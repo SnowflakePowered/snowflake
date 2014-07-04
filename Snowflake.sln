@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.UI.EntryPoint", "Snowflake.UI.EntryPoint\Snowflake.UI.EntryPoint.csproj", "{B2210FF2-1684-4CD2-B4CD-D352F9D297CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Core", "Snowflake.Core\Snowflake.Core.csproj", "{B5C62D3C-0CEA-42AE-8882-0BEC6389D9FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.API", "Snowflake.API\Snowflake.API.csproj", "{8F1D65ED-4A96-4A0A-8371-53655A60A2B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.UI.Theme", "Snowflake.UI.Theme\Snowflake.UI.Theme.csproj", "{88DB7EBF-A3A4-4D53-956E-22B248DE11B7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B2210FF2-1684-4CD2-B4CD-D352F9D297CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2210FF2-1684-4CD2-B4CD-D352F9D297CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2210FF2-1684-4CD2-B4CD-D352F9D297CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2210FF2-1684-4CD2-B4CD-D352F9D297CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5C62D3C-0CEA-42AE-8882-0BEC6389D9FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5C62D3C-0CEA-42AE-8882-0BEC6389D9FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5C62D3C-0CEA-42AE-8882-0BEC6389D9FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5C62D3C-0CEA-42AE-8882-0BEC6389D9FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F1D65ED-4A96-4A0A-8371-53655A60A2B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F1D65ED-4A96-4A0A-8371-53655A60A2B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F1D65ED-4A96-4A0A-8371-53655A60A2B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F1D65ED-4A96-4A0A-8371-53655A60A2B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88DB7EBF-A3A4-4D53-956E-22B248DE11B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88DB7EBF-A3A4-4D53-956E-22B248DE11B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88DB7EBF-A3A4-4D53-956E-22B248DE11B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88DB7EBF-A3A4-4D53-956E-22B248DE11B7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
