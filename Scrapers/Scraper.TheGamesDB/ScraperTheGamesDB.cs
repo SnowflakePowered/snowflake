@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Reflection;
 using System.Net;
+using Snowflake.API;
 using Snowflake.API.Base.Scraper;
 using Snowflake.API.Information.Game;
 using System.Xml.Linq;
@@ -65,11 +66,11 @@ namespace Scraper.TheGamesDB
                 XDocument xmlDoc = XDocument.Parse(xml);
                 string baseImageUrl = xmlDoc.Descendants("baseImgUrl").First().Value;
                 Dictionary<string, string> metadata = new Dictionary<string, string>();
-                metadata.Add("SNOWFLAKE_GAME_DESCRIPTION",
+                metadata.Add(SnowflakeConstants.snowflake_game_description,
                     xmlDoc.Descendants("Overview").First().Value);
-                metadata.Add("SNOWFLAKE_GAME_TITLE",
+                metadata.Add(SnowflakeConstants.snowflake_game_title,
                    xmlDoc.Descendants("GameTitle").First().Value);
-                metadata.Add("SNOWFLAKE_GAME_RELEASEDATE",
+                metadata.Add(SnowflakeConstants.snowflake_game_releasedate,
                    xmlDoc.Descendants("ReleaseDate").First().Value);
                 metadata.Add("SNOWFLAKE_GAME_PUBLISHER",
                    xmlDoc.Descendants("Publisher").First().Value);
