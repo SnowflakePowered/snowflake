@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Reflection;
 using System.Net;
-using Snowflake.API.Plugins.Scraper;
+using Snowflake.API.Base.Scraper;
 using System.Xml.Linq;
 
 namespace Scraper.TheGamesDB
@@ -32,7 +32,7 @@ namespace Scraper.TheGamesDB
                 {
                     var id = game.Elements("id").First().Value;
                     var title = game.Elements("GameTitle").First().Value;
-                    string platform = "ICELAKE_UNKNOWN";
+                    string platform = "SNOWFLAKE_UNKNOWN";
                     string xmlPlatformValue = game.Elements("Platform").First().Value;
                     if (this.ScraperMap.Reverse.ContainsKey(xmlPlatformValue)) platform = this.ScraperMap.Reverse[xmlPlatformValue];
 
@@ -59,21 +59,22 @@ namespace Scraper.TheGamesDB
         public override Tuple<Dictionary<string, string>, Dictionary<string,string>> GetGameDetails(string id)
         {
             Uri searchUri = new Uri(Uri.EscapeUriString("http://thegamesdb.net/api/GetGame.php?id=" + id));
+            Console.WriteLine(searchUri.AbsoluteUri);
             using (WebClient client = new WebClient())
             {
                 string xml = client.DownloadString(searchUri);
                 XDocument xmlDoc = XDocument.Parse(xml);
                 string baseImageUrl = xmlDoc.Descendants("baseImgUrl").First().Value;
                 Dictionary<string, string> metadata = new Dictionary<string, string>();
-                metadata.Add("ICELAKE_GAME_DESCRIPTION",
+                metadata.Add("SNOWFLAKE_GAME_DESCRIPTION",
                     xmlDoc.Descendants("Overview").First().Value);
-                metadata.Add("ICELAKE_GAME_TITLE",
+                metadata.Add("SNOWFLAKE_GAME_TITLE",
                    xmlDoc.Descendants("GameTitle").First().Value);
-                metadata.Add("ICELAKE_GAME_RELEASEDATE",
+                metadata.Add("SNOWFLAKE_GAME_RELEASEDATE",
                    xmlDoc.Descendants("ReleaseDate").First().Value);
-                metadata.Add("ICELAKE_GAME_PUBLISHER",
+                metadata.Add("SNOWFLAKE_GAME_PUBLISHER",
                    xmlDoc.Descendants("Publisher").First().Value);
-                metadata.Add("ICELAKE_GAME_DEVELOPER",
+                metadata.Add("SNOWFLAKE_GAME_DEVELOPER",
                    xmlDoc.Descendants("Developer").First().Value);
 
                 Dictionary<string, string> images = new Dictionary<string, string>();

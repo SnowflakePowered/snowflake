@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.API", "Snowflake.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.UI.Theme", "Snowflake.UI.Theme\Snowflake.UI.Theme.csproj", "{88DB7EBF-A3A4-4D53-956E-22B248DE11B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scraper.TheGamesDB", "Snowflake.Scraper.TheGamesDB\Scraper.TheGamesDB.csproj", "{41420B6B-17FF-4077-890A-7E916F75B5BE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scraper.TheGamesDB", "Scrapers\Scraper.TheGamesDB\Scraper.TheGamesDB.csproj", "{41420B6B-17FF-4077-890A-7E916F75B5BE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scrapers", "Scrapers", "{55F9FD21-EB6C-4A51-B2D1-C3DBC4792A4C}"
 EndProject

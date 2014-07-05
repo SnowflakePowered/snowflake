@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ShortGuid">
+      <HintPath>..\..\packages\ShortGuid.1.0.0\lib\net45\ShortGuid.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,7 +46,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Snowflake.API\Snowflake.API.csproj">
+    <ProjectReference Include="..\..\Snowflake.API\Snowflake.API.csproj">
       <Project>{8f1d65ed-4a96-4a0a-8371-53655a60a2b3}</Project>
       <Name>Snowflake.API</Name>
     </ProjectReference>
@@ -52,6 +55,9 @@
     <EmbeddedResource Include="scrapermap.json">
       <LogicalName>scrapermap.json</LogicalName>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -28,7 +28,7 @@ namespace Snowflake.UI.EntryPoint
             server.StartServer();
 
             var scraper = new Scraper.TheGamesDB.ScraperTheGamesDB();
-            Console.WriteLine(scraper.GetGameDetails("2").Item1["ICELAKE_GAME_TITLE"]);
+            Console.WriteLine(scraper.GetGameDetails("2").Item1["SNOWFLAKE_GAME_TITLE"]);
 
         }
     }

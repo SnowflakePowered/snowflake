@@ -5,13 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.API.Interface;
 
-namespace Snowflake.API.Information
+namespace Snowflake.API.Information.Game
 {
     public class Info: IInfo
     {
         public string PlatformId { get; private set; }
         public string Name { get; private set; }
-        public Dictionary<string, string> Images { get; set; }
+        public virtual Dictionary<string, string> Images { get; set; }
         public Dictionary<string, string> Metadata { get; set; }
 
         public Info(string platformId, string name, Dictionary<string,string> images, Dictionary<string,string> metadata)
