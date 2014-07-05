@@ -7,6 +7,7 @@ using System.IO;
 using System.Reflection;
 using System.Net;
 using Snowflake.API.Base.Scraper;
+using Snowflake.API.Information.Game;
 using System.Xml.Linq;
 
 namespace Scraper.TheGamesDB
@@ -30,10 +31,10 @@ namespace Scraper.TheGamesDB
                 var results = new List<GameScrapeResult>();
                 foreach (var game in games)
                 {
-                    var id = game.Elements("id").First().Value;
-                    var title = game.Elements("GameTitle").First().Value;
+                    var id = game.Element("id").Value;
+                    var title = game.Element("GameTitle").Value;
                     string platform = "SNOWFLAKE_UNKNOWN";
-                    string xmlPlatformValue = game.Elements("Platform").First().Value;
+                    string xmlPlatformValue = game.Element("Platform").Value;
                     if (this.ScraperMap.Reverse.ContainsKey(xmlPlatformValue)) platform = this.ScraperMap.Reverse[xmlPlatformValue];
 
                     results.Add(new GameScrapeResult(id, platform, title));
@@ -47,7 +48,6 @@ namespace Scraper.TheGamesDB
             var results = ParseSearchResults(searchUri);
             return results;
         }
-
         public override List<GameScrapeResult> GetSearchResults(string searchQuery, string platformId)
         {
             Uri searchUri = new Uri(Uri.EscapeUriString("http://thegamesdb.net/api/GetGamesList.php?name=" + searchQuery
@@ -55,8 +55,7 @@ namespace Scraper.TheGamesDB
             var results = ParseSearchResults(searchUri);
             return results;
         }
-
-        public override Tuple<Dictionary<string, string>, Dictionary<string,string>> GetGameDetails(string id)
+        public override Tuple<Dictionary<string, string>, GameImages> GetGameDetails(string id)
         {
             Uri searchUri = new Uri(Uri.EscapeUriString("http://thegamesdb.net/api/GetGame.php?id=" + id));
             Console.WriteLine(searchUri.AbsoluteUri);
@@ -77,7 +76,30 @@ namespace Scraper.TheGamesDB
                 metadata.Add("SNOWFLAKE_GAME_DEVELOPER",
                    xmlDoc.Descendants("Developer").First().Value);
 
-                Dictionary<string, string> images = new Dictionary<string, string>();
+                GameImages images = new GameImages();
+                var boxartFront = baseImageUrl + (from boxart in xmlDoc.Descendants("boxart") where boxart.Attribute("side").Value == "front" select boxart).First().Value;
+                images.AddFromUrl(GameImageType.Boxart_front, new Uri(boxartFront));
+
+                var boxartBack = baseImageUrl + (from boxart in xmlDoc.Descendants("boxart") where boxart.Attribute("side").Value == "back" select boxart).First().Value;
+                images.AddFromUrl(GameImageType.Boxart_back, new Uri(boxartBack));
+
+                //Add fanarts
+                var fanarts = (from fanart in xmlDoc.Descendants("fanart") select fanart).ToList();
+                foreach (var fanart in fanarts)
+                {
+                    string fanartUrl = baseImageUrl + fanart.Element("original").Value;
+                    images.AddFromUrl(GameImageType.Fanart, new Uri(fanartUrl));
+                }
+
+                //Add screenshots
+                var screenshots = (from screenshot in xmlDoc.Descendants("screenshot") select screenshot).ToList();
+                foreach (var screenshot in screenshots)
+                {
+                    string screenshotUrl = baseImageUrl + screenshot.Element("original").Value;
+                    images.AddFromUrl(GameImageType.Screenshot, new Uri(screenshotUrl));
+                }
+
+                
                 //todo add images
                 return Tuple.Create(metadata, images);
 

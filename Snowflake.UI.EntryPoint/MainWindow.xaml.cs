@@ -28,7 +28,8 @@ namespace Snowflake.UI.EntryPoint
             server.StartServer();
 
             var scraper = new Scraper.TheGamesDB.ScraperTheGamesDB();
-            Console.WriteLine(scraper.GetGameDetails("2").Item1["SNOWFLAKE_GAME_TITLE"]);
+            var results = scraper.GetSearchResults("Super Mario World", "NINTENDO_SNES");
+            Console.WriteLine(scraper.GetGameDetails(results[0].ID).Item2.Boxarts["snowflake_boxart_front"][0]);
 
         }
     }

@@ -18,7 +18,7 @@ namespace Snowflake.API.Information.Game
         public GameImages(string cachePath = "imagecache")
         {
             this.CachePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Snowflake", "data", cachePath);
-            this.ImagesID = new ShortGuid().ToString();
+            this.ImagesID = ShortGuid.NewShortGuid();
             this.Fanarts = new List<string[]>();
             this.Screenshots = new List<string[]>();
             this.Boxarts = new Dictionary<string, string[]>();
@@ -29,22 +29,23 @@ namespace Snowflake.API.Information.Game
             string imageFileName="";
             switch (imageType){
                 case GameImageType.Fanart:
-                    imageFileName="fanart_"+this.Fanarts.Count+1;
+                    imageFileName = "fanart_" + this.Fanarts.Count;
                     break;
                 case GameImageType.Screenshot:
-                    imageFileName="screenshot_"+this.Screenshots.Count+1;
+                    imageFileName = "screenshot_" + this.Screenshots.Count;
                     break;
                 case GameImageType.Boxart_back:
                     imageFileName="boxart_back";
                     break;
                 case GameImageType.Boxart_front:
-                    imageFileName="boxart_back";
+                    imageFileName="boxart_front";
                     break;
                 case GameImageType.Boxart_full:
-                    imageFileName="boxart_back";
+                    imageFileName="boxart_full";
                     break;
             }
             string downloadPath = Path.Combine(this.CachePath, this.ImagesID, imageFileName);
+            if (!Directory.Exists(Path.Combine(this.CachePath, this.ImagesID))) Directory.CreateDirectory(Path.Combine(this.CachePath, this.ImagesID));
             using (WebClient webclient = new WebClient())
             {
                 webclient.DownloadFile(imageUrl, downloadPath);

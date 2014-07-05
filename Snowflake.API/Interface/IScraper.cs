@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.API.Base.Scraper;
 using Snowflake.API.Collections;
+using Snowflake.API.Information.Game;
 
 namespace Snowflake.API.Interface
 {
@@ -14,7 +15,7 @@ namespace Snowflake.API.Interface
         BiDictionary<string, string> ScraperMap { get; }
         List<GameScrapeResult> GetSearchResults(string searchQuery);
         List<GameScrapeResult> GetSearchResults(string searchQuery, string platformId);
-        Tuple<Dictionary<string, string>, Dictionary<string, string>> GetGameDetails(string id);
+        Tuple<Dictionary<string, string>, GameImages> GetGameDetails(string id);
       
     }
 }
