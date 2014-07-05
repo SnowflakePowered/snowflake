@@ -82,6 +82,7 @@
     <Compile Include="Base\Scraper\GameScrapeResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Collections\BiDictionary.cs" />
+    <Compile Include="SnowflakeConstants.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

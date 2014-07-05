@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace Snowflake.API
 {
-    public static abstract class SnowflakeConstants
+    public static class SnowflakeConstants
     {
         public static string snowflake_img_boxart_back = "snowflake_img_boxart_back";
         public static string snowflake_img_boxart_front = "snowflake_img_boxart_front";
+        public static string snowflake_img_boxart_full = "snowflake_img_boxart_front";
+
 
         public static string snowflake_game_description = "snowflake_game_desription";
         public static string snowflake_game_title = "snowflake_game_title";

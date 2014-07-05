@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.IO;
+using Snowflake.API;
 using Snowflake.UI.Theme;
 
 namespace Snowflake.UI.EntryPoint
@@ -29,7 +30,7 @@ namespace Snowflake.UI.EntryPoint
 
             var scraper = new Scraper.TheGamesDB.ScraperTheGamesDB();
             var results = scraper.GetSearchResults("Super Mario World", "NINTENDO_SNES");
-            Console.WriteLine(scraper.GetGameDetails(results[0].ID).Item2.Boxarts["snowflake_boxart_front"][0]);
+            Console.WriteLine(scraper.GetGameDetails(results[0].ID).Item2.Boxarts[SnowflakeConstants.snowflake_img_boxart_back][0]);
 
         }
     }

@@ -72,9 +72,9 @@ namespace Scraper.TheGamesDB
                    xmlDoc.Descendants("GameTitle").First().Value);
                 metadata.Add(SnowflakeConstants.snowflake_game_releasedate,
                    xmlDoc.Descendants("ReleaseDate").First().Value);
-                metadata.Add("SNOWFLAKE_GAME_PUBLISHER",
+                metadata.Add(SnowflakeConstants.snowflake_game_publisher,
                    xmlDoc.Descendants("Publisher").First().Value);
-                metadata.Add("SNOWFLAKE_GAME_DEVELOPER",
+                metadata.Add(SnowflakeConstants.snowflake_game_developer,
                    xmlDoc.Descendants("Developer").First().Value);
 
                 GameImages images = new GameImages();

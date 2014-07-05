@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Net;
+using Snowflake.API;
 
 namespace Snowflake.API.Information.Game
 {
@@ -59,13 +60,13 @@ namespace Snowflake.API.Information.Game
                     this.Screenshots.Add(new string[] { downloadPath, imageUrl.AbsoluteUri });
                     break;
                 case GameImageType.Boxart_back:
-                    this.Boxarts.Add("snowflake_boxart_back", new string[] { downloadPath, imageUrl.AbsoluteUri });
+                    this.Boxarts.Add(SnowflakeConstants.snowflake_img_boxart_back, new string[] { downloadPath, imageUrl.AbsoluteUri });
                     break;
                 case GameImageType.Boxart_front:
-                    this.Boxarts.Add("snowflake_boxart_front", new string[] { downloadPath, imageUrl.AbsoluteUri });
+                    this.Boxarts.Add(SnowflakeConstants.snowflake_img_boxart_front, new string[] { downloadPath, imageUrl.AbsoluteUri });
                     break;
                 case GameImageType.Boxart_full:
-                    this.Boxarts.Add("snowflake_boxart_full", new string[] { downloadPath, imageUrl.AbsoluteUri });
+                    this.Boxarts.Add(SnowflakeConstants.snowflake_img_boxart_full, new string[] { downloadPath, imageUrl.AbsoluteUri });
                     break;
             }
         }
