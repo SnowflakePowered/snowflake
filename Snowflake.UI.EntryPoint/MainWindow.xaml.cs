@@ -27,6 +27,9 @@ namespace Snowflake.UI.EntryPoint
             ThemeServer server = new ThemeServer(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "snowflake"));
             server.StartServer();
 
+            var scraper = new Scraper.TheGamesDB.ScraperTheGamesDB();
+            Console.WriteLine(scraper.GetGameDetails("2").Item1["ICELAKE_GAME_TITLE"]);
+
         }
     }
 }

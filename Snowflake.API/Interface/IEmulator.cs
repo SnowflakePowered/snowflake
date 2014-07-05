@@ -8,6 +8,6 @@ namespace Snowflake.API.Interface
 {
     public interface IEmulator: IPlugin
     {
-        void Run();
+        void Run(string gameUUID);
     }
 }

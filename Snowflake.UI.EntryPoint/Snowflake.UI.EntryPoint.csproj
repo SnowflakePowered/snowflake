@@ -109,6 +109,14 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Snowflake.API\Snowflake.API.csproj">
+      <Project>{8f1d65ed-4a96-4a0a-8371-53655a60a2b3}</Project>
+      <Name>Snowflake.API</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Snowflake.Scraper.TheGamesDB\Scraper.TheGamesDB.csproj">
+      <Project>{41420b6b-17ff-4077-890a-7e916f75b5be}</Project>
+      <Name>Scraper.TheGamesDB</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Snowflake.UI.Theme\Snowflake.UI.Theme.csproj">
       <Project>{88db7ebf-a3a4-4d53-956e-22b248de11b7}</Project>
       <Name>Snowflake.UI.Theme</Name>

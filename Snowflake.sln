@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.UI.EntryPoint", "Snowflake.UI.EntryPoint\Snowflake.UI.EntryPoint.csproj", "{B2210FF2-1684-4CD2-B4CD-D352F9D297CC}"
 EndProject
@@ -10,6 +10,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.API", "Snowflake.API\Snowflake.API.csproj", "{8F1D65ED-4A96-4A0A-8371-53655A60A2B3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.UI.Theme", "Snowflake.UI.Theme\Snowflake.UI.Theme.csproj", "{88DB7EBF-A3A4-4D53-956E-22B248DE11B7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scraper.TheGamesDB", "Snowflake.Scraper.TheGamesDB\Scraper.TheGamesDB.csproj", "{41420B6B-17FF-4077-890A-7E916F75B5BE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scrapers", "Scrapers", "{55F9FD21-EB6C-4A51-B2D1-C3DBC4792A4C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,8 +37,15 @@ Global
 		{88DB7EBF-A3A4-4D53-956E-22B248DE11B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88DB7EBF-A3A4-4D53-956E-22B248DE11B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88DB7EBF-A3A4-4D53-956E-22B248DE11B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41420B6B-17FF-4077-890A-7E916F75B5BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41420B6B-17FF-4077-890A-7E916F75B5BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41420B6B-17FF-4077-890A-7E916F75B5BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41420B6B-17FF-4077-890A-7E916F75B5BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{41420B6B-17FF-4077-890A-7E916F75B5BE} = {55F9FD21-EB6C-4A51-B2D1-C3DBC4792A4C}
 	EndGlobalSection
 EndGlobal

@@ -8,12 +8,14 @@ using Snowflake.API.Plugins;
 
 namespace Snowflake.API.Plugins.Emulator
 {
-    public class ExecutableEmulator : Plugin, IEmulator
+    public abstract class ExecutableEmulator : Plugin, IEmulator
     {
         public ExecutableEmulator(string pluginName, string baseDirectory, string executableName):base(pluginName)
         {
         }
-        public virtual void Run(string fileName, string gameConfiguration);
+        public abstract void Run(string uuid);
+
+
    }
 }
 

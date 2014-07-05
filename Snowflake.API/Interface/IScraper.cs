@@ -3,12 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Snowflake.API.Plugins.Scraper;
+using Snowflake.API.Collections;
 
 namespace Snowflake.API.Interface
 {
     public interface IScraper : IPlugin
     {
-        public string ScraperSource { get; private set; }
-        public Dictionary<string, string> ScraperMap { get; private set; }
+        string ScraperSource { get; }
+        BiDictionary<string, string> ScraperMap { get; }
+        List<GameScrapeResult> GetSearchResults(string searchQuery);
+        List<GameScrapeResult> GetSearchResults(string searchQuery, string platformId);
+        Tuple<Dictionary<string, string>, Dictionary<string, string>> GetGameDetails(string id);
+      
     }
 }
