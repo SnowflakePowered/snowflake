@@ -10,14 +10,13 @@ using Snowflake.API;
 using Snowflake.API.Base.Scraper;
 using Snowflake.API.Information.Game;
 using System.Xml.Linq;
+using Snowflake.API.Constants;
 
 namespace Scraper.TheGamesDB
 {
     public class ScraperTheGamesDB : BaseScraper
     {
-        public ScraperTheGamesDB()
-
-            : base("thegamesdb", "thegamesdb.net", Assembly.GetExecutingAssembly())
+        public ScraperTheGamesDB():base(Assembly.GetExecutingAssembly())
         {
         }
 
@@ -66,15 +65,15 @@ namespace Scraper.TheGamesDB
                 XDocument xmlDoc = XDocument.Parse(xml);
                 string baseImageUrl = xmlDoc.Descendants("baseImgUrl").First().Value;
                 Dictionary<string, string> metadata = new Dictionary<string, string>();
-                metadata.Add(SnowflakeConstants.snowflake_game_description,
+                metadata.Add(GameInfoFields.snowflake_game_description,
                     xmlDoc.Descendants("Overview").First().Value);
-                metadata.Add(SnowflakeConstants.snowflake_game_title,
+                metadata.Add(GameInfoFields.snowflake_game_title,
                    xmlDoc.Descendants("GameTitle").First().Value);
-                metadata.Add(SnowflakeConstants.snowflake_game_releasedate,
+                metadata.Add(GameInfoFields.snowflake_game_releasedate,
                    xmlDoc.Descendants("ReleaseDate").First().Value);
-                metadata.Add(SnowflakeConstants.snowflake_game_publisher,
+                metadata.Add(GameInfoFields.snowflake_game_publisher,
                    xmlDoc.Descendants("Publisher").First().Value);
-                metadata.Add(SnowflakeConstants.snowflake_game_developer,
+                metadata.Add(GameInfoFields.snowflake_game_developer,
                    xmlDoc.Descendants("Developer").First().Value);
 
                 GameImages images = new GameImages();

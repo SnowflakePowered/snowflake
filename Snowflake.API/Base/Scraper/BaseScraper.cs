@@ -14,19 +14,11 @@ namespace Snowflake.API.Base.Scraper
 {
     public abstract class BaseScraper: Plugin, IScraper
     {
-        public string ScraperSource { get; private set; }
         public BiDictionary<string, string> ScraperMap { get; private set; }
-        public BaseScraper(string scraperName, string scraperSource, BiDictionary<string, string> scraperMap) : base(scraperName)
-        {
-            this.ScraperSource = scraperSource;
-            this.ScraperMap = scraperMap;
-        }
 
-        public BaseScraper(string scraperName, string scraperSource, Assembly scraperAssembly): base(scraperName)
+        public BaseScraper(Assembly pluginAssembly) : base(pluginAssembly)
         {
-
-            this.ScraperSource = scraperSource;
-            using (Stream stream = scraperAssembly.GetManifestResourceStream("scrapermap.json"))
+            using (Stream stream = this.PluginAssembly.GetManifestResourceStream("scrapermap.json"))
             using (StreamReader reader = new StreamReader(stream))
             {
                 string file = reader.ReadToEnd();

@@ -11,7 +11,6 @@ namespace Snowflake.API.Interface
 {
     public interface IScraper : IPlugin
     {
-        string ScraperSource { get; }
         BiDictionary<string, string> ScraperMap { get; }
         List<GameScrapeResult> GetSearchResults(string searchQuery);
         List<GameScrapeResult> GetSearchResults(string searchQuery, string platformId);
