@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.API.Interface;
 
-namespace Snowflake.API.Plugins
+namespace Snowflake.API.Base
 {
     public class Plugin : IPlugin
     {

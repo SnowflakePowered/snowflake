@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Snowflake.API.Plugins.Emulator;
+using Snowflake.API.Base.Emulator;
 namespace Snowflake.API.Information
 {
     public class Game: Info

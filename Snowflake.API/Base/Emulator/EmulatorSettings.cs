@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Snowflake.API.Plugins.Emulator
+namespace Snowflake.API.Base.Emulator
 {
     public class EmulatorSettings
     {

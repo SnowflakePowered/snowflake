@@ -9,7 +9,7 @@ using Snowflake.API.Collections;
 using System.Reflection;
 using System.IO;
 
-namespace Snowflake.API.Plugins.Scraper
+namespace Snowflake.API.Base.Scraper
 {
     public abstract class BaseScraper: Plugin, IScraper
     {
