@@ -7,7 +7,7 @@
     <ProjectGuid>{8F1D65ED-4A96-4A0A-8371-53655A60A2B3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Snowflake.API.Constants</RootNamespace>
+    <RootNamespace>Snowflake.API</RootNamespace>
     <AssemblyName>Snowflake.API</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -65,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\YamlConfiguration.cs" />
     <Compile Include="Constants\ImagesInfoFields.cs" />
     <Compile Include="Constants\Plugin\PluginInfoFields.cs" />
     <Compile Include="Constants\Plugin\PluginTypes.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="Information\Game\GameImages.cs" />
     <Compile Include="Collections\KeyValuePairExts.cs" />
     <Compile Include="Database\GameDatabase.cs" />
+    <Compile Include="Interface\IConfiguration.cs" />
     <Compile Include="Interface\IScraper.cs" />
     <Compile Include="Base\Emulator\EmulatorSettings.cs" />
     <Compile Include="Base\Emulator\ExecutableEmulator.cs" />

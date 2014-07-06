@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.Serialization;
 // from https://github.com/Athari/Alba.Framework
+
 namespace Snowflake.API.Collections
 {
     [Serializable]

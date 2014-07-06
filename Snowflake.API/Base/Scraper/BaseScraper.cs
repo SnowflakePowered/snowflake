@@ -12,7 +12,7 @@ using Snowflake.API.Information.Game;
 
 namespace Snowflake.API.Base.Scraper
 {
-    public abstract class BaseScraper: Plugin, IScraper
+    public abstract class BaseScraper: BasePlugin, IScraper
     {
         public BiDictionary<string, string> ScraperMap { get; private set; }
 

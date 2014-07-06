@@ -17,6 +17,7 @@ using Snowflake.UI.Theme;
 using Snowflake.API.Constants;
 using Snowflake.API.Constants.Plugin;
 using System.Diagnostics;
+using Snowflake.API.Configuration;
 
 namespace Snowflake.UI.EntryPoint
 {
@@ -35,11 +36,13 @@ namespace Snowflake.UI.EntryPoint
             //var results = scraper.GetSearchResults("Super Mario World", "NINTENDO_SNES");   
             // Console.WriteLine(scraper.GetGameDetails(results[0].ID).Item2.Boxarts[ImagesInfoFields.snowflake_img_boxart_back][0]);
             //Console.WriteLine(scraper.PluginInfo["authors"][0]);
-            var retroarch = new Emulator.RetroArch.EmulatorRetroArch();
-            var proc = retroarch.GetProcessStartInfo("","");
-            Console.WriteLine(proc.FileName);
-            Console.WriteLine(proc.Arguments);
-            Process.Start(proc);
+            //var retroarch = new Emulator.RetroArch.EmulatorRetroArch();
+            //var proc = retroarch.GetProcessStartInfo("","");
+            //Console.WriteLine(proc.FileName);
+            //Console.WriteLine(proc.Arguments);
+            //Process.Start(proc);
+            var s = new Snowflake.API.Configuration.YamlConfiguration("hh");
+            s.LoadConfiguration();
         }
     }
 }

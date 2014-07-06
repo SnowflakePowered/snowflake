@@ -27,7 +27,6 @@ namespace Emulator.RetroArch
                 Arguments = "-L cores/nestopia_libretro.dll "+fileName,
                 WorkingDirectory = this.EmulatorRoot
             };
-
             return startInfo;
         }
         

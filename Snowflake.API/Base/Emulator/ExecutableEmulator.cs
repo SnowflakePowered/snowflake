@@ -9,7 +9,7 @@ using System.Reflection;
 
 namespace Snowflake.API.Base.Emulator
 {
-    public abstract class ExecutableEmulator : Plugin, IEmulator
+    public abstract class ExecutableEmulator : BasePlugin, IEmulator
     {
         public ExecutableEmulator(string pluginName, string baseDirectory, string executableName):base(Assembly.GetExecutingAssembly())
         {

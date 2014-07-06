@@ -10,6 +10,7 @@ namespace Snowflake.API.Interface
     public interface IPlugin
     {
         string PluginName { get; }
+        string PluginDataPath { get; }
         Assembly PluginAssembly { get; }
         Dictionary<string, dynamic> PluginInfo { get; }
     }
