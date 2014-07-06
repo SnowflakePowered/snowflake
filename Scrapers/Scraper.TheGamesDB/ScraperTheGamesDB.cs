@@ -22,7 +22,6 @@ namespace Scraper.TheGamesDB
 
         private List<GameScrapeResult> ParseSearchResults(Uri searchUri)
         {
-            Console.WriteLine(searchUri.OriginalString);
             using (WebClient client = new WebClient())
             {
                 string xml = client.DownloadString(searchUri);
@@ -58,7 +57,6 @@ namespace Scraper.TheGamesDB
         public override Tuple<Dictionary<string, string>, GameImages> GetGameDetails(string id)
         {
             Uri searchUri = new Uri(Uri.EscapeUriString("http://thegamesdb.net/api/GetGame.php?id=" + id));
-            Console.WriteLine(searchUri.AbsoluteUri);
             using (WebClient client = new WebClient())
             {
                 string xml = client.DownloadString(searchUri);

@@ -29,10 +29,11 @@ namespace Snowflake.UI.EntryPoint
             ThemeServer server = new ThemeServer(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "snowflake"));
             server.StartServer();
 
-            var scraper = new Scraper.TheGamesDB.ScraperTheGamesDB();
-            var results = scraper.GetSearchResults("Super Mario World", "NINTENDO_SNES");
-            Console.WriteLine(scraper.GetGameDetails(results[0].ID).Item2.Boxarts[ImagesInfoFields.snowflake_img_boxart_back][0]);
-            Console.WriteLine(scraper.PluginInfo["authors"][0]);
+            //var scraper = new Scraper.TheGamesDB.ScraperTheGamesDB();
+            //var results = scraper.GetSearchResults("Super Mario World", "NINTENDO_SNES");   
+            // Console.WriteLine(scraper.GetGameDetails(results[0].ID).Item2.Boxarts[ImagesInfoFields.snowflake_img_boxart_back][0]);
+            //Console.WriteLine(scraper.PluginInfo["authors"][0]);
+
         }
     }
 }
