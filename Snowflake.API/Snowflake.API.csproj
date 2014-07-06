@@ -75,7 +75,6 @@
     <Compile Include="Database\GameDatabase.cs" />
     <Compile Include="Interface\IConfiguration.cs" />
     <Compile Include="Interface\IScraper.cs" />
-    <Compile Include="Base\Emulator\EmulatorSettings.cs" />
     <Compile Include="Base\Emulator\ExecutableEmulator.cs" />
     <Compile Include="Information\Game\Game.cs" />
     <Compile Include="Information\Info.cs" />

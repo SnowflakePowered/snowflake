@@ -15,8 +15,8 @@ namespace Snowflake.API.Information.Game
         public Dictionary<string, string> Metadata { get; set; }
         public string UUID { get; private set; }
         public string FileName { get; private set; }
-        public EmulatorSettings Settings { get; set; }
-        public Game(string platformId, string name, GameImages images, Dictionary<string,string> metadata, string uuid, string fileName, EmulatorSettings settings=null)
+        public Dictionary<string, dynamic> Settings { get; set; }
+        public Game(string platformId, string name, GameImages images, Dictionary<string,string> metadata, string uuid, string fileName, Dictionary<string, dynamic> settings)
         {
             this.PlatformId = platformId;
             this.Name = name;
@@ -24,7 +24,6 @@ namespace Snowflake.API.Information.Game
             this.Metadata = metadata;
             this.UUID = uuid;
             this.FileName = fileName;
-            if (settings == null) settings = new EmulatorSettings();
             this.Settings = settings;
         }
     }
