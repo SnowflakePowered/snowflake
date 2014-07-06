@@ -83,7 +83,7 @@
     <Compile Include="Interface\IInfo.cs" />
     <Compile Include="Information\Platform.cs" />
     <Compile Include="Interface\IPlugin.cs" />
-    <Compile Include="Base\Plugin.cs" />
+    <Compile Include="Base\BasePlugin.cs" />
     <Compile Include="Base\Scraper\BaseScraper.cs" />
     <Compile Include="Base\Scraper\GameScrapeResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

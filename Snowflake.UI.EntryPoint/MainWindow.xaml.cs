@@ -36,13 +36,14 @@ namespace Snowflake.UI.EntryPoint
             //var results = scraper.GetSearchResults("Super Mario World", "NINTENDO_SNES");   
             // Console.WriteLine(scraper.GetGameDetails(results[0].ID).Item2.Boxarts[ImagesInfoFields.snowflake_img_boxart_back][0]);
             //Console.WriteLine(scraper.PluginInfo["authors"][0]);
-            //var retroarch = new Emulator.RetroArch.EmulatorRetroArch();
-            //var proc = retroarch.GetProcessStartInfo("","");
+            var retroarch = new Emulator.RetroArch.EmulatorRetroArch();
+            Console.WriteLine(retroarch.MainExecutable);
+            var proc = retroarch.GetProcessStartInfo("NINTENDO_NES","");
             //Console.WriteLine(proc.FileName);
-            //Console.WriteLine(proc.Arguments);
+            Console.WriteLine(proc.Arguments);
             //Process.Start(proc);
-            var s = new Snowflake.API.Configuration.YamlConfiguration("hh");
-            s.LoadConfiguration();
+            //var s = new Snowflake.API.Configuration.YamlConfiguration("hh");
+            //s.LoadConfiguration();
         }
     }
 }

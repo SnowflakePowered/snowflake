@@ -11,7 +11,7 @@ namespace Snowflake.API.Base.Emulator
 {
     public abstract class ExecutableEmulator : BasePlugin, IEmulator
     {
-        public ExecutableEmulator(string pluginName, string baseDirectory, string executableName):base(Assembly.GetExecutingAssembly())
+        public ExecutableEmulator(Assembly pluginAssembly):base(pluginAssembly)
         {
         }
         public abstract void Run(string uuid);

@@ -42,7 +42,12 @@
     <Compile Include="EmulatorRetroArch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\Snowflake.API\Snowflake.API.csproj">
+      <Project>{8f1d65ed-4a96-4a0a-8371-53655a60a2b3}</Project>
+      <Name>Snowflake.API</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="emulator_retroarch\.retroarch-game-history.txt" />
     <Content Include="emulator_retroarch\autoconfig\README.txt" />
@@ -149,6 +154,9 @@
     <Content Include="emulator_retroarch\zlib1.dll" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="config.yml">
+		<LogicalName>config.yml</LogicalName>
+	</EmbeddedResource>
     <None Include="emulator_retroarch\info\3dengine_libretro.info" />
     <None Include="emulator_retroarch\info\bnes_libretro.info" />
     <None Include="emulator_retroarch\info\bsnes_accuracy_libretro.info" />
@@ -626,6 +634,9 @@
     <None Include="emulator_retroarch\system\st018.data.rom" />
     <None Include="emulator_retroarch\system\st018.program.rom" />
     <None Include="emulator_retroarch\system\st018.rom" />
+    <EmbeddedResource Include="plugin.json">
+      <LogicalName>plugin.json</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

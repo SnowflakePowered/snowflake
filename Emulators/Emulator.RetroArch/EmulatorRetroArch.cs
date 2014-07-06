@@ -6,25 +6,35 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using Snowflake.API.Base.Emulator;
 
 namespace Emulator.RetroArch
 {
-    public class EmulatorRetroArch
+    public class EmulatorRetroArch : ExecutableEmulator
     {
         public string MainExecutable { get; private set; }
         public string EmulatorRoot { get; private set; }
-        public EmulatorRetroArch()
+        public EmulatorRetroArch() : base(Assembly.GetExecutingAssembly())
         {
-            this.MainExecutable = "retroarch.exe";
-            this.EmulatorRoot = "emulator_retroarch";
+            this.MainExecutable = this.PluginInfo["emulator_executable"];
+            this.EmulatorRoot = this.PluginInfo["emulator_root"];
+            this.InitConfiguration();
+            Console.WriteLine(this.PluginConfiguration.Configuration["cores"]["NINTENDO_NES"]);
         }
 
+        public override void Run(string uuid)
+        {
+            throw new NotImplementedException();
+        }
+        public void Run(string platformId, string fileName)
+        {
+            Process.Start(GetProcessStartInfo(platformId, fileName));
+        }
         public ProcessStartInfo GetProcessStartInfo(string platformId, string fileName){
-            fileName = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath), "SuperMarioBros.nes"));
             var startInfo = new ProcessStartInfo()
             {
                 FileName = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase), this.EmulatorRoot,this.MainExecutable),
-                Arguments = "-L cores/nestopia_libretro.dll "+fileName,
+                Arguments = @"-L cores\"+this.PluginConfiguration.Configuration["cores"][platformId]+" "+fileName,
                 WorkingDirectory = this.EmulatorRoot
             };
             return startInfo;

@@ -14,11 +14,13 @@ namespace Snowflake.API.Configuration
     {
         public string ConfigurationFileName { get; private set; }
         public Dictionary<string, dynamic> Configuration { get; private set; }
-      
-        public YamlConfiguration(string configFileName)
+
+        private string DefaultValues { get; set; }
+        public YamlConfiguration(string configFileName, string defaultValues)
         {
             this.ConfigurationFileName = configFileName;
             this.Configuration = new Dictionary<string, dynamic>();
+            this.DefaultValues = defaultValues;
         }
         public void LoadConfiguration()
         {
@@ -26,9 +28,13 @@ namespace Snowflake.API.Configuration
             {
                 EmitTags = false
             });
+            if (!File.Exists(this.ConfigurationFileName))
+            {
+                File.Create(this.ConfigurationFileName).Close();
+                File.WriteAllText(this.ConfigurationFileName, this.DefaultValues);
+            }
             string serializedYaml = File.ReadAllText(this.ConfigurationFileName);
             this.Configuration = serializer.Deserialize<Dictionary<string, dynamic>>(serializedYaml);
-            
         }
 
         public void SaveConfiguration()

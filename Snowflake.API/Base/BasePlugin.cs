@@ -27,7 +27,6 @@ namespace Snowflake.API.Base
             using (StreamReader reader = new StreamReader(stream))
             {
                 string file = reader.ReadToEnd();
-                Console.WriteLine(file);
                 Dictionary<string, dynamic> pluginInfo = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(file);
                 this.PluginInfo = pluginInfo;
             }
@@ -36,11 +35,20 @@ namespace Snowflake.API.Base
             if (!Directory.Exists(this.PluginDataPath)) Directory.CreateDirectory(this.PluginDataPath);
         }
 
-        private virtual void InitConfiguration()
+        protected virtual void InitConfiguration(string defaultValues)
         {
-            this.PluginConfiguration = new YamlConfiguration(Path.Combine(this.PluginDataPath, "config.yml"));
+            this.PluginConfiguration = new YamlConfiguration(Path.Combine(this.PluginDataPath, "config.yml"), defaultValues);
             this.PluginConfiguration.LoadConfiguration();
         }
 
+        protected virtual void InitConfiguration()
+        {
+            using (Stream stream = this.PluginAssembly.GetManifestResourceStream("config.yml"))
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                string file = reader.ReadToEnd();
+                this.InitConfiguration(file);
+            }
+        }
     }
 }
