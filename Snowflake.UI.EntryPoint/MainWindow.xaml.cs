@@ -29,6 +29,11 @@ namespace Snowflake.UI.EntryPoint
         public MainWindow()
         {
             InitializeComponent();
+            
+           var uuid = "ssss";
+                        string query = @"SELECT * FROM `games` WHERE `uuid` == """ + uuid + @"""";
+
+                        Console.WriteLine(query);
             ThemeServer server = new ThemeServer(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "snowflake"));
             server.StartServer();
 
@@ -36,11 +41,11 @@ namespace Snowflake.UI.EntryPoint
             //var results = scraper.GetSearchResults("Super Mario World", "NINTENDO_SNES");   
             // Console.WriteLine(scraper.GetGameDetails(results[0].ID).Item2.Boxarts[ImagesInfoFields.snowflake_img_boxart_back][0]);
             //Console.WriteLine(scraper.PluginInfo["authors"][0]);
-            var retroarch = new Emulator.RetroArch.EmulatorRetroArch();
-            Console.WriteLine(retroarch.MainExecutable);
-            var proc = retroarch.GetProcessStartInfo("NINTENDO_NES","");
-            //Console.WriteLine(proc.FileName);
-            Console.WriteLine(proc.Arguments);
+           // var retroarch = new Emulator.RetroArch.EmulatorRetroArch();
+           // Console.WriteLine(retroarch.MainExecutable);
+           // var proc = retroarch.GetProcessStartInfo("NINTENDO_NES","");
+           // //Console.WriteLine(proc.FileName);
+           //s Console.WriteLine(proc.Arguments);
             //Process.Start(proc);
             //var s = new Snowflake.API.Configuration.YamlConfiguration("hh");
             //s.LoadConfiguration();

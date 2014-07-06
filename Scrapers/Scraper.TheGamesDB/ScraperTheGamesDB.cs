@@ -97,7 +97,7 @@ namespace Scraper.TheGamesDB
                     images.AddFromUrl(GameImageType.Screenshot, new Uri(screenshotUrl));
                 }
 
-                
+        
                 //todo add images
                 return Tuple.Create(metadata, images);
 

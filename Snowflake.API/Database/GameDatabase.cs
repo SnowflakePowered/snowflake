@@ -4,7 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SQLite;
+using System.Data;
 using System.IO;
+using Newtonsoft.Json;
+using Snowflake.API.Information.Game;
 
 namespace Snowflake.API.Database
 {
@@ -12,7 +15,6 @@ namespace Snowflake.API.Database
     {
         public string FileName{get; private set;}
         private SQLiteConnection DBConnection {get; set;}
-
         public GameDatabase(string fileName){
             this.FileName = FileName;
 
@@ -40,5 +42,83 @@ namespace Snowflake.API.Database
             sqlCommand.ExecuteNonQuery();
             dbConnection.Close();
         }
+
+        public void AddGame(Game game){
+            this.DBConnection.Open();
+            using (SQLiteCommand sqlCommand = new SQLiteCommand(String.Format(@"INSERT INTO games VALUES(
+                                          ""{0}"",
+                                          ""{1}"",
+                                          ""{2}"",
+                                          ""{3}"",
+                                          ""{4}"",
+                                          ""{5}"",
+                                          ""{6}""",
+                                          game.PlatformId,
+                                          game.UUID,
+                                          game.FileName,
+                                          game.Name,
+                                          JsonConvert.SerializeObject(game.Images),
+                                          JsonConvert.SerializeObject(game.Metadata),
+                                          JsonConvert.SerializeObject(game.Settings)),
+                                          this.DBConnection))
+            {
+                sqlCommand.ExecuteNonQuery();
+            }
+            this.DBConnection.Close();
+        }
+
+        public Game GetGameByUUID(string uuid)
+        {
+            this.DBConnection.Open();
+            string query = @"SELECT * FROM `games` WHERE `uuid` == """ + uuid + @"""";
+            using (SQLiteCommand sqlCommand = new SQLiteCommand(query,this.DBConnection)){
+                using (var reader = sqlCommand.ExecuteReader(CommandBehavior.SingleResult))
+                {
+                    DataTable result = new DataTable();
+                    result.Load(reader);
+                    return GetGameFromDataRow(result.Rows[0]);
+                }
+            }
+        }
+
+        public List<Game> GetGamesByPlatform(string platformId)
+        {
+            return GetGamesByRow("platform_id", platformId);
+        }
+        public List<Game> GetGamesByName(string nameSearch)
+        {
+            return GetGamesByRow("name", nameSearch);
+        }
+        private List<Game>GetGamesByRow(string rowName, string searchQuery){
+            this.DBConnection.Open();
+            string query = @"SELECT * FROM `games` WHERE `" + rowName + @"` == """ + searchQuery + @"""";
+            using (SQLiteCommand sqlCommand = new SQLiteCommand(query, this.DBConnection))
+            {
+                using (var reader = sqlCommand.ExecuteReader())
+                {
+                    DataTable result = new DataTable();
+                    result.Load(reader);
+                    List<Game> gamesResults = new List<Game>();
+                    foreach (DataRow row in result.Rows)
+                    {
+                        gamesResults.Add(GetGameFromDataRow(row));
+                    }
+                    return gamesResults;
+                }
+            }
+        }
+        private Game GetGameFromDataRow(DataRow row)
+        {
+            var platformId = (string)row["platform_id"];
+            var uuid = (string)row["uuid"];
+            var fileName = (string)row["filename"];
+            var name = (string)row["name"];
+            var images = JsonConvert.DeserializeObject<GameImages>((string)row["images"]);
+            var metadata = JsonConvert.DeserializeObject<Dictionary<string, string>>((string)row["metadata"]);
+            var settings = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>((string)row["settings"]);
+
+            return new Game(platformId, name, images, metadata, uuid, fileName, settings);
+        }
+
     }
 }
