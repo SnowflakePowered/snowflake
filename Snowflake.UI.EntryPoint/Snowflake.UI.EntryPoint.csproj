@@ -109,6 +109,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Emulators\Emulator.RetroArch\Emulator.RetroArch.csproj">
+      <Project>{45820d8e-c98b-421c-b0ca-c1952f91f3ff}</Project>
+      <Name>Emulator.RetroArch</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Snowflake.API\Snowflake.API.csproj">
       <Project>{8f1d65ed-4a96-4a0a-8371-53655a60a2b3}</Project>
       <Name>Snowflake.API</Name>

@@ -20,10 +20,12 @@ namespace Emulator.RetroArch
         }
 
         public ProcessStartInfo GetProcessStartInfo(string platformId, string fileName){
+            fileName = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath), "SuperMarioBros.nes"));
             var startInfo = new ProcessStartInfo()
             {
-                FileName = Path.Combine(Assembly.GetExecutingAssembly().CodeBase, this.EmulatorRoot,this.MainExecutable),
-                Arguments = "-L nestopia_libretro.dll SuperMarioBrothers.nes"
+                FileName = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase), this.EmulatorRoot,this.MainExecutable),
+                Arguments = "-L cores/nestopia_libretro.dll "+fileName,
+                WorkingDirectory = this.EmulatorRoot
             };
 
             return startInfo;

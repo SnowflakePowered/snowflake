@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scraper.TheGamesDB", "Scrap
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scrapers", "Scrapers", "{55F9FD21-EB6C-4A51-B2D1-C3DBC4792A4C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Emulators", "Emulators", "{B4AE2243-738F-4A9D-AA45-BEB2DB75FB82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emulator.RetroArch", "Emulators\Emulator.RetroArch\Emulator.RetroArch.csproj", "{45820D8E-C98B-421C-B0CA-C1952F91F3FF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,11 +45,16 @@ Global
 		{41420B6B-17FF-4077-890A-7E916F75B5BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{41420B6B-17FF-4077-890A-7E916F75B5BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{41420B6B-17FF-4077-890A-7E916F75B5BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45820D8E-C98B-421C-B0CA-C1952F91F3FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45820D8E-C98B-421C-B0CA-C1952F91F3FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45820D8E-C98B-421C-B0CA-C1952F91F3FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45820D8E-C98B-421C-B0CA-C1952F91F3FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{41420B6B-17FF-4077-890A-7E916F75B5BE} = {55F9FD21-EB6C-4A51-B2D1-C3DBC4792A4C}
+		{45820D8E-C98B-421C-B0CA-C1952F91F3FF} = {B4AE2243-738F-4A9D-AA45-BEB2DB75FB82}
 	EndGlobalSection
 EndGlobal
