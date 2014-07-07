@@ -54,7 +54,7 @@ namespace Scraper.TheGamesDB
             var results = ParseSearchResults(searchUri);
             return results;
         }
-        public override Tuple<Dictionary<string, string>, GameImages> GetGameDetails(string id)
+        public override Tuple<Dictionary<string, dynamic>, GameImages> GetGameDetails(string id)
         {
             Uri searchUri = new Uri(Uri.EscapeUriString("http://thegamesdb.net/api/GetGame.php?id=" + id));
             using (WebClient client = new WebClient())
@@ -62,7 +62,7 @@ namespace Scraper.TheGamesDB
                 string xml = client.DownloadString(searchUri);
                 XDocument xmlDoc = XDocument.Parse(xml);
                 string baseImageUrl = xmlDoc.Descendants("baseImgUrl").First().Value;
-                Dictionary<string, string> metadata = new Dictionary<string, string>();
+                Dictionary<string, dynamic> metadata = new Dictionary<string, dynamic>();
                 metadata.Add(GameInfoFields.snowflake_game_description,
                     xmlDoc.Descendants("Overview").First().Value);
                 metadata.Add(GameInfoFields.snowflake_game_title,

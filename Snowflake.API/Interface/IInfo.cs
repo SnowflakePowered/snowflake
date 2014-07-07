@@ -10,7 +10,7 @@ namespace Snowflake.API.Interface
     {
         string PlatformId { get; }
         string Name { get; }
-        Dictionary<string, string> Metadata { get; set; }
+        Dictionary<string, dynamic> Metadata { get; set; }
 
     }
 }

@@ -30,7 +30,7 @@ namespace Snowflake.API.Base.Scraper
         }
         public abstract List<GameScrapeResult> GetSearchResults(string searchQuery);
         public abstract List<GameScrapeResult> GetSearchResults(string searchQuery, string platformId);
-        public abstract Tuple<Dictionary<string, string>, GameImages> GetGameDetails(string id);
+        public abstract Tuple<Dictionary<string, dynamic>, GameImages> GetGameDetails(string id);
 
     }
 }

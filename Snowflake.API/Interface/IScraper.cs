@@ -14,7 +14,7 @@ namespace Snowflake.API.Interface
         BiDictionary<string, string> ScraperMap { get; }
         List<GameScrapeResult> GetSearchResults(string searchQuery);
         List<GameScrapeResult> GetSearchResults(string searchQuery, string platformId);
-        Tuple<Dictionary<string, string>, GameImages> GetGameDetails(string id);
+        Tuple<Dictionary<string, dynamic>, GameImages> GetGameDetails(string id);
       
     }
 }
