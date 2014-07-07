@@ -8,10 +8,13 @@ namespace Snowflake.API.Information.Game
 {
     public class Platform : Info
     {
-        public Platform(string platformId, string name, Dictionary<string, string> images, Dictionary<string, string> metadata, List<string> fileExtensions): base(platformId, name, images, metadata)
+        public Platform(string platformId, string name, Dictionary<string, string> images, Dictionary<string, string> metadata, List<string> fileExtensions, string romIdentifierPlugin): base(platformId, name, images, metadata)
         {
             this.FileExtensions = fileExtensions;
+            this.RomIdentifierPlugin = romIdentifierPlugin;
         }
         public List<string> FileExtensions { get; private set; }
+        public string RomIdentifierPlugin { get; private set; }
+
     }
 }

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.UI.EntryPoint", "Snowflake.UI.EntryPoint\Snowflake.UI.EntryPoint.csproj", "{B2210FF2-1684-4CD2-B4CD-D352F9D297CC}"
 EndProject
@@ -18,6 +18,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Emulators", "Emulators", "{B4AE2243-738F-4A9D-AA45-BEB2DB75FB82}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emulator.RetroArch", "Emulators\Emulator.RetroArch\Emulator.RetroArch.csproj", "{45820D8E-C98B-421C-B0CA-C1952F91F3FF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{4C9C73BE-2D39-46EC-8961-D3007C04D1C6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

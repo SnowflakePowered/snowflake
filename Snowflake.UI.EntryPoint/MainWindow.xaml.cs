@@ -18,6 +18,7 @@ using Snowflake.API.Constants;
 using Snowflake.API.Constants.Plugin;
 using System.Diagnostics;
 using Snowflake.API.Configuration;
+using System.Text.RegularExpressions;
 
 namespace Snowflake.UI.EntryPoint
 {
@@ -29,14 +30,18 @@ namespace Snowflake.UI.EntryPoint
         public MainWindow()
         {
             InitializeComponent();
-            
-           var uuid = "ssss";
-                        string query = @"SELECT * FROM `games` WHERE `uuid` == """ + uuid + @"""";
+            string test = File.ReadAllText("test.txt");
+            Console.WriteLine(test);
+            var resultString = Regex.Match(test, @"(?<=rom \( name "").*?(?="" size \d+ crc 2e2bf112)").Value;
+            Console.WriteLine(resultString);
+           //var uuid = "ssss";
+            //            string query = @"SELECT * FROM `games` WHERE `uuid` == """ + uuid + @"""";
 
-                        Console.WriteLine(query);
+//                        Console.WriteLine(query);
             ThemeServer server = new ThemeServer(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "snowflake"));
             server.StartServer();
-
+ //           var x = new GameScrapeEngine();
+  //          Console.WriteLine(x.CalculateCRC32(new FileStream("SuperMarioBros.nes", FileMode.Open)));
             //var scraper = new Scraper.TheGamesDB.ScraperTheGamesDB();
             //var results = scraper.GetSearchResults("Super Mario World", "NINTENDO_SNES");   
             // Console.WriteLine(scraper.GetGameDetails(results[0].ID).Item2.Boxarts[ImagesInfoFields.snowflake_img_boxart_back][0]);
