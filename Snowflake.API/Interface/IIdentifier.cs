@@ -9,8 +9,8 @@ namespace Snowflake.API.Interface
 {
     public interface IIdentifier
     {
-        string IdentifyRom(string fileName);
+        string IdentifyGame(string fileName, string platformId);
 
-        string IdentifyRom()
+        string IdentifyGame(FileStream file, string platformId);
     }
 }

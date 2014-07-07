@@ -30,10 +30,12 @@ namespace Snowflake.UI.EntryPoint
         public MainWindow()
         {
             InitializeComponent();
-            string test = File.ReadAllText("test.txt");
-            Console.WriteLine(test);
-            var resultString = Regex.Match(test, @"(?<=rom \( name "").*?(?="" size \d+ crc 2e2bf112)").Value;
-            Console.WriteLine(resultString);
+
+            var fileName = @"[abc][def]Real Name[!].exe";
+            Console.WriteLine(Regex.Match(fileName, @"(\[[^]]*\])*([\w\s]+)").Groups[2].Value);
+
+            //var resultString = Regex.Match(test, @"(?<=rom \( name "").*?(?="" size \d+ crc 2e2bf112)").Value;
+           // Console.WriteLine(resultString);
            //var uuid = "ssss";
             //            string query = @"SELECT * FROM `games` WHERE `uuid` == """ + uuid + @"""";
 
