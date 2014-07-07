@@ -1,0 +1,512 @@
+clrmamepro (
+	name "Nintendo Game Boy - Games"
+	description "Nintendo Game Boy - Games (TOSEC-v2012-04-13)"
+	category "Nintendo Game Boy - Games"
+	version 2012-04-13
+	author "Cassiel"
+)
+
+game (
+	name "Alien 3 (1992)(BITS - LJN)"
+	description "Alien 3 (1992)(BITS - LJN)"
+	rom ( name "Alien 3 (1992)(BITS - LJN).bin" size 131072 crc effb960b md5 b3f3d35f58a0ea3affc0ec6d4ee1183d sha1 ab4d11eee7faea42c637505469e0671c9d4a83f8 )
+)
+
+game (
+	name "Alien 3 (1992)(BITS - LJN)(JP)(en)"
+	description "Alien 3 (1992)(BITS - LJN)(JP)(en)"
+	rom ( name "Alien 3 (1992)(BITS - LJN)(JP)(en).bin" size 131072 crc e59049b2 md5 4f5c4c439f1134177e02d72c794882ba sha1 4a3e7eb0edaefec096baa0019b3cba28b4796689 )
+)
+
+game (
+	name "Alien 3 (1992)(BITS - LJN)[b2]"
+	description "Alien 3 (1992)(BITS - LJN)[b2]"
+	rom ( name "Alien 3 (1992)(BITS - LJN)[b2].bin" size 131072 crc 8362d3de md5 f6cabf0f0911c80d30e7a4d2d069ddf9 sha1 5c2aa5eb09ae54be32ae8de2f5833e94c71333cc )
+)
+
+game (
+	name "Alien 3 (1992)(BITS - LJN)[b3]"
+	description "Alien 3 (1992)(BITS - LJN)[b3]"
+	rom ( name "Alien 3 (1992)(BITS - LJN)[b3].bin" size 131072 crc cbe62a55 md5 6c91c4cfb6652dcaef41339e9ebfbde7 sha1 60f6956a9e7890fddf50d8e472405bfd589cb924 )
+)
+
+game (
+	name "Alien 3 (1992)(BITS - LJN)[b4]"
+	description "Alien 3 (1992)(BITS - LJN)[b4]"
+	rom ( name "Alien 3 (1992)(BITS - LJN)[b4].bin" size 32768 crc 86c2a080 md5 5ed0b02befbef5b06f6a178456de3aaa sha1 627d90569e35883989abae23d394ef8a317ce86e )
+)
+
+game (
+	name "Alien 3 (1992)(BITS - LJN)[b5]"
+	description "Alien 3 (1992)(BITS - LJN)[b5]"
+	rom ( name "Alien 3 (1992)(BITS - LJN)[b5].bin" size 131072 crc 7c2dc542 md5 1e2288a6cbecf85c905b71b88433d95c sha1 dd093eba0a7a322614a8659338f2b30a56d39251 )
+)
+
+game (
+	name "Alien 3 (1992)(BITS - LJN)[b]"
+	description "Alien 3 (1992)(BITS - LJN)[b]"
+	rom ( name "Alien 3 (1992)(BITS - LJN)[b].bin" size 131072 crc ae31a96c md5 122b1eefee82b4abe140d789ded20cdf sha1 985182708dd41f5c5fdb9f6d018912844d402519 )
+)
+
+game (
+	name "Alien 3 (1992)(BITS - LJN)[t]"
+	description "Alien 3 (1992)(BITS - LJN)[t]"
+	rom ( name "Alien 3 (1992)(BITS - LJN)[t].bin" size 131072 crc d735cfcd md5 e98d34efa917996cf929777b953b2cb9 sha1 71ad79daba5c9681f34533a2767da58bf42918b7 )
+)
+
+game (
+	name "Batman - Return of the Joker (1992)(Sunsoft)(JP)(en)"
+	description "Batman - Return of the Joker (1992)(Sunsoft)(JP)(en)"
+	rom ( name "Batman - Return of the Joker (1992)(Sunsoft)(JP)(en).bin" size 131072 crc de459a47 md5 9550fadc917db38cacd0ecfb694f816c sha1 149586120c3ae9c9614fa6e6a5e298cceae16c4d )
+)
+
+game (
+	name "Batman - Return of the Joker (1992)(Sunsoft)(JP)(en)[b2]"
+	description "Batman - Return of the Joker (1992)(Sunsoft)(JP)(en)[b2]"
+	rom ( name "Batman - Return of the Joker (1992)(Sunsoft)(JP)(en)[b2].bin" size 131072 crc 67459dbd md5 0c0ed7001b89a41ef77662bc265099b5 sha1 abb5eb37f2235061d5637e8160a81af1fd02a286 )
+)
+
+game (
+	name "Batman - Return of the Joker (1992)(Sunsoft)(JP)(en)[b3]"
+	description "Batman - Return of the Joker (1992)(Sunsoft)(JP)(en)[b3]"
+	rom ( name "Batman - Return of the Joker (1992)(Sunsoft)(JP)(en)[b3].bin" size 131072 crc 0374eaaf md5 33d9a3a986b4588a515eb89f18029b66 sha1 a29a7a6585b54c884c0e8e5ac533f03511643d7e )
+)
+
+game (
+	name "Batman - Return of the Joker (1992)(Sunsoft)(JP)(en)[b]"
+	description "Batman - Return of the Joker (1992)(Sunsoft)(JP)(en)[b]"
+	rom ( name "Batman - Return of the Joker (1992)(Sunsoft)(JP)(en)[b].bin" size 131072 crc 813c7f92 md5 f7b9fb92de839dc72fd5f618821d4444 sha1 21cb8b3ae642d95b6cac071a4f7b6c33818f3a88 )
+)
+
+game (
+	name "Batman - Return of the Joker (1992)(Sunsoft)(JP)(en)[tr ru]"
+	description "Batman - Return of the Joker (1992)(Sunsoft)(JP)(en)[tr ru]"
+	rom ( name "Batman - Return of the Joker (1992)(Sunsoft)(JP)(en)[tr ru].bin" size 131072 crc 2d5e8452 md5 c35a66eb4b59e3e0ba1ceb2d133dd2d4 sha1 b7c099803b02da664e03b6c1a162bfcc758f96ff )
+)
+
+game (
+	name "Batman - Return of the Joker (1992)(Sunsoft)(US)"
+	description "Batman - Return of the Joker (1992)(Sunsoft)(US)"
+	rom ( name "Batman - Return of the Joker (1992)(Sunsoft)(US).bin" size 131072 crc 5124bbec md5 97bc907deba1e7d7c9bc72fca0310822 sha1 345a332175f58304f91111a13b770662e5ea92c3 )
+)
+
+game (
+	name "Battletoads Double Dragon - The Ultimate Team (1993)(Rare - Tradewest)(EU)(en)"
+	description "Battletoads Double Dragon - The Ultimate Team (1993)(Rare - Tradewest)(EU)(en)"
+	rom ( name "Battletoads Double Dragon - The Ultimate Team (1993)(Rare - Tradewest)(EU)(en).bin" size 262144 crc 7b217082 md5 ec8dfc2600756d4ff306eedcd03defd2 sha1 5a834e0dc81703906eb441555e1aa31de22d39d6 )
+)
+
+game (
+	name "Battletoads Double Dragon - The Ultimate Team (1993)(Rare - Tradewest)(EU)(en)[b2]"
+	description "Battletoads Double Dragon - The Ultimate Team (1993)(Rare - Tradewest)(EU)(en)[b2]"
+	rom ( name "Battletoads Double Dragon - The Ultimate Team (1993)(Rare - Tradewest)(EU)(en)[b2].bin" size 262144 crc bf4f8a98 md5 b664f2c0f886550ea1f363a96a9d9a70 sha1 274a8762dcdbd0776c1fdbd7399ed8971cf89181 )
+)
+
+game (
+	name "Battletoads Double Dragon - The Ultimate Team (1993)(Rare - Tradewest)(EU)(en)[b3]"
+	description "Battletoads Double Dragon - The Ultimate Team (1993)(Rare - Tradewest)(EU)(en)[b3]"
+	rom ( name "Battletoads Double Dragon - The Ultimate Team (1993)(Rare - Tradewest)(EU)(en)[b3].bin" size 262144 crc cca3f6b2 md5 e6a3b60d87a5384a3dde656a7d855090 sha1 23221b7c4a8e8b38fb1044b2c9cc7d795795ca66 )
+)
+
+game (
+	name "Battletoads Double Dragon - The Ultimate Team (1993)(Rare - Tradewest)(EU)(en)[b]"
+	description "Battletoads Double Dragon - The Ultimate Team (1993)(Rare - Tradewest)(EU)(en)[b]"
+	rom ( name "Battletoads Double Dragon - The Ultimate Team (1993)(Rare - Tradewest)(EU)(en)[b].bin" size 262144 crc becce184 md5 a27e197d4bfe43c6569238e21d21a2f1 sha1 e412e85bac76528c31aabc6ee601e740ecb99ffa )
+)
+
+game (
+	name "Battletoads Double Dragon - The Ultimate Team (1993)(Rare - Tradewest)(US)"
+	description "Battletoads Double Dragon - The Ultimate Team (1993)(Rare - Tradewest)(US)"
+	rom ( name "Battletoads Double Dragon - The Ultimate Team (1993)(Rare - Tradewest)(US).bin" size 262144 crc a727f9cd md5 13ec0c660b5a963a07b39ecabf0e0ab5 sha1 ce68df4dc2d604625164430266017b237b72303d )
+)
+
+game (
+	name "Bionic Commando (1992)(Capcom)(JP)"
+	description "Bionic Commando (1992)(Capcom)(JP)"
+	rom ( name "Bionic Commando (1992)(Capcom)(JP).bin" size 262144 crc 3f4d5c84 md5 489f52a2761dcb6f01567ef5de14cb8a sha1 12dc5b05751214be3ce55da0fecaf23a41eb1881 )
+)
+
+game (
+	name "Bionic Commando (1992)(Capcom)(JP)[b]"
+	description "Bionic Commando (1992)(Capcom)(JP)[b]"
+	rom ( name "Bionic Commando (1992)(Capcom)(JP)[b].bin" size 262144 crc 38707b29 md5 fde90090f3633a929a9a79e2bb3a9946 sha1 6e98a1076a51e4a5e263a1582af50a4cc4cac557 )
+)
+
+game (
+	name "Bionic Commando (1992)(Capcom)(JP)[h]"
+	description "Bionic Commando (1992)(Capcom)(JP)[h]"
+	rom ( name "Bionic Commando (1992)(Capcom)(JP)[h].bin" size 262144 crc 7cbde1a9 md5 ee60b2f43dc0f4e4864d9fcae87b3d6a sha1 fbefdccd47441e4b21bba6242160106cfc78fa3a )
+)
+
+game (
+	name "Bionic Commando (1992)(Capcom)(JP)[t]"
+	description "Bionic Commando (1992)(Capcom)(JP)[t]"
+	rom ( name "Bionic Commando (1992)(Capcom)(JP)[t].bin" size 262144 crc 4fe4788e md5 6ef05bd546f5dd031731156f5f2cf1cb sha1 6e0573a21d55cb4df1ccf513d53be44557a85892 )
+)
+
+game (
+	name "Bionic Commando (1992)(Capcom)(US)"
+	description "Bionic Commando (1992)(Capcom)(US)"
+	rom ( name "Bionic Commando (1992)(Capcom)(US).bin" size 262144 crc 41dbb5fb md5 f89a33de3fa660a13ec29bb323efffa9 sha1 e0ef47568a017ccdd3dbe0db5d7654822b4e5ce1 )
+)
+
+game (
+	name "Bionic Commando (1992)(Capcom)(US)[b2]"
+	description "Bionic Commando (1992)(Capcom)(US)[b2]"
+	rom ( name "Bionic Commando (1992)(Capcom)(US)[b2].bin" size 262144 crc d1446c9b md5 74daec8898ecf15e4e9c3e47c78d51fc sha1 6c1e73241752b280a63672d7bcde8de0a9174a05 )
+)
+
+game (
+	name "Bionic Commando (1992)(Capcom)(US)[b3]"
+	description "Bionic Commando (1992)(Capcom)(US)[b3]"
+	rom ( name "Bionic Commando (1992)(Capcom)(US)[b3].bin" size 262144 crc 75f32d85 md5 85a7292ee896c469681ba51cbe182e37 sha1 e77cde8187c1bd6b0bc763ad063281f8cf393510 )
+)
+
+game (
+	name "Bionic Commando (1992)(Capcom)(US)[b4]"
+	description "Bionic Commando (1992)(Capcom)(US)[b4]"
+	rom ( name "Bionic Commando (1992)(Capcom)(US)[b4].bin" size 262144 crc ff8094d2 md5 597c396127a86ee81d2bda921bedef6b sha1 66fd3c331d4e284d90d3b7235b3362e7f62cd1db )
+)
+
+game (
+	name "Bionic Commando (1992)(Capcom)(US)[b5]"
+	description "Bionic Commando (1992)(Capcom)(US)[b5]"
+	rom ( name "Bionic Commando (1992)(Capcom)(US)[b5].bin" size 262144 crc db814191 md5 1df853009de5d7feac89a9a9271681aa sha1 a44309861f2b4e4c6c1ebdb90e4991ba19fcf9a6 )
+)
+
+game (
+	name "Bionic Commando (1992)(Capcom)(US)[b6]"
+	description "Bionic Commando (1992)(Capcom)(US)[b6]"
+	rom ( name "Bionic Commando (1992)(Capcom)(US)[b6].bin" size 262144 crc fde0e951 md5 14f5d5af73f9b346134c979829ec5f3e sha1 81b38d6853a6bc15a05e70c47c360b63ca23ba7e )
+)
+
+game (
+	name "Bionic Commando (1992)(Capcom)(US)[b7]"
+	description "Bionic Commando (1992)(Capcom)(US)[b7]"
+	rom ( name "Bionic Commando (1992)(Capcom)(US)[b7].bin" size 262144 crc 7979525c md5 c5aecf9d44d5a243471f233665bf3b45 sha1 04b4ef496e498c781fbb76e259f3f760550af34f )
+)
+
+game (
+	name "Bionic Commando (1992)(Capcom)(US)[b8]"
+	description "Bionic Commando (1992)(Capcom)(US)[b8]"
+	rom ( name "Bionic Commando (1992)(Capcom)(US)[b8].bin" size 262144 crc 8ddb7197 md5 63b6b891f61a54b2fdba23de37a405ea sha1 4514252b66f11a2adeeee375ce3787db6e831207 )
+)
+
+game (
+	name "Bionic Commando (1992)(Capcom)(US)[b9]"
+	description "Bionic Commando (1992)(Capcom)(US)[b9]"
+	rom ( name "Bionic Commando (1992)(Capcom)(US)[b9].bin" size 262133 crc aa5c93c4 md5 0f6493f6e262c620b7111c0d8b7f0be8 sha1 8be1f76d9071435339510d7229f42d3a5dc99958 )
+)
+
+game (
+	name "Bionic Commando (1992)(Capcom)(US)[b]"
+	description "Bionic Commando (1992)(Capcom)(US)[b]"
+	rom ( name "Bionic Commando (1992)(Capcom)(US)[b].bin" size 262144 crc 7333b1dd md5 35e1aabf3fb567a19f59bde592c4acab sha1 1c856ee90928681e4f3a6c902e3a9f22d4fa626f )
+)
+
+game (
+	name "Chuck Rock (1993)(Core Design - Sony)(US)"
+	description "Chuck Rock (1993)(Core Design - Sony)(US)"
+	rom ( name "Chuck Rock (1993)(Core Design - Sony)(US).bin" size 131072 crc c5951d9e md5 435b566a4b3745b0acc5a976bedd9245 sha1 601453f98ba7d92ebe71f3e86952a584cbea090c )
+)
+
+game (
+	name "Chuck Rock (1993)(Core Design - Sony)(US)[b2]"
+	description "Chuck Rock (1993)(Core Design - Sony)(US)[b2]"
+	rom ( name "Chuck Rock (1993)(Core Design - Sony)(US)[b2].bin" size 131072 crc 9e784cd2 md5 a2829ea6424f39769ec95359d5eed272 sha1 16fac9f7a0fa19aa6a0b93b4f226669a703604d6 )
+)
+
+game (
+	name "Chuck Rock (1993)(Core Design - Sony)(US)[b3]"
+	description "Chuck Rock (1993)(Core Design - Sony)(US)[b3]"
+	rom ( name "Chuck Rock (1993)(Core Design - Sony)(US)[b3].bin" size 131072 crc bf2ab01f md5 8c38539f6f74acf4dd39206006ff3fca sha1 8f1459479eeae412e7118cc889fa5cf17f04eedd )
+)
+
+game (
+	name "Chuck Rock (1993)(Core Design - Sony)(US)[b4]"
+	description "Chuck Rock (1993)(Core Design - Sony)(US)[b4]"
+	rom ( name "Chuck Rock (1993)(Core Design - Sony)(US)[b4].bin" size 131072 crc 3b7c6a1d md5 1c3a8a0c29667afdb7d1e91374d64d4e sha1 40c7118f02620d0a44c58e76d5558057af925764 )
+)
+
+game (
+	name "Chuck Rock (1993)(Core Design - Sony)(US)[b5]"
+	description "Chuck Rock (1993)(Core Design - Sony)(US)[b5]"
+	rom ( name "Chuck Rock (1993)(Core Design - Sony)(US)[b5].bin" size 131072 crc 5690de6c md5 1d6f6c84113b68cd583df98acd6307e5 sha1 c7c74e1951a7eed93013911b6593e8444fc98f9f )
+)
+
+game (
+	name "Chuck Rock (1993)(Core Design - Sony)(US)[b6]"
+	description "Chuck Rock (1993)(Core Design - Sony)(US)[b6]"
+	rom ( name "Chuck Rock (1993)(Core Design - Sony)(US)[b6].bin" size 131072 crc aaa41a14 md5 c9f00ab6aaf63d05fbf74c10cca65808 sha1 779f81b654c030c13732660fb115e1a6428aa0a9 )
+)
+
+game (
+	name "Chuck Rock (1993)(Core Design - Sony)(US)[b7]"
+	description "Chuck Rock (1993)(Core Design - Sony)(US)[b7]"
+	rom ( name "Chuck Rock (1993)(Core Design - Sony)(US)[b7].bin" size 131072 crc 431e7467 md5 a04681a9d4349d456f6d3621ff4de41a sha1 f876ff7995904a4c9bcf5e6614fb7a377fd4caeb )
+)
+
+game (
+	name "Chuck Rock (1993)(Core Design - Sony)(US)[b8]"
+	description "Chuck Rock (1993)(Core Design - Sony)(US)[b8]"
+	rom ( name "Chuck Rock (1993)(Core Design - Sony)(US)[b8].bin" size 131072 crc ab3c7bb9 md5 f90dcfae31ec0f6f3b2a79000e44240c sha1 7bb55843b9f399af468fe5cea677934cc1dcd034 )
+)
+
+game (
+	name "Chuck Rock (1993)(Core Design - Sony)(US)[b]"
+	description "Chuck Rock (1993)(Core Design - Sony)(US)[b]"
+	rom ( name "Chuck Rock (1993)(Core Design - Sony)(US)[b].bin" size 131072 crc 2814c76f md5 5470735723093402c9e9ad3bcb4b61d6 sha1 09dbc2f94befe5c381c20796227a22e12bfd72d3 )
+)
+
+game (
+	name "Gradius - The Interstellar Assault (1991)(Konami)(US)"
+	description "Gradius - The Interstellar Assault (1991)(Konami)(US)"
+	rom ( name "Gradius - The Interstellar Assault (1991)(Konami)(US).bin" size 262144 crc 90f87d57 md5 e10f788da29e18934c3e9161b25b96c7 sha1 7a50fdf0b8ad15556c933df0657fae0a2cd8bc92 )
+)
+
+game (
+	name "Gradius - The Interstellar Assault (1991)(Konami)(US)[b2]"
+	description "Gradius - The Interstellar Assault (1991)(Konami)(US)[b2]"
+	rom ( name "Gradius - The Interstellar Assault (1991)(Konami)(US)[b2].bin" size 262144 crc 7f3dc242 md5 97075aec3931fdf1eefc06dc50bc0299 sha1 96681a54d1d75e86ba87722e6a1c3b99d45eeb15 )
+)
+
+game (
+	name "Gradius - The Interstellar Assault (1991)(Konami)(US)[b3]"
+	description "Gradius - The Interstellar Assault (1991)(Konami)(US)[b3]"
+	rom ( name "Gradius - The Interstellar Assault (1991)(Konami)(US)[b3].bin" size 524288 crc 5ecbb229 md5 8bf0aa16285fe8ee8e0090efda8f4b52 sha1 0eec40609d9e29e369925808447d0861772c8931 )
+)
+
+game (
+	name "Gradius - The Interstellar Assault (1991)(Konami)(US)[b4]"
+	description "Gradius - The Interstellar Assault (1991)(Konami)(US)[b4]"
+	rom ( name "Gradius - The Interstellar Assault (1991)(Konami)(US)[b4].bin" size 270336 crc c8e0f04f md5 b98f5fd7e92736e5be2a848073a65a1a sha1 04b8ee7d8e08b9bf3a1b2951117578e00080341e )
+)
+
+game (
+	name "Gradius - The Interstellar Assault (1991)(Konami)(US)[b5]"
+	description "Gradius - The Interstellar Assault (1991)(Konami)(US)[b5]"
+	rom ( name "Gradius - The Interstellar Assault (1991)(Konami)(US)[b5].bin" size 270336 crc 061d751c md5 3a34dbd408e264aa54fb4b92d875ee7a sha1 bccc0b5bf16c2963ec2a54a942e17a10fdaf9a4d )
+)
+
+game (
+	name "Gradius - The Interstellar Assault (1991)(Konami)(US)[b]"
+	description "Gradius - The Interstellar Assault (1991)(Konami)(US)[b]"
+	rom ( name "Gradius - The Interstellar Assault (1991)(Konami)(US)[b].bin" size 262144 crc 3cec1f4a md5 1dc524a8b70f9d7ae5d62f111922485a sha1 89530a2c21d6247d94fbd0b90e79f8dd1e05d741 )
+)
+
+game (
+	name "Incredible Crash Dummies, The (1992)(LJN - Software Creations)(US)"
+	description "Incredible Crash Dummies, The (1992)(LJN - Software Creations)(US)"
+	rom ( name "Incredible Crash Dummies, The (1992)(LJN - Software Creations)(US).bin" size 131072 crc d81c08fa md5 c21058af21efc29413797f0a2c532e16 sha1 f62d369b576cfd2882f8e03a5a32238eb1599477 )
+)
+
+game (
+	name "Incredible Crash Dummies, The (1992)(LJN - Software Creations)(US)[b2]"
+	description "Incredible Crash Dummies, The (1992)(LJN - Software Creations)(US)[b2]"
+	rom ( name "Incredible Crash Dummies, The (1992)(LJN - Software Creations)(US)[b2].bin" size 131072 crc c54a4386 md5 9051df51261038cce1df7fd80ffe7ecb sha1 0d2cd84e95202705a1f66e76096e04a0c079bd3e )
+)
+
+game (
+	name "Incredible Crash Dummies, The (1992)(LJN - Software Creations)(US)[b3]"
+	description "Incredible Crash Dummies, The (1992)(LJN - Software Creations)(US)[b3]"
+	rom ( name "Incredible Crash Dummies, The (1992)(LJN - Software Creations)(US)[b3].bin" size 139264 crc c4d84b2e md5 66ea97b4d6a4d41e11462f0d35c6e2e7 sha1 29998af1833e51f481de2c0fa92e61b232093847 )
+)
+
+game (
+	name "Incredible Crash Dummies, The (1992)(LJN - Software Creations)(US)[b4]"
+	description "Incredible Crash Dummies, The (1992)(LJN - Software Creations)(US)[b4]"
+	rom ( name "Incredible Crash Dummies, The (1992)(LJN - Software Creations)(US)[b4].bin" size 262144 crc 68bea5b3 md5 bc49acc3c1fe55cffbf79468cd5e5ade sha1 997e23362e90520e6698594283f59b3b1779559d )
+)
+
+game (
+	name "Incredible Crash Dummies, The (1992)(LJN - Software Creations)(US)[b]"
+	description "Incredible Crash Dummies, The (1992)(LJN - Software Creations)(US)[b]"
+	rom ( name "Incredible Crash Dummies, The (1992)(LJN - Software Creations)(US)[b].bin" size 131072 crc 8f9a13a6 md5 073b665a6a5daa17bab2fdc2659382dc sha1 dc41312bd903f779465be600c151bad7254a6d1e )
+)
+
+game (
+	name "Incredible Crash Dummies, The (1992)(LJN - Software Creations)(US)[t]"
+	description "Incredible Crash Dummies, The (1992)(LJN - Software Creations)(US)[t]"
+	rom ( name "Incredible Crash Dummies, The (1992)(LJN - Software Creations)(US)[t].bin" size 131072 crc eb80bfd2 md5 9abce3852b25be013eddf77f7d7176c2 sha1 68379c2300336a75298d035a36745cb772d238cd )
+)
+
+game (
+	name "Lamborghini American Challenge (1993)(Titus)(US)"
+	description "Lamborghini American Challenge (1993)(Titus)(US)"
+	rom ( name "Lamborghini American Challenge (1993)(Titus)(US).bin" size 131072 crc 675e1309 md5 967d5fc3ab464c465c04d55bc1747768 sha1 82a6808f0c4cb1e05a4c2a38a39b0c37874b4211 )
+)
+
+game (
+	name "Lamborghini American Challenge (1993)(Titus)(US)[b2]"
+	description "Lamborghini American Challenge (1993)(Titus)(US)[b2]"
+	rom ( name "Lamborghini American Challenge (1993)(Titus)(US)[b2].bin" size 131072 crc bbd2b370 md5 5eb65e710b43b3bb9571a746afe2cf08 sha1 64e9e1bfe550affa5c53b89bad0d1a7bfec4641f )
+)
+
+game (
+	name "Lamborghini American Challenge (1993)(Titus)(US)[b3]"
+	description "Lamborghini American Challenge (1993)(Titus)(US)[b3]"
+	rom ( name "Lamborghini American Challenge (1993)(Titus)(US)[b3].bin" size 131072 crc 9af32fce md5 28ffe440b9315f2dc24a587e507882c4 sha1 7d677af0a52402d7df689d405d1a685e46419d14 )
+)
+
+game (
+	name "Lamborghini American Challenge (1993)(Titus)(US)[b4]"
+	description "Lamborghini American Challenge (1993)(Titus)(US)[b4]"
+	rom ( name "Lamborghini American Challenge (1993)(Titus)(US)[b4].bin" size 131072 crc 331e646b md5 874753b1dc839111aa627cb04c1e2d49 sha1 961083ab7688db3cbf137d70419298566ad585d1 )
+)
+
+game (
+	name "Lamborghini American Challenge (1993)(Titus)(US)[b]"
+	description "Lamborghini American Challenge (1993)(Titus)(US)[b]"
+	rom ( name "Lamborghini American Challenge (1993)(Titus)(US)[b].bin" size 131072 crc ab4480f2 md5 9b7578238733c134b78fb282892465c6 sha1 a2bb6142409375cd785c36346931319ada2bf408 )
+)
+
+game (
+	name "Mega Man IV (1993)(Capcom - Laguna)(EU)(en)"
+	description "Mega Man IV (1993)(Capcom - Laguna)(EU)(en)"
+	rom ( name "Mega Man IV (1993)(Capcom - Laguna)(EU)(en).bin" size 524288 crc 060b89e6 md5 b1a4da0fc96be115b3d5303c9ca1447f sha1 a15a05593bf9bdddb5826b148e25182e7b90f268 )
+)
+
+game (
+	name "Mega Man IV (1993)(Capcom - Laguna)(EU)(en)[b2]"
+	description "Mega Man IV (1993)(Capcom - Laguna)(EU)(en)[b2]"
+	rom ( name "Mega Man IV (1993)(Capcom - Laguna)(EU)(en)[b2].bin" size 526833 crc 5461c39e md5 2fcf2d814ad92e893dbf516d888cf027 sha1 d77b4904f958c9ae7010b49a5ab3ab2088f5b95f )
+)
+
+game (
+	name "Mega Man IV (1993)(Capcom - Laguna)(EU)(en)[b]"
+	description "Mega Man IV (1993)(Capcom - Laguna)(EU)(en)[b]"
+	rom ( name "Mega Man IV (1993)(Capcom - Laguna)(EU)(en)[b].bin" size 524288 crc 973fcf4c md5 4cefe39910a0c6dcf9290556fbd29184 sha1 f4f7baaaec4bfde95003ac52fdfe95eccdab569c )
+)
+
+game (
+	name "Mega Man IV (1993)(Capcom - Laguna)(EU)(en)[tr de]"
+	description "Mega Man IV (1993)(Capcom - Laguna)(EU)(en)[tr de]"
+	rom ( name "Mega Man IV (1993)(Capcom - Laguna)(EU)(en)[tr de].bin" size 524288 crc 362fadad md5 96bf61f7b55314e46ce9a008ae17f4bc sha1 ebce56d23a1f19c85e09fd2e31ac3a165c685c96 )
+)
+
+game (
+	name "Mega Man IV (1993)(Capcom - Laguna)(EU)(en)[tr es]"
+	description "Mega Man IV (1993)(Capcom - Laguna)(EU)(en)[tr es]"
+	rom ( name "Mega Man IV (1993)(Capcom - Laguna)(EU)(en)[tr es].bin" size 524288 crc da2bb531 md5 fd20d9985238ea22f6daab96aa33baef sha1 6b68bbc1ecd411d7df4a3868d3c656193ed85b6b )
+)
+
+game (
+	name "Mega Man IV (1993)(Capcom)(US)"
+	description "Mega Man IV (1993)(Capcom)(US)"
+	rom ( name "Mega Man IV (1993)(Capcom)(US).bin" size 524288 crc abcea00d md5 8a00f627b8902c92327435901c249e19 sha1 6f0901db2b5dcaace0215c0abdc21a914fa21b65 )
+)
+
+game (
+	name "Mega Man IV (1993)(Capcom)(US)[tr fr]"
+	description "Mega Man IV (1993)(Capcom)(US)[tr fr]"
+	rom ( name "Mega Man IV (1993)(Capcom)(US)[tr fr].bin" size 524288 crc ed615cf5 md5 93767bb53d495cb523618c8bac030e56 sha1 00f654965aa14a6d291ca4929c694cc0ca728f63 )
+)
+
+game (
+	name "Probotector (1991)(Konami - Palcom)(EU)(en)"
+	description "Probotector (1991)(Konami - Palcom)(EU)(en)"
+	rom ( name "Probotector (1991)(Konami - Palcom)(EU)(en).bin" size 131072 crc c9acc4f4 md5 298c80fe568bb2ff8bb7e4dfe5862a9d sha1 45482a44ce0cdfa33fc58a8a8afe2d7284dfa498 )
+)
+
+game (
+	name "Probotector (1991)(Konami - Palcom)(EU)(en)[b2]"
+	description "Probotector (1991)(Konami - Palcom)(EU)(en)[b2]"
+	rom ( name "Probotector (1991)(Konami - Palcom)(EU)(en)[b2].bin" size 131072 crc f1f7b5e4 md5 f6d1dcf7a9b2298783976ff4303f1a02 sha1 659816492ab876e593ff36421afbe85a0fdb8cf7 )
+)
+
+game (
+	name "Probotector (1991)(Konami - Palcom)(EU)(en)[b]"
+	description "Probotector (1991)(Konami - Palcom)(EU)(en)[b]"
+	rom ( name "Probotector (1991)(Konami - Palcom)(EU)(en)[b].bin" size 131072 crc d9308401 md5 95bfc3ea8f5230a5662d724d81f46d7f sha1 865e9818b7dd1d44789eee59db934d5743abeb6d )
+)
+
+game (
+	name "Probotector (1991)(Konami - Palcom)(EU)(en)[tr de]"
+	description "Probotector (1991)(Konami - Palcom)(EU)(en)[tr de]"
+	rom ( name "Probotector (1991)(Konami - Palcom)(EU)(en)[tr de].bin" size 131072 crc 10c398a1 md5 61ac18fd4f6c212dfc60d609ccc02c6a sha1 dd80d967cb6bd1c6b4af8177517712e8ff3fe611 )
+)
+
+game (
+	name "Waterworld (1995)(Ocean)(EU)(en)"
+	description "Waterworld (1995)(Ocean)(EU)(en)"
+	rom ( name "Waterworld (1995)(Ocean)(EU)(en).bin" size 262144 crc 4786fd6e md5 93e66350ffd7403827914b80d233c989 sha1 e669d47b124a1e12d73f4ac80d8b4c0f917cb058 )
+)
+
+game (
+	name "Waterworld (1995)(Ocean)(EU)(en)[t2]"
+	description "Waterworld (1995)(Ocean)(EU)(en)[t2]"
+	rom ( name "Waterworld (1995)(Ocean)(EU)(en)[t2].bin" size 262144 crc bbf2c9e7 md5 fb01196496ea787218a0889cc3f69053 sha1 4ce18b382b2ce2ab387992bd953bfd8a3b312b9d )
+)
+
+game (
+	name "Waterworld (1995)(Ocean)(EU)(en)[t3]"
+	description "Waterworld (1995)(Ocean)(EU)(en)[t3]"
+	rom ( name "Waterworld (1995)(Ocean)(EU)(en)[t3].bin" size 262144 crc 89bb87f9 md5 7ad802a254d37ea230d7faec3398f7d0 sha1 918b0ae8385d6119b58e548019202aa62c09378a )
+)
+
+game (
+	name "Waterworld (1995)(Ocean)(EU)(en)[t]"
+	description "Waterworld (1995)(Ocean)(EU)(en)[t]"
+	rom ( name "Waterworld (1995)(Ocean)(EU)(en)[t].bin" size 262144 crc c9245633 md5 d7e6338086dc8ca1f3eff4d8517632e9 sha1 0cbcb55d4f0d0b76edbe61aa24c789b84a9f9a18 )
+)
+
+game (
+	name "Zerd no Densetsu (1991)(Vic Tokai)(JP)"
+	description "Zerd no Densetsu (1991)(Vic Tokai)(JP)"
+	rom ( name "Zerd no Densetsu (1991)(Vic Tokai)(JP).bin" size 131072 crc 492edb36 md5 fd280448ae0f60bae1d10016a87fc1ed sha1 8db8ad90505d9a2b4485e903b9f5d67bb9c0c149 )
+)
+
+game (
+	name "Zerd no Densetsu 2 - Xerd!! Gishin no Ryouiki (1992)(Vic Tokai)(JP)"
+	description "Zerd no Densetsu 2 - Xerd!! Gishin no Ryouiki (1992)(Vic Tokai)(JP)"
+	rom ( name "Zerd no Densetsu 2 - Xerd!! Gishin no Ryouiki (1992)(Vic Tokai)(JP).bin" size 524288 crc a197bdb7 md5 10cc4382f2c77400d7e2a0ccffbecdf2 sha1 cfa91da4120c6e1ee0f1f121d944d44532506cfa )
+)
+
+game (
+	name "Zettai Muteki Raijin-Oh (1991)(Tomy)(JP)"
+	description "Zettai Muteki Raijin-Oh (1991)(Tomy)(JP)"
+	rom ( name "Zettai Muteki Raijin-Oh (1991)(Tomy)(JP).bin" size 65536 crc 7d03727d md5 e870bccbc307fb32228fa8e4545edf35 sha1 6269ca535eea41f4bcfef99f512f435daf06c6e3 )
+)
+
+game (
+	name "Zettai Muteki Raijin-Oh (1991)(Tomy)(JP)[tr en]"
+	description "Zettai Muteki Raijin-Oh (1991)(Tomy)(JP)[tr en]"
+	rom ( name "Zettai Muteki Raijin-Oh (1991)(Tomy)(JP)[tr en].bin" size 65536 crc a08a646d md5 76a240ce95985fe6134389fa035b84bf sha1 4f3601d34d5f0a8df00f7b9f5dce35a107193ea5 )
+)
+
+game (
+	name "Zoids Densetsu (1990)(Tomy)(JP)"
+	description "Zoids Densetsu (1990)(Tomy)(JP)"
+	rom ( name "Zoids Densetsu (1990)(Tomy)(JP).bin" size 65536 crc c32dca06 md5 a77e8144b00215385ebf8490a539e4be sha1 5d6016b605ea22901150bc5735bc13ba64aaf3c6 )
+)
+
+game (
+	name "Zool (1993)(GameTek - Gremlin)(US)"
+	description "Zool (1993)(GameTek - Gremlin)(US)"
+	rom ( name "Zool (1993)(GameTek - Gremlin)(US).bin" size 131072 crc ef54b46e md5 52700ea227c3a31f170ccbc6a052a7a8 sha1 5c1b1af8e70cd23f5f72848d03fcc56869d18be7 )
+)
+
+game (
+	name "Zool (1993)(Gremlin)(EU)(en)"
+	description "Zool (1993)(Gremlin)(EU)(en)"
+	rom ( name "Zool (1993)(Gremlin)(EU)(en).bin" size 131072 crc ae13e227 md5 1425bc943f215cba23f1ec8c4bc22bbc sha1 6df1086910ae33d6a699df3ad428b901ab851bb4 )
+)
+
+game (
+	name "Zoop (1995)(Viacom)(JP)(en)"
+	description "Zoop (1995)(Viacom)(JP)(en)"
+	rom ( name "Zoop (1995)(Viacom)(JP)(en).bin" size 65536 crc 10e1a10c md5 0b10a49804c027c57201c61835acad77 sha1 89a74970761700d591c2affc47c9306f49d22ba8 )
+)
+
+game (
+	name "Zoop (1995)(Viacom)(US)"
+	description "Zoop (1995)(Viacom)(US)"
+	rom ( name "Zoop (1995)(Viacom)(US).bin" size 65536 crc 14f8b6bb md5 2387654e0e8e63bfc5f85d9bd7aa6ac3 sha1 1e0390d456066b9fbe1faff5f7404d4593a2b839 )
+)
+
+game (
+	name "Zoop (1995)(Viacom)(US)[b]"
+	description "Zoop (1995)(Viacom)(US)[b]"
+	rom ( name "Zoop (1995)(Viacom)(US)[b].bin" size 65536 crc 0157060b md5 364e6a8fe120285a7bc6e9e3236897cd sha1 39075d233ec63ac7a5a854d33ec37987644a7b6b )
+)
+

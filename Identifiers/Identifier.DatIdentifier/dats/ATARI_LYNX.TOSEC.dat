@@ -1,0 +1,2246 @@
+clrmamepro (
+	name "Atari Lynx - Games"
+	description "Atari Lynx - Games (TOSEC-v2013-12-13)"
+	category "Atari Lynx - Games"
+	version 2013-12-13
+	author "Eldio - Cassiel"
+)
+
+game (
+	name "Alien vs Predator (1994)(Images)(proto)"
+	description "Alien vs Predator (1994)(Images)(proto)"
+	rom ( name "Alien vs Predator (1994)(Images)(proto).lnx" size 262208 crc d6843e8e md5 68f0e7447ed1671141ce6549b5c4c461 sha1 860a73b9484c78330d3502a70bb807d699d540dc )
+)
+
+game (
+	name "All Points Bulletin (1990)(Tengen Inc)"
+	description "All Points Bulletin (1990)(Tengen Inc)"
+	rom ( name "All Points Bulletin (1990)(Tengen Inc).lnx" size 262208 crc 68a0acab md5 c302613d0e837cab485ddcd8f4d8ea5e sha1 4abef1bc702319d4347d839ac8513193164a08a0 )
+)
+
+game (
+	name "All Points Bulletin (1990)(Tengen Inc)[b]"
+	description "All Points Bulletin (1990)(Tengen Inc)[b]"
+	rom ( name "All Points Bulletin (1990)(Tengen Inc)[b].lnx" size 262208 crc 3160b73b md5 73a439639e1e110a3917599b1d69bb69 sha1 699443a08e04718e4d982a3b4189c6dce8badc1c )
+)
+
+game (
+	name "Awesome Golf (1991)(Atari Corp)"
+	description "Awesome Golf (1991)(Atari Corp)"
+	rom ( name "Awesome Golf (1991)(Atari Corp).lnx" size 262208 crc 2b90e818 md5 2cc518161199fe6b20864e7be2b77937 sha1 c40ac4cc9a4aade0f7eab4283eed46d5882b35a8 )
+)
+
+game (
+	name "Awesome Golf (1991)(Atari Corp)[a]"
+	description "Awesome Golf (1991)(Atari Corp)[a]"
+	rom ( name "Awesome Golf (1991)(Atari Corp)[a].lnx" size 262208 crc 12025adf md5 697a2f7cabc03ff49ba607acadb98d6a sha1 765f2360e1f13064ff225c9474cfcd0cc20594da )
+)
+
+game (
+	name "Awesome Golf (1991)(Atari Corp)[b]"
+	description "Awesome Golf (1991)(Atari Corp)[b]"
+	rom ( name "Awesome Golf (1991)(Atari Corp)[b].lnx" size 262208 crc ee52badd md5 24088bf882bc9710a786c150401078ad sha1 0023bbb8ce6fd1fa1808c69ae0590d137219a8ab )
+)
+
+game (
+	name "Baseball Heroes (199x)(-)[b2]"
+	description "Baseball Heroes (199x)(-)[b2]"
+	rom ( name "Baseball Heroes (199x)(-)[b2].lnx" size 262208 crc d9873c03 md5 ac85c5c2d4a65b865ccc189222827bdd sha1 24ac0f785cbcd6ad7048a4658bd29814917ecae6 )
+)
+
+game (
+	name "Baseball Heroes (199x)(-)[b]"
+	description "Baseball Heroes (199x)(-)[b]"
+	rom ( name "Baseball Heroes (199x)(-)[b].lnx" size 262208 crc 400989ea md5 87dc5ba1ee5e502a0bb0d10007a08cf4 sha1 5e116d56e1642f107e15bb943416655917fbd607 )
+)
+
+game (
+	name "Basketbrawl (1992)(Atari Corp)"
+	description "Basketbrawl (1992)(Atari Corp)"
+	rom ( name "Basketbrawl (1992)(Atari Corp).lnx" size 262208 crc a41b3d47 md5 675928b7957be8e4d81242bc946015ce sha1 cfe4708a881564b1ad75cdbe6da526c06d19a9c1 )
+)
+
+game (
+	name "Basketbrawl (1992)(Atari Corp)[a2]"
+	description "Basketbrawl (1992)(Atari Corp)[a2]"
+	rom ( name "Basketbrawl (1992)(Atari Corp)[a2].lnx" size 131136 crc cf67513a md5 b03b308882be1cea6539b1597f73140b sha1 8fd95a71f77f354c8414afc75ac4f75426d73711 )
+)
+
+game (
+	name "Basketbrawl (1992)(Atari Corp)[a]"
+	description "Basketbrawl (1992)(Atari Corp)[a]"
+	rom ( name "Basketbrawl (1992)(Atari Corp)[a].lnx" size 262208 crc 3d4004ec md5 fa72087c5791a945038de22becb5027c sha1 cc41ffa7c878d4ec1197658df396f7209dfbb20b )
+)
+
+game (
+	name "Basketbrawl (1992)(Atari Corp)[b]"
+	description "Basketbrawl (1992)(Atari Corp)[b]"
+	rom ( name "Basketbrawl (1992)(Atari Corp)[b].lnx" size 262208 crc da9bbe68 md5 92bdaba4a7ebe59ebcd9d18825c67459 sha1 50c1858e71b40d2d986b666a1c59335274ecd8d8 )
+)
+
+game (
+	name "Batman Returns (1992)(DC Comics Inc)"
+	description "Batman Returns (1992)(DC Comics Inc)"
+	rom ( name "Batman Returns (1992)(DC Comics Inc).lnx" size 262208 crc 68cd6dcb md5 56be8a61dc7c50eda6cb017e20c0696d sha1 45df55597bae86b9184861d64d1a1d770f1e8c40 )
+)
+
+game (
+	name "Batman Returns (1992)(DC Comics Inc)[b]"
+	description "Batman Returns (1992)(DC Comics Inc)[b]"
+	rom ( name "Batman Returns (1992)(DC Comics Inc)[b].lnx" size 262208 crc 6f161065 md5 e26c4c71889359f8439a94c21780d497 sha1 c8b182f6b4ea22bf2bbc01ac0895d5e79109ca63 )
+)
+
+game (
+	name "Battle Wheels (1993)(Beyond Games)"
+	description "Battle Wheels (1993)(Beyond Games)"
+	rom ( name "Battle Wheels (1993)(Beyond Games).lnx" size 262208 crc db45d5c4 md5 73d1b5dec3cf73ccd46e81c6f0fe3661 sha1 770b693dfac8833eaa1446ee7218f653b10c366f )
+)
+
+game (
+	name "Battle Wheels (1993)(Beyond Games)[a2]"
+	description "Battle Wheels (1993)(Beyond Games)[a2]"
+	rom ( name "Battle Wheels (1993)(Beyond Games)[a2].lnx" size 131136 crc 57efff37 md5 baf2b2e8eeaa5d947b92f9543a7749f7 sha1 fbb4808b71a22211cc8b08211b0830f40c8e4674 )
+)
+
+game (
+	name "Battle Wheels (1993)(Beyond Games)[a]"
+	description "Battle Wheels (1993)(Beyond Games)[a]"
+	rom ( name "Battle Wheels (1993)(Beyond Games)[a].lnx" size 131136 crc fd5ae3db md5 a368af62db3454827c4eb51dce774b6e sha1 42f8a53fdba03358a65e82db81067e8e9aaba30b )
+)
+
+game (
+	name "Battlezone 2000 (1993)(Atari Corp)"
+	description "Battlezone 2000 (1993)(Atari Corp)"
+	rom ( name "Battlezone 2000 (1993)(Atari Corp).lnx" size 262208 crc e3af09ce md5 143a3013a131100f7631958ef9d154b5 sha1 772d4b35c1717b5da7820b135056bfe16e08aaf5 )
+)
+
+game (
+	name "Battlezone 2000 (1993)(Atari Corp)[a]"
+	description "Battlezone 2000 (1993)(Atari Corp)[a]"
+	rom ( name "Battlezone 2000 (1993)(Atari Corp)[a].lnx" size 262208 crc 414bda9a md5 d78fd225edb8c743b9ca1e5d4e34e75e sha1 7edfa01096a61f681dd4bf217ab1f0281c3b33b0 )
+)
+
+game (
+	name "Bill & Ted's Excellent Adventure (1991)(Atari Corp)"
+	description "Bill & Ted's Excellent Adventure (1991)(Atari Corp)"
+	rom ( name "Bill & Ted's Excellent Adventure (1991)(Atari Corp).lnx" size 262208 crc c91aff8a md5 b9a1562c7e04791f175acdac96f79b33 sha1 f322d28a6311d84edc36b35083acc07a0ba4660a )
+)
+
+game (
+	name "Bill & Ted's Excellent Adventure (1991)(Atari Corp)[b]"
+	description "Bill & Ted's Excellent Adventure (1991)(Atari Corp)[b]"
+	rom ( name "Bill & Ted's Excellent Adventure (1991)(Atari Corp)[b].lnx" size 262208 crc 92e517be md5 c64d5ab182a7e31646ed4bef4e375bdc sha1 87e5ea1e8036aacb03fedb9c1b4a37920689c1c7 )
+)
+
+game (
+	name "Block Out (1990)(Atari Corp)"
+	description "Block Out (1990)(Atari Corp)"
+	rom ( name "Block Out (1990)(Atari Corp).lnx" size 262208 crc f2da1756 md5 14a023f0f705ea3bb4f0ec1bca872041 sha1 2adf79d64dd1bb38e1d9a189f30689df9cf2028c )
+)
+
+game (
+	name "Block Out (1990)(Atari Corp)[a]"
+	description "Block Out (1990)(Atari Corp)[a]"
+	rom ( name "Block Out (1990)(Atari Corp)[a].lnx" size 131136 crc c96e5bc6 md5 465681114455a67309022a4d4541e256 sha1 2efb86ed51e676a6e59cce3b40e56f408fe84605 )
+)
+
+game (
+	name "Blue Lightning (1989)(Epyx Inc)"
+	description "Blue Lightning (1989)(Epyx Inc)"
+	rom ( name "Blue Lightning (1989)(Epyx Inc).lnx" size 262208 crc 0782722a md5 05cd2a0b3318af3fca8fea6b4d29d988 sha1 00db17da5a4c29619681d788c928ca160095f46c )
+)
+
+game (
+	name "Blue Lightning (1989)(Epyx Inc)[a]"
+	description "Blue Lightning (1989)(Epyx Inc)[a]"
+	rom ( name "Blue Lightning (1989)(Epyx Inc)[a].lnx" size 131136 crc 35af173c md5 422acf7338904b408cf60a1f7ecb4576 sha1 fd4dfa7b8822229c0e0c5b0f6cde608f8f94bb65 )
+)
+
+game (
+	name "Blue Lightning (demo) (1989)(Epyx Inc)"
+	description "Blue Lightning (demo) (1989)(Epyx Inc)"
+	rom ( name "Blue Lightning (demo) (1989)(Epyx Inc).lnx" size 262208 crc 6ce4b9b0 md5 c376419b23399e0bf47419dea930edb2 sha1 52764c6db959a1340e8f60d069b045229edd37d6 )
+)
+
+game (
+	name "Blue Lightning (demo) (1989)(Epyx Inc)[a]"
+	description "Blue Lightning (demo) (1989)(Epyx Inc)[a]"
+	rom ( name "Blue Lightning (demo) (1989)(Epyx Inc)[a].lnx" size 131136 crc 0bd1b69c md5 2f51ac2d255a97811da99969605a04ec sha1 d95653027c1956085a01541e3164ea637b52f100 )
+)
+
+game (
+	name "Bubble Trouble (1993)(Lore Design Ltd)"
+	description "Bubble Trouble (1993)(Lore Design Ltd)"
+	rom ( name "Bubble Trouble (1993)(Lore Design Ltd).lnx" size 262208 crc f85d0806 md5 215b26ab70d1173a3049613a9205b65d sha1 6a118f9a60ca99c3f6af4a4281a21ab2e3a366b3 )
+)
+
+game (
+	name "Bubble Trouble (1993)(Lore Design Ltd)[a]"
+	description "Bubble Trouble (1993)(Lore Design Ltd)[a]"
+	rom ( name "Bubble Trouble (1993)(Lore Design Ltd)[a].lnx" size 262208 crc 75f2ee47 md5 de4a02f8e8fbd3ba10dd3fa4088af42d sha1 856055257429e8b4d951cda10180082f2c362dee )
+)
+
+game (
+	name "California Games (1991)(Epyx Inc)"
+	description "California Games (1991)(Epyx Inc)"
+	rom ( name "California Games (1991)(Epyx Inc).lnx" size 262208 crc 0ce53b00 md5 a10e4cca882f26fcead522feec71b174 sha1 97bc95db4cdbcffa8f7a12949d6e9986f1c28f33 )
+)
+
+game (
+	name "California Games (1991)(Epyx Inc)[a2]"
+	description "California Games (1991)(Epyx Inc)[a2]"
+	rom ( name "California Games (1991)(Epyx Inc)[a2].lnx" size 131136 crc 2918ea2e md5 8c36f1c16c4ea9c8aae67a9f680fde8c sha1 9c89db856a1b85afdb0334d2bc5d9dffa1d3cca2 )
+)
+
+game (
+	name "California Games (1991)(Epyx Inc)[a]"
+	description "California Games (1991)(Epyx Inc)[a]"
+	rom ( name "California Games (1991)(Epyx Inc)[a].lnx" size 131136 crc da7d96fd md5 35a63e6ff2516c670fa6e72baf57f9ab sha1 ae369a7a3f076de1449097d3b926e3ab4dae242c )
+)
+
+game (
+	name "Centipede (198x)(Shadowsoft Inc)"
+	description "Centipede (198x)(Shadowsoft Inc)"
+	rom ( name "Centipede (198x)(Shadowsoft Inc).lnx" size 131136 crc e38a0f69 md5 59527c766707f513dcbfdab17641f098 sha1 ec45d3e3d9ceba61ada730fb3b499074fd31a034 )
+)
+
+game (
+	name "Centipede (198x)(Shadowsoft Inc)[a]"
+	description "Centipede (198x)(Shadowsoft Inc)[a]"
+	rom ( name "Centipede (198x)(Shadowsoft Inc)[a].lnx" size 131136 crc 70cc4ae8 md5 efe5694b21ef434e32532faf451d4601 sha1 9954707eeba52904533cef59e5aae6e196434534 )
+)
+
+game (
+	name "Checkered Flag (1991)(Atari Corp)"
+	description "Checkered Flag (1991)(Atari Corp)"
+	rom ( name "Checkered Flag (1991)(Atari Corp).lnx" size 262208 crc 6687f846 md5 49c610118a514690a42a4c9567e610c1 sha1 848694715135979c022561ef9e4da58b8a67c4f3 )
+)
+
+game (
+	name "Checkered Flag (1991)(Atari Corp)[b]"
+	description "Checkered Flag (1991)(Atari Corp)[b]"
+	rom ( name "Checkered Flag (1991)(Atari Corp)[b].lnx" size 262208 crc a9c64aa1 md5 da3ed25975cdfac1bc22c74ded5e14d3 sha1 a320de100517c35e9079fec770460beab527a9ae )
+)
+
+game (
+	name "Chip's Challenge (1989)(Epyx Inc)"
+	description "Chip's Challenge (1989)(Epyx Inc)"
+	rom ( name "Chip's Challenge (1989)(Epyx Inc).lnx" size 262208 crc ad7c002b md5 1f98b68bf719572d549bb1dc0737defd sha1 8d07f19d5aae9b18b0f29a46d276578b439a69e7 )
+)
+
+game (
+	name "Chip's Challenge (1989)(Epyx Inc)[a]"
+	description "Chip's Challenge (1989)(Epyx Inc)[a]"
+	rom ( name "Chip's Challenge (1989)(Epyx Inc)[a].lnx" size 131136 crc f45f784a md5 ad3d091ba4250d0354bc6d3fd8c9a882 sha1 92af2d566c6bbf626a21dbfa41af16d73e0a774d )
+)
+
+game (
+	name "Crystal Mines II (1991)(Atari Corp)"
+	description "Crystal Mines II (1991)(Atari Corp)"
+	rom ( name "Crystal Mines II (1991)(Atari Corp).lnx" size 262208 crc 58ff6db3 md5 05b8de7fdd2e10de260a6bc56950ca3b sha1 e8d6a939a202060a76e0417315c7693631116d57 )
+)
+
+game (
+	name "Crystal Mines II (1991)(Atari Corp)[a]"
+	description "Crystal Mines II (1991)(Atari Corp)[a]"
+	rom ( name "Crystal Mines II (1991)(Atari Corp)[a].lnx" size 131136 crc 0535e6c9 md5 1d847749b453e784ca1bd09ae8d50b00 sha1 c3b7e7fe892068bf4b58aec85181f6b00693b47d )
+)
+
+game (
+	name "Desert Strike - Return to the Gulf (1993)(Telegames)"
+	description "Desert Strike - Return to the Gulf (1993)(Telegames)"
+	rom ( name "Desert Strike - Return to the Gulf (1993)(Telegames).lnx" size 262208 crc 2eaae973 md5 e0e0c8320b5897147c9a6c72a84f06dd sha1 1e529493866d6485074233458b40c4e7b0f032ef )
+)
+
+game (
+	name "Desert Strike - Return to the Gulf (1993)(Telegames)[b]"
+	description "Desert Strike - Return to the Gulf (1993)(Telegames)[b]"
+	rom ( name "Desert Strike - Return to the Gulf (1993)(Telegames)[b].lnx" size 262208 crc de0ec161 md5 c6fdf3c623c03d34f8265ae0962e7548 sha1 8240e9adc5af80881349ac89f7f21f0cb715b2b2 )
+)
+
+game (
+	name "Dinolympics (1992)(Atari Corp)"
+	description "Dinolympics (1992)(Atari Corp)"
+	rom ( name "Dinolympics (1992)(Atari Corp).lnx" size 262208 crc 0ed9eb06 md5 673ad7130698273497b52c37bcf9103d sha1 8af3a298ddb7ba235b54891c221ef53a2c89e9db )
+)
+
+game (
+	name "Dinolympics (1992)(Atari Corp)[b]"
+	description "Dinolympics (1992)(Atari Corp)[b]"
+	rom ( name "Dinolympics (1992)(Atari Corp)[b].lnx" size 262208 crc 47d57c30 md5 1e4c04b10db1182393f864d44ae1f6c7 sha1 a2a4ae4e3ab4cfe281659b265580e9076067983c )
+)
+
+game (
+	name "Dirty Larry - Renegade Cop (1992)(Atari Corp)"
+	description "Dirty Larry - Renegade Cop (1992)(Atari Corp)"
+	rom ( name "Dirty Larry - Renegade Cop (1992)(Atari Corp).lnx" size 262208 crc c6017733 md5 305bfffb0e969c5d8d9f19d8dc639dc2 sha1 c1d62142fc5094252637dbc6a2355e41d0425fc2 )
+)
+
+game (
+	name "Dirty Larry - Renegade Cop (1992)(Atari Corp)[a2]"
+	description "Dirty Larry - Renegade Cop (1992)(Atari Corp)[a2]"
+	rom ( name "Dirty Larry - Renegade Cop (1992)(Atari Corp)[a2].lnx" size 262208 crc 3cd319bd md5 430676137da7c9281eded7c4e6255cd2 sha1 59577b594445090a0da1416fded2a970cb3d2bd6 )
+)
+
+game (
+	name "Dirty Larry - Renegade Cop (1992)(Atari Corp)[a]"
+	description "Dirty Larry - Renegade Cop (1992)(Atari Corp)[a]"
+	rom ( name "Dirty Larry - Renegade Cop (1992)(Atari Corp)[a].lnx" size 262208 crc 8953dfca md5 0594be65573293a93064744ebb8f920b sha1 5c0a524fd55c1048c1e6202d5a0bdba2ed335ecf )
+)
+
+game (
+	name "Dirty Larry - Renegade Cop (1992)(Atari Corp)[b]"
+	description "Dirty Larry - Renegade Cop (1992)(Atari Corp)[b]"
+	rom ( name "Dirty Larry - Renegade Cop (1992)(Atari Corp)[b].lnx" size 262208 crc d3ae054a md5 a76d7e0e4703466a029f34196a2ae7e6 sha1 87a33cb1ab595f7d8f06fc71f54d1807eaf0845b )
+)
+
+game (
+	name "Double Dragon (1993)(Telegames)"
+	description "Double Dragon (1993)(Telegames)"
+	rom ( name "Double Dragon (1993)(Telegames).lnx" size 262208 crc bcb2e75a md5 256a8ea2c21ba0f69ac9dd71421d5b54 sha1 1227eb28e6bad3c30b38d3dbfa9f929d836300c5 )
+)
+
+game (
+	name "Double Dragon (1993)(Telegames)[b]"
+	description "Double Dragon (1993)(Telegames)[b]"
+	rom ( name "Double Dragon (1993)(Telegames)[b].lnx" size 262208 crc a4e78202 md5 044935f25240dda2c4ef0c09e9ac7eb5 sha1 52f841faa4ffa234144a78073a066bc636376248 )
+)
+
+game (
+	name "Dracula - The Undead (1991)(Atari Corp)"
+	description "Dracula - The Undead (1991)(Atari Corp)"
+	rom ( name "Dracula - The Undead (1991)(Atari Corp).lnx" size 262208 crc 0f4b4071 md5 9fd7f9de725fe89c196c5e3ae06993e6 sha1 824f245004a778613c85d40c9a2785a8cefe4181 )
+)
+
+game (
+	name "Dracula - The Undead (1991)(Atari Corp)[b]"
+	description "Dracula - The Undead (1991)(Atari Corp)[b]"
+	rom ( name "Dracula - The Undead (1991)(Atari Corp)[b].lnx" size 262208 crc adfb50e9 md5 2e1cc095c8080e6abb57a776b9ac1479 sha1 3b3346863f0d248c904e62af914f8c5ed5d2f76f )
+)
+
+game (
+	name "Electrocop (1989)(Atari Corp)"
+	description "Electrocop (1989)(Atari Corp)"
+	rom ( name "Electrocop (1989)(Atari Corp).lnx" size 262208 crc cd9b18d3 md5 dbe196382d788df3716bb6fa2f6d176b sha1 5c3fa6a1daed62d541456451cc533de766361174 )
+)
+
+game (
+	name "Electrocop (1989)(Atari Corp)[a]"
+	description "Electrocop (1989)(Atari Corp)[a]"
+	rom ( name "Electrocop (1989)(Atari Corp)[a].lnx" size 131136 crc 765d742d md5 a3c5d44ec6c81950b0da09f374b39e8b sha1 c06e983638b4466322a15a367cdaeb56fc2486e6 )
+)
+
+game (
+	name "European Soccer Challenge (1993)(Telegames)"
+	description "European Soccer Challenge (1993)(Telegames)"
+	rom ( name "European Soccer Challenge (1993)(Telegames).lnx" size 262208 crc d25c3d35 md5 d9617d52927e657a06fa2924130fb79f sha1 3b7311c98cd6ecf441d8d352b97f5200b9e4752a )
+)
+
+game (
+	name "European Soccer Challenge (1993)(Telegames)[a]"
+	description "European Soccer Challenge (1993)(Telegames)[a]"
+	rom ( name "European Soccer Challenge (1993)(Telegames)[a].lnx" size 131136 crc 8ec43452 md5 a85db47938120feca5b05d119ccf0e3d sha1 890560068840282a4565272fee00fa3f146ef71e )
+)
+
+game (
+	name "Eye of the Beholder (1990)(Atari Corp)(proto)"
+	description "Eye of the Beholder (1990)(Atari Corp)(proto)"
+	rom ( name "Eye of the Beholder (1990)(Atari Corp)(proto).lnx" size 131136 crc a0010717 md5 8ec6c6de7fa715782527b9cddb812445 sha1 6c37e1f220e73ff784b90c81846cebe4db0ab3bc )
+)
+
+game (
+	name "Fat Bobby (1993)(Atari Corp)"
+	description "Fat Bobby (1993)(Atari Corp)"
+	rom ( name "Fat Bobby (1993)(Atari Corp).lnx" size 262208 crc 8c76bde2 md5 193d3187b3fb28cb8eb9839be61439e6 sha1 107f626ef5f7fbd459aec38a879de0d438ff651c )
+)
+
+game (
+	name "Fat Bobby (1993)(Atari Corp)[a]"
+	description "Fat Bobby (1993)(Atari Corp)[a]"
+	rom ( name "Fat Bobby (1993)(Atari Corp)[a].lnx" size 262208 crc 03f4e2a7 md5 1051dc66891a376db40a502f42064025 sha1 2eab6bfb7e5b479fac3deeb7bdf383fd59d64bcb )
+)
+
+game (
+	name "Fidelity Ultimate Chess Challenge (1991)(Telegames)"
+	description "Fidelity Ultimate Chess Challenge (1991)(Telegames)"
+	rom ( name "Fidelity Ultimate Chess Challenge (1991)(Telegames).lnx" size 262208 crc 27d2d190 md5 28598b4cf75fb34f4a34d6877765c5df sha1 80b9c2e4da2be73b329b729e84a8b9571b6d5671 )
+)
+
+game (
+	name "Fidelity Ultimate Chess Challenge (1991)(Telegames)[a2]"
+	description "Fidelity Ultimate Chess Challenge (1991)(Telegames)[a2]"
+	rom ( name "Fidelity Ultimate Chess Challenge (1991)(Telegames)[a2].lnx" size 131136 crc bd77d5f2 md5 d8be6a65d39e492acf0242966e51be04 sha1 d65c4d14f609a05786ec64808bbde4b955362412 )
+)
+
+game (
+	name "Fidelity Ultimate Chess Challenge (1991)(Telegames)[a]"
+	description "Fidelity Ultimate Chess Challenge (1991)(Telegames)[a]"
+	rom ( name "Fidelity Ultimate Chess Challenge (1991)(Telegames)[a].lnx" size 131136 crc 96643baa md5 2e5fd617b9d034aec01974e718a30207 sha1 051f95a0c5b60e8c517b8df08f449110ed2bca68 )
+)
+
+game (
+	name "Gates of Zendocon, The (1989)(Epyx Inc)"
+	description "Gates of Zendocon, The (1989)(Epyx Inc)"
+	rom ( name "Gates of Zendocon, The (1989)(Epyx Inc).lnx" size 262208 crc 42dfe400 md5 991e0d31c8f7c8ef06e5b8f906c3d2f3 sha1 69a920cf25bc1f1b9c47e4f420f9df5d3a1a15ac )
+)
+
+game (
+	name "Gates of Zendocon, The (1989)(Epyx Inc)[a2]"
+	description "Gates of Zendocon, The (1989)(Epyx Inc)[a2]"
+	rom ( name "Gates of Zendocon, The (1989)(Epyx Inc)[a2].lnx" size 131136 crc d852dba7 md5 1dda01b595589960565596fd0f9d9c29 sha1 d89985e2e692b335e3eb1e2a269ac2a2e4b3c8ad )
+)
+
+game (
+	name "Gates of Zendocon, The (1989)(Epyx Inc)[a]"
+	description "Gates of Zendocon, The (1989)(Epyx Inc)[a]"
+	rom ( name "Gates of Zendocon, The (1989)(Epyx Inc)[a].lnx" size 131136 crc 2b37a774 md5 0626265d32701eaefb7e894c3ecfd9cc sha1 ed051179dc5fcff614c5e41a64cff7cbd3b0d63c )
+)
+
+game (
+	name "Gauntlet - The Third Encounter (1989)(Tengen Inc)"
+	description "Gauntlet - The Third Encounter (1989)(Tengen Inc)"
+	rom ( name "Gauntlet - The Third Encounter (1989)(Tengen Inc).lnx" size 262208 crc c3497fb2 md5 5e841dc1dbb66ff5fe2e4ee7e46d1846 sha1 c6abb87eb1eb50ca5efba2a45e678a7677afed30 )
+)
+
+game (
+	name "Gauntlet - The Third Encounter (1989)(Tengen Inc)[a]"
+	description "Gauntlet - The Third Encounter (1989)(Tengen Inc)[a]"
+	rom ( name "Gauntlet - The Third Encounter (1989)(Tengen Inc)[a].lnx" size 131136 crc 8e0908e5 md5 eff19cbc469f7f902527aeba56b4f93b sha1 7cf7d08b52784e13d8278d249dcd8975d3714da4 )
+)
+
+game (
+	name "Gordo 106 - The Mutated Lab Monkey (1992)(Tenth Planet)"
+	description "Gordo 106 - The Mutated Lab Monkey (1992)(Tenth Planet)"
+	rom ( name "Gordo 106 - The Mutated Lab Monkey (1992)(Tenth Planet).lnx" size 262208 crc 0671acea md5 d6c5f4fa22ad79fdfd27ab9408cca59f sha1 46fd69c68cb0929a2d21ecc5225390b7425ae3f4 )
+)
+
+game (
+	name "Gordo 106 - The Mutated Lab Monkey (1992)(Tenth Planet)[b2]"
+	description "Gordo 106 - The Mutated Lab Monkey (1992)(Tenth Planet)[b2]"
+	rom ( name "Gordo 106 - The Mutated Lab Monkey (1992)(Tenth Planet)[b2].lnx" size 262208 crc cea6795b md5 51e9b05d0f0a4a68ade1671e302571cf sha1 949945ecd5ca1262512b4cfa45414db75f9af42e )
+)
+
+game (
+	name "Gordo 106 - The Mutated Lab Monkey (1992)(Tenth Planet)[b]"
+	description "Gordo 106 - The Mutated Lab Monkey (1992)(Tenth Planet)[b]"
+	rom ( name "Gordo 106 - The Mutated Lab Monkey (1992)(Tenth Planet)[b].lnx" size 262208 crc abb60103 md5 aa530811882603711445fa6a827e1f98 sha1 5c8b784b7089231cc96c589aca72c079c4e9b980 )
+)
+
+game (
+	name "Hard Drivin' (1993)(Tengen Inc)"
+	description "Hard Drivin' (1993)(Tengen Inc)"
+	rom ( name "Hard Drivin' (1993)(Tengen Inc).lnx" size 262208 crc 2f20bac7 md5 a041728c56d72d1157f33d75416945be sha1 d15e40f97d277615e03e861d5962d3f5b35e1d58 )
+)
+
+game (
+	name "Hard Drivin' (1993)(Tengen Inc)[a2]"
+	description "Hard Drivin' (1993)(Tengen Inc)[a2]"
+	rom ( name "Hard Drivin' (1993)(Tengen Inc)[a2].lnx" size 131136 crc 9add0861 md5 4a8897d6930fb61f7ca3af4b7272dad4 sha1 afe1a2b3ed37596378b2d40f54e1635bf15c5600 )
+)
+
+game (
+	name "Hard Drivin' (1993)(Tengen Inc)[a]"
+	description "Hard Drivin' (1993)(Tengen Inc)[a]"
+	rom ( name "Hard Drivin' (1993)(Tengen Inc)[a].lnx" size 131136 crc 69b874b2 md5 cbae8567fa3daf9d8cc9e8a4dfcabfe1 sha1 758ac32ef7c1aa7ad96393236795d70058d9af2c )
+)
+
+game (
+	name "Hockey (1992)(Atari Corp)"
+	description "Hockey (1992)(Atari Corp)"
+	rom ( name "Hockey (1992)(Atari Corp).lnx" size 262208 crc 0904a4d9 md5 68bf8d696e577d9c28cb481d2a9823f9 sha1 2f2d74cfba54360e7f5555d182a9e9e7f74287e8 )
+)
+
+game (
+	name "Hockey (1992)(Atari Corp)[b]"
+	description "Hockey (1992)(Atari Corp)[b]"
+	rom ( name "Hockey (1992)(Atari Corp)[b].lnx" size 262208 crc 5670704b md5 c8cf4d3f657c3834a7adec98865ba2a9 sha1 0465752c632e396218ce4d8a111c005e7dda55a2 )
+)
+
+game (
+	name "Hydra (1992)(Tengen Inc)"
+	description "Hydra (1992)(Tengen Inc)"
+	rom ( name "Hydra (1992)(Tengen Inc).lnx" size 262208 crc 8980a322 md5 8ba407b682e0bb9471cfe1e28983b9cc sha1 5ceb3ad748cd42e181067a191e2b0dccc0325057 )
+)
+
+game (
+	name "Hydra (1992)(Tengen Inc)[b]"
+	description "Hydra (1992)(Tengen Inc)[b]"
+	rom ( name "Hydra (1992)(Tengen Inc)[b].lnx" size 262208 crc d2cec8c7 md5 eef165f39c9efd552a12a8503d7e75f5 sha1 397e0953fb2105268fcaf148b9900e614348db13 )
+)
+
+game (
+	name "Ishido - The Way of the Stones (1991)(Atari Corp)"
+	description "Ishido - The Way of the Stones (1991)(Atari Corp)"
+	rom ( name "Ishido - The Way of the Stones (1991)(Atari Corp).lnx" size 262208 crc 7c58aea4 md5 8064ca0f12b6fad96ecd7147bc595620 sha1 f7f2fb564c589fc8499f0aafd21ef13a38135947 )
+)
+
+game (
+	name "Ishido - The Way of the Stones (1991)(Atari Corp)[a]"
+	description "Ishido - The Way of the Stones (1991)(Atari Corp)[a]"
+	rom ( name "Ishido - The Way of the Stones (1991)(Atari Corp)[a].lnx" size 131136 crc 4aa0e0b9 md5 3df23a124186053836419abe6d87a8c0 sha1 3508d30bf1c62dde31c6d888b29b2d7964b73149 )
+)
+
+game (
+	name "Jimmy Connors Tennis (1993)(Atari Corp)"
+	description "Jimmy Connors Tennis (1993)(Atari Corp)"
+	rom ( name "Jimmy Connors Tennis (1993)(Atari Corp).lnx" size 524352 crc fdd6536d md5 3fb127de0fcef18b1331c65ed1c3547f sha1 eb53241c8cac2456684c4b1fe86aa8c90e765d91 )
+)
+
+game (
+	name "Jimmy Connors Tennis (1993)(Atari Corp)[b2]"
+	description "Jimmy Connors Tennis (1993)(Atari Corp)[b2]"
+	rom ( name "Jimmy Connors Tennis (1993)(Atari Corp)[b2].lnx" size 524352 crc 7d96476a md5 54d5b29bc2f0486ca1408c08638a2045 sha1 573eb78247f1d7b411fe6faa04d45eeff84f884d )
+)
+
+game (
+	name "Jimmy Connors Tennis (1993)(Atari Corp)[b]"
+	description "Jimmy Connors Tennis (1993)(Atari Corp)[b]"
+	rom ( name "Jimmy Connors Tennis (1993)(Atari Corp)[b].lnx" size 524352 crc aebee319 md5 99eb48b7099df1509e86657b07ce496f sha1 fd3b964695589d2208bd6977a21b8ab897eacdaf )
+)
+
+game (
+	name "Joust (1993)(Shadowsoft Inc)"
+	description "Joust (1993)(Shadowsoft Inc)"
+	rom ( name "Joust (1993)(Shadowsoft Inc).lnx" size 262208 crc d7b28ef1 md5 4d76615c7d34c9442d92b8f06da11057 sha1 260a30abfa0e8fa9a725632b64078f8a0ef80250 )
+)
+
+game (
+	name "Joust (1993)(Shadowsoft Inc)[a2]"
+	description "Joust (1993)(Shadowsoft Inc)[a2]"
+	rom ( name "Joust (1993)(Shadowsoft Inc)[a2].lnx" size 131136 crc 85a2a177 md5 d51e87c94c8361572a3b253a6b26af5a sha1 667a5e64033076a242297aa846001ab4475e1472 )
+)
+
+game (
+	name "Joust (1993)(Shadowsoft Inc)[a]"
+	description "Joust (1993)(Shadowsoft Inc)[a]"
+	rom ( name "Joust (1993)(Shadowsoft Inc)[a].lnx" size 262208 crc 9f7662c2 md5 ab81ae461cf25b92b679fd26be98c902 sha1 9a72b390ce25ffe8400b7abdedd2ca61d3957cc3 )
+)
+
+game (
+	name "Klax (1990)(Tengen Inc)"
+	description "Klax (1990)(Tengen Inc)"
+	rom ( name "Klax (1990)(Tengen Inc).lnx" size 262208 crc ec53a878 md5 4220be1f2c3effaf934144c542dcae94 sha1 66a04e14e07367a59fb979b25915008ac1602233 )
+)
+
+game (
+	name "Klax (1990)(Tengen Inc)[b]"
+	description "Klax (1990)(Tengen Inc)[b]"
+	rom ( name "Klax (1990)(Tengen Inc)[b].lnx" size 262208 crc 5dd61084 md5 30c14e1988e222d01b6fb2b25588810d sha1 9dfc72e4bb77215a4f17a496eece50d6510d48a9 )
+)
+
+game (
+	name "Krazy Ace Minature Golf (1992)(Telegames)"
+	description "Krazy Ace Minature Golf (1992)(Telegames)"
+	rom ( name "Krazy Ace Minature Golf (1992)(Telegames).lnx" size 262208 crc 96c5d9b9 md5 151e33b59578b3749fe9ef915f0622ca sha1 8ddb2fc5898110f4069a47f91016d4ad3d014ac7 )
+)
+
+game (
+	name "Krazy Ace Minature Golf (1992)(Telegames)[a]"
+	description "Krazy Ace Minature Golf (1992)(Telegames)[a]"
+	rom ( name "Krazy Ace Minature Golf (1992)(Telegames)[a].lnx" size 262208 crc b9f9175d md5 61976dec279c4766f72b5cbe1835c65f sha1 76c4e534bbd1399c90f9425389b9304af63735c0 )
+)
+
+game (
+	name "Krazy Ace Minature Golf (1992)(Telegames)[b2]"
+	description "Krazy Ace Minature Golf (1992)(Telegames)[b2]"
+	rom ( name "Krazy Ace Minature Golf (1992)(Telegames)[b2].lnx" size 131136 crc cb482c7f md5 bd70ee0996e18cab3ae8e4efa661a5d6 sha1 8063dab2ca8da55d0bf1329ff5403d23a1261422 )
+)
+
+game (
+	name "Krazy Ace Minature Golf (1992)(Telegames)[b3]"
+	description "Krazy Ace Minature Golf (1992)(Telegames)[b3]"
+	rom ( name "Krazy Ace Minature Golf (1992)(Telegames)[b3].lnx" size 20904 crc 3c4d4a7e md5 2d7998cf396719728e806f0d6f11a880 sha1 a973124b5e6df36c24109b9a1baeb0002cb1458d )
+)
+
+game (
+	name "Krazy Ace Minature Golf (1992)(Telegames)[b]"
+	description "Krazy Ace Minature Golf (1992)(Telegames)[b]"
+	rom ( name "Krazy Ace Minature Golf (1992)(Telegames)[b].lnx" size 261938 crc d0a29ecd md5 817ea358808b18d58fd2415456ccf728 sha1 b2a43b2303447fde6426801417f18e28a69803d1 )
+)
+
+game (
+	name "Kung Food (1992)(Atari Corp)"
+	description "Kung Food (1992)(Atari Corp)"
+	rom ( name "Kung Food (1992)(Atari Corp).lnx" size 262208 crc 3529d2d7 md5 c2a6fd3408e574700437b862c62b00d1 sha1 ba5f63f558f818d4cf69173c9b00f1b0247a9282 )
+)
+
+game (
+	name "Kung Food (1992)(Atari Corp)[b]"
+	description "Kung Food (1992)(Atari Corp)[b]"
+	rom ( name "Kung Food (1992)(Atari Corp)[b].lnx" size 262208 crc ac145f2f md5 6db4bba289efc0a71965fd1f76b4aa82 sha1 396e25a6016b4279b82745c479593037b78bdeec )
+)
+
+game (
+	name "Lemmings (1993)(Atari Corp)"
+	description "Lemmings (1993)(Atari Corp)"
+	rom ( name "Lemmings (1993)(Atari Corp).lnx" size 262208 crc a77b6b64 md5 17307c423efa63e9564d0280937080b8 sha1 e61c173116eacecf90d0296c03d8c216be57400c )
+)
+
+game (
+	name "Lemmings (1993)(Atari Corp)[b]"
+	description "Lemmings (1993)(Atari Corp)[b]"
+	rom ( name "Lemmings (1993)(Atari Corp)[b].lnx" size 262208 crc ae32c303 md5 74de329f147ab1f8ac99f49bea04ec50 sha1 a919d411f58bea01ccf0590ca42a48f33da9a0f7 )
+)
+
+game (
+	name "Lexis (1994)(Shadowsoft Inc)"
+	description "Lexis (1994)(Shadowsoft Inc)"
+	rom ( name "Lexis (1994)(Shadowsoft Inc).lnx" size 262208 crc 265710ce md5 79c53974d13508168b8be9bf851e1d2e sha1 cef6c2042e6ff8b2411ea30acc43e5e7d0efb209 )
+)
+
+game (
+	name "Lexis (1994)(Shadowsoft Inc)[a]"
+	description "Lexis (1994)(Shadowsoft Inc)[a]"
+	rom ( name "Lexis (1994)(Shadowsoft Inc)[a].lnx" size 262208 crc e89999bc md5 5d7a5e9019afc5eab008f70e3c0a8618 sha1 57819a935bfcbf5b13ac364df966b6c41a3886bf )
+)
+
+game (
+	name "Lode Runner (1996)(Broderbund Software)"
+	description "Lode Runner (1996)(Broderbund Software)"
+	rom ( name "Lode Runner (1996)(Broderbund Software).lnx" size 47626 crc 3469d418 md5 5d00c8b40a6559cf20ae19550ad67579 sha1 6e81cafd17c5252e59f03fb1bfc7b90736bb7fd3 )
+)
+
+game (
+	name "Loopz v0.06 (1992)(Hand Made Software)(proto)"
+	description "Loopz v0.06 (1992)(Hand Made Software)(proto)"
+	rom ( name "Loopz v0.06 (1992)(Hand Made Software)(proto).lnx" size 262208 crc 1b745804 md5 197e4ab0e38961d150c4c472a9229817 sha1 03bd31e278a0517f8ae81c7a8d8b26b64058c58d )
+)
+
+game (
+	name "Loopz v0.06 (1992)(Hand Made Software)(proto)[a]"
+	description "Loopz v0.06 (1992)(Hand Made Software)(proto)[a]"
+	rom ( name "Loopz v0.06 (1992)(Hand Made Software)(proto)[a].lnx" size 262208 crc 93281104 md5 3f56fd81fca0618df0ed2489b7348426 sha1 fa7ce862c1ea15af4ffcf15e0cccc2a8a84b8e6d )
+)
+
+game (
+	name "Lynx Casino (1992)(Atari Corp)"
+	description "Lynx Casino (1992)(Atari Corp)"
+	rom ( name "Lynx Casino (1992)(Atari Corp).lnx" size 262208 crc 5539baf4 md5 21c96cbff7aafbfce340f7861029ccdf sha1 a5fb943e2eeece25bc3aaf1e9f6ae5c030672193 )
+)
+
+game (
+	name "Lynx Casino (1992)(Atari Corp)[b]"
+	description "Lynx Casino (1992)(Atari Corp)[b]"
+	rom ( name "Lynx Casino (1992)(Atari Corp)[b].lnx" size 262208 crc be1ade2c md5 317ae79960f250e7763ba53faedf8884 sha1 9eb4265b2472f8ad4e4e94e0ece4d1e3d5b7b237 )
+)
+
+game (
+	name "Malibu Bikini Volleyball (1993)(Atari Corp)"
+	description "Malibu Bikini Volleyball (1993)(Atari Corp)"
+	rom ( name "Malibu Bikini Volleyball (1993)(Atari Corp).lnx" size 262208 crc aba3e776 md5 977d8c607e7ae05b5ccda430014490e7 sha1 f47f2aed04ba18152347aa2e0858b56c374c5f71 )
+)
+
+game (
+	name "Malibu Bikini Volleyball (1993)(Atari Corp)[b]"
+	description "Malibu Bikini Volleyball (1993)(Atari Corp)[b]"
+	rom ( name "Malibu Bikini Volleyball (1993)(Atari Corp)[b].lnx" size 262208 crc 9bab5462 md5 0629fba06401f7ffbea9f7c9304300f7 sha1 4a30e229a7aa9c3bd79ebaf6117d17d9056d5c8b )
+)
+
+game (
+	name "Marble Madness (1997)(Matthias Domin)(PD)"
+	description "Marble Madness (1997)(Matthias Domin)(PD)"
+	rom ( name "Marble Madness (1997)(Matthias Domin)(PD).lnx" size 56056 crc 9970273e md5 daf8027ccdaf71150aca1f1d91604543 sha1 3daee2f4948ac2017d7362f287ae41b21fbf545e )
+)
+
+game (
+	name "Marble Madness (1999)(Matthias Domin)(PD)"
+	description "Marble Madness (1999)(Matthias Domin)(PD)"
+	rom ( name "Marble Madness (1999)(Matthias Domin)(PD).lnx" size 262208 crc 86acf2b7 md5 adb2d4590ee7e91f1e3ac1006ba9a8dc sha1 006147cb3b3c4e4551fd18266899ef308814f2ce )
+)
+
+game (
+	name "Marlboro Go! (1993)(Digital Image)(proto)"
+	description "Marlboro Go! (1993)(Digital Image)(proto)"
+	rom ( name "Marlboro Go! (1993)(Digital Image)(proto).lnx" size 262208 crc cd20d749 md5 6f4c92dd3c777beaafb67f95053018c6 sha1 b785eba1854f4aa1dfafd52324cafe55da790d8e )
+)
+
+game (
+	name "Marlboro Go! (1993)(Digital Image)(proto)[a]"
+	description "Marlboro Go! (1993)(Digital Image)(proto)[a]"
+	rom ( name "Marlboro Go! (1993)(Digital Image)(proto)[a].lnx" size 262208 crc 8d484e65 md5 4cec94e286778c4b3116ad41d646d2e4 sha1 3d0ee922c3572c9a861fc250082e659e6ebd4c8c )
+)
+
+game (
+	name "Ms. Pac-Man (1990)(Atari Corp)"
+	description "Ms. Pac-Man (1990)(Atari Corp)"
+	rom ( name "Ms. Pac-Man (1990)(Atari Corp).lnx" size 262208 crc 2ec48dfd md5 c5c292f8b9b93bf0f156361962464f49 sha1 ce85e2d2391f538106c92f8f3e136104ba977c16 )
+)
+
+game (
+	name "Ms. Pac-Man (1990)(Atari Corp)[a]"
+	description "Ms. Pac-Man (1990)(Atari Corp)[a]"
+	rom ( name "Ms. Pac-Man (1990)(Atari Corp)[a].lnx" size 131136 crc a4d77de9 md5 f67161daf154edc4e9f7c06a76dac9b9 sha1 a0fff552f8747aba7a66bea234fa52faa3c64aac )
+)
+
+game (
+	name "Ms. Pac-Man (1990)(Atari Corp)[b]"
+	description "Ms. Pac-Man (1990)(Atari Corp)[b]"
+	rom ( name "Ms. Pac-Man (1990)(Atari Corp)[b].lnx" size 131136 crc 0a54736f md5 16d3aa5ecc8dd2b171c26441855d2a50 sha1 d2243c3f10ab854288f69692fdb18ba92a3e868c )
+)
+
+game (
+	name "NFL Football (1990)(Atari Corp)"
+	description "NFL Football (1990)(Atari Corp)"
+	rom ( name "NFL Football (1990)(Atari Corp).lnx" size 262208 crc c398359e md5 dcb92ab3793c90cd47823d2cf148000e sha1 22735fcd59eb028a4041027a369602b0bd968eb5 )
+)
+
+game (
+	name "NFL Football (1990)(Atari Corp)[b]"
+	description "NFL Football (1990)(Atari Corp)[b]"
+	rom ( name "NFL Football (1990)(Atari Corp)[b].lnx" size 262208 crc cdf2732f md5 2015a3199379d90625d19527227cc0e3 sha1 76b4d3c29c1e68c8a62cc2913daf4884c3913b62 )
+)
+
+game (
+	name "Ninja Gaiden (1990)(Atari Corp)"
+	description "Ninja Gaiden (1990)(Atari Corp)"
+	rom ( name "Ninja Gaiden (1990)(Atari Corp).lnx" size 262208 crc 5adf25f0 md5 b65bf4c8c318b4e41c3ea8fb599de275 sha1 e751c35cce6e2e126ce7ccbd32b148dd6e248809 )
+)
+
+game (
+	name "Ninja Gaiden (1990)(Atari Corp)[b]"
+	description "Ninja Gaiden (1990)(Atari Corp)[b]"
+	rom ( name "Ninja Gaiden (1990)(Atari Corp)[b].lnx" size 262208 crc 5cdd4a0c md5 1d76f8aabbaed17354aad95277e0c67d sha1 d00bcc7e7e43243d6827e50163856c72f9e3f366 )
+)
+
+game (
+	name "Ninja Gaiden III - Ancient Ship of Doom (1993)(Atari Corp)"
+	description "Ninja Gaiden III - Ancient Ship of Doom (1993)(Atari Corp)"
+	rom ( name "Ninja Gaiden III - Ancient Ship of Doom (1993)(Atari Corp).lnx" size 524352 crc cd2ffbcc md5 436067e72b7e6e9b005d959bf4abc386 sha1 70f4115a92e3fdc4c93339ac801976a7697397ba )
+)
+
+game (
+	name "Ninja Gaiden III - Ancient Ship of Doom (1993)(Atari Corp)[b2]"
+	description "Ninja Gaiden III - Ancient Ship of Doom (1993)(Atari Corp)[b2]"
+	rom ( name "Ninja Gaiden III - Ancient Ship of Doom (1993)(Atari Corp)[b2].lnx" size 173056 crc 23275880 md5 e8420519d98ce3cdb110f479b66029a0 sha1 1d239d809c4009122c04dc31c122714bd96b2dd6 )
+)
+
+game (
+	name "Ninja Gaiden III - Ancient Ship of Doom (1993)(Atari Corp)[b]"
+	description "Ninja Gaiden III - Ancient Ship of Doom (1993)(Atari Corp)[b]"
+	rom ( name "Ninja Gaiden III - Ancient Ship of Doom (1993)(Atari Corp)[b].lnx" size 524352 crc 9799f932 md5 08c6b6fcf1f518014f7ea05581784be1 sha1 feceff10d54d84b07ca106e01977bb86e673cb7c )
+)
+
+game (
+	name "Pac-Land (1991)(Atari Corp)"
+	description "Pac-Land (1991)(Atari Corp)"
+	rom ( name "Pac-Land (1991)(Atari Corp).lnx" size 262208 crc 635179ba md5 83eb7be25995c0afee37420f2c109f37 sha1 b8d8d6f09322a4d4fddb4526195c2c070371677a )
+)
+
+game (
+	name "Pac-Land (1991)(Atari Corp)[a]"
+	description "Pac-Land (1991)(Atari Corp)[a]"
+	rom ( name "Pac-Land (1991)(Atari Corp)[a].lnx" size 131136 crc 5b57126a md5 7f0a05f387fc1faa8dcbbce7fef9b236 sha1 ca4f651c9955b756a88d3e7714f033c592fa0f6a )
+)
+
+game (
+	name "Paperboy (1990)(Tengen Inc)"
+	description "Paperboy (1990)(Tengen Inc)"
+	rom ( name "Paperboy (1990)(Tengen Inc).lnx" size 262208 crc b77f6c21 md5 c1646ef2432911c03bf1f1eda622b2fd sha1 1d6a284203fdcfbda76ded39cd6be61ec2364ce1 )
+)
+
+game (
+	name "Paperboy (1990)(Tengen Inc)[a2]"
+	description "Paperboy (1990)(Tengen Inc)[a2]"
+	rom ( name "Paperboy (1990)(Tengen Inc)[a2].lnx" size 131136 crc d6a4c70b md5 bb5d1ee028c8267bba11e6c8dc35cf13 sha1 7b5150cc095c554b0578bdd9a20caec0a7921547 )
+)
+
+game (
+	name "Paperboy (1990)(Tengen Inc)[a]"
+	description "Paperboy (1990)(Tengen Inc)[a]"
+	rom ( name "Paperboy (1990)(Tengen Inc)[a].lnx" size 131136 crc 25c1bbd8 md5 c1166cca2986406b13789d9a86ab2c9d sha1 c93c87e5aefee9c8926b2088e40d6375ddf67baf )
+)
+
+game (
+	name "Pinball Jam (1992)(Atari Corp)"
+	description "Pinball Jam (1992)(Atari Corp)"
+	rom ( name "Pinball Jam (1992)(Atari Corp).lnx" size 262208 crc 8863c28d md5 3e78b2e15e6fbd9470a6ac14421e6ac0 sha1 1f1695acbecf39cf6fd7afa71ce5f5e0ec80934d )
+)
+
+game (
+	name "Pinball Jam (1992)(Atari Corp)[b]"
+	description "Pinball Jam (1992)(Atari Corp)[b]"
+	rom ( name "Pinball Jam (1992)(Atari Corp)[b].lnx" size 262208 crc 1060661e md5 cc4bb5c47131632d79292abe080d699d sha1 da7c221b7cb719bea19e3e988c73389bcc648e09 )
+)
+
+game (
+	name "Pit Fighter (1992)(Tengen Inc)"
+	description "Pit Fighter (1992)(Tengen Inc)"
+	rom ( name "Pit Fighter (1992)(Tengen Inc).lnx" size 524352 crc cbaf54f3 md5 4a0ad63e27d08c2a553735a9b62f0334 sha1 d87b768ec219ba468e050d4a6c71ef59854adb28 )
+)
+
+game (
+	name "Pit Fighter (1992)(Tengen Inc)[b]"
+	description "Pit Fighter (1992)(Tengen Inc)[b]"
+	rom ( name "Pit Fighter (1992)(Tengen Inc)[b].lnx" size 524352 crc c0770884 md5 bf8f8c9bc9c3d0068fcf4d451304fb10 sha1 0214284156269f7666e47b29250e51e6814f60a3 )
+)
+
+game (
+	name "Pong 5 (1997)(Carl Forhan)(PD)"
+	description "Pong 5 (1997)(Carl Forhan)(PD)"
+	rom ( name "Pong 5 (1997)(Carl Forhan)(PD).lnx" size 5551 crc 6ecc1d1e md5 c7823529373fb277666246a35713db17 sha1 c6341b7773dbc0979a6f0aa72ff08ea1d8fd2f2b )
+)
+
+game (
+	name "Pong 5 (1997)(Carl Forhan)(PD)[a]"
+	description "Pong 5 (1997)(Carl Forhan)(PD)[a]"
+	rom ( name "Pong 5 (1997)(Carl Forhan)(PD)[a].lnx" size 5544 crc 58d0fcfb md5 8f36646cb66db46b84679a3a81800a3b sha1 30c33da8d040bc570145fe330ec4be425c6ff0a8 )
+)
+
+game (
+	name "Power Factor (1992)(Atari Corp)"
+	description "Power Factor (1992)(Atari Corp)"
+	rom ( name "Power Factor (1992)(Atari Corp).lnx" size 262208 crc 5db41679 md5 0c165a298589c44df6026f7c30b8ccb6 sha1 858855f42fd24c692859f43df261dbc0e19f0819 )
+)
+
+game (
+	name "Power Factor (1992)(Atari Corp)[b]"
+	description "Power Factor (1992)(Atari Corp)[b]"
+	rom ( name "Power Factor (1992)(Atari Corp)[b].lnx" size 262208 crc 4a02f2bc md5 c99ae74992a831c89a098938478e3d46 sha1 908c6424d869a57da0adfd54b8275c50f501c204 )
+)
+
+game (
+	name "Qix (1991)(Telegames)"
+	description "Qix (1991)(Telegames)"
+	rom ( name "Qix (1991)(Telegames).lnx" size 262208 crc 48e45bd2 md5 c677b4ccdab2b556ba09c011ba27ed23 sha1 ed3ce34c4dec35edc4885de2cfa1a8dc61a38452 )
+)
+
+game (
+	name "Qix (1991)(Telegames)[a]"
+	description "Qix (1991)(Telegames)[a]"
+	rom ( name "Qix (1991)(Telegames)[a].lnx" size 131136 crc 5651e1a8 md5 c1a8a70fc5df46fe67b0e5a7ce6f8006 sha1 ab9545de5b867c930afed570668d03b1ee41a9dd )
+)
+
+game (
+	name "Raiden (1997)(Atari Corp)"
+	description "Raiden (1997)(Atari Corp)"
+	rom ( name "Raiden (1997)(Atari Corp).lnx" size 262208 crc df1741bb md5 e5e9a50988c42daeb03e9c103d186336 sha1 3b0048d6b3ab5af0812c470217cfede5bb1bf791 )
+)
+
+game (
+	name "Raiden (1997)(Atari Corp)[a2]"
+	description "Raiden (1997)(Atari Corp)[a2]"
+	rom ( name "Raiden (1997)(Atari Corp)[a2].lnx" size 262208 crc 51d8c2e8 md5 3e6d5cc1b6dd74311e5230101487e64b sha1 e02593514a5a081a9dceeebeb2972917a7939ede )
+)
+
+game (
+	name "Raiden (1997)(Atari Corp)[a]"
+	description "Raiden (1997)(Atari Corp)[a]"
+	rom ( name "Raiden (1997)(Atari Corp)[a].lnx" size 262208 crc 2702ba4f md5 566a6dfaeda0af5494a9169ed16ae538 sha1 752a58e02787afc145f5245aec3577ad4bff954e )
+)
+
+game (
+	name "Rampage (1991)(Atari Corp)"
+	description "Rampage (1991)(Atari Corp)"
+	rom ( name "Rampage (1991)(Atari Corp).lnx" size 262208 crc 490033c9 md5 4cd5f397be3188b06eae950e0941d535 sha1 52a0bf6aa79be75c7f97e4f2998469fb8f1c1596 )
+)
+
+game (
+	name "Rampage (1991)(Atari Corp)[b]"
+	description "Rampage (1991)(Atari Corp)[b]"
+	rom ( name "Rampage (1991)(Atari Corp)[b].lnx" size 262208 crc 47039625 md5 3c4e6f17cabf5d05fcaec5400b054e2e sha1 4a56552c64127d7303e79174a7440b772d020eec )
+)
+
+game (
+	name "Rampart (1991)(Tengen Inc)"
+	description "Rampart (1991)(Tengen Inc)"
+	rom ( name "Rampart (1991)(Tengen Inc).lnx" size 262208 crc adab7883 md5 07a0e4b554247ec2f4f70c3f88f25fb5 sha1 d024992d0032bce698273e81d7276fba9a19f75f )
+)
+
+game (
+	name "Rampart (1991)(Tengen Inc)[b]"
+	description "Rampart (1991)(Tengen Inc)[b]"
+	rom ( name "Rampart (1991)(Tengen Inc)[b].lnx" size 262208 crc ec4566bd md5 601079eabfbb121f673df7afc3f3b43b sha1 edd686dc268816c53d7f5232d96fc3358678d260 )
+)
+
+game (
+	name "Road Blasters (1990)(Tengen Inc)"
+	description "Road Blasters (1990)(Tengen Inc)"
+	rom ( name "Road Blasters (1990)(Tengen Inc).lnx" size 262208 crc 47f69051 md5 d9969b675a735c91d4b0f49577a07de9 sha1 bc005446fb9e96848823e8baa722c6a7761783e1 )
+)
+
+game (
+	name "Road Blasters (1990)(Tengen Inc)[b]"
+	description "Road Blasters (1990)(Tengen Inc)[b]"
+	rom ( name "Road Blasters (1990)(Tengen Inc)[b].lnx" size 262208 crc 449be149 md5 14b44c73311c5675f1cda2bbfb3a963b sha1 5b561875daf5ecd6399a2929700363d238fbaf4c )
+)
+
+game (
+	name "Road Riot (1994)(Tengen Inc)"
+	description "Road Riot (1994)(Tengen Inc)"
+	rom ( name "Road Riot (1994)(Tengen Inc).lnx" size 262208 crc 3bebb6d1 md5 509aabdf333ebdea7900d2d5f375d67c sha1 e6102b29727fd76177efd64c26f40dd6beee6888 )
+)
+
+game (
+	name "Robo Squash (1990)(Atari Corp)"
+	description "Robo Squash (1990)(Atari Corp)"
+	rom ( name "Robo Squash (1990)(Atari Corp).lnx" size 262208 crc 168be6b1 md5 99974f825cd06e8a8a9c3abec0490d67 sha1 c359f506fe7e31aa65dd2a3fbf55c337bf7743b7 )
+)
+
+game (
+	name "Robo Squash (1990)(Atari Corp)[a]"
+	description "Robo Squash (1990)(Atari Corp)[a]"
+	rom ( name "Robo Squash (1990)(Atari Corp)[a].lnx" size 131136 crc aeed3e7e md5 439fe9ed2de26999cdfc252fbb8e8329 sha1 a5a3204508207929b4b4e29d112b1653bb679b91 )
+)
+
+game (
+	name "Robotron 2084 (1991)(Shadowsoft Inc)"
+	description "Robotron 2084 (1991)(Shadowsoft Inc)"
+	rom ( name "Robotron 2084 (1991)(Shadowsoft Inc).lnx" size 131136 crc 28c789c8 md5 51af0aaa20b2551fc99c40ea1c803705 sha1 ffc7e5a8d1b9226642e09b91d50cc30534e3c609 )
+)
+
+game (
+	name "Robotron 2084 (1991)(Shadowsoft Inc)[a2]"
+	description "Robotron 2084 (1991)(Shadowsoft Inc)[a2]"
+	rom ( name "Robotron 2084 (1991)(Shadowsoft Inc)[a2].lnx" size 131136 crc 82729524 md5 a1b5cdfd4b873cbba56359bc982eafb6 sha1 e28f0c9f421f65c9fcbef0a479b2bb524d12da83 )
+)
+
+game (
+	name "Robotron 2084 (1991)(Shadowsoft Inc)[a]"
+	description "Robotron 2084 (1991)(Shadowsoft Inc)[a]"
+	rom ( name "Robotron 2084 (1991)(Shadowsoft Inc)[a].lnx" size 131136 crc 7117e9f7 md5 0a59a1f3e6ed9f0c10f6978089906c7d sha1 c2abd595741c61518cebd5012ea8e42d1c73c887 )
+)
+
+game (
+	name "Rygar - Legendary Warrior (1990)(Atari Corp)"
+	description "Rygar - Legendary Warrior (1990)(Atari Corp)"
+	rom ( name "Rygar - Legendary Warrior (1990)(Atari Corp).lnx" size 262208 crc 1dfca564 md5 9317cf888dd1de0979038bbe7bbe30e6 sha1 24e14920178e3481f161783b73efca0a1594c8cf )
+)
+
+game (
+	name "Rygar - Legendary Warrior (1990)(Atari Corp)[b]"
+	description "Rygar - Legendary Warrior (1990)(Atari Corp)[b]"
+	rom ( name "Rygar - Legendary Warrior (1990)(Atari Corp)[b].lnx" size 262208 crc 997e3dce md5 3f1bb4f8325bb88c67eedfdab55c0cde sha1 f1ee7e5d7ea5782f95bb1b8a8c2bb8573c1aa8c9 )
+)
+
+game (
+	name "S.T.U.N. Runner (1991)(Tengen Inc)"
+	description "S.T.U.N. Runner (1991)(Tengen Inc)"
+	rom ( name "S.T.U.N. Runner (1991)(Tengen Inc).lnx" size 262208 crc 4b3bf84f md5 509db06e5449563fdf0ca7db4e8f9c7f sha1 3ccd01902f07ab06f9c815ac75a4865a82e78599 )
+)
+
+game (
+	name "S.T.U.N. Runner (1991)(Tengen Inc)[b]"
+	description "S.T.U.N. Runner (1991)(Tengen Inc)[b]"
+	rom ( name "S.T.U.N. Runner (1991)(Tengen Inc)[b].lnx" size 262208 crc 946b66cf md5 3ed1749b66386c06521fcbe95ec5df72 sha1 c826ff7e268c4663d60858cd236762668af339c5 )
+)
+
+game (
+	name "Scrapyard Dog (1991)(Atari Corp)"
+	description "Scrapyard Dog (1991)(Atari Corp)"
+	rom ( name "Scrapyard Dog (1991)(Atari Corp).lnx" size 262208 crc ca0d1bda md5 ff82069ad465ada3cda8646edf0f2a8c sha1 112e6433deca07dd49e2adf1a436cacfe94af7d6 )
+)
+
+game (
+	name "Scrapyard Dog (1991)(Atari Corp)[b]"
+	description "Scrapyard Dog (1991)(Atari Corp)[b]"
+	rom ( name "Scrapyard Dog (1991)(Atari Corp)[b].lnx" size 262208 crc 40bc876d md5 4619ee217560a4b7db019d14fa341628 sha1 5d6d898c75a7eaa65c2a0408588a4fe68d9dbd43 )
+)
+
+game (
+	name "Shadow of the Beast (1992)(Atari Corp)"
+	description "Shadow of the Beast (1992)(Atari Corp)"
+	rom ( name "Shadow of the Beast (1992)(Atari Corp).lnx" size 262208 crc 904ff064 md5 9501cc5c4470b08b7e1ed37b9f2f61d2 sha1 04d0eec3d595b3da9fec55a20ef7fbc0d2a19c26 )
+)
+
+game (
+	name "Shadow of the Beast (1992)(Atari Corp)[a]"
+	description "Shadow of the Beast (1992)(Atari Corp)[a]"
+	rom ( name "Shadow of the Beast (1992)(Atari Corp)[a].lnx" size 262208 crc d43a8430 md5 648700bcaaecb43c9137983f7de1daf9 sha1 f4bda927017465cfd417d5ad8a62fa095cc3a101 )
+)
+
+game (
+	name "Shadow of the Beast (1992)(Atari Corp)[b]"
+	description "Shadow of the Beast (1992)(Atari Corp)[b]"
+	rom ( name "Shadow of the Beast (1992)(Atari Corp)[b].lnx" size 262208 crc 0948227a md5 0d4f5b05e235688f79d823ce87b5640f sha1 88b31086dee1c4a4f40c47aa6848d4fdd398c9b0 )
+)
+
+game (
+	name "Shanghai (1990)(Atari Corp)"
+	description "Shanghai (1990)(Atari Corp)"
+	rom ( name "Shanghai (1990)(Atari Corp).lnx" size 262208 crc 2441a8b7 md5 90efb9e7d76a6133fe52706ad3ce75a9 sha1 b091847b6734f5a5c3b0cb0cf0ac1dd633547b7b )
+)
+
+game (
+	name "Shanghai (1990)(Atari Corp)[a]"
+	description "Shanghai (1990)(Atari Corp)[a]"
+	rom ( name "Shanghai (1990)(Atari Corp)[a].lnx" size 131136 crc 78ba01fd md5 904d63d4ecbfeec012006a1c03fc273c sha1 dbc5749a30d05c3fbb7e247d80405dd026bc8add )
+)
+
+game (
+	name "Steel Talons (1991)(Tengen Inc)"
+	description "Steel Talons (1991)(Tengen Inc)"
+	rom ( name "Steel Talons (1991)(Tengen Inc).lnx" size 262208 crc ab814832 md5 607796a86c94e0949052038c2226ba3b sha1 2d3536b3c5f3b8aa9dd5d952dbd43beac3043f6f )
+)
+
+game (
+	name "Steel Talons (1991)(Tengen Inc)[b]"
+	description "Steel Talons (1991)(Tengen Inc)[b]"
+	rom ( name "Steel Talons (1991)(Tengen Inc)[b].lnx" size 262208 crc f4ffba4a md5 2c7ffa27a316adf42c2cc944f000329e sha1 ff7c4dc40b8a9b2a8453f4d17c75e4382e36ed8c )
+)
+
+game (
+	name "Super Asteroids & Missile Command (1994)(Atari Corp)"
+	description "Super Asteroids & Missile Command (1994)(Atari Corp)"
+	rom ( name "Super Asteroids & Missile Command (1994)(Atari Corp).lnx" size 262208 crc f4b32067 md5 bc10be970f2154ec150ff81dcecbf0e1 sha1 b71e330f717498d358cf4f3f726f44a75310d165 )
+)
+
+game (
+	name "Super Asteroids & Missile Command (1994)(Atari Corp)[a]"
+	description "Super Asteroids & Missile Command (1994)(Atari Corp)[a]"
+	rom ( name "Super Asteroids & Missile Command (1994)(Atari Corp)[a].lnx" size 131136 crc 7d8a25d1 md5 7d808a6cf9b2825668b45d8df1d9ac85 sha1 3b36e4e256ceabfd8ef8f86731d01bc191f7d5a7 )
+)
+
+game (
+	name "Super Off Road (1993)(Telegames)"
+	description "Super Off Road (1993)(Telegames)"
+	rom ( name "Super Off Road (1993)(Telegames).lnx" size 262208 crc c51b7a2f md5 96e84932cd52c41b45638dc17328f54f sha1 825540819ec2dfee70b6d189f13c6c07c39d387d )
+)
+
+game (
+	name "Super Skweek (1991)(Atari Corp)"
+	description "Super Skweek (1991)(Atari Corp)"
+	rom ( name "Super Skweek (1991)(Atari Corp).lnx" size 262208 crc 11b712f6 md5 32b73a75caf9896a8748fc73f309f960 sha1 a6185962f6106bad3b20abe5bd724c6ea8c7ba34 )
+)
+
+game (
+	name "Super Skweek (1991)(Atari Corp)[a]"
+	description "Super Skweek (1991)(Atari Corp)[a]"
+	rom ( name "Super Skweek (1991)(Atari Corp)[a].lnx" size 262208 crc d6084b14 md5 c6ae103d47ce91e6c6a3492865314d73 sha1 4a99491694bb384665b0d0932e659f466c4c289e )
+)
+
+game (
+	name "Super Skweek (1991)(Atari Corp)[b]"
+	description "Super Skweek (1991)(Atari Corp)[b]"
+	rom ( name "Super Skweek (1991)(Atari Corp)[b].lnx" size 262208 crc 8bef6b4f md5 ecdfa7975adf0aa9a75e067b00add2dc sha1 16d87f8d6862dda9f74ddeeb2d19b2f2df2c5c7e )
+)
+
+game (
+	name "Switchblade II (1992)(Atari Corp)"
+	description "Switchblade II (1992)(Atari Corp)"
+	rom ( name "Switchblade II (1992)(Atari Corp).lnx" size 262208 crc 63144491 md5 681e2ab38430dee04f390e9c4dd7506c sha1 01fb0609e292d84de23adee31be44605e9d0503c )
+)
+
+game (
+	name "Switchblade II (1992)(Atari Corp)[b]"
+	description "Switchblade II (1992)(Atari Corp)[b]"
+	rom ( name "Switchblade II (1992)(Atari Corp)[b].lnx" size 262208 crc 8b8b560f md5 0ff22e50aa8aad44bec3876ac0648735 sha1 03e83e5cf6d73916ce776e20783245ef846fd822 )
+)
+
+game (
+	name "T-Tris (1993)(Bastian Schick)(PD)"
+	description "T-Tris (1993)(Bastian Schick)(PD)"
+	rom ( name "T-Tris (1993)(Bastian Schick)(PD).lnx" size 15914 crc 2708643d md5 dbc654e957184ff2ad67c23fbe181540 sha1 75c2f2853996dcaf73a014a6f03b6590108b8d59 )
+)
+
+game (
+	name "T-Tris (1993)(Bastian Schick)(PD)[a]"
+	description "T-Tris (1993)(Bastian Schick)(PD)[a]"
+	rom ( name "T-Tris (1993)(Bastian Schick)(PD)[a].lnx" size 15700 crc a261fcbc md5 1b6a8a0b7f80332e9c7dfecaded8683e sha1 d337d0b38e22f42c92691ad2a80d48125d908b7f )
+)
+
+game (
+	name "Tetris (199x)(-)[b2]"
+	description "Tetris (199x)(-)[b2]"
+	rom ( name "Tetris (199x)(-)[b2].lnx" size 262175 crc 8c803b33 md5 fef524eb436443a08a5262b3cccbe2d5 sha1 df431f2748f54bdd6b77380712b04fc0dea609c0 )
+)
+
+game (
+	name "Tetris (199x)(-)[b3]"
+	description "Tetris (199x)(-)[b3]"
+	rom ( name "Tetris (199x)(-)[b3].lnx" size 262208 crc 22bfcedf md5 aca312086a30f6e6771301ceca9ffe51 sha1 a3c8fbb6ecbe989f589313e3a708f1dd674a8f46 )
+)
+
+game (
+	name "Tetris (199x)(-)[b]"
+	description "Tetris (199x)(-)[b]"
+	rom ( name "Tetris (199x)(-)[b].lnx" size 262208 crc 77a3d4f6 md5 33016f676ce09c52b6cb9708e6c99a8e sha1 7e1334bbe3ef96e4faa25fff410a7025031961b3 )
+)
+
+game (
+	name "Todd's Adventures - Slime World (1990)(Epyx Inc)"
+	description "Todd's Adventures - Slime World (1990)(Epyx Inc)"
+	rom ( name "Todd's Adventures - Slime World (1990)(Epyx Inc).lnx" size 262208 crc c1d05f3e md5 1624675fb086657ab8a899d86b4460ce sha1 efb11f6478718a8bb592115a1eb4090fdc8c3c57 )
+)
+
+game (
+	name "Todd's Adventures - Slime World (1990)(Epyx Inc)[a]"
+	description "Todd's Adventures - Slime World (1990)(Epyx Inc)[a]"
+	rom ( name "Todd's Adventures - Slime World (1990)(Epyx Inc)[a].lnx" size 131136 crc 39bf3c25 md5 aef290c0805b97b8373161f834f4a04e sha1 a1914219cc572c8e41becd61839abac72e811260 )
+)
+
+game (
+	name "Toki (1990)(Atari Corp)"
+	description "Toki (1990)(Atari Corp)"
+	rom ( name "Toki (1990)(Atari Corp).lnx" size 262208 crc 52b94a6c md5 9c5602556cb9b2c4ba305f0c2660fa49 sha1 9a01844c003e7755bd3b219f028fd2bd9eee1640 )
+)
+
+game (
+	name "Toki (1990)(Atari Corp)[b]"
+	description "Toki (1990)(Atari Corp)[b]"
+	rom ( name "Toki (1990)(Atari Corp)[b].lnx" size 262208 crc 7af58340 md5 c7ea2b425695001d58ac41e5aaaf0d65 sha1 7cc238fcc664b9923f2af1012dc093ba924463e9 )
+)
+
+game (
+	name "Tournament Cyberball 2072 (1991)(Tengen Inc)"
+	description "Tournament Cyberball 2072 (1991)(Tengen Inc)"
+	rom ( name "Tournament Cyberball 2072 (1991)(Tengen Inc).lnx" size 262208 crc 70d0c9bf md5 45757e3ed5a010e8881d2e458cb698c4 sha1 e2d5f95b046ec0950cf872413202ec504dbf5338 )
+)
+
+game (
+	name "Tournament Cyberball 2072 (1991)(Tengen Inc)[b]"
+	description "Tournament Cyberball 2072 (1991)(Tengen Inc)[b]"
+	rom ( name "Tournament Cyberball 2072 (1991)(Tengen Inc)[b].lnx" size 262208 crc a966742b md5 4233f380d56c6383360df7b6625748a7 sha1 7cf0895afa070571acf877f7c6dbbbf761166172 )
+)
+
+game (
+	name "Turbo Sub (1991)(Atari Corp)"
+	description "Turbo Sub (1991)(Atari Corp)"
+	rom ( name "Turbo Sub (1991)(Atari Corp).lnx" size 262208 crc 9d4ed688 md5 8d2d246ff6a23c160eea87c5aa708742 sha1 2bb868192ab67fad08dfb6b5c04c75866391497a )
+)
+
+game (
+	name "Turbo Sub (1991)(Atari Corp)[a]"
+	description "Turbo Sub (1991)(Atari Corp)[a]"
+	rom ( name "Turbo Sub (1991)(Atari Corp)[a].lnx" size 131136 crc 5247b5f3 md5 b80b1ed321cba56400d1913052b67251 sha1 b56ea80870a19ac3436a66c80447a2aa0ff49d83 )
+)
+
+game (
+	name "Viking Child (1991)(Atari Corp)"
+	description "Viking Child (1991)(Atari Corp)"
+	rom ( name "Viking Child (1991)(Atari Corp).lnx" size 262208 crc 45969eb0 md5 c163d7d7ec9d02ea782212829ade2f11 sha1 2a0a1e303da1d8fc2ea1c59a16398946787614a6 )
+)
+
+game (
+	name "Viking Child (1991)(Atari Corp)[b]"
+	description "Viking Child (1991)(Atari Corp)[b]"
+	rom ( name "Viking Child (1991)(Atari Corp)[b].lnx" size 262208 crc 31fe9876 md5 a98a43e076fb164bb4dd2fdd6b458e4e sha1 0012d0497445bd3dc1b6e577b0fc4dfc9354153f )
+)
+
+game (
+	name "Warbirds (1990)(Atari Corp)"
+	description "Warbirds (1990)(Atari Corp)"
+	rom ( name "Warbirds (1990)(Atari Corp).lnx" size 262208 crc 78574d46 md5 bd6d89a67bade4db329c2d22a0e86325 sha1 1ef0c1f7400debef08854bf521585bd3f10e7f67 )
+)
+
+game (
+	name "Warbirds (1990)(Atari Corp)[a2]"
+	description "Warbirds (1990)(Atari Corp)[a2]"
+	rom ( name "Warbirds (1990)(Atari Corp)[a2].lnx" size 131136 crc a6ae2301 md5 b8fff245c2e408d2f00f354043a2b280 sha1 340e76e14d0d1b961d2c2d2b1b7146381dda3a48 )
+)
+
+game (
+	name "Warbirds (1990)(Atari Corp)[a]"
+	description "Warbirds (1990)(Atari Corp)[a]"
+	rom ( name "Warbirds (1990)(Atari Corp)[a].lnx" size 131136 crc ff7e433e md5 dc641bc2d6188a6ca5dc179370f73375 sha1 8401148c26175cee32bb1be9657fd0f54a9571d9 )
+)
+
+game (
+	name "World Class Soccer (1992)(Atari Corp)"
+	description "World Class Soccer (1992)(Atari Corp)"
+	rom ( name "World Class Soccer (1992)(Atari Corp).lnx" size 262208 crc 9d929f2c md5 6034395479446fb1e1db7bb9c7912b3f sha1 cc2e2a4cefbaa3ec6961a4e23b2f37262f9816c8 )
+)
+
+game (
+	name "World Class Soccer (1992)(Atari Corp)[b2]"
+	description "World Class Soccer (1992)(Atari Corp)[b2]"
+	rom ( name "World Class Soccer (1992)(Atari Corp)[b2].lnx" size 262118 crc 1d460be0 md5 7302ad0ac6c71b73c5f6c38e1297235c sha1 dd8e6432f99d63e80885d4bce3d29c2e497737d3 )
+)
+
+game (
+	name "World Class Soccer (1992)(Atari Corp)[b]"
+	description "World Class Soccer (1992)(Atari Corp)[b]"
+	rom ( name "World Class Soccer (1992)(Atari Corp)[b].lnx" size 262208 crc 7a17a94c md5 e931d512299877e12670c8b755f556e2 sha1 795c4505016f6592a5610683c1cbf3923461972b )
+)
+
+game (
+	name "Xenophobe (1990)(Atari Corp)"
+	description "Xenophobe (1990)(Atari Corp)"
+	rom ( name "Xenophobe (1990)(Atari Corp).lnx" size 262208 crc bc1194f6 md5 501c937b3f74f7008dbf9716f5f21a87 sha1 3c9af585a1a8072a8dcaef893eb5dcf1f88a6f0d )
+)
+
+game (
+	name "Xenophobe (1990)(Atari Corp)[a2]"
+	description "Xenophobe (1990)(Atari Corp)[a2]"
+	rom ( name "Xenophobe (1990)(Atari Corp)[a2].lnx" size 131136 crc 03506a42 md5 211eee3a500bd3476193a940d0cf4a8c sha1 3674cb9868809ea9d1ec43fb2d16153ea92d07d5 )
+)
+
+game (
+	name "Xenophobe (1990)(Atari Corp)[a3]"
+	description "Xenophobe (1990)(Atari Corp)[a3]"
+	rom ( name "Xenophobe (1990)(Atari Corp)[a3].lnx" size 131136 crc 0d9f4bda md5 285188b282c94ed3b9deaa7a2d9e8424 sha1 987e529a0b7d28d10e4b84f407e5568cd5f3b9e3 )
+)
+
+game (
+	name "Xenophobe (1990)(Atari Corp)[a4]"
+	description "Xenophobe (1990)(Atari Corp)[a4]"
+	rom ( name "Xenophobe (1990)(Atari Corp)[a4].lnx" size 131136 crc 922a9dd0 md5 dbd710fcd817c7ea968f5e9a76a78e9b sha1 1f8a8e144d8ea19cfb2ec2f198060ba933b94849 )
+)
+
+game (
+	name "Xenophobe (1990)(Atari Corp)[a]"
+	description "Xenophobe (1990)(Atari Corp)[a]"
+	rom ( name "Xenophobe (1990)(Atari Corp)[a].lnx" size 262208 crc cb179390 md5 2ad17006d5eb6b208215f9d032c7b3a8 sha1 6ee8655770034ddaedaf9df9db46bad07009c3a1 )
+)
+
+game (
+	name "Xybots (1991)(Tengen Inc)"
+	description "Xybots (1991)(Tengen Inc)"
+	rom ( name "Xybots (1991)(Tengen Inc).lnx" size 262208 crc cac9a246 md5 acc1855c2574cc06879ad7a45fd6b183 sha1 c3c117db6060d2b99d914e96284d4c2da723d033 )
+)
+
+game (
+	name "Xybots (1991)(Tengen Inc)[b]"
+	description "Xybots (1991)(Tengen Inc)[b]"
+	rom ( name "Xybots (1991)(Tengen Inc)[b].lnx" size 262208 crc a612c8af md5 08fd7f04093e373f1acca5567ccce2f5 sha1 554b9bb0290f1ea1683e090886b837765eed7f0a )
+)
+
+game (
+	name "Zarlor Mercenary (1990)(Epyx Inc)"
+	description "Zarlor Mercenary (1990)(Epyx Inc)"
+	rom ( name "Zarlor Mercenary (1990)(Epyx Inc).lnx" size 262208 crc 5dae45c2 md5 bc7ab2e185ef16ae3baba57d32017634 sha1 5c3aaeffc70eb03fd31eb846cc1e108db86c5e15 )
+)
+
+game (
+	name "Zarlor Mercenary (1990)(Epyx Inc)[a]"
+	description "Zarlor Mercenary (1990)(Epyx Inc)[a]"
+	rom ( name "Zarlor Mercenary (1990)(Epyx Inc)[a].lnx" size 131136 crc 35bc4ff9 md5 3a52bca3464b7c3298711b95e89d190f sha1 24397a46e45ae34d7b06b222c56f950976ab44b6 )
+)
+
+game (
+	name "Zarlor Mercenary (1990)(Epyx Inc)[b]"
+	description "Zarlor Mercenary (1990)(Epyx Inc)[b]"
+	rom ( name "Zarlor Mercenary (1990)(Epyx Inc)[b].lnx" size 196672 crc b0ccd073 md5 f641df4a892e5f56123b130ee5781d5d sha1 b59f934c30e01ff9c55b1d37cea97b1462a08270 )
+)
+
+game (
+	name ZZZ-UNK-2001
+	description "ZZZ-UNK-2001"
+	rom ( name ZZZ-UNK-2001.lnx size 3189 crc 6169b53f md5 61f60d57a4f7f5b935e678221318ddd8 sha1 eb0f874fe9b3fe1b2de9539acbbe5ba9cd4e69cd )
+)
+
+game (
+	name ZZZ-UNK-2001_V2
+	description "ZZZ-UNK-2001_V2"
+	rom ( name ZZZ-UNK-2001_V2.lnx size 3320 crc 41473852 md5 a54352d00846c9db42699eb49f74009c sha1 09ad2af1f70467d2d29d1f1587a232e05e744da1 )
+)
+
+game (
+	name "ZZZ-UNK-A.P.B. - All Points Bulletin (UE)"
+	description "ZZZ-UNK-A.P.B. - All Points Bulletin (UE)"
+	rom ( name "ZZZ-UNK-A.P.B. - All Points Bulletin (UE).lnx" size 262208 crc f1e2ad2b md5 b7916ec869d9a3ca7287538d4add0280 sha1 8f9d2f1426e7072935075e051ecfac1ccf01683f )
+)
+
+game (
+	name "ZZZ-UNK-Alien vs Predator (U) (Beta)"
+	description "ZZZ-UNK-Alien vs Predator (U) (Beta)"
+	rom ( name "ZZZ-UNK-Alien vs Predator (U) (Beta).lnx" size 262208 crc 53177e67 md5 46c3831a7de6bce79894f7fe2b7c87fa sha1 70ac9703cc3050b40efcf243e64784a8c0833613 )
+)
+
+game (
+	name "ZZZ-UNK-Anti A-Bomb Aircraft Artillery (2005) (Sampo)"
+	description "ZZZ-UNK-Anti A-Bomb Aircraft Artillery (2005) (Sampo)"
+	rom ( name "ZZZ-UNK-Anti A-Bomb Aircraft Artillery (2005) (Sampo).lnx" size 36359 crc d0177377 md5 43c17ac1ec4dd445eea34f76e19ef557 sha1 637d816b367dd6879342b5714820e18034ff754d )
+)
+
+game (
+	name ZZZ-UNK-ATARI
+	description "ZZZ-UNK-ATARI"
+	rom ( name ZZZ-UNK-ATARI.lnx size 831 crc 78e80f25 md5 3a40f1316fa76fce317ea6e8d4d96933 sha1 400451057d358365596894585ca8460ce5ac4170 )
+)
+
+game (
+	name "ZZZ-UNK-Awesome Golf (UE)"
+	description "ZZZ-UNK-Awesome Golf (UE)"
+	rom ( name "ZZZ-UNK-Awesome Golf (UE).lnx" size 262208 crc 039a28fa md5 453154bc8d1c241ef87b6a5abb531139 sha1 9786d7144b813f3c9090802d1342e22e0fe0a17d )
+)
+
+game (
+	name "ZZZ-UNK-Baseball Heroes (UE) [b]"
+	description "ZZZ-UNK-Baseball Heroes (UE) [b]"
+	rom ( name "ZZZ-UNK-Baseball Heroes (UE) [b].lnx" size 262208 crc 0424b7f5 md5 4d7a3a2a1c579895b85f821eb9698aad sha1 6512e2023975d01f41e3168c2edeb20102f2867c )
+)
+
+game (
+	name "ZZZ-UNK-Basketbrawl (UE)"
+	description "ZZZ-UNK-Basketbrawl (UE)"
+	rom ( name "ZZZ-UNK-Basketbrawl (UE).lnx" size 131136 crc 5162bd56 md5 ea189fde4d1692efb8b79daf725191f8 sha1 a8a288dadfb5eadd4469028438999e21d5e35b6c )
+)
+
+game (
+	name "ZZZ-UNK-Batman Returns (1992)"
+	description "ZZZ-UNK-Batman Returns (1992)"
+	rom ( name "ZZZ-UNK-Batman Returns (1992).lnx" size 262208 crc 9f7f6262 md5 febdd477081b18608eb227f8b9d235f3 sha1 fdaa6f77189067c7a9f4a646467607496437d984 )
+)
+
+game (
+	name "ZZZ-UNK-Batman Returns (UE)"
+	description "ZZZ-UNK-Batman Returns (UE)"
+	rom ( name "ZZZ-UNK-Batman Returns (UE).lnx" size 262208 crc 20666712 md5 35a86bd11eb3777b5635ab48bd0d7ccf sha1 d7cd14a1ac0569f038b9447ce9a4310d70c78cbb )
+)
+
+game (
+	name "ZZZ-UNK-Battle Wheels (UE)"
+	description "ZZZ-UNK-Battle Wheels (UE)"
+	rom ( name "ZZZ-UNK-Battle Wheels (UE).lnx" size 131136 crc 679ca8d2 md5 5f34939e686615b235326b5a3d6d6b74 sha1 0baee82ab11bff0c6872dbcfce764e979e99615f )
+)
+
+game (
+	name "ZZZ-UNK-Battlezone 2000 (UE)"
+	description "ZZZ-UNK-Battlezone 2000 (UE)"
+	rom ( name "ZZZ-UNK-Battlezone 2000 (UE).lnx" size 262208 crc 37e702f6 md5 c29e33450494bf945e1b636cb8e216dc sha1 f401496c3f0e9fc438ed32070e142dc5829787b4 )
+)
+
+game (
+	name "ZZZ-UNK-Befok (20021012) by Jum Hig (PD)"
+	description "ZZZ-UNK-Befok (20021012) by Jum Hig (PD)"
+	rom ( name "ZZZ-UNK-Befok (20021012) by Jum Hig (PD).lnx" size 31452 crc a5244636 md5 0c19945c478e8629b92d64e075d225a1 sha1 1ef8e83541386277edc3298b89e67bc299924e6b )
+)
+
+game (
+	name "ZZZ-UNK-Befok#Maze (20021012) by Jum Hig (PD)"
+	description "ZZZ-UNK-Befok#Maze (20021012) by Jum Hig (PD)"
+	rom ( name "ZZZ-UNK-Befok#Maze (20021012) by Jum Hig (PD).lnx" size 5421 crc 72386df0 md5 881b0b019d36c30de7dbc5510b2c7266 sha1 9361686aebeb29971dc0a3fdd434335c0d8cb05d )
+)
+
+game (
+	name "ZZZ-UNK-Befok#Packraw (20021012) by Jum Hig (PD)"
+	description "ZZZ-UNK-Befok#Packraw (20021012) by Jum Hig (PD)"
+	rom ( name "ZZZ-UNK-Befok#Packraw (20021012) by Jum Hig (PD).lnx" size 1703 crc 984c38c6 md5 9a10fadd76d7a31dd74990836e1b06da sha1 a8d201688d81493240de9cb27cdebd35961cdd24 )
+)
+
+game (
+	name "ZZZ-UNK-Bill & Ted's Excellent Adventure (UE)"
+	description "ZZZ-UNK-Bill & Ted's Excellent Adventure (UE)"
+	rom ( name "ZZZ-UNK-Bill & Ted's Excellent Adventure (UE).lnx" size 262208 crc 1323d4ee md5 b83693a793b3df48ee566de2c40e3545 sha1 7c48ed39312138f40fd845b9626cdfb31c12fb26 )
+)
+
+game (
+	name "ZZZ-UNK-Block Out (UE)"
+	description "ZZZ-UNK-Block Out (UE)"
+	rom ( name "ZZZ-UNK-Block Out (UE).lnx" size 131136 crc 2cd45bef md5 5f1c97e1274e18cfc8f22f581114b25e sha1 10002fdea38d2616957ca00f1f9de74e4ea9c861 )
+)
+
+game (
+	name "ZZZ-UNK-Blue Lightning (U) (Demo)"
+	description "ZZZ-UNK-Blue Lightning (U) (Demo)"
+	rom ( name "ZZZ-UNK-Blue Lightning (U) (Demo).lnx" size 131136 crc afe06339 md5 a7e5bbd020a1d4c82dfff09eeb933b09 sha1 493e0efd1f0985be04e9216ae477c85afce10ad3 )
+)
+
+game (
+	name "ZZZ-UNK-Blue Lightning (UE)"
+	description "ZZZ-UNK-Blue Lightning (UE)"
+	rom ( name "ZZZ-UNK-Blue Lightning (UE).lnx" size 131136 crc caf681ad md5 fc07e96ce8bac113dae8144f592ff8a3 sha1 cf183398642cc8ef7465218db845e572c16ae8ce )
+)
+
+game (
+	name ZZZ-UNK-bombe
+	description "ZZZ-UNK-bombe"
+	rom ( name ZZZ-UNK-bombe.lnx size 51 crc 61c6f724 md5 ef325f9b9c889c6d203704e17191da38 sha1 dd16e120afac40f1f9c33792aec882904d7b0872 )
+)
+
+game (
+	name "ZZZ-UNK-Booster (2005) (jum)"
+	description "ZZZ-UNK-Booster (2005) (jum)"
+	rom ( name "ZZZ-UNK-Booster (2005) (jum).lnx" size 9050 crc c61b957c md5 7cb5d72969d47da150ecb78ccf6e7aef sha1 fb5a877f4e28f9af8a8825e5230cd13a033fc000 )
+)
+
+game (
+	name "ZZZ-UNK-Booster (WIP 2005-12-28)"
+	description "ZZZ-UNK-Booster (WIP 2005-12-28)"
+	rom ( name "ZZZ-UNK-Booster (WIP 2005-12-28).lnx" size 34773 crc f6fb519c md5 7849a21194572f6374d50ba52f43155f sha1 b14faf3a804d4dff0d99f807ce1bfc5fc57bb7dc )
+)
+
+game (
+	name ZZZ-UNK-booster_01
+	description "ZZZ-UNK-booster_01"
+	rom ( name ZZZ-UNK-booster_01.lnx size 30811 crc feb0d882 md5 d308bb3e4822532e4fe8e7d9a3e4c81c sha1 1858885534bf1327beb92b5f1162627da8b49673 )
+)
+
+game (
+	name ZZZ-UNK-booster_03
+	description "ZZZ-UNK-booster_03"
+	rom ( name ZZZ-UNK-booster_03.lnx size 32782 crc dad8720b md5 63a56d689b485df8c8269faf908611b0 sha1 83b67134c4bac0b2e6991f4cdab17a542aba2d84 )
+)
+
+game (
+	name "ZZZ-UNK-Bubble Trouble (1997) (Telegames)"
+	description "ZZZ-UNK-Bubble Trouble (1997) (Telegames)"
+	rom ( name "ZZZ-UNK-Bubble Trouble (1997) (Telegames).lnx" size 262208 crc fccfac57 md5 851c252cc4d72b8ef55944621ae258e8 sha1 9fb0ccec1fb3b00d36adc5e5b11f387f93e6ae7d )
+)
+
+game (
+	name "ZZZ-UNK-Bubble Trouble (UE)"
+	description "ZZZ-UNK-Bubble Trouble (UE)"
+	rom ( name "ZZZ-UNK-Bubble Trouble (UE).lnx" size 262208 crc 34244b1e md5 078b49ced6643e4755ed77cbc1b048da sha1 f01d83b1fb40e6231622f26491c6b6c5c1add685 )
+)
+
+game (
+	name ZZZ-UNK-building
+	description "ZZZ-UNK-building"
+	rom ( name ZZZ-UNK-building.lnx size 19392 crc 1fbce8bf md5 3640e13b193047f763735a9864cf3748 sha1 fdfb1f1207ef659154fdf257406ce7c99a3c6aab )
+)
+
+game (
+	name ZZZ-UNK-bullet
+	description "ZZZ-UNK-bullet"
+	rom ( name ZZZ-UNK-bullet.lnx size 51 crc d556f671 md5 2f6986d6998718467a006eb4d20eb6bf sha1 b96b48eba62b8e907ffbb74591518b76f661a6cf )
+)
+
+game (
+	name "ZZZ-UNK-California Games (UE)"
+	description "ZZZ-UNK-California Games (UE)"
+	rom ( name "ZZZ-UNK-California Games (UE).lnx" size 131136 crc b08c0d45 md5 2bfced2063318da6d2fe4623e2137049 sha1 11838318e66f9e4c5591f73b3e3dfd328c428219 )
+)
+
+game (
+	name ZZZ-UNK-CARDHEAD-
+	description "ZZZ-UNK-CARDHEAD-"
+	rom ( name ZZZ-UNK-CARDHEAD-.lnx size 80 crc 0e3c3c1d md5 643a98e485408810726f41f0dae8bfdc sha1 faf0a40d25d9fc1268238051a5cc3a5c831485a1 )
+)
+
+game (
+	name "ZZZ-UNK-Centipede (Prototype) (1987) (Shadowsoft)"
+	description "ZZZ-UNK-Centipede (Prototype) (1987) (Shadowsoft)"
+	rom ( name "ZZZ-UNK-Centipede (Prototype) (1987) (Shadowsoft).lnx" size 131136 crc bf4fdd20 md5 212adcaa70843e2413ed17363443e59f sha1 e9f3d8868b764f635f522e748f837bb4584f7cb9 )
+)
+
+game (
+	name "ZZZ-UNK-Centipede (U) (Beta)"
+	description "ZZZ-UNK-Centipede (U) (Beta)"
+	rom ( name "ZZZ-UNK-Centipede (U) (Beta).lnx" size 131136 crc 071a2e46 md5 803c62b1416c13770a980552c3237d0b sha1 9151f07e267170c55d22bbb2418c5fd37bf86794 )
+)
+
+game (
+	name "ZZZ-UNK-Checkered Flag (UE)"
+	description "ZZZ-UNK-Checkered Flag (UE)"
+	rom ( name "ZZZ-UNK-Checkered Flag (UE).lnx" size 262208 crc 1edc4275 md5 d7fe44f4fc58bb7cdcaafc84042c3003 sha1 b0d1ca1d6844a69b50b6983e7676e5e7bdfc936b )
+)
+
+game (
+	name "ZZZ-UNK-Chip's Challenge (1989)"
+	description "ZZZ-UNK-Chip's Challenge (1989)"
+	rom ( name "ZZZ-UNK-Chip's Challenge (1989).lnx" size 131136 crc 073a0499 md5 526f20adc03d92691a2eb60f95fda525 sha1 6cf70e3cc59f11e92b9eea2b7906750338093e1a )
+)
+
+game (
+	name "ZZZ-UNK-Chip's Challenge (UE)"
+	description "ZZZ-UNK-Chip's Challenge (UE)"
+	rom ( name "ZZZ-UNK-Chip's Challenge (UE).lnx" size 131136 crc 7a5c55f1 md5 7f98dec620345005f32cd0056b50f056 sha1 cd0e82d241ff2f7618f4f7b0a27d08c7f6e25d69 )
+)
+
+game (
+	name "ZZZ-UNK-Choplifter (2000) by Jum Hig (PD)"
+	description "ZZZ-UNK-Choplifter (2000) by Jum Hig (PD)"
+	rom ( name "ZZZ-UNK-Choplifter (2000) by Jum Hig (PD).lnx" size 8605 crc c2751780 md5 41f704acc2b1629e52bb7471e3d05d01 sha1 424a7215f8e7bd73f0f8326c731ab6c855948125 )
+)
+
+game (
+	name "ZZZ-UNK-Choplifter by Jum High (PD)"
+	description "ZZZ-UNK-Choplifter by Jum High (PD)"
+	rom ( name "ZZZ-UNK-Choplifter by Jum High (PD).lnx" size 15805 crc ea95c004 md5 f0023ddfed214daabb4099de7ef53ab7 sha1 db71d2ccab25b59f86cb381e61d27be9e0c8f027 )
+)
+
+game (
+	name "ZZZ-UNK-Chopper (2005)(Higgs, James)"
+	description "ZZZ-UNK-Chopper (2005)(Higgs, James)"
+	rom ( name "ZZZ-UNK-Chopper (2005)(Higgs, James).lnx" size 34464 crc 8b23867e md5 fe6150443e0bfedd9b627ee31db3bd79 sha1 4e4ed7aaa3997b5c044bf9759f34e3d9e959f183 )
+)
+
+game (
+	name ZZZ-UNK-clock
+	description "ZZZ-UNK-clock"
+	rom ( name ZZZ-UNK-clock.lnx size 51 crc f684dfa4 md5 6b338b5838e0df773cff8f0b1b8e4001 sha1 19c8fb3816c7132ace7236ae3844c96a765683f6 )
+)
+
+game (
+	name "ZZZ-UNK-Crystal Mines II (1990) [o]"
+	description "ZZZ-UNK-Crystal Mines II (1990) [o]"
+	rom ( name "ZZZ-UNK-Crystal Mines II (1990) [o].lnx" size 262208 crc b76e1ee1 md5 3cbc852663e0a58624fa7b42559fe0af sha1 9c46ac3f86f56d31b86485fbc5db392a18d28970 )
+)
+
+game (
+	name "ZZZ-UNK-Crystal Mines II (UE)"
+	description "ZZZ-UNK-Crystal Mines II (UE)"
+	rom ( name "ZZZ-UNK-Crystal Mines II (UE).lnx" size 131136 crc bec772d4 md5 b5eed732f25a8aea27809c81391bab76 sha1 b3ee526041fe1db6b6421d1fdb543208ce093d7a )
+)
+
+game (
+	name ZZZ-UNK-dead
+	description "ZZZ-UNK-dead"
+	rom ( name ZZZ-UNK-dead.lnx size 51 crc 318a62ca md5 2ae9b990baf2c194ed8850ad45f86151 sha1 a677e2635f427bfd54b949cf37cbee84375590b9 )
+)
+
+game (
+	name "ZZZ-UNK-Desert Strike - Return to the Gulf (UE)"
+	description "ZZZ-UNK-Desert Strike - Return to the Gulf (UE)"
+	rom ( name "ZZZ-UNK-Desert Strike - Return to the Gulf (UE).lnx" size 262208 crc beb5fa35 md5 e37ef18af1c4f91e6ff95ddb09a7a33f sha1 3582cd61ab7a252f76f425828035d1d7c3575f2e )
+)
+
+game (
+	name "ZZZ-UNK-dgate [prototype]"
+	description "ZZZ-UNK-dgate [prototype]"
+	rom ( name "ZZZ-UNK-dgate [prototype].lnx" size 262208 crc db339a17 md5 8600efd2dd8ee812de00a5ce7631293d sha1 3db7dbf520245b3c824b536e6528084e5d417acb )
+)
+
+game (
+	name "ZZZ-UNK-Dinolympics (UE)"
+	description "ZZZ-UNK-Dinolympics (UE)"
+	rom ( name "ZZZ-UNK-Dinolympics (UE).lnx" size 262208 crc 5721892a md5 6e0bb9c2280f1b99802e2c7cf24cefc5 sha1 bf9e9e475a5a8245fad949ee1fe10cd5a9e86916 )
+)
+
+game (
+	name "ZZZ-UNK-Dirty Larry - Renegade Cop (UE)"
+	description "ZZZ-UNK-Dirty Larry - Renegade Cop (UE)"
+	rom ( name "ZZZ-UNK-Dirty Larry - Renegade Cop (UE).lnx" size 262208 crc d27c1e67 md5 3a1de51a589cfd2d9476a8257dd14596 sha1 e8c1307313f2fb2dbf4d510a1004be1adcf90f78 )
+)
+
+game (
+	name "ZZZ-UNK-Double Dragon (UE)"
+	description "ZZZ-UNK-Double Dragon (UE)"
+	rom ( name "ZZZ-UNK-Double Dragon (UE).lnx" size 262208 crc fce5ead5 md5 084d9ef4d4d47aa3265b1f1e710e7c89 sha1 8ec29459ca92fd8ed0e9c549d232330f7650f6af )
+)
+
+game (
+	name "ZZZ-UNK-Dracula - The Undead (UE)"
+	description "ZZZ-UNK-Dracula - The Undead (UE)"
+	rom ( name "ZZZ-UNK-Dracula - The Undead (UE).lnx" size 262208 crc 34a29117 md5 d2c24d8f78aa46c78de9714d5c67b35d sha1 ba884a2633c78067000e183d84339f9268dfb810 )
+)
+
+game (
+	name "ZZZ-UNK-Electrocop (UE)"
+	description "ZZZ-UNK-Electrocop (UE)"
+	rom ( name "ZZZ-UNK-Electrocop (UE).lnx" size 131136 crc ad941777 md5 8e01a004a5a253a8a906f7475c6eaf5e sha1 a776c2961eeebfece9606b3b6538c4d2246023a3 )
+)
+
+game (
+	name "ZZZ-UNK-European Soccer Challenge (1993) (Telegames)"
+	description "ZZZ-UNK-European Soccer Challenge (1993) (Telegames)"
+	rom ( name "ZZZ-UNK-European Soccer Challenge (1993) (Telegames).lnx" size 131136 crc d714546d md5 446950382ff3dcad3b8e2aa135aceff9 sha1 c3b6ed0e72aa6fcfab0ac72ce682fdd304314dff )
+)
+
+game (
+	name "ZZZ-UNK-European Soccer Challenge (UE)"
+	description "ZZZ-UNK-European Soccer Challenge (UE)"
+	rom ( name "ZZZ-UNK-European Soccer Challenge (UE).lnx" size 131136 crc e83091e5 md5 e15a7756b1fae4fd3cf1387ee8b37e6c sha1 98a8de4bfe48b919efd8f9d36836a1f9b203d249 )
+)
+
+game (
+	name "ZZZ-UNK-Eye of the Beholder (U) (Beta)"
+	description "ZZZ-UNK-Eye of the Beholder (U) (Beta)"
+	rom ( name "ZZZ-UNK-Eye of the Beholder (U) (Beta).lnx" size 131136 crc 7bcdac80 md5 879e80fbda6eb4c8889bd0f062904cdb sha1 fb8a6abd922cad9151ea75010018e18a9950d05b )
+)
+
+game (
+	name ZZZ-UNK-fahne
+	description "ZZZ-UNK-fahne"
+	rom ( name ZZZ-UNK-fahne.lnx size 51 crc 3126a9dd md5 78d88a6e8ae2a551be8a12944473e7e5 sha1 094096bf34af1653f25245f49a3268ed6d492f93 )
+)
+
+game (
+	name "ZZZ-UNK-Fat Bobby (UE)"
+	description "ZZZ-UNK-Fat Bobby (UE)"
+	rom ( name "ZZZ-UNK-Fat Bobby (UE).lnx" size 262208 crc 972d0bf7 md5 33965e3359fae4bdba842e1af676c0b9 sha1 a90e83762d3f38d93406015e73e687bf68a022e8 )
+)
+
+game (
+	name "ZZZ-UNK-Fidelity Ultimate Chess Challenge, The (UE)"
+	description "ZZZ-UNK-Fidelity Ultimate Chess Challenge, The (UE)"
+	rom ( name "ZZZ-UNK-Fidelity Ultimate Chess Challenge, The (UE).lnx" size 131136 crc 6e485f59 md5 d7c3d1d87e50aeabbc00c7b03d32cbb9 sha1 654e9f864e7fecdb4f78890a94895a4033cde928 )
+)
+
+game (
+	name "ZZZ-UNK-Gates of Zendocon, The (UE)"
+	description "ZZZ-UNK-Gates of Zendocon, The (UE)"
+	rom ( name "ZZZ-UNK-Gates of Zendocon, The (UE).lnx" size 131136 crc 594fc374 md5 f81b078f45387a45277a99efc6ea9672 sha1 b71a9abc3672e2d55be48699e7409b71d6b2390f )
+)
+
+game (
+	name "ZZZ-UNK-Gauntlet - The Third Encounter (UE)"
+	description "ZZZ-UNK-Gauntlet - The Third Encounter (UE)"
+	rom ( name "ZZZ-UNK-Gauntlet - The Third Encounter (UE).lnx" size 131136 crc c291dd38 md5 84626cefb5431ceccf58c5700ce1ec11 sha1 04fa51694e124143731fb2c8c1b026b542792e2f )
+)
+
+game (
+	name "ZZZ-UNK-Gordo 106 - The Mutated Lab Monkey (1993)"
+	description "ZZZ-UNK-Gordo 106 - The Mutated Lab Monkey (1993)"
+	rom ( name "ZZZ-UNK-Gordo 106 - The Mutated Lab Monkey (1993).lnx" size 262208 crc 89f3f3af md5 81c2dbc051406a8b9b0b92507daab5c7 sha1 1b2f92b642ca902463d06de60841947472cd56fc )
+)
+
+game (
+	name "ZZZ-UNK-Gordo 106 - The Mutated Lab Monkey (UE)"
+	description "ZZZ-UNK-Gordo 106 - The Mutated Lab Monkey (UE)"
+	rom ( name "ZZZ-UNK-Gordo 106 - The Mutated Lab Monkey (UE).lnx" size 262208 crc d513602c md5 99d889282dc870751057f53072334a05 sha1 3a15180d99283e102a747cea2eba6f43d897789f )
+)
+
+game (
+	name ZZZ-UNK-GOTBALLS
+	description "ZZZ-UNK-GOTBALLS"
+	rom ( name ZZZ-UNK-GOTBALLS.lnx size 14151 crc 87ebbc37 md5 c88e5fa908278bc493daf3cdbfc6384f sha1 3efd34b21b3578f7909876a2aae3e9d931419144 )
+)
+
+game (
+	name ZZZ-UNK-gras
+	description "ZZZ-UNK-gras"
+	rom ( name ZZZ-UNK-gras.lnx size 51 crc aaa24f6b md5 b90b31b14c67cc917c66210f33a1709d sha1 b4cd6b9cea1392649d40ff68b26be9bc44f429d5 )
+)
+
+game (
+	name "ZZZ-UNK-gravitar physics techdemo"
+	description "ZZZ-UNK-gravitar physics techdemo"
+	rom ( name "ZZZ-UNK-gravitar physics techdemo.lnx" size 7631 crc 3c6c100d md5 fb8b4f50bb7e20742c8bad2d1cb3efb6 sha1 4de728290ca171eaa4a81a2a1eaa7b17f6147363 )
+)
+
+game (
+	name ZZZ-UNK-gwn_demo
+	description "ZZZ-UNK-gwn_demo"
+	rom ( name ZZZ-UNK-gwn_demo.lnx size 262208 crc 67a32363 md5 871a7e695d1dd5fcdf57bb9f243a8709 sha1 423ca1efd351e47c63ea964b17775b68e40b9bfa )
+)
+
+game (
+	name "ZZZ-UNK-Hallo Welt! (1996) by Bjoern Spruck (PD)"
+	description "ZZZ-UNK-Hallo Welt! (1996) by Bjoern Spruck (PD)"
+	rom ( name "ZZZ-UNK-Hallo Welt! (1996) by Bjoern Spruck (PD).lnx" size 2044 crc 85c2ea2b md5 2aa9e7a148c0a15fe187c06274c745e7 sha1 cb90292ff1bec808502aed82d3d02104e695cf68 )
+)
+
+game (
+	name "ZZZ-UNK-Hallo Welt! 2 (1996) by Bjoern Spruck (PD)"
+	description "ZZZ-UNK-Hallo Welt! 2 (1996) by Bjoern Spruck (PD)"
+	rom ( name "ZZZ-UNK-Hallo Welt! 2 (1996) by Bjoern Spruck (PD).lnx" size 1972 crc cdb08ebc md5 ccd2e07e255be9e2a81f8fe197a2868d sha1 89791f1a785bdf2fd115dee0831d4dd60ff64a41 )
+)
+
+game (
+	name "ZZZ-UNK-Hard Drivin' (UE)"
+	description "ZZZ-UNK-Hard Drivin' (UE)"
+	rom ( name "ZZZ-UNK-Hard Drivin' (UE).lnx" size 131136 crc 7df53e28 md5 528bfe5f3c240353bb07322319a232f7 sha1 ea9a005e0e0b04f17df71a97aee2c3082bc73af8 )
+)
+
+game (
+	name "ZZZ-UNK-Hockey (1992) [b]"
+	description "ZZZ-UNK-Hockey (1992) [b]"
+	rom ( name "ZZZ-UNK-Hockey (1992) [b].lnx" size 262208 crc 2fe64aa6 md5 7a3cda50d2b910abb2635e8409567c47 sha1 98e2524f2dd8a441f8ae9c5c8fe0a15f4160b940 )
+)
+
+game (
+	name "ZZZ-UNK-Hockey (UE)"
+	description "ZZZ-UNK-Hockey (UE)"
+	rom ( name "ZZZ-UNK-Hockey (UE).lnx" size 262208 crc efadb2d7 md5 ef057bf002a0f1908aaf72199262b900 sha1 4e0811ab21e86344a46d0292f73c637a616e89c4 )
+)
+
+game (
+	name "ZZZ-UNK-Hydra (UE)"
+	description "ZZZ-UNK-Hydra (UE)"
+	rom ( name "ZZZ-UNK-Hydra (UE).lnx" size 262208 crc e41df9bc md5 479004af74babcfcba8e655e324579b7 sha1 dbb84f5a3ce7996a3dfc8a7a8de5a3ccaea3c061 )
+)
+
+game (
+	name "ZZZ-UNK-INSERT [a]"
+	description "ZZZ-UNK-INSERT [a]"
+	rom ( name "ZZZ-UNK-INSERT [a].lnx" size 880 crc fa3311d6 md5 aa3b8ecedf3b913067752a85bd0ce4ca sha1 d8a7bffa87d3ada887deeb2e325a40e248057bea )
+)
+
+game (
+	name "ZZZ-UNK-Ishido - The Way of Stones (UE)"
+	description "ZZZ-UNK-Ishido - The Way of Stones (UE)"
+	rom ( name "ZZZ-UNK-Ishido - The Way of Stones (UE).lnx" size 131136 crc 4cfbbdec md5 206b790b485cb733f55f02875bd21070 sha1 34aabab3ef0922904c089eeb4790d80b957e6b92 )
+)
+
+game (
+	name "ZZZ-UNK-Ishido - The Way of the Stones (1991)"
+	description "ZZZ-UNK-Ishido - The Way of the Stones (1991)"
+	rom ( name "ZZZ-UNK-Ishido - The Way of the Stones (1991).lnx" size 131136 crc 28bf6bf8 md5 24e8851dee2e9afc257857a307ef6b41 sha1 080205e1119300a52baf60e0606e9b712ea9ede5 )
+)
+
+game (
+	name "ZZZ-UNK-Jimmy Conners' Tennis (UE)"
+	description "ZZZ-UNK-Jimmy Conners' Tennis (UE)"
+	rom ( name "ZZZ-UNK-Jimmy Conners' Tennis (UE).lnx" size 524352 crc 41b8d581 md5 8bbf58dc3c86ff75d37ab05612c49452 sha1 ff01ea8e715e3264b5b0a11410f02701a8693093 )
+)
+
+game (
+	name "ZZZ-UNK-Joust (1993) (Williams)"
+	description "ZZZ-UNK-Joust (1993) (Williams)"
+	rom ( name "ZZZ-UNK-Joust (1993) (Williams).lnx" size 131136 crc 2f17bd9b md5 51af41eb2c2e7e671fffbbe925bcd743 sha1 ec0cc1ed2ee26ab965c3b4c378434e83f419f7e1 )
+)
+
+game (
+	name "ZZZ-UNK-Joust (UE)"
+	description "ZZZ-UNK-Joust (UE)"
+	rom ( name "ZZZ-UNK-Joust (UE).lnx" size 131136 crc 4db97f36 md5 08bed75c87cf42602302bee9721bc07e sha1 7734f59475a3e78217af0eac2b1ece919ec2989c )
+)
+
+game (
+	name "ZZZ-UNK-Karateboy minidemo"
+	description "ZZZ-UNK-Karateboy minidemo"
+	rom ( name "ZZZ-UNK-Karateboy minidemo.lnx" size 46606 crc 2d47ccb7 md5 9c959239cbf0643c8a45b5329309be1d sha1 92491ee10afe269573da7c27948592a6b15b8f57 )
+)
+
+game (
+	name "ZZZ-UNK-Klax (UE)"
+	description "ZZZ-UNK-Klax (UE)"
+	rom ( name "ZZZ-UNK-Klax (UE).lnx" size 262208 crc de2551db md5 554ad4121e7f068b2f7c57710ba252f5 sha1 62ca2ae3278a520a4390a887d8944fce828b6b2a )
+)
+
+game (
+	name ZZZ-UNK-knight
+	description "ZZZ-UNK-knight"
+	rom ( name ZZZ-UNK-knight.lnx size 40137 crc 0d4d1156 md5 85f0417d2f640287df925ce5618749a3 sha1 4818b273b7a4a39aa577bcd520fd733b8a54f2f4 )
+)
+
+game (
+	name "ZZZ-UNK-knight moves"
+	description "ZZZ-UNK-knight moves"
+	rom ( name "ZZZ-UNK-knight moves.lnx" size 2894 crc 6dfe2794 md5 d0efb2a109f968c3a4daac933b0f5410 sha1 7888e29f742a79e34dafc7ad8da52c788f9d7452 )
+)
+
+game (
+	name "ZZZ-UNK-Knightmare minidemo"
+	description "ZZZ-UNK-Knightmare minidemo"
+	rom ( name "ZZZ-UNK-Knightmare minidemo.lnx" size 32490 crc b1f4c540 md5 d5a871994a7e88432ff7c52fc759f3d5 sha1 13a2bde65ceb2bd5012ff3635ece2d30d800ba8f )
+)
+
+game (
+	name "ZZZ-UNK-Krazy Ace - Miniature Golf (UE)"
+	description "ZZZ-UNK-Krazy Ace - Miniature Golf (UE)"
+	rom ( name "ZZZ-UNK-Krazy Ace - Miniature Golf (UE).lnx" size 262208 crc b9cc5ffb md5 aee0e0418fd72ae3005d4a02fdc7468d sha1 b34275c62c92e1d3b3a9ae0cdae3f108e9875147 )
+)
+
+game (
+	name "ZZZ-UNK-Kung Food (UE)"
+	description "ZZZ-UNK-Kung Food (UE)"
+	rom ( name "ZZZ-UNK-Kung Food (UE).lnx" size 262208 crc ca0231d5 md5 3403194dd540dc11bf55a86c7f1b51a1 sha1 c9014753fa38e0a6fbf7529259d2be32d712293d )
+)
+
+game (
+	name ZZZ-UNK-leer
+	description "ZZZ-UNK-leer"
+	rom ( name ZZZ-UNK-leer.lnx size 51 crc 3d38a5e1 md5 de39a199a7c43ac4c4b8f77ae4b1438f sha1 561cf320b1484dbb18b42f5b595acf2ef2ccee29 )
+)
+
+game (
+	name "ZZZ-UNK-Lemmings (UE)"
+	description "ZZZ-UNK-Lemmings (UE)"
+	rom ( name "ZZZ-UNK-Lemmings (UE).lnx" size 262208 crc 3ea05d1c md5 aeb131a39ade45c59c3af3fa19b5b565 sha1 44f5b43a2a3bfb03097e754eda8f2a110a0d3f3d )
+)
+
+game (
+	name "ZZZ-UNK-Lexis (1999) (Songbird)"
+	description "ZZZ-UNK-Lexis (1999) (Songbird)"
+	rom ( name "ZZZ-UNK-Lexis (1999) (Songbird).lnx" size 262208 crc 6e93fcfd md5 a594fc4f13dc328eedb7d9fccee58be1 sha1 f49152c2a8bf1bce68bc68cd971bba2cdda4557c )
+)
+
+game (
+	name "ZZZ-UNK-Lexis (UE)"
+	description "ZZZ-UNK-Lexis (UE)"
+	rom ( name "ZZZ-UNK-Lexis (UE).lnx" size 262208 crc fd7da8cd md5 9a6400fe271d72962517b3a70e2a3c38 sha1 e17980d33b447d7436c839f57bcb960ca74699de )
+)
+
+game (
+	name ZZZ-UNK-loader
+	description "ZZZ-UNK-loader"
+	rom ( name ZZZ-UNK-loader.lnx size 8162 crc fccfffc1 md5 91428278d908424dad9068d8a726ce66 sha1 c5f55c4c431abd42acde672ac5a9ca209b372e46 )
+)
+
+game (
+	name "ZZZ-UNK-Loopz (U) (Beta) (v0.06)"
+	description "ZZZ-UNK-Loopz (U) (Beta) (v0.06)"
+	rom ( name "ZZZ-UNK-Loopz (U) (Beta) (v0.06).lnx" size 262208 crc b6dbbb21 md5 986f3a3fe895c1a631a6e64f643d2e3f sha1 3ddfb9050b859e8f8ec46b93e1c22736e547021f )
+)
+
+game (
+	name "ZZZ-UNK-Lunar (2004) by Fadest (PD)"
+	description "ZZZ-UNK-Lunar (2004) by Fadest (PD)"
+	rom ( name "ZZZ-UNK-Lunar (2004) by Fadest (PD).lnx" size 13280 crc 35db5167 md5 52e536f153e49c1db6f29750a498cc42 sha1 9de44a7c5dfbab85f3f171a325c44d6125d1a9ab )
+)
+
+game (
+	name "ZZZ-UNK-Lynx Cart Demo 1.1"
+	description "ZZZ-UNK-Lynx Cart Demo 1.1"
+	rom ( name "ZZZ-UNK-Lynx Cart Demo 1.1.lnx" size 7538 crc 3e3f32e5 md5 963b9d1f5945a0733b99f15acd7d4ca0 sha1 2317cdeadc8b07455ea331521974b303eac1b86d )
+)
+
+game (
+	name "ZZZ-UNK-Lynx Casino (1992)"
+	description "ZZZ-UNK-Lynx Casino (1992)"
+	rom ( name "ZZZ-UNK-Lynx Casino (1992).lnx" size 262208 crc e02958c2 md5 f00a17cfe35a91b93d0522d0b9bbf81e sha1 f5deec317bbe9199fc29b46278df4e534eba6ffd )
+)
+
+game (
+	name "ZZZ-UNK-Lynx Casino (UE)"
+	description "ZZZ-UNK-Lynx Casino (UE)"
+	rom ( name "ZZZ-UNK-Lynx Casino (UE).lnx" size 262208 crc 178847b8 md5 490101768c61f149afd3be16b8883ad2 sha1 ff5eb2ba2cce2cbf61c87154c49ba31c09300694 )
+)
+
+game (
+	name "ZZZ-UNK-Malibu Bikini Volleyball (UE)"
+	description "ZZZ-UNK-Malibu Bikini Volleyball (UE)"
+	rom ( name "ZZZ-UNK-Malibu Bikini Volleyball (UE).lnx" size 262208 crc acbf3fed md5 d28fd5c5e2608305bc791223bbd4e687 sha1 ec8681527aa225ff4ec53d012b6b635a791dfa7e )
+)
+
+game (
+	name "ZZZ-UNK-Marlboro Go! (E) (Beta)"
+	description "ZZZ-UNK-Marlboro Go! (E) (Beta)"
+	rom ( name "ZZZ-UNK-Marlboro Go! (E) (Beta).lnx" size 262208 crc c4e3e89d md5 af839477b85baed62fea550102454939 sha1 4516b22476bd3d03eaa017d32f777db4a2688a56 )
+)
+
+game (
+	name "ZZZ-UNK-Mines 2 by Bastian Schick (1996) (PD)"
+	description "ZZZ-UNK-Mines 2 by Bastian Schick (1996) (PD)"
+	rom ( name "ZZZ-UNK-Mines 2 by Bastian Schick (1996) (PD).lnx" size 5087 crc cb7e0472 md5 3962e56b23312c3bea8d4deaeaeaead6 sha1 2776b2df46da82cc586fc9c739e7d386832631bf )
+)
+
+game (
+	name ZZZ-UNK-minimal
+	description "ZZZ-UNK-minimal"
+	rom ( name ZZZ-UNK-minimal.lnx size 4912 crc c40446cf md5 ed04356e4b60ad76b2cdf9a5814b0ed2 sha1 0edcbdfbb721389af9f1295fe75718b2bdeed7e9 )
+)
+
+game (
+	name "ZZZ-UNK-Moon Patrol (20000821) by Jum Hig (PD)"
+	description "ZZZ-UNK-Moon Patrol (20000821) by Jum Hig (PD)"
+	rom ( name "ZZZ-UNK-Moon Patrol (20000821) by Jum Hig (PD).lnx" size 10785 crc 2f2264b3 md5 a8c1239a13f56355b14d023d6c3b224b sha1 cd81cd308292704000668a213c8bc07fe8e81906 )
+)
+
+game (
+	name "ZZZ-UNK-Ms. Pac-Man (UE)"
+	description "ZZZ-UNK-Ms. Pac-Man (UE)"
+	rom ( name "ZZZ-UNK-Ms. Pac-Man (UE).lnx" size 131136 crc 6de07e26 md5 08fef92d2a624988b35b6928f8535e6d sha1 c09ca036a5c862a81df96b390c6fcbc9092f994d )
+)
+
+game (
+	name "ZZZ-UNK-NFL Football (UE)"
+	description "ZZZ-UNK-NFL Football (UE)"
+	rom ( name "ZZZ-UNK-NFL Football (UE).lnx" size 262208 crc ff63cdbc md5 0be1de8ef135a56470e44d02aae84393 sha1 f4f9e31712b5f00fbceb93295579b1eb825743cb )
+)
+
+game (
+	name "ZZZ-UNK-Ninja Gaiden (UE)"
+	description "ZZZ-UNK-Ninja Gaiden (UE)"
+	rom ( name "ZZZ-UNK-Ninja Gaiden (UE).lnx" size 262208 crc 25cd9881 md5 a7dc0bf9a1432faae9e00dc35b23b5e6 sha1 8e8dc0d743b79c882cc4d3ce46bedf80aecd821d )
+)
+
+game (
+	name "ZZZ-UNK-Ninja Gaiden III - The Ancient Ship of Doom (UE)"
+	description "ZZZ-UNK-Ninja Gaiden III - The Ancient Ship of Doom (UE)"
+	rom ( name "ZZZ-UNK-Ninja Gaiden III - The Ancient Ship of Doom (UE).lnx" size 524352 crc 960e9b5f md5 11e30df774aab455d9ddbdf0484a092b sha1 cc71d40f4933d39bb57676231c25226983711b33 )
+)
+
+game (
+	name ZZZ-UNK-othello
+	description "ZZZ-UNK-othello"
+	rom ( name ZZZ-UNK-othello.lnx size 23267 crc 8a0e684d md5 d92d327e7533f83439ae766fbe52772c sha1 8080497c6b2a89796a4897a512003e8227f7daa6 )
+)
+
+game (
+	name "ZZZ-UNK-Pac-Land (UE)"
+	description "ZZZ-UNK-Pac-Land (UE)"
+	rom ( name "ZZZ-UNK-Pac-Land (UE).lnx" size 131136 crc ba53db3e md5 0140657e624dab65ab69d1fb714e2e2e sha1 b749892b55ee118ecfdb814e7e7f5d8353dcb5f7 )
+)
+
+game (
+	name "ZZZ-UNK-Paperboy (UE)"
+	description "ZZZ-UNK-Paperboy (UE)"
+	rom ( name "ZZZ-UNK-Paperboy (UE).lnx" size 131136 crc 5cdcbb4b md5 f6fb809c3a95557cc1d0f5bf368be4c4 sha1 abbd28972e7d540cde63ac5c2731a009e19921c9 )
+)
+
+game (
+	name "ZZZ-UNK-Paraply minidemo"
+	description "ZZZ-UNK-Paraply minidemo"
+	rom ( name "ZZZ-UNK-Paraply minidemo.lnx" size 18528 crc a48a654b md5 5702abb96f370cf720529eae5b08d264 sha1 8e03d63506760581ce2bff4ec9f0d5c957be136d )
+)
+
+game (
+	name ZZZ-UNK-phobyx1
+	description "ZZZ-UNK-phobyx1"
+	rom ( name ZZZ-UNK-phobyx1.lnx size 8160 crc 50e51f4f md5 306a9b08d209fec8f0d81037a6167440 sha1 3586e5cca9f58be803be57a609229b637bd1f6c3 )
+)
+
+game (
+	name "ZZZ-UNK-Pinball Jam (UE)"
+	description "ZZZ-UNK-Pinball Jam (UE)"
+	rom ( name "ZZZ-UNK-Pinball Jam (UE).lnx" size 262208 crc 13ca6977 md5 d66402a7f6b4daa50061bcdc103abcc6 sha1 0aa5838b3ab6ebef6370a207e5aa765ba3fafaf2 )
+)
+
+game (
+	name "ZZZ-UNK-Pit Fighter - The Ultimate Competition (UE)"
+	description "ZZZ-UNK-Pit Fighter - The Ultimate Competition (UE)"
+	rom ( name "ZZZ-UNK-Pit Fighter - The Ultimate Competition (UE).lnx" size 524352 crc 467e7011 md5 c505eca29da55709b87508ab4a1ee36b sha1 60daf10582a94da4a0bf4ba9ce95525835ee5993 )
+)
+
+game (
+	name ZZZ-UNK-play_smp
+	description "ZZZ-UNK-play_smp"
+	rom ( name ZZZ-UNK-play_smp.lnx size 11795 crc 240fcb90 md5 23159fbf25e766152befb6cf160a36b6 sha1 e062c7c6706856cc7b730096988fc0eedfd2fbcc )
+)
+
+game (
+	name ZZZ-UNK-playsmp1
+	description "ZZZ-UNK-playsmp1"
+	rom ( name ZZZ-UNK-playsmp1.lnx size 11791 crc d86c8f1a md5 2cc350accf428bf1fb4a134327278ca1 sha1 de2ea61c3668a940da0ff392ede3961f08245fc6 )
+)
+
+game (
+	name ZZZ-UNK-playsmp2
+	description "ZZZ-UNK-playsmp2"
+	rom ( name ZZZ-UNK-playsmp2.lnx size 19681 crc 378a71b6 md5 a340c2839bc3d1754b1fe4f7c4337e34 sha1 7b059d65eec1b3da379d405f4b61a0125807c9da )
+)
+
+game (
+	name "ZZZ-UNK-Poker Game (2005-04-10)"
+	description "ZZZ-UNK-Poker Game (2005-04-10)"
+	rom ( name "ZZZ-UNK-Poker Game (2005-04-10).lnx" size 46499 crc e04fc7f2 md5 ca2bc490aaabd82d91e0f24567a39e95 sha1 f9961cf83a1f4eee4d04b34398187e679cfdac11 )
+)
+
+game (
+	name "ZZZ-UNK-Poker Game (2005-06-20)"
+	description "ZZZ-UNK-Poker Game (2005-06-20)"
+	rom ( name "ZZZ-UNK-Poker Game (2005-06-20).lnx" size 45086 crc 99a6bc48 md5 8a7fc5f2c2afd205aa1edad6f9bc7210 sha1 e2a88960325e5e7c3b81c89aba876c24549a16eb )
+)
+
+game (
+	name "ZZZ-UNK-Power Factor (UE)"
+	description "ZZZ-UNK-Power Factor (UE)"
+	rom ( name "ZZZ-UNK-Power Factor (UE).lnx" size 262208 crc 9eddc5e4 md5 57a8405b5fe4912be825ce76fc62b74f sha1 a6909e4a23d32c3effbff63ec597adca55fff704 )
+)
+
+game (
+	name ZZZ-UNK-projet
+	description "ZZZ-UNK-projet"
+	rom ( name ZZZ-UNK-projet.lnx size 6995 crc da3ea774 md5 18d46a8772937f417ffb7a3a966677e7 sha1 82281bc5873d7f5ec322bd34ac956ab35f723d32 )
+)
+
+game (
+	name "ZZZ-UNK-Puyo Puyo 2 (PD)"
+	description "ZZZ-UNK-Puyo Puyo 2 (PD)"
+	rom ( name "ZZZ-UNK-Puyo Puyo 2 (PD).lnx" size 15583 crc 31ef2975 md5 203c65c737495060ce410ea2df0e863d sha1 b668dca803489ae1263d8769573f98454e2caae9 )
+)
+
+game (
+	name "ZZZ-UNK-Qix (1991) (Telegames) [o]"
+	description "ZZZ-UNK-Qix (1991) (Telegames) [o]"
+	rom ( name "ZZZ-UNK-Qix (1991) (Telegames) [o].lnx" size 262208 crc 1533d875 md5 cb6aa2939103e6fbcb9d5118803eafd7 sha1 c207d14ee6c404f813827108eed1b28798886d2a )
+)
+
+game (
+	name "ZZZ-UNK-Qix (UE)"
+	description "ZZZ-UNK-Qix (UE)"
+	rom ( name "ZZZ-UNK-Qix (UE).lnx" size 131136 crc a98b123f md5 465ab64cba57606576d6619f457e55d9 sha1 52dae119b0969bac28a18328d9f56884ba184060 )
+)
+
+game (
+	name "ZZZ-UNK-Raiden (U) (CES Version) (v3.0)"
+	description "ZZZ-UNK-Raiden (U) (CES Version) (v3.0)"
+	rom ( name "ZZZ-UNK-Raiden (U) (CES Version) (v3.0).lnx" size 262208 crc 43dd121e md5 4bd2b756076152af28ba126319212fb0 sha1 4ff928b190f6806cde5f706ced721c492077b29a )
+)
+
+game (
+	name "ZZZ-UNK-Rampage (UE)"
+	description "ZZZ-UNK-Rampage (UE)"
+	rom ( name "ZZZ-UNK-Rampage (UE).lnx" size 262208 crc b612995e md5 0eacef4a01c344120a3f66a24ee2cebe sha1 4473a65afb33df56116f3c359368b0fdff399fa2 )
+)
+
+game (
+	name "ZZZ-UNK-Rampart (UE)"
+	description "ZZZ-UNK-Rampart (UE)"
+	rom ( name "ZZZ-UNK-Rampart (UE).lnx" size 262208 crc 1486d5cd md5 204620be1c27b7f5c0a877513512441a sha1 3ff8b63beb4091189fe45bd67f49e930f6d21221 )
+)
+
+game (
+	name ZZZ-UNK-rapide_racer
+	description "ZZZ-UNK-rapide_racer"
+	rom ( name ZZZ-UNK-rapide_racer.lnx size 35179 crc 9af9fed5 md5 e1d8b907ca47a48d662c35cade350592 sha1 ccf2f94d6d795be2ba36f7f017dd35206e9bc001 )
+)
+
+game (
+	name "ZZZ-UNK-Road Riot 4WD (Beta) (1994)"
+	description "ZZZ-UNK-Road Riot 4WD (Beta) (1994)"
+	rom ( name "ZZZ-UNK-Road Riot 4WD (Beta) (1994).lnx" size 262208 crc e5742a2f md5 931a02df1f988ed8001e7cd82168ba47 sha1 84cbe4e8c4ccf0a96eeab844bfcd98cca4f61014 )
+)
+
+game (
+	name "ZZZ-UNK-Road Riot 4WD (U) (Beta)"
+	description "ZZZ-UNK-Road Riot 4WD (U) (Beta)"
+	rom ( name "ZZZ-UNK-Road Riot 4WD (U) (Beta).lnx" size 262208 crc 6e8c7feb md5 731fef254504703c973df7ea072c2eed sha1 63988d1af8cfada6ede881426cc6db42bb97e576 )
+)
+
+game (
+	name "ZZZ-UNK-RoadBlasters (UE)"
+	description "ZZZ-UNK-RoadBlasters (UE)"
+	rom ( name "ZZZ-UNK-RoadBlasters (UE).lnx" size 262208 crc 6f7e0ddc md5 427e11c2e4cf5fa8aec36d38796af6fe sha1 d3dc262510346141db18b78c7fb071a91e69fdb1 )
+)
+
+game (
+	name "ZZZ-UNK-Robo-Squash (UE)"
+	description "ZZZ-UNK-Robo-Squash (UE)"
+	rom ( name "ZZZ-UNK-Robo-Squash (UE).lnx" size 131136 crc c1dcf4ae md5 d4e48680084b72a6fb3377f21f88474f sha1 68887e95eea162690e1689948b3723af767544c8 )
+)
+
+game (
+	name "ZZZ-UNK-Robotron 2084 (UE)"
+	description "ZZZ-UNK-Robotron 2084 (UE)"
+	rom ( name "ZZZ-UNK-Robotron 2084 (UE).lnx" size 131136 crc 6a634fa9 md5 dfc35b3aa9d90255f545bf513fe6a550 sha1 1e42a3b68ba586984512b75e93201c0f6a53b787 )
+)
+
+game (
+	name "ZZZ-UNK-Rygar - Legendary Warrior (UE)"
+	description "ZZZ-UNK-Rygar - Legendary Warrior (UE)"
+	rom ( name "ZZZ-UNK-Rygar - Legendary Warrior (UE).lnx" size 262208 crc 60fc586a md5 81a547278ff57fed5260363d54390336 sha1 1c4eca726c6919e581685df61ef9dcd65e847d43 )
+)
+
+game (
+	name "ZZZ-UNK-S.T.U.N. Runner (UE)"
+	description "ZZZ-UNK-S.T.U.N. Runner (UE)"
+	rom ( name "ZZZ-UNK-S.T.U.N. Runner (UE).lnx" size 262208 crc 828c21db md5 10da1247735c273715fa5caa495f68d0 sha1 012670104966b97a09fd7e8a433631e3fecbb14d )
+)
+
+game (
+	name "ZZZ-UNK-Scrapyard Dog (UE)"
+	description "ZZZ-UNK-Scrapyard Dog (UE)"
+	rom ( name "ZZZ-UNK-Scrapyard Dog (UE).lnx" size 262208 crc b90f8aeb md5 0ec23443140ae1b4ce197586ea0b6c10 sha1 7cb14c601d73449152b29adf0b54d72fa25ee2c1 )
+)
+
+game (
+	name "ZZZ-UNK-Shadow of the Beast (1992) [b]"
+	description "ZZZ-UNK-Shadow of the Beast (1992) [b]"
+	rom ( name "ZZZ-UNK-Shadow of the Beast (1992) [b].lnx" size 262208 crc bd118707 md5 e44c4f0e63531430ad08365b1b7c9e07 sha1 4bcfb360770752fce4b9040c3e440d71fe3c68c0 )
+)
+
+game (
+	name "ZZZ-UNK-Shadow of the Beast (UE)"
+	description "ZZZ-UNK-Shadow of the Beast (UE)"
+	rom ( name "ZZZ-UNK-Shadow of the Beast (UE).lnx" size 262208 crc ec615f73 md5 a9a8bf33fa345c86f2c25b56f4144c8a sha1 a24a349cf10e868121c20af1dbc15f562ecfa676 )
+)
+
+game (
+	name "ZZZ-UNK-Shanghai (1990)"
+	description "ZZZ-UNK-Shanghai (1990)"
+	rom ( name "ZZZ-UNK-Shanghai (1990).lnx" size 131136 crc 216a61c2 md5 4ed1dfe6a9132438f8e7f16b793d3c0d sha1 f00c1c35a39269b3bdc38e9a40e2da0cf31de6b4 )
+)
+
+game (
+	name "ZZZ-UNK-Shanghai (UE)"
+	description "ZZZ-UNK-Shanghai (UE)"
+	rom ( name "ZZZ-UNK-Shanghai (UE).lnx" size 131136 crc 0928cb18 md5 31e3d54dd9dfe00d9ef932d4ba65af72 sha1 39528efb1b6f093d5546439f1589cc648664a73e )
+)
+
+game (
+	name ZZZ-UNK-sintab_8
+	description "ZZZ-UNK-sintab_8"
+	rom ( name ZZZ-UNK-sintab_8.lnx size 512 crc bbf9ebab md5 e5093929f00239f0dda26a991ce5e392 sha1 a946de0fe499f1813070afc565ff21e80c640de1 )
+)
+
+game (
+	name ZZZ-UNK-soltest6
+	description "ZZZ-UNK-soltest6"
+	rom ( name ZZZ-UNK-soltest6.lnx size 14013 crc e7bb6349 md5 e864cde39b217c5972771a9998dd267a sha1 b5c84bee4774ca3bd55872e20f42a73a8592d3b1 )
+)
+
+game (
+	name "ZZZ-UNK-Sound driver demo1"
+	description "ZZZ-UNK-Sound driver demo1"
+	rom ( name "ZZZ-UNK-Sound driver demo1.lnx" size 10398 crc 5f964ae9 md5 66bf338caf16622df098ecf0dec14eb2 sha1 bbbbe8bda2accf6f275622d0b47bdf9e43f57c7c )
+)
+
+game (
+	name "ZZZ-UNK-Sound driver demo2"
+	description "ZZZ-UNK-Sound driver demo2"
+	rom ( name "ZZZ-UNK-Sound driver demo2.lnx" size 9476 crc df4cb051 md5 5d5b360d9edd743c0039440ef7f086ef sha1 73ddfac60f86871a7d3b58ffd90b07c533150aa7 )
+)
+
+game (
+	name "ZZZ-UNK-Sound driver demo3"
+	description "ZZZ-UNK-Sound driver demo3"
+	rom ( name "ZZZ-UNK-Sound driver demo3.lnx" size 7684 crc 1a4e713f md5 70675d2aaba95b2a10812c4719342617 sha1 b8951c028fbb7c9864143346affb717c25e59953 )
+)
+
+game (
+	name "ZZZ-UNK-Sprite driver demo 4"
+	description "ZZZ-UNK-Sprite driver demo 4"
+	rom ( name "ZZZ-UNK-Sprite driver demo 4.lnx" size 8358 crc a2cac396 md5 4e5b6e9fb403666bca48a5ad6b7b0b56 sha1 f4864f4f4256e62c443a3b9cb458825338332011 )
+)
+
+game (
+	name ZZZ-UNK-stars
+	description "ZZZ-UNK-stars"
+	rom ( name ZZZ-UNK-stars.lnx size 6796 crc 2161e3be md5 99151d24df052a6acb0adf776c7b6afd sha1 f3b1b4df5c0ca3d3838631faf7b893d665983978 )
+)
+
+game (
+	name "ZZZ-UNK-Steel Talons (UE)"
+	description "ZZZ-UNK-Steel Talons (UE)"
+	rom ( name "ZZZ-UNK-Steel Talons (UE).lnx" size 262208 crc 5c3aed3d md5 323194808444ef1bd77494fafb5f61c4 sha1 7a7a59a8c7d0a79005feeb97aca1782be606a9bf )
+)
+
+game (
+	name "ZZZ-UNK-Super Asteroids & Missile Command (UE)"
+	description "ZZZ-UNK-Super Asteroids & Missile Command (UE)"
+	rom ( name "ZZZ-UNK-Super Asteroids & Missile Command (UE).lnx" size 131136 crc 3da4e4b4 md5 45c0475bcbd0cac733f3d93d17e64630 sha1 b084a2e91962ac5c6b5c30dacee89c4389f04c08 )
+)
+
+game (
+	name "ZZZ-UNK-Super Off-Road (UE)"
+	description "ZZZ-UNK-Super Off-Road (UE)"
+	rom ( name "ZZZ-UNK-Super Off-Road (UE).lnx" size 262208 crc 6e154b60 md5 5ee8d1810a1cb28b7f0a9f400e2f79f0 sha1 7f0b997f5b9679f90b1af4e03ab2407eeaed45e2 )
+)
+
+game (
+	name "ZZZ-UNK-Super Skweek (UE)"
+	description "ZZZ-UNK-Super Skweek (UE)"
+	rom ( name "ZZZ-UNK-Super Skweek (UE).lnx" size 262208 crc d8bff0a1 md5 e4ac9220173563c4d94d7463365a359a sha1 2f71662e6b374c2e6c731c5bec70231e83851f5e )
+)
+
+game (
+	name "ZZZ-UNK-Switchblade II (UE)"
+	description "ZZZ-UNK-Switchblade II (UE)"
+	rom ( name "ZZZ-UNK-Switchblade II (UE).lnx" size 262208 crc 147c92d5 md5 e0e184cf1dec1550eed34e657117d4cd sha1 2784b6655aee04337458bb9ecea8850921549b40 )
+)
+
+game (
+	name ZZZ-UNK-tank
+	description "ZZZ-UNK-tank"
+	rom ( name ZZZ-UNK-tank.lnx size 51 crc 178e4190 md5 64a3f69994f74edccbe4c35935b45fdb sha1 b91bb1b4163ecf2c14077229a519188cf4419676 )
+)
+
+game (
+	name ZZZ-UNK-tetris
+	description "ZZZ-UNK-tetris"
+	rom ( name ZZZ-UNK-tetris.lnx size 21156 crc e9efb6d2 md5 94e9fcb96c3bfe4d7ae4f1bc3565d2ee sha1 c9a144f2c139f5e5054497d4231ec041d52c32b5 )
+)
+
+game (
+	name "ZZZ-UNK-Tetris (1996) [b]"
+	description "ZZZ-UNK-Tetris (1996) [b]"
+	rom ( name "ZZZ-UNK-Tetris (1996) [b].lnx" size 262208 crc f9f7cea7 md5 8bfb1f646b207748c1c0f65102fb2339 sha1 8fb0e507e45b45e090489baff884faf36a4f78aa )
+)
+
+game (
+	name "ZZZ-UNK-tetris 2005-04-11"
+	description "ZZZ-UNK-tetris 2005-04-11"
+	rom ( name "ZZZ-UNK-tetris 2005-04-11.lnx" size 24498 crc 4dfd2b27 md5 0ca835a843032a274cf12707cacd9589 sha1 7248ace90728da80f9cad465361d0bb07c887b2c )
+)
+
+game (
+	name "ZZZ-UNK-tetris 2005-04-11a"
+	description "ZZZ-UNK-tetris 2005-04-11a"
+	rom ( name "ZZZ-UNK-tetris 2005-04-11a.lnx" size 262208 crc 43f846c1 md5 de016ab38be6f0726e8fa4350581f533 sha1 9ac76dd345cf1f8526d94fcd92f6931e51cda0e4 )
+)
+
+game (
+	name "ZZZ-UNK-tetris 2006-01-03"
+	description "ZZZ-UNK-tetris 2006-01-03"
+	rom ( name "ZZZ-UNK-tetris 2006-01-03.lnx" size 22858 crc bde93a23 md5 7f9f96fe1926f45a88d7e83e09984d68 sha1 ddacda982893575a64a31888c1c4d4e901f58e67 )
+)
+
+game (
+	name "ZZZ-UNK-tetris alt"
+	description "ZZZ-UNK-tetris alt"
+	rom ( name "ZZZ-UNK-tetris alt.lnx" size 262208 crc 189f96a1 md5 4d4026fd150be4c5bab9e2e3fce7d1b3 sha1 16eb3ba36c24ed292efb1af5287f336b58def8f9 )
+)
+
+game (
+	name ZZZ-UNK-thedeep
+	description "ZZZ-UNK-thedeep"
+	rom ( name ZZZ-UNK-thedeep.lnx size 10711 crc 8acd5db2 md5 25907f1212d3d8ada8de2dc3083f2387 sha1 49299338cf3bcf9d6fe28f7fe109e811897776b0 )
+)
+
+game (
+	name ZZZ-UNK-tipover
+	description "ZZZ-UNK-tipover"
+	rom ( name ZZZ-UNK-tipover.lnx size 10209 crc e918226a md5 7550a93023436e1bc24cd5cd8abd8500 sha1 d15879e165435af5d27bf191285d530d445a9220 )
+)
+
+game (
+	name "ZZZ-UNK-Todd's Adventures in Slime World (UE)"
+	description "ZZZ-UNK-Todd's Adventures in Slime World (UE)"
+	rom ( name "ZZZ-UNK-Todd's Adventures in Slime World (UE).lnx" size 131136 crc be257835 md5 14f02b85af985487b51ab0dcfb047e1d sha1 a31f3b12f713beb6364a308bd8db65b049929e7c )
+)
+
+game (
+	name "ZZZ-UNK-Toki (UE)"
+	description "ZZZ-UNK-Toki (UE)"
+	rom ( name "ZZZ-UNK-Toki (UE).lnx" size 262208 crc 1273af9c md5 9da02bfd489035f24a3f7ab04b7d230c sha1 3c762244ee67edf3ca1357e2b60a3f2e2c79c3f8 )
+)
+
+game (
+	name "ZZZ-UNK-Tournament Cyberball 2072 (UE)"
+	description "ZZZ-UNK-Tournament Cyberball 2072 (UE)"
+	rom ( name "ZZZ-UNK-Tournament Cyberball 2072 (UE).lnx" size 262208 crc 02894c33 md5 45789fe5382de9f14cdf8a506d4cce35 sha1 97ecf4fed8c14eccd54d9e6adc9e1596f6815233 )
+)
+
+game (
+	name "ZZZ-UNK-Turbo Sub (1991)"
+	description "ZZZ-UNK-Turbo Sub (1991)"
+	rom ( name "ZZZ-UNK-Turbo Sub (1991).lnx" size 131136 crc 0b97d5cc md5 5e0574f37af05d703e358948032a606f sha1 3801f9360e6dfd6f9a4530393a00a41aa32e5021 )
+)
+
+game (
+	name "ZZZ-UNK-Turbo Sub (UE)"
+	description "ZZZ-UNK-Turbo Sub (UE)"
+	rom ( name "ZZZ-UNK-Turbo Sub (UE).lnx" size 131136 crc b4ba22ca md5 9206197c1e3c6bf3b0a89090e1ed944b sha1 972a02f9988570964ec16a133a95c3b9bc99ca5e )
+)
+
+game (
+	name ZZZ-UNK-tutowav
+	description "ZZZ-UNK-tutowav"
+	rom ( name ZZZ-UNK-tutowav.lnx size 27582 crc aba2bdc3 md5 b073a2a825d52391f2bf0ef5df4e3ef8 sha1 c9f91d3b089c9bfdf35ba30306bd5106d9691c91 )
+)
+
+game (
+	name "ZZZ-UNK-Unknown Game 'T-RES' (199x) [b]"
+	description "ZZZ-UNK-Unknown Game 'T-RES' (199x) [b]"
+	rom ( name "ZZZ-UNK-Unknown Game 'T-RES' (199x) [b].lnx" size 131136 crc dd0fe131 md5 d91b10fd7b39ea1f9cd2a0967608196a sha1 a8d97587a5749d19158d1749ee998c520b7c71fe )
+)
+
+game (
+	name "ZZZ-UNK-Viking Child (UE)"
+	description "ZZZ-UNK-Viking Child (UE)"
+	rom ( name "ZZZ-UNK-Viking Child (UE).lnx" size 262208 crc 8a4f675b md5 9ae1cb79702b256a3a58f5930a6600f4 sha1 b1d51b6ac874fa18b6e8e987328abdfca025ba52 )
+)
+
+game (
+	name "ZZZ-UNK-Warbirds (UE)"
+	description "ZZZ-UNK-Warbirds (UE)"
+	rom ( name "ZZZ-UNK-Warbirds (UE).lnx" size 131136 crc a945bc55 md5 b7e4161ba9d9a1f679f915b7f7f16c38 sha1 9fdb2fa959a0f4a3300ff1bca68ff2d3b070c931 )
+)
+
+game (
+	name ZZZ-UNK-wav
+	description "ZZZ-UNK-wav"
+	rom ( name ZZZ-UNK-wav.lnx size 55740 crc effb2478 md5 76e761848e5f2a7046221b9e2eef9ac0 sha1 cead7b6025b0f88201fb0def94d53ec0d7cf980b )
+)
+
+game (
+	name "ZZZ-UNK-World Class Soccer (UE)"
+	description "ZZZ-UNK-World Class Soccer (UE)"
+	rom ( name "ZZZ-UNK-World Class Soccer (UE).lnx" size 262208 crc 963ad244 md5 8532668c886f39dded813b783d632997 sha1 4a68b6e2df25358e422439e1a9b1b97e223acba7 )
+)
+
+game (
+	name "ZZZ-UNK-Xenophobe (UE)"
+	description "ZZZ-UNK-Xenophobe (UE)"
+	rom ( name "ZZZ-UNK-Xenophobe (UE).lnx" size 131136 crc 8bee7571 md5 662395bb4bc8fd3d29774282ceb3e32a sha1 1c9fbaff8debfd7ac8f6f1d89230f81a9a97e6a4 )
+)
+
+game (
+	name "ZZZ-UNK-Xenophobe (UE) [a]"
+	description "ZZZ-UNK-Xenophobe (UE) [a]"
+	rom ( name "ZZZ-UNK-Xenophobe (UE) [a].lnx" size 131136 crc a5436c86 md5 67d2d767d54f09f74c1fb5b378e9f440 sha1 c437ec081e2deb41017fb568f70d2639e7e0142d )
+)
+
+game (
+	name "ZZZ-UNK-Xybots (UE)"
+	description "ZZZ-UNK-Xybots (UE)"
+	rom ( name "ZZZ-UNK-Xybots (UE).lnx" size 262208 crc 8efb4045 md5 388a8142f606451b804db40040451b4b sha1 37e53c4bcc0bec54f2f60614a35d501782c7d1c1 )
+)
+
+game (
+	name "ZZZ-UNK-Zaku Public Demo (2005-11-13)"
+	description "ZZZ-UNK-Zaku Public Demo (2005-11-13)"
+	rom ( name "ZZZ-UNK-Zaku Public Demo (2005-11-13).lnx" size 262208 crc 598ae8ae md5 2729cc7f787e857bd330fd5d9c90cc28 sha1 734174f97ab14d54329a67971998a983eb3cd345 )
+)
+
+game (
+	name "ZZZ-UNK-Zarlor Mercenary (UE)"
+	description "ZZZ-UNK-Zarlor Mercenary (UE)"
+	rom ( name "ZZZ-UNK-Zarlor Mercenary (UE).lnx" size 131136 crc db241f81 md5 4d9c120c90456e572263556d8ce29a45 sha1 b3af3a1ddfb3aeb899dbe63539a6a40dde9fb397 )
+)
+

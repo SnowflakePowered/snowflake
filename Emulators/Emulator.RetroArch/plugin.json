@@ -1,9 +1,9 @@
 ﻿{
-  "name": "RetroArch Emulator",
+  "name": "Snowflake-EmulatorRetroArchExec",
   "type": "snowflake_plugin_emulator",
   "version": "1.0.0.0",
   "authors": [
-    "Ronny Chan",
+    "Snowflake Authors",
 	"libRetro and RetroArch Authors"
   ],
   "description": "Snowflake ExecutableEmulator Bridge for RetroArch",

@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{38095FE3-A186-49BB-AC5B-966A5BC8F515}</ProjectGuid>
+    <ProjectGuid>{3773A92C-E6C1-40EA-A44F-34FC226ECB7C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Identifier.DatIdentifier</RootNamespace>
-    <AssemblyName>Identifier.DatIdentifier</AssemblyName>
+    <RootNamespace>Snowflake.ProjectTemplate</RootNamespace>
+    <AssemblyName>Snowflake.ProjectTemplate</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -39,21 +39,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Crc32.cs" />
-    <Compile Include="DatIdentifier.cs" />
+    <Compile Include="SnowflakePlugin1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Snowflake.API\Snowflake.API.csproj">
+    <ProjectReference Include="..\Snowflake.API\Snowflake.API.csproj">
       <Project>{8f1d65ed-4a96-4a0a-8371-53655a60a2b3}</Project>
       <Name>Snowflake.API</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="config.yml" />
+    <EmbeddedResource Include="config.yml">
+		<LogicalName>config.yml</LogicalName>
+	</EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="plugin.json" />
+    <EmbeddedResource Include="plugin.json">
+			<LogicalName>plugin.json</LogicalName>
+	</EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

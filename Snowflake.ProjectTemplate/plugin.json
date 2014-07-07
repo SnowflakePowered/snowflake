@@ -1,0 +1,9 @@
+﻿{
+  "name": "$safeprojectname$",
+  "type": "snowflake_plugin_plugin",
+  "version": "1.0.0.0",
+  "authors": [
+    "$username$"
+  ],
+  "description": "Plugin Description"
+}

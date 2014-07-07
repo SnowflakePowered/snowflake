@@ -1,9 +1,9 @@
 ﻿{
-  "name": "The Games DB Scraper",
+  "name": "Snowflake-ScraperTheGamesDB",
   "type": "snowflake_plugin_scraper",
   "version": "1.0.0.0",
   "authors": [
-    "Ronny Chan"
+    "Snowflake Authors"
   ],
   "description": "Game Scraper for The Games DB",
   "scraper_source": "http://thegamesdb.net/"

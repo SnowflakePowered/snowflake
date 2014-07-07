@@ -26,10 +26,18 @@ namespace Identifier.DatIdentifier
         public string IdentifyGame(FileStream file, string platformId)
         {
             string crc32 = GetCrc32(file);
-            string datFile = String.Empty;
-            string gameName = Regex.Match(datFile, String.Format(@"(?<=rom \( name "").*?(?="" size \d+ crc {0})", crc32.ToLower()), RegexOptions.IgnoreCase).Value;
+            List<string> datFiles = File.OpenRead(this.PluginConfiguration.Configuration["dats"][platformId]);
+            string gameName = String.Empty;
+            foreach (string datFile in datFiles)
+            {
+                Match gameMatch = Regex.Match(datFile, String.Format(@"(?<=rom \( name "").*?(?="" size \d+ crc {0})", crc32.ToLower()), RegexOptions.IgnoreCase);
+                if (gameMatch.Success)
+                {
+                    gameName = gameMatch.Value;
+                    break;
+                }
+            }
             gameName = Regex.Match(gameName, @"(\[[^]]*\])*([\w\s]+)").Groups[2].Value;
-
             return gameName;
         }
 

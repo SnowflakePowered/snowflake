@@ -1,0 +1,1142 @@
+clrmamepro (
+	name "Sega 32X - Games"
+	description "Sega 32X - Games (TOSEC-v2012-09-08)"
+	category "Sega 32X - Games"
+	version 2012-09-08
+	author "Cassiel"
+)
+
+game (
+	name "36 Great Holes Starring Fred Couples (1994)(Sega)(EU)(en)"
+	description "36 Great Holes Starring Fred Couples (1994)(Sega)(EU)(en)"
+	rom ( name "36 Great Holes Starring Fred Couples (1994)(Sega)(EU)(en).bin" size 3145728 crc 6ef99202 md5 f772e22b574406e3e20c172117050973 sha1 55848f7c54533fd2a19011db661ef261cd8bdb22 )
+)
+
+game (
+	name "36 Great Holes Starring Fred Couples (1994)(Sega)(EU)(en)[b]"
+	description "36 Great Holes Starring Fred Couples (1994)(Sega)(EU)(en)[b]"
+	rom ( name "36 Great Holes Starring Fred Couples (1994)(Sega)(EU)(en)[b].bin" size 262144 crc 8d1cbc38 md5 902f28ebdafbdde3e1ba58eb3d4e2cb0 sha1 59a917852f0905ea316c00fbb068a063bbe0a913 )
+)
+
+game (
+	name "36 Great Holes Starring Fred Couples (1994)(Sega)(JP-US)(en)"
+	description "36 Great Holes Starring Fred Couples (1994)(Sega)(JP-US)(en)"
+	rom ( name "36 Great Holes Starring Fred Couples (1994)(Sega)(JP-US)(en).bin" size 3145728 crc d3d0a2fe md5 b90a2a1eec015911aa445f9c41d7bc32 sha1 dc77b1e5c888c2c4284766915a5020bb14ee681d )
+)
+
+game (
+	name "36 Great Holes Starring Fred Couples Rev 19940706 (1994)(Sega)(beta)"
+	description "36 Great Holes Starring Fred Couples Rev 19940706 (1994)(Sega)(beta)"
+	rom ( name "36 Great Holes Starring Fred Couples Rev 19940706 (1994)(Sega)(beta).bin" size 1057122 crc 6726c100 md5 56b0c88cd4aef3ff65ef623527a9edba sha1 6a066c44d71199d62dbc368efbc371dd01cc95e1 )
+)
+
+game (
+	name "36 Great Holes Starring Fred Couples Rev 19941011 (1994)(Sega)(beta)"
+	description "36 Great Holes Starring Fred Couples Rev 19941011 (1994)(Sega)(beta)"
+	rom ( name "36 Great Holes Starring Fred Couples Rev 19941011 (1994)(Sega)(beta).bin" size 3001124 crc 622a34a5 md5 2600f3ba9d72947910e7cffeba8f5b71 sha1 94c994ce74377ec726b4c0803b51fd4ca6cc4389 )
+)
+
+game (
+	name "36 Great Holes Starring Fred Couples Rev 19941017 (1994)(Sega)(beta)"
+	description "36 Great Holes Starring Fred Couples Rev 19941017 (1994)(Sega)(beta)"
+	rom ( name "36 Great Holes Starring Fred Couples Rev 19941017 (1994)(Sega)(beta).bin" size 3001124 crc cbd33fc7 md5 6aca59ba95b6c1defe19ed32f00d3ef1 sha1 83b70bea9efa281dd5119334a28ef33bc7426325 )
+)
+
+game (
+	name "36 Great Holes Starring Fred Couples Rev 19941018 (1994)(Sega)(beta)"
+	description "36 Great Holes Starring Fred Couples Rev 19941018 (1994)(Sega)(beta)"
+	rom ( name "36 Great Holes Starring Fred Couples Rev 19941018 (1994)(Sega)(beta).bin" size 4194304 crc e39ba17f md5 1fc6e86e79315775cb93649f4cfe83d9 sha1 41e12cb8465acb6e0180deea9b34c2554e3f79e1 )
+)
+
+game (
+	name "36 Great Holes Starring Fred Couples Rev 19941024 (1994)(Sega)(beta)"
+	description "36 Great Holes Starring Fred Couples Rev 19941024 (1994)(Sega)(beta)"
+	rom ( name "36 Great Holes Starring Fred Couples Rev 19941024 (1994)(Sega)(beta).bin" size 3090536 crc ffe279cc md5 c5a1281e901df24a620a66026373cddc sha1 2093a7437062dc21c4440a360dd177102ca6cc88 )
+)
+
+game (
+	name "36 Great Holes Starring Fred Couples Rev 19941026 (1994)(Sega)(beta)"
+	description "36 Great Holes Starring Fred Couples Rev 19941026 (1994)(Sega)(beta)"
+	rom ( name "36 Great Holes Starring Fred Couples Rev 19941026 (1994)(Sega)(beta).bin" size 3090528 crc 37a79c9c md5 61bf65053db9eaa967bca74e18adf23d sha1 91d78a15094c20fb6a8103d5addbaa4f90d199b8 )
+)
+
+game (
+	name "36 Great Holes Starring Fred Couples Rev 19941101 (1994)(Sega)(beta)"
+	description "36 Great Holes Starring Fred Couples Rev 19941101 (1994)(Sega)(beta)"
+	rom ( name "36 Great Holes Starring Fred Couples Rev 19941101 (1994)(Sega)(beta).bin" size 3136928 crc 91106a69 md5 03480484a4d2e3fe3353900dc3033101 sha1 f6b944876b40b5a52bf1293b71373cb3f5c71a14 )
+)
+
+game (
+	name "36 Great Holes Starring Fred Couples Rev 19941103 (1994)(Sega)(beta)"
+	description "36 Great Holes Starring Fred Couples Rev 19941103 (1994)(Sega)(beta)"
+	rom ( name "36 Great Holes Starring Fred Couples Rev 19941103 (1994)(Sega)(beta).bin" size 3136712 crc d261a6c3 md5 7f1ddc96f801c121adb5e6b1a5c2f73f sha1 7c295cb39408d21835b76c2c1aeb03b659094593 )
+)
+
+game (
+	name "36 Great Holes Starring Fred Couples Rev 19941105 (1994)(Sega)(beta)"
+	description "36 Great Holes Starring Fred Couples Rev 19941105 (1994)(Sega)(beta)"
+	rom ( name "36 Great Holes Starring Fred Couples Rev 19941105 (1994)(Sega)(beta).bin" size 3136712 crc 1559541e md5 ca9ca81bde5b0819d1bcce097796a41b sha1 eff8337257b0cc6221ce459d32191f7d63450d1c )
+)
+
+game (
+	name "36 Great Holes Starring Fred Couples Rev 19941107 (1994)(Sega)(beta)"
+	description "36 Great Holes Starring Fred Couples Rev 19941107 (1994)(Sega)(beta)"
+	rom ( name "36 Great Holes Starring Fred Couples Rev 19941107 (1994)(Sega)(beta).bin" size 3136712 crc 36b1708e md5 6bc3ecead9db55f646f4db49d484403d sha1 ea7539dbeaa86fdc36132e85be48f6577fb6dbb9 )
+)
+
+game (
+	name "36 Great Holes Starring Fred Couples Rev 19941108 (1994)(Sega)(beta)"
+	description "36 Great Holes Starring Fred Couples Rev 19941108 (1994)(Sega)(beta)"
+	rom ( name "36 Great Holes Starring Fred Couples Rev 19941108 (1994)(Sega)(beta).bin" size 3136712 crc bcaf23fd md5 415b56539f3dbe85fbc9e327e7512136 sha1 f317903c11777991417abf95cc45d4888bee25d6 )
+)
+
+game (
+	name "36 Great Holes Starring Fred Couples Rev 19941110 (1994)(Sega)(beta)"
+	description "36 Great Holes Starring Fred Couples Rev 19941110 (1994)(Sega)(beta)"
+	rom ( name "36 Great Holes Starring Fred Couples Rev 19941110 (1994)(Sega)(beta).bin" size 3136712 crc 5226ef71 md5 a1cfa86bc7d81f199f0b329ddf4458e7 sha1 33620d0bb49c52a24563958b4caec883b2009a90 )
+)
+
+game (
+	name "36 Great Holes Starring Fred Couples Rev 19941116 (1994)(Sega)(beta)"
+	description "36 Great Holes Starring Fred Couples Rev 19941116 (1994)(Sega)(beta)"
+	rom ( name "36 Great Holes Starring Fred Couples Rev 19941116 (1994)(Sega)(beta).bin" size 3136712 crc ccb9fead md5 bcb29b2ec1d693aa863998b19a1873f4 sha1 3bff7d113fa7487d015a54d8f27050f2cf296106 )
+)
+
+game (
+	name "36 Great Holes Starring Fred Couples Rev 19941118 (1994)(Sega)(beta)"
+	description "36 Great Holes Starring Fred Couples Rev 19941118 (1994)(Sega)(beta)"
+	rom ( name "36 Great Holes Starring Fred Couples Rev 19941118 (1994)(Sega)(beta).bin" size 3136712 crc dc4c7c27 md5 9db9c401226292cefd5a28f6adfa5065 sha1 abe1d16dff2b2c1752e2f47bb15f97f049d6bfc0 )
+)
+
+game (
+	name "36 Great Holes Starring Fred Couples Rev 19941119 (1994)(Sega)(beta)"
+	description "36 Great Holes Starring Fred Couples Rev 19941119 (1994)(Sega)(beta)"
+	rom ( name "36 Great Holes Starring Fred Couples Rev 19941119 (1994)(Sega)(beta).bin" size 3136736 crc da1026c8 md5 4b5fd6be86b307399bc6592d8eae79b5 sha1 2ea5fcdffa9b8f22b1468eeb2e76134d3f1b3be6 )
+)
+
+game (
+	name "36 Great Holes Starring Fred Couples Rev 19941119-B (1994)(Sega)(beta)"
+	description "36 Great Holes Starring Fred Couples Rev 19941119-B (1994)(Sega)(beta)"
+	rom ( name "36 Great Holes Starring Fred Couples Rev 19941119-B (1994)(Sega)(beta).bin" size 3145728 crc 8fa32086 md5 c9ce63ee1c915b4ffd1d14940ecbf7c6 sha1 5fc3837ba3b98f9f2c560d3775da969798a150ee )
+)
+
+game (
+	name "36 Great Holes Starring Fred Couples Rev 19941121 (1994)(Sega)(beta)"
+	description "36 Great Holes Starring Fred Couples Rev 19941121 (1994)(Sega)(beta)"
+	rom ( name "36 Great Holes Starring Fred Couples Rev 19941121 (1994)(Sega)(beta).bin" size 3136724 crc 8d0713ce md5 12aae94fab8374e0c61c8220f28007b7 sha1 34d7bf6b86c877ab068390f660073016a95711e3 )
+)
+
+game (
+	name "36 Great Holes Starring Fred Couples Rev 19941122 (1994)(Sega)(beta)"
+	description "36 Great Holes Starring Fred Couples Rev 19941122 (1994)(Sega)(beta)"
+	rom ( name "36 Great Holes Starring Fred Couples Rev 19941122 (1994)(Sega)(beta).bin" size 3136724 crc e1e98cac md5 9035d2efd419306d5014df16f0dd29a4 sha1 a6bee7800f73e2ca12381432154b636ddd279412 )
+)
+
+game (
+	name "36 Great Holes Starring Fred Couples Rev 19941122-B (1994)(Sega)(beta)"
+	description "36 Great Holes Starring Fred Couples Rev 19941122-B (1994)(Sega)(beta)"
+	rom ( name "36 Great Holes Starring Fred Couples Rev 19941122-B (1994)(Sega)(beta).bin" size 3136724 crc 6b656643 md5 f4877c8823d7f39df0932068ed23a585 sha1 0590ff4405fcd0ca8f2fc5293690330fdf63127a )
+)
+
+game (
+	name "36 Great Holes Starring Fred Couples Rev 19941123 (1994)(Sega)(beta)"
+	description "36 Great Holes Starring Fred Couples Rev 19941123 (1994)(Sega)(beta)"
+	rom ( name "36 Great Holes Starring Fred Couples Rev 19941123 (1994)(Sega)(beta).bin" size 3136724 crc 0b58f6a5 md5 11d87989771f3f0882512a52e758439e sha1 fa2f2d3887bb3e6010a5c13289f63681cac0404a )
+)
+
+game (
+	name "36 Great Holes Starring Fred Couples Rev 19941126 (1994)(Sega)(beta)"
+	description "36 Great Holes Starring Fred Couples Rev 19941126 (1994)(Sega)(beta)"
+	rom ( name "36 Great Holes Starring Fred Couples Rev 19941126 (1994)(Sega)(beta).bin" size 3145728 crc 2ece26db md5 3920135572b377d760cee34995c159bd sha1 541ddfac44323c589ad23f51a5be984ecfa55539 )
+)
+
+game (
+	name "36 Great Holes Starring Fred Couples Rev 19941127 (1994)(Sega)(beta)"
+	description "36 Great Holes Starring Fred Couples Rev 19941127 (1994)(Sega)(beta)"
+	rom ( name "36 Great Holes Starring Fred Couples Rev 19941127 (1994)(Sega)(beta).bin" size 3145728 crc b5e82f07 md5 7d04ff0502908fe179ad90aaa5270542 sha1 afa1f5c2dab7de2114d3a34794785b0d6768d95c )
+)
+
+game (
+	name "36 Great Holes Starring Fred Couples Rev 19941128 (1994)(Sega)(beta)"
+	description "36 Great Holes Starring Fred Couples Rev 19941128 (1994)(Sega)(beta)"
+	rom ( name "36 Great Holes Starring Fred Couples Rev 19941128 (1994)(Sega)(beta).bin" size 3145728 crc 38d09772 md5 20917b40eb81edeebfceb57aec9b419d sha1 f0d06074b1b5ce2df77fdaaf74620158efb7f875 )
+)
+
+game (
+	name "36 Great Holes Starring Fred Couples Rev 19941128-B (1994)(Sega)(beta)"
+	description "36 Great Holes Starring Fred Couples Rev 19941128-B (1994)(Sega)(beta)"
+	rom ( name "36 Great Holes Starring Fred Couples Rev 19941128-B (1994)(Sega)(beta).bin" size 3145728 crc 8f4f6479 md5 8b2f55c154013452170e0dfd77d5ad2a sha1 e341e5fca64def64c019310d4f551ff48908291b )
+)
+
+game (
+	name "36 Great Holes Starring Fred Couples Rev 19941129 (1994)(Sega)(beta)"
+	description "36 Great Holes Starring Fred Couples Rev 19941129 (1994)(Sega)(beta)"
+	rom ( name "36 Great Holes Starring Fred Couples Rev 19941129 (1994)(Sega)(beta).bin" size 3145728 crc 9c5011b0 md5 bbcf031159ad7ea4b014a58c0ed9433f sha1 5658febd37534280962dc6801efc10604b07603f )
+)
+
+game (
+	name "36 Great Holes Starring Fred Couples Rev 19941130 (1994)(Sega)(beta)"
+	description "36 Great Holes Starring Fred Couples Rev 19941130 (1994)(Sega)(beta)"
+	rom ( name "36 Great Holes Starring Fred Couples Rev 19941130 (1994)(Sega)(beta).bin" size 3145728 crc 41e2d54d md5 9386cbfe21dcb58cc8a8006c8bc06e61 sha1 19681b2e5d1eafaa09401dca296bea884fbc08c1 )
+)
+
+game (
+	name "36 Great Holes Starring Fred Couples Rev 19941202 (1994)(Sega)(beta)"
+	description "36 Great Holes Starring Fred Couples Rev 19941202 (1994)(Sega)(beta)"
+	rom ( name "36 Great Holes Starring Fred Couples Rev 19941202 (1994)(Sega)(beta).bin" size 3145728 crc 323c2935 md5 3e33e547288d1d2a5baf1b21a07f8df0 sha1 5b1140e33357a3d0fdc056ab5a350d588b5e5af9 )
+)
+
+game (
+	name "36 Great Holes Starring Fred Couples Rev 19941203 (1994)(Sega)(beta)"
+	description "36 Great Holes Starring Fred Couples Rev 19941203 (1994)(Sega)(beta)"
+	rom ( name "36 Great Holes Starring Fred Couples Rev 19941203 (1994)(Sega)(beta).bin" size 3145728 crc 3f30c0d2 md5 97caf7c900fe4bcee30117365a70543c sha1 7ca51ad03ebb95f017a1b900a4a1592876d0d5c2 )
+)
+
+game (
+	name "36 Great Holes Starring Fred Couples Rev 19941206 (1994)(Sega)(beta)"
+	description "36 Great Holes Starring Fred Couples Rev 19941206 (1994)(Sega)(beta)"
+	rom ( name "36 Great Holes Starring Fred Couples Rev 19941206 (1994)(Sega)(beta).bin" size 3145728 crc ecfe5a0f md5 fa60425cd76cfdbee2dc8000b3099a98 sha1 af8eadcf49d0700c7479648865cc08cd40bc2808 )
+)
+
+game (
+	name "36 Great Holes Starring Fred Couples Rev 19941213 (1994)(Sega)(beta)"
+	description "36 Great Holes Starring Fred Couples Rev 19941213 (1994)(Sega)(beta)"
+	rom ( name "36 Great Holes Starring Fred Couples Rev 19941213 (1994)(Sega)(beta).bin" size 3145728 crc 34bf7c6d md5 443a014104ff3145f0b2eebe4ffce0fd sha1 6398a442595650d70a5ce20a52331899c0dfaf62 )
+)
+
+game (
+	name "36 Great Holes Starring Fred Couples Rev 19941214 (1994)(Sega)(beta)"
+	description "36 Great Holes Starring Fred Couples Rev 19941214 (1994)(Sega)(beta)"
+	rom ( name "36 Great Holes Starring Fred Couples Rev 19941214 (1994)(Sega)(beta).bin" size 3145728 crc a63b0636 md5 c30e393f01ada81ca44bad43ee63d3b7 sha1 f78481e57111295c2f5aeb64cd306c3c5fbf6d97 )
+)
+
+game (
+	name "36 Great Holes Starring Fred Couples Rev 19941219 (1994)(Sega)(beta)"
+	description "36 Great Holes Starring Fred Couples Rev 19941219 (1994)(Sega)(beta)"
+	rom ( name "36 Great Holes Starring Fred Couples Rev 19941219 (1994)(Sega)(beta).bin" size 3145728 crc c073149f md5 fa347c89886d60279abf6b1d6c0c5f02 sha1 e28ab68e8aed7aa8e9f33a6e9c68678272df4d95 )
+)
+
+game (
+	name "36 Great Holes Starring Fred Couples Rev 19941221 (1994)(Sega)(beta)"
+	description "36 Great Holes Starring Fred Couples Rev 19941221 (1994)(Sega)(beta)"
+	rom ( name "36 Great Holes Starring Fred Couples Rev 19941221 (1994)(Sega)(beta).bin" size 3145728 crc 3893dcfe md5 86fcf541b14f98dedb8c8deff14de868 sha1 23e84ec4d8cec09992fcff323f32f49f44d23cd2 )
+)
+
+game (
+	name "36 Great Holes Starring Fred Couples Rev 19941221-B (1994)(Sega)(beta)"
+	description "36 Great Holes Starring Fred Couples Rev 19941221-B (1994)(Sega)(beta)"
+	rom ( name "36 Great Holes Starring Fred Couples Rev 19941221-B (1994)(Sega)(beta).bin" size 3145728 crc cc0334bb md5 7a186abafff18ba8ed439f362b56014e sha1 6a1801ef96cc8c4a6896ab55e105f7fa8d707f51 )
+)
+
+game (
+	name "After Burner Complete (1994)(Sega)(EU)(en)"
+	description "After Burner Complete (1994)(Sega)(EU)(en)"
+	rom ( name "After Burner Complete (1994)(Sega)(EU)(en).bin" size 2097152 crc 029106f5 md5 a8e05bd3cdf97e1811ebd6d52c4371a7 sha1 c7d56cc75dc9a5206fda6a080cbedae9f48c82bc )
+)
+
+game (
+	name "After Burner Complete (1994)(Sega)(JP-US)(en)"
+	description "After Burner Complete (1994)(Sega)(JP-US)(en)"
+	rom ( name "After Burner Complete (1994)(Sega)(JP-US)(en).bin" size 2097152 crc 204044c4 md5 ec9529858cc7961b39f5382b2f657b8f sha1 9cf575feb036e2f26e78350154d5eb2fd3825325 )
+)
+
+game (
+	name "BC Racers (1995)(Core Design)"
+	description "BC Racers (1995)(Core Design)"
+	rom ( name "BC Racers (1995)(Core Design).bin" size 3145728 crc 936c3d27 md5 35a11e021ca0b7ff909e4774eb8b3236 sha1 9b5fd499eaa442d48a2c97fceb1d505dc8e8ddff )
+)
+
+game (
+	name "Blackthorne (1995)(Blizzard Entertainment - Interplay)(US)"
+	description "Blackthorne (1995)(Blizzard Entertainment - Interplay)(US)"
+	rom ( name "Blackthorne (1995)(Blizzard Entertainment - Interplay)(US).bin" size 3145728 crc d1a60a47 md5 c238b112113b0297b2b9f4f618d56598 sha1 4bf120cf056fe1417ca5b02fa0372ef33cb8ec11 )
+)
+
+game (
+	name "Brutal Unleashed - Above the Claw (1995)(Eurocom - GameTek)(US)"
+	description "Brutal Unleashed - Above the Claw (1995)(Eurocom - GameTek)(US)"
+	rom ( name "Brutal Unleashed - Above the Claw (1995)(Eurocom - GameTek)(US).bin" size 3145728 crc 7a72c939 md5 1738a479b0253bcb0bcfb7bf09c03add sha1 40aa2c787f37772cdbd7280b8be06b15421fabae )
+)
+
+game (
+	name "Chaotix Featuring Knuckles the Echidna (1995)(Sega)(EU)(en)"
+	description "Chaotix Featuring Knuckles the Echidna (1995)(Sega)(EU)(en)"
+	rom ( name "Chaotix Featuring Knuckles the Echidna (1995)(Sega)(EU)(en).bin" size 3145728 crc 41d63572 md5 4ce9e6b6e8883d8a678d90aabce022d0 sha1 5c1a2e327a656217604d4bae7e141764a7e59922 )
+)
+
+game (
+	name "Chaotix Featuring Knuckles the Echidna (1995)(Sega)(EU)(en)[h]"
+	description "Chaotix Featuring Knuckles the Echidna (1995)(Sega)(EU)(en)[h]"
+	rom ( name "Chaotix Featuring Knuckles the Echidna (1995)(Sega)(EU)(en)[h].bin" size 3145728 crc 87fbdbd7 md5 72d3eb77a39f28adf0c679b6eddbf95e sha1 a88fd0e0159efc12f5d8a7898941007e868c2e13 )
+)
+
+game (
+	name "Chaotix Featuring Knuckles the Echidna (1995)(Sega)(JP-US)(en)"
+	description "Chaotix Featuring Knuckles the Echidna (1995)(Sega)(JP-US)(en)"
+	rom ( name "Chaotix Featuring Knuckles the Echidna (1995)(Sega)(JP-US)(en).bin" size 3145728 crc d0b0b842 md5 47b1095e68b053125cd2cd5b1ac4eb50 sha1 0c2fff7bc79ed26507c08ac47464c3af19f7ced7 )
+)
+
+game (
+	name "Chaotix Featuring Knuckles the Echidna (1995)(Sega)(JP-US)(en)[h]"
+	description "Chaotix Featuring Knuckles the Echidna (1995)(Sega)(JP-US)(en)[h]"
+	rom ( name "Chaotix Featuring Knuckles the Echidna (1995)(Sega)(JP-US)(en)[h].bin" size 3145728 crc d8977863 md5 d0981100adf924a085c4c43ffd3f8b4c sha1 9d162332daf212602f55949b200a4c490d9b4bb2 )
+)
+
+game (
+	name "Chaotix Featuring Knuckles the Echidna Rev 0111-19950112-0936 (1995)(Sega)(beta)"
+	description "Chaotix Featuring Knuckles the Echidna Rev 0111-19950112-0936 (1995)(Sega)(beta)"
+	rom ( name "Chaotix Featuring Knuckles the Echidna Rev 0111-19950112-0936 (1995)(Sega)(beta).bin" size 4194304 crc 5523ea78 md5 d8ad7470835e0edc83b770b59584f625 sha1 882ce770f32f4af61ac422accecc8a84e1c52cd3 )
+)
+
+game (
+	name "Chaotix Featuring Knuckles the Echidna Rev 0202-19950207-1525 (1995)(Sega)(beta)"
+	description "Chaotix Featuring Knuckles the Echidna Rev 0202-19950207-1525 (1995)(Sega)(beta)"
+	rom ( name "Chaotix Featuring Knuckles the Echidna Rev 0202-19950207-1525 (1995)(Sega)(beta).bin" size 3145728 crc 7b32e440 md5 e6c65023505129b294c48d37a2d7899d sha1 4e4af26f944cf3b5d99f60f37b20dc67207a4fbe )
+)
+
+game (
+	name "Chaotix Featuring Knuckles the Echidna Rev 0213-19950213-0730 (1995)(Sega)(beta)"
+	description "Chaotix Featuring Knuckles the Echidna Rev 0213-19950213-0730 (1995)(Sega)(beta)"
+	rom ( name "Chaotix Featuring Knuckles the Echidna Rev 0213-19950213-0730 (1995)(Sega)(beta).bin" size 3145728 crc 14f43e14 md5 9d986b6c96704de70e43988825df463a sha1 0cbbcc96f23917feb844469163bc8ab14da94816 )
+)
+
+game (
+	name "Chaotix Featuring Knuckles the Echidna Rev 119-19950119-0704 (1995)(Sega)(beta)"
+	description "Chaotix Featuring Knuckles the Echidna Rev 119-19950119-0704 (1995)(Sega)(beta)"
+	rom ( name "Chaotix Featuring Knuckles the Echidna Rev 119-19950119-0704 (1995)(Sega)(beta).bin" size 4194304 crc 468ad032 md5 dde8f92c0fb80488f53ebbce98bd203c sha1 2b1a5f19113fa4015437ede5a195c5dfb377e5be )
+)
+
+game (
+	name "Chaotix Featuring Knuckles the Echidna Rev 1207-19941207-0715 (1995)(Sega)(beta)"
+	description "Chaotix Featuring Knuckles the Echidna Rev 1207-19941207-0715 (1995)(Sega)(beta)"
+	rom ( name "Chaotix Featuring Knuckles the Echidna Rev 1207-19941207-0715 (1995)(Sega)(beta).bin" size 3145728 crc d62ae235 md5 ed059ef80f0292989c0cc86a0224f09d sha1 150dace1482ebf38a0f6242be6d8b7ea19f8a737 )
+)
+
+game (
+	name "Chaotix Featuring Knuckles the Echidna Rev 1227-19941227-1028 (1995)(Sega)(beta)"
+	description "Chaotix Featuring Knuckles the Echidna Rev 1227-19941227-1028 (1995)(Sega)(beta)"
+	rom ( name "Chaotix Featuring Knuckles the Echidna Rev 1227-19941227-1028 (1995)(Sega)(beta).bin" size 4194304 crc 4307d738 md5 a161c79dd955d971ee3fcb2e01777257 sha1 c62a8be339ffd9dd182a3f8e60b6e27225cfc5f2 )
+)
+
+game (
+	name "Chaotix Featuring Knuckles the Echidna Rev 1229-19941230-1531 (1995)(Sega)(beta)"
+	description "Chaotix Featuring Knuckles the Echidna Rev 1229-19941230-1531 (1995)(Sega)(beta)"
+	rom ( name "Chaotix Featuring Knuckles the Echidna Rev 1229-19941230-1531 (1995)(Sega)(beta).bin" size 4194304 crc 36a294e0 md5 88c27c63dd58ba339b4db3a1c8791521 sha1 883c7748c3c352b44238d2bdc9152ac9651e99fb )
+)
+
+game (
+	name "Chaotix Featuring Knuckles the Echidna Rev 208-19950208-1117 (1995)(Sega)(beta)"
+	description "Chaotix Featuring Knuckles the Echidna Rev 208-19950208-1117 (1995)(Sega)(beta)"
+	rom ( name "Chaotix Featuring Knuckles the Echidna Rev 208-19950208-1117 (1995)(Sega)(beta).bin" size 3145728 crc b099e5f6 md5 b37e562d5c0a26122abf66ac94fef886 sha1 d965d12c8cce09683d80c08d06c74b7c6e7b8dab )
+)
+
+game (
+	name "Chaotix Featuring Knuckles the Echidna Rev 209-19950209-0825 (1995)(Sega)(beta)"
+	description "Chaotix Featuring Knuckles the Echidna Rev 209-19950209-0825 (1995)(Sega)(beta)"
+	rom ( name "Chaotix Featuring Knuckles the Echidna Rev 209-19950209-0825 (1995)(Sega)(beta).bin" size 3145728 crc e95d7f57 md5 241082f8b6399e658e3516281a2a725e sha1 01c9f4614f282a05b3e86701b4ca18a1a0e1889c )
+)
+
+game (
+	name "Chaotix Featuring Knuckles the Echidna Rev 210-19950210-0628 (1995)(Sega)(beta)"
+	description "Chaotix Featuring Knuckles the Echidna Rev 210-19950210-0628 (1995)(Sega)(beta)"
+	rom ( name "Chaotix Featuring Knuckles the Echidna Rev 210-19950210-0628 (1995)(Sega)(beta).bin" size 3145728 crc 7b716175 md5 b925cb18160ced5285981a3edd5c4213 sha1 4c13842abeda86ce6577da67ba5fc24fbfbdc0de )
+)
+
+game (
+	name "Chaotix Featuring Knuckles the Echidna Rev 213B-19950213-0646 (1995)(Sega)(beta)"
+	description "Chaotix Featuring Knuckles the Echidna Rev 213B-19950213-0646 (1995)(Sega)(beta)"
+	rom ( name "Chaotix Featuring Knuckles the Echidna Rev 213B-19950213-0646 (1995)(Sega)(beta).bin" size 3145728 crc aff06bff md5 bdd716e7e0ce4a24ad73179fba8d65dd sha1 88b122398c1b25f432ae845b799f1308f51aa055 )
+)
+
+game (
+	name "Chaotix Featuring Knuckles the Echidna Rev 214-19950214-0646 (1995)(Sega)(beta)"
+	description "Chaotix Featuring Knuckles the Echidna Rev 214-19950214-0646 (1995)(Sega)(beta)"
+	rom ( name "Chaotix Featuring Knuckles the Echidna Rev 214-19950214-0646 (1995)(Sega)(beta).bin" size 3145728 crc ba0a1108 md5 5e1012438fdeda44b64589fd33daad5f sha1 af3bfd9540098581aef08664d625725ffcc90be2 )
+)
+
+game (
+	name "Cosmic Carnage (1994)(Sega)(EU)(en)"
+	description "Cosmic Carnage (1994)(Sega)(EU)(en)"
+	rom ( name "Cosmic Carnage (1994)(Sega)(EU)(en).bin" size 3145728 crc 9f3fdbc2 md5 8aadc467d31bc64f95a7fbe8f95afeb3 sha1 900e8ecdcc4460b4c4af3873e1d6bc83da4aee99 )
+)
+
+game (
+	name "Cosmic Carnage (1994)(Sega)(JP-US)(en)"
+	description "Cosmic Carnage (1994)(Sega)(JP-US)(en)"
+	rom ( name "Cosmic Carnage (1994)(Sega)(JP-US)(en).bin" size 3145728 crc 7c7be6a2 md5 32f3002a46a462735aa12ca856cb7652 sha1 9a563ed821b483148339561ebd2b876efa58847b )
+)
+
+game (
+	name "Cosmic Carnage Rev 19940906 (1994)(Sega)(beta)"
+	description "Cosmic Carnage Rev 19940906 (1994)(Sega)(beta)"
+	rom ( name "Cosmic Carnage Rev 19940906 (1994)(Sega)(beta).bin" size 3145728 crc d4166241 md5 2a6755d2c4f00bc8569a3fd41dd556d8 sha1 f84006cee56748bf2c7249dec3c356409cb0e0a5 )
+)
+
+game (
+	name "Cosmic Carnage Rev 19940921 (1994)(Sega)(beta)"
+	description "Cosmic Carnage Rev 19940921 (1994)(Sega)(beta)"
+	rom ( name "Cosmic Carnage Rev 19940921 (1994)(Sega)(beta).bin" size 4194304 crc 7b58141c md5 4fd7b679099aaf9ebe8dec1603ec3780 sha1 926996f4b1f935ce4c3b46e902171c4b4da16385 )
+)
+
+game (
+	name "Cosmic Carnage Rev 19940926 (1994)(Sega)(beta)"
+	description "Cosmic Carnage Rev 19940926 (1994)(Sega)(beta)"
+	rom ( name "Cosmic Carnage Rev 19940926 (1994)(Sega)(beta).bin" size 3145728 crc f04f4366 md5 7f97f54d53a6adfcde9a56faaf448c34 sha1 512d3c9b51e2f3015265dc78757363f45fc0a788 )
+)
+
+game (
+	name "Cosmic Carnage Rev 19940928 (1994)(Sega)(beta)"
+	description "Cosmic Carnage Rev 19940928 (1994)(Sega)(beta)"
+	rom ( name "Cosmic Carnage Rev 19940928 (1994)(Sega)(beta).bin" size 3145728 crc cf89175f md5 ad83a93fc3a31444bdd89ddb11262c5d sha1 443c961bfc441b4d0ace5f6e0a8d1bb7abf8ac28 )
+)
+
+game (
+	name "Cosmic Carnage Rev 19941004 (1994)(Sega)(beta)"
+	description "Cosmic Carnage Rev 19941004 (1994)(Sega)(beta)"
+	rom ( name "Cosmic Carnage Rev 19941004 (1994)(Sega)(beta).bin" size 3145728 crc c6867772 md5 f2a81c48457191b4f3329792941ac71a sha1 17cf3d4671a3313764df42e0f9a25133b0dc4ec9 )
+)
+
+game (
+	name "Cosmic Carnage Rev 19941005 (1994)(Sega)(beta)"
+	description "Cosmic Carnage Rev 19941005 (1994)(Sega)(beta)"
+	rom ( name "Cosmic Carnage Rev 19941005 (1994)(Sega)(beta).bin" size 3145728 crc bfe27f56 md5 0210673f0735f1f0956057243bef919c sha1 99bb4c98c7de0668934ab91a6eb01c9f680918b9 )
+)
+
+game (
+	name "Cosmic Carnage Rev 19941007 (1994)(Sega)(beta)"
+	description "Cosmic Carnage Rev 19941007 (1994)(Sega)(beta)"
+	rom ( name "Cosmic Carnage Rev 19941007 (1994)(Sega)(beta).bin" size 3145728 crc d8b04c24 md5 0eee6f56666fd70b3483bad9b5297a5e sha1 c051de6dccc48352d51650f2712dbc7d62a1ec1a )
+)
+
+game (
+	name "Cosmic Carnage Rev 19941011 (1994)(Sega)(beta)"
+	description "Cosmic Carnage Rev 19941011 (1994)(Sega)(beta)"
+	rom ( name "Cosmic Carnage Rev 19941011 (1994)(Sega)(beta).bin" size 3145728 crc e483498b md5 52a2e8a8a6a031e0ae731d2efd65a982 sha1 bbdfe2b276c255247225efd1e8348be57a42ef4a )
+)
+
+game (
+	name "Darxide (1995)(Frontier Developments)(EU)(M4)"
+	description "Darxide (1995)(Frontier Developments)(EU)(M4)"
+	rom ( name "Darxide (1995)(Frontier Developments)(EU)(M4).bin" size 2097152 crc 22d7c906 md5 30ee320f76db70a836edeff2c8ce9cd2 sha1 108b4ffed8643abdefa921cfb58389b119b47f3d )
+)
+
+game (
+	name "Doom (1994)(id Software - Sega)(EU)(en)"
+	description "Doom (1994)(id Software - Sega)(EU)(en)"
+	rom ( name "Doom (1994)(id Software - Sega)(EU)(en).bin" size 3145728 crc 53734e3a md5 1abe8b9b1855b1b101cb7f1d86395c22 sha1 4ec03c2114ebffbbcd16859583340d4ea4cd8dd5 )
+)
+
+game (
+	name "Doom (1994)(id Software - Sega)(JP-US)(en)"
+	description "Doom (1994)(id Software - Sega)(JP-US)(en)"
+	rom ( name "Doom (1994)(id Software - Sega)(JP-US)(en).bin" size 3145728 crc 208332fd md5 79339867d9d4f58b169753d9a29ea1a5 sha1 b68e9c7af81853b8f05b8696033dfe4c80327e38 )
+)
+
+game (
+	name "FIFA Soccer 96 (1995)(Electronic Arts)(EU-US)(M6)"
+	description "FIFA Soccer 96 (1995)(Electronic Arts)(EU-US)(M6)"
+	rom ( name "FIFA Soccer 96 (1995)(Electronic Arts)(EU-US)(M6).bin" size 3145728 crc fb14a7c8 md5 24aaa6ef307d20147ce10e7610e59aa2 sha1 131ebb717dee4dd1d8f5ab2b9393c23785d3a359 )
+)
+
+game (
+	name "Kolibri (1995)(Sega)"
+	description "Kolibri (1995)(Sega)"
+	rom ( name "Kolibri (1995)(Sega).bin" size 3145728 crc 20ca53ef md5 6af6207b1e67072a9104178130c61712 sha1 191ae0b525ecf32664086d8d748e0b35f776ddfe )
+)
+
+game (
+	name "Metal Head (1995)(Sega)(EU)(en-ja)"
+	description "Metal Head (1995)(Sega)(EU)(en-ja)"
+	rom ( name "Metal Head (1995)(Sega)(EU)(en-ja).bin" size 3145728 crc bf9b8376 md5 5ab011dae907f77e68eb764bec3870d8 sha1 2a7767024e23b55fe193d586a96a3ba3c92e7ea8 )
+)
+
+game (
+	name "Metal Head (1995)(Sega)(EU)(en-ja)[b]"
+	description "Metal Head (1995)(Sega)(EU)(en-ja)[b]"
+	rom ( name "Metal Head (1995)(Sega)(EU)(en-ja)[b].bin" size 3145728 crc 2af60167 md5 9add3dfa94adec73fb9a8ebd972da04e sha1 dffe08b54130ca857be21b523d40dc99a1a4617e )
+)
+
+game (
+	name "Metal Head (1995)(Sega)(JP-US)(en-ja)"
+	description "Metal Head (1995)(Sega)(JP-US)(en-ja)"
+	rom ( name "Metal Head (1995)(Sega)(JP-US)(en-ja).bin" size 3145728 crc ef5553ff md5 03cc5d7549d71ba4e9ddc1beae3805fb sha1 4e872fbb44ecb2bd730abd8cc8f32f96b10582c0 )
+)
+
+game (
+	name "Metal Head Rev 19941114 (1995)(Sega)(beta)"
+	description "Metal Head Rev 19941114 (1995)(Sega)(beta)"
+	rom ( name "Metal Head Rev 19941114 (1995)(Sega)(beta).bin" size 3145728 crc 2ea0ff81 md5 360ec44967bcc22a05dcd215c624897f sha1 a81db052a095360439a1da6e41ac19b91561ab27 )
+)
+
+game (
+	name "Metal Head Rev 19941118 (1995)(Sega)(beta)"
+	description "Metal Head Rev 19941118 (1995)(Sega)(beta)"
+	rom ( name "Metal Head Rev 19941118 (1995)(Sega)(beta).bin" size 3145728 crc a0343749 md5 e36b87067183fe1ba286f0957c469b62 sha1 a943ea135d6c685f87957503697cb9f894e12c52 )
+)
+
+game (
+	name "Metal Head Rev 19941121 (1995)(Sega)(beta)"
+	description "Metal Head Rev 19941121 (1995)(Sega)(beta)"
+	rom ( name "Metal Head Rev 19941121 (1995)(Sega)(beta).bin" size 3145728 crc 398bcb98 md5 9c5c8e456c5237705e6b9fd39fef093b sha1 e7667f4a4342a5a45b0a010f0fe2e61b2bf99fea )
+)
+
+game (
+	name "Metal Head Rev 19941202 (1995)(Sega)(en-ja)(beta)"
+	description "Metal Head Rev 19941202 (1995)(Sega)(en-ja)(beta)"
+	rom ( name "Metal Head Rev 19941202 (1995)(Sega)(en-ja)(beta).bin" size 3145728 crc 8b7bc8a4 md5 aae550a44c4f349b25db009ef84fcabd sha1 194f45a0651a59305e0e727e407801ff09968a62 )
+)
+
+game (
+	name "Metal Head Rev 19941207 (1995)(Sega)(en-ja)(beta)"
+	description "Metal Head Rev 19941207 (1995)(Sega)(en-ja)(beta)"
+	rom ( name "Metal Head Rev 19941207 (1995)(Sega)(en-ja)(beta).bin" size 3145728 crc fa0fc326 md5 b68bf1cdba527506bb6b0aa04a0f3656 sha1 d82b26783f0843faabe526167eabf296c84b0c47 )
+)
+
+game (
+	name "Metal Head Rev 19941207-B (1995)(Sega)(en-ja)(beta)"
+	description "Metal Head Rev 19941207-B (1995)(Sega)(en-ja)(beta)"
+	rom ( name "Metal Head Rev 19941207-B (1995)(Sega)(en-ja)(beta).bin" size 3145728 crc 476d29b0 md5 ebb8f4df5e5215a5c8d2e1facbb8396b sha1 438e172b22ef2b78f5bceb3195da408639ae463c )
+)
+
+game (
+	name "Metal Head Rev 19941209 (1995)(Sega)(en-ja)(beta)"
+	description "Metal Head Rev 19941209 (1995)(Sega)(en-ja)(beta)"
+	rom ( name "Metal Head Rev 19941209 (1995)(Sega)(en-ja)(beta).bin" size 3145728 crc 5369d23f md5 5e2f45365c0eaedc7b22127343f4ed38 sha1 4d795a7ecab65527e6538ef886c3c3783a1ba936 )
+)
+
+game (
+	name "Metal Head Rev 19941213 (1995)(Sega)(en-ja)(beta)"
+	description "Metal Head Rev 19941213 (1995)(Sega)(en-ja)(beta)"
+	rom ( name "Metal Head Rev 19941213 (1995)(Sega)(en-ja)(beta).bin" size 3145728 crc 3302b1a1 md5 176aaa2a84d0cc82e21c35f21dc45e64 sha1 5a38dce482c7fe38a50c6fd8884b019f1acab2a1 )
+)
+
+game (
+	name "Metal Head Rev 19941220 (1995)(Sega)(en-ja)(beta)"
+	description "Metal Head Rev 19941220 (1995)(Sega)(en-ja)(beta)"
+	rom ( name "Metal Head Rev 19941220 (1995)(Sega)(en-ja)(beta).bin" size 3145728 crc de99c9ce md5 ac7e0ef84b3f72bb4766ad1af74a5318 sha1 8d7a9f78860342643502e2ba77b445b4dc7e078e )
+)
+
+game (
+	name "Mortal Kombat II Rev 199412 (1994)(Acclaim - Midway - Probe)"
+	description "Mortal Kombat II Rev 199412 (1994)(Acclaim - Midway - Probe)"
+	rom ( name "Mortal Kombat II Rev 199412 (1994)(Acclaim - Midway - Probe).bin" size 4194304 crc 773c0a85 md5 a95c0e7c1d35fd42cd2e3eb7b06cb6d0 sha1 d55964bd935110ac2d9cbd3b085b7e8b71b11df2 )
+)
+
+game (
+	name "Mortal Kombat II Rev 199501 (1994)(Acclaim - Midway - Probe)"
+	description "Mortal Kombat II Rev 199501 (1994)(Acclaim - Midway - Probe)"
+	rom ( name "Mortal Kombat II Rev 199501 (1994)(Acclaim - Midway - Probe).bin" size 4194304 crc 211085ce md5 9d258d11fe1e4cac2c1aab370c35e57a sha1 f75698de887d0ef980f73e35fc4615887a9ad58f )
+)
+
+game (
+	name "Motocross Championship (1994)(Sega)(EU)(en)"
+	description "Motocross Championship (1994)(Sega)(EU)(en)"
+	rom ( name "Motocross Championship (1994)(Sega)(EU)(en).bin" size 2097152 crc ae3364e9 md5 6bc365808a00b8a640dd86ccb5a0ea24 sha1 af0cb8626825e1b431eba07b8a9b571186745c16 )
+)
+
+game (
+	name "Motocross Championship (1994)(Sega)(JP-US)(en)"
+	description "Motocross Championship (1994)(Sega)(JP-US)(en)"
+	rom ( name "Motocross Championship (1994)(Sega)(JP-US)(en).bin" size 2097152 crc a21c5761 md5 2c4a934985021624d48725b8d7b039e8 sha1 5f1a107991aaf9eff0b3ce864b2e3151f56abe7b )
+)
+
+game (
+	name "Motocross Championship Rev 19941012 (1994)(Sega)(beta)"
+	description "Motocross Championship Rev 19941012 (1994)(Sega)(beta)"
+	rom ( name "Motocross Championship Rev 19941012 (1994)(Sega)(beta).bin" size 1690952 crc 0a075812 md5 b741a12b72807648aee002105ce8d282 sha1 102e763c6f4bf65210b307d34d75473fd27d7ae4 )
+)
+
+game (
+	name "Motocross Championship Rev 19941017 (1994)(Sega)(beta)"
+	description "Motocross Championship Rev 19941017 (1994)(Sega)(beta)"
+	rom ( name "Motocross Championship Rev 19941017 (1994)(Sega)(beta).bin" size 1608792 crc f3163d21 md5 57182c2a4edebec3858942094c5a482b sha1 670779a85db5673b23825b91693b1015f841fde3 )
+)
+
+game (
+	name "Motocross Championship Rev 19941018 (1994)(Sega)(beta)"
+	description "Motocross Championship Rev 19941018 (1994)(Sega)(beta)"
+	rom ( name "Motocross Championship Rev 19941018 (1994)(Sega)(beta).bin" size 1624764 crc 2c2dc4df md5 ff8fc197fcd71018564473e83db5d40c sha1 bafabf4eb40fb1197dd543fa6ae69df1f87e9d02 )
+)
+
+game (
+	name "Motocross Championship Rev 19941019 (1994)(Sega)(beta)"
+	description "Motocross Championship Rev 19941019 (1994)(Sega)(beta)"
+	rom ( name "Motocross Championship Rev 19941019 (1994)(Sega)(beta).bin" size 1644464 crc 385ed8c7 md5 b52dc9a0fd6c3bf46a66dc608965fdaa sha1 3862fe8d98a512e3332748b8f73fcdf84faba489 )
+)
+
+game (
+	name "Motocross Championship Rev 19941020 (1994)(Sega)(beta)"
+	description "Motocross Championship Rev 19941020 (1994)(Sega)(beta)"
+	rom ( name "Motocross Championship Rev 19941020 (1994)(Sega)(beta).bin" size 1661296 crc ac6cf708 md5 400cf0229ebc8d441a7b03733c55cd55 sha1 95edb6101eee31588e7b0ce0b67d73206070eb81 )
+)
+
+game (
+	name "Motocross Championship Rev 19941024 (1994)(Sega)(beta)"
+	description "Motocross Championship Rev 19941024 (1994)(Sega)(beta)"
+	rom ( name "Motocross Championship Rev 19941024 (1994)(Sega)(beta).bin" size 1736076 crc 20c49183 md5 ff2dfbe40f8863c123e9d82c0edf6e6e sha1 d641e7b2fd0a44ad603cdc324921a25f1b897288 )
+)
+
+game (
+	name "Motocross Championship Rev 19941028 (1994)(Sega)(beta)"
+	description "Motocross Championship Rev 19941028 (1994)(Sega)(beta)"
+	rom ( name "Motocross Championship Rev 19941028 (1994)(Sega)(beta).bin" size 1843436 crc 59107472 md5 0e3f3a483d99c8d1cc03a3402afa13c9 sha1 174158dd18a4d243d3c943c9f8cf080acd91cc3b )
+)
+
+game (
+	name "Motocross Championship Rev 19941101 (1994)(Sega)(beta)"
+	description "Motocross Championship Rev 19941101 (1994)(Sega)(beta)"
+	rom ( name "Motocross Championship Rev 19941101 (1994)(Sega)(beta).bin" size 2045468 crc 46970275 md5 f0c494585f0fad8d77bf9115a6875399 sha1 372a43df94cbed3859bbddad4982fa5301416aed )
+)
+
+game (
+	name "Motocross Championship Rev 19941102 (1994)(Sega)(beta)"
+	description "Motocross Championship Rev 19941102 (1994)(Sega)(beta)"
+	rom ( name "Motocross Championship Rev 19941102 (1994)(Sega)(beta).bin" size 2045684 crc cefef428 md5 9eec4062c7d36f158d265731a8ab749a sha1 607b9d89e312294ca4e477de238bec2d1bea2a42 )
+)
+
+game (
+	name "Motocross Championship Rev 19941102-B (1994)(Sega)(beta)"
+	description "Motocross Championship Rev 19941102-B (1994)(Sega)(beta)"
+	rom ( name "Motocross Championship Rev 19941102-B (1994)(Sega)(beta).bin" size 2045684 crc efe307ff md5 0fea70d9fe033ff4da6b0c4e31140b26 sha1 3b7cfe05c0a66fc025bbdd3a35ba7828b2fc3c7f )
+)
+
+game (
+	name "Motocross Championship Rev 19941103 (1994)(Sega)(beta)"
+	description "Motocross Championship Rev 19941103 (1994)(Sega)(beta)"
+	rom ( name "Motocross Championship Rev 19941103 (1994)(Sega)(beta).bin" size 2045120 crc c652c802 md5 a8359f240a85576a2904280c2b8c2fbb sha1 5dc89f7f2cc03689991c9325a1a2d08c6df5dc1b )
+)
+
+game (
+	name "Motocross Championship Rev 19941104 (1994)(Sega)(beta)"
+	description "Motocross Championship Rev 19941104 (1994)(Sega)(beta)"
+	rom ( name "Motocross Championship Rev 19941104 (1994)(Sega)(beta).bin" size 2045624 crc 6e12d410 md5 a8b3f927ca15c43a0096357fb149f46a sha1 ca4db761d26328b99445445b99304e90d7279c3e )
+)
+
+game (
+	name "Motocross Championship Rev 19941107 (1994)(Sega)(beta)"
+	description "Motocross Championship Rev 19941107 (1994)(Sega)(beta)"
+	rom ( name "Motocross Championship Rev 19941107 (1994)(Sega)(beta).bin" size 2097152 crc 63db2fb0 md5 868b0df732d4073e0b4070e2b762e134 sha1 181a58cfc8348e18e5d34ed0a75e79acedcc004e )
+)
+
+game (
+	name "Motocross Championship Rev 19941108 (1994)(Sega)(beta)"
+	description "Motocross Championship Rev 19941108 (1994)(Sega)(beta)"
+	rom ( name "Motocross Championship Rev 19941108 (1994)(Sega)(beta).bin" size 2097152 crc 5ff9eab9 md5 ffdc287031f59d3ce4a6f4c2b69aff31 sha1 93e13f7d3c4640e9aee7d577e974ab6581c07f91 )
+)
+
+game (
+	name "Motocross Championship Rev 19941111 (1994)(Sega)(beta)"
+	description "Motocross Championship Rev 19941111 (1994)(Sega)(beta)"
+	rom ( name "Motocross Championship Rev 19941111 (1994)(Sega)(beta).bin" size 2097152 crc 37f78d3d md5 5bdc8f310638695b570f92ffd99c7c59 sha1 45f457930884c7a5ec35361e37b1fd8cd91e4487 )
+)
+
+game (
+	name "NBA Jam - Tournament Edition (1995)(Acclaim)"
+	description "NBA Jam - Tournament Edition (1995)(Acclaim)"
+	rom ( name "NBA Jam - Tournament Edition (1995)(Acclaim).bin" size 4194304 crc 6b7994aa md5 966a5e00dd7bcdc70b05c5a0c0e8f7aa sha1 c8af3e74c49514669ba6652ec0c81bccf77873b6 )
+)
+
+game (
+	name "NFL Quarterback Club (1995)(Acclaim - Iguana Entertainment)"
+	description "NFL Quarterback Club (1995)(Acclaim - Iguana Entertainment)"
+	rom ( name "NFL Quarterback Club (1995)(Acclaim - Iguana Entertainment).bin" size 3145728 crc 0bc7018d md5 e273c10114351cdafeba1abccca8909d sha1 a0dc24f2f3a7fc5bfd12791cf25af7f7888843cf )
+)
+
+game (
+	name "Pitfall - The Mayan Adventure (1995)(Activision)(US)"
+	description "Pitfall - The Mayan Adventure (1995)(Activision)(US)"
+	rom ( name "Pitfall - The Mayan Adventure (1995)(Activision)(US).bin" size 3145728 crc f9126f15 md5 e091e542f7ea29ef3daf6022b36e219b sha1 ee864d1677c6d976d0846eb5f8d8edb839acfb76 )
+)
+
+game (
+	name "Primal Rage (1995)(Probe - Time Warner Interactive)"
+	description "Primal Rage (1995)(Probe - Time Warner Interactive)"
+	rom ( name "Primal Rage (1995)(Probe - Time Warner Interactive).bin" size 4194304 crc e78a4d28 md5 e1efc5804d3360e7b19f7542219bf964 sha1 5084dcca51d76173c383ab7d04cbc661673545f7 )
+)
+
+game (
+	name "RBI Baseball '95 (1995)(Atari - Time Warner Interactive)(US)"
+	description "RBI Baseball '95 (1995)(Atari - Time Warner Interactive)(US)"
+	rom ( name "RBI Baseball '95 (1995)(Atari - Time Warner Interactive)(US).bin" size 2097152 crc ff795fdc md5 5f955b5feab07c072fc345f1fee52a60 sha1 4f90433a4403fd74cafeea49272689046de4ae43 )
+)
+
+game (
+	name "Sangokushi IV (1995)(Koei - Sega)(JP)"
+	description "Sangokushi IV (1995)(Koei - Sega)(JP)"
+	rom ( name "Sangokushi IV (1995)(Koei - Sega)(JP).bin" size 4194304 crc e4de7625 md5 f4bb8844d77442dbb5bee78d0246b456 sha1 74a3ba27c55cff12409bf6c9324ece6247abbad1 )
+)
+
+game (
+	name "Space Harrier (1994)(Sega)(EU)(en)"
+	description "Space Harrier (1994)(Sega)(EU)(en)"
+	rom ( name "Space Harrier (1994)(Sega)(EU)(en).bin" size 2097152 crc 5cac3587 md5 4619e328e1719bee165941d891c08d81 sha1 8b0495257fa5392ef9ddcc9c3ba1860ae58f4f3d )
+)
+
+game (
+	name "Space Harrier (1994)(Sega)(JP-US)(en)"
+	description "Space Harrier (1994)(Sega)(JP-US)(en)"
+	rom ( name "Space Harrier (1994)(Sega)(JP-US)(en).bin" size 2097152 crc 86e7f989 md5 6180e973f678bfc96705e8be4e0783f1 sha1 f32a52a7082761982024e40291dbd962a835b231 )
+)
+
+game (
+	name "Space Harrier Rev 19940920 (1994)(Sega)(beta)"
+	description "Space Harrier Rev 19940920 (1994)(Sega)(beta)"
+	rom ( name "Space Harrier Rev 19940920 (1994)(Sega)(beta).bin" size 2097152 crc 2c65fa40 md5 1c1b4a07286b6df9eead9a0305672198 sha1 05d24d6f6c645866b8b1fde96746e27d0a19bbc6 )
+)
+
+game (
+	name "Spider-Man - Web of Fire (1996)(Sega)"
+	description "Spider-Man - Web of Fire (1996)(Sega)"
+	rom ( name "Spider-Man - Web of Fire (1996)(Sega).bin" size 3145728 crc 29dce257 md5 a60b0838a776966e17a8f10b94baddef sha1 7cc2ea1e10f110338ad880bd3e7ff3bce72e7e9e )
+)
+
+game (
+	name "Star Trek - Starfleet Academy - Starship Bridge Simulator (1994)(Interplay)(US)"
+	description "Star Trek - Starfleet Academy - Starship Bridge Simulator (1994)(Interplay)(US)"
+	rom ( name "Star Trek - Starfleet Academy - Starship Bridge Simulator (1994)(Interplay)(US).bin" size 2097152 crc dd9708b9 md5 78086fba202066ff4f968d35e7c21c11 sha1 e5248328b64a1ec4f1079c88ee53ef8d48e99e58 )
+)
+
+game (
+	name "Star Wars Arcade (1994)(LucasArts - Sega)(EU)(en)"
+	description "Star Wars Arcade (1994)(LucasArts - Sega)(EU)(en)"
+	rom ( name "Star Wars Arcade (1994)(LucasArts - Sega)(EU)(en).bin" size 2621440 crc 82e82660 md5 bfaa6fd031490c26e25f3d59d9c37497 sha1 a877cbf704fe7480966fd88a3c39efb6a39392ac )
+)
+
+game (
+	name "Star Wars Arcade (1994)(LucasArts - Sega)(JP)(en-ja)"
+	description "Star Wars Arcade (1994)(LucasArts - Sega)(JP)(en-ja)"
+	rom ( name "Star Wars Arcade (1994)(LucasArts - Sega)(JP)(en-ja).bin" size 2621440 crc f4e9b846 md5 f6e8648a6ced9017c9f0bf0ca544f17f sha1 282767a07e453e868de52b46bf11def3d071bda6 )
+)
+
+game (
+	name "Star Wars Arcade (1994)(LucasArts - Sega)(US)"
+	description "Star Wars Arcade (1994)(LucasArts - Sega)(US)"
+	rom ( name "Star Wars Arcade (1994)(LucasArts - Sega)(US).bin" size 2621440 crc 2f16b44a md5 ae3a42c6297ef25c6018a209fda0194e sha1 f4ffaaf1d8330ea971643021be3f3203e1ea065d )
+)
+
+game (
+	name "Star Wars Arcade (1994)(LucasArts - Sega)(US)[b]"
+	description "Star Wars Arcade (1994)(LucasArts - Sega)(US)[b]"
+	rom ( name "Star Wars Arcade (1994)(LucasArts - Sega)(US)[b].bin" size 1048576 crc 067e780b md5 1e233836cacf3ebef42cf0fc78397fb1 sha1 5e55b14c7536b2821eed48d1565e70c6ef15e80e )
+)
+
+game (
+	name "Star Wars Arcade Rev 19940830 (1994)(LucasArts - Sega)(beta)"
+	description "Star Wars Arcade Rev 19940830 (1994)(LucasArts - Sega)(beta)"
+	rom ( name "Star Wars Arcade Rev 19940830 (1994)(LucasArts - Sega)(beta).bin" size 2097152 crc 10d4a078 md5 e0603f3785e9ce60bc47c7a4419b6606 sha1 8e90bb4b3bde14b819de85944080d4a3caf11c1b )
+)
+
+game (
+	name "Star Wars Arcade Rev 19940901 (1994)(LucasArts - Sega)(beta)"
+	description "Star Wars Arcade Rev 19940901 (1994)(LucasArts - Sega)(beta)"
+	rom ( name "Star Wars Arcade Rev 19940901 (1994)(LucasArts - Sega)(beta).bin" size 2097152 crc b0bb29eb md5 67c748fa61e808312f32cc727d0e44cb sha1 37da621707fec11bb08d59cec1fa2c554365afec )
+)
+
+game (
+	name "Star Wars Arcade Rev 19940906 (1994)(LucasArts - Sega)(beta)"
+	description "Star Wars Arcade Rev 19940906 (1994)(LucasArts - Sega)(beta)"
+	rom ( name "Star Wars Arcade Rev 19940906 (1994)(LucasArts - Sega)(beta).bin" size 2097152 crc b8d9317c md5 43efb3d85aa106567661adddec440731 sha1 b7df724434b0e7ef2af198a56021d825f701cf4d )
+)
+
+game (
+	name "Star Wars Arcade Rev 19940907 (1994)(LucasArts - Sega)(beta)"
+	description "Star Wars Arcade Rev 19940907 (1994)(LucasArts - Sega)(beta)"
+	rom ( name "Star Wars Arcade Rev 19940907 (1994)(LucasArts - Sega)(beta).bin" size 2097152 crc c6a8582b md5 95dee4ef705455008ec9570b8fabfcd1 sha1 7e84f2eafef33e211500a551b3d430155368b66e )
+)
+
+game (
+	name "Star Wars Arcade Rev 19940909 (1994)(LucasArts - Sega)(beta)"
+	description "Star Wars Arcade Rev 19940909 (1994)(LucasArts - Sega)(beta)"
+	rom ( name "Star Wars Arcade Rev 19940909 (1994)(LucasArts - Sega)(beta).bin" size 2097152 crc 5bdd86d3 md5 76ca792a475cccff4e76fe7e0f248886 sha1 761aa97ab8f7524c49a141804246209fd6c970f2 )
+)
+
+game (
+	name "Star Wars Arcade Rev 19940912 (1994)(LucasArts - Sega)(beta)"
+	description "Star Wars Arcade Rev 19940912 (1994)(LucasArts - Sega)(beta)"
+	rom ( name "Star Wars Arcade Rev 19940912 (1994)(LucasArts - Sega)(beta).bin" size 2097152 crc 118a011c md5 267df04136c31ca16e1f3870945c446e sha1 b328170014bfc4770479eacc017f76bcaee61389 )
+)
+
+game (
+	name "Star Wars Arcade Rev 19940913-B (1994)(LucasArts - Sega)(beta)"
+	description "Star Wars Arcade Rev 19940913-B (1994)(LucasArts - Sega)(beta)"
+	rom ( name "Star Wars Arcade Rev 19940913-B (1994)(LucasArts - Sega)(beta).bin" size 2467793 crc dc5628ba md5 b0eadfa1cb6b9f0d44e45433baab8857 sha1 d4c262ba8118f2f2af720a45e461d4254d5163b4 )
+)
+
+game (
+	name "Star Wars Arcade Rev 19940914-D (1994)(LucasArts - Sega)(beta)"
+	description "Star Wars Arcade Rev 19940914-D (1994)(LucasArts - Sega)(beta)"
+	rom ( name "Star Wars Arcade Rev 19940914-D (1994)(LucasArts - Sega)(beta).bin" size 2504513 crc efc980fe md5 03957d55ddeb3faa8758eded5e2ceef9 sha1 2ba71086a01e14051dce2a5c24bba49a991cb2e5 )
+)
+
+game (
+	name "Star Wars Arcade Rev 19940915 (1994)(LucasArts - Sega)(beta)"
+	description "Star Wars Arcade Rev 19940915 (1994)(LucasArts - Sega)(beta)"
+	rom ( name "Star Wars Arcade Rev 19940915 (1994)(LucasArts - Sega)(beta).bin" size 3145728 crc 34c6a769 md5 01e5b6f81beb2f5b0ab4e9d43fb1f3a8 sha1 9a492a52be224ee9ff41d4ea7df3cee67f028235 )
+)
+
+game (
+	name "Star Wars Arcade Rev 19940916 (1994)(LucasArts - Sega)(beta)"
+	description "Star Wars Arcade Rev 19940916 (1994)(LucasArts - Sega)(beta)"
+	rom ( name "Star Wars Arcade Rev 19940916 (1994)(LucasArts - Sega)(beta).bin" size 3145728 crc 150a0dfd md5 0a9683a85087d3953ac782046741c864 sha1 492816545c7309d2b7594b5d4f8d508f4a13e06a )
+)
+
+game (
+	name "Star Wars Arcade Rev 19940918 (1994)(LucasArts - Sega)(beta)"
+	description "Star Wars Arcade Rev 19940918 (1994)(LucasArts - Sega)(beta)"
+	rom ( name "Star Wars Arcade Rev 19940918 (1994)(LucasArts - Sega)(beta).bin" size 3145728 crc 02933d44 md5 c834b1d6d0a9e8ac2cc7a06310700d7e sha1 5d924628b507464ec1b1ca8755cb509cf68b02af )
+)
+
+game (
+	name "Star Wars Arcade Rev 19940923 (1994)(LucasArts - Sega)(beta)"
+	description "Star Wars Arcade Rev 19940923 (1994)(LucasArts - Sega)(beta)"
+	rom ( name "Star Wars Arcade Rev 19940923 (1994)(LucasArts - Sega)(beta).bin" size 2517257 crc 8e7bfc7c md5 1cf3240ce3d994719ee9fc06e827262a sha1 75ce473164f678f9f394d719b35850e4899a8cd1 )
+)
+
+game (
+	name "Star Wars Arcade Rev 19940929 (1994)(LucasArts - Sega)(beta)"
+	description "Star Wars Arcade Rev 19940929 (1994)(LucasArts - Sega)(beta)"
+	rom ( name "Star Wars Arcade Rev 19940929 (1994)(LucasArts - Sega)(beta).bin" size 2517297 crc 7682fe72 md5 1b6fc1ef31464acd728783e746286f1f sha1 2f93b915add1357dfcf42135d4ce85e6bb668cf8 )
+)
+
+game (
+	name "Star Wars Arcade Rev 19940930-B (1994)(LucasArts - Sega)(beta)"
+	description "Star Wars Arcade Rev 19940930-B (1994)(LucasArts - Sega)(beta)"
+	rom ( name "Star Wars Arcade Rev 19940930-B (1994)(LucasArts - Sega)(beta).bin" size 2516793 crc 6074f26c md5 320fb649a04da1e5decde198bd799f97 sha1 f1786e62b7707b8a01b66720f2722d555ec9d4db )
+)
+
+game (
+	name "Star Wars Arcade Rev 19941003 (1994)(LucasArts - Sega)(beta)"
+	description "Star Wars Arcade Rev 19941003 (1994)(LucasArts - Sega)(beta)"
+	rom ( name "Star Wars Arcade Rev 19941003 (1994)(LucasArts - Sega)(beta).bin" size 3145728 crc a653a183 md5 7837ea435585cf60c1d7ea2d99248e19 sha1 38fde66801083a60c142c3f3e7bae2aa81518acf )
+)
+
+game (
+	name "Star Wars Arcade Rev 19941005 (1994)(LucasArts - Sega)(beta)"
+	description "Star Wars Arcade Rev 19941005 (1994)(LucasArts - Sega)(beta)"
+	rom ( name "Star Wars Arcade Rev 19941005 (1994)(LucasArts - Sega)(beta).bin" size 2516513 crc 9861e21f md5 ec824311a5f31007a5bdd98b5209b138 sha1 24e599b251d643b74a923323a83e43a26d21fafc )
+)
+
+game (
+	name "Star Wars Arcade Rev 19941006-P (1994)(LucasArts - Sega)(beta)"
+	description "Star Wars Arcade Rev 19941006-P (1994)(LucasArts - Sega)(beta)"
+	rom ( name "Star Wars Arcade Rev 19941006-P (1994)(LucasArts - Sega)(beta).bin" size 2621440 crc c00af920 md5 6e75534d5f3d7bf42f15cdf0faf3e0da sha1 1ade331c81eade613748126882057841dc02a420 )
+)
+
+game (
+	name "Star Wars Arcade Rev 19941007-B (1994)(LucasArts - Sega)(beta)"
+	description "Star Wars Arcade Rev 19941007-B (1994)(LucasArts - Sega)(beta)"
+	rom ( name "Star Wars Arcade Rev 19941007-B (1994)(LucasArts - Sega)(beta).bin" size 2621440 crc 57afc1ac md5 777e1ae822f9ed033d27aa1e409d9623 sha1 c75853fb88f13a01ddca05b2202ed150770c1284 )
+)
+
+game (
+	name "Stellar Assault (1995)(Sega)(EU-US)(en)"
+	description "Stellar Assault (1995)(Sega)(EU-US)(en)"
+	rom ( name "Stellar Assault (1995)(Sega)(EU-US)(en).bin" size 2097152 crc 60c49e4d md5 1415a8675adf3e8647b3df673b50056d sha1 561c8c63dbcabc0b1b6f31673ca75a0bde7abc72 )
+)
+
+game (
+	name "Stellar Assault Rev 19950206 (1995)(Sega)(EU-US)(en)(beta)"
+	description "Stellar Assault Rev 19950206 (1995)(Sega)(EU-US)(en)(beta)"
+	rom ( name "Stellar Assault Rev 19950206 (1995)(Sega)(EU-US)(en)(beta).bin" size 2097152 crc 24057310 md5 b7cac9f37b7873127afe7a91dead2bde sha1 6ff8cd79cfa073697dd13cd1c4dc767b4e0c558e )
+)
+
+game (
+	name "Stellar Assault Rev 19950213 (1995)(Sega)(EU-US)(en)(beta)"
+	description "Stellar Assault Rev 19950213 (1995)(Sega)(EU-US)(en)(beta)"
+	rom ( name "Stellar Assault Rev 19950213 (1995)(Sega)(EU-US)(en)(beta).bin" size 2097152 crc ca0de10e md5 775d395064002f0d1120f3e67e936f2b sha1 71061c0a02b4cc3c3e39d872bf86b190421cb594 )
+)
+
+game (
+	name "Stellar Assault Rev 19950222 (1995)(Sega)(EU-US)(en)(beta)"
+	description "Stellar Assault Rev 19950222 (1995)(Sega)(EU-US)(en)(beta)"
+	rom ( name "Stellar Assault Rev 19950222 (1995)(Sega)(EU-US)(en)(beta).bin" size 2097152 crc 48ef9ee9 md5 1f363c972686056a475813f61b8600bf sha1 9d72335cb0468a9699f7e92927043387091bc0c9 )
+)
+
+game (
+	name "Stellar Assault Rev 19950302 (1995)(Sega)(EU-US)(en)(beta)"
+	description "Stellar Assault Rev 19950302 (1995)(Sega)(EU-US)(en)(beta)"
+	rom ( name "Stellar Assault Rev 19950302 (1995)(Sega)(EU-US)(en)(beta).bin" size 2097152 crc 25bdde61 md5 f5e23c9c89673f3f2294eef5d2e5ca67 sha1 5a83e4ebffe8ac7108b45697be7468bd7f111642 )
+)
+
+game (
+	name "Stellar Assault Rev 19950306 (1995)(Sega)(EU-US)(en)(beta)"
+	description "Stellar Assault Rev 19950306 (1995)(Sega)(EU-US)(en)(beta)"
+	rom ( name "Stellar Assault Rev 19950306 (1995)(Sega)(EU-US)(en)(beta).bin" size 2097152 crc 7eec3665 md5 9b2f80f1c52b78885cebd8140e99166e sha1 31a0a0a34719b1259de98458c24cf5eb78f7109c )
+)
+
+game (
+	name "Stellar Assault Rev 19950313 (1995)(Sega)(EU-US)(en)(beta)"
+	description "Stellar Assault Rev 19950313 (1995)(Sega)(EU-US)(en)(beta)"
+	rom ( name "Stellar Assault Rev 19950313 (1995)(Sega)(EU-US)(en)(beta).bin" size 2097152 crc 58962105 md5 df79824d61c1f4f7a258450528a1ff3c sha1 9bae40d4d07a096545b11f6b0434db778c238af5 )
+)
+
+game (
+	name "Stellar Assault Rev 19950313-B (1995)(Sega)(EU-US)(en)(beta)"
+	description "Stellar Assault Rev 19950313-B (1995)(Sega)(EU-US)(en)(beta)"
+	rom ( name "Stellar Assault Rev 19950313-B (1995)(Sega)(EU-US)(en)(beta).bin" size 2097152 crc fd7fedb2 md5 c304de27cdb1cf7dbf660c37f666ac13 sha1 9875b357fd2d651892054d233c608b6f3bbb40e7 )
+)
+
+game (
+	name "T-MEK (1995)(Atari - Time Warner Interactive)"
+	description "T-MEK (1995)(Atari - Time Warner Interactive)"
+	rom ( name "T-MEK (1995)(Atari - Time Warner Interactive).bin" size 3145728 crc 66d2c48f md5 1b06c84caf09206a8d9f0bb3eaaba512 sha1 173c8425921d83db3e8d181158e7599364f4c0f6 )
+)
+
+game (
+	name "Tempo (1995)(Sega)(JP-US)(en)"
+	description "Tempo (1995)(Sega)(JP-US)(en)"
+	rom ( name "Tempo (1995)(Sega)(JP-US)(en).bin" size 3145728 crc 14e5c575 md5 30989c83d4e4ea3c35a1f3e2620b8465 sha1 6673ba83570b4f2c1b4a22415a56594c3cc6c6a9 )
+)
+
+game (
+	name "Tempo Rev 19941229 (1995)(Sega)(JP-US)(en)(beta)"
+	description "Tempo Rev 19941229 (1995)(Sega)(JP-US)(en)(beta)"
+	rom ( name "Tempo Rev 19941229 (1995)(Sega)(JP-US)(en)(beta).bin" size 3145728 crc 7bfe49a3 md5 cc6570e604c22f51dc24347663da1732 sha1 017ee73e0f582893ef3deebfbe74af4babd532a5 )
+)
+
+game (
+	name "Tempo Rev 19950121 (1995)(Sega)(JP-US)(en)(beta)"
+	description "Tempo Rev 19950121 (1995)(Sega)(JP-US)(en)(beta)"
+	rom ( name "Tempo Rev 19950121 (1995)(Sega)(JP-US)(en)(beta).bin" size 3145728 crc 48cc1645 md5 62790d7ffe26582288b0b0ae40bbd60e sha1 55fd5d5410a820867526d5f7f909bf39d25607c2 )
+)
+
+game (
+	name "Tempo Rev 19950124 (1995)(Sega)(JP-US)(en)(beta)"
+	description "Tempo Rev 19950124 (1995)(Sega)(JP-US)(en)(beta)"
+	rom ( name "Tempo Rev 19950124 (1995)(Sega)(JP-US)(en)(beta).bin" size 3145728 crc 7a02c17b md5 2e989b696e1447358829ebcc37ac1476 sha1 1b8225ae3e688ebdde482015a389a6cebbdbfd5e )
+)
+
+game (
+	name "Tempo Rev 19950126 (1995)(Sega)(JP-US)(en)(beta)"
+	description "Tempo Rev 19950126 (1995)(Sega)(JP-US)(en)(beta)"
+	rom ( name "Tempo Rev 19950126 (1995)(Sega)(JP-US)(en)(beta).bin" size 3145728 crc 86637ae4 md5 a45f3d6db91df1bc3950173285a726f5 sha1 4ec1dd3abf3e5aa0d1a902f20cfa0d16a224b5bf )
+)
+
+game (
+	name "Tempo Rev 19950204 (1995)(Sega)(JP-US)(en)(beta)"
+	description "Tempo Rev 19950204 (1995)(Sega)(JP-US)(en)(beta)"
+	rom ( name "Tempo Rev 19950204 (1995)(Sega)(JP-US)(en)(beta).bin" size 3145728 crc 6e2bcc9f md5 f97cd1d66bcc7378569cc92f2b073025 sha1 73d31074f08d9dd8061bf0996829dbad46b3d784 )
+)
+
+game (
+	name "Tempo Rev 19950206 (1995)(Sega)(JP-US)(en)(beta)"
+	description "Tempo Rev 19950206 (1995)(Sega)(JP-US)(en)(beta)"
+	rom ( name "Tempo Rev 19950206 (1995)(Sega)(JP-US)(en)(beta).bin" size 3145728 crc e2502fe6 md5 ac6ee8d2c258e00a6d752122f701fab0 sha1 2e9724e9b7f2d351ad1ddfb34c43014aff4b07dd )
+)
+
+game (
+	name "Tempo Rev 19950206-B (1995)(Sega)(JP-US)(en)(beta)"
+	description "Tempo Rev 19950206-B (1995)(Sega)(JP-US)(en)(beta)"
+	rom ( name "Tempo Rev 19950206-B (1995)(Sega)(JP-US)(en)(beta).bin" size 3145728 crc 6d0775f3 md5 07d06786fdc642449deff5d7880b2ef5 sha1 7c29092fb82711851f1c681fa717cd59b98f531a )
+)
+
+game (
+	name "Tempo Rev 19950207 (1995)(Sega)(JP-US)(en)(beta)"
+	description "Tempo Rev 19950207 (1995)(Sega)(JP-US)(en)(beta)"
+	rom ( name "Tempo Rev 19950207 (1995)(Sega)(JP-US)(en)(beta).bin" size 3145728 crc a2ebc91c md5 2ae43c978349214492d2172758ba21b3 sha1 91bca4f05b97b51b96fb1ddcb9b54165f0b621ae )
+)
+
+game (
+	name "Toughman Contest (1995)(Electronic Arts)"
+	description "Toughman Contest (1995)(Electronic Arts)"
+	rom ( name "Toughman Contest (1995)(Electronic Arts).bin" size 4194304 crc 14eac7a6 md5 386d99d132ce5699ade81b4473cef5b4 sha1 7588b0b8f4e93d5fdc920d3ab7e464154e423da9 )
+)
+
+game (
+	name "Virtua Fighter (1995)(Sega)(EU)(en)"
+	description "Virtua Fighter (1995)(Sega)(EU)(en)"
+	rom ( name "Virtua Fighter (1995)(Sega)(EU)(en).bin" size 4194304 crc 25aea73c md5 adcf6c6150d1bc3d073d3754b22ebc69 sha1 24b3063284a914c76d8d1f681e3ed6323b0d7d0b )
+)
+
+game (
+	name "Virtua Fighter (1995)(Sega)(EU)(en)[b]"
+	description "Virtua Fighter (1995)(Sega)(EU)(en)[b]"
+	rom ( name "Virtua Fighter (1995)(Sega)(EU)(en)[b].bin" size 4194304 crc 6e626839 md5 17de0712018b95cd307a4c7c835ee426 sha1 5edf5624f5949942da516851733c9f29fdc42986 )
+)
+
+game (
+	name "Virtua Fighter (1995)(Sega)(JP-US)(en)"
+	description "Virtua Fighter (1995)(Sega)(JP-US)(en)"
+	rom ( name "Virtua Fighter (1995)(Sega)(JP-US)(en).bin" size 4194304 crc b5de9626 md5 901e97c9f731fbdf1f1ead0fbf58249a sha1 f35754f4bfe3a53722d7a799f88face0fd13c424 )
+)
+
+game (
+	name "Virtua Fighter Rev 19950530 (1995)(Sega)(beta)"
+	description "Virtua Fighter Rev 19950530 (1995)(Sega)(beta)"
+	rom ( name "Virtua Fighter Rev 19950530 (1995)(Sega)(beta).bin" size 4194304 crc 46a88625 md5 14d0fdf6df181ec4902942975e470913 sha1 fbb0d96c22465abb1702499f0a8c68228dcf8fc6 )
+)
+
+game (
+	name "Virtua Fighter Rev 19950615 (1995)(Sega)(beta)"
+	description "Virtua Fighter Rev 19950615 (1995)(Sega)(beta)"
+	rom ( name "Virtua Fighter Rev 19950615 (1995)(Sega)(beta).bin" size 4194304 crc 8df6401c md5 500ab2d460721db06b6243027f6a0eab sha1 28e99cc511e7c539fec66acbf5662f81528389d3 )
+)
+
+game (
+	name "Virtua Fighter Rev 19950630 (1995)(Sega)(beta)"
+	description "Virtua Fighter Rev 19950630 (1995)(Sega)(beta)"
+	rom ( name "Virtua Fighter Rev 19950630 (1995)(Sega)(beta).bin" size 4194304 crc 3b88f987 md5 4a51f39e2e6fd27456cdfc18c1b1017c sha1 cc6a95d10a95a91337f995a0120cb353196ce080 )
+)
+
+game (
+	name "Virtua Fighter Rev 19950717 (1995)(Sega)(beta)"
+	description "Virtua Fighter Rev 19950717 (1995)(Sega)(beta)"
+	rom ( name "Virtua Fighter Rev 19950717 (1995)(Sega)(beta).bin" size 4194304 crc 6a364bce md5 374dd57d027e06601d1193b67da8c2b2 sha1 c931cd60543b41e8bfb29511dcc70e4648471cbf )
+)
+
+game (
+	name "Virtua Fighter Rev 19950721 (1995)(Sega)(beta)"
+	description "Virtua Fighter Rev 19950721 (1995)(Sega)(beta)"
+	rom ( name "Virtua Fighter Rev 19950721 (1995)(Sega)(beta).bin" size 4194304 crc 1c4c13f3 md5 b969b201c236a764f125ed2e9b3a12f9 sha1 d26708a26a3add9e4d6083e6b9ccd48776cd4c56 )
+)
+
+game (
+	name "Virtua Fighter Rev 19950724 (1995)(Sega)(beta)"
+	description "Virtua Fighter Rev 19950724 (1995)(Sega)(beta)"
+	rom ( name "Virtua Fighter Rev 19950724 (1995)(Sega)(beta).bin" size 4194304 crc d4f5484b md5 16c67ad8853789279178f93780aa69c3 sha1 4600fb1c80c968728688269dfbd9c480d4d70abe )
+)
+
+game (
+	name "Virtua Fighter Rev 19950725 (1995)(Sega)(beta)"
+	description "Virtua Fighter Rev 19950725 (1995)(Sega)(beta)"
+	rom ( name "Virtua Fighter Rev 19950725 (1995)(Sega)(beta).bin" size 4194304 crc aff4d320 md5 f48a565aab16802c99b645f48a5cb503 sha1 7b881a7849320187389d4af5bd4bf8d3ee6fd796 )
+)
+
+game (
+	name "Virtua Hamster (1995)(Quakenbush Design - Sega)(US)(proto)"
+	description "Virtua Hamster (1995)(Quakenbush Design - Sega)(US)(proto)"
+	rom ( name "Virtua Hamster (1995)(Quakenbush Design - Sega)(US)(proto).bin" size 2097152 crc cd54ac37 md5 b3a4929fcb61bc9ecdfd9ac453860fc1 sha1 c10f98d9db73ae90be5e5d556b663a5aff015cef )
+)
+
+game (
+	name "Virtua Racing Deluxe (1994)(Sega)(EU)(en)"
+	description "Virtua Racing Deluxe (1994)(Sega)(EU)(en)"
+	rom ( name "Virtua Racing Deluxe (1994)(Sega)(EU)(en).bin" size 3145728 crc 27f14b5f md5 c30a6430b1a7e819bd2dde63a41d4d57 sha1 bb26ddde26cd07191d872e8a76a170ca3326f781 )
+)
+
+game (
+	name "Virtua Racing Deluxe (1994)(Sega)(EU)(en)[b]"
+	description "Virtua Racing Deluxe (1994)(Sega)(EU)(en)[b]"
+	rom ( name "Virtua Racing Deluxe (1994)(Sega)(EU)(en)[b].bin" size 3162112 crc 26522e04 md5 fb8b10729078de36a736bc4decae97d6 sha1 5c93dc9756f5323516d7ff5db2c8d6eac2d4495e )
+)
+
+game (
+	name "Virtua Racing Deluxe (1994)(Sega)(EU)(en)[h]"
+	description "Virtua Racing Deluxe (1994)(Sega)(EU)(en)[h]"
+	rom ( name "Virtua Racing Deluxe (1994)(Sega)(EU)(en)[h].bin" size 3145728 crc 6364b44c md5 31d1280d97a866c35180acddbbe0ba34 sha1 ffb52b05400ea0ff415f4fc699151464d9a402ad )
+)
+
+game (
+	name "Virtua Racing Deluxe (1994)(Sega)(JP)(en)"
+	description "Virtua Racing Deluxe (1994)(Sega)(JP)(en)"
+	rom ( name "Virtua Racing Deluxe (1994)(Sega)(JP)(en).bin" size 3145728 crc 0908e888 md5 08cae0a96d9ee07001c6e1c247d407c6 sha1 1c64e80eb164ca8d6c6587a55ad60385ba1daf27 )
+)
+
+game (
+	name "Virtua Racing Deluxe (1994)(Sega)(US)"
+	description "Virtua Racing Deluxe (1994)(Sega)(US)"
+	rom ( name "Virtua Racing Deluxe (1994)(Sega)(US).bin" size 3145728 crc 7896b62e md5 72b1ad0f949f68da7d0a6339ecd51a3f sha1 18dfdeb50780c2623e60a6587d7ed701a1cf81f1 )
+)
+
+game (
+	name "Virtua Racing Deluxe Rev 19940822 (1994)(Sega)(beta)"
+	description "Virtua Racing Deluxe Rev 19940822 (1994)(Sega)(beta)"
+	rom ( name "Virtua Racing Deluxe Rev 19940822 (1994)(Sega)(beta).bin" size 3145728 crc 6ebb3eda md5 c07a68331b846d1614954554c0414f86 sha1 d4e996fd7fb26919017d1056d0de608a34f05184 )
+)
+
+game (
+	name "Virtua Racing Deluxe Rev 19940829 (1994)(Sega)(beta)"
+	description "Virtua Racing Deluxe Rev 19940829 (1994)(Sega)(beta)"
+	rom ( name "Virtua Racing Deluxe Rev 19940829 (1994)(Sega)(beta).bin" size 3145728 crc 86a318de md5 9e7b5d7e83ae5f25421a44e14d6140bf sha1 b1385111a39795bf2ea57ab50a4feb479d7e502d )
+)
+
+game (
+	name "Virtua Racing Deluxe Rev 19940905 (1994)(Sega)(beta)"
+	description "Virtua Racing Deluxe Rev 19940905 (1994)(Sega)(beta)"
+	rom ( name "Virtua Racing Deluxe Rev 19940905 (1994)(Sega)(beta).bin" size 3145728 crc 99f38344 md5 a5efb294179bc3bdc6515383bcdeb63d sha1 88b3ef2bb0ccba25f3f83f218ca090e1a89512fe )
+)
+
+game (
+	name "World Series Baseball (1995)(Sega)(US)"
+	description "World Series Baseball (1995)(Sega)(US)"
+	rom ( name "World Series Baseball (1995)(Sega)(US).bin" size 3145728 crc 6de1bc75 md5 4d14eab0585e79e2fc4789e090755f2d sha1 ab3026eae46a775adb7eaebc13702699557ddc41 )
+)
+
+game (
+	name "WWF Raw (1995)(Acclaim)"
+	description "WWF Raw (1995)(Acclaim)"
+	rom ( name "WWF Raw (1995)(Acclaim).bin" size 4194304 crc 8eb7cd2c md5 b3788f861803d21cfa0e559695835f44 sha1 94b974f2f69f0c10bc18b349fa4ff95ca56fa47b )
+)
+
+game (
+	name "WWF WrestleMania (1995)(Acclaim - Midway - Sculptured Software)"
+	description "WWF WrestleMania (1995)(Acclaim - Midway - Sculptured Software)"
+	rom ( name "WWF WrestleMania (1995)(Acclaim - Midway - Sculptured Software).bin" size 4194304 crc 61833503 md5 8456cae9975ba6cb041c4ef2be54b1a1 sha1 551eedc963cba0e1410b3d229b332ef9ea061469 )
+)
+
+game (
+	name "X-Men - Mind Games (1996)(Scavenger - Sega)(US)(proto)"
+	description "X-Men - Mind Games (1996)(Scavenger - Sega)(US)(proto)"
+	rom ( name "X-Men - Mind Games (1996)(Scavenger - Sega)(US)(proto).bin" size 4194304 crc d61febc0 md5 bdd19a34a887a4aa6067ccfb617b9041 sha1 cd3fa2ace2fdbf4b6402cb52eeb208010bf31029 )
+)
+
+game (
+	name "Zaxxon's Motherbase 2000 (1995)(Sega)(JP-US)(en)"
+	description "Zaxxon's Motherbase 2000 (1995)(Sega)(JP-US)(en)"
+	rom ( name "Zaxxon's Motherbase 2000 (1995)(Sega)(JP-US)(en).bin" size 2097152 crc 447d44be md5 bd32a5e46d0159dc88cb31ea4bd9d899 sha1 60c390f76c394bdd221936c21aecbf98aec49a3d )
+)
+
+game (
+	name "Zaxxon's Motherbase 2000 Rev 19950210 (1995)(Sega)(JP-US)(en)(beta)"
+	description "Zaxxon's Motherbase 2000 Rev 19950210 (1995)(Sega)(JP-US)(en)(beta)"
+	rom ( name "Zaxxon's Motherbase 2000 Rev 19950210 (1995)(Sega)(JP-US)(en)(beta).bin" size 2097152 crc c65693af md5 bce14cea563e804765e793ce6ef91311 sha1 9db5a93ae5fc4045df342a9f53b904ef130debbf )
+)
+
+game (
+	name "Zaxxon's Motherbase 2000 Rev 19950221 (1995)(Sega)(JP-US)(en)(beta)"
+	description "Zaxxon's Motherbase 2000 Rev 19950221 (1995)(Sega)(JP-US)(en)(beta)"
+	rom ( name "Zaxxon's Motherbase 2000 Rev 19950221 (1995)(Sega)(JP-US)(en)(beta).bin" size 2097152 crc 061c0cf2 md5 fa84f37b4d7a53b160fa3596be9caf7c sha1 3a8c794139fe7255e7107877b2d0018a6eaa0300 )
+)
+
+game (
+	name "Zaxxon's Motherbase 2000 Rev 19950223 (1995)(Sega)(JP-US)(en)(beta)"
+	description "Zaxxon's Motherbase 2000 Rev 19950223 (1995)(Sega)(JP-US)(en)(beta)"
+	rom ( name "Zaxxon's Motherbase 2000 Rev 19950223 (1995)(Sega)(JP-US)(en)(beta).bin" size 2097152 crc e92b36c5 md5 62de41e3546891b6a95ec28a558aefb2 sha1 6c93f432610908950b594bb8d289fe81de88fbdf )
+)
+
+game (
+	name "Zaxxon's Motherbase 2000 Rev 19950227 (1995)(Sega)(JP-US)(en)(beta)"
+	description "Zaxxon's Motherbase 2000 Rev 19950227 (1995)(Sega)(JP-US)(en)(beta)"
+	rom ( name "Zaxxon's Motherbase 2000 Rev 19950227 (1995)(Sega)(JP-US)(en)(beta).bin" size 2097152 crc a1ef9787 md5 fd3eb732b7fdca39eded45b90cff25ab sha1 e498f84bea01f073a430d854b47306b7d35ffe08 )
+)
+
+game (
+	name "Zaxxon's Motherbase 2000 Rev 19950303 (1995)(Sega)(JP-US)(en)(beta)"
+	description "Zaxxon's Motherbase 2000 Rev 19950303 (1995)(Sega)(JP-US)(en)(beta)"
+	rom ( name "Zaxxon's Motherbase 2000 Rev 19950303 (1995)(Sega)(JP-US)(en)(beta).bin" size 2097152 crc 5856082d md5 0827db2ebc41af9dfd693b0b8630fdf1 sha1 22dfc9a059657f45c7218d3be84c4a8c257ccc38 )
+)
+
+game (
+	name "Zaxxon's Motherbase 2000 Rev 19950306 (1995)(Sega)(JP-US)(en)(beta)"
+	description "Zaxxon's Motherbase 2000 Rev 19950306 (1995)(Sega)(JP-US)(en)(beta)"
+	rom ( name "Zaxxon's Motherbase 2000 Rev 19950306 (1995)(Sega)(JP-US)(en)(beta).bin" size 2097152 crc 90692a18 md5 478fab0968e5f8248d7e5ad5ebc8a0ae sha1 67afaca4956df2120f62259b1147feaad6098a53 )
+)
+
+game (
+	name "Zaxxon's Motherbase 2000 Rev 19950310 (1995)(Sega)(JP-US)(en)(beta)"
+	description "Zaxxon's Motherbase 2000 Rev 19950310 (1995)(Sega)(JP-US)(en)(beta)"
+	rom ( name "Zaxxon's Motherbase 2000 Rev 19950310 (1995)(Sega)(JP-US)(en)(beta).bin" size 2097152 crc 20faf0c3 md5 4c4f31281b713b7f515d909c78825ae9 sha1 df6898e46cba85541bc7f92090bfcf7000c0e648 )
+)
+
+game (
+	name "Zaxxon's Motherbase 2000 Rev 19950315 (1995)(Sega)(JP-US)(en)(beta)"
+	description "Zaxxon's Motherbase 2000 Rev 19950315 (1995)(Sega)(JP-US)(en)(beta)"
+	rom ( name "Zaxxon's Motherbase 2000 Rev 19950315 (1995)(Sega)(JP-US)(en)(beta).bin" size 2097152 crc adfd5bc6 md5 c81f0e02b7f779ee532c7b9b92c79240 sha1 ed9d3414edc90b7fb6a23732038f5c57710de9d3 )
+)
+
+game (
+	name "Zaxxon's Motherbase 2000 Rev 19950331 (1995)(Sega)(JP-US)(en)(beta)"
+	description "Zaxxon's Motherbase 2000 Rev 19950331 (1995)(Sega)(JP-US)(en)(beta)"
+	rom ( name "Zaxxon's Motherbase 2000 Rev 19950331 (1995)(Sega)(JP-US)(en)(beta).bin" size 2097152 crc 1344f08b md5 9ce8f1476ef7b6678ec134c6edda8147 sha1 ed3b31494407f324f18db4f5056ad6df75dc1a10 )
+)
+
