@@ -9,7 +9,7 @@ using Snowflake.API.Information.Game;
 
 namespace Snowflake.API.Interface
 {
-    public interface IScraper : IPlugin
+    public interface IScraper
     {
         BiDictionary<string, string> ScraperMap { get; }
         List<GameScrapeResult> GetSearchResults(string searchQuery);
