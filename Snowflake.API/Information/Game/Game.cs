@@ -12,11 +12,11 @@ namespace Snowflake.API.Information.Game
         public string PlatformId { get; private set; }
         public string Name { get; private set; }
         public GameImages Images { get; set; }
-        public Dictionary<string, dynamic> Metadata { get; set; }
+        public Dictionary<string, string> Metadata { get; set; }
         public string UUID { get; private set; }
         public string FileName { get; private set; }
         public Dictionary<string, dynamic> Settings { get; set; }
-        public Game(string platformId, string name, GameImages images, Dictionary<string, dynamic> metadata, string uuid, string fileName, Dictionary<string, dynamic> settings)
+        public Game(string platformId, string name, GameImages images, Dictionary<string,string> metadata, string uuid, string fileName, Dictionary<string, dynamic> settings)
         {
             this.PlatformId = platformId;
             this.Name = name;
