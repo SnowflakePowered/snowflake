@@ -50,10 +50,55 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="config.yml" />
+    <EmbeddedResource Include="config.yml">
+		<LogicalName>config.yml</LogicalName>
+	</EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="plugin.json" />
+    <EmbeddedResource Include="plugin.json">
+		<LogicalName>plugin.json</LogicalName>
+	</EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="dats\ATARI_2600.TOSEC.dat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="dats\ATARI_5200.TOSEC.dat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="dats\ATARI_LYNX.TOSEC.dat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="dats\NINTENDO_GB.TOSEC.dat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="dats\NINTENDO_GBA.TOSEC.dat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="dats\NINTENDO_GBC.TOSEC.dat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="dats\NINTENDO_N64.TOSEC.dat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="dats\NINTENDO_NES.TOSEC.dat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="dats\NINTENDO_SNES.TOSEC.dat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="dats\SEGA_32X.TOSEC.dat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="dats\SEGA_GEN.TOSEC.dat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="dats\SEGA_GG.TOSEC.dat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="dats\SEGA_SMS.TOSEC.dat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

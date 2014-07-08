@@ -30,9 +30,10 @@ namespace Snowflake.UI.EntryPoint
         public MainWindow()
         {
             InitializeComponent();
-
-            var fileName = @"[abc][def]Real Name[!].exe";
-            Console.WriteLine(Regex.Match(fileName, @"(\[[^]]*\])*([\w\s]+)").Groups[2].Value);
+            var id = new Identifier.DatIdentifier.DatIdentifier();
+            Console.WriteLine(id.IdentifyGame("sadsah.sfc", "NINTENDO_SNES"));
+           // var fileName = @"[abc][def]Real Name[!].exe";
+           // Console.WriteLine(Regex.Match(fileName, @"(\[[^]]*\])*([\w\s]+)").Groups[2].Value);
 
             //var resultString = Regex.Match(test, @"(?<=rom \( name "").*?(?="" size \d+ crc 2e2bf112)").Value;
            // Console.WriteLine(resultString);

@@ -113,6 +113,10 @@
       <Project>{45820d8e-c98b-421c-b0ca-c1952f91f3ff}</Project>
       <Name>Emulator.RetroArch</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Identifiers\Identifier.DatIdentifier\Identifier.DatIdentifier.csproj">
+      <Project>{38095fe3-a186-49bb-ac5b-966a5bc8f515}</Project>
+      <Name>Identifier.DatIdentifier</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Snowflake.API\Snowflake.API.csproj">
       <Project>{8f1d65ed-4a96-4a0a-8371-53655a60a2b3}</Project>
       <Name>Snowflake.API</Name>

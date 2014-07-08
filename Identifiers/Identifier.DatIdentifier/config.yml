@@ -1,7 +1,7 @@
 ﻿dats:
   ATARI_2600: 
     - 'ATARI_2600.TOSEC.dat'
-	- ''
+    - ''
   ATARI_5200: 
     - 'ATARI_5200.TOSEC.dat'
     - ''
@@ -43,4 +43,4 @@
     - ''
   SEGA_GG: 
     - 'SEGA_GG.TOSEC.dat'
-    - ''	
+    - ''    

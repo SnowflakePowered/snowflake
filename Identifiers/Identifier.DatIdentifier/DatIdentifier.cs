@@ -16,21 +16,25 @@ namespace Identifier.DatIdentifier
         public DatIdentifier()
             : base(Assembly.GetExecutingAssembly())
         {
-
+            this.InitConfiguration();
         }
 
         public string IdentifyGame(string fileName, string platformId)
         {
-            return IdentifyGame(File.Open(fileName, FileMode.Open), platformId);
+            return IdentifyGame(File.OpenRead(fileName), platformId);
         }
         public string IdentifyGame(FileStream file, string platformId)
         {
             string crc32 = GetCrc32(file);
-            List<string> datFiles = File.OpenRead(this.PluginConfiguration.Configuration["dats"][platformId]);
+            file.Close();
+            Console.WriteLine(Path.Combine(this.PluginDataPath, "dats", this.PluginConfiguration.Configuration["dats"][platformId][0]));
+            List<object> datFiles = this.PluginConfiguration.Configuration["dats"][platformId];
             string gameName = String.Empty;
-            foreach (string datFile in datFiles)
+            
+            foreach (var datFile  in datFiles)
             {
-                Match gameMatch = Regex.Match(datFile, String.Format(@"(?<=rom \( name "").*?(?="" size \d+ crc {0})", crc32.ToLower()), RegexOptions.IgnoreCase);
+                string dat = File.ReadAllText(Path.Combine(this.PluginDataPath, "dats", datFile.ToString()));
+                Match gameMatch = Regex.Match(dat, String.Format(@"(?<=rom \( name "").*?(?="" size \d+ crc {0})", crc32), RegexOptions.IgnoreCase);
                 if (gameMatch.Success)
                 {
                     gameName = gameMatch.Value;
@@ -38,13 +42,14 @@ namespace Identifier.DatIdentifier
                 }
             }
             gameName = Regex.Match(gameName, @"(\[[^]]*\])*([\w\s]+)").Groups[2].Value;
+            
             return gameName;
         }
 
-        public string GetCrc32(FileStream file)
+        private string GetCrc32(FileStream file)
         {
             using (Crc32 crc32 = new Crc32())
-            return crc32.ComputeHash(file).ToString().Replace("-", String.Empty).ToLowerInvariant();
+            return BitConverter.ToString(crc32.ComputeHash(file)).Replace("-", String.Empty).ToLowerInvariant();
 
         }
     }
