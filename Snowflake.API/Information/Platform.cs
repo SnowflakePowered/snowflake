@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Snowflake.API.Information.Game
+namespace Snowflake.API.Information
 {
     public class Platform : Info
     {

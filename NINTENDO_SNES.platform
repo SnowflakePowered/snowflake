@@ -1,0 +1,18 @@
+{
+    "PlatformId": "NINTENDO_SNES",
+    "Name": "Super Nintendo Entertainment System",
+    "FileExtensions": [
+        ".sfc",
+		".smc"
+    ],
+    "RomIdentifierPlugin": "Snowflake-IdentifierDat",
+    "Images": {
+        "snowflake_img_platform_logo": "logo.png",
+        "snowflake_img_platform_productshot": "product.png"
+    },
+    "Metadata": {
+        "snowflake_platform_shortname": "SNES",
+        "snowflake_platform_company": "Nintendo",
+        "snowflake_platform_releasedate": "21/11/1990"
+    }
+}

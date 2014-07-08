@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.API.Interface;
 
-namespace Snowflake.API.Information.Game
+namespace Snowflake.API.Information
 {
     public class Info: IInfo
     {

@@ -18,7 +18,9 @@ using Snowflake.API.Constants;
 using Snowflake.API.Constants.Plugin;
 using System.Diagnostics;
 using Snowflake.API.Configuration;
+using Snowflake.API.Information;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json;
 
 namespace Snowflake.UI.EntryPoint
 {
@@ -29,9 +31,16 @@ namespace Snowflake.UI.EntryPoint
     {
         public MainWindow()
         {
+            
             InitializeComponent();
-            var id = new Identifier.DatIdentifier.DatIdentifier();
-            Console.WriteLine(id.IdentifyGame("sadsah.sfc", "NINTENDO_SNES"));
+            Platform p = new Platform("NINTENDO_NES", "Nintendo Entertainment System", new Dictionary<string,string>(), new Dictionary<string,string>(), new List<string>(), "Snowflake-IdentifierDat");
+            p.Images.Add("snowflake_img_platform_logo", "logo.png");
+            p.FileExtensions.Add(".nes");
+            p.Metadata.Add("snowflake_platform_shortname", "NES");
+            p.Metadata.Add("snowflake_platform_company", "Nintendo");
+            Console.WriteLine(JsonConvert.SerializeObject(p));
+            //var id = new Identifier.DatIdentifier.DatIdentifier();
+            //Console.WriteLine(id.IdentifyGame("sadsah.sfc", "NINTENDO_SNES"));
            // var fileName = @"[abc][def]Real Name[!].exe";
            // Console.WriteLine(Regex.Match(fileName, @"(\[[^]]*\])*([\w\s]+)").Groups[2].Value);
 

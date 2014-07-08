@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.UI.EntryPoint", "Snowflake.UI.EntryPoint\Snowflake.UI.EntryPoint.csproj", "{B2210FF2-1684-4CD2-B4CD-D352F9D297CC}"
 EndProject
@@ -24,6 +24,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identifiers", "Identifiers", "{FF308269-A2EA-4A75-956C-7E681DE82986}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Identifier.DatIdentifier", "Identifiers\Identifier.DatIdentifier\Identifier.DatIdentifier.csproj", "{38095FE3-A186-49BB-AC5B-966A5BC8F515}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Platforms", "Platforms", "{95E5C1D6-192C-42AC-80F4-B10FD82B4062}"
+	ProjectSection(SolutionItems) = preProject
+		Platforms\NINTENDO_NES.platform = Platforms\NINTENDO_NES.platform
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
