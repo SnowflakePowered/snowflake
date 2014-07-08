@@ -28,6 +28,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Platforms", "Platforms", "{95E5C1D6-192C-42AC-80F4-B10FD82B4062}"
 	ProjectSection(SolutionItems) = preProject
 		Platforms\NINTENDO_NES.platform = Platforms\NINTENDO_NES.platform
+		NINTENDO_SNES.platform = NINTENDO_SNES.platform
+		Schema.json = Schema.json
 	EndProjectSection
 EndProject
 Global

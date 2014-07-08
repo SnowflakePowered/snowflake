@@ -33,12 +33,14 @@ namespace Snowflake.UI.EntryPoint
         {
             
             InitializeComponent();
-            Platform p = new Platform("NINTENDO_NES", "Nintendo Entertainment System", new Dictionary<string,string>(), new Dictionary<string,string>(), new List<string>(), "Snowflake-IdentifierDat");
-            p.Images.Add("snowflake_img_platform_logo", "logo.png");
-            p.FileExtensions.Add(".nes");
-            p.Metadata.Add("snowflake_platform_shortname", "NES");
-            p.Metadata.Add("snowflake_platform_company", "Nintendo");
-            Console.WriteLine(JsonConvert.SerializeObject(p));
+            var x = new Snowflake.Core.FrontendCore();
+            Console.WriteLine(x.LoadedPlatforms["NINTENDO_NES"].RomIdentifierPlugin);
+            //Platform p = new Platform("NINTENDO_NES", "Nintendo Entertainment System", new Dictionary<string,string>(), new Dictionary<string,string>(), new List<string>(), "Snowflake-IdentifierDat");
+            //p.Images.Add("snowflake_img_platform_logo", "logo.png");
+            //p.FileExtensions.Add(".nes");
+            //p.Metadata.Add("snowflake_platform_shortname", "NES");
+            //p.Metadata.Add("snowflake_platform_company", "Nintendo");
+            //Console.WriteLine(JsonConvert.SerializeObject(p));
             //var id = new Identifier.DatIdentifier.DatIdentifier();
             //Console.WriteLine(id.IdentifyGame("sadsah.sfc", "NINTENDO_SNES"));
            // var fileName = @"[abc][def]Real Name[!].exe";
