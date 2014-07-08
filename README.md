@@ -5,7 +5,7 @@ Snowflake
 
 What is Snowflake?
 ------------------
-Snowflake, on the surface, aims to be [http://openemu.org/](OpenEmu) for Windows. But a pretty interface is only a part of Snowflake's goal. Snowflake is designed to be as modular as possible, providing a robust event-based plugin architecture through the Managed Extensibility Framework. Snowflake will support external, executable emulators such as Dolphin and PCSX2, and in the future, through P/Invoke or C++/CLI, libRetro cores as well. 
+Snowflake, on the surface, aims to be [OpenEmu](http://openemu.org/) for Windows. But a pretty interface is only a part of Snowflake's goal. Snowflake is designed to be as modular as possible, providing a robust event-based plugin architecture through the Managed Extensibility Framework. Snowflake will support external, executable emulators such as Dolphin and PCSX2, and in the future, through P/Invoke or C++/CLI, libRetro cores as well. 
 
 A powerful and flexible API will be provided to General Plugins that can access Snowflake's events. Specialized APIs for Scrapers and Emulators ensure easy integration with existing emulators and services. Snowflake aims to have full scraping support, all one would need to do is add the ROM, and press play. 
 
