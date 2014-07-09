@@ -12,7 +12,6 @@ using System.ComponentModel.Composition;
 namespace Identifier.DatIdentifier
 {
     [Export(typeof(IIdentifier))]
-    [ExportMetadata("pluginname", "Snowflake-IdentifierDat")]
     public class DatIdentifier:BasePlugin,IIdentifier
     {
         public DatIdentifier()

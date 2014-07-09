@@ -18,13 +18,13 @@ namespace Snowflake.Core
         public string AppDataDirectory { get; private set; }
 
         [ImportMany(typeof(IIdentifier))]
-        IEnumerable<Lazy<IIdentifier, IDictionary<string, object>>> identifiers;
+        IEnumerable<Lazy<IIdentifier>> identifiers;
         [ImportMany(typeof(IEmulator))]
-        IEnumerable<Lazy<IEmulator, IDictionary<string, object>>> emulators;
+        IEnumerable<Lazy<IEmulator>> emulators;
         [ImportMany(typeof(IScraper))]
-        IEnumerable<Lazy<IScraper, IDictionary<string, object>>> scrapers;
+        IEnumerable<Lazy<IScraper>> scrapers;
         [ImportMany(typeof(IPlugin))]
-        IEnumerable<Lazy<IPlugin, IDictionary<string, object>>> _identifiers;
+        IEnumerable<Lazy<IPlugin>> plugins;
 
 
         public Dictionary<string, IIdentifier> LoadedIdentifiers { get; private set; }
@@ -84,7 +84,8 @@ namespace Snowflake.Core
             var loadedIdentifiers = new Dictionary<string, IIdentifier>();
             foreach (var identifier in this.identifiers)
             {
-                loadedIdentifiers.Add((string)identifier.Metadata["pluginname"], identifier.Value);
+                var instance = identifier.Value;
+                loadedIdentifiers.Add(instance.PluginName, instance);
             }
             return loadedIdentifiers;
         }
