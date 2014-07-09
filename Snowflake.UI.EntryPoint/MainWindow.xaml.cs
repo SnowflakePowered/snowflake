@@ -13,7 +13,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.IO;
 using Snowflake.API;
-using Snowflake.UI.Theme;
 using Snowflake.API.Constants;
 using Snowflake.API.Constants.Plugin;
 using System.Diagnostics;
@@ -52,8 +51,7 @@ namespace Snowflake.UI.EntryPoint
             //            string query = @"SELECT * FROM `games` WHERE `uuid` == """ + uuid + @"""";
 
 //                        Console.WriteLine(query);
-            ThemeServer server = new ThemeServer(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "snowflake"));
-            server.StartServer();
+           
  //           var x = new GameScrapeEngine();
   //          Console.WriteLine(x.CalculateCRC32(new FileStream("SuperMarioBros.nes", FileMode.Open)));
             //var scraper = new Scraper.TheGamesDB.ScraperTheGamesDB();

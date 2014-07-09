@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.API.Information;
 using Snowflake.API.Interface;
+using Snowflake.API.Database;
+using Snowflake.Core.Theme;
 using System.IO;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
@@ -31,7 +33,7 @@ namespace Snowflake.Core
         public IDictionary<string, IEmulator> LoadedEmulators { get; private set; }
         public IDictionary<string, IScraper> LoadedScrapers { get; private set; }
         public IDictionary<string, IGenericPlugin> LoadedPlugins { get; private set; }
-
+        public GameDatabase GameDatabase { get; private set; }
      
         [Import(typeof(IIdentifier))]
         public IIdentifier datIdentifier;
@@ -46,6 +48,10 @@ namespace Snowflake.Core
             this.LoadedEmulators = this.LoadPlugin<IEmulator>(this.emulators);
             this.LoadedScrapers = this.LoadPlugin<IScraper>(this.scrapers);
             this.LoadedPlugins = this.LoadPlugin<IGenericPlugin>(this.plugins);
+            this.GameDatabase = new GameDatabase(Path.Combine(this.AppDataDirectory, "games.db"));
+            
+            ThemeServer server = new ThemeServer(Path.Combine(this.AppDataDirectory, "theme"));
+            server.StartServer();
 
             Console.WriteLine(this.LoadedIdentifiers["Snowflake-IdentifierDat"].PluginName);
 
