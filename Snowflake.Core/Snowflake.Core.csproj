@@ -38,6 +38,8 @@
       <HintPath>..\packages\SharpYaml.1.2.0\lib\SharpYaml.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.Composition.Registration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -46,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions.cs" />
     <Compile Include="FrontendCore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

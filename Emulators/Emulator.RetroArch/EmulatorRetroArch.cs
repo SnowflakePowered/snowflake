@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.ComponentModel.Composition;
 using Snowflake.API.Base.Emulator;
 
 namespace Emulator.RetroArch
 {
+    [Export]
     public class EmulatorRetroArch : ExecutableEmulator
     {
         public string MainExecutable { get; private set; }

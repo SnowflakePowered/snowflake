@@ -31,6 +31,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.Composition.Registration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -155,8 +157,8 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="config.yml">
-		<LogicalName>config.yml</LogicalName>
-	</EmbeddedResource>
+      <LogicalName>config.yml</LogicalName>
+    </EmbeddedResource>
     <None Include="emulator_retroarch\info\3dengine_libretro.info" />
     <None Include="emulator_retroarch\info\bnes_libretro.info" />
     <None Include="emulator_retroarch\info\bsnes_accuracy_libretro.info" />

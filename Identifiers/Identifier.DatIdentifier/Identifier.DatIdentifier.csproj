@@ -31,6 +31,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.Composition.Registration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -51,13 +53,13 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="config.yml">
-		<LogicalName>config.yml</LogicalName>
-	</EmbeddedResource>
+      <LogicalName>config.yml</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="plugin.json">
-		<LogicalName>plugin.json</LogicalName>
-	</EmbeddedResource>
+      <LogicalName>plugin.json</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Content Include="dats\ATARI_2600.TOSEC.dat">

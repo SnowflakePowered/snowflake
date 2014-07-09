@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Snowflake.API.Interface
 {
-    public interface IEmulator
+    public interface IEmulator : IPlugin
     {
         void Run(string gameUUID);
     }

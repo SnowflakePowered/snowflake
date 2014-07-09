@@ -7,7 +7,7 @@ using System.IO;
 
 namespace Snowflake.API.Interface
 {
-    public interface IIdentifier
+    public interface IIdentifier : IPlugin
     {
         string IdentifyGame(string fileName, string platformId);
 
