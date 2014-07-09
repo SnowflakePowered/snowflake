@@ -20,7 +20,7 @@ namespace Scraper.TheGamesDB
         {
         }
 
-        private List<GameScrapeResult> ParseSearchResults(Uri searchUri)
+        private IList<GameScrapeResult> ParseSearchResults(Uri searchUri)
         {
             using (WebClient client = new WebClient())
             {
@@ -41,13 +41,13 @@ namespace Scraper.TheGamesDB
                 return results;
             }
         }
-        public override List<GameScrapeResult> GetSearchResults(string searchQuery)
+        public override IList<GameScrapeResult> GetSearchResults(string searchQuery)
         {
             Uri searchUri = new Uri(Uri.EscapeUriString("http://thegamesdb.net/api/GetGamesList.php?name=" + searchQuery));
             var results = ParseSearchResults(searchUri);
             return results;
         }
-        public override List<GameScrapeResult> GetSearchResults(string searchQuery, string platformId)
+        public override IList<GameScrapeResult> GetSearchResults(string searchQuery, string platformId)
         {
             Uri searchUri = new Uri(Uri.EscapeUriString("http://thegamesdb.net/api/GetGamesList.php?name=" + searchQuery
                 + "&platform=" + this.ScraperMap[platformId]));

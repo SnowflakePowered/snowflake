@@ -81,15 +81,15 @@ namespace Snowflake.API.Database
             }
         }
 
-        public List<Game> GetGamesByPlatform(string platformId)
+        public IList<Game> GetGamesByPlatform(string platformId)
         {
             return GetGamesByRow("platform_id", platformId);
         }
-        public List<Game> GetGamesByName(string nameSearch)
+        public IList<Game> GetGamesByName(string nameSearch)
         {
             return GetGamesByRow("name", nameSearch);
         }
-        private List<Game>GetGamesByRow(string rowName, string searchQuery){
+        private IList<Game>GetGamesByRow(string rowName, string searchQuery){
             this.DBConnection.Open();
             string query = @"SELECT * FROM `games` WHERE `" + rowName + @"` == """ + searchQuery + @"""";
             using (SQLiteCommand sqlCommand = new SQLiteCommand(query, this.DBConnection))
@@ -98,7 +98,7 @@ namespace Snowflake.API.Database
                 {
                     DataTable result = new DataTable();
                     result.Load(reader);
-                    List<Game> gamesResults = new List<Game>();
+                    IList<Game> gamesResults = new List<Game>();
                     foreach (DataRow row in result.Rows)
                     {
                         gamesResults.Add(GetGameFromDataRow(row));
