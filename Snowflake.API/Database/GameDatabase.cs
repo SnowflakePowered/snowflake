@@ -114,8 +114,8 @@ namespace Snowflake.API.Database
             var fileName = (string)row["filename"];
             var name = (string)row["name"];
             var images = JsonConvert.DeserializeObject<GameImages>((string)row["images"]);
-            var metadata = JsonConvert.DeserializeObject<Dictionary<string, string>>((string)row["metadata"]);
-            var settings = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>((string)row["settings"]);
+            var metadata = JsonConvert.DeserializeObject<IDictionary<string, string>>((string)row["metadata"]);
+            var settings = JsonConvert.DeserializeObject<IDictionary<string, dynamic>>((string)row["settings"]);
 
             return new Game(platformId, name, images, metadata, uuid, fileName, settings);
         }

@@ -14,7 +14,7 @@ namespace Snowflake.API.Base
     public class BasePlugin : IPlugin
     {
         public string PluginName { get; private set; }
-        public Dictionary<string, dynamic> PluginInfo { get; private set; }
+        public IDictionary<string, dynamic> PluginInfo { get; private set; }
         public Assembly PluginAssembly { get; private set; }
         public string PluginDataPath { get; private set; }
         public virtual IConfiguration PluginConfiguration { get; private set; }
@@ -27,7 +27,7 @@ namespace Snowflake.API.Base
             using (StreamReader reader = new StreamReader(stream))
             {
                 string file = reader.ReadToEnd();
-                Dictionary<string, dynamic> pluginInfo = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(file);
+                IDictionary<string, dynamic> pluginInfo = JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(file);
                 this.PluginInfo = pluginInfo;
             }
             this.PluginName = PluginInfo[PluginInfoFields.Name];

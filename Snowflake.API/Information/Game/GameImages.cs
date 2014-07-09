@@ -14,7 +14,7 @@ namespace Snowflake.API.Information.Game
     {
         public List<string[]> Fanarts { get; set; }
         public List<string[]> Screenshots { get; set; }
-        public Dictionary<string, string[]> Boxarts { get; set; }
+        public IDictionary<string, string[]> Boxarts { get; set; }
         public string CachePath { get; private set; }
         public string ImagesID { get; private set; }
         public GameImages(string cachePath = "imagecache")

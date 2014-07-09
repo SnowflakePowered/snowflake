@@ -8,7 +8,7 @@ namespace Snowflake.API.Information
 {
     public class Platform : Info
     {
-        public Platform(string platformId, string name, Dictionary<string, string> images, Dictionary<string, string> metadata, List<string> fileExtensions, string romIdentifierPlugin): base(platformId, name, images, metadata)
+        public Platform(string platformId, string name, IDictionary<string, string> images, IDictionary<string, string> metadata, List<string> fileExtensions, string romIdentifierPlugin): base(platformId, name, images, metadata)
         {
             this.FileExtensions = fileExtensions;
             this.RomIdentifierPlugin = romIdentifierPlugin;

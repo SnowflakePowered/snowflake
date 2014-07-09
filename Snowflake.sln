@@ -32,8 +32,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Platforms", "Platforms", "{
 		Platforms\Schema.json = Platforms\Schema.json
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MEFTest", "MEFTest\MEFTest.csproj", "{D8463B30-E475-424B-8F8E-B54EC66AC86D}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -68,10 +66,6 @@ Global
 		{38095FE3-A186-49BB-AC5B-966A5BC8F515}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38095FE3-A186-49BB-AC5B-966A5BC8F515}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38095FE3-A186-49BB-AC5B-966A5BC8F515}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D8463B30-E475-424B-8F8E-B54EC66AC86D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D8463B30-E475-424B-8F8E-B54EC66AC86D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D8463B30-E475-424B-8F8E-B54EC66AC86D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D8463B30-E475-424B-8F8E-B54EC66AC86D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

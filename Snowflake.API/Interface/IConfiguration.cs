@@ -10,7 +10,7 @@ namespace Snowflake.API.Interface
     public interface IConfiguration
     {
         string ConfigurationFileName { get; }
-        Dictionary<string, dynamic> Configuration { get; }
+        IDictionary<string, dynamic> Configuration { get; }
         void LoadConfiguration();
         void SaveConfiguration();
     }

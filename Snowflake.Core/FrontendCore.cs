@@ -27,10 +27,10 @@ namespace Snowflake.Core
         IEnumerable<Lazy<IPlugin>> plugins;
 
 
-        public Dictionary<string, IIdentifier> LoadedIdentifiers { get; private set; }
-        public Dictionary<string, IEmulator> LoadedEmulators { get; private set; }
-        public Dictionary<string, IScraper> LoadedScrapers { get; private set; }
-        public Dictionary<string, IPlugin> LoadedPlugins { get; private set; }
+        public IDictionary<string, IIdentifier> LoadedIdentifiers { get; private set; }
+        public IDictionary<string, IEmulator> LoadedEmulators { get; private set; }
+        public IDictionary<string, IScraper> LoadedScrapers { get; private set; }
+        public IDictionary<string, IPlugin> LoadedPlugins { get; private set; }
 
      
         [Import(typeof(IIdentifier))]

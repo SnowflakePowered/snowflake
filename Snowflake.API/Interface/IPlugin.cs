@@ -12,6 +12,6 @@ namespace Snowflake.API.Interface
         string PluginName { get; }
         string PluginDataPath { get; }
         Assembly PluginAssembly { get; }
-        Dictionary<string, dynamic> PluginInfo { get; }
+        IDictionary<string, dynamic> PluginInfo { get; }
     }
 }

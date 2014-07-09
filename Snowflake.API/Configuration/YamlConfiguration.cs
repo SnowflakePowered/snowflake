@@ -13,7 +13,7 @@ namespace Snowflake.API.Configuration
     public class YamlConfiguration : IConfiguration
     {
         public string ConfigurationFileName { get; private set; }
-        public Dictionary<string, dynamic> Configuration { get; private set; }
+        public IDictionary<string, dynamic> Configuration { get; private set; }
 
         private string DefaultValues { get; set; }
         public YamlConfiguration(string configFileName, string defaultValues)
@@ -34,7 +34,7 @@ namespace Snowflake.API.Configuration
                 File.WriteAllText(this.ConfigurationFileName, this.DefaultValues);
             }
             string serializedYaml = File.ReadAllText(this.ConfigurationFileName);
-            this.Configuration = serializer.Deserialize<Dictionary<string, dynamic>>(serializedYaml);
+            this.Configuration = serializer.Deserialize<IDictionary<string, dynamic>>(serializedYaml);
         }
 
         public void SaveConfiguration()
