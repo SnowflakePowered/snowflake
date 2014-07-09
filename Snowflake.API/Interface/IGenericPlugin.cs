@@ -7,9 +7,8 @@ using System.ComponentModel.Composition;
 
 namespace Snowflake.API.Interface
 {
-    [InheritedExport(typeof(IEmulator))]
-    public interface IEmulator : IPlugin
+    [InheritedExport(typeof(IGenericPlugin))]
+    public interface IGenericPlugin:IPlugin
     {
-        void Run(string gameUUID);
     }
 }

@@ -8,6 +8,7 @@ using System.ComponentModel.Composition;
 
 namespace Snowflake.API.Interface
 {
+    [InheritedExport(typeof(IIdentifier))]
     public interface IIdentifier : IPlugin
     {
         string IdentifyGame(string fileName, string platformId);

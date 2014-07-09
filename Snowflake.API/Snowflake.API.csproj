@@ -76,6 +76,7 @@
     <Compile Include="Collections\KeyValuePairExts.cs" />
     <Compile Include="Database\GameDatabase.cs" />
     <Compile Include="Interface\IConfiguration.cs" />
+    <Compile Include="Interface\IGenericPlugin.cs" />
     <Compile Include="Interface\IIdentifier.cs" />
     <Compile Include="Interface\IScraper.cs" />
     <Compile Include="Base\Emulator\ExecutableEmulator.cs" />

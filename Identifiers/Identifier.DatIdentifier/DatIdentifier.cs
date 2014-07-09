@@ -11,7 +11,6 @@ using System.Text.RegularExpressions;
 using System.ComponentModel.Composition;
 namespace Identifier.DatIdentifier
 {
-    [Export(typeof(IIdentifier))]
     public class DatIdentifier:BasePlugin,IIdentifier
     {
         public DatIdentifier()

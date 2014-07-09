@@ -23,14 +23,14 @@ namespace Snowflake.Core
         IEnumerable<Lazy<IEmulator>> emulators;
         [ImportMany(typeof(IScraper))]
         IEnumerable<Lazy<IScraper>> scrapers;
-        [ImportMany(typeof(IPlugin))]
-        IEnumerable<Lazy<IPlugin>> plugins;
+        [ImportMany(typeof(IGenericPlugin))]
+        IEnumerable<Lazy<IGenericPlugin>> plugins;
 
 
         public IDictionary<string, IIdentifier> LoadedIdentifiers { get; private set; }
         public IDictionary<string, IEmulator> LoadedEmulators { get; private set; }
         public IDictionary<string, IScraper> LoadedScrapers { get; private set; }
-        public IDictionary<string, IPlugin> LoadedPlugins { get; private set; }
+        public IDictionary<string, IGenericPlugin> LoadedPlugins { get; private set; }
 
      
         [Import(typeof(IIdentifier))]
@@ -42,7 +42,11 @@ namespace Snowflake.Core
             this.AppDataDirectory = appDataDirectory;
             this.LoadedPlatforms = this.LoadPlatforms(Path.Combine(this.AppDataDirectory, "platforms"));
             this.ComposeImports();
-            this.LoadedIdentifiers = this.LoadIdentifiers();
+            this.LoadedIdentifiers = this.LoadPlugin<IIdentifier>(this.identifiers);
+            this.LoadedEmulators = this.LoadPlugin<IEmulator>(this.emulators);
+            this.LoadedScrapers = this.LoadPlugin<IScraper>(this.scrapers);
+            this.LoadedPlugins = this.LoadPlugin<IGenericPlugin>(this.plugins);
+
             Console.WriteLine(this.LoadedIdentifiers["Snowflake-IdentifierDat"].PluginName);
 
         }
@@ -79,16 +83,18 @@ namespace Snowflake.Core
             container.SatisfyImportsOnce(this);
         }
 
-        private Dictionary<string, IIdentifier> LoadIdentifiers()
+        private Dictionary<string, T> LoadPlugin<T>(IEnumerable<Lazy<T>> plugins)
         {
-            var loadedIdentifiers = new Dictionary<string, IIdentifier>();
-            foreach (var identifier in this.identifiers)
-            {
-                var instance = identifier.Value;
-                loadedIdentifiers.Add(instance.PluginName, instance);
+            if(!(typeof(IPlugin).IsAssignableFrom(typeof(T)))){
+                throw new ArgumentException("Attemped to load plugin that is not inherited from IPlugin");
             }
-            return loadedIdentifiers;
+            var loadedPlugins = new Dictionary<string, T>();
+            foreach (var plugin in plugins)
+            {
+                var instance = (IPlugin) plugin.Value;
+                loadedPlugins.Add(instance.PluginName, plugin.Value);
+            }
+            return loadedPlugins;
         }
-
     }
 }
