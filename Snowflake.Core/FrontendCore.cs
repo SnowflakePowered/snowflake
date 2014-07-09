@@ -17,13 +17,22 @@ namespace Snowflake.Core
         public Dictionary<string, Platform> LoadedPlatforms { get; private set; }
         public string AppDataDirectory { get; private set; }
 
+        [ImportMany(typeof(IIdentifier))]
+        IEnumerable<Lazy<IIdentifier, IDictionary<string, object>>> identifiers;
+        [ImportMany(typeof(IEmulator))]
+        IEnumerable<Lazy<IEmulator, IDictionary<string, object>>> emulators;
+        [ImportMany(typeof(IScraper))]
+        IEnumerable<Lazy<IScraper, IDictionary<string, object>>> scrapers;
+        [ImportMany(typeof(IPlugin))]
+        IEnumerable<Lazy<IPlugin, IDictionary<string, object>>> _identifiers;
+
+
         public Dictionary<string, IIdentifier> LoadedIdentifiers { get; private set; }
         public Dictionary<string, IEmulator> LoadedEmulators { get; private set; }
         public Dictionary<string, IScraper> LoadedScrapers { get; private set; }
+        public Dictionary<string, IPlugin> LoadedPlugins { get; private set; }
 
-     //   [ImportMany (typeof(IIdentifier))]
-        //private List<IPlugin> LoadedPlugins { get; private set; }
-
+     
         [Import(typeof(IIdentifier))]
         public IIdentifier datIdentifier;
 
@@ -31,7 +40,10 @@ namespace Snowflake.Core
         public FrontendCore(string appDataDirectory)
         {
             this.AppDataDirectory = appDataDirectory;
-            ///this.LoadedPlatforms = this.LoadPlatforms(Path.Combine(this.AppDataDirectory, "platforms"));
+            this.LoadedPlatforms = this.LoadPlatforms(Path.Combine(this.AppDataDirectory, "platforms"));
+            this.ComposeImports();
+            this.LoadedIdentifiers = this.LoadIdentifiers();
+            Console.WriteLine(this.LoadedIdentifiers["Snowflake-IdentifierDat"].PluginName);
 
         }
 
@@ -60,7 +72,22 @@ namespace Snowflake.Core
 
         }
 
-       
+        private void ComposeImports()
+        {
+            DirectoryCatalog catalog = new DirectoryCatalog(Path.Combine(this.AppDataDirectory, "plugins"));
+            CompositionContainer container = new CompositionContainer(catalog);
+            container.SatisfyImportsOnce(this);
+        }
+
+        private Dictionary<string, IIdentifier> LoadIdentifiers()
+        {
+            var loadedIdentifiers = new Dictionary<string, IIdentifier>();
+            foreach (var identifier in this.identifiers)
+            {
+                loadedIdentifiers.Add((string)identifier.Metadata["pluginname"], identifier.Value);
+            }
+            return loadedIdentifiers;
+        }
 
     }
 }
