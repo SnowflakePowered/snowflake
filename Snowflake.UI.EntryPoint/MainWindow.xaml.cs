@@ -32,7 +32,8 @@ namespace Snowflake.UI.EntryPoint
         {
             
             InitializeComponent();
-            var x = new Snowflake.Core.FrontendCore();
+            Snowflake.Core.FrontendCore.InitCore();
+            var x = Snowflake.Core.FrontendCore.LoadedCore;
             Console.WriteLine(x.LoadedPlatforms["NINTENDO_NES"].RomIdentifierPlugin);
             //Platform p = new Platform("NINTENDO_NES", "Nintendo Entertainment System", new Dictionary<string,string>(), new Dictionary<string,string>(), new List<string>(), "Snowflake-IdentifierDat");
             //p.Images.Add("snowflake_img_platform_logo", "logo.png");

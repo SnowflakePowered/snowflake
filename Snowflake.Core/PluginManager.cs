@@ -12,7 +12,7 @@ namespace Snowflake.Core
 {
     public class PluginManager
     {
-        private string AppDataDirectory { get; private set; }
+        private string AppDataDirectory { get; set; }
 
         [ImportMany(typeof(IIdentifier))]
         IEnumerable<Lazy<IIdentifier>> identifiers;

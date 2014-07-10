@@ -20,7 +20,14 @@ namespace Snowflake.Core
         public string AppDataDirectory { get; private set; }
         public PluginManager PluginManager { get; private set; }
         public GameDatabase GameDatabase { get; private set; }
-     
+
+        public static FrontendCore LoadedCore { get; private set; }
+
+        public static void InitCore()
+        {
+            var core = new FrontendCore();
+            FrontendCore.LoadedCore = core;
+        }
         public FrontendCore() : this(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Snowflake")) { }
         public FrontendCore(string appDataDirectory)
         {
@@ -33,8 +40,6 @@ namespace Snowflake.Core
 
             ThemeServer server = new ThemeServer(Path.Combine(this.AppDataDirectory, "theme"));
             server.StartServer();
-
-            Console.WriteLine(this.PluginManager.LoadedIdentifiers["Snowflake-IdentifierDat"].PluginName);
 
         }
 
