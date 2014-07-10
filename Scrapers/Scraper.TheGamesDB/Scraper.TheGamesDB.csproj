@@ -42,7 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ScraperTheGamesDB.cs" />
+    <Compile Include="TheGamesDB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -59,8 +59,8 @@
   <ItemGroup>
     <None Include="packages.config" />
     <EmbeddedResource Include="plugin.json">
-	      <LogicalName>plugin.json</LogicalName>
-	</EmbeddedResource>
+      <LogicalName>plugin.json</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

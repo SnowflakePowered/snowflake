@@ -1,8 +1,8 @@
 ﻿<Window x:Class="Snowflake.UI.EntryPoint.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
+        Title="MainWindow" Height="350" Width="525" Drop="Grid_Drop" DragEnter="Grid_DragEnter">
+    <Grid >
         
     </Grid>
 </Window>

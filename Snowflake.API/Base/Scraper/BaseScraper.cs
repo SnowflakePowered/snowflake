@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using Snowflake.API.Collections;
 using System.Reflection;
 using System.IO;
+using Snowflake.API.Information.Platform;
 using Snowflake.API.Information.Game;
 
 namespace Snowflake.API.Base.Scraper

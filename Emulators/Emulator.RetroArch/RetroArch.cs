@@ -12,16 +12,15 @@ using Snowflake.API.Base.Emulator;
 namespace Emulator.RetroArch
 {
     [Export]
-    public class EmulatorRetroArch : ExecutableEmulator
+    public class RetroArch : ExecutableEmulator
     {
         public string MainExecutable { get; private set; }
         public string EmulatorRoot { get; private set; }
-        public EmulatorRetroArch() : base(Assembly.GetExecutingAssembly())
+        public RetroArch() : base(Assembly.GetExecutingAssembly())
         {
             this.MainExecutable = this.PluginInfo["emulator_executable"];
             this.EmulatorRoot = this.PluginInfo["emulator_root"];
             this.InitConfiguration();
-            Console.WriteLine(this.PluginConfiguration.Configuration["cores"]["NINTENDO_NES"]);
         }
 
         public override void Run(string uuid)

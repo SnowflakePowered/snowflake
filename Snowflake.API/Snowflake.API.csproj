@@ -75,6 +75,7 @@
     <Compile Include="Information\Game\GameImages.cs" />
     <Compile Include="Collections\KeyValuePairExts.cs" />
     <Compile Include="Database\GameDatabase.cs" />
+    <Compile Include="Information\Platform\PlatformDefaults.cs" />
     <Compile Include="Interface\IConfiguration.cs" />
     <Compile Include="Interface\IGenericPlugin.cs" />
     <Compile Include="Interface\IIdentifier.cs" />
@@ -84,7 +85,7 @@
     <Compile Include="Information\Info.cs" />
     <Compile Include="Interface\IEmulator.cs" />
     <Compile Include="Interface\IInfo.cs" />
-    <Compile Include="Information\Platform.cs" />
+    <Compile Include="Information\Platform\Platform.cs" />
     <Compile Include="Interface\IPlugin.cs" />
     <Compile Include="Base\BasePlugin.cs" />
     <Compile Include="Base\Scraper\BaseScraper.cs" />

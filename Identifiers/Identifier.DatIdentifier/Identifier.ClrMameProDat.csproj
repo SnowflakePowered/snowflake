@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Identifier.DatIdentifier</RootNamespace>
-    <AssemblyName>Identifier.DatIdentifier</AssemblyName>
+    <AssemblyName>Identifier.ClrMameProDat</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -42,7 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Crc32.cs" />
-    <Compile Include="DatIdentifier.cs" />
+    <Compile Include="ClrMameProDat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

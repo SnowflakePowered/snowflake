@@ -17,9 +17,11 @@ using Snowflake.API.Constants;
 using Snowflake.API.Constants.Plugin;
 using System.Diagnostics;
 using Snowflake.API.Configuration;
-using Snowflake.API.Information;
+using Snowflake.API.Information.Platform;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
+using Snowflake.Core;
+using Snowflake.API.Interface;
 
 namespace Snowflake.UI.EntryPoint
 {
@@ -32,41 +34,38 @@ namespace Snowflake.UI.EntryPoint
         {
             
             InitializeComponent();
-            Snowflake.Core.FrontendCore.InitCore();
-            var x = Snowflake.Core.FrontendCore.LoadedCore;
-            Console.WriteLine(x.LoadedPlatforms["NINTENDO_NES"].RomIdentifierPlugin);
-            //Platform p = new Platform("NINTENDO_NES", "Nintendo Entertainment System", new Dictionary<string,string>(), new Dictionary<string,string>(), new List<string>(), "Snowflake-IdentifierDat");
-            //p.Images.Add("snowflake_img_platform_logo", "logo.png");
-            //p.FileExtensions.Add(".nes");
-            //p.Metadata.Add("snowflake_platform_shortname", "NES");
-            //p.Metadata.Add("snowflake_platform_company", "Nintendo");
-            //Console.WriteLine(JsonConvert.SerializeObject(p));
-            //var id = new Identifier.DatIdentifier.DatIdentifier();
-            //Console.WriteLine(id.IdentifyGame("sadsah.sfc", "NINTENDO_SNES"));
-           // var fileName = @"[abc][def]Real Name[!].exe";
-           // Console.WriteLine(Regex.Match(fileName, @"(\[[^]]*\])*([\w\s]+)").Groups[2].Value);
+            this.AllowDrop = true;
+            FrontendCore.InitCore();
+            var x = FrontendCore.LoadedCore;           
+        }
 
-            //var resultString = Regex.Match(test, @"(?<=rom \( name "").*?(?="" size \d+ crc 2e2bf112)").Value;
-           // Console.WriteLine(resultString);
-           //var uuid = "ssss";
-            //            string query = @"SELECT * FROM `games` WHERE `uuid` == """ + uuid + @"""";
+        private void Grid_Drop(object sender, DragEventArgs e)
+        {
+            string[] s = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
 
-//                        Console.WriteLine(query);
-           
- //           var x = new GameScrapeEngine();
-  //          Console.WriteLine(x.CalculateCRC32(new FileStream("SuperMarioBros.nes", FileMode.Open)));
-            //var scraper = new Scraper.TheGamesDB.ScraperTheGamesDB();
-            //var results = scraper.GetSearchResults("Super Mario World", "NINTENDO_SNES");   
-            // Console.WriteLine(scraper.GetGameDetails(results[0].ID).Item2.Boxarts[ImagesInfoFields.snowflake_img_boxart_back][0]);
-            //Console.WriteLine(scraper.PluginInfo["authors"][0]);
-           // var retroarch = new Emulator.RetroArch.EmulatorRetroArch();
-           // Console.WriteLine(retroarch.MainExecutable);
-           // var proc = retroarch.GetProcessStartInfo("NINTENDO_NES","");
-           // //Console.WriteLine(proc.FileName);
-           //s Console.WriteLine(proc.Arguments);
-            //Process.Start(proc);
-            //var s = new Snowflake.API.Configuration.YamlConfiguration("hh");
-            //s.LoadConfiguration();
+               
+
+                var defaults = FrontendCore.LoadedCore.LoadedPlatforms["NINTENDO_NES"].Defaults;
+              
+                IScraper scraper = FrontendCore.LoadedCore.PluginManager.LoadedScrapers[defaults.Scraper];
+                string name = FrontendCore.LoadedCore.PluginManager.LoadedIdentifiers[defaults.Identifier].IdentifyGame(files[0], "NINTENDO_NES");
+                var info = scraper.GetSearchResults(name);
+                var xinfo = scraper.GetGameDetails(info[0].ID);
+                
+                MessageBox.Show(xinfo.Item1[GameInfoFields.snowflake_game_description], name);
+
+            }
+        }
+
+        private void Grid_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                e.Effects = DragDropEffects.All;
+            else
+                e.Effects = DragDropEffects.None;
         }
     }
 }

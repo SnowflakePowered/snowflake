@@ -1,4 +1,4 @@
-﻿dats:
+﻿cores:
   ATARI_2600: "stella_libretro.dll"
   ATARI_5200: "stella_libretro.dll"
   ATARI_LYNX: "Atari Lynx"

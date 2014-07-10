@@ -11,9 +11,9 @@ using System.Text.RegularExpressions;
 using System.ComponentModel.Composition;
 namespace Identifier.DatIdentifier
 {
-    public class DatIdentifier:BasePlugin,IIdentifier
+    public class ClrMameProDat:BasePlugin,IIdentifier
     {
-        public DatIdentifier()
+        public ClrMameProDat()
             : base(Assembly.GetExecutingAssembly())
         {
             this.InitConfiguration();

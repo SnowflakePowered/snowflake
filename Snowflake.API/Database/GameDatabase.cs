@@ -7,6 +7,7 @@ using System.Data.SQLite;
 using System.Data;
 using System.IO;
 using Newtonsoft.Json;
+using Snowflake.API.Information.Platform;
 using Snowflake.API.Information.Game;
 
 namespace Snowflake.API.Database
@@ -16,7 +17,7 @@ namespace Snowflake.API.Database
         public string FileName{get; private set;}
         private SQLiteConnection DBConnection {get; set;}
         public GameDatabase(string fileName){
-            this.FileName = FileName;
+            this.FileName = fileName;
 
             if (!File.Exists(this.FileName))
             {

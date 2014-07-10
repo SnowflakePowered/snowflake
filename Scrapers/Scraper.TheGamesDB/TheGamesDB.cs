@@ -8,15 +8,16 @@ using System.Reflection;
 using System.Net;
 using Snowflake.API;
 using Snowflake.API.Base.Scraper;
+using Snowflake.API.Information.Platform;
 using Snowflake.API.Information.Game;
 using System.Xml.Linq;
 using Snowflake.API.Constants;
 
 namespace Scraper.TheGamesDB
 {
-    public class ScraperTheGamesDB : BaseScraper
+    public class TheGamesDB : BaseScraper
     {
-        public ScraperTheGamesDB():base(Assembly.GetExecutingAssembly())
+        public TheGamesDB():base(Assembly.GetExecutingAssembly())
         {
         }
 
