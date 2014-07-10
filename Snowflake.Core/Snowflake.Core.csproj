@@ -57,7 +57,7 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="FrontendCore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ThemeServer.cs" />
+    <Compile Include="Theme\ThemeServer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
