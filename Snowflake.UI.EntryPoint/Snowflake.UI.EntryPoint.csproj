@@ -125,10 +125,6 @@
       <Project>{41420b6b-17ff-4077-890a-7e916f75b5be}</Project>
       <Name>Scraper.TheGamesDB</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Snowflake.Core\Snowflake.Core.csproj">
-      <Project>{b5c62d3c-0cea-42ae-8882-0bec6389d9ff}</Project>
-      <Name>Snowflake.Core</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

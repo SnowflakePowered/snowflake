@@ -28,9 +28,11 @@ namespace Snowflake.Core
         public IDictionary<string, IEmulator> LoadedEmulators { get; private set; }
         public IDictionary<string, IScraper> LoadedScrapers { get; private set; }
         public IDictionary<string, IGenericPlugin> LoadedPlugins { get; private set; }
+        public IDictionary<string, Type> PluginRegistry { get; private set; }
         public PluginManager(string appDataDirectory)
         {
             this.AppDataDirectory = appDataDirectory;
+            this.PluginRegistry = new Dictionary<string, Type>();
             this.ComposeImports();
         }
 
@@ -55,10 +57,13 @@ namespace Snowflake.Core
                 throw new ArgumentException("Attemped to load plugin that is not inherited from IPlugin");
             }
             var loadedPlugins = new Dictionary<string, T>();
+           
             foreach (var plugin in plugins)
             {
                 var instance = (IPlugin)plugin.Value;
                 loadedPlugins.Add(instance.PluginName, plugin.Value);
+                this.PluginRegistry.Add(instance.PluginName, typeof(T));
+
             }
             return loadedPlugins;
         }

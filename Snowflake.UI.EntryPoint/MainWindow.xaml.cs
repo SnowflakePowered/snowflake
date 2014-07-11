@@ -36,7 +36,7 @@ namespace Snowflake.UI.EntryPoint
             InitializeComponent();
             this.AllowDrop = true;
             FrontendCore.InitCore();
-            var x = FrontendCore.LoadedCore;           
+            FrontendCore.LoadedCore.CoreLoaded += (s, e) => { MessageBox.Show("loaded"); };
         }
 
         private void Grid_Drop(object sender, DragEventArgs e)

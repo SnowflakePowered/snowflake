@@ -11,22 +11,38 @@ using System.IO;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using Newtonsoft.Json;
+using Snowflake.Events.CoreEvents;
 
 namespace Snowflake.Core
 {
-    public class FrontendCore
+    public partial class FrontendCore
     {
+        #region Loaded Objects
         public Dictionary<string, Platform> LoadedPlatforms { get; private set; }
-        public string AppDataDirectory { get; private set; }
         public PluginManager PluginManager { get; private set; }
         public GameDatabase GameDatabase { get; private set; }
+        #endregion
 
+        public string AppDataDirectory { get; private set; }
         public static FrontendCore LoadedCore { get; private set; }
+
+        #region Events
+        public delegate void PluginManagerLoadedEvent(object sender, PluginManagerLoadedEventArgs e);
+        public event EventHandler CoreLoaded;
+        #endregion
 
         public static void InitCore()
         {
             var core = new FrontendCore();
             FrontendCore.LoadedCore = core;
+            FrontendCore.InitPluginManagerAsync();
+
+        }
+        public async static Task InitPluginManagerAsync()
+        {
+            await Task.Run(() => FrontendCore.LoadedCore.PluginManager.LoadAllPlugins());
+           
+            FrontendCore.LoadedCore.OnPluginManagerLoaded(new PluginManagerLoadedEventArgs());
         }
         public FrontendCore() : this(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Snowflake")) { }
         public FrontendCore(string appDataDirectory)
@@ -36,13 +52,11 @@ namespace Snowflake.Core
          
             this.GameDatabase = new GameDatabase(Path.Combine(this.AppDataDirectory, "games.db"));
             this.PluginManager = new PluginManager(this.AppDataDirectory);
-            this.PluginManager.LoadAllPlugins();
 
             ThemeServer server = new ThemeServer(Path.Combine(this.AppDataDirectory, "theme"));
             server.StartServer();
 
         }
-
         private Dictionary<string, Platform> LoadPlatforms(string platformDirectory)
         {
             var loadedPlatforms = new Dictionary<string, Platform>();
@@ -68,6 +82,10 @@ namespace Snowflake.Core
 
         }
 
-
+        protected virtual void OnPluginManagerLoaded(PluginManagerLoadedEventArgs e)
+        {
+            if (CoreLoaded != null)
+                CoreLoaded(this, e);
+        }
     }
 }
