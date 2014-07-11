@@ -15,7 +15,7 @@ using Snowflake.Events.CoreEvents;
 
 namespace Snowflake.Core
 {
-    public partial class FrontendCore
+    public partial class FrontendCore : IFrontendCore
     {
         #region Loaded Objects
         public Dictionary<string, Platform> LoadedPlatforms { get; private set; }

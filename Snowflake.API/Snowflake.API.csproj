@@ -78,10 +78,8 @@
     <Compile Include="Constants\Plugin\PluginInfoFields.cs" />
     <Compile Include="Constants\Plugin\PluginTypes.cs" />
     <Compile Include="Constants\Plugin\ScraperInfoFields.cs" />
-    <Compile Include="Core\Extensions.cs" />
-    <Compile Include="Core\FrontendCore.cs" />
-    <Compile Include="Core\PluginManager.cs" />
-    <Compile Include="Core\Theme\ThemeServer.cs" />
+    <Compile Include="Interface\Core\IPluginManager.cs" />
+    <Compile Include="Interface\Core\IFrontendCore.cs" />
     <Compile Include="Events\CoreEvents\PluginManagerLoadedEventArgs.cs" />
     <Compile Include="Information\Game\GameImages.cs" />
     <Compile Include="Collections\KeyValuePairExts.cs" />
@@ -107,7 +105,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <Compile Include="Core\FrontendCore.Events.cs" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

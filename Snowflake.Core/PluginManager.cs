@@ -10,7 +10,7 @@ using System.IO;
 
 namespace Snowflake.Core
 {
-    public class PluginManager
+    public class PluginManager : Snowflake.API.Core.IPluginManager
     {
         private string AppDataDirectory { get; set; }
 
