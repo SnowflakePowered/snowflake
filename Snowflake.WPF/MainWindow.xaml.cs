@@ -25,9 +25,12 @@ namespace Snowflake.WPF
         {
             InitializeComponent();
             FrontendCore.InitCore();
-            FrontendCore.LoadedCore.CoreLoaded += (s, e) => { MessageBox.Show("loaded"); };
-            WebView view = new WebView();
-            view.Address = "http://google.ca";
+           // FrontendCore.LoadedCore.CoreLoaded += (s, e) => { MessageBox.Show("loaded"); };
+            WebView view = new WebView()
+            {
+                Address="http://localhost:8999"
+            };
+        
             this.MainControl.Children.Add(view);
 
         }
