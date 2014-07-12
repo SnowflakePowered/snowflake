@@ -4,13 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.Composition;
+using Snowflake.API.Interface.Core;
 using Snowflake.API.Interface;
+
 using System.ComponentModel.Composition.Hosting;
 using System.IO;
 
 namespace Snowflake.Core
 {
-    public class PluginManager : Snowflake.API.Core.IPluginManager
+    public class PluginManager : IPluginManager
     {
         private string AppDataDirectory { get; set; }
 

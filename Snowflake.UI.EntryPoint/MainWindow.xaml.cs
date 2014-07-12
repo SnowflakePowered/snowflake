@@ -20,7 +20,6 @@ using Snowflake.API.Configuration;
 using Snowflake.API.Information.Platform;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Snowflake.Core;
 using Snowflake.API.Interface;
 
 namespace Snowflake.UI.EntryPoint
