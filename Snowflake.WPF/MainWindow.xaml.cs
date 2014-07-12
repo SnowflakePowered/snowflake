@@ -28,11 +28,13 @@ namespace Snowflake.WPF
            // FrontendCore.LoadedCore.CoreLoaded += (s, e) => { MessageBox.Show("loaded"); };
             WebView view = new WebView()
             {
-                Address="http://localhost:8999"
+             //   Address="http://localhost:8999"
+                Address="http://google.com"
             };
         
             this.MainControl.Children.Add(view);
-
+            this.Closed += (s, e) => { FrontendCore.LoadedCore.ThemeServer.StopServer(); };
         }
+        
     }
 }
