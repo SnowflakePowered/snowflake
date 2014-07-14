@@ -1,0 +1,149 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Selector</title>
+	<script src="../bower_components/platform/platform.js"></script>
+	<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="../bower_components/jquery-mousewheel/jquery.mousewheel.min.js"></script>
+	<script src="../bower_components/perfect-scrollbar/min/perfect-scrollbar-0.4.10.with-mousewheel.min.js"></script>
+	<link rel="stylesheet" href="../bower_components/perfect-scrollbar/min/perfect-scrollbar-0.4.10.min.css">
+	<link rel="import" href="../bower_components/core-selector/core-selector.html">
+</head>
+<body unresolved style="background-color:#eee; ">
+  <template id="auto-bind-demo" is="auto-binding">
+		<div id="gamesListContainer" style="width: 20%; 
+					float: left;
+					margin-right: 10px;
+					top: 0;
+					bottom: 0;
+					overflow: hidden;
+					position: absolute;
+					margin-left: -10px;">
+			<style>
+					.list {
+					  display: block;
+					  border: 1px solid #ccc;
+					  border-bottom: none;
+					  background: #666;
+					  color: white;
+					  list-style: none;
+					  margin: 0;
+					  padding: 0;
+					}
+					.list > * {
+					  height: 40px;
+					  line-height: 40px;
+					  padding: 0 20px;
+					  border-bottom: 1px solid #ccc;
+					}
+					.list > *.core-selected {
+					  background: #333;
+					}
+			</style>
+			<core-selector id="gameslist" class="list" selected="0" >
+				<template repeat="{{game in games}}">
+						<div coverart="{{game.coverArt}}" description="{{game.description}}" >{{game.name}}</div>
+				</template>
+			</core-selector>
+		</div>	
+			
+		<div style="width: 80%; float: right;">
+		<h1 id="displayGameName">{{gameName}}</h1>
+		<img style="max-height: 300px;" id="displayGameCover" src="{{gameCoverArtSrc}}" alt="Game Cover Art"></img>
+		<div>{{gameDescription}}</div>
+		</div>
+		
+		<script>
+			$("#gameslist")[0].addEventListener('core-select', function (event) {
+				var t = $('#auto-bind-demo')[0];
+				
+				t.gameName = $("#gameslist")[0].selectedItem.textContent;
+				t.gameCoverArtSrc = $($("#gameslist")[0].selectedItem).attr('coverart');
+				t.gameDescription = $($("#gameslist")[0].selectedItem).attr('description');
+			});
+			$("#gamesListContainer").perfectScrollbar();
+		</script>
+	</template>
+	<script>
+		window.addEventListener('polymer-ready', function(e) {
+			
+			var t = $('#auto-bind-demo')[0];
+			t.games = [
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/4/41/Legend_of_zelda_cover_(with_cartridge)_gold.png', description: 'Zelda', name: 'The Legend of Zelda'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/0/03/Super_Mario_Bros._box.png', description: 'Mario Bro', name: 'Super Mario Bros.'},
+			  {coverArt: 'http://imagery.playerattack.com/Tetris-BoxArt.jpg', description: 'Russian Block', name: 'Tetris'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'},
+			  {coverArt: 'http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg', description: 'Samus', name: 'Metroid'}
+			];
+        });
+	</script>
+</body>
+
+</html>

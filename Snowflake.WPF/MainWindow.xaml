@@ -1,9 +1,8 @@
 ﻿<Window x:Class="Snowflake.WPF.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:cef="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
         Title="MainWindow" Height="350" Width="525">
-    <Grid Name="MainControl">
+    <Grid x:Name="MainControl">
         
     </Grid>
 </Window>

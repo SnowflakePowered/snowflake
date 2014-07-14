@@ -11,7 +11,6 @@ using Snowflake.API.Base.Emulator;
 
 namespace Emulator.RetroArch
 {
-    [Export]
     public class RetroArch : ExecutableEmulator
     {
         public string MainExecutable { get; private set; }

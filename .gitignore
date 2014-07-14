@@ -4,6 +4,10 @@
 MEFTest/
 emulator_*/
 *.nes
+bower_components/
+bower_*/
+bower_*/*
+
 
 # User-specific files
 *.suo
@@ -176,3 +180,4 @@ UpgradeLog*.htm
 
 # Microsoft Fakes
 FakesAssemblies/
+theme/Materia/bower_components/*

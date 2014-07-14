@@ -11,6 +11,7 @@ namespace Snowflake.Core.Theme
     public class ThemeServer
     {
         HttpListener serverListener;
+        Thread serverThread;
         public string ThemeRoot { get; set; }
         public ThemeServer(string themeRoot)
         {
@@ -20,7 +21,7 @@ namespace Snowflake.Core.Theme
         }
         public void StartServer()
         {
-            Thread serverThread = new Thread(
+            this.serverThread = new Thread(
                 () =>
                 {
                     serverListener.Start();
@@ -31,7 +32,9 @@ namespace Snowflake.Core.Theme
                     }
                 }
             );
-            serverThread.Start();
+                       
+            this.serverThread.Start();
+            
             
             
         }
@@ -58,6 +61,12 @@ namespace Snowflake.Core.Theme
                 context.Response.OutputStream.Write(buffer, 0, nbytes);
             input.Close();
             context.Response.OutputStream.Close();
+        }
+
+        public void StopServer()
+        {
+            this.serverThread.Abort();
+            this.serverListener.Stop();
         }
     }
 }
