@@ -1,49 +1,70 @@
 <link rel="import" href="../bower_components/core-selector/core-selector.html">
-<polymer-element name="materia-gameview-details">
+<polymer-element name="snowflake-gameview-details">
 	<template>
 		<core-selector id="gameList" selected="0" on-core-select="{{gameSelect}}">
-			<template repeat="{{game in games}}">
+			<template repeat="{{game, gameIndex in games}}">
 				<div class="gameItem" index="{{gameIndex}}" name="{{game.name}}">{{game.name}}</div>
 			</template>
 		</core-selector>
 	<div id="gameDetails">
 			<div id="gameLaunch">
 				<h1>{{game.name}}</h1>
-				<a href="#play">Play</a>
-				<a href="#config">Configure</a>
+				<a href="#snowflake://run/{{game.id}}">Play</a>
+				<a href="#snowflake://config/{{game.id}}">Configure</a>
 			</div>
 			<div id="gameStats"> 
 				<table>
 						<tr>
 							<th scope="row">Publisher</th>
 							<!--todo set this snowflake keys-->
-							<td>{{game.metadata['publisher']}}</td>
+							<td>{{game.metadata.publisher}}</td>
 						</tr>
 						<tr>
 							<th scope="row">Developer</th>
-							<td>{{game.metadata['developer']}}</td>
+							<td>{{game.metadata.developer}}</td>
 						</tr>
 						<tr>
 							<th scope="row">Release Date</th>
-							<td>{{game.metadata['releasedate']}}</td>
+							<td>{{game.metadata.releasedate}}</td>
 						</tr>
 				</table>
 			</div>
 			<div id="gameDescription">
 				<p>
-					{{game.metadata['description']}}
+					{{game.metadata.description}}
 				</p>
 			</div>
 			<div id="gameBoxart">
-				<img src="{{games[selectedGameIndex].images['boxart_front']}}"></img>
+				<img src="{{game.images.boxart_front}}"></img>
 			</div>
 		</div>
 	</template>
 	
 	<script>
-		Polymer('materia-gameview-details', {
+		Polymer('snowflake-gameview-details', {
 			ready: function() {
-				this.games = [];
+				this.games = [
+					{
+						id: "someid",
+						name: "test",
+						metadata: {
+							"publisher" : "pub_test",
+							"developer": "dev_test",
+							"releasedate": "0/0/0"
+						}
+						
+					},
+					{
+						id: "someid2",
+						name: "test2",
+						metadata: {
+							"publisher" : "pub_test2",
+							"developer": "dev_test2",
+							"releasedate": "0/0/2"
+						}
+						
+					}
+				];
 			},
 			gameSelect: function(e, detail) {
 				if (detail.isSelected) {

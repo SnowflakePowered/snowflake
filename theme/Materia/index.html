@@ -1,9 +1,12 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-	<title>Selector</title>
 	<script src="/bower_components/platform/platform.js"></script>
+	<link rel="import" href="/bower_components/polymer/polymer.html">
 	<link rel="import" href="/materia-components/materia-mainmenu.html">
+	<link rel="import" href="/snowflake-components/snowflake-gameview-details.html">
+	<link rel="import" href="/snowflake-components/snowflake-platform-indicator.html">
+
 	<style>
 	materia-mainmenu{
 		position: absolute;
@@ -17,10 +20,10 @@
 	}
 	</style>
 </head>
-<body unresolved style="background-color:#eee; ">
+<body unresolved>
 <div id="menucontainer">
-  <materia-mainmenu></materia-mainmenu>
+  <snowflake-gameview-details></snowflake-gameview-details>
+  <snowflake-platform-indicator platformid="NINTENDO_NES"></snowflake-platform-indicator>
 </div>
 </body>
-
 </html>
