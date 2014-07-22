@@ -8,11 +8,11 @@
 		</core-selector>
 	<div id="gameDetails">
 			<div id="gameLaunch">
-				<h1>{{game.name}}</h1>
-				<a href="#snowflake://run/{{game.id}}">Play</a>
-				<a href="#snowflake://config/{{game.id}}">Configure</a>
+				<h1 class="info">{{game.name}}</h1>
+				<a href="#snowflake://run/{{game.id}}" class="info">Play</a>
+				<a href="#snowflake://config/{{game.id}}" class="info">Configure</a>
 			</div>
-			<div id="gameStats"> 
+			<div id="gameStats" class="info"> 
 				<table>
 						<tr>
 							<th scope="row">Publisher</th>
@@ -29,12 +29,12 @@
 						</tr>
 				</table>
 			</div>
-			<div id="gameDescription">
+			<div id="gameDescription" class="info">
 				<p>
 					{{game.metadata.description}}
 				</p>
 			</div>
-			<div id="gameBoxart">
+			<div id="gameBoxart" class="info">
 				<img src="{{game.images.boxart_front}}"></img>
 			</div>
 		</div>
