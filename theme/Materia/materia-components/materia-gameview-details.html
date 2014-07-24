@@ -8,7 +8,9 @@
 <polymer-element name="materia-gameview-details">
 	<template>
 	<style>
-	
+	:host{
+		font-family: sans-serif;
+	}
 	#wrapperGameBoxart{
 		position: absolute;
 		bottom: 0;
@@ -58,8 +60,9 @@
 		text-align: left;
 		float: right;
 		clear: both;
-		margin-top: 30px;
+		margin-bottom: 10px;
 		display: block;
+		padding: 10px;
 	}
 	#wrapperGameTitle{
 		font-size: 2em;
@@ -108,6 +111,9 @@
 	}
 	.gameItem{
 		padding: 10px;
+	}
+	.gameItem:hover{
+		background: #ddd;
 	}
 	.gameItem.core-selected{
 		background: #fff;
