@@ -1,0 +1,63 @@
+<polymer-element name="materia-platform-indicator" attributes="platformid">
+	<template>
+	<style>
+	#platformDetails{
+		font-size: 2em;
+		width: 100%;
+		background: #fff;
+		margin: 0;
+		height: 100%;
+		display: flex;
+	}
+	.float-left{
+		float: left;
+	}
+	.float-right{
+		float: right;
+	}
+	.clear-both{
+		clear: both;
+	}
+	.clear-right{
+		clear: right;
+	}
+	.clear-left{
+		clear: left;
+	}
+	.platformWrapper{
+		font-size: 1em;
+	}
+	#platformText{
+		width: 256px;
+		height: 100%;
+		background: #fff;
+	}
+	#platformName{
+		width: 100%;
+		height: 100%;
+		background: #eee;
+		flex-shrink: 100;
+	}
+	</style>
+	<div id="platformDetails" platformid="{{platformid}}">
+			<div id="platformText" class="platformWrapper">
+				<span>Platform</span>
+			</div>
+			<div id="platformName" class="platformWrapper">
+				<span>{{platform.name}}</span>
+			</div>
+			<img src="{{platform.images.logo}}"></img>
+	</div>
+	</template>
+	
+	<script>
+		Polymer('materia-platform-indicator', {
+			ready: function() {
+				this.platform = {
+					name: "SomePlatform",
+					images: {}
+				};
+			}
+		});
+	</script>
+</polymer-element>
