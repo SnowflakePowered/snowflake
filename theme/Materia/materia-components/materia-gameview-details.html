@@ -1,7 +1,8 @@
 <link rel="import" href="../bower_components/core-selector/core-selector.html">
 <link rel="import" href="../bower_components/core-drawer-panel/core-drawer-panel.html">
-<link rel="import" href="../bower_components/paper-shadow/paper-shadow.html">
+<link rel="import" href="../bower_components/core-animation/core-animation.html">
 <link rel="import" href="../snowflake-components/snowflake-gameview-details.html">
+<link rel="import" href="unresolved-img.html">
 
 
 <link rel="import" href="../bower_components/core-selector/core-selector.html">
@@ -10,17 +11,19 @@
 	<style>
 	:host{
 		font-family: sans-serif;
+		-webkit-user-select: none;
 	}
 	#wrapperGameBoxart{
 		position: absolute;
-		bottom: 0;
-		width: 95%;
+		bottom: 330px;
+		right: 10%;
 	}
 	#wrapperMain{
 		width: 100%;
 		position: absolute;
 		bottom: 15%;
 		height: 100%;
+		pointer-events: none;
 	}
 	#wrapperGameDescription{
 		position: absolute;
@@ -28,7 +31,7 @@
 		width: 100%;
 	}
 	#wrapperGameDescription > div{
-		width: 50%;
+		width: 90%;
 	}
 	#gameListContainer{
 		box-shadow: -10px 0px 30px 1px rgba(0,0,0,0.75);
@@ -44,8 +47,11 @@
 	#gameDescription p{
 		height: 100%;
 		overflow-y: auto;
+		pointer-events: auto !important;
 	}
-
+	#gamelaunch-tab{
+		width: 100%;
+	}
 	#gameListContainer{
 		height: 100%;
 		display: inline;
@@ -56,10 +62,8 @@
 		margin-left: 0px;
 	}
 	#gameStats{
-		width: 30%;
+		width: 20%;
 		text-align: left;
-		float: right;
-		clear: both;
 		margin-bottom: 10px;
 		display: block;
 		padding: 10px;
@@ -72,23 +76,20 @@
 		margin: 10px;
 	}
 	#gameBoxart{
-		max-height: 80%;
-		max-width: 35%;
-		height: auto;
 		width: auto;
 		bottom: 0;
 	}
-	#gameBoxart img{
-		height: 100%;
-		width: 100%;
+	#gameBoxart unresolved-img::shadow img{
+		max-height: 45%;
+		width: auto;
 		display: block;
 	}
-	.launch{
+	.launch-tab{
 		padding: 2px 5px;
 		display: block;
 		margin-bottom: 10px;
 	}
-	.launch a{
+	.launch-tab a{
 		margin: 0;
 		vertical-align: middle;
 		text-decoration: none;
@@ -118,7 +119,23 @@
 	.gameItem.core-selected{
 		background: #fff;
 	}
+	#background{
+		position: fixed;
+		height: 100%;
+		width: 100%;
+		z-index: -99999;
+		-webkit-filter: blur(5px);
+	}
+	#background::shadow img{
+		transition: opacity ease-in 1s;
+	}
+	:host /deep/ .card{
+		background: #fff;
+		border-radius: 2px;
+		box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+	}
 
+	
 	</style>
 	<core-drawer-panel>
 	<div id="gameListContainer" drawer>
@@ -130,39 +147,34 @@
 	</div>
 
 	<div id="gameDetails" main>
-			<div id="gameLaunch" class="float-left">
-				<div id="wrapperGameTitle" class="float-left clear-both">
-				<paper-shadow z="1"><paper-shadow>
-					<h1 id="gameTitle" class="info">
+			<unresolved-img id="background" src="{{game.art}}"></unresolved-img>
+			<div id="gamelaunch-tab" class="float-left">
+				<div id="wrapperGameTitle" class="launch-tab float-left clear-both card slide-left">
+					<h1 id="gameTitle">
 					{{game.name}}
 					</h1>
 				</div>
-				<div class="launch float-left clear-both">
-					<paper-shadow z="1"><paper-shadow>
-					<a href="#snowflake://run/{{game.id}}" class="info launch">
+				<div class="launch-tab card float-left clear-both slide-left">
+					<a href="#snowflake://run/{{game.id}}">
 						Play
 					</a>
 				</div>
-				<div class="launch float-left clear-both">
-					<paper-shadow z="1"><paper-shadow>
-					<a href="#snowflake://config/{{game.id}}" class="info launch">
+				<div class="launch-tab card float-left clear-both slide-left">
+					<a href="#snowflake://config/{{game.id}}">
 						Configure
 					</a>
 				</div>
 			</div>
 			<div id="wrapperMain">
-							
-				<div id="wrapperGameBoxart" class="clear-both float-right">
-						<div id="gameBoxart" class="info float-right">
-							<img src="{{game.img}}">
-							
-							<paper-shadow z="1"></paper-shadow></img>
-						</div>
-				</div>
 				<div id="wrapperGameDescription">
-				
 					<div class="float-left clear-left">
-						<div id="gameStats" class="info">
+					<div id="wrapperGameBoxart">
+						<div id="gameBoxart" class="float-right clear-both">
+								<unresolved-img unresolved src="{{game.img}}" class="card"></unresolved-img>
+								<paper-shadow z="1"></paper-shadow></img>
+						</div>
+					</div>
+						<div id="gameStats" class="card float-left clear-both>
 							<paper-shadow z="1"><paper-shadow>
 							<table>
 									<tr>
@@ -180,8 +192,7 @@
 									</tr>
 							</table>
 						</div><br />
-						<div id="gameDescription" class="info">
-							<paper-shadow z="1"><paper-shadow>
+						<div id="gameDescription" class="card">
 							<p>
 								{{game.metadata.description}}
 							</p>
@@ -201,6 +212,7 @@
 						id: "someid",
 						name: "test",
 						img: "http://articles.myrabbits.de/retro/zelda/Zelda_Cover.jpg",
+						art: "http://i.gyazo.com/b79eb192066017fdcc51b08166f06597.png",
 						metadata: {
 							"publisher" : "pub_test",
 							"developer": "dev_test",
@@ -229,7 +241,11 @@
 			gameSelect: function(e, detail) {
 				if (detail.isSelected) {
 					this.game = this.games[detail.item.getAttribute('index')];
+					  var animation = this.$.slideleft;
+					  animation.target = this.$.wrapperGameTitle;
+					  animation.play();
 				}
+				
 			}
 		});
 	</script>
