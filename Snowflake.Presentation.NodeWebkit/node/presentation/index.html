@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Edge.JS Test Application</title>
+	<script src="jquery-1.10.2.js" type="text/javascript"></script>
+  </head>
+  <body>
+	Type a name and hit enter: <input type="text" id="name-input" />	
+	<hr />
+    <div id="content"></div>
+
+	<script>
+		var gui = require('nw.gui');
+		var argv = gui.App.argv;
+		var edge = require('edge');
+		var sayHello = edge.func({
+			assemblyFile: argv[0],
+			typeName: 'Snowflake.Presentation.NodeWebkit.EdgeBridge',
+			methodName: 'HelloWorld'
+		});
+	
+		$('#name-input').on('keypress', function(e) {
+			 if (e.which == 13) {
+				e.preventDefault();
+			
+				var name = this.value;
+			
+				if(name != "") {
+					sayHello(name, function (error, result) {
+						if (error) throw error;
+						
+						$("#content").append(result + "<br/>");
+					});
+				}
+			}
+		});		
+	</script>	
+  </body>
+</html>
