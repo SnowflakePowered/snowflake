@@ -13,6 +13,7 @@ using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using Newtonsoft.Json;
 using Snowflake.Events.CoreEvents;
+using System.Threading;
 
 namespace Snowflake.Core
 {
@@ -33,15 +34,22 @@ namespace Snowflake.Core
         public event EventHandler CoreLoaded;
         #endregion
 
-        public static void InitCore()
+        private static void InitCore()
         {
-            var core = new FrontendCore();
-            FrontendCore.LoadedCore = core;
-            FrontendCore.InitPluginManagerAsync();
-            FrontendCore.LoadedCore.ThemeServer.StartServer();
-
+                var core = new FrontendCore();
+                FrontendCore.LoadedCore = core;
+                FrontendCore.InitPluginManagerAsync();
+                FrontendCore.LoadedCore.ThemeServer.StartServer();
+            
         }
-        public async static Task InitPluginManagerAsync()
+        public static void InitCoreAsync(){
+            new Thread(
+                () =>
+                {
+                    FrontendCore.InitCore();
+             });
+        }
+        private async static Task InitPluginManagerAsync()
         {
             await Task.Run(() => FrontendCore.LoadedCore.PluginManager.LoadAllPlugins());
             FrontendCore.LoadedCore.OnPluginManagerLoaded(new PluginManagerLoadedEventArgs());

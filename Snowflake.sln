@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.API", "Snowflake.API\Snowflake.API.csproj", "{8F1D65ED-4A96-4A0A-8371-53655A60A2B3}"
 EndProject
@@ -29,6 +29,7 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Core", "Snowflake.Core\Snowflake.Core.csproj", "{D61406F1-95A5-475A-8EC7-04F07C41F263}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Presentation.NodeWebkit", "Snowflake.Presentation.NodeWebkit\Snowflake.Presentation.NodeWebkit.csproj", "{BE32C49E-D80B-4C2F-BF66-4C466F029819}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.WPF", "Snowflake.WPF\Snowflake.WPF.csproj", "{31F05AC0-B8BA-4C63-A36C-47A93DAF95C0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -60,6 +61,10 @@ Global
 		{BE32C49E-D80B-4C2F-BF66-4C466F029819}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE32C49E-D80B-4C2F-BF66-4C466F029819}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE32C49E-D80B-4C2F-BF66-4C466F029819}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31F05AC0-B8BA-4C63-A36C-47A93DAF95C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31F05AC0-B8BA-4C63-A36C-47A93DAF95C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31F05AC0-B8BA-4C63-A36C-47A93DAF95C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31F05AC0-B8BA-4C63-A36C-47A93DAF95C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
