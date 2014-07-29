@@ -12,7 +12,7 @@ Snowflake, on the surface, aims to be [OpenEmu](http://openemu.org/) for Windows
 
 A powerful and flexible API will be provided to General Plugins that can access Snowflake's events. Specialized APIs for Scrapers and Emulators ensure easy integration with existing emulators and services. Snowflake aims to have full scraping support, all one would need to do is add the ROM, and press play. 
 
-Customizability is core to Snowflake's design. The User Interface is written using the latest HTML5 and Javascript technology, rendered by Chromium/Blink through CEFSharp. As CEFSharp is merely acting as the renderer, both CEFSharp and the HTML+JS UI can be switched out. As the underlying HTML is able to be edited, Snowflake will have a powerful theming framework. 
+Customizability is core to Snowflake's design. The User Interface is written using the latest HTML5 and Javascript technology, rendered by Chromium/Blink through CEFSharp.The HTML+JS UI can be switched out. As the underlying HTML is able to be edited, Snowflake will have a powerful theming framework. 
 
 Currently, Snowflake is largely incomplete. The API will be very volatile until the first Major release. Snowflake follows the Semantic Versioning syntax; leaving the build number as 0.
 
