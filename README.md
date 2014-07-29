@@ -1,6 +1,9 @@
 Snowflake
 =========
 
+Currently waiting on CEFSharp3 Javascript objects because IPC is a b*tch to work with.
+
+
 > As of this C# implementation Snowflake-csharp is no longer strictly an implementation of Icelake. Instead, Icelake and pySnowflake is now deprecated and all future Snowflake development will be under Snowflake-Csharp. As a result, compatibility under non-Windows systems is no longer guaranteed but development will continue with *nix compatibility in mind for the future
 
 What is Snowflake?
