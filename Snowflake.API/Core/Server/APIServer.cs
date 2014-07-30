@@ -8,6 +8,7 @@ using System.IO;
 using System.Threading;
 using Newtonsoft.Json;
 using System.Web;
+using Snowflake.Core.API.JSAPI;
 namespace Snowflake.Core.Server
 {
     public class APIServer
@@ -28,14 +29,14 @@ namespace Snowflake.Core.Server
                     while (true)
                     {
                         HttpListenerContext context = serverListener.GetContext();
-                        this.Process(context);
+                        Task.Run(() => this.Process(context));
                     }
                 }
             );
                        
             this.serverThread.Start();          
         }
-        private void Process(HttpListenerContext context)
+        private async Task Process(HttpListenerContext context)
         {
             string getRequest = context.Request.Url.AbsolutePath.Remove(0,1); //Remove first slash
             string getUri = context.Request.Url.AbsoluteUri;
@@ -48,31 +49,21 @@ namespace Snowflake.Core.Server
             }
             var request = new JSRequest(getRequest.Split('/')[0], dictParams);
             StreamWriter writer = new StreamWriter(context.Response.OutputStream);
-            writer.WriteLine(ProcessRequest(request));
+            
+            writer.WriteLine(await ProcessRequest(request));
             writer.Flush();
             context.Response.OutputStream.Close();
         }
 
-        private string ProcessRequest(JSRequest args)
+        private async Task<string> ProcessRequest(JSRequest args)
         {
             string method = args.MethodName;
-            switch (method)
+            var invokedMethod = typeof(JSBridge).GetMethod(method);
+            if (invokedMethod != null)
             {
-                case "Test":
-                    return JsonConvert.SerializeObject(new Dictionary<string, string>()
-                    {
-                        {"response", "success"}
-                    });
-                case "GetAllPlatforms":
-                    return JsonConvert.SerializeObject(FrontendCore.LoadedCore.LoadedPlatforms);
-                case "GetPlatform":
-                    if (args.MethodParameters.ContainsKey("platformid"))
-                        return JsonConvert.SerializeObject(FrontendCore.LoadedCore.LoadedPlatforms[args.MethodParameters["platformid"]]);
-                    else goto default;
-                default:
-                    return "invalid";
-
+                return  (string)invokedMethod.Invoke(this, new object[] { args });
             }
+            else return "invalid";
         }
         public void StopServer()
         {
@@ -81,15 +72,6 @@ namespace Snowflake.Core.Server
         }
     }
 
-    public class JSRequest{
-
-        public string MethodName { get; private set; }
-        public IDictionary<string, string> MethodParameters { get; private set; }
-        public JSRequest(string methodName, IDictionary<string, string> parameters)
-        {
-            this.MethodName = methodName;
-            this.MethodParameters = parameters;
-        }
-    }
+   
 }
 
