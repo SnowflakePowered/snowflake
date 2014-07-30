@@ -11,13 +11,24 @@ namespace Snowflake.Core.API.JSAPI
     {
         public static string GetAllPlatforms(JSRequest request)
         {
-            return JsonConvert.SerializeObject(CoreAPI.GetAllPlatforms());
+            return JSBridge.ProcessJSONP(JsonConvert.SerializeObject(CoreAPI.GetAllPlatforms()), request);
         }
 
         public static string Work(JSRequest request)
         {
             System.Threading.Thread.Sleep(100000);
             return "done";
+        }
+
+        private static string ProcessJSONP(string output, JSRequest request){
+            if (request.MethodParameters.ContainsKey("jsoncallback"))
+            {
+                return request.MethodParameters["jsoncallback"] + "(" + output + ");";
+            }
+            else
+            {
+                return output;
+            }
         }
     }
 }
