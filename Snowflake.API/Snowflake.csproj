@@ -79,6 +79,9 @@
     <Compile Include="Constants\Plugin\PluginInfoFields.cs" />
     <Compile Include="Constants\Plugin\PluginTypes.cs" />
     <Compile Include="Constants\Plugin\ScraperInfoFields.cs" />
+    <Compile Include="Core\API\CoreAPI.cs" />
+    <Compile Include="Core\API\JSAPI\JSBridge.cs" />
+    <Compile Include="Core\API\JSAPI\JSRequest.cs" />
     <Compile Include="Core\Interface\IPluginManager.cs" />
     <Compile Include="Core\Interface\IFrontendCore.cs" />
     <Compile Include="Events\CoreEvents\PluginManagerLoadedEventArgs.cs" />
