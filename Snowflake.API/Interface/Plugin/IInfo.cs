@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Snowflake.API.Interface
+namespace Snowflake.API.Interface.Plugin
 {
     public interface IInfo
     {

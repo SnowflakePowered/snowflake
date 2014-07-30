@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.Composition;
 using Snowflake.API.Interface.Core;
-using Snowflake.API.Interface;
+using Snowflake.API.Interface.Plugin;
 
 using System.ComponentModel.Composition.Hosting;
 using System.IO;

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Dynamic;
 
-namespace Snowflake.API.Interface
+namespace Snowflake.API.Interface.Plugin
 {
     public interface IConfiguration
     {

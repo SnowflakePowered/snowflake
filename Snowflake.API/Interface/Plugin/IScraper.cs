@@ -8,7 +8,7 @@ using Snowflake.API.Collections;
 using Snowflake.API.Information.Game;
 using System.ComponentModel.Composition;
 
-namespace Snowflake.API.Interface
+namespace Snowflake.API.Interface.Plugin
 {
     [InheritedExport(typeof(IScraper))]
     public interface IScraper : IPlugin

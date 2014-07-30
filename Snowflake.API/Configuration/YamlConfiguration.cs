@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Dynamic;
-using Snowflake.API.Interface;
+using Snowflake.API.Interface.Plugin;
 using SharpYaml.Serialization;
 using System.IO;
 

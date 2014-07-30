@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.Composition;
 
-namespace Snowflake.API.Interface
+namespace Snowflake.API.Interface.Plugin
 {
     [InheritedExport(typeof(IGenericPlugin))]
     public interface IGenericPlugin:IPlugin

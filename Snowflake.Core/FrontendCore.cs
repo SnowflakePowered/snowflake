@@ -7,7 +7,7 @@ using Snowflake.API.Information.Platform;
 using Snowflake.API.Interface;
 using Snowflake.API.Database;
 using Snowflake.API.Interface.Core;
-using Snowflake.Core.Theme;
+using Snowflake.Core.Server;
 using System.IO;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
@@ -27,20 +27,23 @@ namespace Snowflake.Core
 
         public string AppDataDirectory { get; private set; }
         public static FrontendCore LoadedCore { get; private set; }
-        public ThemeServer ThemeServer { get; private set; }
+        public ThemeServer ThemeServer { get; private set; }    
+        public APIServer APIServer { get; private set; }
+
 
         #region Events
         public delegate void PluginManagerLoadedEvent(object sender, PluginManagerLoadedEventArgs e);
         public event EventHandler CoreLoaded;
         #endregion
 
-        private static void InitCore()
+        public static void InitCore()
         {
                 var core = new FrontendCore();
                 FrontendCore.LoadedCore = core;
                 FrontendCore.InitPluginManagerAsync();
                 FrontendCore.LoadedCore.ThemeServer.StartServer();
-            
+                FrontendCore.LoadedCore.APIServer.StartServer();
+
         }
         public static void InitCoreAsync(){
             new Thread(
@@ -66,6 +69,7 @@ namespace Snowflake.Core
             this.PluginManager = new PluginManager(this.AppDataDirectory);
 
             this.ThemeServer = new ThemeServer(Path.Combine(this.AppDataDirectory, "theme"));
+            this.APIServer = new APIServer();
         }
         private Dictionary<string, Platform> LoadPlatforms(string platformDirectory)
         {

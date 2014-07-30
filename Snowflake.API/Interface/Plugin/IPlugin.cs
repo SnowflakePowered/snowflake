@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Reflection;
 using System.ComponentModel.Composition;
 
-namespace Snowflake.API.Interface
+namespace Snowflake.API.Interface.Plugin
 {
     public interface IPlugin
     {

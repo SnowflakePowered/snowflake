@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.ComponentModel.Composition;
 
-namespace Snowflake.API.Interface
+namespace Snowflake.API.Interface.Plugin
 {
     [InheritedExport(typeof(IIdentifier))]
     public interface IIdentifier : IPlugin

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Mono.Net;
 using System.IO;
 using System.Threading;
-namespace Snowflake.Core.Theme
+namespace Snowflake.Core.Server
 {
     public class ThemeServer
     {
@@ -41,7 +41,6 @@ namespace Snowflake.Core.Theme
         private void Process(HttpListenerContext context)
         {
             string filename = context.Request.Url.AbsolutePath;
-            Console.WriteLine(filename);
             filename = filename.Substring(1);
             if (string.IsNullOrEmpty(filename))
                 filename = "index.html";

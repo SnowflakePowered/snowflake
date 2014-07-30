@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.API.Base;
-using Snowflake.API.Interface;
+using Snowflake.API.Interface.Plugin;
 using System.Reflection;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.ComponentModel.Composition;
 namespace Identifier.DatIdentifier
 {
-    public class ClrMameProDat:BasePlugin,IIdentifier
+    public class ClrMameProDat: BasePlugin, IIdentifier
     {
         public ClrMameProDat()
             : base(Assembly.GetExecutingAssembly())
