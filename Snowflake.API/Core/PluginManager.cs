@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.Composition;
-using Snowflake.API.Interface.Core;
-using Snowflake.API.Interface.Plugin;
+using Snowflake.Core.Interface;
+using Snowflake.Plugin.Interface;
 
 using System.ComponentModel.Composition.Hosting;
 using System.IO;

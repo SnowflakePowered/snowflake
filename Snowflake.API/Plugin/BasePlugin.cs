@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Snowflake.API.Interface.Plugin;
+using Snowflake.Plugin.Interface;
 using System.Reflection;
 using System.IO;
 using Newtonsoft.Json;
-using Snowflake.API.Constants.Plugin;
-using Snowflake.API.Configuration;
-namespace Snowflake.API.Plugin
+using Snowflake.Constants.Plugin;
+using Snowflake.Configuration;
+using Snowflake.Configuration.Interface;
+namespace Snowflake.Plugin
 {
     public class BasePlugin : IPlugin
     {

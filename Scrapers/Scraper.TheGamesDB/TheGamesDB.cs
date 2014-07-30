@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Reflection;
 using System.Net;
-using Snowflake.API;
-using Snowflake.API.Plugin.Scraper;
-using Snowflake.API.Information.Platform;
-using Snowflake.API.Information.Game;
+using Snowflake.Plugin.Scraper;
+using Snowflake.Information.Platform;
+using Snowflake.Information.Game;
 using System.Xml.Linq;
-using Snowflake.API.Constants;
+using Snowflake.Constants;
 
 namespace Scraper.TheGamesDB
 {

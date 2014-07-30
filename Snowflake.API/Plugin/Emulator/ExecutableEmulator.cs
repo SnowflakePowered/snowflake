@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Snowflake.API.Interface.Plugin;
-using Snowflake.API.Plugin;
+using Snowflake.Plugin.Interface;
+using Snowflake.Plugin;
 using System.Reflection;
 
-namespace Snowflake.API.Plugin.Emulator
+namespace Snowflake.Plugin.Emulator
 {
     public abstract class ExecutableEmulator : BasePlugin, IEmulator
     {

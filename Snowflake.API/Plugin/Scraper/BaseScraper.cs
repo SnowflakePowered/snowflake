@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Snowflake.API.Interface.Plugin;
+using Snowflake.Plugin.Interface;
 using Newtonsoft.Json;
-using Snowflake.API.Collections;
+using Snowflake.Collections;
 using System.Reflection;
 using System.IO;
-using Snowflake.API.Information.Platform;
-using Snowflake.API.Information.Game;
+using Snowflake.Information.Platform;
+using Snowflake.Information.Game;
 
-namespace Snowflake.API.Plugin.Scraper
+namespace Snowflake.Plugin.Scraper
 {
     public abstract class BaseScraper: BasePlugin, IScraper
     {
