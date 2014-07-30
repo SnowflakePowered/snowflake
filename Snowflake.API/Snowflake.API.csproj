@@ -7,8 +7,8 @@
     <ProjectGuid>{8F1D65ED-4A96-4A0A-8371-53655A60A2B3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Snowflake.API</RootNamespace>
-    <AssemblyName>Snowflake.API</AssemblyName>
+    <RootNamespace>Snowflake</RootNamespace>
+    <AssemblyName>Snowflake</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -66,6 +66,7 @@
     <Reference Include="System.Data.SQLite.Linq">
       <HintPath>..\packages\System.Data.SQLite.Linq.1.0.93.0\lib\net45\System.Data.SQLite.Linq.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -73,35 +74,40 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\YamlConfiguration.cs" />
-    <Compile Include="Constants\ImagesInfoFields.cs" />
-    <Compile Include="Constants\Plugin\PluginInfoFields.cs" />
-    <Compile Include="Constants\Plugin\PluginTypes.cs" />
-    <Compile Include="Constants\Plugin\ScraperInfoFields.cs" />
-    <Compile Include="Interface\Core\IPluginManager.cs" />
-    <Compile Include="Interface\Core\IFrontendCore.cs" />
-    <Compile Include="Events\CoreEvents\PluginManagerLoadedEventArgs.cs" />
-    <Compile Include="Information\Game\GameImages.cs" />
-    <Compile Include="Collections\KeyValuePairExts.cs" />
-    <Compile Include="Database\GameDatabase.cs" />
-    <Compile Include="Information\Platform\PlatformDefaults.cs" />
-    <Compile Include="Interface\Plugin\IConfiguration.cs" />
-    <Compile Include="Interface\Plugin\IGenericPlugin.cs" />
-    <Compile Include="Interface\Plugin\IIdentifier.cs" />
-    <Compile Include="Interface\Plugin\IScraper.cs" />
-    <Compile Include="Base\Emulator\ExecutableEmulator.cs" />
-    <Compile Include="Information\Game\Game.cs" />
-    <Compile Include="Information\Info.cs" />
-    <Compile Include="Interface\Plugin\IEmulator.cs" />
-    <Compile Include="Interface\Plugin\IInfo.cs" />
-    <Compile Include="Information\Platform\Platform.cs" />
-    <Compile Include="Interface\Plugin\IPlugin.cs" />
-    <Compile Include="Base\BasePlugin.cs" />
-    <Compile Include="Base\Scraper\BaseScraper.cs" />
-    <Compile Include="Base\Scraper\GameScrapeResult.cs" />
+    <Compile Include="API\Configuration\YamlConfiguration.cs" />
+    <Compile Include="API\Constants\ImagesInfoFields.cs" />
+    <Compile Include="API\Constants\Plugin\PluginInfoFields.cs" />
+    <Compile Include="API\Constants\Plugin\PluginTypes.cs" />
+    <Compile Include="API\Constants\Plugin\ScraperInfoFields.cs" />
+    <Compile Include="API\Interface\Core\IPluginManager.cs" />
+    <Compile Include="API\Interface\Core\IFrontendCore.cs" />
+    <Compile Include="API\Events\CoreEvents\PluginManagerLoadedEventArgs.cs" />
+    <Compile Include="API\Information\Game\GameImages.cs" />
+    <Compile Include="API\Collections\KeyValuePairExts.cs" />
+    <Compile Include="API\Database\GameDatabase.cs" />
+    <Compile Include="API\Information\Platform\PlatformDefaults.cs" />
+    <Compile Include="API\Interface\Plugin\IConfiguration.cs" />
+    <Compile Include="API\Interface\Plugin\IGenericPlugin.cs" />
+    <Compile Include="API\Interface\Plugin\IIdentifier.cs" />
+    <Compile Include="API\Interface\Plugin\IScraper.cs" />
+    <Compile Include="API\Base\Emulator\ExecutableEmulator.cs" />
+    <Compile Include="API\Information\Game\Game.cs" />
+    <Compile Include="API\Information\Info.cs" />
+    <Compile Include="API\Interface\Plugin\IEmulator.cs" />
+    <Compile Include="API\Interface\Plugin\IInfo.cs" />
+    <Compile Include="API\Information\Platform\Platform.cs" />
+    <Compile Include="API\Interface\Plugin\IPlugin.cs" />
+    <Compile Include="API\Base\BasePlugin.cs" />
+    <Compile Include="API\Base\Scraper\BaseScraper.cs" />
+    <Compile Include="API\Base\Scraper\GameScrapeResult.cs" />
+    <Compile Include="Core\Extensions.cs" />
+    <Compile Include="Core\FrontendCore.cs" />
+    <Compile Include="Core\PluginManager.cs" />
+    <Compile Include="Core\Server\APIServer.cs" />
+    <Compile Include="Core\Server\ThemeServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Collections\BiDictionary.cs" />
-    <Compile Include="Constants\GameInfoFields.cs" />
+    <Compile Include="API\Collections\BiDictionary.cs" />
+    <Compile Include="API\Constants\GameInfoFields.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -79,10 +79,6 @@
       <Project>{8f1d65ed-4a96-4a0a-8371-53655a60a2b3}</Project>
       <Name>Snowflake.API</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Snowflake.Core\Snowflake.Core.csproj">
-      <Project>{d61406f1-95a5-475a-8ec7-04f07c41f263}</Project>
-      <Name>Snowflake.Core</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
