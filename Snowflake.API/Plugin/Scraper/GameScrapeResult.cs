@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Snowflake.API.Base.Scraper
+namespace Snowflake.API.Plugin.Scraper
 {
     public class GameScrapeResult
     {

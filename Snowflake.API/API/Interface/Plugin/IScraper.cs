@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Snowflake.API.Base.Scraper;
+using Snowflake.API.Plugin.Scraper;
 using Snowflake.API.Collections;
 using Snowflake.API.Information.Game;
 using System.ComponentModel.Composition;

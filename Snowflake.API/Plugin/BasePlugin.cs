@@ -9,7 +9,7 @@ using System.IO;
 using Newtonsoft.Json;
 using Snowflake.API.Constants.Plugin;
 using Snowflake.API.Configuration;
-namespace Snowflake.API.Base
+namespace Snowflake.API.Plugin
 {
     public class BasePlugin : IPlugin
     {

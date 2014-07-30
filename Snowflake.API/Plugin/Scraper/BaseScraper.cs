@@ -11,7 +11,7 @@ using System.IO;
 using Snowflake.API.Information.Platform;
 using Snowflake.API.Information.Game;
 
-namespace Snowflake.API.Base.Scraper
+namespace Snowflake.API.Plugin.Scraper
 {
     public abstract class BaseScraper: BasePlugin, IScraper
     {

@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.API.Interface.Plugin;
-using Snowflake.API.Base;
+using Snowflake.API.Plugin;
 using System.Reflection;
 
-namespace Snowflake.API.Base.Emulator
+namespace Snowflake.API.Plugin.Emulator
 {
     public abstract class ExecutableEmulator : BasePlugin, IEmulator
     {

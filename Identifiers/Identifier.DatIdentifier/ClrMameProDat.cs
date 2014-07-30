@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Snowflake.API.Base;
+using Snowflake.API.Plugin;
 using Snowflake.API.Interface.Plugin;
 using System.Reflection;
 using System.IO;

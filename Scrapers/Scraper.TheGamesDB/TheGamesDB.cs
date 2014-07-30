@@ -7,7 +7,7 @@ using System.IO;
 using System.Reflection;
 using System.Net;
 using Snowflake.API;
-using Snowflake.API.Base.Scraper;
+using Snowflake.API.Plugin.Scraper;
 using Snowflake.API.Information.Platform;
 using Snowflake.API.Information.Game;
 using System.Xml.Linq;

@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.ComponentModel.Composition;
-using Snowflake.API.Base.Emulator;
+using Snowflake.API.Plugin.Emulator;
 
 namespace Emulator.RetroArch
 {
