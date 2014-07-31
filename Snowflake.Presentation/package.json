@@ -1,0 +1,11 @@
+{
+  "main": "index.html",
+  "name": "Snowflake",
+  "scripts": {
+    "start": "nodewebkit"
+  },
+  "dependencies": {
+	    "nodewebkit": "0.10.x",
+	    "multitransport-jsonrpc": "0.6.x"
+	}
+}
