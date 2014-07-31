@@ -5,7 +5,7 @@
 		var Server = jsonrpc.server;
 		var ServerHttp = jsonrpc.transports.server.http;
 		var jsonRpcHttpServer = new Server(new ServerHttp(3333), {
-			loopback: function(obj, callback) {
+			presentation: function(obj, callback) {
 				console.log(obj);
 				callback(undefined, obj); 
 			}
