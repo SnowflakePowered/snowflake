@@ -88,6 +88,7 @@
     <Compile Include="Core\EventDelegate\JsonRPCEventDelegate.cs" />
     <Compile Include="Core\Interface\IPluginManager.cs" />
     <Compile Include="Core\Interface\IFrontendCore.cs" />
+    <Compile Include="Core\Server\BaseHttpServer.cs" />
     <Compile Include="Events\CoreEvents\PluginManagerLoadedEventArgs.cs" />
     <Compile Include="Information\Game\GameImages.cs" />
     <Compile Include="Collections\KeyValuePairExts.cs" />

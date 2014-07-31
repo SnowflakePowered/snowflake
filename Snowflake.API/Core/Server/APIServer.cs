@@ -11,37 +11,16 @@ using System.Web;
 using Snowflake.Core.API.JSAPI;
 namespace Snowflake.Core.Server
 {
-    public class APIServer
+    public class APIServer:BaseHttpServer
     {
-        HttpListener serverListener;
-        Thread serverThread;
-        public APIServer()
+        public APIServer():base(30001)
         {
-            serverListener = new HttpListener();
-            serverListener.Prefixes.Add("http://localhost:9000/");
             
         }
-        public void StartServer()
+
+        protected override async Task Process(HttpListenerContext context)
         {
-            this.serverThread = new Thread(
-                () =>
-                {
-                    serverListener.Start();
-                    while (true)
-                    {
-                        HttpListenerContext context = serverListener.GetContext();
-                        Task.Run(() => this.Process(context));
-                    }
-                }
-            );
-                       
-            this.serverThread.Start();          
-        }
-        private async Task Process(HttpListenerContext context)
-        {
-            context.Response.AppendHeader("Access-Control-Allow-Credentials", "true");
-            context.Response.AppendHeader("Access-Control-Allow-Origin", "*");
-            context.Response.AppendHeader("Access-Control-Origin", "*");
+            APIServer.AddAccessControlHeaders(ref context);
             string getRequest = context.Request.Url.AbsolutePath.Remove(0,1); //Remove first slash
             string getUri = context.Request.Url.AbsoluteUri;
             int index = getUri.IndexOf("?");
@@ -71,13 +50,6 @@ namespace Snowflake.Core.Server
             }
             else return "invalid";
         }
-        public void StopServer()
-        {
-            this.serverThread.Abort();
-            this.serverListener.Stop();
-        }
     }
-
-   
 }
 

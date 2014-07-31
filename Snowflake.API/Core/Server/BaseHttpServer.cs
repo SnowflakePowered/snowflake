@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Net;
+using Mono.Net;
 using System.Threading;
 namespace Snowflake.Core.Server
 {
@@ -17,7 +17,7 @@ namespace Snowflake.Core.Server
         {
             serverListener = new HttpListener();
             serverListener.Prefixes.Add("http://localhost:" + port.ToString() + "/");
-            
+
         }
         public void StartServer()
         {
@@ -32,8 +32,8 @@ namespace Snowflake.Core.Server
                     }
                 }
             );
-            this.serverThread.IsBackground = true; 
-            this.serverThread.Start();          
+            this.serverThread.IsBackground = true;
+            this.serverThread.Start();
         }
 
         public void StopServer()
@@ -43,6 +43,13 @@ namespace Snowflake.Core.Server
             this.serverListener.Stop();
         }
 
-        public abstract void Process(HttpListenerContext context);
+        protected abstract Task Process(HttpListenerContext context);
+
+        public static void AddAccessControlHeaders(ref HttpListenerContext context)
+        {
+            context.Response.AppendHeader("Access-Control-Allow-Credentials", "true");
+            context.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            context.Response.AppendHeader("Access-Control-Origin", "*");
+        }
     }
 }

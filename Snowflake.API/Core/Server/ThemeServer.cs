@@ -8,38 +8,18 @@ using System.IO;
 using System.Threading;
 namespace Snowflake.Core.Server
 {
-    public class ThemeServer
+    public class ThemeServer : BaseHttpServer
     {
-        HttpListener serverListener;
-        Thread serverThread;
+     
         public string ThemeRoot { get; set; }
-        public ThemeServer(string themeRoot)
+        public ThemeServer(string themeRoot) : base(30000)
         {
             this.ThemeRoot = themeRoot;
-            serverListener = new HttpListener();
-            serverListener.Prefixes.Add("http://localhost:8999/");
         }
-        public void StartServer()
+        
+        protected override async Task Process(HttpListenerContext context)
         {
-            this.serverThread = new Thread(
-                () =>
-                {
-                    serverListener.Start();
-                    while (true)
-                    {
-                        HttpListenerContext context = serverListener.GetContext();
-                        this.Process(context);
-                    }
-                }
-            );
-                       
-            this.serverThread.Start();
-            
-            
-            
-        }
-        private void Process(HttpListenerContext context)
-        {
+            ThemeServer.AddAccessControlHeaders(ref context);
             string filename = context.Request.Url.AbsolutePath;
             filename = filename.Substring(1);
             if (string.IsNullOrEmpty(filename))
@@ -52,7 +32,7 @@ namespace Snowflake.Core.Server
             }
             catch (FileNotFoundException)
             {
-                input = new FileStream("index.html", FileMode.Open);
+                input = new MemoryStream(new UTF8Encoding().GetBytes("404 not found"));
             }
             byte[] buffer = new byte[1024 * 16];
             int nbytes;
@@ -60,12 +40,6 @@ namespace Snowflake.Core.Server
                 context.Response.OutputStream.Write(buffer, 0, nbytes);
             input.Close();
             context.Response.OutputStream.Close();
-        }
-
-        public void StopServer()
-        {
-            this.serverThread.Abort();
-            this.serverListener.Stop();
         }
     }
 }
