@@ -11,23 +11,28 @@ namespace Snowflake.Core.API.JSAPI
     {
         public static string GetAllPlatforms(JSRequest request)
         {
-            return JSBridge.ProcessJSONP(JsonConvert.SerializeObject(CoreAPI.GetAllPlatforms()), request);
+            return JSBridge.ProcessJSONP(CoreAPI.GetAllPlatforms(), request);
         }
 
+        public static string GetGamesByPlatform(JSRequest request)
+        {
+            return JSBridge.ProcessJSONP(CoreAPI.GetGamesByPlatform(request.MethodParameters["platformid"]), request);
+        }
+        
         public static string Work(JSRequest request)
         {
             System.Threading.Thread.Sleep(100000);
             return "done";
         }
 
-        private static string ProcessJSONP(string output, JSRequest request){
+        private static string ProcessJSONP(dynamic output, JSRequest request){
             if (request.MethodParameters.ContainsKey("jsoncallback"))
             {
-                return request.MethodParameters["jsoncallback"] + "(" + output + ");";
+                return request.MethodParameters["jsoncallback"] + "(" + JsonConvert.SerializeObject(output) + ");";
             }
             else
             {
-                return output;
+                return JsonConvert.SerializeObject(output);
             }
         }
     }
