@@ -69,7 +69,7 @@ namespace Snowflake.Core
 
             this.ThemeServer = new ThemeServer(Path.Combine(this.AppDataDirectory, "theme"));
             this.APIServer = new APIServer();
-            new JsonRPCEventDelegate(3333).Notify("test", new Dictionary<string, string>() { {"test","test"}});
+            //new JsonRPCEventDelegate(3333).Notify("test", new Dictionary<string, string>() { {"test","test"}});
         }
         private Dictionary<string, Platform> LoadPlatforms(string platformDirectory)
         {

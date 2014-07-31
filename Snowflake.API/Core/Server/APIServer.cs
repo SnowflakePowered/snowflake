@@ -19,6 +19,7 @@ namespace Snowflake.Core.Server
         {
             serverListener = new HttpListener();
             serverListener.Prefixes.Add("http://localhost:9000/");
+            
         }
         public void StartServer()
         {
@@ -38,6 +39,9 @@ namespace Snowflake.Core.Server
         }
         private async Task Process(HttpListenerContext context)
         {
+            context.Response.AppendHeader("Access-Control-Allow-Credentials", "true");
+            context.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            context.Response.AppendHeader("Access-Control-Origin", "*");
             string getRequest = context.Request.Url.AbsolutePath.Remove(0,1); //Remove first slash
             string getUri = context.Request.Url.AbsoluteUri;
             int index = getUri.IndexOf("?");
@@ -52,6 +56,8 @@ namespace Snowflake.Core.Server
             
             writer.WriteLine(await ProcessRequest(request));
             writer.Flush();
+   
+          
             context.Response.OutputStream.Close();
         }
 
