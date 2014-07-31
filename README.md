@@ -1,5 +1,7 @@
 Snowflake
 =========
+[![Build status](https://ci.appveyor.com/api/projects/status/mhei9fdtja5j04kk)](https://ci.appveyor.com/project/ron975/snowflake)
+
 
 Currently waiting on CEFSharp3 Javascript objects because IPC is a b*tch to work with.
 
