@@ -9,6 +9,7 @@ using System.Threading;
 using Newtonsoft.Json;
 using System.Web;
 using Snowflake.Core.API.JSAPI;
+using Snowflake.Extensions;
 namespace Snowflake.Core.Server
 {
     public class APIServer:BaseHttpServer
@@ -20,7 +21,7 @@ namespace Snowflake.Core.Server
 
         protected override async Task Process(HttpListenerContext context)
         {
-            APIServer.AddAccessControlHeaders(ref context);
+            context.AddAccessControlHeaders();
             string getRequest = context.Request.Url.AbsolutePath.Remove(0,1); //Remove first slash
             string getUri = context.Request.Url.AbsoluteUri;
             int index = getUri.IndexOf("?");

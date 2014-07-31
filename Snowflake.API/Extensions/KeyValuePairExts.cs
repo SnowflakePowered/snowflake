@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 // from https://github.com/Athari/Alba.Framework
-namespace Snowflake.Collections
+namespace Snowflake.Extensions
 {
     public static class KeyValuePairExts
     {

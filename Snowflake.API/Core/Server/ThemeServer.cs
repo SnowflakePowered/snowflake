@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Mono.Net;
 using System.IO;
 using System.Threading;
+using Snowflake.Extensions;
 namespace Snowflake.Core.Server
 {
     public class ThemeServer : BaseHttpServer
@@ -19,7 +20,7 @@ namespace Snowflake.Core.Server
         
         protected override async Task Process(HttpListenerContext context)
         {
-            ThemeServer.AddAccessControlHeaders(ref context);
+            context.AddAccessControlHeaders();
             string filename = context.Request.Url.AbsolutePath;
             filename = filename.Substring(1);
             if (string.IsNullOrEmpty(filename))

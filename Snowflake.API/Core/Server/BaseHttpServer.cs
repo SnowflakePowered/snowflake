@@ -44,12 +44,5 @@ namespace Snowflake.Core.Server
         }
 
         protected abstract Task Process(HttpListenerContext context);
-
-        public static void AddAccessControlHeaders(ref HttpListenerContext context)
-        {
-            context.Response.AppendHeader("Access-Control-Allow-Credentials", "true");
-            context.Response.AppendHeader("Access-Control-Allow-Origin", "*");
-            context.Response.AppendHeader("Access-Control-Origin", "*");
-        }
     }
 }
