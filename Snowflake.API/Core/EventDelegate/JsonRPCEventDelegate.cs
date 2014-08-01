@@ -19,15 +19,15 @@ namespace Snowflake.Core.EventDelegate
             this.RPCUrl = "http://localhost:" + port.ToString() + @"/";
         }
 
-        public void Notify(string eventName, dynamic eventData)
+        public WebResponse InvokeMethod(string method, string methodParams, string id)
         {
-            WebRequest request = WebRequest.Create (this.RPCUrl);
+            WebRequest request = WebRequest.Create(this.RPCUrl);
             request.ContentType = "application/json-rpc";
             request.Method = "POST";
             var values = new Dictionary<string, dynamic>(){
-                    {"method", "notify"},
-                    {"params", JsonConvert.SerializeObject(eventData)},
-                    {"id", "null"}
+                    {"method", method},
+                    {"params", methodParams},
+                    {"id", id}
             };
             var data = JsonConvert.SerializeObject(values);
             byte[] byteArray = Encoding.UTF8.GetBytes(data);
@@ -36,7 +36,23 @@ namespace Snowflake.Core.EventDelegate
             dataStream.Write(byteArray, 0, byteArray.Length);
             dataStream.Flush();
             dataStream.Close();
-            WebResponse response = request.GetResponse();
-            }
+            return request.GetResponse();
+        }
+
+
+        public void Notify(string eventName, dynamic eventData)
+        {
+            var response = this.InvokeMethod(
+                "notify",
+                JsonConvert.SerializeObject(
+                         new Dictionary<string, dynamic>(){
+                            {"eventData",  eventData},
+                            {"eventName",  eventName}
+                        }),
+                 "null"
+                );
         }
     }
+}
+
+    
