@@ -19,7 +19,7 @@ namespace Snowflake.Core.EventDelegate
             this.RPCUrl = "http://localhost:" + port.ToString() + @"/";
         }
 
-        public WebResponse InvokeMethod(string method, string methodParams, string id)
+        private WebResponse InvokeMethod(string method, string methodParams, string id)
         {
             WebRequest request = WebRequest.Create(this.RPCUrl);
             request.ContentType = "application/json-rpc";
