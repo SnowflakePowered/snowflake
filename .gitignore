@@ -7,7 +7,7 @@ emulator_*/
 bower_components/
 bower_*/
 bower_*/*
-
+!dummysmb.nes
 
 # User-specific files
 *.suo
