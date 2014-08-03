@@ -39,7 +39,6 @@ namespace Snowflake.Core
         {
                 var core = new FrontendCore();
                 FrontendCore.LoadedCore = core;
-                FrontendCore.InitPluginManagerAsync();
                 FrontendCore.LoadedCore.ThemeServer.StartServer();
                 FrontendCore.LoadedCore.APIServer.StartServer();
 
@@ -51,12 +50,16 @@ namespace Snowflake.Core
                     FrontendCore.InitCore();
              });
         }
-        private async static Task InitPluginManagerAsync()
+        public async static Task InitPluginManagerAsync()
         {
-            await Task.Run(() => FrontendCore.LoadedCore.PluginManager.LoadAllPlugins());
-            FrontendCore.LoadedCore.OnPluginManagerLoaded(new PluginManagerLoadedEventArgs());
+            await Task.Run(() => InitPluginManager());
         }
 
+        public static void InitPluginManager()
+        {
+            FrontendCore.LoadedCore.PluginManager.LoadAllPlugins();
+            FrontendCore.LoadedCore.OnPluginManagerLoaded(new PluginManagerLoadedEventArgs());
+        }
 
         public FrontendCore() : this(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Snowflake")) { }
         public FrontendCore(string appDataDirectory)
