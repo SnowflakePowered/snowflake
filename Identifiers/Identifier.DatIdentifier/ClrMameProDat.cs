@@ -27,7 +27,6 @@ namespace Identifier.DatIdentifier
         {
             string crc32 = GetCrc32(file);
             file.Close();
-            Console.WriteLine(Path.Combine(this.PluginDataPath, "dats", this.PluginConfiguration.Configuration["dats"][platformId][0]));
             List<object> datFiles = this.PluginConfiguration.Configuration["dats"][platformId];
             string gameName = String.Empty;
             

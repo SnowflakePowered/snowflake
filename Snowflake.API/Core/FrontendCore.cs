@@ -14,6 +14,7 @@ using Newtonsoft.Json;
 using Snowflake.Events.CoreEvents;
 using System.Threading;
 using Snowflake.Core.EventDelegate;
+using Snowflake.Information;
 namespace Snowflake.Core
 {
     public partial class FrontendCore : IFrontendCore
@@ -104,5 +105,6 @@ namespace Snowflake.Core
             if (CoreLoaded != null)
                 CoreLoaded(this, e);
         }
+
     }
 }
