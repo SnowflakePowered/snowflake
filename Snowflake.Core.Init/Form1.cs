@@ -38,7 +38,7 @@ namespace Snowflake.Core.Init
             await FrontendCore.InitPluginManagerAsync();
             var platform = FrontendCore.LoadedCore.LoadedPlatforms["NINTENDO_NES"];
             var game = platform.GetScrapeEngine().GetGameInfo("dummysmb.nes");
-            Console.WriteLine(JsonConvert.SerializeObject(game));
+            this.textBox1.Text = JsonConvert.SerializeObject(game);
         }
     }
 }
