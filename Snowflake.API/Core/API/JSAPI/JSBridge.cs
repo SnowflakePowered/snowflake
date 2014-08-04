@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Core.API;
 using Newtonsoft.Json;
+using Snowflake.Extensions;
+using Snowflake.Information.Game;
 namespace Snowflake.Core.API.JSAPI
 {
     public static class JSBridge
@@ -18,7 +20,13 @@ namespace Snowflake.Core.API.JSAPI
         {
             return JSBridge.ProcessJSONP(CoreAPI.GetGamesByPlatform(request.MethodParameters["platformid"]), request);
         }
-        
+
+        public static string GetTestGame(JSRequest request)
+        {
+            var platform = FrontendCore.LoadedCore.LoadedPlatforms["NINTENDO_NES"];
+            var game = platform.GetScrapeEngine().GetGameInfo("dummysmb.nes");
+            return JSBridge.ProcessJSONP(new Game[] {game}, request);
+        }
         public static string Work(JSRequest request)
         {
             System.Threading.Thread.Sleep(100000);
