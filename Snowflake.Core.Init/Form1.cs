@@ -27,10 +27,6 @@ namespace Snowflake.Core.Init
             InitializeComponent();
             FrontendCore.InitCore();
             Init();
-          
-
-         
-          
         }
 
         async Task Init()
@@ -39,7 +35,12 @@ namespace Snowflake.Core.Init
             var platform = FrontendCore.LoadedCore.LoadedPlatforms["NINTENDO_NES"];
 
             var game = await Task.Run<Game>(() => platform.GetScrapeEngine().GetGameInfo("dummysmb.nes"));
-            this.textBox1.Text = JsonConvert.SerializeObject(game);
+            Console.WriteLine(game.UUID);
+            FrontendCore.LoadedCore.GameDatabase.AddGame(game);
+            Console.WriteLine("addgame");
+            var dbgame = FrontendCore.LoadedCore.GameDatabase.GetGameByUUID(game.UUID);
+            Console.WriteLine("getgm");
+            this.textBox1.Text = JsonConvert.SerializeObject(dbgame);
         }
     }
 }
