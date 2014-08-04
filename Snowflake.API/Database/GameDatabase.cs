@@ -46,23 +46,23 @@ namespace Snowflake.Database
 
         public void AddGame(Game game){
             this.DBConnection.Open();
-            using (SQLiteCommand sqlCommand = new SQLiteCommand(String.Format(@"INSERT INTO games VALUES(
-                                          ""{0}"",
-                                          ""{1}"",
-                                          ""{2}"",
-                                          ""{3}"",
-                                          ""{4}"",
-                                          ""{5}"",
-                                          ""{6}""",
-                                          game.PlatformId,
-                                          game.UUID,
-                                          game.FileName,
-                                          game.Name,
-                                          JsonConvert.SerializeObject(game.Images),
-                                          JsonConvert.SerializeObject(game.Metadata),
-                                          JsonConvert.SerializeObject(game.Settings)),
-                                          this.DBConnection))
+            using (SQLiteCommand sqlCommand = new SQLiteCommand(@"INSERT INTO games VALUES(
+                                          @platform_id,
+                                          @uuid,
+                                          @filename,
+                                          @name,
+                                          @images,
+                                          @metadata,
+                                          @settings)", this.DBConnection))
             {
+                Console.WriteLine(sqlCommand.CommandText);
+                sqlCommand.Parameters.AddWithValue("@platform_id", game.PlatformId);
+                sqlCommand.Parameters.AddWithValue("@uuid", game.UUID);
+                sqlCommand.Parameters.AddWithValue("@filename", game.FileName);
+                sqlCommand.Parameters.AddWithValue("@name",  game.Name);
+                sqlCommand.Parameters.AddWithValue("@images", JsonConvert.SerializeObject(game.Images));
+                sqlCommand.Parameters.AddWithValue("@metadata",  JsonConvert.SerializeObject(game.Metadata));
+                sqlCommand.Parameters.AddWithValue("@settings", JsonConvert.SerializeObject(game.Settings));
                 sqlCommand.ExecuteNonQuery();
             }
             this.DBConnection.Close();
@@ -70,29 +70,20 @@ namespace Snowflake.Database
 
         public Game GetGameByUUID(string uuid)
         {
-            this.DBConnection.Open();
-            string query = @"SELECT * FROM `games` WHERE `uuid` == """ + uuid + @"""";
-            using (SQLiteCommand sqlCommand = new SQLiteCommand(query,this.DBConnection)){
-                using (var reader = sqlCommand.ExecuteReader(CommandBehavior.SingleResult))
-                {
-                    DataTable result = new DataTable();
-                    result.Load(reader);
-                    return GetGameFromDataRow(result.Rows[0]);
-                }
-            }
+            return GetGamesByColumn("uuid", uuid)[0];
         }
 
         public IList<Game> GetGamesByPlatform(string platformId)
         {
-            return GetGamesByRow("platform_id", platformId);
+            return GetGamesByColumn("platform_id", platformId);
         }
         public IList<Game> GetGamesByName(string nameSearch)
         {
-            return GetGamesByRow("name", nameSearch);
+            return GetGamesByColumn("name", nameSearch);
         }
-        private IList<Game>GetGamesByRow(string rowName, string searchQuery){
+        private IList<Game>GetGamesByColumn(string colName, string searchQuery){
             this.DBConnection.Open();
-            string query = @"SELECT * FROM `games` WHERE `" + rowName + @"` == """ + searchQuery + @"""";
+            string query = @"SELECT * FROM `games` WHERE `" + colName + @"` == """ + searchQuery + @"""";
             using (SQLiteCommand sqlCommand = new SQLiteCommand(query, this.DBConnection))
             {
                 using (var reader = sqlCommand.ExecuteReader())
