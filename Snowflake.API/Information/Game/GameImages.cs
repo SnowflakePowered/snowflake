@@ -17,15 +17,18 @@ namespace Snowflake.Information.Game
         public IDictionary<string, string[]> Boxarts { get; set; }
         public string CachePath { get; private set; }
         public string ImagesID { get; private set; }
-        public GameImages(string cachePath = "imagecache")
+        public GameImages(string cachePath)
         {
-            this.CachePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Snowflake", "data", cachePath);
+            this.CachePath = cachePath;
             this.ImagesID = ShortGuid.NewShortGuid();
             this.Fanarts = new List<string[]>();
             this.Screenshots = new List<string[]>();
             this.Boxarts = new Dictionary<string, string[]>();
         }
-
+        public GameImages():this(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Snowflake", "data", "imagescache"))
+        {
+            
+        }
         public void AddFromUrl(GameImageType imageType, Uri imageUrl)
         {
             string imageFileName="";
@@ -54,22 +57,32 @@ namespace Snowflake.Information.Game
             }
             switch (imageType)
             {
+               
                 case GameImageType.Fanart:
-                    this.Fanarts.Add(new string[] { downloadPath, imageUrl.AbsoluteUri });
+                    this.Fanarts.Add(new string[] { imageFileName, imageUrl.AbsoluteUri });
                     break;
                 case GameImageType.Screenshot:
-                    this.Screenshots.Add(new string[] { downloadPath, imageUrl.AbsoluteUri });
+                    this.Screenshots.Add(new string[] { imageFileName, imageUrl.AbsoluteUri });
                     break;
                 case GameImageType.Boxart_back:
-                    this.Boxarts.Add(ImagesInfoFields.snowflake_img_boxart_back, new string[] { downloadPath, imageUrl.AbsoluteUri });
+                    this.Boxarts.Add(ImagesInfoFields.snowflake_img_boxart_back, new string[] { imageFileName, imageUrl.AbsoluteUri });
                     break;
                 case GameImageType.Boxart_front:
-                    this.Boxarts.Add(ImagesInfoFields.snowflake_img_boxart_front, new string[] { downloadPath, imageUrl.AbsoluteUri });
+                    this.Boxarts.Add(ImagesInfoFields.snowflake_img_boxart_front, new string[] { imageFileName, imageUrl.AbsoluteUri });
                     break;
                 case GameImageType.Boxart_full:
-                    this.Boxarts.Add(ImagesInfoFields.snowflake_img_boxart_full, new string[] { downloadPath, imageUrl.AbsoluteUri });
+                    this.Boxarts.Add(ImagesInfoFields.snowflake_img_boxart_full, new string[] { imageFileName, imageUrl.AbsoluteUri });
                     break;
             }
+        }
+
+        public static string GetFullImagePath(string imageFileName, string imagesId)
+        {
+            return GameImages.GetFullImagePath(imageFileName, imageFileName, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Snowflake", "data", "imagescache"));
+        }
+        public static string GetFullImagePath(string imageFileName, string imagesId, string cachePath)
+        {
+            return Path.Combine(cachePath, imagesId, imageFileName);
         }
     }
 
