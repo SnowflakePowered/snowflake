@@ -1,0 +1,296 @@
+clrmamepro (
+	name "Nintendo Game Boy Color - Games"
+	description "Nintendo Game Boy Color - Games (TOSEC-v2012-02-27)"
+	category "Nintendo Game Boy Color - Games"
+	version 2012-02-27
+	author "Cassiel"
+)
+
+game (
+	name "Alfred's Adventure (2000)(Mobius - SCi)(EU)(M5)"
+	description "Alfred's Adventure (2000)(Mobius - SCi)(EU)(M5)"
+	rom ( name "Alfred's Adventure (2000)(Mobius - SCi)(EU)(M5).bin" size 1048576 crc 6f9ef15e md5 bcc135b000c1c54f12f4ae87c7673b0c sha1 81c1acf0e87755a8c16f0beeb3524b3ec04455ea )
+)
+
+game (
+	name "Alfred's Adventure (2000)(Mobius - SCi)(EU)(M5)[b]"
+	description "Alfred's Adventure (2000)(Mobius - SCi)(EU)(M5)[b]"
+	rom ( name "Alfred's Adventure (2000)(Mobius - SCi)(EU)(M5)[b].bin" size 1048576 crc 9536fb32 md5 9040083575d365962cb7949cdbba4b83 sha1 d54d5f4d07c29a6c5ade4e574297fc740d3528ed )
+)
+
+game (
+	name "Alfred's Adventure (2000)(Mobius - SCi)(EU)(M5)[h]"
+	description "Alfred's Adventure (2000)(Mobius - SCi)(EU)(M5)[h]"
+	rom ( name "Alfred's Adventure (2000)(Mobius - SCi)(EU)(M5)[h].bin" size 1048576 crc 725cc3ee md5 baea23e1e11852c4fe345b35775712cc sha1 6c40518245d29e4154c5d35606aa3f215de0795b )
+)
+
+game (
+	name "Alfred's Adventure (2000)(Mobius - SCi)(EU)(M5)[t]"
+	description "Alfred's Adventure (2000)(Mobius - SCi)(EU)(M5)[t]"
+	rom ( name "Alfred's Adventure (2000)(Mobius - SCi)(EU)(M5)[t].bin" size 1048576 crc c4930980 md5 e25e470530e1f6300086be7abb05ebb2 sha1 2aa045dfeb707de8cf9224e0edc0de84f3bf023f )
+)
+
+game (
+	name "Animal Breeder 3 (1999)(J-Wing)(JP)[Nintendo Game Boy Compatible][Nintendo Super Game Boy Enhanced]"
+	description "Animal Breeder 3 (1999)(J-Wing)(JP)[Nintendo Game Boy Compatible][Nintendo Super Game Boy Enhanced]"
+	rom ( name "Animal Breeder 3 (1999)(J-Wing)(JP)[Nintendo Game Boy Compatible][Nintendo Super Game Boy Enhanced].bin" size 4194304 crc c62a4c30 md5 3f0f1cc327ff1be267b226b85b7a11c6 sha1 f5e6e770a681bb6eba255e2584f9ed343e5d9f98 )
+)
+
+game (
+	name "Animal Breeder 4 (2001)(J-Wing)(JP)"
+	description "Animal Breeder 4 (2001)(J-Wing)(JP)"
+	rom ( name "Animal Breeder 4 (2001)(J-Wing)(JP).bin" size 4194304 crc 83d838c3 md5 22d11b8d9670fb9b4ca84368f0f50cee sha1 2f7854cfc227ecc395551ea4c0b62256f0757514 )
+)
+
+game (
+	name "Driver (2000)(Crawfish Interactive - Infogrames - Reflections)(US)"
+	description "Driver (2000)(Crawfish Interactive - Infogrames - Reflections)(US)"
+	rom ( name "Driver (2000)(Crawfish Interactive - Infogrames - Reflections)(US).bin" size 1048576 crc d4c7f6df md5 413e1acd7847d628364163eb2c97cecd sha1 9add1e67f39f900f2c004e4d8bbd1fec368eef4c )
+)
+
+game (
+	name "Driver (2000)(Crawfish Interactive - Infogrames - Reflections)(US)[t]"
+	description "Driver (2000)(Crawfish Interactive - Infogrames - Reflections)(US)[t]"
+	rom ( name "Driver (2000)(Crawfish Interactive - Infogrames - Reflections)(US)[t].bin" size 1048576 crc 6c5f3220 md5 fc6e7bf86188061685a97b19ac238932 sha1 acb42fce54eb19e0ddd49e0547d1d14cd491d034 )
+)
+
+game (
+	name "Driver (2000)(Crawfish Interactive - Infogrames - Reflections)(US)[tr pl]"
+	description "Driver (2000)(Crawfish Interactive - Infogrames - Reflections)(US)[tr pl]"
+	rom ( name "Driver (2000)(Crawfish Interactive - Infogrames - Reflections)(US)[tr pl].bin" size 1048576 crc a72b9677 md5 e816a9c53d17fb3b85ab558a262c914b sha1 ad8d9e1b1cc6323f407f37b2468b063f3ea1ae25 )
+)
+
+game (
+	name "Driver (2000)(Crawfish Interactive - Infogrames - Reflections)(US)[tr pl][a]"
+	description "Driver (2000)(Crawfish Interactive - Infogrames - Reflections)(US)[tr pl][a]"
+	rom ( name "Driver (2000)(Crawfish Interactive - Infogrames - Reflections)(US)[tr pl][a].bin" size 1048576 crc 86d3c2ad md5 516b8a7f798ef689e1c407128fe9bb11 sha1 56d725d506b5f1646abb4c203e95ce9356da68c8 )
+)
+
+game (
+	name "Driver (2000)(Crawfish Interactive - Infogrames - Reflections)(US)[tr ru]"
+	description "Driver (2000)(Crawfish Interactive - Infogrames - Reflections)(US)[tr ru]"
+	rom ( name "Driver (2000)(Crawfish Interactive - Infogrames - Reflections)(US)[tr ru].bin" size 1048576 crc 57aaa5f8 md5 25c36667ec617880601d8166331deb53 sha1 f21b801c23137eaf3f6a81039bfec3880a190936 )
+)
+
+game (
+	name "Evel Knievel (1999)(Rockstar - Tarantula Studios)(EU)(M7)[b2][Nintendo Game Boy Compatible]"
+	description "Evel Knievel (1999)(Rockstar - Tarantula Studios)(EU)(M7)[b2][Nintendo Game Boy Compatible]"
+	rom ( name "Evel Knievel (1999)(Rockstar - Tarantula Studios)(EU)(M7)[b2][Nintendo Game Boy Compatible].bin" size 2097152 crc 0d55e1a8 md5 ffb6a9ca367e48c4f404577b2aef2e31 sha1 e1a370414fdcce142a1c3e9237b8eaca59f91dba )
+)
+
+game (
+	name "Evel Knievel (1999)(Rockstar - Tarantula Studios)(EU)(M7)[b][Nintendo Game Boy Compatible]"
+	description "Evel Knievel (1999)(Rockstar - Tarantula Studios)(EU)(M7)[b][Nintendo Game Boy Compatible]"
+	rom ( name "Evel Knievel (1999)(Rockstar - Tarantula Studios)(EU)(M7)[b][Nintendo Game Boy Compatible].bin" size 720896 crc 57870194 md5 bfc1030667d187772e630bd85c3e55d4 sha1 eb4005f34e102ce0e4318c30ba00d94181436cf7 )
+)
+
+game (
+	name "Evel Knievel (1999)(Rockstar - Tarantula Studios)(EU)(M7)[h][Nintendo Game Boy Compatible]"
+	description "Evel Knievel (1999)(Rockstar - Tarantula Studios)(EU)(M7)[h][Nintendo Game Boy Compatible]"
+	rom ( name "Evel Knievel (1999)(Rockstar - Tarantula Studios)(EU)(M7)[h][Nintendo Game Boy Compatible].bin" size 2097152 crc cb12299c md5 1b39b2fee0aeb5752a7c46586a66a0c6 sha1 b093dc428143bbe3601022647a557a1b4906eeb9 )
+)
+
+game (
+	name "Evel Knievel (1999)(Rockstar - Tarantula Studios)(EU)(M7)[Nintendo Game Boy Compatible]"
+	description "Evel Knievel (1999)(Rockstar - Tarantula Studios)(EU)(M7)[Nintendo Game Boy Compatible]"
+	rom ( name "Evel Knievel (1999)(Rockstar - Tarantula Studios)(EU)(M7)[Nintendo Game Boy Compatible].bin" size 2097152 crc dfd6a908 md5 5e1b4969a76e069acf2622f7bb05d8d3 sha1 0841f55e18fe6e4a50df826703db22681169f2e7 )
+)
+
+game (
+	name "Evel Knievel (1999)(Rockstar - Tarantula Studios)(EU)(M7)[t][Nintendo Game Boy Compatible]"
+	description "Evel Knievel (1999)(Rockstar - Tarantula Studios)(EU)(M7)[t][Nintendo Game Boy Compatible]"
+	rom ( name "Evel Knievel (1999)(Rockstar - Tarantula Studios)(EU)(M7)[t][Nintendo Game Boy Compatible].bin" size 2097152 crc 75359626 md5 3325a20b9ed4c70cede0a69f4eebe765 sha1 b5a4c2e4de3e9e94cfa3a350b529eaa276da8c11 )
+)
+
+game (
+	name "Evel Knievel (1999)(Rockstar - Tarantula Studios)(US)[Nintendo Game Boy Compatible]"
+	description "Evel Knievel (1999)(Rockstar - Tarantula Studios)(US)[Nintendo Game Boy Compatible]"
+	rom ( name "Evel Knievel (1999)(Rockstar - Tarantula Studios)(US)[Nintendo Game Boy Compatible].bin" size 2097152 crc 51e951b5 md5 f9c554dfce8383f16e554b61083f0922 sha1 24cac6ab0151b33d2b1fd06ee01931802fb98267 )
+)
+
+game (
+	name "Keitai Denjuu Telefang - Power Version (2000)(Natsume - Smilesoft)(JP)[b][Nintendo Game Boy Compatible]"
+	description "Keitai Denjuu Telefang - Power Version (2000)(Natsume - Smilesoft)(JP)[b][Nintendo Game Boy Compatible]"
+	rom ( name "Keitai Denjuu Telefang - Power Version (2000)(Natsume - Smilesoft)(JP)[b][Nintendo Game Boy Compatible].bin" size 2097152 crc 8f16393f md5 8b0a1b6667040a52f6957c0eeea1dbd7 sha1 57ed95e2164b1edc3c2c4c38a67e033501094573 )
+)
+
+game (
+	name "Keitai Denjuu Telefang - Power Version (2000)(Natsume - Smilesoft)(JP)[h][Nintendo Game Boy Compatible]"
+	description "Keitai Denjuu Telefang - Power Version (2000)(Natsume - Smilesoft)(JP)[h][Nintendo Game Boy Compatible]"
+	rom ( name "Keitai Denjuu Telefang - Power Version (2000)(Natsume - Smilesoft)(JP)[h][Nintendo Game Boy Compatible].bin" size 2097152 crc 41e3723c md5 a9401fbd85e48cf0105ea3aabaf012a2 sha1 47391ca3d68c41a627e1bb5cf987425ce391abf0 )
+)
+
+game (
+	name "Keitai Denjuu Telefang - Power Version (2000)(Natsume - Smilesoft)(JP)[Nintendo Game Boy Compatible]"
+	description "Keitai Denjuu Telefang - Power Version (2000)(Natsume - Smilesoft)(JP)[Nintendo Game Boy Compatible]"
+	rom ( name "Keitai Denjuu Telefang - Power Version (2000)(Natsume - Smilesoft)(JP)[Nintendo Game Boy Compatible].bin" size 2097152 crc 8b61cfcc md5 04f7ea139fef2bc2e3f70b2c23933d2e sha1 baaf7fb9f9958ca22982ba0600bc0cb8a7fc4764 )
+)
+
+game (
+	name "Keitai Denjuu Telefang - Power Version (2000)(Natsume - Smilesoft)(JP)[tr zh][Nintendo Game Boy Compatible]"
+	description "Keitai Denjuu Telefang - Power Version (2000)(Natsume - Smilesoft)(JP)[tr zh][Nintendo Game Boy Compatible]"
+	rom ( name "Keitai Denjuu Telefang - Power Version (2000)(Natsume - Smilesoft)(JP)[tr zh][Nintendo Game Boy Compatible].bin" size 2097152 crc 1d505ada md5 9d3bcec616f238ed41146a2ce94ab562 sha1 f59b8e282a5bad67f023d5ee00fbd859b64c0270 )
+)
+
+game (
+	name "Keitai Denjuu Telefang - Speed Version (2000)(Natsume - Smilesoft)(JP)[Nintendo Game Boy Compatible]"
+	description "Keitai Denjuu Telefang - Speed Version (2000)(Natsume - Smilesoft)(JP)[Nintendo Game Boy Compatible]"
+	rom ( name "Keitai Denjuu Telefang - Speed Version (2000)(Natsume - Smilesoft)(JP)[Nintendo Game Boy Compatible].bin" size 2097152 crc fb528f66 md5 ebfe05828463cc004898e6a95ee57fea sha1 1c273f9078c580e85e5c49e7114058f3e0fe5cca )
+)
+
+game (
+	name "Metal Gear Solid (2000)(Konami)(EU)(M5)"
+	description "Metal Gear Solid (2000)(Konami)(EU)(M5)"
+	rom ( name "Metal Gear Solid (2000)(Konami)(EU)(M5).bin" size 4194304 crc 16796957 md5 7971c95ad9745fe20df52e03cd52f636 sha1 488bff9c4cee9e692a05b3938fd7b2014e743eac )
+)
+
+game (
+	name "Metal Gear Solid (2000)(Konami)(EU)(M5)[b2]"
+	description "Metal Gear Solid (2000)(Konami)(EU)(M5)[b2]"
+	rom ( name "Metal Gear Solid (2000)(Konami)(EU)(M5)[b2].bin" size 2359296 crc 7b0735ef md5 30f7063348f7fd6549d8393347b4c981 sha1 1749921a6a6acac556557874f5b09cade51282cf )
+)
+
+game (
+	name "Metal Gear Solid (2000)(Konami)(EU)(M5)[b3]"
+	description "Metal Gear Solid (2000)(Konami)(EU)(M5)[b3]"
+	rom ( name "Metal Gear Solid (2000)(Konami)(EU)(M5)[b3].bin" size 4194304 crc ca5bd34b md5 e52038d316f7a71b02ef152dc64dca17 sha1 884624d9f9481e7b2918da5f2f0be4fcba83a9b8 )
+)
+
+game (
+	name "Metal Gear Solid (2000)(Konami)(EU)(M5)[b]"
+	description "Metal Gear Solid (2000)(Konami)(EU)(M5)[b]"
+	rom ( name "Metal Gear Solid (2000)(Konami)(EU)(M5)[b].bin" size 4194304 crc 6570e700 md5 a906a7982e027a5fcafce76d5079c7df sha1 9d8b52139d4190074e404d94328b70a0d12020bf )
+)
+
+game (
+	name "Metal Gear Solid (2000)(Konami)(US)"
+	description "Metal Gear Solid (2000)(Konami)(US)"
+	rom ( name "Metal Gear Solid (2000)(Konami)(US).bin" size 2097152 crc 04b0c5d6 md5 f6dd1b1e5747412b9e5f25376c972d5a sha1 2266499cfa10351b23fefd2216308867d1f1558b )
+)
+
+game (
+	name "Metal Gear Solid (2000)(Konami)(US)[tr zh]"
+	description "Metal Gear Solid (2000)(Konami)(US)[tr zh]"
+	rom ( name "Metal Gear Solid (2000)(Konami)(US)[tr zh].bin" size 2097152 crc 98861fdc md5 195ad6c0ee8de1bcf1cc20ec61758bf0 sha1 51e29fc325cbe1c0c5e90d28dbe1de0b22d213ad )
+)
+
+game (
+	name "Turok 2 - Seeds of Evil (1998)(Acclaim - Bit Managers - Iguana Entertainment)(US)(M4)[b2][Nintendo Game Boy Compatible]"
+	description "Turok 2 - Seeds of Evil (1998)(Acclaim - Bit Managers - Iguana Entertainment)(US)(M4)[b2][Nintendo Game Boy Compatible]"
+	rom ( name "Turok 2 - Seeds of Evil (1998)(Acclaim - Bit Managers - Iguana Entertainment)(US)(M4)[b2][Nintendo Game Boy Compatible].bin" size 1048576 crc 2ab63d00 md5 4f5c24188ca623e4e747fd0eba4ba967 sha1 6dc383eb81f462fdb39c89a133191205f25b8dcf )
+)
+
+game (
+	name "Turok 2 - Seeds of Evil (1998)(Acclaim - Bit Managers - Iguana Entertainment)(US)(M4)[b3][Nintendo Game Boy Compatible]"
+	description "Turok 2 - Seeds of Evil (1998)(Acclaim - Bit Managers - Iguana Entertainment)(US)(M4)[b3][Nintendo Game Boy Compatible]"
+	rom ( name "Turok 2 - Seeds of Evil (1998)(Acclaim - Bit Managers - Iguana Entertainment)(US)(M4)[b3][Nintendo Game Boy Compatible].bin" size 524288 crc 47185e22 md5 ccfd215430f1712eca915fc242d33931 sha1 8376215d6d4b7e1cf265830ef2a13cebd2325d07 )
+)
+
+game (
+	name "Turok 2 - Seeds of Evil (1998)(Acclaim - Bit Managers - Iguana Entertainment)(US)(M4)[b][Nintendo Game Boy Compatible]"
+	description "Turok 2 - Seeds of Evil (1998)(Acclaim - Bit Managers - Iguana Entertainment)(US)(M4)[b][Nintendo Game Boy Compatible]"
+	rom ( name "Turok 2 - Seeds of Evil (1998)(Acclaim - Bit Managers - Iguana Entertainment)(US)(M4)[b][Nintendo Game Boy Compatible].bin" size 524288 crc 3a7cb5ef md5 fb25ea21404a812eb2e2a9c84188b0a4 sha1 b18fd7ba153dd8d15c238a235fe4790e3ff4b20a )
+)
+
+game (
+	name "Turok 2 - Seeds of Evil (1998)(Acclaim - Bit Managers - Iguana Entertainment)(US)(M4)[Nintendo Game Boy Compatible]"
+	description "Turok 2 - Seeds of Evil (1998)(Acclaim - Bit Managers - Iguana Entertainment)(US)(M4)[Nintendo Game Boy Compatible]"
+	rom ( name "Turok 2 - Seeds of Evil (1998)(Acclaim - Bit Managers - Iguana Entertainment)(US)(M4)[Nintendo Game Boy Compatible].bin" size 1048576 crc 6eda6a3a md5 28d6c613fdf608fe241fb3ce183aaae5 sha1 fb7856af0205cc749174cda9eb51ae137984558c )
+)
+
+game (
+	name "Turok 2 - Seeds of Evil (1998)(Acclaim - Bit Managers - Iguana Entertainment)(US)(M4)[t][Nintendo Game Boy Compatible]"
+	description "Turok 2 - Seeds of Evil (1998)(Acclaim - Bit Managers - Iguana Entertainment)(US)(M4)[t][Nintendo Game Boy Compatible]"
+	rom ( name "Turok 2 - Seeds of Evil (1998)(Acclaim - Bit Managers - Iguana Entertainment)(US)(M4)[t][Nintendo Game Boy Compatible].bin" size 1048576 crc f73e58ad md5 bf40436ad3b3ab2c805cd894deb552c8 sha1 bf0d0c3b2c4082e99d95065a9b5a703f27cb5e25 )
+)
+
+game (
+	name "Turok 2 - Seeds of Evil (1999)(Acclaim - Bit Managers - Iguana Entertainment)(JP)[Nintendo Game Boy Compatible]"
+	description "Turok 2 - Seeds of Evil (1999)(Acclaim - Bit Managers - Iguana Entertainment)(JP)[Nintendo Game Boy Compatible]"
+	rom ( name "Turok 2 - Seeds of Evil (1999)(Acclaim - Bit Managers - Iguana Entertainment)(JP)[Nintendo Game Boy Compatible].bin" size 1048576 crc f095b446 md5 9253aae0d9257d82f52d879813cf3c19 sha1 08a112f0c3fdc4cd4c14cfb98683d25d5d8475de )
+)
+
+game (
+	name "Worms Armageddon (1999)(Infogrames - Team17)(EU)(M6)"
+	description "Worms Armageddon (1999)(Infogrames - Team17)(EU)(M6)"
+	rom ( name "Worms Armageddon (1999)(Infogrames - Team17)(EU)(M6).bin" size 1048576 crc cb04f34d md5 b6b81d98a27596443792f47812f15b67 sha1 0bff9f46f2c455e98a5f0d9c0d560eda88d939de )
+)
+
+game (
+	name "Worms Armageddon (1999)(Infogrames - Team17)(EU)(M6)[h]"
+	description "Worms Armageddon (1999)(Infogrames - Team17)(EU)(M6)[h]"
+	rom ( name "Worms Armageddon (1999)(Infogrames - Team17)(EU)(M6)[h].bin" size 1048576 crc 8d858f52 md5 e2927d691cec879c95319429ca1a700f sha1 84d49bd6ff2530d39584d5738740e92689153db1 )
+)
+
+game (
+	name "Worms Armageddon (1999)(Infogrames - Team17)(EU)(M6)[t]"
+	description "Worms Armageddon (1999)(Infogrames - Team17)(EU)(M6)[t]"
+	rom ( name "Worms Armageddon (1999)(Infogrames - Team17)(EU)(M6)[t].bin" size 1048576 crc bf7e169d md5 c02ba9eeec5151d552735fed5ef2635b sha1 ef040f9b9bfe9500a1f46ea0c46bea91f157342b )
+)
+
+game (
+	name "Worms Armageddon (1999)(Infogrames - Team17)(EU)(M6)[tr pl]"
+	description "Worms Armageddon (1999)(Infogrames - Team17)(EU)(M6)[tr pl]"
+	rom ( name "Worms Armageddon (1999)(Infogrames - Team17)(EU)(M6)[tr pl].bin" size 1048576 crc 37ad1808 md5 2e52ce1a8cd567920e57f2d71cdddf2d sha1 ce9531aab31d6579fb3d2cdf5168465f1a0ab291 )
+)
+
+game (
+	name "Worms Armageddon (1999)(Infogrames - Team17)(US)(M3)"
+	description "Worms Armageddon (1999)(Infogrames - Team17)(US)(M3)"
+	rom ( name "Worms Armageddon (1999)(Infogrames - Team17)(US)(M3).bin" size 1048576 crc e241edde md5 7e0df312ccd8f3e25bf3074e17d5aedf sha1 ec587a3660298f95bf85f4471a626727b5fe6d7c )
+)
+
+game (
+	name "Worms Armageddon (1999)(Infogrames - Team17)(US)(M3)[b]"
+	description "Worms Armageddon (1999)(Infogrames - Team17)(US)(M3)[b]"
+	rom ( name "Worms Armageddon (1999)(Infogrames - Team17)(US)(M3)[b].bin" size 1048599 crc 7f4560f1 md5 8125f541a329be14e78e6448ba9f8a16 sha1 fdf1b3a5184d690149d53000cd22ee52f7cefa04 )
+)
+
+game (
+	name "Worms Armageddon (1999)(Infogrames - Team17)(US)(M3)[tr pl]"
+	description "Worms Armageddon (1999)(Infogrames - Team17)(US)(M3)[tr pl]"
+	rom ( name "Worms Armageddon (1999)(Infogrames - Team17)(US)(M3)[tr pl].bin" size 1048576 crc 37dcc35e md5 c289fefcbaf7bcc4eb5ca662d3f7b19e sha1 99b7366f56d4627d0fbf22ee11085a993639aec7 )
+)
+
+game (
+	name "Zidane - Football Generation (2001)(Aqua Pacific - Cryo Interactive)(EU)(M5)"
+	description "Zidane - Football Generation (2001)(Aqua Pacific - Cryo Interactive)(EU)(M5)"
+	rom ( name "Zidane - Football Generation (2001)(Aqua Pacific - Cryo Interactive)(EU)(M5).bin" size 1048576 crc e96dbfb5 md5 0044c80fb6c6c7c49466dafe6637d61a sha1 06385470bb0b4ef6c743ab6a5e7f8d7a97f6100b )
+)
+
+game (
+	name "Zoboomafoo - Playtime in Zobooland (2001)(Encore - Vicarious Visions)(US)"
+	description "Zoboomafoo - Playtime in Zobooland (2001)(Encore - Vicarious Visions)(US)"
+	rom ( name "Zoboomafoo - Playtime in Zobooland (2001)(Encore - Vicarious Visions)(US).bin" size 1048576 crc 38d91885 md5 63f1430338d4f8053a34587429fb6b96 sha1 a85a113bc266325f807f110daaf30feeea4b2738 )
+)
+
+game (
+	name "Zoboomafoo - Playtime in Zobooland (2001)(Encore - Vicarious Visions)(US)[t]"
+	description "Zoboomafoo - Playtime in Zobooland (2001)(Encore - Vicarious Visions)(US)[t]"
+	rom ( name "Zoboomafoo - Playtime in Zobooland (2001)(Encore - Vicarious Visions)(US)[t].bin" size 1048576 crc d4b8041a md5 111b7ba6a89793233ca13c8ada2dccc4 sha1 8824a8d921d8bd39de030863fc7591378c5a28ef )
+)
+
+game (
+	name "Zoids - Jashin Fukkatsu! Genobreaker Hen (2000)(Tomy)(JP)[Nintendo Game Boy Compatible][Nintendo Super Game Boy Enhanced]"
+	description "Zoids - Jashin Fukkatsu! Genobreaker Hen (2000)(Tomy)(JP)[Nintendo Game Boy Compatible][Nintendo Super Game Boy Enhanced]"
+	rom ( name "Zoids - Jashin Fukkatsu! Genobreaker Hen (2000)(Tomy)(JP)[Nintendo Game Boy Compatible][Nintendo Super Game Boy Enhanced].bin" size 2097152 crc f36c874d md5 e2f33aaf29750f1142b2b6017b454bd4 sha1 4ddb1d66d909d453374bd195a4a7dbe328ed41be )
+)
+
+game (
+	name "Zoids - Shirogane no Juukishin Liger Zero (2001)(Tomy)(JP)"
+	description "Zoids - Shirogane no Juukishin Liger Zero (2001)(Tomy)(JP)"
+	rom ( name "Zoids - Shirogane no Juukishin Liger Zero (2001)(Tomy)(JP).bin" size 2097152 crc 530705a1 md5 77836df2b2ce5284e4dda233e118b914 sha1 a5623ab4e026aa546b345f2bd5638cfdfed68c04 )
+)
+
+game (
+	name "Zoids - Shirogane no Juukishin Liger Zero (2001)(Tomy)(JP)[tr en]"
+	description "Zoids - Shirogane no Juukishin Liger Zero (2001)(Tomy)(JP)[tr en]"
+	rom ( name "Zoids - Shirogane no Juukishin Liger Zero (2001)(Tomy)(JP)[tr en].bin" size 2097152 crc d43d780a md5 0c65722d788c43eb3f21d87074a1eb58 sha1 98c5e074c1ca0c7cbab73ccd3f69ba883d499184 )
+)
+
+game (
+	name "Zok Zok Heroes (2000)(KAZe - Media Factory)(JP)"
+	description "Zok Zok Heroes (2000)(KAZe - Media Factory)(JP)"
+	rom ( name "Zok Zok Heroes (2000)(KAZe - Media Factory)(JP).bin" size 2097152 crc c09f9e1b md5 e4874674056451f1df22c2cbf7a25f93 sha1 91ab908fddebd926e7db8d61295a40955b2adc39 )
+)
+

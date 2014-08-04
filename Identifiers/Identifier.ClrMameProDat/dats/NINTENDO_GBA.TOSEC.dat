@@ -1,0 +1,776 @@
+clrmamepro (
+	name "Nintendo Game Boy Advance - Games"
+	description "Nintendo Game Boy Advance - Games (TOSEC-v2012-02-27)"
+	category "Nintendo Game Boy Advance - Games"
+	version 2012-02-27
+	author "Cassiel"
+)
+
+game (
+	name "Holy Hell (2011)(Genecyst Games)(PD)"
+	description "Holy Hell (2011)(Genecyst Games)(PD)"
+	rom ( name "Holy Hell (2011)(Genecyst Games)(PD).bin" size 5906924 crc 423feb61 md5 ef3cb9217337e5ee4ee699087271f6a6 sha1 aafba4a0c37d34aa81a386fed2907e7f0e799d29 )
+)
+
+game (
+	name "Legend of Zelda, The - Fushigi no Boushi (2004)(Nintendo)(JP)"
+	description "Legend of Zelda, The - Fushigi no Boushi (2004)(Nintendo)(JP)"
+	rom ( name "Legend of Zelda, The - Fushigi no Boushi (2004)(Nintendo)(JP).bin" size 16777216 crc 6ce771a5 md5 0b061059fd5e7f7b034f96932c86829c sha1 6c5404a1effb17f481f352181d0f1c61a2765c5d )
+)
+
+game (
+	name "Legend of Zelda, The - Fushigi no Boushi (2004)(Nintendo)(JP)[h2]"
+	description "Legend of Zelda, The - Fushigi no Boushi (2004)(Nintendo)(JP)[h2]"
+	rom ( name "Legend of Zelda, The - Fushigi no Boushi (2004)(Nintendo)(JP)[h2].bin" size 16777216 crc 51538cef md5 6a5c9d7f2adea61c4084d6881b1e5caa sha1 38226dc5e368e24a05d863f086d3a1e3d225b5e4 )
+)
+
+game (
+	name "Legend of Zelda, The - Fushigi no Boushi (2004)(Nintendo)(JP)[h]"
+	description "Legend of Zelda, The - Fushigi no Boushi (2004)(Nintendo)(JP)[h]"
+	rom ( name "Legend of Zelda, The - Fushigi no Boushi (2004)(Nintendo)(JP)[h].bin" size 16777216 crc 15a04b5f md5 56355436723d81e1a9e3442149c41321 sha1 c68023191a7e58e992be0b5d7f1b8392db9c7061 )
+)
+
+game (
+	name "Legend of Zelda, The - Fushigi no Boushi (2004)(Nintendo)(JP)[tr zh]"
+	description "Legend of Zelda, The - Fushigi no Boushi (2004)(Nintendo)(JP)[tr zh]"
+	rom ( name "Legend of Zelda, The - Fushigi no Boushi (2004)(Nintendo)(JP)[tr zh].bin" size 16777216 crc 7c32326c md5 b1c9b5d6c1a8373955f704c95a9b1c70 sha1 fa82f87efa718105ba5a2a66b085c0eca8949026 )
+)
+
+game (
+	name "Legend of Zelda, The - Fushigi no Boushi (2004)(Nintendo)(JP)[tr zh][a2]"
+	description "Legend of Zelda, The - Fushigi no Boushi (2004)(Nintendo)(JP)[tr zh][a2]"
+	rom ( name "Legend of Zelda, The - Fushigi no Boushi (2004)(Nintendo)(JP)[tr zh][a2].bin" size 16777216 crc ba222877 md5 b45289006a099968c0632269adcdd8e0 sha1 ba04cfbe93d12d2ad684c52234472fa12a5b53d7 )
+)
+
+game (
+	name "Legend of Zelda, The - Fushigi no Boushi (2004)(Nintendo)(JP)[tr zh][a3]"
+	description "Legend of Zelda, The - Fushigi no Boushi (2004)(Nintendo)(JP)[tr zh][a3]"
+	rom ( name "Legend of Zelda, The - Fushigi no Boushi (2004)(Nintendo)(JP)[tr zh][a3].bin" size 16777216 crc 6cbbe588 md5 2ece5d00241819dbca678c78a52310b9 sha1 14870fc25affa81144e033b2a78ae0dbb1fdb49a )
+)
+
+game (
+	name "Legend of Zelda, The - Fushigi no Boushi (2004)(Nintendo)(JP)[tr zh][a4]"
+	description "Legend of Zelda, The - Fushigi no Boushi (2004)(Nintendo)(JP)[tr zh][a4]"
+	rom ( name "Legend of Zelda, The - Fushigi no Boushi (2004)(Nintendo)(JP)[tr zh][a4].bin" size 16777216 crc ad8a18d6 md5 4712c13b4ce534d763864f66c017dec0 sha1 e3b7728428caff73dfbf79715e17dc52c9e95bcc )
+)
+
+game (
+	name "Legend of Zelda, The - Fushigi no Boushi (2004)(Nintendo)(JP)[tr zh][a5]"
+	description "Legend of Zelda, The - Fushigi no Boushi (2004)(Nintendo)(JP)[tr zh][a5]"
+	rom ( name "Legend of Zelda, The - Fushigi no Boushi (2004)(Nintendo)(JP)[tr zh][a5].bin" size 16777216 crc a6d2b498 md5 b06d9137039b421457e51ab17d3cd1ee sha1 71ee0fe0a666983286c4a5d590dc609b47f8def6 )
+)
+
+game (
+	name "Legend of Zelda, The - Fushigi no Boushi (2004)(Nintendo)(JP)[tr zh][a6]"
+	description "Legend of Zelda, The - Fushigi no Boushi (2004)(Nintendo)(JP)[tr zh][a6]"
+	rom ( name "Legend of Zelda, The - Fushigi no Boushi (2004)(Nintendo)(JP)[tr zh][a6].bin" size 16777216 crc ef2d259f md5 5a29c0c1207e0964a7cb5fe17a004ea7 sha1 5c7daf9154d41aa1faac520123ee60735f27e88e )
+)
+
+game (
+	name "Legend of Zelda, The - Fushigi no Boushi (2004)(Nintendo)(JP)[tr zh][a]"
+	description "Legend of Zelda, The - Fushigi no Boushi (2004)(Nintendo)(JP)[tr zh][a]"
+	rom ( name "Legend of Zelda, The - Fushigi no Boushi (2004)(Nintendo)(JP)[tr zh][a].bin" size 16777216 crc 97448a69 md5 e704a0ecc900e6ee54f8a07fa8450e89 sha1 d3b43b209f3af4abff438a861c4ed0287e585c65 )
+)
+
+game (
+	name "Worms Blast (2002)(Team17 - Ubisoft)(EU)(M5)"
+	description "Worms Blast (2002)(Team17 - Ubisoft)(EU)(M5)"
+	rom ( name "Worms Blast (2002)(Team17 - Ubisoft)(EU)(M5).bin" size 4194304 crc 5223f5aa md5 caf46477c33a49dacf2d08aed205909b sha1 0da4ff24b61ae8b6d67ef59377770fd958517f2f )
+)
+
+game (
+	name "Worms Blast (2002)(Team17 - Ubisoft)(EU)(M5)[b2]"
+	description "Worms Blast (2002)(Team17 - Ubisoft)(EU)(M5)[b2]"
+	rom ( name "Worms Blast (2002)(Team17 - Ubisoft)(EU)(M5)[b2].bin" size 8388608 crc d43ea4da md5 3394e3818bbd36ac2ff93518832b30d7 sha1 41c1d98287ac350a1a673a41fef8e40fdf56c9e2 )
+)
+
+game (
+	name "Worms Blast (2002)(Team17 - Ubisoft)(EU)(M5)[b]"
+	description "Worms Blast (2002)(Team17 - Ubisoft)(EU)(M5)[b]"
+	rom ( name "Worms Blast (2002)(Team17 - Ubisoft)(EU)(M5)[b].bin" size 8388608 crc 3c103be8 md5 322917539f0b67b494e2f01b85440d5c sha1 404edc3d6ef65055b65b7fb4e9622d1fc586edf4 )
+)
+
+game (
+	name "xXx (2002)(Activision)(FR)"
+	description "xXx (2002)(Activision)(FR)"
+	rom ( name "xXx (2002)(Activision)(FR).bin" size 8388608 crc 44a77f71 md5 2395cca1007ecd7d016860703812c2bc sha1 a47da3b30a45035aac333ebc62f36da6a3d88e0a )
+)
+
+game (
+	name "xXx (2002)(Activision)(US)[h2]"
+	description "xXx (2002)(Activision)(US)[h2]"
+	rom ( name "xXx (2002)(Activision)(US)[h2].bin" size 8388608 crc fa0a4166 md5 b4a7883ed04c1f37fcd0790f776aca06 sha1 92239c50dec3a2db8410f50d94367937fff4735a )
+)
+
+game (
+	name "xXx (2002)(Activision)(US)[h3]"
+	description "xXx (2002)(Activision)(US)[h3]"
+	rom ( name "xXx (2002)(Activision)(US)[h3].bin" size 8388608 crc 64f51953 md5 8e033719e4bd06025bf9c3bb953afbc9 sha1 9c638e86c8a240260cd14a7d7c76a6df0bdacf1a )
+)
+
+game (
+	name "xXx (2002)(Activision)(US)[h4]"
+	description "xXx (2002)(Activision)(US)[h4]"
+	rom ( name "xXx (2002)(Activision)(US)[h4].bin" size 8388608 crc 2b3a2ab2 md5 59118d9b87b1809a1cb50b1d42035c7a sha1 8f10c133772d8d4d0f940927d1cd303a1d8bb7ba )
+)
+
+game (
+	name "xXx (2002)(Activision)(US)[h]"
+	description "xXx (2002)(Activision)(US)[h]"
+	rom ( name "xXx (2002)(Activision)(US)[h].bin" size 8388608 crc 2ad1e468 md5 5b1bd32db98ffbc90f644ebe03400c5d sha1 80d5ad34315133be6cdea8fc40f0d2563c38b3e0 )
+)
+
+game (
+	name "Yoshi's Universal Gravitation (2005)(Nintendo)(EU)(M5)"
+	description "Yoshi's Universal Gravitation (2005)(Nintendo)(EU)(M5)"
+	rom ( name "Yoshi's Universal Gravitation (2005)(Nintendo)(EU)(M5).bin" size 8388608 crc 05f4d0aa md5 f9de621b65084bcdaff6e6b0cdc7c413 sha1 045be1369964f141009f3701839ec0a8dccb25c1 )
+)
+
+game (
+	name "Yoshi's Universal Gravitation (2005)(Nintendo)(EU)(M5)[b]"
+	description "Yoshi's Universal Gravitation (2005)(Nintendo)(EU)(M5)[b]"
+	rom ( name "Yoshi's Universal Gravitation (2005)(Nintendo)(EU)(M5)[b].bin" size 8388608 crc 64c06c05 md5 035a0f8efa16fe89530abde02ffd3dcf sha1 a868b19a67e82ef8f6de39d6fcf0fc1bee58c8f1 )
+)
+
+game (
+	name "Yoshi's Universal Gravitation (2005)(Nintendo)(EU)(M5)[h]"
+	description "Yoshi's Universal Gravitation (2005)(Nintendo)(EU)(M5)[h]"
+	rom ( name "Yoshi's Universal Gravitation (2005)(Nintendo)(EU)(M5)[h].bin" size 8388608 crc fec0b371 md5 6f16e6a9738e26ef8a54be78350b0cce sha1 f505d592d6f5c355fb347fea50f171dc6e5b0700 )
+)
+
+game (
+	name "Yu Yu Hakusho - Spirit Detective (2003)(Atari)(US)"
+	description "Yu Yu Hakusho - Spirit Detective (2003)(Atari)(US)"
+	rom ( name "Yu Yu Hakusho - Spirit Detective (2003)(Atari)(US).bin" size 8388608 crc d3784b52 md5 ffa7898ee8b3bc98e4156f3b5e7cdf63 sha1 2a9825db34a7aedcfd0a9fae5c7cee50292f03b7 )
+)
+
+game (
+	name "Yu Yu Hakusho - Spirit Detective (2003)(Atari)(US)[tr pt]"
+	description "Yu Yu Hakusho - Spirit Detective (2003)(Atari)(US)[tr pt]"
+	rom ( name "Yu Yu Hakusho - Spirit Detective (2003)(Atari)(US)[tr pt].bin" size 8388608 crc f91e0086 md5 aa80d31fbc53c9f10598a7c33bb00676 sha1 9f8633ca7b758136f3f4b06721d13eea5bd2d8b5 )
+)
+
+game (
+	name "Yu Yu Hakusho - Spirit Detective (2003)(Atari)(US)[tr pt][a]"
+	description "Yu Yu Hakusho - Spirit Detective (2003)(Atari)(US)[tr pt][a]"
+	rom ( name "Yu Yu Hakusho - Spirit Detective (2003)(Atari)(US)[tr pt][a].bin" size 8388608 crc 680d7d08 md5 f02c4c5d4da3b6947c7d066fb91f1d1a sha1 b3e01e913e6f19d2d36c57675f5f4fa0f5602697 )
+)
+
+game (
+	name "Yu Yu Hakusho - Spirit Detective (2003)(Atari)(US)[tr vi]"
+	description "Yu Yu Hakusho - Spirit Detective (2003)(Atari)(US)[tr vi]"
+	rom ( name "Yu Yu Hakusho - Spirit Detective (2003)(Atari)(US)[tr vi].bin" size 8388608 crc 86edba6e md5 e074a66c443fd53f914be1340764675b sha1 1f1636f66fb7c11d66566caf5f633f65b47cd274 )
+)
+
+game (
+	name "Yu Yu Hakusho - Spirit Detective (2005)(Atari)(EU)(M5)"
+	description "Yu Yu Hakusho - Spirit Detective (2005)(Atari)(EU)(M5)"
+	rom ( name "Yu Yu Hakusho - Spirit Detective (2005)(Atari)(EU)(M5).bin" size 8388608 crc 208d77ec md5 ade79cc8fac2f433648fb95ca8c51164 sha1 66dc426b71195c11761f7ce58ffef231e8e227b1 )
+)
+
+game (
+	name "Yu Yu Hakusho - Tournament Tactics (2004)(Atari)(US)"
+	description "Yu Yu Hakusho - Tournament Tactics (2004)(Atari)(US)"
+	rom ( name "Yu Yu Hakusho - Tournament Tactics (2004)(Atari)(US).bin" size 8388608 crc aef6b7cc md5 acefebbe5fdf25ae83a386a6d1c09bca sha1 dab129544c5ab496df4fd1dfbfa33e76142d2d8a )
+)
+
+game (
+	name "Yu Yu Hakusho - Tournament Tactics (2004)(Atari)(US)[h2]"
+	description "Yu Yu Hakusho - Tournament Tactics (2004)(Atari)(US)[h2]"
+	rom ( name "Yu Yu Hakusho - Tournament Tactics (2004)(Atari)(US)[h2].bin" size 8388608 crc e53fc643 md5 9959b96ae3ccd4bfd2d0ed203cfe1a90 sha1 77db4c447f27b0fe146f09cb3503979f3de0b9b1 )
+)
+
+game (
+	name "Yu Yu Hakusho - Tournament Tactics (2004)(Atari)(US)[h]"
+	description "Yu Yu Hakusho - Tournament Tactics (2004)(Atari)(US)[h]"
+	rom ( name "Yu Yu Hakusho - Tournament Tactics (2004)(Atari)(US)[h].bin" size 8388608 crc 3d0691b4 md5 23c68f0c9a3235e175b799892336bdd6 sha1 c4e0434a67236b72d8eb6ff39b2a91efd426acbc )
+)
+
+game (
+	name "Yu-Gi-Oh! - Destiny Board Traveler + Yu-Gi-Oh! - Dungeon Dice Monsters (2006)(Konami)(EU)(M5)"
+	description "Yu-Gi-Oh! - Destiny Board Traveler + Yu-Gi-Oh! - Dungeon Dice Monsters (2006)(Konami)(EU)(M5)"
+	rom ( name "Yu-Gi-Oh! - Destiny Board Traveler + Yu-Gi-Oh! - Dungeon Dice Monsters (2006)(Konami)(EU)(M5).bin" size 16777216 crc 2cb399d0 md5 f062e6c537cfc8aac48107915da7e861 sha1 76be77c5bc0b6457e40e959b1afff71a65da9322 )
+)
+
+game (
+	name "Yu-Gi-Oh! - Duel Monsters International - Worldwide Edition Rev 0 (2003)(Konami)(JP)[h2]"
+	description "Yu-Gi-Oh! - Duel Monsters International - Worldwide Edition Rev 0 (2003)(Konami)(JP)[h2]"
+	rom ( name "Yu-Gi-Oh! - Duel Monsters International - Worldwide Edition Rev 0 (2003)(Konami)(JP)[h2].bin" size 16777216 crc 98507497 md5 9a8abbb9e95ad1ead235e3ade9b7b429 sha1 a6eddd916eff82fa7841366bac1932b88201e548 )
+)
+
+game (
+	name "Yu-Gi-Oh! - Duel Monsters International - Worldwide Edition Rev 0 (2003)(Konami)(JP)[h3]"
+	description "Yu-Gi-Oh! - Duel Monsters International - Worldwide Edition Rev 0 (2003)(Konami)(JP)[h3]"
+	rom ( name "Yu-Gi-Oh! - Duel Monsters International - Worldwide Edition Rev 0 (2003)(Konami)(JP)[h3].bin" size 16777216 crc 3d54fbdf md5 95691a7491dac58c1c8ce1f4ba1dfd2d sha1 4dcf0e28aa68027c378a1fb77070979a2fb9ef42 )
+)
+
+game (
+	name "Yu-Gi-Oh! - Duel Monsters International - Worldwide Edition Rev 0 (2003)(Konami)(JP)[h]"
+	description "Yu-Gi-Oh! - Duel Monsters International - Worldwide Edition Rev 0 (2003)(Konami)(JP)[h]"
+	rom ( name "Yu-Gi-Oh! - Duel Monsters International - Worldwide Edition Rev 0 (2003)(Konami)(JP)[h].bin" size 16777216 crc dba621b7 md5 946f862cbad311ee5b5954a394e06162 sha1 a988be973bc19e11e6e2731df3bddab25b39cae2 )
+)
+
+game (
+	name "Yu-Gi-Oh! - Duel Monsters International - Worldwide Edition Rev 1 (2003)(Konami)(JP)"
+	description "Yu-Gi-Oh! - Duel Monsters International - Worldwide Edition Rev 1 (2003)(Konami)(JP)"
+	rom ( name "Yu-Gi-Oh! - Duel Monsters International - Worldwide Edition Rev 1 (2003)(Konami)(JP).bin" size 16777216 crc 1becf9d3 md5 9bc1ee3d43963364ad25e687ec867d26 sha1 e16dd5848bcbaffdc60d5d5548d60f4311f4615c )
+)
+
+game (
+	name "Yu-Gi-Oh! - Dungeon Dice Monsters (2001)(Konami)(JP)"
+	description "Yu-Gi-Oh! - Dungeon Dice Monsters (2001)(Konami)(JP)"
+	rom ( name "Yu-Gi-Oh! - Dungeon Dice Monsters (2001)(Konami)(JP).bin" size 8388608 crc 51b35e87 md5 72f072d0e26a9e3d12b6107598cbaf69 sha1 a0ad0cbff3d74bb3e234abcff866994ea602c43a )
+)
+
+game (
+	name "Yu-Gi-Oh! - Dungeon Dice Monsters (2001)(Konami)(JP)[h]"
+	description "Yu-Gi-Oh! - Dungeon Dice Monsters (2001)(Konami)(JP)[h]"
+	rom ( name "Yu-Gi-Oh! - Dungeon Dice Monsters (2001)(Konami)(JP)[h].bin" size 8388608 crc f311d8c7 md5 c2d01eb60ded216c1d0b9dea08d9ccae sha1 d6c8f02af75923b1de1aa7556441a278059501b8 )
+)
+
+game (
+	name "Yu-Gi-Oh! - Dungeon Dice Monsters (2003)(Konami)(EU)(M5)"
+	description "Yu-Gi-Oh! - Dungeon Dice Monsters (2003)(Konami)(EU)(M5)"
+	rom ( name "Yu-Gi-Oh! - Dungeon Dice Monsters (2003)(Konami)(EU)(M5).bin" size 8388608 crc ee317f69 md5 ec2e23cc5fd7a3ea4e32ac7b8d488103 sha1 3ded1227698fbdb2ba47f03025cd1934fc184b99 )
+)
+
+game (
+	name "Yu-Gi-Oh! - Dungeon Dice Monsters (2003)(Konami)(EU)(M5)[b]"
+	description "Yu-Gi-Oh! - Dungeon Dice Monsters (2003)(Konami)(EU)(M5)[b]"
+	rom ( name "Yu-Gi-Oh! - Dungeon Dice Monsters (2003)(Konami)(EU)(M5)[b].bin" size 8388608 crc 7dbd42ef md5 1eef3faee142a9c6cbf83582c6441593 sha1 e1841b11be71643c3c9e328078bf879cc8b0da82 )
+)
+
+game (
+	name "Yu-Gi-Oh! - Dungeon Dice Monsters (2003)(Konami)(EU)(M5)[h]"
+	description "Yu-Gi-Oh! - Dungeon Dice Monsters (2003)(Konami)(EU)(M5)[h]"
+	rom ( name "Yu-Gi-Oh! - Dungeon Dice Monsters (2003)(Konami)(EU)(M5)[h].bin" size 8388608 crc 706dff00 md5 70fed6abd43a83ae370fac258c7c7046 sha1 99878a6e1d760e44d054f60f9c93364a51606d69 )
+)
+
+game (
+	name "Yu-Gi-Oh! - Dungeon Dice Monsters (2003)(Konami)(US)(en-es)"
+	description "Yu-Gi-Oh! - Dungeon Dice Monsters (2003)(Konami)(US)(en-es)"
+	rom ( name "Yu-Gi-Oh! - Dungeon Dice Monsters (2003)(Konami)(US)(en-es).bin" size 8388608 crc 8b5e0a27 md5 1ac4901f9a831d6b86ca776bb61f8d8b sha1 fdd69455a072b2f74e6c5c50b96daa0438156b27 )
+)
+
+game (
+	name "Yu-Gi-Oh! - GX Duel Academy (2006)(Konami)(EU)(en)"
+	description "Yu-Gi-Oh! - GX Duel Academy (2006)(Konami)(EU)(en)"
+	rom ( name "Yu-Gi-Oh! - GX Duel Academy (2006)(Konami)(EU)(en).bin" size 33554432 crc 3fb2abda md5 e1cc21ebf4c3be179738ebbf44f25308 sha1 deb55081c6a567337943d1dddec29b1e6968bccc )
+)
+
+game (
+	name "Yu-Gi-Oh! - GX Duel Academy (2006)(Konami)(US)"
+	description "Yu-Gi-Oh! - GX Duel Academy (2006)(Konami)(US)"
+	rom ( name "Yu-Gi-Oh! - GX Duel Academy (2006)(Konami)(US).bin" size 33554432 crc 3b8a00fe md5 f62c47cbe08e1e3bcfcf9f1b84841a76 sha1 57d6bb789833b62b360072902982d5f1011b3640 )
+)
+
+game (
+	name "Yu-Gi-Oh! - Reshef of Destruction (2004)(Konami)(EU)(M5)"
+	description "Yu-Gi-Oh! - Reshef of Destruction (2004)(Konami)(EU)(M5)"
+	rom ( name "Yu-Gi-Oh! - Reshef of Destruction (2004)(Konami)(EU)(M5).bin" size 16777216 crc 460e073f md5 4f71a4e021f4b9319c9d4443dd710666 sha1 1d33877dcc5ec94cc0d68460163208c7ebfb6ad3 )
+)
+
+game (
+	name "Yu-Gi-Oh! - Reshef of Destruction (2004)(Konami)(US)"
+	description "Yu-Gi-Oh! - Reshef of Destruction (2004)(Konami)(US)"
+	rom ( name "Yu-Gi-Oh! - Reshef of Destruction (2004)(Konami)(US).bin" size 16777216 crc 09e0c559 md5 c06decdf51468503434dcb5e7bbdcca5 sha1 dad3aa7dd470c9b475236fed2ea867b04ab1b089 )
+)
+
+game (
+	name "Yu-Gi-Oh! - Sugoroku no Sugoroku (2004)(Konami)(JP)"
+	description "Yu-Gi-Oh! - Sugoroku no Sugoroku (2004)(Konami)(JP)"
+	rom ( name "Yu-Gi-Oh! - Sugoroku no Sugoroku (2004)(Konami)(JP).bin" size 8388608 crc 8d52b3c5 md5 c5401124a48f173f05fb10fb9e716011 sha1 6816f044c3f4cac76e888c0ec36dc216e7c140d2 )
+)
+
+game (
+	name "Yu-Gi-Oh! - The Eternal Duelist Soul (2002)(Konami)(US)"
+	description "Yu-Gi-Oh! - The Eternal Duelist Soul (2002)(Konami)(US)"
+	rom ( name "Yu-Gi-Oh! - The Eternal Duelist Soul (2002)(Konami)(US).bin" size 8388608 crc dfd07a36 md5 ec3f000ffde5754cb164a05d2d6f9053 sha1 510fbba212aca9bab95ea12f8fd933e62ee34dea )
+)
+
+game (
+	name "Yu-Gi-Oh! - The Eternal Duelist Soul (2002)(Konami)(US)[h2]"
+	description "Yu-Gi-Oh! - The Eternal Duelist Soul (2002)(Konami)(US)[h2]"
+	rom ( name "Yu-Gi-Oh! - The Eternal Duelist Soul (2002)(Konami)(US)[h2].bin" size 8388608 crc 1d8f9f63 md5 6fdd852d81cf08afa4409b8ccd7881d7 sha1 0cbf8a3165ef1fa9cfbba1dd1ee7274525424b67 )
+)
+
+game (
+	name "Yu-Gi-Oh! - The Eternal Duelist Soul (2002)(Konami)(US)[h3]"
+	description "Yu-Gi-Oh! - The Eternal Duelist Soul (2002)(Konami)(US)[h3]"
+	rom ( name "Yu-Gi-Oh! - The Eternal Duelist Soul (2002)(Konami)(US)[h3].bin" size 8388608 crc 6860971d md5 9b68aaa9678e812afdae14528c08950f sha1 e092d4d30f79c9f458790af9942cfd796716cfcd )
+)
+
+game (
+	name "Yu-Gi-Oh! - The Eternal Duelist Soul (2002)(Konami)(US)[h]"
+	description "Yu-Gi-Oh! - The Eternal Duelist Soul (2002)(Konami)(US)[h]"
+	rom ( name "Yu-Gi-Oh! - The Eternal Duelist Soul (2002)(Konami)(US)[h].bin" size 8388608 crc 87dc6d91 md5 1666978663e28fca3f076983701df846 sha1 b3cf8d2ca1af583c6fe0c629bcec530e5a86104e )
+)
+
+game (
+	name "Yu-Gi-Oh! - The Eternal Duelist Soul (2002)(Konami)(US)[tr es]"
+	description "Yu-Gi-Oh! - The Eternal Duelist Soul (2002)(Konami)(US)[tr es]"
+	rom ( name "Yu-Gi-Oh! - The Eternal Duelist Soul (2002)(Konami)(US)[tr es].bin" size 8388608 crc d8686ea0 md5 233a8dc2cb9b4aaa76c2bfe56ee8d5fe sha1 8d74d03c836c9666b8337916804b1c90664f76d2 )
+)
+
+game (
+	name "Yu-Gi-Oh! - The Eternal Duelist Soul (2002)(Konami)(US)[tr pt]"
+	description "Yu-Gi-Oh! - The Eternal Duelist Soul (2002)(Konami)(US)[tr pt]"
+	rom ( name "Yu-Gi-Oh! - The Eternal Duelist Soul (2002)(Konami)(US)[tr pt].bin" size 8388608 crc 5ed2fe53 md5 c499c41247806a8b887115ca85df57a3 sha1 4fe552b76843b6555d1a8d6dedc6146a926488cf )
+)
+
+game (
+	name "Yu-Gi-Oh! - The Sacred Cards (2003)(Konami)(US)"
+	description "Yu-Gi-Oh! - The Sacred Cards (2003)(Konami)(US)"
+	rom ( name "Yu-Gi-Oh! - The Sacred Cards (2003)(Konami)(US).bin" size 16777216 crc 141fb1cc md5 0a7c58069d5390165482e88a22158bd2 sha1 a06735f9c3d10be9339657026981aef77af34b27 )
+)
+
+game (
+	name "Yu-Gi-Oh! - The Sacred Cards (2003)(Konami)(US)[t]"
+	description "Yu-Gi-Oh! - The Sacred Cards (2003)(Konami)(US)[t]"
+	rom ( name "Yu-Gi-Oh! - The Sacred Cards (2003)(Konami)(US)[t].bin" size 16777216 crc dbb4b13d md5 2b9e37428bb45e1e18ab471d8b2cfd3c sha1 9ed2746d67e56222d0c30e84bac63d1eeecd9f7d )
+)
+
+game (
+	name "Yu-Gi-Oh! - The Sacred Cards (2004)(Konami)(EU)(M5)"
+	description "Yu-Gi-Oh! - The Sacred Cards (2004)(Konami)(EU)(M5)"
+	rom ( name "Yu-Gi-Oh! - The Sacred Cards (2004)(Konami)(EU)(M5).bin" size 16777216 crc d19db37c md5 c43587fca1f7e02f611baab02d26716d sha1 9a23ad34f67ac1f1343b7009f11ac95c77b782ef )
+)
+
+game (
+	name "Yu-Gi-Oh! - The Sacred Cards + Yu-Gi-Oh! - Reshef of Destruction (2006)(Konami)(EU)(M5)"
+	description "Yu-Gi-Oh! - The Sacred Cards + Yu-Gi-Oh! - Reshef of Destruction (2006)(Konami)(EU)(M5)"
+	rom ( name "Yu-Gi-Oh! - The Sacred Cards + Yu-Gi-Oh! - Reshef of Destruction (2006)(Konami)(EU)(M5).bin" size 33554432 crc 7ea28a99 md5 fb29d59010a0ea0fec56cec94241617b sha1 14a5e70e05bca849695190833d1b107799ceb58d )
+)
+
+game (
+	name "Yu-Gi-Oh! - The Sacred Cards + Yu-Gi-Oh! - Reshef of Destruction (2006)(Konami)(US)"
+	description "Yu-Gi-Oh! - The Sacred Cards + Yu-Gi-Oh! - Reshef of Destruction (2006)(Konami)(US)"
+	rom ( name "Yu-Gi-Oh! - The Sacred Cards + Yu-Gi-Oh! - Reshef of Destruction (2006)(Konami)(US).bin" size 33554432 crc f3df5758 md5 b288c64ec50625b6b80bc6730efbf190 sha1 cfa00b4f8a3f2e6400d4816df6ed1bfebf131120 )
+)
+
+game (
+	name "Yu-Gi-Oh! - Ultimate Masters - World Championship Tournament 2006 (2006)(Konami)(US)"
+	description "Yu-Gi-Oh! - Ultimate Masters - World Championship Tournament 2006 (2006)(Konami)(US)"
+	rom ( name "Yu-Gi-Oh! - Ultimate Masters - World Championship Tournament 2006 (2006)(Konami)(US).bin" size 33554432 crc f968a196 md5 b8a7c976b28172995fe9e465d654297a sha1 9689337d6aac1ce9699ab60aac73fc2cfdccad9b )
+)
+
+game (
+	name "Yu-Gi-Oh! - Ultimate Masters Edition - World Championship Tournament 2006 (2006)(Konami)(EU)(M5)"
+	description "Yu-Gi-Oh! - Ultimate Masters Edition - World Championship Tournament 2006 (2006)(Konami)(EU)(M5)"
+	rom ( name "Yu-Gi-Oh! - Ultimate Masters Edition - World Championship Tournament 2006 (2006)(Konami)(EU)(M5).bin" size 33554432 crc cede4060 md5 020411d3b08f5639eb8cb878283f84bf sha1 0734be2fe17d9ef5ede88e0a14cd194656aa23d8 )
+)
+
+game (
+	name "Yu-Gi-Oh! - World Championship Tournament 2004 (2004)(Konami)(EU)(M6)"
+	description "Yu-Gi-Oh! - World Championship Tournament 2004 (2004)(Konami)(EU)(M6)"
+	rom ( name "Yu-Gi-Oh! - World Championship Tournament 2004 (2004)(Konami)(EU)(M6).bin" size 16777216 crc 31edef1b md5 6f0f891c1d8e8dcda39eea116f2bd957 sha1 97a2e7cf6613538216dc807ae5ed92eaa4b9d7a8 )
+)
+
+game (
+	name "Yu-Gi-Oh! - World Championship Tournament 2004 (2004)(Konami)(EU)(M6)[tr zh]"
+	description "Yu-Gi-Oh! - World Championship Tournament 2004 (2004)(Konami)(EU)(M6)[tr zh]"
+	rom ( name "Yu-Gi-Oh! - World Championship Tournament 2004 (2004)(Konami)(EU)(M6)[tr zh].bin" size 16777216 crc a7f0a348 md5 72cc61c536e644eec8a1833a308e04dd sha1 4fc500bee894edebe3c84569fca2910cb4fad406 )
+)
+
+game (
+	name "Yu-Gi-Oh! - World Championship Tournament 2004 (2004)(Konami)(US)(M6)"
+	description "Yu-Gi-Oh! - World Championship Tournament 2004 (2004)(Konami)(US)(M6)"
+	rom ( name "Yu-Gi-Oh! - World Championship Tournament 2004 (2004)(Konami)(US)(M6).bin" size 16777216 crc 69b6f229 md5 8517049ce498d84530c953d6a8b3112e sha1 3a7fceffa1405640fe4606e006d272d1af542f2b )
+)
+
+game (
+	name "Yu-Gi-Oh! - World Championship Tournament 2004 (2004)(Konami)(US)(M6)[tr zh]"
+	description "Yu-Gi-Oh! - World Championship Tournament 2004 (2004)(Konami)(US)(M6)[tr zh]"
+	rom ( name "Yu-Gi-Oh! - World Championship Tournament 2004 (2004)(Konami)(US)(M6)[tr zh].bin" size 16777216 crc ffabbe7a md5 6732ff8242993acc9cb5abb9d14dfdd4 sha1 833a3a8f36273f79d61eb45c4028ce4dadb608cc )
+)
+
+game (
+	name "Yu-Gi-Oh! - Worldwide Edition - Stairway to the Destined Duel (2003)(Konami)(EU)(M6)"
+	description "Yu-Gi-Oh! - Worldwide Edition - Stairway to the Destined Duel (2003)(Konami)(EU)(M6)"
+	rom ( name "Yu-Gi-Oh! - Worldwide Edition - Stairway to the Destined Duel (2003)(Konami)(EU)(M6).bin" size 16777216 crc aca5ffc6 md5 15dbde22ef467c503e09f75b233da539 sha1 96a490f9152acff2d0f6b2486382f1906b3baee8 )
+)
+
+game (
+	name "Yu-Gi-Oh! - Worldwide Edition - Stairway to the Destined Duel (2003)(Konami)(EU)(M6)[h2]"
+	description "Yu-Gi-Oh! - Worldwide Edition - Stairway to the Destined Duel (2003)(Konami)(EU)(M6)[h2]"
+	rom ( name "Yu-Gi-Oh! - Worldwide Edition - Stairway to the Destined Duel (2003)(Konami)(EU)(M6)[h2].bin" size 16777216 crc 58996f0f md5 0667fc3f2e70eaf687636b673e9341d0 sha1 afbabc74f36c661e1cd0bc6fcdacdc4be883a39d )
+)
+
+game (
+	name "Yu-Gi-Oh! - Worldwide Edition - Stairway to the Destined Duel (2003)(Konami)(EU)(M6)[h]"
+	description "Yu-Gi-Oh! - Worldwide Edition - Stairway to the Destined Duel (2003)(Konami)(EU)(M6)[h]"
+	rom ( name "Yu-Gi-Oh! - Worldwide Edition - Stairway to the Destined Duel (2003)(Konami)(EU)(M6)[h].bin" size 16777216 crc 6e0b8072 md5 ab460c0d13475d90a4225adbd66f7e0d sha1 540095380530df18c18cdaa071e5103e8cf18537 )
+)
+
+game (
+	name "Yu-Gi-Oh! - Worldwide Edition - Stairway to the Destined Duel (2003)(Konami)(US)"
+	description "Yu-Gi-Oh! - Worldwide Edition - Stairway to the Destined Duel (2003)(Konami)(US)"
+	rom ( name "Yu-Gi-Oh! - Worldwide Edition - Stairway to the Destined Duel (2003)(Konami)(US).bin" size 16777216 crc 39b5e771 md5 1e52d66f5f8a7c4f207d80ba4fccf55e sha1 53d4ae06d1b605f8925c53d6c585478d73ff55c0 )
+)
+
+game (
+	name "Yushun Rhapsody (2001)(Capcom)(JP)"
+	description "Yushun Rhapsody (2001)(Capcom)(JP)"
+	rom ( name "Yushun Rhapsody (2001)(Capcom)(JP).bin" size 8388608 crc 0ff11189 md5 fb95bb41631ce0ab21b44575ff6c55b6 sha1 e09f676b439fc65a63babebc31ca371f8367f3c5 )
+)
+
+game (
+	name "Yushun Rhapsody (2001)(Capcom)(JP)[b]"
+	description "Yushun Rhapsody (2001)(Capcom)(JP)[b]"
+	rom ( name "Yushun Rhapsody (2001)(Capcom)(JP)[b].bin" size 566228 crc 83d6d04a md5 c61069c5c3826979ee093bba18acfe34 sha1 e9f7a2ef6b3e6616c244f40d065ffd32ddec8e3c )
+)
+
+game (
+	name "Yushun Rhapsody (2001)(Capcom)(JP)[h]"
+	description "Yushun Rhapsody (2001)(Capcom)(JP)[h]"
+	rom ( name "Yushun Rhapsody (2001)(Capcom)(JP)[h].bin" size 8388608 crc 56129ab0 md5 11b2a5856e6739055927178da73dd2b7 sha1 61e61abf112f15247fbed477206f59da8472ed4f )
+)
+
+game (
+	name "Yuurei Yashiki no Nijuuyon Jikan (2002)(Global A Entertainment)(JP)"
+	description "Yuurei Yashiki no Nijuuyon Jikan (2002)(Global A Entertainment)(JP)"
+	rom ( name "Yuurei Yashiki no Nijuuyon Jikan (2002)(Global A Entertainment)(JP).bin" size 4194304 crc 6da2166e md5 230bbfa7c06395868dfc17c514112c83 sha1 c1e33700e6c0e5228152e414d432c61f860c5b69 )
+)
+
+game (
+	name "Yuurei Yashiki no Nijuuyon Jikan (2002)(Global A Entertainment)(JP)[b]"
+	description "Yuurei Yashiki no Nijuuyon Jikan (2002)(Global A Entertainment)(JP)[b]"
+	rom ( name "Yuurei Yashiki no Nijuuyon Jikan (2002)(Global A Entertainment)(JP)[b].bin" size 4194304 crc c2b3313c md5 ed3161be32e96ebebd642badf45bcd11 sha1 d17b966153ddbea813a9612c09f720fc7321a136 )
+)
+
+game (
+	name "Z.O.E 2173 Testament (2001)(Konami)(JP)"
+	description "Z.O.E 2173 Testament (2001)(Konami)(JP)"
+	rom ( name "Z.O.E 2173 Testament (2001)(Konami)(JP).bin" size 8388608 crc 9feef66d md5 a1ece5ce4fe328f0c0240fc281de4f4b sha1 c882179863001f9f2ea15a46ec65da0f465263c1 )
+)
+
+game (
+	name "Z.O.E 2173 Testament (2001)(Konami)(JP)[tr zh]"
+	description "Z.O.E 2173 Testament (2001)(Konami)(JP)[tr zh]"
+	rom ( name "Z.O.E 2173 Testament (2001)(Konami)(JP)[tr zh].bin" size 8388608 crc 01e8e145 md5 2f444e99ce8133dba8941180cc8eb480 sha1 c23dfd8f2dffa43f82f8e16bb7b2cf1f9f581503 )
+)
+
+game (
+	name "Zapper (2002)(Infogrames)(EU)(M5)"
+	description "Zapper (2002)(Infogrames)(EU)(M5)"
+	rom ( name "Zapper (2002)(Infogrames)(EU)(M5).bin" size 4194304 crc 8753a1c5 md5 eb7ba1c777b946bd9842b6238676f799 sha1 08b1d2aa6b37d76d2b19688d01aca778aa6e7f26 )
+)
+
+game (
+	name "Zapper (2002)(Infogrames)(US)"
+	description "Zapper (2002)(Infogrames)(US)"
+	rom ( name "Zapper (2002)(Infogrames)(US).bin" size 4194304 crc 6751a4ef md5 9a83e6571c9543a1a4d658564f02be4c sha1 1561c4e1f4ab945299f2dfb5bb7df532ec4d4067 )
+)
+
+game (
+	name "Zapper (2002)(Infogrames)(US)[h2]"
+	description "Zapper (2002)(Infogrames)(US)[h2]"
+	rom ( name "Zapper (2002)(Infogrames)(US)[h2].bin" size 4194304 crc ab232c7d md5 8d13d42b649aa5f5fef55675c4b672ed sha1 16f67cfd72702c617f940a58a26f75b5cb775858 )
+)
+
+game (
+	name "Zapper (2002)(Infogrames)(US)[h3]"
+	description "Zapper (2002)(Infogrames)(US)[h3]"
+	rom ( name "Zapper (2002)(Infogrames)(US)[h3].bin" size 4194304 crc 2790c02f md5 6fbbaac6dd7b626237f3bbe9fa21d362 sha1 92005994af59a165065d393e06f0714782a01009 )
+)
+
+game (
+	name "Zapper (2002)(Infogrames)(US)[h]"
+	description "Zapper (2002)(Infogrames)(US)[h]"
+	rom ( name "Zapper (2002)(Infogrames)(US)[h].bin" size 4194304 crc 1b620f35 md5 c9ad7ad2e8a643b2ef5d96e16cb95734 sha1 4643aa187993460a0e80923dc97532f761e7ae90 )
+)
+
+game (
+	name "Zatch Bell! Electric Arena (2005)(Bandai - Banpresto)(US)"
+	description "Zatch Bell! Electric Arena (2005)(Bandai - Banpresto)(US)"
+	rom ( name "Zatch Bell! Electric Arena (2005)(Bandai - Banpresto)(US).bin" size 8388608 crc b4f1e785 md5 54f8b4748e5f0233bc28216a0188c968 sha1 96b67004d7592ae118936e8988c96880d9880f60 )
+)
+
+game (
+	name "Zatch Bell! Electric Arena (2005)(Bandai - Banpresto)(US)[h2]"
+	description "Zatch Bell! Electric Arena (2005)(Bandai - Banpresto)(US)[h2]"
+	rom ( name "Zatch Bell! Electric Arena (2005)(Bandai - Banpresto)(US)[h2].bin" size 8388608 crc 7fe28b20 md5 d0bb171dfa356e6803f7484492743b66 sha1 60f28391117e308a3a13e2171a2f9dbf80953806 )
+)
+
+game (
+	name "Zatch Bell! Electric Arena (2005)(Bandai - Banpresto)(US)[h]"
+	description "Zatch Bell! Electric Arena (2005)(Bandai - Banpresto)(US)[h]"
+	rom ( name "Zatch Bell! Electric Arena (2005)(Bandai - Banpresto)(US)[h].bin" size 8388608 crc 4e6f5cc7 md5 f47da35fb006ffc9f6a553bd618c398a sha1 8a913683bdb5491033c0b9fe5f2c78e39f93dc95 )
+)
+
+game (
+	name "Zatch Bell! Electric Arena (2005)(Bandai - Banpresto)(US)[t]"
+	description "Zatch Bell! Electric Arena (2005)(Bandai - Banpresto)(US)[t]"
+	rom ( name "Zatch Bell! Electric Arena (2005)(Bandai - Banpresto)(US)[t].bin" size 8388608 crc 58c865e7 md5 8e21e23e2fb5b1044f608f4adea1a2ca sha1 208e6ebcb567ee88404a6f052d3c351ffc06cc10 )
+)
+
+game (
+	name "Zen-Nippon Shounen Soccer Taikai 2 - Mezase Nippon-ichi! (2002)(Boom - Success)(JP)"
+	description "Zen-Nippon Shounen Soccer Taikai 2 - Mezase Nippon-ichi! (2002)(Boom - Success)(JP)"
+	rom ( name "Zen-Nippon Shounen Soccer Taikai 2 - Mezase Nippon-ichi! (2002)(Boom - Success)(JP).bin" size 8388608 crc 268f9c7e md5 5423d3057e1806348dd1f959f0be94f9 sha1 e71992923c4e5b3bfe51c1a1960a584347626991 )
+)
+
+game (
+	name "Zero One (2003)(Fuuki)(JP)"
+	description "Zero One (2003)(Fuuki)(JP)"
+	rom ( name "Zero One (2003)(Fuuki)(JP).bin" size 16777216 crc 84a4c1b4 md5 120cf0c4d430cf9de20071a249db62f4 sha1 42501ed8395dfcc87cc112d20183a9394d0b232f )
+)
+
+game (
+	name "Zero One SP (2004)(Fuuki)(JP)"
+	description "Zero One SP (2004)(Fuuki)(JP)"
+	rom ( name "Zero One SP (2004)(Fuuki)(JP).bin" size 16777216 crc fd6ce886 md5 267f45f19c0bd4cb4eec1879c2cbd7cf sha1 7ed2b25dff8783a924c5d6dfe2add95d766f32f0 )
+)
+
+game (
+	name "Zero One SP (2004)(Fuuki)(JP)[h2]"
+	description "Zero One SP (2004)(Fuuki)(JP)[h2]"
+	rom ( name "Zero One SP (2004)(Fuuki)(JP)[h2].bin" size 16777216 crc b6ccf7ea md5 c9407340bda3c5b0e45e95294ef215bf sha1 1067cb5f687734713bca5d1e2afbbbcb1a51c575 )
+)
+
+game (
+	name "Zero One SP (2004)(Fuuki)(JP)[h]"
+	description "Zero One SP (2004)(Fuuki)(JP)[h]"
+	rom ( name "Zero One SP (2004)(Fuuki)(JP)[h].bin" size 16777216 crc 94032455 md5 10cdd296263b2413fa43bd3d5b600db0 sha1 965f9f9bd75f691afe999d1c7dfa67d29ac66784 )
+)
+
+game (
+	name "Zettai Zetsumei Den Chara Suji-san (2004)(Rokumendo - Kids Station)(JP)"
+	description "Zettai Zetsumei Den Chara Suji-san (2004)(Rokumendo - Kids Station)(JP)"
+	rom ( name "Zettai Zetsumei Den Chara Suji-san (2004)(Rokumendo - Kids Station)(JP).bin" size 8388608 crc 99273ee3 md5 89bea97ec8d4f11274784afc125de6c8 sha1 8f294172a467fdc0114c55ac297870d918030c21 )
+)
+
+game (
+	name "Zettai Zetsumei Denjarasu Jii-san - Shijou Saikyou no Dogeza (2003)(Rokumendo - Kids Station)(JP)"
+	description "Zettai Zetsumei Denjarasu Jii-san - Shijou Saikyou no Dogeza (2003)(Rokumendo - Kids Station)(JP)"
+	rom ( name "Zettai Zetsumei Denjarasu Jii-san - Shijou Saikyou no Dogeza (2003)(Rokumendo - Kids Station)(JP).bin" size 8388608 crc 7da6cc69 md5 6ce00cd216c0b7c3d3abe895540480a9 sha1 d246639ddd955058e45be722f64899a2c267d02f )
+)
+
+game (
+	name "Zettai Zetsumei Denjarasu Jii-san - Shijou Saikyou no Dogeza (2003)(Rokumendo - Kids Station)(JP)[b2]"
+	description "Zettai Zetsumei Denjarasu Jii-san - Shijou Saikyou no Dogeza (2003)(Rokumendo - Kids Station)(JP)[b2]"
+	rom ( name "Zettai Zetsumei Denjarasu Jii-san - Shijou Saikyou no Dogeza (2003)(Rokumendo - Kids Station)(JP)[b2].bin" size 8388608 crc c9d127ac md5 22dfb25896c2114ae63ad0438b4cad72 sha1 d5bb29cd87aa2e87d3bc7e365ef51e84487295e0 )
+)
+
+game (
+	name "Zettai Zetsumei Denjarasu Jii-san - Shijou Saikyou no Dogeza (2003)(Rokumendo - Kids Station)(JP)[b]"
+	description "Zettai Zetsumei Denjarasu Jii-san - Shijou Saikyou no Dogeza (2003)(Rokumendo - Kids Station)(JP)[b]"
+	rom ( name "Zettai Zetsumei Denjarasu Jii-san - Shijou Saikyou no Dogeza (2003)(Rokumendo - Kids Station)(JP)[b].bin" size 8388608 crc 7045c60d md5 98b150b874224a6be8fc6c1b1fcbc340 sha1 bfb941a620b970bcf1b37166424b782e969c69c0 )
+)
+
+game (
+	name "Zettai Zetsumei Denjarasu Jii-san 2 - Naki no Ikkai Zettai Fukujuu Violence Kouchou - Wagahai ha Ichiban Erainjyai (2004)(Rokumendo - Kids Station)(JP)"
+	description "Zettai Zetsumei Denjarasu Jii-san 2 - Naki no Ikkai Zettai Fukujuu Violence Kouchou - Wagahai ha Ichiban Erainjyai (2004)(Rokumendo - Kids Station)(JP)"
+	rom ( name "Zettai Zetsumei Denjarasu Jii-san 2 - Naki no Ikkai Zettai Fukujuu Violence Kouchou - Wagahai ha Ichiban Erainjyai (2004)(Rokumendo - Kids Station)(JP).bin" size 8388608 crc 00328bb3 md5 ba11d0bfd27985088ac44866d7ece116 sha1 e582dd422f33b7f7a5ae306fe5159550f2a55444 )
+)
+
+game (
+	name "Zettai Zetsumei Denjarasu Jii-san 3 - Hateshinaki Mamonogatari (2004)(Rokumendo - Kids Station)(JP)"
+	description "Zettai Zetsumei Denjarasu Jii-san 3 - Hateshinaki Mamonogatari (2004)(Rokumendo - Kids Station)(JP)"
+	rom ( name "Zettai Zetsumei Denjarasu Jii-san 3 - Hateshinaki Mamonogatari (2004)(Rokumendo - Kids Station)(JP).bin" size 8388608 crc 5be52fb7 md5 d1b92af267a24b56ccd00869fbc7303f sha1 8e25c26b1a55369cfeee86708b64f41cb650b88b )
+)
+
+game (
+	name "Zidane - Football Generation 2002 (2002)(Aqua Pacific - Cryo Interactive)(EU)(M5)"
+	description "Zidane - Football Generation 2002 (2002)(Aqua Pacific - Cryo Interactive)(EU)(M5)"
+	rom ( name "Zidane - Football Generation 2002 (2002)(Aqua Pacific - Cryo Interactive)(EU)(M5).bin" size 4194304 crc 59e2635f md5 2585d9385617b38836884f90997dc985 sha1 e18e9e8aabb8844de688ddff8843329f84e470aa )
+)
+
+game (
+	name "Zidane - Football Generation 2002 (2002)(Aqua Pacific - Cryo Interactive)(EU)(M5)[h]"
+	description "Zidane - Football Generation 2002 (2002)(Aqua Pacific - Cryo Interactive)(EU)(M5)[h]"
+	rom ( name "Zidane - Football Generation 2002 (2002)(Aqua Pacific - Cryo Interactive)(EU)(M5)[h].bin" size 4194304 crc 45b5ee52 md5 112ba61ad9156a19f1a29c3ca675a9f2 sha1 b6fc8e7996b5d36af26ad35e70f44f70e853e6ae )
+)
+
+game (
+	name "Zoey 101 (2007)(THQ)(EU-US)(en)"
+	description "Zoey 101 (2007)(THQ)(EU-US)(en)"
+	rom ( name "Zoey 101 (2007)(THQ)(EU-US)(en).bin" size 4194304 crc 9cf348a8 md5 f7c0a6bf412b6f78a0f0e096aa0fd07e sha1 2953f982dfacfc7ac93bc216382f413aad674e21 )
+)
+
+game (
+	name "Zoids - Legacy (2004)(Atari - Tomy)(US)"
+	description "Zoids - Legacy (2004)(Atari - Tomy)(US)"
+	rom ( name "Zoids - Legacy (2004)(Atari - Tomy)(US).bin" size 8388608 crc 302e75f3 md5 220a6f1b9d8d63e7638248f24dbfa709 sha1 460fa2158606097f6e6f63ce966d2d6ecdd58d70 )
+)
+
+game (
+	name "Zoids - Legacy (2004)(Atari - Tomy)(US)[t]"
+	description "Zoids - Legacy (2004)(Atari - Tomy)(US)[t]"
+	rom ( name "Zoids - Legacy (2004)(Atari - Tomy)(US)[t].bin" size 8352520 crc 35f52538 md5 2627fb85e034bd0708bfb07761096aec sha1 260edf2f12976fa67a4c22e1fb2c3ba8bb74d135 )
+)
+
+game (
+	name "Zoids Saga (2001)(Tomy)(JP)"
+	description "Zoids Saga (2001)(Tomy)(JP)"
+	rom ( name "Zoids Saga (2001)(Tomy)(JP).bin" size 8388608 crc 5975dda8 md5 36545c66bf7abdbced2b294a7dd8d419 sha1 75d8c15ac281ea93c8ac7cc7641c490799557081 )
+)
+
+game (
+	name "Zoids Saga II (2003)(Tomy)(JP)"
+	description "Zoids Saga II (2003)(Tomy)(JP)"
+	rom ( name "Zoids Saga II (2003)(Tomy)(JP).bin" size 8388608 crc 0c039503 md5 f7bdd0eb9cd94d4c3bf924654998c514 sha1 6014ca7c7af931d62634be4baa992a2fe187413f )
+)
+
+game (
+	name "Zoids Saga II (2003)(Tomy)(JP)[tr zh]"
+	description "Zoids Saga II (2003)(Tomy)(JP)[tr zh]"
+	rom ( name "Zoids Saga II (2003)(Tomy)(JP)[tr zh].bin" size 8388608 crc a96b2ef7 md5 f7c6421a7124fe23cf0f162df6e18b3a sha1 280212894b6f5a90bb9d8563c61fecd20739d269 )
+)
+
+game (
+	name "Zoids Saga III - Fuzors (2004)(Tomy)(JP)"
+	description "Zoids Saga III - Fuzors (2004)(Tomy)(JP)"
+	rom ( name "Zoids Saga III - Fuzors (2004)(Tomy)(JP).bin" size 8388608 crc 094e16ad md5 02fd4433f3dacbfd1c921a54909ac365 sha1 f5269aba2e5f587aa2f851f35e96c1cbc5e1a78a )
+)
+
+game (
+	name "Zoku Bokura no Taiyou - Taiyou Shounen Django Rev 0 (2004)(Konami)(JP)(en-ja)"
+	description "Zoku Bokura no Taiyou - Taiyou Shounen Django Rev 0 (2004)(Konami)(JP)(en-ja)"
+	rom ( name "Zoku Bokura no Taiyou - Taiyou Shounen Django Rev 0 (2004)(Konami)(JP)(en-ja).bin" size 16777216 crc 2804e589 md5 f4e3dead5af182598623cf89f9a428f4 sha1 54a4dcdeca2ee9a22559eb104b88586386639097 )
+)
+
+game (
+	name "Zoku Bokura no Taiyou - Taiyou Shounen Django Rev 0 (2004)(Konami)(JP)(en-ja)[h2]"
+	description "Zoku Bokura no Taiyou - Taiyou Shounen Django Rev 0 (2004)(Konami)(JP)(en-ja)[h2]"
+	rom ( name "Zoku Bokura no Taiyou - Taiyou Shounen Django Rev 0 (2004)(Konami)(JP)(en-ja)[h2].bin" size 16777216 crc 0717c5e9 md5 4d44b81ebaa3ebc4522fd01328290bf7 sha1 0fa1add609ab68d5e7a0e4dbcc992ab6a8766430 )
+)
+
+game (
+	name "Zoku Bokura no Taiyou - Taiyou Shounen Django Rev 0 (2004)(Konami)(JP)(en-ja)[h3]"
+	description "Zoku Bokura no Taiyou - Taiyou Shounen Django Rev 0 (2004)(Konami)(JP)(en-ja)[h3]"
+	rom ( name "Zoku Bokura no Taiyou - Taiyou Shounen Django Rev 0 (2004)(Konami)(JP)(en-ja)[h3].bin" size 16777216 crc c456ab35 md5 f0f39856e0b0fcc036405e5f9b6b71ca sha1 48f9f96375814e0daa58482e38d6bfaa65b83d3f )
+)
+
+game (
+	name "Zoku Bokura no Taiyou - Taiyou Shounen Django Rev 0 (2004)(Konami)(JP)(en-ja)[h4]"
+	description "Zoku Bokura no Taiyou - Taiyou Shounen Django Rev 0 (2004)(Konami)(JP)(en-ja)[h4]"
+	rom ( name "Zoku Bokura no Taiyou - Taiyou Shounen Django Rev 0 (2004)(Konami)(JP)(en-ja)[h4].bin" size 16777216 crc 53757280 md5 eb74ae7bc2d5dad237299be957dd8140 sha1 d6ac6b876f17786f4f88a5da4a63c217fdae4107 )
+)
+
+game (
+	name "Zoku Bokura no Taiyou - Taiyou Shounen Django Rev 0 (2004)(Konami)(JP)(en-ja)[h5]"
+	description "Zoku Bokura no Taiyou - Taiyou Shounen Django Rev 0 (2004)(Konami)(JP)(en-ja)[h5]"
+	rom ( name "Zoku Bokura no Taiyou - Taiyou Shounen Django Rev 0 (2004)(Konami)(JP)(en-ja)[h5].bin" size 16777216 crc 54e8da86 md5 0e6538eb3949523a63d16e73b01b5d78 sha1 0a872e8131f8dd36ac94d500e6ae9bfd02181efc )
+)
+
+game (
+	name "Zoku Bokura no Taiyou - Taiyou Shounen Django Rev 0 (2004)(Konami)(JP)(en-ja)[h6]"
+	description "Zoku Bokura no Taiyou - Taiyou Shounen Django Rev 0 (2004)(Konami)(JP)(en-ja)[h6]"
+	rom ( name "Zoku Bokura no Taiyou - Taiyou Shounen Django Rev 0 (2004)(Konami)(JP)(en-ja)[h6].bin" size 16777216 crc 9cef2b65 md5 fb0aa1325a17d7686961e5f0169e892b sha1 8087685e5500d7a0649d17e78e702e7f9a7f70b9 )
+)
+
+game (
+	name "Zoku Bokura no Taiyou - Taiyou Shounen Django Rev 0 (2004)(Konami)(JP)(en-ja)[h]"
+	description "Zoku Bokura no Taiyou - Taiyou Shounen Django Rev 0 (2004)(Konami)(JP)(en-ja)[h]"
+	rom ( name "Zoku Bokura no Taiyou - Taiyou Shounen Django Rev 0 (2004)(Konami)(JP)(en-ja)[h].bin" size 16777216 crc 3a5c90bb md5 b829faee3d44dfaaaec5d058a396aab5 sha1 86b9dfa441d1590aa06b81d20a1210ae1ba1a477 )
+)
+
+game (
+	name "Zoku Bokura no Taiyou - Taiyou Shounen Django Rev 0 (2004)(Konami)(JP)(en-ja)[tr zh]"
+	description "Zoku Bokura no Taiyou - Taiyou Shounen Django Rev 0 (2004)(Konami)(JP)(en-ja)[tr zh]"
+	rom ( name "Zoku Bokura no Taiyou - Taiyou Shounen Django Rev 0 (2004)(Konami)(JP)(en-ja)[tr zh].bin" size 16777216 crc c3cb0333 md5 d9aeb431cdd29715c3bdd582cda9c0ee sha1 285d82976abefa9bdb1c0454458d419408aeb545 )
+)
+
+game (
+	name "Zoku Bokura no Taiyou - Taiyou Shounen Django Rev 0 (2004)(Konami)(JP)(en-ja)[tr zh][a]"
+	description "Zoku Bokura no Taiyou - Taiyou Shounen Django Rev 0 (2004)(Konami)(JP)(en-ja)[tr zh][a]"
+	rom ( name "Zoku Bokura no Taiyou - Taiyou Shounen Django Rev 0 (2004)(Konami)(JP)(en-ja)[tr zh][a].bin" size 16777216 crc b8ba943a md5 fb6d0eab0792545543b395b3652945e9 sha1 c6c6b61b64140b6b79106f80675a0ab4e5ce2508 )
+)
+
+game (
+	name "Zoku Bokura no Taiyou - Taiyou Shounen Django Rev 1 (2004)(Konami)(JP)(en-ja)"
+	description "Zoku Bokura no Taiyou - Taiyou Shounen Django Rev 1 (2004)(Konami)(JP)(en-ja)"
+	rom ( name "Zoku Bokura no Taiyou - Taiyou Shounen Django Rev 1 (2004)(Konami)(JP)(en-ja).bin" size 16777216 crc 71e2cd01 md5 6449dc62cdf67c4d4d293febd38dcfda sha1 1a81843c3070decea4cbca20c4563541400b2437 )
+)
+
+game (
+	name "Zoku Bokura no Taiyou - Taiyou Shounen Django Rev 1 (2004)(Konami)(JP)(en-ja)[h2]"
+	description "Zoku Bokura no Taiyou - Taiyou Shounen Django Rev 1 (2004)(Konami)(JP)(en-ja)[h2]"
+	rom ( name "Zoku Bokura no Taiyou - Taiyou Shounen Django Rev 1 (2004)(Konami)(JP)(en-ja)[h2].bin" size 16777216 crc 8d93fc9f md5 4dc5d81d796da749c6c56e51fb79b576 sha1 e5d17d10227f2192af17f016f4122b1c165b2c73 )
+)
+
+game (
+	name "Zoku Bokura no Taiyou - Taiyou Shounen Django Rev 1 (2004)(Konami)(JP)(en-ja)[h3]"
+	description "Zoku Bokura no Taiyou - Taiyou Shounen Django Rev 1 (2004)(Konami)(JP)(en-ja)[h3]"
+	rom ( name "Zoku Bokura no Taiyou - Taiyou Shounen Django Rev 1 (2004)(Konami)(JP)(en-ja)[h3].bin" size 16777216 crc c480ded1 md5 aef30556c383c5561a87f084a8bed2ff sha1 a7a343c6f2e4993e1cfee7c16c9f9f0bf51ae63c )
+)
+
+game (
+	name "Zoku Bokura no Taiyou - Taiyou Shounen Django Rev 1 (2004)(Konami)(JP)(en-ja)[h4]"
+	description "Zoku Bokura no Taiyou - Taiyou Shounen Django Rev 1 (2004)(Konami)(JP)(en-ja)[h4]"
+	rom ( name "Zoku Bokura no Taiyou - Taiyou Shounen Django Rev 1 (2004)(Konami)(JP)(en-ja)[h4].bin" size 16777216 crc faa29548 md5 9aed9a30164bdc6e828025ba50868de0 sha1 6ea20d7d4c8af0d6012d402fa93f867144e66588 )
+)
+
+game (
+	name "Zoku Bokura no Taiyou - Taiyou Shounen Django Rev 1 (2004)(Konami)(JP)(en-ja)[h5]"
+	description "Zoku Bokura no Taiyou - Taiyou Shounen Django Rev 1 (2004)(Konami)(JP)(en-ja)[h5]"
+	rom ( name "Zoku Bokura no Taiyou - Taiyou Shounen Django Rev 1 (2004)(Konami)(JP)(en-ja)[h5].bin" size 16777216 crc 38f1ef4f md5 225f19c9e403024df9d412088097f41d sha1 17083c89f9dd84089f2a4cd8953a4e542d691e81 )
+)
+
+game (
+	name "Zoku Bokura no Taiyou - Taiyou Shounen Django Rev 1 (2004)(Konami)(JP)(en-ja)[h]"
+	description "Zoku Bokura no Taiyou - Taiyou Shounen Django Rev 1 (2004)(Konami)(JP)(en-ja)[h]"
+	rom ( name "Zoku Bokura no Taiyou - Taiyou Shounen Django Rev 1 (2004)(Konami)(JP)(en-ja)[h].bin" size 16777216 crc 4fc08698 md5 9e962ae35cd67b8198a77ff272705ce9 sha1 21da535ccfe96fc735592dc25ee4ce0446ffd67a )
+)
+
+game (
+	name "Zone of the Enders - The Fist of Mars (2002)(Konami)(EU)(en)"
+	description "Zone of the Enders - The Fist of Mars (2002)(Konami)(EU)(en)"
+	rom ( name "Zone of the Enders - The Fist of Mars (2002)(Konami)(EU)(en).bin" size 8388608 crc 973496e0 md5 55b8193f7a2e96d6af029e2411fe22cb sha1 2441dcc18125514596c36b7ebc090f3fb3644fdb )
+)
+
+game (
+	name "Zone of the Enders - The Fist of Mars (2002)(Konami)(US)"
+	description "Zone of the Enders - The Fist of Mars (2002)(Konami)(US)"
+	rom ( name "Zone of the Enders - The Fist of Mars (2002)(Konami)(US).bin" size 8388608 crc 24244415 md5 b9c0646696297fb21cfad315c434cc2a sha1 1839f900e5f2c8a52a4ce160a8c35a572c2d388f )
+)
+
+game (
+	name "Zone of the Enders - The Fist of Mars (2002)(Konami)(US)[h2]"
+	description "Zone of the Enders - The Fist of Mars (2002)(Konami)(US)[h2]"
+	rom ( name "Zone of the Enders - The Fist of Mars (2002)(Konami)(US)[h2].bin" size 8388608 crc e67ba140 md5 b6c9c67d3b69263696f184d721d9bd35 sha1 f126b42514c558ae802ea4039c6b3774b68013a9 )
+)
+
+game (
+	name "Zone of the Enders - The Fist of Mars (2002)(Konami)(US)[h]"
+	description "Zone of the Enders - The Fist of Mars (2002)(Konami)(US)[h]"
+	rom ( name "Zone of the Enders - The Fist of Mars (2002)(Konami)(US)[h].bin" size 8388608 crc fe4408f1 md5 afe3e5df2faa4a11b6f1cd2d56ca9b8c sha1 40d9e41d715ee54d395e02aff153cfc2355e28ab )
+)
+
+game (
+	name "ZooCube (2002)(Acclaim - PuzzleKings)(EU)(M5)"
+	description "ZooCube (2002)(Acclaim - PuzzleKings)(EU)(M5)"
+	rom ( name "ZooCube (2002)(Acclaim - PuzzleKings)(EU)(M5).bin" size 4194304 crc 4a23b8d6 md5 2097afe595661f911cffe25050d532ec sha1 5f47fd6ebd9738c85ac93b9faa0266c8abb26090 )
+)
+
+game (
+	name "ZooCube (2002)(Acclaim - PuzzleKings)(EU)(M5)[h]"
+	description "ZooCube (2002)(Acclaim - PuzzleKings)(EU)(M5)[h]"
+	rom ( name "ZooCube (2002)(Acclaim - PuzzleKings)(EU)(M5)[h].bin" size 4194304 crc 191a6914 md5 2fbec6a2646f50fa4a2bd36776f0d373 sha1 0e8a1f95250775fc446f874b1324fee896051424 )
+)
+
+game (
+	name "ZooCube (2002)(Acclaim - PuzzleKings)(JP)"
+	description "ZooCube (2002)(Acclaim - PuzzleKings)(JP)"
+	rom ( name "ZooCube (2002)(Acclaim - PuzzleKings)(JP).bin" size 4194304 crc 09a2255f md5 50c6dcc5065b594199d9fe8b764420a3 sha1 a008170113aec5b9b9c1c710c997f0f5c0511dc5 )
+)
+
+game (
+	name "ZooCube (2002)(Acclaim - PuzzleKings)(US)"
+	description "ZooCube (2002)(Acclaim - PuzzleKings)(US)"
+	rom ( name "ZooCube (2002)(Acclaim - PuzzleKings)(US).bin" size 4194304 crc af20be72 md5 01457d05d4601ceff3f6d27a31606c18 sha1 044713bea5245ee6e31b8ec4744c0696f79b30d0 )
+)
+
+game (
+	name "Zooo (2005)(Buddiez - Ignition Entertainment - Success)(EU)(M5)"
+	description "Zooo (2005)(Buddiez - Ignition Entertainment - Success)(EU)(M5)"
+	rom ( name "Zooo (2005)(Buddiez - Ignition Entertainment - Success)(EU)(M5).bin" size 8388608 crc 897b2893 md5 e0ec4f5cd24d2f7b93eac7f7d7b89398 sha1 9096450c4b29ab6e317d94ca09ee82f5b74dd4b1 )
+)
+
+game (
+	name "Zooo (2005)(Buddiez - Ignition Entertainment - Success)(EU)(M5)[t]"
+	description "Zooo (2005)(Buddiez - Ignition Entertainment - Success)(EU)(M5)[t]"
+	rom ( name "Zooo (2005)(Buddiez - Ignition Entertainment - Success)(EU)(M5)[t].bin" size 8454144 crc 58e7dbdd md5 96454952a90eae4a0a794d501d79c66a sha1 76ec02bbf989ccdb88e3b99b968f066a1ca23247 )
+)
+

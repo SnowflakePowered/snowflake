@@ -1,0 +1,27 @@
+﻿{
+  "name": "Identifier.ClrMameProDat",
+  "type": "snowflake_plugin_identifier",
+  "version": "1.0.0.0",
+  "authors": [
+    "Snowflake Authors"
+  ],
+  "description": "ROM Identifier using ClrMamePro dats",
+  "identifier_platforms": [
+    "ATARI_2600", 
+    "ATARI_5200", 
+    "ATARI_LYNX", 
+    "NINTENDO_NES", 
+    "NINTENDO_SNES", 
+    "NINTENDO_N64", 
+    "NINTENDO_GB", 
+    "NINTENDO_GBC", 
+    "NINTENDO_GBA", 
+    "NINTENDO_NDS", 
+    "SEGA_SMS", 
+    "SEGA_GEN", 
+    "SEGA_MD", 
+    "SEGA_CD", 
+    "SEGA_32X", 
+    "SEGA_GG"
+  ]
+}

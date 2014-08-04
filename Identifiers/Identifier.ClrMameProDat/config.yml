@@ -1,0 +1,32 @@
+﻿dats:
+  ATARI_2600: 
+    - 'ATARI_2600.TOSEC.dat'
+  ATARI_5200: 
+    - 'ATARI_5200.TOSEC.dat'
+  ATARI_LYNX: 
+    - 'ATARI_LYNX.TOSEC.dat'
+  NINTENDO_NES: 
+    - 'NINTENDO_NES.TOSEC.dat'
+  NINTENDO_SNES: 
+    - 'NINTENDO_SNES.TOSEC.dat'
+  NINTENDO_N64: 
+    - 'NINTENDO_N64.TOSEC.dat'
+  NINTENDO_GB: 
+    - 'NINTENDO_GB.TOSEC.dat'
+  NINTENDO_GBC: 
+    - 'NINTENDO_GBC.TOSEC.dat'
+  NINTENDO_GBA: 
+    - 'NINTENDO_GBA.TOSEC.dat'
+  NINTENDO_NDS: 
+    - 'NINTENDO_NDS.TOSEC.dat'
+  SEGA_SMS: 
+    - 'SEGA_SMS.TOSEC.dat'
+  SEGA_GEN: 
+    - 'SEGA_GEN.TOSEC.dat'
+  SEGA_MD: 
+    - 'SEGA_GEN.TOSEC.dat'
+  SEGA_32X: 
+    - 'SEGA_32X.TOSEC.dat'
+  SEGA_GG: 
+    - 'SEGA_GG.TOSEC.dat'
+    
