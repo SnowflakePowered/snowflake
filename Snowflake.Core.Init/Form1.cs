@@ -34,7 +34,6 @@ namespace Snowflake.Core.Init
             await FrontendCore.InitPluginManagerAsync();
            
             var dbgame = FrontendCore.LoadedCore.GameDatabase.GetGameByUUID("sWJznptYf0m_qH0_OvHtSg");
-            Console.WriteLine("getgm");
             this.textBox1.Text = JsonConvert.SerializeObject(dbgame);
         }
     }

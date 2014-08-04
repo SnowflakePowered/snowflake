@@ -96,6 +96,7 @@ namespace Snowflake.Database
                     {
                         gamesResults.Add(GetGameFromDataRow(row));
                     }
+                    this.DBConnection.Close();
                     return gamesResults;
                 }
             }

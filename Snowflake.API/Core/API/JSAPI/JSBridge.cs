@@ -24,9 +24,10 @@ namespace Snowflake.Core.API.JSAPI
         public static string GetTestGame(JSRequest request)
         {
             var platform = FrontendCore.LoadedCore.LoadedPlatforms["NINTENDO_NES"];
-            var game = platform.GetScrapeEngine().GetGameInfo("dummysmb.nes");
+            var game = FrontendCore.LoadedCore.GameDatabase.GetGameByUUID("sWJznptYf0m_qH0_OvHtSg");
             return JSBridge.ProcessJSONP(new Game[] {game}, request);
         }
+
         public static string Work(JSRequest request)
         {
             System.Threading.Thread.Sleep(100000);
