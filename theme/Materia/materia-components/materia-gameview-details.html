@@ -140,26 +140,26 @@
 	<div id="gameListContainer" drawer>
 		<core-selector id="gameList" selected="0" on-core-select="{{gameSelect}}">
 			<template repeat="{{game, gameIndex in games}}">
-				<div class="gameItem" index="{{gameIndex}}" name="{{game.name}}">{{game.name}}</div>
+				<div class="gameItem" index="{{gameIndex}}" name="{{game.Name}}">{{game.Name}}</div>
 			</template>
 		</core-selector>
 	</div>
 
 	<div id="gameDetails" main>
-			<unresolved-img id="background" src="{{game.art}}"></unresolved-img>
+			<unresolved-img id="background" src="{{game.Images.Fanarts[0][1]}}"></unresolved-img>
 			<div id="gamelaunch-tab" class="float-left">
 				<div id="wrapperGameTitle" class="launch-tab float-left clear-both card slide-left">
 					<h1 id="gameTitle">
-					{{game.name}}
+					{{game.Name}}
 					</h1>
 				</div>
 				<div class="launch-tab card float-left clear-both slide-left">
-					<a href="#snowflake://run/{{game.id}}">
+					<a href="#snowflake://run/{{game.UUID}}">
 						Play
 					</a>
 				</div>
 				<div class="launch-tab card float-left clear-both slide-left">
-					<a href="#snowflake://config/{{game.id}}">
+					<a href="#snowflake://config/{{game.UUID}}">
 						Configure
 					</a>
 				</div>
@@ -169,7 +169,7 @@
 					<div class="float-left clear-left">
 					<div id="wrapperGameBoxart">
 						<div id="gameBoxart" class="float-right clear-both">
-								<unresolved-img unresolved src="{{game.img}}" class="card"></unresolved-img>
+								<unresolved-img unresolved src="{{game.Images.Boxarts.snowflake_img_boxart_front[1]}}" class="card"></unresolved-img>
 								<paper-shadow z="1"></paper-shadow></img>
 						</div>
 					</div>
@@ -178,22 +178,21 @@
 							<table>
 									<tr>
 										<th scope="row">Publisher</th>
-										<!--todo set this snowflake keys-->
-										<td>{{game.metadata.publisher}}</td>
+										<td>{{game.Metadata.snowflake_game_publisher}}</td>
 									</tr>
 									<tr>
 										<th scope="row">Developer</th>
-										<td>{{game.metadata.developer}}</td>
+										<td>{{game.Metadata.snowflake_game_developer}}</td>
 									</tr>
 									<tr>
 										<th scope="row">Release Date</th>
-										<td>{{game.metadata.releasedate}}</td>
+										<td>{{game.Metadata.snowflake_game_releasedate}}</td>
 									</tr>
 							</table>
 						</div><br />
 						<div id="gameDescription" class="card">
 							<p>
-								{{game.metadata.description}}
+								{{game.Metadata.snowflake_game_description}}
 							</p>
 						</div>
 					</div>
@@ -201,14 +200,104 @@
 			</div>
 		</div>
 		</core-drawer-panel>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
 	</template>
 	
 	<script>
 		Polymer('materia-gameview-details', {
 			created: function() {
+			
 			this.games = [
-					//replace with core-ajax call
-				];
+    {
+        "PlatformId": "NINTENDO_NES",
+        "Name": "Super Mario Bros.",
+        "Images": {
+            "Fanarts": [
+                [
+                    "fanart_0",
+                    "http://thegamesdb.net/banners/fanart/original/140-1.jpg"
+                ],
+                [
+                    "fanart_1",
+                    "http://thegamesdb.net/banners/fanart/original/140-10.jpg"
+                ],
+                [
+                    "fanart_2",
+                    "http://thegamesdb.net/banners/fanart/original/140-11.jpg"
+                ],
+                [
+                    "fanart_3",
+                    "http://thegamesdb.net/banners/fanart/original/140-12.jpg"
+                ],
+                [
+                    "fanart_4",
+                    "http://thegamesdb.net/banners/fanart/original/140-13.jpg"
+                ],
+                [
+                    "fanart_5",
+                    "http://thegamesdb.net/banners/fanart/original/140-14.jpg"
+                ],
+                [
+                    "fanart_6",
+                    "http://thegamesdb.net/banners/fanart/original/140-2.jpg"
+                ],
+                [
+                    "fanart_7",
+                    "http://thegamesdb.net/banners/fanart/original/140-3.jpg"
+                ],
+                [
+                    "fanart_8",
+                    "http://thegamesdb.net/banners/fanart/original/140-4.jpg"
+                ],
+                [
+                    "fanart_9",
+                    "http://thegamesdb.net/banners/fanart/original/140-5.jpg"
+                ],
+                [
+                    "fanart_10",
+                    "http://thegamesdb.net/banners/fanart/original/140-7.jpg"
+                ],
+                [
+                    "fanart_11",
+                    "http://thegamesdb.net/banners/fanart/original/140-8.jpg"
+                ],
+                [
+                    "fanart_12",
+                    "http://thegamesdb.net/banners/fanart/original/140-9.jpg"
+                ]
+            ],
+            "Screenshots": [
+                [
+                    "screenshot_0",
+                    "http://thegamesdb.net/banners/screenshots/140-1.jpg"
+                ]
+            ],
+            "Boxarts": {
+                "snowflake_img_boxart_front": [
+                    "boxart_front",
+                    "http://thegamesdb.net/banners/boxart/original/front/140-1.jpg"
+                ],
+                "snowflake_img_boxart_back": [
+                    "boxart_back",
+                    "http://thegamesdb.net/banners/boxart/original/back/140-2.jpg"
+                ]
+            },
+            "CachePath": "C:\\Users\\Ronny\\AppData\\Roaming\\Snowflake\\data\\imagescache",
+            "ImagesID": "QYL0Q9y-f0ymisLb0WX6Hg"
+        },
+        "Metadata": {
+            "snowflake_game_description": "The player takes the role of Mario, or in the case of a second player, Mario's brother Luigi. The ultimate objective is to race through the worlds of the Mushroom Kingdom, evade or eliminate Bowser's forces, and save the Princess",
+            "snowflake_game_title": "Super Mario Bros.",
+            "snowflake_game_releasedate": "09/13/1985",
+            "snowflake_game_publisher": "Nintendo",
+            "snowflake_game_developer": "Nintendo"
+        },
+        "UUID": "sWJznptYf0m_qH0_OvHtSg",
+        "FileName": "dummysmb.nes",
+        "Settings": {}
+    }
+];
 			},
 			domReady: function() {
 				this.game = this.games['0'];
