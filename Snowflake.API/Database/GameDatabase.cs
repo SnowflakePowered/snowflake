@@ -55,7 +55,6 @@ namespace Snowflake.Database
                                           @metadata,
                                           @settings)", this.DBConnection))
             {
-                Console.WriteLine(sqlCommand.CommandText);
                 sqlCommand.Parameters.AddWithValue("@platform_id", game.PlatformId);
                 sqlCommand.Parameters.AddWithValue("@uuid", game.UUID);
                 sqlCommand.Parameters.AddWithValue("@filename", game.FileName);
@@ -83,9 +82,11 @@ namespace Snowflake.Database
         }
         private IList<Game>GetGamesByColumn(string colName, string searchQuery){
             this.DBConnection.Open();
-            string query = @"SELECT * FROM `games` WHERE `" + colName + @"` == """ + searchQuery + @"""";
-            using (SQLiteCommand sqlCommand = new SQLiteCommand(query, this.DBConnection))
+            using (SQLiteCommand sqlCommand = new SQLiteCommand(@"SELECT * FROM `games` WHERE `%colName` == @searchQuery"
+                , this.DBConnection))
             {
+                sqlCommand.CommandText = sqlCommand.CommandText.Replace("%colName", colName); //Easier to read than string replacement.
+                sqlCommand.Parameters.AddWithValue("@searchQuery", searchQuery);
                 using (var reader = sqlCommand.ExecuteReader())
                 {
                     DataTable result = new DataTable();
