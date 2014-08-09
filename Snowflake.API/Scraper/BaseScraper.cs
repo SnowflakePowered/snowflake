@@ -13,7 +13,7 @@ namespace Snowflake.Scraper
     {
         public BiDictionary<string, string> ScraperMap { get; private set; }
 
-        public BaseScraper(Assembly pluginAssembly) : base(pluginAssembly)
+        protected BaseScraper(Assembly pluginAssembly) : base(pluginAssembly)
         {
             using (Stream stream = this.PluginAssembly.GetManifestResourceStream("scrapermap.json"))
             using (StreamReader reader = new StreamReader(stream))

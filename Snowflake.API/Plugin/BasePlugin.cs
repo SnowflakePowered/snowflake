@@ -11,7 +11,7 @@ using Snowflake.Configuration;
 using Snowflake.Configuration.Interface;
 namespace Snowflake.Plugin
 {
-    public class BasePlugin : IPlugin
+    public abstract class BasePlugin : IPlugin
     {
         public string PluginName { get; private set; }
         public IDictionary<string, dynamic> PluginInfo { get; private set; }
@@ -19,7 +19,7 @@ namespace Snowflake.Plugin
         public string PluginDataPath { get; private set; }
         public virtual IConfiguration PluginConfiguration { get; private set; }
 
-        public BasePlugin(Assembly pluginAssembly)
+        protected BasePlugin(Assembly pluginAssembly)
         {
             this.PluginAssembly = pluginAssembly;
             

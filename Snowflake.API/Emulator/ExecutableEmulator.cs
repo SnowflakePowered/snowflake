@@ -12,7 +12,7 @@ namespace Snowflake.Emulator
         public string MainExecutable { get; private set; }
         public string EmulatorRoot { get; private set; }
 
-        public ExecutableEmulator(Assembly pluginAssembly):base(pluginAssembly)
+        protected ExecutableEmulator(Assembly pluginAssembly):base(pluginAssembly)
         {
             this.MainExecutable = this.PluginInfo["emulator_executable"];
             this.EmulatorRoot = this.PluginInfo["emulator_root"];
