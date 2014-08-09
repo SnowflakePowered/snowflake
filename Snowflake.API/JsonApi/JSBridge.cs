@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Snowflake.Core.API;
 using Newtonsoft.Json;
 using Snowflake.Extensions;
 using Snowflake.Information.Game;
@@ -12,23 +11,25 @@ namespace Snowflake.Core.JsonApi
 {
     public class JSBridge
     {
-        public IDictionary<string, IDictionary<string, Func<JSRequest, dynamic>>> JavascriptNamespace;
+        public IDictionary<string, JSApiCore> JavascriptNamespace;
         public JSBridge()
         {
-            this.JavascriptNamespace = new Dictionary<string, IDictionary<string, Func<JSRequest, dynamic>>>();
+            this.JavascriptNamespace = new Dictionary<string, JSApiCore>();
         }
-        public void RegisterNamespace(string namespaceName)
+        public void RegisterNamespace(string namespaceName, JSApiCore namespaceObject)
         {
             if (!this.JavascriptNamespace.ContainsKey(namespaceName))
-                this.JavascriptNamespace.Add(namespaceName, new Dictionary<string, Func<JSRequest, dynamic>>());
+                this.JavascriptNamespace.Add(namespaceName, namespaceObject);
         }
-        public void RegisterMethod(string namespaceName, string methodName, Func<JSRequest, dynamic> method)
+        
+        public async Task<string> CallMethod(string namespaceName, string methodName, JSRequest request)
         {
-            this.JavascriptNamespace[namespaceName].Add(methodName, method);
-        }
-        public string CallMethod(string namespaceName, string methodName, JSRequest request)
-        {
-            dynamic result = Task.Run<dynamic>(this.JavascriptNamespace[namespaceName][methodName].Invoke(request));
+
+            dynamic result = await Task.Run<dynamic>(
+                () => 
+                this.JavascriptNamespace[namespaceName].GetType().GetMethod(methodName).Invoke(this.JavascriptNamespace[namespaceName], new object[] {request})
+            );
+
             return ProcessJSONP(result, request);
         }
         private static string ProcessJSONP(dynamic output, JSRequest request){

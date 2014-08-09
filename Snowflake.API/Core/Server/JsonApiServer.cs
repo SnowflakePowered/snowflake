@@ -8,7 +8,7 @@ using System.IO;
 using System.Threading;
 using Newtonsoft.Json;
 using System.Web;
-using Snowflake.Core.API.JSAPI;
+using Snowflake.Core.JsonApi;
 using Snowflake.Extensions;
 namespace Snowflake.Core.Server
 {

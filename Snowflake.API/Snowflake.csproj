@@ -85,8 +85,9 @@
     <Compile Include="Constants\Plugin\PluginInfoFields.cs" />
     <Compile Include="Constants\Plugin\PluginTypes.cs" />
     <Compile Include="Constants\Plugin\ScraperInfoFields.cs" />
-    <Compile Include="Core\JsonApi\JSBridge.cs" />
-    <Compile Include="Core\JsonApi\JSRequest.cs" />
+    <Compile Include="JsonApi\JSApiCore.cs" />
+    <Compile Include="JsonApi\JSBridge.cs" />
+    <Compile Include="JsonApi\JSRequest.cs" />
     <Compile Include="Core\EventDelegate\JsonRPCEventDelegate.cs" />
     <Compile Include="Core\Interface\IPluginManager.cs" />
     <Compile Include="Core\Interface\IFrontendCore.cs" />
