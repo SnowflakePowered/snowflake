@@ -44,13 +44,7 @@ namespace Snowflake.Core
                 FrontendCore.LoadedCore.APIServer.StartServer();
 
         }
-        public static void InitCoreAsync(){
-            new Thread(
-                () =>
-                {
-                    FrontendCore.InitCore();
-             });
-        }
+      
         public async static Task InitPluginManagerAsync()
         {
             await Task.Run(() => InitPluginManager());
@@ -79,21 +73,18 @@ namespace Snowflake.Core
         {
             var loadedPlatforms = new Dictionary<string, Platform>();
 
-            foreach (string fileName in Directory.GetFiles(platformDirectory))
+            foreach (string fileName in Directory.GetFiles(platformDirectory).Where(fileName => Path.GetExtension(fileName) == ".platform"))
             {
-                if (Path.GetExtension(fileName) == ".platform")
+                try
                 {
-                    try
-                    {
-                        var platform = JsonConvert.DeserializeObject<Platform>(File.ReadAllText(fileName));
-                        loadedPlatforms.Add(platform.PlatformId, platform);
-                    }
-                    catch (Exception)
-                    {
-                        //log
-                        Console.WriteLine("Exception occured when importing platform " + fileName);
-                        continue;
-                    }
+                    var platform = JsonConvert.DeserializeObject<Platform>(File.ReadAllText(fileName));
+                    loadedPlatforms.Add(platform.PlatformId, platform);
+                }
+                catch (Exception)
+                {
+                    //log
+                    Console.WriteLine("Exception occured when importing platform " + fileName);
+                    continue;
                 }
             }
             return loadedPlatforms;

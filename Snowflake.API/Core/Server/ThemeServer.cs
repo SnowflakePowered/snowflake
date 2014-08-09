@@ -11,7 +11,6 @@ namespace Snowflake.Core.Server
 {
     public class ThemeServer : BaseHttpServer
     {
-     
         public string ThemeRoot { get; set; }
         public ThemeServer(string themeRoot) : base(30000)
         {

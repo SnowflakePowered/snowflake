@@ -91,11 +91,7 @@ namespace Snowflake.Database
                 {
                     var result = new DataTable();
                     result.Load(reader);
-                    var gamesResults = new List<Game>();
-                    foreach (DataRow row in result.Rows)
-                    {
-                        gamesResults.Add(GetGameFromDataRow(row));
-                    }
+                    var gamesResults = (from DataRow row in result.Rows select GetGameFromDataRow(row)).ToList();
                     this.DBConnection.Close();
                     return gamesResults;
                 }

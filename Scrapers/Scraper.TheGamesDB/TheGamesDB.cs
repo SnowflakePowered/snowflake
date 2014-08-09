@@ -81,17 +81,15 @@ namespace Scraper.TheGamesDB
 
                 //Add fanarts
                 var fanarts = (from fanart in xmlDoc.Descendants("fanart") select fanart).ToList();
-                foreach (var fanart in fanarts)
+                foreach (string fanartUrl in fanarts.Select(fanart => baseImageUrl + fanart.Element("original").Value))
                 {
-                    string fanartUrl = baseImageUrl + fanart.Element("original").Value;
                     images.AddFromUrl(GameImageType.Fanart, new Uri(fanartUrl));
                 }
 
                 //Add screenshots
                 var screenshots = (from screenshot in xmlDoc.Descendants("screenshot") select screenshot).ToList();
-                foreach (var screenshot in screenshots)
+                foreach (string screenshotUrl in screenshots.Select(screenshot => baseImageUrl + screenshot.Element("original").Value))
                 {
-                    string screenshotUrl = baseImageUrl + screenshot.Element("original").Value;
                     images.AddFromUrl(GameImageType.Screenshot, new Uri(screenshotUrl));
                 }
                 return Tuple.Create(metadata, images);
