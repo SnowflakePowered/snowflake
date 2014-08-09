@@ -48,8 +48,8 @@ namespace Snowflake.Core
         }
         private void ComposeImports()
         {
-            DirectoryCatalog catalog = new DirectoryCatalog(Path.Combine(this.AppDataDirectory, "plugins"));
-            CompositionContainer container = new CompositionContainer(catalog);
+            var catalog = new DirectoryCatalog(Path.Combine(this.AppDataDirectory, "plugins"));
+            var container = new CompositionContainer(catalog);
             container.SatisfyImportsOnce(this);
         }
 

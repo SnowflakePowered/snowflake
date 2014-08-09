@@ -46,7 +46,7 @@ namespace Identifier.DatIdentifier
 
         private string GetCrc32(FileStream file)
         {
-            using (Crc32 crc32 = new Crc32())
+            using (var crc32 = new Crc32())
             return BitConverter.ToString(crc32.ComputeHash(file)).Replace("-", String.Empty).ToLowerInvariant();
 
         }

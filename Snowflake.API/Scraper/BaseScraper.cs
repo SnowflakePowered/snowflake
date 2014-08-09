@@ -16,18 +16,18 @@ namespace Snowflake.Scraper
         protected BaseScraper(Assembly pluginAssembly) : base(pluginAssembly)
         {
             using (Stream stream = this.PluginAssembly.GetManifestResourceStream("scrapermap.json"))
-            using (StreamReader reader = new StreamReader(stream))
+            using (var reader = new StreamReader(stream))
             {
                 string file = reader.ReadToEnd();
                 Console.WriteLine(file);
-                BiDictionary<string, string> scraperMapValues = JsonConvert.DeserializeObject<BiDictionary<string, string>>(file);
+                var scraperMapValues = JsonConvert.DeserializeObject<BiDictionary<string, string>>(file);
                 this.ScraperMap = scraperMapValues;
             }
             
         }
         public abstract IList<GameScrapeResult> GetSearchResults(string searchQuery);
         public abstract IList<GameScrapeResult> GetSearchResults(string searchQuery, string platformId);
-        public abstract Tuple<IDictionary<string, string>, GameImages> GetGameDetails(string id);
+        public abstract Tuple<Dictionary<string, string>, GameImages> GetGameDetails(string id);
 
     }
 }

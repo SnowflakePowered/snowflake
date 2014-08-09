@@ -32,7 +32,7 @@ namespace Snowflake.Core.Server
                 dictParams =  nvcParams.AllKeys.ToDictionary(o => o, o => nvcParams[o]);
             }
             var request = new JSRequest(getRequest.Split('/')[0], dictParams);
-            StreamWriter writer = new StreamWriter(context.Response.OutputStream);
+            var writer = new StreamWriter(context.Response.OutputStream);
             
             writer.WriteLine(await ProcessRequest(request));
             writer.Flush();

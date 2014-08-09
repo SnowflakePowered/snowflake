@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,7 +23,7 @@ namespace Scraper.TheGamesDB
 
         private IList<GameScrapeResult> ParseSearchResults(Uri searchUri)
         {
-            using (WebClient client = new WebClient())
+            using (var client = new WebClient())
             {
                 string xml = client.DownloadString(searchUri);
                 XDocument xmlDoc = XDocument.Parse(xml);
@@ -30,8 +31,8 @@ namespace Scraper.TheGamesDB
                 var results = new List<GameScrapeResult>();
                 foreach (var game in games)
                 {
-                    var id = game.Element("id").Value;
-                    var title = game.Element("GameTitle").Value;
+                    string id = game.Element("id").Value;
+                    string title = game.Element("GameTitle").Value;
                     string platform = "SNOWFLAKE_UNKNOWN";
                     string xmlPlatformValue = game.Element("Platform").Value;
                     if (this.ScraperMap.Reverse.ContainsKey(xmlPlatformValue)) platform = this.ScraperMap.Reverse[xmlPlatformValue];
@@ -43,38 +44,35 @@ namespace Scraper.TheGamesDB
         }
         public override IList<GameScrapeResult> GetSearchResults(string searchQuery)
         {
-            Uri searchUri = new Uri(Uri.EscapeUriString("http://thegamesdb.net/api/GetGamesList.php?name=" + searchQuery));
+            var searchUri = new Uri(Uri.EscapeUriString("http://thegamesdb.net/api/GetGamesList.php?name=" + searchQuery));
             var results = ParseSearchResults(searchUri);
             return results;
         }
         public override IList<GameScrapeResult> GetSearchResults(string searchQuery, string platformId)
         {
-            Uri searchUri = new Uri(Uri.EscapeUriString("http://thegamesdb.net/api/GetGamesList.php?name=" + searchQuery
+            var searchUri = new Uri(Uri.EscapeUriString("http://thegamesdb.net/api/GetGamesList.php?name=" + searchQuery
                 + "&platform=" + this.ScraperMap[platformId]));
             var results = ParseSearchResults(searchUri);
             return results;
         }
-        public override Tuple<IDictionary<string, string>, GameImages> GetGameDetails(string id)
+        public override Tuple<Dictionary<string, string>, GameImages> GetGameDetails(string id)
         {
-            Uri searchUri = new Uri(Uri.EscapeUriString("http://thegamesdb.net/api/GetGame.php?id=" + id));
-            using (WebClient client = new WebClient())
+            var searchUri = new Uri(Uri.EscapeUriString("http://thegamesdb.net/api/GetGame.php?id=" + id));
+            using (var client = new WebClient())
             {
                 string xml = client.DownloadString(searchUri);
                 XDocument xmlDoc = XDocument.Parse(xml);
                 string baseImageUrl = xmlDoc.Descendants("baseImgUrl").First().Value;
-                IDictionary<string, string> metadata = new Dictionary<string, string>();
-                metadata.Add(GameInfoFields.snowflake_game_description,
-                    xmlDoc.Descendants("Overview").First().Value);
-                metadata.Add(GameInfoFields.snowflake_game_title,
-                   xmlDoc.Descendants("GameTitle").First().Value);
-                metadata.Add(GameInfoFields.snowflake_game_releasedate,
-                   xmlDoc.Descendants("ReleaseDate").First().Value);
-                metadata.Add(GameInfoFields.snowflake_game_publisher,
-                   xmlDoc.Descendants("Publisher").First().Value);
-                metadata.Add(GameInfoFields.snowflake_game_developer,
-                   xmlDoc.Descendants("Developer").First().Value);
+                var metadata = new Dictionary<string, string>
+                {
+                    {GameInfoFields.snowflake_game_description, xmlDoc.Descendants("Overview").First().Value},
+                    {GameInfoFields.snowflake_game_title, xmlDoc.Descendants("GameTitle").First().Value},
+                    {GameInfoFields.snowflake_game_releasedate, xmlDoc.Descendants("ReleaseDate").First().Value},
+                    {GameInfoFields.snowflake_game_publisher, xmlDoc.Descendants("Publisher").First().Value},
+                    {GameInfoFields.snowflake_game_developer, xmlDoc.Descendants("Developer").First().Value}
+                };
 
-                GameImages images = new GameImages();
+                var images = new GameImages();
                 var boxartFront = baseImageUrl + (from boxart in xmlDoc.Descendants("boxart") where boxart.Attribute("side").Value == "front" select boxart).First().Value;
                 images.AddFromUrl(GameImageType.Boxart_front, new Uri(boxartFront));
 
@@ -96,11 +94,7 @@ namespace Scraper.TheGamesDB
                     string screenshotUrl = baseImageUrl + screenshot.Element("original").Value;
                     images.AddFromUrl(GameImageType.Screenshot, new Uri(screenshotUrl));
                 }
-
-        
-                //todo add images
                 return Tuple.Create(metadata, images);
-
             }
 
         }

@@ -31,7 +31,7 @@ namespace Snowflake.Database
             SQLiteConnection.CreateFile(this.FileName);
             var dbConnection = new SQLiteConnection("Data Source="+this.FileName+";Version=3;");
             dbConnection.Open();
-            SQLiteCommand sqlCommand = new SQLiteCommand(@"CREATE TABLE IF NOT EXISTS games(
+            var sqlCommand = new SQLiteCommand(@"CREATE TABLE IF NOT EXISTS games(
                                                                 platform_id TEXT,
                                                                 uuid TEXT,
                                                                 filename TEXT,
@@ -46,7 +46,7 @@ namespace Snowflake.Database
 
         public void AddGame(Game game){
             this.DBConnection.Open();
-            using (SQLiteCommand sqlCommand = new SQLiteCommand(@"INSERT INTO games VALUES(
+            using (var sqlCommand = new SQLiteCommand(@"INSERT INTO games VALUES(
                                           @platform_id,
                                           @uuid,
                                           @filename,
@@ -82,16 +82,16 @@ namespace Snowflake.Database
         }
         private IList<Game>GetGamesByColumn(string colName, string searchQuery){
             this.DBConnection.Open();
-            using (SQLiteCommand sqlCommand = new SQLiteCommand(@"SELECT * FROM `games` WHERE `%colName` == @searchQuery"
+            using (var sqlCommand = new SQLiteCommand(@"SELECT * FROM `games` WHERE `%colName` == @searchQuery"
                 , this.DBConnection))
             {
                 sqlCommand.CommandText = sqlCommand.CommandText.Replace("%colName", colName); //Easier to read than string replacement.
                 sqlCommand.Parameters.AddWithValue("@searchQuery", searchQuery);
                 using (var reader = sqlCommand.ExecuteReader())
                 {
-                    DataTable result = new DataTable();
+                    var result = new DataTable();
                     result.Load(reader);
-                    IList<Game> gamesResults = new List<Game>();
+                    var gamesResults = new List<Game>();
                     foreach (DataRow row in result.Rows)
                     {
                         gamesResults.Add(GetGameFromDataRow(row));

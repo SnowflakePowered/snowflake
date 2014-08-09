@@ -18,7 +18,7 @@ namespace ConsoleApplication1
 
         public async static void Run()
         {
-            JSBridge bridge = new JSBridge();
+            var bridge = new JSBridge();
             bridge.RegisterNamespace("Core", new JSApiCore());
             var output = await bridge.CallMethod("Core", "Test", new JSRequest("", new Dictionary<string, string>()));
             Console.WriteLine(output);

@@ -24,10 +24,10 @@ namespace Snowflake.Plugin
             this.PluginAssembly = pluginAssembly;
             
             using (Stream stream = this.PluginAssembly.GetManifestResourceStream("plugin.json"))
-            using (StreamReader reader = new StreamReader(stream))
+            using (var reader = new StreamReader(stream))
             {
                 string file = reader.ReadToEnd();
-                IDictionary<string, dynamic> pluginInfo = JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(file);
+                var pluginInfo = JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(file);
                 this.PluginInfo = pluginInfo;
             }
             this.PluginName = PluginInfo[PluginInfoFields.Name];
@@ -44,7 +44,7 @@ namespace Snowflake.Plugin
         protected virtual void InitConfiguration()
         {
             using (Stream stream = this.PluginAssembly.GetManifestResourceStream("config.yml"))
-            using (StreamReader reader = new StreamReader(stream))
+            using (var reader = new StreamReader(stream))
             {
                 string file = reader.ReadToEnd();
                 this.InitConfiguration(file);
