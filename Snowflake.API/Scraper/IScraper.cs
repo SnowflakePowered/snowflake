@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Snowflake.Plugin.Scraper;
+using System.ComponentModel.Composition;
 using Snowflake.Collections;
 using Snowflake.Information.Game;
-using System.ComponentModel.Composition;
+using Snowflake.Plugin.Interface;
 
-namespace Snowflake.Plugin.Interface
+namespace Snowflake.Scraper
 {
     [InheritedExport(typeof(IScraper))]
     public interface IScraper : IPlugin

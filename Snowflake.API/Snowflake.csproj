@@ -80,14 +80,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Ajax\JSApiCore.cs" />
+    <Compile Include="Ajax\JSBridge.cs" />
+    <Compile Include="Ajax\JSRequest.cs" />
     <Compile Include="Configuration\YamlConfiguration.cs" />
     <Compile Include="Constants\ImagesInfoFields.cs" />
     <Compile Include="Constants\Plugin\PluginInfoFields.cs" />
     <Compile Include="Constants\Plugin\PluginTypes.cs" />
     <Compile Include="Constants\Plugin\ScraperInfoFields.cs" />
-    <Compile Include="JsonApi\JSApiCore.cs" />
-    <Compile Include="JsonApi\JSBridge.cs" />
-    <Compile Include="JsonApi\JSRequest.cs" />
     <Compile Include="Core\EventDelegate\JsonRPCEventDelegate.cs" />
     <Compile Include="Core\Interface\IPluginManager.cs" />
     <Compile Include="Core\Interface\IFrontendCore.cs" />

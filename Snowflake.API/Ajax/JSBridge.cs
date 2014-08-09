@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Snowflake.Extensions;
-using Snowflake.Information.Game;
-using System.Dynamic;
-namespace Snowflake.Core.JsonApi
+
+namespace Snowflake.Ajax
 {
     public class JSBridge
     {

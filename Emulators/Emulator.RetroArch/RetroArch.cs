@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.ComponentModel.Composition;
-using Snowflake.Plugin.Emulator;
+using Snowflake.Emulator;
 
 namespace Emulator.RetroArch
 {
@@ -22,7 +22,7 @@ namespace Emulator.RetroArch
             this.InitConfiguration();
         }
 
-        public override void Run(string uuid)
+        public override void Run(string gameUuid)
         {
             throw new NotImplementedException();
         }

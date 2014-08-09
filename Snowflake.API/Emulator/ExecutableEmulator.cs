@@ -1,22 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Snowflake.Plugin.Interface;
+﻿using System.Reflection;
 using Snowflake.Plugin;
-using System.Reflection;
+using Snowflake.Plugin.Interface;
 
-namespace Snowflake.Plugin.Emulator
+namespace Snowflake.Emulator
 {
     public abstract class ExecutableEmulator : BasePlugin, IEmulator
     {
         public ExecutableEmulator(Assembly pluginAssembly):base(pluginAssembly)
         {
+            //todo backport functionality from retroarch
         }
-        public abstract void Run(string uuid);
-
-
+        public abstract void Run(string gameUuid);
    }
 }
 

@@ -11,7 +11,6 @@ using Snowflake.Core;
 using Snowflake.Information.Platform;
 using Snowflake.Information.Game;
 using Snowflake.Plugin.Interface;
-using Snowflake.Plugin.Scraper;
 using Newtonsoft.Json;
 using Snowflake.Constants;
 using System.Threading;

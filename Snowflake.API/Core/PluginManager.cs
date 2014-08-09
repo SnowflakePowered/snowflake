@@ -5,10 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.Composition;
 using Snowflake.Core.Interface;
+using Snowflake.Emulator;
 using Snowflake.Plugin.Interface;
 
 using System.ComponentModel.Composition.Hosting;
 using System.IO;
+using Snowflake.Scraper;
 
 namespace Snowflake.Core
 {

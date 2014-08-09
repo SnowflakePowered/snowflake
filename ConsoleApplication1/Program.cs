@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
-using Snowflake.Core.JsonApi;
+using Snowflake.Ajax;
 
 namespace ConsoleApplication1
 {

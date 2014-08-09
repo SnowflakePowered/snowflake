@@ -8,6 +8,8 @@ using Snowflake.Information.Game;
 using Snowflake.Plugin.Interface;
 using Snowflake.Constants;
 using DuoVia.FuzzyStrings;
+using Snowflake.Scraper;
+
 namespace Snowflake.Core
 {
     public class ScrapeEngine

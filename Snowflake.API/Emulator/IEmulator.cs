@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel.Composition;
+﻿using System.ComponentModel.Composition;
+using Snowflake.Plugin.Interface;
 
-namespace Snowflake.Plugin.Interface
+namespace Snowflake.Emulator
 {
     [InheritedExport(typeof(IEmulator))]
     public interface IEmulator : IPlugin
     {
-        void Run(string gameUUID);
+        void Run(string gameUuid);
     }
 }

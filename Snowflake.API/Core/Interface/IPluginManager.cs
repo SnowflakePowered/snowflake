@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using Snowflake.Emulator;
 using Snowflake.Plugin.Interface;
+using Snowflake.Scraper;
+
 namespace Snowflake.Core.Interface
 {
     public interface IPluginManager
