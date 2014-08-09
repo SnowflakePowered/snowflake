@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Reflection;
-using System.ComponentModel.Composition;
 
-namespace Snowflake.Plugin.Interface
+namespace Snowflake.Plugin
 {
     public interface IPlugin
     {

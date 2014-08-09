@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Snowflake.Emulator;
-using Snowflake.Plugin.Interface;
+using Snowflake.Plugin;
 using Snowflake.Scraper;
 
 namespace Snowflake.Core.Interface

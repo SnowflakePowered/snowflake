@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Information.Platform;
 using Snowflake.Information.Game;
-using Snowflake.Plugin.Interface;
+using Snowflake.Plugin;
 using Snowflake.Constants;
 using DuoVia.FuzzyStrings;
 using Snowflake.Scraper;

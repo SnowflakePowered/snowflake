@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using Snowflake.Collections;
 using Snowflake.Information.Game;
-using Snowflake.Plugin.Interface;
+using Snowflake.Plugin;
 
 namespace Snowflake.Scraper
 {

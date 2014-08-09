@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.Composition;
-using Snowflake.Plugin.Interface;
+using Snowflake.Plugin;
 
 namespace Snowflake.Emulator
 {

@@ -10,7 +10,6 @@ using System.Windows.Forms;
 using Snowflake.Core;
 using Snowflake.Information.Platform;
 using Snowflake.Information.Game;
-using Snowflake.Plugin.Interface;
 using Newtonsoft.Json;
 using Snowflake.Constants;
 using System.Threading;
