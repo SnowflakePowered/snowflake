@@ -1,16 +1,45 @@
-﻿using System.Reflection;
+﻿using System.Diagnostics;
+using System.IO;
+using System.Reflection;
+using Snowflake.Core;
+using Snowflake.Information.Game;
 using Snowflake.Plugin;
-using Snowflake.Plugin.Interface;
 
 namespace Snowflake.Emulator
 {
     public abstract class ExecutableEmulator : BasePlugin, IEmulator
     {
+        public string MainExecutable { get; private set; }
+        public string EmulatorRoot { get; private set; }
+
         public ExecutableEmulator(Assembly pluginAssembly):base(pluginAssembly)
         {
-            //todo backport functionality from retroarch
+            this.MainExecutable = this.PluginInfo["emulator_executable"];
+            this.EmulatorRoot = this.PluginInfo["emulator_root"];
         }
-        public abstract void Run(string gameUuid);
+
+        public virtual void Run(string gameUuid)
+        {
+            Game game = FrontendCore.LoadedCore.GameDatabase.GetGameByUUID(gameUuid);
+            this.Run(game.PlatformId, game.FileName);
+        }
+
+        public virtual void Run(string platformId, string fileName)
+        {
+            Process.Start(this.GetProcessStartInfo(platformId, fileName));
+        }
+
+        protected abstract ProcessStartInfo GetProcessStartInfo(string platformId, string fileName);
+        protected virtual ProcessStartInfo GetProcessStartInfo(string platformId, string fileName, string processArguments)
+        {
+            var startInfo = new ProcessStartInfo()
+            {
+                FileName = Path.Combine(Path.GetDirectoryName(PluginAssembly.CodeBase), this.EmulatorRoot, this.MainExecutable),
+                Arguments = processArguments,
+                WorkingDirectory = this.EmulatorRoot
+            };
+            return startInfo;
+        }
    }
 }
 
