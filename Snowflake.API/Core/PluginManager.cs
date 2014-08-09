@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -41,10 +42,10 @@ namespace Snowflake.Core
 
         public void LoadAllPlugins()
         {
-            this.LoadedIdentifiers = this.LoadPlugin<IIdentifier>(this.identifiers);
-            this.LoadedEmulators = this.LoadPlugin<IEmulator>(this.emulators);
-            this.LoadedScrapers = this.LoadPlugin<IScraper>(this.scrapers);
-            this.LoadedPlugins = this.LoadPlugin<IGenericPlugin>(this.plugins);
+            this.LoadedIdentifiers = this.LoadPlugin(this.identifiers);
+            this.LoadedEmulators = this.LoadPlugin(this.emulators);
+            this.LoadedScrapers = this.LoadPlugin(this.scrapers);
+            this.LoadedPlugins = this.LoadPlugin(this.plugins);
         }
         private void ComposeImports()
         {
@@ -53,19 +54,15 @@ namespace Snowflake.Core
             container.SatisfyImportsOnce(this);
         }
 
-        private Dictionary<string, T> LoadPlugin<T>(IEnumerable<Lazy<T>> plugins)
+        private Dictionary<string, T> LoadPlugin<T>(IEnumerable<Lazy<T>> unloadedPlugins) where T : IPlugin
         {
-            if (!(typeof(IPlugin).IsAssignableFrom(typeof(T))))
-            {
-                throw new ArgumentException("Attemped to load plugin that is not inherited from IPlugin");
-            }
             var loadedPlugins = new Dictionary<string, T>();
-           
-            foreach (var plugin in plugins)
+            foreach (var plugin in unloadedPlugins)
             {
                 var instance = (IPlugin)plugin.Value;
                 loadedPlugins.Add(instance.PluginName, plugin.Value);
                 this.PluginRegistry.Add(instance.PluginName, typeof(T));
+                Console.WriteLine(typeof(T).Name);
 
             }
             return loadedPlugins;
