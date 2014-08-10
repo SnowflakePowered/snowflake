@@ -12,14 +12,14 @@ namespace ConsoleApplication1
     {
         static void Main(string[] args)
         {
-            Run();
+           Run();
             Console.ReadLine();
         }
 
         public async static void Run()
         {
-            var bridge = new JSBridge();
-            bridge.RegisterNamespace("Core", new JSApiCore());
+            var bridge = new AjaxManager();
+            bridge.RegisterNamespace("Core", new BaseAjaxNamespace());
             var output = await bridge.CallMethod("Core", "Test", new JSRequest("", new Dictionary<string, string>()));
             Console.WriteLine(output);
             Console.ReadLine();

@@ -44,7 +44,7 @@ namespace Snowflake.Core.Server
         private async Task<string> ProcessRequest(JSRequest args)
         {
             string method = args.MethodName;
-            var invokedMethod = typeof(JSBridge).GetMethod(method);
+            var invokedMethod = typeof(AjaxManager).GetMethod(method);
             if (invokedMethod != null)
             {
                 return  (string)invokedMethod.Invoke(this, new object[] { args });
