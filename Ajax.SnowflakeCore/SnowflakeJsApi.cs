@@ -4,12 +4,13 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Snowflake.Ajax;
 
-namespace Snowflake.Ajax
+namespace Ajax.SnowflakeCore
 {
-    public class JsApiTest:BaseAjaxNamespace
+    public class SnowflakeJsApi : BaseAjaxNamespace
     {
-        public JsApiTest() : base(Assembly.GetExecutingAssembly())
+        public SnowflakeJsApi() : base(Assembly.GetExecutingAssembly())
         {
             
         }
@@ -17,7 +18,7 @@ namespace Snowflake.Ajax
         [AjaxMethod]
         public JSResponse Test(JSRequest request)
         {
-            return new JSResponse(request, "success");
+            return new JSResponse(request, "success from Api");
         }
     }
 }

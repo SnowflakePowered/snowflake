@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Snowflake.Ajax;
 
-namespace Snowflake.Ajax
+namespace Snowflake.Core
 {
     public class AjaxManager
     {

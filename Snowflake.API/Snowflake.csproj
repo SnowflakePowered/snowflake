@@ -82,9 +82,7 @@
   <ItemGroup>
     <Compile Include="Ajax\BaseAjaxNamespace.cs" />
     <Compile Include="Ajax\IBaseAjaxNamespace.cs" />
-    <Compile Include="Ajax\AjaxManager.cs" />
     <Compile Include="Ajax\AjaxMethod.cs" />
-    <Compile Include="Ajax\JsApiTest.cs" />
     <Compile Include="Ajax\JSRequest.cs" />
     <Compile Include="Ajax\JSResponse.cs" />
     <Compile Include="Configuration\YamlConfiguration.cs" />
@@ -92,6 +90,7 @@
     <Compile Include="Constants\Plugin\PluginInfoFields.cs" />
     <Compile Include="Constants\Plugin\PluginTypes.cs" />
     <Compile Include="Constants\Plugin\ScraperInfoFields.cs" />
+    <Compile Include="Core\AjaxManager.cs" />
     <Compile Include="Core\EventDelegate\JsonRPCEventDelegate.cs" />
     <Compile Include="Core\Interface\IPluginManager.cs" />
     <Compile Include="Core\Interface\IFrontendCore.cs" />

@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using Ajax.SnowflakeCore;
 using Snowflake.Ajax;
+using Snowflake.Core;
 
 namespace ConsoleApplication1
 {
@@ -19,7 +21,7 @@ namespace ConsoleApplication1
         public async static void Run()
         {
             var bridge = new AjaxManager();
-            bridge.RegisterNamespace("Core", new JsApiTest());
+            bridge.RegisterNamespace("Core", new SnowflakeJsApi());
             var output = await bridge.CallMethod(new JSRequest("Core","Test", new Dictionary<string, string>()));
             Console.WriteLine(output);
             Console.ReadLine();
