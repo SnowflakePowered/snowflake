@@ -14,5 +14,6 @@ namespace Snowflake.Core.Interface
         IDictionary<string, IGenericPlugin> LoadedPlugins { get; }
         IDictionary<string, IScraper> LoadedScrapers { get; }
         IDictionary<string, Type> PluginRegistry { get; }
+        IAjaxManager AjaxNamespace { get; }
     }
 }

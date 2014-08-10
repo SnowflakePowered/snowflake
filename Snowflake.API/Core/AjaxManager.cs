@@ -2,12 +2,13 @@
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Snowflake.Ajax;
+using Snowflake.Core.Interface;
 
 namespace Snowflake.Core
 {
-    public class AjaxManager
+    public class AjaxManager : IAjaxManager
     {
-        public IDictionary<string, IBaseAjaxNamespace> JavascriptNamespace;
+        public IDictionary<string, IBaseAjaxNamespace> JavascriptNamespace { get; private set; }
         public AjaxManager()
         {
             this.JavascriptNamespace = new Dictionary<string, IBaseAjaxNamespace>();

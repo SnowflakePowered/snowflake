@@ -10,11 +10,11 @@ using System.Linq;
 
 namespace Snowflake.Ajax
 {
-    public abstract class BaseAjaxNamespace :  IBaseAjaxNamespace
+    public abstract class BaseAjaxNamespace :  BasePlugin, IBaseAjaxNamespace
     {
         public IDictionary<string, Func<JSRequest, JSResponse>> JavascriptMethods { get; private set; }
 
-        protected BaseAjaxNamespace(Assembly pluginAssembly)
+        protected BaseAjaxNamespace(Assembly pluginAssembly):base(pluginAssembly)
         {
             this.JavascriptMethods = new Dictionary<string, Func<JSRequest, JSResponse>>();
             this.RegisterMethods();

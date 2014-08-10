@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Snowflake.Ajax;
 using Snowflake.Core;
 using Snowflake.Information.Platform;
 using Snowflake.Information.Game;
@@ -31,7 +32,7 @@ namespace Snowflake.Core.Init
         {
             await FrontendCore.InitPluginManagerAsync();
             Console.WriteLine(FrontendCore.LoadedCore.PluginManager.LoadedIdentifiers.First().Value.IdentifyGame("dummysmb.nes", "NINTENDO_NES"));
-
+            this.textBox1.Text = await FrontendCore.LoadedCore.PluginManager.AjaxNamespace.CallMethod(new JSRequest("Core", "Test", new Dictionary<string, string>()));
           //  var dbgame = FrontendCore.LoadedCore.GameDatabase.GetGameByUUID("sWJznptYf0m_qH0_OvHtSg");
            // this.textBox1.Text = JsonConvert.SerializeObject(dbgame);
         }
