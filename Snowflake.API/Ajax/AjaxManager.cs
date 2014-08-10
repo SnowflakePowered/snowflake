@@ -17,14 +17,14 @@ namespace Snowflake.Ajax
                 this.JavascriptNamespace.Add(namespaceName, namespaceObject);
         }
         
-        public async Task<string> CallMethod(string namespaceName, string methodName, JSRequest request)
+        public async Task<string> CallMethod(JSRequest request)
         {
             try
             {
                 JSResponse result =
                     await
                         Task.Run(
-                            () => this.JavascriptNamespace[namespaceName].JavascriptMethods[methodName].Invoke(request));
+                            () => this.JavascriptNamespace[request.NameSpace].JavascriptMethods[request.MethodName].Invoke(request));
                 return result.GetJson();
             }
             catch (KeyNotFoundException)

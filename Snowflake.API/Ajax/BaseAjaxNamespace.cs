@@ -26,7 +26,7 @@ namespace Snowflake.Ajax
             {
                 if(!method.GetCustomAttributes(typeof(AjaxMethod), false).Any()) continue;
                 if (method.ReturnType != typeof(JSResponse)) continue;
-                if (method.GetParameters().First().GetType() != typeof(JSRequest)) continue;
+                if (method.GetParameters().First().ParameterType != typeof(JSRequest)) continue;
                 var requestParam = Expression.Parameter(typeof (JSRequest));
                 var instanceRef = Expression.Constant(this, this.GetType());
                 var call = Expression.Call(

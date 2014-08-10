@@ -20,7 +20,7 @@ namespace ConsoleApplication1
         {
             var bridge = new AjaxManager();
             bridge.RegisterNamespace("Core", new JsApiTest());
-            var output = await bridge.CallMethod("Core", "Tesst", new JSRequest("", new Dictionary<string, string>()));
+            var output = await bridge.CallMethod(new JSRequest("Core","Test", new Dictionary<string, string>()));
             Console.WriteLine(output);
             Console.ReadLine();
         }

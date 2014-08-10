@@ -12,7 +12,7 @@ using Snowflake.Ajax;
 using Snowflake.Extensions;
 namespace Snowflake.Core.Server
 {
-    public class APIServer:BaseHttpServer
+    public class APIServer : BaseHttpServer
     {
         public APIServer():base(30001)
         {
@@ -31,7 +31,7 @@ namespace Snowflake.Core.Server
                 var nvcParams = HttpUtility.ParseQueryString(rawParams);
                 dictParams =  nvcParams.AllKeys.ToDictionary(o => o, o => nvcParams[o]);
             }
-            var request = new JSRequest(getRequest.Split('/')[0], dictParams);
+            var request = new JSRequest(getRequest.Split('/')[0], getRequest.Split('/')[1], dictParams);
             var writer = new StreamWriter(context.Response.OutputStream);
             
             writer.WriteLine(await ProcessRequest(request));
@@ -43,13 +43,8 @@ namespace Snowflake.Core.Server
 
         private async Task<string> ProcessRequest(JSRequest args)
         {
-            string method = args.MethodName;
-            var invokedMethod = typeof(AjaxManager).GetMethod(method);
-            if (invokedMethod != null)
-            {
-                return  (string)invokedMethod.Invoke(this, new object[] { args });
-            }
-            else return "invalid";
+
+            return await new AjaxManager().CallMethod(args);
         }
     }
 }
