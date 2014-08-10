@@ -99,6 +99,8 @@
     <Compile Include="Core\Server\BaseHttpServer.cs" />
     <Compile Include="Events\CoreEvents\PluginManagerLoadedEventArgs.cs" />
     <Compile Include="Extensions\HttpListenerContextExts.cs" />
+    <Compile Include="Extensions\IDictionaryExtensions.cs" />
+    <Compile Include="Extensions\MEFExtensions.cs" />
     <Compile Include="Extensions\PlatformExts.cs" />
     <Compile Include="Information\Game\GameImages.cs" />
     <Compile Include="Extensions\KeyValuePairExts.cs" />
@@ -118,7 +120,6 @@
     <Compile Include="Plugin\BasePlugin.cs" />
     <Compile Include="Scraper\BaseScraper.cs" />
     <Compile Include="Scraper\GameScrapeResult.cs" />
-    <Compile Include="Core\Extensions.cs" />
     <Compile Include="Core\FrontendCore.cs" />
     <Compile Include="Core\PluginManager.cs" />
     <Compile Include="Core\Server\JsonApiServer.cs" />

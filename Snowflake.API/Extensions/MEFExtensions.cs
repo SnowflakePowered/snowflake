@@ -1,23 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 
-namespace Snowflake.Core
+namespace Snowflake.Extensions
 {
-    public static class IDictionaryExtensions
-    {
-        public static bool ContainsKeyWithValue<KeyType, KeyValue>(
-            this IDictionary<KeyType, ValueType> Dictionary,
-            KeyType Key, ValueType Value)
-        {
-            return (Dictionary.ContainsKey(Key) && Dictionary[Key].Equals(Value));
-        }
-    }
-
     public static class MEFExtensions
     {
         public static IEnumerable<T> GetExportedValues<T>(this CompositionContainer Container,
