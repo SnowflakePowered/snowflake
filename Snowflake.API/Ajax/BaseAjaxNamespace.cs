@@ -10,11 +10,11 @@ using System.Linq;
 
 namespace Snowflake.Ajax
 {
-    public abstract class BaseAjaxNamespace : BasePlugin, IBaseAjaxNamespace
+    public abstract class BaseAjaxNamespace :  IBaseAjaxNamespace
     {
         public IDictionary<string, Func<JSRequest, JSResponse>> JavascriptMethods { get; private set; }
 
-        protected BaseAjaxNamespace(Assembly pluginAssembly):base(pluginAssembly)
+        protected BaseAjaxNamespace(Assembly pluginAssembly)
         {
             this.JavascriptMethods = new Dictionary<string, Func<JSRequest, JSResponse>>();
             this.RegisterMethods();
@@ -22,12 +22,15 @@ namespace Snowflake.Ajax
 
         private void RegisterMethods()
         {
-            foreach (var method in this.GetType().GetMethods(BindingFlags.Public | BindingFlags.Static))
+            foreach (var method in this.GetType().GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy))
             {
                 if(!method.GetCustomAttributes(typeof(AjaxMethod), false).Any()) continue;
+                if (method.ReturnType != typeof(JSResponse)) continue;
+                if (method.GetParameters().First().GetType() != typeof(JSRequest)) continue;
                 var requestParam = Expression.Parameter(typeof (JSRequest));
+                var instanceRef = Expression.Constant(this, this.GetType());
                 var call = Expression.Call(
-                    null, method, new Expression[] {requestParam}
+                    instanceRef, method, new Expression[] {requestParam}
                     );
                 this.JavascriptMethods.Add(method.Name,
                     Expression.Lambda<Func<JSRequest, JSResponse>>(call, new ParameterExpression[] {requestParam})

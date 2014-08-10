@@ -19,8 +19,8 @@ namespace ConsoleApplication1
         public async static void Run()
         {
             var bridge = new AjaxManager();
-            bridge.RegisterNamespace("Core", new BaseAjaxNamespace());
-            var output = await bridge.CallMethod("Core", "Test", new JSRequest("", new Dictionary<string, string>()));
+            bridge.RegisterNamespace("Core", new JsApiTest());
+            var output = await bridge.CallMethod("Core", "Tesst", new JSRequest("", new Dictionary<string, string>()));
             Console.WriteLine(output);
             Console.ReadLine();
         }

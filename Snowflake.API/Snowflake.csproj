@@ -84,6 +84,7 @@
     <Compile Include="Ajax\IBaseAjaxNamespace.cs" />
     <Compile Include="Ajax\AjaxManager.cs" />
     <Compile Include="Ajax\AjaxMethod.cs" />
+    <Compile Include="Ajax\JsApiTest.cs" />
     <Compile Include="Ajax\JSRequest.cs" />
     <Compile Include="Ajax\JSResponse.cs" />
     <Compile Include="Configuration\YamlConfiguration.cs" />

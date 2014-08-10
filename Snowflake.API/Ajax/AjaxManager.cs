@@ -6,12 +6,12 @@ namespace Snowflake.Ajax
 {
     public class AjaxManager
     {
-        public IDictionary<string, BaseAjaxNamespace> JavascriptNamespace;
+        public IDictionary<string, IBaseAjaxNamespace> JavascriptNamespace;
         public AjaxManager()
         {
-            this.JavascriptNamespace = new Dictionary<string, BaseAjaxNamespace>();
+            this.JavascriptNamespace = new Dictionary<string, IBaseAjaxNamespace>();
         }
-        public void RegisterNamespace(string namespaceName, BaseAjaxNamespace namespaceObject)
+        public void RegisterNamespace(string namespaceName, IBaseAjaxNamespace namespaceObject)
         {
             if (!this.JavascriptNamespace.ContainsKey(namespaceName))
                 this.JavascriptNamespace.Add(namespaceName, namespaceObject);
@@ -19,9 +19,18 @@ namespace Snowflake.Ajax
         
         public async Task<string> CallMethod(string namespaceName, string methodName, JSRequest request)
         {
-
-            var result = await Task.Run(() => this.JavascriptNamespace[namespaceName].JavascriptMethods[methodName].Invoke(request));
-            return result.GetJson();
+            try
+            {
+                JSResponse result =
+                    await
+                        Task.Run(
+                            () => this.JavascriptNamespace[namespaceName].JavascriptMethods[methodName].Invoke(request));
+                return result.GetJson();
+            }
+            catch (KeyNotFoundException)
+            {
+                return JsonConvert.Undefined;
+            }
         }
     }
 }
