@@ -8,6 +8,7 @@ namespace Snowflake.Core.Interface
     {
         IDictionary<string, IBaseAjaxNamespace> JavascriptNamespace { get; }
         void RegisterNamespace(string namespaceName, IBaseAjaxNamespace namespaceObject);
-        Task<string> CallMethod(JSRequest request);
+        Task<string> CallMethodAsync(JSRequest request);
+        string CallMethod(JSRequest request);
     }
 }

@@ -12,9 +12,9 @@ using Snowflake.Ajax;
 using Snowflake.Extensions;
 namespace Snowflake.Core.Server
 {
-    public class APIServer : BaseHttpServer
+    public class ApiServer : BaseHttpServer
     {
-        public APIServer():base(30001)
+        public ApiServer():base(30001)
         {
             
         }
@@ -24,14 +24,21 @@ namespace Snowflake.Core.Server
             context.AddAccessControlHeaders();
             string getRequest = context.Request.Url.AbsolutePath.Remove(0,1); //Remove first slash
             string getUri = context.Request.Url.AbsoluteUri;
-            int index = getUri.IndexOf("?");
+            int index = getUri.IndexOf("?", StringComparison.Ordinal);
             var dictParams = new Dictionary<string, string>();
-            if ( index > 0 ){
-                string rawParams = getUri.Substring(index).Remove (0, 1);
+            JSRequest request;
+            if (index > 0)
+            {
+                string rawParams = getUri.Substring(index).Remove(0, 1);
                 var nvcParams = HttpUtility.ParseQueryString(rawParams);
-                dictParams =  nvcParams.AllKeys.ToDictionary(o => o, o => nvcParams[o]);
+                dictParams = nvcParams.AllKeys.ToDictionary(o => o, o => nvcParams[o]);
+                request = new JSRequest(getRequest.Split('/')[0], getRequest.Split('/')[1], dictParams);
             }
-            var request = new JSRequest(getRequest.Split('/')[0], getRequest.Split('/')[1], dictParams);
+            else
+            {
+                request = new JSRequest("", "", new Dictionary<string, string>());
+            }
+            
             var writer = new StreamWriter(context.Response.OutputStream);
             
             writer.WriteLine(await ProcessRequest(request));
@@ -43,8 +50,7 @@ namespace Snowflake.Core.Server
 
         private async Task<string> ProcessRequest(JSRequest args)
         {
-
-            return await new AjaxManager().CallMethod(args);
+            return await FrontendCore.LoadedCore.PluginManager.AjaxNamespace.CallMethodAsync(args);
         }
     }
 }

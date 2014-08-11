@@ -20,7 +20,7 @@ namespace ConsoleApplication1
 
         public async static void Run()
         {
-            var bridge = FrontendCore.LoadedCore.PluginManager.
+            var bridge = FrontendCore.LoadedCore.PluginManager.PluginR
           //  bridge.RegisterNamespace("Core", new SnowflakeJsApi());
             var output = await bridge.CallMethod(new JSRequest("Core","Test", new Dictionary<string, string>()));
             Console.WriteLine(output);

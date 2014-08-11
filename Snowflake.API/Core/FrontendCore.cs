@@ -28,7 +28,7 @@ namespace Snowflake.Core
         public string AppDataDirectory { get; private set; }
         public static FrontendCore LoadedCore { get; private set; }
         public ThemeServer ThemeServer { get; private set; }    
-        public APIServer APIServer { get; private set; }
+        public ApiServer APIServer { get; private set; }
 
 
         #region Events
@@ -66,7 +66,7 @@ namespace Snowflake.Core
             this.PluginManager = new PluginManager(this.AppDataDirectory);
 
             this.ThemeServer = new ThemeServer(Path.Combine(this.AppDataDirectory, "theme"));
-            this.APIServer = new APIServer();
+            this.APIServer = new ApiServer();
             //new JsonRPCEventDelegate(3333).Notify("test", new Dictionary<string, string>() { {"test","test"}});
         }
         private Dictionary<string, Platform> LoadPlatforms(string platformDirectory)

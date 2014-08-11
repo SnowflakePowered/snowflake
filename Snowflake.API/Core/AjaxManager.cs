@@ -18,21 +18,22 @@ namespace Snowflake.Core
             if (!this.JavascriptNamespace.ContainsKey(namespaceName))
                 this.JavascriptNamespace.Add(namespaceName, namespaceObject);
         }
-        
-        public async Task<string> CallMethod(JSRequest request)
+
+        public string CallMethod(JSRequest request)
         {
             try
             {
-                JSResponse result =
-                    await
-                        Task.Run(
-                            () => this.JavascriptNamespace[request.NameSpace].JavascriptMethods[request.MethodName].Invoke(request));
+                JSResponse result = this.JavascriptNamespace[request.NameSpace].JavascriptMethods[request.MethodName].Invoke(request);
                 return result.GetJson();
             }
             catch (KeyNotFoundException)
             {
                 return JsonConvert.Undefined;
             }
+        }
+        public async Task<string> CallMethodAsync(JSRequest request)
+        {
+            return await Task.Run(() => this.CallMethod(request));
         }
     }
 }
