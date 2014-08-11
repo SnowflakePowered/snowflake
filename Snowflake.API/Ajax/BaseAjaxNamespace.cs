@@ -33,8 +33,8 @@ namespace Snowflake.Ajax
                     instanceRef, method, new Expression[] {requestParam}
                     );
                 var methodAttribute = method.GetCustomAttribute<AjaxMethodAttribute>();
-                var methodPrefix = (methodAttribute.MethodPrefix != "") ? methodAttribute.MethodPrefix + "." : "";
-                string methodName = (methodAttribute.MethodName != "") ? methodAttribute.MethodName : method.Name;
+                var methodPrefix = (methodAttribute.MethodPrefix != null) ? methodAttribute.MethodPrefix + "." : "";
+                string methodName = (methodAttribute.MethodName != null) ? methodAttribute.MethodName : method.Name;
                 this.JavascriptMethods.Add(methodPrefix + methodName,
                     Expression.Lambda<Func<JSRequest, JSResponse>>(call, new ParameterExpression[] {requestParam})
                         .Compile());

@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Ajax;
+using Snowflake.Core;
 
 namespace Ajax.SnowflakeCore
 {
@@ -19,6 +20,13 @@ namespace Ajax.SnowflakeCore
         public JSResponse Test(JSRequest request)
         {
             return new JSResponse(request, "success from Api");
+        }
+
+        [AjaxMethod]
+        public JSResponse GetTest(JSRequest request)
+        {
+            var game = FrontendCore.LoadedCore.GameDatabase.GetGameByUUID("sWJznptYf0m_qH0_OvHtSg");
+            return  new JSResponse(request, game);
         }
     }
 }

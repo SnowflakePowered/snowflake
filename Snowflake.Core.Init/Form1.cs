@@ -33,8 +33,8 @@ namespace Snowflake.Core.Init
             await FrontendCore.InitPluginManagerAsync();
             Console.WriteLine(FrontendCore.LoadedCore.PluginManager.LoadedIdentifiers.First().Value.IdentifyGame("dummysmb.nes", "NINTENDO_NES"));
             this.textBox1.Text = await FrontendCore.LoadedCore.PluginManager.AjaxNamespace.CallMethodAsync(new JSRequest("Core", "Test", new Dictionary<string, string>()));
-          //  var dbgame = FrontendCore.LoadedCore.GameDatabase.GetGameByUUID("sWJznptYf0m_qH0_OvHtSg");
-           // this.textBox1.Text = JsonConvert.SerializeObject(dbgame);
+            var dbgame = FrontendCore.LoadedCore.GameDatabase.GetGameByUUID("sWJznptYf0m_qH0_OvHtSg");
+            this.textBox1.Text = JsonConvert.SerializeObject(dbgame);
         }
     }
 }
