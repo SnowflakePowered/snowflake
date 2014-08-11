@@ -15,7 +15,7 @@ namespace Ajax.SnowflakeCore
             
         }
 
-        [AjaxMethod]
+        [AjaxMethod(MethodPrefix = "Get", MethodName = "NotTest")]
         public JSResponse Test(JSRequest request)
         {
             return new JSResponse(request, "success from Api");

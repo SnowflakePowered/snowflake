@@ -24,7 +24,7 @@ namespace Snowflake.Ajax
         {
             foreach (var method in this.GetType().GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy))
             {
-                if(!method.GetCustomAttributes(typeof(AjaxMethod), false).Any()) continue;
+                if (!method.GetCustomAttributes(typeof(AjaxMethodAttribute), false).Any()) continue;
                 if (method.ReturnType != typeof(JSResponse)) continue;
                 if (method.GetParameters().First().ParameterType != typeof(JSRequest)) continue;
                 var requestParam = Expression.Parameter(typeof (JSRequest));
@@ -32,7 +32,10 @@ namespace Snowflake.Ajax
                 var call = Expression.Call(
                     instanceRef, method, new Expression[] {requestParam}
                     );
-                this.JavascriptMethods.Add(method.Name,
+                var methodAttribute = method.GetCustomAttribute<AjaxMethodAttribute>();
+                var methodPrefix = (methodAttribute.MethodPrefix != "") ? methodAttribute.MethodPrefix + "." : "";
+                string methodName = (methodAttribute.MethodName != "") ? methodAttribute.MethodName : method.Name;
+                this.JavascriptMethods.Add(methodPrefix + methodName,
                     Expression.Lambda<Func<JSRequest, JSResponse>>(call, new ParameterExpression[] {requestParam})
                         .Compile());
             }

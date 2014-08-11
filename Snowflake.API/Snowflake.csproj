@@ -82,7 +82,7 @@
   <ItemGroup>
     <Compile Include="Ajax\BaseAjaxNamespace.cs" />
     <Compile Include="Ajax\IBaseAjaxNamespace.cs" />
-    <Compile Include="Ajax\AjaxMethod.cs" />
+    <Compile Include="Ajax\AjaxMethodAttribute.cs" />
     <Compile Include="Ajax\JSRequest.cs" />
     <Compile Include="Ajax\JSResponse.cs" />
     <Compile Include="Configuration\YamlConfiguration.cs" />
