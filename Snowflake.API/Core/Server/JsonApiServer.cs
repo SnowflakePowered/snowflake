@@ -35,7 +35,7 @@ namespace Snowflake.Core.Server
             }
             var request = getRequest.Split('/').Count() >= 2 ?
                 new JSRequest(getRequest.Split('/')[0], getRequest.Split('/')[1], dictParams) :
-                new JSRequest("","",new Dictionary<string, string>());
+                new JSRequest("", "", new Dictionary<string, string>());
             
             var writer = new StreamWriter(context.Response.OutputStream);
             
