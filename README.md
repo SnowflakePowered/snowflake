@@ -1,6 +1,6 @@
 ![Logo](https://raw.githubusercontent.com/snowflake-frontend/snowflake/master/logo_nes.png) Snowflake
 =========
-[![Build status](https://ci.appveyor.com/api/projects/status/mhei9fdtja5j04kk)](https://ci.appveyor.com/project/ron975/snowflake)
+[![Build status](https://ci.appveyor.com/api/projects/status/mhei9fdtja5j04kk)](https://ci.appveyor.com/project/RonnChyran/snowflake)
 
 
 Snowflake is an emulator frontend for Windows that emphasizes ease-of-use, extensibility and aesthetics. Snowflake provides an extensive plugin API, and HTML5 UI system that allows modern web-design techniques to theme the frontend. Snowflake is currently in pre-alpha. 
