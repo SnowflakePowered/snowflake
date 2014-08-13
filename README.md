@@ -12,6 +12,7 @@ Plugins may be of one of the following types:
   * Emulators
   * Scrapers
   * Identifiers
+  * Ajax API
   * General Plugins
   
 ### Emulators
@@ -29,14 +30,18 @@ Snowflake is designed to be as noob-friendly as possible, welcoming newcomers to
 
 ALPHA: Currently, the only identifier written can identify ROMs through CRC data in TOSEC and No-Intro dats. Identifiers that grab information through file headers will soon be implemented.
 
+### Ajax APIs
+Snowflake does not provide an integrated Ajax API, which is required for interfacting with the user interface. Instead, the API is abstracted into a separate plugin. Ajax.SnowflakeCore is the standard Ajax API and is callable under the Core namespace.
+
 ### General Plugins
 Snowflake will provide an extensive event API that will allow plugins to control nearly every aspect of the frontend. With maturity, Snowflake's plugin system will allow endless possibilities.
 
 Interface
 ---------
-Snowflake's interface is powered by node-webkit. Events are delegated to the frontend through an abstraction of window.postMessage, and Snowflake provides a robust JSONP API through GET requests that is easily accessible through the web browser.
+Snowflake's interface is powered by node-webkit.
 
-Snowflake provides a GET API to interact with the core. The Information API, for example to get information regarding a Game or a Platform, and will return a reply. The Command API directs Snowflake to _do_ something, such as adding a game to the database, running a game, or notifying Snowflake of UI events, return no useful reply, besides an acknowledgement that the command has been received. Such commands may result in an event delivered to the UI, through either JSONRPC if using node-webkit, or direct method call using CefSharp. The API that receives events is abstracted from the implementation, regardless of which UI is used, ensuring compatibility with all skins.
+Robust JSON callbacks provided by the backend allow for simple communication between the user interface and the backend. Thus, events are delegated from the user interface to the backend.
+
 
 ### Materia
 Materia is Snowflake's default theme, written in HTML5 using the Polymer framework. Themes do not need to use Polymer framework, and only need to respond to the Javascript window message APIs.
