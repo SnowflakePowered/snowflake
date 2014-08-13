@@ -13,5 +13,18 @@ namespace Snowflake.Ajax
             this.MethodName = methodName;
             this.MethodParameters = parameters;
         }
+
+        public string GetParameter(string paramKey)
+        {
+            try
+            {
+                return this.MethodParameters[paramKey];
+            }
+            catch (KeyNotFoundException)
+            {
+                return null;
+            }
+        }
+
     }
 }
