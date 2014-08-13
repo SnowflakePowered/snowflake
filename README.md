@@ -48,8 +48,8 @@ Materia is Snowflake's default theme, written in HTML5 using the Polymer framewo
 
 API Documentation
 -----------------
-This early in development, the API specification is still uncertain. Further along, more comprehensive API documentation will be provided.\
+This early in development, the API specification is still uncertain. Further along, more comprehensive API documentation will be provided.
 
 Legal
 -----
-Snowflake is licensed under the Apache License 2.0. Snowflake does not in any way facilitate the download of illegal ROM images or warez of any kind. 
+Snowflake is licensed under the Apache License 2.0. However any fork of the [codebase prior to the relicensing to Apache 2](https://github.com/snowflake-frontend/snowflake/commit/b0286553ec0887ce406420827a2ba0c20aa78117#diff-d41d8cd98f00b204e9800998ecf8427e) must be distributed under the GNU GPL v3. Any fork of the codebase after that commit is can be distributed under the Apache 2 license. Snowflake does not in any way facilitate the download of illegal ROM images or warez of any kind. 
