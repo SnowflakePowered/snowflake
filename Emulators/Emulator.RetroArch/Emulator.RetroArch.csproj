@@ -159,6 +159,7 @@
     <EmbeddedResource Include="config.yml">
       <LogicalName>config.yml</LogicalName>
     </EmbeddedResource>
+    <None Include="app.config" />
     <None Include="emulator_retroarch\info\3dengine_libretro.info" />
     <None Include="emulator_retroarch\info\bnes_libretro.info" />
     <None Include="emulator_retroarch\info\bsnes_accuracy_libretro.info" />
