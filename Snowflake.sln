@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake", "Snowflake.API\Snowflake.csproj", "{8F1D65ED-4A96-4A0A-8371-53655A60A2B3}"
 EndProject
@@ -37,6 +37,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{9ED147
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ajax.SnowflakeCore", "Ajax.SnowflakeCore\Ajax.SnowflakeCore.csproj", "{4792C8C4-81A8-4AB1-9041-2DFF4F5E8DBB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Presentation", "Snowflake.Presentation\Snowflake.Presentation.csproj", "{FCEABEBE-7940-418A-9478-2C40B0D6B39C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +69,10 @@ Global
 		{4792C8C4-81A8-4AB1-9041-2DFF4F5E8DBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4792C8C4-81A8-4AB1-9041-2DFF4F5E8DBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4792C8C4-81A8-4AB1-9041-2DFF4F5E8DBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCEABEBE-7940-418A-9478-2C40B0D6B39C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCEABEBE-7940-418A-9478-2C40B0D6B39C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCEABEBE-7940-418A-9478-2C40B0D6B39C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCEABEBE-7940-418A-9478-2C40B0D6B39C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

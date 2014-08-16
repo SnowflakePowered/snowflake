@@ -1,0 +1,10 @@
+{
+  "name": "Snowflake.Node",
+  "version": "0.0.0",
+  "description": "Snowflake.Node",
+  "main": "app.js",
+  "author": {
+    "name": "Ronny",
+    "email": ""
+  }
+}
