@@ -15,8 +15,6 @@ using Snowflake.Events.CoreEvents;
 using System.Threading;
 using Snowflake.Core.EventDelegate;
 using Snowflake.Information;
-using Common.Logging;
-using System.Collections.Specialized;
 namespace Snowflake.Core
 {
     public partial class FrontendCore : IFrontendCore
@@ -32,13 +30,6 @@ namespace Snowflake.Core
         public ThemeServer ThemeServer { get; private set; }    
         public ApiServer APIServer { get; private set; }
 
-        public ILog Logger
-        {
-            get
-            {
-                return LogManager.GetLogger("snowflake");
-            }
-        }
 
         #region Events
         public delegate void PluginManagerLoadedEvent(object sender, PluginManagerLoadedEventArgs e);
@@ -51,7 +42,7 @@ namespace Snowflake.Core
                 FrontendCore.LoadedCore = core;
                 FrontendCore.LoadedCore.ThemeServer.StartServer();
                 FrontendCore.LoadedCore.APIServer.StartServer();
-                FrontendCore.LoadedCore.Logger.Debug("test");
+
         }
       
         public async static Task InitPluginManagerAsync()
@@ -68,11 +59,6 @@ namespace Snowflake.Core
         public FrontendCore() : this(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Snowflake")) { }
         public FrontendCore(string appDataDirectory)
         {
-            NameValueCollection properties = new NameValueCollection();
-            properties["showDateTime"] = "true";
-
-            // set Adapter
-            Common.Logging.LogManager.Adapter = new Common.Logging.NLog.NLogLoggerFactoryAdapter(properties);
             this.AppDataDirectory = appDataDirectory;
             this.LoadedPlatforms = this.LoadPlatforms(Path.Combine(this.AppDataDirectory, "platforms"));
          
