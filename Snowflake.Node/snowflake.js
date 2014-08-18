@@ -7,15 +7,17 @@ var Snowflake = function Snowflake(snowflakeUrl) {
     this.platforms = {};
     this.games = {};
     this.loadGames = function () {
-        return new Promise(function (resolve, reject) {
-            this.ajax('', '', function (response) { resolve(response); });
+        return this.ajax('', '').then(function (response) {
+            instance.games = response;
+        }).catch(function (fail) {
+            console.log(fail);
         });
     };
     this.loadPlatforms = function () {
     };
 
-    this.ajax = function (namespace, methodname, callback) {
-        return najax('http://www.xgoogle.com', callback);
+    this.ajax = function (namespace, methodname) {
+        return Promise.resolve(najax('http://www.google.com'));
     }
 
 }
