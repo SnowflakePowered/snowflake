@@ -65,6 +65,11 @@ namespace Ajax.SnowflakeCore
             return name != null ? new JSResponse(request, FrontendCore.LoadedCore.GameDatabase.GetGamesByName(name)) : new JSResponse(request, null);
         }
 
+        [AjaxMethod(MethodPrefix = "Game")]
+        public JSResponse GetAllGames(JSRequest request)
+        {
+            return new JSResponse(request, FrontendCore.LoadedCore.GameDatabase.GetAllGames());
+        }
         [AjaxMethod(MethodPrefix = "Command")]
         public JSResponse RunGameByUuid(JSRequest request)
         {

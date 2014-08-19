@@ -97,6 +97,22 @@ namespace Snowflake.Database
                 }
             }
         }
+        public IList<Game> GetAllGames()
+        {
+            this.DBConnection.Open();
+            using (var sqlCommand = new SQLiteCommand(@"SELECT * FROM `games`"
+                , this.DBConnection))
+            {
+                using (var reader = sqlCommand.ExecuteReader())
+                {
+                    var result = new DataTable();
+                    result.Load(reader);
+                    var gamesResults = (from DataRow row in result.Rows select GetGameFromDataRow(row)).ToList();
+                    this.DBConnection.Close();
+                    return gamesResults;
+                }
+            }
+        }
         private Game GetGameFromDataRow(DataRow row)
         {
             var platformId = (string)row["platform_id"];
