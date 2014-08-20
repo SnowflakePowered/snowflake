@@ -1,6 +1,7 @@
 ﻿{
   "main": "index.html",
   "name": "Snowflake",
+  "node-main": "init.js",
   "scripts": {
     "start": "nodewebkit"
   },
