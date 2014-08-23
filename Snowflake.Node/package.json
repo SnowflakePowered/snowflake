@@ -1,7 +1,7 @@
 ﻿{
   "main": "index.html",
   "name": "Snowflake",
-  "node-main": "init.js",
+  "node-remote": "<local>",
   "scripts": {
     "start": "nodewebkit"
   },
