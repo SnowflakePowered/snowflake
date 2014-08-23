@@ -1,5 +1,6 @@
 (function(){
 	var snowflakeModule = require("./snowflake.js");
+	
 	var Snowflake = snowflakeModule.Snowflake;
 	if(global.snowflake === undefined){
 			global.snowflake = {};
