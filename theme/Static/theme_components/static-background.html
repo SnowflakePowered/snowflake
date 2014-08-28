@@ -1,0 +1,47 @@
+<polymer-element name="static-background" attributes="backgroundImage">
+	<template>
+		<style>
+			.background {
+				background-color: #545454;
+				width: 100%;
+				height: 100%;
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				right: 0;
+				left: 0;
+				overflow: hidden;
+			}
+			.background img{
+				position: absolute;
+				bottom: 0; 
+				right: 0; 
+				min-width: 100%; 
+				min-height: 100%; 
+				width: auto; 
+				height: auto; 
+				overflow: hidden;
+				transition: -webkit-filter 0.5s ease;
+				-webkit-filter: blur(5px);
+			}
+			.background img:active{
+				-webkit-filter: none;
+			}
+		</style>
+		
+		<div class="background" >
+			<img id="bgImg" src="{{backgroundImage}}"/>
+		</div>
+</template>
+	<script>
+		Polymer('static-background', {
+			ready: function() {
+				window.dbackground = this;
+				this.backgroundImage = this.backgroundImage || "";
+				this.$.bgImg.ondragstart = function() { return false; };
+
+			}
+			
+		});
+	</script>
+</polymer-element>
