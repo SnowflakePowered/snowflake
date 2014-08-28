@@ -30,7 +30,7 @@
 		</style>
 		
 		<div class="background" >
-			<img id="bgImg" src="{{backgroundImage}}"/>
+			<img id="backgroundElem" src="{{backgroundImage}}"/>
 		</div>
 </template>
 	<script>
@@ -38,7 +38,7 @@
 			ready: function() {
 				window.dbackground = this;
 				this.backgroundImage = this.backgroundImage || "";
-				this.$.bgImg.ondragstart = function() { return false; };
+				this.$.backgroundElem.ondragstart = function() { return false; };
 
 			}
 			

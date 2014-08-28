@@ -1,0 +1,39 @@
+<link rel="import" href="static-mainbar.html">
+<link rel="import" href="static-background.html">
+<polymer-element name="static-view" attributes="barText barTitle barLogo backgroundImage">
+	<template>
+		<style>
+			::host{
+				overflow-y: hidden;
+			}
+			static-background{
+				z-index: -10000;
+				position: fixed;
+				top: 0;
+				bottom: 0;
+				left: 0;
+				right: 0;
+			}
+			static-mainbar{
+				height: 500px;
+				width: 100%;
+				position: absolute;
+				bottom: 0;
+				right: 0;
+				left: 0;
+			}
+		</style>
+		
+		<static-mainbar barText="{{barText}}" barTitle="Super Mario Bros." barLogo="{{barLogo}}"></static-mainbar>
+		<static-background backgroundImage="http://static.tumblr.com/noynber/nN8n43by5/ffxv_lucis.jpg"><static-background>
+</template>
+	
+	<script>
+		Polymer('static-view', {
+			ready: function() {
+				
+			}
+			
+		});
+	</script>
+</polymer-element>
