@@ -1,16 +1,55 @@
-<polymer-element name="static-descriptionbar" attributes="barText barTitle barLogo">
+<polymer-element name="static-mainbar" attributes="barText barTitle barLogo">
 	<template>
-		<div>
-			<div id="playButtonArea">
+		<style>
+			.container{
+				display: -webkit-flex;
+				display: flex;
+				width: 100%;
+				font-size: 14pt;
+				background-color: #fff;
+			}
+			.outerDiv{
+			}
+			#playButtonArea{
+				flex: none;
+				width: 350px;
+				text-overflow: ellipsis;
+			}
+			#playButtonArea button{
+				font-size: 1.2em;
+				width: 100px;
+				height: 50px;
+				
+			}
+			#descriptionArea{
+			}
+			#tableArea{
+			}
+			#logoArea{
+			
+			}
+			#logoArea img{
+				width: 100%;
+			}
+			.flex1{
+				flex: 1;
+			}
+			.flex2{
+				flex: 2;
+			}
+		</style>
+		
+		<div class="container">
+			<div id="playButtonArea" class="outerDiv flex1">
 				<h1>{{barTitle}}</h1>
 				<button on-click="{{onPlayClick}}">Play</button>
 			</div>
-			<div id="descriptionArea">
+			<div id="descriptionArea" class="outerDiv flex2">
 				<p>
 				{{barText}}
 				</P>
 			</div>
-			<div id="tableArea">
+			<div id="tableArea" class="outerDiv">
 				<template repeat="{{obj in list}}">
 					<table>
 						<template repeat="{{item in obj | fKeys}}">
@@ -22,14 +61,14 @@
 					</table>
 				</template>
 			</div>
-			<div id="logoArea">
+			<div id="logoArea" class="outerDiv flex1">
 				<img src="{{barLogo}}"/>
 			</div>
 		</div>
 </template>
 	
 	<script>
-		Polymer('static-descriptionbar', {
+		Polymer('static-mainbar', {
 			created: function(){
 				this.list = [];
 			},
@@ -44,6 +83,7 @@
 				this.barText = this.barText || "set model.barText";
 				this.barTitle = this.barTitle || "set model.barTitle";
 				this.barLogo = this.barLogo || "https://dev.sourcefabric.org/secure/attachment/10933/404.png";
+				this.backgroundImage = this.backgroundImage || "https://dev.sourcefabric.org/secure/attachment/10933/404.png";
 				this.list = [
 					{
 						"Platform": "test",
