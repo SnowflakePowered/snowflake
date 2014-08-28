@@ -3,35 +3,12 @@
 <head>
 	<script src="/bower_components/platform/platform.js"></script>
 	<link rel="import" href="/bower_components/polymer/polymer.html">
-	<link rel="import" href="/materia-components/materia-mainmenu.html">
-	<link rel="import" href="/materia-components/materia-gameview-details.html">
-	<link rel="import" href="/materia-components/materia-platform-indicator.html">
-
-	<style>
-	materia-mainmenu{
-		position: absolute;
-		top: 0px;
-		width: 100%;
-		height: 100%;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		margin: 0 auto;
-	}
-	materia-platform-indicator{
-		position: fixed;
-		z-index: 100;
-		bottom: 0;
-		width: 100%;
-		left: 0;
-		height: 10%;
-	}
-	</style>
+	<link rel="import" href="/theme_components/static-mainbar.html">
+	
 </head>
 <body unresolved>
 <div id="menucontainer">
-  <materia-gameview-details></materia-gameview-details>
-  <materia-platform-indicator platformid="NINTENDO_NES"></materia-platform-indicator>
+  <static-mainbar barText="{{barText}}" barTitle="{{barTitle}}" barLogo="{{barLogo}}"></static-mainbar>
 </div>
 </body>
 </html>

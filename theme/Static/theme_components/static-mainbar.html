@@ -1,0 +1,63 @@
+<polymer-element name="static-descriptionbar" attributes="barText barTitle barLogo">
+	<template>
+		<div>
+			<div id="playButtonArea">
+				<h1>{{barTitle}}</h1>
+				<button on-click="{{onPlayClick}}">Play</button>
+			</div>
+			<div id="descriptionArea">
+				<p>
+				{{barText}}
+				</P>
+			</div>
+			<div id="tableArea">
+				<template repeat="{{obj in list}}">
+					<table>
+						<template repeat="{{item in obj | fKeys}}">
+						  <tr>
+							  <th>{{item}}</th>
+							  <td>{{obj[item]}}</td>
+						  </tr>
+						</template>
+					</table>
+				</template>
+			</div>
+			<div id="logoArea">
+				<img src="{{barLogo}}"/>
+			</div>
+		</div>
+</template>
+	
+	<script>
+		Polymer('static-descriptionbar', {
+			created: function(){
+				this.list = [];
+			},
+			fKeys : function(o){
+				return Object.keys(o);
+			},
+			onPlayClick: function() {
+				this.fire('play'); // fire(inType, inDetail, inToNode)
+			  },
+			ready: function() {
+				window.debug = this;
+				this.barText = this.barText || "set model.barText";
+				this.barTitle = this.barTitle || "set model.barTitle";
+				this.barLogo = this.barLogo || "https://dev.sourcefabric.org/secure/attachment/10933/404.png";
+				this.list = [
+					{
+						"Platform": "test",
+						"Release Date": "test",
+						"Publisher": "test"
+					},
+					{
+						"Last Played": "test",
+						"You've played": "test"
+					}
+				];
+
+			}
+			
+		});
+	</script>
+</polymer-element>
