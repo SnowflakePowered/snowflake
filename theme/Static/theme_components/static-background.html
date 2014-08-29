@@ -25,12 +25,13 @@
 				-webkit-filter: blur(5px);
 			}
 			.background img:active{
-				-webkit-filter: none;
+				-webkit-filter: blur(0px);
+
 			}
 		</style>
 		
 		<div class="background" >
-			<img id="backgroundElem" src="{{backgroundImage}}"/>
+			<img draggable="false" id="backgroundElem" src="{{backgroundImage}}"/>
 		</div>
 </template>
 	<script>
@@ -38,7 +39,6 @@
 			ready: function() {
 				window.dbackground = this;
 				this.backgroundImage = this.backgroundImage || "";
-				this.$.backgroundElem.ondragstart = function() { return false; };
 
 			}
 			

@@ -1,59 +1,95 @@
+				<link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:300italic,400italic,700italic,400,700,300' rel='stylesheet' type='text/css'>
+
 <polymer-element name="static-mainbar" attributes="barText barTitle barLogo">
+
 	<template>
+
 		<style>
 			.container{
-				display: -webkit-flex;
-				display: flex;
+				font-family: 'Roboto Condensed', sans-serif;
 				width: 100%;
+				height: 100%;
 				font-size: 14pt;
-				background-color: #fff;
+				background-color: rgba(255,255,255,0.7);
 				position: absolute;
 				bottom: 0;
 				padding-bottom: 10px;
+				
 			}
+			
 			.outerDiv{
+				padding-left: 10px;
+				padding-right: 10px;
+				margin-top: 10px;
+				position: relative;
+			}
+			.border{
+				border-right: 1px dotted;
+				margin-top: 50px;
+				margin-bottom: 50px;
+				width: 0 !important;
+				flex: none !important;
+				display: block;
+				content: ' ';
 			}
 			#playButtonArea{
-				flex: none;
-				width: 200px;
+				max-width: 500px;
+				width: 275px;
 				text-overflow: ellipsis;
 				font-size: 1em;
 			}
-			#playButtonArea button{
+			#actionArea button{
 				font-size: 1.2em;
 				width: 100px;
 				height: 50px;
-				
 			}
-			#descriptionArea{
+			.outerDiv p, .outerDiv h1{
+				margin: 0;
 			}
-			#tableArea{
+			#tableArea table{
+				width: 100%;
+				padding-bottom: 25px;
+			}
+			#tableArea table th{
+				text-align: left;
+			}
+			#tableArea table td{
+				text-align: right;
 			}
 			#logoArea{
-			
+				min-height: 100%;
 			}
 			#logoArea img{
-				width: 100%;
-			}
-			.flex1{
-				flex: 1;
-			}
-			.flex2{
-				flex: 2;
+				position: absolute;
+				top: -10px;
+				bottom: 0;
+				right: 0;
+				left: 0;
+				margin: auto;
+				max-width: 80%;
+				min-width: 75%;
+				height: auto;
+				max-height: 90%;
 			}
 		</style>
 		
-		<div class="container">
-			<div id="playButtonArea" class="outerDiv flex1">
+		<div horizontal layout class="container">
+		<div flex three horizontal layout class="outerDiv" id="titleActionArea">
+			<div flex three id="titleArea" >
 				<h1>{{barTitle}}</h1>
+			</div>
+			<div flex id="actionArea">
 				<button on-click="{{onPlayClick}}">Play</button>
 			</div>
-			<div id="descriptionArea" class="outerDiv flex2">
+			</div>
+			<div class="border"></div>
+			<div flex four id="descriptionArea" class="outerDiv">
 				<p>
 				{{barText}}
 				</P>
 			</div>
-			<div id="tableArea" class="outerDiv">
+			<div class="border"></div>
+			<div flex id="tableArea" class="outerDiv">
 				<template repeat="{{obj in list}}">
 					<table>
 						<template repeat="{{item in obj | fKeys}}">
@@ -65,7 +101,8 @@
 					</table>
 				</template>
 			</div>
-			<div id="logoArea" class="outerDiv flex1">
+			<div class="border"></div>
+			<div flex two id="logoArea" class="outerDiv">
 				<img src="{{barLogo}}"/>
 			</div>
 		</div>
