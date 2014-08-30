@@ -1,6 +1,6 @@
 				<link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:300italic,400italic,700italic,400,700,300' rel='stylesheet' type='text/css'>
 
-<polymer-element name="static-mainbar" attributes="barText barTitle barLogo">
+<polymer-element name="static-mainbar" attributes="barText barTitle barLogo barTable">
 
 	<template>
 
@@ -16,12 +16,14 @@
 				padding-bottom: 10px;
 				
 			}
-			
 			.outerDiv{
 				padding-left: 10px;
 				padding-right: 10px;
 				margin-top: 10px;
+			}
+			.container div:not(.border){
 				position: relative;
+				height: 100%;
 			}
 			.border{
 				border-right: 1px dotted;
@@ -35,7 +37,6 @@
 			#playButtonArea{
 				max-width: 500px;
 				width: 275px;
-				text-overflow: ellipsis;
 				font-size: 1em;
 			}
 			#actionArea button{
@@ -45,6 +46,16 @@
 			}
 			.outerDiv p, .outerDiv h1{
 				margin: 0;
+				word-wrap: break-word;
+				overflow: hidden;
+				height: 100%;
+
+			}
+			.outerDiv h1{
+				text-overflow: ellipsis;
+				display: -webkit-box;
+			   -webkit-line-clamp: 4;
+			   -webkit-box-orient: vertical;
 			}
 			#tableArea table{
 				width: 100%;
@@ -90,7 +101,7 @@
 			</div>
 			<div class="border"></div>
 			<div flex id="tableArea" class="outerDiv">
-				<template repeat="{{obj in list}}">
+				<template repeat="{{obj in barTable}}">
 					<table>
 						<template repeat="{{item in obj | fKeys}}">
 						  <tr>
@@ -125,17 +136,7 @@
 				this.barTitle = this.barTitle || "set model.barTitle";
 				this.barLogo = this.barLogo || "https://dev.sourcefabric.org/secure/attachment/10933/404.png";
 				this.backgroundImage = this.backgroundImage || "https://dev.sourcefabric.org/secure/attachment/10933/404.png";
-				this.list = [
-					{
-						"Platform": "test",
-						"Release Date": "test",
-						"Publisher": "test"
-					},
-					{
-						"Last Played": "test",
-						"You've played": "test"
-					}
-				];
+				
 
 			}
 			

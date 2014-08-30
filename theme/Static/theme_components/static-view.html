@@ -1,10 +1,26 @@
 <link rel="import" href="static-mainbar.html">
 <link rel="import" href="static-background.html">
-<polymer-element name="static-view" attributes="barText barTitle barLogo backgroundImage">
+<polymer-element name="static-model" attributes="barText barTitle barLogo barTable backgroundImage">
+  <script>
+    Polymer('static-model', {
+		  ready: function() {
+			this.barText = this.barText || "model.barText";
+			this.barTitle = this.barTitle || "model.barTitle";
+			this.barLogo = this.barLogo || "model.barLogo";
+			this.backgroundImage = this.backgroundImage || "model.backgroundImage";
+			this.barTable = this.barTable || [];
+			window.model = this;
+		  }
+    });
+  </script>
+</polymer-element>
+
+
+<polymer-element name="static-view">
 	<template>
 		<style>
-			::host{
-				overflow-y: hidden;
+			:host{
+				overflow: hidden;
 			}
 			static-background{
 				z-index: -10000;
@@ -18,22 +34,36 @@
 				max-height: 30%;
 				height: 30%;
 				width: 100%;
-				position: absolute;
+				position: fixed;
 				bottom: 0;
 				right: 0;
 				left: 0;
 			}
 		</style>
 		
-		
-		<static-mainbar barText="{{barText}}" barTitle="Arbitrarily stupidly long title" barLogo="http://upload.wikimedia.org/wikipedia/commons/2/2c/SNES_logo.svg"></static-mainbar>
-		<static-background backgroundImage="http://static.tumblr.com/noynber/nN8n43by5/ffxv_lucis.jpg"><static-background>
+		<static-model id="model" barText="{{barText}}" barTitle="{{barTitle}}" barLogo="{{barLogo}}" backgroundImage="{{backgroundImage}}"></td-model>
+		<static-mainbar barText="{{barText}}" barTitle="{{barTitle}}" barLogo="{{barLogo}}" barTable="{{barTable}}"></static-mainbar>
+		<static-background backgroundImage="{{backgroundImage}}"><static-background>
 </template>
 	
 	<script>
 		Polymer('static-view', {
 			ready: function() {
-				
+				this.barText = "someText";
+				this.barTitle = "The Adventures of Jimmy Neutron, Boy Genius: Jimmy Neutron Vs. Jimmy Negatron"
+				this.barLogo = "http://upload.wikimedia.org/wikipedia/commons/2/2c/SNES_logo.svg";
+				this.backgroundImage = "http://static.tumblr.com/noynber/nN8n43by5/ffxv_lucis.jpg";
+				this.barTable = [
+					{
+						"Platform": "test",
+						"Release Date": "test",
+						"Publisher": "test"
+					},
+					{
+						"Last Played": "test",
+						"You've played": "test"
+					}
+				];
 			}
 			
 		});
