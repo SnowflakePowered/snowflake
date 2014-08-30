@@ -1,0 +1,123 @@
+<link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:300italic,400italic,700italic,400,700,300' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Roboto:100,300' rel='stylesheet' type='text/css'>
+<polymer-element name="static-titlebar" attributes="titleText">
+	<template>			
+		<style>
+			.container{
+				display: flex;
+				font-size: 24pt;
+				color: white;
+				position: absolute;
+				right: 0;
+				left: 0;
+				bottom:0;
+				height: 100%;
+				vertical-align: text-bottom;
+				-webkit-app-region: drag;
+				-webkit-user-select: none;
+				cursor: default;
+				overflow: hidden;
+
+			}
+			.buttons{
+				-webkit-app-region: no-drag;
+				-webkit-user-select: all;
+				z-index:10000;
+				position: absolute;
+				top: 0;
+				display: flex;
+				
+			}
+			.windowbutton{
+				padding: 0;
+				width: 15px;
+				height: 15px;
+				vertical-align: middle;
+				font-size: 0px;
+				margin: 2px;
+				background: #fff;
+				border: none;
+				border-radius: 50%;
+			}
+			.windowbutton:focus{
+			    outline: 0;
+			}
+			.windowbutton.close{
+				background: red;
+			}
+			.windowbutton.minimize{
+				background: yellow;
+			}
+			.windowbutton.maximize{
+				background: green;
+			}
+			.windowbutton.close:hover{
+				background: darkred;
+			}
+			.windowbutton.minimize:hover{
+				background: olive;
+			}
+			.windowbutton.maximize:hover{
+				background: darkgreen;
+			}
+			.buttoncontainer{
+				flex: none;
+				background-color: #4CCAFF;
+				width: 15%;
+				position:relative;
+				font-family: 'Roboto', sans-serif;
+				font-weight: 100;
+			}
+			.platform{
+				flex: 1;
+				text-transform: uppercase;
+				background-color: #00B3FF;
+				position:relative;
+				font-family: 'Roboto Condensed', sans-serif;
+			}
+			.platform span{
+				text-align: right;
+			}
+			.container div span:not(.buttons){
+				position: absolute;
+				bottom: -9px;
+				width: 100%;
+			}
+		</style>
+		
+		
+		<div class="container" >
+			<div class="buttoncontainer">
+				<span class="buttons">
+					<span class="buttons">
+						<button on-click="{{close}}" class="windowbutton close">x</button>
+						<button on-click="{{minimize}}" class="windowbutton minimize">-</button>
+						<button on-click="{{maximize}}" class="windowbutton maximize">+</button>
+					</span>
+				</span>
+				<span>Snowflake</span>
+			</div>
+			<div class="platform">
+				<span>{{titleText}}</span>
+				</div>
+		</div>
+		
+</template>
+	<script>
+		Polymer('static-titlebar', {
+			ready: function() {
+			
+			},
+			close: function(){
+				this.fire('snowflake-close');
+			},
+			maximize: function(){
+				this.fire('snowflake-maximize');
+			},
+			minimize: function(){
+				this.fire('snowflake-minimize');
+			}
+			
+		});
+	</script>
+</polymer-element>
