@@ -41,7 +41,7 @@
 				margin-left: -10px;
 			}
 			.view .text{
-			margin-left: 10px;
+				margin-left: 10px;
 			}
 			.view{
 				width: 15%;
@@ -50,6 +50,8 @@
 			.status{
 				background-color: #7F7F7F;
 			}
+			
+			
 			button{
 				z-index: 100000;
 				color: white;
@@ -65,24 +67,34 @@
 			button:active{
 				color: #dedede;
 			}
-			.status .buttoncontainer{
-				position: absolute;
-				left: 10px;
-			}
-			.view .buttoncontainer{
-				position: absolute;
-				right: 10px;
-			}
+			
 			.buttoncontainer{
+				position: absolute;
 				top: 0;
 				bottom: 0;
 			}
-			button .buttons{
-				font-size: 12pt;
+			.view .buttoncontainer{
+				right: 10px;
 			}
+			.status .buttoncontainer{
+				width: 60%;
+			}
+			.status .buttoncontainer > input {
+				width: 100%;
+			}
+			
+			
+			
 			core-icon svg{
 				width: 28px !important;
 				height: 28px !important;
+			}
+			core-icon{
+				width: 28px !important;
+				height: 28px !important;
+				top: 0;
+				bottom: 0;
+				
 			}
 			#input{
 				background-color: inherit;
@@ -90,18 +102,26 @@
 				font-size: 28px;
 				outline: 0;
 				padding: 0;
-			
 				color: inherit;
 				-webkit-appearance: none;
+				z-index: 1000000;
+				font-family: 'Roboto';
+				font-size: 12pt;
+				line-height: 35px;
+				vertical-align: middle;
+				visibility: hidden;
+			}
+			#input.active{
+				visibility: visible;
 			}
 			input[type="search"] {
-    -webkit-appearance: textfield;
-}
+				-webkit-appearance: textfield;
+			}
 
-input[type="search"]::-webkit-search-decoration,
-input[type="search"]::-webkit-search-cancel-button {
-    -webkit-appearance: none;
-}
+			input[type="search"]::-webkit-search-decoration,
+			input[type="search"]::-webkit-search-cancel-button {
+				-webkit-appearance: none;
+			}
 		</style>
 		
 		<x-fontawesome></x-fontawesome>
@@ -109,21 +129,15 @@ input[type="search"]::-webkit-search-cancel-button {
 			<div flex none class="view">
 				<span horizontal layout class="buttoncontainer">
 					<button horizontal layout autofocus><core-icon class="buttons" icon="menu"></core-icon></button>
-					<button horizontal layout autofocus><core-icon class="buttons" icon="search"></core-icon></button>
-
 				</span>
 				<span class="text">View</span>
 				
 			</div>
-			<div flex one class="status">
-				<!--<span horizontal layout class="buttoncontainer">
-					<button horizontal layout><core-icon class="buttons" icon="fontawesome-icons:fa-play"></span></button>
-					<button horizontal layout><core-icon class="buttons" icon="fontawesome-icons:fa-cog"></core-icon></button>
-					<button horizontal layout><core-icon class="buttons" icon="fontawesome-icons:fa-search"></core-icon></span></button>
-					<button horizontal layout><core-icon class="buttons" icon="fontawesome-icons:fa-plus"></core-icon></span></button>
-
-				</span>-->
-				<input type="search" id="input" autocomplete="off">
+			<div horizontal layout flex one class="status">
+				<span class="buttoncontainer" horizontal layout>
+					<button horizontal layout autofocus on-click="{{searchActivate}}"><core-icon class="buttons" icon="search"></core-icon></button>
+					<input type="search" on-blur="{{searchDeactivate}}" on-keydown="{{searchEvent}}" id="input" autocomplete="off">
+				</span>
 				<span class="text">Game</span>
 
 			</div>
@@ -135,14 +149,20 @@ input[type="search"]::-webkit-search-cancel-button {
 			ready: function() {
 			
 			},
-			close: function(){
-				this.fire('snowflake-close');
+			searchActivate: function(){
+				this.$.input.setAttribute("class", "active");
+				this.$.input.focus();
 			},
-			maximize: function(){
-				this.fire('snowflake-maximize');
+			searchDeactivate: function(){
+				this.$.input.setAttribute("class", "");
+				this.$.input.blur();
+				this.$.input.value = "";
 			},
-			minimize: function(){
-				this.fire('snowflake-minimize');
+			searchEvent: function(event){
+				if (event.which == 13 || event.keyCode == 13) {
+					this.fire('snowflake-search', {query: this.$.input.value});
+					this.searchDeactivate();
+				}
 			}
 			
 		});
