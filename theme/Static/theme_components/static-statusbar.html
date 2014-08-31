@@ -3,6 +3,7 @@
 <link rel="import" href="../bower_components/core-icon/core-icon.html">
 <link rel="import" href="../bower_components/x-fontawesome/dist/x-fontawesome.html">
 <link rel="import" href="static-fonts.html">
+<link rel="import" href="static-searchbar.html">
 
 <polymer-element name="static-statusbar" attributes="keyword status">
 	<template>		
@@ -25,7 +26,6 @@
 				line-height: 35px;
 
 			}
-		
 			.text{
 				width: 100%;
 				position: absolute;
@@ -33,7 +33,6 @@
 			.container div{
 				position: relative;
 			}
-			
 			.status .text{
 				text-align: right;
 				margin-left: -10px;
@@ -48,8 +47,6 @@
 			.status{
 				background-color: #7F7F7F;
 			}
-			
-			
 			button{
 				z-index: 100000;
 				color: white;
@@ -74,15 +71,10 @@
 			.view .buttoncontainer{
 				right: 10px;
 			}
-			.status .buttoncontainer{
+			static-searchbar{
 				width: 60%;
 			}
-			.status .buttoncontainer > input {
-				width: 100%;
-			}
-			
-			
-			
+
 			core-icon svg{
 				width: 28px !important;
 				height: 28px !important;
@@ -94,30 +86,7 @@
 				bottom: 0;
 				
 			}
-			#input{
-				background-color: inherit;
-				border: none;
-				outline: 0;
-				padding: 0;
-				color: inherit;
-				z-index: 1000000;
-				font-family: 'RobotoDraft';
-				font-size: 12pt;
-				line-height: 35px;
-				vertical-align: middle;
-				visibility: hidden;
-				cursor: text;
-				height: 100%;
-			}
-			#input.active{
-				visibility: visible;
-			}
 			
-
-			input[type="search"]::-webkit-search-decoration,
-			input[type="search"]::-webkit-search-cancel-button {
-				-webkit-appearance: none;
-			}
 		</style>
 		
 		<x-fontawesome></x-fontawesome>
@@ -130,10 +99,7 @@
 				
 			</div>
 			<div horizontal layout flex one class="status">
-				<span class="buttoncontainer" horizontal layout>
-					<button horizontal layout autofocus on-click="{{searchActivate}}"><core-icon class="buttons" icon="search"></core-icon></button>
-					<input type="search" on-blur="{{searchDeactivate}}" on-keydown="{{searchEvent}}" placeholder="search {{keyword}}s" id="input" autocomplete="off">
-				</span>
+				<static-searchbar class="buttoncontainer" id="searchbar" keyword="{{keyword}}" status="{{status}}"></static-searchbar>
 				<span class="text">{{keyword}}{{status|fInsertHyphen}}{{status}}</span>
 
 			</div>
@@ -150,30 +116,9 @@
 				}
 			},
 			ready: function() {
-				var statusbar = this; //todo move this into node snowflake object;
-				window.addEventListener('keydown', function(e){
-					if (event.which == 13 || event.keyCode == 13) {
-						statusbar.searchActivate();
-					}
-				});
-			},
-			searchActivate: function(){
-				this.$.input.setAttribute("class", "active");
-				this.$.input.focus();
-			},
-			searchDeactivate: function(){
-				this.$.input.setAttribute("class", "");
-				this.$.input.blur();
-				this.$.input.value = "";
-			},
-			searchEvent: function(event){
-				if (event.which == 13 || event.keyCode == 13) {
-					this.fire('snowflake-search', {query: this.$.input.value});
-					this.searchDeactivate();
-				}
-				event.stopPropagation();
+			
 			}
 			
 		});
 	</script>
-</polymer-element>-->
+</polymer-element>

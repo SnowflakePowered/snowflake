@@ -1,0 +1,108 @@
+<link rel="import" href="../bower_components/core-icons/core-icons.html">
+<link rel="import" href="../bower_components/core-icon/core-icon.html">
+<link rel="import" href="static-fonts.html">
+
+<polymer-element name="static-searchbar" attributes="keyword status">
+	<template>		
+
+		<style>
+			button{
+				z-index: 100000;
+				color: white;
+				background: transparent;
+				border: none;
+				height: 100%;
+			}
+			
+			button:focus{
+				outline: none;
+			}
+			
+			button:active{
+				color: #dedede;
+			}
+
+			.buttoncontainer{
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				width: 100%;
+			}
+			core-icon svg{
+				width: 28px !important;
+				height: 28px !important;
+			}
+			core-icon{
+				width: 28px !important;
+				height: 28px !important;
+				top: 0;
+				bottom: 0;
+				
+			}
+			#input{
+				background-color: inherit;
+				border: none;
+				outline: 0;
+				padding: 0;
+				color: transparent;
+				z-index: 1000000;
+				font-family: 'RobotoDraft';
+				font-size: 12pt;
+				line-height: 35px;
+				vertical-align: middle;
+				visibility: hidden;
+				cursor: text;
+				height: 100%;
+				width: 100%;
+			}
+			#input.active{
+				visibility: visible;
+			}
+			
+			input[type="search"]::-webkit-search-decoration,
+			input[type="search"]::-webkit-search-cancel-button {
+				-webkit-appearance: none;
+			}
+		</style>
+		
+		<span class="buttoncontainer" horizontal layout>
+			<button horizontal layout autofocus on-click="{{searchActivate}}"><core-icon class="buttons" icon="search"></core-icon></button>
+			<input spellcheck="false" type="search" on-blur="{{searchDeactivate}}" on-input="{{fixCaret}}" on-keydown="{{searchEvent}}" placeholder="search {{keyword}}s" id="input" autocomplete="off">
+		</span>
+
+</template>
+	<script>
+		Polymer('static-searchbar', {
+		
+			ready: function() {
+				var searchbar = this; //todo move this into node snowflake object;
+				window.addEventListener('keydown', function(e){
+					if (event.which == 13 || event.keyCode == 13) {
+						searchbar.searchActivate();
+					}
+				});
+			},
+			searchActivate: function(){
+				this.$.input.setAttribute("class", "active");
+				this.$.input.focus();
+			},
+			searchDeactivate: function(){
+				this.$.input.setAttribute("class", "");
+				this.$.input.blur();
+				this.$.input.value = "";
+				this.fixCaret();
+			},
+			searchEvent: function(event){
+				if (event.which == 13 || event.keyCode == 13) {
+					if(!this.$.input.value.isEmpty()){
+						this.fire('snowflake-search', {query: this.$.input.value});
+					}
+					this.searchDeactivate();
+				}
+				
+				event.stopPropagation();
+			},
+			
+		});
+	</script>
+</polymer-element>
