@@ -3,7 +3,7 @@
 <link rel="import" href="static-titlebar.html">
 <link rel="import" href="static-statusbar.html">
 	
-<polymer-element name="static-model" attributes="barText barTitle barLogo barTable backgroundImage titleText">
+<polymer-element name="static-model" attributes="barText barTitle barLogo barTable backgroundImage titleText themeMode statusText">
   <script>
     Polymer('static-model', {
 		  ready: function() {
@@ -13,6 +13,8 @@
 			this.backgroundImage = this.backgroundImage || "model.backgroundImage";
 			this.barTable = this.barTable || [];
 			this.titleText = this.titleText || "model.titleText";
+			this.themeMode = this.themeMode || "model.themeMode";
+			this.statusText = this.statusText || "model.statusText";
 			window.model = this;
 		  }
     });
@@ -62,9 +64,18 @@
 			}
 		</style>
 		
-		<static-model id="model" titleText="{{titleText}}" barText="{{barText}}" barTitle="{{barTitle}}" barLogo="{{barLogo}}" backgroundImage="{{backgroundImage}}"></td-model>
+		<static-model id="model" 
+			titleText="{{titleText}}" 
+			barText="{{barText}}" 
+			barTitle="{{barTitle}}" 
+			barLogo="{{barLogo}}" 
+			backgroundImage="{{backgroundImage}}" 
+			themeMode="{{themeMode}}" 
+			statusText="{{statusText}}">
+		</static-model>
+		
 		<static-titlebar titleText="{{titleText}}"></static-titlebar>
-		<static-statusbar></static-statusbar>
+		<static-statusbar keyword="{{themeMode}}" status="{{statusText}}"></static-statusbar>
 		<static-mainbar barText="{{barText}}" barTitle="{{barTitle}}" barLogo="{{barLogo}}" barTable="{{barTable}}"></static-mainbar>
 		<static-background backgroundImage="{{backgroundImage}}"><static-background>
 </template>
