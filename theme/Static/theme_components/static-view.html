@@ -1,6 +1,8 @@
 <link rel="import" href="static-mainbar.html">
 <link rel="import" href="static-background.html">
 <link rel="import" href="static-titlebar.html">
+<link rel="import" href="static-statusbar.html">
+	
 <polymer-element name="static-model" attributes="barText barTitle barLogo barTable backgroundImage titleText">
   <script>
     Polymer('static-model', {
@@ -20,6 +22,7 @@
 
 <polymer-element name="static-view">
 	<template>
+
 		<style>
 			:host{
 				overflow: hidden;
@@ -49,10 +52,19 @@
 				height: 75px;
 				z-index: 1000;
 			}
+			static-statusbar{
+				position: absolute;
+				top: 74px;
+				right: 0;
+				left: 0;
+				height: 35px;
+				z-index: 1000;
+			}
 		</style>
 		
 		<static-model id="model" titleText="{{titleText}}" barText="{{barText}}" barTitle="{{barTitle}}" barLogo="{{barLogo}}" backgroundImage="{{backgroundImage}}"></td-model>
 		<static-titlebar titleText="{{titleText}}"></static-titlebar>
+		<static-statusbar></static-statusbar>
 		<static-mainbar barText="{{barText}}" barTitle="{{barTitle}}" barLogo="{{barLogo}}" barTable="{{barTable}}"></static-mainbar>
 		<static-background backgroundImage="{{backgroundImage}}"><static-background>
 </template>

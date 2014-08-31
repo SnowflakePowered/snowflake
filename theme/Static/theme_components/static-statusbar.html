@@ -1,0 +1,150 @@
+<link rel="import" href="../bower_components/core-icons/core-icons.html">
+<link rel="import" href="../bower_components/core-icons/iconsets/av-icons.html">
+<link rel="import" href="../bower_components/core-icon/core-icon.html">
+<link rel="import" href="../bower_components/x-fontawesome/dist/x-fontawesome.html">
+
+<link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:300italic,400italic,700italic,400,700,300' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Roboto:100,300' rel='stylesheet' type='text/css'>
+<link href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
+<polymer-element name="static-statusbar" attributes="titleText">
+	<template>		
+
+		<style>
+			.container{
+				font-size: 14pt;
+				position: absolute;
+				right: 0;
+				left: 0;
+				color: white;
+				height: 100%;
+				vertical-align: text-bottom;
+				-webkit-app-region: drag;
+				text-transform: uppercase;
+				cursor: default;
+				overflow: hidden;
+				font-family: 'Roboto', sans-serif;
+				font-weight: 100;
+				line-height: 35px;
+
+			}
+		
+			.text{
+				width: 100%;
+				position: absolute;
+			}
+			.container div{
+				position: relative;
+			}
+			
+			.status .text{
+				text-align: right;
+				margin-left: -10px;
+			}
+			.view .text{
+			margin-left: 10px;
+			}
+			.view{
+				width: 15%;
+				background-color: #BFBFBF;
+			}
+			.status{
+				background-color: #7F7F7F;
+			}
+			button{
+				z-index: 100000;
+				color: white;
+				background: transparent;
+				border: none;
+				height: 100%;
+			}
+			
+			button:focus{
+				outline: none;
+			}
+			
+			button:active{
+				color: #dedede;
+			}
+			.status .buttoncontainer{
+				position: absolute;
+				left: 10px;
+			}
+			.view .buttoncontainer{
+				position: absolute;
+				right: 10px;
+			}
+			.buttoncontainer{
+				top: 0;
+				bottom: 0;
+			}
+			button .buttons{
+				font-size: 12pt;
+			}
+			core-icon svg{
+				width: 28px !important;
+				height: 28px !important;
+			}
+			#input{
+				background-color: inherit;
+				border: none;
+				font-size: 28px;
+				outline: 0;
+				padding: 0;
+			
+				color: inherit;
+				-webkit-appearance: none;
+			}
+			input[type="search"] {
+    -webkit-appearance: textfield;
+}
+
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+}
+		</style>
+		
+		<x-fontawesome></x-fontawesome>
+		<div horizontal layout class="container" >
+			<div flex none class="view">
+				<span horizontal layout class="buttoncontainer">
+					<button horizontal layout autofocus><core-icon class="buttons" icon="menu"></core-icon></button>
+					<button horizontal layout autofocus><core-icon class="buttons" icon="search"></core-icon></button>
+
+				</span>
+				<span class="text">View</span>
+				
+			</div>
+			<div flex one class="status">
+				<!--<span horizontal layout class="buttoncontainer">
+					<button horizontal layout><core-icon class="buttons" icon="fontawesome-icons:fa-play"></span></button>
+					<button horizontal layout><core-icon class="buttons" icon="fontawesome-icons:fa-cog"></core-icon></button>
+					<button horizontal layout><core-icon class="buttons" icon="fontawesome-icons:fa-search"></core-icon></span></button>
+					<button horizontal layout><core-icon class="buttons" icon="fontawesome-icons:fa-plus"></core-icon></span></button>
+
+				</span>-->
+				<input type="search" id="input" autocomplete="off">
+				<span class="text">Game</span>
+
+			</div>
+		</div>
+		
+</template>
+	<script>
+		Polymer('static-statusbar', {
+			ready: function() {
+			
+			},
+			close: function(){
+				this.fire('snowflake-close');
+			},
+			maximize: function(){
+				this.fire('snowflake-maximize');
+			},
+			minimize: function(){
+				this.fire('snowflake-minimize');
+			}
+			
+		});
+	</script>
+</polymer-element>-->
