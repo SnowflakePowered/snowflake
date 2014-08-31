@@ -72,6 +72,9 @@
 
 </template>
 	<script>
+		String.prototype.isEmpty = function() {
+			return (this.length === 0 || !this.trim());
+		};
 		Polymer('static-searchbar', {
 		
 			ready: function() {
@@ -102,6 +105,13 @@
 				
 				event.stopPropagation();
 			},
+			fixCaret: function(event){
+				if(this.$.input.value == "" || this.$.input.value == undefined){
+						this.$.input.setAttribute("style", "color: transparent;");
+					}else{
+						this.$.input.setAttribute("style", "color: inherit;");
+				}
+			}
 			
 		});
 	</script>
