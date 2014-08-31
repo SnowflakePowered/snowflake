@@ -16,12 +16,17 @@
     "tests"
   ],
   "dependencies": {
-    "core-elements": "Polymer/core-elements#~0.3.3",
-    "bootstrap": "~3.2.0",
-    "polymer": "Polymer/polymer#~0.3.3",
+    "core-elements": "Polymer/core-elements#master",
+    "polymer": "Polymer/polymer#master",
     "jquery": "~2.1.1",
-    "paper-elements": "Polymer/paper-elements#~0.3.3",
+    "paper-elements": "Polymer/paper-elements#master",
     "perfect-scrollbar": "~0.4.10",
-    "jquery-mousewheel": "~3.1.11"
+    "jquery-mousewheel": "~3.1.11",
+    "x-fontawesome": "~0.2.0"
+  },
+  "resolutions": {
+    "polymer": "master",
+    "platform": "master",
+    "core-component-page": "master"
   }
 }
