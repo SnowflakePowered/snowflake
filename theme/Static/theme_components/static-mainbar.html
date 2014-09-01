@@ -1,4 +1,7 @@
 <link rel="import" href="static-fonts.html">
+<link rel="import" href="../bower_components/core-icons/core-icons.html">
+<link rel="import" href="../bower_components/core-icons/av-icons.html">
+<link rel="import" href="../bower_components/core-icon/core-icon.html">
 <polymer-element name="static-mainbar" attributes="barText barTitle barLogo barTable">
 	<template>
 		<style>
@@ -41,6 +44,27 @@
 				font-size: 1.2em;
 				width: 100px;
 				height: 50px;
+				background-color: rgba(255,255,255,0.7);
+				outline: none;
+				border: none;
+				text-align: left;
+				line-height: 1.2em;
+				vertical-align: middle;
+			}
+			#actionArea button:active{
+				
+				background-color: rgba(240,240,240,0.7);
+				
+			}
+			core-icon svg{
+				width: 1.2em !important;
+				height: 1.2em !important;
+			}
+			core-icon{
+				width: 1.2em !important;
+				height: 1.2em !important;
+				top: 0;
+				bottom: 0;
 			}
 			.outerDiv p, .outerDiv h1{
 				margin: 0;
@@ -90,7 +114,7 @@
 				<h1>{{barTitle}}</h1>
 			</div>
 			<div flex id="actionArea">
-				<button on-click="{{onPlayClick}}">Play</button>
+				<button on-click="{{onPlayClick}}"><core-icon icon="av:play-arrow"></core-icon>Play</button>
 			</div>
 			</div>
 			<div class="border"></div>
