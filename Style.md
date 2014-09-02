@@ -9,21 +9,21 @@ Use Visual Studio defaults - Follow [MSDN C# Coding Conventions](http://msdn.mic
 
 - Use var when creating a new object, specify type otherwise
 
-    var x = new List<string, string>();
-    var x = new Foo();
+        var x = new List<string, string>();
+        var x = new Foo();
     
-    Bar x = Foo.GetBar();
-    Bar x = Foo.Bar;
-    Bar x = Foo.SomeObject;
+        Bar x = Foo.GetBar();
+        Bar x = Foo.Bar;
+        Bar x = Foo.SomeObject;
 
 
 - Use explicit instantiation when creating flat arrays
 
-    var x = new string[] {'foo', 'bar'};
+        var x = new string[] {'foo', 'bar'};
 
 - Prefer using keywords when performing LINQ. Always wrap in parentheses
 
-    var style = (from foo in bar where foo.baz = "foobaz" select foo.qux)
+        var style = (from foo in bar where foo.baz = "foobaz" select foo.qux)
 
 HTML and Javascript
 -------------------
