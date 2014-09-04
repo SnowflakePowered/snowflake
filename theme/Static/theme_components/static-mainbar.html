@@ -15,6 +15,7 @@
 				position: absolute;
 				bottom: 0;
 				padding-bottom: 10px;
+				color: #151515;
 				
 			}
 			.outerDiv{
@@ -27,13 +28,15 @@
 				height: 100%;
 			}
 			.border{
-				border-right: 1px dotted;
-				margin-top: 50px;
-				margin-bottom: 50px;
+				border-right: 1px solid;
+				margin-top: 20px;
+				margin-bottom: 20px;
+				color: #777;
 				width: 0 !important;
 				flex: none !important;
 				display: block;
 				content: ' ';
+				padding: 0;
 			}
 			#playButtonArea{
 				max-width: 500px;
@@ -50,6 +53,7 @@
 				text-align: left;
 				line-height: 1.2em;
 				vertical-align: middle;
+				padding: 0;
 			}
 			#actionArea button:active{
 				
@@ -80,6 +84,11 @@
 			   -webkit-line-clamp: 3;
 			   -webkit-box-orient: vertical;
 			   height: 4em;
+			   font-size: 1.5em;
+			   font-weight: 600;
+			}
+			#titleArea{
+				padding-right: 10px;
 			}
 			#tableArea table{
 				width: 100%;
@@ -106,6 +115,13 @@
 				height: auto;
 				max-height: 90%;
 			}
+			.actionText{
+				vertical-align: bottom;
+				font-family: 'RobotoDraft', sans-serif;
+				text-transform: uppercase;
+				font-weight: 300;
+			}
+			
 		</style>
 		
 		<div horizontal layout class="container">
@@ -114,7 +130,11 @@
 				<h1>{{barTitle}}</h1>
 			</div>
 			<div flex id="actionArea">
-				<button on-click="{{onPlayClick}}"><core-icon icon="av:play-arrow"></core-icon>Play</button>
+				<button on-click="{{onPlayClick}}">
+					
+						<span class="actionText"><core-icon icon="av:play-arrow" style="padding-bottom: 2px;"></core-icon></span>
+						<span class="actionText">Play</span>
+				</button>
 			</div>
 			</div>
 			<div class="border"></div>
@@ -124,7 +144,7 @@
 				</P>
 			</div>
 			<div class="border"></div>
-			<div flex id="tableArea" class="outerDiv">
+			<div flex two id="tableArea" class="outerDiv">
 				<template repeat="{{obj in barTable}}">
 					<table>
 						<template repeat="{{item in obj | fKeys}}">
@@ -138,7 +158,7 @@
 			</div>
 			<div class="border"></div>
 			<div flex two id="logoArea" class="outerDiv">
-				<img src="{{barLogo}}"/>
+				<img draggable="false" src="{{barLogo}}"/>
 			</div>
 		</div>
 </template>

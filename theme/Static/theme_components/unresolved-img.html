@@ -1,0 +1,40 @@
+<polymer-element name="unresolved-img" attributes="src">
+
+<template>
+<style>
+img{
+	transition: opacity ease-in 0.2s;
+	height: 100%;
+	width: auto;
+}
+[unresolved] {
+    opacity: 0;
+}
+img[card]{
+	background: #fff;
+	border-radius: 2px;
+	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+	
+}
+</style>
+<img id="displayImage" unresolved src card></img>
+</template>
+<script>
+    Polymer('unresolved-img', {
+		created: function(){
+			this.loadingImage = new Image();
+		},
+		ready: function(){
+		},
+		srcChanged: function() {
+			this.$.displayImage.setAttribute('unresolved', '');
+			this.loadingImage.targetImage = this.$.displayImage;
+			this.loadingImage.onload = function() { 
+				this.targetImage.src = this.src;
+				this.targetImage.removeAttribute('unresolved');
+			};
+			this.loadingImage.src = this.src;
+		}
+    });
+  </script>
+<polymer-element>

@@ -2,6 +2,7 @@
 <link rel="import" href="static-background.html">
 <link rel="import" href="static-titlebar.html">
 <link rel="import" href="static-statusbar.html">
+<link rel="import" href="static-view-list.html">
 
 <polymer-element name="static-model" attributes="barText barTitle barLogo barTable backgroundImage titleText themeMode statusText">
   <script>
@@ -31,6 +32,7 @@
 			}
 			:host{
 				overflow: hidden;
+				-webkit-user-select: none;
 			}
 			static-background{
 				z-index: -10000;
@@ -65,6 +67,15 @@
 				height: 35px;
 				z-index: 1000;
 			}
+			static-view-list{
+				position: absolute;
+				top: 109px;
+				right: 0;
+				left: 0;
+				height: calc(70% - 119px);
+				width: 100%
+				
+			}
 		</style>
 		
 		<static-model id="model" 
@@ -76,10 +87,12 @@
 			themeMode="{{themeMode}}" 
 			statusText="{{statusText}}">
 		</static-model>
-		
+		<div vertical layout>
 		<static-titlebar titleText="{{titleText}}"></static-titlebar>
 		<static-statusbar keyword="{{themeMode}}" status="{{statusText}}"></static-statusbar>
+		<static-view-list></static-view-list>
 		<static-mainbar barText="{{barText}}" barTitle="{{barTitle}}" barLogo="{{barLogo}}" barTable="{{barTable}}"></static-mainbar>
+		</div>
 		<static-background backgroundImage="{{backgroundImage}}"><static-background>
 </template>
 	
