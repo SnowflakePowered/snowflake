@@ -8,11 +8,11 @@ namespace Snowflake.Constants
 {
     public static class GameInfoFields
     {
-        public static string snowflake_game_description = "snowflake_game_description";
-        public static string snowflake_game_title = "snowflake_game_title";
-        public static string snowflake_game_releasedate = "snowflake_game_releasedate";
-        public static string snowflake_game_publisher = "snowflake_game_publisher";
-        public static string snowflake_game_developer = "snowflake_game_developer";
+        public static string game_description = "game_description";
+        public static string game_title = "game_title";
+        public static string game_releasedate = "game_releasedate";
+        public static string game_publisher = "game_publisher";
+        public static string game_developer = "game_developer";
  
     }
 }

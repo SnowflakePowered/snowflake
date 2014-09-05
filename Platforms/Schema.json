@@ -33,11 +33,11 @@
             "type": "object",
             "required": true,
             "properties": {
-                "snowflake_img_platform_logo": {
+                "img_platform_logo": {
                     "type": "string",
                     "required": false
                 },
-                "snowflake_img_platform_productshot": {
+                "img_platform_productshot": {
                     "type": "string",
                     "required": false
                 }
@@ -47,15 +47,15 @@
             "type": "object",
             "required": true,
             "properties": {
-                "snowflake_platform_company": {
+                "platform_company": {
                     "type": "string",
                     "required": false
                 },
-                "snowflake_platform_releasedate": {
+                "platform_releasedate": {
                     "type": "string",
                     "required": false
                 },
-                "snowflake_platform_shortname": {
+                "platform_shortname": {
                     "type": "string",
                     "required": false
                 }

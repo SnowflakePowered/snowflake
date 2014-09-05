@@ -8,8 +8,8 @@ namespace Snowflake.Constants
 {
     public static class ImagesInfoFields
     {
-        public static string snowflake_img_boxart_back = "snowflake_img_boxart_back";
-        public static string snowflake_img_boxart_front = "snowflake_img_boxart_front";
-        public static string snowflake_img_boxart_full = "snowflake_img_boxart_front";
+        public static string img_boxart_back = "img_boxart_back";
+        public static string img_boxart_front = "img_boxart_front";
+        public static string img_boxart_full = "img_boxart_full";
     }
 }

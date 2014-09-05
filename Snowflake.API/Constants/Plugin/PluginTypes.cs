@@ -8,8 +8,8 @@ namespace Snowflake.Constants.Plugin
 {
     public static class PluginTypes
     {
-        public static string Scraper = "snowflake_plugin_scraper";
-        public static string Emulator = "snowflake_plugin_emulator";
-        public static string Plugin = "snowflake_plugin_plugin";
+        public static string Scraper = "plugin_scraper";
+        public static string Emulator = "plugin_emulator";
+        public static string Plugin = "plugin_plugin";
     }
 }

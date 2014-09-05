@@ -1,6 +1,6 @@
 ﻿{
   "name": "Emulator.RetroArch",
-  "type": "snowflake_plugin_emulator",
+  "type": "plugin_emulator",
   "version": "1.0.0.0",
   "authors": [
     "Snowflake Authors",

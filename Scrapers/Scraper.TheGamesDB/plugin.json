@@ -1,6 +1,6 @@
 ﻿{
   "name": "Scraper.TheGamesDB",
-  "type": "snowflake_plugin_scraper",
+  "type": "plugin_scraper",
   "version": "1.0.0.0",
   "authors": [
     "Snowflake Authors"

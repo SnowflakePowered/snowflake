@@ -65,13 +65,13 @@ namespace Snowflake.Information.Game
                     this.Screenshots.Add(new string[] { imageFileName, imageUrl.AbsoluteUri });
                     break;
                 case GameImageType.Boxart_back:
-                    this.Boxarts.Add(ImagesInfoFields.snowflake_img_boxart_back, new string[] { imageFileName, imageUrl.AbsoluteUri });
+                    this.Boxarts.Add(ImagesInfoFields.img_boxart_back, new string[] { imageFileName, imageUrl.AbsoluteUri });
                     break;
                 case GameImageType.Boxart_front:
-                    this.Boxarts.Add(ImagesInfoFields.snowflake_img_boxart_front, new string[] { imageFileName, imageUrl.AbsoluteUri });
+                    this.Boxarts.Add(ImagesInfoFields.img_boxart_front, new string[] { imageFileName, imageUrl.AbsoluteUri });
                     break;
                 case GameImageType.Boxart_full:
-                    this.Boxarts.Add(ImagesInfoFields.snowflake_img_boxart_full, new string[] { imageFileName, imageUrl.AbsoluteUri });
+                    this.Boxarts.Add(ImagesInfoFields.img_boxart_full, new string[] { imageFileName, imageUrl.AbsoluteUri });
                     break;
             }
         }

@@ -33,7 +33,7 @@ namespace Scraper.TheGamesDB
                 {
                     string id = game.Element("id").Value;
                     string title = game.Element("GameTitle").Value;
-                    string platform = "SNOWFLAKE_UNKNOWN";
+                    string platform = "UNKNOWN";
                     string xmlPlatformValue = game.Element("Platform").Value;
                     if (this.ScraperMap.Reverse.ContainsKey(xmlPlatformValue)) platform = this.ScraperMap.Reverse[xmlPlatformValue];
 
@@ -65,11 +65,11 @@ namespace Scraper.TheGamesDB
                 string baseImageUrl = xmlDoc.Descendants("baseImgUrl").First().Value;
                 var metadata = new Dictionary<string, string>
                 {
-                    {GameInfoFields.snowflake_game_description, xmlDoc.Descendants("Overview").First().Value},
-                    {GameInfoFields.snowflake_game_title, xmlDoc.Descendants("GameTitle").First().Value},
-                    {GameInfoFields.snowflake_game_releasedate, xmlDoc.Descendants("ReleaseDate").First().Value},
-                    {GameInfoFields.snowflake_game_publisher, xmlDoc.Descendants("Publisher").First().Value},
-                    {GameInfoFields.snowflake_game_developer, xmlDoc.Descendants("Developer").First().Value}
+                    {GameInfoFields.game_description, xmlDoc.Descendants("Overview").First().Value},
+                    {GameInfoFields.game_title, xmlDoc.Descendants("GameTitle").First().Value},
+                    {GameInfoFields.game_releasedate, xmlDoc.Descendants("ReleaseDate").First().Value},
+                    {GameInfoFields.game_publisher, xmlDoc.Descendants("Publisher").First().Value},
+                    {GameInfoFields.game_developer, xmlDoc.Descendants("Developer").First().Value}
                 };
 
                 var images = new GameImages();

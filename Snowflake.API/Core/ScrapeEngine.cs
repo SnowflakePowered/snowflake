@@ -33,7 +33,7 @@ namespace Snowflake.Core
             var gameinfo = resultdetails.Item1;
             return new Game(
                 this.ScrapePlatform.PlatformId,
-                gameinfo[GameInfoFields.snowflake_game_title],
+                gameinfo[GameInfoFields.game_title],
                 resultdetails.Item2,
                 gameinfo,
                 ShortGuid.NewShortGuid(),
