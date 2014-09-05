@@ -53,6 +53,7 @@ namespace Snowflake.Information.Game
             if (!Directory.Exists(Path.Combine(this.CachePath, this.ImagesID))) Directory.CreateDirectory(Path.Combine(this.CachePath, this.ImagesID));
             using (var webclient = new WebClient())
             {
+                Console.WriteLine("Downloading File " + imageUrl);
                 webclient.DownloadFile(imageUrl, downloadPath);
             }
             switch (imageType)
