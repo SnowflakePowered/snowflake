@@ -1,0 +1,13 @@
+<polymer-element name="snowflake-game-model" attributes="game">
+  <script>
+    Polymer('snowflake-game-model', {
+		  ready: function() {
+		  	snowflake.theme.heap.debug.gameModel.push(this);
+			this.game = this.game;
+		  }
+    });
+  </script>
+  <template>
+			<content></content>
+  </template>
+</polymer-element>

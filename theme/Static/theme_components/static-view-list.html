@@ -1,5 +1,6 @@
 <link rel="import" href="static-fonts.html">
 <link rel="import" href="unresolved-img.html">
+<link rel="import" href="snowflake-game-model.html">
 
 <polymer-element name="static-view-list">
 	<template>
@@ -90,19 +91,15 @@
 
 <div horizontal layout class="container">
 	<div class="selector">
-		<div>
-			Super Mario Bros
-		</div>
-		<div>
-			Random Jimmy Neutron Game that supposedly has a long name
-		</div>
-		<div>
-			Random Jimmy Neutron Game that supposedly has a long name
-		</div>
+		<template repeat="{{game in gamesModel}}">
+			<snowflake-game-model gameObject="{{game}}">
+				<div>{{game.Name}}</div>
+			</snowflake-game-model>
+		</template>
 	</div>
 	<div flex one vertical layout class="content">
 		<div class="contentinner header"><h1>Super Mario Bros</h1></div>
-		<div class="contentinner main">
+		<div class="contentinner main">	
 			<img draggable="false" class="image" src="http://img4.wikia.nocookie.net/__cb20120609143443/mario/images/6/60/SMBBoxart.png">
 		</div>
 	</div>
@@ -114,8 +111,7 @@
 	<script>
 		Polymer('static-view-list', {
 			ready: function() {
-			
-			
+				this.gamesModel = snowflake.api.games;
 			}
 			
 		});
