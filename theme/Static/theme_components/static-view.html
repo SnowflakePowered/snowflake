@@ -89,7 +89,7 @@
 		<div vertical layout>
 		<static-titlebar titleText="{{titleText}}"></static-titlebar>
 		<static-statusbar keyword="{{themeMode}}" status="{{statusText}}"></static-statusbar>
-		<static-view-list></static-view-list>
+		<static-view-list selectedModel="{{selectedGame}}" on-model-changed="{{gameViewChanged}}"></static-view-list>
 		<static-mainbar barText="{{barText}}" barTitle="{{barTitle}}" barLogo="{{barLogo}}" barTable="{{barTable}}"></static-mainbar>
 		</div>
 		<static-background backgroundImage="{{backgroundImage}}"><static-background>
@@ -111,6 +111,25 @@
 					{
 						"Last Played": "test",
 						"You've played": "test"
+					}
+				];
+			},
+			gameViewChanged: function(event){
+				console.log(event);
+				var newValue = event.detail.newValue;
+				this.barText = newValue.Metadata.game_description;
+				this.barTitle = newValue.Metadata.game_title;
+				this.titleText = newValue.PlatformId;
+				this.barTable = [
+					{
+						"Platform": newValue.PlatformId,
+						"Release Date": newValue.Metadata.game_releasedate,
+						"Publisher": newValue.Metadata.game_publisher,
+						"Developer": newValue.Metadata.game_developer
+					},
+					{
+						"Last Played": "Never",
+						"You've played": "0 hours"
 					}
 				];
 			}

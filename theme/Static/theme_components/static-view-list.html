@@ -1,8 +1,9 @@
 <link rel="import" href="static-fonts.html">
 <link rel="import" href="unresolved-img.html">
 <link rel="import" href="snowflake-game-model.html">
+<link rel="import" href="../bower_components/core-selector/core-selector.html">
 
-<polymer-element name="static-view-list">
+<polymer-element name="static-view-list" attributes="selectedModel">
 	<template>
 		<style>
 		.container{
@@ -30,21 +31,23 @@
 			
 		}
 		.selector::-webkit-scrollbar {
-		  width:10px; // manage scrollbar width here
+			width: 10px; 
+			background: #eee;
 		}
 		.selector::-webkit-scrollbar * {
-			  background:transparent; // manage scrollbar background color here
+			  background: white !important; 
 		}
 		.selector::-webkit-scrollbar-thumb {
-			  background:rgba(0,0,0,0.1) !important; // manage scrollbar thumb background color here
+			  background:rgba(0,0,0,0.1) !important; 
 		}
 		.selector div{
 			width: 100%;
 			text-overflow: ellipsis;
 			white-space: nowrap;
 			overflow: hidden;
-			margin-left: 5px;
-			margin-top: 5px;
+			padding-left: 4px;
+			padding-top: 2px;
+			padding-bottom: 2px;
 		}
 		.content{
 			background; #666;
@@ -86,19 +89,24 @@
 			background: #666;
 			height: 5em;
 		}
+		.game-model.core-selected > .game-model-display{
+			background: #fff;
+			z-index: -10000000;
+		}
+
 	</style>
 
 
 <div horizontal layout class="container">
-	<div class="selector">
-		<template repeat="{{game in gamesModel}}">
-			<snowflake-game-model gameObject="{{game}}">
-				<div>{{game.Name}}</div>
+	<core-selector class="selector" selected="0" selectedModel="{{selectedModel}}">
+		<template repeat="{{gamesModel}}">
+			<snowflake-game-model class="game-model" gameObject="{{game}}">
+				<div class="game-model-display">{{Name}}</div>
 			</snowflake-game-model>
 		</template>
-	</div>
+	</core-selector>
 	<div flex one vertical layout class="content">
-		<div class="contentinner header"><h1>Super Mario Bros</h1></div>
+		<div class="contentinner header"><h1>{{selectedModel.Name}}</h1></div>
 		<div class="contentinner main">	
 			<img draggable="false" class="image" src="http://img4.wikia.nocookie.net/__cb20120609143443/mario/images/6/60/SMBBoxart.png">
 		</div>
@@ -112,6 +120,9 @@
 		Polymer('static-view-list', {
 			ready: function() {
 				this.gamesModel = snowflake.api.games;
+			},
+			selectedModelChanged: function(oldValue, newValue){
+				this.fire('model-changed', {newValue: newValue, oldValue: oldValue});
 			}
 			
 		});
