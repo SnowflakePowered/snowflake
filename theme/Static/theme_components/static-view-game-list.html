@@ -3,7 +3,7 @@
 <link rel="import" href="snowflake-game-model.html">
 <link rel="import" href="../bower_components/core-selector/core-selector.html">
 
-<polymer-element name="static-view-list" attributes="selectedModel">
+<polymer-element name="static-view-game-list" attributes="selectedModel">
 	<template>
 		<style>
 		.container{
@@ -107,7 +107,7 @@
 	<div flex one vertical layout class="content">
 		<div class="contentinner header"><h1>{{selectedModel.Name}}</h1></div>
 		<div class="contentinner main">	
-			<img draggable="false" class="image" src="http://img4.wikia.nocookie.net/__cb20120609143443/mario/images/6/60/SMBBoxart.png">
+			<img draggable="false" class="image" src="{{selectedModel.Images.Boxarts.img_boxart_front[1]}}">
 		</div>
 	</div>
 </div>
@@ -116,7 +116,7 @@
 </template>
 	
 	<script>
-		Polymer('static-view-list', {
+		Polymer('static-view-game-list', {
 			ready: function() {
 				this.gamesModel = snowflake.api.games;
 			},

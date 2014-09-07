@@ -5,7 +5,9 @@
 <polymer-element name="static-mainbar" attributes="barText barTitle barLogo barTable">
 	<template>
 		<style>
-			
+			:host{
+				height:100%;
+			}
 			.container{
 				font-family: 'Roboto Condensed', sans-serif;
 				width: 100%;
@@ -102,13 +104,10 @@
 			}
 			#logoArea{
 				min-height: 100%;
+				height: initial;
 			}
 			#logoArea img{
-				position: absolute;
-				top: -10px;
-				bottom: 0;
-				right: 0;
-				left: 0;
+				position: relative;
 				margin: auto;
 				max-width: 80%;
 				min-width: 75%;
@@ -157,7 +156,7 @@
 				</template>
 			</div>
 			<div class="border"></div>
-			<div flex two id="logoArea" class="outerDiv">
+			<div horizontal layout center flex two id="logoArea" class="outerDiv">
 				<img draggable="false" src="{{barLogo}}"/>
 			</div>
 		</div>

@@ -2,7 +2,7 @@
 <link rel="import" href="static-background.html">
 <link rel="import" href="static-titlebar.html">
 <link rel="import" href="static-statusbar.html">
-<link rel="import" href="static-view-list.html">
+<link rel="import" href="static-view-game-list.html">
 
 <polymer-element name="static-model" attributes="barText barTitle barLogo barTable backgroundImage titleText themeMode statusText">
   <script>
@@ -63,7 +63,7 @@
 				z-index: 1000;
 				position: relative;
 			}
-			static-view-list{
+			static-view-game-list{
 				display: table-row;
 				height: auto;
 				width: 100%
@@ -92,7 +92,7 @@
 		<div class="container">
 		<static-titlebar titleText="{{titleText}}"></static-titlebar>
 		<static-statusbar keyword="{{themeMode}}" status="{{statusText}}"></static-statusbar>
-		<static-view-list selectedModel="{{selectedGame}}" on-model-changed="{{gameViewChanged}}"></static-view-list>
+		<static-view-game-list selectedModel="{{selectedGame}}" on-model-changed="{{gameViewChanged}}"></static-view-game-list>
 		<static-mainbar barText="{{barText}}" barTitle="{{barTitle}}" barLogo="{{barLogo}}" barTable="{{barTable}}"></static-mainbar>
 		</div>
 		<static-background backgroundImage="{{backgroundImage}}"><static-background>
@@ -118,7 +118,6 @@
 				];
 			},
 			gameViewChanged: function(event){
-				console.log(event);
 				var newValue = event.detail.newValue;
 				this.barText = newValue.Metadata.game_description;
 				this.barTitle = newValue.Metadata.game_title;
@@ -136,6 +135,8 @@
 					}
 				];
 				this.backgroundImage = newValue.Images.Fanarts[Math.floor(Math.random() * newValue.Images.Fanarts.length)][1];
+								window.history.pushState("Snowflake - Game - " + newValue.Metadata.game_title, "Snowflake - Game - " + newValue.Metadata.game_title, "#game-"+newValue.UUID);
+
 			}
 			
 		});
