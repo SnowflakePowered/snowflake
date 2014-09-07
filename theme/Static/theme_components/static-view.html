@@ -45,35 +45,39 @@
 				max-height: 30%;
 				height: 30%;
 				width: 100%;
-				position: fixed;
+				display: table-row;
 				bottom: 0;
 				right: 0;
 				left: 0;
 			}
 			static-titlebar{
-				position: absolute;
-				top: 0;
-				right: 0;
-				left: 0;
+				display: table-row;
 				height: 75px;
 				z-index: 1000;
+				width: 100%;
+				position: relative;
 			}
 			static-statusbar{
-				position: absolute;
-				top: 74px;
-				right: 0;
-				left: 0;
+				display: table-row;
 				height: 35px;
 				z-index: 1000;
+				position: relative;
 			}
 			static-view-list{
-				position: absolute;
-				top: 109px;
-				right: 0;
-				left: 0;
-				height: calc(70% - 119px);
+				display: table-row;
+				
+				height: auto;
 				width: 100%
 				
+			}
+			.container{
+				display: table;
+				height: 100%;
+				width: 100%;
+				left: 0;
+				right: 0;
+				top: 0;
+				bottom: 0;
 			}
 		</style>
 		
@@ -86,7 +90,7 @@
 			themeMode="{{themeMode}}" 
 			statusText="{{statusText}}">
 		</static-model>
-		<div vertical layout>
+		<div class="container">
 		<static-titlebar titleText="{{titleText}}"></static-titlebar>
 		<static-statusbar keyword="{{themeMode}}" status="{{statusText}}"></static-statusbar>
 		<static-view-list selectedModel="{{selectedGame}}" on-model-changed="{{gameViewChanged}}"></static-view-list>
