@@ -1,9 +1,11 @@
-<polymer-element name="snowflake-game-model" attributes="game">
+<polymer-element name="snowflake-model" attributes="model type">
   <script>
-    Polymer('snowflake-game-model', {
+    Polymer('snowflake-model', {
 		  ready: function() {
 		  	snowflake.theme.heap.debug.gameModel.push(this);
-			this.game = this.game;
+			this.model = this.model;
+			this.type = this.type;
+			console.log(this.model);
 		  }
     });
   </script>

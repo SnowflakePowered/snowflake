@@ -1,9 +1,46 @@
 <link rel="import" href="static-fonts.html">
 <link rel="import" href="unresolved-img.html">
 <link rel="import" href="snowflake-game-model.html">
+<link rel="import" href="static-view-list-selector.html">
 <link rel="import" href="../bower_components/core-selector/core-selector.html">
+<polymer-element name="static-view-list-model" attributes="modelMode modelObject viewTitle viewImage viewText viewStats">
+  <script>
+    Polymer('static-view-list-model', {
+		ready: function() {
+			this.modelMode = this.modelMode || "game";
+			this.modelObject = this.modelObject || null;
+			this.updateDisplay(this.modelMode);
+		  },
+		updateDisplay: function(modelMode){
+			 try {
+				this.viewTitle = this.modelObject.Name;
+				this.viewImage = this.modelObject.Images.Boxarts.img_boxart_front[1] || "undefined";
+				this.viewText = this.modelObject.Metadata.game_description || "undefined";
+				this.viewStats = [
+					{
+						"Platform": this.modelObject.PlatformId,
+						"Release Date": this.modelObject.Metadata.game_releasedate,
+						"Publisher": this.modelObject.Metadata.game_publisher,
+						"Developer": this.modelObject.Metadata.game_developer
+					},
+					{
+						"Last Played": "Never",
+						"You've played": "0 hours"
+					}
+				];
+			}catch(event){
+			
+			}
+		},
+		modelObjectChanged: function(){
+			this.updateDisplay(this.modelMode);
+		}
+		  
+    });
+  </script>
+</polymer-element>
 
-<polymer-element name="static-view-game-list" attributes="selectedModel">
+<polymer-element name="static-view-list" attributes="selectedModel displayModel modelMode viewTitle viewImage viewText viewStats">
 	<template>
 		<style>
 		.container{
@@ -15,40 +52,11 @@
 			cursor: default !important;
 		}
 		.selector{
-			display: block;
-			background: rgba(200,200,200,0.9);
-			color: #666;
-			list-style: none;
-			margin: 0;
-			padding: 0;
-			font-family: 'RobotoDraft';
-			font-weight: 100;
 			width: 15%;
 			position: relative;
 			height: 100%;
-			overflow-y: scroll;
-			overflow-x: hidden;
-			
 		}
-		.selector::-webkit-scrollbar {
-			width: 10px; 
-			background: #eee;
-		}
-		.selector::-webkit-scrollbar * {
-			  background: white !important; 
-		}
-		.selector::-webkit-scrollbar-thumb {
-			  background:rgba(0,0,0,0.1) !important; 
-		}
-		.selector div{
-			width: 100%;
-			text-overflow: ellipsis;
-			white-space: nowrap;
-			overflow: hidden;
-			padding-left: 4px;
-			padding-top: 2px;
-			padding-bottom: 2px;
-		}
+		
 		.content{
 			background; #666;
 			height: 100%;
@@ -82,6 +90,10 @@
 			position: absolute;
 			left: 0;
 			bottom: -13px;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			overflow: hidden;
+			width: 100%;
 		}
 		.header{
 			position: relative;
@@ -96,18 +108,13 @@
 	</style>
 
 
+<static-view-list-model modelMode="{{modelMode}}" modelObject="{{selectedModel}}" viewTitle="{{viewTitle}}" viewImage="{{viewImage}}" viewText="{{viewText}}" viewStats="{{viewStats}}"></static-view-list-model>
 <div horizontal layout class="container">
-	<core-selector class="selector" selected="0" selectedModel="{{selectedModel}}">
-		<template repeat="{{gamesModel}}">
-			<snowflake-game-model class="game-model" gameObject="{{game}}">
-				<div class="game-model-display">{{Name}}</div>
-			</snowflake-game-model>
-		</template>
-	</core-selector>
+	<static-view-list-selector class="selector" displayModel="{{displayModel}}" selectedModel="{{selectedModel}}" type="{{modelMode}}"></static-view-list-selector>
 	<div flex one vertical layout class="content">
-		<div class="contentinner header"><h1>{{selectedModel.Name}}</h1></div>
+		<div class="contentinner header"><h1>{{viewTitle}}</h1></div>
 		<div class="contentinner main">	
-			<img draggable="false" class="image" src="{{selectedModel.Images.Boxarts.img_boxart_front[1]}}">
+			<img draggable="false" class="image" src="{{viewImage}}">
 		</div>
 	</div>
 </div>
@@ -116,9 +123,9 @@
 </template>
 	
 	<script>
-		Polymer('static-view-game-list', {
+		Polymer('static-view-list', {
 			ready: function() {
-				this.gamesModel = snowflake.api.games;
+				
 			},
 			selectedModelChanged: function(oldValue, newValue){
 				this.fire('model-changed', {newValue: newValue, oldValue: oldValue});

@@ -2,7 +2,7 @@
 <link rel="import" href="static-background.html">
 <link rel="import" href="static-titlebar.html">
 <link rel="import" href="static-statusbar.html">
-<link rel="import" href="static-view-game-list.html">
+<link rel="import" href="static-view-list.html">
 
 <polymer-element name="static-model" attributes="barText barTitle barLogo barTable backgroundImage titleText themeMode statusText">
   <script>
@@ -14,7 +14,7 @@
 			this.backgroundImage = this.backgroundImage || "model.backgroundImage";
 			this.barTable = this.barTable || [];
 			this.titleText = this.titleText || "model.titleText";
-			this.themeMode = this.themeMode || "model.themeMode";
+			this.themeMode = this.themeMode || "games";
 			this.statusText = this.statusText || "model.statusText";
 		  }
     });
@@ -63,9 +63,8 @@
 				z-index: 1000;
 				position: relative;
 			}
-			static-view-game-list{
+			static-view-list{
 				display: table-row;
-				
 				height: auto;
 				width: 100%
 				
@@ -79,6 +78,12 @@
 				top: 0;
 				bottom: 0;
 			}
+			.hidden{
+				height: 0;
+				position: absolute; 
+				visibility: hidden;
+				display: none;
+			}
 		</style>
 		
 		<static-model id="model" 
@@ -90,11 +95,13 @@
 			themeMode="{{themeMode}}" 
 			statusText="{{statusText}}">
 		</static-model>
+		
+		
 		<div class="container">
-		<static-titlebar titleText="{{titleText}}"></static-titlebar>
-		<static-statusbar keyword="{{themeMode}}" status="{{statusText}}"></static-statusbar>
-		<static-view-game-list selectedModel="{{selectedGame}}" on-model-changed="{{gameViewChanged}}"></static-view-game-list>
-		<static-mainbar barText="{{barText}}" barTitle="{{barTitle}}" barLogo="{{barLogo}}" barTable="{{barTable}}"></static-mainbar>
+			<static-titlebar titleText="{{titleText}}"></static-titlebar>
+			<static-statusbar keyword="{{themeMode}}" status="{{statusText}}"></static-statusbar>
+			<static-view-list displayModel="{{gamesModel}}" selectedModel="{{selectedGame}}" viewTitle="{{barTitle}}" viewText="{{barText}}" viewStats="{{barTable}}" modelMode="game" on-model-changed="{{gameViewChanged}}"></static-view-list>
+			<static-mainbar barText="{{barText}}" barTitle="{{barTitle}}" barLogo="{{barLogo}}" barTable="{{barTable}}"></static-mainbar>
 		</div>
 		<static-background backgroundImage="{{backgroundImage}}"><static-background>
 </template>
@@ -102,39 +109,18 @@
 	<script>
 		Polymer('static-view', {
 			ready: function() {
+				this.statusText = "";
+				this.gamesModel = snowflake.api.games;
 				this.barText = "someText";
 				this.barTitle = "The Adventures of Jimmy Neutron, Boy Genius: Jimmy Neutron Vs. Jimmy Negatron"
 				this.barLogo = "http://upload.wikimedia.org/wikipedia/commons/2/2c/SNES_logo.svg";
-				this.backgroundImage = "http://static.tumblr.com/noynber/nN8n43by5/ffxv_lucis.jpg";
-				this.barTable = [
-					{
-						"Platform": "test",
-						"Release Date": "test",
-						"Publisher": "test"
-					},
-					{
-						"Last Played": "test",
-						"You've played": "test"
-					}
-				];
+				
 			},
 			gameViewChanged: function(event){
 				var newValue = event.detail.newValue;
-				this.barText = newValue.Metadata.game_description;
-				this.barTitle = newValue.Metadata.game_title;
+				
 				this.titleText = newValue.PlatformId;
-				this.barTable = [
-					{
-						"Platform": newValue.PlatformId,
-						"Release Date": newValue.Metadata.game_releasedate,
-						"Publisher": newValue.Metadata.game_publisher,
-						"Developer": newValue.Metadata.game_developer
-					},
-					{
-						"Last Played": "Never",
-						"You've played": "0 hours"
-					}
-				];
+				
 				this.backgroundImage = newValue.Images.Fanarts[Math.floor(Math.random() * newValue.Images.Fanarts.length)][1];
 								window.history.pushState("Snowflake - Game - " + newValue.Metadata.game_title, "Snowflake - Game - " + newValue.Metadata.game_title, "#game-"+newValue.UUID);
 

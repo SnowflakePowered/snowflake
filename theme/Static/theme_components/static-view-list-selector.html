@@ -1,0 +1,71 @@
+<link rel="import" href="static-fonts.html">
+<link rel="import" href="snowflake-model.html">
+<link rel="import" href="../bower_components/core-selector/core-selector.html">
+
+<polymer-element name="static-view-list-selector" attributes="selectedModel displayTitle displayImage displayModel type">
+	<template>
+		<style>
+		.selector{
+			display: block;
+			background: rgba(200,200,200,0.9);
+			color: #666;
+			list-style: none;
+			margin: 0;
+			padding: 0;
+			font-family: 'RobotoDraft';
+			font-weight: 100;
+			width: 100%;
+			position: relative;
+			height: 100%;
+			overflow-y: scroll;
+			overflow-x: hidden;
+			
+		}
+		.selector::-webkit-scrollbar {
+			width: 10px; 
+			background: #eee;
+		}
+		.selector::-webkit-scrollbar * {
+			  background: white !important; 
+		}
+		.selector::-webkit-scrollbar-thumb {
+			  background:rgba(0,0,0,0.1) !important; 
+		}
+		.selector div{
+			width: 100%;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+			padding-left: 4px;
+			padding-top: 2px;
+			padding-bottom: 2px;
+		}
+		
+		.model.core-selected > .model-display{
+			background: #fff;
+			z-index: -10000000;
+		}
+
+	</style>
+
+<core-selector class="selector" selected="0" selectedModel="{{selectedModel}}">
+		<template repeat="{{displayModel}}">
+			<snowflake-model class="model" type="{{type}}" model="{{}}">
+				<div class="model-display">{{Name}}</div>
+			</snowflake-model>
+		</template>
+	</core-selector>
+</template>
+	
+	<script>
+		Polymer('static-view-list-selector', {
+			ready: function() {
+				
+			},
+			selectedModelChanged: function(oldValue, newValue){
+				this.fire('model-changed', {newValue: newValue, oldValue: oldValue, type: this.type});
+			}
+			
+		});
+	</script>
+</polymer-element>
