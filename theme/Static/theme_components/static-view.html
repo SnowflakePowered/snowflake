@@ -21,6 +21,60 @@
   </script>
 </polymer-element>
 
+<polymer-element name="static-view-controller" attributes="modelMode modelObject viewTitle viewImage viewText viewStats viewBackgroundImage">
+  <script>
+    Polymer('static-view-controller', {
+		ready: function() {
+			this.modelMode = this.modelMode || "games";
+			this.modelObject = this.modelObject || null;
+			this.updateDisplay(this.modelMode);
+		  },
+		updateDisplay: function(modelMode){
+			 try {
+			  if(modelMode == "games"){
+					this.viewTitle = this.modelObject.Name;
+					this.viewImage = this.modelObject.Images.Boxarts.img_boxart_front[1] || "undefined";
+					this.viewText = this.modelObject.Metadata.game_description || "undefined";
+					this.viewBackgroundImage = this.modelObject.Images.Fanarts[Math.floor(Math.random() * this.modelObject.Images.Fanarts.length)][1];
+					this.viewStats = [
+						{
+							"Platform": this.modelObject.PlatformId,
+							"Release Date": this.modelObject.Metadata.game_releasedate,
+							"Publisher": this.modelObject.Metadata.game_publisher,
+							"Developer": this.modelObject.Metadata.game_developer
+						},
+						{
+							"Last Played": "Never",
+							"You've played": "0 hours"
+						}
+					];
+				}
+				if(modelMode == "platforms"){
+					//todo add Platform
+					this.viewTitle = this.modelObject.Name + "_platform";
+						this.viewImage = this.modelObject.Images.Boxarts.img_boxart_front[1] || "undefined";
+						this.viewText = this.modelObject.Metadata.game_description || "undefined";
+						this.viewStats = [
+							{
+								"Platform": this.modelObject.PlatformId + "_platform",
+								"Release Date": this.modelObject.Metadata.game_releasedate + "_platform",
+								"Publisher": this.modelObject.Metadata.game_publisher + "_platform",
+								"Developer": this.modelObject.Metadata.game_developer + "_platform"
+							}
+						];
+				}
+			}catch(event){
+			
+			}
+		},
+		modelObjectChanged: function(){
+			this.updateDisplay(this.modelMode);
+		}
+		  
+    });
+  </script>
+</polymer-element>
+
 
 <polymer-element name="static-view">
 	<template>
@@ -96,13 +150,21 @@
 			statusText="{{statusText}}">
 		</static-model>
 		
-		
+		<static-view-controller 
+			modelMode="{{themeMode}}" 
+			modelObject="{{selectedGame}}"
+			viewTitle="{{barTitle}}"
+			viewText="{{barText}}" 
+			viewStats="{{barTable}}"
+			viewBackgroundImage="{{backgroundImage}}">
+			</static-view-controller>
 		<div class="container">
 			<static-titlebar titleText="{{titleText}}"></static-titlebar>
 			<static-statusbar keyword="{{themeMode}}" status="{{statusText}}"></static-statusbar>
-			<static-view-list displayModel="{{gamesModel}}" selectedModel="{{selectedGame}}" viewTitle="{{barTitle}}" viewText="{{barText}}" viewStats="{{barTable}}" modelMode="game" on-model-changed="{{gameViewChanged}}"></static-view-list>
-			<static-mainbar barText="{{barText}}" barTitle="{{barTitle}}" barLogo="{{barLogo}}" barTable="{{barTable}}"></static-mainbar>
+			<static-view-list displayModel="{{gamesModel}}" selectedModel="{{selectedGame}}" modelMode="game"></static-view-list>
+			<static-mainbar barText="{{barText}}" barTitle="{{selectedGame.Name}}" barLogo="{{barLogo}}" barTable="{{barTable}}"></static-mainbar>
 		</div>
+		
 		<static-background backgroundImage="{{backgroundImage}}"><static-background>
 </template>
 	
@@ -115,15 +177,6 @@
 				this.barTitle = "The Adventures of Jimmy Neutron, Boy Genius: Jimmy Neutron Vs. Jimmy Negatron"
 				this.barLogo = "http://upload.wikimedia.org/wikipedia/commons/2/2c/SNES_logo.svg";
 				
-			},
-			gameViewChanged: function(event){
-				var newValue = event.detail.newValue;
-				
-				this.titleText = newValue.PlatformId;
-				
-				this.backgroundImage = newValue.Images.Fanarts[Math.floor(Math.random() * newValue.Images.Fanarts.length)][1];
-								window.history.pushState("Snowflake - Game - " + newValue.Metadata.game_title, "Snowflake - Game - " + newValue.Metadata.game_title, "#game-"+newValue.UUID);
-
 			}
 			
 		});
