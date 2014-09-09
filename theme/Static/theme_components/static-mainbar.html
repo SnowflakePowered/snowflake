@@ -2,7 +2,7 @@
 <link rel="import" href="../bower_components/core-icons/core-icons.html">
 <link rel="import" href="../bower_components/core-icons/av-icons.html">
 <link rel="import" href="../bower_components/core-icon/core-icon.html">
-<polymer-element name="static-mainbar" attributes="barText barTitle barLogo barTable">
+<polymer-element name="static-mainbar" attributes="barText barTitle barLogo barTable showPlay">
 	<template>
 		<style>
 			:host{
@@ -128,13 +128,14 @@
 			<div flex three id="titleArea" >
 				<h1>{{barTitle}}</h1>
 			</div>
-			<div flex id="actionArea">
-				<button on-click="{{onPlayClick}}">
-					
-						<span class="actionText"><core-icon icon="av:play-arrow" style="padding-bottom: 2px;"></core-icon></span>
-						<span class="actionText">Play</span>
-				</button>
-			</div>
+			<template if="{{showPlay}}">
+				<div flex id="actionArea">
+					<button on-click="{{onPlayClick}}">
+							<span class="actionText"><core-icon icon="av:play-arrow" style="padding-bottom: 2px;"></core-icon></span>
+							<span class="actionText">Play</span>
+					</button>
+				</div>
+			</template>
 			</div>
 			<div class="border"></div>
 			<div flex four id="descriptionArea" class="outerDiv">
