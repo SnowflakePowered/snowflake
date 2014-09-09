@@ -29,6 +29,7 @@ namespace Snowflake.Core.Server
             try
             {
                 input = new FileStream(filename, FileMode.Open);
+                context.Response.AddHeader("Content-Type", MimeTypes.GetMimeType(Path.GetExtension(filename)));
             }
             catch (FileNotFoundException)
             {

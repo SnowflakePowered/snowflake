@@ -97,6 +97,8 @@
     <Compile Include="Core\Interface\IFrontendCore.cs" />
     <Compile Include="Core\ScrapeEngine.cs" />
     <Compile Include="Core\Server\BaseHttpServer.cs" />
+    <Compile Include="Core\Server\MimeTypes.cs" />
+    <Compile Include="Core\Server\ResourceServer.cs" />
     <Compile Include="Events\CoreEvents\PluginManagerLoadedEventArgs.cs" />
     <Compile Include="Extensions\HttpListenerContextExts.cs" />
     <Compile Include="Extensions\IDictionaryExtensions.cs" />

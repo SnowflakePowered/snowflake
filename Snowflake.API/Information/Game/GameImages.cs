@@ -25,7 +25,7 @@ namespace Snowflake.Information.Game
             this.Screenshots = new List<string[]>();
             this.Boxarts = new Dictionary<string, string[]>();
         }
-        public GameImages():this(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Snowflake", "data", "imagescache"))
+        public GameImages():this(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Snowflake", "data", "imagecache"))
         {
             
         }
