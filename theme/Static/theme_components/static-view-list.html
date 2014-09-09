@@ -1,46 +1,23 @@
 <link rel="import" href="static-fonts.html">
 <link rel="import" href="unresolved-img.html">
-<link rel="import" href="snowflake-game-model.html">
+<link rel="import" href="snowflake-model.html">
 <link rel="import" href="static-view-list-selector.html">
 <link rel="import" href="../bower_components/core-selector/core-selector.html">
-<polymer-element name="static-view-list-model" attributes="modelMode modelObject viewTitle viewImage viewText viewStats">
+<polymer-element name="static-view-list-controller" attributes="type modelObject viewTitle viewImage">
   <script>
-    Polymer('static-view-list-model', {
+    Polymer('static-view-list-controller', {
 		ready: function() {
-			this.modelMode = this.modelMode || "game";
-			this.modelObject = this.modelObject || null;
-			this.updateDisplay(this.modelMode);
-		  },
-		updateDisplay: function(modelMode){
-			 try {
-				this.viewTitle = this.modelObject.Name;
-				this.viewImage = this.modelObject.Images.Boxarts.img_boxart_front[1] || "undefined";
-				this.viewText = this.modelObject.Metadata.game_description || "undefined";
-				this.viewStats = [
-					{
-						"Platform": this.modelObject.PlatformId,
-						"Release Date": this.modelObject.Metadata.game_releasedate,
-						"Publisher": this.modelObject.Metadata.game_publisher,
-						"Developer": this.modelObject.Metadata.game_developer
-					},
-					{
-						"Last Played": "Never",
-						"You've played": "0 hours"
-					}
-				];
-			}catch(event){
-			
-			}
 		},
 		modelObjectChanged: function(){
-			this.updateDisplay(this.modelMode);
+			this.viewTitle = this.modelObject.Name;
+			this.viewImage = (this.type == 'games') ? this.modelObject.Images.Boxarts.img_boxart_front[1] : this.modelObject.Images.img_platform_productshot;					
 		}
 		  
     });
   </script>
 </polymer-element>
 
-<polymer-element name="static-view-list" attributes="selectedModel displayModel modelMode viewTitle viewImage viewText viewStats">
+<polymer-element name="static-view-list" attributes="selectedModel displayModel modelMode">
 	<template>
 		<style>
 		.container{
@@ -108,8 +85,8 @@
 	</style>
 
 
-<static-view-list-model modelMode="{{modelMode}}" modelObject="{{selectedModel}}" viewTitle="{{viewTitle}}" viewImage="{{viewImage}}" viewText="{{viewText}}" viewStats="{{viewStats}}"></static-view-list-model>
 <div horizontal layout class="container">
+	<static-view-list-controller modelObject="{{selectedModel}}" type="{{modelMode}}" viewTitle="{{viewTitle}}" viewImage="{{viewImage}}"></static-view-list-controller>
 	<static-view-list-selector class="selector" displayModel="{{displayModel}}" selectedModel="{{selectedModel}}" type="{{modelMode}}"></static-view-list-selector>
 	<div flex one vertical layout class="content">
 		<div class="contentinner header"><h1>{{viewTitle}}</h1></div>
