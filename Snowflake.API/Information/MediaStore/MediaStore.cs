@@ -31,7 +31,15 @@ namespace Snowflake.Information.MediaStore
         {
            if (!Directory.Exists(mediastoreRoot)) Directory.CreateDirectory(mediastoreRoot);
            if (!Directory.Exists(Path.Combine(mediastoreRoot, mediastoreKey))) Directory.CreateDirectory(Path.Combine(mediastoreRoot, mediastoreKey));
-           
+           this.MediaStoreKey = mediastoreKey;
+
+           this.sections = new Dictionary<string, MediaStoreSection>()
+           {
+               {"Images", new MediaStoreSection("Images", this) },
+               {"Audio", new MediaStoreSection("Audio", this) },
+               {"Video", new MediaStoreSection("Video", this) },
+               {"Resources", new MediaStoreSection("Resources", this) }
+           };
         }
         public MediaStore(string mediastoreKey) : this(mediastoreKey, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Snowflake", "mediastores")) { }
     }

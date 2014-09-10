@@ -106,6 +106,7 @@
     <Compile Include="Extensions\KeyValuePairExts.cs" />
     <Compile Include="Database\GameDatabase.cs" />
     <Compile Include="Information\MediaStore\MediaStore.cs" />
+    <Compile Include="Information\MediaStore\MediaStoreItems.cs" />
     <Compile Include="Information\MediaStore\MediaStoreSection.cs" />
     <Compile Include="Information\Platform\PlatformDefaults.cs" />
     <Compile Include="Configuration\Interface\IConfiguration.cs" />

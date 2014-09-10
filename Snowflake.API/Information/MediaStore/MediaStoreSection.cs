@@ -8,7 +8,7 @@ using System.IO;
 
 namespace Snowflake.Information.MediaStore
 {
-    public class MediaStoreSection
+    public sealed class MediaStoreSection
     {
         public string SectionName { get; set; }
         public Dictionary<string, string> MediaStoreItems;
@@ -24,26 +24,49 @@ namespace Snowflake.Information.MediaStore
         {
             try
             {
-                return JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(Path.Combine(mediaStoreRoot, ".mediastore")));
+                var record = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(Path.Combine(mediaStoreRoot, ".mediastore")));
+                return (record != null) ? record : new Dictionary<string, string>();
             }
             catch
             {
+                if (!Directory.Exists(this.mediaStoreRoot))
+                {
+                    Directory.CreateDirectory(this.mediaStoreRoot);
+                    File.Create(Path.Combine(this.mediaStoreRoot, ".mediastore")).Close();
+                }
+
                 return new Dictionary<string, string>();
             }
         }
+
         public void Add(string key, string fileName){
-            File.Copy(fileName, Path.Combine(this.mediaStoreRoot, Path.GetFileName(fileName));
-            this.MediaStoreItems.Add(key, Path.GetFileName(fileName));
-            this.UpdateMediaStoreRecord();
+            try
+            {
+                File.Copy(fileName, Path.Combine(this.mediaStoreRoot, Path.GetFileName(fileName)), true);
+                this.MediaStoreItems.Add(key, Path.GetFileName(fileName));
+                this.UpdateMediaStoreRecord();
+            }
+            catch
+            {
+                throw;
+            }
         }
         public void Remove(string key){
-            File.Delete(Path.Combine(this.mediaStoreRoot, Path.GetFileName(fileName));
-            this.MediaStoreItems.Remove(key);
-            this.UpdateMediaStoreRecord();
+            try
+            {
+                File.Delete(Path.Combine(this.mediaStoreRoot, this.MediaStoreItems[key]));
+                this.MediaStoreItems.Remove(key);
+                this.UpdateMediaStoreRecord();
+            }
+            catch
+            {
+                throw;
+            }
         }
+
         private void UpdateMediaStoreRecord(){
             string record = JsonConvert.SerializeObject(this.MediaStoreItems);
-            File.WriteAllText(Path.Combine(mediaStoreRoot, ".mediastore"));
+            File.WriteAllText(Path.Combine(mediaStoreRoot, ".mediastore"), record);
         }
     }
 }
