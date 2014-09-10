@@ -29,7 +29,7 @@ namespace Snowflake.Core
         public static FrontendCore LoadedCore { get; private set; }
         public ThemeServer ThemeServer { get; private set; }    
         public ApiServer APIServer { get; private set; }
-        public ResourceServer ResourceServer { get; private set; }
+       // public ResourceServer ResourceServer { get; private set; }
 
 
         #region Events
@@ -43,7 +43,6 @@ namespace Snowflake.Core
                 FrontendCore.LoadedCore = core;
                 FrontendCore.LoadedCore.ThemeServer.StartServer();
                 FrontendCore.LoadedCore.APIServer.StartServer();
-                FrontendCore.LoadedCore.ResourceServer.StartServer();
         }
       
         public async static Task InitPluginManagerAsync()
@@ -68,7 +67,7 @@ namespace Snowflake.Core
 
             this.ThemeServer = new ThemeServer(Path.Combine(this.AppDataDirectory, "theme"));
             this.APIServer = new ApiServer();
-            this.ResourceServer = new ResourceServer(this.AppDataDirectory);
+          //  this.ResourceServer = new ResourceServer(this.AppDataDirectory);
             //new JsonRPCEventDelegate(3333).Notify("test", new Dictionary<string, string>() { {"test","test"}});
         }
         private Dictionary<string, Platform> LoadPlatforms(string platformDirectory)
