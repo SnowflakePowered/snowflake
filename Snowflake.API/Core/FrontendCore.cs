@@ -20,7 +20,7 @@ namespace Snowflake.Core
     public partial class FrontendCore : IFrontendCore
     {
         #region Loaded Objects
-        public IDictionary<string, Platform> LoadedPlatforms { get; private set; }
+        public IDictionary<string, PlatformInfo> LoadedPlatforms { get; private set; }
         public IPluginManager PluginManager { get; private set; }
         public GameDatabase GameDatabase { get; private set; }
         #endregion
@@ -70,15 +70,15 @@ namespace Snowflake.Core
           //  this.ResourceServer = new ResourceServer(this.AppDataDirectory);
             //new JsonRPCEventDelegate(3333).Notify("test", new Dictionary<string, string>() { {"test","test"}});
         }
-        private Dictionary<string, Platform> LoadPlatforms(string platformDirectory)
+        private Dictionary<string, PlatformInfo> LoadPlatforms(string platformDirectory)
         {
-            var loadedPlatforms = new Dictionary<string, Platform>();
+            var loadedPlatforms = new Dictionary<string, PlatformInfo>();
 
             foreach (string fileName in Directory.GetFiles(platformDirectory).Where(fileName => Path.GetExtension(fileName) == ".platform"))
             {
                 try
                 {
-                    var platform = JsonConvert.DeserializeObject<Platform>(File.ReadAllText(fileName));
+                    var platform = JsonConvert.DeserializeObject<PlatformInfo>(File.ReadAllText(fileName));
                     loadedPlatforms.Add(platform.PlatformId, platform);
                 }
                 catch (Exception)

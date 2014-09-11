@@ -8,7 +8,7 @@ namespace Snowflake.Core.Interface
         string AppDataDirectory { get; }
         event EventHandler CoreLoaded;
         GameDatabase GameDatabase { get; }
-        IDictionary<string, global::Snowflake.Information.Platform.Platform> LoadedPlatforms { get; }
+        IDictionary<string, global::Snowflake.Information.Platform.PlatformInfo> LoadedPlatforms { get; }
         IPluginManager PluginManager { get; }
     }
 }

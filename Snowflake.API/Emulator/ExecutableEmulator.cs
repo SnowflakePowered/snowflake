@@ -20,7 +20,7 @@ namespace Snowflake.Emulator
 
         public virtual void Run(string gameUuid)
         {
-            Game game = FrontendCore.LoadedCore.GameDatabase.GetGameByUUID(gameUuid);
+            GameInfo game = FrontendCore.LoadedCore.GameDatabase.GetGameByUUID(gameUuid);
             this.Run(game.PlatformId, game.FileName);
         }
 

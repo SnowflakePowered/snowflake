@@ -9,6 +9,7 @@ using System.IO;
 using Newtonsoft.Json;
 using Snowflake.Information.Platform;
 using Snowflake.Information.Game;
+using Snowflake.Information.MediaStore;
 
 namespace Snowflake.Database
 {
@@ -36,7 +37,7 @@ namespace Snowflake.Database
                                                                 uuid TEXT,
                                                                 filename TEXT,
                                                                 name TEXT,
-                                                                images TEXT,
+                                                                mediastore TEXT,
                                                                 metadata TEXT,
                                                                 settings TEXT
                                                                 )", dbConnection);
@@ -44,14 +45,14 @@ namespace Snowflake.Database
             dbConnection.Close();
         }
 
-        public void AddGame(Game game){
+        public void AddGame(GameInfo game){
             this.DBConnection.Open();
             using (var sqlCommand = new SQLiteCommand(@"INSERT INTO games VALUES(
                                           @platform_id,
                                           @uuid,
                                           @filename,
                                           @name,
-                                          @images,
+                                          @mediastore,
                                           @metadata,
                                           @settings)", this.DBConnection))
             {
@@ -59,7 +60,7 @@ namespace Snowflake.Database
                 sqlCommand.Parameters.AddWithValue("@uuid", game.UUID);
                 sqlCommand.Parameters.AddWithValue("@filename", game.FileName);
                 sqlCommand.Parameters.AddWithValue("@name",  game.Name);
-                sqlCommand.Parameters.AddWithValue("@images", JsonConvert.SerializeObject(game.Images));
+                sqlCommand.Parameters.AddWithValue("@mediastore", JsonConvert.SerializeObject(game.MediaStore));
                 sqlCommand.Parameters.AddWithValue("@metadata",  JsonConvert.SerializeObject(game.Metadata));
                 sqlCommand.Parameters.AddWithValue("@settings", JsonConvert.SerializeObject(game.Settings));
                 sqlCommand.ExecuteNonQuery();
@@ -67,20 +68,20 @@ namespace Snowflake.Database
             this.DBConnection.Close();
         }
 
-        public Game GetGameByUUID(string uuid)
+        public GameInfo GetGameByUUID(string uuid)
         {
             return GetGamesByColumn("uuid", uuid)[0];
         }
 
-        public IList<Game> GetGamesByPlatform(string platformId)
+        public IList<GameInfo> GetGamesByPlatform(string platformId)
         {
             return GetGamesByColumn("platform_id", platformId);
         }
-        public IList<Game> GetGamesByName(string nameSearch)
+        public IList<GameInfo> GetGamesByName(string nameSearch)
         {
             return GetGamesByColumn("name", nameSearch);
         }
-        private IList<Game>GetGamesByColumn(string colName, string searchQuery){
+        private IList<GameInfo>GetGamesByColumn(string colName, string searchQuery){
             this.DBConnection.Open();
             using (var sqlCommand = new SQLiteCommand(@"SELECT * FROM `games` WHERE `%colName` == @searchQuery"
                 , this.DBConnection))
@@ -97,7 +98,7 @@ namespace Snowflake.Database
                 }
             }
         }
-        public IList<Game> GetAllGames()
+        public IList<GameInfo> GetAllGames()
         {
             this.DBConnection.Open();
             using (var sqlCommand = new SQLiteCommand(@"SELECT * FROM `games`"
@@ -113,17 +114,17 @@ namespace Snowflake.Database
                 }
             }
         }
-        private Game GetGameFromDataRow(DataRow row)
+        private GameInfo GetGameFromDataRow(DataRow row)
         {
             var platformId = (string)row["platform_id"];
             var uuid = (string)row["uuid"];
             var fileName = (string)row["filename"];
             var name = (string)row["name"];
-            var images = JsonConvert.DeserializeObject<GameImages>((string)row["images"]);
+            var mediaStore = JsonConvert.DeserializeObject<IMediaStore>((string)row["mediastore"]);
             var metadata = JsonConvert.DeserializeObject<IDictionary<string, string>>((string)row["metadata"]);
             var settings = JsonConvert.DeserializeObject<IDictionary<string, dynamic>>((string)row["settings"]);
 
-            return new Game(platformId, name, images, metadata, uuid, fileName, settings);
+            return new GameInfo(platformId, name, mediaStore, metadata, uuid, fileName, settings);
         }
 
     }

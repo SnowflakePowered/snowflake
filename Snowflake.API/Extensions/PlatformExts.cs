@@ -10,7 +10,7 @@ namespace Snowflake.Extensions
 {
     public static class PlatformExts
     {
-        public static ScrapeEngine GetScrapeEngine(this Platform platform)
+        public static ScrapeEngine GetScrapeEngine(this PlatformInfo platform)
         {
             return new ScrapeEngine(platform);
         }

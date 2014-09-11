@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Snowflake.Information.Platform
 {
-    public class Platform : Info
+    public class PlatformInfo : Info
     {
-        public Platform(string platformId, string name, IDictionary<string, string> images, IDictionary<string, string> metadata, IList<string> fileExtensions, PlatformDefaults platformDefaults): base(platformId, name, images, metadata)
+        public PlatformInfo(string platformId, string name, IDictionary<string, string> images, IDictionary<string, string> metadata, IList<string> fileExtensions, PlatformDefaults platformDefaults): base(platformId, name, images, metadata)
         {
             this.FileExtensions = fileExtensions;
             this.Defaults = platformDefaults;
