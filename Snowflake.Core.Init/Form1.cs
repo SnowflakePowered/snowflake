@@ -30,17 +30,16 @@ namespace Snowflake.Core.Init
             Init();
         }
 
-        void FromJson(Dictionary<string, dynamic> json)
+        public static PlatformInfo PlatformInfo.FromDictionary(IDictionary<string, dynamic> jsonDictionary)
         {
-            string platformID = json["PlatformId"];
-            string platformName = json["Name"];
-            string mediaStoreKey = json["MediaStoreKey"];
-            var _metadata = json["Metadata"];
-            var platformMetadata = new Dictionary<string, string>();
-            foreach (JProperty metadata in _metadata)
-            {
-                platformMetadata.Add(metadata.Name, metadata.Value.ToString());
-            }
+            return new PlatformInfo(
+                    json["PlatformId"],
+                    json["Name"],
+                    new FileMediaStore(json["MediaStoreKey"]),
+                    json["Metadata"].ToObject<Dictionary<string, string>>(),
+                    json["FileExtensions"].ToObject<List<string>>(),
+                    json["Defaults"].ToObject<PlatformDefaults>()
+                )
         }
         void Init()
         {
@@ -64,8 +63,8 @@ namespace Snowflake.Core.Init
                         )
                     )
                 );
-            var x =
-                JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(@"
+            
+                var x = PlatformInfo.FromDictionary(JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(@"
                 {
     'FileExtensions': [
         '.nes'
@@ -83,12 +82,8 @@ namespace Snowflake.Core.Init
         'platform_company': 'Nintendo',
         'platform_release': '18/10/1985'
     }
-}");
-            foreach(JProperty xitem in x["Metadata"]){
-                Console.WriteLine(xitem.Name);
-                Console.WriteLine(xitem.Value);
-                Console.WriteLine(x["Metadata"].GetType());
-            }
+}"));
+            Console.WriteLine(x.Name);
           //  var test = new FileMediaStore("test");
          //   test.Resources.Add("test", "test.txt");
          //   Console.WriteLine(test.Resources.MediaStoreItems["test"]);
