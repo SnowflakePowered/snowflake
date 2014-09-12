@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Snowflake.Information.MediaStore;
 
 namespace Snowflake.Information
 {
@@ -7,6 +8,7 @@ namespace Snowflake.Information
         string PlatformId { get; }
         string Name { get; }
         IDictionary<string, string> Metadata { get; set; }
+        IMediaStore MediaStore { get;  }
 
     }
 }
