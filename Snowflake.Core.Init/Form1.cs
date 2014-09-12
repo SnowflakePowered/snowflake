@@ -30,7 +30,7 @@ namespace Snowflake.Core.Init
             Init();
         }
 
-        public static PlatformInfo PlatformInfo.FromDictionary(IDictionary<string, dynamic> jsonDictionary)
+        public static PlatformInfo FromDictionary(IDictionary<string, dynamic> jsonDictionary)
         {
             return new PlatformInfo(
                     json["PlatformId"],
@@ -39,7 +39,7 @@ namespace Snowflake.Core.Init
                     json["Metadata"].ToObject<Dictionary<string, string>>(),
                     json["FileExtensions"].ToObject<List<string>>(),
                     json["Defaults"].ToObject<PlatformDefaults>()
-                )
+                );
         }
         void Init()
         {
@@ -64,7 +64,7 @@ namespace Snowflake.Core.Init
                     )
                 );
             
-                var x = PlatformInfo.FromDictionary(JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(@"
+                var x = Form1.FromDictionary(JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(@"
                 {
     'FileExtensions': [
         '.nes'
