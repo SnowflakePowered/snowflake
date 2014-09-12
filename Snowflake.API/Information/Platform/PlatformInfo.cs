@@ -14,8 +14,10 @@ namespace Snowflake.Information.Platform
             this.FileExtensions = fileExtensions;
             this.Defaults = platformDefaults;
         }
+       
         public IList<string> FileExtensions { get; private set; }
         public PlatformDefaults Defaults { get; set; }
+
 
     }
 }
