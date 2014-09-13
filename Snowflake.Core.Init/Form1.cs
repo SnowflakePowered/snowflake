@@ -30,20 +30,10 @@ namespace Snowflake.Core.Init
             Init();
         }
 
-        public static PlatformInfo FromDictionary(IDictionary<string, dynamic> jsonDictionary)
+        
+        async void Init()
         {
-            return new PlatformInfo(
-                    json["PlatformId"],
-                    json["Name"],
-                    new FileMediaStore(json["MediaStoreKey"]),
-                    json["Metadata"].ToObject<Dictionary<string, string>>(),
-                    json["FileExtensions"].ToObject<List<string>>(),
-                    json["Defaults"].ToObject<PlatformDefaults>()
-                );
-        }
-        void Init()
-        {
-            Console.WriteLine(
+            /*Console.WriteLine(
                 JsonConvert.SerializeObject(
                     new PlatformInfo(
                         "NINTENDO_NES",
@@ -64,7 +54,7 @@ namespace Snowflake.Core.Init
                     )
                 );
             
-                var x = Form1.FromDictionary(JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(@"
+                var x = PlatformInfo.FromDictionary(JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(@"
                 {
     'FileExtensions': [
         '.nes'
@@ -83,13 +73,15 @@ namespace Snowflake.Core.Init
         'platform_release': '18/10/1985'
     }
 }"));
-            Console.WriteLine(x.Name);
+            Console.WriteLine(x.Metadata[
+                "platform_shortname"]);
           //  var test = new FileMediaStore("test");
          //   test.Resources.Add("test", "test.txt");
          //   Console.WriteLine(test.Resources.MediaStoreItems["test"]);
-         //   Console.WriteLine(JsonConvert.SerializeObject(test));
-           ///   await FrontendCore.InitPluginManagerAsync();
-             // Console.WriteLine(FrontendCore.LoadedCore.PluginManager.LoadedIdentifiers.First().Value.IdentifyGame("dummysmb.nes", "NINTENDO_NES"));
+         //   Console.WriteLine(JsonConvert.SerializeObject(test)); */
+                await FrontendCore.InitPluginManagerAsync();
+                Console.WriteLine(FrontendCore.LoadedCore.LoadedPlatforms["NINTENDO_NES"].MediaStore.MediaStoreKey);
+                Console.WriteLine(FrontendCore.LoadedCore.PluginManager.LoadedIdentifiers.First().Value.IdentifyGame("dummysmb.nes", "NINTENDO_NES"));
         //      Console.WriteLine(JsonConvert.SerializeObject(FrontendCore.LoadedCore.LoadedPlatforms["NINTENDO_NES"].GetScrapeEngine().GetGameInfo("dummysmb.nes")));
             
         //    this.textBox1.Text = await FrontendCore.LoadedCore.PluginManager.AjaxNamespace.CallMethodAsync(new JSRequest("Core", "Test", new Dictionary<string, string>()));

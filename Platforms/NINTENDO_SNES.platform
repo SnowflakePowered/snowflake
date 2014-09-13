@@ -1,6 +1,7 @@
 {
     "PlatformId": "NINTENDO_SNES",
     "Name": "Super Nintendo Entertainment System",
+    "MediaStoreKey": "platform.NINTENDO_SNES",
     "FileExtensions": [
         ".sfc",
 		".smc"
@@ -10,10 +11,6 @@
 		"Identifier": "Identifier.ClrMameProDat",
 		"Emulator": "Emulator.RetroArch" 
 	},
-    "Images": {
-        "img_platform_logo": "logo.png",
-        "img_platform_productshot": "product.png"
-    },
     "Metadata": {
         "platform_shortname": "SNES",
         "platform_company": "Nintendo",
