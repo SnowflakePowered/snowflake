@@ -37,7 +37,7 @@ namespace Snowflake.Database
                                                                 uuid TEXT,
                                                                 filename TEXT,
                                                                 name TEXT,
-                                                                mediastore TEXT,
+                                                                mediastorekey TEXT,
                                                                 metadata TEXT,
                                                                 settings TEXT
                                                                 )", dbConnection);
@@ -52,7 +52,7 @@ namespace Snowflake.Database
                                           @uuid,
                                           @filename,
                                           @name,
-                                          @mediastore,
+                                          @mediastorekey,
                                           @metadata,
                                           @settings)", this.DBConnection))
             {
@@ -60,7 +60,7 @@ namespace Snowflake.Database
                 sqlCommand.Parameters.AddWithValue("@uuid", game.UUID);
                 sqlCommand.Parameters.AddWithValue("@filename", game.FileName);
                 sqlCommand.Parameters.AddWithValue("@name",  game.Name);
-                sqlCommand.Parameters.AddWithValue("@mediastore", JsonConvert.SerializeObject(game.MediaStore));
+                sqlCommand.Parameters.AddWithValue("@mediastorekey", game.MediaStore.MediaStoreKey);
                 sqlCommand.Parameters.AddWithValue("@metadata",  JsonConvert.SerializeObject(game.Metadata));
                 sqlCommand.Parameters.AddWithValue("@settings", JsonConvert.SerializeObject(game.Settings));
                 sqlCommand.ExecuteNonQuery();
@@ -120,7 +120,7 @@ namespace Snowflake.Database
             var uuid = (string)row["uuid"];
             var fileName = (string)row["filename"];
             var name = (string)row["name"];
-            var mediaStore = JsonConvert.DeserializeObject<IMediaStore>((string)row["mediastore"]);
+            var mediaStore = new FileMediaStore((string)row["mediastorekey"]);
             var metadata = JsonConvert.DeserializeObject<IDictionary<string, string>>((string)row["metadata"]);
             var settings = JsonConvert.DeserializeObject<IDictionary<string, dynamic>>((string)row["settings"]);
 

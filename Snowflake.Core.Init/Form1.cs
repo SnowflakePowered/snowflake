@@ -33,60 +33,13 @@ namespace Snowflake.Core.Init
         
         async void Init()
         {
-            /*Console.WriteLine(
-                JsonConvert.SerializeObject(
-                    new PlatformInfo(
-                        "NINTENDO_NES",
-                        "Nintendo Entertainment System",
-                        new FileMediaStore("platform.NINTENDO_NES"),
-                        new Dictionary<string, string>()
-                            {
-                                {"platform_shortname", "NES"},
-                                {"platform_company", "Nintendo"},
-                                {"platform_release", "18/10/1985"}
-                            },
-                        new List<string>()
-                           {
-                                ".nes"
-                           },
-                           new PlatformDefaults("Scraper.TheGamesDB", "Identifier.ClrMameProDat", "Emulator.RetroArch")
-                        )
-                    )
-                );
-            
-                var x = PlatformInfo.FromDictionary(JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(@"
-                {
-    'FileExtensions': [
-        '.nes'
-    ],
-    'Defaults': {
-        'Scraper': 'Scraper.TheGamesDB',
-        'Identifier': 'Identifier.ClrMameProDat',
-        'Emulator': 'Emulator.RetroArch'
-    },
-    'PlatformId': 'NINTENDO_NES',
-    'Name': 'Nintendo Entertainment System',
-    'MediaStoreKey': 'platform.NINTENDO_NES',
-    'Metadata': {
-        'platform_shortname': 'NES',
-        'platform_company': 'Nintendo',
-        'platform_release': '18/10/1985'
-    }
-}"));
-            Console.WriteLine(x.Metadata[
-                "platform_shortname"]);
-          //  var test = new FileMediaStore("test");
-         //   test.Resources.Add("test", "test.txt");
-         //   Console.WriteLine(test.Resources.MediaStoreItems["test"]);
-         //   Console.WriteLine(JsonConvert.SerializeObject(test)); */
                 await FrontendCore.InitPluginManagerAsync();
                 Console.WriteLine(FrontendCore.LoadedCore.LoadedPlatforms["NINTENDO_NES"].MediaStore.MediaStoreKey);
                 Console.WriteLine(FrontendCore.LoadedCore.PluginManager.LoadedIdentifiers.First().Value.IdentifyGame("dummysmb.nes", "NINTENDO_NES"));
-        //      Console.WriteLine(JsonConvert.SerializeObject(FrontendCore.LoadedCore.LoadedPlatforms["NINTENDO_NES"].GetScrapeEngine().GetGameInfo("dummysmb.nes")));
-            
-        //    this.textBox1.Text = await FrontendCore.LoadedCore.PluginManager.AjaxNamespace.CallMethodAsync(new JSRequest("Core", "Test", new Dictionary<string, string>()));
-              //var dbgame = FrontendCore.LoadedCore.GameDatabase.GetGameByUUID("sWJznptYf0m_qH0_OvHtSg");
-             // this.textBox1.Text = JsonConvert.SerializeObject(dbgame);
+                //var test = FrontendCore.LoadedCore.LoadedPlatforms["NINTENDO_NES"].GetScrapeEngine().GetGameInfo("dummysmb.nes");
+                //Console.WriteLine(test.UUID);
+                var x = FrontendCore.LoadedCore.GameDatabase.GetGameByUUID("klGNT8l9m0ypDI8IGr0TcA");
+           
         }
     }
 }
