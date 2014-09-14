@@ -39,7 +39,9 @@ namespace Snowflake.Core.Init
                 //var test = FrontendCore.LoadedCore.LoadedPlatforms["NINTENDO_NES"].GetScrapeEngine().GetGameInfo("dummysmb.nes");
                 //Console.WriteLine(test.UUID);
                 var x = FrontendCore.LoadedCore.GameDatabase.GetGameByUUID("klGNT8l9m0ypDI8IGr0TcA");
-           
+                var ms = x.MediaStore.Images["boxart_front"];
+                Console.WriteLine(JsonConvert.SerializeObject(x.MediaStore.Images));
+
         }
     }
 }

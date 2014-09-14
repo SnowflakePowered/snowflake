@@ -68,5 +68,16 @@ namespace Snowflake.Information.MediaStore
             string record = JsonConvert.SerializeObject(this.MediaStoreItems);
             File.WriteAllText(Path.Combine(mediaStoreRoot, ".mediastore"), record);
         }
+        public string this[string key]
+        {
+            get
+            {
+                return this.MediaStoreItems[key];
+            }
+            set
+            {
+                this.Add(key, value);
+            }
+        }
     }
 }
