@@ -9,15 +9,15 @@ using System.Net;
 using Snowflake.Constants;
 using Snowflake.Information.MediaStore;
 
-namespace Snowflake.Information.Game
+namespace Snowflake.Scraper
 {
-    public class GameImages
+    public class GameImagesResult
     {
         public IList<string> Fanarts { get; set; }
         public IList<string> Screenshots { get; set; }
         public IDictionary<string, string> Boxarts { get; set; }
         public string ImagesID { get; private set; }
-        public GameImages()
+        public GameImagesResult()
         {
             this.ImagesID = ShortGuid.NewShortGuid();
             this.Fanarts = new List<string>();
@@ -103,7 +103,7 @@ namespace Snowflake.Information.Game
         }
         public static string GetFullImagePath(string imageFileName, string imagesId)
         {
-            return GameImages.GetFullImagePath(imageFileName, imageFileName, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Snowflake", "data", "imagescache"));
+            return GameImagesResult.GetFullImagePath(imageFileName, imageFileName, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Snowflake", "data", "imagescache"));
         }
         public static string GetFullImagePath(string imageFileName, string imagesId, string cachePath)
         {

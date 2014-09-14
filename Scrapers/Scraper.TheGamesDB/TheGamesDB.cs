@@ -7,8 +7,6 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Reflection;
 using System.Net;
-using Snowflake.Information.Platform;
-using Snowflake.Information.Game;
 using System.Xml.Linq;
 using Snowflake.Constants;
 using Snowflake.Scraper;
@@ -55,7 +53,7 @@ namespace Scraper.TheGamesDB
             var results = ParseSearchResults(searchUri);
             return results;
         }
-        public override Tuple<Dictionary<string, string>, GameImages> GetGameDetails(string id)
+        public override Tuple<Dictionary<string, string>, GameImagesResult> GetGameDetails(string id)
         {
             var searchUri = new Uri(Uri.EscapeUriString("http://thegamesdb.net/api/GetGame.php?id=" + id));
             using (var client = new WebClient())
@@ -72,7 +70,7 @@ namespace Scraper.TheGamesDB
                     {GameInfoFields.game_developer, xmlDoc.Descendants("Developer").First().Value}
                 };
 
-                var images = new GameImages();
+                var images = new GameImagesResult();
                 var boxartFront = baseImageUrl + (from boxart in xmlDoc.Descendants("boxart") where boxart.Attribute("side").Value == "front" select boxart).First().Value;
                 images.AddFromUrl(GameImageType.Boxart_front, new Uri(boxartFront));
 

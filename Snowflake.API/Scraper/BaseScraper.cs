@@ -4,7 +4,6 @@ using System.IO;
 using System.Reflection;
 using Newtonsoft.Json;
 using Snowflake.Collections;
-using Snowflake.Information.Game;
 using Snowflake.Plugin;
 
 namespace Snowflake.Scraper
@@ -27,7 +26,7 @@ namespace Snowflake.Scraper
         }
         public abstract IList<GameScrapeResult> GetSearchResults(string searchQuery);
         public abstract IList<GameScrapeResult> GetSearchResults(string searchQuery, string platformId);
-        public abstract Tuple<Dictionary<string, string>, GameImages> GetGameDetails(string id);
+        public abstract Tuple<Dictionary<string, string>, GameImagesResult> GetGameDetails(string id);
 
     }
 }
