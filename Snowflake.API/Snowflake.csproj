@@ -94,14 +94,15 @@
     <Compile Include="Core\EventDelegate\JsonRPCEventDelegate.cs" />
     <Compile Include="Core\Interface\IAjaxManager.cs" />
     <Compile Include="Core\Interface\IPluginManager.cs" />
-    <Compile Include="Core\Interface\IFrontendCore.cs" />
     <Compile Include="Core\ScrapeEngine.cs" />
     <Compile Include="Core\Server\BaseHttpServer.cs" />
+    <Compile Include="Core\Server\FileMediaStoreServer.cs" />
     <Compile Include="Events\CoreEvents\PluginManagerLoadedEventArgs.cs" />
     <Compile Include="Extensions\HttpListenerContextExts.cs" />
     <Compile Include="Extensions\IDictionaryExtensions.cs" />
     <Compile Include="Extensions\MEFExtensions.cs" />
     <Compile Include="Extensions\PlatformExts.cs" />
+    <Compile Include="Core\Server\MimeTypes.cs" />
     <Compile Include="Scraper\GameImagesResult.cs" />
     <Compile Include="Extensions\KeyValuePairExts.cs" />
     <Compile Include="Database\GameDatabase.cs" />

@@ -29,7 +29,7 @@ namespace Snowflake.Core.Server
             try
             {
                 input = new FileStream(filename, FileMode.Open);
-               // context.Response.AddHeader("Content-Type", MimeTypes.GetMimeType(Path.GetExtension(filename)));
+                context.Response.AddHeader("Content-Type", MimeTypes.GetMimeType(Path.GetFileName(filename)));
             }
             catch (FileNotFoundException)
             {
@@ -37,8 +37,11 @@ namespace Snowflake.Core.Server
             }
             byte[] buffer = new byte[1024 * 16];
             int nbytes;
-            while ((nbytes = input.Read(buffer, 0, buffer.Length)) > 0)
-                context.Response.OutputStream.Write(buffer, 0, nbytes);
+            await Task.Run(() =>
+            {
+                while ((nbytes = input.Read(buffer, 0, buffer.Length)) > 0)
+                    context.Response.OutputStream.Write(buffer, 0, nbytes);
+            });
             input.Close();
             context.Response.OutputStream.Close();
         }

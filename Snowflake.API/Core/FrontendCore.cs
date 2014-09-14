@@ -29,7 +29,7 @@ namespace Snowflake.Core
         public static FrontendCore LoadedCore { get; private set; }
         public ThemeServer ThemeServer { get; private set; }    
         public ApiServer APIServer { get; private set; }
-       // public ResourceServer ResourceServer { get; private set; }
+        public FileMediaStoreServer MediaStoreServer { get; private set; }
 
 
         #region Events
@@ -39,10 +39,11 @@ namespace Snowflake.Core
 
         public static void InitCore()
         {
-                var core = new FrontendCore();
-                FrontendCore.LoadedCore = core;
-                FrontendCore.LoadedCore.ThemeServer.StartServer();
-                FrontendCore.LoadedCore.APIServer.StartServer();
+            var core = new FrontendCore();
+            FrontendCore.LoadedCore = core;
+            FrontendCore.LoadedCore.ThemeServer.StartServer();
+            FrontendCore.LoadedCore.APIServer.StartServer();
+            FrontendCore.LoadedCore.MediaStoreServer.StartServer();
         }
       
         public async static Task InitPluginManagerAsync()
@@ -67,7 +68,7 @@ namespace Snowflake.Core
 
             this.ThemeServer = new ThemeServer(Path.Combine(this.AppDataDirectory, "theme"));
             this.APIServer = new ApiServer();
-          //  this.ResourceServer = new ResourceServer(this.AppDataDirectory);
+            this.MediaStoreServer = new FileMediaStoreServer(Path.Combine(this.AppDataDirectory, "mediastores"));
             //new JsonRPCEventDelegate(3333).Notify("test", new Dictionary<string, string>() { {"test","test"}});
         }
         private Dictionary<string, PlatformInfo> LoadPlatforms(string platformDirectory)
