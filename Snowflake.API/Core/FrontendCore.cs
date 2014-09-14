@@ -17,7 +17,7 @@ using Snowflake.Core.EventDelegate;
 using Snowflake.Information;
 namespace Snowflake.Core
 {
-    public partial class FrontendCore : IFrontendCore
+    public partial class FrontendCore 
     {
         #region Loaded Objects
         public IDictionary<string, PlatformInfo> LoadedPlatforms { get; private set; }
