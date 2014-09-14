@@ -5,7 +5,11 @@ namespace Snowflake.Core.Server
 {
     public static class MimeTypes
     {
-        private static readonly Dictionary<string, string> TypeMap = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase){
+        private static readonly Dictionary<string, string> TypeMap;
+
+        static MimeTypes()
+        {
+            TypeMap = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase){
             {"323", "text/h323"},
 			{"3dmf", "x-world/x-3dmf"},
 			{"3dm", "x-world/x-3dmf"},
@@ -559,10 +563,6 @@ namespace Snowflake.Core.Server
 			{"zip", "application/zip"},
 			{"zsh", "text/x-script.zsh"}
         };
-
-        static MimeTypes()
-        {
-            
 			
         }
 
