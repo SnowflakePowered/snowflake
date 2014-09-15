@@ -10,7 +10,7 @@
 		},
 		modelObjectChanged: function(){
 			this.viewTitle = this.modelObject.Name;
-			this.viewImage = (this.type == 'games') ? this.modelObject.Images.Boxarts.img_boxart_front[1] : this.modelObject.Images.img_platform_productshot;					
+			this.viewImage = (this.type == 'games') ? "http://localhost:30002/"+this.modelObject.MediaStore.MediaStoreKey+"/images/boxart_front" : this.modelObject.Images.img_platform_productshot;					
 		}
 		  
     });
