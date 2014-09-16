@@ -59,7 +59,7 @@ namespace Snowflake.Scraper
                     string filename = Path.GetFileName(new Uri(fanart).AbsolutePath);
                     try
                     {
-                        string downloadPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.InternetCache), filename);
+                        string downloadPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.InternetCache), "fanart_" + filename);
                         webClient.DownloadFile(fanart, downloadPath);
                         mediaStore.Images.Add("fanart_" + i, downloadPath);
                     }
@@ -74,7 +74,7 @@ namespace Snowflake.Scraper
                     string filename = Path.GetFileName(new Uri(screenshot).AbsolutePath);
                     try
                     {
-                        string downloadPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.InternetCache), filename);
+                        string downloadPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.InternetCache), "screenshot_" + filename);
                         webClient.DownloadFile(screenshot, downloadPath);
                         mediaStore.Images.Add("screenshot_" + i, downloadPath);
                     }
@@ -89,7 +89,7 @@ namespace Snowflake.Scraper
                     string filename = Path.GetFileName(new Uri(boxart.Value).AbsolutePath);
                     try
                     {
-                        string downloadPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.InternetCache), filename);
+                        string downloadPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.InternetCache), "boxart_" + filename);
                         webClient.DownloadFile(boxart.Value, downloadPath);
                         mediaStore.Images.Add(boxart.Key.Substring(4), downloadPath);//remove 'img_' prefix
                     }
