@@ -9,7 +9,8 @@
   "dependencies": {
 	    "nodewebkit": "0.10.x",
         "najax":  "0.1.x",
-        "promise": "5.0.x"
+        "promise": "5.0.x",
+        "fromjs":  "2.1.x"
 
   }
 }
