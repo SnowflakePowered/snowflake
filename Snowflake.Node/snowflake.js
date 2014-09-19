@@ -1,3 +1,5 @@
+var najax = require("najax");
+var Promise = require('promise');
 var from = require("fromjs");
 if (!String.prototype.startsWith) {
     Object.defineProperty(String.prototype, 'startsWith', {
@@ -9,6 +11,33 @@ if (!String.prototype.startsWith) {
             return this.lastIndexOf(searchString, position) === position;
         }
     });
+}
+/* non-snowflake code end*/
+
+var SnowflakeApi = function SnowflakeApi(snowflakeUrl) {
+    var instance = this;
+
+    this.snowflakeUrl = snowflakeUrl;
+    this.platforms = {};
+    this.games = {};
+    this.loadGames = function () {
+        return this.ajax('Core', 'Game.GetAllGames').then(function (response) {
+            instance.games = JSON.parse(response);
+        }).catch(function (fail) {
+            console.log(fail);
+        });
+    };
+    this.loadPlatforms = function () {
+        return this.ajax('Core', 'Platform.GetAllPlatforms').then(function (response) {
+            instance.platforms = JSON.parse(response);
+        }).catch(function (fail) {
+            console.log(fail);
+        });
+    };
+
+    this.ajax = function (namespace, methodname) {
+        return Promise.resolve(najax(snowflakeUrl + '/' + namespace + '/' + methodname));
+    }
 }
 
 var MediaStore = function MediaStore(mediaStore) {
@@ -27,7 +56,7 @@ var MediaStore = function MediaStore(mediaStore) {
     this.Resources = this.$.Resources.MediaStoreItems;
     this.Fanarts = enumerateImages("fanart");
     this.Screenshots = enumerateImages("screenshot");
-   
 }
 
 exports.MediaStore = MediaStore;
+exports.SnowflakeApi = SnowflakeApi;
