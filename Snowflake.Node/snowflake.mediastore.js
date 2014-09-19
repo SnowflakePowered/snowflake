@@ -10,28 +10,24 @@ if (!String.prototype.startsWith) {
         }
     });
 }
-var MediaStore = function MediaStore(mediaStore, mediaStoreServer) {
+
+var MediaStore = function MediaStore(mediaStore) {
     var enumerateImages = function (enumerateString) {
-        from(this.Images).where(function (value, key) {
+        var from = require("fromjs");
+        return from(instance.$.Images.MediaStoreItems).where(function (value, key) {
+            console.log(key);
             return key.startsWith(enumerateString);
         }).toArray();
     }
-        
-    
-    var buildAbsolute = function (mediaStoreSection, mediaStoreServer) {
-        var _section = mediaStoreSection;
-        from(mediaStoreSection).each(function (value, key) {
-            console.log(key);
-            console.log(value);
-            _section[key] = mediaStoreServer + value;
-        })
-        return _section;
-    }
+    var instance = this;
     this.$ = mediaStore;
-    this.Images = buildAbsolute(this.$.Images, mediaStoreServer);
-    this.Fanarts = buildAbsolute(enumerateImages("fanart"));
+    this.Images = this.$.Images.MediaStoreItems;
+    this.Video = this.$.Video.MediaStoreItems;
+    this.Audio = this.$.Audio.MediaStoreItems;
+    this.Resources = this.$.Resources.MediaStoreItems;
+    this.Fanarts = enumerateImages("fanart");
     this.Screenshots = enumerateImages("screenshot");
-	
-	
-	
+   
 }
+
+exports.MediaStore = MediaStore;
