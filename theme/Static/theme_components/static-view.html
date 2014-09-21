@@ -3,6 +3,8 @@
 <link rel="import" href="static-titlebar.html">
 <link rel="import" href="static-statusbar.html">
 <link rel="import" href="static-view-list.html">
+<link rel="import" href="static-view-list.html">
+<link rel="import" href="../bower_components/core-animated-pages/core-animated-pages.html">
 
 <polymer-element name="static-model" attributes="barText barTitle barLogo barTable backgroundImage titleText themeMode statusText">
   <script>
@@ -117,10 +119,20 @@
 				position: relative;
 			}
 			static-view-list{
+				position: relative;
+				display: block;
+				height: inherit;
+			}
+			.viewcontainer{
 				display: table-row;
-				height: auto;
-				width: 100%
-				
+				height: 100%;
+				width: 100%;
+				position: relative;
+			}
+			core-animated-pages{
+				width: 100%;
+				display: table;
+				height: inherit;
 			}
 			.container{
 				display: table;
@@ -136,6 +148,10 @@
 				position: absolute; 
 				visibility: hidden;
 				display: none;
+			}
+			.view.view{
+			position: relative;
+			height: inherit;
 			}
 		</style>
 		
@@ -161,8 +177,17 @@
 		<div class="container">
 			<static-titlebar titleText="{{selectedPlatform.Name}}"></static-titlebar>
 			<static-statusbar keyword="{{themeMode}}" status="{{statusText}}"></static-statusbar>
-			<static-view-list displayModel="{{gamesModel}}" selectedModel="{{selectedGame}}" modelMode="games"></static-view-list>
-			<static-view-list displayModel="{{platformsModel}}" selectedModel="{{selectedPlatform}}" modelMode="platforms"></static-view-list>
+			<div class="viewcontainer">
+				<core-animated-pages transitions="cross-fade" selected="list-platform" valueattr="modelName">
+				<section class="view" cross-fade modelName="view-list-games">
+					<static-view-list displayModel="{{gamesModel}}" selectedModel="{{selectedGame}}" modelMode="games"></static-view-list>
+				</section>
+				<section class="view" cross-fade modelName="view-list-platform">
+					<static-view-listdisplayModel="{{platformsModel}}" selectedModel="{{selectedPlatform}}" modelMode="platforms"></static-view-list>
+				</section>
+			</core-animated-pages>
+			</div>
+
 			<static-mainbar showPlay="{{(themeMode == 'games')}}" barText="{{barText}}" barTitle="{{barTitle}}" barLogo="{{selectedPlatform.Images.img_platform_logo}}" barTable="{{barTable}}"></static-mainbar>
 		</div>
 		
