@@ -4,7 +4,7 @@
 <link rel="import" href="static-fonts.html">
 <link rel="import" href="static-searchbar.html">
 
-<polymer-element name="static-statusbar" attributes="keyword status">
+<polymer-element name="static-statusbar" attributes="keyword status selectedView">
 	<template>		
 
 		<style>
@@ -90,8 +90,9 @@
 		<div horizontal layout class="container" >
 			<div flex none class="view">
 				<span horizontal layout class="buttoncontainer">
-					<button horizontal layout autofocus><core-icon class="buttons" icon="menu"></core-icon></button>
+					<button horizontal layout autofocus on-click="{{toggleView}}"><core-icon class="buttons" icon="menu"></core-icon></button>
 				</span>
+	
 				<span class="text">View</span>
 				
 			</div>
@@ -113,7 +114,16 @@
 				}
 			},
 			ready: function() {
-			
+				this.selectedView = this.selectedView || "view-list-game";
+				console.log(this.selectedView);
+			},
+			toggleView: function(){
+				if(this.selectedView == "view-list-game"){
+					this.selectedView = "view-list-platform";
+				}
+				if(this.selectedView == "view-list-platform"){
+					this.selectedView = "view-list-game";
+				}
 			}
 			
 		});

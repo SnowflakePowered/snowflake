@@ -174,11 +174,11 @@
 			titleText="{{titleText}}">
 			</static-view-controller>
 			
-		<div class="container">
+		<div class="container">	
 			<static-titlebar titleText="{{selectedPlatform.Name}}"></static-titlebar>
-			<static-statusbar keyword="{{themeMode}}" status="{{statusText}}"></static-statusbar>
+			<static-statusbar keyword="{{themeMode}}" status="{{statusText}}" selectedView="{{viewName}}"></static-statusbar>
 			<div class="viewcontainer">
-				<core-animated-pages transitions="cross-fade" selected="list-platform" valueattr="modelName">
+				<core-animated-pages transitions="cross-fade" selected="{{viewName}}" valueattr="modelName">
 				<section class="view" cross-fade modelName="view-list-games">
 					<static-view-list displayModel="{{gamesModel}}" selectedModel="{{selectedGame}}" modelMode="games"></static-view-list>
 				</section>

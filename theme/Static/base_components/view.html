@@ -1,0 +1,282 @@
+<link rel="import" href="../bower_components/core-selector/core-selector.html">
+<link rel="import" href="../bower_components/core-animated-pages/core-animated-pages.html">
+
+<polymer-element name="snowflake-interface-games" attributes="model">
+  <script>
+    Polymer('snowflake-interface-games', {
+		domReady: function() {
+			this.model = snowflake.api.games;
+		  }
+    });
+  </script>
+</polymer-element>
+
+<polymer-element name="snowflake-interface-platforms" attributes="model">
+  <script>
+    Polymer('snowflake-interface-platforms', {
+		domReady: function() {
+			this.model = Object.keys(snowflake.api.platforms).map(function(k) { return snowflake.api.platforms[k] });
+		  }
+    });
+  </script>
+</polymer-element>
+
+<polymer-element name="snowflake-controller-search" attributes="input output query">
+  <script>
+    Polymer('snowflake-controller-search', {
+		domReady: function() {
+			this.output = this.input; //todo implement query
+			console.log(this.output);
+		  }
+    });
+  </script>
+</polymer-element>
+
+<polymer-element name="snowflake-controller-display-platform" attributes="selectedPlatform displayModel">
+  <script>
+    Polymer('snowflake-controller-display-platform', {
+		domReady: function() {
+			
+		  },
+		selectedPlatformChanged: function(){
+			this.displayModel = {
+				title: this.selectedPlatform.Name,
+				description: this.selectedPlatform.Metadata.platform_description,
+				table: [
+							{
+								"Short Name": this.selectedPlatform.Metadata.platform_shortname,
+								"Company": this.selectedPlatform.Metadata.platform_company,
+								"Release Date": this.selectedPlatform.Metadata.platform_releasedate
+							}
+						]
+			};
+		}
+    });
+  </script>
+</polymer-element>
+
+
+<polymer-element name="snowflake-controller-display-game" attributes="selectedGame displayModel">
+  <script>
+    Polymer('snowflake-controller-display-game', {
+		domReady: function() {
+			
+		},
+		selectedGameChanged: function(){
+			this.displayModel = {
+				title: this.selectedGame.Name,
+				description: this.selectedGame.Metadata.game_description,
+				table: [
+						{
+							"Platform": snowflake.api.platforms[debug.selectedGame.PlatformId].Name,
+							"Release Date": this.selectedGame.Metadata.game_releasedate,
+							"Publisher": this.selectedGame.Metadata.game_publisher,
+							"Developer": this.selectedGame.Metadata.game_developer
+						},
+						{
+							"Last Played": "Never",
+							"You've played": "0 hours"
+						}
+					]
+			};
+		}
+			
+    });
+  </script>
+</polymer-element>
+
+<polymer-element name="snowflake-controller-display" attributes="gameDisplayModel platformDisplayModel displayModel displayMode">
+  <script>
+    Polymer('snowflake-controller-display', {
+		domReady: function() {
+			this.update();
+		},
+		update: function(){
+			switch(this.displayMode) {
+				case "games":
+					this.displayModel = this.gameDisplayModel;
+					this.displayModel.platform = snowflake.api.platforms[debug.selectedGame.PlatformId].Name;
+					break;
+				case "platforms":
+					this.displayModel = this.platformDisplayModel;
+					this.displayModel.platform = this.platformDisplayModel.title;
+					break;
+				default:
+					this.displayModel = this.gameDisplayModel;
+					this.displayModel.platform = snowflake.api.platforms[debug.selectedGame.PlatformId].Name;
+
+			};
+			
+		},
+		displayModeChanged: function(){ this.update(); },
+		gameDisplayModelChanged: function(){ this.update(); },
+		platformDisplayModelChanged: function(){ this.update(); }
+    });
+  </script>
+</polymer-element>
+
+<polymer-element name="snowflake-controller-view" attributes="platformViews gameViews currentViews displayMode">
+  <script>
+    Polymer('snowflake-controller-view', {
+		domReady: function() {
+			this.update();
+		},
+		update: function(){
+			switch(this.displayMode) {
+				case "games":
+					this.currentViews = this.gameViews;
+					break;
+				case "platforms":
+					this.currentViews = this.platformViews;
+					break;
+				default:
+					this.currentViews = this.gameViews;
+			};
+		},
+		displayModeChanged: function(){ this.update(); },
+		gameViewsChanged: function(){ this.update(); },
+		platformViewsChanged: function(){ this.update(); }
+			
+    });
+  </script>
+</polymer-element>
+
+<polymer-element name="snowflake-view">
+  <script>
+    Polymer('snowflake-view', {
+		fKeys : function(o){
+				return Object.keys(o);
+			},
+		ready: function() {
+			window.debug = this;
+			this.platformViews = [
+				['namelist', 'Names'],
+				['snamelist', 'Short Names']
+			];
+			this.gameViews = [
+				['namelist', 'Names']
+			];
+		  }
+		  
+    });
+  </script>
+  <template>
+  Hello World
+  
+  <!--Model Controller Begin-->
+	  <!--games attr=model query-->
+	  <snowflake-interface-games model="{{_gamesModel}}"></snowflake-interface-games>
+	  <snowflake-controller-search input="{{_gamesModel}}" query="{{gamesQuery}}" output="{{gamesModel}}"></snowflake-controller-search>
+	  <!--/games attr=model query-->
+
+	  <!--platforms attr=model query-->
+	  <snowflake-interface-platforms model="{{_platformsModel}}"></snowflake-interface-platforms>
+	  <snowflake-controller-search input="{{_platformsModel}}" query="{{platformsQuery}}" output="{{platformsModel}}"></snowflake-controller-search>
+	  <!--/platforms attr=model query-->
+  <!--Model Controller End-->
+	<core-animated-pages valueattr="mode" selected="{{displayMode}}">
+		<section mode="games" style="position: relative;">
+		<core-animated-pages valueattr="viewname" selected="{{selectedView}}">
+			<section style="position: relative;" viewname="namelist">
+				<core-selector selected="0" selectedModel="{{selectedGame}}">
+					<template repeat="{{gamesModel}}">
+						<div class="model-display">{{Name}}</div>
+					</template>
+				</core-selector>
+			</section>
+			
+			
+		</section>
+		<section mode="platforms" style="position: relative;">
+			<core-animated-pages valueattr="viewname" selected="{{selectedView}}">
+			<section style="position: relative;" viewname="namelist">
+				<core-selector style="position: relative;" selected="0" selectedModel="{{selectedPlatform}}">
+					<template repeat="{{platformsModel}}">
+						<div class="model-display">{{Name}}</div>
+					</template>
+				</core-selector>
+			</section>
+			<section style="position: relative;" viewname="snamelist">
+				<core-selector style="position: relative;" selected="0" selectedModel="{{selectedPlatform}}">
+					<template repeat="{{platformsModel}}">
+						<div class="model-display">{{PlatformId}}</div>
+					</template>
+				</core-selector>
+				</section>
+			</core-animated-pages>
+		</section>
+  	</core-animated-pages>
+
+	
+	<core-selector valueattr="mode" selected="{{displayMode}}">
+		<div mode="games">Games</div>
+		<div mode="platforms">Platforms</div>
+	</core-selector>
+	
+	<core-selector valueattr="viewname" selected="{{selectedView}}">
+		<template repeat="{{currentViews}}">
+				<div viewname="{{[0]}}">{{[1]}}</div>
+		</template>
+	</core-selector>
+	
+	
+	<snowflake-controller-display-game selectedGame="{{selectedGame}}" displayModel="{{gameDisplayModel}}"></snowflake-controller-display-game>
+	<snowflake-controller-display-platform selectedPlatform="{{selectedPlatform}}" displayModel="{{platformDisplayModel}}"></snowflake-controller-display-platform>
+	
+	<snowflake-controller-display gameDisplayModel="{{gameDisplayModel}}" platformDisplayModel="{{platformDisplayModel}}" displayModel="{{displayModel}}" displayMode="{{displayMode}}"></snowflake-controller-display>
+	
+	<snowflake-controller-view platformViews="{{platformViews}}" gameViews="{{gameViews}}" currentViews="{{currentViews}}" displayMode="{{displayMode}}"></snowflake-controller-view>
+	<section>
+	<h2>Game</h2>
+	{{gameDisplayModel.title}}
+	{{gameDisplayModel.description}}
+	<template repeat="{{obj in gameDisplayModel.table}}">
+					<table>
+						<template repeat="{{item in obj | fKeys}}">
+						  <tr>
+							  <th>{{item}}</th>
+							  <td>{{obj[item]}}</td>
+						  </tr>
+						</template>
+					</table>
+	</template>
+	</section>
+	<section>
+	<h2>Platform</h2>
+	{{platformDisplayModel.title}}
+	{{platformDisplayModel.description}}
+
+	<template repeat="{{obj in platformDisplayModel.table}}">
+					<table>
+						<template repeat="{{item in obj | fKeys}}">
+						  <tr>
+							  <th>{{item}}</th>
+							  <td>{{obj[item]}}</td>
+						  </tr>
+						</template>
+					</table>
+	</template>
+	</section>
+	<h2>Unified</h2>
+	{{displayModel.title}}<br>
+	{{displayModel.description}}<br>
+	{{displayModel.platform}}<br>
+
+	<template repeat="{{obj in displayModel.table}}">
+					<table>
+						<template repeat="{{item in obj | fKeys}}">
+						  <tr>
+							  <th>{{item}}</th>
+							  <td>{{obj[item]}}</td>
+						  </tr>
+						</template>
+					</table>
+  	</template>
+
+	
+  <!--Debug Start-->
+
+  <!--Debug End-->
+
+  <template>
+</polymer-element>
