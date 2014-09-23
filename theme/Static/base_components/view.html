@@ -85,19 +85,27 @@
 	
 	  <!--Model Controller Begin-->
 	  <!--games attr=model query-->
-	  <snowflake-interface-games model="{{_gamesModel}}"></snowflake-interface-games>
-	  <snowflake-controller-search input="{{_gamesModel}}" query="{{gamesQuery}}" output="{{gamesModel}}"></snowflake-controller-search>
+	
 	  <!--/games attr=model query-->
 
 	  <!--platforms attr=model query-->
-	  <snowflake-interface-platforms model="{{_platformsModel}}"></snowflake-interface-platforms>
-	  <snowflake-controller-search input="{{_platformsModel}}" query="{{platformsQuery}}" output="{{platformsModel}}"></snowflake-controller-search>
+	
 	  <!--/platforms attr=model query-->
   <!--Model Controller End-->
   
+  
+    <!-- TODO: Expose gamesModel platformsModel platformsQuery gamesQuery-->
+    <snowflake-interface-games model="{{_gamesModel}}"></snowflake-interface-games>
+	<snowflake-controller-search input="{{_gamesModel}}" query="{{gamesQuery}}" output="{{gamesModel}}"></snowflake-controller-search>
+	<snowflake-interface-platforms model="{{_platformsModel}}"></snowflake-interface-platforms>
+	<snowflake-controller-search input="{{_platformsModel}}" query="{{platformsQuery}}" output="{{platformsModel}}"></snowflake-controller-search>
+	
+	<!-- TODO: Expose selectedGame selectedPlatform displayModel displayMode-->
 	<snowflake-controller-display-game selectedGame="{{selectedGame}}" displayModel="{{gameDisplayModel}}"></snowflake-controller-display-game>
 	<snowflake-controller-display-platform selectedPlatform="{{selectedPlatform}}" displayModel="{{platformDisplayModel}}"></snowflake-controller-display-platform>
 	<snowflake-controller-display gameDisplayModel="{{gameDisplayModel}}" platformDisplayModel="{{platformDisplayModel}}" displayModel="{{displayModel}}" displayMode="{{displayMode}}"></snowflake-controller-display>
+	
+	<!-- TODO: Expose currentViews selectedView displayMode-->
 	<snowflake-controller-view platformViews="{{platformViews}}" gameViews="{{gameViews}}" currentViews="{{currentViews}}" displayMode="{{displayMode}}" selectedView="{{selectedView}}"></snowflake-controller-view>
 
 	<section>
