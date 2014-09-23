@@ -115,32 +115,59 @@
   </script>
 </polymer-element>
 
-<polymer-element name="snowflake-controller-view" attributes="platformViews gameViews currentViews displayMode">
+<polymer-element name="snowflake-controller-view" attributes="platformViews gameViews currentViews selectedView displayMode">
   <script>
     Polymer('snowflake-controller-view', {
-		domReady: function() {
+		domReady: function() {	
 			this.update();
 		},
 		update: function(){
 			switch(this.displayMode) {
 				case "games":
 					this.currentViews = this.gameViews;
+					this.selectedView = (this.selectedGameView == undefined) ? this.gameViews[0][0] : this.selectedGameView;
 					break;
 				case "platforms":
 					this.currentViews = this.platformViews;
+					this.selectedView = (this.selectedPlatformView == undefined) ? this.platformViews[0][0] : this.selectedPlatformView;
 					break;
 				default:
 					this.currentViews = this.gameViews;
+					this.selectedView = (this.selectedGameView == undefined) ? this.gameViews[0][0] : this.selectedGameView;
+					break;
 			};
 		},
 		displayModeChanged: function(){ this.update(); },
-		gameViewsChanged: function(){ this.update(); },
-		platformViewsChanged: function(){ this.update(); }
+		selectedViewChanged: function(){ 
+			switch(this.displayMode) {
+				case "games":
+					this.selectedGameView = this.selectedView;
+					break;
+				case "platforms":
+					this.selectedPlatformView = this.selectedView;
+			};
+		}
+
 			
     });
   </script>
 </polymer-element>
-
+<polymer-element name="snowflake-controller-view-platform" attributes="platformViews selectedView">
+  <script>
+    Polymer('snowflake-controller-view-platform', {
+		
+		
+    });
+  </script>
+</polymer-element>
+<polymer-element name="snowflake-controller-view-game" attributes="gameViews selectedView">
+  <script>
+    Polymer('snowflake-controller-view-game', {
+		
+			
+    });
+  </script>
+</polymer-element>
 <polymer-element name="snowflake-view">
   <script>
     Polymer('snowflake-view', {
@@ -222,10 +249,10 @@
 	
 	<snowflake-controller-display-game selectedGame="{{selectedGame}}" displayModel="{{gameDisplayModel}}"></snowflake-controller-display-game>
 	<snowflake-controller-display-platform selectedPlatform="{{selectedPlatform}}" displayModel="{{platformDisplayModel}}"></snowflake-controller-display-platform>
-	
 	<snowflake-controller-display gameDisplayModel="{{gameDisplayModel}}" platformDisplayModel="{{platformDisplayModel}}" displayModel="{{displayModel}}" displayMode="{{displayMode}}"></snowflake-controller-display>
 	
-	<snowflake-controller-view platformViews="{{platformViews}}" gameViews="{{gameViews}}" currentViews="{{currentViews}}" displayMode="{{displayMode}}"></snowflake-controller-view>
+	<snowflake-controller-view platformViews="{{platformViews}}" gameViews="{{gameViews}}" currentViews="{{currentViews}}" displayMode="{{displayMode}}" selectedView="{{selectedView}}"></snowflake-controller-view>
+
 	<section>
 	<h2>Game</h2>
 	{{gameDisplayModel.title}}
