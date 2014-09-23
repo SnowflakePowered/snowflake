@@ -1,0 +1,81 @@
+<polymer-element name="snowflake-controller-display-game" attributes="selectedGame displayModel">
+  <script>
+    Polymer('snowflake-controller-display-game', {
+		domReady: function() {
+			
+		},
+		selectedGameChanged: function(){
+			this.displayModel = {
+				title: this.selectedGame.Name,
+				description: this.selectedGame.Metadata.game_description,
+				table: [
+						{
+							"Platform": snowflake.api.platforms[debug.selectedGame.PlatformId].Name,
+							"Release Date": this.selectedGame.Metadata.game_releasedate,
+							"Publisher": this.selectedGame.Metadata.game_publisher,
+							"Developer": this.selectedGame.Metadata.game_developer
+						},
+						{
+							"Last Played": "Never",
+							"You've played": "0 hours"
+						}
+					]
+			};
+		}
+			
+    });
+  </script>
+</polymer-element>
+
+<polymer-element name="snowflake-controller-display" attributes="gameDisplayModel platformDisplayModel displayModel displayMode">
+  <script>
+    Polymer('snowflake-controller-display', {
+		domReady: function() {
+			this.update();
+		},
+		update: function(){
+			switch(this.displayMode) {
+				case "games":
+					this.displayModel = this.gameDisplayModel;
+					this.displayModel.platform = snowflake.api.platforms[debug.selectedGame.PlatformId].Name;
+					break;
+				case "platforms":
+					this.displayModel = this.platformDisplayModel;
+					this.displayModel.platform = this.platformDisplayModel.title;
+					break;
+				default:
+					this.displayModel = this.gameDisplayModel;
+					this.displayModel.platform = snowflake.api.platforms[debug.selectedGame.PlatformId].Name;
+
+			};
+			
+		},
+		displayModeChanged: function(){ this.update(); },
+		gameDisplayModelChanged: function(){ this.update(); },
+		platformDisplayModelChanged: function(){ this.update(); }
+    });
+  </script>
+</polymer-element>
+
+<polymer-element name="snowflake-controller-display-platform" attributes="selectedPlatform displayModel">
+  <script>
+    Polymer('snowflake-controller-display-platform', {
+		domReady: function() {
+			
+		  },
+		selectedPlatformChanged: function(){
+			this.displayModel = {
+				title: this.selectedPlatform.Name,
+				description: this.selectedPlatform.Metadata.platform_description,
+				table: [
+							{
+								"Short Name": this.selectedPlatform.Metadata.platform_shortname,
+								"Company": this.selectedPlatform.Metadata.platform_company,
+								"Release Date": this.selectedPlatform.Metadata.platform_releasedate
+							}
+						]
+			};
+		}
+    });
+  </script>
+</polymer-element>
