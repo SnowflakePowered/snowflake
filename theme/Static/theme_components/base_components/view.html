@@ -1,17 +1,7 @@
 <link rel="import" href="../bower_components/core-selector/core-selector.html">
 <link rel="import" href="../bower_components/core-animated-pages/core-animated-pages.html">
-
-
-<polymer-element name="snowflake-controller-search" attributes="input output query">
-  <script>
-    Polymer('snowflake-controller-search', {
-		domReady: function() {
-			this.output = this.input; //todo implement query
-			console.log(this.output);
-		  }
-    });
-  </script>
-</polymer-element>
+<link rel="import" href="snowflake-model.html">
+<link rel="import" href="snowflake-controller-view.html">
 
 
 
@@ -36,8 +26,8 @@
   </script>
   <template>
   Hello World
-  
-
+	
+	
 	<core-animated-pages valueattr="mode" selected="{{displayMode}}">
 		<section mode="games" style="position: relative;">
 		<core-animated-pages valueattr="viewname" selected="{{selectedView}}">
@@ -48,8 +38,6 @@
 					</template>
 				</core-selector>
 			</section>
-			
-			
 		</section>
 		<section mode="platforms" style="position: relative;">
 			<core-animated-pages valueattr="viewname" selected="{{selectedView}}">
@@ -83,62 +71,13 @@
 		</template>
 	</core-selector>
 	
-	  <!--Model Controller Begin-->
-	  <!--games attr=model query-->
 	
-	  <!--/games attr=model query-->
-
-	  <!--platforms attr=model query-->
-	
-	  <!--/platforms attr=model query-->
-  <!--Model Controller End-->
-  
-  
-    <!-- TODO: Expose gamesModel platformsModel platformsQuery gamesQuery-->
-    <snowflake-interface-games model="{{_gamesModel}}"></snowflake-interface-games>
-	<snowflake-controller-search input="{{_gamesModel}}" query="{{gamesQuery}}" output="{{gamesModel}}"></snowflake-controller-search>
-	<snowflake-interface-platforms model="{{_platformsModel}}"></snowflake-interface-platforms>
-	<snowflake-controller-search input="{{_platformsModel}}" query="{{platformsQuery}}" output="{{platformsModel}}"></snowflake-controller-search>
-	
-	<!-- TODO: Expose selectedGame selectedPlatform displayModel displayMode-->
-	<snowflake-controller-display-game selectedGame="{{selectedGame}}" displayModel="{{gameDisplayModel}}"></snowflake-controller-display-game>
-	<snowflake-controller-display-platform selectedPlatform="{{selectedPlatform}}" displayModel="{{platformDisplayModel}}"></snowflake-controller-display-platform>
-	<snowflake-controller-display gameDisplayModel="{{gameDisplayModel}}" platformDisplayModel="{{platformDisplayModel}}" displayModel="{{displayModel}}" displayMode="{{displayMode}}"></snowflake-controller-display>
-	
-	<!-- TODO: Expose currentViews selectedView displayMode-->
+	<snowflake-model-data gamesModel="{{gamesModel}}" platformsModel="{{platformsModel}}" platformsQuery="{{platformsQuery}}" gamesQuery="{{gamesQuery}}"></snowflake-model-data>
+	<snowflake-model-display selectedGame="{{selectedGame}}" selectedPlatform="{{selectedPlatform}}" displayModel="{{displayModel}}" displayMode="{{displayMode}}"></snowflake-model-display>
 	<snowflake-controller-view platformViews="{{platformViews}}" gameViews="{{gameViews}}" currentViews="{{currentViews}}" displayMode="{{displayMode}}" selectedView="{{selectedView}}"></snowflake-controller-view>
 
-	<section>
-	<h2>Game</h2>
-	{{gameDisplayModel.title}}
-	{{gameDisplayModel.description}}
-	<template repeat="{{obj in gameDisplayModel.table}}">
-					<table>
-						<template repeat="{{item in obj | fKeys}}">
-						  <tr>
-							  <th>{{item}}</th>
-							  <td>{{obj[item]}}</td>
-						  </tr>
-						</template>
-					</table>
-	</template>
-	</section>
-	<section>
-	<h2>Platform</h2>
-	{{platformDisplayModel.title}}
-	{{platformDisplayModel.description}}
 
-	<template repeat="{{obj in platformDisplayModel.table}}">
-					<table>
-						<template repeat="{{item in obj | fKeys}}">
-						  <tr>
-							  <th>{{item}}</th>
-							  <td>{{obj[item]}}</td>
-						  </tr>
-						</template>
-					</table>
-	</template>
-	</section>
+	
 	<h2>Unified</h2>
 	{{displayModel.title}}<br>
 	{{displayModel.description}}<br>

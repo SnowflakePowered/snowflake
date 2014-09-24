@@ -3,78 +3,9 @@
 <link rel="import" href="static-titlebar.html">
 <link rel="import" href="static-statusbar.html">
 <link rel="import" href="static-view-list.html">
-<link rel="import" href="static-view-list.html">
+<link rel="import" href="base_components/snowflake-model.html">
+<link rel="import" href="base_components/snowflake-controller-view.html">
 <link rel="import" href="../bower_components/core-animated-pages/core-animated-pages.html">
-
-<polymer-element name="static-model" attributes="barText barTitle barLogo barTable backgroundImage titleText themeMode statusText">
-  <script>
-    Polymer('static-model', {
-		  ready: function() {
-			this.barText = this.barText || "model.barText";
-			this.barTitle = this.barTitle || "model.barTitle";
-			this.barLogo = this.barLogo || "model.barLogo";
-			this.backgroundImage = this.backgroundImage || "model.backgroundImage";
-			this.barTable = this.barTable || [];
-			this.titleText = this.titleText || "model.titleText";
-			this.themeMode = this.themeMode || "games";
-			this.statusText = this.statusText || "model.statusText";
-		  }
-    });
-  </script>
-</polymer-element>
-
-<polymer-element name="static-view-controller" attributes="modelMode modelObject viewTitle viewImage viewText viewStats viewBackgroundImage titleText">
-  <script>
-    Polymer('static-view-controller', {
-		ready: function() {
-			this.modelMode = this.modelMode || "games";
-			this.modelObject = this.modelObject || null;
-			
-			this.updateDisplay();
-		  },
-		updateDisplay: function(){
-			 try {
-			  if(this.modelMode == "games"){
-					this.viewTitle = this.modelObject.Name;
-					this.viewImage = this.modelObject.Images.Boxarts.img_boxart_front[1] || "undefined";
-					this.viewText = this.modelObject.Metadata.game_description || "undefined";
-					this.viewBackgroundImage = "http://localhost:30002/" + this.modelObject.MediaStore.MediaStoreKey+"/images/fanart_0";
-					this.viewStats = [
-						{
-							"Platform": this.modelObject.PlatformId,
-							"Release Date": this.modelObject.Metadata.game_releasedate,
-							"Publisher": this.modelObject.Metadata.game_publisher,
-							"Developer": this.modelObject.Metadata.game_developer
-						},
-						{
-							"Last Played": "Never",
-							"You've played": "0 hours"
-						}
-					];
-				}
-				if(this.modelMode == "platforms"){
-						console.log(this.modelObject.Images.img_platform_productshot);
-						this.viewTitle = this.modelObject.Name;
-						this.viewStats = [
-							{
-								"Short Name": this.modelObject.Metadata.platform_shortname,
-								"Company": this.modelObject.Metadata.platform_company,
-								"Release Date": this.modelObject.Metadata.platform_releasedate
-							}
-						];
-						this.viewImage = this.modelObject.Images.img_platform_productshot || "undefined";
-				}
-			}catch(event){
-			
-			}
-		},
-		modelObjectChanged: function(){
-			this.updateDisplay(this.modelMode);
-		}
-		  
-    });
-  </script>
-</polymer-element>
 
 
 <polymer-element name="static-view">
@@ -155,37 +86,53 @@
 			}
 		</style>
 		
-		<static-model id="model" 
-			barText="{{barText}}" 
-			barTitle="{{barTitle}}" 
-			barLogo="{{barLogo}}" 
-			backgroundImage="{{backgroundImage}}" 
-			themeMode="{{themeMode}}" 
-			statusText="{{statusText}}">
-		</static-model>
-		
-		<static-view-controller 
-			modelMode="{{themeMode}}" 
-			modelObject="{{(themeMode == 'games') ? selectedGame : selectedPlatform}}"
-			viewTitle="{{barTitle}}"
-			viewText="{{barText}}" 
-			viewStats="{{barTable}}"
-			viewBackgroundImage="{{backgroundImage}}"
-			titleText="{{titleText}}">
-			</static-view-controller>
+	
+		<snowflake-model-data gamesModel="{{gamesModel}}" platformsModel="{{platformsModel}}" platformsQuery="{{platformsQuery}}" gamesQuery="{{gamesQuery}}"></snowflake-model-data>
+		<snowflake-model-display selectedGame="{{selectedGame}}" selectedPlatform="{{selectedPlatform}}" displayModel="{{displayModel}}" displayMode="{{displayMode}}"></snowflake-model-display>
+		<snowflake-controller-view platformViews="{{platformViews}}" gameViews="{{gameViews}}" currentViews="{{currentViews}}" displayMode="{{displayMode}}" selectedView="{{selectedView}}"></snowflake-controller-view>
 			
 		<div class="container">	
-			<static-titlebar titleText="{{selectedPlatform.Name}}"></static-titlebar>
-			<static-statusbar keyword="{{themeMode}}" status="{{statusText}}" selectedView="{{viewName}}"></static-statusbar>
+		<!--	<static-titlebar titleText="{displayModel.title}}"></static-titlebar>-->
+			<!-- <static-statusbar keyword="{{themeMode}}" status="{{statusText}}" selectedView="{{viewName}}"></static-statusbar>-->
 			<div class="viewcontainer">
-				<core-animated-pages transitions="cross-fade" selected="{{viewName}}" valueattr="modelName">
+				<!--<core-animated-pages transitions="cross-fade" selected="{{viewName}}" valueattr="modelName">
 				<section class="view" cross-fade modelName="view-list-games">
 					<static-view-list displayModel="{{gamesModel}}" selectedModel="{{selectedGame}}" modelMode="games"></static-view-list>
 				</section>
 				<section class="view" cross-fade modelName="view-list-platform">
-					<static-view-listdisplayModel="{{platformsModel}}" selectedModel="{{selectedPlatform}}" modelMode="platforms"></static-view-list>
+					<static-view-list displayModel="{{platformsModel}}" selectedModel="{{selectedPlatform}}" modelMode="platforms"></static-view-list>
+				</section>
+			</core-animated-pages>-->
+			<core-animated-pages valueattr="mode" selected="{{displayMode}}">
+		<section mode="games" style="position: relative;">
+		<core-animated-pages valueattr="viewname" selected="{{selectedView}}">
+			<section style="position: relative;" viewname="namelist">
+				<core-selector selected="0" selectedModel="{{selectedGame}}">
+					<template repeat="{{gamesModel}}">
+						<div class="model-display">{{Name}}</div>
+					</template>
+				</core-selector>
+			</section>
+		</section>
+		<section mode="platforms" style="position: relative;">
+			<core-animated-pages valueattr="viewname" selected="{{selectedView}}">
+			<section style="position: relative;" viewname="namelist">
+				<core-selector style="position: relative;" selected="0" selectedModel="{{selectedPlatform}}">
+					<template repeat="{{platformsModel}}">
+						<div class="model-display">{{Name}}</div>
+					</template>
+				</core-selector>
+			</section>
+			<section style="position: relative;" viewname="snamelist">
+				<core-selector style="position: relative;" selected="0" selectedModel="{{selectedPlatform}}">
+					<template repeat="{{platformsModel}}">
+						<div class="model-display">{{PlatformId}}</div>
+					</template>
+				</core-selector>
 				</section>
 			</core-animated-pages>
+		</section>
+  	</core-animated-pages>
 			</div>
 
 			<static-mainbar showPlay="{{(themeMode == 'games')}}" barText="{{barText}}" barTitle="{{barTitle}}" barLogo="{{selectedPlatform.Images.img_platform_logo}}" barTable="{{barTable}}"></static-mainbar>
@@ -197,13 +144,15 @@
 	<script>
 		Polymer('static-view', {
 			ready: function() {
-				this.statusText = "";
-				this.themeMode = "platforms";
-				this.gamesModel = snowflake.api.games;
-				this.platformsModel = Object.keys(snowflake.api.platforms).map(function(k) { return snowflake.api.platforms[k] });
-				this.barText = "someText";
-				this.barTitle = "The Adventures of Jimmy Neutron, Boy Genius: Jimmy Neutron Vs. Jimmy Negatron"
-				this.barLogo = "";
+			this.displayMode = "games";
+				window.debug = this;
+			this.platformViews = [
+				['namelist', 'Names'],
+				['snamelist', 'Short Names']
+			];
+			this.gameViews = [
+				['namelist', 'Names']
+			];
 			}
 			
 		});
