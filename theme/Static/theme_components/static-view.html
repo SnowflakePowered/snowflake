@@ -29,7 +29,7 @@
 			}
 			static-mainbar{
 				max-height: 30%;
-				height: 30%;
+				height: 10%;
 				width: 100%;
 				display: table-row;
 				bottom: 0;
@@ -93,7 +93,7 @@
 			
 		<div class="container">	
 		<!--	<static-titlebar titleText="{displayModel.title}}"></static-titlebar>-->
-			<!-- <static-statusbar keyword="{{themeMode}}" status="{{statusText}}" selectedView="{{viewName}}"></static-statusbar>-->
+			<static-statusbar keyword="{{displayMode}}" status="{{statusText}}" selectedView="{{viewName}}"></static-statusbar>
 			<div class="viewcontainer">
 				<!--<core-animated-pages transitions="cross-fade" selected="{{viewName}}" valueattr="modelName">
 				<section class="view" cross-fade modelName="view-list-games">
@@ -135,7 +135,8 @@
   	</core-animated-pages>
 			</div>
 
-			<static-mainbar showPlay="{{(themeMode == 'games')}}" barText="{{barText}}" barTitle="{{barTitle}}" barLogo="{{selectedPlatform.Images.img_platform_logo}}" barTable="{{barTable}}"></static-mainbar>
+			<static-mainbar showPlay="{{(themeMode == 'games')}}" barText="{{displayModel.description}}" barTitle="{{displayModel.title}}" barLogo="{{selectedPlatform.Images.img_platform_logo}}" barTable="{{~displayModel.table}}"></static-mainbar>
+			
 		</div>
 		
 		<static-background backgroundImage="{{backgroundImage}}"><static-background>
