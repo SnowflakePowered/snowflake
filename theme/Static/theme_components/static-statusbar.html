@@ -90,7 +90,7 @@
 		<div horizontal layout class="container" >
 			<div flex none class="view">
 				<span horizontal layout class="buttoncontainer">
-					<button horizontal layout autofocus on-click="{{toggleView}}"><core-icon class="buttons" icon="menu"></core-icon></button>
+					<button horizontal layout autofocus on-click="{{selectNamesView}}"><core-icon class="buttons" icon="menu"></core-icon></button>
 				</span>
 	
 				<span class="text">View</span>
@@ -114,16 +114,11 @@
 				}
 			},
 			ready: function() {
-				this.selectedView = this.selectedView || "view-list-game";
+				this.selectedView = this.selectedView || "najmeslist";
 				console.log(this.selectedView);
 			},
-			toggleView: function(){
-				if(this.selectedView == "view-list-game"){
-					this.selectedView = "view-list-platform";
-				}
-				if(this.selectedView == "view-list-platform"){
-					this.selectedView = "view-list-game";
-				}
+			selectNamesView: function(){
+				this.selectedView = "viewlist";
 			}
 			
 		});

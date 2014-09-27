@@ -63,7 +63,7 @@
 			core-animated-pages{
 				width: 100%;
 				display: table;
-				height: inherit;
+				height: 100%;
 			}
 			.container{
 				display: table;
@@ -81,8 +81,8 @@
 				display: none;
 			}
 			.view.view{
-			position: relative;
-			height: inherit;
+				position: relative;
+				height: 100%;
 			}
 		</style>
 		
@@ -93,7 +93,7 @@
 			
 		<div class="container">	
 		<!--	<static-titlebar titleText="{displayModel.title}}"></static-titlebar>-->
-			<static-statusbar keyword="{{displayMode}}" status="{{statusText}}" selectedView="{{viewName}}"></static-statusbar>
+			<static-statusbar keyword="{{displayMode}}" status="{{statusText}}" selectedView="{{selectedView}}"></static-statusbar>
 			<div class="viewcontainer">
 				<!--<core-animated-pages transitions="cross-fade" selected="{{viewName}}" valueattr="modelName">
 				<section class="view" cross-fade modelName="view-list-games">
@@ -103,8 +103,8 @@
 					<static-view-list displayModel="{{platformsModel}}" selectedModel="{{selectedPlatform}}" modelMode="platforms"></static-view-list>
 				</section>
 			</core-animated-pages>-->
-			<core-animated-pages valueattr="mode" selected="{{displayMode}}">
-		<section mode="games" style="position: relative;">
+		<core-animated-pages valueattr="mode" selected="{{displayMode}}">
+		<section mode="games" class="view">
 		<core-animated-pages valueattr="viewname" selected="{{selectedView}}">
 			<section style="position: relative;" viewname="namelist">
 				<core-selector selected="0" selectedModel="{{selectedGame}}">
@@ -112,6 +112,9 @@
 						<div class="model-display">{{Name}}</div>
 					</template>
 				</core-selector>
+			</section>
+			<section class="view" viewname="viewlist">
+					<static-view-list displayModel="{{gamesModel}}" selectedModel="{{selectedGame}}" modelMode="games"></static-view-list>
 			</section>
 		</section>
 		<section mode="platforms" style="position: relative;">
