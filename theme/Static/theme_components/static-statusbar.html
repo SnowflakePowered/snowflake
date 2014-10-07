@@ -98,7 +98,7 @@
 			</div>
 			<div horizontal layout flex one class="status">
 				<static-searchbar class="buttoncontainer" id="searchbar" keyword="{{keyword}}" status="{{status}}"></static-searchbar>
-				<span class="text">{{keyword}}{{status|fInsertHyphen}}{{status}}</span>
+				<span class="text" on-click="{{toggleMode}}">{{status}}{{status|fInsertHyphen}}{{keyword}}</span>
 
 			</div>
 		</div>
@@ -119,6 +119,16 @@
 			},
 			selectNamesView: function(){
 				this.selectedView = "viewlist";
+			},
+			toggleMode: function(){
+				switch(this.keyword){
+					case "games":
+						this.keyword = "platforms";
+					break;
+					case "platforms":
+						this.keyword = "games";
+					break;
+				};
 			}
 			
 		});

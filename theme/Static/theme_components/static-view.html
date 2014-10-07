@@ -106,13 +106,6 @@
 		<core-animated-pages valueattr="mode" selected="{{displayMode}}">
 		<section mode="games" class="view">
 		<core-animated-pages valueattr="viewname" selected="{{selectedView}}">
-			<section style="position: relative;" viewname="namelist">
-				<core-selector selected="0" selectedModel="{{selectedGame}}">
-					<template repeat="{{gamesModel}}">
-						<div class="model-display">{{Name}}</div>
-					</template>
-				</core-selector>
-			</section>
 			<section class="view" viewname="viewlist">
 					<static-view-list displayModel="{{gamesModel}}" selectedModel="{{selectedGame}}" modelMode="games"></static-view-list>
 			</section>
@@ -135,6 +128,9 @@
 				</section>
 			</core-animated-pages>
 		</section>
+		<section class="view" viewname="viewlist">
+					<static-view-list displayModel="{{platformsModel}}" selectedModel="{{selectedPlatform}}" modelMode="platforms"></static-view-list>
+			</section>
   	</core-animated-pages>
 			</div>
 
@@ -155,9 +151,10 @@
 				['snamelist', 'Short Names']
 			];
 			this.gameViews = [
-				['namelist', 'Names']
+				['viewlist', 'Names']
 			];
 			}
+			
 			
 		});
 	</script>

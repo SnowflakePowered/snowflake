@@ -5,6 +5,9 @@
 			this.update();
 		},
 		update: function(){
+			console.log('update');
+			console.log(this.displayMode);
+			console.log(this.selectedPlatformView);
 			switch(this.displayMode) {
 				case "games":
 					this.currentViews = this.gameViews;
@@ -13,10 +16,6 @@
 				case "platforms":
 					this.currentViews = this.platformViews;
 					this.selectedView = (this.selectedPlatformView == undefined) ? this.platformViews[0][0] : this.selectedPlatformView;
-					break;
-				default:
-					this.currentViews = this.gameViews;
-					this.selectedView = (this.selectedGameView == undefined) ? this.gameViews[0][0] : this.selectedGameView;
 					break;
 			};
 		},

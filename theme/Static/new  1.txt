@@ -1,0 +1,36 @@
+{
+    "FileExtensions": [
+        '.nes'
+    ],
+    'Defaults': {
+        'Scraper': 'Scraper.TheGamesDB',
+        'Identifier': 'Identifier.ClrMameProDat',
+        'Emulator': 'Emulator.RetroArch'
+    },
+    'PlatformId': 'NINTENDO_NES',
+    'Name': 'Nintendo Entertainment System',
+    'MediaStore': {
+        'Images': {
+            'SectionName': 'Images',
+            'MediaStoreItems': {}
+        },
+        'Audio': {
+            'SectionName': 'Audio',
+            'MediaStoreItems': {}
+        },
+        'Video': {
+            'SectionName': 'Video',
+            'MediaStoreItems': {}
+        },
+        'Resources': {
+            'SectionName': 'Resources',
+            'MediaStoreItems': {}
+        },
+        'MediaStoreKey': 'platform.NINTENDO_NES'
+    },
+    'Metadata': {
+        'platform_shortname': 'NES',
+        'platform_company': 'Nintendo',
+        'platform_release': '18/10/1985'
+    }
+}
