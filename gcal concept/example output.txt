@@ -1,0 +1,31 @@
+Input --
+
+controller: NINTENDO_NES_CONTROLLER
+name: "Default NES Mapping"
+mapping:
+    NES_DPAD_UP: GAMEPAD_DPAD_UP
+    NES_DPAD_DOWN: GAMEPAD_DPAD_DOWN
+    NES_DPAD_LEFT: GAMEPAD_DPAD_LEFT
+    NES_DPAD_RIGHT: GAMEPAD_DPAD_RIGHT
+    NES_START: GAMEPAD_START
+    NES_SELECT: GAMEPAD_SELECT
+    NES_A: GAMEPAD_A
+    NES_B: GAMEPAD_B
+
+Generate(input, playerindex, template, gamepadkeys)
+
+Templating
+input_player@_up_btn = {NES_DPAD_UP}
+input_player@_down_btn = {NES_DPAD_DOWN}
+input_player@_left_btn = {NES_DPAD_LEFT}
+input_player@_right_btn = {NES_DPAD_RIGHT}
+input_player@_start_btn = {NES_START}
+input_player@_select_btn =  {NES_SELECT}
+input_player@_a_btn = {NES_A}
+input_player@_b_btn = {NES_B}
+ 
+Output --
+template.replace("@", playerindex.ToString());
+template.format(emulator.gamepadkeys["xinput"][mapping]) 
+template.format(emulator.keyboard["normal"][mapping])
+
