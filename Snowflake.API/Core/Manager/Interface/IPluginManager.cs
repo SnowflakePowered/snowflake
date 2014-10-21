@@ -4,16 +4,13 @@ using Snowflake.Emulator;
 using Snowflake.Plugin;
 using Snowflake.Scraper;
 
-namespace Snowflake.Core.Interface
+namespace Snowflake.Core.Manager.Interface
 {
-    public interface IPluginManager
+    public interface IPluginManager : ILoadableManager
     {
-        void LoadAllPlugins();
         IDictionary<string, IEmulator> LoadedEmulators { get; }
         IDictionary<string, IIdentifier> LoadedIdentifiers { get; }
         IDictionary<string, IGenericPlugin> LoadedPlugins { get; }
         IDictionary<string, IScraper> LoadedScrapers { get; }
-        IDictionary<string, Type> PluginRegistry { get; }
-        IAjaxManager AjaxNamespace { get; }
     }
 }

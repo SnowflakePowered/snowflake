@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Information.Platform;
 using Snowflake.Database;
-using Snowflake.Core.Interface;
+using Snowflake.Core.Manager.Interface;
 using Snowflake.Core.Server;
 using System.IO;
 using System.ComponentModel.Composition;
@@ -16,6 +16,7 @@ using System.Threading;
 using Snowflake.Core.EventDelegate;
 using Snowflake.Information;
 using System.Reflection;
+using Snowflake.Core.Manager;
 namespace Snowflake.Core
 {
     public partial class FrontendCore 
@@ -23,6 +24,7 @@ namespace Snowflake.Core
         #region Loaded Objects
         public IDictionary<string, PlatformInfo> LoadedPlatforms { get; private set; }
         public IPluginManager PluginManager { get; private set; }
+        public IAjaxManager AjaxManager { get; private set; }
         public GameDatabase GameDatabase { get; private set; }
         #endregion
 
@@ -54,7 +56,8 @@ namespace Snowflake.Core
 
         public static void InitPluginManager()
         {
-            FrontendCore.LoadedCore.PluginManager.LoadAllPlugins();
+            FrontendCore.LoadedCore.PluginManager.LoadAll();
+            FrontendCore.LoadedCore.AjaxManager.LoadAll();
             FrontendCore.LoadedCore.OnPluginManagerLoaded(new PluginManagerLoadedEventArgs());
         }
 
@@ -67,10 +70,11 @@ namespace Snowflake.Core
             this.GameDatabase = new GameDatabase(Path.Combine(this.AppDataDirectory, "games.db"));
 #if DEBUG
             this.PluginManager = new PluginManager(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location));
-
-#endif
+            this.AjaxManager = new AjaxManager(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location));
+#else
             this.PluginManager = new PluginManager(this.AppDataDirectory);
-
+            this.AjaxManager = new AjaxManager(this.AppDataDirectory);
+#endif
             this.ThemeServer = new ThemeServer(Path.Combine(this.AppDataDirectory, "theme"));
             this.APIServer = new ApiServer();
             this.MediaStoreServer = new FileMediaStoreServer(Path.Combine(this.AppDataDirectory, "mediastores"));

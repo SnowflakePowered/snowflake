@@ -90,10 +90,11 @@
     <Compile Include="Constants\Plugin\PluginInfoFields.cs" />
     <Compile Include="Constants\Plugin\PluginTypes.cs" />
     <Compile Include="Constants\Plugin\ScraperInfoFields.cs" />
-    <Compile Include="Core\AjaxManager.cs" />
+    <Compile Include="Core\Manager\AjaxManager.cs" />
     <Compile Include="Core\EventDelegate\JsonRPCEventDelegate.cs" />
-    <Compile Include="Core\Interface\IAjaxManager.cs" />
-    <Compile Include="Core\Interface\IPluginManager.cs" />
+    <Compile Include="Core\Manager\Interface\IAjaxManager.cs" />
+    <Compile Include="Core\Manager\Interface\ILoadableManager.cs" />
+    <Compile Include="Core\Manager\Interface\IPluginManager.cs" />
     <Compile Include="Core\ScrapeEngine.cs" />
     <Compile Include="Core\Server\BaseHttpServer.cs" />
     <Compile Include="Core\Server\FileMediaStoreServer.cs" />
@@ -126,7 +127,7 @@
     <Compile Include="Scraper\BaseScraper.cs" />
     <Compile Include="Scraper\GameScrapeResult.cs" />
     <Compile Include="Core\FrontendCore.cs" />
-    <Compile Include="Core\PluginManager.cs" />
+    <Compile Include="Core\Manager\PluginManager.cs" />
     <Compile Include="Core\Server\JsonApiServer.cs" />
     <Compile Include="Core\Server\ThemeServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

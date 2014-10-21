@@ -48,7 +48,7 @@ namespace Snowflake.Core.Server
 
         private async Task<string> ProcessRequest(JSRequest args)
         {
-            return await FrontendCore.LoadedCore.PluginManager.AjaxNamespace.CallMethodAsync(args);
+            return await FrontendCore.LoadedCore.AjaxManager.CallMethodAsync(args);
         }
     }
 }

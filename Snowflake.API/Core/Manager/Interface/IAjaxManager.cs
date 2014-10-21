@@ -2,11 +2,11 @@
 using System.Threading.Tasks;
 using Snowflake.Ajax;
 
-namespace Snowflake.Core.Interface
+namespace Snowflake.Core.Manager.Interface
 {
-    public interface IAjaxManager
+    public interface IAjaxManager : ILoadableManager
     {
-        IDictionary<string, IBaseAjaxNamespace> JavascriptNamespace { get; }
+        IDictionary<string, IBaseAjaxNamespace> GlobalNamespace { get; }
         void RegisterNamespace(string namespaceName, IBaseAjaxNamespace namespaceObject);
         Task<string> CallMethodAsync(JSRequest request);
         string CallMethod(JSRequest request);
