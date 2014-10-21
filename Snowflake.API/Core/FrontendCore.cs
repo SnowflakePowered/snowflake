@@ -15,6 +15,7 @@ using Snowflake.Events.CoreEvents;
 using System.Threading;
 using Snowflake.Core.EventDelegate;
 using Snowflake.Information;
+using System.Reflection;
 namespace Snowflake.Core
 {
     public partial class FrontendCore 
@@ -64,6 +65,10 @@ namespace Snowflake.Core
             this.LoadedPlatforms = this.LoadPlatforms(Path.Combine(this.AppDataDirectory, "platforms"));
          
             this.GameDatabase = new GameDatabase(Path.Combine(this.AppDataDirectory, "games.db"));
+#if DEBUG
+            this.PluginManager = new PluginManager(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location));
+
+#endif
             this.PluginManager = new PluginManager(this.AppDataDirectory);
 
             this.ThemeServer = new ThemeServer(Path.Combine(this.AppDataDirectory, "theme"));
