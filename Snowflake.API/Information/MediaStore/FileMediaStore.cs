@@ -26,13 +26,13 @@ namespace Snowflake.Information.MediaStore
             get { return this.sections["Resources"]; }
         }
         public string MediaStoreKey { get; private set; }
-
+        public string MediaStoreRoot { get; private set; }
         public FileMediaStore(string mediastoreKey, string mediastoreRoot)
         {
            if (!Directory.Exists(mediastoreRoot)) Directory.CreateDirectory(mediastoreRoot);
            if (!Directory.Exists(Path.Combine(mediastoreRoot, mediastoreKey))) Directory.CreateDirectory(Path.Combine(mediastoreRoot, mediastoreKey));
            this.MediaStoreKey = mediastoreKey;
-
+           this.MediaStoreRoot = mediaStoreRoot;
            this.sections = new Dictionary<string, IMediaStoreSection>()
            {
                {"Images", new FileMediaStoreSection("Images", this) },
