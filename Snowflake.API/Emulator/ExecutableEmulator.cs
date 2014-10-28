@@ -7,7 +7,7 @@ using Snowflake.Plugin;
 
 namespace Snowflake.Emulator
 {
-    public abstract class ExecutableEmulator : BasePlugin, IEmulator
+    public abstract class ExecutableEmulator : BasePlugin, IEmulatorBridge
     {
         public string MainExecutable { get; private set; }
         public string EmulatorRoot { get; private set; }

@@ -24,8 +24,8 @@ namespace Snowflake.Core.Manager
         public IReadOnlyDictionary<string, Type> Registry { get { return this.registry.AsReadOnly(); } }
         [ImportMany(typeof(IIdentifier))]
         IEnumerable<Lazy<IIdentifier>> identifiers;
-        [ImportMany(typeof(IEmulator))]
-        IEnumerable<Lazy<IEmulator>> emulators;
+        [ImportMany(typeof(IEmulatorBridge))]
+        IEnumerable<Lazy<IEmulatorBridge>> emulators;
         [ImportMany(typeof(IScraper))]
         IEnumerable<Lazy<IScraper>> scrapers;
         [ImportMany(typeof(IGenericPlugin))]
@@ -34,12 +34,12 @@ namespace Snowflake.Core.Manager
 
 
         private IDictionary<string, IIdentifier> loadedIdentifiers;
-        private IDictionary<string, IEmulator> loadedEmulators;
+        private IDictionary<string, IEmulatorBridge> loadedEmulators;
         private IDictionary<string, IScraper> loadedScrapers;
         private IDictionary<string, IGenericPlugin> loadedPlugins;
 
         public IReadOnlyDictionary<string, IIdentifier> LoadedIdentifiers { get { return this.loadedIdentifiers.AsReadOnly(); } }
-        public IReadOnlyDictionary<string, IEmulator> LoadedEmulators { get { return this.loadedEmulators.AsReadOnly(); } }
+        public IReadOnlyDictionary<string, IEmulatorBridge> LoadedEmulators { get { return this.loadedEmulators.AsReadOnly(); } }
         public IReadOnlyDictionary<string, IScraper> LoadedScrapers { get { return this.loadedScrapers.AsReadOnly(); } }
         public IReadOnlyDictionary<string, IGenericPlugin> LoadedPlugins { get { return this.loadedPlugins.AsReadOnly(); } }
 

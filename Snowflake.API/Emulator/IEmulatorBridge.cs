@@ -3,8 +3,8 @@ using Snowflake.Plugin;
 
 namespace Snowflake.Emulator
 {
-    [InheritedExport(typeof(IEmulator))]
-    public interface IEmulator : IPlugin
+    [InheritedExport(typeof(IEmulatorBridge))]
+    public interface IEmulatorBridge : IPlugin
     {
         void Run(string gameUuid);
     }
