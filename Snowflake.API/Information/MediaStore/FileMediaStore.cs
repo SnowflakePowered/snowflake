@@ -32,7 +32,7 @@ namespace Snowflake.Information.MediaStore
            if (!Directory.Exists(mediastoreRoot)) Directory.CreateDirectory(mediastoreRoot);
            if (!Directory.Exists(Path.Combine(mediastoreRoot, mediastoreKey))) Directory.CreateDirectory(Path.Combine(mediastoreRoot, mediastoreKey));
            this.MediaStoreKey = mediastoreKey;
-           this.MediaStoreRoot = mediaStoreRoot;
+           this.MediaStoreRoot = mediastoreRoot;
            this.sections = new Dictionary<string, IMediaStoreSection>()
            {
                {"Images", new FileMediaStoreSection("Images", this) },
