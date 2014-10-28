@@ -92,6 +92,7 @@
     <Compile Include="Constants\Plugin\ScraperInfoFields.cs" />
     <Compile Include="Core\Manager\AjaxManager.cs" />
     <Compile Include="Core\EventDelegate\JsonRPCEventDelegate.cs" />
+    <Compile Include="Core\Manager\EmulatorManager.cs" />
     <Compile Include="Core\Manager\Interface\IAjaxManager.cs" />
     <Compile Include="Core\Manager\Interface\ILoadableManager.cs" />
     <Compile Include="Core\Manager\Interface\IPluginManager.cs" />

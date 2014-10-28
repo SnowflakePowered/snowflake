@@ -6,7 +6,7 @@ namespace Snowflake.Core.Manager.Interface
 {
     public interface IAjaxManager : ILoadableManager
     {
-        IDictionary<string, IBaseAjaxNamespace> GlobalNamespace { get; }
+        IReadOnlyDictionary<string, IBaseAjaxNamespace> GlobalNamespace { get; }
         void RegisterNamespace(string namespaceName, IBaseAjaxNamespace namespaceObject);
         Task<string> CallMethodAsync(JSRequest request);
         string CallMethod(JSRequest request);

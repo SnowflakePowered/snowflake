@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Snowflake.Extensions
 {
@@ -10,6 +11,11 @@ namespace Snowflake.Extensions
             KeyType Key, ValueType Value)
         {
             return (Dictionary.ContainsKey(Key) && Dictionary[Key].Equals(Value));
+        }
+        public static ReadOnlyDictionary<TKey, TValue> AsReadOnly<TKey, TValue>(
+    this IDictionary<TKey, TValue> dictionary)
+        {
+            return new ReadOnlyDictionary<TKey, TValue>(dictionary);
         }
     }
 }

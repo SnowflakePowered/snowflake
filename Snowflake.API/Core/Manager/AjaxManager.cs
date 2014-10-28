@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Snowflake.Ajax;
@@ -9,25 +10,31 @@ using System.IO;
 using System.Reflection;
 using System;
 using System.Linq;
+using Snowflake.Extensions;
 
 namespace Snowflake.Core.Manager
 {
     public class AjaxManager : IAjaxManager, ILoadableManager
     {
-        public IDictionary<string, IBaseAjaxNamespace> GlobalNamespace { get; private set; }
-        
+        public string LoadablesLocation { get; private set; }
+        private IDictionary<string, Type> registry;
+        public IReadOnlyDictionary<string, Type> Registry { get { return this.registry.AsReadOnly(); } }
+        [ImportMany(typeof(IBaseAjaxNamespace))]
+        IEnumerable<Lazy<IBaseAjaxNamespace>> ajaxNamespaces;
+        private IDictionary<string, IBaseAjaxNamespace> globalNamespace;
+        public IReadOnlyDictionary<string, IBaseAjaxNamespace> GlobalNamespace { get { return this.globalNamespace.AsReadOnly(); } }
         public AjaxManager(string loadablesLocation)
         {
-            this.GlobalNamespace = new Dictionary<string, IBaseAjaxNamespace>();
+            this.globalNamespace = new Dictionary<string, IBaseAjaxNamespace>();
             this.LoadablesLocation = loadablesLocation;
-            this.Registry = new Dictionary<string, Type>();
+            this.registry = new Dictionary<string, Type>();
             this.ComposeImports();
 
         }
         public void RegisterNamespace(string namespaceName, IBaseAjaxNamespace namespaceObject)
         {
-            if (!this.GlobalNamespace.ContainsKey(namespaceName))
-                this.GlobalNamespace.Add(namespaceName, namespaceObject);
+            if (!this.globalNamespace.ContainsKey(namespaceName))
+                this.globalNamespace.Add(namespaceName, namespaceObject);
         }
         public string CallMethod(JSRequest request)
         {
@@ -47,10 +54,7 @@ namespace Snowflake.Core.Manager
         }
 
         #region ILoadableManager Members
-        public string LoadablesLocation { get; private set; }
-        public IDictionary<string, Type> Registry { get; private set; }
-        [ImportMany(typeof(IBaseAjaxNamespace))]
-        IEnumerable<Lazy<IBaseAjaxNamespace>> ajaxNamespaces;
+
         private void ComposeImports()
         {
             var catalog = new DirectoryCatalog(Path.Combine(this.LoadablesLocation, "ajax"));
@@ -62,7 +66,7 @@ namespace Snowflake.Core.Manager
             foreach (var instance in this.ajaxNamespaces.Select(plugin => plugin.Value))
             {
                 this.RegisterNamespace(instance.PluginInfo["namespace"], instance);
-                this.Registry.Add(instance.PluginName, typeof(IBaseAjaxNamespace));
+                this.registry.Add(instance.PluginName, typeof(IBaseAjaxNamespace));
             }
         }
         #endregion

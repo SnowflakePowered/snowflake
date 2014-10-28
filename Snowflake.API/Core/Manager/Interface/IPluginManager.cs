@@ -8,9 +8,9 @@ namespace Snowflake.Core.Manager.Interface
 {
     public interface IPluginManager : ILoadableManager
     {
-        IDictionary<string, IEmulator> LoadedEmulators { get; }
-        IDictionary<string, IIdentifier> LoadedIdentifiers { get; }
-        IDictionary<string, IGenericPlugin> LoadedPlugins { get; }
-        IDictionary<string, IScraper> LoadedScrapers { get; }
+        IReadOnlyDictionary<string, IEmulator> LoadedEmulators { get; }
+        IReadOnlyDictionary<string, IIdentifier> LoadedIdentifiers { get; }
+        IReadOnlyDictionary<string, IGenericPlugin> LoadedPlugins { get; }
+        IReadOnlyDictionary<string, IScraper> LoadedScrapers { get; }
     }
 }

@@ -9,7 +9,7 @@ namespace Snowflake.Core.Manager.Interface
     public interface ILoadableManager
     {
         void LoadAll();
-        IDictionary<string, Type> Registry { get; }
+        IReadOnlyDictionary<string, Type> Registry { get; }
         string LoadablesLocation { get;  }
 
     }
