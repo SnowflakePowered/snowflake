@@ -99,12 +99,18 @@
     <Compile Include="Core\ScrapeEngine.cs" />
     <Compile Include="Core\Server\BaseHttpServer.cs" />
     <Compile Include="Core\Server\FileMediaStoreServer.cs" />
+    <Compile Include="Emulator\Core\Configuration\ConfigurationMapping.cs" />
+    <Compile Include="Emulator\Core\Configuration\ControllerMapping.cs" />
+    <Compile Include="Emulator\Core\Input\GamepadMapping.cs" />
+    <Compile Include="Emulator\Core\Input\KeyboardMapping.cs" />
+    <Compile Include="Emulator\Core\EmulatorCore.cs" />
     <Compile Include="Events\CoreEvents\PluginManagerLoadedEventArgs.cs" />
     <Compile Include="Extensions\HttpListenerContextExts.cs" />
     <Compile Include="Extensions\IDictionaryExtensions.cs" />
     <Compile Include="Extensions\MEFExtensions.cs" />
     <Compile Include="Extensions\PlatformExts.cs" />
     <Compile Include="Core\Server\MimeTypes.cs" />
+    <Compile Include="Information\Controller\ControllerDefinition.cs" />
     <Compile Include="Scraper\GameImagesResult.cs" />
     <Compile Include="Extensions\KeyValuePairExts.cs" />
     <Compile Include="Database\GameDatabase.cs" />
@@ -120,7 +126,7 @@
     <Compile Include="Emulator\ExecutableEmulator.cs" />
     <Compile Include="Information\Game\GameInfo.cs" />
     <Compile Include="Information\Info.cs" />
-    <Compile Include="Emulator\IEmulator.cs" />
+    <Compile Include="Emulator\IEmulatorBridge.cs" />
     <Compile Include="Information\IInfo.cs" />
     <Compile Include="Information\Platform\PlatformInfo.cs" />
     <Compile Include="Plugin\IPlugin.cs" />
