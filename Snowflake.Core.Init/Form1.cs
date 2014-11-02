@@ -18,6 +18,7 @@ using Snowflake.Extensions;
 using DuoVia.FuzzyStrings;
 using Snowflake.Information.MediaStore;
 using Newtonsoft.Json.Linq;
+using System.IO;
 
 namespace Snowflake.Core.Init
 {
@@ -26,16 +27,19 @@ namespace Snowflake.Core.Init
         public Form1()
         {
             InitializeComponent();
-            FrontendCore.InitCore();
-            Init();
+     //       FrontendCore.InitCore();
+      //      Init();
+            var manager = new Core.Manager.EmulatorManager(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "emulators"));
+            manager.LoadEmulatorCores();
+            Console.WriteLine(manager.EmulatorCores["retroarch"]["main"]);
         }
 
         
         async void Init()
         {
-                await FrontendCore.InitPluginManagerAsync();
-                Console.WriteLine(FrontendCore.LoadedCore.AjaxManager.Registry.Keys.ToArray()[0]);
-               // Console.WriteLine(FrontendCore.LoadedCore.LoadedPlatforms["NINTENDO_NES"].MediaStore.MediaStoreKey);
+            //    await FrontendCore.InitPluginManagerAsync();
+             //   Console.WriteLine(FrontendCore.LoadedCore.AjaxManager.Registry.Keys.ToArray()[0]);
+           //    // Console.WriteLine(FrontendCore.LoadedCore.LoadedPlatforms["NINTENDO_NES"].MediaStore.MediaStoreKey);
               //  Console.WriteLine(FrontendCore.LoadedCore.PluginManager.LoadedIdentifiers.First().Value.IdentifyGame("dummysmb.nes", "NINTENDO_NES"));
         //        var test = FrontendCore.LoadedCore.LoadedPlatforms["NINTENDO_NES"].GetScrapeEngine().GetGameInfo("dummysmb.nes");
                 //Console.WriteLine(test.UUID);

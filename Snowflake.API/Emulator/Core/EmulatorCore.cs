@@ -8,6 +8,10 @@ namespace Snowflake.Emulator
 {
     public class EmulatorCore
     {
-    
+        public string RootExecutable { get; private set; }
+        public EmulatorCore(string rootExecutable)
+        {
+            this.RootExecutable = rootExecutable;
+        }
     }
 }
