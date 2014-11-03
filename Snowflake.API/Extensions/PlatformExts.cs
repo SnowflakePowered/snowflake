@@ -10,8 +10,15 @@ namespace Snowflake.Extensions
 {
     public static class PlatformExts
     {
-        public static ScrapeEngine GetScrapeEngine(this PlatformInfo platform)
+        /// <summary>
+        /// This method is used as part of a core function, 
+        /// and does not serve the pure data role of the PlatformInfo class.
+        /// </summary>
+        /// <param name="platform"></param>
+        /// <returns></returns>
+        public static ScrapeEngine GetScrapeEngine(this PlatformInfo platform) 
         {
+          
             return new ScrapeEngine(platform);
         }
     }

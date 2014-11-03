@@ -12,12 +12,12 @@ namespace Snowflake.Core.Manager
 {
     public class EmulatorManager
     {
-        private IDictionary<string, dynamic> emulatorCores;
-        public IReadOnlyDictionary<string, dynamic> EmulatorCores { get { return this.emulatorCores.AsReadOnly(); } }
+        private IDictionary<string, EmulatorCore> emulatorCores;
+        public IReadOnlyDictionary<string, EmulatorCore> EmulatorCores { get { return this.emulatorCores.AsReadOnly(); } }
         public string LoadablesLocation { get; private set; }
         public EmulatorManager(string loadablesLocation)
         {
-            this.emulatorCores = new Dictionary<string, dynamic>();
+            this.emulatorCores = new Dictionary<string, EmulatorCore>();
             this.LoadablesLocation = loadablesLocation;
         }
 
@@ -30,9 +30,12 @@ namespace Snowflake.Core.Manager
             foreach (string fileName in Directory.GetFiles(this.LoadablesLocation))
             {
                 if (!(Path.GetExtension(fileName) == ".yml")) continue;
-                var emulator = serializer.Deserialize<Dictionary<string, string>>(File.ReadAllText(fileName));
-                this.emulatorCores.Add(emulator["id"], emulator);
+                var emulator = serializer.Deserialize<Dictionary<string, dynamic>>(File.ReadAllText(fileName));
+                var emulatorCore = new EmulatorCore(emulator["main"], emulator["id"], emulator["name"], emulator["type"]);
+                this.emulatorCores.Add(emulator["id"], emulatorCore);
             }
         }
+
+       
     }
 }

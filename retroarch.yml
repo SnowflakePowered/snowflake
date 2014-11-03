@@ -1,0 +1,4 @@
+name: "RetroArch"
+id: "retroarch"
+main: "retroarch.exe"
+type: EMULATOR_EXECUTABLE
