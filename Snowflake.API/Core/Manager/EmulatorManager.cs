@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Extensions;
 using Snowflake.Emulator;
+using Snowflake.Emulator.Core.Input;
 using System.IO;
 using SharpYaml.Serialization;
 
@@ -31,8 +32,15 @@ namespace Snowflake.Core.Manager
             {
                 if (!(Path.GetExtension(fileName) == ".yml")) continue;
                 var emulator = serializer.Deserialize<Dictionary<string, dynamic>>(File.ReadAllText(fileName));
-                var emulatorCore = new EmulatorCore(emulator["main"], emulator["id"], emulator["name"], emulator["type"]);
-                this.emulatorCores.Add(emulator["id"], emulatorCore);
+
+                var gameMappings = new Dictionary<string, GamepadMapping>();
+                foreach (var value in emulator["gamepad"])
+                {
+                    var mappingDictionary = (Dictionary<object, object>) value.Value;
+                    gameMappings.Add(value.Key, new GamepadMapping(mappingDictionary.ToDictionary(k => k.Key.ToString(), k => k.Value.ToString())));
+                }
+               var emulatorCore = new EmulatorCore(emulator["main"], emulator["id"], emulator["name"], emulator["type"], gameMappings);
+               this.emulatorCores.Add(emulator["id"], emulatorCore);
             }
         }
 
