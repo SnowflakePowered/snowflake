@@ -47,26 +47,9 @@ namespace Snowflake.Emulator.Core.Mapping
 
 
         //Override operators to allow in place of bool
-        public static bool operator true(EmulatorBoolean x)
+        public static implicit operator bool(EmulatorBoolean emulatorBoolean)
         {
-            if (x.value) 
-                return true;
-            else 
-                return false;
-        }
-        public static bool operator false(EmulatorBoolean x)
-        {
-            if (x.value)
-                return false;
-            else
-                return true;
-        }
-        public static bool operator !(EmulatorBoolean x)
-        {
-            if (x.value)
-                return false;
-            else
-                return true;
+            return emulatorBoolean.value;
         }
     }
 }
