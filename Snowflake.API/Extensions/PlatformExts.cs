@@ -13,12 +13,12 @@ namespace Snowflake.Extensions
         /// <summary>
         /// This method is used as part of a core function, 
         /// and does not serve the pure data role of the PlatformInfo class.
+        /// Extension methods are put in when they are unrelated to the class and is not used as part of the class.
         /// </summary>
         /// <param name="platform"></param>
         /// <returns></returns>
         public static ScrapeEngine GetScrapeEngine(this PlatformInfo platform) 
         {
-          
             return new ScrapeEngine(platform);
         }
     }

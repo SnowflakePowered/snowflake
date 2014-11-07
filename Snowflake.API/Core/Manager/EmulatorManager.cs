@@ -24,25 +24,27 @@ namespace Snowflake.Core.Manager
 
         public void LoadEmulatorCores()
         { 
-            var serializer = new Serializer(new SerializerSettings()
-            {
-                EmitTags = false
-            });
+           
             foreach (string fileName in Directory.GetFiles(this.LoadablesLocation))
             {
                 if (!(Path.GetExtension(fileName) == ".yml")) continue;
-                var emulator = serializer.Deserialize<Dictionary<string, dynamic>>(File.ReadAllText(fileName));
-
-                var gameMappings = new Dictionary<string, GamepadMapping>();
-                foreach (var value in emulator["gamepad"])
-                {
-                    var mappingDictionary = (Dictionary<object, object>) value.Value;
-                    gameMappings.Add(value.Key, new GamepadMapping(mappingDictionary.ToDictionary(k => k.Key.ToString(), k => k.Value.ToString())));
-                }
-                var booleanMapping = new BooleanMapping(emulator["boolean"][true], emulator["boolean"][false]);
-                var emulatorCore = new EmulatorCore(emulator["main"], emulator["id"], emulator["name"], emulator["type"], gameMappings, booleanMapping);
-                this.emulatorCores.Add(emulator["id"], emulatorCore);
+                var emulatorCore = EmulatorManager.ParseEmulatorCore(fileName);
+              
+                this.emulatorCores.Add(emulatorCore.EmulatorId, emulatorCore);
             }
+        }
+
+        public static EmulatorCore ParseEmulatorCore(string emulatorCorePath)
+        {
+            var emulator = new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText(emulatorCorePath));
+            var gameMappings = new Dictionary<string, GamepadMapping>();
+            foreach (var value in emulator["gamepad"])
+            {
+                var mappingDictionary = (Dictionary<object, object>)value.Value;
+                gameMappings.Add(value.Key, new GamepadMapping(mappingDictionary.ToDictionary(k => k.Key.ToString(), k => k.Value.ToString())));
+            }
+            var booleanMapping = new BooleanMapping(emulator["boolean"][true], emulator["boolean"][false]);
+            return new EmulatorCore(emulator["main"], emulator["id"], emulator["name"], emulator["type"], gameMappings, booleanMapping);
         }
 
        

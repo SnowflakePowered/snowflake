@@ -25,7 +25,9 @@ namespace Snowflake.Emulator.Core.Mapping
                 return this.FALSE;
         }
     }
-
+    /// <summary>
+    /// Represents a boolean in an emulator configuration file
+    /// </summary>
     public class EmulatorBoolean
     {
         private string representation;
