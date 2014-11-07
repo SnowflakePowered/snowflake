@@ -34,8 +34,9 @@ namespace Snowflake.Core.Init
       //      Init();
             var manager = new Core.Manager.EmulatorManager(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "emulators"));
             manager.LoadEmulatorCores();
-            Process.Start(manager.GetExecutableEmulatorProcess(manager.EmulatorCores["retroarch"]));
+            //Process.Start(manager.GetExecutableEmulatorProcess(manager.EmulatorCores["retroarch"]));
             Console.WriteLine(manager.EmulatorCores["retroarch"].BooleanMapping.TRUE.ToString());
+            Console.WriteLine(manager.EmulatorCores["retroarch"].KeyboardMappings["normal"].KEY_0);
         }
 
         

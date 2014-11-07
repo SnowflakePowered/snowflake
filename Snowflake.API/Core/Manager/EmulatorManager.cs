@@ -38,13 +38,20 @@ namespace Snowflake.Core.Manager
         {
             var emulator = new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText(emulatorCorePath));
             var gameMappings = new Dictionary<string, GamepadMapping>();
+            var keyboardMappings = new Dictionary<string, KeyboardMapping>();
+
             foreach (var value in emulator["gamepad"])
             {
                 var mappingDictionary = (Dictionary<object, object>)value.Value;
                 gameMappings.Add(value.Key, new GamepadMapping(mappingDictionary.ToDictionary(k => k.Key.ToString(), k => k.Value.ToString())));
             }
+            foreach (var value in emulator["keyboard"])
+            {
+                var mappingDictionary = (Dictionary<object, object>)value.Value;
+                keyboardMappings.Add(value.Key, new KeyboardMapping(mappingDictionary.ToDictionary(k => k.Key.ToString(), k => k.Value.ToString())));
+            }
             var booleanMapping = new BooleanMapping(emulator["boolean"][true], emulator["boolean"][false]);
-            return new EmulatorCore(emulator["main"], emulator["id"], emulator["name"], emulator["type"], gameMappings, booleanMapping);
+            return new EmulatorCore(emulator["main"], emulator["id"], emulator["name"], emulator["type"], gameMappings, keyboardMappings, booleanMapping);
         }
 
        
