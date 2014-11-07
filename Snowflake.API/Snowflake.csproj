@@ -99,10 +99,9 @@
     <Compile Include="Core\ScrapeEngine.cs" />
     <Compile Include="Core\Server\BaseHttpServer.cs" />
     <Compile Include="Core\Server\FileMediaStoreServer.cs" />
-    <Compile Include="Emulator\Core\Configuration\ConfigurationMapping.cs" />
-    <Compile Include="Emulator\Core\Configuration\ControllerMapping.cs" />
-    <Compile Include="Emulator\Core\Input\GamepadMapping.cs" />
-    <Compile Include="Emulator\Core\Input\KeyboardMapping.cs" />
+    <Compile Include="Emulator\Core\Mapping\BooleanMapping.cs" />
+    <Compile Include="Emulator\Core\Mapping\GamepadMapping.cs" />
+    <Compile Include="Emulator\Core\Mapping\KeyboardMapping.cs" />
     <Compile Include="Emulator\Core\EmulatorCore.cs" />
     <Compile Include="Events\CoreEvents\PluginManagerLoadedEventArgs.cs" />
     <Compile Include="Extensions\EmulatorManagerExts.cs" />

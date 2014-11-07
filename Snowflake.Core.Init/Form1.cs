@@ -20,7 +20,7 @@ using Snowflake.Information.MediaStore;
 using Newtonsoft.Json.Linq;
 using System.IO;
 using System.Diagnostics;
-using Snowflake.Emulator.Core.Input;
+using Snowflake.Emulator.Core.Mapping;
 
 
 namespace Snowflake.Core.Init
@@ -35,8 +35,7 @@ namespace Snowflake.Core.Init
             var manager = new Core.Manager.EmulatorManager(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "emulators"));
             manager.LoadEmulatorCores();
             Process.Start(manager.GetExecutableEmulatorProcess(manager.EmulatorCores["retroarch"]));
-            
-           
+            Console.WriteLine(manager.EmulatorCores["retroarch"].BooleanMapping.TRUE);
         }
 
         

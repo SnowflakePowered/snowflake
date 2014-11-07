@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Extensions;
 using Snowflake.Emulator;
-using Snowflake.Emulator.Core.Input;
+using Snowflake.Emulator.Core.Mapping;
 using System.IO;
 using SharpYaml.Serialization;
 
@@ -39,8 +39,9 @@ namespace Snowflake.Core.Manager
                     var mappingDictionary = (Dictionary<object, object>) value.Value;
                     gameMappings.Add(value.Key, new GamepadMapping(mappingDictionary.ToDictionary(k => k.Key.ToString(), k => k.Value.ToString())));
                 }
-               var emulatorCore = new EmulatorCore(emulator["main"], emulator["id"], emulator["name"], emulator["type"], gameMappings);
-               this.emulatorCores.Add(emulator["id"], emulatorCore);
+                var booleanMapping = new BooleanMapping(emulator["boolean"][true], emulator["boolean"][false]);
+                var emulatorCore = new EmulatorCore(emulator["main"], emulator["id"], emulator["name"], emulator["type"], gameMappings, booleanMapping);
+                this.emulatorCores.Add(emulator["id"], emulatorCore);
             }
         }
 
