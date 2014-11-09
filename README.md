@@ -5,6 +5,8 @@
 
 Snowflake is an emulator frontend for Windows that emphasizes ease-of-use, extensibility and aesthetics. Snowflake provides an extensive plugin API, and HTML5 UI system that allows modern web-design techniques to theme the frontend. Snowflake is currently in pre-alpha. 
 
+Snowflake aims to be able to achieve unprecendented integration with emulators without having to re-implement the emulator logic. Instead, the configuration format and emulator endpoint is defined, exposing a standard interface to configure any emulator. 
+
 Plugins
 -------
 Snowflake considers plugins to be a vital part of the frontend. 
