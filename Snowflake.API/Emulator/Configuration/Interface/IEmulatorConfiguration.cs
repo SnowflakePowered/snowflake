@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using Snowflake.Emulator.Configuration.Mapping;
 using Snowflake.Emulator.Configuration.Type;
 
+using Snowflake.Emulator.Configuration.Template;
 namespace Snowflake.Emulator.Configuration
 {
     public interface IEmulatorConfiguration

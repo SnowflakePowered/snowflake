@@ -17,5 +17,10 @@ namespace Snowflake.Emulator.Configuration.Mapping
             this.False = falseValue;
         }
 
+        public string FromBool(bool value)
+        {
+            return value ? this.True : this.False;
+        }
+
     }
 }

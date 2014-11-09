@@ -99,9 +99,9 @@
     <Compile Include="Core\ScrapeEngine.cs" />
     <Compile Include="Core\Server\BaseHttpServer.cs" />
     <Compile Include="Core\Server\FileMediaStoreServer.cs" />
-    <Compile Include="Emulator\Configuration\ConfigurationEntry.cs" />
+    <Compile Include="Emulator\Configuration\Template\ConfigurationEntry.cs" />
     <Compile Include="Emulator\Configuration\EmulatorConfiguration.cs" />
-    <Compile Include="Emulator\Configuration\ConfigurationTemplate.cs" />
+    <Compile Include="Emulator\Configuration\Template\ConfigurationTemplate.cs" />
     <Compile Include="Emulator\Configuration\Interface\IEmulatorConfiguration.cs" />
     <Compile Include="Emulator\Configuration\Interface\IInputConfiguration.cs" />
     <Compile Include="Emulator\Configuration\InputConfiguration.cs" />

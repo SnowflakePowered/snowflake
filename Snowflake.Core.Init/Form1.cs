@@ -20,8 +20,9 @@ using Snowflake.Information.MediaStore;
 using Newtonsoft.Json.Linq;
 using System.IO;
 using System.Diagnostics;
-using Snowflake.Emulator.Configuration;
+using Snowflake.Emulator.Configuration.Template;
 using SharpYaml.Serialization;
+using Snowflake.Emulator.Configuration;
 
 
 namespace Snowflake.Core.Init
@@ -39,8 +40,17 @@ namespace Snowflake.Core.Init
 
             string s = File.ReadAllText("c.yml");
             var x = ConfigurationTemplate.FromYaml(s);
-            var jsx = JsonConvert.SerializeObject(x);
-            Console.WriteLine(jsx);
+            var xi = new EmulatorConfiguration()
+            {
+                keys = new Dictionary<string, dynamic>()
+                {
+                    {"video_fullscreen", false},
+                    {"video_driver", "gl"},
+                    {"video_rotation", 0}
+                },
+            };
+            Console.WriteLine(xi.Compile(x));
+            Console.WriteLine(JsonConvert.SerializeObject(xi));
         }
 
         
