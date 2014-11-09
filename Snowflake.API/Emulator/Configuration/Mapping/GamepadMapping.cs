@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Snowflake.Emulator.Core.Mapping
+namespace Snowflake.Emulator.Configuration.Mapping
 {
     public class GamepadMapping
     {
-
         public readonly string GAMEPAD_A;
         public readonly string GAMEPAD_B;
         public readonly string GAMEPAD_X;

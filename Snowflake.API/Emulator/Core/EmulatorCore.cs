@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Snowflake.Emulator.Core.Mapping;
+using Snowflake.Emulator.Configuration.Mapping;
 
 namespace Snowflake.Emulator
 {
@@ -13,12 +13,8 @@ namespace Snowflake.Emulator
         public string EmulatorId { get; private set; }
         public string EmulatorName { get; private set; }
         public EmulatorAssemblyType AssemblyType { get; private set; }
-        public IDictionary<string, GamepadMapping> GamepadMappings { get; private set; }
-        public IDictionary<string, KeyboardMapping> KeyboardMappings { get; private set; }
 
-        public BooleanMapping BooleanMapping { get; private set; }
-
-        public EmulatorCore(string mainAssembly, string emulatorId, string name, string assemblyTypeString, IDictionary<string, GamepadMapping> gamepadMappings, IDictionary<string, KeyboardMapping> keyboardMappings, BooleanMapping booleanMapping)
+        public EmulatorCore(string mainAssembly, string emulatorId, string name, string assemblyTypeString)
         {
             EmulatorAssemblyType assemblyType;
             if (!Enum.TryParse<EmulatorAssemblyType>(assemblyTypeString, true, out assemblyType)) assemblyType = EmulatorAssemblyType.EMULATOR_MISC;
@@ -26,21 +22,16 @@ namespace Snowflake.Emulator
             this.EmulatorId = emulatorId;
             this.EmulatorName = name;
             this.AssemblyType = assemblyType;
-            this.GamepadMappings = gamepadMappings;
-            this.BooleanMapping = booleanMapping;
-            this.KeyboardMappings = keyboardMappings;
+
 
         }
 
-        public EmulatorCore(string mainAssembly, string emulatorId, string name, EmulatorAssemblyType assemblyType, IDictionary<string, GamepadMapping> gamepadMappings, IDictionary<string, KeyboardMapping> keyboardMappings, BooleanMapping booleanMapping)
+        public EmulatorCore(string mainAssembly, string emulatorId, string name, EmulatorAssemblyType assemblyType)
         {
             this.MainAssembly = mainAssembly;
             this.EmulatorId = emulatorId;
             this.EmulatorName = name;
             this.AssemblyType = assemblyType;
-            this.GamepadMappings = gamepadMappings;
-            this.BooleanMapping = booleanMapping;
-            this.KeyboardMappings = keyboardMappings;
         }
     }
     public enum EmulatorAssemblyType

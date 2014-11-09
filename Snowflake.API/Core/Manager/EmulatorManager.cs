@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Extensions;
 using Snowflake.Emulator;
-using Snowflake.Emulator.Core.Mapping;
 using System.IO;
 using SharpYaml.Serialization;
 
@@ -37,10 +36,10 @@ namespace Snowflake.Core.Manager
         public static EmulatorCore ParseEmulatorCore(string emulatorCorePath)
         {
             var emulator = new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText(emulatorCorePath));
-            var gameMappings = new Dictionary<string, GamepadMapping>();
-            var keyboardMappings = new Dictionary<string, KeyboardMapping>();
+          //  var gameMappings = new Dictionary<string, GamepadMapping>();
+           // var keyboardMappings = new Dictionary<string, KeyboardMapping>();
 
-            foreach (var value in emulator["gamepad"])
+      /*      foreach (var value in emulator["gamepad"])
             {
                 var mappingDictionary = (Dictionary<object, object>)value.Value;
                 gameMappings.Add(value.Key, new GamepadMapping(mappingDictionary.ToDictionary(k => k.Key.ToString(), k => k.Value.ToString())));
@@ -49,9 +48,8 @@ namespace Snowflake.Core.Manager
             {
                 var mappingDictionary = (Dictionary<object, object>)value.Value;
                 keyboardMappings.Add(value.Key, new KeyboardMapping(mappingDictionary.ToDictionary(k => k.Key.ToString(), k => k.Value.ToString())));
-            }
-            var booleanMapping = new BooleanMapping(emulator["boolean"][true], emulator["boolean"][false]);
-            return new EmulatorCore(emulator["main"], emulator["id"], emulator["name"], emulator["type"], gameMappings, keyboardMappings, booleanMapping);
+            }*/
+            return new EmulatorCore(emulator["main"], emulator["id"], emulator["name"], emulator["type"]);
         }
 
        

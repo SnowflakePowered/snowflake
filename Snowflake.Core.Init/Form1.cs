@@ -20,7 +20,8 @@ using Snowflake.Information.MediaStore;
 using Newtonsoft.Json.Linq;
 using System.IO;
 using System.Diagnostics;
-using Snowflake.Emulator.Core.Mapping;
+using Snowflake.Emulator.Configuration;
+using SharpYaml.Serialization;
 
 
 namespace Snowflake.Core.Init
@@ -30,13 +31,16 @@ namespace Snowflake.Core.Init
         public Form1()
         {
             InitializeComponent();
-     //       FrontendCore.InitCore();
+            FrontendCore.InitCore();
       //      Init();
-            var manager = new Core.Manager.EmulatorManager(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "emulators"));
-            manager.LoadEmulatorCores();
+           // var manager = new Core.Manager.EmulatorManager(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "emulators"));
+            //manager.LoadEmulatorCores();
             //Process.Start(manager.GetExecutableEmulatorProcess(manager.EmulatorCores["retroarch"]));
-            Console.WriteLine(manager.EmulatorCores["retroarch"].BooleanMapping.TRUE.ToString());
-            Console.WriteLine(manager.EmulatorCores["retroarch"].KeyboardMappings["normal"].KEY_0);
+
+            string s = File.ReadAllText("c.yml");
+            var x = ConfigurationTemplate.FromYaml(s);
+            var jsx = JsonConvert.SerializeObject(x);
+            Console.WriteLine(jsx);
         }
 
         

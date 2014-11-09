@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Snowflake.Information.Controller
 {
-    class ControllerDefinition{
-        IList<string> buttons;
+    class ControllerConfiguration
+    {
         string ControllerID;
+        IDictionary<string, string> ControllerMapping;
     }
 }
