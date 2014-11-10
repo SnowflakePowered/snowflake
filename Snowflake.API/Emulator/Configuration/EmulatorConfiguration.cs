@@ -14,38 +14,46 @@ namespace Snowflake.Emulator.Configuration
     public class EmulatorConfiguration 
     {
 
-        public IDictionary<string, dynamic> keys;
-        public string Compile(ConfigurationTemplate template)
+        public IDictionary<string, dynamic> Keys;
+        private ConfigurationTemplate template;
+        public string Compile()
         {
-            var builder = new StringBuilder(template.StringTemplate);
-            foreach (KeyValuePair<string, dynamic> value in this.keys)
+          
+            var builder = new StringBuilder(this.template.StringTemplate);
+            foreach (KeyValuePair<string, ConfigurationEntry> entry in this.template.ConfigurationEntries)
             {
-                var entry = template.ConfigurationEntries[value.Key];
+                var value = this.Keys.ContainsKey(entry.Value.Name) ? this.Keys[entry.Value.Name] : this.template.DefaultValues[entry.Value.Name];
                 string input;
-                switch (entry.Type)
+                switch (entry.Value.Type)
                 {
                     case "boolean":
-                        try
-                        {
-                            input = template.BooleanMapping.FromBool((bool) value.Value);
-                        }catch
-                        {
-                            input = "false";
-                        }
+                        input = this.template.BooleanMapping.FromBool((bool)value);
                         break;
                     default:
-                        input = value.Value.ToString();
+                        input = value.ToString();
                         break;
                 }
 
-                builder.Replace("{" + value.Key + "}", input);
+                builder.Replace("{" + entry.Value.Name + "}", input);
             }
             return builder.ToString();
         }
 
-        public EmulatorConfiguration()
+        private void IncludeDefaults()
         {
-            this.keys = new Dictionary<string, dynamic>();
+            foreach (KeyValuePair<string, ConfigurationEntry> entry in this.template.ConfigurationEntries)
+            {
+                if(!this.Keys.ContainsKey(entry.Value.Name)){
+                    this.Keys.Add(entry.Value.Name, this.template.DefaultValues[entry.Value.Name]);
+                }
+
+            }
+        }
+        public EmulatorConfiguration(ConfigurationTemplate template, IDictionary<string, dynamic> keys)
+        {
+            this.Keys = new Dictionary<string, dynamic>();
+            this.template = template;
+            this.IncludeDefaults();
         }
     }
 }

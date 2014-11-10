@@ -40,16 +40,14 @@ namespace Snowflake.Core.Init
 
             string s = File.ReadAllText("c.yml");
             var x = ConfigurationTemplate.FromYaml(s);
-            var xi = new EmulatorConfiguration()
-            {
-                keys = new Dictionary<string, dynamic>()
+            var xx = new Dictionary<string, dynamic>()
                 {
-                    {"video_fullscreen", false},
                     {"video_driver", "gl"},
                     {"video_rotation", 0}
-                },
-            };
-            Console.WriteLine(xi.Compile(x));
+                };
+            var xi = new EmulatorConfiguration(x, xx);
+           
+            Console.WriteLine(xi.Compile());
             Console.WriteLine(JsonConvert.SerializeObject(xi));
         }
 
