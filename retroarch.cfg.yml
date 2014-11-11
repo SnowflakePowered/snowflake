@@ -1,39 +1,414 @@
-template: >
-    video_yscale = "3.000000"
-    video_crop_overscan = "true"
-    video_scale_integer = "false"
-    video_smooth = "true"
-    video_threaded = "false"
-    video_fullscreen = "false"
-    video_refresh_rate = "59.950001"
-    video_driver = "gl"
-    video_vsync = "true"
-    video_hard_sync = "false"
-    video_hard_sync_frames = "0"
-    video_black_frame_insertion = "false"
-    video_swap_interval = "1"
-    video_gpu_screenshot = "true"
-    video_rotation = "0"
+template: |
+    libretro_path = "{libretro_path}"
+    libretro_info_path = "{libretro_info_path}"
+    system_directory = "{system_directory}"
+    rgui_config_directory = "{rgui_config_directory}"
+    config_save_on_exit = "{config_save_on_exit}"
+    video_shader_dir = "{video_shader_dir}"
+    joypad_autoconfig_dir = "{joypad_autoconfig_dir}"
+    screenshot_directory = "{screenshot_directory}"
+    fps_show = "{fps_show}"
+    rewind_enable = "{rewind_enable}"
+    rewind_granularity = "{rewind_granularity}"
+    video_shader_enable = "{video_shader_enable}"
+    video_aspect_ratio = "{video_aspect_ratio}"
+    video_xscale = "{video_xscale}"
+    autosave_interval = "{autosave_interval}"
+    video_yscale = "{video_yscale}"
+    video_crop_overscan = "{video_crop_overscan}"
+    video_scale_integer = "{video_scale_integer}"
+    video_smooth = "{video_smooth}"
+    video_threaded = "{video_threaded}"
+    video_fullscreen = "{video_fullscreen}"
+    video_refresh_rate = "{video_refresh_rate}"
+    video_driver = "{video_driver}"
+    video_vsync = "{video_vsync}"
+    video_hard_sync = "{video_hard_sync}"
+    video_hard_sync_frames = "{video_hard_sync_frames}"
+    video_black_frame_insertion = "{video_black_frame_insertion}"
+    video_swap_interval = "{video_swap_interval}"
+    video_gpu_screenshot = "{video_gpu_screenshot}"
+    video_rotation = "{video_rotation}"
+    aspect_ratio_index = "{aspect_ratio_index}"
+    audio_rate_control = "{audio_rate_control}"
+    audio_rate_control_delta = "{audio_rate_control_delta}"
+    audio_driver = "{audio_driver}"
+    audio_out_rate = "{audio_out_rate}"
+    audio_resampler = "{audio_resampler}"
+    savefile_directory = "{savefile_directory}"
+    savestate_directory = "{savestate_directory}"
+    content_directory = "{content_directory}"
+    rgui_browser_directory = "{rgui_browser_directory}"
+    rgui_show_start_screen = "{rgui_show_start_screen}"
+    game_history_size = "{game_history_size}"
+    input_autodetect_enable = "{input_autodetect_enable}"
+    overlay_directory = "{overlay_directory}"
+    input_overlay_opacity = "{input_overlay_opacity}"
+    input_overlay_scale = "{input_overlay_scale}"
+    gamma_correction = "{gamma_correction}"
+    triple_buffering_enable = "{triple_buffering_enable}"
+    soft_filter_enable = "{soft_filter_enable}"
+    flicker_filter_enable = "{flicker_filter_enable}"
+    flicker_filter_index = "{flicker_filter_index}"
+    soft_filter_index = "{soft_filter_index}"
+    current_resolution_id = "{current_resolution_id}"
+    custom_viewport_width = "{custom_viewport_width}"
+    custom_viewport_height = "{custom_viewport_height}"
+    custom_viewport_x = "{custom_viewport_x}"
+    custom_viewport_y = "{custom_viewport_y}"
+    video_font_size = "{video_font_size}"
+    block_sram_overwrite = "{block_sram_overwrite}"
+    savestate_auto_index = "{savestate_auto_index}"
+    savestate_auto_save = "{savestate_auto_save}"
+    savestate_auto_load = "{savestate_auto_load}"
+    sound_mode = "{sound_mode}"
+    state_slot = "{state_slot}"
+    custom_bgm_enable = "{custom_bgm_enable}"
+    input_driver = "{input_driver}"
 boolean: 
     true: "true"
     false: "false"
 types:
-    video_drivers: 
+    video_driver: 
         - ["gl", "OpenGL"]
         - ["xvideo", "XVideo"]
         - ["sdl", "SDL"]
+    input_driver:
+        - 
+    audio_driver:
+    audio_resampler:
 filename: "retroarch.cfg"
-configuration_name: "RetroArch Core"
+configuration_name: "RetroArchCore"
 keys: 
-    video_fullscreen:
-        description: "Run the window in fullscreen"
-        type: boolean
-        protection: public
-    video_driver:
-        description: "Video render driver"
-        type: ~video_drivers
-        protection: private
-    video_rotation:
-        description: "Video rotation"
-        type: integer
-        protection: private
+    libretro_path: 
+        description: "desc"
+        type: "string"
+        protection: "private"
+        default: ":\\cores/"
+    libretro_info_path: 
+        description: "desc"
+        type: "string"
+        protection: "private"
+        default: ":\\info/"
+    system_directory: 
+        description: "desc"
+        type: "string"
+        protection: "private"
+        default: ":\\system/"
+    rgui_config_directory: 
+        description: "desc"
+        type: "string"
+        protection: "private"
+        default: ":\\configs/"
+    config_save_on_exit: 
+        description: "desc"
+        type: "boolean"
+        protection: "private"
+        default: true
+    video_shader_dir: 
+        description: "desc"
+        type: "string"
+        protection: "private"
+        default: ":\\shaders/"
+    joypad_autoconfig_dir: 
+        description: "desc"
+        type: "string"
+        protection: "private"
+        default: ":\\autoconfig/"
+    screenshot_directory: 
+        description: "desc"
+        type: "string"
+        protection: "private"
+        default: ":\\screenshots/"
+    fps_show: 
+        description: "Show FPS"
+        type: "boolean"
+        protection: "public"
+        default: false
+    rewind_enable: 
+        description: "Enable Rewind"
+        type: "boolean"
+        protection: "private"
+        default: false
+    rewind_granularity: 
+        description: "desc"
+        type: "integer"
+        protection: "private"
+        default: 1
+    video_shader_enable: 
+        description: "Enable Video Shaders"
+        type: "boolean"
+        protection: "public"
+        default: false
+    video_aspect_ratio: 
+        description: "Aspect Ratio (DO NOT CHANGE)"
+        type: "double"
+        protection: "private"
+        default: -1
+    video_xscale: 
+        description: "desc"
+        type: "double"
+        protection: "private"
+        default: 3
+    autosave_interval: 
+        description: "desc"
+        type: "integer"
+        protection: "private"
+        default: 0
+    video_yscale: 
+        description: "desc"
+        type: "double"
+        protection: "private"
+        default: 3
+    video_crop_overscan: 
+        description: "desc"
+        type: "boolean"
+        protection: "private"
+        default: true
+    video_scale_integer: 
+        description: "Use "
+        type: "boolean"
+        protection: "private"
+        default: false
+    video_smooth: 
+        description: "desc"
+        type: "boolean"
+        protection: "private"
+        default: true
+    video_threaded: 
+        description: "desc"
+        type: "boolean"
+        protection: "private"
+        default: false
+    video_fullscreen: 
+        description: "desc"
+        type: "boolean"
+        protection: "private"
+        default: false
+    video_refresh_rate: 
+        description: "desc"
+        type: "double"
+        protection: "private"
+        default: 59.950001
+    video_driver: 
+        description: "desc"
+        type: "~video_driver"
+        protection: "private"
+        default: "gl"
+    video_vsync: 
+        description: "Use Vsync"
+        type: "boolean"
+        protection: "public"
+        default: true
+    video_hard_sync: 
+        description: "desc"
+        type: "boolean"
+        protection: "private"
+        default: false
+    video_hard_sync_frames: 
+        description: "desc"
+        type: "integer"
+        protection: "private"
+        default: 0
+    video_black_frame_insertion: 
+        description: "desc"
+        type: "boolean"
+        protection: "private"
+        default: false
+    video_swap_interval: 
+        description: "desc"
+        type: "integer"
+        protection: "private"
+        default: 1
+    video_gpu_screenshot: 
+        description: "desc"
+        type: "boolean"
+        protection: "private"
+        default: true
+    video_rotation: 
+        description: "desc"
+        type: "integer"
+        protection: "private"
+        default: 0
+    aspect_ratio_index: 
+        description: "desc"
+        type: "integer"
+        protection: "private"
+        default: 4
+    audio_rate_control: 
+        description: "desc"
+        type: "boolean"
+        protection: "private"
+        default: true
+    audio_rate_control_delta: 
+        description: "desc"
+        type: "double"
+        protection: "private"
+        default: 0.005
+    audio_driver: 
+        description: "desc"
+        type: "~audio_driver"
+        protection: "private"
+        default: "dsound"
+    audio_out_rate: 
+        description: "desc"
+        type: "integer"
+        protection: "private"
+        default: 48000
+    audio_resampler: 
+        description: "desc"
+        type: "~audio_resampler"
+        protection: "private"
+        default: "sinc"
+    savefile_directory: 
+        description: "desc"
+        type: "string"
+        protection: "private"
+        default: "default"
+    savestate_directory: 
+        description: "desc"
+        type: "string"
+        protection: "private"
+        default: "default"
+    content_directory: 
+        description: "desc"
+        type: "string"
+        protection: "private"
+        default: "default"
+    rgui_browser_directory: 
+        description: "desc"
+        type: "string"
+        protection: "private"
+        default: "default"
+    rgui_show_start_screen: 
+        description: "desc"
+        type: "boolean"
+        protection: "private"
+        default: false
+    game_history_size: 
+        description: "desc"
+        type: "integer"
+        protection: "private"
+        default: 100
+    input_autodetect_enable: 
+        description: "desc"
+        type: "boolean"
+        protection: "private"
+        default: true
+    overlay_directory: 
+        description: "desc"
+        type: "string"
+        protection: "private"
+        default: "default"
+    input_overlay_opacity: 
+        description: "desc"
+        type: "double"
+        protection: "private"
+        default: 0.7
+    input_overlay_scale: 
+        description: "desc"
+        type: "double"
+        protection: "private"
+        default: 1
+    gamma_correction: 
+        description: "desc"
+        type: "boolean"
+        protection: "private"
+        default: false
+    triple_buffering_enable: 
+        description: "desc"
+        type: "boolean"
+        protection: "private"
+        default: false
+    soft_filter_enable: 
+        description: "desc"
+        type: "boolean"
+        protection: "private"
+        default: false
+    flicker_filter_enable: 
+        description: "desc"
+        type: "boolean"
+        protection: "private"
+        default: false
+    flicker_filter_index: 
+        description: "desc"
+        type: "integer"
+        protection: "private"
+        default: 0
+    soft_filter_index: 
+        description: "desc"
+        type: "integer"
+        protection: "private"
+        default: 0
+    current_resolution_id: 
+        description: "desc"
+        type: "integer"
+        protection: "private"
+        default: 0
+    custom_viewport_width: 
+        description: "desc"
+        type: "integer"
+        protection: "private"
+        default: 960
+    custom_viewport_height: 
+        description: "desc"
+        type: "integer"
+        protection: "private"
+        default: 720
+    custom_viewport_x: 
+        description: "desc"
+        type: "integer"
+        protection: "private"
+        default: 0
+    custom_viewport_y: 
+        description: "desc"
+        type: "integer"
+        protection: "private"
+        default: 0
+    video_font_size: 
+        description: "desc"
+        type: "double"
+        protection: "private"
+        default: 48
+    block_sram_overwrite: 
+        description: "desc"
+        type: "boolean"
+        protection: "private"
+        default: false
+    savestate_auto_index: 
+        description: "desc"
+        type: "boolean"
+        protection: "private"
+        default: false
+    savestate_auto_save: 
+        description: "desc"
+        type: "boolean"
+        protection: "private"
+        default: false
+    savestate_auto_load: 
+        description: "desc"
+        type: "boolean"
+        protection: "private"
+        default: true
+    sound_mode: 
+        description: "desc"
+        type: "integer"
+        protection: "private"
+        default: 0
+    state_slot: 
+        description: "desc"
+        type: "integer"
+        protection: "private"
+        default: 0
+    custom_bgm_enable: 
+        description: "desc"
+        type: "boolean"
+        protection: "private"
+        default: false
+    input_driver: 
+        description: "desc"
+        type: "~input_driver"
+        protection: "private"
+        default: "dinput"
+
+    
