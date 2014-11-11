@@ -12,12 +12,14 @@ namespace Snowflake.Emulator.Configuration.Template
         public readonly string ProtectionLevel;
         public readonly string Type;
         public readonly string Name;
-        public ConfigurationEntry(string description, string protectionLevel, string type, string name)
+        public readonly dynamic DefaultValue;
+        public ConfigurationEntry(string description, string protectionLevel, string type, string name, dynamic defaultValue)
         {
             this.Description = description;
             this.ProtectionLevel = protectionLevel;
             this.Type = type;
             this.Name = name;
+            this.DefaultValue = defaultValue;
         }
 
     }

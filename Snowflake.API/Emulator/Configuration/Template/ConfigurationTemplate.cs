@@ -21,9 +21,8 @@ namespace Snowflake.Emulator.Configuration.Template
         public string FileName { get; private set; }
         public BooleanMapping BooleanMapping { get; private set; }
         public IReadOnlyDictionary<string, CustomType> CustomTypes { get { return this.customTypes.AsReadOnly(); } }
-        public IReadOnlyDictionary<string, dynamic> DefaultValues { get; private set; }
 
-        public ConfigurationTemplate(string stringTemplate, IDictionary<string, ConfigurationEntry> configurationEntries, IDictionary<string, CustomType> customTypes, BooleanMapping booleanMapping, string fileName, string configurationName, ReadOnlyDictionary<string, dynamic> defaultValues)
+        public ConfigurationTemplate(string stringTemplate, IDictionary<string, ConfigurationEntry> configurationEntries, IDictionary<string, CustomType> customTypes, BooleanMapping booleanMapping, string fileName, string configurationName)
         {
             this.StringTemplate = stringTemplate;
             this.configurationEntries = configurationEntries;
@@ -31,7 +30,6 @@ namespace Snowflake.Emulator.Configuration.Template
             this.BooleanMapping = booleanMapping;
             this.FileName = fileName;
             this.ConfigurationName = configurationName;
-            this.DefaultValues = defaultValues;
         }
 
         public static ConfigurationTemplate FromYaml(string yaml)
@@ -56,13 +54,10 @@ namespace Snowflake.Emulator.Configuration.Template
             }
             foreach (var value in protoTemplate["keys"])
             {
-                entries.Add(value.Key, new ConfigurationEntry(value.Value["description"], value.Value["protection"], value.Value["type"], value.Key));
+                entries.Add(value.Key, new ConfigurationEntry(value.Value["description"], value.Value["protection"], value.Value["type"], value.Key, value.Value["default"]));
             }
-            foreach (var value in protoTemplate["defaults"])
-            {
-                defaults.Add(value.Key, value.Value);
-            }
-            return new ConfigurationTemplate(stringTemplate, entries, types, booleanMapping, fileName, configName, new ReadOnlyDictionary<string, dynamic>(defaults));
+            
+            return new ConfigurationTemplate(stringTemplate, entries, types, booleanMapping, fileName, configName);
         }
     }
 }

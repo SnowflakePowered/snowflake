@@ -22,7 +22,7 @@ namespace Snowflake.Emulator.Configuration
             var builder = new StringBuilder(this.template.StringTemplate);
             foreach (KeyValuePair<string, ConfigurationEntry> entry in this.template.ConfigurationEntries)
             {
-                var value = this.Keys.ContainsKey(entry.Value.Name) ? this.Keys[entry.Value.Name] : this.template.DefaultValues[entry.Value.Name];
+                var value = this.Keys.ContainsKey(entry.Value.Name) ? this.Keys[entry.Value.Name] : entry.Value.DefaultValue;
                 string input;
                 switch (entry.Value.Type)
                 {
@@ -44,7 +44,7 @@ namespace Snowflake.Emulator.Configuration
             foreach (KeyValuePair<string, ConfigurationEntry> entry in this.template.ConfigurationEntries)
             {
                 if(!this.Keys.ContainsKey(entry.Value.Name)){
-                    this.Keys.Add(entry.Value.Name, this.template.DefaultValues[entry.Value.Name]);
+                    this.Keys.Add(entry.Value.Name, entry.Value.DefaultValue);
                 }
 
             }
