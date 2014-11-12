@@ -119,8 +119,6 @@
     <Compile Include="Extensions\MEFExtensions.cs" />
     <Compile Include="Extensions\PlatformExts.cs" />
     <Compile Include="Core\Server\MimeTypes.cs" />
-    <Compile Include="Information\Controller\ControllerConfiguration.cs" />
-    <Compile Include="Information\Controller\ControllerDefinition.cs" />
     <Compile Include="Scraper\GameImagesResult.cs" />
     <Compile Include="Extensions\KeyValuePairExts.cs" />
     <Compile Include="Database\GameDatabase.cs" />
