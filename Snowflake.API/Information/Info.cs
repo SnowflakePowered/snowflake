@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Snowflake.Information.MediaStore;
+using Snowflake.MediaStore;
 
 namespace Snowflake.Information
 {

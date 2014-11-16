@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.IO;
 
-namespace Snowflake.Information.MediaStore
+namespace Snowflake.MediaStore
 {
     public sealed class FileMediaStoreSection : IMediaStoreSection
     {

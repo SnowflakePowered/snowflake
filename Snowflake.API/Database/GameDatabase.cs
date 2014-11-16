@@ -7,9 +7,9 @@ using System.Data.SQLite;
 using System.Data;
 using System.IO;
 using Newtonsoft.Json;
-using Snowflake.Information.Platform;
-using Snowflake.Information.Game;
-using Snowflake.Information.MediaStore;
+using Snowflake.Platform;
+using Snowflake.Game;
+using Snowflake.MediaStore;
 
 namespace Snowflake.Database
 {

@@ -7,7 +7,7 @@ using System.IO;
 using System.Net;
 
 using Snowflake.Constants;
-using Snowflake.Information.MediaStore;
+using Snowflake.MediaStore;
 
 namespace Snowflake.Scraper
 {

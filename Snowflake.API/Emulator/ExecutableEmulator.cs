@@ -2,7 +2,7 @@
 using System.IO;
 using System.Reflection;
 using Snowflake.Core;
-using Snowflake.Information.Game;
+using Snowflake.Game;
 using Snowflake.Plugin;
 
 namespace Snowflake.Emulator

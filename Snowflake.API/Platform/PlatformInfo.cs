@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Snowflake.Information.MediaStore;
+using Snowflake.MediaStore;
+using Snowflake.Information;
 
-namespace Snowflake.Information.Platform
+namespace Snowflake.Platform
 {
     public class PlatformInfo : Info
     {

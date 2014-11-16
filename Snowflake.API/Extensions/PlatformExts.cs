@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Core;
-using Snowflake.Information.Platform;
+using Snowflake.Platform;
 
 namespace Snowflake.Extensions
 {

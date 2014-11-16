@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-namespace Snowflake.Information.MediaStore
+namespace Snowflake.MediaStore
 {
     public class FileMediaStore : IMediaStore
     {

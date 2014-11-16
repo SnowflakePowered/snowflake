@@ -7,7 +7,7 @@ using Mono.Net;
 using Snowflake.Extensions;
 using System.Web;
 using System.IO;
-using Snowflake.Information.MediaStore;
+using Snowflake.MediaStore;
 namespace Snowflake.Core.Server
 {
     public class FileMediaStoreServer : BaseHttpServer
