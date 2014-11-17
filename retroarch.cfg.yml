@@ -65,6 +65,7 @@ template: |
     state_slot = "{state_slot}"
     custom_bgm_enable = "{custom_bgm_enable}"
     input_driver = "{input_driver}"
+    video_shader = "{video_shader}"
 boolean: 
     true: "true"
     false: "false"
@@ -73,15 +74,13 @@ types:
         - ["gl", "OpenGL"]
         - ["xvideo", "XVideo"]
         - ["sdl", "SDL"]
-    input_driver:
-        - 
     audio_driver:
     audio_resampler:
 filename: "retroarch.cfg"
 configuration_name: "RetroArchCore"
 keys: 
     libretro_path: 
-        description: "desc"
+        description: "Path to libRetroCore"
         type: "string"
         protection: "private"
         default: ":\\cores/"
@@ -101,9 +100,9 @@ keys:
         protection: "private"
         default: ":\\configs/"
     config_save_on_exit: 
-        description: "desc"
+        description: "Save configuration on exit (Unavailable if Snowflake configuration handling is enabled)"
         type: "boolean"
-        protection: "private"
+        protection: "protected"
         default: true
     video_shader_dir: 
         description: "desc"
@@ -121,9 +120,9 @@ keys:
         protection: "private"
         default: ":\\screenshots/"
     fps_show: 
-        description: "Show FPS"
+        description: "Show FPS counter"
         type: "boolean"
-        protection: "public"
+        protection: "protected"
         default: false
     rewind_enable: 
         description: "Enable Rewind"
@@ -131,7 +130,7 @@ keys:
         protection: "private"
         default: false
     rewind_granularity: 
-        description: "desc"
+        description: "How many frames to rewind at a time (Increases rewind speed)"
         type: "integer"
         protection: "private"
         default: 1
@@ -141,12 +140,12 @@ keys:
         protection: "public"
         default: false
     video_aspect_ratio: 
-        description: "Aspect Ratio (DO NOT CHANGE)"
+        description: "Aspect Ratio (-1 is Core Provided)"
         type: "double"
-        protection: "private"
+        protection: "protected"
         default: -1
     video_xscale: 
-        description: "desc"
+        description: "Windowed xscale"
         type: "double"
         protection: "private"
         default: 3
@@ -156,14 +155,14 @@ keys:
         protection: "private"
         default: 0
     video_yscale: 
-        description: "desc"
+        description: "Windowed yscale"
         type: "double"
         protection: "private"
         default: 3
     video_crop_overscan: 
-        description: "desc"
+        description: "Force crop overscan"
         type: "boolean"
-        protection: "private"
+        protection: "protected"
         default: true
     video_scale_integer: 
         description: "Use "
@@ -171,19 +170,19 @@ keys:
         protection: "private"
         default: false
     video_smooth: 
-        description: "desc"
+        description: "Use Bilinear Filtering
         type: "boolean"
-        protection: "private"
-        default: true
+        protection: "protected"
+        default: false
     video_threaded: 
-        description: "desc"
+        description: "Use Threaded Video Driver"
         type: "boolean"
         protection: "private"
         default: false
     video_fullscreen: 
-        description: "desc"
+        description: "Start in fullscreen. Can be changed at runtime."
         type: "boolean"
-        protection: "private"
+        protection: "public"
         default: false
     video_refresh_rate: 
         description: "desc"
@@ -191,39 +190,39 @@ keys:
         protection: "private"
         default: 59.950001
     video_driver: 
-        description: "desc"
+        description: "Video driver to use"
         type: "~video_driver"
         protection: "private"
         default: "gl"
     video_vsync: 
-        description: "Use Vsync"
+        description: "VSync"
         type: "boolean"
         protection: "public"
         default: true
     video_hard_sync: 
-        description: "desc"
+        description: "Hard GPU Sync"
         type: "boolean"
-        protection: "private"
+        protection: "protected"
         default: false
     video_hard_sync_frames: 
-        description: "desc"
+        description: "Number of synced GPU Frames"
         type: "integer"
-        protection: "private"
+        protection: "protected"
         default: 0
     video_black_frame_insertion: 
-        description: "desc"
+        description: "Black Frame Insertion"
         type: "boolean"
-        protection: "private"
+        protection: "protected"
         default: false
     video_swap_interval: 
-        description: "desc"
+        description: "VSync swap interval"
         type: "integer"
         protection: "private"
         default: 1
     video_gpu_screenshot: 
-        description: "desc"
+        description: "Screenshots will be taken after applying shaders"
         type: "boolean"
-        protection: "private"
+        protection: "public"
         default: true
     video_rotation: 
         description: "desc"
@@ -236,12 +235,12 @@ keys:
         protection: "private"
         default: 4
     audio_rate_control: 
-        description: "desc"
+        description: "Enable experimental audio rate control"
         type: "boolean"
         protection: "private"
         default: true
     audio_rate_control_delta: 
-        description: "desc"
+        description: "Audio Rate Control Delta"
         type: "double"
         protection: "private"
         default: 0.005
@@ -371,7 +370,7 @@ keys:
         protection: "private"
         default: 48
     block_sram_overwrite: 
-        description: "desc"
+        description: "Block SRAM from being overwritten when loading save states."
         type: "boolean"
         protection: "private"
         default: false
@@ -407,7 +406,7 @@ keys:
         default: false
     input_driver: 
         description: "desc"
-        type: "~input_driver"
+        type: "string"
         protection: "private"
         default: "dinput"
 
