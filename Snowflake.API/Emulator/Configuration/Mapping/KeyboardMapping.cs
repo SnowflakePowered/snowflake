@@ -103,6 +103,7 @@ namespace Snowflake.Emulator.Configuration.Mapping
         public readonly string KEY_F_11;
         public readonly string KEY_F_12;
 
+
         public KeyboardMapping(IDictionary<string, string> mappingData)
         {
             this.KEY_A = mappingData["KEY_A"];

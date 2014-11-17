@@ -5,14 +5,69 @@
     "FileExtensions": [
         ".nes"
     ],
-	"Defaults": {
-		"Scraper": "Scraper.TheGamesDB",
-		"Identifier": "Identifier.ClrMameProDat",
-		"Emulator": "Emulator.RetroArch" 
-	},
+    "Defaults": {
+        "Scraper": "Scraper.TheGamesDB",
+        "Identifier": "Identifier.ClrMameProDat",
+        "Emulator": "Emulator.RetroArch"
+    },
     "Metadata": {
         "platform_shortname": "NES",
         "platform_company": "Nintendo",
         "platform_releasedate": "18/10/1985"
+    },
+    "Controllers": {
+        "NES_CONTROLLER": {
+            "ControllerInputs": {
+                "BTN_A": {
+                    "IsAnalog": false,
+                    "InputName": "BTN_A",
+                    "KeyboardDefault": "KEYBOARD_Z",
+                    "GamepadDefault": "GAMEPAD_A"
+                },
+                "BTN_B": {
+                    "IsAnalog": false,
+                    "InputName": "BTN_A",
+                    "KeyboardDefault": "KEYBOARD_X",
+                    "GamepadDefault": "GAMEPAD_B"
+                },
+                "BTN_START": {
+                    "IsAnalog": false,
+                    "InputName": "BTN_A",
+                    "KeyboardDefault": "KEYBOARD_SPACEBAR",
+                    "GamepadDefault": "GAMEPAD_START"
+                },
+                "BTN_SELECT": {
+                    "IsAnalog": false,
+                    "InputName": "BTN_A",
+                    "KeyboardDefault": "KEYBOARD_ENTER",
+                    "GamepadDefault": "GAMEPAD_SELECT"
+                },
+                "BTN_DPAD_UP": {
+                    "IsAnalog": false,
+                    "InputName": "BTN_A",
+                    "KeyboardDefault": "KEYBOARD_UP",
+                    "GamepadDefault": "GAMEPAD_DPAD_UP"
+                },
+                "BTN_DPAD_DOWN": {
+                    "IsAnalog": false,
+                    "InputName": "BTN_A",
+                    "KeyboardDefault": "KEYBOARD_DOWN",
+                    "GamepadDefault": "GAMEPAD_DPAD_DOWN"
+                },
+                "BTN_DPAD_LEFT": {
+                    "IsAnalog": false,
+                    "InputName": "BTN_A",
+                    "KeyboardDefault": "KEYBOARD_LEFT",
+                    "GamepadDefault": "GAMEPAD_DPAD_LEFT"
+                },
+                "BTN_DPAD_RIGHT": {
+                    "IsAnalog": false,
+                    "InputName": "BTN_A",
+                    "KeyboardDefault": "KEYBOARD_RIGHT",
+                    "GamepadDefault": "GAMEPAD_DPAD_RIGHT"
+                }
+            },
+            "ControllerID": "NES_CONTROLLER"
+        }
     }
 }

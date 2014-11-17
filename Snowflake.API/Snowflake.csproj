@@ -90,7 +90,8 @@
     <Compile Include="Constants\Plugin\PluginInfoFields.cs" />
     <Compile Include="Constants\Plugin\PluginTypes.cs" />
     <Compile Include="Constants\Plugin\ScraperInfoFields.cs" />
-    <Compile Include="Controller\ControllerDefinition.cs" />
+    <Compile Include="Constants\Input\GamepadConstants.cs" />
+    <Compile Include="Platform\Controller\ControllerDefinition.cs" />
     <Compile Include="Core\Manager\AjaxManager.cs" />
     <Compile Include="Core\EventDelegate\JsonRPCEventDelegate.cs" />
     <Compile Include="Core\Manager\EmulatorManager.cs" />
@@ -120,6 +121,7 @@
     <Compile Include="Extensions\MEFExtensions.cs" />
     <Compile Include="Extensions\PlatformExts.cs" />
     <Compile Include="Core\Server\MimeTypes.cs" />
+    <Compile Include="Platform\Controller\ControllerInput.cs" />
     <Compile Include="Scraper\GameImagesResult.cs" />
     <Compile Include="Extensions\KeyValuePairExts.cs" />
     <Compile Include="Database\GameDatabase.cs" />

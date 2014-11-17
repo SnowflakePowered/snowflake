@@ -21,10 +21,13 @@ using Newtonsoft.Json.Linq;
 using System.IO;
 using System.Diagnostics;
 using Snowflake.Emulator.Configuration.Template;
+using Snowflake.Emulator.Configuration.Mapping;
 using SharpYaml.Serialization;
 using Snowflake.Emulator.Configuration;
 using System.Text.RegularExpressions;
 using System.Dynamic;
+using Snowflake.Platform.Controller;
+using Snowflake.Constants.Input;
 namespace Snowflake.Core.Init
 {
     public partial class Form1 : Form
@@ -32,7 +35,19 @@ namespace Snowflake.Core.Init
         public Form1()
         {
             InitializeComponent();
-            FrontendCore.InitCore();
+       /*     FrontendCore.InitCore();*/
+            var x = new Dictionary<string, ControllerInput>(){
+                {"BTN_A", new ControllerInput("BTN_A", "KEYBOARD_Z", GamepadConstants.GAMEPAD_A)},
+                {"BTN_B", new ControllerInput("BTN_A", "KEYBOARD_X", GamepadConstants.GAMEPAD_B)},
+                {"BTN_START", new ControllerInput("BTN_A", "KEYBOARD_SPACEBAR", GamepadConstants.GAMEPAD_START)},
+                {"BTN_SELECT", new ControllerInput("BTN_A", "KEYBOARD_ENTER", GamepadConstants.GAMEPAD_SELECT)},
+                {"BTN_DPAD_UP", new ControllerInput("BTN_A", "KEYBOARD_UP", GamepadConstants.GAMEPAD_DPAD_UP)},
+                {"BTN_DPAD_DOWN", new ControllerInput("BTN_A", "KEYBOARD_DOWN", GamepadConstants.GAMEPAD_DPAD_DOWN)},
+                {"BTN_DPAD_LEFT", new ControllerInput("BTN_A", "KEYBOARD_LEFT", GamepadConstants.GAMEPAD_DPAD_LEFT)},
+                {"BTN_DPAD_RIGHT", new ControllerInput("BTN_A", "KEYBOARD_RIGHT", GamepadConstants.GAMEPAD_DPAD_RIGHT)}
+            };
+            var y = new ControllerDefinition(x, "NES_CONTROLLER");
+            Console.WriteLine(JsonConvert.SerializeObject(y));
             //      Init();
             // var manager = new Core.Manager.EmulatorManager(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "emulators"));
             //manager.LoadEmulatorCores();
@@ -50,12 +65,12 @@ namespace Snowflake.Core.Init
              Console.WriteLine(xi.Compile());
              Console.WriteLine(JsonConvert.SerializeObject(xi));*/
 
-            foreach (string line in File.ReadAllLines("retroarch.cfg"))
+        /*    foreach (string line in File.ReadAllLines("retroarch.cfg"))
             {
                 var key = Regex.Match(line, @".+?(?=\s)").Value;
                 var value = Regex.Match(line, "\"([^\"]*)\"").Value.Replace("\"", "");
                 Console.WriteLine(line.Replace(value, "{" + key + "}"));
-            }
+            }*/
 
             /*   var xix = new Dictionary<string, Dictionary<string, dynamic>>();
                foreach (string line in File.ReadAllLines("retroarch.cfg"))
