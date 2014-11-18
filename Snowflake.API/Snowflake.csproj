@@ -87,6 +87,7 @@
     <Compile Include="Ajax\JSResponse.cs" />
     <Compile Include="Configuration\YamlConfiguration.cs" />
     <Compile Include="Constants\ImagesInfoFields.cs" />
+    <Compile Include="Constants\Input\KeyboardConstants.cs" />
     <Compile Include="Constants\Plugin\PluginInfoFields.cs" />
     <Compile Include="Constants\Plugin\PluginTypes.cs" />
     <Compile Include="Constants\Plugin\ScraperInfoFields.cs" />

@@ -65,16 +65,17 @@ namespace Snowflake.Core
         public FrontendCore(string appDataDirectory)
         {
             this.AppDataDirectory = appDataDirectory;
+#if DEBUG
+            this.AppDataDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+#endif
             this.LoadedPlatforms = this.LoadPlatforms(Path.Combine(this.AppDataDirectory, "platforms"));
          
             this.GameDatabase = new GameDatabase(Path.Combine(this.AppDataDirectory, "games.db"));
-#if DEBUG
-            this.PluginManager = new PluginManager(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location));
-            this.AjaxManager = new AjaxManager(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location));
-#else
+
+           
             this.PluginManager = new PluginManager(this.AppDataDirectory);
             this.AjaxManager = new AjaxManager(this.AppDataDirectory);
-#endif
+
             this.ThemeServer = new ThemeServer(Path.Combine(this.AppDataDirectory, "theme"));
             this.APIServer = new ApiServer();
             this.MediaStoreServer = new FileMediaStoreServer(Path.Combine(this.AppDataDirectory, "mediastores"));
