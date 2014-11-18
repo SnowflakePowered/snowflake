@@ -33,9 +33,10 @@ namespace Snowflake.Emulator.Configuration.Mapping
         public readonly string GAMEPAD_DPAD_DOWN;
         public readonly string GAMEPAD_DPAD_LEFT;
         public readonly string GAMEPAD_DPAD_RIGHT;
-
+        private IDictionary<string, string> mappingData;
         public GamepadMapping(IDictionary<string, string> mappingData)
         {
+            this.mappingData = mappingData;
             this.GAMEPAD_A = mappingData["GAMEPAD_A"];
             this.GAMEPAD_B = mappingData["GAMEPAD_B"];
             this.GAMEPAD_X = mappingData["GAMEPAD_X"];
@@ -61,6 +62,9 @@ namespace Snowflake.Emulator.Configuration.Mapping
             this.GAMEPAD_DPAD_DOWN = mappingData["GAMEPAD_DPAD_DOWN"];
             this.GAMEPAD_DPAD_LEFT = mappingData["GAMEPAD_DPAD_LEFT"];
             this.GAMEPAD_DPAD_RIGHT = mappingData["GAMEPAD_DPAD_RIGHT"];
+        }
+        public string this[string key] {
+            get { return this.mappingData[key]; }
         }
     }
 }

@@ -102,10 +102,11 @@ namespace Snowflake.Emulator.Configuration.Mapping
         public readonly string KEY_F_10;
         public readonly string KEY_F_11;
         public readonly string KEY_F_12;
-
+        private IDictionary<string, string> mappingData;
 
         public KeyboardMapping(IDictionary<string, string> mappingData)
         {
+            this.mappingData = mappingData;
             this.KEY_A = mappingData["KEY_A"];
             this.KEY_B = mappingData["KEY_B"];
             this.KEY_C = mappingData["KEY_C"];
@@ -200,6 +201,11 @@ namespace Snowflake.Emulator.Configuration.Mapping
             this.KEY_F_10 = mappingData["KEY_F_10"];
             this.KEY_F_11 = mappingData["KEY_F_11"];
             this.KEY_F_12 = mappingData["KEY_F_12"];
+        }
+
+        public string this[string key]
+        {
+            get { return this.mappingData[key]; }
         }
     }
 }
