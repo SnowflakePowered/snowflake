@@ -16,6 +16,7 @@
         "platform_company": "Nintendo",
         "platform_releasedate": "21/11/1990"
     },
+	"MaximumInputs": 4,
     "Controllers": {
         "SNES_CONTROLLER": {
             "ControllerInputs": {

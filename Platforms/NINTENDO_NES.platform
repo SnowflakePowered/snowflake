@@ -15,6 +15,7 @@
         "platform_company": "Nintendo",
         "platform_releasedate": "18/10/1985"
     },
+	"MaximumInputs": 4,
     "Controllers": {
         "NES_CONTROLLER": {
             "ControllerInputs": {

@@ -13,7 +13,7 @@ namespace Snowflake.Platform
 {
     public class PlatformInfo : Info
     {
-        public PlatformInfo(string platformId, string name, IMediaStore mediastore, IDictionary<string, string> metadata, IList<string> fileExtensions, PlatformDefaults platformDefaults, IDictionary<string, ControllerDefinition> controllers): base(platformId, name, mediastore, metadata)
+        public PlatformInfo(string platformId, string name, IMediaStore mediastore, IDictionary<string, string> metadata, IList<string> fileExtensions, PlatformDefaults platformDefaults, IDictionary<string, ControllerDefinition> controllers, int maximumInputs): base(platformId, name, mediastore, metadata)
         {
             this.FileExtensions = fileExtensions;
             this.Defaults = platformDefaults;
@@ -24,6 +24,7 @@ namespace Snowflake.Platform
         public PlatformDefaults Defaults { get; set; }
         public IReadOnlyDictionary<string, ControllerDefinition> Controllers { get { return this.controllers.AsReadOnly(); } }
         private IDictionary<string, ControllerDefinition> controllers;
+        public int MaximumInputs { get; private set; }
         public static PlatformInfo FromDictionary(IDictionary<string, dynamic> jsonDictionary)
         {
          
@@ -34,7 +35,8 @@ namespace Snowflake.Platform
                     jsonDictionary["Metadata"].ToObject<Dictionary<string, string>>(),
                     jsonDictionary["FileExtensions"].ToObject<List<string>>(),
                     jsonDictionary["Defaults"].ToObject<PlatformDefaults>(),
-                    jsonDictionary["Controllers"].ToObject<Dictionary<string, ControllerDefinition>>()
+                    jsonDictionary["Controllers"].ToObject<Dictionary<string, ControllerDefinition>>(),
+                    (int)jsonDictionary["MaximumInputs"] 
                 );
         }
 
