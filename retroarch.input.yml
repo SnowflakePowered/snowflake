@@ -1,4 +1,0 @@
-template: "insert template hare"
-controllers: 
-    - NES_CONTROLLER
-    - SNES_CONTROLLER

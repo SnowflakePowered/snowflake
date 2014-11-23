@@ -74,8 +74,8 @@ types:
         - ["gl", "OpenGL"]
         - ["xvideo", "XVideo"]
         - ["sdl", "SDL"]
-    audio_driver:
-    audio_resampler:
+    audio_driver: []
+    audio_resampler: []
 filename: "retroarch.cfg"
 configuration_name: "RetroArchCore"
 keys: 

@@ -1,0 +1,206 @@
+template: |
+    input_device_p{N} = "{INPUTDEVICE}"
+    input_player{N}_joypad_index = "{JOYPAD_INDEX}"
+    input_libretro_device_p{N} = "1"
+    input_player{N}_analog_dpad_mode = "0"
+    input_player{N}_b = "{KEYBOARD_INPUT_B}"
+    input_player{N}_b_btn = "{GAMEPAD_INPUT_B}"
+    input_player{N}_b_axis = "{GAMEPAD_ANALOG_INPUT_B}"
+    input_player{N}_y = "{KEYBOARD_INPUT_Y}"
+    input_player{N}_y_btn = "{GAMEPAD_INPUT_Y}"
+    input_player{N}_y_axis = "{GAMEPAD_ANALOG_INPUT_Y}"
+    input_player{N}_select = "{KEYBOARD_INPUT_SELECT}"
+    input_player{N}_select_btn = "{GAMEPAD_INPUT_SELECT}"
+    input_player{N}_select_axis = "{GAMEPAD_ANALOG_INPUT_SELECT}"
+    input_player{N}_start = "{KEYBOARD_INPUT_START}"
+    input_player{N}_start_btn = "{GAMEPAD_INPUT_START}"
+    input_player{N}_start_axis = "{GAMEPAD_ANALOG_INPUT_START}"
+    input_player{N}_up = "{KEYBOARD_INPUT_UP}"
+    input_player{N}_up_btn = "{GAMEPAD_INPUT_UP}"
+    input_player{N}_up_axis = "{GAMEPAD_ANALOG_INPUT_UP}"
+    input_player{N}_down = "{KEYBOARD_INPUT_DOWN}"
+    input_player{N}_down_btn = "{GAMEPAD_INPUT_DOWN}"
+    input_player{N}_down_axis = "{GAMEPAD_ANALOG_INPUT_DOWN}"
+    input_player{N}_left = "{KEYBOARD_INPUT_LEFT}"
+    input_player{N}_left_btn = "{GAMEPAD_INPUT_LEFT}"
+    input_player{N}_left_axis = "{GAMEPAD_ANALOG_INPUT_LEFT}"
+    input_player{N}_right = "{KEYBOARD_INPUT_RIGHT}"
+    input_player{N}_right_btn = "{GAMEPAD_INPUT_RIGHT}"
+    input_player{N}_right_axis = "{GAMEPAD_ANALOG_INPUT_RIGHT}"
+    input_player{N}_a = "{KEYBOARD_INPUT_A}"
+    input_player{N}_a_btn = "{GAMEPAD_INPUT_A}"
+    input_player{N}_a_axis = "{GAMEPAD_ANALOG_INPUT_A}"
+    input_player{N}_x = "{KEYBOARD_INPUT_X}"
+    input_player{N}_x_btn = "{GAMEPAD_INPUT_X}"
+    input_player{N}_x_axis = "{GAMEPAD_ANALOG_INPUT_X}"
+    input_player{N}_l = "{KEYBOARD_INPUT_L1}"
+    input_player{N}_l_btn = "{GAMEPAD_INPUT_L1}"
+    input_player{N}_l_axis = "{GAMEPAD_ANALOG_INPUT_L1}"
+    input_player{N}_r = "{KEYBOARD_INPUT_R1}"
+    input_player{N}_r_btn = "{GAMEPAD_INPUT_R1}"
+    input_player{N}_r_axis = "{GAMEPAD_ANALOG_INPUT_R1}"
+    input_player{N}_l2 = "{KEYBOARD_INPUT_L2}"
+    input_player{N}_l2_btn = "{GAMEPAD_INPUT_L2}"
+    input_player{N}_l2_axis = "{GAMEPAD_ANALOG_INPUT_L2}"
+    input_player{N}_r2 = "{KEYBOARD_INPUT_R2}"
+    input_player{N}_r2_btn = "{GAMEPAD_INPUT_R2}"
+    input_player{N}_r2_axis = "{GAMEPAD_ANALOG_INPUT_R2}"
+    input_player{N}_l3 = "{KEYBOARD_INPUT_L3}"
+    input_player{N}_l3_btn = "{GAMEPAD_INPUT_L3}"
+    input_player{N}_l3_axis = "{GAMEPAD_ANALOG_INPUT_L3}"
+    input_player{N}_r3 = "{KEYBOARD_INPUT_R3}"
+    input_player{N}_r3_btn = "{GAMEPAD_INPUT_R3}"
+    input_player{N}_r3_axis = "{GAMEPAD_ANALOG_INPUT_R3}"
+    input_player{N}_l_x_plus = "{KEYBOARD_INPUT_L_X_RIGHT}"
+    input_player{N}_l_x_plus_btn = "{GAMEPAD_INPUT_L_X_RIGHT}"
+    input_player{N}_l_x_plus_axis = "{GAMEPAD_ANALOG_INPUT_L_X_RIGHT}"
+    input_player{N}_l_x_minus = "{KEYBOARD_INPUT_L_X_LEFT}"
+    input_player{N}_l_x_minus_btn = "{GAMEPAD_INPUT_L_X_LEFT}"
+    input_player{N}_l_x_minus_axis = "{GAMEPAD_ANALOG_INPUT_L_X_LEFT}"
+    input_player{N}_l_y_plus = "{KEYBOARD_INPUT_L_Y_UP}"
+    input_player{N}_l_y_plus_btn = "{GAMEPAD_INPUT_L_Y_UP}"
+    input_player{N}_l_y_plus_axis = "{GAMEPAD_ANALOG_INPUT_L_Y_UP}"
+    input_player{N}_l_y_minus = "{KEYBOARD_INPUT_L_Y_DOWN}"
+    input_player{N}_l_y_minus_btn = "{GAMEPAD_INPUT_L_Y_DOWN}"
+    input_player{N}_l_y_minus_axis = "{GAMEPAD_ANALOG_INPUT_L_Y_DOWN}"
+    input_player{N}_r_x_plus = "{KEYBOARD_INPUT_R_X_RIGHT}"
+    input_player{N}_r_x_plus_btn = "{GAMEPAD_INPUT_R_X_RIGHT}"
+    input_player{N}_r_x_plus_axis = "{GAMEPAD_ANALOG_INPUT_R_X_RIGHT}"
+    input_player{N}_r_x_minus = "{KEYBOARD_INPUT_R_X_LEFT}"
+    input_player{N}_r_x_minus_btn = "{GAMEPAD_INPUT_R_X_LEFT}"
+    input_player{N}_r_x_minus_axis = "{GAMEPAD_ANALOG_INPUT_R_X_LEFT}"
+    input_player{N}_r_y_plus = "{KEYBOARD_INPUT_R_Y_UP}"
+    input_player{N}_r_y_plus_btn = "{GAMEPAD_INPUT_R_Y_UP}"
+    input_player{N}_r_y_plus_axis = "{GAMEPAD_ANALOG_INPUT_R_Y_UP}"
+    input_player{N}_r_y_minus = "{KEYBOARD_INPUT_R_Y_DOWN}"
+    input_player{N}_r_y_minus_btn = "{GAMEPAD_INPUT_R_Y_DOWN}"
+    input_player{N}_r_y_minus_axis = "{GAMEPAD_ANALOG_INPUT_R_Y_DOWN}"
+    input_player{N}_turbo = "{KEYBOARD_INPUT_TURBO}"
+    input_player{N}_turbo_btn = "{GAMEPAD_INPUT_TURBO}"
+    input_player{N}_turbo_axis = "{GAMEPAD_ANALOG_INPUT_TURBO}"
+
+nobind: 'nul'
+
+gamepad:
+    xinput: 
+        GAMEPAD_A: '0'
+        GAMEPAD_B: '1'
+        GAMEPAD_X: '2'
+        GAMEPAD_Y: '3'
+        GAMEPAD_START: '7'
+        GAMEPAD_SELECT: '6'
+        GAMEPAD_L1: '5'
+        GAMEPAD_L2: '+4'
+        GAMEPAD_L3: '8'
+        GAMEPAD_R1: '4'
+        GAMEPAD_R2: '+5'
+        GAMEPAD_R3: '9'
+        GAMEPAD_L_X_UP: '+1'
+        GAMEPAD_L_X_DOWN: '-1'
+        GAMEPAD_L_Y_RIGHT: '+0'
+        GAMEPAD_L_Y_LEFT: '-0'
+        GAMEPAD_R_X_UP: '+3'
+        GAMEPAD_R_X_DOWN: '-3'
+        GAMEPAD_R_Y_RIGHT: '-2'
+        GAMEPAD_R_Y_LEFT: '+2'
+        GAMEPAD_GUIDE: '10'
+        GAMEPAD_DPAD_UP: 'hat0up'
+        GAMEPAD_DPAD_DOWN: 'hat0down'
+        GAMEPAD_DPAD_LEFT: 'hat0left'
+        GAMEPAD_DPAD_RIGHT: 'hat0right'
+keyboard:
+    normal: 
+        KEY_A: 'a'
+        KEY_B: 'b'
+        KEY_C: 'c'
+        KEY_D: 'd'
+        KEY_E: 'e'
+        KEY_F: 'f'
+        KEY_G: 'g'
+        KEY_H: 'h'
+        KEY_I: 'i'
+        KEY_J: 'j'
+        KEY_K: 'k'
+        KEY_L: 'l'
+        KEY_M: 'm'
+        KEY_N: 'n'
+        KEY_O: 'o'
+        KEY_P: 'p'
+        KEY_Q: 'q'
+        KEY_R: 'r'
+        KEY_S: 's'
+        KEY_T: 't'
+        KEY_U: 'u'
+        KEY_V: 'v'
+        KEY_W: 'w'
+        KEY_X: 'x'
+        KEY_Y: 'y'
+        KEY_Z: 'z'
+        KEY_0: 'num0'
+        KEY_1: 'num1'
+        KEY_2: 'num2'
+        KEY_3: 'num3'
+        KEY_4: 'num4'
+        KEY_5: 'num5'
+        KEY_6: 'num6'
+        KEY_7: 'num7'
+        KEY_8: 'num8'
+        KEY_9: 'num9'
+        KEY_EQUALS: 'equals'
+        KEY_MINUS: 'minus'
+        KEY_BACKSPACE: 'backspace'
+        KEY_SPACEBAR: 'space'
+        KEY_ENTER: 'enter'
+        KEY_UP: 'up'
+        KEY_DOWN: 'down'
+        KEY_LEFT: 'left'
+        KEY_RIGHT: 'right'
+        KEY_TAB: 'tab'
+        KEY_INSERT: 'insert'
+        KEY_DELETE: 'del'
+        KEY_HOME: 'home'
+        KEY_END: 'end'
+        KEY_PAGE_UP: 'pageup'
+        KEY_PAGE_DOWN: 'pagedown'
+        KEY_SHIFT: 'shift'
+        KEY_CTRL: 'ctrl'
+        KEY_ALT: 'alt'
+        KEY_ESCAPE: 'escape'
+        KEY_TILDE: 'tilde'
+        KEY_QUOTE: 'quote'
+        KEY_SEMICOLON: 'semicolon'
+        KEY_COMMA: 'comma'
+        KEY_PERIOD: 'period'
+        KEY_SLASH: 'slash'
+        KEY_BRACKET_LEFT: 'leftbracket'
+        KEY_BRACKET_RIGHT: 'rightbracket'
+        KEY_BACKSLASH: 'backslash'
+        KEY_RIGHT_ALT: 'ralt'
+        KEY_RIGHT_CTRL: 'rctrl'
+        KEY_RIGHT_SHIFT: 'rshift'
+        KEY_NUMPAD_0: 'keypad0'
+        KEY_NUMPAD_1: 'keypad1'
+        KEY_NUMPAD_2: 'keypad2'
+        KEY_NUMPAD_3: 'keypad3'
+        KEY_NUMPAD_4: 'keypad4'
+        KEY_NUMPAD_5: 'keypad5'
+        KEY_NUMPAD_6: 'keypad6'
+        KEY_NUMPAD_7: 'keypad7'
+        KEY_NUMPAD_8: 'keypad8'
+        KEY_NUMPAD_9: 'keypad9'
+        KEY_NUMPAD_PERIOD: 'kp_period'
+        KEY_NUMPAD_PLUS: 'kp_plus'
+        KEY_NUMPAD_MINUS: 'kp_minus'
+        KEY_NUMPAD_ENTER: 'kp_enter'
+        KEY_F_1: 'f1'
+        KEY_F_2: 'f2'
+        KEY_F_3: 'f3'
+        KEY_F_4: 'f4'
+        KEY_F_5: 'f5'
+        KEY_F_6: 'f6'
+        KEY_F_7: 'f7'
+        KEY_F_8: 'f8'
+        KEY_F_9: 'f9'
+        KEY_F_10: 'f10'
+        KEY_F_11: 'f11'
+        KEY_F_12: 'f12'

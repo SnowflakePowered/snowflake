@@ -18,7 +18,7 @@ namespace Snowflake.Emulator.Configuration
         private ConfigurationTemplate template;
         public string Compile()
         {
-          
+         //fix this pls. 
             var builder = new StringBuilder(this.template.StringTemplate);
             foreach (KeyValuePair<string, ConfigurationEntry> entry in this.template.ConfigurationEntries)
             {
