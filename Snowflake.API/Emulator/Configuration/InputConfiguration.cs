@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Snowflake.Emulator.Configuration
 {
-    class InputConfiguration
+    public class InputConfiguration
     {
     }
 }

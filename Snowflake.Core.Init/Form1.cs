@@ -37,7 +37,7 @@ namespace Snowflake.Core.Init
             InitializeComponent();
             FrontendCore.InitCore();
 
-            Console.WriteLine(FrontendCore.LoadedCore.LoadedPlatforms["NINTENDO_SNES"].Controllers["SNES_CONTROLLER"].ControllerID);
+           // Console.WriteLine(FrontendCore.LoadedCore.LoadedPlatforms["NINTENDO_SNES"].Controllers["SNES_CONTROLLER"].ControllerID);
          /*   var x = new Dictionary<string, ControllerInput>(){
                 {"BTN_A", new ControllerInput("BTN_A", KeyboardConstants.KEY_Z, GamepadConstants.GAMEPAD_A)},
                 {"BTN_B", new ControllerInput("BTN_B", KeyboardConstants.KEY_X, GamepadConstants.GAMEPAD_B)},
@@ -55,24 +55,25 @@ namespace Snowflake.Core.Init
             //manager.LoadEmulatorCores();
             //Process.Start(manager.GetExecutableEmulatorProcess(manager.EmulatorCores["retroarch"]));
 
-           /* string s = File.ReadAllText("c.yml");
-             var x = ConfigurationTemplate.FromYaml(s);
-             var xx = new Dictionary<string, dynamic>()
-                 {
-                     {"video_driver", "gl"},
-                     {"video_rotation", 0}
-                 };
-             var xi = new EmulatorConfiguration(x, xx);
+              string s = File.ReadAllText("c.yml");
+              var x = ConfigurationTemplate.FromDictionary(new Serializer().Deserialize<Dictionary<string, dynamic>>(s));
+            
+              var xx = new Dictionary<string, dynamic>()
+                  {
+                      {"video_driver", "gl"},
+                      {"video_rotation", 0}
+                  };
+              var xi = new EmulatorConfiguration(x, xx);
            
-             Console.WriteLine(xi.Compile());
-             Console.WriteLine(JsonConvert.SerializeObject(xi));*/
+              Console.WriteLine(xi.Compile());
+              Console.WriteLine(JsonConvert.SerializeObject(xi));
 
-        /*    foreach (string line in File.ReadAllLines("retroarch.cfg"))
-            {
-                var key = Regex.Match(line, @".+?(?=\s)").Value;
-                var value = Regex.Match(line, "\"([^\"]*)\"").Value.Replace("\"", "");
-                Console.WriteLine(line.Replace(value, "{" + key + "}"));
-            }*/
+            /*    foreach (string line in File.ReadAllLines("retroarch.cfg"))
+                {
+                    var key = Regex.Match(line, @".+?(?=\s)").Value;
+                    var value = Regex.Match(line, "\"([^\"]*)\"").Value.Replace("\"", "");
+                    Console.WriteLine(line.Replace(value, "{" + key + "}"));
+                }*/
 
             /*   var xix = new Dictionary<string, Dictionary<string, dynamic>>();
                foreach (string line in File.ReadAllLines("retroarch.cfg"))

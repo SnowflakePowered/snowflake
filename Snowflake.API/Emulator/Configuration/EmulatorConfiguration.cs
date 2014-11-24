@@ -55,5 +55,6 @@ namespace Snowflake.Emulator.Configuration
             this.template = template;
             this.IncludeDefaults();
         }
+
     }
 }

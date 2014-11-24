@@ -32,10 +32,8 @@ namespace Snowflake.Emulator.Configuration.Template
             this.ConfigurationName = configurationName;
         }
 
-        public static ConfigurationTemplate FromYaml(string yaml)
+        public static ConfigurationTemplate FromDictionary(IDictionary<string, dynamic> protoTemplate)
         {
-            var serializer = new Serializer();
-            dynamic protoTemplate = serializer.Deserialize(yaml);
             string stringTemplate = protoTemplate["template"];
             var booleanMapping = new BooleanMapping(protoTemplate["boolean"][true], protoTemplate["boolean"][false]);
             var types = new Dictionary<string, CustomType>();
