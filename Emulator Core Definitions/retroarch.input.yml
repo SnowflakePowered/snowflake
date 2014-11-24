@@ -248,7 +248,7 @@ keyboard:
         KEY_TILDE: 'tilde'
         KEY_QUOTE: 'quote'
         KEY_SEMICOLON: 'semicolon'
-        KEY_COMMA: 'comma'
+        KEY_COMMA: 'comma'	
         KEY_PERIOD: 'period'
         KEY_SLASH: 'slash'
         KEY_BRACKET_LEFT: 'leftbracket'

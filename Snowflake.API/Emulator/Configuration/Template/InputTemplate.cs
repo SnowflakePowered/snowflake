@@ -29,6 +29,20 @@ namespace Snowflake.Emulator.Configuration.Template
             this.templateKeys = templateKeys;
         }
 
+        public static void FromDictionary(IDictionary<string, dynamic> protoTemplate)
+        {
+            string template = protoTemplate["template"];
+            IList<string> templateKeys = (from key in (IList<object>) protoTemplate["templatekeys"] select (string) key).ToList();
+            string nobind = protoTemplate["nobind"];
+        
+            IDictionary<string, GamepadMapping> gamepadMappings = (from mapping in (IDictionary<object, object>)protoTemplate["gamepad"] select mapping)
+                .ToDictionary(mapping => (string)mapping.Key, mapping => new GamepadMapping(((IDictionary<object, object>)mapping.Value)
+                    .ToDictionary(input => (string) input.Key, input => (string) input.Value)));
+            IDictionary<string, KeyboardMapping> keyboardMappings = (from mapping in (IDictionary<object, object>)protoTemplate["keyboard"] select mapping)
+              .ToDictionary(mapping => (string)mapping.Key, mapping => new KeyboardMapping(((IDictionary<object, object>)mapping.Value)
+                  .ToDictionary(input => (string)input.Key, input => (string)input.Value)));
+              
+        }
 
     }
-}
+} 

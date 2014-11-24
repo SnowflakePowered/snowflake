@@ -35,7 +35,11 @@ namespace Snowflake.Core.Init
         public Form1()
         {
             InitializeComponent();
-            FrontendCore.InitCore();
+          /*  FrontendCore.InitCore();*/
+
+            string s = File.ReadAllText("retroarch.input.yml");
+            InputTemplate.FromDictionary(new Serializer().Deserialize<Dictionary<string, dynamic>>(s));
+
 
            // Console.WriteLine(FrontendCore.LoadedCore.LoadedPlatforms["NINTENDO_SNES"].Controllers["SNES_CONTROLLER"].ControllerID);
          /*   var x = new Dictionary<string, ControllerInput>(){
@@ -55,7 +59,7 @@ namespace Snowflake.Core.Init
             //manager.LoadEmulatorCores();
             //Process.Start(manager.GetExecutableEmulatorProcess(manager.EmulatorCores["retroarch"]));
 
-              string s = File.ReadAllText("c.yml");
+           /*   string s = File.ReadAllText("c.yml");
               var x = ConfigurationTemplate.FromDictionary(new Serializer().Deserialize<Dictionary<string, dynamic>>(s));
             
               var xx = new Dictionary<string, dynamic>()
@@ -66,7 +70,7 @@ namespace Snowflake.Core.Init
               var xi = new EmulatorConfiguration(x, xx);
            
               Console.WriteLine(xi.Compile());
-              Console.WriteLine(JsonConvert.SerializeObject(xi));
+              Console.WriteLine(JsonConvert.SerializeObject(xi));*/
 
             /*    foreach (string line in File.ReadAllLines("retroarch.cfg"))
                 {

@@ -92,7 +92,7 @@
     <Compile Include="Constants\Plugin\PluginTypes.cs" />
     <Compile Include="Constants\Plugin\ScraperInfoFields.cs" />
     <Compile Include="Constants\Input\GamepadConstants.cs" />
-    <Compile Include="Emulator\Configuration\Template\ControllerTemplate.cs" />
+    <Compile Include="Emulator\Configuration\Template\InputTemplate.cs" />
     <Compile Include="Platform\Controller\ControllerDefinition.cs" />
     <Compile Include="Core\Manager\AjaxManager.cs" />
     <Compile Include="Core\EventDelegate\JsonRPCEventDelegate.cs" />
