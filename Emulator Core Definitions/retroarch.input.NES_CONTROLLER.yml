@@ -1,5 +1,6 @@
 controller: NES_CONTROLLER
 emulator: RetroArch
+platform: NINTENDO_NES
 
 gamepad: 
     default: 
