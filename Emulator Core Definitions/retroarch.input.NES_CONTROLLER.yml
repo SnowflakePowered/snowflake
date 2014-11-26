@@ -6,7 +6,7 @@ gamepad:
     default: 
         keys:
             INPUTDEVICE: "0"
-        mappings:
+        input:
             BTN_A: GAMEPAD_INPUT_A
             BTN_B: GAMEPAD_INPUT_B
             BTN_L: GAMEPAD_INPUT_L1
@@ -17,7 +17,7 @@ keyboard:
     default:
         keys:
             INPUTDEVICE: "0"
-        mappings:
+        input:
             BTN_A: KEYBOARD_INPUT_A
             BTN_B: KEYBOARD_INPUT_B
             BTN_L: KEYBOARD_INPUT_L1

@@ -43,7 +43,10 @@ namespace Snowflake.Emulator.Configuration.Template
             var defaults = new Dictionary<string, dynamic>();
             foreach (var value in protoTemplate["types"])
             {
+               
+                //todo replace this part with more readable LINQ
                 var typeValues = new List<CustomTypeValue>();
+
                 foreach (var type in value.Value)
                 {
                     typeValues.Add(new CustomTypeValue(type[0], type[1]));

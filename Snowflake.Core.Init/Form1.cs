@@ -28,6 +28,7 @@ using System.Text.RegularExpressions;
 using System.Dynamic;
 using Snowflake.Platform.Controller;
 using Snowflake.Constants.Input;
+using Snowflake.Emulator.Input.Template;
 namespace Snowflake.Core.Init
 {
     public partial class Form1 : Form
@@ -37,8 +38,8 @@ namespace Snowflake.Core.Init
             InitializeComponent();
           /*  FrontendCore.InitCore();*/
 
-            string s = File.ReadAllText("retroarch.cfg.yml");
-            ConfigurationTemplate.FromDictionary(new Serializer().Deserialize<Dictionary<string, dynamic>>(s));
+            string s = File.ReadAllText("retroarch.input.NES_CONTROLLER.yml");
+            Console.WriteLine(ControllerTemplate.FromDictionary(new Serializer().Deserialize<Dictionary<string, dynamic>>(s)).KeyboardControllerMappings["default"].InputMappings["BTN_A"]);
 
 
            // Console.WriteLine(FrontendCore.LoadedCore.LoadedPlatforms["NINTENDO_SNES"].Controllers["SNES_CONTROLLER"].ControllerID);
