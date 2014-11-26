@@ -38,7 +38,7 @@ namespace Snowflake.Core.Init
           /*  FrontendCore.InitCore();*/
 
             string s = File.ReadAllText("retroarch.cfg.yml");
-           ConfigurationTemplate.FromDictionary(new Serializer().Deserialize<Dictionary<string, dynamic>>(s));
+            ConfigurationTemplate.FromDictionary(new Serializer().Deserialize<Dictionary<string, dynamic>>(s));
 
 
            // Console.WriteLine(FrontendCore.LoadedCore.LoadedPlatforms["NINTENDO_SNES"].Controllers["SNES_CONTROLLER"].ControllerID);

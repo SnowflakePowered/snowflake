@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Snowflake.Emulator.Configuration.Mapping;
+using Snowflake.Emulator.Input.Mapping;
 
-namespace Snowflake.Emulator.Configuration
+namespace Snowflake.Emulator.Input
 {
     public interface IInputConfiguration
     {

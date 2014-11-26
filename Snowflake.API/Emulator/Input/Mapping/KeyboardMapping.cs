@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Snowflake.Emulator.Configuration.Mapping
+namespace Snowflake.Emulator.Input.Mapping
 {
     public class KeyboardMapping
     {
