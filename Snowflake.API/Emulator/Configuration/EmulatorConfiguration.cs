@@ -20,11 +20,11 @@ namespace Snowflake.Emulator.Configuration
         {
          //fix this pls. 
             var builder = new StringBuilder(this.template.StringTemplate);
-            foreach (KeyValuePair<string, ConfigurationEntry> entry in this.template.ConfigurationEntries)
+            foreach (ConfigurationEntry entry in this.template.ConfigurationEntries)
             {
-                var value = this.Keys.ContainsKey(entry.Value.Name) ? this.Keys[entry.Value.Name] : entry.Value.DefaultValue;
+                var value = this.Keys.ContainsKey(entry.Name) ? this.Keys[entry.Name] : entry.DefaultValue;
                 string input;
-                switch (entry.Value.Type)
+                switch (entry.Type)
                 {
                     case "boolean":
                         input = this.template.BooleanMapping.FromBool((bool)value);
@@ -34,17 +34,17 @@ namespace Snowflake.Emulator.Configuration
                         break;
                 }
 
-                builder.Replace("{" + entry.Value.Name + "}", input);
+                builder.Replace("{" + entry.Name + "}", input);
             }
             return builder.ToString();
         }
 
         private void IncludeDefaults()
         {
-            foreach (KeyValuePair<string, ConfigurationEntry> entry in this.template.ConfigurationEntries)
+            foreach (ConfigurationEntry entry in this.template.ConfigurationEntries)
             {
-                if(!this.Keys.ContainsKey(entry.Value.Name)){
-                    this.Keys.Add(entry.Value.Name, entry.Value.DefaultValue);
+                if(!this.Keys.ContainsKey(entry.Name)){
+                    this.Keys.Add(entry.Name, entry.DefaultValue);
                 }
 
             }

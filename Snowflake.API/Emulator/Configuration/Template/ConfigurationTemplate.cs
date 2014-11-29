@@ -14,15 +14,15 @@ namespace Snowflake.Emulator.Configuration.Template
     public class ConfigurationTemplate
     {
         public string StringTemplate { get; set; }
-        private IDictionary<string, ConfigurationEntry> configurationEntries;
+        private IList<ConfigurationEntry> configurationEntries;
         private IDictionary<string, CustomType> customTypes;
         public string ConfigurationName { get; private set; }
-        public IReadOnlyDictionary<string, ConfigurationEntry> ConfigurationEntries { get { return this.configurationEntries.AsReadOnly(); } }
+        public IList<ConfigurationEntry> ConfigurationEntries { get { return this.configurationEntries.AsReadOnly(); } }
         public string FileName { get; private set; }
         public BooleanMapping BooleanMapping { get; private set; }
         public IReadOnlyDictionary<string, CustomType> CustomTypes { get { return this.customTypes.AsReadOnly(); } }
 
-        public ConfigurationTemplate(string stringTemplate, IDictionary<string, ConfigurationEntry> configurationEntries, IDictionary<string, CustomType> customTypes, BooleanMapping booleanMapping, string fileName, string configurationName)
+        public ConfigurationTemplate(string stringTemplate, IList<ConfigurationEntry> configurationEntries, IDictionary<string, CustomType> customTypes, BooleanMapping booleanMapping, string fileName, string configurationName)
         {
             this.StringTemplate = stringTemplate;
             this.configurationEntries = configurationEntries;
@@ -37,7 +37,7 @@ namespace Snowflake.Emulator.Configuration.Template
             string stringTemplate = protoTemplate["template"];
             var booleanMapping = new BooleanMapping(protoTemplate["boolean"][true], protoTemplate["boolean"][false]);
             var types = new Dictionary<string, CustomType>();
-            var entries = new Dictionary<string, ConfigurationEntry>();
+            var entries = new List<ConfigurationEntry>();
             var fileName = protoTemplate["filename"];
             var configName = protoTemplate["configuration_name"];
             var defaults = new Dictionary<string, dynamic>();
@@ -55,7 +55,7 @@ namespace Snowflake.Emulator.Configuration.Template
             }
             foreach (var value in protoTemplate["keys"])
             {
-                entries.Add(value.Key, new ConfigurationEntry(value.Value["description"], value.Value["protection"], value.Value["type"], value.Key, value.Value["default"]));
+                entries.Add(new ConfigurationEntry(value.Value["description"], value.Value["protection"], value.Value["type"], value.Key, value.Value["default"]));
             }
           
             return new ConfigurationTemplate(stringTemplate, entries, types, booleanMapping, fileName, configName);

@@ -36,11 +36,13 @@ namespace Snowflake.Core.Init
         public Form1()
         {
             InitializeComponent();
-          /*  FrontendCore.InitCore();*/
+           FrontendCore.InitCore();
 
-            string s = File.ReadAllText("retroarch.input.NES_CONTROLLER.yml");
-            Console.WriteLine(ControllerTemplate.FromDictionary(new Serializer().Deserialize<Dictionary<string, dynamic>>(s)).KeyboardControllerMappings["default"].InputMappings["BTN_A"]);
+            var controllerMapping = ControllerTemplate.FromDictionary(new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText("retroarch.input.NES_CONTROLLER.yml")));
+            var inputMapping = InputTemplate.FromDictionary(new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText("retroarch.input.yml")));
+            var controller = FrontendCore.LoadedCore.LoadedPlatforms["NINTENDO_NES"].Controllers["NES_CONTROLLER"];
 
+            foreach()
 
            // Console.WriteLine(FrontendCore.LoadedCore.LoadedPlatforms["NINTENDO_SNES"].Controllers["SNES_CONTROLLER"].ControllerID);
          /*   var x = new Dictionary<string, ControllerInput>(){
