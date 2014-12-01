@@ -41,8 +41,32 @@ namespace Snowflake.Core.Init
             var controllerMapping = ControllerTemplate.FromDictionary(new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText("retroarch.input.NES_CONTROLLER.yml")));
             var inputMapping = InputTemplate.FromDictionary(new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText("retroarch.input.yml")));
             var controller = FrontendCore.LoadedCore.LoadedPlatforms["NINTENDO_NES"].Controllers["NES_CONTROLLER"];
+            var inputs = controllerMapping.GamepadControllerMappings.First().Value;
 
-            foreach()
+            StringBuilder template = new StringBuilder(inputMapping.StringTemplate);
+
+
+            foreach (var key in inputs.InputMappings)
+            {
+                var input = controller.ControllerInputs[key.Key].GamepadDefault;
+                template.Replace(key.Value, controller.ControllerInputs[key.Key].GamepadDefault);
+                template.Replace("{"+input+"}", inputMapping.GamepadMappings.First().Value[input]);
+            }
+            foreach (var key in inputMapping.TemplateKeys)
+            {
+                template.Replace("{N}", "1"); //Player Index
+                if (inputs.KeyMappings.ContainsKey(key))
+                {
+                    template.Replace("{" + key + "}", inputs.KeyMappings[key]); //Non-input keys
+                }else{
+                    template.Replace("{" + key + "}", inputMapping.NoBind); //Non-input keys
+                }
+               
+           
+            }
+          
+
+            Console.WriteLine(template.ToString());
 
            // Console.WriteLine(FrontendCore.LoadedCore.LoadedPlatforms["NINTENDO_SNES"].Controllers["SNES_CONTROLLER"].ControllerID);
          /*   var x = new Dictionary<string, ControllerInput>(){
