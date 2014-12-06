@@ -95,6 +95,7 @@
     <Compile Include="Emulator\Input\Mapping\ControllerMapping.cs" />
     <Compile Include="Emulator\Input\Template\ControllerTemplate.cs" />
     <Compile Include="Emulator\Input\Template\InputTemplate.cs" />
+    <Compile Include="Platform\Controller\ControllerConfiguration.cs" />
     <Compile Include="Platform\Controller\ControllerDefinition.cs" />
     <Compile Include="Core\Manager\AjaxManager.cs" />
     <Compile Include="Core\EventDelegate\JsonRPCEventDelegate.cs" />

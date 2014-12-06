@@ -3,160 +3,160 @@ template: |
     input_player{N}_joypad_index = "{JOYPAD_INDEX}"
     input_libretro_device_p{N} = "1"
     input_player{N}_analog_dpad_mode = "0"
-    input_player{N}_b = "{KEYBOARD_INPUT_B}"
-    input_player{N}_b_btn = "{GAMEPAD_INPUT_B}"
-    input_player{N}_b_axis = "{GAMEPAD_ANALOG_INPUT_B}"
-    input_player{N}_y = "{KEYBOARD_INPUT_Y}"
-    input_player{N}_y_btn = "{GAMEPAD_INPUT_Y}"
-    input_player{N}_y_axis = "{GAMEPAD_ANALOG_INPUT_Y}"
-    input_player{N}_select = "{KEYBOARD_INPUT_SELECT}"
-    input_player{N}_select_btn = "{GAMEPAD_INPUT_SELECT}"
-    input_player{N}_select_axis = "{GAMEPAD_ANALOG_INPUT_SELECT}"
-    input_player{N}_start = "{KEYBOARD_INPUT_START}"
-    input_player{N}_start_btn = "{GAMEPAD_INPUT_START}"
-    input_player{N}_start_axis = "{GAMEPAD_ANALOG_INPUT_START}"
-    input_player{N}_up = "{KEYBOARD_INPUT_UP}"
-    input_player{N}_up_btn = "{GAMEPAD_INPUT_UP}"
-    input_player{N}_up_axis = "{GAMEPAD_ANALOG_INPUT_UP}"
-    input_player{N}_down = "{KEYBOARD_INPUT_DOWN}"
-    input_player{N}_down_btn = "{GAMEPAD_INPUT_DOWN}"
-    input_player{N}_down_axis = "{GAMEPAD_ANALOG_INPUT_DOWN}"
-    input_player{N}_left = "{KEYBOARD_INPUT_LEFT}"
-    input_player{N}_left_btn = "{GAMEPAD_INPUT_LEFT}"
-    input_player{N}_left_axis = "{GAMEPAD_ANALOG_INPUT_LEFT}"
-    input_player{N}_right = "{KEYBOARD_INPUT_RIGHT}"
-    input_player{N}_right_btn = "{GAMEPAD_INPUT_RIGHT}"
-    input_player{N}_right_axis = "{GAMEPAD_ANALOG_INPUT_RIGHT}"
-    input_player{N}_a = "{KEYBOARD_INPUT_A}"
-    input_player{N}_a_btn = "{GAMEPAD_INPUT_A}"
-    input_player{N}_a_axis = "{GAMEPAD_ANALOG_INPUT_A}"
-    input_player{N}_x = "{KEYBOARD_INPUT_X}"
-    input_player{N}_x_btn = "{GAMEPAD_INPUT_X}"
-    input_player{N}_x_axis = "{GAMEPAD_ANALOG_INPUT_X}"
-    input_player{N}_l = "{KEYBOARD_INPUT_L1}"
-    input_player{N}_l_btn = "{GAMEPAD_INPUT_L1}"
-    input_player{N}_l_axis = "{GAMEPAD_ANALOG_INPUT_L1}"
-    input_player{N}_r = "{KEYBOARD_INPUT_R1}"
-    input_player{N}_r_btn = "{GAMEPAD_INPUT_R1}"
-    input_player{N}_r_axis = "{GAMEPAD_ANALOG_INPUT_R1}"
-    input_player{N}_l2 = "{KEYBOARD_INPUT_L2}"
-    input_player{N}_l2_btn = "{GAMEPAD_INPUT_L2}"
-    input_player{N}_l2_axis = "{GAMEPAD_ANALOG_INPUT_L2}"
-    input_player{N}_r2 = "{KEYBOARD_INPUT_R2}"
-    input_player{N}_r2_btn = "{GAMEPAD_INPUT_R2}"
-    input_player{N}_r2_axis = "{GAMEPAD_ANALOG_INPUT_R2}"
-    input_player{N}_l3 = "{KEYBOARD_INPUT_L3}"
-    input_player{N}_l3_btn = "{GAMEPAD_INPUT_L3}"
-    input_player{N}_l3_axis = "{GAMEPAD_ANALOG_INPUT_L3}"
-    input_player{N}_r3 = "{KEYBOARD_INPUT_R3}"
-    input_player{N}_r3_btn = "{GAMEPAD_INPUT_R3}"
-    input_player{N}_r3_axis = "{GAMEPAD_ANALOG_INPUT_R3}"
-    input_player{N}_l_x_plus = "{KEYBOARD_INPUT_L_X_RIGHT}"
-    input_player{N}_l_x_plus_btn = "{GAMEPAD_INPUT_L_X_RIGHT}"
-    input_player{N}_l_x_plus_axis = "{GAMEPAD_ANALOG_INPUT_L_X_RIGHT}"
-    input_player{N}_l_x_minus = "{KEYBOARD_INPUT_L_X_LEFT}"
-    input_player{N}_l_x_minus_btn = "{GAMEPAD_INPUT_L_X_LEFT}"
-    input_player{N}_l_x_minus_axis = "{GAMEPAD_ANALOG_INPUT_L_X_LEFT}"
-    input_player{N}_l_y_plus = "{KEYBOARD_INPUT_L_Y_UP}"
-    input_player{N}_l_y_plus_btn = "{GAMEPAD_INPUT_L_Y_UP}"
-    input_player{N}_l_y_plus_axis = "{GAMEPAD_ANALOG_INPUT_L_Y_UP}"
-    input_player{N}_l_y_minus = "{KEYBOARD_INPUT_L_Y_DOWN}"
-    input_player{N}_l_y_minus_btn = "{GAMEPAD_INPUT_L_Y_DOWN}"
-    input_player{N}_l_y_minus_axis = "{GAMEPAD_ANALOG_INPUT_L_Y_DOWN}"
-    input_player{N}_r_x_plus = "{KEYBOARD_INPUT_R_X_RIGHT}"
-    input_player{N}_r_x_plus_btn = "{GAMEPAD_INPUT_R_X_RIGHT}"
-    input_player{N}_r_x_plus_axis = "{GAMEPAD_ANALOG_INPUT_R_X_RIGHT}"
-    input_player{N}_r_x_minus = "{KEYBOARD_INPUT_R_X_LEFT}"
-    input_player{N}_r_x_minus_btn = "{GAMEPAD_INPUT_R_X_LEFT}"
-    input_player{N}_r_x_minus_axis = "{GAMEPAD_ANALOG_INPUT_R_X_LEFT}"
-    input_player{N}_r_y_plus = "{KEYBOARD_INPUT_R_Y_UP}"
-    input_player{N}_r_y_plus_btn = "{GAMEPAD_INPUT_R_Y_UP}"
-    input_player{N}_r_y_plus_axis = "{GAMEPAD_ANALOG_INPUT_R_Y_UP}"
-    input_player{N}_r_y_minus = "{KEYBOARD_INPUT_R_Y_DOWN}"
-    input_player{N}_r_y_minus_btn = "{GAMEPAD_INPUT_R_Y_DOWN}"
-    input_player{N}_r_y_minus_axis = "{GAMEPAD_ANALOG_INPUT_R_Y_DOWN}"
-    input_player{N}_turbo = "{KEYBOARD_INPUT_TURBO}"
-    input_player{N}_turbo_btn = "{GAMEPAD_INPUT_TURBO}"
-    input_player{N}_turbo_axis = "{GAMEPAD_ANALOG_INPUT_TURBO}"
+    input_player{N}_b = "{RETROARCH_KEYBOARD_INPUT_B}"
+    input_player{N}_b_btn = "{RETROARCH_GAMEPAD_INPUT_B}"
+    input_player{N}_b_axis = "{RETROARCH_GAMEPAD_ANALOG_INPUT_B}"
+    input_player{N}_y = "{RETROARCH_KEYBOARD_INPUT_Y}"
+    input_player{N}_y_btn = "{RETROARCH_GAMEPAD_INPUT_Y}"
+    input_player{N}_y_axis = "{RETROARCH_GAMEPAD_ANALOG_INPUT_Y}"
+    input_player{N}_select = "{RETROARCH_KEYBOARD_INPUT_SELECT}"
+    input_player{N}_select_btn = "{RETROARCH_GAMEPAD_INPUT_SELECT}"
+    input_player{N}_select_axis = "{RETROARCH_GAMEPAD_ANALOG_INPUT_SELECT}"
+    input_player{N}_start = "{RETROARCH_KEYBOARD_INPUT_START}"
+    input_player{N}_start_btn = "{RETROARCH_GAMEPAD_INPUT_START}"
+    input_player{N}_start_axis = "{RETROARCH_GAMEPAD_ANALOG_INPUT_START}"
+    input_player{N}_up = "{RETROARCH_KEYBOARD_INPUT_UP}"
+    input_player{N}_up_btn = "{RETROARCH_GAMEPAD_INPUT_UP}"
+    input_player{N}_up_axis = "{RETROARCH_GAMEPAD_ANALOG_INPUT_UP}"
+    input_player{N}_down = "{RETROARCH_KEYBOARD_INPUT_DOWN}"
+    input_player{N}_down_btn = "{RETROARCH_GAMEPAD_INPUT_DOWN}"
+    input_player{N}_down_axis = "{RETROARCH_GAMEPAD_ANALOG_INPUT_DOWN}"
+    input_player{N}_left = "{RETROARCH_KEYBOARD_INPUT_LEFT}"
+    input_player{N}_left_btn = "{RETROARCH_GAMEPAD_INPUT_LEFT}"
+    input_player{N}_left_axis = "{RETROARCH_GAMEPAD_ANALOG_INPUT_LEFT}"
+    input_player{N}_right = "{RETROARCH_KEYBOARD_INPUT_RIGHT}"
+    input_player{N}_right_btn = "{RETROARCH_GAMEPAD_INPUT_RIGHT}"
+    input_player{N}_right_axis = "{RETROARCH_GAMEPAD_ANALOG_INPUT_RIGHT}"
+    input_player{N}_a = "{RETROARCH_KEYBOARD_INPUT_A}"
+    input_player{N}_a_btn = "{RETROARCH_GAMEPAD_INPUT_A}"
+    input_player{N}_a_axis = "{RETROARCH_GAMEPAD_ANALOG_INPUT_A}"
+    input_player{N}_x = "{RETROARCH_KEYBOARD_INPUT_X}"
+    input_player{N}_x_btn = "{RETROARCH_GAMEPAD_INPUT_X}"
+    input_player{N}_x_axis = "{RETROARCH_GAMEPAD_ANALOG_INPUT_X}"
+    input_player{N}_l = "{RETROARCH_KEYBOARD_INPUT_L1}"
+    input_player{N}_l_btn = "{RETROARCH_GAMEPAD_INPUT_L1}"
+    input_player{N}_l_axis = "{RETROARCH_GAMEPAD_ANALOG_INPUT_L1}"
+    input_player{N}_r = "{RETROARCH_KEYBOARD_INPUT_R1}"
+    input_player{N}_r_btn = "{RETROARCH_GAMEPAD_INPUT_R1}"
+    input_player{N}_r_axis = "{RETROARCH_GAMEPAD_ANALOG_INPUT_R1}"
+    input_player{N}_l2 = "{RETROARCH_KEYBOARD_INPUT_L2}"
+    input_player{N}_l2_btn = "{RETROARCH_GAMEPAD_INPUT_L2}"
+    input_player{N}_l2_axis = "{RETROARCH_GAMEPAD_ANALOG_INPUT_L2}"
+    input_player{N}_r2 = "{RETROARCH_KEYBOARD_INPUT_R2}"
+    input_player{N}_r2_btn = "{RETROARCH_GAMEPAD_INPUT_R2}"
+    input_player{N}_r2_axis = "{RETROARCH_GAMEPAD_ANALOG_INPUT_R2}"
+    input_player{N}_l3 = "{RETROARCH_KEYBOARD_INPUT_L3}"
+    input_player{N}_l3_btn = "{RETROARCH_GAMEPAD_INPUT_L3}"
+    input_player{N}_l3_axis = "{RETROARCH_GAMEPAD_ANALOG_INPUT_L3}"
+    input_player{N}_r3 = "{RETROARCH_KEYBOARD_INPUT_R3}"
+    input_player{N}_r3_btn = "{RETROARCH_GAMEPAD_INPUT_R3}"
+    input_player{N}_r3_axis = "{RETROARCH_GAMEPAD_ANALOG_INPUT_R3}"
+    input_player{N}_l_x_plus = "{RETROARCH_KEYBOARD_INPUT_L_X_RIGHT}"
+    input_player{N}_l_x_plus_btn = "{RETROARCH_GAMEPAD_INPUT_L_X_RIGHT}"
+    input_player{N}_l_x_plus_axis = "{RETROARCH_GAMEPAD_ANALOG_INPUT_L_X_RIGHT}"
+    input_player{N}_l_x_minus = "{RETROARCH_KEYBOARD_INPUT_L_X_LEFT}"
+    input_player{N}_l_x_minus_btn = "{RETROARCH_GAMEPAD_INPUT_L_X_LEFT}"
+    input_player{N}_l_x_minus_axis = "{RETROARCH_GAMEPAD_ANALOG_INPUT_L_X_LEFT}"
+    input_player{N}_l_y_plus = "{RETROARCH_KEYBOARD_INPUT_L_Y_UP}"
+    input_player{N}_l_y_plus_btn = "{RETROARCH_GAMEPAD_INPUT_L_Y_UP}"
+    input_player{N}_l_y_plus_axis = "{RETROARCH_GAMEPAD_ANALOG_INPUT_L_Y_UP}"
+    input_player{N}_l_y_minus = "{RETROARCH_KEYBOARD_INPUT_L_Y_DOWN}"
+    input_player{N}_l_y_minus_btn = "{RETROARCH_GAMEPAD_INPUT_L_Y_DOWN}"
+    input_player{N}_l_y_minus_axis = "{RETROARCH_GAMEPAD_ANALOG_INPUT_L_Y_DOWN}"
+    input_player{N}_r_x_plus = "{RETROARCH_KEYBOARD_INPUT_R_X_RIGHT}"
+    input_player{N}_r_x_plus_btn = "{RETROARCH_GAMEPAD_INPUT_R_X_RIGHT}"
+    input_player{N}_r_x_plus_axis = "{RETROARCH_GAMEPAD_ANALOG_INPUT_R_X_RIGHT}"
+    input_player{N}_r_x_minus = "{RETROARCH_KEYBOARD_INPUT_R_X_LEFT}"
+    input_player{N}_r_x_minus_btn = "{RETROARCH_GAMEPAD_INPUT_R_X_LEFT}"
+    input_player{N}_r_x_minus_axis = "{RETROARCH_GAMEPAD_ANALOG_INPUT_R_X_LEFT}"
+    input_player{N}_r_y_plus = "{RETROARCH_KEYBOARD_INPUT_R_Y_UP}"
+    input_player{N}_r_y_plus_btn = "{RETROARCH_GAMEPAD_INPUT_R_Y_UP}"
+    input_player{N}_r_y_plus_axis = "{RETROARCH_GAMEPAD_ANALOG_INPUT_R_Y_UP}"
+    input_player{N}_r_y_minus = "{RETROARCH_KEYBOARD_INPUT_R_Y_DOWN}"
+    input_player{N}_r_y_minus_btn = "{RETROARCH_GAMEPAD_INPUT_R_Y_DOWN}"
+    input_player{N}_r_y_minus_axis = "{RETROARCH_GAMEPAD_ANALOG_INPUT_R_Y_DOWN}"
+    input_player{N}_turbo = "{RETROARCH_KEYBOARD_INPUT_TURBO}"
+    input_player{N}_turbo_btn = "{RETROARCH_GAMEPAD_INPUT_TURBO}"
+    input_player{N}_turbo_axis = "{RETROARCH_GAMEPAD_ANALOG_INPUT_TURBO}"
 
 templatekeys:
     - 'INPUTDEVICE'
     - 'JOYPAD_INDEX'
-    - 'KEYBOARD_INPUT_B'
-    - 'GAMEPAD_INPUT_B'
-    - 'GAMEPAD_ANALOG_INPUT_B'
-    - 'KEYBOARD_INPUT_Y'
-    - 'GAMEPAD_INPUT_Y'
-    - 'GAMEPAD_ANALOG_INPUT_Y'
-    - 'KEYBOARD_INPUT_SELECT'
-    - 'GAMEPAD_INPUT_SELECT'
-    - 'GAMEPAD_ANALOG_INPUT_SELECT'
-    - 'KEYBOARD_INPUT_START'
-    - 'GAMEPAD_INPUT_START'
-    - 'GAMEPAD_ANALOG_INPUT_START'
-    - 'KEYBOARD_INPUT_UP'
-    - 'GAMEPAD_INPUT_UP'
-    - 'GAMEPAD_ANALOG_INPUT_UP'
-    - 'KEYBOARD_INPUT_DOWN'
-    - 'GAMEPAD_INPUT_DOWN'
-    - 'GAMEPAD_ANALOG_INPUT_DOWN'
-    - 'KEYBOARD_INPUT_LEFT'
-    - 'GAMEPAD_INPUT_LEFT'
-    - 'GAMEPAD_ANALOG_INPUT_LEFT'
-    - 'KEYBOARD_INPUT_RIGHT'
-    - 'GAMEPAD_INPUT_RIGHT'
-    - 'GAMEPAD_ANALOG_INPUT_RIGHT'
-    - 'KEYBOARD_INPUT_A'
-    - 'GAMEPAD_INPUT_A'
-    - 'GAMEPAD_ANALOG_INPUT_A'
-    - 'KEYBOARD_INPUT_X'
-    - 'GAMEPAD_INPUT_X'
-    - 'GAMEPAD_ANALOG_INPUT_X'
-    - 'KEYBOARD_INPUT_L1'
-    - 'GAMEPAD_INPUT_L1'
-    - 'GAMEPAD_ANALOG_INPUT_L1'
-    - 'KEYBOARD_INPUT_R1'
-    - 'GAMEPAD_INPUT_R1'
-    - 'GAMEPAD_ANALOG_INPUT_R1'
-    - 'KEYBOARD_INPUT_L2'
-    - 'GAMEPAD_INPUT_L2'
-    - 'GAMEPAD_ANALOG_INPUT_L2'
-    - 'KEYBOARD_INPUT_R2'
-    - 'GAMEPAD_INPUT_R2'
-    - 'GAMEPAD_ANALOG_INPUT_R2'
-    - 'KEYBOARD_INPUT_L3'
-    - 'GAMEPAD_INPUT_L3'
-    - 'GAMEPAD_ANALOG_INPUT_L3'
-    - 'KEYBOARD_INPUT_R3'
-    - 'GAMEPAD_INPUT_R3'
-    - 'GAMEPAD_ANALOG_INPUT_R3'
-    - 'KEYBOARD_INPUT_L_X_RIGHT'
-    - 'GAMEPAD_INPUT_L_X_RIGHT'
-    - 'GAMEPAD_ANALOG_INPUT_L_X_RIGHT'
-    - 'KEYBOARD_INPUT_L_X_LEFT'
-    - 'GAMEPAD_INPUT_L_X_LEFT'
-    - 'GAMEPAD_ANALOG_INPUT_L_X_LEFT'
-    - 'KEYBOARD_INPUT_L_Y_UP'
-    - 'GAMEPAD_INPUT_L_Y_UP'
-    - 'GAMEPAD_ANALOG_INPUT_L_Y_UP'
-    - 'KEYBOARD_INPUT_L_Y_DOWN'
-    - 'GAMEPAD_INPUT_L_Y_DOWN'
-    - 'GAMEPAD_ANALOG_INPUT_L_Y_DOWN'
-    - 'KEYBOARD_INPUT_R_X_RIGHT'
-    - 'GAMEPAD_INPUT_R_X_RIGHT'
-    - 'GAMEPAD_ANALOG_INPUT_R_X_RIGHT'
-    - 'KEYBOARD_INPUT_R_X_LEFT'
-    - 'GAMEPAD_INPUT_R_X_LEFT'
-    - 'GAMEPAD_ANALOG_INPUT_R_X_LEFT'
-    - 'KEYBOARD_INPUT_R_Y_UP'
-    - 'GAMEPAD_INPUT_R_Y_UP'
-    - 'GAMEPAD_ANALOG_INPUT_R_Y_UP'
-    - 'KEYBOARD_INPUT_R_Y_DOWN'
-    - 'GAMEPAD_INPUT_R_Y_DOWN'
-    - 'GAMEPAD_ANALOG_INPUT_R_Y_DOWN'
-    - 'KEYBOARD_INPUT_TURBO'
-    - 'GAMEPAD_INPUT_TURBO'
-    - 'GAMEPAD_ANALOG_INPUT_TURBO'
+    - 'RETROARCH_KEYBOARD_INPUT_B'
+    - 'RETROARCH_GAMEPAD_INPUT_B'
+    - 'RETROARCH_GAMEPAD_ANALOG_INPUT_B'
+    - 'RETROARCH_KEYBOARD_INPUT_Y'
+    - 'RETROARCH_GAMEPAD_INPUT_Y'
+    - 'RETROARCH_GAMEPAD_ANALOG_INPUT_Y'
+    - 'RETROARCH_KEYBOARD_INPUT_SELECT'
+    - 'RETROARCH_GAMEPAD_INPUT_SELECT'
+    - 'RETROARCH_GAMEPAD_ANALOG_INPUT_SELECT'
+    - 'RETROARCH_KEYBOARD_INPUT_START'
+    - 'RETROARCH_GAMEPAD_INPUT_START'
+    - 'RETROARCH_GAMEPAD_ANALOG_INPUT_START'
+    - 'RETROARCH_KEYBOARD_INPUT_UP'
+    - 'RETROARCH_GAMEPAD_INPUT_UP'
+    - 'RETROARCH_GAMEPAD_ANALOG_INPUT_UP'
+    - 'RETROARCH_KEYBOARD_INPUT_DOWN'
+    - 'RETROARCH_GAMEPAD_INPUT_DOWN'
+    - 'RETROARCH_GAMEPAD_ANALOG_INPUT_DOWN'
+    - 'RETROARCH_KEYBOARD_INPUT_LEFT'
+    - 'RETROARCH_GAMEPAD_INPUT_LEFT'
+    - 'RETROARCH_GAMEPAD_ANALOG_INPUT_LEFT'
+    - 'RETROARCH_KEYBOARD_INPUT_RIGHT'
+    - 'RETROARCH_GAMEPAD_INPUT_RIGHT'
+    - 'RETROARCH_GAMEPAD_ANALOG_INPUT_RIGHT'
+    - 'RETROARCH_KEYBOARD_INPUT_A'
+    - 'RETROARCH_GAMEPAD_INPUT_A'
+    - 'RETROARCH_GAMEPAD_ANALOG_INPUT_A'
+    - 'RETROARCH_KEYBOARD_INPUT_X'
+    - 'RETROARCH_GAMEPAD_INPUT_X'
+    - 'RETROARCH_GAMEPAD_ANALOG_INPUT_X'
+    - 'RETROARCH_KEYBOARD_INPUT_L1'
+    - 'RETROARCH_GAMEPAD_INPUT_L1'
+    - 'RETROARCH_GAMEPAD_ANALOG_INPUT_L1'
+    - 'RETROARCH_KEYBOARD_INPUT_R1'
+    - 'RETROARCH_GAMEPAD_INPUT_R1'
+    - 'RETROARCH_GAMEPAD_ANALOG_INPUT_R1'
+    - 'RETROARCH_KEYBOARD_INPUT_L2'
+    - 'RETROARCH_GAMEPAD_INPUT_L2'
+    - 'RETROARCH_GAMEPAD_ANALOG_INPUT_L2'
+    - 'RETROARCH_KEYBOARD_INPUT_R2'
+    - 'RETROARCH_GAMEPAD_INPUT_R2'
+    - 'RETROARCH_GAMEPAD_ANALOG_INPUT_R2'
+    - 'RETROARCH_KEYBOARD_INPUT_L3'
+    - 'RETROARCH_GAMEPAD_INPUT_L3'
+    - 'RETROARCH_GAMEPAD_ANALOG_INPUT_L3'
+    - 'RETROARCH_KEYBOARD_INPUT_R3'
+    - 'RETROARCH_GAMEPAD_INPUT_R3'
+    - 'RETROARCH_GAMEPAD_ANALOG_INPUT_R3'
+    - 'RETROARCH_KEYBOARD_INPUT_L_X_RIGHT'
+    - 'RETROARCH_GAMEPAD_INPUT_L_X_RIGHT'
+    - 'RETROARCH_GAMEPAD_ANALOG_INPUT_L_X_RIGHT'
+    - 'RETROARCH_KEYBOARD_INPUT_L_X_LEFT'
+    - 'RETROARCH_GAMEPAD_INPUT_L_X_LEFT'
+    - 'RETROARCH_GAMEPAD_ANALOG_INPUT_L_X_LEFT'
+    - 'RETROARCH_KEYBOARD_INPUT_L_Y_UP'
+    - 'RETROARCH_GAMEPAD_INPUT_L_Y_UP'
+    - 'RETROARCH_GAMEPAD_ANALOG_INPUT_L_Y_UP'
+    - 'RETROARCH_KEYBOARD_INPUT_L_Y_DOWN'
+    - 'RETROARCH_GAMEPAD_INPUT_L_Y_DOWN'
+    - 'RETROARCH_GAMEPAD_ANALOG_INPUT_L_Y_DOWN'
+    - 'RETROARCH_KEYBOARD_INPUT_R_X_RIGHT'
+    - 'RETROARCH_GAMEPAD_INPUT_R_X_RIGHT'
+    - 'RETROARCH_GAMEPAD_ANALOG_INPUT_R_X_RIGHT'
+    - 'RETROARCH_KEYBOARD_INPUT_R_X_LEFT'
+    - 'RETROARCH_GAMEPAD_INPUT_R_X_LEFT'
+    - 'RETROARCH_GAMEPAD_ANALOG_INPUT_R_X_LEFT'
+    - 'RETROARCH_KEYBOARD_INPUT_R_Y_UP'
+    - 'RETROARCH_GAMEPAD_INPUT_R_Y_UP'
+    - 'RETROARCH_GAMEPAD_ANALOG_INPUT_R_Y_UP'
+    - 'RETROARCH_KEYBOARD_INPUT_R_Y_DOWN'
+    - 'RETROARCH_GAMEPAD_INPUT_R_Y_DOWN'
+    - 'RETROARCH_GAMEPAD_ANALOG_INPUT_R_Y_DOWN'
+    - 'RETROARCH_KEYBOARD_INPUT_TURBO'
+    - 'RETROARCH_GAMEPAD_INPUT_TURBO'
+    - 'RETROARCH_GAMEPAD_ANALOG_INPUT_TURBO'
 
 nobind: 'nul'
 
@@ -187,6 +187,7 @@ gamepad:
         GAMEPAD_DPAD_DOWN: 'hat0down'
         GAMEPAD_DPAD_LEFT: 'hat0left'
         GAMEPAD_DPAD_RIGHT: 'hat0right'
+
 keyboard:
     normal: 
         KEY_A: 'a'
@@ -248,7 +249,7 @@ keyboard:
         KEY_TILDE: 'tilde'
         KEY_QUOTE: 'quote'
         KEY_SEMICOLON: 'semicolon'
-        KEY_COMMA: 'comma'	
+        KEY_COMMA: 'comma'
         KEY_PERIOD: 'period'
         KEY_SLASH: 'slash'
         KEY_BRACKET_LEFT: 'leftbracket'
