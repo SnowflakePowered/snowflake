@@ -61,8 +61,6 @@ namespace Snowflake.Core.Init
                 }else{
                     template.Replace("{" + key + "}", inputMapping.NoBind); //Non-input keys
                 }
-               
-           
             }
           
 
