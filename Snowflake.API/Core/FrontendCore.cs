@@ -79,7 +79,6 @@ namespace Snowflake.Core
             this.ThemeServer = new ThemeServer(Path.Combine(this.AppDataDirectory, "theme"));
             this.APIServer = new ApiServer();
             this.MediaStoreServer = new FileMediaStoreServer(Path.Combine(this.AppDataDirectory, "mediastores"));
-            //new JsonRPCEventDelegate(3333).Notify("test", new Dictionary<string, string>() { {"test","test"}});
         }
         private Dictionary<string, PlatformInfo> LoadPlatforms(string platformDirectory)
         {

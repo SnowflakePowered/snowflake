@@ -13,6 +13,5 @@ namespace Snowflake.Constants
         public static string game_releasedate = "game_releasedate";
         public static string game_publisher = "game_publisher";
         public static string game_developer = "game_developer";
- 
     }
 }

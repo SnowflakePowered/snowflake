@@ -1,8 +1,7 @@
 ControllerID: NES_CONTROLLER
 PlatformID: NINTENDO_NES
-ProfileType: GAMEPAD
-Device: xinput1
-InputMappings:
+ProfileType: GAMEPAD_PROFILE
+InputConfiguration:
     BTN_A : GAMEPAD_A
     BTN_B : GAMEPAD_B
     BTN_DPAD_UP: GAMEPAD_DPAD_UP

@@ -95,7 +95,7 @@
     <Compile Include="Emulator\Input\Mapping\ControllerMapping.cs" />
     <Compile Include="Emulator\Input\Template\ControllerTemplate.cs" />
     <Compile Include="Emulator\Input\Template\InputTemplate.cs" />
-    <Compile Include="Platform\Controller\ControllerConfiguration.cs" />
+    <Compile Include="Platform\Controller\ControllerProfile.cs" />
     <Compile Include="Platform\Controller\ControllerDefinition.cs" />
     <Compile Include="Core\Manager\AjaxManager.cs" />
     <Compile Include="Core\EventDelegate\JsonRPCEventDelegate.cs" />
@@ -111,7 +111,6 @@
     <Compile Include="Emulator\Configuration\Template\ConfigurationTemplate.cs" />
     <Compile Include="Emulator\Configuration\Interface\IEmulatorConfiguration.cs" />
     <Compile Include="Emulator\Input\Interface\IInputConfiguration.cs" />
-    <Compile Include="Emulator\Input\InputConfiguration.cs" />
     <Compile Include="Emulator\Configuration\Mapping\BooleanMapping.cs" />
     <Compile Include="Emulator\Input\Mapping\GamepadMapping.cs" />
     <Compile Include="Emulator\Input\Mapping\KeyboardMapping.cs" />
