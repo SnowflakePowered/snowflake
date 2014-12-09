@@ -39,7 +39,7 @@ namespace Snowflake.Core.Init
            FrontendCore.InitCore();
 
 
-
+            /*
            var controllerTemplate = ControllerTemplate.FromDictionary(new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText("retroarch.input.NES_CONTROLLER.yml")));
            var inputTemplate = InputTemplate.FromDictionary(new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText("retroarch.input.yml")));
            var controllerDefinition = FrontendCore.LoadedCore.LoadedPlatforms["NINTENDO_NES"].Controllers["NES_CONTROLLER"];
@@ -68,6 +68,13 @@ namespace Snowflake.Core.Init
                }
            }
            Console.WriteLine(template.ToString());
+            */
+           var config = File.ReadAllText("retroarch.cfg.yml");
+           var parsedconfig = ConfigurationTemplate.FromDictionary(new Serializer().Deserialize<Dictionary<string, dynamic>>(config));
+           foreach (var value in parsedconfig.ConfigurationEntries)
+           {
+               Console.WriteLine(value.Name);
+           }
         }
 
 

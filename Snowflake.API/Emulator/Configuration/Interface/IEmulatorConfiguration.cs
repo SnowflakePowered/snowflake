@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using Snowflake.Emulator.Configuration.Mapping;
-using Snowflake.Emulator.Configuration.Type;
 
 using Snowflake.Emulator.Configuration.Template;
 namespace Snowflake.Emulator.Configuration
@@ -15,6 +14,5 @@ namespace Snowflake.Emulator.Configuration
         BooleanMapping BooleanMapping { get;}
         string FileName { get; }
         ConfigurationTemplate ConfigurationTemplate { get; }
-        IReadOnlyDictionary<string, CustomType> CustomTypes { get; }
     }
 }

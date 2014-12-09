@@ -69,345 +69,207 @@ template: |
 boolean: 
     true: "true"
     false: "false"
-types:
-    video_driver: 
-        - ["gl", "OpenGL"]
-        - ["xvideo", "XVideo"]
-        - ["sdl", "SDL"]
-    audio_driver: []
-    audio_resampler: []
 filename: "retroarch.cfg"
 configuration_name: "RetroArchCore"
+
 keys: 
     libretro_path: 
         description: "Path to libRetroCore"
-        type: "string"
-        protection: "private"
         default: ":\\cores/"
     libretro_info_path: 
         description: "desc"
-        type: "string"
-        protection: "private"
         default: ":\\info/"
     system_directory: 
         description: "desc"
-        type: "string"
-        protection: "private"
         default: ":\\system/"
     rgui_config_directory: 
         description: "desc"
-        type: "string"
-        protection: "private"
         default: ":\\configs/"
     config_save_on_exit: 
         description: "Save configuration on exit (Unavailable if Snowflake configuration handling is enabled)"
-        type: "boolean"
-        protection: "protected"
         default: true
     video_shader_dir: 
         description: "desc"
-        type: "string"
-        protection: "private"
         default: ":\\shaders/"
     joypad_autoconfig_dir: 
         description: "desc"
-        type: "string"
-        protection: "private"
         default: ":\\autoconfig/"
     screenshot_directory: 
         description: "desc"
-        type: "string"
-        protection: "private"
         default: ":\\screenshots/"
     fps_show: 
         description: "Show FPS counter"
-        type: "boolean"
-        protection: "protected"
         default: false
     rewind_enable: 
         description: "Enable Rewind"
-        type: "boolean"
-        protection: "private"
         default: false
     rewind_granularity: 
         description: "How many frames to rewind at a time (Increases rewind speed)"
-        type: "integer"
-        protection: "private"
         default: 1
     video_shader_enable: 
         description: "Enable Video Shaders"
-        type: "boolean"
-        protection: "public"
         default: false
     video_aspect_ratio: 
         description: "Aspect Ratio (-1 is Core Provided)"
-        type: "double"
-        protection: "protected"
         default: -1
     video_xscale: 
         description: "Windowed xscale"
-        type: "double"
-        protection: "private"
         default: 3
     autosave_interval: 
         description: "desc"
-        type: "integer"
-        protection: "private"
         default: 0
     video_yscale: 
         description: "Windowed yscale"
-        type: "double"
-        protection: "private"
         default: 3
     video_crop_overscan: 
         description: "Force crop overscan"
-        type: "boolean"
-        protection: "protected"
         default: true
     video_scale_integer: 
         description: "Use "
-        type: "boolean"
-        protection: "private"
         default: false
     video_smooth: 
-        description: "Use Bilinear Filtering
-        type: "boolean"
-        protection: "protected"
+        description: "Use Bilinear Filtering"
         default: false
     video_threaded: 
         description: "Use Threaded Video Driver"
-        type: "boolean"
-        protection: "private"
         default: false
     video_fullscreen: 
         description: "Start in fullscreen. Can be changed at runtime."
-        type: "boolean"
-        protection: "public"
         default: false
     video_refresh_rate: 
         description: "desc"
-        type: "double"
-        protection: "private"
         default: 59.950001
     video_driver: 
         description: "Video driver to use"
-        type: "~video_driver"
-        protection: "private"
         default: "gl"
     video_vsync: 
         description: "VSync"
-        type: "boolean"
-        protection: "public"
         default: true
     video_hard_sync: 
         description: "Hard GPU Sync"
-        type: "boolean"
-        protection: "protected"
         default: false
     video_hard_sync_frames: 
         description: "Number of synced GPU Frames"
-        type: "integer"
-        protection: "protected"
         default: 0
     video_black_frame_insertion: 
         description: "Black Frame Insertion"
-        type: "boolean"
-        protection: "protected"
         default: false
     video_swap_interval: 
         description: "VSync swap interval"
-        type: "integer"
-        protection: "private"
         default: 1
     video_gpu_screenshot: 
         description: "Screenshots will be taken after applying shaders"
-        type: "boolean"
-        protection: "public"
         default: true
     video_rotation: 
         description: "desc"
-        type: "integer"
-        protection: "private"
         default: 0
     aspect_ratio_index: 
         description: "desc"
-        type: "integer"
-        protection: "private"
         default: 4
     audio_rate_control: 
         description: "Enable experimental audio rate control"
-        type: "boolean"
-        protection: "private"
         default: true
     audio_rate_control_delta: 
         description: "Audio Rate Control Delta"
-        type: "double"
-        protection: "private"
         default: 0.005
     audio_driver: 
         description: "desc"
-        type: "~audio_driver"
-        protection: "private"
         default: "dsound"
     audio_out_rate: 
         description: "desc"
-        type: "integer"
-        protection: "private"
         default: 48000
     audio_resampler: 
         description: "desc"
-        type: "~audio_resampler"
-        protection: "private"
         default: "sinc"
     savefile_directory: 
         description: "desc"
-        type: "string"
-        protection: "private"
         default: "default"
     savestate_directory: 
         description: "desc"
-        type: "string"
-        protection: "private"
         default: "default"
     content_directory: 
         description: "desc"
-        type: "string"
-        protection: "private"
         default: "default"
     rgui_browser_directory: 
         description: "desc"
-        type: "string"
-        protection: "private"
         default: "default"
     rgui_show_start_screen: 
         description: "desc"
-        type: "boolean"
-        protection: "private"
         default: false
     game_history_size: 
         description: "desc"
-        type: "integer"
-        protection: "private"
         default: 100
     input_autodetect_enable: 
         description: "desc"
-        type: "boolean"
-        protection: "private"
         default: true
     overlay_directory: 
         description: "desc"
-        type: "string"
-        protection: "private"
         default: "default"
     input_overlay_opacity: 
         description: "desc"
-        type: "double"
-        protection: "private"
         default: 0.7
     input_overlay_scale: 
         description: "desc"
-        type: "double"
-        protection: "private"
         default: 1
     gamma_correction: 
         description: "desc"
-        type: "boolean"
-        protection: "private"
         default: false
     triple_buffering_enable: 
         description: "desc"
-        type: "boolean"
-        protection: "private"
         default: false
     soft_filter_enable: 
         description: "desc"
-        type: "boolean"
-        protection: "private"
         default: false
     flicker_filter_enable: 
         description: "desc"
-        type: "boolean"
-        protection: "private"
         default: false
     flicker_filter_index: 
         description: "desc"
-        type: "integer"
-        protection: "private"
         default: 0
     soft_filter_index: 
         description: "desc"
-        type: "integer"
-        protection: "private"
         default: 0
     current_resolution_id: 
         description: "desc"
-        type: "integer"
-        protection: "private"
         default: 0
     custom_viewport_width: 
         description: "desc"
-        type: "integer"
-        protection: "private"
         default: 960
     custom_viewport_height: 
         description: "desc"
-        type: "integer"
-        protection: "private"
         default: 720
     custom_viewport_x: 
         description: "desc"
-        type: "integer"
-        protection: "private"
         default: 0
     custom_viewport_y: 
         description: "desc"
-        type: "integer"
-        protection: "private"
         default: 0
     video_font_size: 
         description: "desc"
-        type: "double"
-        protection: "private"
         default: 48
     block_sram_overwrite: 
         description: "Block SRAM from being overwritten when loading save states."
-        type: "boolean"
-        protection: "private"
         default: false
     savestate_auto_index: 
         description: "desc"
-        type: "boolean"
-        protection: "private"
         default: false
     savestate_auto_save: 
         description: "desc"
-        type: "boolean"
-        protection: "private"
         default: false
     savestate_auto_load: 
         description: "desc"
-        type: "boolean"
-        protection: "private"
         default: true
     sound_mode: 
         description: "desc"
-        type: "integer"
-        protection: "private"
         default: 0
     state_slot: 
         description: "desc"
-        type: "integer"
-        protection: "private"
         default: 0
     custom_bgm_enable: 
         description: "desc"
-        type: "boolean"
-        protection: "private"
         default: false
     input_driver: 
         description: "desc"
-        type: "string"
-        protection: "private"
         default: "dinput"
 
     

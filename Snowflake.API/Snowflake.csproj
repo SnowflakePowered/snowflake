@@ -114,8 +114,6 @@
     <Compile Include="Emulator\Configuration\Mapping\BooleanMapping.cs" />
     <Compile Include="Emulator\Input\Mapping\GamepadMapping.cs" />
     <Compile Include="Emulator\Input\Mapping\KeyboardMapping.cs" />
-    <Compile Include="Emulator\Configuration\Type\CustomType.cs" />
-    <Compile Include="Emulator\Configuration\Type\CustomTypeValue.cs" />
     <Compile Include="Emulator\Core\EmulatorCore.cs" />
     <Compile Include="Events\CoreEvents\PluginManagerLoadedEventArgs.cs" />
     <Compile Include="Extensions\EmulatorManagerExts.cs" />
