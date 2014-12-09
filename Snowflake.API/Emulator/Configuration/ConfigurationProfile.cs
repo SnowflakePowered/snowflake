@@ -10,7 +10,7 @@ using SharpYaml.Serialization;
 
 namespace Snowflake.Emulator.Configuration
 {
-    public class EmulatorConfiguration 
+    public class ConfigurationProfile 
     {
 
         public IDictionary<string, dynamic> Keys;
@@ -26,7 +26,7 @@ namespace Snowflake.Emulator.Configuration
 
             }
         }
-        public EmulatorConfiguration(ConfigurationTemplate template, IDictionary<string, dynamic> keys)
+        public ConfigurationProfile(ConfigurationTemplate template, IDictionary<string, dynamic> keys)
         {
             this.Keys = new Dictionary<string, dynamic>();
             this.template = template;
