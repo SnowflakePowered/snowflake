@@ -12,7 +12,7 @@ namespace Snowflake.Extensions
 {
     public static class EmulatorManagerExts
     {
-        public static ProcessStartInfo GetExecutableEmulatorProcess(this EmulatorManager manager, EmulatorCore core, string parameters = "")
+        public static ProcessStartInfo GetExecutableEmulatorProcess(this EmulatorManager manager, EmulatorAssembly core, string parameters = "")
         {
             if (core.AssemblyType != EmulatorAssemblyType.EMULATOR_EXECUTABLE)
                 throw new InvalidOperationException("You can only run executable emulators");

@@ -7,14 +7,14 @@ using Snowflake.Emulator.Configuration.Mapping;
 
 namespace Snowflake.Emulator
 {
-    public class EmulatorCore
+    public class EmulatorAssembly
     {
         public string MainAssembly { get; private set; }
         public string EmulatorId { get; private set; }
         public string EmulatorName { get; private set; }
         public EmulatorAssemblyType AssemblyType { get; private set; }
 
-        public EmulatorCore(string mainAssembly, string emulatorId, string name, string assemblyTypeString)
+        public EmulatorAssembly(string mainAssembly, string emulatorId, string name, string assemblyTypeString)
         {
             EmulatorAssemblyType assemblyType;
             if (!Enum.TryParse<EmulatorAssemblyType>(assemblyTypeString, true, out assemblyType)) assemblyType = EmulatorAssemblyType.EMULATOR_MISC;
@@ -22,16 +22,18 @@ namespace Snowflake.Emulator
             this.EmulatorId = emulatorId;
             this.EmulatorName = name;
             this.AssemblyType = assemblyType;
-
-
         }
 
-        public EmulatorCore(string mainAssembly, string emulatorId, string name, EmulatorAssemblyType assemblyType)
+        public EmulatorAssembly(string mainAssembly, string emulatorId, string name, EmulatorAssemblyType assemblyType)
         {
             this.MainAssembly = mainAssembly;
             this.EmulatorId = emulatorId;
             this.EmulatorName = name;
             this.AssemblyType = assemblyType;
+        }
+
+        public static EmulatorAssembly FromDictionary (IDictionary<string, dynamic> emulatorAssembly){
+            return new EmulatorAssembly(emulatorAssembly["main"], emulatorAssembly["id"], emulatorAssembly["name"], emulatorAssembly["type"]);
         }
     }
     public enum EmulatorAssemblyType

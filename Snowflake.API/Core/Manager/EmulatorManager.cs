@@ -12,31 +12,30 @@ namespace Snowflake.Core.Manager
 {
     public class EmulatorManager
     {
-        private IDictionary<string, EmulatorCore> emulatorCores;
-        public IReadOnlyDictionary<string, EmulatorCore> EmulatorCores { get { return this.emulatorCores.AsReadOnly(); } }
+        private IDictionary<string, EmulatorAssembly> emulatorAssemblies;
+        public IReadOnlyDictionary<string, EmulatorAssembly> EmulatorAssemblies { get { return this.emulatorAssemblies.AsReadOnly(); } }
         public string LoadablesLocation { get; private set; }
         public EmulatorManager(string loadablesLocation)
         {
-            this.emulatorCores = new Dictionary<string, EmulatorCore>();
+            this.emulatorAssemblies = new Dictionary<string, EmulatorAssembly>();
             this.LoadablesLocation = loadablesLocation;
         }
 
-        public void LoadEmulatorCores()
+        public void LoadEmulatorAssemblies()
         { 
            
             foreach (string fileName in Directory.GetFiles(this.LoadablesLocation))
             {
                 if (!(Path.GetExtension(fileName) == ".yml")) continue;
-                var emulatorCore = EmulatorManager.ParseEmulatorCore(fileName);
-              
-                this.emulatorCores.Add(emulatorCore.EmulatorId, emulatorCore);
+                var emulatorCore = EmulatorManager.ParseEmulatorAssembly(fileName);
+                this.emulatorAssemblies.Add(emulatorCore.EmulatorId, emulatorCore);
             }
         }
 
-        public static EmulatorCore ParseEmulatorCore(string emulatorCorePath)
+        public static EmulatorAssembly ParseEmulatorAssembly(string emulatorCorePath)
         {
             var emulator = new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText(emulatorCorePath));
-            return new EmulatorCore(emulator["main"], emulator["id"], emulator["name"], emulator["type"]);
+            return EmulatorAssembly.FromDictionary(emulator);
         }
 
        
