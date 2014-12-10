@@ -2,29 +2,3 @@ name: "RetroArch"
 id: "retroarch"
 main: "retroarch.exe"
 type: EMULATOR_EXECUTABLE
-gamepad:
-    xinput: 
-         GAMEPAD_A: '0'
-         GAMEPAD_B: '1'
-         GAMEPAD_X: '2'
-         GAMEPAD_Y: '3'
-         GAMEPAD_START: '7'
-         GAMEPAD_SELECT: '6'
-         GAMEPAD_L1: '5'
-         GAMEPAD_L2: '+4'
-         GAMEPAD_L3: '8'
-         GAMEPAD_R1: '4'
-         GAMEPAD_R2: '+5'
-         GAMEPAD_R3: '9'
-         GAMEPAD_L_X_UP: '+1'
-         GAMEPAD_L_X_DOWN: '-1'
-         GAMEPAD_L_Y_RIGHT: '+0'
-         GAMEPAD_L_Y_LEFT: '-0'
-         GAMEPAD_R_X_UP: '+3'
-         GAMEPAD_R_X_DOWN: '-3'
-         GAMEPAD_R_Y_RIGHT: '-2'
-         GAMEPAD_R_Y_LEFT: '+2'
-         GAMEPAD_GUIDE: '10'
-         GAMEPAD_DPAD_UP: 'hat0up'
-         GAMEPAD_DPAD_LEFT: 'hat0left'
-         GAMEPAD_DPAD_RIGHT: 'hat0right'

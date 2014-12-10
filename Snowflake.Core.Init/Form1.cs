@@ -37,7 +37,7 @@ namespace Snowflake.Core.Init
         {
             InitializeComponent();
            FrontendCore.InitCore();
-
+           FrontendCore.InitPluginManager();
 
             /*
            var controllerTemplate = ControllerTemplate.FromDictionary(new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText("retroarch.input.NES_CONTROLLER.yml")));
@@ -69,12 +69,7 @@ namespace Snowflake.Core.Init
            }
            Console.WriteLine(template.ToString());
             */
-           var config = File.ReadAllText("retroarch.cfg.yml");
-           var parsedconfig = ConfigurationTemplate.FromDictionary(new Serializer().Deserialize<Dictionary<string, dynamic>>(config));
-           foreach (var value in parsedconfig.ConfigurationEntries)
-           {
-               Console.WriteLine(value.Name);
-           }
+           Console.WriteLine(FrontendCore.LoadedCore.EmulatorManager.EmulatorAssemblies["retroarch"].EmulatorName);
         }
 
 

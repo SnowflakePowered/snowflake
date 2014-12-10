@@ -116,7 +116,6 @@
     <Compile Include="Emulator\Input\Mapping\KeyboardMapping.cs" />
     <Compile Include="Emulator\EmulatorAssembly.cs" />
     <Compile Include="Events\CoreEvents\PluginManagerLoadedEventArgs.cs" />
-    <Compile Include="Extensions\EmulatorManagerExts.cs" />
     <Compile Include="Extensions\HttpListenerContextExts.cs" />
     <Compile Include="Extensions\IDictionaryExtensions.cs" />
     <Compile Include="Extensions\IListExtensions.cs" />

@@ -26,6 +26,7 @@ namespace Snowflake.Core
         public IPluginManager PluginManager { get; private set; }
         public IAjaxManager AjaxManager { get; private set; }
         public GameDatabase GameDatabase { get; private set; }
+        public EmulatorManager EmulatorManager { get; private set; }
         #endregion
 
         public string AppDataDirectory { get; private set; }
@@ -58,6 +59,7 @@ namespace Snowflake.Core
         {
             FrontendCore.LoadedCore.PluginManager.LoadAll();
             FrontendCore.LoadedCore.AjaxManager.LoadAll();
+            FrontendCore.LoadedCore.EmulatorManager.LoadEmulatorAssemblies();
             FrontendCore.LoadedCore.OnPluginManagerLoaded(new PluginManagerLoadedEventArgs());
         }
 
@@ -75,6 +77,7 @@ namespace Snowflake.Core
            
             this.PluginManager = new PluginManager(this.AppDataDirectory);
             this.AjaxManager = new AjaxManager(this.AppDataDirectory);
+            this.EmulatorManager = new EmulatorManager(Path.Combine(this.AppDataDirectory, "emulators"));
 
             this.ThemeServer = new ThemeServer(Path.Combine(this.AppDataDirectory, "theme"));
             this.APIServer = new ApiServer();

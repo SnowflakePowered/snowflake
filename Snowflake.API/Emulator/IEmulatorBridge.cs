@@ -14,6 +14,7 @@ namespace Snowflake.Emulator
     [InheritedExport(typeof(IEmulatorBridge))]
     public interface IEmulatorBridge : IPlugin
     {
+        EmulatorAssembly EmulatorAssembly { get; }
         void StartRom(string gameId);
         void StartRom(string platformId, string gameId);
         void StartRom(string platformId, GameInfo gameInfo, ConfigurationProfile configurationProfile, IList<ControllerProfile> controllerProfiles);
@@ -24,10 +25,13 @@ namespace Snowflake.Emulator
         void PlaceConfigurationFiles(IDictionary<string, string> compiledConfiguration, IList<string> compiledController);
         void ShutdownEmulator();
         void HandlePrompt(string promptMessage);
+       /*  
         event EventHandler OnEmulatorShutdown;
         event EventHandler OnEmulatorStartup;
         event EventHandler OnEmulatorLoseFocus;
         event EventHandler OnBridgePrompt;
+       */
+
 
     }
 }

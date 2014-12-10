@@ -14,19 +14,19 @@ namespace Snowflake.Core.Manager
     {
         private IDictionary<string, EmulatorAssembly> emulatorAssemblies;
         public IReadOnlyDictionary<string, EmulatorAssembly> EmulatorAssemblies { get { return this.emulatorAssemblies.AsReadOnly(); } }
-        public string LoadablesLocation { get; private set; }
-        public EmulatorManager(string loadablesLocation)
+        public string AssembliesLocation { get; private set; }
+        public EmulatorManager(string assembliesLocation)
         {
             this.emulatorAssemblies = new Dictionary<string, EmulatorAssembly>();
-            this.LoadablesLocation = loadablesLocation;
+            this.AssembliesLocation = assembliesLocation;
         }
 
         public void LoadEmulatorAssemblies()
         { 
-           
-            foreach (string fileName in Directory.GetFiles(this.LoadablesLocation))
+            foreach (string fileName in Directory.GetFiles(this.AssembliesLocation))
             {
                 if (!(Path.GetExtension(fileName) == ".yml")) continue;
+                
                 var emulatorCore = EmulatorManager.ParseEmulatorAssembly(fileName);
                 this.emulatorAssemblies.Add(emulatorCore.EmulatorId, emulatorCore);
             }
