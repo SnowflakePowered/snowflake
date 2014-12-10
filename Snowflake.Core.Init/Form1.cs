@@ -29,6 +29,7 @@ using System.Dynamic;
 using Snowflake.Platform.Controller;
 using Snowflake.Constants.Input;
 using Snowflake.Emulator.Input.Template;
+using Snowflake.Emulator;
 namespace Snowflake.Core.Init
 {
     public partial class Form1 : Form
@@ -39,36 +40,16 @@ namespace Snowflake.Core.Init
            FrontendCore.InitCore();
            FrontendCore.InitPluginManager();
 
-            /*
+            
            var controllerTemplate = ControllerTemplate.FromDictionary(new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText("retroarch.input.NES_CONTROLLER.yml")));
            var inputTemplate = InputTemplate.FromDictionary(new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText("retroarch.input.yml")));
            var controllerDefinition = FrontendCore.LoadedCore.LoadedPlatforms["NINTENDO_NES"].Controllers["NES_CONTROLLER"];
            int playerIndex = 1;
-           StringBuilder template = new StringBuilder(inputTemplate.StringTemplate);
 
            var profile = ControllerProfile.FromDictionary(new Serializer().Deserialize<IDictionary<string, dynamic>>(File.ReadAllText("NES_CONTROLLER.profile.yml")));
 
-           
-           foreach (ControllerInput input in controllerDefinition.ControllerInputs.Values){
-               string templateKey = controllerTemplate.GamepadControllerMappings["default"].InputMappings[input.InputName];
-               string inputSetting = profile.InputConfiguration[input.InputName];
-               string emulatorValue = inputTemplate.GamepadMappings.First().Value[inputSetting];
-               template.Replace("{" + templateKey + "}", emulatorValue);
-           }
-           foreach (var key in inputTemplate.TemplateKeys)
-           {
-               template.Replace("{N}", playerIndex.ToString()); //Player Index
-               if (controllerTemplate.GamepadControllerMappings["default"].KeyMappings.ContainsKey(key))
-               {
-                   template.Replace("{" + key + "}", controllerTemplate.GamepadControllerMappings["default"].KeyMappings[key]); //Non-input keys
-               }
-               else
-               {
-                   template.Replace("{" + key + "}", inputTemplate.NoBind); //Non-input keys
-               }
-           }
-           Console.WriteLine(template.ToString());
-            */
+           Console.WriteLine(new EmulatorBridge().CompileController(1, controllerDefinition, controllerTemplate, profile, inputTemplate));
+        
            Console.WriteLine(FrontendCore.LoadedCore.EmulatorManager.EmulatorAssemblies["retroarch"].EmulatorName);
         }
 

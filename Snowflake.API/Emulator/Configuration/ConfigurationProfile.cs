@@ -12,7 +12,7 @@ namespace Snowflake.Emulator.Configuration
 {
     public class ConfigurationProfile 
     {
-
+        //todo write a proper ConfigurationProfile class
         public IDictionary<string, dynamic> Keys;
         private ConfigurationTemplate template;
       
@@ -32,6 +32,5 @@ namespace Snowflake.Emulator.Configuration
             this.template = template;
             this.IncludeDefaults();
         }
-
     }
 }

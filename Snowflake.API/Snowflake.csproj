@@ -95,6 +95,7 @@
     <Compile Include="Emulator\Input\Mapping\ControllerMapping.cs" />
     <Compile Include="Emulator\Input\Template\ControllerTemplate.cs" />
     <Compile Include="Emulator\Input\Template\InputTemplate.cs" />
+    <Compile Include="Emulator\EmulatorBridge.cs" />
     <Compile Include="Platform\Controller\ControllerProfile.cs" />
     <Compile Include="Platform\Controller\ControllerDefinition.cs" />
     <Compile Include="Core\Manager\AjaxManager.cs" />

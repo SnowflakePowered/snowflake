@@ -15,6 +15,7 @@ namespace Snowflake.Emulator
     public interface IEmulatorBridge : IPlugin
     {
         EmulatorAssembly EmulatorAssembly { get; }
+        IReadOnlyDictionary<string, string> SupportedPlatforms { get;  }
         void StartRom(string gameId);
         void StartRom(string platformId, string gameId);
         void StartRom(string platformId, GameInfo gameInfo, ConfigurationProfile configurationProfile, IList<ControllerProfile> controllerProfiles);
