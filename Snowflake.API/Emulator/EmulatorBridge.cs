@@ -18,6 +18,7 @@ namespace Snowflake.Emulator
             return String.Empty;
         }
 
+       
         public string CompileController(int playerIndex, ControllerDefinition controllerDefinition, ControllerTemplate controllerTemplate, ControllerProfile controllerProfile, InputTemplate inputTemplate)
         {
             StringBuilder template = new StringBuilder(inputTemplate.StringTemplate);

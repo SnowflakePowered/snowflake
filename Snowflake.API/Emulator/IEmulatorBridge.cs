@@ -19,10 +19,11 @@ namespace Snowflake.Emulator
         void StartRom(string gameId);
         void StartRom(string platformId, string gameId);
         void StartRom(string platformId, GameInfo gameInfo, ConfigurationProfile configurationProfile, IList<ControllerProfile> controllerProfiles);
-        string CompileConfiguration(ConfigurationTemplate configurationTemplate);
-        string CompileConfiguration(ConfigurationTemplate configurationTemplate, ConfigurationProfile configurationProfile = null);
+        string CompileConfiguration(ConfigurationProfile configurationProfile);
+        string CompileConfiguration(ConfigurationTemplate configurationTemplate, ConfigurationProfile configurationProfile);
         string CompileController(int playerIndex, ControllerDefinition controllerDefinition, ControllerTemplate controllerTemplate, ControllerProfile controllerProfile, InputTemplate inputTemplate);
-        string CompileController(int playerIndex, ControllerDefinition controllerDefinition, ControllerTemplate controlelrTemplate, ControllerProfile controllerProfile);
+        string CompileController(int playerIndex, ControllerDefinition controllerDefinition, ControllerTemplate controllerTemplate, ControllerProfile controllerProfile);
+        string CompileController(int playerIndex, ControllerProfile controllerProfile);
         void PlaceConfigurationFiles(IDictionary<string, string> compiledConfiguration, IList<string> compiledController);
         void ShutdownEmulator();
         void HandlePrompt(string promptMessage);

@@ -48,8 +48,13 @@ namespace Snowflake.Core.Init
 
            var profile = ControllerProfile.FromDictionary(new Serializer().Deserialize<IDictionary<string, dynamic>>(File.ReadAllText("NES_CONTROLLER.profile.yml")));
 
-           Console.WriteLine(new EmulatorBridge().CompileController(1, controllerDefinition, controllerTemplate, profile, inputTemplate));
-        
+        //   Console.WriteLine(new EmulatorBridge().CompileController(1, controllerDefinition, controllerTemplate, profile, inputTemplate));
+           var configuration = ConfigurationTemplate.FromDictionary(new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText("retroarch.cfg.yml")));
+           var dictionary = new Dictionary<string, dynamic>();
+            foreach (var entry in configuration.ConfigurationEntries){
+                dictionary.Add(entry.Name, entry.DefaultValue);
+            }
+            Console.WriteLine(new Serializer().Serialize(dictionary));
            Console.WriteLine(FrontendCore.LoadedCore.EmulatorManager.EmulatorAssemblies["retroarch"].EmulatorName);
         }
 
