@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Emulator.Configuration.Mapping;
 using Snowflake.Emulator.Configuration.Template;
+using Snowflake.Extensions;
 
 using SharpYaml.Serialization;
 
@@ -12,25 +13,26 @@ namespace Snowflake.Emulator.Configuration
 {
     public class ConfigurationProfile 
     {
-        //todo write a proper ConfigurationProfile class
-        public IDictionary<string, dynamic> Keys;
-        private ConfigurationTemplate template;
-      
-        private void IncludeDefaults()
+        //todo write a proper 
+        public IReadOnlyDictionary<string, dynamic> ConfigurationValues { get; private set; }
+        public string TemplateID { get; private set; }
+     
+        public ConfigurationProfile (string templateId, IDictionary<string, dynamic> value)
         {
-            foreach (ConfigurationEntry entry in this.template.ConfigurationEntries)
-            {
-                if(!this.Keys.ContainsKey(entry.Name)){
-                    this.Keys.Add(entry.Name, entry.DefaultValue);
-                }
+            this.ConfigurationValues = value.AsReadOnly();
+            this.TemplateID = templateId;
+        }
 
-            }
-        }
-        public ConfigurationProfile(ConfigurationTemplate template, IDictionary<string, dynamic> keys)
+        public static ConfigurationProfile FromDictionary (IDictionary<string, dynamic> protoTemplate)
         {
-            this.Keys = new Dictionary<string, dynamic>();
-            this.template = template;
-            this.IncludeDefaults();
+            return new ConfigurationProfile(protoTemplate["TemplateID"], ((IDictionary<object, dynamic>)protoTemplate["ConfigurationValues"])
+                .ToDictionary(value => (string)value.Key, value => value.Value));
         }
+
+        public static IList<ConfigurationProfile> FromManyDictionaries(IList<IDictionary<string, dynamic>> protoTemplates)
+        {
+            return protoTemplates.Select(protoTemplate => ConfigurationProfile.FromDictionary(protoTemplate)).ToList();
+        }
+
     }
 }

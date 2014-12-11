@@ -27,13 +27,6 @@ namespace Snowflake.Emulator
         void PlaceConfigurationFiles(IDictionary<string, string> compiledConfiguration, IList<string> compiledController);
         void ShutdownEmulator();
         void HandlePrompt(string promptMessage);
-       /*  
-        event EventHandler OnEmulatorShutdown;
-        event EventHandler OnEmulatorStartup;
-        event EventHandler OnEmulatorLoseFocus;
-        event EventHandler OnBridgePrompt;
-       */
-
-
+       
     }
 }

@@ -50,12 +50,8 @@ namespace Snowflake.Core.Init
 
         //   Console.WriteLine(new EmulatorBridge().CompileController(1, controllerDefinition, controllerTemplate, profile, inputTemplate));
            var configuration = ConfigurationTemplate.FromDictionary(new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText("retroarch.cfg.yml")));
-           var dictionary = new Dictionary<string, dynamic>();
-            foreach (var entry in configuration.ConfigurationEntries){
-                dictionary.Add(entry.Name, entry.DefaultValue);
-            }
-            Console.WriteLine(new Serializer().Serialize(dictionary));
-           Console.WriteLine(FrontendCore.LoadedCore.EmulatorManager.EmulatorAssemblies["retroarch"].EmulatorName);
+          
+           var configuProfiles = ConfigurationProfile.FromManyDictionaries(new Serializer().Deserialize<IList<IDictionary<string, dynamic>>>(File.ReadAllText("retroarch.profile.yml")));
         }
 
 

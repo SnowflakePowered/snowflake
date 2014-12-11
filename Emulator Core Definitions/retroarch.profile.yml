@@ -1,6 +1,5 @@
-Configurations:
--   ConfigurationID: RetroArchCore
-    ConfigurationKeys:
+-   TemplateID: RetroArchCore
+    ConfigurationValues:
         aspect_ratio_index: 4
         audio_driver: dsound
         audio_out_rate: 48000
