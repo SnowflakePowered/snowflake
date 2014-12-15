@@ -1,4 +1,4 @@
-![Logo](https://raw.githubusercontent.com/snowflake-frontend/snowflake/master/logo_nes.png) Snowflake
+![Snowflake](branding/Snowflake-Banner-Katakana-256.png) 
 =========
 [![Build status](https://ci.appveyor.com/api/projects/status/mhei9fdtja5j04kk)](https://ci.appveyor.com/project/RonnChyran/snowflake)
 
