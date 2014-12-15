@@ -52,6 +52,8 @@ namespace Snowflake.Core.Init
            var configuration = ConfigurationTemplate.FromDictionary(new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText("retroarch.cfg.yml")));
           
            var configuProfiles = ConfigurationProfile.FromManyDictionaries(new Serializer().Deserialize<IList<IDictionary<string, dynamic>>>(File.ReadAllText("retroarch.profile.yml")));
+           Console.WriteLine(new EmulatorBridge().CompileConfiguration(configuration, configuProfiles[0]));
+       
         }
 
 

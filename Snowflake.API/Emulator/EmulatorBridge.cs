@@ -21,17 +21,30 @@ namespace Snowflake.Emulator
         public IReadOnlyDictionary<string, ConfigurationTemplate> ConfigurationTemplates { get; private set; }
         public IReadOnlyList<string> SupportedPlatforms { get; private set; }
 
-        public string CompileConfiguration(ConfigurationTemplate template, ConfigurationProfile profile)
+        public string CompileConfiguration(ConfigurationTemplate configTemplate, ConfigurationProfile configProfile)
         {
-            return String.Empty;
+            var template = new StringBuilder(configTemplate.StringTemplate);
+            foreach (var configurationValue in configProfile.ConfigurationValues)
+            {
+                Type configurationvalueType = configurationValue.Value.GetType();
+                string stringValue;
+                if (configurationvalueType == typeof(bool))
+                {
+                    stringValue = configTemplate.BooleanMapping.FromBool(configurationValue.Value);
+                }
+                else
+                {
+                    stringValue = configurationValue.Value.ToString();
+                }
+                template.Replace("{" + configurationValue.Key + "}", stringValue);
+            }
+            return template.ToString();
         }
 
        
         public string CompileController(int playerIndex, ControllerDefinition controllerDefinition, ControllerTemplate controllerTemplate, ControllerProfile controllerProfile, InputTemplate inputTemplate)
         {
-            StringBuilder template = new StringBuilder(inputTemplate.StringTemplate);
-
-            
+            var template = new StringBuilder(inputTemplate.StringTemplate);
             var controllerMappings = controllerProfile.ProfileType == ControllerProfileType.KEYBOARD_PROFILE ? 
                 controllerTemplate.KeyboardControllerMappings : controllerTemplate.GamepadControllerMappings;
 
