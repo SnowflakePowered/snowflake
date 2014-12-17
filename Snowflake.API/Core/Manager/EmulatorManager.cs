@@ -31,7 +31,9 @@ namespace Snowflake.Core.Manager
                 this.emulatorAssemblies.Add(emulatorCore.EmulatorId, emulatorCore);
             }
         }
-
+        public string GetAssemblyDirectory(EmulatorAssembly assembly){
+            return Path.Combine(this.AssembliesLocation, assembly.EmulatorId, assembly.EmulatorName);
+        }
         public static EmulatorAssembly ParseEmulatorAssembly(string emulatorCorePath)
         {
             var emulator = new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText(emulatorCorePath));

@@ -34,26 +34,49 @@ namespace Snowflake.Core.Init
 {
     public partial class Form1 : Form
     {
+        static FrontendCore fcRef;
         public Form1()
         {
             InitializeComponent();
-           FrontendCore.InitCore();
-           FrontendCore.InitPluginManager();
-
+            FrontendCore.InitCore();
+            FrontendCore.InitPluginManager();
             
-           var controllerTemplate = ControllerTemplate.FromDictionary(new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText("retroarch.input.NES_CONTROLLER.yml")));
-           var inputTemplate = InputTemplate.FromDictionary(new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText("retroarch.input.yml")));
-           var controllerDefinition = FrontendCore.LoadedCore.LoadedPlatforms["NINTENDO_NES"].Controllers["NES_CONTROLLER"];
-           int playerIndex = 1;
+         
+           // var homebrew = new GameInfo("NINTENDO_SNES", "SNES_TEST", new FileMediaStore(gameUuid), new Dictionary<string, string>(), gameUuid, "christmascraze.smc", new Dictionary<string, dynamic>());
+         //   FrontendCore.LoadedCore.GameDatabase.AddGame(homebrew);
+            var game = FrontendCore.LoadedCore.GameDatabase.GetGameByUUID("eUML_nobAUqTGt6CmeYN1Q");
+            var controllerTemplate = ControllerTemplate.FromDictionary(new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText("retroarch.input.NES_CONTROLLER.yml")));
+            var inputTemplate = InputTemplate.FromDictionary(new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText("retroarch.input.yml")));
+            var configurationTemplate = ConfigurationTemplate.FromDictionary(new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText("retroarch.cfg.yml")));
+            var controllerDefinition = FrontendCore.LoadedCore.LoadedPlatforms["NINTENDO_NES"].Controllers["NES_CONTROLLER"];
+            var configProfiles = ConfigurationProfile.FromManyDictionaries(new Serializer().Deserialize<IList<IDictionary<string, dynamic>>>(File.ReadAllText("retroarch.profile.yml")));
+            var controllerProfile = ControllerProfile.FromDictionary(new Serializer().Deserialize<IDictionary<string, dynamic>>(File.ReadAllText("NES_CONTROLLER.profile.yml")));
 
-           var profile = ControllerProfile.FromDictionary(new Serializer().Deserialize<IDictionary<string, dynamic>>(File.ReadAllText("NES_CONTROLLER.profile.yml")));
+            var bridge = new EmulatorBridge(
+                new Dictionary<string, ControllerTemplate>(){
+                        {"NES_CONTROLLER", controllerTemplate}
+                    },
+                    new Dictionary<string, InputTemplate>(){
+                        {"retroarch", inputTemplate}
+                    },
+                    new Dictionary<string, ConfigurationTemplate>(){
+                        {"retroarch", configurationTemplate}
+                    },
+                    new List<string>{
+                        "NINTENDO_SNES"
+                    }
+                );
+            string keyControl = bridge.CompileController(1, FrontendCore.LoadedCore.LoadedPlatforms["NINTENDO_NES"].Controllers["NES_CONTROLLER"], bridge.ControllerTemplates["NES_CONTROLLER"], controllerProfile, bridge.InputTemplates["retroarch"]);
+            Console.WriteLine(keyControl);
+            bridge.StartRom(game);
+            int playerIndex = 1;
 
-        //   Console.WriteLine(new EmulatorBridge().CompileController(1, controllerDefinition, controllerTemplate, profile, inputTemplate));
-           var configuration = ConfigurationTemplate.FromDictionary(new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText("retroarch.cfg.yml")));
-          
-           var configuProfiles = ConfigurationProfile.FromManyDictionaries(new Serializer().Deserialize<IList<IDictionary<string, dynamic>>>(File.ReadAllText("retroarch.profile.yml")));
-           Console.WriteLine(new EmulatorBridge().CompileConfiguration(configuration, configuProfiles[0]));
-       
+
+            //   Console.WriteLine(new EmulatorBridge().CompileController(1, controllerDefinition, controllerTemplate, profile, inputTemplate));
+            //  var configuration = ConfigurationTemplate.FromDictionary(new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText("retroarch.cfg.yml")));
+
+            //   Console.WriteLine(new EmulatorBridge().CompileConfiguration(configuration, configuProfiles[0]));
+
         }
 
 
