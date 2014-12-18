@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Emulator.Configuration.Mapping;
+using System.IO;
 
 namespace Snowflake.Emulator
 {
