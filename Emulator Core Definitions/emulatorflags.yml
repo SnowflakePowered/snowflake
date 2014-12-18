@@ -1,0 +1,15 @@
+- key: fullscreen_toggle
+  type: boolean
+  default: true
+  description: "Toggle fullscreen"
+- key: someint
+  type: integer
+  default: 1
+  description: "Some integer"
+- key: videorender
+  type: select
+  default: opengl
+  values: 
+      opengl: "OpenGL Renderer"
+      directx: "DirectX Renderer"
+  description: "videorenderer"
