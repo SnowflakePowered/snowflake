@@ -12,12 +12,15 @@ namespace Snowflake.Game
     {
         public string UUID { get; private set; }
         public string FileName { get; private set; }
-        public IDictionary<string, dynamic> Settings { get; set; }
-        public GameInfo(string platformId, string name, IMediaStore mediaStore, IDictionary<string,string> metadata, string uuid, string fileName, IDictionary<string, dynamic> settings) : base(platformId,name,mediaStore,metadata)
+        public string CRC32 {get; private set;}
+        public GameInfo(string platformId, string name, IMediaStore mediaStore, IDictionary<string,string> metadata, string uuid, string fileName, string crc32) : base(platformId,name,mediaStore,metadata)
         {
             this.UUID = uuid;
             this.FileName = fileName;
-            this.Settings = settings;
+            this.CRC32 = crc32;
         }
+        public GameInfo(string platformId, string name, IMediaStore mediaStore, IDictionary<string, string> metadata, string uuid, string fileName)
+            : this(platformId, name, mediaStore, metadata, uuid, fileName, Crc32.GetCrc32(fileName)) { }
+      
     }
 }

@@ -39,8 +39,7 @@ namespace Snowflake.Core
                 resultdetails.Item2.ToMediaStore("game."+ScrapeEngine.ValidateFilename(gameinfo[GameInfoFields.game_title]).Replace(' ','_')+gameUuid),
                 gameinfo,
                 gameUuid,
-                fileName,
-                new Dictionary<string, dynamic>()
+                fileName
             );
         }
         private static string ValidateFilename(string text, char? replacement = '_')

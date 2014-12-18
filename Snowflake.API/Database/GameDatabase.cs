@@ -39,7 +39,7 @@ namespace Snowflake.Database
                                                                 name TEXT,
                                                                 mediastorekey TEXT,
                                                                 metadata TEXT,
-                                                                settings TEXT
+                                                                crc32 TEXT
                                                                 )", dbConnection);
             sqlCommand.ExecuteNonQuery();
             dbConnection.Close();
@@ -54,7 +54,7 @@ namespace Snowflake.Database
                                           @name,
                                           @mediastorekey,
                                           @metadata,
-                                          @settings)", this.DBConnection))
+                                          @crc32)", this.DBConnection))
             {
                 sqlCommand.Parameters.AddWithValue("@platform_id", game.PlatformId);
                 sqlCommand.Parameters.AddWithValue("@uuid", game.UUID);
@@ -62,7 +62,7 @@ namespace Snowflake.Database
                 sqlCommand.Parameters.AddWithValue("@name",  game.Name);
                 sqlCommand.Parameters.AddWithValue("@mediastorekey", game.MediaStore.MediaStoreKey);
                 sqlCommand.Parameters.AddWithValue("@metadata",  JsonConvert.SerializeObject(game.Metadata));
-                sqlCommand.Parameters.AddWithValue("@settings", JsonConvert.SerializeObject(game.Settings));
+                sqlCommand.Parameters.AddWithValue("@crc32", game.CRC32);
                 sqlCommand.ExecuteNonQuery();
             }
             this.DBConnection.Close();
@@ -122,9 +122,9 @@ namespace Snowflake.Database
             var name = (string)row["name"];
             var mediaStore = new FileMediaStore((string)row["mediastorekey"]);
             var metadata = JsonConvert.DeserializeObject<IDictionary<string, string>>((string)row["metadata"]);
-            var settings = JsonConvert.DeserializeObject<IDictionary<string, dynamic>>((string)row["settings"]);
+            var crc32 = (string)row["crc32"];
 
-            return new GameInfo(platformId, name, mediaStore, metadata, uuid, fileName, settings);
+            return new GameInfo(platformId, name, mediaStore, metadata, uuid, fileName, crc32);
         }
 
     }
