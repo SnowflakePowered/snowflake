@@ -68,7 +68,7 @@ namespace Snowflake.Core.Init
                 );
             string keyControl = bridge.CompileController(1, FrontendCore.LoadedCore.LoadedPlatforms["NINTENDO_NES"].Controllers["NES_CONTROLLER"], bridge.ControllerTemplates["NES_CONTROLLER"], controllerProfile, bridge.InputTemplates["retroarch"]);
             Console.WriteLine(keyControl);
-            bridge.StartRom(game);
+            bridge.StartRom(game,controllerProfile);
             int playerIndex = 1;
 
 

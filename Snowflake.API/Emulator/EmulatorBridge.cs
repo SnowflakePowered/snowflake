@@ -33,15 +33,18 @@ namespace Snowflake.Emulator
         }
            
 
-        public void StartRom(GameInfo gameInfo)
+        public void StartRom(GameInfo gameInfo, ControllerProfile profile)
         {
             var retroArch = FrontendCore.LoadedCore.EmulatorManager.EmulatorAssemblies["retroarch"];
             string path = FrontendCore.LoadedCore.EmulatorManager.GetAssemblyDirectory(retroArch);
             var startInfo = new ProcessStartInfo(path);
             startInfo.WorkingDirectory = Path.Combine(FrontendCore.LoadedCore.EmulatorManager.AssembliesLocation, "retroarch");
-            startInfo.Arguments = String.Format(@"{0} --libretro ""cores/bsnes_balanced_libretro.dll""", gameInfo.FileName);
+            startInfo.Arguments = String.Format(@"{0} --libretro ""cores/bsnes_balanced_libretro.dll"" --config retroarch.cfg.clean --appendconfig controller.cfg", gameInfo.FileName);
             Console.WriteLine(startInfo.Arguments);
+            File.WriteAllText("controller.cfg", CompileController(1, FrontendCore.LoadedCore.LoadedPlatforms["NINTENDO_NES"].Controllers["NES_CONTROLLER"], this.ControllerTemplates["NES_CONTROLLER"], profile, this.InputTemplates["retroarch"]));
             Process.Start(startInfo).WaitForExit();
+           //todo needs a place to output configurations
+            //configurationflags please
         }
         
         public string CompileConfiguration(ConfigurationTemplate configTemplate, ConfigurationProfile configProfile)
