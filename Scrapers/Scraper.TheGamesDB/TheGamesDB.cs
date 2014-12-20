@@ -42,6 +42,7 @@ namespace Scraper.TheGamesDB
         }
         public override IList<GameScrapeResult> GetSearchResults(string searchQuery)
         {
+            Console.WriteLine(this.FrontendInstance.GetHashCode());
             var searchUri = new Uri(Uri.EscapeUriString("http://thegamesdb.net/api/GetGamesList.php?name=" + searchQuery));
             var results = ParseSearchResults(searchUri);
             return results;
