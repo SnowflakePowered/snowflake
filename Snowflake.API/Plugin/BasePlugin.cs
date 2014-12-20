@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using Snowflake.Constants.Plugin;
 using Snowflake.Configuration;
 using Snowflake.Configuration.Interface;
+using Snowflake.Core;
 namespace Snowflake.Plugin
 {
     public abstract class BasePlugin : IPlugin
@@ -18,7 +19,7 @@ namespace Snowflake.Plugin
         public Assembly PluginAssembly { get; private set; }
         public string PluginDataPath { get; private set; }
         public virtual IConfiguration PluginConfiguration { get; private set; }
-
+        public FrontendCore CoreInstance { get; set; }
         protected BasePlugin(Assembly pluginAssembly)
         {
             this.PluginAssembly = pluginAssembly;

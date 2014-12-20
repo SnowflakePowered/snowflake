@@ -71,6 +71,7 @@ namespace Snowflake.Core.Manager
             foreach (var plugin in unloadedPlugins)
             {
                 var instance = (IPlugin)plugin.Value;
+                instance.CoreInstance = FrontendCore.LoadedCore;
                 loadedPlugins.Add(instance.PluginName, plugin.Value);
                 this.registry.Add(instance.PluginName, typeof(T));
             }

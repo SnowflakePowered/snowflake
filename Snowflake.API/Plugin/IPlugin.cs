@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
-
+using Snowflake.Core;
 namespace Snowflake.Plugin
 {
     public interface IPlugin
@@ -9,6 +9,7 @@ namespace Snowflake.Plugin
         string PluginDataPath { get; }
         Assembly PluginAssembly { get; }
         IDictionary<string, dynamic> PluginInfo { get; }
+        FrontendCore CoreInstance { get; set; }
         //todo IFrontendCore (fix after planned refactor)
     }
 }
