@@ -40,11 +40,11 @@ namespace Snowflake.Core.Init
             InitializeComponent();
             FrontendCore.InitCore();
             FrontendCore.InitPluginManager();
-            
-         
-           // var homebrew = new GameInfo("NINTENDO_SNES", "SNES_TEST", new FileMediaStore(gameUuid), new Dictionary<string, string>(), gameUuid, "christmascraze.smc", new Dictionary<string, dynamic>());
-         //   FrontendCore.LoadedCore.GameDatabase.AddGame(homebrew);
-            var game = FrontendCore.LoadedCore.GameDatabase.GetGameByUUID("eUML_nobAUqTGt6CmeYN1Q");
+
+            var gameUuid = ShortGuid.NewShortGuid();
+            var homebrew = new GameInfo("NINTENDO_SNES", "SNES_TEST", new FileMediaStore(gameUuid), new Dictionary<string, string>(), gameUuid, "christmascraze.smc");
+           FrontendCore.LoadedCore.GameDatabase.AddGame(homebrew);
+           Console.WriteLine(gameUuid);
             var controllerTemplate = ControllerTemplate.FromDictionary(new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText("retroarch.input.NES_CONTROLLER.yml")));
             var inputTemplate = InputTemplate.FromDictionary(new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText("retroarch.input.yml")));
             var configurationTemplate = ConfigurationTemplate.FromDictionary(new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText("retroarch.cfg.yml")));
@@ -68,7 +68,7 @@ namespace Snowflake.Core.Init
                 );
             string keyControl = bridge.CompileController(1, FrontendCore.LoadedCore.LoadedPlatforms["NINTENDO_NES"].Controllers["NES_CONTROLLER"], bridge.ControllerTemplates["NES_CONTROLLER"], controllerProfile, bridge.InputTemplates["retroarch"]);
             Console.WriteLine(keyControl);
-            bridge.StartRom(game,controllerProfile);
+          // bridge.StartRom(game,controllerProfile);
             int playerIndex = 1;
 
 

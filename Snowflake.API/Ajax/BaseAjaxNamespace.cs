@@ -7,6 +7,7 @@ using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using Snowflake.Plugin;
 using System.Linq;
+using Snowflake.Core;
 
 namespace Snowflake.Ajax
 {
@@ -14,7 +15,7 @@ namespace Snowflake.Ajax
     {
         public IDictionary<string, Func<JSRequest, JSResponse>> JavascriptMethods { get; private set; }
 
-        protected BaseAjaxNamespace(Assembly pluginAssembly):base(pluginAssembly)
+        protected BaseAjaxNamespace(Assembly pluginAssembly, FrontendCore coreInstance):base(pluginAssembly, coreInstance)
         {
             this.JavascriptMethods = new Dictionary<string, Func<JSRequest, JSResponse>>();
             this.RegisterMethods();

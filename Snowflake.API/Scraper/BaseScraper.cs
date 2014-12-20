@@ -5,14 +5,14 @@ using System.Reflection;
 using Newtonsoft.Json;
 using Snowflake.Collections;
 using Snowflake.Plugin;
-
+using Snowflake.Core;
 namespace Snowflake.Scraper
 {
     public abstract class BaseScraper: BasePlugin, IScraper
     {
         public BiDictionary<string, string> ScraperMap { get; private set; }
 
-        protected BaseScraper(Assembly pluginAssembly) : base(pluginAssembly)
+        protected BaseScraper(Assembly pluginAssembly, FrontendCore coreInstance) : base(pluginAssembly, coreInstance)
         {
             using (Stream stream = this.PluginAssembly.GetManifestResourceStream("scrapermap.json"))
             using (var reader = new StreamReader(stream))

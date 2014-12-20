@@ -19,11 +19,11 @@ namespace Snowflake.Plugin
         public Assembly PluginAssembly { get; private set; }
         public string PluginDataPath { get; private set; }
         public virtual IConfiguration PluginConfiguration { get; private set; }
-        public FrontendCore CoreInstance { get; set; }
-        protected BasePlugin(Assembly pluginAssembly)
+        public FrontendCore CoreInstance { get; private set; }
+        protected BasePlugin(Assembly pluginAssembly, FrontendCore coreInstance)
         {
             this.PluginAssembly = pluginAssembly;
-            
+            this.CoreInstance = coreInstance;
             using (Stream stream = this.PluginAssembly.GetManifestResourceStream("plugin.json"))
             using (var reader = new StreamReader(stream))
             {

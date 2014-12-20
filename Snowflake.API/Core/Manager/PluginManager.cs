@@ -47,11 +47,11 @@ namespace Snowflake.Core.Manager
         {
             this.LoadablesLocation = loadablesLocation;
             this.registry = new Dictionary<string, Type>();
-            this.ComposeImports();
         }
 
         public void LoadAll()
         {
+            this.ComposeImports();
             this.loadedIdentifiers = this.LoadPlugin(this.identifiers);
             this.loadedEmulators = this.LoadPlugin(this.emulators);
             this.loadedScrapers = this.LoadPlugin(this.scrapers);
@@ -62,7 +62,9 @@ namespace Snowflake.Core.Manager
         {
             var catalog = new DirectoryCatalog(Path.Combine(this.LoadablesLocation, "plugins"));
             var container = new CompositionContainer(catalog);
-            container.SatisfyImportsOnce(this);
+            Console.WriteLine(FrontendCore.LoadedCore.GetHashCode());
+            container.ComposeExportedValue("coreInstance", FrontendCore.LoadedCore);
+            container.ComposeParts(this);
         }
 
         private Dictionary<string, T> LoadPlugin<T>(IEnumerable<Lazy<T>> unloadedPlugins) where T : IPlugin
@@ -71,7 +73,6 @@ namespace Snowflake.Core.Manager
             foreach (var plugin in unloadedPlugins)
             {
                 var instance = (IPlugin)plugin.Value;
-                instance.CoreInstance = FrontendCore.LoadedCore;
                 loadedPlugins.Add(instance.PluginName, plugin.Value);
                 this.registry.Add(instance.PluginName, typeof(T));
             }
