@@ -26,6 +26,8 @@ namespace Snowflake.Core
         public IPluginManager PluginManager { get; private set; }
         public IAjaxManager AjaxManager { get; private set; }
         public GameDatabase GameDatabase { get; private set; }
+        public ControllerDatabase ControllerDatabase { get; private set; }
+
         public EmulatorManager EmulatorManager { get; private set; }
         #endregion
 
@@ -73,8 +75,10 @@ namespace Snowflake.Core
             this.LoadedPlatforms = this.LoadPlatforms(Path.Combine(this.AppDataDirectory, "platforms"));
          
             this.GameDatabase = new GameDatabase(Path.Combine(this.AppDataDirectory, "games.db"));
+            this.ControllerDatabase = new ControllerDatabase(Path.Combine(this.AppDataDirectory, "controllers.db"));
 
-           
+            this.ControllerDatabase.LoadTables(this.LoadedPlatforms);
+
             this.PluginManager = new PluginManager(this.AppDataDirectory);
             this.AjaxManager = new AjaxManager(this.AppDataDirectory);
             this.EmulatorManager = new EmulatorManager(Path.Combine(this.AppDataDirectory, "emulators"));
@@ -83,7 +87,7 @@ namespace Snowflake.Core
             this.APIServer = new ApiServer();
             this.MediaStoreServer = new FileMediaStoreServer(Path.Combine(this.AppDataDirectory, "mediastores"));
         }
-        private Dictionary<string, PlatformInfo> LoadPlatforms(string platformDirectory)
+        private IDictionary<string, PlatformInfo> LoadPlatforms(string platformDirectory)
         {
             var loadedPlatforms = new Dictionary<string, PlatformInfo>();
 

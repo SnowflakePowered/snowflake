@@ -29,8 +29,13 @@ namespace Snowflake.Database
                                                                 name TEXT,
                                                                 mediastorekey TEXT,
                                                                 metadata TEXT,
+<<<<<<< Updated upstream
                                                                 crc32 TEXT
+                                                                )", dbConnection);
+=======
+                                                                settings TEXT
                                                                 )", this.DBConnection);
+>>>>>>> Stashed changes
             sqlCommand.ExecuteNonQuery();
             this.DBConnection.Close();
         }
