@@ -106,13 +106,13 @@ namespace Snowflake.Database
         }
         private GameInfo GetGameFromDataRow(DataRow row)
         {
-            var platformId = (string)row["platform_id"];
-            var uuid = (string)row["uuid"];
-            var fileName = (string)row["filename"];
-            var name = (string)row["name"];
-            var mediaStore = new FileMediaStore((string)row["mediastorekey"]);
-            var metadata = JsonConvert.DeserializeObject<IDictionary<string, string>>((string)row["metadata"]);
-            var crc32 = (string)row["crc32"];
+            var platformId = row.Field<string>("platform_id");
+            var uuid = row.Field<string>("uuid");
+            var fileName = row.Field<string>("filename");
+            var name = row.Field<string>("name");
+            var mediaStore = new FileMediaStore(row.Field<string>("mediastorekey"));
+            var metadata = JsonConvert.DeserializeObject<IDictionary<string, string>>(row.Field<string>("metadata"));
+            var crc32 = row.Field<string>("crc32");
 
             return new GameInfo(platformId, name, mediaStore, metadata, uuid, fileName, crc32);
         }
