@@ -2,6 +2,19 @@
 =========
 [![Build status](https://ci.appveyor.com/api/projects/status/mhei9fdtja5j04kk)](https://ci.appveyor.com/project/RonnChyran/snowflake)
 
+Emulator API
+- [ ] A way to store and load custom game profiles during configuration compilation (read-only)
+- [ ]  A way to store and load configured controller profiles (filesystem?)
+- [ ]  A way to store and load emulator-specific flags for certain games (use a database)
+- [ ]  Implementing common logic in the abstract base class
+
+Others
+- [ ] A massive refactoring is required, sorting every class into a distinct API and creating and documenting interfaces for every core class
+- [ ]  Completely remove the SharpYaml dependency, just migrate everything to json.net.
+- [ ]  EventManager API should be implemented AFTER refactoring
+- [ ]  Unit and integration tests if possible
+
+
 
 Snowflake provides a plugin-based backend and a set of APIs powering an modern HTML5 frontend for Emulators with unprecendented integration and easy of use, without needing to modify or recompile the base emulator; allowing for maximum compatibility.
 
