@@ -52,7 +52,9 @@ namespace Snowflake.Core.Init
             var configProfiles = ConfigurationProfile.FromManyDictionaries(new Serializer().Deserialize<IList<IDictionary<string, dynamic>>>(File.ReadAllText("retroarch.profile.yml")));
             var controllerProfile = ControllerProfile.FromDictionary(new Serializer().Deserialize<IDictionary<string, dynamic>>(File.ReadAllText("NES_CONTROLLER.profile.yml")));
 
-            FrontendCore.LoadedCore.ControllerDatabase.LoadFromProfile(controllerProfile, 1);
+           // FrontendCore.LoadedCore.ControllerDatabase.AddControllerProfile(controllerProfile, 1);
+            var _conP = FrontendCore.LoadedCore.ControllerDatabase.GetControllerProfile("NES_CONTROLLER", 1);
+            
             var bridge = new EmulatorBridge(
                 new Dictionary<string, ControllerTemplate>(){
                         {"NES_CONTROLLER", controllerTemplate}

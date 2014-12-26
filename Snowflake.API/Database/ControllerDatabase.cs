@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SQLite;
+using System.Data;
 using System.IO;
 using Snowflake.Platform.Controller;
 using Snowflake.Platform;
@@ -11,11 +12,14 @@ namespace Snowflake.Database
 {
     public class ControllerDatabase : BaseDatabase
     {
-        public ControllerDatabase(string fileName) : base(fileName){
+        public ControllerDatabase(string fileName)
+            : base(fileName)
+        {
 
         }
 
-        public void LoadTables(IDictionary<string, PlatformInfo> platforms){
+        public void LoadTables(IDictionary<string, PlatformInfo> platforms)
+        {
             foreach (PlatformInfo platform in platforms.Values)
             {
                 foreach (ControllerDefinition controller in platform.Controllers.Values)
@@ -43,7 +47,7 @@ namespace Snowflake.Database
             this.DBConnection.Close();
 
         }
-        public void LoadFromProfile(ControllerProfile controllerProfile, int controllerIndex)
+        public void AddControllerProfile(ControllerProfile controllerProfile, int controllerIndex)
         {
             var queryString = new StringBuilder();
             queryString.AppendFormat("INSERT INTO {0} (", controllerProfile.ControllerID);
@@ -80,6 +84,35 @@ namespace Snowflake.Database
             }
             this.DBConnection.Close();
         }
+        public ControllerProfile GetControllerProfile(string controllerId, int controllerIndex)
+        {
+            this.DBConnection.Open();
+            using (var sqlCommand = new SQLiteCommand(@"SELECT * FROM `%tableName` WHERE `ControllerIndex` == @controllerIndex"
+                , this.DBConnection))
+            {
+                sqlCommand.CommandText = sqlCommand.CommandText.Replace("%tableName", controllerId);
+                sqlCommand.Parameters.AddWithValue("@controllerIndex", controllerIndex);
+
+                using (var reader = sqlCommand.ExecuteReader())
+                {
+                    var result = new DataTable();
+                    result.Load(reader);
+                    var row = result.Rows[0];
+                    var resultPlatformId = row.Field<string>("PlatformID");
+                    var resultProfileType = (ControllerProfileType)Enum.Parse(typeof(ControllerProfileType), row.Field<string>("ProfileType"), true);
+                    var resultControllerId = row.Field<string>("ControllerID");
+                    IDictionary<string, string> resultInputConfiguration =
+                        (from DataColumn item in result.Columns
+                         where item.ColumnName.StartsWith("INPUT_")
+                         select new KeyValuePair<string, string>
+                             (item.ColumnName.Remove(0, "INPUT_".Length), result.Rows[0].Field<string>(item)))
+                         .ToDictionary(config => config.Key, config => config.Value);
+                    this.DBConnection.Close();
+                    return new ControllerProfile(resultControllerId, resultPlatformId, resultProfileType, resultInputConfiguration);
+                }
+            }
+        }
+
         private void CreateDatabase()
         {
             SQLiteConnection.CreateFile(this.FileName);
