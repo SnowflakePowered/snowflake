@@ -8,12 +8,13 @@ using System.Reflection;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.ComponentModel.Composition;
+using Snowflake.Core;
 namespace Identifier.DatIdentifier
 {
     public sealed class ClrMameProDat: BasePlugin, IIdentifier
     {
-        public ClrMameProDat()
-            : base(Assembly.GetExecutingAssembly())
+        public ClrMameProDat([Import("coreInstance")] FrontendCore coreInstance)
+            : base(Assembly.GetExecutingAssembly(), coreInstance)
         {
             this.InitConfiguration();
         }

@@ -24,7 +24,7 @@ namespace Snowflake.Plugin
         {
             this.PluginAssembly = pluginAssembly;
             this.CoreInstance = coreInstance;
-            using (Stream stream = this.PluginAssembly.GetManifestResourceStream("plugin.json"))
+            using (Stream stream = this.GetResource("plugin.json"))
             using (var reader = new StreamReader(stream))
             {
                 string file = reader.ReadToEnd();
@@ -44,12 +44,17 @@ namespace Snowflake.Plugin
 
         protected virtual void InitConfiguration()
         {
-            using (Stream stream = this.PluginAssembly.GetManifestResourceStream("config.yml"))
+            using (Stream stream = this.GetResource("config.yml"))
             using (var reader = new StreamReader(stream))
             {
                 string file = reader.ReadToEnd();
                 this.InitConfiguration(file);
             }
+        }
+
+        protected virtual Stream GetResource(string resourceName)
+        {
+            return this.GetResource(this.PluginAssembly.GetName().Name + ".resource." + resourceName);
         }
     }
 }

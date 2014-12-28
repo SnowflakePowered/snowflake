@@ -14,7 +14,7 @@ namespace Snowflake.Scraper
 
         protected BaseScraper(Assembly pluginAssembly, FrontendCore coreInstance) : base(pluginAssembly, coreInstance)
         {
-            using (Stream stream = this.PluginAssembly.GetManifestResourceStream("scrapermap.json"))
+            using (Stream stream = this.GetResource("scrapermap.json"))
             using (var reader = new StreamReader(stream))
             {
                 string file = reader.ReadToEnd();

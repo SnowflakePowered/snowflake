@@ -95,6 +95,7 @@
     <Compile Include="Crc32.cs" />
     <Compile Include="Database\BaseDatabase.cs" />
     <Compile Include="Database\ControllerDatabase.cs" />
+    <Compile Include="Emulator\Configuration\EmulatorConfigurationStore.cs" />
     <Compile Include="Emulator\Input\Mapping\ControllerMapping.cs" />
     <Compile Include="Emulator\Input\Template\ControllerTemplate.cs" />
     <Compile Include="Emulator\Input\Template\InputTemplate.cs" />
@@ -160,9 +161,7 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Emulator\Configuration\ProfileStore\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="x86\SQLite.Interop.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
