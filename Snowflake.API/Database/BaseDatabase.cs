@@ -11,7 +11,7 @@ namespace Snowflake.Database
     public abstract class BaseDatabase
     {
         public string FileName { get; private set; }
-        protected SQLiteConnection DBConnection {get; set;}
+        protected SQLiteConnection DBConnection { get; set; }
         public BaseDatabase(string fileName)
         {
             this.FileName = fileName;
