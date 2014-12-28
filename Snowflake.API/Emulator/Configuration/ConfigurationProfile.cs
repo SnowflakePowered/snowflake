@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 using Snowflake.Emulator.Configuration.Mapping;
 using Snowflake.Emulator.Configuration.Template;
 using Snowflake.Extensions;
-
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using SharpYaml.Serialization;
 
 namespace Snowflake.Emulator.Configuration
@@ -25,8 +26,18 @@ namespace Snowflake.Emulator.Configuration
 
         public static ConfigurationProfile FromDictionary (IDictionary<string, dynamic> protoTemplate)
         {
-            return new ConfigurationProfile(protoTemplate["TemplateID"], ((IDictionary<object, dynamic>)protoTemplate["ConfigurationValues"])
+            try
+            {
+                return new ConfigurationProfile(protoTemplate["TemplateID"], ((IDictionary<object, dynamic>)protoTemplate["ConfigurationValues"])
                 .ToDictionary(value => (string)value.Key, value => value.Value));
+            }
+            catch (InvalidCastException)
+            {
+                //Account for JSON source where JObject is required
+                return new ConfigurationProfile(protoTemplate["TemplateID"], ((JObject)protoTemplate["ConfigurationValues"])
+                    .ToObject<IDictionary<object, dynamic>>()
+              .ToDictionary(value => (string)value.Key, value => value.Value));
+            }
         }
 
         public static IList<ConfigurationProfile> FromManyDictionaries(IList<IDictionary<string, dynamic>> protoTemplates)
