@@ -7,12 +7,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Ajax;
 using Snowflake.Core;
-
+using System.ComponentModel.Composition;
 namespace Ajax.SnowflakeCore
 {
     public class SnowflakeJsApi : BaseAjaxNamespace
     {
-        public SnowflakeJsApi() : base(Assembly.GetExecutingAssembly())
+        public SnowflakeJsApi([Import("coreInstance")] FrontendCore coreInstance)
+            : base(Assembly.GetExecutingAssembly(), coreInstance)
         {
             
         }
@@ -78,7 +79,7 @@ namespace Ajax.SnowflakeCore
                 var uuid = request.GetParameter("uuid");
                 var game = FrontendCore.LoadedCore.GameDatabase.GetGameByUUID(uuid);
                 var platform = FrontendCore.LoadedCore.LoadedPlatforms[game.PlatformId];
-                FrontendCore.LoadedCore.PluginManager.LoadedEmulators[platform.Defaults.Emulator].Run(game.UUID);
+                FrontendCore.LoadedCore.PluginManager.LoadedEmulators[platform.Defaults.Emulator].StartRom(game);
                 return new JSResponse(request, "success"); //todo replace with proper success response
             }
             catch
