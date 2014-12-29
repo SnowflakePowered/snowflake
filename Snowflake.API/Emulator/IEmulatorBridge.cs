@@ -17,7 +17,6 @@ namespace Snowflake.Emulator
         EmulatorAssembly EmulatorAssembly { get; }
         IReadOnlyDictionary<string, string> SupportedPlatforms { get;  }
         void StartRom(GameInfo gameInfo);
-        void StartRom(GameInfo gameInfo, ConfigurationProfile configurationProfile, IList<ControllerProfile> controllerProfiles);
         string CompileConfiguration(ConfigurationProfile configurationProfile);
         string CompileConfiguration(ConfigurationTemplate configurationTemplate, ConfigurationProfile configurationProfile);
         string CompileController(int playerIndex, ControllerDefinition controllerDefinition, ControllerTemplate controllerTemplate, ControllerProfile controllerProfile);

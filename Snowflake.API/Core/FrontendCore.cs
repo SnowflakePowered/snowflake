@@ -27,6 +27,7 @@ namespace Snowflake.Core
         public IAjaxManager AjaxManager { get; private set; }
         public GameDatabase GameDatabase { get; private set; }
         public ControllerDatabase ControllerDatabase { get; private set; }
+        public ControllerPortsDatabase ControllerPortsDatabase { get; private set; }
 
         public EmulatorManager EmulatorManager { get; private set; }
         #endregion
@@ -79,6 +80,12 @@ namespace Snowflake.Core
 
             this.ControllerDatabase.LoadTables(this.LoadedPlatforms);
 
+            this.ControllerPortsDatabase = new ControllerPortsDatabase(Path.Combine(this.AppDataDirectory, "ports.db"));
+
+            foreach (PlatformInfo platform in this.LoadedPlatforms.Values)
+            {
+                this.ControllerPortsDatabase.AddPlatform(platform);
+            }
             this.PluginManager = new PluginManager(this.AppDataDirectory);
             this.AjaxManager = new AjaxManager(this.AppDataDirectory);
             this.EmulatorManager = new EmulatorManager(Path.Combine(this.AppDataDirectory, "emulators"));

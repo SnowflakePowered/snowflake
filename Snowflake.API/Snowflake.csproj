@@ -101,6 +101,7 @@
     <Compile Include="Emulator\Input\Template\InputTemplate.cs" />
     <Compile Include="Emulator\EmulatorBridge.cs" />
     <Compile Include="Extensions\JObjectExts.cs" />
+    <Compile Include="Database\ControllerPortsDatabase.cs" />
     <Compile Include="Platform\Controller\ControllerProfile.cs" />
     <Compile Include="Platform\Controller\ControllerDefinition.cs" />
     <Compile Include="Core\Manager\AjaxManager.cs" />
