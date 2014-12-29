@@ -39,6 +39,7 @@ namespace Snowflake.Database
             queryString.Append("ControllerID TEXT,");
             queryString.Append("PlatformID TEXT,");
             queryString.Append("ProfileType TEXT,");
+            queryString.Append("DeviceName TEXT,");
             queryString.Append("ControllerIndex INTEGER)");
 
             this.DBConnection.Open();
@@ -58,6 +59,7 @@ namespace Snowflake.Database
             queryString.Append("ControllerID,");
             queryString.Append("PlatformID,");
             queryString.Append("ProfileType,");
+            queryString.Append("DeviceName,");
             queryString.Append("ControllerIndex) VALUES (");
             foreach (KeyValuePair<string, string> input in controllerProfile.InputConfiguration)
             {
@@ -66,6 +68,7 @@ namespace Snowflake.Database
             queryString.Append("@ControllerID,");
             queryString.Append("@PlatformID,");
             queryString.Append("@ProfileType,");
+            queryString.Append("@DeviceName,");
             queryString.Append("@ControllerIndex)");
             this.DBConnection.Open();
             using (var sqlCommand = new SQLiteCommand(queryString.ToString(), this.DBConnection))
@@ -77,12 +80,42 @@ namespace Snowflake.Database
                 sqlCommand.Parameters.AddWithValue("@ControllerID", controllerProfile.ControllerID);
                 sqlCommand.Parameters.AddWithValue("@PlatformID", controllerProfile.PlatformID);
                 sqlCommand.Parameters.AddWithValue("@ProfileType", controllerProfile.ProfileType.ToString());
+                sqlCommand.Parameters.AddWithValue("@DeviceName", "");
                 sqlCommand.Parameters.AddWithValue("@ControllerIndex", controllerIndex);
-                Console.WriteLine(sqlCommand.CommandText);
 
                 sqlCommand.ExecuteNonQuery();
             }
             this.DBConnection.Close();
+        }
+        public void SetDeviceName(string controllerId, int controllerIndex, string deviceName)
+        {
+            this.DBConnection.Open();
+            using (var sqlCommand = new SQLiteCommand("UPDATE `%tableName` SET `DeviceName` = @deviceName WHERE `ControllerIndex` == @controllerIndex", this.DBConnection))
+            {
+                sqlCommand.CommandText = sqlCommand.CommandText.Replace("%tableName", controllerId);
+
+                sqlCommand.Parameters.AddWithValue("@deviceName", deviceName);
+                sqlCommand.Parameters.AddWithValue("@controllerIndex", controllerIndex);
+                sqlCommand.ExecuteNonQuery();
+            }
+            this.DBConnection.Close();
+        }
+        public string GetDeviceName(string controllerId, int controllerIndex)
+        {
+            this.DBConnection.Open();
+            using (var sqlCommand = new SQLiteCommand("SELECT `DeviceName` FROM `%tableName` WHERE `ControllerIndex` == @controllerIndex", this.DBConnection))
+            {
+                sqlCommand.CommandText = sqlCommand.CommandText.Replace("%tableName", controllerId);
+                sqlCommand.Parameters.AddWithValue("@controllerIndex", controllerIndex);
+                using (var reader = sqlCommand.ExecuteReader())
+                {
+                    var result = new DataTable();
+                    result.Load(reader);
+                    var row = result.Rows[0];
+                    return row.Field<string>("DeviceName");
+                }
+                this.DBConnection.Close();
+            }
         }
         public ControllerProfile GetControllerProfile(string controllerId, int controllerIndex)
         {
@@ -90,6 +123,7 @@ namespace Snowflake.Database
             using (var sqlCommand = new SQLiteCommand(@"SELECT * FROM `%tableName` WHERE `ControllerIndex` == @controllerIndex"
                 , this.DBConnection))
             {
+
                 sqlCommand.CommandText = sqlCommand.CommandText.Replace("%tableName", controllerId);
                 sqlCommand.Parameters.AddWithValue("@controllerIndex", controllerIndex);
 
@@ -112,25 +146,5 @@ namespace Snowflake.Database
                 }
             }
         }
-
-        private void CreateDatabase()
-        {
-            SQLiteConnection.CreateFile(this.FileName);
-            var dbConnection = new SQLiteConnection("Data Source=" + this.FileName + ";Version=3;");
-            dbConnection.Open();
-            var sqlCommand = new SQLiteCommand(@"CREATE TABLE IF NOT EXISTS games(
-                                                                platform_id TEXT,
-                                                                uuid TEXT,
-                                                                filename TEXT,
-                                                                name TEXT,
-                                                                mediastorekey TEXT,
-                                                                metadata TEXT,
-                                                                settings TEXT
-                                                                )", dbConnection);
-            sqlCommand.ExecuteNonQuery();
-            dbConnection.Close();
-        }
-
-
     }
 }

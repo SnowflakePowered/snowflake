@@ -58,7 +58,8 @@ namespace Snowflake.Platform.Controller
     public enum ControllerProfileType
     {
         GAMEPAD_PROFILE,
-        KEYBOARD_PROFILE
+        KEYBOARD_PROFILE,
+        CUSTOM_PROFILE
     }
     
 }

@@ -57,9 +57,9 @@ namespace Snowflake.Core.Init
 ;           var homebrew = new GameInfo("NINTENDO_SNES", "SNES_TEST", new FileMediaStore(gameUuid), new Dictionary<string, string>(), gameUuid, "christmascraze.smc");
             Console.WriteLine(homebrew.CRC32);
             Console.WriteLine(x[homebrew].ConfigurationValues["aspect_ratio_index"]);
-           // FrontendCore.LoadedCore.ControllerDatabase.AddControllerProfile(controllerProfile, 1);
-            var _conP = FrontendCore.LoadedCore.ControllerDatabase.GetControllerProfile("NES_CONTROLLER", 1);
-            
+         //   FrontendCore.LoadedCore.ControllerDatabase.AddControllerProfile(controllerProfile, 1);
+          //  var _conP = FrontendCore.LoadedCore.ControllerDatabase.GetControllerProfile("NES_CONTROLLER", 1);
+            Console.WriteLine(FrontendCore.LoadedCore.ControllerDatabase.GetDeviceName("NES_CONTROLLER", 1));
             var bridge = new EmulatorBridge(
                 new Dictionary<string, ControllerTemplate>(){
                         {"NES_CONTROLLER", controllerTemplate}
