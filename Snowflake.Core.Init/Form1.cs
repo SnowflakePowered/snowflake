@@ -38,13 +38,20 @@ namespace Snowflake.Core.Init
         public Form1()
         {
             InitializeComponent();
+            Console.SetOut(new MultiTextWriter(new ControlWriter(this.textBox1), Console.Out));
+
+            start();
+        }
+
+        void start()
+        {
             FrontendCore.InitCore();
             FrontendCore.InitPluginManager();
 
             var gameUuid = ShortGuid.NewShortGuid();
-          //  var homebrew = new GameInfo("NINTENDO_SNES", "SNES_TEST", new FileMediaStore(gameUuid), new Dictionary<string, string>(), gameUuid, "christmascraze.smc");
-           //FrontendCore.LoadedCore.GameDatabase.AddGame(homebrew);
-           Console.WriteLine(gameUuid);
+            //  var homebrew = new GameInfo("NINTENDO_SNES", "SNES_TEST", new FileMediaStore(gameUuid), new Dictionary<string, string>(), gameUuid, "christmascraze.smc");
+            //FrontendCore.LoadedCore.GameDatabase.AddGame(homebrew);
+            Console.WriteLine(gameUuid);
             var controllerTemplate = ControllerTemplate.FromDictionary(new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText("retroarch.input.NES_CONTROLLER.yml")));
             var inputTemplate = InputTemplate.FromDictionary(new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText("retroarch.input.yml")));
             var configurationTemplate = ConfigurationTemplate.FromDictionary(new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText("retroarch.cfg.yml")));
@@ -54,12 +61,15 @@ namespace Snowflake.Core.Init
 
             var x = new ConfigurationStore(configProfiles.First());
             Console.WriteLine(JsonConvert.SerializeObject(configProfiles.First()))
-;           var homebrew = new GameInfo("NINTENDO_SNES", "SNES_TEST", new FileMediaStore(gameUuid), new Dictionary<string, string>(), gameUuid, "christmascraze.smc");
+; var homebrew = new GameInfo("NINTENDO_SNES", "SNES_TEST", new FileMediaStore(gameUuid), new Dictionary<string, string>(), gameUuid, "christmascraze.smc");
             Console.WriteLine(homebrew.CRC32);
             Console.WriteLine(x[homebrew].ConfigurationValues["aspect_ratio_index"]);
-         //   FrontendCore.LoadedCore.ControllerDatabase.AddControllerProfile(controllerProfile, 1);
-          //  var _conP = FrontendCore.LoadedCore.ControllerDatabase.GetControllerProfile("NES_CONTROLLER", 1);
+            FrontendCore.LoadedCore.ControllerDatabase.AddControllerProfile(controllerProfile, 1);
+            //  var _conP = FrontendCore.LoadedCore.ControllerDatabase.GetControllerProfile("NES_CONTROLLER", 1);
             Console.WriteLine(FrontendCore.LoadedCore.ControllerDatabase.GetDeviceName("NES_CONTROLLER", 1));
+            FrontendCore.LoadedCore.ControllerPortsDatabase.SetPort(FrontendCore.LoadedCore.LoadedPlatforms["NINTENDO_NES"], 1, "NINTENDO_NES");
+
+            Console.WriteLine(FrontendCore.LoadedCore.ControllerPortsDatabase.GetPort(FrontendCore.LoadedCore.LoadedPlatforms["NINTENDO_NES"], 1));
             var bridge = new EmulatorBridge(
                 new Dictionary<string, ControllerTemplate>(){
                         {"NES_CONTROLLER", controllerTemplate}
@@ -76,7 +86,7 @@ namespace Snowflake.Core.Init
                 );
             string keyControl = bridge.CompileController(1, FrontendCore.LoadedCore.LoadedPlatforms["NINTENDO_NES"].Controllers["NES_CONTROLLER"], bridge.ControllerTemplates["NES_CONTROLLER"], controllerProfile, bridge.InputTemplates["retroarch"]);
             Console.WriteLine(keyControl);
-          // bridge.StartRom(game,controllerProfile);
+            // bridge.StartRom(game,controllerProfile);
             int playerIndex = 1;
 
 
@@ -84,9 +94,7 @@ namespace Snowflake.Core.Init
             //  var configuration = ConfigurationTemplate.FromDictionary(new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText("retroarch.cfg.yml")));
 
             //   Console.WriteLine(new EmulatorBridge().CompileConfiguration(configuration, configuProfiles[0]));
-
         }
-
 
 
         async void Init()
@@ -103,4 +111,71 @@ namespace Snowflake.Core.Init
 
         }
     }
+    //http://stackoverflow.com/questions/18726852/redirecting-console-writeline-to-textbox
+    public class ControlWriter : TextWriter
+    {
+        private Control textbox;
+        public ControlWriter(Control textbox)
+        {
+            this.textbox = textbox;
+        }
+
+        public override void Write(char value)
+        {
+            textbox.Text += Regex.Replace(value.ToString(), "(?<!\r)\n", "\r\n");
+        }
+
+        public override void Write(string value)
+        {
+
+            textbox.Text += Regex.Replace(value, "(?<!\r)\n", "\r\n");
+        }
+
+        public override Encoding Encoding
+        {
+            get { return Encoding.ASCII; }
+        }
+    }
+    public class MultiTextWriter : TextWriter
+    {
+        private IEnumerable<TextWriter> writers;
+        public MultiTextWriter(IEnumerable<TextWriter> writers)
+        {
+            this.writers = writers.ToList();
+        }
+        public MultiTextWriter(params TextWriter[] writers)
+        {
+            this.writers = writers;
+        }
+
+        public override void Write(char value)
+        {
+            foreach (var writer in writers)
+                writer.Write(value);
+        }
+
+        public override void Write(string value)
+        {
+            foreach (var writer in writers)
+                writer.Write(value);
+        }
+
+        public override void Flush()
+        {
+            foreach (var writer in writers)
+                writer.Flush();
+        }
+
+        public override void Close()
+        {
+            foreach (var writer in writers)
+                writer.Close();
+        }
+
+        public override Encoding Encoding
+        {
+            get { return Encoding.ASCII; }
+        }
+    }
+
 }
