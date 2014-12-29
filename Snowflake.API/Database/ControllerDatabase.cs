@@ -40,7 +40,7 @@ namespace Snowflake.Database
             queryString.Append("PlatformID TEXT,");
             queryString.Append("ProfileType TEXT,");
             queryString.Append("DeviceName TEXT,");
-            queryString.Append("ControllerIndex INTEGER)");
+            queryString.Append("ControllerIndex INTEGER PRIMARY KEY)");
 
             this.DBConnection.Open();
             var sqlCommand = new SQLiteCommand(queryString.ToString(), this.DBConnection);
@@ -51,7 +51,7 @@ namespace Snowflake.Database
         public void AddControllerProfile(ControllerProfile controllerProfile, int controllerIndex)
         {
             var queryString = new StringBuilder();
-            queryString.AppendFormat("INSERT INTO {0} (", controllerProfile.ControllerID);
+            queryString.AppendFormat("INSERT OR REPLACE INTO {0} (", controllerProfile.ControllerID);
             foreach (KeyValuePair<string, string> input in controllerProfile.InputConfiguration)
             {
                 queryString.AppendFormat("INPUT_{0},", input.Key);
@@ -80,7 +80,7 @@ namespace Snowflake.Database
                 sqlCommand.Parameters.AddWithValue("@ControllerID", controllerProfile.ControllerID);
                 sqlCommand.Parameters.AddWithValue("@PlatformID", controllerProfile.PlatformID);
                 sqlCommand.Parameters.AddWithValue("@ProfileType", controllerProfile.ProfileType.ToString());
-                sqlCommand.Parameters.AddWithValue("@DeviceName", "");
+                sqlCommand.Parameters.AddWithValue("@DeviceName", null);
                 sqlCommand.Parameters.AddWithValue("@ControllerIndex", controllerIndex);
 
                 sqlCommand.ExecuteNonQuery();
@@ -112,9 +112,9 @@ namespace Snowflake.Database
                     var result = new DataTable();
                     result.Load(reader);
                     var row = result.Rows[0];
+                    this.DBConnection.Close();
                     return row.Field<string>("DeviceName");
                 }
-                this.DBConnection.Close();
             }
         }
         public ControllerProfile GetControllerProfile(string controllerId, int controllerIndex)
