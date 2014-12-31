@@ -35,8 +35,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{9ED147
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ajax.SnowflakeCore", "Ajax.SnowflakeCore\Ajax.SnowflakeCore.csproj", "{4792C8C4-81A8-4AB1-9041-2DFF4F5E8DBB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Presentation", "Snowflake.Presentation\Snowflake.Presentation.csproj", "{FCEABEBE-7940-418A-9478-2C40B0D6B39C}"
-EndProject
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "Snowflake.Node", "Snowflake.Node\Snowflake.Node.njsproj", "{BCBC1C0B-C75C-407C-8F7C-1766BE1F582F}"
 EndProject
 Global
@@ -65,10 +63,6 @@ Global
 		{4792C8C4-81A8-4AB1-9041-2DFF4F5E8DBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4792C8C4-81A8-4AB1-9041-2DFF4F5E8DBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4792C8C4-81A8-4AB1-9041-2DFF4F5E8DBB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FCEABEBE-7940-418A-9478-2C40B0D6B39C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FCEABEBE-7940-418A-9478-2C40B0D6B39C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FCEABEBE-7940-418A-9478-2C40B0D6B39C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FCEABEBE-7940-418A-9478-2C40B0D6B39C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BCBC1C0B-C75C-407C-8F7C-1766BE1F582F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BCBC1C0B-C75C-407C-8F7C-1766BE1F582F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
