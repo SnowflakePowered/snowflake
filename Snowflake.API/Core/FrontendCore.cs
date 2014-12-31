@@ -17,6 +17,7 @@ using Snowflake.Core.EventDelegate;
 using Snowflake.Information;
 using System.Reflection;
 using Snowflake.Core.Manager;
+using Snowflake.Emulator.Configuration.Flags;
 namespace Snowflake.Core
 {
     public partial class FrontendCore 
@@ -28,7 +29,7 @@ namespace Snowflake.Core
         public GameDatabase GameDatabase { get; private set; }
         public ControllerDatabase ControllerDatabase { get; private set; }
         public ControllerPortsDatabase ControllerPortsDatabase { get; private set; }
-
+        public ConfigurationFlagDatabase ConfigurationFlagDatabase { get; private set; }
         public EmulatorManager EmulatorManager { get; private set; }
         #endregion
 
@@ -81,7 +82,7 @@ namespace Snowflake.Core
             this.ControllerDatabase.LoadTables(this.LoadedPlatforms);
 
             this.ControllerPortsDatabase = new ControllerPortsDatabase(Path.Combine(this.AppDataDirectory, "ports.db"));
-
+            this.ConfigurationFlagDatabase = new ConfigurationFlagDatabase(Path.Combine(this.AppDataDirectory, "flags.db"));
             foreach (PlatformInfo platform in this.LoadedPlatforms.Values)
             {
                 this.ControllerPortsDatabase.AddPlatform(platform);

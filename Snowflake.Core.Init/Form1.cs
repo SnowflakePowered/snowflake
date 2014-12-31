@@ -30,6 +30,7 @@ using Snowflake.Platform.Controller;
 using Snowflake.Constants.Input;
 using Snowflake.Emulator.Input.Template;
 using Snowflake.Emulator;
+using Snowflake.Emulator.Configuration.Flags;
 namespace Snowflake.Core.Init
 {
     public partial class Form1 : Form
@@ -48,7 +49,7 @@ namespace Snowflake.Core.Init
             FrontendCore.InitCore();
             FrontendCore.InitPluginManager();
 
-            var gameUuid = ShortGuid.NewShortGuid();
+            var gameUuid = "UPeeOUwXQESzaKU8jRsDag";
             //  var homebrew = new GameInfo("NINTENDO_SNES", "SNES_TEST", new FileMediaStore(gameUuid), new Dictionary<string, string>(), gameUuid, "christmascraze.smc");
             //FrontendCore.LoadedCore.GameDatabase.AddGame(homebrew);
             Console.WriteLine(gameUuid);
@@ -94,6 +95,15 @@ namespace Snowflake.Core.Init
             //  var configuration = ConfigurationTemplate.FromDictionary(new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText("retroarch.cfg.yml")));
 
             //   Console.WriteLine(new EmulatorBridge().CompileConfiguration(configuration, configuProfiles[0]));
+            //FrontendCore.LoadedCore.ConfigurationFlagDatabase.CreateFlagsTable("");
+
+            string flags = File.ReadAllText("emulatorflags.json");
+            var flagsobj = JsonConvert.DeserializeObject<IList<IDictionary<string, dynamic>>>(flags);
+            var cflag = ConfigurationFlag.FromManyDictionaries(flagsobj);
+            FrontendCore.LoadedCore.ConfigurationFlagDatabase.CreateFlagsTable("test", cflag);
+        //    FrontendCore.LoadedCore.ConfigurationFlagDatabase.AddGame(homebrew, "test", cflag, new Dictionary<string, string>());
+            var val =  (int)FrontendCore.LoadedCore.ConfigurationFlagDatabase.GetValue(homebrew, "test", "someint", ConfigurationFlagTypes.INTEGER_FLAG);
+            Console.WriteLine(val);
         }
 
 

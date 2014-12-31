@@ -24,7 +24,7 @@ namespace Snowflake.Database
             this.DBConnection.Open();
             var sqlCommand = new SQLiteCommand(@"CREATE TABLE IF NOT EXISTS games(
                                                                 platform_id TEXT,
-                                                                uuid TEXT,
+                                                                uuid TEXT PRIMARY KEY,
                                                                 filename TEXT,
                                                                 name TEXT,
                                                                 mediastorekey TEXT,
@@ -37,7 +37,7 @@ namespace Snowflake.Database
 
         public void AddGame(GameInfo game){
             this.DBConnection.Open();
-            using (var sqlCommand = new SQLiteCommand(@"INSERT INTO games VALUES(
+            using (var sqlCommand = new SQLiteCommand(@"INSERT OR REPLACE INTO games VALUES(
                                           @platform_id,
                                           @uuid,
                                           @filename,

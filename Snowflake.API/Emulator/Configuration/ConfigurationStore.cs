@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 
 namespace Snowflake.Emulator.Configuration
 {
+    //new config store per config
     public class ConfigurationStore
     {
         public string TemplateID { get; private set; }

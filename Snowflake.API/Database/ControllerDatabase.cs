@@ -8,6 +8,7 @@ using System.Data;
 using System.IO;
 using Snowflake.Platform.Controller;
 using Snowflake.Platform;
+using System.Data.SQLite;
 namespace Snowflake.Database
 {
     public class ControllerDatabase : BaseDatabase

@@ -183,3 +183,4 @@ UpgradeLog*.htm
 FakesAssemblies/
 theme/Materia/bower_components/*
 Snowflake.Node/.ntvs_analysis.dat
+Snowflake.API/classlist.txt
