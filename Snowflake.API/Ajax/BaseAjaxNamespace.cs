@@ -15,7 +15,7 @@ namespace Snowflake.Ajax
     {
         public IDictionary<string, Func<IJSRequest, IJSResponse>> JavascriptMethods { get; private set; }
 
-        protected BaseAjaxNamespace(Assembly pluginAssembly, CoreService coreInstance):base(pluginAssembly, coreInstance)
+        protected BaseAjaxNamespace(Assembly pluginAssembly, ICoreService coreInstance):base(pluginAssembly, coreInstance)
         {
             this.JavascriptMethods = new Dictionary<string, Func<IJSRequest, IJSResponse>>();
             this.RegisterMethods();

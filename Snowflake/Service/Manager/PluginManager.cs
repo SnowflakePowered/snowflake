@@ -12,8 +12,6 @@ using Snowflake.Plugin;
 using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using Snowflake.Scraper;
-using Snowflake.Plugin;
-using Snowflake.Emulator;
 using Snowflake.Identifier;
 namespace Snowflake.Service.Manager
 {

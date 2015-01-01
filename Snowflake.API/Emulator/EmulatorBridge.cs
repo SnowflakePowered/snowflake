@@ -10,7 +10,6 @@ using Snowflake.Game;
 using System.Diagnostics;
 using System.Collections;
 using System.IO;
-using Snowflake.Extensions;
 using Snowflake.Emulator.Input;
 using Snowflake.Plugin;
 /*

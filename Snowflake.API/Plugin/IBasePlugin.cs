@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
 using Snowflake.Service;
+using System.IO;
 namespace Snowflake.Plugin
 {
     public interface IBasePlugin
@@ -10,6 +11,7 @@ namespace Snowflake.Plugin
         Assembly PluginAssembly { get; }
         IDictionary<string, dynamic> PluginInfo { get; }
         ICoreService CoreInstance { get; }
-        //todo IFrontendCore (fix ater planned refactor)
+        Stream GetResource(string resourceName);
+        IPluginConfiguration PluginConfiguration { get; }
     }
 }
