@@ -94,10 +94,10 @@ namespace Snowflake.Service.Init
             //   Console.WriteLine(new EmulatorBridge().CompileConfiguration(configuration, configuProfiles[0]));
             //FrontendCore.LoadedCore.ConfigurationFlagDatabase.CreateFlagsTable("");
 
-            string flags = File.ReadAllText("emulatorflags.json");
+            /*string flags = File.ReadAllText("emulatorflags.json");
             var flagsobj = JsonConvert.DeserializeObject<IList<IDictionary<string, dynamic>>>(flags);
-            var cflag = ConfigurationFlag.FromManyDictionaries(flagsobj);
-            CoreService.LoadedCore.ConfigurationFlagDatabase.CreateFlagsTable("test", cflag);
+            var cflag = ConfigurationFlag.FromManyDictionaries(flagsobj);*/
+          //  CoreService.LoadedCore.ConfigurationFlagDatabase.CreateFlagsTable("test", cflag);
         //    FrontendCore.LoadedCore.ConfigurationFlagDatabase.AddGame(homebrew, "test", cflag, new Dictionary<string, string>());
        //     var val =  (int)CoreService.LoadedCore.ConfigurationFlagDatabase.GetValue(homebrew, "test", "someint", ConfigurationFlagTypes.INTEGER_FLAG);
           ///  Console.WriteLine(val);

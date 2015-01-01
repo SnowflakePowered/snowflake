@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 using System.Data.SQLite;
 using System.Data;
 using System.IO;
-using Snowflake.Controller;
 using Snowflake.Platform;
 using Snowflake.Utility;
-namespace Snowflake.Database
+namespace Snowflake.Controller
 {
-    public class ControllerDatabase : BaseDatabase, Snowflake.Controller.IControllerDatabase
+    public class ControllerProfileDatabase : BaseDatabase, IControllerProfileDatabase
     {
-        public ControllerDatabase(string fileName)
+        public ControllerProfileDatabase(string fileName)
             : base(fileName)
         {
 

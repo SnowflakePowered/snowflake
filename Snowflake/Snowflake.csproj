@@ -83,7 +83,7 @@
     <Compile Include="Ajax\JSRequest.cs" />
     <Compile Include="Ajax\JSResponse.cs" />
     <Compile Include="Plugin\YamlConfiguration.cs" />
-    <Compile Include="Controller\ControllerDatabase.cs" />
+    <Compile Include="Controller\ControllerProfileDatabase.cs" />
     <Compile Include="Emulator\Configuration\ConfigurationStore.cs" />
     <Compile Include="Emulator\Configuration\ConfigurationFlag.cs" />
     <Compile Include="Emulator\Configuration\ConfigurationFlagDatabase.cs" />

@@ -2,7 +2,7 @@
 using Snowflake.Platform;
 namespace Snowflake.Controller
 {
-    public interface IControllerDatabase
+    public interface IControllerProfileDatabase
     {
         void AddControllerProfile(IControllerProfile controllerProfile, int controllerIndex);
         IControllerProfile GetControllerProfile(string controllerId, int controllerIndex);

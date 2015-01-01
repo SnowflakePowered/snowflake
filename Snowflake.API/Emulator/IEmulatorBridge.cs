@@ -6,6 +6,7 @@ using Snowflake.Emulator.Input;
 using Snowflake.Controller;
 using System.Collections.Generic;
 using System;
+using Snowflake.Platform;
 
 namespace Snowflake.Emulator
 {
@@ -13,13 +14,12 @@ namespace Snowflake.Emulator
     public interface IEmulatorBridge : IBasePlugin
     {
         IEmulatorAssembly EmulatorAssembly { get; }
-        IReadOnlyDictionary<string, string> SupportedPlatforms { get;  }
+        IReadOnlyList<string> SupportedPlatforms { get;  }
         void StartRom(IGameInfo gameInfo);
         string CompileConfiguration(IConfigurationProfile configurationProfile);
         string CompileConfiguration(IConfigurationTemplate configurationTemplate, IConfigurationProfile configurationProfile);
-        string CompileController(int playerIndex, IControllerDefinition controllerDefinition, IControllerTemplate controllerTemplate, IControllerProfile controllerProfile);
-        string CompileController(int playerIndex, IControllerProfile controllerProfile);
-        void PlaceConfigurationFiles(IDictionary<string, string> compiledConfiguration, IList<string> compiledController);
+        string CompileController(int playerIndex, IControllerDefinition controllerDefinition, IControllerTemplate controllerTemplate, IControllerProfile controllerProfile, IInputTemplate inputTemplate);
+        string CompileController(int playerIndex, IPlatformInfo platformInfo, IInputTemplate inputTemplate);
         void ShutdownEmulator();
         void HandlePrompt(string promptMessage);
        

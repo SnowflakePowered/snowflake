@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Platform;
-using Snowflake.Database;
 using Snowflake.Service.HttpServer;
 using System.IO;
 using System.ComponentModel.Composition;
@@ -27,7 +26,7 @@ namespace Snowflake.Service
         public IPluginManager PluginManager { get; private set; }
         public IAjaxManager AjaxManager { get; private set; }
         public IGameDatabase GameDatabase { get; private set; }
-        public IControllerDatabase ControllerDatabase { get; private set; }
+        public IControllerProfileDatabase ControllerDatabase { get; private set; }
         public IControllerPortsDatabase ControllerPortsDatabase { get; private set; }
         public IConfigurationFlagDatabase ConfigurationFlagDatabase { get; private set; }
         public IEmulatorAssembliesManager EmulatorManager { get; private set; }
@@ -77,7 +76,7 @@ namespace Snowflake.Service
             this.LoadedPlatforms = this.LoadPlatforms(Path.Combine(this.AppDataDirectory, "platforms"));
          
             this.GameDatabase = new GameDatabase(Path.Combine(this.AppDataDirectory, "games.db"));
-            this.ControllerDatabase = new ControllerDatabase(Path.Combine(this.AppDataDirectory, "controllers.db"));
+            this.ControllerDatabase = new ControllerProfileDatabase(Path.Combine(this.AppDataDirectory, "controllers.db"));
 
             this.ControllerDatabase.LoadTables(this.LoadedPlatforms);
 

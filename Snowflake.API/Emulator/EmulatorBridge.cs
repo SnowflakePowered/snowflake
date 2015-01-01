@@ -12,27 +12,24 @@ using System.Collections;
 using System.IO;
 using Snowflake.Emulator.Input;
 using Snowflake.Plugin;
-/*
+using Snowflake.Platform;
+using System.Reflection;
+
 namespace Snowflake.Emulator
 {
-    public class EmulatorBridge : BasePlugin, IEmulatorBridge
+    public abstract class EmulatorBridge : BasePlugin, IEmulatorBridge
     {
         public IReadOnlyDictionary<string, IControllerTemplate> ControllerTemplates { get; private set; }
         public IReadOnlyDictionary<string, IInputTemplate> InputTemplates { get; private set; }
         public IReadOnlyDictionary<string, IConfigurationTemplate> ConfigurationTemplates { get; private set; }
         public IReadOnlyList<string> SupportedPlatforms { get; private set; }
+        public IEmulatorAssembly EmulatorAssembly { get; private set; }
 
-        public EmulatorBridge(IDictionary<string, ControllerTemplate> controllerTemplates, IDictionary<string, InputTemplate> inputTemplates, IDictionary<string, ConfigurationTemplate> configurationTemplates, IList<string> supportedPlatforms)
-        {
-            this.ControllerTemplates = controllerTemplates.AsReadOnly();
-            this.InputTemplates = inputTemplates.AsReadOnly();
-            this.ConfigurationTemplates = configurationTemplates.AsReadOnly();
-            this.SupportedPlatforms = supportedPlatforms.AsReadOnly();
-        }
-           
+        public EmulatorBridge(Assembly pluginAssembly, ICoreService coreInstance) : base(pluginAssembly, coreInstance) { }
 
-        public void StartRom(GameInfo gameInfo, ControllerProfile profile)
-        {
+        public abstract void StartRom(IGameInfo gameInfo);
+      /*  {
+            
             var retroArch = CoreService.LoadedCore.EmulatorManager.EmulatorAssemblies["retroarch"];
             string path = CoreService.LoadedCore.EmulatorManager.GetAssemblyDirectory(retroArch);
             var startInfo = new ProcessStartInfo(path);
@@ -44,9 +41,14 @@ namespace Snowflake.Emulator
             Process.Start(startInfo).WaitForExit();
            //todo needs a place to output configurations
             //configurationflags please
+        }*/
+        public abstract void HandlePrompt(string messagge);
+        public abstract void ShutdownEmulator();
+        public virtual string CompileConfiguration(IConfigurationProfile configProfile)
+        {
+            return this.CompileConfiguration(this.ConfigurationTemplates[configProfile.TemplateID], configProfile);
         }
-        
-        public string CompileConfiguration(ConfigurationTemplate configTemplate, ConfigurationProfile configProfile)
+        public virtual string CompileConfiguration(IConfigurationTemplate configTemplate, IConfigurationProfile configProfile)
         {
             var template = new StringBuilder(configTemplate.StringTemplate);
             foreach (var configurationValue in configProfile.ConfigurationValues)
@@ -65,13 +67,24 @@ namespace Snowflake.Emulator
             }
             return template.ToString();
         }
-        public string CompileController(int playerIndex, ControllerDefinition controllerDefinition, ControllerTemplate controllerTemplate, ControllerProfile controllerProfile, InputTemplate inputTemplate)
+        public virtual string CompileController(int playerIndex, IPlatformInfo platformInfo, IInputTemplate inputTemplate)
+        {
+            string controllerId = this.CoreInstance.ControllerPortsDatabase.GetPort(platformInfo, playerIndex);
+            IControllerProfile controllerProfile = this.CoreInstance.ControllerDatabase.GetControllerProfile(controllerId, playerIndex);
+
+            return this.CompileController(playerIndex, 
+                platformInfo.Controllers[controllerProfile.ControllerID],
+                this.ControllerTemplates[controllerProfile.ControllerID],
+                controllerProfile,
+                inputTemplate);
+        }
+        public virtual string CompileController(int playerIndex, IControllerDefinition controllerDefinition, IControllerTemplate controllerTemplate, IControllerProfile controllerProfile, IInputTemplate inputTemplate)
         {
             var template = new StringBuilder(inputTemplate.StringTemplate);
             var controllerMappings = controllerProfile.ProfileType == ControllerProfileType.KEYBOARD_PROFILE ? 
                 controllerTemplate.KeyboardControllerMappings : controllerTemplate.GamepadControllerMappings;
 
-            foreach (ControllerInput input in controllerDefinition.ControllerInputs.Values)
+            foreach (IControllerInput input in controllerDefinition.ControllerInputs.Values)
             {
                 string templateKey = controllerMappings["default"].InputMappings[input.InputName];
                 string inputSetting = controllerProfile.InputConfiguration[input.InputName];
@@ -96,4 +109,3 @@ namespace Snowflake.Emulator
         }
     }
 }
-*/

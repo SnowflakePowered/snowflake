@@ -15,7 +15,7 @@ namespace Snowflake.Service
         IEmulatorAssembliesManager EmulatorManager { get; }
         string AppDataDirectory { get; }
         IConfigurationFlagDatabase ConfigurationFlagDatabase { get; }
-        IControllerDatabase ControllerDatabase { get; }
+        IControllerProfileDatabase ControllerDatabase { get; }
         IControllerPortsDatabase ControllerPortsDatabase { get; }
         event EventHandler CoreLoaded;
         IGameDatabase GameDatabase { get; }
