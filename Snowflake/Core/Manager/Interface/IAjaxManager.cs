@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Snowflake.Ajax;
 
-namespace Snowflake.Core.Manager.Interface
+namespace Snowflake.Service.Manager.Interface
 {
     public interface IAjaxManager : ILoadableManager
     {

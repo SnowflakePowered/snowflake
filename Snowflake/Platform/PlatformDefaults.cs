@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Snowflake.Platform
 {
-    public class PlatformDefaults
+    public class PlatformDefaults : IPlatformDefaults
     {
         public string Scraper { get; set; }
         public string Identifier { get; set; }

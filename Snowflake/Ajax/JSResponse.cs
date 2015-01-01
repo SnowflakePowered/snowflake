@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace Snowflake.Ajax
 {
-    public class JSResponse
+    public class JSResponse : IJSResponse
     {
         public JSRequest Request { get; private set; }
         public dynamic Payload { get; private set; }

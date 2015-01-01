@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 using System.Web;
 using Snowflake.Ajax;
 using Snowflake.Extensions;
-namespace Snowflake.Core.Server
+namespace Snowflake.Service.Server
 {
     public class ApiServer : BaseHttpServer
     {
@@ -48,7 +48,7 @@ namespace Snowflake.Core.Server
 
         private async Task<string> ProcessRequest(JSRequest args)
         {
-            return await FrontendCore.LoadedCore.AjaxManager.CallMethodAsync(args);
+            return await CoreService.LoadedCore.AjaxManager.CallMethodAsync(args);
         }
     }
 }

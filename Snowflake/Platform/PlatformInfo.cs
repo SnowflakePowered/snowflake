@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Snowflake.MediaStore;
+using Snowflake.Information.MediaStore;
 using Snowflake.Information;
-using Snowflake.Platform.Controller;
+using Snowflake.Controller;
 using System.Collections.ObjectModel;
 using Snowflake.Extensions;
 
 namespace Snowflake.Platform
 {
-    public class PlatformInfo : Info
+    public class PlatformInfo : Info, IPlatformInfo
     {
         public PlatformInfo(string platformId, string name, IMediaStore mediastore, IDictionary<string, string> metadata, IList<string> fileExtensions, PlatformDefaults platformDefaults, IDictionary<string, ControllerDefinition> controllers, int maximumInputs): base(platformId, name, mediastore, metadata)
         {

@@ -3,18 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Snowflake.Emulator.Configuration.Mapping;
-using Snowflake.Emulator.Configuration.Template;
 using Snowflake.Extensions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SharpYaml.Serialization;
-
+using Snowflake.Emulator.Configuration;
 namespace Snowflake.Emulator.Configuration
 {
-    public class ConfigurationProfile 
+    public class ConfigurationProfile : IConfigurationProfile 
     {
-        //todo write a proper 
         public IReadOnlyDictionary<string, dynamic> ConfigurationValues { get; private set; }
         public string TemplateID { get; private set; }
      

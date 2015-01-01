@@ -3,21 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Snowflake.Emulator.Configuration.Template;
 using Snowflake.Emulator.Configuration;
-using Snowflake.Emulator.Input.Template;
-using Snowflake.Platform.Controller;
-using Snowflake.Core;
+using Snowflake.Controller;
+using Snowflake.Service;
 using Snowflake.Game;
 using System.Diagnostics;
 using System.Collections;
 using System.IO;
 using Snowflake.Extensions;
-
+using Snowflake.Emulator.Input;
 
 namespace Snowflake.Emulator
 {
-    public class EmulatorBridge
+    public class EmulatorBridge : IEmulatorBridge
     {
         public IReadOnlyDictionary<string, ControllerTemplate> ControllerTemplates { get; private set; }
         public IReadOnlyDictionary<string, InputTemplate> InputTemplates { get; private set; }
@@ -35,14 +33,14 @@ namespace Snowflake.Emulator
 
         public void StartRom(GameInfo gameInfo, ControllerProfile profile)
         {
-            var retroArch = FrontendCore.LoadedCore.EmulatorManager.EmulatorAssemblies["retroarch"];
-            string path = FrontendCore.LoadedCore.EmulatorManager.GetAssemblyDirectory(retroArch);
+            var retroArch = CoreService.LoadedCore.EmulatorManager.EmulatorAssemblies["retroarch"];
+            string path = CoreService.LoadedCore.EmulatorManager.GetAssemblyDirectory(retroArch);
             var startInfo = new ProcessStartInfo(path);
-            startInfo.WorkingDirectory = Path.Combine(FrontendCore.LoadedCore.EmulatorManager.AssembliesLocation, "retroarch");
+            startInfo.WorkingDirectory = Path.Combine(CoreService.LoadedCore.EmulatorManager.AssembliesLocation, "retroarch");
             startInfo.Arguments = String.Format(@"{0} --libretro ""cores/bsnes_balanced_libretro.dll"" --config retroarch.cfg.clean --appendconfig controller.cfg", gameInfo.FileName);
             Console.WriteLine(startInfo.Arguments);
-            var platform = FrontendCore.LoadedCore.LoadedPlatforms[gameInfo.PlatformId];
-            File.WriteAllText("controller.cfg", CompileController(1, platform.Controllers[FrontendCore.LoadedCore.ControllerPortsDatabase.GetPort(platform, 1)], this.ControllerTemplates["NES_CONTROLLER"], profile, this.InputTemplates["retroarch"]));
+            var platform = CoreService.LoadedCore.LoadedPlatforms[gameInfo.PlatformId];
+            File.WriteAllText("controller.cfg", CompileController(1, platform.Controllers[CoreService.LoadedCore.ControllerPortsDatabase.GetPort(platform, 1)], this.ControllerTemplates["NES_CONTROLLER"], profile, this.InputTemplates["retroarch"]));
             Process.Start(startInfo).WaitForExit();
            //todo needs a place to output configurations
             //configurationflags please

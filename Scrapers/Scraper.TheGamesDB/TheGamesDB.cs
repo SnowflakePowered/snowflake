@@ -11,14 +11,14 @@ using System.Xml.Linq;
 using Snowflake.Constants;
 using Snowflake.Scraper;
 using System.ComponentModel.Composition;
-using Snowflake.Core;
+using Snowflake.Service;
 
 namespace Scraper.TheGamesDB
 {
     public class TheGamesDB : BaseScraper
     {
         [ImportingConstructor]
-        public TheGamesDB([Import("coreInstance")] FrontendCore coreInstance)
+        public TheGamesDB([Import("coreInstance")] CoreService coreInstance)
             : base(Assembly.GetExecutingAssembly(), coreInstance)
         {
         }

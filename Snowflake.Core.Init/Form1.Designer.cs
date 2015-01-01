@@ -1,4 +1,4 @@
-﻿namespace Snowflake.Core.Init
+﻿namespace Snowflake.Service.Init
 {
     partial class Form1
     {

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using Newtonsoft.Json;
-using Snowflake.Collections;
+using Snowflake.Utility;
 using Snowflake.Plugin;
-using Snowflake.Core;
+using Snowflake.Service;
 namespace Snowflake.Scraper
 {
     public abstract class BaseScraper: BasePlugin, IScraper

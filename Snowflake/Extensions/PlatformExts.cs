@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Snowflake.Core;
+using Snowflake.Service;
 using Snowflake.Platform;
 
 namespace Snowflake.Extensions
@@ -17,9 +17,9 @@ namespace Snowflake.Extensions
         /// </summary>
         /// <param name="platform"></param>
         /// <returns></returns>
-        public static ScrapeEngine GetScrapeEngine(this PlatformInfo platform) 
+        public static ScrapeService GetScrapeEngine(this PlatformInfo platform) 
         {
-            return new ScrapeEngine(platform);
+            return new ScrapeService(platform);
         }
     }
 }

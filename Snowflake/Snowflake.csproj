@@ -81,91 +81,71 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Ajax\BaseAjaxNamespace.cs" />
-    <Compile Include="Ajax\IBaseAjaxNamespace.cs" />
-    <Compile Include="Ajax\AjaxMethodAttribute.cs" />
     <Compile Include="Ajax\JSRequest.cs" />
     <Compile Include="Ajax\JSResponse.cs" />
-    <Compile Include="Configuration\YamlConfiguration.cs" />
-    <Compile Include="Constants\ImagesInfoFields.cs" />
-    <Compile Include="Constants\Input\KeyboardConstants.cs" />
-    <Compile Include="Constants\Plugin\PluginInfoFields.cs" />
-    <Compile Include="Constants\Plugin\PluginTypes.cs" />
-    <Compile Include="Constants\Plugin\ScraperInfoFields.cs" />
-    <Compile Include="Constants\Input\GamepadConstants.cs" />
-    <Compile Include="Crc32.cs" />
-    <Compile Include="Database\BaseDatabase.cs" />
-    <Compile Include="Database\ControllerDatabase.cs" />
+    <Compile Include="Plugin\Configuration\YamlConfiguration.cs" />
+    <Compile Include="Controller\ControllerDatabase.cs" />
     <Compile Include="Emulator\Configuration\ConfigurationStore.cs" />
-    <Compile Include="Emulator\Configuration\Flags\ConfigurationFlag.cs" />
-    <Compile Include="Emulator\Configuration\Flags\ConfigurationFlagDatabase.cs" />
-    <Compile Include="Emulator\Input\Mapping\ControllerMapping.cs" />
-    <Compile Include="Emulator\Input\Template\ControllerTemplate.cs" />
-    <Compile Include="Emulator\Input\Template\InputTemplate.cs" />
+    <Compile Include="Emulator\Configuration\ConfigurationFlag.cs" />
+    <Compile Include="Emulator\Configuration\ConfigurationFlagDatabase.cs" />
+    <Compile Include="Emulator\Input\ControllerMapping.cs" />
+    <Compile Include="Emulator\Input\ControllerTemplate.cs" />
+    <Compile Include="Emulator\Input\InputTemplate.cs" />
     <Compile Include="Emulator\EmulatorBridge.cs" />
     <Compile Include="Extensions\JObjectExts.cs" />
-    <Compile Include="Database\ControllerPortsDatabase.cs" />
-    <Compile Include="Platform\Controller\ControllerProfile.cs" />
-    <Compile Include="Platform\Controller\ControllerDefinition.cs" />
+    <Compile Include="Controller\ControllerPortsDatabase.cs" />
+    <Compile Include="Controller\ControllerProfile.cs" />
+    <Compile Include="Controller\ControllerDefinition.cs" />
     <Compile Include="Core\Manager\AjaxManager.cs" />
-    <Compile Include="Core\EventDelegate\JsonRPCEventDelegate.cs" />
     <Compile Include="Core\Manager\EmulatorManager.cs" />
     <Compile Include="Core\Manager\Interface\IAjaxManager.cs" />
     <Compile Include="Core\Manager\Interface\ILoadableManager.cs" />
     <Compile Include="Core\Manager\Interface\IPluginManager.cs" />
-    <Compile Include="Core\ScrapeEngine.cs" />
+    <Compile Include="Core\ScrapeService.cs" />
     <Compile Include="Core\Server\BaseHttpServer.cs" />
     <Compile Include="Core\Server\FileMediaStoreServer.cs" />
-    <Compile Include="Emulator\Configuration\Template\ConfigurationEntry.cs" />
+    <Compile Include="Emulator\Configuration\ConfigurationEntry.cs" />
     <Compile Include="Emulator\Configuration\ConfigurationProfile.cs" />
-    <Compile Include="Emulator\Configuration\Template\ConfigurationTemplate.cs" />
-    <Compile Include="Emulator\Configuration\Interface\IEmulatorConfiguration.cs" />
-    <Compile Include="Emulator\Input\Interface\IInputConfiguration.cs" />
-    <Compile Include="Emulator\Configuration\Mapping\BooleanMapping.cs" />
-    <Compile Include="Emulator\Input\Mapping\GamepadMapping.cs" />
-    <Compile Include="Emulator\Input\Mapping\KeyboardMapping.cs" />
+    <Compile Include="Emulator\Configuration\ConfigurationTemplate.cs" />
+    <Compile Include="Emulator\Configuration\BooleanMapping.cs" />
+    <Compile Include="Emulator\Input\GamepadMapping.cs" />
+    <Compile Include="Emulator\Input\KeyboardMapping.cs" />
     <Compile Include="Emulator\EmulatorAssembly.cs" />
-    <Compile Include="Events\CoreEvents\PluginManagerLoadedEventArgs.cs" />
     <Compile Include="Extensions\HttpListenerContextExts.cs" />
     <Compile Include="Extensions\IDictionaryExtensions.cs" />
     <Compile Include="Extensions\IListExtensions.cs" />
     <Compile Include="Extensions\MEFExtensions.cs" />
     <Compile Include="Extensions\PlatformExts.cs" />
     <Compile Include="Core\Server\MimeTypes.cs" />
-    <Compile Include="Platform\Controller\ControllerInput.cs" />
+    <Compile Include="Controller\ControllerInput.cs" />
+    <Compile Include="Plugin\GeneralPlugin.cs" />
     <Compile Include="Scraper\GameImagesResult.cs" />
-    <Compile Include="Extensions\KeyValuePairExts.cs" />
-    <Compile Include="Database\GameDatabase.cs" />
-    <Compile Include="MediaStore\FileMediaStore.cs" />
-    <Compile Include="MediaStore\IMediaStore.cs" />
-    <Compile Include="MediaStore\FileMediaStoreSection.cs" />
-    <Compile Include="MediaStore\IMediaStoreSection.cs" />
+    <Compile Include="Game\GameDatabase.cs" />
+    <Compile Include="Information\MediaStore\FileMediaStore.cs" />
+    <Compile Include="Information\MediaStore\FileMediaStoreSection.cs" />
     <Compile Include="Platform\PlatformDefaults.cs" />
-    <Compile Include="Configuration\Interface\IConfiguration.cs" />
-    <Compile Include="Plugin\IGenericPlugin.cs" />
-    <Compile Include="Plugin\IIdentifier.cs" />
-    <Compile Include="Scraper\IScraper.cs" />
     <Compile Include="Game\GameInfo.cs" />
     <Compile Include="Information\Info.cs" />
-    <Compile Include="Emulator\IEmulatorBridge.cs" />
-    <Compile Include="Information\IInfo.cs" />
     <Compile Include="Platform\PlatformInfo.cs" />
-    <Compile Include="Plugin\IPlugin.cs" />
     <Compile Include="Plugin\BasePlugin.cs" />
     <Compile Include="Scraper\BaseScraper.cs" />
     <Compile Include="Scraper\GameScrapeResult.cs" />
-    <Compile Include="Core\FrontendCore.cs" />
+    <Compile Include="Core\CoreService.cs" />
     <Compile Include="Core\Manager\PluginManager.cs" />
     <Compile Include="Core\Server\JsonApiServer.cs" />
     <Compile Include="Core\Server\ThemeServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Collections\BiDictionary.cs" />
-    <Compile Include="Constants\GameInfoFields.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Snowflake.API\Snowflake.API.csproj">
+      <Project>{2841aeea-03d5-47b0-9d90-375dfa19559a}</Project>
+      <Name>Snowflake.API</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="x86\SQLite.Interop.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

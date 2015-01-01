@@ -1,6 +1,6 @@
 ﻿namespace Snowflake.Scraper
 {
-    public class GameScrapeResult
+    public class GameScrapeResult : IGameScrapeResult
     {
         public string ID { get; private set; }
         public string PlatformID { get; private set; }

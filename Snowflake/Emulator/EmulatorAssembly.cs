@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Snowflake.Emulator.Configuration.Mapping;
 using System.IO;
-
+using Snowflake.Emulator;
 namespace Snowflake.Emulator
 {
-    public class EmulatorAssembly
+    public class EmulatorAssembly : IEmulatorAssembly
     {
         public string MainAssembly { get; private set; }
         public string EmulatorId { get; private set; }
@@ -36,11 +35,5 @@ namespace Snowflake.Emulator
         public static EmulatorAssembly FromDictionary (IDictionary<string, dynamic> emulatorAssembly){
             return new EmulatorAssembly(emulatorAssembly["main"], emulatorAssembly["id"], emulatorAssembly["name"], emulatorAssembly["type"]);
         }
-    }
-    public enum EmulatorAssemblyType
-    {
-        EMULATOR_EXECUTABLE,
-        EMULATOR_LIBRARY,
-        EMULATOR_MISC
     }
 }

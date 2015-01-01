@@ -7,7 +7,7 @@ using Mono.Net;
 using System.IO;
 using System.Threading;
 using Snowflake.Extensions;
-namespace Snowflake.Core.Server
+namespace Snowflake.Service.Server
 {
     public class ThemeServer : BaseHttpServer
     {

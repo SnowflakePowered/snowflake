@@ -8,16 +8,16 @@ using Snowflake.Emulator;
 using System.IO;
 using SharpYaml.Serialization;
 
-namespace Snowflake.Core.Manager
+namespace Snowflake.Service.Manager
 {
     public class EmulatorManager
     {
-        private IDictionary<string, EmulatorAssembly> emulatorAssemblies;
-        public IReadOnlyDictionary<string, EmulatorAssembly> EmulatorAssemblies { get { return this.emulatorAssemblies.AsReadOnly(); } }
+        private IDictionary<string, IEmulatorAssembly> emulatorAssemblies;
+        public IReadOnlyDictionary<string, IEmulatorAssembly> EmulatorAssemblies { get { return this.emulatorAssemblies.AsReadOnly(); } }
         public string AssembliesLocation { get; private set; }
         public EmulatorManager(string assembliesLocation)
         {
-            this.emulatorAssemblies = new Dictionary<string, EmulatorAssembly>();
+            this.emulatorAssemblies = new Dictionary<string, IEmulatorAssembly>();
             this.AssembliesLocation = assembliesLocation;
         }
 
@@ -31,10 +31,10 @@ namespace Snowflake.Core.Manager
                 this.emulatorAssemblies.Add(emulatorCore.EmulatorId, emulatorCore);
             }
         }
-        public string GetAssemblyDirectory(EmulatorAssembly assembly){
+        public string GetAssemblyDirectory(IEmulatorAssembly assembly){
             return Path.Combine(this.AssembliesLocation, assembly.EmulatorId, assembly.EmulatorName);
         }
-        public static EmulatorAssembly ParseEmulatorAssembly(string emulatorCorePath)
+        public static IEmulatorAssembly ParseEmulatorAssembly(string emulatorCorePath)
         {
             var emulator = new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText(emulatorCorePath));
             return EmulatorAssembly.FromDictionary(emulator);

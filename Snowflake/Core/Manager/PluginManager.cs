@@ -6,15 +6,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.Composition;
 using Snowflake.Ajax;
-using Snowflake.Core.Manager.Interface;
+using Snowflake.Service.Manager.Interface;
 using Snowflake.Emulator;
 using Snowflake.Extensions;
 using Snowflake.Plugin;
 using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using Snowflake.Scraper;
-
-namespace Snowflake.Core.Manager
+using Snowflake.Plugin;
+using Snowflake.Emulator;
+using Snowflake.Identifier;
+namespace Snowflake.Service.Manager
 {
     public class PluginManager : IPluginManager
     {
@@ -28,20 +30,20 @@ namespace Snowflake.Core.Manager
         IEnumerable<Lazy<IEmulatorBridge>> emulators;
         [ImportMany(typeof(IScraper))]
         IEnumerable<Lazy<IScraper>> scrapers;
-        [ImportMany(typeof(IGenericPlugin))]
-        IEnumerable<Lazy<IGenericPlugin>> plugins;
+        [ImportMany(typeof(IGeneralPlugin))]
+        IEnumerable<Lazy<IGeneralPlugin>> plugins;
 
 
 
         private IDictionary<string, IIdentifier> loadedIdentifiers;
         private IDictionary<string, IEmulatorBridge> loadedEmulators;
         private IDictionary<string, IScraper> loadedScrapers;
-        private IDictionary<string, IGenericPlugin> loadedPlugins;
+        private IDictionary<string, IGeneralPlugin> loadedPlugins;
 
         public IReadOnlyDictionary<string, IIdentifier> LoadedIdentifiers { get { return this.loadedIdentifiers.AsReadOnly(); } }
         public IReadOnlyDictionary<string, IEmulatorBridge> LoadedEmulators { get { return this.loadedEmulators.AsReadOnly(); } }
         public IReadOnlyDictionary<string, IScraper> LoadedScrapers { get { return this.loadedScrapers.AsReadOnly(); } }
-        public IReadOnlyDictionary<string, IGenericPlugin> LoadedPlugins { get { return this.loadedPlugins.AsReadOnly(); } }
+        public IReadOnlyDictionary<string, IGeneralPlugin> LoadedPlugins { get { return this.loadedPlugins.AsReadOnly(); } }
 
         public PluginManager(string loadablesLocation)
         {
@@ -62,17 +64,17 @@ namespace Snowflake.Core.Manager
         {
             var catalog = new DirectoryCatalog(Path.Combine(this.LoadablesLocation, "plugins"));
             var container = new CompositionContainer(catalog);
-            Console.WriteLine(FrontendCore.LoadedCore.GetHashCode());
-            container.ComposeExportedValue("coreInstance", FrontendCore.LoadedCore);
+            Console.WriteLine(CoreService.LoadedCore.GetHashCode());
+            container.ComposeExportedValue("coreInstance", CoreService.LoadedCore);
             container.ComposeParts(this);
         }
 
-        private Dictionary<string, T> LoadPlugin<T>(IEnumerable<Lazy<T>> unloadedPlugins) where T : IPlugin
+        private Dictionary<string, T> LoadPlugin<T>(IEnumerable<Lazy<T>> unloadedPlugins) where T : IBasePlugin
         {
             var loadedPlugins = new Dictionary<string, T>();
             foreach (var plugin in unloadedPlugins)
             {
-                var instance = (IPlugin)plugin.Value;
+                var instance = (IBasePlugin)plugin.Value;
                 loadedPlugins.Add(instance.PluginName, plugin.Value);
                 this.registry.Add(instance.PluginName, typeof(T));
             }

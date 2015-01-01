@@ -5,13 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Net;
-
 using Snowflake.Constants;
-using Snowflake.MediaStore;
+using Snowflake.Information.MediaStore;
 
 namespace Snowflake.Scraper
 {
-    public class GameImagesResult
+    public class GameImagesResult : IGameImagesResult
     {
         public IList<string> Fanarts { get; set; }
         public IList<string> Screenshots { get; set; }
@@ -112,12 +111,4 @@ namespace Snowflake.Scraper
         
     }
 
-    public enum GameImageType
-    {
-        Fanart,
-        Screenshot,
-        Boxart_front,
-        Boxart_back,
-        Boxart_full
-    }
 }

@@ -8,7 +8,8 @@ using System.Reflection;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.ComponentModel.Composition;
-using Snowflake.Core;
+using Snowflake.Service;
+
 namespace Identifier.DatIdentifier
 {
     public sealed class ClrMameProDat: BasePlugin, IIdentifier

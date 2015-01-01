@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Snowflake.Ajax;
-using Snowflake.Core.Manager.Interface;
+using Snowflake.Service.Manager.Interface;
 using System.ComponentModel.Composition.Hosting;
 using System.ComponentModel.Composition;
 using System.IO;
@@ -12,7 +12,7 @@ using System;
 using System.Linq;
 using Snowflake.Extensions;
 
-namespace Snowflake.Core.Manager
+namespace Snowflake.Service.Manager
 {
     public class AjaxManager : IAjaxManager, ILoadableManager
     {
@@ -36,11 +36,11 @@ namespace Snowflake.Core.Manager
             if (!this.globalNamespace.ContainsKey(namespaceName))
                 this.globalNamespace.Add(namespaceName, namespaceObject);
         }
-        public string CallMethod(JSRequest request)
+        public string CallMethod(IJSRequest request)
         {
             try
             {
-                JSResponse result = this.GlobalNamespace[request.NameSpace].JavascriptMethods[request.MethodName].Invoke(request);
+                IJSResponse result = this.GlobalNamespace[request.NameSpace].JavascriptMethods[request.MethodName].Invoke(request);
                 return result.GetJson();
             }
             catch (KeyNotFoundException)
@@ -48,7 +48,7 @@ namespace Snowflake.Core.Manager
                 return JsonConvert.Undefined;
             }
         }
-        public async Task<string> CallMethodAsync(JSRequest request)
+        public async Task<string> CallMethodAsync(IJSRequest request)
         {
             return await Task.Run(() => this.CallMethod(request));
         }

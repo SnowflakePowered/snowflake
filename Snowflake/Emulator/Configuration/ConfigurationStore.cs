@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 using System.IO;
 using Snowflake.Game;
 using Newtonsoft.Json;
+using Snowflake.Emulator.Configuration;
 
 namespace Snowflake.Emulator.Configuration
 {
     //new config store per config
-    public class ConfigurationStore
+    public class ConfigurationStore : IConfigurationStore
     {
         public string TemplateID { get; private set; }
         public ConfigurationProfile DefaultProfile { get; private set; }

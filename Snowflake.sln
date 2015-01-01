@@ -37,6 +37,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ajax.SnowflakeCore", "Ajax.
 EndProject
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "Snowflake.Node", "Snowflake.Node\Snowflake.Node.njsproj", "{BCBC1C0B-C75C-407C-8F7C-1766BE1F582F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.API", "Snowflake.API\Snowflake.API.csproj", "{2841AEEA-03D5-47B0-9D90-375DFA19559A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,6 +67,10 @@ Global
 		{4792C8C4-81A8-4AB1-9041-2DFF4F5E8DBB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BCBC1C0B-C75C-407C-8F7C-1766BE1F582F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BCBC1C0B-C75C-407C-8F7C-1766BE1F582F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2841AEEA-03D5-47B0-9D90-375DFA19559A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2841AEEA-03D5-47B0-9D90-375DFA19559A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2841AEEA-03D5-47B0-9D90-375DFA19559A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2841AEEA-03D5-47B0-9D90-375DFA19559A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
