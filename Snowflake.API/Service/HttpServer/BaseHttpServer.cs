@@ -7,6 +7,7 @@ using Mono.Net;
 using System.Threading;
 namespace Snowflake.Service.HttpServer
 {
+    /// <inheritdoc/>
     public abstract class BaseHttpServer : IBaseHttpServer
     {
         HttpListener serverListener;
@@ -43,6 +44,12 @@ namespace Snowflake.Service.HttpServer
             this.serverListener.Stop();
         }
 
+        /// <summary>
+        /// Implement this to handle the process loop
+        /// </summary>
+        /// <param name="context">The HTTP context of the server listener</param>
+        /// <returns>A Task that is called asynchronously that outputs a stream of text to be written as the HttpResponse</returns>
+        /// <see cref="Snowflake.Service.Server"/> for example implementations
         protected abstract Task Process(HttpListenerContext context);
     }
 }

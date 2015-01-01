@@ -97,7 +97,6 @@
     <Compile Include="Service\Manager\AjaxManager.cs" />
     <Compile Include="Service\Manager\EmulatorAssembliesManager.cs" />
     <Compile Include="Service\ScrapeService.cs" />
-    <Compile Include="Service\Server\BaseHttpServer.cs" />
     <Compile Include="Service\Server\FileMediaStoreServer.cs" />
     <Compile Include="Emulator\Configuration\ConfigurationEntry.cs" />
     <Compile Include="Emulator\Configuration\ConfigurationProfile.cs" />
