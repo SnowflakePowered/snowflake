@@ -14,7 +14,10 @@ namespace Snowflake.Emulator
     public interface IEmulatorBridge : IBasePlugin
     {
         IEmulatorAssembly EmulatorAssembly { get; }
-        IReadOnlyList<string> SupportedPlatforms { get;  }
+        IList<string> SupportedPlatforms { get;  }
+        IDictionary<string, IControllerTemplate> ControllerTemplates { get; }
+        IDictionary<string, IInputTemplate> InputTemplates { get; }
+        IDictionary<string, IConfigurationTemplate> ConfigurationTemplates { get; }
         void StartRom(IGameInfo gameInfo);
         string CompileConfiguration(IConfigurationProfile configurationProfile);
         string CompileConfiguration(IConfigurationTemplate configurationTemplate, IConfigurationProfile configurationProfile);

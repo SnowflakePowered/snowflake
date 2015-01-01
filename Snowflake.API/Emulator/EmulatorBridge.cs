@@ -19,10 +19,10 @@ namespace Snowflake.Emulator
 {
     public abstract class EmulatorBridge : BasePlugin, IEmulatorBridge
     {
-        public IReadOnlyDictionary<string, IControllerTemplate> ControllerTemplates { get; private set; }
-        public IReadOnlyDictionary<string, IInputTemplate> InputTemplates { get; private set; }
-        public IReadOnlyDictionary<string, IConfigurationTemplate> ConfigurationTemplates { get; private set; }
-        public IReadOnlyList<string> SupportedPlatforms { get; private set; }
+        public IDictionary<string, IControllerTemplate> ControllerTemplates { get; private set; }
+        public IDictionary<string, IInputTemplate> InputTemplates { get; private set; }
+        public IDictionary<string, IConfigurationTemplate> ConfigurationTemplates { get; private set; }
+        public IList<string> SupportedPlatforms { get; private set; }
         public IEmulatorAssembly EmulatorAssembly { get; private set; }
 
         public EmulatorBridge(Assembly pluginAssembly, ICoreService coreInstance) : base(pluginAssembly, coreInstance) { }

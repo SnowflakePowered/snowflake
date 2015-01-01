@@ -11,6 +11,7 @@ using Snowflake.Service;
 
 namespace Snowflake.Ajax
 {
+    /// <inheritdoc/>
     public abstract class BaseAjaxNamespace :  BasePlugin, IBaseAjaxNamespace
     {
         public IDictionary<string, Func<IJSRequest, IJSResponse>> JavascriptMethods { get; private set; }

@@ -67,8 +67,7 @@
     <Compile Include="Ajax\IBaseAjaxNamespace.cs" />
     <Compile Include="Ajax\IJSRequest.cs" />
     <Compile Include="Ajax\IJSResponse.cs" />
-    <Compile Include="Constants\InfoFields\GameInfoFields.cs" />
-    <Compile Include="Constants\InfoFields\ImagesInfoFields.cs" />
+    <Compile Include="Scraper\ImagesInfoFields.cs" />
     <Compile Include="Controller\ControllerProfileType.cs" />
     <Compile Include="Controller\IControllerDatabase.cs" />
     <Compile Include="Controller\IControllerDefinition.cs" />
@@ -80,8 +79,9 @@
     <Compile Include="Emulator\Input\ControllerMappingType.cs" />
     <Compile Include="Emulator\Input\Constants\GamepadConstants.cs" />
     <Compile Include="Emulator\Input\Constants\KeyboardConstants.cs" />
-    <Compile Include="Constants\InfoFields\PluginInfoFields.cs" />
-    <Compile Include="Constants\InfoFields\ScraperInfoFields.cs" />
+    <Compile Include="Game\GameInfoFields.cs" />
+    <Compile Include="Plugin\PluginInfoFields.cs" />
+    <Compile Include="Scraper\ScraperInfoFields.cs" />
     <Compile Include="Emulator\Configuration\IBooleanMapping.cs" />
     <Compile Include="Emulator\Configuration\IConfigurationEntry.cs" />
     <Compile Include="Emulator\Configuration\IConfigurationFlag.cs" />
@@ -127,9 +127,7 @@
     <Compile Include="Utility\BiDictionary.cs" />
     <Compile Include="Utility\Crc32.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Constants\Input\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="x86\SQLite.Interop.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
