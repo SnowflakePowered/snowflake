@@ -9,7 +9,7 @@ namespace Snowflake.Plugin
         string PluginDataPath { get; }
         Assembly PluginAssembly { get; }
         IDictionary<string, dynamic> PluginInfo { get; }
-        FrontendCore CoreInstance { get; }
+        ICoreService CoreInstance { get; }
         //todo IFrontendCore (fix ater planned refactor)
     }
 }

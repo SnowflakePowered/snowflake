@@ -108,13 +108,19 @@
     <Compile Include="Scraper\IGameImagesResult.cs" />
     <Compile Include="Scraper\IGameScrapeResult.cs" />
     <Compile Include="Scraper\IScraper.cs" />
+    <Compile Include="Service\ICoreService.cs" />
+    <Compile Include="Service\IScrapeService.cs" />
+    <Compile Include="Service\Manager\IAjaxManager.cs" />
+    <Compile Include="Service\HttpServer\IBaseHttpServer.cs" />
+    <Compile Include="Service\Manager\IEmulatorAssembliesManager.cs" />
+    <Compile Include="Service\Manager\ILoadableManager.cs" />
+    <Compile Include="Service\Manager\IPluginManager.cs" />
     <Compile Include="Utility\BaseDatabase.cs" />
     <Compile Include="Utility\BiDictionary.cs" />
     <Compile Include="Utility\Crc32.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Constants\Input\" />
-    <Folder Include="Service\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="x64\SQLite.Interop.dll">

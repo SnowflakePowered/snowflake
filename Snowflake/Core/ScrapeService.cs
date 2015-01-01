@@ -14,7 +14,7 @@ using Snowflake.Identifier;
 
 namespace Snowflake.Service
 {
-    public class ScrapeService
+    public class ScrapeService : IScrapeService
     {
         private IPlatformInfo ScrapePlatform { get; set; }
         private IScraper ScraperPlugin { get; set; }
@@ -26,7 +26,7 @@ namespace Snowflake.Service
             this.IdentifierPlugin = CoreService.LoadedCore.PluginManager.LoadedIdentifiers[ScrapePlatform.Defaults.Identifier];
         }
 
-        public GameInfo GetGameInfo(string fileName)
+        public IGameInfo GetGameInfo(string fileName)
         {
 
             string gameName = this.IdentifierPlugin.IdentifyGame(fileName, this.ScrapePlatform.PlatformId);

@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Snowflake.Ajax;
-using Snowflake.Service.Manager.Interface;
 using System.ComponentModel.Composition.Hosting;
 using System.ComponentModel.Composition;
 using System.IO;

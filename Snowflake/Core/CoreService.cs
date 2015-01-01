@@ -5,8 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Platform;
 using Snowflake.Database;
-using Snowflake.Service.Manager.Interface;
-using Snowflake.Service.Server;
+using Snowflake.Service.HttpServer;
 using System.IO;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
@@ -16,26 +15,29 @@ using System.Threading;
 using Snowflake.Information;
 using System.Reflection;
 using Snowflake.Service.Manager;
+using Snowflake.Controller;
+using Snowflake.Game;
+using Snowflake.Emulator.Configuration;
 namespace Snowflake.Service
 {
-    public partial class CoreService 
+    public partial class CoreService : ICoreService 
     {
         #region Loaded Objects
-        public IDictionary<string, PlatformInfo> LoadedPlatforms { get; private set; }
+        public IDictionary<string, IPlatformInfo> LoadedPlatforms { get; private set; }
         public IPluginManager PluginManager { get; private set; }
         public IAjaxManager AjaxManager { get; private set; }
-        public GameDatabase GameDatabase { get; private set; }
-        public ControllerDatabase ControllerDatabase { get; private set; }
-        public ControllerPortsDatabase ControllerPortsDatabase { get; private set; }
-        public ConfigurationFlagDatabase ConfigurationFlagDatabase { get; private set; }
-        public EmulatorManager EmulatorManager { get; private set; }
+        public IGameDatabase GameDatabase { get; private set; }
+        public IControllerDatabase ControllerDatabase { get; private set; }
+        public IControllerPortsDatabase ControllerPortsDatabase { get; private set; }
+        public IConfigurationFlagDatabase ConfigurationFlagDatabase { get; private set; }
+        public EmulatorAssembliesManager EmulatorManager { get; private set; }
         #endregion
 
         public string AppDataDirectory { get; private set; }
         public static CoreService LoadedCore { get; private set; }
-        public ThemeServer ThemeServer { get; private set; }    
-        public ApiServer APIServer { get; private set; }
-        public FileMediaStoreServer MediaStoreServer { get; private set; }
+        public IBaseHttpServer ThemeServer { get; private set; }
+        public IBaseHttpServer APIServer { get; private set; }
+        public IBaseHttpServer MediaStoreServer { get; private set; }
 
 
         #region Events
@@ -87,7 +89,7 @@ namespace Snowflake.Service
             }
             this.PluginManager = new PluginManager(this.AppDataDirectory);
             this.AjaxManager = new AjaxManager(this.AppDataDirectory);
-            this.EmulatorManager = new EmulatorManager(Path.Combine(this.AppDataDirectory, "emulators"));
+            this.EmulatorManager = new EmulatorAssembliesManager(Path.Combine(this.AppDataDirectory, "emulators"));
 
             this.ThemeServer = new ThemeServer(Path.Combine(this.AppDataDirectory, "theme"));
             this.APIServer = new ApiServer();

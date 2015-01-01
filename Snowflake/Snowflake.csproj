@@ -97,10 +97,7 @@
     <Compile Include="Controller\ControllerProfile.cs" />
     <Compile Include="Controller\ControllerDefinition.cs" />
     <Compile Include="Core\Manager\AjaxManager.cs" />
-    <Compile Include="Core\Manager\EmulatorManager.cs" />
-    <Compile Include="Core\Manager\Interface\IAjaxManager.cs" />
-    <Compile Include="Core\Manager\Interface\ILoadableManager.cs" />
-    <Compile Include="Core\Manager\Interface\IPluginManager.cs" />
+    <Compile Include="Core\Manager\EmulatorAssembliesManager.cs" />
     <Compile Include="Core\ScrapeService.cs" />
     <Compile Include="Core\Server\BaseHttpServer.cs" />
     <Compile Include="Core\Server\FileMediaStoreServer.cs" />

@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Mono.Net;
 using System.Threading;
-namespace Snowflake.Service.Server
+namespace Snowflake.Service.HttpServer
 {
-    public abstract class BaseHttpServer
+    public abstract class BaseHttpServer : IBaseHttpServer
     {
         HttpListener serverListener;
         Thread serverThread;

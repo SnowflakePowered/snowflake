@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Snowflake.Service.Manager.Interface
+namespace Snowflake.Service.Manager
 {
     public interface ILoadableManager
     {

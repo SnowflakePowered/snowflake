@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Snowflake.Service.Server
+namespace Snowflake.Service.HttpServer
 {
     public static class MimeTypes
     {

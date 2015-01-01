@@ -10,12 +10,12 @@ using SharpYaml.Serialization;
 
 namespace Snowflake.Service.Manager
 {
-    public class EmulatorManager
+    public class EmulatorAssembliesManager : IEmulatorAssembliesManager
     {
         private IDictionary<string, IEmulatorAssembly> emulatorAssemblies;
         public IReadOnlyDictionary<string, IEmulatorAssembly> EmulatorAssemblies { get { return this.emulatorAssemblies.AsReadOnly(); } }
         public string AssembliesLocation { get; private set; }
-        public EmulatorManager(string assembliesLocation)
+        public EmulatorAssembliesManager(string assembliesLocation)
         {
             this.emulatorAssemblies = new Dictionary<string, IEmulatorAssembly>();
             this.AssembliesLocation = assembliesLocation;
@@ -27,7 +27,7 @@ namespace Snowflake.Service.Manager
             {
                 if (!(Path.GetExtension(fileName) == ".yml")) continue;
                 
-                var emulatorCore = EmulatorManager.ParseEmulatorAssembly(fileName);
+                var emulatorCore = EmulatorAssembliesManager.ParseEmulatorAssembly(fileName);
                 this.emulatorAssemblies.Add(emulatorCore.EmulatorId, emulatorCore);
             }
         }

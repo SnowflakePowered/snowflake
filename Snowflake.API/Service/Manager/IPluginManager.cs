@@ -5,7 +5,7 @@ using Snowflake.Plugin;
 using Snowflake.Scraper;
 using Snowflake.Identifier;
 
-namespace Snowflake.Service.Manager.Interface
+namespace Snowflake.Service.Manager
 {
     public interface IPluginManager : ILoadableManager
     {

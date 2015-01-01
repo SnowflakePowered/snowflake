@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.Composition;
 using Snowflake.Ajax;
-using Snowflake.Service.Manager.Interface;
 using Snowflake.Emulator;
 using Snowflake.Extensions;
 using Snowflake.Plugin;
