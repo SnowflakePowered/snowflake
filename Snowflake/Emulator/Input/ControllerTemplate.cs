@@ -12,12 +12,12 @@ namespace Snowflake.Emulator.Input
         public string EmulatorID { get; private set; }
         public string PlatformID { get; private set; }
 
-        public IReadOnlyDictionary<string, ControllerMapping> KeyboardControllerMappings { get { return this.keyboardControllerMappings.AsReadOnly(); } }
-        private IDictionary<string, ControllerMapping> keyboardControllerMappings;
-        public IReadOnlyDictionary<string, ControllerMapping> GamepadControllerMappings { get { return this.gamepadControllerMappings.AsReadOnly(); } }
-        private IDictionary<string, ControllerMapping> gamepadControllerMappings;
+        public IReadOnlyDictionary<string, IControllerMapping> KeyboardControllerMappings { get { return this.keyboardControllerMappings.AsReadOnly(); } }
+        private IDictionary<string, IControllerMapping> keyboardControllerMappings;
+        public IReadOnlyDictionary<string, IControllerMapping> GamepadControllerMappings { get { return this.gamepadControllerMappings.AsReadOnly(); } }
+        private IDictionary<string, IControllerMapping> gamepadControllerMappings;
 
-        public ControllerTemplate(string controllerId, string emulatorId, string platformId, IDictionary<string, ControllerMapping> keyboardControllerMappings, IDictionary<string, ControllerMapping> gamepadControllerMappings)
+        public ControllerTemplate(string controllerId, string emulatorId, string platformId, IDictionary<string, IControllerMapping> keyboardControllerMappings, IDictionary<string, IControllerMapping> gamepadControllerMappings)
         {
             this.ControllerID = controllerId;
             this.EmulatorID = emulatorId;
@@ -30,8 +30,8 @@ namespace Snowflake.Emulator.Input
             var controllerid = protoTemplate["controller"];
             var emulator = protoTemplate["emulator"];
             var platformid = protoTemplate["platform"];
-            var gamepadControllerMappings = new Dictionary<string, ControllerMapping>();
-            var keyboardControllerMappings = new Dictionary<string, ControllerMapping>();
+            var gamepadControllerMappings = new Dictionary<string, IControllerMapping>();
+            var keyboardControllerMappings = new Dictionary<string, IControllerMapping>();
 
             foreach (var mapping in protoTemplate["gamepad"])
             {

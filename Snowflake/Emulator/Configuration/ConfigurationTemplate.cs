@@ -13,13 +13,13 @@ namespace Snowflake.Emulator.Configuration
     public class ConfigurationTemplate : IConfigurationTemplate
     {
         public string StringTemplate { get; set; }
-        private IList<ConfigurationEntry> configurationEntries;
+        private IList<IConfigurationEntry> configurationEntries;
         public string ConfigurationName { get; private set; }
-        public IList<ConfigurationEntry> ConfigurationEntries { get { return this.configurationEntries.AsReadOnly(); } }
+        public IList<IConfigurationEntry> ConfigurationEntries { get { return this.configurationEntries.AsReadOnly(); } }
         public string FileName { get; private set; }
-        public BooleanMapping BooleanMapping { get; private set; }
+        public IBooleanMapping BooleanMapping { get; private set; }
 
-        public ConfigurationTemplate(string stringTemplate, IList<ConfigurationEntry> configurationEntries, BooleanMapping booleanMapping, string fileName, string configurationName)
+        public ConfigurationTemplate(string stringTemplate, IList<IConfigurationEntry> configurationEntries, IBooleanMapping booleanMapping, string fileName, string configurationName)
         {
             this.StringTemplate = stringTemplate;
             this.configurationEntries = configurationEntries;
@@ -28,11 +28,11 @@ namespace Snowflake.Emulator.Configuration
             this.ConfigurationName = configurationName;
         }
 
-        public static ConfigurationTemplate FromDictionary(IDictionary<string, dynamic> protoTemplate)
+        public static IConfigurationTemplate FromDictionary(IDictionary<string, dynamic> protoTemplate)
         {
             string stringTemplate = protoTemplate["template"];
             var booleanMapping = new BooleanMapping(protoTemplate["boolean"][true], protoTemplate["boolean"][false]);
-            var entries = new List<ConfigurationEntry>();
+            var entries = new List<IConfigurationEntry>();
             var fileName = protoTemplate["filename"];
             var configName = protoTemplate["configuration_name"];
             var defaults = new Dictionary<string, dynamic>();

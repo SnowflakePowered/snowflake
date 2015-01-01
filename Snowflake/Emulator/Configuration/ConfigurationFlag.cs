@@ -31,7 +31,7 @@ namespace Snowflake.Emulator.Configuration
             }
         }
 
-        public static ConfigurationFlag FromDictionary(IDictionary<string, dynamic> protoTemplate){
+        public static IConfigurationFlag FromDictionary(IDictionary<string, dynamic> protoTemplate){
             string key = protoTemplate["key"];
             ConfigurationFlagTypes type;
             if (!Enum.TryParse<ConfigurationFlagTypes>(protoTemplate["type"], out type))
@@ -50,7 +50,7 @@ namespace Snowflake.Emulator.Configuration
 
             }
         }
-        public static IList<ConfigurationFlag> FromManyDictionaries(IList<IDictionary<string, dynamic>> protoTemplates)
+        public static IList<IConfigurationFlag> FromManyDictionaries(IList<IDictionary<string, dynamic>> protoTemplates)
         {
             return protoTemplates.Select(protoTemplate => ConfigurationFlag.FromDictionary(protoTemplate)).ToList();
         }

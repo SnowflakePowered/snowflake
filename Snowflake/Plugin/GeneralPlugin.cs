@@ -11,7 +11,7 @@ namespace Snowflake.Plugin
 {
     public class GeneralPlugin : BasePlugin, IGeneralPlugin
     {
-        protected GeneralPlugin(Assembly pluginAssembly, CoreService coreInstance)
+        protected GeneralPlugin(Assembly pluginAssembly, ICoreService coreInstance)
             : base(pluginAssembly, coreInstance)
         {
     }

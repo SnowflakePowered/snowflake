@@ -19,12 +19,12 @@ namespace Snowflake.Emulator.Configuration
         {
 
         }
-        public void CreateFlagsTable(string emulatorId, IList<ConfigurationFlag> configFlags)
+        public void CreateFlagsTable(string emulatorId, IList<IConfigurationFlag> configFlags)
         {
             var queryString = new StringBuilder();
             queryString.AppendFormat("CREATE TABLE IF NOT EXISTS {0}(", emulatorId);
 
-            foreach (ConfigurationFlag configFlag in configFlags)
+            foreach (IConfigurationFlag configFlag in configFlags)
             {
                 queryString.AppendFormat("{0} TEXT,", configFlag.Key);
             }
@@ -35,7 +35,7 @@ namespace Snowflake.Emulator.Configuration
             this.DBConnection.Close();
         }
 
-        public void AddGame(GameInfo gameInfo, string emulatorId, IList<ConfigurationFlag> configFlags, IDictionary<string, string> flagValues)
+        public void AddGame(IGameInfo gameInfo, string emulatorId, IList<IConfigurationFlag> configFlags, IDictionary<string, string> flagValues)
         {
             
             var queryString = new StringBuilder();
@@ -65,7 +65,7 @@ namespace Snowflake.Emulator.Configuration
             }
         }
 
-        public object GetValue(GameInfo gameInfo, string emulatorId, string key, ConfigurationFlagTypes type) 
+        public object GetValue(IGameInfo gameInfo, string emulatorId, string key, ConfigurationFlagTypes type) 
         {
             this.DBConnection.Open();
             //tableName and key are presumed to be safe since they are defined by plugin. Plugins can have malicious behaviour even if this input is sanitized so it's not worth sanitizing. 

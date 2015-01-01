@@ -36,7 +36,7 @@ namespace Snowflake.Controller
             this.DBConnection.Close();
         }
 
-        public void AddPlatform(PlatformInfo platformInfo)
+        public void AddPlatform(IPlatformInfo platformInfo)
         {
             this.DBConnection.Open();
             using (var sqlCommand = new SQLiteCommand(@"INSERT OR IGNORE INTO ports VALUES(
@@ -56,7 +56,7 @@ namespace Snowflake.Controller
                 this.DBConnection.Close();
             }
         }
-        public string GetPort(PlatformInfo platformInfo, int portNumber)
+        public string GetPort(IPlatformInfo platformInfo, int portNumber)
         {
             if (portNumber > 8 || portNumber < 1){
                 return String.Empty;
@@ -78,7 +78,7 @@ namespace Snowflake.Controller
             }
         }
 
-        public void SetPort(PlatformInfo platformInfo, int portNumber, string controllerId)
+        public void SetPort(IPlatformInfo platformInfo, int portNumber, string controllerId)
         {
             if (portNumber > 8 || portNumber < 1)
             {

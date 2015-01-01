@@ -24,9 +24,9 @@ namespace Snowflake.Scraper
             }
             
         }
-        public abstract IList<GameScrapeResult> GetSearchResults(string searchQuery);
-        public abstract IList<GameScrapeResult> GetSearchResults(string searchQuery, string platformId);
-        public abstract Tuple<Dictionary<string, string>, GameImagesResult> GetGameDetails(string id);
+        public abstract IList<IGameScrapeResult> GetSearchResults(string searchQuery);
+        public abstract IList<IGameScrapeResult> GetSearchResults(string searchQuery, string platformId);
+        public abstract Tuple<IDictionary<string, string>, IGameImagesResult> GetGameDetails(string id);
 
     }
 }

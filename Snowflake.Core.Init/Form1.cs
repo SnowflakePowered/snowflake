@@ -45,8 +45,8 @@ namespace Snowflake.Service.Init
         {
             CoreService.InitCore();
             CoreService.InitPluginManager();
-
-            var gameUuid = "UPeeOUwXQESzaKU8jRsDag";
+            Console.WriteLine("Test");
+      /*      var gameUuid = "UPeeOUwXQESzaKU8jRsDag";
             //  var homebrew = new GameInfo("NINTENDO_SNES", "SNES_TEST", new FileMediaStore(gameUuid), new Dictionary<string, string>(), gameUuid, "christmascraze.smc");
             //FrontendCore.LoadedCore.GameDatabase.AddGame(homebrew);
             Console.WriteLine(gameUuid);
@@ -68,7 +68,7 @@ namespace Snowflake.Service.Init
             CoreService.LoadedCore.ControllerPortsDatabase.SetPort(CoreService.LoadedCore.LoadedPlatforms["NINTENDO_NES"], 1, "NINTENDO_NES");
 
             Console.WriteLine(CoreService.LoadedCore.ControllerPortsDatabase.GetPort(CoreService.LoadedCore.LoadedPlatforms["NINTENDO_NES"], 1));
-            var bridge = new EmulatorBridge(
+           /* var bridge = new EmulatorBridge(
                 new Dictionary<string, ControllerTemplate>(){
                         {"NES_CONTROLLER", controllerTemplate}
                     },
@@ -81,12 +81,12 @@ namespace Snowflake.Service.Init
                     new List<string>{
                         "NINTENDO_SNES"
                     }
-                );
-            string keyControl = bridge.CompileController(1, CoreService.LoadedCore.LoadedPlatforms["NINTENDO_NES"].Controllers["NES_CONTROLLER"], bridge.ControllerTemplates["NES_CONTROLLER"], controllerProfile, bridge.InputTemplates["retroarch"]);
-            Console.WriteLine(keyControl);
+                );*/
+            //string keyControl = bridge.CompileController(1, CoreService.LoadedCore.LoadedPlatforms["NINTENDO_NES"].Controllers["NES_CONTROLLER"], bridge.ControllerTemplates["NES_CONTROLLER"], controllerProfile, bridge.InputTemplates["retroarch"]);
+          //  Console.WriteLine(keyControl);
             // bridge.StartRom(game,controllerProfile);
             int playerIndex = 1;
-
+            
 
             //   Console.WriteLine(new EmulatorBridge().CompileController(1, controllerDefinition, controllerTemplate, profile, inputTemplate));
             //  var configuration = ConfigurationTemplate.FromDictionary(new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText("retroarch.cfg.yml")));
@@ -99,8 +99,9 @@ namespace Snowflake.Service.Init
             var cflag = ConfigurationFlag.FromManyDictionaries(flagsobj);
             CoreService.LoadedCore.ConfigurationFlagDatabase.CreateFlagsTable("test", cflag);
         //    FrontendCore.LoadedCore.ConfigurationFlagDatabase.AddGame(homebrew, "test", cflag, new Dictionary<string, string>());
-            var val =  (int)CoreService.LoadedCore.ConfigurationFlagDatabase.GetValue(homebrew, "test", "someint", ConfigurationFlagTypes.INTEGER_FLAG);
-            Console.WriteLine(val);
+       //     var val =  (int)CoreService.LoadedCore.ConfigurationFlagDatabase.GetValue(homebrew, "test", "someint", ConfigurationFlagTypes.INTEGER_FLAG);
+          ///  Console.WriteLine(val);
+            
         }
 
 

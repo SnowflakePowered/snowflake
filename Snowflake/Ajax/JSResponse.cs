@@ -9,10 +9,10 @@ namespace Snowflake.Ajax
 {
     public class JSResponse : IJSResponse
     {
-        public JSRequest Request { get; private set; }
+        public IJSRequest Request { get; private set; }
         public dynamic Payload { get; private set; }
         
-        public JSResponse(JSRequest request, dynamic payload)
+        public JSResponse(IJSRequest request, dynamic payload)
         {
             this.Request = request;
             this.Payload = payload;
@@ -22,7 +22,7 @@ namespace Snowflake.Ajax
         {
             return JSResponse.ProcessJSONP(this.Payload, this.Request);
         }
-        private static string ProcessJSONP(dynamic output, JSRequest request)
+        private static string ProcessJSONP(dynamic output, IJSRequest request)
         {
             if (request.MethodParameters.ContainsKey("jsoncallback"))
             {

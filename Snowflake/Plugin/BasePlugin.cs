@@ -19,8 +19,8 @@ namespace Snowflake.Plugin
         public Assembly PluginAssembly { get; private set; }
         public string PluginDataPath { get; private set; }
         public virtual IPluginConfiguration PluginConfiguration { get; private set; }
-        public CoreService CoreInstance { get; private set; }
-        protected BasePlugin(Assembly pluginAssembly, CoreService coreInstance)
+        public ICoreService CoreInstance { get; private set; }
+        protected BasePlugin(Assembly pluginAssembly, ICoreService coreInstance)
         {
             this.PluginAssembly = pluginAssembly;
             this.CoreInstance = coreInstance;

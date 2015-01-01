@@ -19,11 +19,11 @@ namespace Snowflake.Database
 
         }
 
-        public void LoadTables(IDictionary<string, PlatformInfo> platforms)
+        public void LoadTables(IDictionary<string, IPlatformInfo> platforms)
         {
-            foreach (PlatformInfo platform in platforms.Values)
+            foreach (IPlatformInfo platform in platforms.Values)
             {
-                foreach (ControllerDefinition controller in platform.Controllers.Values)
+                foreach (IControllerDefinition controller in platform.Controllers.Values)
                 {
                     this.CreateControllerTable(controller);
                 }
@@ -33,7 +33,7 @@ namespace Snowflake.Database
         {
             var queryString = new StringBuilder();
             queryString.AppendFormat("CREATE TABLE IF NOT EXISTS {0}(", controllerDefinition.ControllerID);
-            foreach (ControllerInput input in controllerDefinition.ControllerInputs.Values)
+            foreach (IControllerInput input in controllerDefinition.ControllerInputs.Values)
             {
                 queryString.AppendFormat("INPUT_{0} TEXT,", input.InputName);
             }

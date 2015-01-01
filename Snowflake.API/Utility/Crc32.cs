@@ -22,7 +22,7 @@ namespace Snowflake.Utility
     /// interface or remember that the result of one Compute call needs to be ~ (XOR) before
     /// being passed in as the seed for the next Compute call.
     /// </remarks>
-    sealed class Crc32 : HashAlgorithm
+    public sealed class Crc32 : HashAlgorithm
     {
         public const UInt32 DefaultPolynomial = 0xedb88320u;
         public const UInt32 DefaultSeed = 0xffffffffu;

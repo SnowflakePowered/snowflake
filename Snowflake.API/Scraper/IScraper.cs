@@ -11,7 +11,7 @@ namespace Snowflake.Scraper
         BiDictionary<string, string> ScraperMap { get; }
         IList<IGameScrapeResult> GetSearchResults(string searchQuery);
         IList<IGameScrapeResult> GetSearchResults(string searchQuery, string platformId);
-        Tuple<Dictionary<string, string>, IGameImagesResult> GetGameDetails(string id);
+        Tuple<IDictionary<string, string>, IGameImagesResult> GetGameDetails(string id);
       
     }
 }

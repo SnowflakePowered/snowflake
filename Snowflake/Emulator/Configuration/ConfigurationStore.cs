@@ -14,9 +14,9 @@ namespace Snowflake.Emulator.Configuration
     public class ConfigurationStore : IConfigurationStore
     {
         public string TemplateID { get; private set; }
-        public ConfigurationProfile DefaultProfile { get; private set; }
+        public IConfigurationProfile DefaultProfile { get; private set; }
         public string ConfigurationStorePath { get; private set; }
-        private ConfigurationStore(string configurationstoreRoot, ConfigurationProfile defaultProfile)
+        private ConfigurationStore(string configurationstoreRoot, IConfigurationProfile defaultProfile)
         {
             if (!Directory.Exists(configurationstoreRoot)) Directory.CreateDirectory(configurationstoreRoot);
             if (!Directory.Exists(Path.Combine(configurationstoreRoot, defaultProfile.TemplateID))) Directory.CreateDirectory(Path.Combine(configurationstoreRoot, defaultProfile.TemplateID));
@@ -25,20 +25,20 @@ namespace Snowflake.Emulator.Configuration
             this.TemplateID = defaultProfile.TemplateID;
         }
 
-        public bool ContainsFilename(GameInfo gameInfo)
+        public bool ContainsFilename(IGameInfo gameInfo)
         {
             return File.Exists(Path.Combine(this.ConfigurationStorePath, gameInfo.FileName + ".json"));
         }
-        public bool ContainsCRC32(GameInfo gameInfo)
+        public bool ContainsCRC32(IGameInfo gameInfo)
         {
             return File.Exists(Path.Combine(this.ConfigurationStorePath, gameInfo.CRC32 +  ".json"));
         }
 
-        public bool Contains(GameInfo gameInfo)
+        public bool Contains(IGameInfo gameInfo)
         {
             return (ContainsFilename(gameInfo) || ContainsCRC32(gameInfo));
         }
-        public ConfigurationProfile GetConfigurationProfile(GameInfo gameInfo)
+        public IConfigurationProfile GetConfigurationProfile(IGameInfo gameInfo)
         {
             if (!this.Contains(gameInfo))
             {
@@ -50,7 +50,7 @@ namespace Snowflake.Emulator.Configuration
                 return ConfigurationProfile.FromDictionary(JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(File.ReadAllText(fileName)));
             }
         }
-        public ConfigurationProfile this[GameInfo gameInfo]
+        public IConfigurationProfile this[IGameInfo gameInfo]
         {
             get
             {

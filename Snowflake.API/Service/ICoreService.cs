@@ -13,7 +13,6 @@ namespace Snowflake.Service
         IAjaxManager AjaxManager { get; }
         IBaseHttpServer APIServer { get; }
         IEmulatorAssembliesManager EmulatorManager { get; }
-
         string AppDataDirectory { get; }
         IConfigurationFlagDatabase ConfigurationFlagDatabase { get; }
         IControllerDatabase ControllerDatabase { get; }

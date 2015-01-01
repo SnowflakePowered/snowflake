@@ -30,11 +30,11 @@ namespace Snowflake.Service
         public IControllerDatabase ControllerDatabase { get; private set; }
         public IControllerPortsDatabase ControllerPortsDatabase { get; private set; }
         public IConfigurationFlagDatabase ConfigurationFlagDatabase { get; private set; }
-        public EmulatorAssembliesManager EmulatorManager { get; private set; }
+        public IEmulatorAssembliesManager EmulatorManager { get; private set; }
         #endregion
 
         public string AppDataDirectory { get; private set; }
-        public static CoreService LoadedCore { get; private set; }
+        public static ICoreService LoadedCore { get; private set; }
         public IBaseHttpServer ThemeServer { get; private set; }
         public IBaseHttpServer APIServer { get; private set; }
         public IBaseHttpServer MediaStoreServer { get; private set; }
@@ -64,7 +64,7 @@ namespace Snowflake.Service
             CoreService.LoadedCore.PluginManager.LoadAll();
             CoreService.LoadedCore.AjaxManager.LoadAll();
             CoreService.LoadedCore.EmulatorManager.LoadEmulatorAssemblies();
-            CoreService.LoadedCore.OnPluginManagerLoaded(new PluginManagerLoadedEventArgs());
+      //      CoreService.LoadedCore.OnPluginManagerLoaded(new PluginManagerLoadedEventArgs());
         }
 
         public CoreService() : this(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Snowflake")) { }
@@ -95,24 +95,23 @@ namespace Snowflake.Service
             this.APIServer = new ApiServer();
             this.MediaStoreServer = new FileMediaStoreServer(Path.Combine(this.AppDataDirectory, "mediastores"));
         }
-        private IDictionary<string, PlatformInfo> LoadPlatforms(string platformDirectory)
+        private IDictionary<string, IPlatformInfo> LoadPlatforms(string platformDirectory)
         {
-            var loadedPlatforms = new Dictionary<string, PlatformInfo>();
+            var loadedPlatforms = new Dictionary<string, IPlatformInfo>();
 
             foreach (string fileName in Directory.GetFiles(platformDirectory).Where(fileName => Path.GetExtension(fileName) == ".platform"))
             {
-                try
-                {
+                
                     var _platform = JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(File.ReadAllText(fileName));
                     var platform = PlatformInfo.FromDictionary(_platform); //Convert MediaStoreKey reference to full MediaStore object
                     loadedPlatforms.Add(platform.PlatformId, platform);
-                }
-                catch (Exception)
+               
+               /* catch (Exception)
                 {
                     //log
                     Console.WriteLine("Exception occured when importing platform " + fileName);
                     continue;
-                }
+                }*/
             }
             return loadedPlatforms;
 

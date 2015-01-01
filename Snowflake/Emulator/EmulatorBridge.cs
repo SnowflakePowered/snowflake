@@ -12,14 +12,15 @@ using System.Collections;
 using System.IO;
 using Snowflake.Extensions;
 using Snowflake.Emulator.Input;
-
+using Snowflake.Plugin;
+/*
 namespace Snowflake.Emulator
 {
-    public class EmulatorBridge : IEmulatorBridge
+    public class EmulatorBridge : BasePlugin, IEmulatorBridge
     {
-        public IReadOnlyDictionary<string, ControllerTemplate> ControllerTemplates { get; private set; }
-        public IReadOnlyDictionary<string, InputTemplate> InputTemplates { get; private set; }
-        public IReadOnlyDictionary<string, ConfigurationTemplate> ConfigurationTemplates { get; private set; }
+        public IReadOnlyDictionary<string, IControllerTemplate> ControllerTemplates { get; private set; }
+        public IReadOnlyDictionary<string, IInputTemplate> InputTemplates { get; private set; }
+        public IReadOnlyDictionary<string, IConfigurationTemplate> ConfigurationTemplates { get; private set; }
         public IReadOnlyList<string> SupportedPlatforms { get; private set; }
 
         public EmulatorBridge(IDictionary<string, ControllerTemplate> controllerTemplates, IDictionary<string, InputTemplate> inputTemplates, IDictionary<string, ConfigurationTemplate> configurationTemplates, IList<string> supportedPlatforms)
@@ -96,3 +97,4 @@ namespace Snowflake.Emulator
         }
     }
 }
+*/

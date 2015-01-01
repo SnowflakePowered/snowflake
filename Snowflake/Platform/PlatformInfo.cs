@@ -13,7 +13,7 @@ namespace Snowflake.Platform
 {
     public class PlatformInfo : Info, IPlatformInfo
     {
-        public PlatformInfo(string platformId, string name, IMediaStore mediastore, IDictionary<string, string> metadata, IList<string> fileExtensions, PlatformDefaults platformDefaults, IDictionary<string, ControllerDefinition> controllers, int maximumInputs): base(platformId, name, mediastore, metadata)
+        public PlatformInfo(string platformId, string name, IMediaStore mediastore, IDictionary<string, string> metadata, IList<string> fileExtensions, IPlatformDefaults platformDefaults, IDictionary<string, IControllerDefinition> controllers, int maximumInputs): base(platformId, name, mediastore, metadata)
         {
             this.FileExtensions = fileExtensions;
             this.Defaults = platformDefaults;
@@ -21,21 +21,22 @@ namespace Snowflake.Platform
         }
        
         public IList<string> FileExtensions { get; private set; }
-        public PlatformDefaults Defaults { get; set; }
-        public IReadOnlyDictionary<string, ControllerDefinition> Controllers { get { return this.controllers.AsReadOnly(); } }
-        private IDictionary<string, ControllerDefinition> controllers;
+        public IPlatformDefaults Defaults { get; set; }
+        public IReadOnlyDictionary<string, IControllerDefinition> Controllers { get { return this.controllers.AsReadOnly(); } }
+        private IDictionary<string, IControllerDefinition> controllers;
         public int MaximumInputs { get; private set; }
-        public static PlatformInfo FromDictionary(IDictionary<string, dynamic> jsonDictionary)
+        public static IPlatformInfo FromDictionary(IDictionary<string, dynamic> jsonDictionary)
         {
-         
+            IPlatformDefaults platformDefaults = jsonDictionary["Defaults"].ToObject<PlatformDefaults>();
+          //  string controllerId =
             return new PlatformInfo(
                     jsonDictionary["PlatformId"],
                     jsonDictionary["Name"],
                     new FileMediaStore(jsonDictionary["MediaStoreKey"]),
                     jsonDictionary["Metadata"].ToObject<Dictionary<string, string>>(),
                     jsonDictionary["FileExtensions"].ToObject<List<string>>(),
-                    jsonDictionary["Defaults"].ToObject<PlatformDefaults>(),
-                    jsonDictionary["Controllers"].ToObject<Dictionary<string, ControllerDefinition>>(),
+                    platformDefaults,
+                    jsonDictionary["Controllers"].ToObject<Dictionary<string, IControllerDefinition>>(),
                     (int)jsonDictionary["MaximumInputs"] 
                 );
         }
