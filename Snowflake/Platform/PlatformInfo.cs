@@ -8,6 +8,7 @@ using Snowflake.Information;
 using Snowflake.Controller;
 using System.Collections.ObjectModel;
 using Snowflake.Extensions;
+using Newtonsoft.Json.Linq;
 
 namespace Snowflake.Platform
 {
@@ -28,6 +29,13 @@ namespace Snowflake.Platform
         public static IPlatformInfo FromDictionary(IDictionary<string, dynamic> jsonDictionary)
         {
             IPlatformDefaults platformDefaults = jsonDictionary["Defaults"].ToObject<PlatformDefaults>();
+            var controllers = new Dictionary<string, IControllerDefinition>();
+
+            foreach (var value in jsonDictionary["Controllers"])
+            {
+                var inputs = ((JObject)value.Value.ControllerInputs).ToObject<IDictionary<object, JObject>>().ToDictionary(x => (string)x.Key, x => (IControllerInput)x.Value.ToObject<ControllerInput>());
+                controllers.Add(value.Name, new ControllerDefinition(inputs, value.Name));
+            }
           //  string controllerId =
             return new PlatformInfo(
                     jsonDictionary["PlatformId"],
@@ -36,7 +44,7 @@ namespace Snowflake.Platform
                     jsonDictionary["Metadata"].ToObject<Dictionary<string, string>>(),
                     jsonDictionary["FileExtensions"].ToObject<List<string>>(),
                     platformDefaults,
-                    jsonDictionary["Controllers"].ToObject<Dictionary<string, IControllerDefinition>>(),
+                    controllers,
                     (int)jsonDictionary["MaximumInputs"] 
                 );
         }
