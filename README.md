@@ -8,7 +8,7 @@ Snowflake provides a plugin-based backend and a set of APIs powering an modern H
 
 Documentation
 -------------
-Hang on while we get our API fully fleshed out! A massive refactor is planned separating interfaces from implementation, and the API itself is in a state of constant flux, additions and ABI breakages, we don't even have a version number yet!
+Preliminary documentation is available [here](http://snowflakepowe.red/doc/html/). As we document out API, we'll also be writing quick start guides on creating plugins.
 
 Legal
 -----
