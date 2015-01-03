@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Snowflake.Controller;
 using Snowflake.Information;
+
 namespace Snowflake.Platform
 {
     /// <summary>
@@ -13,6 +14,9 @@ namespace Snowflake.Platform
         /// The controllers in a platform.
         /// </summary>
         IReadOnlyDictionary<string, IControllerDefinition> Controllers { get; }
+        /// <summary>
+        /// The defaults used to populate IPlatformPreferenceDatabase entry
+        /// </summary>
         IPlatformDefaults Defaults { get; set; }
         /// <summary>
         /// The file extensions ROMs of this platform are known to have.

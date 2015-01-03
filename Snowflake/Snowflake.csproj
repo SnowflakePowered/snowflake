@@ -82,6 +82,7 @@
   <ItemGroup>
     <Compile Include="Ajax\JSRequest.cs" />
     <Compile Include="Ajax\JSResponse.cs" />
+    <Compile Include="Platform\PlatformPreferencesDatabase.cs" />
     <Compile Include="Plugin\YamlConfiguration.cs" />
     <Compile Include="Controller\ControllerProfileDatabase.cs" />
     <Compile Include="Emulator\Configuration\ConfigurationStore.cs" />

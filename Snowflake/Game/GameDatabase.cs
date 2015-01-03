@@ -16,7 +16,9 @@ namespace Snowflake.Game
 {
     public class GameDatabase : BaseDatabase, IGameDatabase
     {
-        public GameDatabase(string fileName) : base(fileName){
+        public GameDatabase(string fileName)
+            : base(fileName)
+        {
             this.CreateDatabase();
         }
 
@@ -36,7 +38,8 @@ namespace Snowflake.Game
             this.DBConnection.Close();
         }
 
-        public void AddGame(IGameInfo game){
+        public void AddGame(IGameInfo game)
+        {
             this.DBConnection.Open();
             using (var sqlCommand = new SQLiteCommand(@"INSERT OR REPLACE INTO games VALUES(
                                           @platform_id,
@@ -50,9 +53,9 @@ namespace Snowflake.Game
                 sqlCommand.Parameters.AddWithValue("@platform_id", game.PlatformId);
                 sqlCommand.Parameters.AddWithValue("@uuid", game.UUID);
                 sqlCommand.Parameters.AddWithValue("@filename", game.FileName);
-                sqlCommand.Parameters.AddWithValue("@name",  game.Name);
+                sqlCommand.Parameters.AddWithValue("@name", game.Name);
                 sqlCommand.Parameters.AddWithValue("@mediastorekey", game.MediaStore.MediaStoreKey);
-                sqlCommand.Parameters.AddWithValue("@metadata",  JsonConvert.SerializeObject(game.Metadata));
+                sqlCommand.Parameters.AddWithValue("@metadata", JsonConvert.SerializeObject(game.Metadata));
                 sqlCommand.Parameters.AddWithValue("@crc32", game.CRC32);
                 sqlCommand.ExecuteNonQuery();
             }
@@ -72,7 +75,8 @@ namespace Snowflake.Game
         {
             return GetGamesByColumn("name", nameSearch);
         }
-        private IList<IGameInfo>GetGamesByColumn(string colName, string searchQuery){
+        private IList<IGameInfo> GetGamesByColumn(string colName, string searchQuery)
+        {
             this.DBConnection.Open();
             using (var sqlCommand = new SQLiteCommand(@"SELECT * FROM `games` WHERE `%colName` == @searchQuery"
                 , this.DBConnection))
