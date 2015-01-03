@@ -18,14 +18,11 @@ namespace Snowflake.Controller
 
         }
 
-        public void LoadTables(IDictionary<string, IPlatformInfo> platforms)
+        public void AddPlatform(IPlatformInfo platform)
         {
-            foreach (IPlatformInfo platform in platforms.Values)
+            foreach (IControllerDefinition controller in platform.Controllers.Values)
             {
-                foreach (IControllerDefinition controller in platform.Controllers.Values)
-                {
-                    this.CreateControllerTable(controller);
-                }
+                this.CreateControllerTable(controller);
             }
         }
         private void CreateControllerTable(IControllerDefinition controllerDefinition)

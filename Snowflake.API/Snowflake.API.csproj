@@ -76,7 +76,7 @@
     <Compile Include="Platform\IPlatformPreferenceDatabase.cs" />
     <Compile Include="Scraper\ImagesInfoFields.cs" />
     <Compile Include="Controller\ControllerProfileType.cs" />
-    <Compile Include="Controller\IControllerDatabase.cs" />
+    <Compile Include="Controller\IControllerProfileDatabase.cs" />
     <Compile Include="Controller\IControllerDefinition.cs" />
     <Compile Include="Controller\IControllerInput.cs" />
     <Compile Include="Controller\IControllerPortsDatabase.cs" />

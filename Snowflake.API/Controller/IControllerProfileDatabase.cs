@@ -47,11 +47,10 @@ namespace Snowflake.Controller
         /// <returns>Device name if one is set, null if controller is not type of CUSTOM_PROFILE</returns>
         string GetDeviceName(string controllerId, int controllerIndex);
         /// <summary>
-        /// Load (create) tables for every registered controller for all loaded platforms.
+        /// Add a platform's controllers to the database
         /// </summary>
-        /// <seealso cref="Snowflake.Service.ICoreService.LoadedPlatforms"/>
-        /// <param name="platforms">Loaded platforms</param>
-        void LoadTables(IDictionary<string, IPlatformInfo> platforms);
+        /// <param name="platform">The platform to add</param>
+        void AddPlatform(IPlatformInfo platform);
 
     }
 }

@@ -15,10 +15,11 @@ namespace Snowflake.Service
         IEmulatorAssembliesManager EmulatorManager { get; }
         string AppDataDirectory { get; }
         IConfigurationFlagDatabase ConfigurationFlagDatabase { get; }
-        IControllerProfileDatabase ControllerDatabase { get; }
+        IControllerProfileDatabase ControllerProfileDatabase { get; }
         IControllerPortsDatabase ControllerPortsDatabase { get; }
         event EventHandler CoreLoaded;
         IGameDatabase GameDatabase { get; }
+        IPlatformPreferenceDatabase PlatformPreferenceDatabase { get; }
         IDictionary<string, IPlatformInfo> LoadedPlatforms { get; }
         IBaseHttpServer MediaStoreServer { get; }
         IPluginManager PluginManager { get; }

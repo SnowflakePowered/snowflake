@@ -26,9 +26,10 @@ namespace Snowflake.Service
         public IPluginManager PluginManager { get; private set; }
         public IAjaxManager AjaxManager { get; private set; }
         public IGameDatabase GameDatabase { get; private set; }
-        public IControllerProfileDatabase ControllerDatabase { get; private set; }
+        public IControllerProfileDatabase ControllerProfileDatabase { get; private set; }
         public IControllerPortsDatabase ControllerPortsDatabase { get; private set; }
         public IConfigurationFlagDatabase ConfigurationFlagDatabase { get; private set; }
+        public IPlatformPreferenceDatabase PlatformPreferenceDatabase { get; private set; }
         public IEmulatorAssembliesManager EmulatorManager { get; private set; }
         #endregion
 
@@ -76,15 +77,15 @@ namespace Snowflake.Service
             this.LoadedPlatforms = this.LoadPlatforms(Path.Combine(this.AppDataDirectory, "platforms"));
          
             this.GameDatabase = new GameDatabase(Path.Combine(this.AppDataDirectory, "games.db"));
-            this.ControllerDatabase = new ControllerProfileDatabase(Path.Combine(this.AppDataDirectory, "controllers.db"));
-
-            this.ControllerDatabase.LoadTables(this.LoadedPlatforms);
-
+            this.ControllerProfileDatabase = new ControllerProfileDatabase(Path.Combine(this.AppDataDirectory, "controllers.db"));
+            this.PlatformPreferenceDatabase = new PlatformPreferencesDatabase(Path.Combine(this.AppDataDirectory, "platformprefs.db"));
             this.ControllerPortsDatabase = new ControllerPortsDatabase(Path.Combine(this.AppDataDirectory, "ports.db"));
             this.ConfigurationFlagDatabase = new ConfigurationFlagDatabase(Path.Combine(this.AppDataDirectory, "flags.db"));
             foreach (PlatformInfo platform in this.LoadedPlatforms.Values)
             {
+                this.ControllerProfileDatabase.AddPlatform(platform);
                 this.ControllerPortsDatabase.AddPlatform(platform);
+                this.PlatformPreferenceDatabase.AddPlatform(platform);
             }
             this.PluginManager = new PluginManager(this.AppDataDirectory);
             this.AjaxManager = new AjaxManager(this.AppDataDirectory);

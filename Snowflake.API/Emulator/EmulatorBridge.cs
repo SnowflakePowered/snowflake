@@ -70,7 +70,7 @@ namespace Snowflake.Emulator
         public virtual string CompileController(int playerIndex, IPlatformInfo platformInfo, IInputTemplate inputTemplate)
         {
             string controllerId = this.CoreInstance.ControllerPortsDatabase.GetPort(platformInfo, playerIndex);
-            IControllerProfile controllerProfile = this.CoreInstance.ControllerDatabase.GetControllerProfile(controllerId, playerIndex);
+            IControllerProfile controllerProfile = this.CoreInstance.ControllerProfileDatabase.GetControllerProfile(controllerId, playerIndex);
 
             return this.CompileController(playerIndex, 
                 platformInfo.Controllers[controllerProfile.ControllerID],

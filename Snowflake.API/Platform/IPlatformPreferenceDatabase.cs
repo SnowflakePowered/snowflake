@@ -23,16 +23,23 @@ namespace Snowflake.Platform
         /// <param name="platformInfo">The platform</param>
         /// <returns>The preferences for a certain platform</returns>
         IPlatformDefaults GetPreferences(IPlatformInfo platformInfo);
-        void SetEmulator(IPlatformInfo platformInfo);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="platformInfo">The platform</param>
+        /// <param name="value">The preferred emulator for a platform</param>
+        void SetEmulator(IPlatformInfo platformInfo, string value);
         /// <summary>
         /// Sets the preferred scraper for a platform
         /// </summary>
-        /// <param name="platformInfo">The preferred scraper for a platform</param>
-        void SetScraper(IPlatformInfo platformInfo);
+        /// <param name="platformInfo">The platform</param>
+        /// <param name="value">The preferred scraper for a platform</param>
+        void SetScraper(IPlatformInfo platformInfo, string value);
         /// <summary>
         /// Sets the preferred identifier for a platform
         /// </summary>
-        /// <param name="platformInfo">The preferred identifier for a platform</param>
-        void SetIdentifier(IPlatformInfo platformInfo);
+        /// <param name="platformInfo">The platform</param>
+        /// <param name="value">The preferred identifier for a platform</param>
+        void SetIdentifier(IPlatformInfo platformInfo, string value);
     }
 }
