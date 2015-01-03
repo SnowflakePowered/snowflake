@@ -57,8 +57,11 @@ namespace Snowflake.Platform
                     var result = new DataTable();
                     result.Load(reader);
                     var row = result.Rows[0];
+                    string scraper = result.Rows[0].Field<string>("scraper");
+                    string identifier = result.Rows[0].Field<string>("identifier");
+                    string emulator = result.Rows[0].Field<string>("emulator");
                     IPlatformDefaults platformDefaults =
-                        new PlatformDefaults(row.Field<string>("scraper"), row.Field<string>("identifier"), row.Field<string>("emulator"));
+                        new PlatformDefaults(scraper, identifier, emulator);
                     this.DBConnection.Close();
                     return platformDefaults;
                 }
