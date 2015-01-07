@@ -14,7 +14,6 @@ namespace Snowflake.Emulator
     public interface IEmulatorBridge : IBasePlugin
     {
         IEmulatorAssembly EmulatorAssembly { get; }
-        IList<string> SupportedPlatforms { get;  }
         IDictionary<string, IControllerTemplate> ControllerTemplates { get; }
         IDictionary<string, IInputTemplate> InputTemplates { get; }
         IDictionary<string, IConfigurationTemplate> ConfigurationTemplates { get; }

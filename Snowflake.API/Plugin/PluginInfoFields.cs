@@ -12,5 +12,6 @@ namespace Snowflake.Constants.Plugin
         public static string Name = "name";
         public static string Description = "description";
         public static string Type = "type";
+        public static string SupportedPlatforms = "platforms";
     }
 }

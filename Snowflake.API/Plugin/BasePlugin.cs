@@ -20,6 +20,7 @@ namespace Snowflake.Plugin
         public string PluginDataPath { get; private set; }
         public virtual IPluginConfiguration PluginConfiguration { get; protected set; }
         public ICoreService CoreInstance { get; private set; }
+        public IList<string> SupportedPlatforms { get; private set; }
         protected BasePlugin(Assembly pluginAssembly, ICoreService coreInstance)
         {
             this.PluginAssembly = pluginAssembly;
@@ -31,7 +32,8 @@ namespace Snowflake.Plugin
                 var pluginInfo = JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(file);
                 this.PluginInfo = pluginInfo;
             }
-            this.PluginName = PluginInfo[PluginInfoFields.Name];
+            this.PluginName = this.PluginInfo[PluginInfoFields.Name];
+            this.SupportedPlatforms = this.PluginInfo[PluginInfoFields.SupportedPlatforms];
             this.PluginDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Snowflake", "plugins", PluginName);
             if (!Directory.Exists(this.PluginDataPath)) Directory.CreateDirectory(this.PluginDataPath);
         }
