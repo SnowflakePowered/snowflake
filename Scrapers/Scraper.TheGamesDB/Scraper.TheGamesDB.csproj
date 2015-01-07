@@ -46,6 +46,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Snowflake.API\Snowflake.API.csproj">
+      <Project>{2841aeea-03d5-47b0-9d90-375dfa19559a}</Project>
+      <Name>Snowflake.API</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Snowflake\Snowflake.csproj">
       <Project>{8f1d65ed-4a96-4a0a-8371-53655a60a2b3}</Project>
       <Name>Snowflake</Name>

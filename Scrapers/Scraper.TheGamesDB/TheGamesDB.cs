@@ -8,11 +8,10 @@ using System.IO;
 using System.Reflection;
 using System.Net;
 using System.Xml.Linq;
-using Snowflake.Constants;
 using Snowflake.Scraper;
 using System.ComponentModel.Composition;
 using Snowflake.Service;
-
+using Snowflake.Constants;
 namespace Scraper.TheGamesDB
 {
     public class TheGamesDB : BaseScraper
