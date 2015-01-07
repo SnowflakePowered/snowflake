@@ -19,6 +19,11 @@ What's Possible?
 Anything that's possible to do in HTML5 will be possible on Snowflake. Including Material Design (coming soon)
 
 ![mockup](branding/mockups/ngcopen.png)
+
+I don't code, what can I do with Snowflake?
+-------------------------------------------
+Nothing yet, hang on while we get our API stable and start to write the UI!
+
 Legal
 -----
 Snowflake is licensed under the Apache License 2.0. However any fork of the [codebase prior to the relicensing to Apache 2](https://github.com/snowflake-frontend/snowflake/commit/b0286553ec0887ce406420827a2ba0c20aa78117#diff-d41d8cd98f00b204e9800998ecf8427e) must be distributed under the GNU GPL v3. Any fork of the codebase after that commit is can be distributed under the Apache 2 license. Snowflake does not in any way facilitate the download of illegal ROM images or warez of any kind. 
