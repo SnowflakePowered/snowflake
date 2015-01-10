@@ -22,14 +22,14 @@ namespace Scraper.TheGamesDB
         {
         }
 
-        private IList<GameScrapeResult> ParseSearchResults(Uri searchUri)
+        private IList<IGameScrapeResult> ParseSearchResults(Uri searchUri)
         {
             using (var client = new WebClient())
             {
                 string xml = client.DownloadString(searchUri);
                 XDocument xmlDoc = XDocument.Parse(xml);
                 var games = (from game in xmlDoc.Descendants("Game") select game).ToList();
-                var results = new List<GameScrapeResult>();
+                var results = new List<IGameScrapeResult>();
                 foreach (var game in games)
                 {
                     string id = game.Element("id").Value;
@@ -43,21 +43,21 @@ namespace Scraper.TheGamesDB
                 return results;
             }
         }
-        public override IList<GameScrapeResult> GetSearchResults(string searchQuery)
+        public override IList<IGameScrapeResult> GetSearchResults(string searchQuery)
         {
             Console.WriteLine(this.CoreInstance.GetHashCode());
             var searchUri = new Uri(Uri.EscapeUriString("http://thegamesdb.net/api/GetGamesList.php?name=" + searchQuery));
             var results = ParseSearchResults(searchUri);
             return results;
         }
-        public override IList<GameScrapeResult> GetSearchResults(string searchQuery, string platformId)
+        public override IList<IGameScrapeResult> GetSearchResults(string searchQuery, string platformId)
         {
             var searchUri = new Uri(Uri.EscapeUriString("http://thegamesdb.net/api/GetGamesList.php?name=" + searchQuery
                 + "&platform=" + this.ScraperMap[platformId]));
             var results = ParseSearchResults(searchUri);
             return results;
         }
-        public override Tuple<Dictionary<string, string>, GameImagesResult> GetGameDetails(string id)
+        public override Tuple<Dictionary<string, string>, IGameImagesResult> GetGameDetails(string id)
         {
             var searchUri = new Uri(Uri.EscapeUriString("http://thegamesdb.net/api/GetGame.php?id=" + id));
             using (var client = new WebClient())
@@ -74,7 +74,7 @@ namespace Scraper.TheGamesDB
                     {GameInfoFields.game_developer, xmlDoc.Descendants("Developer").First().Value}
                 };
 
-                var images = new GameImagesResult();
+                IGameImagesResult images = new GameImagesResult();
                 var boxartFront = baseImageUrl + (from boxart in xmlDoc.Descendants("boxart") where boxart.Attribute("side").Value == "front" select boxart).First().Value;
                 images.AddFromUrl(GameImageType.IMAGE_BOXART_FRONT, new Uri(boxartFront));
 

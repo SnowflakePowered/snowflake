@@ -9,6 +9,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.ComponentModel.Composition;
 using Snowflake.Service;
+using Snowflake.Identifier;
 
 namespace Identifier.DatIdentifier
 {
