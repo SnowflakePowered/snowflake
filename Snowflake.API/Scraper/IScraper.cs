@@ -30,10 +30,10 @@ namespace Snowflake.Scraper
         /// <returns></returns>
         IList<IGameScrapeResult> GetSearchResults(string searchQuery, string platformId);
         /// <summary>
-        /// Gets the details of 
+        /// Gets the details of the games from the result id
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">Search Result ID</param>
+        /// <returns>Tuple containing game metadata and game images</returns>
         Tuple<IDictionary<string, string>, IGameImagesResult> GetGameDetails(string id);
     }
 }

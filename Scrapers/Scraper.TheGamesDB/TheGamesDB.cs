@@ -76,23 +76,23 @@ namespace Scraper.TheGamesDB
 
                 var images = new GameImagesResult();
                 var boxartFront = baseImageUrl + (from boxart in xmlDoc.Descendants("boxart") where boxart.Attribute("side").Value == "front" select boxart).First().Value;
-                images.AddFromUrl(GameImageType.Boxart_front, new Uri(boxartFront));
+                images.AddFromUrl(GameImageType.IMAGE_BOXART_FRONT, new Uri(boxartFront));
 
                 var boxartBack = baseImageUrl + (from boxart in xmlDoc.Descendants("boxart") where boxart.Attribute("side").Value == "back" select boxart).First().Value;
-                images.AddFromUrl(GameImageType.Boxart_back, new Uri(boxartBack));
+                images.AddFromUrl(GameImageType.IMAGE_BOXART_BACK, new Uri(boxartBack));
 
                 //Add fanarts
                 var fanarts = (from fanart in xmlDoc.Descendants("fanart") select fanart).ToList();
                 foreach (string fanartUrl in fanarts.Select(fanart => baseImageUrl + fanart.Element("original").Value))
                 {
-                    images.AddFromUrl(GameImageType.Fanart, new Uri(fanartUrl));
+                    images.AddFromUrl(GameImageType.IMAGE_FANART, new Uri(fanartUrl));
                 }
 
                 //Add screenshots
                 var screenshots = (from screenshot in xmlDoc.Descendants("screenshot") select screenshot).ToList();
                 foreach (string screenshotUrl in screenshots.Select(screenshot => baseImageUrl + screenshot.Element("original").Value))
                 {
-                    images.AddFromUrl(GameImageType.Screenshot, new Uri(screenshotUrl));
+                    images.AddFromUrl(GameImageType.IMAGE_SCREENSHOT, new Uri(screenshotUrl));
                 }
                 return Tuple.Create(metadata, images);
             }

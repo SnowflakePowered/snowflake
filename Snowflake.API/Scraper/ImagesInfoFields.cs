@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Snowflake.Constants
 {
+    /// <summary>
+    /// Images are stored with these keys
+    /// </summary>
     public static class ImagesInfoFields
     {
         public static string img_boxart_back = "img_boxart_back";

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using Snowflake.Information.MediaStore;
 namespace Snowflake.Scraper
 {
+    /// <summary>
+    /// Represents a set of images that relate to a game
+    /// </summary>
     public interface IGameImagesResult
     {
         void AddFromUrl(GameImageType imageType, Uri imageUrl);

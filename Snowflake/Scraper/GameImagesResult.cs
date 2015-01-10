@@ -29,19 +29,19 @@ namespace Snowflake.Scraper
             switch (imageType)
             {
                
-                case GameImageType.Fanart:
+                case GameImageType.IMAGE_FANART:
                     this.Fanarts.Add(imageUrl.AbsoluteUri);
                     break;
-                case GameImageType.Screenshot:
+                case GameImageType.IMAGE_SCREENSHOT:
                     this.Screenshots.Add(imageUrl.AbsoluteUri);
                     break;
-                case GameImageType.Boxart_back:
+                case GameImageType.IMAGE_BOXART_BACK:
                     this.Boxarts.Add(ImagesInfoFields.img_boxart_back, imageUrl.AbsoluteUri);
                     break;
-                case GameImageType.Boxart_front:
+                case GameImageType.IMAGE_BOXART_FRONT:
                     this.Boxarts.Add(ImagesInfoFields.img_boxart_front, imageUrl.AbsoluteUri);
                     break;
-                case GameImageType.Boxart_full:
+                case GameImageType.IMAGE_BOXART_FULL:
                     this.Boxarts.Add(ImagesInfoFields.img_boxart_full, imageUrl.AbsoluteUri);
                     break;
             }
