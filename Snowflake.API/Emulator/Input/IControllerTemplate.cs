@@ -11,10 +11,28 @@ namespace Snowflake.Emulator.Input
     /// </summary>
     public interface IControllerTemplate
     {
+        /// <summary>
+        /// The unique ID of the controller definition
+        /// </summary>
         string ControllerID { get; }
+        /// <summary>
+        /// The Emulator Bridge ID this controller template corresponds to
+        /// </summary>
         string EmulatorID { get; }
+        /// <summary>
+        /// The keymappings for gamepad devices
+        /// Multiple mappings may be defined for multiple types of gamepads. 
+        /// Most common are definitions for an XInput gamepad
+        /// </summary>
         IReadOnlyDictionary<string, IControllerMapping> GamepadControllerMappings { get; }
+        /// <summary>
+        /// The keymappings for keyboard devices.
+        /// Multiple mappings may be defined for multiple types of keyboards.
+        /// </summary>
         IReadOnlyDictionary<string, IControllerMapping> KeyboardControllerMappings { get; }
+        /// <summary>
+        /// The platform ID of the controller
+        /// </summary>
         string PlatformID { get; }
     }
 }

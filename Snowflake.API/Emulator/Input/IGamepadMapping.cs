@@ -1,6 +1,10 @@
 ﻿using System;
 namespace Snowflake.Emulator.Input
 {
+    /// <summary>
+    /// An IGamepadMapping maps a standard XInput-style gamepad to the values that represent each button in an emulator.
+    /// IGamepadMapping supports the 4 lettered face buttons (ABXY), X and Y +/- values for 2 analog sticks and stick depression, and 4 shoulder buttons
+    /// </summary>
     public interface IGamepadMapping
     {
         string GAMEPAD_A { get; }

@@ -1,6 +1,10 @@
 ﻿using System;
 namespace Snowflake.Emulator.Input
 {
+    /// <summary>
+    /// Represents the buttons on a keyboard.
+    /// Numpad keys are prefixed with NUMPAD
+    /// </summary>
     public interface IKeyboardMapping
     {
         string KEY_0 { get; }
