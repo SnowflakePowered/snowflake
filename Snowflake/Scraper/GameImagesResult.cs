@@ -49,7 +49,7 @@ namespace Snowflake.Scraper
 
         public IMediaStore ToMediaStore(string mediaStoreKey)
         {
-            var mediaStore = new FileMediaStore(mediaStoreKey);
+            IMediaStore mediaStore = new FileMediaStore(mediaStoreKey);
             using (var webClient = new WebClient())
             {
                 for (int i = 0; i < this.Fanarts.Count; i++)

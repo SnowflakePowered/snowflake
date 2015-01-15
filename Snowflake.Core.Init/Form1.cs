@@ -45,7 +45,7 @@ namespace Snowflake.Service.Init
         {
             CoreService.InitCore();
             CoreService.InitPluginManager();
-            Console.WriteLine("Test");
+            var x = CoreService.LoadedCore.PluginManager.LoadedScrapers["Scraper.TheGamesDB"].GetSearchResults("Super Mario World");
       /*      var gameUuid = "UPeeOUwXQESzaKU8jRsDag";
             //  var homebrew = new GameInfo("NINTENDO_SNES", "SNES_TEST", new FileMediaStore(gameUuid), new Dictionary<string, string>(), gameUuid, "christmascraze.smc");
             //FrontendCore.LoadedCore.GameDatabase.AddGame(homebrew);

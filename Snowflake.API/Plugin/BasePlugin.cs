@@ -33,14 +33,14 @@ namespace Snowflake.Plugin
                 this.PluginInfo = pluginInfo;
             }
             this.PluginName = this.PluginInfo[PluginInfoFields.Name];
-            this.SupportedPlatforms = this.PluginInfo[PluginInfoFields.SupportedPlatforms];
+            this.SupportedPlatforms = this.PluginInfo[PluginInfoFields.SupportedPlatforms].ToObject<IList<string>>();
             this.PluginDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Snowflake", "plugins", PluginName);
             if (!Directory.Exists(this.PluginDataPath)) Directory.CreateDirectory(this.PluginDataPath);
         }
 
         public Stream GetResource(string resourceName)
         {
-            return this.GetResource(this.PluginAssembly.GetName().Name + ".resource." + resourceName);
+            return this.PluginAssembly.GetManifestResourceStream(this.PluginAssembly.GetName().Name + ".resource." + resourceName);
         }
     }
 }

@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -82,6 +83,8 @@
   <ItemGroup>
     <Compile Include="Ajax\JSRequest.cs" />
     <Compile Include="Ajax\JSResponse.cs" />
+    <Compile Include="Information\MediaStore\FileMediaStore.cs" />
+    <Compile Include="Information\MediaStore\FileMediaStoreSection.cs" />
     <Compile Include="Platform\PlatformPreferencesDatabase.cs" />
     <Compile Include="Plugin\YamlConfiguration.cs" />
     <Compile Include="Controller\ControllerProfileDatabase.cs" />
@@ -95,6 +98,8 @@
     <Compile Include="Controller\ControllerPortsDatabase.cs" />
     <Compile Include="Controller\ControllerProfile.cs" />
     <Compile Include="Controller\ControllerDefinition.cs" />
+    <Compile Include="Scraper\GameImagesResult.cs" />
+    <Compile Include="Scraper\GameScrapeResult.cs" />
     <Compile Include="Service\Manager\AjaxManager.cs" />
     <Compile Include="Service\Manager\EmulatorAssembliesManager.cs" />
     <Compile Include="Service\ScrapeService.cs" />
@@ -114,15 +119,11 @@
     <Compile Include="Service\Server\MimeTypes.cs" />
     <Compile Include="Controller\ControllerInput.cs" />
     <Compile Include="Plugin\GeneralPlugin.cs" />
-    <Compile Include="Scraper\GameImagesResult.cs" />
     <Compile Include="Game\GameDatabase.cs" />
-    <Compile Include="Information\MediaStore\FileMediaStore.cs" />
-    <Compile Include="Information\MediaStore\FileMediaStoreSection.cs" />
     <Compile Include="Platform\PlatformDefaults.cs" />
     <Compile Include="Game\GameInfo.cs" />
     <Compile Include="Information\Info.cs" />
     <Compile Include="Platform\PlatformInfo.cs" />
-    <Compile Include="Scraper\GameScrapeResult.cs" />
     <Compile Include="Service\CoreService.cs" />
     <Compile Include="Service\Manager\PluginManager.cs" />
     <Compile Include="Service\Server\JsonApiServer.cs" />

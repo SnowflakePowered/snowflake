@@ -18,7 +18,6 @@ namespace Snowflake.Scraper
             using (var reader = new StreamReader(stream))
             {
                 string file = reader.ReadToEnd();
-                Console.WriteLine(file);
                 var scraperMapValues = JsonConvert.DeserializeObject<BiDictionary<string, string>>(file);
                 this.ScraperMap = scraperMapValues;
             }

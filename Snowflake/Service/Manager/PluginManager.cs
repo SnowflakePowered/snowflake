@@ -55,7 +55,7 @@ namespace Snowflake.Service.Manager
             this.loadedEmulators = this.LoadPlugin(this.emulators);
             this.loadedScrapers = this.LoadPlugin(this.scrapers);
             this.loadedPlugins = this.LoadPlugin(this.plugins);
-            
+
         }
         private void ComposeImports()
         {
@@ -71,9 +71,8 @@ namespace Snowflake.Service.Manager
             var loadedPlugins = new Dictionary<string, T>();
             foreach (var plugin in unloadedPlugins)
             {
-                var instance = (IBasePlugin)plugin.Value;
-                loadedPlugins.Add(instance.PluginName, plugin.Value);
-                this.registry.Add(instance.PluginName, typeof(T));
+                loadedPlugins.Add(plugin.Value.PluginName, plugin.Value);
+                this.registry.Add(plugin.Value.PluginName, typeof(T));
             }
             return loadedPlugins;
         }

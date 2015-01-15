@@ -19,6 +19,8 @@ using Snowflake.Game;
 using Snowflake.Emulator.Configuration;
 namespace Snowflake.Service
 {
+    [Export(typeof(ICoreService))]
+    [PartCreationPolicy(CreationPolicy.Shared)]
     public partial class CoreService : ICoreService 
     {
         #region Loaded Objects
