@@ -34,7 +34,7 @@ namespace Snowflake.Plugin
             }
             this.PluginName = this.PluginInfo[PluginInfoFields.Name];
             this.SupportedPlatforms = this.PluginInfo[PluginInfoFields.SupportedPlatforms].ToObject<IList<string>>();
-            this.PluginDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Snowflake", "plugins", PluginName);
+            this.PluginDataPath = Path.Combine(coreInstance.AppDataDirectory, "plugins", PluginName);
             if (!Directory.Exists(this.PluginDataPath)) Directory.CreateDirectory(this.PluginDataPath);
         }
 

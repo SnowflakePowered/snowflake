@@ -33,7 +33,7 @@ namespace Snowflake.Utility
         private readonly UInt32[] table;
         private UInt32 hash;
 
-        internal Crc32()
+        public Crc32()
             : this(DefaultPolynomial, DefaultSeed)
         {
         }
