@@ -11,6 +11,7 @@ using DuoVia.FuzzyStrings;
 using Snowflake.Scraper;
 using System.IO;
 using Snowflake.Identifier;
+using Snowflake.Utility;
 
 namespace Snowflake.Service
 {
@@ -33,7 +34,7 @@ namespace Snowflake.Service
             var results = this.ScraperPlugin.GetSearchResults(gameName, this.ScrapePlatform.PlatformId).OrderBy(result => result.GameTitle.LevenshteinDistance(gameName)).ToList();
             var resultdetails = this.ScraperPlugin.GetGameDetails(results[0].ID);
             var gameinfo = resultdetails.Item1;
-            var gameUuid = ShortGuid.NewShortGuid();
+            var gameUuid = MD5.GetMD5(fileName).Substring(0, 22);
             return new GameInfo(
                 this.ScrapePlatform.PlatformId,
                 gameinfo[GameInfoFields.game_title],

@@ -138,6 +138,7 @@
     <Compile Include="Utility\BaseDatabase.cs" />
     <Compile Include="Utility\BiDictionary.cs" />
     <Compile Include="Utility\Crc32.cs" />
+    <Compile Include="Utility\Md5.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
