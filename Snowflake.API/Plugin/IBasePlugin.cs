@@ -43,6 +43,12 @@ namespace Snowflake.Plugin
         /// <returns>The resource as a stream</returns>
         Stream GetResource(string resourceName);
         /// <summary>
+        /// Gets an embedded resource as a String from the plugin Assembly
+        /// </summary>
+        /// <param name="resourceName">The name of the resource</param>
+        /// <returns>The resource as a string</returns>
+        string GetStringResource(string resourceName);
+        /// <summary>
         /// The IPluginConfiguration configuration associated with this plugin.
         /// This is null unless it has been initialized by the plugin.
         /// </summary>

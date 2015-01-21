@@ -25,13 +25,11 @@ namespace Snowflake.Plugin
         {
             this.PluginAssembly = pluginAssembly;
             this.CoreInstance = coreInstance;
-            using (Stream stream = this.GetResource("plugin.json"))
-            using (var reader = new StreamReader(stream))
-            {
-                string file = reader.ReadToEnd();
-                var pluginInfo = JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(file);
-                this.PluginInfo = pluginInfo;
-            }
+            
+            string file = this.GetStringResource("plugin.json");
+            var pluginInfo = JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(file);
+            this.PluginInfo = pluginInfo;
+            
             this.PluginName = this.PluginInfo[PluginInfoFields.Name];
             this.SupportedPlatforms = this.PluginInfo[PluginInfoFields.SupportedPlatforms].ToObject<IList<string>>();
             this.PluginDataPath = Path.Combine(coreInstance.AppDataDirectory, "plugins", PluginName);
@@ -41,6 +39,16 @@ namespace Snowflake.Plugin
         public Stream GetResource(string resourceName)
         {
             return this.PluginAssembly.GetManifestResourceStream(this.PluginAssembly.GetName().Name + ".resource." + resourceName);
+        }
+
+        public string GetStringResource(string resourceName)
+        {
+            using (Stream stream = this.GetResource(resourceName))
+            using (var reader = new StreamReader(stream))
+            {
+                string file = reader.ReadToEnd();
+                return file;
+            }
         }
     }
 }
