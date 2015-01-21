@@ -30,8 +30,9 @@ namespace Snowflake.Emulator.Configuration
 
         public static IConfigurationTemplate FromJsonProtoTemplate(IDictionary<string, dynamic> protoTemplate)
         {
+            
             string stringTemplate = protoTemplate["template"];
-            var booleanMapping = new BooleanMapping(protoTemplate["boolean"]["true"], protoTemplate["boolean"]["false"]);
+            var booleanMapping = new BooleanMapping((string)protoTemplate["boolean"]["true"], (string)protoTemplate["boolean"]["false"]);
             var entries = new List<IConfigurationEntry>();
             var fileName = protoTemplate["filename"];
             var configName = protoTemplate["configuration_name"];
@@ -39,7 +40,7 @@ namespace Snowflake.Emulator.Configuration
            
             foreach (var value in protoTemplate["keys"])
             {
-                entries.Add(new ConfigurationEntry(value.Value["description"], value.Key, value.Value["default"]));
+                entries.Add(new ConfigurationEntry((string)value.Value.description, (string)value.Name, (object)value.Value.defaultValue.Value));
             }
           
             return new ConfigurationTemplate(stringTemplate, entries, booleanMapping, fileName, configName);
