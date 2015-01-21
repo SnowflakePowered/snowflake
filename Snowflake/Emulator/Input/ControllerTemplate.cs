@@ -9,7 +9,7 @@ namespace Snowflake.Emulator.Input
     public class ControllerTemplate : IControllerTemplate
     {
         public string ControllerID { get; private set; }
-        public string EmulatorID { get; private set; }
+        public string InputTemplateName { get; private set; }
         public string PlatformID { get; private set; }
 
         public IReadOnlyDictionary<string, IControllerMapping> KeyboardControllerMappings { get { return this.keyboardControllerMappings.AsReadOnly(); } }
@@ -20,7 +20,7 @@ namespace Snowflake.Emulator.Input
         public ControllerTemplate(string controllerId, string emulatorId, string platformId, IDictionary<string, IControllerMapping> keyboardControllerMappings, IDictionary<string, IControllerMapping> gamepadControllerMappings)
         {
             this.ControllerID = controllerId;
-            this.EmulatorID = emulatorId;
+            this.InputTemplateName = emulatorId;
             this.PlatformID = platformId;
             this.keyboardControllerMappings = keyboardControllerMappings;
             this.gamepadControllerMappings = gamepadControllerMappings;

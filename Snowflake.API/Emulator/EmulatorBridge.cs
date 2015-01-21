@@ -22,6 +22,7 @@ namespace Snowflake.Emulator
         public IDictionary<string, IControllerTemplate> ControllerTemplates { get; private set; }
         public IDictionary<string, IInputTemplate> InputTemplates { get; private set; }
         public IDictionary<string, IConfigurationTemplate> ConfigurationTemplates { get; private set; }
+        public IDictionary<string, IConfigurationFlag> ConfigurationFlags { get; private set; }
         public IEmulatorAssembly EmulatorAssembly { get; private set; }
 
         public EmulatorBridge(Assembly pluginAssembly, ICoreService coreInstance) : base(pluginAssembly, coreInstance) { }

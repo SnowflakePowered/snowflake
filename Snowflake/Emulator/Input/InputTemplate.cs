@@ -14,14 +14,16 @@ namespace Snowflake.Emulator.Input
         public IReadOnlyList<string> TemplateKeys { get { return this.templateKeys.AsReadOnly(); } }
         private IList<string> templateKeys;
         public string NoBind { get; private set; }
+        public string Name { get; private set; }
         public IReadOnlyDictionary<string, IGamepadMapping> GamepadMappings { get { return this.gamepadMappings.AsReadOnly(); } }
         private IDictionary<string, IGamepadMapping> gamepadMappings;
         public IReadOnlyDictionary<string, IKeyboardMapping> KeyboardMappings { get { return this.keyboardMappings.AsReadOnly(); } }
         private IDictionary<string, IKeyboardMapping> keyboardMappings;
 
 
-        public InputTemplate(string stringTemplate, IList<string> templateKeys, string noBind, IDictionary<string, IGamepadMapping> gamepadMappings, IDictionary<string, IKeyboardMapping> keyboardMappings)
+        public InputTemplate(string name, string stringTemplate, IList<string> templateKeys, string noBind, IDictionary<string, IGamepadMapping> gamepadMappings, IDictionary<string, IKeyboardMapping> keyboardMappings)
         {
+            this.Name = name;
             this.StringTemplate = stringTemplate;
             this.NoBind = noBind;
             this.gamepadMappings = gamepadMappings;
@@ -34,7 +36,7 @@ namespace Snowflake.Emulator.Input
             string template = protoTemplate["template"];
             IList<string> templateKeys = (from key in (IList<object>) protoTemplate["templatekeys"] select (string) key).ToList();
             string nobind = protoTemplate["nobind"];
-      
+            string name = protoTemplate["name"];
             IDictionary<string, IGamepadMapping> gamepadMappings = (from mapping in (IDictionary<object, object>)protoTemplate["gamepad"] select mapping)
                 .ToDictionary(mapping => (string)mapping.Key, mapping => (IGamepadMapping)new GamepadMapping(((IDictionary<object, object>)mapping.Value)
                     .ToDictionary(input => (string)input.Key, input => (string)input.Value)));
@@ -43,7 +45,7 @@ namespace Snowflake.Emulator.Input
               .ToDictionary(mapping => (string)mapping.Key, mapping => (IKeyboardMapping)new KeyboardMapping(((IDictionary<object, object>)mapping.Value)
                   .ToDictionary(input => (string)input.Key, input => (string)input.Value)));
 
-            return new InputTemplate(template, templateKeys, nobind, gamepadMappings, keyboardMappings);
+            return new InputTemplate(name, template, templateKeys, nobind, gamepadMappings, keyboardMappings);
         }
 
     }

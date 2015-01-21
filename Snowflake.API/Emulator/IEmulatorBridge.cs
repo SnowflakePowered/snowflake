@@ -37,6 +37,10 @@ namespace Snowflake.Emulator
         /// </summary>
         IDictionary<string, IConfigurationTemplate> ConfigurationTemplates { get; }
         /// <summary>
+        /// A set of configuration flags
+        /// </summary>
+        IDictionary<string, IConfigurationFlag> ConfigurationFlags { get; }
+        /// <summary>
         /// Start a game rom
         /// </summary>
         /// <param name="gameInfo">The game to start</param>

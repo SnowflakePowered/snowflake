@@ -10,6 +10,10 @@ namespace Snowflake.Emulator.Input
     public interface IInputTemplate
     {
         /// <summary>
+        /// The name of the input template used as an identifier
+        /// </summary>
+        string Name { get; }
+        /// <summary>
         /// The gamepad input mappings 
         /// </summary>
         IReadOnlyDictionary<string, IGamepadMapping> GamepadMappings { get; }

@@ -16,9 +16,9 @@ namespace Snowflake.Emulator.Input
         /// </summary>
         string ControllerID { get; }
         /// <summary>
-        /// The Emulator Bridge ID this controller template corresponds to
+        /// The Input Template this controller template corresponds to
         /// </summary>
-        string EmulatorID { get; }
+        string InputTemplateName { get; }
         /// <summary>
         /// The keymappings for gamepad devices
         /// Multiple mappings may be defined for multiple types of gamepads. 
