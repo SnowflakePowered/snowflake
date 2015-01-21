@@ -83,6 +83,8 @@
   <ItemGroup>
     <Compile Include="Ajax\JSRequest.cs" />
     <Compile Include="Ajax\JSResponse.cs" />
+    <Compile Include="Emulator\EmulatorBridge.cs" />
+    <Compile Include="Identifier\BaseIdentifier.cs" />
     <Compile Include="Information\MediaStore\FileMediaStore.cs" />
     <Compile Include="Information\MediaStore\FileMediaStoreSection.cs" />
     <Compile Include="Platform\PlatformPreferencesDatabase.cs" />
@@ -98,6 +100,7 @@
     <Compile Include="Controller\ControllerPortsDatabase.cs" />
     <Compile Include="Controller\ControllerProfile.cs" />
     <Compile Include="Controller\ControllerDefinition.cs" />
+    <Compile Include="Scraper\BaseScraper.cs" />
     <Compile Include="Scraper\GameImagesResult.cs" />
     <Compile Include="Scraper\GameScrapeResult.cs" />
     <Compile Include="Service\Manager\AjaxManager.cs" />

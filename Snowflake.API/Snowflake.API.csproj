@@ -76,7 +76,6 @@
     <Compile Include="Ajax\IBaseAjaxNamespace.cs" />
     <Compile Include="Ajax\IJSRequest.cs" />
     <Compile Include="Ajax\IJSResponse.cs" />
-    <Compile Include="Identifier\BaseIdentifier.cs" />
     <Compile Include="Platform\IPlatformPreferenceDatabase.cs" />
     <Compile Include="Scraper\ImagesInfoFields.cs" />
     <Compile Include="Controller\ControllerProfileType.cs" />
@@ -86,7 +85,6 @@
     <Compile Include="Controller\IControllerPortsDatabase.cs" />
     <Compile Include="Controller\IControllerProfile.cs" />
     <Compile Include="Emulator\Configuration\ConfigurationFlagTypes.cs" />
-    <Compile Include="Emulator\EmulatorBridge.cs" />
     <Compile Include="Emulator\Input\ControllerMappingType.cs" />
     <Compile Include="Emulator\Input\Constants\GamepadConstants.cs" />
     <Compile Include="Emulator\Input\Constants\KeyboardConstants.cs" />
@@ -122,7 +120,6 @@
     <Compile Include="Plugin\IBasePlugin.cs" />
     <Compile Include="Plugin\IGeneralPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Scraper\BaseScraper.cs" />
     <Compile Include="Scraper\GameImagesType.cs" />
     <Compile Include="Scraper\IGameImagesResult.cs" />
     <Compile Include="Scraper\IGameScrapeResult.cs" />

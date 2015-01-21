@@ -25,7 +25,9 @@ namespace Snowflake.Emulator
         public IDictionary<string, IConfigurationFlag> ConfigurationFlags { get; private set; }
         public IEmulatorAssembly EmulatorAssembly { get; private set; }
 
-        public EmulatorBridge(Assembly pluginAssembly, ICoreService coreInstance) : base(pluginAssembly, coreInstance) { }
+        public EmulatorBridge(Assembly pluginAssembly, ICoreService coreInstance) : base(pluginAssembly, coreInstance) {
+        
+        }
 
         public abstract void StartRom(IGameInfo gameInfo);
       /*  {

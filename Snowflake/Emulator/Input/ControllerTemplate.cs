@@ -28,7 +28,7 @@ namespace Snowflake.Emulator.Input
         public static ControllerTemplate FromDictionary(IDictionary<string, dynamic> protoTemplate)
         {
             var controllerid = protoTemplate["controller"];
-            var emulator = protoTemplate["emulator"];
+            var inputtemplate = protoTemplate["input_template"];
             var platformid = protoTemplate["platform"];
             var gamepadControllerMappings = new Dictionary<string, IControllerMapping>();
             var keyboardControllerMappings = new Dictionary<string, IControllerMapping>();
@@ -53,7 +53,7 @@ namespace Snowflake.Emulator.Input
                 keyboardControllerMappings.Add(name, new ControllerMapping(ControllerMappingType.KEYBOARD_MAPPING, keyMappings, inputMappings));
             }
 
-            return new ControllerTemplate(controllerid, emulator, platformid, keyboardControllerMappings, gamepadControllerMappings);
+            return new ControllerTemplate(controllerid, inputtemplate, platformid, keyboardControllerMappings, gamepadControllerMappings);
         }
     }
 }
