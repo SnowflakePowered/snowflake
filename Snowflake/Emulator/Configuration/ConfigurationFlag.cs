@@ -50,10 +50,5 @@ namespace Snowflake.Emulator.Configuration
 
             }
         }
-        public static IList<IConfigurationFlag> FromManyDictionaries(IList<IDictionary<string, dynamic>> protoTemplates)
-        {
-            return protoTemplates.Select(protoTemplate => ConfigurationFlag.FromDictionary(protoTemplate)).ToList();
-        }
-
     }
 }

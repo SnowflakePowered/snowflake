@@ -36,11 +36,5 @@ namespace Snowflake.Emulator.Configuration
               .ToDictionary(value => (string)value.Key, value => value.Value));
             }
         }
-
-        public static IList<ConfigurationProfile> FromManyDictionaries(IList<IDictionary<string, dynamic>> protoTemplates)
-        {
-            return protoTemplates.Select(protoTemplate => ConfigurationProfile.FromDictionary(protoTemplate)).ToList();
-        }
-
     }
 }

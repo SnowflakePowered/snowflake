@@ -27,6 +27,7 @@ namespace Snowflake.Emulator
 
         public EmulatorBridge(Assembly pluginAssembly, ICoreService coreInstance) : base(pluginAssembly, coreInstance) {
         
+            this.ConfigurationTemplates = 
         }
 
         public abstract void StartRom(IGameInfo gameInfo);
