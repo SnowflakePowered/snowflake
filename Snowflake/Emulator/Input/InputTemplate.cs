@@ -37,23 +37,17 @@ namespace Snowflake.Emulator.Input
             IList<string> templateKeys = protoTemplate["templatekeys"].ToObject<IList<string>>();
             string nobind = protoTemplate["nobind"];
             string name = protoTemplate["name"];
+            IDictionary<string, IGamepadMapping> gamepadMappings = new Dictionary<string, IGamepadMapping>();
+            IDictionary<string, IKeyboardMapping> keyboardMappings = new Dictionary<string, IKeyboardMapping>();
 
-            /*
-             * LINQ magic to load gamepad and keyboard mappings
-             * Convert the JObjects to a Dictionary of JObjects
-             * Convert that Dictionary of JObjects to Dictionary<string,string> and use that to init the mapping object.
-             * 
-             * Needs improvement but I'm not sure how to improve it.
-             */
-            IDictionary<string, IGamepadMapping> gamepadMappings = ((JObject)protoTemplate["gamepad"])
-                .ToObject<IDictionary<string, JObject>>()
-                .ToDictionary(mapping => mapping.Key, mapping => 
-                    (IGamepadMapping)new GamepadMapping(mapping.Value.ToObject <IDictionary<string, string>>()));
-
-            IDictionary<string, IKeyboardMapping> keyboardMappings = ((JObject)protoTemplate["keyboard"])
-                .ToObject<IDictionary<string, JObject>>()
-                .ToDictionary(mapping => mapping.Key, mapping =>
-                    (IKeyboardMapping)new KeyboardMapping(mapping.Value.ToObject<IDictionary<string, string>>()));
+            foreach(var gamepadMapping in protoTemplate["gamepad"])
+            {
+                gamepadMappings.Add(gamepadMapping.Name, (IGamepadMapping)new GamepadMapping(gamepadMapping.Value.ToObject<IDictionary<string, string>>()));
+            }
+            foreach (var keyboardMapping in protoTemplate["keyboard"])
+            {
+                 keyboardMappings.Add(keyboardMapping.Name, (IKeyboardMapping)new KeyboardMapping(keyboardMapping.Value.ToObject<IDictionary<string, string>>()));
+            }
 
             return new InputTemplate(name, template, templateKeys, nobind, gamepadMappings, keyboardMappings);
         }
