@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Emulator.Input;
 using Snowflake.Extensions;
-
+using Newtonsoft.Json.Linq;
 namespace Snowflake.Emulator.Input
 {
     public class InputTemplate : IInputTemplate
@@ -31,19 +31,29 @@ namespace Snowflake.Emulator.Input
             this.templateKeys = templateKeys;
         }
 
-        public static InputTemplate FromJsonProtoTemplate(IDictionary<string, dynamic> protoTemplate)
+        public static IInputTemplate FromJsonProtoTemplate(IDictionary<string, dynamic> protoTemplate)
         {
             string template = protoTemplate["template"];
-            IList<string> templateKeys = (from key in (IList<object>) protoTemplate["templatekeys"] select (string) key).ToList();
+            IList<string> templateKeys = protoTemplate["templatekeys"].ToObject<IList<string>>();
             string nobind = protoTemplate["nobind"];
             string name = protoTemplate["name"];
-            IDictionary<string, IGamepadMapping> gamepadMappings = (from mapping in (IDictionary<object, object>)protoTemplate["gamepad"] select mapping)
-                .ToDictionary(mapping => (string)mapping.Key, mapping => (IGamepadMapping)new GamepadMapping(((IDictionary<object, object>)mapping.Value)
-                    .ToDictionary(input => (string)input.Key, input => (string)input.Value)));
 
-            IDictionary<string, IKeyboardMapping> keyboardMappings = (from mapping in (IDictionary<object, object>)protoTemplate["keyboard"] select mapping)
-              .ToDictionary(mapping => (string)mapping.Key, mapping => (IKeyboardMapping)new KeyboardMapping(((IDictionary<object, object>)mapping.Value)
-                  .ToDictionary(input => (string)input.Key, input => (string)input.Value)));
+            /*
+             * LINQ magic to load gamepad and keyboard mappings
+             * Convert the JObjects to a Dictionary of JObjects
+             * Convert that Dictionary of JObjects to Dictionary<string,string> and use that to init the mapping object.
+             * 
+             * Needs improvement but I'm not sure how to improve it.
+             */
+            IDictionary<string, IGamepadMapping> gamepadMappings = ((JObject)protoTemplate["gamepad"])
+                .ToObject<IDictionary<string, JObject>>()
+                .ToDictionary(mapping => mapping.Key, mapping => 
+                    (IGamepadMapping)new GamepadMapping(mapping.Value.ToObject <IDictionary<string, string>>()));
+
+            IDictionary<string, IKeyboardMapping> keyboardMappings = ((JObject)protoTemplate["keyboard"])
+                .ToObject<IDictionary<string, JObject>>()
+                .ToDictionary(mapping => mapping.Key, mapping =>
+                    (IKeyboardMapping)new KeyboardMapping(mapping.Value.ToObject<IDictionary<string, string>>()));
 
             return new InputTemplate(name, template, templateKeys, nobind, gamepadMappings, keyboardMappings);
         }
