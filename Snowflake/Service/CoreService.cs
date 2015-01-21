@@ -63,9 +63,9 @@ namespace Snowflake.Service
 
         public static void InitPluginManager()
         {
+            CoreService.LoadedCore.EmulatorManager.LoadEmulatorAssemblies();
             CoreService.LoadedCore.PluginManager.LoadAll();
             CoreService.LoadedCore.AjaxManager.LoadAll();
-            CoreService.LoadedCore.EmulatorManager.LoadEmulatorAssemblies();
       //      CoreService.LoadedCore.OnPluginManagerLoaded(new PluginManagerLoadedEventArgs());
         }
 
