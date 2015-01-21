@@ -33,7 +33,7 @@ namespace Snowflake.Controller
             return new ControllerProfile(controllerId, platformId, ControllerProfileType.GAMEPAD_PROFILE, inputConfiguration);
         }
 
-        public static ControllerProfile FromDictionary(IDictionary<string, dynamic> protoTemplate){
+        public static ControllerProfile FromJsonProtoTemplate(IDictionary<string, dynamic> protoTemplate){
             string controllerId = protoTemplate["ControllerID"];
             string platformId = protoTemplate["PlatformID"];
             ControllerProfileType profileType = Enum.Parse(typeof(ControllerProfileType), protoTemplate["ProfileType"]);

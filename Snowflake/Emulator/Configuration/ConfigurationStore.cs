@@ -47,7 +47,7 @@ namespace Snowflake.Emulator.Configuration
             else
             {
                 string fileName = ContainsFilename(gameInfo) ? Path.Combine(this.ConfigurationStorePath, gameInfo.FileName + ".json") : Path.Combine(this.ConfigurationStorePath, gameInfo.CRC32 + ".json");
-                return ConfigurationProfile.FromDictionary(JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(File.ReadAllText(fileName)));
+                return ConfigurationProfile.FromJsonProtoTemplate(JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(File.ReadAllText(fileName)));
             }
         }
         public IConfigurationProfile this[IGameInfo gameInfo]

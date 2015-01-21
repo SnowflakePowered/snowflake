@@ -37,7 +37,7 @@ namespace Snowflake.Service.Manager
         public static IEmulatorAssembly ParseEmulatorAssembly(string emulatorCorePath)
         {
             var emulator = new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText(emulatorCorePath));
-            return EmulatorAssembly.FromDictionary(emulator);
+            return EmulatorAssembly.FromJsonProtoTemplate(emulator);
         }
 
        

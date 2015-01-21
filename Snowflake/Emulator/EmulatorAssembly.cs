@@ -32,7 +32,7 @@ namespace Snowflake.Emulator
             this.AssemblyType = assemblyType;
         }
 
-        public static EmulatorAssembly FromDictionary (IDictionary<string, dynamic> emulatorAssembly){
+        public static EmulatorAssembly FromJsonProtoTemplate (IDictionary<string, dynamic> emulatorAssembly){
             return new EmulatorAssembly(emulatorAssembly["main"], emulatorAssembly["id"], emulatorAssembly["name"], emulatorAssembly["type"]);
         }
     }

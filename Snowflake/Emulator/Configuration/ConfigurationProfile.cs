@@ -21,7 +21,7 @@ namespace Snowflake.Emulator.Configuration
             this.TemplateID = templateId;
         }
 
-        public static ConfigurationProfile FromDictionary (IDictionary<string, dynamic> protoTemplate)
+        public static IConfigurationProfile FromJsonProtoTemplate (IDictionary<string, dynamic> protoTemplate)
         {
             try
             {

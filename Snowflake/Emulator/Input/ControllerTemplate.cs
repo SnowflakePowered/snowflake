@@ -25,7 +25,7 @@ namespace Snowflake.Emulator.Input
             this.keyboardControllerMappings = keyboardControllerMappings;
             this.gamepadControllerMappings = gamepadControllerMappings;
         }
-        public static ControllerTemplate FromDictionary(IDictionary<string, dynamic> protoTemplate)
+        public static ControllerTemplate FromJsonProtoTemplate(IDictionary<string, dynamic> protoTemplate)
         {
             var controllerid = protoTemplate["controller"];
             var inputtemplate = protoTemplate["input_template"];

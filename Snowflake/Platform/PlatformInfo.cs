@@ -26,7 +26,7 @@ namespace Snowflake.Platform
         public IReadOnlyDictionary<string, IControllerDefinition> Controllers { get { return this.controllers.AsReadOnly(); } }
         private IDictionary<string, IControllerDefinition> controllers;
         public int MaximumInputs { get; private set; }
-        public static IPlatformInfo FromDictionary(IDictionary<string, dynamic> jsonDictionary)
+        public static IPlatformInfo FromJsonProtoTemplate(IDictionary<string, dynamic> jsonDictionary)
         {
             IPlatformDefaults platformDefaults = jsonDictionary["Defaults"].ToObject<PlatformDefaults>();
             var controllers = new Dictionary<string, IControllerDefinition>();

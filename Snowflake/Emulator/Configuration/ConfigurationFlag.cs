@@ -31,7 +31,7 @@ namespace Snowflake.Emulator.Configuration
             }
         }
 
-        public static IConfigurationFlag FromDictionary(IDictionary<string, dynamic> protoTemplate){
+        public static IConfigurationFlag FromJsonProtoTemplate(IDictionary<string, dynamic> protoTemplate){
             string key = protoTemplate["key"];
             ConfigurationFlagTypes type;
             if (!Enum.TryParse<ConfigurationFlagTypes>(protoTemplate["type"], out type))

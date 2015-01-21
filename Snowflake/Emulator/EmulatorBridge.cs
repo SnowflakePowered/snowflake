@@ -14,6 +14,7 @@ using Snowflake.Emulator.Input;
 using Snowflake.Plugin;
 using Snowflake.Platform;
 using System.Reflection;
+using Newtonsoft.Json;
 
 namespace Snowflake.Emulator
 {
@@ -26,8 +27,10 @@ namespace Snowflake.Emulator
         public IEmulatorAssembly EmulatorAssembly { get; private set; }
 
         public EmulatorBridge(Assembly pluginAssembly, ICoreService coreInstance) : base(pluginAssembly, coreInstance) {
-        
-            this.ConfigurationTemplates = 
+
+            var configurationProtoTemplates = JsonConvert.DeserializeObject<IList<IDictionary<string, dynamic>>>(this.GetStringResource("configurations.json"));
+            this.ConfigurationTemplates = configurationProtoTemplates.Select(protoTemplate => ConfigurationTemplate.FromJsonProtoTemplate(protoTemplate)).ToDictionary(key => key.ConfigurationName, key => key);
+
         }
 
         public abstract void StartRom(IGameInfo gameInfo);

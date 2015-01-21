@@ -50,12 +50,12 @@ namespace Snowflake.Service.Init
             //  var homebrew = new GameInfo("NINTENDO_SNES", "SNES_TEST", new FileMediaStore(gameUuid), new Dictionary<string, string>(), gameUuid, "christmascraze.smc");
             //FrontendCore.LoadedCore.GameDatabase.AddGame(homebrew);
             Console.WriteLine(gameUuid);
-            var controllerTemplate = ControllerTemplate.FromDictionary(new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText("retroarch.input.NES_CONTROLLER.yml")));
-            var inputTemplate = InputTemplate.FromDictionary(new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText("retroarch.input.yml")));
-            var configurationTemplate = ConfigurationTemplate.FromDictionary(new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText("retroarch.cfg.yml")));
+            var controllerTemplate = ControllerTemplate.FromJsonProtoTemplate(new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText("retroarch.input.NES_CONTROLLER.yml")));
+            var inputTemplate = InputTemplate.FromJsonProtoTemplate(new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText("retroarch.input.yml")));
+            var configurationTemplate = ConfigurationTemplate.FromJsonProtoTemplate(new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText("retroarch.cfg.yml")));
             var controllerDefinition = CoreService.LoadedCore.LoadedPlatforms["NINTENDO_NES"].Controllers["NES_CONTROLLER"];
             var configProfiles = ConfigurationProfile.FromManyDictionaries(new Serializer().Deserialize<IList<IDictionary<string, dynamic>>>(File.ReadAllText("retroarch.profile.yml")));
-            var controllerProfile = ControllerProfile.FromDictionary(new Serializer().Deserialize<IDictionary<string, dynamic>>(File.ReadAllText("NES_CONTROLLER.profile.yml")));
+            var controllerProfile = ControllerProfile.FromJsonProtoTemplate(new Serializer().Deserialize<IDictionary<string, dynamic>>(File.ReadAllText("NES_CONTROLLER.profile.yml")));
 
             var x = new ConfigurationStore(configProfiles.First());
             Console.WriteLine(JsonConvert.SerializeObject(configProfiles.First()))
@@ -89,7 +89,7 @@ namespace Snowflake.Service.Init
             
 
             //   Console.WriteLine(new EmulatorBridge().CompileController(1, controllerDefinition, controllerTemplate, profile, inputTemplate));
-            //  var configuration = ConfigurationTemplate.FromDictionary(new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText("retroarch.cfg.yml")));
+            //  var configuration = ConfigurationTemplate.FromJsonProtoTemplate(new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText("retroarch.cfg.yml")));
 
             //   Console.WriteLine(new EmulatorBridge().CompileConfiguration(configuration, configuProfiles[0]));
             //FrontendCore.LoadedCore.ConfigurationFlagDatabase.CreateFlagsTable("");

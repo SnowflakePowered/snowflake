@@ -31,7 +31,7 @@ namespace Snowflake.Emulator.Input
             this.templateKeys = templateKeys;
         }
 
-        public static InputTemplate FromDictionary(IDictionary<string, dynamic> protoTemplate)
+        public static InputTemplate FromJsonProtoTemplate(IDictionary<string, dynamic> protoTemplate)
         {
             string template = protoTemplate["template"];
             IList<string> templateKeys = (from key in (IList<object>) protoTemplate["templatekeys"] select (string) key).ToList();
