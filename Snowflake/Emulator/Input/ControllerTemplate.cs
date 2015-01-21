@@ -25,7 +25,7 @@ namespace Snowflake.Emulator.Input
             this.keyboardControllerMappings = keyboardControllerMappings;
             this.gamepadControllerMappings = gamepadControllerMappings;
         }
-        public static ControllerTemplate FromJsonProtoTemplate(IDictionary<string, dynamic> protoTemplate)
+        public static IControllerTemplate FromJsonProtoTemplate(IDictionary<string, dynamic> protoTemplate)
         {
             var controllerid = protoTemplate["controller"];
             var inputtemplate = protoTemplate["input_template"];
@@ -35,21 +35,34 @@ namespace Snowflake.Emulator.Input
 
             foreach (var mapping in protoTemplate["gamepad"])
             {
-                var name = mapping.Key;
-                IDictionary<string, string> keyMappings = (from keys in (IDictionary<object, object>)mapping.Value["keys"] select keys)
-                    .ToDictionary(keys => (string)keys.Key, keys => (string)keys.Value);
-                IDictionary<string, string> inputMappings = (from keys in (IDictionary<object, object>)mapping.Value["input"] select keys)
-                    .ToDictionary(keys => (string)keys.Key, keys => (string)keys.Value);
+                var name = mapping.Name;
+                IDictionary<string, string> keyMappings = new Dictionary<string, string>();
+                IDictionary<string, string> inputMappings = new Dictionary<string, string>();
+                foreach(var keyMapping in mapping.Value.keys)
+                {
+                    keyMappings.Add(keyMapping.Name, keyMapping.Value.Value);
+                }
+
+                foreach (var keyMapping in mapping.Value.input)
+                {
+                    keyMappings.Add(keyMapping.Name, keyMapping.Value.Value);
+                }
                 gamepadControllerMappings.Add(name, new ControllerMapping(ControllerMappingType.GAMEPAD_MAPPING, keyMappings, inputMappings));
             }
 
             foreach (var mapping in protoTemplate["keyboard"])
             {
-                var name = mapping.Key;
-                IDictionary<string, string> keyMappings = (from keys in (IDictionary<object, object>)mapping.Value["keys"] select keys)
-                    .ToDictionary(keys => (string)keys.Key, keys => (string)keys.Value);
-                IDictionary<string, string> inputMappings = (from keys in (IDictionary<object, object>)mapping.Value["input"] select keys)
-                    .ToDictionary(keys => (string)keys.Key, keys => (string)keys.Value);
+                var name = mapping.Name;
+                IDictionary<string, string> keyMappings = new Dictionary<string, string>();
+                IDictionary<string, string> inputMappings = new Dictionary<string, string>();
+                foreach (var keyMapping in mapping.Value.keys)
+                {
+                    keyMappings.Add(keyMapping.Name, keyMapping.Value.Value);
+                }
+                foreach (var keyMapping in mapping.Value.input)
+                {
+                    keyMappings.Add(keyMapping.Name, keyMapping.Value.Value);
+                }
                 keyboardControllerMappings.Add(name, new ControllerMapping(ControllerMappingType.KEYBOARD_MAPPING, keyMappings, inputMappings));
             }
 
