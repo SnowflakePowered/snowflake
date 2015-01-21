@@ -19,26 +19,26 @@ namespace Ajax.SnowflakeCore
         }
 
         [AjaxMethod(MethodPrefix = "Get", MethodName = "NotTest")]
-        public JSResponse Test(JSRequest request)
+        public IJSResponse Test(IJSRequest request)
         {
             return new JSResponse(request, "success from Api");
         }
 
         [AjaxMethod]
-        public JSResponse GetTest(JSRequest request)
+        public IJSResponse GetTest(IJSRequest request)
         {
             var game = CoreService.LoadedCore.GameDatabase.GetGameByUUID("sWJznptYf0m_qH0_OvHtSg");
             return  new JSResponse(request, game);
         }
 
         [AjaxMethod(MethodPrefix = "Platform")]
-        public JSResponse GetAllPlatforms(JSRequest request)
+        public IJSResponse GetAllPlatforms(IJSRequest request)
         {
             return new JSResponse(request, CoreService.LoadedCore.LoadedPlatforms);
         }
 
         [AjaxMethod(MethodPrefix = "Platform")]
-        public JSResponse GetPlatform(JSRequest request)
+        public IJSResponse GetPlatform(IJSRequest request)
         {
             var platform = request.GetParameter("platform");
             if (platform == null || !CoreService.LoadedCore.LoadedPlatforms.ContainsKey(platform)) return new JSResponse(request, null);
@@ -46,33 +46,33 @@ namespace Ajax.SnowflakeCore
         }
 
         [AjaxMethod(MethodPrefix = "Game")]
-        public JSResponse GetGamesByPlatform(JSRequest request)
+        public IJSResponse GetGamesByPlatform(IJSRequest request)
         {
             var platform = request.GetParameter("platform");
             if (platform == null || !CoreService.LoadedCore.LoadedPlatforms.ContainsKey(platform)) return new JSResponse(request, null);
             return new JSResponse(request, CoreService.LoadedCore.GameDatabase.GetGamesByPlatform(platform));
         }
         [AjaxMethod(MethodPrefix = "Game")]
-        public JSResponse GetGameByUuid(JSRequest request)
+        public IJSResponse GetGameByUuid(IJSRequest request)
         {
             var uuid = request.GetParameter("uuid");
             return uuid != null ? new JSResponse(request, CoreService.LoadedCore.GameDatabase.GetGameByUUID(uuid)) : new JSResponse(request, null);
         }
 
         [AjaxMethod(MethodPrefix = "Game")]
-        public JSResponse GetGamesByName(JSRequest request)
+        public IJSResponse GetGamesByName(IJSRequest request)
         {
             var name = request.GetParameter("name");
             return name != null ? new JSResponse(request, CoreService.LoadedCore.GameDatabase.GetGamesByName(name)) : new JSResponse(request, null);
         }
 
         [AjaxMethod(MethodPrefix = "Game")]
-        public JSResponse GetAllGames(JSRequest request)
+        public IJSResponse GetAllGames(IJSRequest request)
         {
             return new JSResponse(request, CoreService.LoadedCore.GameDatabase.GetAllGames());
         }
         [AjaxMethod(MethodPrefix = "Command")]
-        public JSResponse RunGameByUuid(JSRequest request)
+        public IJSResponse RunGameByUuid(IJSRequest request)
         {
             try
             {
@@ -89,7 +89,7 @@ namespace Ajax.SnowflakeCore
    
         }
         [AjaxMethod(MethodPrefix = "Command")]
-        public JSResponse Quit(JSRequest request)
+        public IJSResponse Quit(IJSRequest request)
         {
             //todo call an exit event here
             return new JSResponse(request, null);
