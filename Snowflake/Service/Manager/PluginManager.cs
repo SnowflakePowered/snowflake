@@ -71,8 +71,17 @@ namespace Snowflake.Service.Manager
             var loadedPlugins = new Dictionary<string, T>();
             foreach (var plugin in unloadedPlugins)
             {
-                loadedPlugins.Add(plugin.Value.PluginName, plugin.Value);
-                this.registry.Add(plugin.Value.PluginName, typeof(T));
+                try
+                {
+                    loadedPlugins.Add(plugin.Value.PluginName, plugin.Value);
+                    this.registry.Add(plugin.Value.PluginName, typeof(T));
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Unable to load plugin: " + ex.Source);
+                    Console.WriteLine(ex.ToString());
+                    continue;
+                }
             }
             return loadedPlugins;
         }
