@@ -34,7 +34,7 @@ namespace Snowflake.Service
             var results = this.ScraperPlugin.GetSearchResults(gameName, this.ScrapePlatform.PlatformId).OrderBy(result => result.GameTitle.LevenshteinDistance(gameName)).ToList();
             var resultdetails = this.ScraperPlugin.GetGameDetails(results[0].ID);
             var gameinfo = resultdetails.Item1;
-            var gameUuid = MD5.GetMD5(fileName).Substring(0, 22);
+            var gameUuid = FileHash.GetMD5(fileName);
             return new GameInfo(
                 this.ScrapePlatform.PlatformId,
                 gameinfo[GameInfoFields.game_title],

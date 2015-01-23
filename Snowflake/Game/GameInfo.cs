@@ -22,7 +22,7 @@ namespace Snowflake.Game
             this.CRC32 = crc32;
         }
         public GameInfo(string platformId, string name, IMediaStore mediaStore, IDictionary<string, string> metadata, string uuid, string fileName)
-            : this(platformId, name, mediaStore, metadata, uuid, fileName, Crc32.GetCrc32(fileName)) { }
+            : this(platformId, name, mediaStore, metadata, uuid, fileName, FileHash.GetCRC32(fileName)) { }
 
     }
 }

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.IO;
 
-namespace Snowflake.Utility
+namespace Snowflake.Utility.Hash
 {
     /// <summary>
     /// Implements a 32-bit CRC hash algorithm compatible with Zip etc.
@@ -22,7 +22,7 @@ namespace Snowflake.Utility
     /// interface or remember that the result of one Compute call needs to be ~ (XOR) before
     /// being passed in as the seed for the next Compute call.
     /// </remarks>
-    public sealed class Crc32 : HashAlgorithm
+    internal sealed class Crc32 : HashAlgorithm
     {
         public const UInt32 DefaultPolynomial = 0xedb88320u;
         public const UInt32 DefaultSeed = 0xffffffffu;
@@ -119,16 +119,11 @@ namespace Snowflake.Utility
             return result;
         }
 
-        public static string GetCrc32(FileStream file)
+        public static string GetHash(FileStream file)
         {
             using (var crc32 = new Crc32())
                 return BitConverter.ToString(crc32.ComputeHash(file)).Replace("-", String.Empty).ToLowerInvariant();
 
-        }
-
-        public static string GetCrc32(string fileName)
-        {
-            return Crc32.GetCrc32(File.OpenRead(fileName));
         }
     }
 }
