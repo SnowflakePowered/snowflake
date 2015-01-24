@@ -34,7 +34,6 @@ namespace Snowflake.Controller
                 queryString.AppendFormat("INPUT_{0} TEXT,", input.InputName);
             }
             queryString.Append("ControllerID TEXT,");
-            queryString.Append("PlatformID TEXT,");
             queryString.Append("ProfileType TEXT,");
             queryString.Append("DeviceName TEXT,");
             queryString.Append("ControllerIndex INTEGER PRIMARY KEY)");
@@ -44,7 +43,27 @@ namespace Snowflake.Controller
             sqlCommand.ExecuteNonQuery();
             this.DBConnection.Close();
 
+            try 
+            {
+                //If there are no valid controller configurations put the defaults in there
+                this.GetControllerProfile(controllerDefinition.ControllerID, 1); 
+                this.GetControllerProfile(controllerDefinition.ControllerID, 2);
+            }
+            catch
+            {
+                this.AddDefaults(controllerDefinition);
+            }
+            
         }
+
+        private void AddDefaults(IControllerDefinition controllerDefinition)
+        {
+            IControllerProfile keyboard1 = new ControllerProfile(controllerDefinition.ControllerID, ControllerProfileType.KEYBOARD_PROFILE, controllerDefinition.ControllerInputs.ToDictionary(input => input.Value.InputName, input => input.Value.KeyboardDefault));
+            IControllerProfile gamepad2 = new ControllerProfile(controllerDefinition.ControllerID, ControllerProfileType.GAMEPAD_PROFILE, controllerDefinition.ControllerInputs.ToDictionary(input => input.Value.InputName, input => input.Value.GamepadDefault));
+            this.AddControllerProfile(keyboard1, 1);
+            this.AddControllerProfile(gamepad2, 2);
+        }
+
         public void AddControllerProfile(IControllerProfile controllerProfile, int controllerIndex)
         {
             var queryString = new StringBuilder();
@@ -54,7 +73,6 @@ namespace Snowflake.Controller
                 queryString.AppendFormat("INPUT_{0},", input.Key);
             }
             queryString.Append("ControllerID,");
-            queryString.Append("PlatformID,");
             queryString.Append("ProfileType,");
             queryString.Append("DeviceName,");
             queryString.Append("ControllerIndex) VALUES (");
@@ -63,7 +81,6 @@ namespace Snowflake.Controller
                 queryString.AppendFormat("@INPUT_{0},", input.Key);
             }
             queryString.Append("@ControllerID,");
-            queryString.Append("@PlatformID,");
             queryString.Append("@ProfileType,");
             queryString.Append("@DeviceName,");
             queryString.Append("@ControllerIndex)");
@@ -75,7 +92,6 @@ namespace Snowflake.Controller
                     sqlCommand.Parameters.AddWithValue(String.Format("@INPUT_{0}", input.Key), input.Value);
                 }
                 sqlCommand.Parameters.AddWithValue("@ControllerID", controllerProfile.ControllerID);
-                sqlCommand.Parameters.AddWithValue("@PlatformID", controllerProfile.PlatformID);
                 sqlCommand.Parameters.AddWithValue("@ProfileType", controllerProfile.ProfileType.ToString());
                 sqlCommand.Parameters.AddWithValue("@DeviceName", null);
                 sqlCommand.Parameters.AddWithValue("@ControllerIndex", controllerIndex);
@@ -123,23 +139,32 @@ namespace Snowflake.Controller
 
                 sqlCommand.CommandText = sqlCommand.CommandText.Replace("%tableName", controllerId);
                 sqlCommand.Parameters.AddWithValue("@controllerIndex", controllerIndex);
-
-                using (var reader = sqlCommand.ExecuteReader())
+                try
                 {
-                    var result = new DataTable();
-                    result.Load(reader);
-                    var row = result.Rows[0];
-                    var resultPlatformId = row.Field<string>("PlatformID");
-                    var resultProfileType = (ControllerProfileType)Enum.Parse(typeof(ControllerProfileType), row.Field<string>("ProfileType"), true);
-                    var resultControllerId = row.Field<string>("ControllerID");
-                    IDictionary<string, string> resultInputConfiguration =
-                        (from DataColumn item in result.Columns
-                         where item.ColumnName.StartsWith("INPUT_")
-                         select new KeyValuePair<string, string>
-                             (item.ColumnName.Remove(0, "INPUT_".Length), result.Rows[0].Field<string>(item)))
-                         .ToDictionary(config => config.Key, config => config.Value);
+                    using (var reader = sqlCommand.ExecuteReader())
+                    {
+                        var result = new DataTable();
+                        result.Load(reader);
+                        var row = result.Rows[0];
+                        var resultProfileType = (ControllerProfileType)Enum.Parse(typeof(ControllerProfileType), row.Field<string>("ProfileType"), true);
+                        var resultControllerId = row.Field<string>("ControllerID");
+                        IDictionary<string, string> resultInputConfiguration =
+                            (from DataColumn item in result.Columns
+                             where item.ColumnName.StartsWith("INPUT_")
+                             select new KeyValuePair<string, string>
+                                 (item.ColumnName.Remove(0, "INPUT_".Length), result.Rows[0].Field<string>(item)))
+                             .ToDictionary(config => config.Key, config => config.Value);
+                        this.DBConnection.Close();
+                        return new ControllerProfile(resultControllerId, resultProfileType, resultInputConfiguration);
+                    }
+                }
+                catch
+                {
+                    throw;
+                }
+                finally
+                {
                     this.DBConnection.Close();
-                    return new ControllerProfile(resultControllerId, resultPlatformId, resultProfileType, resultInputConfiguration);
                 }
             }
         }

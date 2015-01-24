@@ -107,7 +107,6 @@ namespace Snowflake.Service
                     var _platform = JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(File.ReadAllText(fileName));
                     var platform = PlatformInfo.FromJsonProtoTemplate(_platform); //Convert MediaStoreKey reference to full MediaStore object
                     loadedPlatforms.Add(platform.PlatformId, platform);
-               
                /* catch (Exception)
                 {
                     //log

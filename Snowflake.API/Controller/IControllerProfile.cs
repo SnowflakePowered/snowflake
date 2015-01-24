@@ -19,11 +19,6 @@ namespace Snowflake.Controller
         /// </summary>
         IReadOnlyDictionary<string, string> InputConfiguration { get; }
         /// <summary>
-        /// The ID of the platform this controller profile is for.
-        /// [code review needed] (is this redundant?)
-        /// </summary>
-        string PlatformID { get; }
-        /// <summary>
         /// Whether this profile is for a gamepad, keyboard, or unhandled (custom)
         /// </summary>
         ControllerProfileType ProfileType { get; }

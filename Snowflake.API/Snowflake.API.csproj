@@ -77,6 +77,7 @@
     <Compile Include="Ajax\IJSRequest.cs" />
     <Compile Include="Ajax\IJSResponse.cs" />
     <Compile Include="Platform\IPlatformPreferenceDatabase.cs" />
+    <Compile Include="Platform\StonePlatforms.cs" />
     <Compile Include="Scraper\ImagesInfoFields.cs" />
     <Compile Include="Controller\ControllerProfileType.cs" />
     <Compile Include="Controller\IControllerProfileDatabase.cs" />

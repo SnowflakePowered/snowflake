@@ -38,7 +38,6 @@ namespace Snowflake.Service.Init
         {
             InitializeComponent();
             Console.SetOut(new MultiTextWriter(new ControlWriter(this.textBox1), Console.Out));
-
             start();
         }
 
