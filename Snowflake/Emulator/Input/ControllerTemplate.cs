@@ -45,7 +45,7 @@ namespace Snowflake.Emulator.Input
 
                 foreach (var keyMapping in mapping.Value.input)
                 {
-                    keyMappings.Add(keyMapping.Name, keyMapping.Value.Value);
+                    inputMappings.Add(keyMapping.Name, keyMapping.Value.Value);
                 }
                 gamepadControllerMappings.Add(name, new ControllerMapping(ControllerMappingType.GAMEPAD_MAPPING, keyMappings, inputMappings));
             }
@@ -61,7 +61,7 @@ namespace Snowflake.Emulator.Input
                 }
                 foreach (var keyMapping in mapping.Value.input)
                 {
-                    keyMappings.Add(keyMapping.Name, keyMapping.Value.Value);
+                    inputMappings.Add(keyMapping.Name, keyMapping.Value.Value);
                 }
                 keyboardControllerMappings.Add(name, new ControllerMapping(ControllerMappingType.KEYBOARD_MAPPING, keyMappings, inputMappings));
             }

@@ -32,7 +32,7 @@ namespace Snowflake.Service.Manager
             }
         }
         public string GetAssemblyDirectory(IEmulatorAssembly assembly){
-            return Path.Combine(this.AssembliesLocation, assembly.EmulatorId, assembly.EmulatorName);
+            return Path.Combine(this.AssembliesLocation, assembly.EmulatorId);
         }
         public static IEmulatorAssembly ParseEmulatorAssembly(string emulatorCorePath)
         {
