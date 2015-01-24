@@ -23,18 +23,10 @@ namespace Snowflake.Emulator.Configuration
 
         public static IConfigurationProfile FromJsonProtoTemplate (IDictionary<string, dynamic> protoTemplate)
         {
-            try
-            {
-                return new ConfigurationProfile(protoTemplate["TemplateID"], ((IDictionary<object, dynamic>)protoTemplate["ConfigurationValues"])
-                .ToDictionary(value => (string)value.Key, value => value.Value));
-            }
-            catch (InvalidCastException)
-            {
                 //Account for JSON source where JObject is required
                 return new ConfigurationProfile(protoTemplate["TemplateID"], ((JObject)protoTemplate["ConfigurationValues"])
                     .ToObject<IDictionary<object, dynamic>>()
               .ToDictionary(value => (string)value.Key, value => value.Value));
-            }
         }
     }
 }
