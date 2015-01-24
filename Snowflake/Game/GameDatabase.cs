@@ -64,7 +64,14 @@ namespace Snowflake.Game
 
         public IGameInfo GetGameByUUID(string uuid)
         {
-            return GetGamesByColumn("uuid", uuid)[0];
+            try
+            {
+                return GetGamesByColumn("uuid", uuid)[0];
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public IList<IGameInfo> GetGamesByPlatform(string platformId)

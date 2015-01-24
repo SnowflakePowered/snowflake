@@ -21,7 +21,7 @@ namespace Snowflake.Emulator
         /// </summary>
         string EmulatorName { get; }
         /// <summary>
-        /// The path to the filename of the main emulator assembly that can be called into
+        /// The filename of the main emulator assembly that can be called into
         /// </summary>
         string MainAssembly { get; }
     }

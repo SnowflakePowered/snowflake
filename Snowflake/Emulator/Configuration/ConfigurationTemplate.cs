@@ -14,18 +14,19 @@ namespace Snowflake.Emulator.Configuration
     {
         public string StringTemplate { get; set; }
         private IList<IConfigurationEntry> configurationEntries;
-        public string ConfigurationName { get; private set; }
+        public string TemplateID { get; private set; }
         public IList<IConfigurationEntry> ConfigurationEntries { get { return this.configurationEntries.AsReadOnly(); } }
         public string FileName { get; private set; }
         public IBooleanMapping BooleanMapping { get; private set; }
-
+        public IConfigurationStore ConfigurationStore { get; private set; }
         public ConfigurationTemplate(string stringTemplate, IList<IConfigurationEntry> configurationEntries, IBooleanMapping booleanMapping, string fileName, string configurationName)
         {
             this.StringTemplate = stringTemplate;
             this.configurationEntries = configurationEntries;
             this.BooleanMapping = booleanMapping;
             this.FileName = fileName;
-            this.ConfigurationName = configurationName;
+            this.TemplateID = configurationName;
+            this.ConfigurationStore = new ConfigurationStore(this.GetDefaultProfile());
         }
 
         public static IConfigurationTemplate FromJsonProtoTemplate(IDictionary<string, dynamic> protoTemplate)
@@ -35,7 +36,7 @@ namespace Snowflake.Emulator.Configuration
             var booleanMapping = new BooleanMapping((string)protoTemplate["boolean"]["true"], (string)protoTemplate["boolean"]["false"]);
             var entries = new List<IConfigurationEntry>();
             var fileName = protoTemplate["filename"];
-            var configName = protoTemplate["configuration_name"];
+            var configName = protoTemplate["templateid"];
             var defaults = new Dictionary<string, dynamic>();
            
             foreach (var value in protoTemplate["keys"])
@@ -44,6 +45,16 @@ namespace Snowflake.Emulator.Configuration
             }
           
             return new ConfigurationTemplate(stringTemplate, entries, booleanMapping, fileName, configName);
+        }
+
+        /// <summary>
+        /// Generates a default configuration profile from the defaultValues in the configuration entry
+        /// </summary>
+        /// <returns>A default configuration profile</returns>
+        private IConfigurationProfile GetDefaultProfile()
+        {
+            IDictionary<string, dynamic> defaultValues = this.ConfigurationEntries.ToDictionary(entry => entry.Name, entry => entry.DefaultValue);
+            return new ConfigurationProfile(this.TemplateID, defaultValues);
         }
     }
 }

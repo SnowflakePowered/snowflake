@@ -20,7 +20,7 @@ namespace Snowflake.Emulator.Configuration
         /// <summary>
         /// The name of the configuration, for use in identification during compilation
         /// </summary>
-        string ConfigurationName { get; }
+        string TemplateID { get; }
         /// <summary>
         /// The default filename of the configuration
         /// </summary>
@@ -29,5 +29,9 @@ namespace Snowflake.Emulator.Configuration
         /// The string template to replace with sufficient values to generate a valid configuration file
         /// </summary>
         string StringTemplate { get; set; }
+        /// <summary>
+        /// The configuration store for this template
+        /// </summary>
+        IConfigurationStore ConfigurationStore { get; }
     }
 }

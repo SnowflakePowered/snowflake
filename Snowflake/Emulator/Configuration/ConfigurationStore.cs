@@ -14,14 +14,24 @@ namespace Snowflake.Emulator.Configuration
     public class ConfigurationStore : IConfigurationStore
     {
         public string TemplateID { get; private set; }
-        public IConfigurationProfile DefaultProfile { get; private set; }
+        public IConfigurationProfile DefaultProfile
+        {
+            get
+            {                
+                return ConfigurationProfile.FromJsonProtoTemplate(JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(File.ReadAllText(Path.Combine(this.ConfigurationStorePath, ".default"))));
+            }
+            private set
+            {
+                File.WriteAllText(Path.Combine(this.ConfigurationStorePath, ".default"), JsonConvert.SerializeObject(value));
+            }
+        }
         public string ConfigurationStorePath { get; private set; }
         private ConfigurationStore(string configurationstoreRoot, IConfigurationProfile defaultProfile)
         {
             if (!Directory.Exists(configurationstoreRoot)) Directory.CreateDirectory(configurationstoreRoot);
             if (!Directory.Exists(Path.Combine(configurationstoreRoot, defaultProfile.TemplateID))) Directory.CreateDirectory(Path.Combine(configurationstoreRoot, defaultProfile.TemplateID));
             this.ConfigurationStorePath = Path.Combine(configurationstoreRoot, defaultProfile.TemplateID);
-            this.DefaultProfile = defaultProfile;
+            if(!File.Exists(Path.Combine(this.ConfigurationStorePath, ".default"))) this.DefaultProfile = defaultProfile;
             this.TemplateID = defaultProfile.TemplateID;
         }
 
@@ -58,7 +68,7 @@ namespace Snowflake.Emulator.Configuration
             }
         }
 
-        public ConfigurationStore(ConfigurationProfile defaultProfile) : this(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Snowflake", "configurationstores"), defaultProfile) { }
+        public ConfigurationStore(IConfigurationProfile defaultProfile) : this(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Snowflake", "configurationstores"), defaultProfile) { }
 
     }
 }

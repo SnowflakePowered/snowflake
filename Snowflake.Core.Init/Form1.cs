@@ -28,6 +28,7 @@ using Snowflake.Controller;
 using Snowflake.Emulator.Input;
 using Snowflake.Emulator.Input.Constants;
 using Snowflake.Emulator;
+using Snowflake.Utility;
 namespace Snowflake.Service.Init
 {
     public partial class Form1 : Form
@@ -45,10 +46,18 @@ namespace Snowflake.Service.Init
         {
             CoreService.InitCore();
             CoreService.InitPluginManager();
-            var x = CoreService.LoadedCore.PluginManager.LoadedScrapers["Scraper.TheGamesDB"].GetSearchResults("Super Mario World");
-      /*      var gameUuid = "UPeeOUwXQESzaKU8jRsDag";
-            //  var homebrew = new GameInfo("NINTENDO_SNES", "SNES_TEST", new FileMediaStore(gameUuid), new Dictionary<string, string>(), gameUuid, "christmascraze.smc");
-            //FrontendCore.LoadedCore.GameDatabase.AddGame(homebrew);
+
+            var gameUuid = FileHash.GetMD5("christmascraze.smc");
+       /*     var homebrew = new GameInfo("NINTENDO_SNES", "SNES_TEST", new FileMediaStore(gameUuid), new Dictionary<string, string>(), gameUuid, "christmascraze.smc");
+            CoreService.LoadedCore.GameDatabase.AddGame(homebrew);*/
+
+            var game = CoreService.LoadedCore.GameDatabase.GetGameByUUID(gameUuid);
+            CoreService.LoadedCore.PluginManager.LoadedEmulators.First().Value.StartRom(game);
+
+
+            //var x = CoreService.LoadedCore.PluginManager.LoadedScrapers["Scraper.TheGamesDB"].GetSearchResults("Super Mario World");
+      /*     
+            // ;
             Console.WriteLine(gameUuid);
             var controllerTemplate = ControllerTemplate.FromJsonProtoTemplate(new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText("retroarch.input.NES_CONTROLLER.yml")));
             var inputTemplate = InputTemplate.FromJsonProtoTemplate(new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText("retroarch.input.yml")));
