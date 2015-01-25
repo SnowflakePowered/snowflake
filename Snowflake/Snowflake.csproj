@@ -87,6 +87,7 @@
     <Compile Include="Identifier\BaseIdentifier.cs" />
     <Compile Include="Information\MediaStore\FileMediaStore.cs" />
     <Compile Include="Information\MediaStore\FileMediaStoreSection.cs" />
+    <Compile Include="Platform\PlatformControllerPorts.cs" />
     <Compile Include="Platform\PlatformPreferencesDatabase.cs" />
     <Compile Include="Plugin\YamlConfiguration.cs" />
     <Compile Include="Controller\ControllerProfileDatabase.cs" />

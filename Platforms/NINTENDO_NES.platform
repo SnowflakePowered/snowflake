@@ -15,60 +15,12 @@
         "platform_company": "Nintendo",
         "platform_releasedate": "18/10/1985"
     },
-	"MaximumInputs": 4,
-    "Controllers": {
-        "NES_CONTROLLER": {
-            "ControllerInputs": {
-                "BTN_A": {
-                    "IsAnalog": false,
-                    "InputName": "BTN_A",
-                    "KeyboardDefault": "KEY_Z",
-                    "GamepadDefault": "GAMEPAD_A"
-                },
-                "BTN_B": {
-                    "IsAnalog": false,
-                    "InputName": "BTN_B",
-                    "KeyboardDefault": "KEY_X",
-                    "GamepadDefault": "GAMEPAD_B"
-                },
-                "BTN_START": {
-                    "IsAnalog": false,
-                    "InputName": "BTN_START",
-                    "KeyboardDefault": "KEY_SPACEBAR",
-                    "GamepadDefault": "GAMEPAD_START"
-                },
-                "BTN_SELECT": {
-                    "IsAnalog": false,
-                    "InputName": "BTN_SELECT",
-                    "KeyboardDefault": "KEY_ENTER",
-                    "GamepadDefault": "GAMEPAD_SELECT"
-                },
-                "BTN_DPAD_UP": {
-                    "IsAnalog": false,
-                    "InputName": "BTN_DPAD_UP",
-                    "KeyboardDefault": "KEY_UP",
-                    "GamepadDefault": "GAMEPAD_DPAD_UP"
-                },
-                "BTN_DPAD_DOWN": {
-                    "IsAnalog": false,
-                    "InputName": "BTN_DPAD_DOWN",
-                    "KeyboardDefault": "KEY_DOWN",
-                    "GamepadDefault": "GAMEPAD_DPAD_DOWN"
-                },
-                "BTN_DPAD_LEFT": {
-                    "IsAnalog": false,
-                    "InputName": "BTN_DPAD_LEFT",
-                    "KeyboardDefault": "KEY_LEFT",
-                    "GamepadDefault": "GAMEPAD_DPAD_LEFT"
-                },
-                "BTN_DPAD_RIGHT": {
-                    "IsAnalog": false,
-                    "InputName": "BTN_DPAD_RIGHT",
-                    "KeyboardDefault": "KEY_RIGHT",
-                    "GamepadDefault": "GAMEPAD_DPAD_RIGHT"
-                }
-            },
-            "ControllerID": "NES_CONTROLLER"
-        }
+    "MaximumInputs":  2,
+    "Controllers":  [
+        "NES_CONTROLLER"
+    ],
+    "ControllerPorts" : {
+        "port1" : "NES_CONTROLLER",
+        "port2" : "NES_CONTROLLER"
     }
 }

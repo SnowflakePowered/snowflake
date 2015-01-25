@@ -11,10 +11,6 @@ namespace Snowflake.Platform
     public interface IPlatformInfo : IInfo
     {
         /// <summary>
-        /// The controllers in a platform.
-        /// </summary>
-        IReadOnlyDictionary<string, IControllerDefinition> Controllers { get; }
-        /// <summary>
         /// The defaults used to populate IPlatformPreferenceDatabase entry
         /// </summary>
         IPlatformDefaults Defaults { get; set; }
@@ -26,5 +22,13 @@ namespace Snowflake.Platform
         /// The maximum amount of inputs that are physically possible for this platform to have.
         /// </summary>
         int MaximumInputs { get; }
+        /// <summary>
+        /// A list of valid controllers for this platform
+        /// </summary>
+        IList<string> Controllers { get; }
+        /// <summary>
+        /// The controller ports
+        /// </summary>
+        IPlatformControllerPorts ControllerPorts { get; }
     }
 }

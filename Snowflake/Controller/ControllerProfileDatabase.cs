@@ -20,10 +20,10 @@ namespace Snowflake.Controller
 
         public void AddPlatform(IPlatformInfo platform)
         {
-            foreach (IControllerDefinition controller in platform.Controllers.Values)
+         /*   foreach (IControllerDefinition controller in platform.Controllers.Values)
             {
                 this.CreateControllerTable(controller);
-            }
+            }*/
         }
         private void CreateControllerTable(IControllerDefinition controllerDefinition)
         {

@@ -27,6 +27,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.API", "Snowflake.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.InputManager.DirectInput", "Snowflake.InputManager.DirectInput\Snowflake.InputManager.DirectInput.csproj", "{F668FD18-74CB-4774-88A4-41614B2FB0AB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Controller", "Controller", "{52A92EB4-E1D3-450E-ACCD-382EC888C6B0}"
+	ProjectSection(SolutionItems) = preProject
+		Controllers\NES_CONTROLLER.controller = Controllers\NES_CONTROLLER.controller
+		Controllers\SNES_CONTROLLER.controller = Controllers\SNES_CONTROLLER.controller
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -78,6 +78,7 @@
     <Compile Include="Ajax\IJSResponse.cs" />
     <Compile Include="Emulator\Input\InputManager\IInputDevice.cs" />
     <Compile Include="Emulator\Input\InputManager\IInputManager.cs" />
+    <Compile Include="Platform\IPlatformControllerPorts.cs" />
     <Compile Include="Platform\IPlatformPreferenceDatabase.cs" />
     <Compile Include="Platform\StonePlatforms.cs" />
     <Compile Include="Scraper\ImagesInfoFields.cs" />
