@@ -48,14 +48,14 @@ namespace Snowflake.InputManager
         }
     }
 
-    public static class Extensions
+    internal static class Extensions
     {
-        public static void Each<T>(this IEnumerable<T> ie, Action<T, int> action)
+        internal static void Each<T>(this IEnumerable<T> ie, Action<T, int> action)
         {
             var i = 0;
             foreach (var e in ie) action(e, i++);
         }
-        public static bool Contains(this string source, string toCheck, StringComparison comp)
+        internal static bool Contains(this string source, string toCheck, StringComparison comp)
         {
             return source.IndexOf(toCheck, comp) >= 0;
         }
