@@ -186,3 +186,5 @@ Snowflake.Node/.ntvs_analysis.dat
 Snowflake.API/classlist.txt
 Snowflake/classlist.txt
 mockups/material/*.ai
+
+coverage.xml
