@@ -1,0 +1,21 @@
+version: 0.1.{build}
+branches:
+  # whitelist
+  only:
+    - master
+
+skip_tags: true
+configuration: Debug
+build:
+  project: Snowflake.sln
+environment:
+    COVERALLS_REPO_TOKEN:
+      secure: nBi3LwnqgslaH8hbsvjnWTqpe/UbKn705TJujxqJwtcL5OLGfcydM8AnVyld6Ngu
+install:
+    - nuget restore
+after_test:
+    - packages\OpenCover.4.5.3522\OpenCover.Console.exe -register:user -filter:"+[Snowflake*]*" -target:"packages/xunit.runners.2.0.0-rc1-build2826\tools\xunit.console.exe" -targetargs:"Snowflake.Tests\bin\%CONFIGURATION%\Snowflake.Tests.dll Snowflake\bin\%CONFIGURATION%\Snowflake.dll Snowflake.API\bin\%CONFIGURATION%\Snowflake.dll" -output:coverage.xml
+    - packages\coveralls.io.1.1.86\tools\coveralls.net.exe --opencover coverage.xml
+cache:
+    - packages
+

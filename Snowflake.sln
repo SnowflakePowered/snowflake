@@ -14,13 +14,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Platforms", "Platforms", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Core.Init", "Snowflake.Core.Init\Snowflake.Core.Init.csproj", "{D60707C0-51B8-44DE-9CE7-12C2517CFD01}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{9ED14780-1B29-4C8E-9445-046FD2880FBD}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ajax.SnowflakeCore", "Ajax.SnowflakeCore\Ajax.SnowflakeCore.csproj", "{4792C8C4-81A8-4AB1-9041-2DFF4F5E8DBB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.API", "Snowflake.API\Snowflake.API.csproj", "{2841AEEA-03D5-47B0-9D90-375DFA19559A}"
