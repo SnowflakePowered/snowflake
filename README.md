@@ -1,6 +1,6 @@
 ![Snowflake](branding/Snowflake-Banner-Katakana-256.png) 
 =========
-[![Windows Build status](https://ci.appveyor.com/api/projects/status/mhei9fdtja5j04kk)](https://ci.appveyor.com/project/RonnChyran/snowflake) [![Linux Build Status](https://travis-ci.org/SnowflakePowered/snowflake.svg?branch=master)](https://travis-ci.org/SnowflakePowered/snowflake) [![Coverage Status](https://coveralls.io/repos/SnowflakePowered/snowflake/badge.svg?branch=master)](https://coveralls.io/r/SnowflakePowered/snowflake?branch=master) ![License](https://img.shields.io/badge/license-Apache-blue.svg)
+[![Windows Build status](https://ci.appveyor.com/api/projects/status/mhei9fdtja5j04kk)](https://ci.appveyor.com/project/RonnChyran/snowflake) [![Linux Build Status](https://travis-ci.org/SnowflakePowered/snowflake.svg?branch=master)](https://travis-ci.org/SnowflakePowered/snowflake) [![Coverage Status](https://coveralls.io/repos/SnowflakePowered/snowflake/badge.svg?branch=master)](https://coveralls.io/r/SnowflakePowered/snowflake?branch=master) [![License](https://img.shields.io/badge/license-Apache-blue.svg)](https://github.com/SnowflakePowered/snowflake/blob/master/LICENSE)
 
 
 Snowflake provides a plugin-based backend and a set of APIs powering an modern HTML5 frontend for Emulators with unprecendented integration and easy of use, without needing to modify or recompile the base emulator; allowing for maximum compatibility.
