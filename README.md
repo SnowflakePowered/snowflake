@@ -1,6 +1,6 @@
 ![Snowflake](branding/Snowflake-Banner-Katakana-256.png) 
 =========
-[![Build status](https://ci.appveyor.com/api/projects/status/mhei9fdtja5j04kk)](https://ci.appveyor.com/project/RonnChyran/snowflake)
+[![Build status](https://ci.appveyor.com/api/projects/status/mhei9fdtja5j04kk)](https://ci.appveyor.com/project/RonnChyran/snowflake) [![Coverage Status](https://coveralls.io/repos/SnowflakePowered/snowflake/badge.svg?branch=master)](https://coveralls.io/r/SnowflakePowered/snowflake?branch=master)
 
 
 Snowflake provides a plugin-based backend and a set of APIs powering an modern HTML5 frontend for Emulators with unprecendented integration and easy of use, without needing to modify or recompile the base emulator; allowing for maximum compatibility.
