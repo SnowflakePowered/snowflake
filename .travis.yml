@@ -1,7 +1,7 @@
 language: csharp
 solution: Snowflake.sln
 install:
-  - sudo mozroots --import --machine --sync yes | sudo certmgr -ssl -m https://go.microsoft.com yes | sudo certmgr -ssl -m https://nugetgallery.blob.core.windows.net yes | sudo certmgr -ssl -m https://nuget.org
+  - sudo mozroots --import --sync
   - ls
   - mono ./.nuget/NuGet.exe restore Snowflake.sln
   - mono ./.nuget/NuGet.exe install xunit.runners -Version 2.0.0-rc1-build2826 -OutputDirectory testrunner
