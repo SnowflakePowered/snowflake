@@ -72,7 +72,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Ajax\AjaxMethodAttribute.cs" />
-    <Compile Include="Ajax\BaseAjaxNamespace.cs" />
     <Compile Include="Ajax\IBaseAjaxNamespace.cs" />
     <Compile Include="Ajax\IJSRequest.cs" />
     <Compile Include="Ajax\IJSResponse.cs" />
@@ -119,7 +118,6 @@
     <Compile Include="Information\MediaStore\IMediaStoreSection.cs" />
     <Compile Include="Platform\IPlatformDefaults.cs" />
     <Compile Include="Platform\IPlatformInfo.cs" />
-    <Compile Include="Plugin\BasePlugin.cs" />
     <Compile Include="Plugin\IPluginConfiguration.cs" />
     <Compile Include="Plugin\IBasePlugin.cs" />
     <Compile Include="Plugin\IGeneralPlugin.cs" />

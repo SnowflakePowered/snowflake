@@ -81,6 +81,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Ajax\BaseAjaxNamespace.cs" />
     <Compile Include="Ajax\JSRequest.cs" />
     <Compile Include="Ajax\JSResponse.cs" />
     <Compile Include="Emulator\EmulatorBridge.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="Information\MediaStore\FileMediaStoreSection.cs" />
     <Compile Include="Platform\PlatformControllerPorts.cs" />
     <Compile Include="Platform\PlatformPreferencesDatabase.cs" />
+    <Compile Include="Plugin\BasePlugin.cs" />
     <Compile Include="Plugin\YamlConfiguration.cs" />
     <Compile Include="Controller\ControllerProfileDatabase.cs" />
     <Compile Include="Emulator\Configuration\ConfigurationStore.cs" />
