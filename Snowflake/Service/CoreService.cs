@@ -25,6 +25,8 @@ namespace Snowflake.Service
     {
         #region Loaded Objects
         public IDictionary<string, IPlatformInfo> LoadedPlatforms { get; private set; }
+        public IDictionary<string, IControllerDefinition> LoadedControllers { get; private set; }
+
         public IPluginManager PluginManager { get; private set; }
         public IAjaxManager AjaxManager { get; private set; }
         public IGameDatabase GameDatabase { get; private set; }
@@ -77,7 +79,8 @@ namespace Snowflake.Service
             this.AppDataDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 #endif
             this.LoadedPlatforms = this.LoadPlatforms(Path.Combine(this.AppDataDirectory, "platforms"));
-         
+            this.LoadedControllers = this.LoadControllers(Path.Combine(this.AppDataDirectory, "controllers"));
+
             this.GameDatabase = new GameDatabase(Path.Combine(this.AppDataDirectory, "games.db"));
             this.ControllerProfileDatabase = new ControllerProfileDatabase(Path.Combine(this.AppDataDirectory, "controllers.db"));
             this.PlatformPreferenceDatabase = new PlatformPreferencesDatabase(Path.Combine(this.AppDataDirectory, "platformprefs.db"));
@@ -103,21 +106,42 @@ namespace Snowflake.Service
 
             foreach (string fileName in Directory.GetFiles(platformDirectory).Where(fileName => Path.GetExtension(fileName) == ".platform"))
             {
-                
+                try
+                {
                     var _platform = JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(File.ReadAllText(fileName));
                     var platform = PlatformInfo.FromJsonProtoTemplate(_platform); //Convert MediaStoreKey reference to full MediaStore object
                     loadedPlatforms.Add(platform.PlatformId, platform);
-               /* catch (Exception)
+                }
+                catch (Exception)
                 {
                     //log
                     Console.WriteLine("Exception occured when importing platform " + fileName);
                     continue;
-                }*/
+                }
             }
             return loadedPlatforms;
-
         }
+        private IDictionary<string, IControllerDefinition> LoadControllers(string controllerDirectory)
+        {
+            var loadedControllers = new Dictionary<string, IControllerDefinition>();
 
+            foreach (string fileName in Directory.GetFiles(controllerDirectory).Where(fileName => Path.GetExtension(fileName) == ".controller"))
+            {
+                try
+                {
+                    var _controller = JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(File.ReadAllText(fileName));
+                    var controller = ControllerDefinition.FromJsonProtoTemplate(_controller);
+                    loadedControllers.Add(controller.ControllerID, controller);
+                }
+                catch (Exception)
+                {
+                    //log
+                    Console.WriteLine("Exception occured when importing controller " + fileName);
+                    continue;
+                }
+            }
+            return loadedControllers;
+        }
         protected virtual void OnPluginManagerLoaded(PluginManagerLoadedEventArgs e)
         {
             if (CoreLoaded != null)

@@ -19,5 +19,15 @@ namespace Snowflake.Controller
             this.ControllerID = controllerId;
             this.controllerInputs = controllerInputs;
         }
+        public static IControllerDefinition FromJsonProtoTemplate(IDictionary<string, dynamic> jsonDictionary)
+        {
+ 
+            return new ControllerDefinition(
+                   ((IDictionary<string, ControllerInput>)jsonDictionary["ControllerInputs"].ToObject<IDictionary<string, ControllerInput>>())
+                        .ToDictionary(input => input.Key, input => (IControllerInput)input.Value), //explicitly cast the ControllerInput to the interface
+                   jsonDictionary["ControllerID"]
+                );
+        }
+
     }
 }

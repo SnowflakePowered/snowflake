@@ -58,6 +58,10 @@ namespace Snowflake.Service
         /// </summary>
         IDictionary<string, IPlatformInfo> LoadedPlatforms { get; }
         /// <summary>
+        /// All currently loaded controllers
+        /// </summary>
+        IDictionary<string, IControllerDefinition> LoadedControllers { get; }
+        /// <summary>
         /// The server that servers mediastore requests
         /// </summary>
         IBaseHttpServer MediaStoreServer { get; }
