@@ -11,13 +11,19 @@ namespace Snowflake.Platform.Tests
 {
     public class PlatformInfoTests
     {
-        /// <summary>
-        /// Test platform definition loading
-        /// </summary>
-        /// <param name="platformId">platform ID to load</param>
+       
         [Theory]
         [MemberData("TestedPlatforms")]
-        public void PlatformLoadTests(string platformId)
+        public void LoadPlatformFromJson_Test(string platformId)
+        {
+            string platformDefinition = TestUtilities.GetStringResource("Platforms." + platformId + ".platform");
+            var protoTemplate = JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(platformDefinition);
+            var platform = PlatformInfo.FromJsonProtoTemplate(protoTemplate);
+            Assert.NotNull(platform);
+        }
+        [Theory]
+        [MemberData("TestedPlatforms")]
+        public void AssertPlatformDefinitionIDs_Test(string platformId)
         {
             string platformDefinition = TestUtilities.GetStringResource("Platforms." + platformId + ".platform");
             var protoTemplate = JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(platformDefinition);
