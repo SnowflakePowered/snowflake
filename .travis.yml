@@ -1,0 +1,8 @@
+language: csharp
+solution: Snowflake.sln
+install:
+  - nuget restore Snowflake.sln
+  - nuget install xunit.runners -Version 2.0.0-rc1-build2826 -OutputDirectory testrunner
+script:
+  - xbuild /p:Configuration=Debug Snowflake.sln
+  - mono ./testrunner/xunit.runners.2.0.0-rc1-build2826/tools/xunit.console.exe ./Snowflake.Tests/bin/Debug/Snowflake.Tests.dll
