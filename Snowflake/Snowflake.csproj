@@ -106,10 +106,6 @@
     <Compile Include="Scraper\BaseScraper.cs" />
     <Compile Include="Scraper\GameImagesResult.cs" />
     <Compile Include="Scraper\GameScrapeResult.cs" />
-    <Compile Include="Service\Manager\AjaxManager.cs" />
-    <Compile Include="Service\Manager\EmulatorAssembliesManager.cs" />
-    <Compile Include="Service\ScrapeService.cs" />
-    <Compile Include="Service\Server\FileMediaStoreServer.cs" />
     <Compile Include="Emulator\Configuration\ConfigurationEntry.cs" />
     <Compile Include="Emulator\Configuration\ConfigurationProfile.cs" />
     <Compile Include="Emulator\Configuration\ConfigurationTemplate.cs" />
@@ -121,8 +117,6 @@
     <Compile Include="Extensions\IDictionaryExtensions.cs" />
     <Compile Include="Extensions\IListExtensions.cs" />
     <Compile Include="Extensions\MEFExtensions.cs" />
-    <Compile Include="Extensions\PlatformExts.cs" />
-    <Compile Include="Service\Server\MimeTypes.cs" />
     <Compile Include="Controller\ControllerInput.cs" />
     <Compile Include="Plugin\GeneralPlugin.cs" />
     <Compile Include="Game\GameDatabase.cs" />
@@ -130,10 +124,6 @@
     <Compile Include="Game\GameInfo.cs" />
     <Compile Include="Information\Info.cs" />
     <Compile Include="Platform\PlatformInfo.cs" />
-    <Compile Include="Service\CoreService.cs" />
-    <Compile Include="Service\Manager\PluginManager.cs" />
-    <Compile Include="Service\Server\JsonApiServer.cs" />
-    <Compile Include="Service\Server\ThemeServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
