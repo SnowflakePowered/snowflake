@@ -75,6 +75,7 @@
     <Compile Include="Ajax\IBaseAjaxNamespace.cs" />
     <Compile Include="Ajax\IJSRequest.cs" />
     <Compile Include="Ajax\IJSResponse.cs" />
+    <Compile Include="Emulator\Configuration\IConfigurationFlagStore.cs" />
     <Compile Include="Emulator\Input\InputManager\IInputDevice.cs" />
     <Compile Include="Emulator\Input\InputManager\IInputManager.cs" />
     <Compile Include="Platform\IPlatformControllerPorts.cs" />
@@ -97,7 +98,6 @@
     <Compile Include="Emulator\Configuration\IBooleanMapping.cs" />
     <Compile Include="Emulator\Configuration\IConfigurationEntry.cs" />
     <Compile Include="Emulator\Configuration\IConfigurationFlag.cs" />
-    <Compile Include="Emulator\Configuration\IConfigurationFlagDatabase.cs" />
     <Compile Include="Emulator\Configuration\IConfigurationProfile.cs" />
     <Compile Include="Emulator\Configuration\IConfigurationStore.cs" />
     <Compile Include="Emulator\Configuration\IConfigurationTemplate.cs" />
