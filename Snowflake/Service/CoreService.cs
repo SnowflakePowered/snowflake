@@ -32,7 +32,6 @@ namespace Snowflake.Service
         public IGameDatabase GameDatabase { get; private set; }
         public IControllerProfileDatabase ControllerProfileDatabase { get; private set; }
         public IControllerPortsDatabase ControllerPortsDatabase { get; private set; }
-        public IConfigurationFlagDatabase ConfigurationFlagDatabase { get; private set; }
         public IPlatformPreferenceDatabase PlatformPreferenceDatabase { get; private set; }
         public IEmulatorAssembliesManager EmulatorManager { get; private set; }
         #endregion
@@ -85,7 +84,6 @@ namespace Snowflake.Service
             this.ControllerProfileDatabase = new ControllerProfileDatabase(Path.Combine(this.AppDataDirectory, "controllers.db"));
             this.PlatformPreferenceDatabase = new PlatformPreferencesDatabase(Path.Combine(this.AppDataDirectory, "platformprefs.db"));
            // this.ControllerPortsDatabase = new ControllerPortsDatabase(Path.Combine(this.AppDataDirectory, "ports.db"));
-            this.ConfigurationFlagDatabase = new ConfigurationFlagDatabase(Path.Combine(this.AppDataDirectory, "flags.db"));
             foreach (PlatformInfo platform in this.LoadedPlatforms.Values)
             {
                 this.ControllerProfileDatabase.AddPlatform(platform);
