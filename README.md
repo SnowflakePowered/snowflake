@@ -1,5 +1,7 @@
 ![Snowflake](branding/Snowflake-Banner-Katakana-256.png) 
 =========
+
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/SnowflakePowered/snowflake?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Windows Build status](https://ci.appveyor.com/api/projects/status/mhei9fdtja5j04kk?svg=true)](https://ci.appveyor.com/project/RonnChyran/snowflake) [![Linux Build Status](https://travis-ci.org/SnowflakePowered/snowflake.svg?branch=master)](https://travis-ci.org/SnowflakePowered/snowflake) [![Coverage Status](https://coveralls.io/repos/SnowflakePowered/snowflake/badge.svg?branch=master)](https://coveralls.io/r/SnowflakePowered/snowflake?branch=master)  [![Coverity code defect analysis](https://scan.coverity.com/projects/4039/badge.svg?flat=1)](https://scan.coverity.com/projects/4039)
  [![License](https://img.shields.io/badge/license-apache%202.0-blue.svg?style=flat)](https://github.com/SnowflakePowered/snowflake/blob/master/LICENSE)
 
