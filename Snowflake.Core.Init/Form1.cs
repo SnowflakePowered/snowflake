@@ -46,13 +46,12 @@ namespace Snowflake.Service.Init
             CoreService.InitCore();
             CoreService.InitPluginManager();
          
-            new Snowflake.InputManager.InputManager();
             var gameUuid = FileHash.GetMD5("christmascraze.smc");
        /*     var homebrew = new GameInfo("NINTENDO_SNES", "SNES_TEST", new FileMediaStore(gameUuid), new Dictionary<string, string>(), gameUuid, "christmascraze.smc");
             CoreService.LoadedCore.GameDatabase.AddGame(homebrew);*/
 
             var game = CoreService.LoadedCore.GameDatabase.GetGameByUUID(gameUuid);
-            CoreService.LoadedCore.PluginManager.LoadedEmulators.First().Value.StartRom(game);
+           // CoreService.LoadedCore.PluginManager.LoadedEmulators.First().Value.StartRom(game);
 
 
             //var x = CoreService.LoadedCore.PluginManager.LoadedScrapers["Scraper.TheGamesDB"].GetSearchResults("Super Mario World");
