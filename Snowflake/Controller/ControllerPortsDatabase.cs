@@ -56,7 +56,7 @@ namespace Snowflake.Controller
                 this.DBConnection.Close();
             }
         }
-        public string GetPort(IPlatformInfo platformInfo, int portNumber)
+        public string GetDeviceInPort(IPlatformInfo platformInfo, int portNumber)
         {
             if (portNumber > 8 || portNumber < 1){
                 return String.Empty;
@@ -78,7 +78,7 @@ namespace Snowflake.Controller
             }
         }
 
-        public void SetPort(IPlatformInfo platformInfo, int portNumber, string controllerId)
+        public void SetDeviceInPort(IPlatformInfo platformInfo, int portNumber, string deviceName)
         {
             if (portNumber > 8 || portNumber < 1)
             {
@@ -88,7 +88,7 @@ namespace Snowflake.Controller
             using (var sqlCommand = new SQLiteCommand("UPDATE `ports` SET `%portNumber` = @controllerId WHERE `platform_id` == @platformId", this.DBConnection))
             {
                 sqlCommand.CommandText = sqlCommand.CommandText.Replace("%portNumber", "port" + portNumber);
-                sqlCommand.Parameters.AddWithValue("@controllerId", controllerId);
+                sqlCommand.Parameters.AddWithValue("@controllerId", deviceName);
                 sqlCommand.Parameters.AddWithValue("@platformId", platformInfo.PlatformId);
                 sqlCommand.ExecuteNonQuery();
             }
