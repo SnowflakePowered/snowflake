@@ -24,10 +24,12 @@ namespace Snowflake.Emulator
         public IDictionary<string, IInputTemplate> InputTemplates { get; private set; }
         public IDictionary<string, IConfigurationTemplate> ConfigurationTemplates { get; private set; }
         public IDictionary<string, IConfigurationFlag> ConfigurationFlags { get; private set; }
+        public IConfigurationFlagStore ConfigurationFlagStore { get; private set; }
         public IEmulatorAssembly EmulatorAssembly { get; private set; }
 
         public EmulatorBridge(Assembly pluginAssembly, ICoreService coreInstance) : base(pluginAssembly, coreInstance) {
 
+            this.ConfigurationFlagStore = new ConfigurationFlagStore(this);
             var configurationProtoTemplates = JsonConvert.DeserializeObject<IList<IDictionary<string, dynamic>>>(this.GetStringResource("configurations.json"));
             this.ConfigurationTemplates = configurationProtoTemplates.Select(protoTemplate => ConfigurationTemplate.FromJsonProtoTemplate(protoTemplate)).ToDictionary(key => key.TemplateID, key => key);
             var inputProtoTemplates = JsonConvert.DeserializeObject<IList<IDictionary<string, dynamic>>>(this.GetStringResource("input.json"));
