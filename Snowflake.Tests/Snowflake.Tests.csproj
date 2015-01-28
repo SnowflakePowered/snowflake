@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\ControllerProfileTests.cs" />
+    <Compile Include="Game\GameInfoTests.cs" />
     <Compile Include="Platform\PlatformInfoTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestUtilities.cs" />
