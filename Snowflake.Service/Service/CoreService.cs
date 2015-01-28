@@ -81,10 +81,10 @@ namespace Snowflake.Service
 
             this.GameDatabase = new GameDatabase(Path.Combine(this.AppDataDirectory, "games.db"));
             this.PlatformPreferenceDatabase = new PlatformPreferencesDatabase(Path.Combine(this.AppDataDirectory, "platformprefs.db"));
-           // this.ControllerPortsDatabase = new ControllerPortsDatabase(Path.Combine(this.AppDataDirectory, "ports.db"));
+            this.ControllerPortsDatabase = new ControllerPortsDatabase(Path.Combine(this.AppDataDirectory, "ports.db"));
             foreach (PlatformInfo platform in this.LoadedPlatforms.Values)
             {
-              //  this.ControllerPortsDatabase.AddPlatform(platform);
+                this.ControllerPortsDatabase.AddPlatform(platform);
                 this.PlatformPreferenceDatabase.AddPlatform(platform);
             }
             this.PluginManager = new PluginManager(this.AppDataDirectory);

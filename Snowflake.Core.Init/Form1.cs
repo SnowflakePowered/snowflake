@@ -45,6 +45,7 @@ namespace Snowflake.Service.Init
         {
             CoreService.InitCore();
             CoreService.InitPluginManager();
+            var x = CoreService.LoadedCore.ControllerPortsDatabase.GetDeviceInPort(CoreService.LoadedCore.LoadedPlatforms.First().Value, 1);
             var store = CoreService.LoadedCore.LoadedControllers["NES_CONTROLLER"].ProfileStore["KeyboardDevice"];
             var gameUuid = FileHash.GetMD5("christmascraze.smc");
        /*     var homebrew = new GameInfo("NINTENDO_SNES", "SNES_TEST", new FileMediaStore(gameUuid), new Dictionary<string, string>(), gameUuid, "christmascraze.smc");
