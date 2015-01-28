@@ -81,7 +81,6 @@ namespace Snowflake.Service
             this.LoadedControllers = this.LoadControllers(Path.Combine(this.AppDataDirectory, "controllers"));
 
             this.GameDatabase = new GameDatabase(Path.Combine(this.AppDataDirectory, "games.db"));
-            this.ControllerProfileDatabase = new ControllerProfileDatabase(Path.Combine(this.AppDataDirectory, "controllers.db"));
             this.PlatformPreferenceDatabase = new PlatformPreferencesDatabase(Path.Combine(this.AppDataDirectory, "platformprefs.db"));
            // this.ControllerPortsDatabase = new ControllerPortsDatabase(Path.Combine(this.AppDataDirectory, "ports.db"));
             foreach (PlatformInfo platform in this.LoadedPlatforms.Values)

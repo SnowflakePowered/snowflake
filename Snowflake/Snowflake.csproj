@@ -93,7 +93,6 @@
     <Compile Include="Platform\PlatformPreferencesDatabase.cs" />
     <Compile Include="Plugin\BasePlugin.cs" />
     <Compile Include="Plugin\YamlConfiguration.cs" />
-    <Compile Include="Controller\ControllerProfileDatabase.cs" />
     <Compile Include="Emulator\Configuration\ConfigurationStore.cs" />
     <Compile Include="Emulator\Configuration\ConfigurationFlag.cs" />
     <Compile Include="Emulator\Input\ControllerMapping.cs" />
