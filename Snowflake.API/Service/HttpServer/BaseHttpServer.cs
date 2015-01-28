@@ -18,7 +18,6 @@ namespace Snowflake.Service.HttpServer
         {
             serverListener = new HttpListener();
             serverListener.Prefixes.Add("http://localhost:" + port.ToString() + "/");
-
         }
         public void StartServer()
         {
