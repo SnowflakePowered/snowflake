@@ -65,7 +65,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controller\ControllerProfileTests.cs" />
+    <Compile Include="Controller\ControllerDefinitionTests.cs" />
     <Compile Include="Game\GameInfoTests.cs" />
     <Compile Include="Platform\PlatformInfoTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
