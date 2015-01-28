@@ -52,6 +52,8 @@ namespace Snowflake.Service.Init
             CoreService.LoadedCore.GameDatabase.AddGame(homebrew);*/
 
             var game = CoreService.LoadedCore.GameDatabase.GetGameByUUID(gameUuid);
+
+            CoreService.LoadedCore.PluginManager.LoadedEmulators["SnowflakeRA-bSNES-compatibility"].StartRom(game);
            // CoreService.LoadedCore.PluginManager.LoadedEmulators.First().Value.StartRom(game);
 
 
