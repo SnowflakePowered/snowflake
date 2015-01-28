@@ -23,13 +23,13 @@ namespace Snowflake.Controller
         /// <param name="platformInfo">The platform in which the controller is 'plugged in'</param>
         /// <param name="portNumber">The port number where the controller is 'plugged in'</param>
         /// <returns></returns>
-        string GetPort(IPlatformInfo platformInfo, int portNumber);
+        string GetDeviceInPort(IPlatformInfo platformInfo, int portNumber);
         /// <summary>
         /// Sets the controller to be used in a certain port of the platform (console)
         /// </summary>
         /// <param name="platformInfo">The platform in which the controller is to be 'plugged in'</param>
         /// <param name="portNumber">The port number where the controller is to be 'plugged in'</param>
         /// <param name="controllerId">The ControllerID of the controller to be 'plugged in'</param>
-        void SetPort(IPlatformInfo platformInfo, int portNumber, string controllerId);
+        void SetDeviceInPort(IPlatformInfo platformInfo, int portNumber, string controllerId);
     }
 }

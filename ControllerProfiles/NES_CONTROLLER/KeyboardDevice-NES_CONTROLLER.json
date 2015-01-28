@@ -1,0 +1,16 @@
+{
+  "DeviceName": "KeyboardDevice",
+  "ControllerID": "NES_CONTROLLER",
+  "PlatformID": "NINTENDO_NES",
+  "ProfileType": "KEYBOARD_PROFILE",
+  "InputConfiguration": {
+    "BTN_A": "KEYBOARD_Z",
+    "BTN_B": "KEYBOARD_X",
+    "BTN_DPAD_UP": "KEYBOARD_UP",
+    "BTN_DPAD_DOWN": "KEYBOARD_DOWN",
+    "BTN_DPAD_LEFT": "KEYBOARD_LEFT",
+    "BTN_DPAD_RIGHT": "KEYBOARD_RIGHT",
+    "BTN_START": "KEYBOARD_ENTER",
+    "BTN_SELECT": "KEYBOARD_SPACEBAR"
+  }
+}

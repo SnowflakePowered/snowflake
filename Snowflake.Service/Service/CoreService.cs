@@ -30,7 +30,6 @@ namespace Snowflake.Service
         public IPluginManager PluginManager { get; private set; }
         public IAjaxManager AjaxManager { get; private set; }
         public IGameDatabase GameDatabase { get; private set; }
-        public IControllerProfileDatabase ControllerProfileDatabase { get; private set; }
         public IControllerPortsDatabase ControllerPortsDatabase { get; private set; }
         public IPlatformPreferenceDatabase PlatformPreferenceDatabase { get; private set; }
         public IEmulatorAssembliesManager EmulatorManager { get; private set; }
@@ -81,13 +80,11 @@ namespace Snowflake.Service
             this.LoadedControllers = this.LoadControllers(Path.Combine(this.AppDataDirectory, "controllers"));
 
             this.GameDatabase = new GameDatabase(Path.Combine(this.AppDataDirectory, "games.db"));
-            this.ControllerProfileDatabase = new ControllerProfileDatabase(Path.Combine(this.AppDataDirectory, "controllers.db"));
             this.PlatformPreferenceDatabase = new PlatformPreferencesDatabase(Path.Combine(this.AppDataDirectory, "platformprefs.db"));
-           // this.ControllerPortsDatabase = new ControllerPortsDatabase(Path.Combine(this.AppDataDirectory, "ports.db"));
+            this.ControllerPortsDatabase = new ControllerPortsDatabase(Path.Combine(this.AppDataDirectory, "ports.db"));
             foreach (PlatformInfo platform in this.LoadedPlatforms.Values)
             {
-                this.ControllerProfileDatabase.AddPlatform(platform);
-              //  this.ControllerPortsDatabase.AddPlatform(platform);
+                this.ControllerPortsDatabase.AddPlatform(platform);
                 this.PlatformPreferenceDatabase.AddPlatform(platform);
             }
             this.PluginManager = new PluginManager(this.AppDataDirectory);

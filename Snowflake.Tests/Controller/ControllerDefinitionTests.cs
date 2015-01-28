@@ -10,7 +10,7 @@ using Snowflake.Controller;
 
 namespace Snowflake.Controller.Tests
 {
-    public class ControllerProfileTests
+    public class ControllerDefinitionTests
     {
         [Theory]
         [InlineData("NES_CONTROLLER")]

@@ -75,6 +75,8 @@
     <Compile Include="Ajax\IBaseAjaxNamespace.cs" />
     <Compile Include="Ajax\IJSRequest.cs" />
     <Compile Include="Ajax\IJSResponse.cs" />
+    <Compile Include="Controller\ControllerPortDeviceNames.cs" />
+    <Compile Include="Controller\IControllerProfileStore.cs" />
     <Compile Include="Emulator\Configuration\IConfigurationFlagStore.cs" />
     <Compile Include="Emulator\Input\InputManager\IInputDevice.cs" />
     <Compile Include="Emulator\Input\InputManager\IInputManager.cs" />
@@ -83,7 +85,6 @@
     <Compile Include="Platform\StonePlatforms.cs" />
     <Compile Include="Scraper\ImagesInfoFields.cs" />
     <Compile Include="Controller\ControllerProfileType.cs" />
-    <Compile Include="Controller\IControllerProfileDatabase.cs" />
     <Compile Include="Controller\IControllerDefinition.cs" />
     <Compile Include="Controller\IControllerInput.cs" />
     <Compile Include="Controller\IControllerPortsDatabase.cs" />
