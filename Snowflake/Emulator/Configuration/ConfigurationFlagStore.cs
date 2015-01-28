@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using Snowflake.Game;
 using Newtonsoft.Json;
+
 namespace Snowflake.Emulator.Configuration
 {
     public class ConfigurationFlagStore : IConfigurationFlagStore
@@ -17,7 +18,7 @@ namespace Snowflake.Emulator.Configuration
         {
             this.EmulatorBridgeID = emulatorBridge.PluginName;
             this.configurationFlagLocation = Path.Combine(emulatorBridge.PluginDataPath, "flagscache");
-            
+            if (!Directory.Exists(configurationFlagLocation)) Directory.CreateDirectory(configurationFlagLocation);
         }
         public void AddGame(IGameInfo gameInfo, IDictionary<string, string> flagValues)
         {

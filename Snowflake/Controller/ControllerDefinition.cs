@@ -13,11 +13,12 @@ namespace Snowflake.Controller
         public IReadOnlyDictionary<string, IControllerInput> ControllerInputs { get { return this.controllerInputs.AsReadOnly(); } }
         private IDictionary<string, IControllerInput> controllerInputs;
         public string ControllerID { get; private set; }
-       
+        public IControllerProfileStore ProfileStore { get; private set; }
         public ControllerDefinition(IDictionary<string, IControllerInput> controllerInputs, string controllerId)
         {
             this.ControllerID = controllerId;
             this.controllerInputs = controllerInputs;
+            this.ProfileStore = new ControllerProfileStore(this);
         }
         public static IControllerDefinition FromJsonProtoTemplate(IDictionary<string, dynamic> jsonDictionary)
         {

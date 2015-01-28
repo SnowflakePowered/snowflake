@@ -84,6 +84,7 @@
     <Compile Include="Ajax\BaseAjaxNamespace.cs" />
     <Compile Include="Ajax\JSRequest.cs" />
     <Compile Include="Ajax\JSResponse.cs" />
+    <Compile Include="Controller\ControllerProfileStore.cs" />
     <Compile Include="Emulator\Configuration\ConfigurationFlagStore.cs" />
     <Compile Include="Emulator\EmulatorBridge.cs" />
     <Compile Include="Identifier\BaseIdentifier.cs" />
