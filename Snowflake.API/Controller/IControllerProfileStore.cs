@@ -12,6 +12,10 @@ namespace Snowflake.Controller
     public interface IControllerProfileStore
     {
         /// <summary>
+        /// Gets the list of available platforms in a store
+        /// </summary>
+        IList<string> AvailableProfiles { get; }
+        /// <summary>
         /// Gets the ControllerID associated with this store
         /// </summary>
         string ControllerID { get; }

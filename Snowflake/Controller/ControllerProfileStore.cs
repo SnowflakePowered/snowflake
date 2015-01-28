@@ -11,6 +11,12 @@ namespace Snowflake.Controller
     {
         
         readonly string controllerProfilesLocation;
+        public IList<string> AvailableProfiles {
+            get
+            {
+                return Directory.GetFiles(controllerProfilesLocation).Select(x => Path.GetFileNameWithoutExtension(x.Replace("-" + this.ControllerID, ""))).ToList();
+            }
+        }
         public string ControllerID { get; private set; }
         public ControllerProfileStore (IControllerDefinition controllerDefinition, string controllerProfileStoreRoot)
         {
