@@ -42,7 +42,7 @@ namespace Snowflake.Controller
         }
         private string GetControllerProfileFilename(string deviceName)
         {
-            return Path.Combine(this.controllerProfilesLocation, String.Format("{0}-{1}", deviceName, this.ControllerID));
+            return Path.Combine(this.controllerProfilesLocation, String.Format("{0}-{1}.json", deviceName, this.ControllerID));
         }
         public ControllerProfileStore(IControllerDefinition controllerDefinition) : this(controllerDefinition, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Snowflake", "controllerprofiles")) { }
 

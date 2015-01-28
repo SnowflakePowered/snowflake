@@ -35,7 +35,7 @@ namespace Snowflake.Controller
             string controllerId = protoTemplate["ControllerID"];
             ControllerProfileType profileType = Enum.Parse(typeof(ControllerProfileType), protoTemplate["ProfileType"]);
             Dictionary<string, string> inputConfiguration = 
-                ((IDictionary<object, object>)protoTemplate["InputConfiguration"]).ToDictionary(i => (string)i.Key, i =>(string)i.Value);
+                ((IDictionary<object, object>)protoTemplate["InputConfiguration"].ToObject<IDictionary<object, object>>()).ToDictionary(i => (string)i.Key, i =>(string)i.Value);
             return new ControllerProfile(controllerId, profileType, inputConfiguration);
         }
 
