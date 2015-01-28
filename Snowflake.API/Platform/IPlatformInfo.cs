@@ -27,7 +27,7 @@ namespace Snowflake.Platform
         /// </summary>
         IList<string> Controllers { get; }
         /// <summary>
-        /// The controller ports
+        /// The controller ports that list the corresponding virtual controller definition
         /// </summary>
         IPlatformControllerPorts ControllerPorts { get; }
     }

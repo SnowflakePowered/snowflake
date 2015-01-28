@@ -40,20 +40,6 @@ namespace Snowflake.Emulator
         }
 
         public abstract void StartRom(IGameInfo gameInfo);
-      /*  {
-            
-            var retroArch = CoreService.LoadedCore.EmulatorManager.EmulatorAssemblies["retroarch"];
-            string path = CoreService.LoadedCore.EmulatorManager.GetAssemblyDirectory(retroArch);
-            var startInfo = new ProcessStartInfo(path);
-            startInfo.WorkingDirectory = Path.Combine(CoreService.LoadedCore.EmulatorManager.AssembliesLocation, "retroarch");
-            startInfo.Arguments = String.Format(@"{0} --libretro ""cores/bsnes_balanced_libretro.dll"" --config retroarch.cfg.clean --appendconfig controller.cfg", gameInfo.FileName);
-            Console.WriteLine(startInfo.Arguments);
-            var platform = CoreService.LoadedCore.LoadedPlatforms[gameInfo.PlatformId];
-            File.WriteAllText("controller.cfg", CompileController(1, platform.Controllers[CoreService.LoadedCore.ControllerPortsDatabase.GetPort(platform, 1)], this.ControllerTemplates["NES_CONTROLLER"], profile, this.InputTemplates["retroarch"]));
-            Process.Start(startInfo).WaitForExit();
-           //todo needs a place to output configurations
-            //configurationflags please
-        }*/
         public abstract void HandlePrompt(string messagge);
         public abstract void ShutdownEmulator();
         public virtual string CompileConfiguration(IConfigurationProfile configProfile)
@@ -81,13 +67,16 @@ namespace Snowflake.Emulator
         }
         public virtual string CompileController(int playerIndex, IPlatformInfo platformInfo, IInputTemplate inputTemplate)
         {
-            string controllerId = this.CoreInstance.ControllerPortsDatabase.GetDeviceInPort(platformInfo, playerIndex);
-        /*    return this.CompileController(playerIndex, 
-                platformInfo.Controllers[controllerProfile.ControllerID],
+            string deviceName = this.CoreInstance.ControllerPortsDatabase.GetDeviceInPort(platformInfo, playerIndex);
+            string controllerId = platformInfo.ControllerPorts[playerIndex];
+            IControllerDefinition controllerDefinition = this.CoreInstance.LoadedControllers[controllerId];
+            IControllerProfile controllerProfile = controllerDefinition.ProfileStore[deviceName];
+
+            return this.CompileController(playerIndex, 
+                controllerDefinition,
                 this.ControllerTemplates[controllerProfile.ControllerID],
                 controllerProfile,
-                inputTemplate);*/
-            return null;
+                inputTemplate);
         }
         public virtual string CompileController(int playerIndex, IControllerDefinition controllerDefinition, IControllerTemplate controllerTemplate, IControllerProfile controllerProfile, IInputTemplate inputTemplate)
         {
