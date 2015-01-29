@@ -30,10 +30,11 @@ after_test:
     - nuget pack Snowflake\Snowflake.csproj -IncludeReferencedProjects -Symbols
     - nuget pack Snowflake.API\Snowflake.API.csproj -IncludeReferencedProjects  -Symbols
     - echo Uploading NuGet packages to MyGet snowflake-nightly feed
-    - nuget push Snowflake.API.%APPVEYOR_BUILD_VERSION%-pre-alpha-nightly.nupkg %MYGET_FEED_KEY% -Source https://www.myget.org/F/snowflake-nightly/api/v2/package
+    - nuget setApiKey %MYGET_FEED_KEY%
+    - nuget push Snowflake.API.%APPVEYOR_BUILD_VERSION%-pre-alpha-nightly.nupkg -Source https://www.myget.org/F/snowflake-nightly/api/v2/package
     - nuget push Snowflake.API.%APPVEYOR_BUILD_VERSION%-pre-alpha-nightly.Symbols.nupkg %MYGET_FEED_KEY% -Source https://nuget.symbolsource.org/MyGet/snowflake-nightly
-    - nuget push Snowflake.%APPVEYOR_BUILD_VERSION%-pre-alpha-nightly.nupkg %MYGET_FEED_KEY% -Source https://www.myget.org/F/snowflake-nightly/api/v2/package
-    - nuget push Snowflake.%APPVEYOR_BUILD_VERSION%-pre-alpha-nightly.Symbols.nupkg %MYGET_FEED_KEY% -Source https://nuget.symbolsource.org/MyGet/snowflake-nightly
+    - nuget push Snowflake.%APPVEYOR_BUILD_VERSION%-pre-alpha-nightly.nupkg -Source https://www.myget.org/F/snowflake-nightly/api/v2/package
+    - nuget push Snowflake.%APPVEYOR_BUILD_VERSION%-pre-alpha-nightly.Symbols.nupkg -Source https://nuget.symbolsource.org/MyGet/snowflake-nightly
 artifacts:
     - path: Snowflake\bin\$(configuration)
       name: Snowflake Base Libraries
