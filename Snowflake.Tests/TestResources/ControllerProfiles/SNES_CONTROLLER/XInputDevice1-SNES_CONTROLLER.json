@@ -1,0 +1,20 @@
+{
+  "DeviceName": "XInputDevice1",
+  "ControllerID": "SNES_CONTROLLER",
+  "PlatformID": "NINTENDO_SNES",
+  "ProfileType": "GAMEPAD_PROFILE",
+  "InputConfiguration": {
+    "BTN_A": "GAMEPAD_A",
+    "BTN_B": "GAMEPAD_B",
+    "BTN_DPAD_UP": "GAMEPAD_DPAD_UP",
+    "BTN_DPAD_DOWN": "GAMEPAD_DPAD_DOWN",
+    "BTN_DPAD_LEFT": "GAMEPAD_DPAD_LEFT",
+    "BTN_DPAD_RIGHT": "GAMEPAD_DPAD_RIGHT",
+    "BTN_START": "GAMEPAD_START",
+    "BTN_SELECT": "GAMEPAD_SELECT",
+    "BTN_L": "GAMEPAD_L1",
+    "BTN_R": "GAMEPAD_R1",
+    "BTN_X": "GAMEPAD_X",
+    "BTN_Y": "GAMEPAD_Y"
+  }
+}
