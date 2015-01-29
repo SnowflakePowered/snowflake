@@ -34,9 +34,6 @@ artifacts:
     - path: doc
       name: Generated documentation
       type: zip
-    - path: doc
-      name: Generated documentation
-      type: zip
     - path: '**\*.nupkg'
       name: NuGet Packages
 assembly_info:
