@@ -39,3 +39,9 @@ assembly_info:
     assembly_version: '{version}'
     assembly_file_version: '{version}'
     assembly_informational_version: '{version}-pre-alpha-dirty'
+deploy:
+  provider: NuGet
+  api_key:
+    secure: tVZJIZJ/Li47MZyDnXkeWwmUZm+J4J1vUnBSNDKnc3JCJjZKhZZ4sy6nEPFhSMu8
+  skip_symbols: false
+  artifact: /.*\.nupkg/
