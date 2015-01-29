@@ -3,7 +3,6 @@ branches:
   # whitelist
   only:
     - master
-
 skip_tags: true
 test:
   assemblies:
@@ -25,6 +24,8 @@ after_test:
     - packages\OpenCover.4.5.3522\OpenCover.Console.exe -register:user -filter:"+[Snowflake*]*" -target:"packages/xunit.runners.2.0.0-rc1-build2826\tools\xunit.console.exe" -targetargs:"Snowflake.Tests\bin\%CONFIGURATION%\Snowflake.Tests.dll -noshadow" -output:coverage.xml
     - echo Uploading Code Coverage Report to Coveralls
     - packages\coveralls.io.1.1.86\tools\coveralls.net.exe --opencover coverage.xml
+    - nuget pack Snowflake\Snowflake.csproj
+    - nuget pack Snowflake.API\Snowflake.API.csproj
 cache:
     - packages
 artifacts:
@@ -34,3 +35,9 @@ artifacts:
     - path: doc
       name: Generated documentation
       type: zip
+assembly_info:
+    patch: true
+    file: SharedAssemblyInfo.cs
+    assembly_version: '{version}'
+    assembly_file_version: '{version}'
+    assembly_informational_version: '{version}-pre-alpha-dirty'

@@ -55,8 +55,16 @@ namespace Snowflake.Controller
                 sqlCommand.ExecuteNonQuery();
                 this.DBConnection.Close();
             }
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+            {
+                this.SetDefaults_Win32(platformInfo); //Set windows defaults if runs on windows. 
+            }
+            else
+            {
+                this.SetDefaults_KeyboardOnly(platformInfo); //Only set keyboard defaults
+            }
         }
-        public string GetPort(IPlatformInfo platformInfo, int portNumber)
+        public string GetDeviceInPort(IPlatformInfo platformInfo, int portNumber)
         {
             if (portNumber > 8 || portNumber < 1){
                 return String.Empty;
@@ -78,7 +86,7 @@ namespace Snowflake.Controller
             }
         }
 
-        public void SetPort(IPlatformInfo platformInfo, int portNumber, string controllerId)
+        public void SetDeviceInPort(IPlatformInfo platformInfo, int portNumber, string deviceName)
         {
             if (portNumber > 8 || portNumber < 1)
             {
@@ -88,11 +96,24 @@ namespace Snowflake.Controller
             using (var sqlCommand = new SQLiteCommand("UPDATE `ports` SET `%portNumber` = @controllerId WHERE `platform_id` == @platformId", this.DBConnection))
             {
                 sqlCommand.CommandText = sqlCommand.CommandText.Replace("%portNumber", "port" + portNumber);
-                sqlCommand.Parameters.AddWithValue("@controllerId", controllerId);
+                sqlCommand.Parameters.AddWithValue("@controllerId", deviceName);
                 sqlCommand.Parameters.AddWithValue("@platformId", platformInfo.PlatformId);
                 sqlCommand.ExecuteNonQuery();
             }
             this.DBConnection.Close();
+        }
+
+        private void SetDefaults_Win32(IPlatformInfo platformInfo)
+        {
+            this.SetDeviceInPort(platformInfo, 1, ControllerPortDeviceNames.KeyboardDevice);
+            this.SetDeviceInPort(platformInfo, 2, ControllerPortDeviceNames.XInputDevice1);
+            this.SetDeviceInPort(platformInfo, 3, ControllerPortDeviceNames.XInputDevice2);
+            this.SetDeviceInPort(platformInfo, 4, ControllerPortDeviceNames.XInputDevice3);
+            this.SetDeviceInPort(platformInfo, 5, ControllerPortDeviceNames.XInputDevice4);
+        }
+        private void SetDefaults_KeyboardOnly(IPlatformInfo platformInfo)
+        {
+            this.SetDeviceInPort(platformInfo, 1, ControllerPortDeviceNames.KeyboardDevice);
         }
     }
 }

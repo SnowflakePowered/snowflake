@@ -30,10 +30,6 @@ namespace Snowflake.Service
         /// </summary>
         string AppDataDirectory { get; }
         /// <summary>
-        /// The database that holds controller profile information
-        /// </summary>
-        IControllerProfileDatabase ControllerProfileDatabase { get; }
-        /// <summary>
         /// The database that holds controller ports information
         /// </summary>
         IControllerPortsDatabase ControllerPortsDatabase { get; }

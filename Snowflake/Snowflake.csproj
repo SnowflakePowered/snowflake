@@ -81,9 +81,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Ajax\BaseAjaxNamespace.cs" />
     <Compile Include="Ajax\JSRequest.cs" />
     <Compile Include="Ajax\JSResponse.cs" />
+    <Compile Include="Controller\ControllerProfileStore.cs" />
     <Compile Include="Emulator\Configuration\ConfigurationFlagStore.cs" />
     <Compile Include="Emulator\EmulatorBridge.cs" />
     <Compile Include="Identifier\BaseIdentifier.cs" />
@@ -93,7 +97,6 @@
     <Compile Include="Platform\PlatformPreferencesDatabase.cs" />
     <Compile Include="Plugin\BasePlugin.cs" />
     <Compile Include="Plugin\YamlConfiguration.cs" />
-    <Compile Include="Controller\ControllerProfileDatabase.cs" />
     <Compile Include="Emulator\Configuration\ConfigurationStore.cs" />
     <Compile Include="Emulator\Configuration\ConfigurationFlag.cs" />
     <Compile Include="Emulator\Input\ControllerMapping.cs" />

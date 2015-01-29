@@ -35,6 +35,20 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{A3EE47
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Service", "Snowflake.Service\Snowflake.Service.csproj", "{F3A129D6-0C4C-41BC-B60B-5B7E7E6D1A77}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ControllerProfiles", "ControllerProfiles", "{920C691B-AF35-4855-AAC9-AD745D74B397}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NES_CONTROLLER", "NES_CONTROLLER", "{6ED2D66B-9AEB-43CA-993F-1BC88E3DD0BF}"
+	ProjectSection(SolutionItems) = preProject
+		ControllerProfiles\NES_CONTROLLER\KeyboardDevice-NES_CONTROLLER.json = ControllerProfiles\NES_CONTROLLER\KeyboardDevice-NES_CONTROLLER.json
+		ControllerProfiles\NES_CONTROLLER\XInputDevice1-NES_CONTROLLER.json = ControllerProfiles\NES_CONTROLLER\XInputDevice1-NES_CONTROLLER.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SNES_CONTROLLER", "SNES_CONTROLLER", "{35351C6F-1421-4F2A-9355-F260E56664A8}"
+	ProjectSection(SolutionItems) = preProject
+		ControllerProfiles\SNES_CONTROLLER\KeyboardDevice-SNES_CONTROLLER.json = ControllerProfiles\SNES_CONTROLLER\KeyboardDevice-SNES_CONTROLLER.json
+		ControllerProfiles\SNES_CONTROLLER\XInputDevice1-SNES_CONTROLLER.json = ControllerProfiles\SNES_CONTROLLER\XInputDevice1-SNES_CONTROLLER.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,6 +60,7 @@ Global
 		{8F1D65ED-4A96-4A0A-8371-53655A60A2B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F1D65ED-4A96-4A0A-8371-53655A60A2B3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D60707C0-51B8-44DE-9CE7-12C2517CFD01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D60707C0-51B8-44DE-9CE7-12C2517CFD01}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D60707C0-51B8-44DE-9CE7-12C2517CFD01}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4792C8C4-81A8-4AB1-9041-2DFF4F5E8DBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4792C8C4-81A8-4AB1-9041-2DFF4F5E8DBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -68,5 +83,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6ED2D66B-9AEB-43CA-993F-1BC88E3DD0BF} = {920C691B-AF35-4855-AAC9-AD745D74B397}
+		{35351C6F-1421-4F2A-9355-F260E56664A8} = {920C691B-AF35-4855-AAC9-AD745D74B397}
 	EndGlobalSection
 EndGlobal
