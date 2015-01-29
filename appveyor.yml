@@ -13,7 +13,7 @@ build:
 environment:
     COVERALLS_REPO_TOKEN:
       secure: nBi3LwnqgslaH8hbsvjnWTqpe/UbKn705TJujxqJwtcL5OLGfcydM8AnVyld6Ngu
-    MYGET_FEED_KEY:
+    MYGET_API_KEY:
       secure: hSOYKRU/7k20SWxH5ZnDA/enAg7LNbU5rIVc/FuoPrFTpbAAREyVt9ahbtX8SlP6
 install:
     - choco install doxygen.portable
@@ -30,9 +30,9 @@ after_test:
     - nuget pack Snowflake\Snowflake.csproj -IncludeReferencedProjects -Symbols
     - nuget pack Snowflake.API\Snowflake.API.csproj -IncludeReferencedProjects  -Symbols
     - echo Uploading NuGet packages to MyGet snowflake-nightly feed
-    - nuget setApiKey %MYGET_FEED_KEY%
+    - nuget setApiKey %MYGET_API_KEY%
     - nuget push Snowflake.API.%APPVEYOR_BUILD_VERSION%-pre-alpha-nightly.nupkg -Source https://www.myget.org/F/snowflake-nightly/api/v2/package
-    - nuget push Snowflake.API.%APPVEYOR_BUILD_VERSION%-pre-alpha-nightly.Symbols.nupkg %MYGET_FEED_KEY% -Source https://nuget.symbolsource.org/MyGet/snowflake-nightly
+    - nuget push Snowflake.API.%APPVEYOR_BUILD_VERSION%-pre-alpha-nightly.Symbols.nupkg -Source https://nuget.symbolsource.org/MyGet/snowflake-nightly
     - nuget push Snowflake.%APPVEYOR_BUILD_VERSION%-pre-alpha-nightly.nupkg -Source https://www.myget.org/F/snowflake-nightly/api/v2/package
     - nuget push Snowflake.%APPVEYOR_BUILD_VERSION%-pre-alpha-nightly.Symbols.nupkg -Source https://nuget.symbolsource.org/MyGet/snowflake-nightly
 artifacts:
