@@ -43,6 +43,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NES_CONTROLLER", "NES_CONTR
 		ControllerProfiles\NES_CONTROLLER\XInputDevice1-NES_CONTROLLER.json = ControllerProfiles\NES_CONTROLLER\XInputDevice1-NES_CONTROLLER.json
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SNES_CONTROLLER", "SNES_CONTROLLER", "{35351C6F-1421-4F2A-9355-F260E56664A8}"
+	ProjectSection(SolutionItems) = preProject
+		ControllerProfiles\SNES_CONTROLLER\KeyboardDevice-SNES_CONTROLLER.json = ControllerProfiles\SNES_CONTROLLER\KeyboardDevice-SNES_CONTROLLER.json
+		ControllerProfiles\SNES_CONTROLLER\XInputDevice1-SNES_CONTROLLER.json = ControllerProfiles\SNES_CONTROLLER\XInputDevice1-SNES_CONTROLLER.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -80,5 +86,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{6ED2D66B-9AEB-43CA-993F-1BC88E3DD0BF} = {920C691B-AF35-4855-AAC9-AD745D74B397}
+		{35351C6F-1421-4F2A-9355-F260E56664A8} = {920C691B-AF35-4855-AAC9-AD745D74B397}
 	EndGlobalSection
 EndGlobal

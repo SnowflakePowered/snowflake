@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\ControllerDefinitionTests.cs" />
+    <Compile Include="Controller\ControllerProfileTests.cs" />
     <Compile Include="Game\GameInfoTests.cs" />
     <Compile Include="Platform\PlatformInfoTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -89,6 +90,10 @@
       <Link>TestResources\Platforms\NINTENDO_SNES.platform</Link>
     </EmbeddedResource>
     <None Include="packages.config" />
+    <EmbeddedResource Include="TestResources\ControllerProfiles\NES_CONTROLLER\KeyboardDevice-NES_CONTROLLER.json" />
+    <EmbeddedResource Include="TestResources\ControllerProfiles\NES_CONTROLLER\XInputDevice1-NES_CONTROLLER.json" />
+    <EmbeddedResource Include="TestResources\ControllerProfiles\SNES_CONTROLLER\KeyboardDevice-SNES_CONTROLLER.json" />
+    <EmbeddedResource Include="TestResources\ControllerProfiles\SNES_CONTROLLER\XInputDevice1-SNES_CONTROLLER.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Snowflake.API\Snowflake.API.csproj">
@@ -107,6 +112,7 @@
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
