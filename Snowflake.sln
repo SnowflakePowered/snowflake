@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake", "Snowflake\Snowflake.csproj", "{8F1D65ED-4A96-4A0A-8371-53655A60A2B3}"
 EndProject
@@ -41,6 +41,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NES_CONTROLLER", "NES_CONTR
 	ProjectSection(SolutionItems) = preProject
 		ControllerProfiles\NES_CONTROLLER\KeyboardDevice-NES_CONTROLLER.json = ControllerProfiles\NES_CONTROLLER\KeyboardDevice-NES_CONTROLLER.json
 		ControllerProfiles\NES_CONTROLLER\XInputDevice1-NES_CONTROLLER.json = ControllerProfiles\NES_CONTROLLER\XInputDevice1-NES_CONTROLLER.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{25B3E949-96FE-45A2-84AA-490400B32111}"
+	ProjectSection(SolutionItems) = preProject
+		SharedAssemblyInfo.cs = SharedAssemblyInfo.cs
 	EndProjectSection
 EndProject
 Global
