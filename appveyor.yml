@@ -13,6 +13,8 @@ build:
 environment:
     COVERALLS_REPO_TOKEN:
       secure: nBi3LwnqgslaH8hbsvjnWTqpe/UbKn705TJujxqJwtcL5OLGfcydM8AnVyld6Ngu
+    MYGET_FEED_KEY:
+      secure: hSOYKRU/7k20SWxH5ZnDA/enAg7LNbU5rIVc/FuoPrFTpbAAREyVt9ahbtX8SlP6
 install:
     - choco install doxygen.portable
     - nuget restore
@@ -24,10 +26,14 @@ after_test:
     - packages\OpenCover.4.5.3522\OpenCover.Console.exe -register:user -filter:"+[Snowflake*]*" -target:"packages/xunit.runners.2.0.0-rc1-build2826\tools\xunit.console.exe" -targetargs:"Snowflake.Tests\bin\%CONFIGURATION%\Snowflake.Tests.dll -noshadow" -output:coverage.xml
     - echo Uploading Code Coverage Report to Coveralls
     - packages\coveralls.io.1.1.86\tools\coveralls.net.exe --opencover coverage.xml
-    - nuget pack Snowflake\Snowflake.csproj
-    - nuget pack Snowflake.API\Snowflake.API.csproj
-cache:
-    - packages
+    - echo Packing NuGet packages
+    - nuget pack Snowflake\Snowflake.csproj -IncludeReferencedProjects -Symbols
+    - nuget pack Snowflake.API\Snowflake.API.csproj -IncludeReferencedProjects  -Symbols
+    - echo Uploading NuGet packages to MyGet snowflake-nightly feed
+    - nuget push Snowflake.API.%APPVEYOR_BUILD_VERSION%-pre-alpha-nightly.nupkg %MYGET_FEED_KEY% -Source https://www.myget.org/F/snowflake-nightly/api/v2/package
+    - nuget push Snowflake.API.%APPVEYOR_BUILD_VERSION%-pre-alpha-nightly.Symbols.nupkg %MYGET_FEED_KEY% -Source https://nuget.symbolsource.org/MyGet/snowflake-nightly
+    - nuget push Snowflake.%APPVEYOR_BUILD_VERSION%-pre-alpha-nightly.nupkg %MYGET_FEED_KEY% -Source https://www.myget.org/F/snowflake-nightly/api/v2/package
+    - nuget push Snowflake.%APPVEYOR_BUILD_VERSION%-pre-alpha-nightly.Symbols.nupkg %MYGET_FEED_KEY% -Source https://nuget.symbolsource.org/MyGet/snowflake-nightly
 artifacts:
     - path: Snowflake\bin\$(configuration)
       name: Snowflake Base Libraries
@@ -40,4 +46,4 @@ assembly_info:
     file: SharedAssemblyInfo.cs
     assembly_version: '{version}'
     assembly_file_version: '{version}'
-    assembly_informational_version: '{version}-pre-alpha-dirty'
+    assembly_informational_version: '{version}-pre-alpha-nightly'
