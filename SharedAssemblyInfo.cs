@@ -8,3 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCompany("SnowflakePowered")]
 [assembly: AssemblyProduct("Snowflake")]
 [assembly: AssemblyCopyright("Copyright © Ronny Chan 2015")]
+
+[assembly: AssemblyVersion("0.1.*")]
+[assembly: AssemblyFileVersion("0.1.*")]
+[assembly: AssemblyInformationalVersion("0.1.1-pre-alpha")]
