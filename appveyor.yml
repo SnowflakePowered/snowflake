@@ -34,8 +34,10 @@ artifacts:
     - path: doc
       name: Generated documentation
       type: zip
-    - path: '**\*.nupkg'
-      name: NuGet Packages
+    - path: 'Snowflake\*.nupkg'
+      name: Snowflake NuGet Packages
+    - path: 'Snowflake.API\*.nupkg'
+      name: Snowflake.API NuGet Packages
 assembly_info:
     patch: true
     file: SharedAssemblyInfo.cs
