@@ -13,8 +13,6 @@ build:
 environment:
     COVERALLS_REPO_TOKEN:
       secure: nBi3LwnqgslaH8hbsvjnWTqpe/UbKn705TJujxqJwtcL5OLGfcydM8AnVyld6Ngu
-    MYGET_API_KEY:
-      secure: c0TSni4oM3D75P31isNFRu0z4whPsrvTAcu67iLlFmtvvrzopEI8Xj5qWk1pwMkj
 install:
     - choco install doxygen.portable
     - nuget restore
@@ -29,15 +27,6 @@ after_test:
     - echo Packing NuGet packages
     - nuget pack Snowflake\Snowflake.csproj -IncludeReferencedProjects -Symbols
     - nuget pack Snowflake.API\Snowflake.API.csproj -IncludeReferencedProjects  -Symbols
-    - cmd: |
-        echo Uploading NuGet packages to MyGet snowflake-nightly feed
-        nuget setApiKey %MYGET_API_KEY% -Source https://www.myget.org/F/snowflake-nightly/api/v2/package 2> nul
-        nuget setApiKey %MYGET_API_KEY% -Source https://nuget.symbolsource.org/MyGet/snowflake-nightly 2> nul
-        nuget push Snowflake.API.%APPVEYOR_BUILD_VERSION%-pre-alpha-nightly.nupkg -Source https://www.myget.org/F/snowflake-nightly/api/v2/package
-        nuget push Snowflake.API.%APPVEYOR_BUILD_VERSION%-pre-alpha-nightly.Symbols.nupkg -Source https://nuget.symbolsource.org/MyGet/snowflake-nightly
-        nuget push Snowflake.%APPVEYOR_BUILD_VERSION%-pre-alpha-nightly.nupkg -Source https://www.myget.org/F/snowflake-nightly/api/v2/package
-        nuget push Snowflake.%APPVEYOR_BUILD_VERSION%-pre-alpha-nightly.Symbols.nupkg -Source https://nuget.symbolsource.org/MyGet/snowflake-nightly
-        exit /b 0
 artifacts:
     - path: Snowflake\bin\$(configuration)
       name: Snowflake Base Libraries
@@ -51,3 +40,11 @@ assembly_info:
     assembly_version: '{version}'
     assembly_file_version: '{version}'
     assembly_informational_version: '{version}-pre-alpha-nightly'
+deploy:
+  provider: NuGet
+  server: https://www.myget.org/F/snowflake-nightly/api/v2/package
+  api_key:
+    secure: c0TSni4oM3D75P31isNFRu0z4whPsrvTAcu67iLlFmtvvrzopEI8Xj5qWk1pwMkj
+  skip_symbols: false
+  symbol_server: https://nuget.symbolsource.org/MyGet/snowflake-nightly
+  artifact: /.*\.nupkg/
