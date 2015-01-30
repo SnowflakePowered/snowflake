@@ -21,16 +21,6 @@ namespace Snowflake.Controller
             this.inputConfiguration = inputConfiguration;
         }
 
-        public static ControllerProfile GenerateGamepadDefault(ControllerDefinition controllerDefinition, string platformId){
-            var controllerId = controllerDefinition.ControllerID;
-            var inputConfiguration = new Dictionary<string, string>();
-            foreach (var input in controllerDefinition.ControllerInputs)
-            {
-                inputConfiguration.Add(input.Value.InputName, input.Value.GamepadDefault);
-            }
-            return new ControllerProfile(controllerId, ControllerProfileType.GAMEPAD_PROFILE, inputConfiguration);
-        }
-
         public static ControllerProfile FromJsonProtoTemplate(IDictionary<string, dynamic> protoTemplate){
             string controllerId = protoTemplate["ControllerID"];
             ControllerProfileType profileType = Enum.Parse(typeof(ControllerProfileType), protoTemplate["ProfileType"]);

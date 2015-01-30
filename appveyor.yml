@@ -10,6 +10,9 @@ test:
 configuration: Debug
 build:
   project: Snowflake.sln
+  publish_nuget: true
+  publish_nuget_symbols: true
+  verbosity: minimal
 environment:
     COVERALLS_REPO_TOKEN:
       secure: nBi3LwnqgslaH8hbsvjnWTqpe/UbKn705TJujxqJwtcL5OLGfcydM8AnVyld6Ngu
@@ -17,17 +20,16 @@ install:
     - choco install doxygen.portable
     - nuget restore
 after_build:
-    - echo Generating documentation
-    - doxygen.exe "C:\projects\snowflake\snowflake.doxygen"
+    - echo Generating doxygen documentation
+    - doxygen.exe "C:\projects\snowflake\snowflake.doxygen" 2> nul
 after_test:
     - echo Generating Code Coverage Report
     - packages\OpenCover.4.5.3522\OpenCover.Console.exe -register:user -filter:"+[Snowflake*]*" -target:"packages/xunit.runners.2.0.0-rc1-build2826\tools\xunit.console.exe" -targetargs:"Snowflake.Tests\bin\%CONFIGURATION%\Snowflake.Tests.dll -noshadow" -output:coverage.xml
     - echo Uploading Code Coverage Report to Coveralls
     - packages\coveralls.io.1.1.86\tools\coveralls.net.exe --opencover coverage.xml
-    - nuget pack Snowflake\Snowflake.csproj
-    - nuget pack Snowflake.API\Snowflake.API.csproj
-cache:
-    - packages
+    - echo Packing NuGet packages
+    - nuget pack Snowflake\Snowflake.csproj -IncludeReferencedProjects -Symbols
+    - nuget pack Snowflake.API\Snowflake.API.csproj -IncludeReferencedProjects  -Symbols
 artifacts:
     - path: Snowflake\bin\$(configuration)
       name: Snowflake Base Libraries
@@ -35,9 +37,20 @@ artifacts:
     - path: doc
       name: Generated documentation
       type: zip
+    - path: 'Snowflake\*.nupkg'
+      name: Snowflake NuGet Packages
+    - path: 'Snowflake.API\*.nupkg'
+      name: Snowflake.API NuGet Packages
 assembly_info:
     patch: true
     file: SharedAssemblyInfo.cs
     assembly_version: '{version}'
     assembly_file_version: '{version}'
-    assembly_informational_version: '{version}-pre-alpha-dirty'
+    assembly_informational_version: '{version}-pre-alpha-nightly'
+deploy:
+    - provider: NuGet
+      server: https://www.myget.org/F/snowflake-nightly/api/v2/package
+      api_key:
+        secure: c0TSni4oM3D75P31isNFRu0z4whPsrvTAcu67iLlFmtvvrzopEI8Xj5qWk1pwMkj
+      symbol_server: https://nuget.symbolsource.org/MyGet/snowflake-nightly
+
