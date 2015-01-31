@@ -37,9 +37,13 @@ artifacts:
     - path: doc
       name: Generated documentation
       type: zip
-    - path: 'Snowflake\*.nupkg'
+    - path: 'Snowflake\Snowflake.{version}-pre-alpha-nightly.nupkg'
       name: Snowflake NuGet Packages
-    - path: 'Snowflake.API\*.nupkg'
+    - path: 'Snowflake.API\Snowflake.API.{version}-pre-alpha-nightly.nupkg'
+      name: Snowflake.API NuGet Packages
+    - path: 'Snowflake\Snowflake.{version}-pre-alpha-nightly.symbols.nupkg'
+      name: Snowflake NuGet Packages
+    - path: 'Snowflake.API\Snowflake.API.{version}-pre-alpha-nightly.symbols.nupkg'
       name: Snowflake.API NuGet Packages
 assembly_info:
     patch: true
@@ -53,4 +57,4 @@ deploy:
       api_key:
         secure: c0TSni4oM3D75P31isNFRu0z4whPsrvTAcu67iLlFmtvvrzopEI8Xj5qWk1pwMkj
       symbol_server: https://nuget.symbolsource.org/MyGet/snowflake-nightly
-
+      skip_symbols: false
