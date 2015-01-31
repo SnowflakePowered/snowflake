@@ -14,7 +14,7 @@ Preliminary documentation is available [here](http://snowflakepowe.red/doc/html/
 
 Contributing
 ------------
-Feel free to extend the API or document existing ones by forking Snowflake. Javascript (Ajax) API contributions are also welcome at this point. 
+Please feel free to explore the current API, please be aware that Snowflake is still pre-release software and may change at any time. We're also in need of code coverage so if you have some free time, feel free to write some unit tests for Snowflake. Remember to read the contribution guildelines before filing a pull request.
 
 What's Possible?
 ----------------
