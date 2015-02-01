@@ -64,7 +64,8 @@ namespace Snowflake.Service.Init
 ";
 
             var x = JsonConvert.DeserializeObject<IList<IDictionary<string, dynamic>>>(x_);
-            ConfigurationFlag.FromJsonProtoTemplate(x.First());
+            Console.WriteLine(JsonConvert.SerializeObject(            ConfigurationFlag.FromJsonProtoTemplate(x.First())
+));
         }
 
         void start()

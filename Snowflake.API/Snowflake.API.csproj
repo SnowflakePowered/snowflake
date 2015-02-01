@@ -78,7 +78,7 @@
     <Compile Include="Ajax\IBaseAjaxNamespace.cs" />
     <Compile Include="Ajax\IJSRequest.cs" />
     <Compile Include="Ajax\IJSResponse.cs" />
-    <Compile Include="Controller\ControllerPortDeviceNames.cs" />
+    <Compile Include="Emulator\Input\InputManager\InputDeviceNames.cs" />
     <Compile Include="Controller\IControllerProfileStore.cs" />
     <Compile Include="Emulator\Configuration\IConfigurationFlagSelectValue.cs" />
     <Compile Include="Emulator\Configuration\IConfigurationFlagStore.cs" />

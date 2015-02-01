@@ -80,6 +80,7 @@ namespace Snowflake.Emulator
         /// <param name="inputTemplate">The input template to compile for</param>
         /// <returns></returns>
         string CompileController(int playerIndex, IPlatformInfo platformInfo, IInputTemplate inputTemplate);
+        string CompileController(int playerIndex, IControllerDefinition controllerDefinition, IControllerTemplate controllerTemplate, IControllerProfile controllerProfile, IInputTemplate inputTemplate, IControllerMapping controllerMapping);
         /// <summary>
         /// Shutdownt the currently running emulator
         /// </summary>

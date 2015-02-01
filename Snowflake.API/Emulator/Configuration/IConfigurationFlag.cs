@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 namespace Snowflake.Emulator.Configuration
 {
     /// <summary>
@@ -38,6 +40,7 @@ namespace Snowflake.Emulator.Configuration
         /// <summary>
         /// The type of configuration flag
         /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
         ConfigurationFlagTypes Type { get; }
     }
 }
