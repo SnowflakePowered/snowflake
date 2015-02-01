@@ -76,23 +76,21 @@ namespace Snowflake.Emulator
             IControllerProfile controllerProfile = controllerDefinition.ProfileStore[deviceName];
 
             return this.CompileController(playerIndex, 
+                platformInfo,
                 controllerDefinition,
                 this.ControllerTemplates[controllerProfile.ControllerID],
                 controllerProfile,
                 inputTemplate);
         }
 
-        public virtual string CompileController(int playerIndex, IControllerDefinition controllerDefinition, IControllerTemplate controllerTemplate, IControllerProfile controllerProfile, IInputTemplate inputTemplate)
+        public virtual string CompileController(int playerIndex, IPlatformInfo platformInfo, IControllerDefinition controllerDefinition, IControllerTemplate controllerTemplate, IControllerProfile controllerProfile, IInputTemplate inputTemplate)
         {
             var controllerMappings = controllerProfile.ProfileType == ControllerProfileType.KEYBOARD_PROFILE ?
                 controllerTemplate.KeyboardControllerMappings : controllerTemplate.GamepadControllerMappings;
-            return this.CompileController(playerIndex, controllerDefinition, controllerTemplate, controllerProfile, inputTemplate, controllerMappings);
+            return this.CompileController(playerIndex, platformInfo, controllerDefinition, controllerTemplate, controllerProfile, inputTemplate, controllerMappings);
         }
+
         public virtual string CompileController(int playerIndex, IPlatformInfo platformInfo, IControllerDefinition controllerDefinition, IControllerTemplate controllerTemplate, IControllerProfile controllerProfile, IInputTemplate inputTemplate, IReadOnlyDictionary<string, IControllerMapping> controllerMappings)
-        {
-            return this.CompileController(playerIndex, controllerDefinition, controllerTemplate, controllerProfile, inputTemplate, controllerMappings);
-        }
-        public virtual string CompileController(int playerIndex, IControllerDefinition controllerDefinition, IControllerTemplate controllerTemplate, IControllerProfile controllerProfile, IInputTemplate inputTemplate, IReadOnlyDictionary<string, IControllerMapping> controllerMappings)
         {
             var template = new StringBuilder(inputTemplate.StringTemplate);
             foreach (IControllerInput input in controllerDefinition.ControllerInputs.Values)
