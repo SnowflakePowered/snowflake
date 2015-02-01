@@ -26,6 +26,16 @@ namespace Snowflake.Emulator.Configuration
         /// </summary>
         IReadOnlyDictionary<string, string> SelectValues { get; }
         /// <summary>
+        /// The minimum value permitted if this is an INT_FLAG type
+        /// 0 if no minimum or not INT_FLAG
+        /// </summary>
+        int RangeMin { get; }
+        /// <summary>
+        /// The maximum value permitted if this is an INT_FLAG type
+        /// 0 if no maximum or not INT_FLAG
+        /// </summary>
+        int RangeMax { get; }
+        /// <summary>
         /// The type of configuration flag
         /// </summary>
         ConfigurationFlagTypes Type { get; }
