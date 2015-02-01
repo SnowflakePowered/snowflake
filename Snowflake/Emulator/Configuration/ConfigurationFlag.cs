@@ -51,13 +51,16 @@ namespace Snowflake.Emulator.Configuration
             protoTemplate.TryGetValue("values", out selectTypes);
             try
             {
-                return new ConfigurationFlag(key, type, defaultValue, description, max, min, selectTypes.ToObject(typeof(IDictionary<string, string>)));
+                selectTypes.ToObject(typeof(IDictionary<string, string>));
             }
             catch (NullReferenceException)
             {
-                return new ConfigurationFlag(key, type, defaultValue, description, max, min);
+                selectTypes = null;
 
             }
+            
+            return new ConfigurationFlag(key, type, defaultValue, description, max, min, selectTypes);
+
         }
     }
 }
