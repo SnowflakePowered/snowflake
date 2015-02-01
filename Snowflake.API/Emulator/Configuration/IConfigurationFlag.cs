@@ -24,7 +24,7 @@ namespace Snowflake.Emulator.Configuration
         /// <summary>
         /// The available choices if this is a SELECT_FLAG type
         /// </summary>
-        IReadOnlyDictionary<string, string> SelectValues { get; }
+        IList<IConfigurationFlagSelectValue> SelectValues { get; }
         /// <summary>
         /// The minimum value permitted if this is an INT_FLAG type
         /// 0 if no minimum or not INT_FLAG

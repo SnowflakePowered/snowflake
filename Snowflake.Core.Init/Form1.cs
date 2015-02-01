@@ -38,7 +38,33 @@ namespace Snowflake.Service.Init
         {
             InitializeComponent();
             Console.SetOut(new MultiTextWriter(new ControlWriter(this.textBox1), Console.Out));
-            start();
+            //start();
+            string x_ = @"
+[
+    {
+        key: 'fullscreen_toggle',
+        type: 'SELECT_FLAG',
+        description: 'Toggles Fullscreen',
+        default: 'fullscreen_on',
+        max: 10,
+        min: 0,
+        values: [
+            {
+                value: 'fullscreen_on',
+                description: 'Turn on fullscreen'
+            },
+            {
+                value: 'fullscreen_off',
+                description: 'Turn off fullscreen'
+            }
+        ]
+    }
+]
+
+";
+
+            var x = JsonConvert.DeserializeObject<IList<IDictionary<string, dynamic>>>(x_);
+            ConfigurationFlag.FromJsonProtoTemplate(x.First());
         }
 
         void start()

@@ -80,6 +80,7 @@
     <Compile Include="Ajax\IJSResponse.cs" />
     <Compile Include="Controller\ControllerPortDeviceNames.cs" />
     <Compile Include="Controller\IControllerProfileStore.cs" />
+    <Compile Include="Emulator\Configuration\IConfigurationFlagSelectValue.cs" />
     <Compile Include="Emulator\Configuration\IConfigurationFlagStore.cs" />
     <Compile Include="Emulator\Input\InputManager\IInputDevice.cs" />
     <Compile Include="Emulator\Input\InputManager\IInputManager.cs" />

@@ -30,6 +30,8 @@ namespace Snowflake.Emulator
         public EmulatorBridge(Assembly pluginAssembly, ICoreService coreInstance) : base(pluginAssembly, coreInstance) {
 
             this.ConfigurationFlagStore = new ConfigurationFlagStore(this);
+            var flagsProtoTemplates = JsonConvert.DeserializeObject<IList<IDictionary<string, dynamic>>>(this.GetStringResource("flags.json"));
+            this.ConfigurationFlags = flagsProtoTemplates.Select(protoTemplate => ConfigurationFlag.FromJsonProtoTemplate(protoTemplate)).ToDictionary(key => key.Key, key => key);
             var configurationProtoTemplates = JsonConvert.DeserializeObject<IList<IDictionary<string, dynamic>>>(this.GetStringResource("configurations.json"));
             this.ConfigurationTemplates = configurationProtoTemplates.Select(protoTemplate => ConfigurationTemplate.FromJsonProtoTemplate(protoTemplate)).ToDictionary(key => key.TemplateID, key => key);
             var inputProtoTemplates = JsonConvert.DeserializeObject<IList<IDictionary<string, dynamic>>>(this.GetStringResource("input.json"));
@@ -37,6 +39,7 @@ namespace Snowflake.Emulator
             var controllerProtoTemplates = JsonConvert.DeserializeObject<IList<IDictionary<string, dynamic>>>(this.GetStringResource("controllers.json"));
             this.ControllerTemplates = controllerProtoTemplates.Select(protoTemplate => ControllerTemplate.FromJsonProtoTemplate(protoTemplate)).ToDictionary(key => key.ControllerID, key => key);
             this.EmulatorAssembly = coreInstance.EmulatorManager.EmulatorAssemblies[this.PluginInfo["emulator_assembly"]];
+
         }
 
         public abstract void StartRom(IGameInfo gameInfo);

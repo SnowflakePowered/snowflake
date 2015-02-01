@@ -16,9 +16,9 @@ namespace Snowflake.Emulator.Configuration
         public string Description { get; private set; }
         public int RangeMin { get; private set; }
         public int RangeMax { get; private set; }
-        public IReadOnlyDictionary<string, string> SelectValues { get; private set; }
-        
-        public ConfigurationFlag(string key, ConfigurationFlagTypes type, string defaultValue, string description, int rangeMin = 0, int rangeMax = 0, IDictionary<string, string> selectValues = null)
+        public IList<IConfigurationFlagSelectValue> SelectValues { get; private set; }
+
+        public ConfigurationFlag(string key, ConfigurationFlagTypes type, string defaultValue, string description, int rangeMin = 0, int rangeMax = 0, IList<IConfigurationFlagSelectValue> selectValues = null)
         {
             this.Key = key;
             this.Type = type;
@@ -26,14 +26,7 @@ namespace Snowflake.Emulator.Configuration
             this.Description = description;
             this.RangeMin = rangeMin;
             this.RangeMax = rangeMax;
-            if (selectValues != null)
-            {
-                this.SelectValues = selectValues.AsReadOnly();
-            }
-            else
-            {
-                this.SelectValues = null;
-            }
+            this.SelectValues = selectValues;
         }
 
         public static IConfigurationFlag FromJsonProtoTemplate(IDictionary<string, dynamic> protoTemplate){
@@ -51,15 +44,16 @@ namespace Snowflake.Emulator.Configuration
             protoTemplate.TryGetValue("values", out selectTypes);
             try
             {
-                selectTypes.ToObject(typeof(IDictionary<string, string>));
+                selectTypes = selectTypes.ToObject(typeof(IList<ConfigurationFlagSelectValue>));
             }
             catch (NullReferenceException)
             {
                 selectTypes = null;
 
             }
-            
-            return new ConfigurationFlag(key, type, defaultValue, description, max, min, selectTypes);
+
+            selectTypes = ((IList<ConfigurationFlagSelectValue>)selectTypes).Select(x => (IConfigurationFlagSelectValue)x).ToList();
+            return new ConfigurationFlag(key, type, defaultValue, description, (int)max, (int)min, selectTypes);
 
         }
     }
