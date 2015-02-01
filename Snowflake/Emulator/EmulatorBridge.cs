@@ -88,6 +88,10 @@ namespace Snowflake.Emulator
                 controllerTemplate.KeyboardControllerMappings : controllerTemplate.GamepadControllerMappings;
             return this.CompileController(playerIndex, controllerDefinition, controllerTemplate, controllerProfile, inputTemplate, controllerMappings);
         }
+        public virtual string CompileController(int playerIndex, IPlatformInfo platformInfo, IControllerDefinition controllerDefinition, IControllerTemplate controllerTemplate, IControllerProfile controllerProfile, IInputTemplate inputTemplate, IReadOnlyDictionary<string, IControllerMapping> controllerMappings)
+        {
+            return this.CompileController(playerIndex, controllerDefinition, controllerTemplate, controllerProfile, inputTemplate, controllerMappings);
+        }
         public virtual string CompileController(int playerIndex, IControllerDefinition controllerDefinition, IControllerTemplate controllerTemplate, IControllerProfile controllerProfile, IInputTemplate inputTemplate, IReadOnlyDictionary<string, IControllerMapping> controllerMappings)
         {
             var template = new StringBuilder(inputTemplate.StringTemplate);

@@ -81,6 +81,8 @@ namespace Snowflake.Emulator
         /// <returns></returns>
         string CompileController(int playerIndex, IPlatformInfo platformInfo, IInputTemplate inputTemplate);
         string CompileController(int playerIndex, IControllerDefinition controllerDefinition, IControllerTemplate controllerTemplate, IControllerProfile controllerProfile, IInputTemplate inputTemplate, IControllerMapping controllerMapping);
+        string CompileController(int playerIndex, IPlatformInfo platformInfo, IControllerDefinition controllerDefinition, IControllerTemplate controllerTemplate, IControllerProfile controllerProfile, IInputTemplate inputTemplate, IControllerMapping controllerMapping);
+
         /// <summary>
         /// Shutdownt the currently running emulator
         /// </summary>
