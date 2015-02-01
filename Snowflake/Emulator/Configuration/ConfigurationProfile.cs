@@ -12,12 +12,12 @@ namespace Snowflake.Emulator.Configuration
 {
     public class ConfigurationProfile : IConfigurationProfile 
     {
-        public IReadOnlyDictionary<string, dynamic> ConfigurationValues { get; private set; }
+        public IDictionary<string, dynamic> ConfigurationValues { get; private set; }
         public string TemplateID { get; private set; }
      
         public ConfigurationProfile (string templateId, IDictionary<string, dynamic> value)
         {
-            this.ConfigurationValues = value.AsReadOnly();
+            this.ConfigurationValues = value;
             this.TemplateID = templateId;
         }
 
