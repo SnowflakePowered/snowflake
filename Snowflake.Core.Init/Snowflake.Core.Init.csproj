@@ -54,9 +54,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\ShortGuid.1.0.0\lib\net45\ShortGuid.dll</HintPath>
     </Reference>
-    <Reference Include="SnowflakeRA.bSNEScompatibility">
-      <HintPath>..\..\Emulator-SnowflakeRetroarch-working\Emulator-SnowflakeRetroarch\Emulator-SnowflakeRetroarch\SnowflakeRA.bSNES-compatibility\bin\Debug\SnowflakeRA.bSNEScompatibility.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
