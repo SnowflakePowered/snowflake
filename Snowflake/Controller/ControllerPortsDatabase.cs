@@ -54,7 +54,7 @@ namespace Snowflake.Controller
                 sqlCommand.Parameters.AddWithValue("@platform_id", platformInfo.PlatformId);
                 sqlCommand.ExecuteNonQuery();
                 this.DBConnection.Close();
-            }
+            }/*
             if (Environment.OSVersion.Platform == PlatformID.Win32NT)
             {
                 this.SetDefaults_Win32(platformInfo); //Set windows defaults if runs on windows. 
@@ -62,7 +62,7 @@ namespace Snowflake.Controller
             else
             {
                 this.SetDefaults_KeyboardOnly(platformInfo); //Only set keyboard defaults
-            }
+            }*/
         }
         public string GetDeviceInPort(IPlatformInfo platformInfo, int portNumber)
         {
