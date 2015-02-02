@@ -36,23 +36,23 @@ namespace Snowflake.Emulator.Configuration
                 throw new ArgumentException("type can be one of BOOLEAN_FLAG, INTEGER_FLAG, SELECT_FLAG. Fix your emulator plugin.");
             string description = protoTemplate["description"];
             string defaultValue = protoTemplate["default"].ToString();
-            dynamic max = 0;
-            dynamic min = 0;
-            dynamic selectTypes;
-            protoTemplate.TryGetValue("max", out max);
-            protoTemplate.TryGetValue("min", out min);
-            protoTemplate.TryGetValue("values", out selectTypes);
-            try
+            int max = 0;
+            int min = 0;
+            IList<IConfigurationFlagSelectValue> selectTypes = null;
+            if (protoTemplate.ContainsKey("max"))
             {
-                selectTypes = selectTypes.ToObject(typeof(IList<ConfigurationFlagSelectValue>));
+                max = (int)protoTemplate["max"];
             }
-            catch (NullReferenceException)
+            if (protoTemplate.ContainsKey("min"))
             {
-                selectTypes = null;
-
+                min = (int)protoTemplate["min"];
             }
-
-            selectTypes = ((IList<ConfigurationFlagSelectValue>)selectTypes).Select(x => (IConfigurationFlagSelectValue)x).ToList();
+            if (protoTemplate.ContainsKey("values"))
+            {
+                selectTypes = ((IList<ConfigurationFlagSelectValue>)protoTemplate["values"].ToObject(typeof(IList<ConfigurationFlagSelectValue>)))
+                    .Select(x => (IConfigurationFlagSelectValue)x).ToList();
+            }
+           
             return new ConfigurationFlag(key, type, defaultValue, description, (int)max, (int)min, selectTypes);
 
         }

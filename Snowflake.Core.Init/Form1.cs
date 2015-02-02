@@ -29,6 +29,7 @@ using Snowflake.Emulator.Input;
 using Snowflake.Emulator.Input.Constants;
 using Snowflake.Emulator;
 using Snowflake.Utility;
+using SnowflakeRA.bSNEScompatibility;
 namespace Snowflake.Service.Init
 {
     public partial class Form1 : Form
@@ -38,7 +39,7 @@ namespace Snowflake.Service.Init
         {
             InitializeComponent();
             Console.SetOut(new MultiTextWriter(new ControlWriter(this.textBox1), Console.Out));
-            //start();
+            start();
             string x_ = @"
 [
     {
@@ -80,7 +81,9 @@ namespace Snowflake.Service.Init
 
             var game = CoreService.LoadedCore.GameDatabase.GetGameByUUID(gameUuid);
 
-            CoreService.LoadedCore.PluginManager.LoadedEmulators["SnowflakeRA-bSNES-compatibility"].StartRom(game);
+           // CoreService.LoadedCore.PluginManager.LoadedEmulators["SnowflakeRA-bSNES-compatibility"].StartRom(game);
+            var emu = new EmulatorBSNESCompatibility(CoreService.LoadedCore);
+            emu.StartRom(game);
            // CoreService.LoadedCore.PluginManager.LoadedEmulators.First().Value.StartRom(game);
 
 
