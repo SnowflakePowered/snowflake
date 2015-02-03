@@ -54,7 +54,7 @@ namespace Snowflake.Controller
                 sqlCommand.Parameters.AddWithValue("@platform_id", platformInfo.PlatformId);
                 sqlCommand.ExecuteNonQuery();
                 this.DBConnection.Close();
-            }
+            }/*
             if (Environment.OSVersion.Platform == PlatformID.Win32NT)
             {
                 this.SetDefaults_Win32(platformInfo); //Set windows defaults if runs on windows. 
@@ -62,7 +62,7 @@ namespace Snowflake.Controller
             else
             {
                 this.SetDefaults_KeyboardOnly(platformInfo); //Only set keyboard defaults
-            }
+            }*/
         }
         public string GetDeviceInPort(IPlatformInfo platformInfo, int portNumber)
         {
@@ -105,15 +105,15 @@ namespace Snowflake.Controller
 
         private void SetDefaults_Win32(IPlatformInfo platformInfo)
         {
-            this.SetDeviceInPort(platformInfo, 1, ControllerPortDeviceNames.KeyboardDevice);
-            this.SetDeviceInPort(platformInfo, 2, ControllerPortDeviceNames.XInputDevice1);
-            this.SetDeviceInPort(platformInfo, 3, ControllerPortDeviceNames.XInputDevice2);
-            this.SetDeviceInPort(platformInfo, 4, ControllerPortDeviceNames.XInputDevice3);
-            this.SetDeviceInPort(platformInfo, 5, ControllerPortDeviceNames.XInputDevice4);
+            this.SetDeviceInPort(platformInfo, 1, InputDeviceNames.KeyboardDevice);
+            this.SetDeviceInPort(platformInfo, 2, InputDeviceNames.XInputDevice1);
+            this.SetDeviceInPort(platformInfo, 3, InputDeviceNames.XInputDevice2);
+            this.SetDeviceInPort(platformInfo, 4, InputDeviceNames.XInputDevice3);
+            this.SetDeviceInPort(platformInfo, 5, InputDeviceNames.XInputDevice4);
         }
         private void SetDefaults_KeyboardOnly(IPlatformInfo platformInfo)
         {
-            this.SetDeviceInPort(platformInfo, 1, ControllerPortDeviceNames.KeyboardDevice);
+            this.SetDeviceInPort(platformInfo, 1, InputDeviceNames.KeyboardDevice);
         }
     }
 }

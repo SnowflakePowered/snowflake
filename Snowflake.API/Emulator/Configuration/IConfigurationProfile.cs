@@ -12,7 +12,7 @@ namespace Snowflake.Emulator.Configuration
         /// <summary>
         /// The values of the configuration where the key is the name of the configuration value as specified by the configuration template
         /// </summary>
-        IReadOnlyDictionary<string, dynamic> ConfigurationValues { get; }
+        IDictionary<string, dynamic> ConfigurationValues { get; }
         /// <summary>
         /// The ID of the configuration template this profile corresponds to 
         /// </summary>

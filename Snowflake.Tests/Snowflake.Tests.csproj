@@ -100,10 +100,6 @@
       <Project>{2841aeea-03d5-47b0-9d90-375dfa19559a}</Project>
       <Name>Snowflake.API</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Snowflake.InputManager.DirectInput\Snowflake.InputManager.DirectInput.csproj">
-      <Project>{f668fd18-74cb-4774-88a4-41614b2fb0ab}</Project>
-      <Name>Snowflake.InputManager.DirectInput</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Snowflake\Snowflake.csproj">
       <Project>{8f1d65ed-4a96-4a0a-8371-53655a60a2b3}</Project>
       <Name>Snowflake</Name>

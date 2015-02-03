@@ -71,7 +71,7 @@ namespace Snowflake.Emulator
         /// <param name="controllerProfile">The controller profile to compile for</param>
         /// <param name="inputTemplate">The input template to compile for</param>
         /// <returns></returns>
-        string CompileController(int playerIndex, IControllerDefinition controllerDefinition, IControllerTemplate controllerTemplate, IControllerProfile controllerProfile, IInputTemplate inputTemplate);
+        string CompileController(int playerIndex, IPlatformInfo platformInfo, IControllerDefinition controllerDefinition, IControllerTemplate controllerTemplate, IControllerProfile controllerProfile, IInputTemplate inputTemplate);
         /// <summary>
         /// Compile a controller given a specific platform
         /// </summary>
@@ -80,6 +80,8 @@ namespace Snowflake.Emulator
         /// <param name="inputTemplate">The input template to compile for</param>
         /// <returns></returns>
         string CompileController(int playerIndex, IPlatformInfo platformInfo, IInputTemplate inputTemplate);
+        string CompileController(int playerIndex, IPlatformInfo platformInfo, IControllerDefinition controllerDefinition, IControllerTemplate controllerTemplate, IControllerProfile controllerProfile, IInputTemplate inputTemplate, IReadOnlyDictionary<string, IControllerMapping> controllerMappings);
+
         /// <summary>
         /// Shutdownt the currently running emulator
         /// </summary>

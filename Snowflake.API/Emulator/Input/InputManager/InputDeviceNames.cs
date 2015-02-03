@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Snowflake.Controller
 {
-    public static class ControllerPortDeviceNames
+    public static class InputDeviceNames
     {
         public static readonly string KeyboardDevice = "KeyboardDevice";
         public static readonly string XInputDevice1 = "XInputDevice1";

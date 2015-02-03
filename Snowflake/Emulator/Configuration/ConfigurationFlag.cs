@@ -16,9 +16,9 @@ namespace Snowflake.Emulator.Configuration
         public string Description { get; private set; }
         public int RangeMin { get; private set; }
         public int RangeMax { get; private set; }
-        public IReadOnlyDictionary<string, string> SelectValues { get; private set; }
-        
-        public ConfigurationFlag(string key, ConfigurationFlagTypes type, string defaultValue, string description, int rangeMin = 0, int rangeMax = 0, IDictionary<string, string> selectValues = null)
+        public IList<IConfigurationFlagSelectValue> SelectValues { get; private set; }
+
+        public ConfigurationFlag(string key, ConfigurationFlagTypes type, string defaultValue, string description, int rangeMin = 0, int rangeMax = 0, IList<IConfigurationFlagSelectValue> selectValues = null)
         {
             this.Key = key;
             this.Type = type;
@@ -26,14 +26,7 @@ namespace Snowflake.Emulator.Configuration
             this.Description = description;
             this.RangeMin = rangeMin;
             this.RangeMax = rangeMax;
-            if (selectValues != null)
-            {
-                this.SelectValues = selectValues.AsReadOnly();
-            }
-            else
-            {
-                this.SelectValues = null;
-            }
+            this.SelectValues = selectValues;
         }
 
         public static IConfigurationFlag FromJsonProtoTemplate(IDictionary<string, dynamic> protoTemplate){
@@ -43,23 +36,24 @@ namespace Snowflake.Emulator.Configuration
                 throw new ArgumentException("type can be one of BOOLEAN_FLAG, INTEGER_FLAG, SELECT_FLAG. Fix your emulator plugin.");
             string description = protoTemplate["description"];
             string defaultValue = protoTemplate["default"].ToString();
-            dynamic max = 0;
-            dynamic min = 0;
-            dynamic selectTypes;
-            protoTemplate.TryGetValue("max", out max);
-            protoTemplate.TryGetValue("min", out min);
-            protoTemplate.TryGetValue("values", out selectTypes);
-            try
+            int max = 0;
+            int min = 0;
+            IList<IConfigurationFlagSelectValue> selectTypes = null;
+            if (protoTemplate.ContainsKey("max"))
             {
-                selectTypes.ToObject(typeof(IDictionary<string, string>));
+                max = (int)protoTemplate["max"];
             }
-            catch (NullReferenceException)
+            if (protoTemplate.ContainsKey("min"))
             {
-                selectTypes = null;
-
+                min = (int)protoTemplate["min"];
             }
-            
-            return new ConfigurationFlag(key, type, defaultValue, description, max, min, selectTypes);
+            if (protoTemplate.ContainsKey("values"))
+            {
+                selectTypes = ((IList<ConfigurationFlagSelectValue>)protoTemplate["values"].ToObject(typeof(IList<ConfigurationFlagSelectValue>)))
+                    .Select(x => (IConfigurationFlagSelectValue)x).ToList();
+            }
+           
+            return new ConfigurationFlag(key, type, defaultValue, description, (int)max, (int)min, selectTypes);
 
         }
     }

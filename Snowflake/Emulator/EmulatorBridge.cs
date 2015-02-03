@@ -30,6 +30,8 @@ namespace Snowflake.Emulator
         public EmulatorBridge(Assembly pluginAssembly, ICoreService coreInstance) : base(pluginAssembly, coreInstance) {
 
             this.ConfigurationFlagStore = new ConfigurationFlagStore(this);
+            var flagsProtoTemplates = JsonConvert.DeserializeObject<IList<IDictionary<string, dynamic>>>(this.GetStringResource("flags.json"));
+            this.ConfigurationFlags = flagsProtoTemplates.Select(protoTemplate => ConfigurationFlag.FromJsonProtoTemplate(protoTemplate)).ToDictionary(key => key.Key, key => key);
             var configurationProtoTemplates = JsonConvert.DeserializeObject<IList<IDictionary<string, dynamic>>>(this.GetStringResource("configurations.json"));
             this.ConfigurationTemplates = configurationProtoTemplates.Select(protoTemplate => ConfigurationTemplate.FromJsonProtoTemplate(protoTemplate)).ToDictionary(key => key.TemplateID, key => key);
             var inputProtoTemplates = JsonConvert.DeserializeObject<IList<IDictionary<string, dynamic>>>(this.GetStringResource("input.json"));
@@ -37,6 +39,7 @@ namespace Snowflake.Emulator
             var controllerProtoTemplates = JsonConvert.DeserializeObject<IList<IDictionary<string, dynamic>>>(this.GetStringResource("controllers.json"));
             this.ControllerTemplates = controllerProtoTemplates.Select(protoTemplate => ControllerTemplate.FromJsonProtoTemplate(protoTemplate)).ToDictionary(key => key.ControllerID, key => key);
             this.EmulatorAssembly = coreInstance.EmulatorManager.EmulatorAssemblies[this.PluginInfo["emulator_assembly"]];
+
         }
 
         public abstract void StartRom(IGameInfo gameInfo);
@@ -73,17 +76,23 @@ namespace Snowflake.Emulator
             IControllerProfile controllerProfile = controllerDefinition.ProfileStore[deviceName];
 
             return this.CompileController(playerIndex, 
+                platformInfo,
                 controllerDefinition,
                 this.ControllerTemplates[controllerProfile.ControllerID],
                 controllerProfile,
                 inputTemplate);
         }
-        public virtual string CompileController(int playerIndex, IControllerDefinition controllerDefinition, IControllerTemplate controllerTemplate, IControllerProfile controllerProfile, IInputTemplate inputTemplate)
+
+        public virtual string CompileController(int playerIndex, IPlatformInfo platformInfo, IControllerDefinition controllerDefinition, IControllerTemplate controllerTemplate, IControllerProfile controllerProfile, IInputTemplate inputTemplate)
+        {
+            var controllerMappings = controllerProfile.ProfileType == ControllerProfileType.KEYBOARD_PROFILE ?
+                controllerTemplate.KeyboardControllerMappings : controllerTemplate.GamepadControllerMappings;
+            return this.CompileController(playerIndex, platformInfo, controllerDefinition, controllerTemplate, controllerProfile, inputTemplate, controllerMappings);
+        }
+
+        public virtual string CompileController(int playerIndex, IPlatformInfo platformInfo, IControllerDefinition controllerDefinition, IControllerTemplate controllerTemplate, IControllerProfile controllerProfile, IInputTemplate inputTemplate, IReadOnlyDictionary<string, IControllerMapping> controllerMappings)
         {
             var template = new StringBuilder(inputTemplate.StringTemplate);
-            var controllerMappings = controllerProfile.ProfileType == ControllerProfileType.KEYBOARD_PROFILE ? 
-                controllerTemplate.KeyboardControllerMappings : controllerTemplate.GamepadControllerMappings;
-
             foreach (IControllerInput input in controllerDefinition.ControllerInputs.Values)
             {
                 string templateKey = controllerMappings["default"].InputMappings[input.InputName];
