@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using Snowflake.Game;
 using Newtonsoft.Json;
+using Snowflake.Service;
 
 namespace Snowflake.Emulator.Configuration
 {
@@ -13,20 +14,32 @@ namespace Snowflake.Emulator.Configuration
     {
         public string EmulatorBridgeID { get; private set; }
         readonly string configurationFlagLocation;
-
+        readonly IEmulatorBridge emulatorBridge;
         public ConfigurationFlagStore(IEmulatorBridge emulatorBridge)
         {
             this.EmulatorBridgeID = emulatorBridge.PluginName;
+            this.emulatorBridge = emulatorBridge;
             this.configurationFlagLocation = Path.Combine(emulatorBridge.PluginDataPath, "flagscache");
             if (!Directory.Exists(configurationFlagLocation)) Directory.CreateDirectory(configurationFlagLocation);
         }
         public void AddGame(IGameInfo gameInfo, IDictionary<string, string> flagValues)
         {
-            File.WriteAllText(this.GetCacheFileName(gameInfo), JsonConvert.SerializeObject(flagValues));
+            if (!File.Exists(this.GetCacheFileName(gameInfo)))
+            {
+                File.WriteAllText(this.GetCacheFileName(gameInfo), JsonConvert.SerializeObject(flagValues));
+            }
         }
         public dynamic GetValue(IGameInfo gameInfo, string key, ConfigurationFlagTypes type)
         {
-            string value = JsonConvert.DeserializeObject<IDictionary<string, string>>(File.ReadAllText(this.GetCacheFileName(gameInfo)))[key];
+            string value = String.Empty;
+            try
+            {
+                value = JsonConvert.DeserializeObject<IDictionary<string, string>>(File.ReadAllText(this.GetCacheFileName(gameInfo)))[key];
+            }
+            catch
+            {
+                value = emulatorBridge.ConfigurationFlags[key].DefaultValue;
+            }
             switch (type)
             {
                 case ConfigurationFlagTypes.SELECT_FLAG:
