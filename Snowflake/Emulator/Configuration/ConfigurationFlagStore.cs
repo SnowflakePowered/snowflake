@@ -21,6 +21,15 @@ namespace Snowflake.Emulator.Configuration
             this.emulatorBridge = emulatorBridge;
             this.configurationFlagLocation = Path.Combine(emulatorBridge.PluginDataPath, "flagscache");
             if (!Directory.Exists(configurationFlagLocation)) Directory.CreateDirectory(configurationFlagLocation);
+            this.AddDefaults(emulatorBridge.ConfigurationFlags);
+        }
+        private void AddDefaults(IDictionary<string, IConfigurationFlag> configurationFlags)
+        {
+            IDictionary<string, string> flagValues = configurationFlags.ToDictionary(flag => flag.Key, flag => flag.Value.DefaultValue);
+            if (!File.Exists(this.GetDefaultFileName()))
+            {
+                File.WriteAllText(this.GetDefaultFileName(), JsonConvert.SerializeObject(flagValues));
+            }
         }
         public void AddGame(IGameInfo gameInfo, IDictionary<string, string> flagValues)
         {
@@ -29,16 +38,43 @@ namespace Snowflake.Emulator.Configuration
                 File.WriteAllText(this.GetCacheFileName(gameInfo), JsonConvert.SerializeObject(flagValues));
             }
         }
+        public void AddGame(IGameInfo gameInfo)
+        {
+            IDictionary<string, string> flagValues = new Dictionary<string, string>();
+            this.AddGame(gameInfo, flagValues);
+        }
         public dynamic GetValue(IGameInfo gameInfo, string key, ConfigurationFlagTypes type)
+        {
+            return this.GetValue(key, type, this.GetCacheFileName(gameInfo), this.GetDefaultValue(key, type));
+        }
+        public void SetValue(IGameInfo gameInfo, string key, object value, ConfigurationFlagTypes type)
+        {
+            this.SetValue(key, value, type, this.GetCacheFileName(gameInfo));
+        }
+        public dynamic GetDefaultValue(string key, ConfigurationFlagTypes type)
+        {
+            return this.GetValue(key, type, this.GetDefaultFileName(), this.emulatorBridge.ConfigurationFlags[key].DefaultValue);
+        }
+        public void SetDefaultValue(string key, object value, ConfigurationFlagTypes type)
+        {
+            this.SetValue(key, value, type, this.GetDefaultFileName());
+        }
+        private void SetValue(string key, object value, ConfigurationFlagTypes type, string filename)
+        {
+            IDictionary<string, string> keys = JsonConvert.DeserializeObject<IDictionary<string, string>>(File.ReadAllText(filename));
+            keys[key] = value.ToString();
+            File.WriteAllText(filename, JsonConvert.SerializeObject(keys));
+        }
+        private dynamic GetValue(string key, ConfigurationFlagTypes type, string filename, string fallback)
         {
             string value = String.Empty;
             try
             {
-                value = JsonConvert.DeserializeObject<IDictionary<string, string>>(File.ReadAllText(this.GetCacheFileName(gameInfo)))[key];
+                value = JsonConvert.DeserializeObject<IDictionary<string, string>>(File.ReadAllText(filename))[key];
             }
             catch
             {
-                value = emulatorBridge.ConfigurationFlags[key].DefaultValue;
+                value = fallback;
             }
             switch (type)
             {
@@ -51,11 +87,6 @@ namespace Snowflake.Emulator.Configuration
                 default:
                     return value;
             }
-        }
-        public void SetValue(IGameInfo gameInfo, string key, object value, ConfigurationFlagTypes type)
-        {
-            IDictionary<string, string> keys = JsonConvert.DeserializeObject<IDictionary<string, string>>(File.ReadAllText(this.GetCacheFileName(gameInfo)));
-            keys.Add(key, value.ToString());
         }
         public dynamic this[IGameInfo gameInfo, string key, ConfigurationFlagTypes type]
         {
@@ -71,6 +102,10 @@ namespace Snowflake.Emulator.Configuration
         private string GetCacheFileName(IGameInfo gameInfo)
         {
             return Path.Combine(this.configurationFlagLocation, String.Format("{0}.{1}.cfg", gameInfo.UUID, this.EmulatorBridgeID));
+        }
+        private string GetDefaultFileName()
+        {
+            return Path.Combine(this.configurationFlagLocation, String.Format("{0}.{1}.cfg", "default", this.EmulatorBridgeID));
         }
     }
 }
