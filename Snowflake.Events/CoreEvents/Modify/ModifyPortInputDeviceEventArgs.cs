@@ -7,9 +7,9 @@ using Snowflake.Service;
 using Snowflake.Controller;
 using Snowflake.Platform;
 
-namespace Snowflake.Events.CoreEvents.Modify
+namespace Snowflake.Events.CoreEvents.ModifyEvent
 {
-    public class ModifyPortInputDeviceEvent : SnowflakeEventArgs
+    public class ModifyPortInputDeviceEventArgs : SnowflakeEventArgs
     {
         public int PortNumber
         {
@@ -28,7 +28,7 @@ namespace Snowflake.Events.CoreEvents.Modify
         public IPlatformInfo Platform { get; set; }
         public string PreviousPortInputDevice { get; private set; }
         public string ModifiedPortInputDevice { get; set; }
-        public ModifyPortInputDeviceEvent(ICoreService eventCoreInstance, int portNumber, IPlatformInfo platformInfo, string previousPortInputDevice, string modifiedPortInputDevice)
+        public ModifyPortInputDeviceEventArgs(ICoreService eventCoreInstance, int portNumber, IPlatformInfo platformInfo, string previousPortInputDevice, string modifiedPortInputDevice)
             : base(eventCoreInstance)
         {
             this.portNumber = portNumber;

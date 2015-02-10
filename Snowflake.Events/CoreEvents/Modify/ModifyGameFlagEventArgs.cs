@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Snowflake.Emulator.Configuration;
 using Snowflake.Service;
 
-namespace Snowflake.Events.CoreEvents.Modify
+namespace Snowflake.Events.CoreEvents.ModifyEvent
 {
     public class ModifyGameFlagEventArgs : SnowflakeEventArgs
     {

@@ -12,9 +12,5 @@ namespace Snowflake.Events
         {
 
         }
-        public void RegisterEvent(Func<object, SnowflakeEventArgs> eventHandler, string eventName)
-        {
-           
-        }
     }
 }
