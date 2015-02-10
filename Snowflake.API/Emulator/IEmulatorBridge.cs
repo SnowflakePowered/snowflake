@@ -12,7 +12,7 @@ namespace Snowflake.Emulator
 {
     /// <summary>
     /// Represents an Emulator Bridge
-    /// An Emulator Bridge 'bridges' the gap between an unwrapper assembly, such as an .exe or a libretro core and
+    /// An Emulator Bridge 'bridges' the gap between a wrapper assembly, such as an .exe or a libretro core and
     /// wraps it so that Snowflake can call into it using specified endpoints. It is responsible for managing
     /// the controller and emulator configuration for the emulator, converting from Snowflake's config format into 
     /// whatever format the assembly accepts.

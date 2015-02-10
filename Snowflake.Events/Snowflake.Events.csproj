@@ -39,6 +39,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CoreEvents\GameDeleteEventArgs.cs" />
+    <Compile Include="CoreEvents\GameEventArgs.cs" />
+    <Compile Include="CoreEvents\GameScrapedEventArgs.cs" />
+    <Compile Include="CoreEvents\GameIdentifiedEventArgs.cs" />
+    <Compile Include="CoreEvents\GameProcessStartEventArgs.cs" />
+    <Compile Include="CoreEvents\GameProcessQuitEventArgs.cs" />
+    <Compile Include="CoreEvents\GameAddEventArgs.cs" />
+    <Compile Include="CoreEvents\GameQuitEventArgs.cs" />
     <Compile Include="CoreEvents\GameStartEventArgs.cs" />
     <Compile Include="SnowflakeEventArgs.cs" />
     <Compile Include="SnowflakeEventSource.cs" />
