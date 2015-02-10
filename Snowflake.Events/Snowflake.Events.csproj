@@ -39,15 +39,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CoreEvents\GameDeleteEventArgs.cs" />
-    <Compile Include="CoreEvents\GameEventArgs.cs" />
-    <Compile Include="CoreEvents\GameScrapedEventArgs.cs" />
-    <Compile Include="CoreEvents\GameIdentifiedEventArgs.cs" />
-    <Compile Include="CoreEvents\GameProcessStartEventArgs.cs" />
-    <Compile Include="CoreEvents\GameProcessQuitEventArgs.cs" />
-    <Compile Include="CoreEvents\GameAddEventArgs.cs" />
-    <Compile Include="CoreEvents\GameQuitEventArgs.cs" />
-    <Compile Include="CoreEvents\GameStartEventArgs.cs" />
+    <Compile Include="CoreEvents\Game\GameDeleteEventArgs.cs" />
+    <Compile Include="CoreEvents\Game\GameEventArgs.cs" />
+    <Compile Include="CoreEvents\Game\GameScrapedEventArgs.cs" />
+    <Compile Include="CoreEvents\Game\GameIdentifiedEventArgs.cs" />
+    <Compile Include="CoreEvents\Game\GameProcessStartEventArgs.cs" />
+    <Compile Include="CoreEvents\Game\GameProcessQuitEventArgs.cs" />
+    <Compile Include="CoreEvents\Game\GameAddEventArgs.cs" />
+    <Compile Include="CoreEvents\Game\GameQuitEventArgs.cs" />
+    <Compile Include="CoreEvents\Game\GameStartEventArgs.cs" />
+    <Compile Include="CoreEvents\Modify\ModifyGameFlagEventArgs.cs" />
+    <Compile Include="CoreEvents\Modify\ModifyGameInfoEventArgs.cs" />
+    <Compile Include="CoreEvents\Modify\ModifyPortInputDeviceEvent.cs" />
     <Compile Include="SnowflakeEventArgs.cs" />
     <Compile Include="SnowflakeEventSource.cs" />
     <Compile Include="SnowflakeEventSource.Game.cs" />

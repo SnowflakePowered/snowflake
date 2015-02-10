@@ -7,7 +7,7 @@ using Snowflake.Service;
 using Snowflake.Emulator;
 using Snowflake.Game;
 
-namespace Snowflake.Events.CoreEvents
+namespace Snowflake.Events.CoreEvents.GameEvent
 {
     public class GameDeleteEventArgs : GameEventArgs
     {

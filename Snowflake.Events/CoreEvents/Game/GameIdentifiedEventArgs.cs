@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Snowflake.Service;
 using Snowflake.Platform;
 
-namespace Snowflake.Events.CoreEvents
+namespace Snowflake.Events.CoreEvents.GameEvent
 {
     public class GameIdentifiedEventArgs : SnowflakeEventArgs
     {

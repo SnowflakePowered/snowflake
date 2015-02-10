@@ -7,7 +7,7 @@ using Snowflake.Service;
 using Snowflake.Platform;
 using Snowflake.Game;
 using Snowflake.Scraper;
-namespace Snowflake.Events.CoreEvents
+namespace Snowflake.Events.CoreEvents.GameEvent
 {
     public class GameScrapedEventArgs : GameEventArgs
     {

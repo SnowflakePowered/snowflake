@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Service;
-using Snowflake.Events.CoreEvents;
+using Snowflake.Events.CoreEvents.GameEvent;
+
 namespace Snowflake.Events
 {
     public partial class SnowflakeEventSource

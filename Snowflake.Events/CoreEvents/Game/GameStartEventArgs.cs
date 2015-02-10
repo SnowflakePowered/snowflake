@@ -7,13 +7,13 @@ using Snowflake.Service;
 using Snowflake.Emulator;
 using Snowflake.Game;
 
-namespace Snowflake.Events.CoreEvents
+namespace Snowflake.Events.CoreEvents.GameEvent
 {
-    public class GameQuitEventArgs : GameEventArgs
+    public class GameStartEventArgs : GameEventArgs
     {
-        public IEmulatorAssembly GameEmulatorAssembly { get; private set; }
-        public IEmulatorBridge GameEmulatorBridge { get; private set; }
-        public GameQuitEventArgs(ICoreService eventCoreInstance, IGameInfo gameInfo, IEmulatorAssembly emulatorAssembly, IEmulatorBridge emulatorBridge)
+        public IEmulatorAssembly GameEmulatorAssembly { get; set; }
+        public IEmulatorBridge GameEmulatorBridge { get; set; }
+        public GameStartEventArgs(ICoreService eventCoreInstance, IGameInfo gameInfo, IEmulatorAssembly emulatorAssembly, IEmulatorBridge emulatorBridge)
             : base(eventCoreInstance, gameInfo)
         {
             this.GameEmulatorAssembly = emulatorAssembly;
