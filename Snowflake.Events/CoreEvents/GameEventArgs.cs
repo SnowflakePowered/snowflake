@@ -10,7 +10,6 @@ namespace Snowflake.Events.CoreEvents
 {
     public abstract class GameEventArgs : SnowflakeEventArgs
     {
-
         public IGameInfo GameInfo { get; set; }
         
         public GameEventArgs(ICoreService eventCoreInstance, IGameInfo gameInfo) : base(eventCoreInstance)

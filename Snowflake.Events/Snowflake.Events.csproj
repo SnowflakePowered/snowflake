@@ -50,6 +50,7 @@
     <Compile Include="CoreEvents\GameStartEventArgs.cs" />
     <Compile Include="SnowflakeEventArgs.cs" />
     <Compile Include="SnowflakeEventSource.cs" />
+    <Compile Include="SnowflakeEventSource.Game.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

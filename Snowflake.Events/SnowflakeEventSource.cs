@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Snowflake.Service;
+
 namespace Snowflake.Events
 {
-    public class SnowflakeEventSource
+    public partial class SnowflakeEventSource
     {
-
-        public SnowflakeEventSource(ICoreService coreInstance){
+        public SnowflakeEventSource()
+        {
 
         }
         public void RegisterEvent(Func<object, SnowflakeEventArgs> eventHandler, string eventName)
         {
-
+           
         }
     }
 }
