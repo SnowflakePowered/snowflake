@@ -8,15 +8,15 @@ namespace Snowflake.Events
 {
     public partial class SnowflakeEventSource
     {
-        public static SnowflakeEventSource SnowflakeEventSource;
+        public static SnowflakeEventSource EventSource;
         SnowflakeEventSource()
         {
         }
         public static void InitEventSource()
         {
-            if (SnowflakeEventSource.SnowflakeEventSource == null)
+            if (SnowflakeEventSource.EventSource == null)
             {
-                SnowflakeEventSource.SnowflakeEventSource = new SnowflakeEventSource();
+                SnowflakeEventSource.EventSource = new SnowflakeEventSource();
             }
         }
     }
