@@ -53,14 +53,17 @@
     <Compile Include="CoreEvents\Modify\ModifyGameInfoEventArgs.cs" />
     <Compile Include="CoreEvents\Modify\ModifyPlatformPreferenceEventArgs.cs" />
     <Compile Include="CoreEvents\Modify\ModifyPortInputDeviceEventArgs.cs" />
+    <Compile Include="ServiceEvents\AjaxResponseSendingEventArgs.cs" />
+    <Compile Include="ServiceEvents\AjaxRequestReceivedEventArgs.cs" />
+    <Compile Include="ServiceEvents\CoreLoadedEventArgs.cs" />
+    <Compile Include="ServiceEvents\EmulatorPromptEventArgs.cs" />
     <Compile Include="SnowflakeEventArgs.cs" />
     <Compile Include="SnowflakeEventSource.cs" />
     <Compile Include="SnowflakeEventSource.Game.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SnowflakeEventSource.ServiceEvents.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ServiceEvents\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Snowflake.API\Snowflake.API.csproj">
       <Project>{2841aeea-03d5-47b0-9d90-375dfa19559a}</Project>
