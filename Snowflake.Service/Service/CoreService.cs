@@ -9,7 +9,7 @@ using System.IO;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using Newtonsoft.Json;
-using Snowflake.Events.CoreEvents;
+using Snowflake.Events.CoreEvents.GameEvent;
 using System.Threading;
 using Snowflake.Information;
 using System.Reflection;

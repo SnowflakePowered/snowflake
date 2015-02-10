@@ -65,7 +65,7 @@ namespace Snowflake.Emulator.Configuration
             keys[key] = value.ToString();
             File.WriteAllText(filename, JsonConvert.SerializeObject(keys));
         }
-        private dynamic GetValue(string key, ConfigurationFlagTypes type, string filename, string fallback)
+        private dynamic GetValue(string key, ConfigurationFlagTypes type, string filename, object fallback)
         {
             string value = String.Empty;
             try
@@ -74,7 +74,7 @@ namespace Snowflake.Emulator.Configuration
             }
             catch
             {
-                value = fallback;
+                value = fallback.ToString();
             }
             switch (type)
             {
