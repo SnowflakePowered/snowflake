@@ -49,6 +49,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SNES_CONTROLLER", "SNES_CON
 		ControllerProfiles\SNES_CONTROLLER\XInputDevice1-SNES_CONTROLLER.json = ControllerProfiles\SNES_CONTROLLER\XInputDevice1-SNES_CONTROLLER.json
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Events", "Snowflake.Events\Snowflake.Events.csproj", "{7AE8E842-E2A9-4F01-BEC1-8A7A60CC16BB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -80,6 +82,10 @@ Global
 		{F3A129D6-0C4C-41BC-B60B-5B7E7E6D1A77}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3A129D6-0C4C-41BC-B60B-5B7E7E6D1A77}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3A129D6-0C4C-41BC-B60B-5B7E7E6D1A77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AE8E842-E2A9-4F01-BEC1-8A7A60CC16BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AE8E842-E2A9-4F01-BEC1-8A7A60CC16BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AE8E842-E2A9-4F01-BEC1-8A7A60CC16BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AE8E842-E2A9-4F01-BEC1-8A7A60CC16BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
