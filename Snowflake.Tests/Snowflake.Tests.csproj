@@ -67,6 +67,11 @@
   <ItemGroup>
     <Compile Include="Controller\ControllerDefinitionTests.cs" />
     <Compile Include="Controller\ControllerProfileTests.cs" />
+    <Compile Include="Events\SnowflakeEventSourceTests.cs" />
+    <Compile Include="Fakes\FakeCoreService.cs" />
+    <Compile Include="Fakes\FakeGameDatabase.cs" />
+    <Compile Include="Fakes\FakeGameInfo.cs" />
+    <Compile Include="Fakes\FakeMediaStore.cs" />
     <Compile Include="Game\GameInfoTests.cs" />
     <Compile Include="Platform\PlatformInfoTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -99,6 +104,10 @@
     <ProjectReference Include="..\Snowflake.API\Snowflake.API.csproj">
       <Project>{2841aeea-03d5-47b0-9d90-375dfa19559a}</Project>
       <Name>Snowflake.API</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Snowflake.Events\Snowflake.Events.csproj">
+      <Project>{7ae8e842-e2a9-4f01-bec1-8a7a60cc16bb}</Project>
+      <Name>Snowflake.Events</Name>
     </ProjectReference>
     <ProjectReference Include="..\Snowflake\Snowflake.csproj">
       <Project>{8f1d65ed-4a96-4a0a-8371-53655a60a2b3}</Project>
