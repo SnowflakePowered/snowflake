@@ -49,7 +49,7 @@
     <Compile Include="CoreEvents\Game\GameQuitEventArgs.cs" />
     <Compile Include="CoreEvents\Game\GameStartEventArgs.cs" />
     <Compile Include="CoreEvents\Modify\ModifyControllerProfileEventArgs.cs" />
-    <Compile Include="CoreEvents\Modify\ModifyGameFlagEventArgs.cs" />
+    <Compile Include="CoreEvents\Modify\ModifyConfigurationFlagEventArgs.cs" />
     <Compile Include="CoreEvents\Modify\ModifyGameInfoEventArgs.cs" />
     <Compile Include="CoreEvents\Modify\ModifyPlatformPreferenceEventArgs.cs" />
     <Compile Include="CoreEvents\Modify\ModifyPortInputDeviceEventArgs.cs" />

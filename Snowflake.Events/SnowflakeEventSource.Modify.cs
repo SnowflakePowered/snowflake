@@ -9,7 +9,7 @@ namespace Snowflake.Events
     public partial class SnowflakeEventSource
     {
         public event EventHandler<ModifyControllerProfileEventArgs> ControllerProfileModify;
-        public event EventHandler<ModifyGameFlagEventArgs> GameFlagModify;
+        public event EventHandler<ModifyConfigurationFlagEventArgs> ConfigurationFlagModify;
         public event EventHandler<ModifyGameInfoEventArgs> GameInfoModify;
         public event EventHandler<ModifyPlatformPreferenceEventArgs> PlatformPreferenceModify;
         public event EventHandler<ModifyPortInputDeviceEventArgs> PortInputDeviceModify;
@@ -21,11 +21,11 @@ namespace Snowflake.Events
                 this.ControllerProfileModify(this, e);
             }
         }
-        public void OnGameFlagModify(ModifyGameFlagEventArgs e)
+        public void OnConfigurationFlagModify(ModifyConfigurationFlagEventArgs e)
         {
-            if (this.GameFlagModify != null)
+            if (this.ConfigurationFlagModify != null)
             {
-                this.GameFlagModify(this, e);
+                this.ConfigurationFlagModify(this, e);
             }
         }
         public void OnGameInfoModify(ModifyGameInfoEventArgs e)

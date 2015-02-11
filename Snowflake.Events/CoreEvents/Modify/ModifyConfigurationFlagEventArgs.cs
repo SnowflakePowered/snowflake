@@ -8,13 +8,13 @@ using Snowflake.Service;
 
 namespace Snowflake.Events.CoreEvents.ModifyEvent
 {
-    public class ModifyGameFlagEventArgs : SnowflakeEventArgs
+    public class ModifyConfigurationFlagEventArgs : SnowflakeEventArgs
     {
         public IConfigurationFlag ConfigurationFlag { get; private set; }
         public object PreviousFlagValue { get; private set; }
         public object ModifiedFlagValue { get; set; }
 
-        public ModifyGameFlagEventArgs(ICoreService eventCoreInstance, object previousFlagValue, object modifiedFlagValue, IConfigurationFlag configurationFlag): base(eventCoreInstance)
+        public ModifyConfigurationFlagEventArgs(ICoreService eventCoreInstance, object previousFlagValue, object modifiedFlagValue, IConfigurationFlag configurationFlag): base(eventCoreInstance)
         {
             this.PreviousFlagValue = previousFlagValue;
             this.ModifiedFlagValue = modifiedFlagValue;
