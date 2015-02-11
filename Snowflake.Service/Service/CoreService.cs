@@ -9,7 +9,7 @@ using System.IO;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using Newtonsoft.Json;
-using Snowflake.Events.CoreEvents;
+using Snowflake.Events.ServiceEvents;
 using System.Threading;
 using Snowflake.Information;
 using System.Reflection;
@@ -41,12 +41,6 @@ namespace Snowflake.Service
         public IBaseHttpServer APIServer { get; private set; }
         public IBaseHttpServer MediaStoreServer { get; private set; }
 
-
-        #region Events
-        public delegate void PluginManagerLoadedEvent(object sender, PluginManagerLoadedEventArgs e);
-        public event EventHandler CoreLoaded;
-        #endregion
-
         public static void InitCore()
         {
             var core = new CoreService();
@@ -66,7 +60,8 @@ namespace Snowflake.Service
             CoreService.LoadedCore.EmulatorManager.LoadEmulatorAssemblies();
             CoreService.LoadedCore.PluginManager.LoadAll();
             CoreService.LoadedCore.AjaxManager.LoadAll();
-      //      CoreService.LoadedCore.OnPluginManagerLoaded(new PluginManagerLoadedEventArgs());
+            
+
         }
 
         public CoreService() : this(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Snowflake")) { }
@@ -137,11 +132,5 @@ namespace Snowflake.Service
             }
             return loadedControllers;
         }
-        protected virtual void OnPluginManagerLoaded(PluginManagerLoadedEventArgs e)
-        {
-            if (CoreLoaded != null)
-                CoreLoaded(this, e);
-        }
-
     }
 }
