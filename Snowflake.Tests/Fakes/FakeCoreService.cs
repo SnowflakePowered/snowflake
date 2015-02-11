@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Snowflake.Service;
 namespace Snowflake.Tests.Fakes
 {
-    public class FakeCoreServices : ICoreService
+    internal class FakeCoreService : ICoreService
     {
 
         public Service.Manager.IAjaxManager AjaxManager

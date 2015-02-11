@@ -68,10 +68,15 @@
     <Compile Include="Controller\ControllerDefinitionTests.cs" />
     <Compile Include="Controller\ControllerProfileTests.cs" />
     <Compile Include="Events\SnowflakeEventSourceTests.cs" />
+    <Compile Include="Fakes\FakeControllerProfile.cs" />
     <Compile Include="Fakes\FakeCoreService.cs" />
+    <Compile Include="Fakes\FakeEmulatorAssembly.cs" />
+    <Compile Include="Fakes\FakeEmulatorBridge.cs" />
     <Compile Include="Fakes\FakeGameDatabase.cs" />
     <Compile Include="Fakes\FakeGameInfo.cs" />
     <Compile Include="Fakes\FakeMediaStore.cs" />
+    <Compile Include="Fakes\FakePlatformInfo.cs" />
+    <Compile Include="Fakes\FakeScraper.cs" />
     <Compile Include="Game\GameInfoTests.cs" />
     <Compile Include="Platform\PlatformInfoTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
