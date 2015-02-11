@@ -11,6 +11,7 @@ namespace Snowflake.Events
         public event EventHandler<AjaxRequestReceivedEventArgs> AjaxRequestReceived;
         public event EventHandler<AjaxResponseSendingEventArgs> AjaxResponseSending;
         public event EventHandler<CoreLoadedEventArgs> CoreLoaded;
+        public event EventHandler<CoreShutdownEventArgs> CoreShutdown;
         public event EventHandler<EmulatorPromptEventArgs> EmulatorPrompt;
 
         public void OnAjaxRequestReceived(AjaxRequestReceivedEventArgs e)
@@ -32,6 +33,13 @@ namespace Snowflake.Events
             if (this.CoreLoaded != null)
             {
                 this.CoreLoaded(this, e);
+            }
+        }
+        public void OnCoreShutdown(CoreShutdownEventArgs e)
+        {
+            if (this.CoreShutdown != null)
+            {
+                this.CoreShutdown(this, e);
             }
         }
         public void OnEmulatorPrompt(EmulatorPromptEventArgs e)

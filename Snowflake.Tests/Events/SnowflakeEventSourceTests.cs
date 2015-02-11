@@ -160,6 +160,16 @@ namespace Snowflake.Events.Tests
             SnowflakeEventSource.EventSource.OnCoreLoaded(args);
         }
         [Fact]
+        public void CoreShutdownEvent_Test()
+        {
+            var args = new CoreShutdownEventArgs(new FakeCoreService());
+            SnowflakeEventSource.EventSource.CoreShutdown += (s, e) =>
+            {
+                Assert.Equal(args, e);
+            };
+            SnowflakeEventSource.EventSource.OnCoreShutdown(args);
+        }
+        [Fact]
         public void EmulatorPromptEvent_Test()
         {
             var args = new EmulatorPromptEventArgs(new FakeCoreService(), "testprompt", "testbridge");

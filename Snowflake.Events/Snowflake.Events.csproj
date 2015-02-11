@@ -59,6 +59,7 @@
     <Compile Include="ServiceEvents\AjaxResponseSendingEventArgs.cs" />
     <Compile Include="ServiceEvents\AjaxRequestReceivedEventArgs.cs" />
     <Compile Include="ServiceEvents\CoreLoadedEventArgs.cs" />
+    <Compile Include="ServiceEvents\CoreShutdownEventArgs.cs" />
     <Compile Include="ServiceEvents\EmulatorPromptEventArgs.cs" />
     <Compile Include="SnowflakeEventArgs.cs" />
     <Compile Include="SnowflakeEventSource.cs" />
