@@ -14,10 +14,11 @@ namespace Snowflake.Events.CoreEvents.ModifyEvent
         public object PreviousFlagValue { get; private set; }
         public object ModifiedFlagValue { get; set; }
 
-        public ModifyGameFlagEventArgs(ICoreService eventCoreInstance, object previousFlagValue, object modifiedFlagValue): base(eventCoreInstance)
+        public ModifyGameFlagEventArgs(ICoreService eventCoreInstance, object previousFlagValue, object modifiedFlagValue, IConfigurationFlag configurationFlag): base(eventCoreInstance)
         {
             this.PreviousFlagValue = previousFlagValue;
             this.ModifiedFlagValue = modifiedFlagValue;
+            this.ConfigurationFlag = configurationFlag;
         }
     }
 }
