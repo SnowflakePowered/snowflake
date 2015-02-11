@@ -34,10 +34,6 @@ namespace Snowflake.Service
         /// </summary>
         IControllerPortsDatabase ControllerPortsDatabase { get; }
         /// <summary>
-        /// This even occurs when the core is successfully loaded
-        /// </summary>
-        event EventHandler CoreLoaded;
-        /// <summary>
         /// The database that contains games information
         /// </summary>
         IGameDatabase GameDatabase { get; }
