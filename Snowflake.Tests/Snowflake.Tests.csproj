@@ -73,9 +73,14 @@
     <Compile Include="Fakes\FakeEmulatorAssembly.cs" />
     <Compile Include="Fakes\FakeEmulatorBridge.cs" />
     <Compile Include="Fakes\FakeGameDatabase.cs" />
+    <Compile Include="Fakes\FakeConfigurationFlag.cs" />
     <Compile Include="Fakes\FakeGameInfo.cs" />
+    <Compile Include="Fakes\FakeJSRequest.cs" />
+    <Compile Include="Fakes\FakeJSResponse.cs" />
     <Compile Include="Fakes\FakeMediaStore.cs" />
     <Compile Include="Fakes\FakePlatformInfo.cs" />
+    <Compile Include="Fakes\FakeControllerPortsDatabase.cs" />
+    <Compile Include="Fakes\FakePlatformPreferencesDatabase.cs" />
     <Compile Include="Fakes\FakeScraper.cs" />
     <Compile Include="Game\GameInfoTests.cs" />
     <Compile Include="Platform\PlatformInfoTests.cs" />
