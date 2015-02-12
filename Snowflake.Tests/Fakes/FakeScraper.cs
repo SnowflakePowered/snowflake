@@ -72,5 +72,21 @@ namespace Snowflake.Tests.Fakes
         {
             get { throw new NotImplementedException(); }
         }
+
+
+        public IList<Scraper.IGameScrapeResult> GetSearchResults(IDictionary<string, string> identifiedMetadata, string platformId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IList<Scraper.IGameScrapeResult> GetSearchResults(IDictionary<string, string> identifiedMetadata, string searchQuery, string platformId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IList<Scraper.IGameScrapeResult> SortBestResults(IDictionary<string, string> identifiedMetadata, IList<Scraper.IGameScrapeResult> searchResults)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
