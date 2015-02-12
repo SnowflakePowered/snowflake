@@ -27,7 +27,7 @@ namespace Snowflake.Scraper
         public abstract IList<IGameScrapeResult> GetSearchResults(string searchQuery, string platformId);
         public abstract IList<IGameScrapeResult> GetSearchResults(IDictionary<string, string> identifiedMetadata, string platformId);
         public abstract IList<IGameScrapeResult> GetSearchResults(IDictionary<string, string> identifiedMetadata, string searchQuery, string platformId);
-
+        public abstract IList<IGameScrapeResult> SortBestResults(IDictionary<string, string> identifiedMetadata, IList<IGameScrapeResult> searchResults);
         public abstract Tuple<IDictionary<string, string>, IGameImagesResult> GetGameDetails(string id);
 
     }
