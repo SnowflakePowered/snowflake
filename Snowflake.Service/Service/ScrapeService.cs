@@ -19,19 +19,21 @@ namespace Snowflake.Service
     {
         private IPlatformInfo ScrapePlatform { get; set; }
         private IScraper ScraperPlugin { get; set; }
-        private IIdentifier IdentifierPlugin { get; set; }
         public ScrapeService(IPlatformInfo scrapePlatform)
         {
             this.ScrapePlatform = scrapePlatform;
             this.ScraperPlugin = CoreService.LoadedCore.PluginManager.LoadedScrapers[ScrapePlatform.Defaults.Scraper];
-            this.IdentifierPlugin = CoreService.LoadedCore.PluginManager.LoadedIdentifiers[ScrapePlatform.Defaults.Identifier];
         }
 
         public IGameInfo GetGameInfo(string fileName)
         {
 
-            string gameName = this.IdentifierPlugin.IdentifyGame(fileName, this.ScrapePlatform.PlatformId);
-            var results = this.ScraperPlugin.GetSearchResults(gameName, this.ScrapePlatform.PlatformId).OrderBy(result => result.GameTitle.LevenshteinDistance(gameName)).ToList();
+            IDictionary<string, string> identifiedMetadata = CoreService.LoadedCore.PluginManager.LoadedIdentifiers.Values
+                .Where(identifier => identifier.SupportedPlatforms.Contains(this.ScrapePlatform.PlatformId))
+                .ToDictionary(identifier => identifier.PluginName,
+                    identifier => identifier.IdentifyGame(fileName, this.ScrapePlatform.PlatformId));
+
+            var results = this.ScraperPlugin.SortBestResults(identifiedMetadata, this.ScraperPlugin.GetSearchResults(identifiedMetadata, this.ScrapePlatform.PlatformId));
             var resultdetails = this.ScraperPlugin.GetGameDetails(results[0].ID);
             var gameinfo = resultdetails.Item1;
             var gameUuid = FileHash.GetMD5(fileName);
