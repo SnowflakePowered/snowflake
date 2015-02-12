@@ -30,6 +30,21 @@ namespace Snowflake.Scraper
         /// <returns></returns>
         IList<IGameScrapeResult> GetSearchResults(string searchQuery, string platformId);
         /// <summary>
+        /// Gets the search results given a string query
+        /// </summary>
+        /// <param name="identifiedMetadata">The identified metadata gleaned from the ROM file</param>
+        /// <param name="searchQuery">The string to search</param>
+        /// <returns></returns>
+        IList<IGameScrapeResult> GetSearchResults(IDictionary<string, string> identifiedMetadata, string platformId);
+        /// <summary>
+        /// Gets the search results given a string query and the Snowflake platform ID of a platform
+        /// </summary>
+        /// <param name="identifiedMetadata">The identified metadata gleaned from the ROM file</param>
+        /// <param name="searchQuery">The string to search</param>
+        /// <param name="platformId">The Snowflake platform ID</param>
+        /// <returns></returns>
+        IList<IGameScrapeResult> GetSearchResults(IDictionary<string, string> identifiedMetadata, string searchQuery, string platformId);
+        /// <summary>
         /// Gets the details of the games from the result id
         /// </summary>
         /// <param name="id">Search Result ID</param>
