@@ -9,11 +9,11 @@ using Snowflake.Game;
 using Snowflake.Scraper;
 namespace Snowflake.Events.CoreEvents.GameEvent
 {
-    public class GameScrapedEventArgs : GameEventArgs
+    public class GameInfoScrapedEventArgs : GameEventArgs
     {
-        public IScraper GameScraper { get; set; }
+        public IScraper GameScraper { get; private set; }
 
-        public GameScrapedEventArgs(ICoreService eventCoreInstance, IGameInfo gameInfo, IScraper gameScraper)
+        public GameInfoScrapedEventArgs(ICoreService eventCoreInstance, IGameInfo gameInfo, IScraper gameScraper)
             : base(eventCoreInstance, gameInfo)
         {
             this.GameScraper = gameScraper;

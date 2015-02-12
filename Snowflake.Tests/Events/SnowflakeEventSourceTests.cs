@@ -40,16 +40,6 @@ namespace Snowflake.Events.Tests
             SnowflakeEventSource.EventSource.OnGameDelete(args);
         }
         [Fact]
-        public void GameIdentifiedEvent_Test()
-        {
-            var args = new GameIdentifiedEventArgs(new FakeCoreService(), "test", "test.rom", new FakePlatformInfo());
-            SnowflakeEventSource.EventSource.GameIdentified += (s, e) =>
-            {
-                Assert.Equal(args, e);
-            };
-            SnowflakeEventSource.EventSource.OnGameIdentified(args);
-        }
-        [Fact]
         public void GameProcessQuitEventArgs_Test()
         {
             var args = new GameProcessQuitEventArgs(new FakeCoreService(), new FakeGameInfo(), new FakeEmulatorAssembly(), new FakeEmulatorBridge(), new System.Diagnostics.Process());
@@ -90,14 +80,24 @@ namespace Snowflake.Events.Tests
             SnowflakeEventSource.EventSource.OnGameStart(args);
         }
         [Fact]
-        public void GameScrapedEvent_Test()
+        public void GameInfoScrapedEvent_Test()
         {
-            var args = new GameScrapedEventArgs(new FakeCoreService(), new FakeGameInfo(), new FakeScraper());
-            SnowflakeEventSource.EventSource.GameScraped += (s, e) =>
+            var args = new GameInfoScrapedEventArgs(new FakeCoreService(), new FakeGameInfo(), new FakeScraper());
+            SnowflakeEventSource.EventSource.GameInfoScraped += (s, e) =>
             {
                 Assert.Equal(args, e);
             };
-            SnowflakeEventSource.EventSource.OnGameScraped(args);
+            SnowflakeEventSource.EventSource.OnGameInfoScraped(args);
+        }
+        [Fact]
+        public void GameScrapeResultsEvent_Test()
+        {
+            var args = new GameResultsScrapedEventArgs(new FakeCoreService(), "TEST", new List<Snowflake.Scraper.IGameScrapeResult>(), new FakeScraper());
+            SnowflakeEventSource.EventSource.GameResultsScraped += (s, e) =>
+            {
+                Assert.Equal(args, e);
+            };
+            SnowflakeEventSource.EventSource.OnGameResultScraped(args);
         }
         [Fact]
         public void ModifyControllerProfileEvent_Test()
