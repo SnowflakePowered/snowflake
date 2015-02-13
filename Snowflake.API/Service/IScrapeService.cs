@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using Snowflake.Game;
+using Snowflake.Scraper;
 namespace Snowflake.Service
 {
     /// <summary>
@@ -14,6 +16,20 @@ namespace Snowflake.Service
         /// </summary>
         /// <param name="fileName">The filename of the game</param>
         /// <returns>The game information</returns>
-       IGameInfo GetGameInfo(string fileName);
+        IGameInfo GetGameInfo(string fileName);
+        /// <summary>
+        /// Gets the game information for a result
+        /// </summary>
+        /// <param name="gameResult">The game scrape result</param>
+        /// <param name="fileName">The filename of the game</param>
+        /// <returns>The game information</returns>
+        IGameInfo GetGameInfo(IGameScrapeResult gameResult, string fileName);
+        /// <summary>
+        /// Gets the game results given the file name of a game
+        /// </summary>
+        /// <param name="fileName">The filename of the game</param>
+        /// <returns>The game scrape results</returns>
+        IList<IGameScrapeResult> GetGameResults(string fileName);
+
     }
 }

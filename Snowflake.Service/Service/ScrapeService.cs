@@ -25,16 +25,23 @@ namespace Snowflake.Service
             this.ScraperPlugin = CoreService.LoadedCore.PluginManager.LoadedScrapers[ScrapePlatform.Defaults.Scraper];
         }
 
-        public IGameInfo GetGameInfo(string fileName)
+        public IList<IGameScrapeResult> GetGameResults(string fileName)
         {
-
             IDictionary<string, string> identifiedMetadata = CoreService.LoadedCore.PluginManager.LoadedIdentifiers.Values
                 .Where(identifier => identifier.SupportedPlatforms.Contains(this.ScrapePlatform.PlatformId))
                 .ToDictionary(identifier => identifier.PluginName,
                     identifier => identifier.IdentifyGame(fileName, this.ScrapePlatform.PlatformId));
+            identifiedMetadata["md5"] = FileHash.GetMD5(fileName);
+            identifiedMetadata["crc32"] = FileHash.GetCRC32(fileName);
+            identifiedMetadata["sha1"] = FileHash.GetSHA1(fileName);
+            identifiedMetadata["filename"] = fileName; 
+            return this.ScraperPlugin.SortBestResults(identifiedMetadata, this.ScraperPlugin.GetSearchResults(identifiedMetadata, this.ScrapePlatform.PlatformId));
 
-            var results = this.ScraperPlugin.SortBestResults(identifiedMetadata, this.ScraperPlugin.GetSearchResults(identifiedMetadata, this.ScrapePlatform.PlatformId));
-            var resultdetails = this.ScraperPlugin.GetGameDetails(results[0].ID);
+        }
+
+        public IGameInfo GetGameInfo(IGameScrapeResult gameResult, string fileName)
+        {
+            var resultdetails = this.ScraperPlugin.GetGameDetails(gameResult.ID);
             var gameinfo = resultdetails.Item1;
             var gameUuid = FileHash.GetMD5(fileName);
             return new GameInfo(
@@ -45,6 +52,12 @@ namespace Snowflake.Service
                 gameUuid,
                 fileName
             );
+        }
+
+        public IGameInfo GetGameInfo(string fileName)
+        {
+            var results = this.GetGameResults(fileName);
+            return this.GetGameInfo(results[0], fileName);
         }
         private static string ValidateFilename(string text, char? replacement = '_')
         {
