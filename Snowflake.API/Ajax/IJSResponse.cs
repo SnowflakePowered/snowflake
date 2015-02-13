@@ -23,6 +23,6 @@ namespace Snowflake.Ajax
         /// <summary>
         /// Whether the request was successful
         /// </summary>
-        bool Result { get; }
+        bool Success { get; }
     }
 }

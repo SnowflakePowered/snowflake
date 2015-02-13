@@ -11,32 +11,32 @@ namespace Snowflake.Ajax
     {
         public IJSRequest Request { get; private set; }
         public dynamic Payload { get; private set; }
-        public bool Result { get; set; }
-        public JSResponse(IJSRequest request, dynamic payload, bool result = true)
+        public bool Success { get; set; }
+        public JSResponse(IJSRequest request, dynamic payload, bool success = true)
         {
             this.Request = request;
             this.Payload = payload;
-            this.Result = result;
+            this.Success = success;
         }
 
         public string GetJson()
         {
-            return JSResponse.ProcessJSONP(this.Payload, this.Result, this.Request);
+            return JSResponse.ProcessJSONP(this.Payload, this.Success, this.Request);
         }
-        private static string ProcessJSONP(dynamic output, bool result, IJSRequest request)
+        private static string ProcessJSONP(dynamic output, bool success, IJSRequest request)
         {
             if (request.MethodParameters.ContainsKey("jsoncallback"))
             {
                 return request.MethodParameters["jsoncallback"] + "(" + JsonConvert.SerializeObject(new Dictionary<string, object>(){
                     {"payload", output},
-                    {"result", result}
+                    {"success", success}
                 }) + ");";
             }
             else
             {
                 return JsonConvert.SerializeObject(new Dictionary<string, object>(){
                     {"payload", output},
-                    {"result", result}
+                    {"result", success}
                 });
             }
         }
