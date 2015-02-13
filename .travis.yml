@@ -8,4 +8,10 @@ install:
 script:
   - xbuild /p:Configuration=Debug Snowflake.sln
 notifications:
-  irc: "irc.stormbit.net#snowflake"
+  irc:
+    channels:
+      - "irc.stormbit.net#snowflake"
+    on_success: always
+    on_failure: always
+    use_notice: false
+    skip_join: false
