@@ -7,3 +7,11 @@ install:
   - mono ./.nuget/NuGet.exe install xunit.runners -Version 2.0.0-rc1-build2826 -OutputDirectory testrunner
 script:
   - xbuild /p:Configuration=Debug Snowflake.sln
+notifications:
+  irc:
+    channels:
+      - "irc.stormbit.net#snowflake"
+    on_success: always
+    on_failure: always
+    use_notice: false
+    skip_join: false
