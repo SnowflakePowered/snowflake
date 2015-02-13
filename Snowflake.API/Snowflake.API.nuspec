@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/SnowflakePowered/snowflake</projectUrl>
     <iconUrl>https://raw.githubusercontent.com/SnowflakePowered/snowflake/master/branding/Snowflake-Ring-128.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>"Snowflake API C# Interfaces Library"</description>
+    <description>Snowflake API C# Interface Library</description>
     <copyright>Copyright Ronny Chan 2015</copyright>
     <tags>Snowflake Emulator Frontend</tags>
   </metadata>

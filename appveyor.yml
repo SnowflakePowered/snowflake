@@ -4,6 +4,7 @@ branches:
   only:
     - master
 skip_tags: true
+clone_depth: 50
 test:
   assemblies:
     - Snowflake.Test.dll
@@ -28,23 +29,38 @@ after_test:
     - echo Uploading Code Coverage Report to Coveralls
     - packages\coveralls.io.1.1.86\tools\coveralls.net.exe --opencover coverage.xml
     - echo Packing NuGet packages
+    - nuget pack Snowflake.API\Snowflake.API.csproj -IncludeReferencedProjects -Symbols
+    - nuget pack Snowflake.Events\Snowflake.Events.csproj -IncludeReferencedProjects -Symbols
     - nuget pack Snowflake\Snowflake.csproj -IncludeReferencedProjects -Symbols
-    - nuget pack Snowflake.API\Snowflake.API.csproj -IncludeReferencedProjects  -Symbols
+    - nuget pack Snowflake.InputManager.DirectInput\Snowflake.InputManager.DirectInput.csproj -IncludeReferencedProjects -Symbols
+    - nuget pack Snowflake.Tests\Snowflake.Tests.csproj -IncludeReferencedProjects -Symbols
 artifacts:
     - path: Snowflake\bin\$(configuration)
       name: Snowflake Base Libraries
       type: zip
     - path: doc
-      name: Generated documentation
+      name: Generated doxygen documentation
       type: zip
     - path: 'Snowflake\Snowflake.{version}-pre-alpha-nightly.nupkg'
       name: Snowflake NuGet Packages
     - path: 'Snowflake.API\Snowflake.API.{version}-pre-alpha-nightly.nupkg'
       name: Snowflake.API NuGet Packages
+    - path: 'Snowflake.Events\Snowflake.Events.{version}-pre-alpha-nightly.nupkg'
+      name: Snowflake.Events NuGet Packages
+    - path: 'Snowflake.InputManager.DirectInput\Snowflake.InputManager.DirectInput.{version}-pre-alpha-nightly.nupkg'
+      name: Snowflake.InputManager.DirectInput NuGet Packages
+    - path: 'Snowflake.Tests\Snowflake.Tests.{version}-pre-alpha-nightly.nupkg'
+      name: Snowflake.Tests NuGet Packages
     - path: 'Snowflake\Snowflake.{version}-pre-alpha-nightly.symbols.nupkg'
       name: Snowflake NuGet Packages
     - path: 'Snowflake.API\Snowflake.API.{version}-pre-alpha-nightly.symbols.nupkg'
       name: Snowflake.API NuGet Packages
+    - path: 'Snowflake.Events\Snowflake.Events.{version}-pre-alpha-nightly.symbols.nupkg'
+      name: Snowflake.Events NuGet Packages
+    - path: 'Snowflake.InputManager.DirectInput\Snowflake.InputManager.DirectInput.{version}-pre-alpha-nightly.symbols.nupkg'
+      name: Snowflake.InputManager.DirectInput NuGet Packages
+    - path: 'Snowflake.Tests\Snowflake.Tests.{version}-pre-alpha-nightly.symbols.nupkg'
+      name: Snowflake.Tests NuGet Packages
 assembly_info:
     patch: true
     file: SharedAssemblyInfo.cs
