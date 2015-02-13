@@ -14,8 +14,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Platforms", "Platforms", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Core.Init", "Snowflake.Core.Init\Snowflake.Core.Init.csproj", "{D60707C0-51B8-44DE-9CE7-12C2517CFD01}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ajax.SnowflakeCore", "Ajax.SnowflakeCore\Ajax.SnowflakeCore.csproj", "{4792C8C4-81A8-4AB1-9041-2DFF4F5E8DBB}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.API", "Snowflake.API\Snowflake.API.csproj", "{2841AEEA-03D5-47B0-9D90-375DFA19559A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.InputManager.DirectInput", "Snowflake.InputManager.DirectInput\Snowflake.InputManager.DirectInput.csproj", "{F668FD18-74CB-4774-88A4-41614B2FB0AB}"
@@ -51,6 +49,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SNES_CONTROLLER", "SNES_CON
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Events", "Snowflake.Events\Snowflake.Events.csproj", "{7AE8E842-E2A9-4F01-BEC1-8A7A60CC16BB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.StandardAjax", "Snowflake.StandardAjax\Snowflake.StandardAjax.csproj", "{25E40ACB-3872-4BEB-8937-AE70104E7F3B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -64,8 +64,6 @@ Global
 		{D60707C0-51B8-44DE-9CE7-12C2517CFD01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D60707C0-51B8-44DE-9CE7-12C2517CFD01}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D60707C0-51B8-44DE-9CE7-12C2517CFD01}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4792C8C4-81A8-4AB1-9041-2DFF4F5E8DBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4792C8C4-81A8-4AB1-9041-2DFF4F5E8DBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2841AEEA-03D5-47B0-9D90-375DFA19559A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2841AEEA-03D5-47B0-9D90-375DFA19559A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2841AEEA-03D5-47B0-9D90-375DFA19559A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -86,6 +84,10 @@ Global
 		{7AE8E842-E2A9-4F01-BEC1-8A7A60CC16BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7AE8E842-E2A9-4F01-BEC1-8A7A60CC16BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7AE8E842-E2A9-4F01-BEC1-8A7A60CC16BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25E40ACB-3872-4BEB-8937-AE70104E7F3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25E40ACB-3872-4BEB-8937-AE70104E7F3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25E40ACB-3872-4BEB-8937-AE70104E7F3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25E40ACB-3872-4BEB-8937-AE70104E7F3B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

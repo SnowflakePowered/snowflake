@@ -7,7 +7,6 @@ using Snowflake.Platform;
 using Snowflake.Game;
 using Snowflake.Plugin;
 using Snowflake.Constants;
-using DuoVia.FuzzyStrings;
 using Snowflake.Scraper;
 using System.IO;
 using Snowflake.Identifier;
