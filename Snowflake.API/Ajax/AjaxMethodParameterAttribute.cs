@@ -20,6 +20,8 @@ namespace Snowflake.Ajax
     {
         StringParameter,
         ObjectParameter,
-        ArrayParameter
+        ArrayParameter,
+        BoolParameter,
+        IntParameter
     }
 }
