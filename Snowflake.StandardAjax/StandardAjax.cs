@@ -7,7 +7,7 @@ using System.ComponentModel.Composition;
 using System.Reflection;
 using Snowflake.Ajax;
 using Snowflake.Service;
-namespace Snowflake.BaseAjax
+namespace Snowflake.StandardAjax
 {
     public partial class StandardAjax : BaseAjaxNamespace
     {
