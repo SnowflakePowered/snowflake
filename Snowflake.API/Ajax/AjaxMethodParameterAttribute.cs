@@ -11,7 +11,7 @@ namespace Snowflake.Ajax
     /// Does not affect execution.
     /// </summary>
     [AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = true)]
-    public class AjaxMethodParameterAttribute
+    public class AjaxMethodParameterAttribute : Attribute
     {
         public string ParameterName { get; set; }
         public AjaxMethodParameterType ParameterType { get; set; }
