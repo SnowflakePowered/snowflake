@@ -37,7 +37,7 @@ namespace Snowflake.StandardAjax
                     }
                     else
                     {
-                        return new JSResponse(request, "Error: Emulator not installed", false);
+                        throw new ArgumentException("Emulator Not Found", new KeyNotFoundException());
                     }
                 case "scraper":
                     if (this.CoreInstance.PluginManager.LoadedEmulators.ContainsKey(value))
@@ -47,10 +47,10 @@ namespace Snowflake.StandardAjax
                     }
                     else
                     {
-                        return new JSResponse(request, "Error: Scraper not installed", false);
+                        throw new ArgumentException("Scraper Not Found", new KeyNotFoundException());
                     }
                 default:
-                    return new JSResponse(request, "Error: unknown preference type", false);
+                    throw new ArgumentException("Unknown preference type");
             }
         }
 

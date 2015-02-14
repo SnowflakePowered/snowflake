@@ -32,8 +32,6 @@ namespace Snowflake.Platform
         {
             IPlatformDefaults platformDefaults = jsonDictionary["Defaults"].ToObject<PlatformDefaults>();
 
-           
-          //  string controllerId =
             return new PlatformInfo(
                     jsonDictionary["PlatformId"],
                     jsonDictionary["Name"],
