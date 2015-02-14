@@ -26,26 +26,27 @@ namespace Snowflake.StandardAjax
         [AjaxMethod(MethodPrefix = "System")]
         public IJSResponse GetScrapers(IJSRequest request)
         {
-            return new JSResponse(request, null);
+            return new JSResponse(request, this.CoreInstance.PluginManager.LoadedScrapers);
         }
 
         [AjaxMethod(MethodPrefix = "System")]
+        [AjaxMethodParameter(ParameterName = "platform", ParameterType = AjaxMethodParameterType.StringParameter)]
         public IJSResponse GetScrapersForPlatform(IJSRequest request)
         {
-            return new JSResponse(request, null);
+            return new JSResponse(request, this.CoreInstance.PluginManager.LoadedScrapers.Where(scraper => scraper.Value.SupportedPlatforms.Contains(request.GetParameter("platform"))));
         }
 
         [AjaxMethod(MethodPrefix = "System")]
         public IJSResponse GetAllPlugins(IJSRequest request)
         {
-            return new JSResponse(request, null);
+            return new JSResponse(request, this.CoreInstance.PluginManager.Registry);
 
         }
 
         [AjaxMethod(MethodPrefix = "System")]
         public IJSResponse GetAllAjaxMethods(IJSRequest request)
         {
-            return new JSResponse(request, null);
+            return new JSResponse(request, this.CoreInstance.AjaxManager.GlobalNamespace.ToDictionary(ajax => ajax.Key, ajax => ajax.Value.JavascriptMethods));
         }
 
         [AjaxMethod(MethodPrefix = "System")]
