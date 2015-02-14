@@ -27,8 +27,8 @@ namespace Snowflake.Ajax
             foreach (var method in this.GetType().GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy))
             {
                 if (!method.GetCustomAttributes(typeof(AjaxMethodAttribute), false).Any()) continue;
-                if (!(method.ReturnType is IJSResponse)) continue;
-                if (!(method.GetParameters().First().ParameterType is IJSRequest)) continue;
+                if (!(method.ReturnType.Equals(typeof(IJSResponse)))) continue;
+                if (!(method.GetParameters().First().ParameterType.Equals(typeof(IJSRequest)))) continue;
                 var requestParam = Expression.Parameter(typeof (IJSRequest));
                 var instanceRef = Expression.Constant(this, this.GetType());
                 var call = Expression.Call(

@@ -61,7 +61,6 @@ namespace Snowflake.Service.Manager
         {
             var catalog = new DirectoryCatalog(Path.Combine(this.LoadablesLocation, "plugins"));
             var container = new CompositionContainer(catalog);
-            Console.WriteLine(CoreService.LoadedCore.GetHashCode());
             container.ComposeExportedValue("coreInstance", CoreService.LoadedCore);
             container.ComposeParts(this);
         }

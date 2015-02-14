@@ -60,8 +60,6 @@ namespace Snowflake.Service
             CoreService.LoadedCore.EmulatorManager.LoadEmulatorAssemblies();
             CoreService.LoadedCore.PluginManager.LoadAll();
             CoreService.LoadedCore.AjaxManager.LoadAll();
-            
-
         }
 
         public CoreService() : this(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Snowflake")) { }

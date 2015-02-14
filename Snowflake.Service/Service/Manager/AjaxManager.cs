@@ -27,8 +27,6 @@ namespace Snowflake.Service.Manager
             this.globalNamespace = new Dictionary<string, IBaseAjaxNamespace>();
             this.LoadablesLocation = loadablesLocation;
             this.registry = new Dictionary<string, Type>();
-            this.ComposeImports();
-
         }
         public void RegisterNamespace(string namespaceName, IBaseAjaxNamespace namespaceObject)
         {
@@ -58,12 +56,15 @@ namespace Snowflake.Service.Manager
         {
             var catalog = new DirectoryCatalog(Path.Combine(this.LoadablesLocation, "ajax"));
             var container = new CompositionContainer(catalog);
-            container.SatisfyImportsOnce(this);
+            container.ComposeExportedValue("coreInstance", CoreService.LoadedCore);
+            container.ComposeParts(this);
         }
         public void LoadAll()
         {
-            foreach (var instance in this.ajaxNamespaces.Select(plugin => plugin.Value))
+            this.ComposeImports();
+            foreach (var ajaxNamespace in this.ajaxNamespaces)
             {
+                var instance = ajaxNamespace.Value;
                 this.RegisterNamespace(instance.PluginInfo["namespace"], instance);
                 this.registry.Add(instance.PluginName, typeof(IBaseAjaxNamespace));
             }

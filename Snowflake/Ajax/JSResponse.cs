@@ -36,7 +36,7 @@ namespace Snowflake.Ajax
             {
                 return JsonConvert.SerializeObject(new Dictionary<string, object>(){
                     {"payload", output},
-                    {"result", success}
+                    {"success", success}
                 });
             }
         }
