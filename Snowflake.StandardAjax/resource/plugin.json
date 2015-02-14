@@ -6,5 +6,6 @@
     "Snowflake Authors"
   ],
   "description": "Snowflake Standard Ajax",
-  "namespace": "@"
+  "namespace": "@",
+  "platforms": []
 }
