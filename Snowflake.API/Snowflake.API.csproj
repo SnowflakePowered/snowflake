@@ -75,6 +75,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Ajax\AjaxMethodAttribute.cs" />
+    <Compile Include="Ajax\AjaxMethodParameterAttribute.cs" />
     <Compile Include="Ajax\IBaseAjaxNamespace.cs" />
     <Compile Include="Ajax\IJSRequest.cs" />
     <Compile Include="Ajax\IJSResponse.cs" />

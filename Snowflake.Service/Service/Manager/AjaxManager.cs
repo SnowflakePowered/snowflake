@@ -42,9 +42,9 @@ namespace Snowflake.Service.Manager
                 IJSResponse result = this.GlobalNamespace[request.NameSpace].JavascriptMethods[request.MethodName].Invoke(request);
                 return result.GetJson();
             }
-            catch (KeyNotFoundException)
+            catch (Exception e)
             {
-                return JsonConvert.Undefined;
+                return new JSResponse(request, e, false).GetJson();
             }
         }
         public async Task<string> CallMethodAsync(IJSRequest request)

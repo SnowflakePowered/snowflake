@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Ajax;
+using Snowflake.Service;
 
 namespace Snowflake.StandardAjax
 {
@@ -12,13 +13,14 @@ namespace Snowflake.StandardAjax
         [AjaxMethod(MethodPrefix = "System")]
         public IJSResponse GetEmulatorBridges(IJSRequest request)
         {
-            return new JSResponse(request, null);
+            return new JSResponse(request, this.CoreInstance.PluginManager.LoadedEmulators);
         }
 
         [AjaxMethod(MethodPrefix = "System")]
+        [AjaxMethodParameter(ParameterName = "platform", ParameterType = AjaxMethodParameterType.StringParameter)]
         public IJSResponse GetEmulatorBridgesForPlatform(IJSRequest request)
         {
-            return new JSResponse(request, null);
+            return new JSResponse(request, this.CoreInstance.PluginManager.LoadedEmulators.Where(bridge => bridge.Value.SupportedPlatforms.Contains(request.GetParameter("platform"))));
         }
 
         [AjaxMethod(MethodPrefix = "System")]
