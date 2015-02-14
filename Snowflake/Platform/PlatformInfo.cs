@@ -20,6 +20,7 @@ namespace Snowflake.Platform
             this.Defaults = platformDefaults;
             this.Controllers = controllers;
             this.ControllerPorts = controllerPorts;
+            this.MaximumInputs = maximumInputs;
         }
        
         public IList<string> FileExtensions { get; private set; }
