@@ -15,3 +15,5 @@ notifications:
     on_failure: always
     use_notice: false
     skip_join: true
+  webhooks: http://fure-kun.herokuapp.com/hubot/travis?room=%23snowflake
+  
