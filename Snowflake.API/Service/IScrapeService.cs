@@ -25,6 +25,12 @@ namespace Snowflake.Service
         /// <returns>The game information</returns>
         IGameInfo GetGameInfo(IGameScrapeResult gameResult, string fileName);
         /// <summary>
+        /// Gets the game information given an ID
+        /// </summary>
+        /// <param name="fileName">The filename of the game</param>
+        /// <returns>The game information</returns>
+        IGameInfo GetGameInfo(string id, string fileName);
+        /// <summary>
         /// Gets the game results given the file name of a game
         /// </summary>
         /// <param name="fileName">The filename of the game</param>
