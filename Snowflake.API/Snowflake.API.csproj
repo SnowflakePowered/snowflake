@@ -146,6 +146,7 @@
     <Compile Include="Utility\Hash\Crc32.cs" />
     <Compile Include="Utility\Hash\Md5.cs" />
     <Compile Include="Utility\Hash\SHA1.cs" />
+    <Compile Include="Utility\StringEncode.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
