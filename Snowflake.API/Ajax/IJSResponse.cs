@@ -20,5 +20,9 @@ namespace Snowflake.Ajax
         /// The AJAX request that prompted this response
         /// </summary>
         IJSRequest Request { get; }
+        /// <summary>
+        /// Whether the request was successful
+        /// </summary>
+        bool Success { get; }
     }
 }

@@ -40,13 +40,18 @@ namespace Snowflake.Service
 
         public IGameInfo GetGameInfo(IGameScrapeResult gameResult, string fileName)
         {
-            var resultdetails = this.ScraperPlugin.GetGameDetails(gameResult.ID);
+            return this.GetGameInfo(gameResult.ID);
+        }
+
+        public IGameInfo GetGameInfo(string id, string fileName)
+        {
+            var resultdetails = this.ScraperPlugin.GetGameDetails(id);
             var gameinfo = resultdetails.Item1;
             var gameUuid = FileHash.GetMD5(fileName);
             return new GameInfo(
                 this.ScrapePlatform.PlatformId,
                 gameinfo[GameInfoFields.game_title],
-                resultdetails.Item2.ToMediaStore("game."+ScrapeService.ValidateFilename(gameinfo[GameInfoFields.game_title]).Replace(' ','_')+gameUuid),
+                resultdetails.Item2.ToMediaStore("game." + ScrapeService.ValidateFilename(gameinfo[GameInfoFields.game_title]).Replace(' ', '_') + gameUuid),
                 gameinfo,
                 gameUuid,
                 fileName

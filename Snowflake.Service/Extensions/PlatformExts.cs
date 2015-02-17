@@ -17,7 +17,7 @@ namespace Snowflake.Extensions
         /// </summary>
         /// <param name="platform"></param>
         /// <returns></returns>
-        public static ScrapeService GetScrapeEngine(this PlatformInfo platform) 
+        public static ScrapeService GetScrapeEngine(this IPlatformInfo platform) 
         {
             return new ScrapeService(platform);
         }

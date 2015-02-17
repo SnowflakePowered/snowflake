@@ -72,6 +72,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Ajax\AjaxMethodAttribute.cs" />
+    <Compile Include="Ajax\AjaxMethodParameterAttribute.cs" />
     <Compile Include="Ajax\IBaseAjaxNamespace.cs" />
     <Compile Include="Ajax\IJSRequest.cs" />
     <Compile Include="Ajax\IJSResponse.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="Utility\Hash\Crc32.cs" />
     <Compile Include="Utility\Hash\Md5.cs" />
     <Compile Include="Utility\Hash\SHA1.cs" />
+    <Compile Include="Utility\StringEncode.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -20,6 +20,7 @@ namespace Snowflake.Platform
             this.Defaults = platformDefaults;
             this.Controllers = controllers;
             this.ControllerPorts = controllerPorts;
+            this.MaximumInputs = maximumInputs;
         }
        
         public IList<string> FileExtensions { get; private set; }
@@ -31,8 +32,6 @@ namespace Snowflake.Platform
         {
             IPlatformDefaults platformDefaults = jsonDictionary["Defaults"].ToObject<PlatformDefaults>();
 
-           
-          //  string controllerId =
             return new PlatformInfo(
                     jsonDictionary["PlatformId"],
                     jsonDictionary["Name"],

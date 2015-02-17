@@ -22,5 +22,11 @@ namespace Snowflake.Tests.Fakes
         {
             get { throw new NotImplementedException(); }
         }
+
+
+        public bool Success
+        {
+            get { throw new NotImplementedException(); }
+        }
     }
 }

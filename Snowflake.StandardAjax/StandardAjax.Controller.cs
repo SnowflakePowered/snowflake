@@ -27,5 +27,25 @@ namespace Snowflake.StandardAjax
         {
             return new JSResponse(request, null);
         }
+
+        [AjaxMethod(MethodPrefix = "Controller")]
+        public IJSResponse GetControllers(IJSRequest request)
+        {
+            return new JSResponse(request, this.CoreInstance.LoadedControllers);
+        }
+
+        [AjaxMethod(MethodPrefix = "Controller")]
+        [AjaxMethodParameter(ParameterName = "controller", ParameterType = AjaxMethodParameterType.StringParameter)]
+        [AjaxMethodParameter(ParameterName = "slot", ParameterType = AjaxMethodParameterType.IntParameter)]
+        public IJSResponse SetInputDevice(IJSRequest request)
+        {
+            return new JSResponse(request, null);
+        }
+        [AjaxMethod(MethodPrefix = "Controller")]
+        [AjaxMethodParameter(ParameterName = "controller", ParameterType = AjaxMethodParameterType.StringParameter)]
+        public IJSResponse GetInputDevices(IJSRequest request)
+        {
+            return new JSResponse(request, null);
+        }
     }
 }
