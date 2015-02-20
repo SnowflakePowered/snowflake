@@ -1,10 +1,10 @@
 ﻿using System;
-namespace Snowflake.Service.Server
+namespace Snowflake.Service.JSWebSocketServer
 {
     /// <summary>
     /// Represents a web socket server for 2 way duplex communication
     /// </summary>
-    public interface IJsonWebSocketServer
+    public interface IJSWebSocketServer
     {
         /// <summary>
         /// Send a message to all connected clients

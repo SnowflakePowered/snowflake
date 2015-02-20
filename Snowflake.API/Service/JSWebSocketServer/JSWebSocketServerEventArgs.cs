@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Fleck;
-namespace Snowflake.Service.Server
+namespace Snowflake.Service.JSWebSocketServer
 {
     /// <summary>
     /// When the socket has received a message

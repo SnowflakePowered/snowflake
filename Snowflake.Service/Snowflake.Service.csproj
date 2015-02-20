@@ -82,7 +82,7 @@
     <Compile Include="Service\ScrapeService.cs" />
     <Compile Include="Service\Server\FileMediaStoreServer.cs" />
     <Compile Include="Service\Server\JsonApiServer.cs" />
-    <Compile Include="Service\Server\JsonWebSocketServer.cs" />
+    <Compile Include="Service\Server\JsonApiWebSocketServer.cs" />
     <Compile Include="Service\Server\MimeTypes.cs" />
     <Compile Include="Service\Server\ThemeServer.cs" />
   </ItemGroup>

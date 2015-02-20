@@ -28,19 +28,19 @@ using Snowflake.Emulator.Input;
 using Snowflake.Emulator.Input.Constants;
 using Snowflake.Emulator;
 using Snowflake.Utility;
-using Snowflake.Service.Server;
+using Snowflake.Service.JSWebSocketServer;
 using Fleck;
 namespace Snowflake.Service.Init
 {
     public partial class Form1 : Form
     {
-        JsonWebSocketServer server;
+        JsonApiWebSocketServer server;
         static CoreService fcRef;
         public Form1()
         {
             InitializeComponent();
             Console.SetOut(new MultiTextWriter(new ControlWriter(this.textBox1, this), Console.Out));
-            server = new JsonWebSocketServer(8181);
+            server = new JsonApiWebSocketServer(8181);
             server.StartServer();
             start();
  string x_ = @"

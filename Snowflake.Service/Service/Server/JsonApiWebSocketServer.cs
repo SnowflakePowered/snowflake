@@ -9,9 +9,9 @@ using Newtonsoft.Json.Linq;
 using System.Threading;
 using Fleck;
 
-namespace Snowflake.Service.Server
+namespace Snowflake.Service.JSWebSocketServer
 {
-    public class JsonWebSocketServer : IJsonWebSocketServer
+    public class JsonApiWebSocketServer : IJSWebSocketServer
     {
         IWebSocketServer server;
         IList<IWebSocketConnection> connections;
@@ -19,7 +19,7 @@ namespace Snowflake.Service.Server
         public event EventHandler<SocketConnectionEventArgs> SocketOpen;
         public event EventHandler<SocketConnectionEventArgs> SocketClose;
         public event EventHandler<SocketMessageReceivedEventArgs> SocketMessage;
-        public JsonWebSocketServer(int port)
+        public JsonApiWebSocketServer(int port)
         {
             server = new WebSocketServer("ws://0.0.0.0:" + port.ToString());
             this.connections = new List<IWebSocketConnection>();

@@ -134,14 +134,14 @@
     <Compile Include="Scraper\IScraper.cs" />
     <Compile Include="Service\HttpServer\BaseHttpServer.cs" />
     <Compile Include="Service\ICoreService.cs" />
-    <Compile Include="Service\WebSocketServer\IJsonWebSocketServer.cs" />
+    <Compile Include="Service\JSWebSocketServer\IJSWebSocketServer.cs" />
     <Compile Include="Service\IScrapeService.cs" />
     <Compile Include="Service\Manager\IAjaxManager.cs" />
     <Compile Include="Service\HttpServer\IBaseHttpServer.cs" />
     <Compile Include="Service\Manager\IEmulatorAssembliesManager.cs" />
     <Compile Include="Service\Manager\ILoadableManager.cs" />
     <Compile Include="Service\Manager\IPluginManager.cs" />
-    <Compile Include="Service\WebSocketServer\JsonWebSocketServerEventArgs.cs" />
+    <Compile Include="Service\JSWebSocketServer\JSWebSocketServerEventArgs.cs" />
     <Compile Include="Utility\BaseDatabase.cs" />
     <Compile Include="Utility\BiDictionary.cs" />
     <Compile Include="Utility\FileHash.cs" />
