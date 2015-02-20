@@ -12,34 +12,35 @@ using Snowflake.Service;
 namespace Snowflake.Ajax
 {
     /// <inheritdoc/>
-    public abstract class BaseAjaxNamespace :  BasePlugin, IBaseAjaxNamespace
+    public abstract class BaseAjaxNamespace : BasePlugin, IBaseAjaxNamespace
     {
-        public IDictionary<string, Func<IJSRequest, IJSResponse>> JavascriptMethods { get; private set; }
+        public IDictionary<string, IJSMethod> JavascriptMethods { get; private set; }
 
-        protected BaseAjaxNamespace(Assembly pluginAssembly, ICoreService coreInstance):base(pluginAssembly, coreInstance)
+        protected BaseAjaxNamespace(Assembly pluginAssembly, ICoreService coreInstance)
+            : base(pluginAssembly, coreInstance)
         {
-            this.JavascriptMethods = new Dictionary<string, Func<IJSRequest, IJSResponse>>();
+            this.JavascriptMethods = new Dictionary<string, IJSMethod>();
             this.RegisterMethods();
         }
 
         private void RegisterMethods()
         {
-            foreach (var method in this.GetType().GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy))
+            foreach (MethodInfo method in this.GetType().GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy))
             {
                 if (!method.GetCustomAttributes(typeof(AjaxMethodAttribute), false).Any()) continue;
                 if (!(method.ReturnType.Equals(typeof(IJSResponse)))) continue;
                 if (!(method.GetParameters().First().ParameterType.Equals(typeof(IJSRequest)))) continue;
-                var requestParam = Expression.Parameter(typeof (IJSRequest));
+                var requestParam = Expression.Parameter(typeof(IJSRequest));
                 var instanceRef = Expression.Constant(this, this.GetType());
                 var call = Expression.Call(
-                    instanceRef, method, new Expression[] {requestParam}
+                    instanceRef, method, new Expression[] { requestParam }
                     );
                 var methodAttribute = method.GetCustomAttribute<AjaxMethodAttribute>();
                 var methodPrefix = (methodAttribute.MethodPrefix != null) ? methodAttribute.MethodPrefix + "." : "";
                 string methodName = (methodAttribute.MethodName != null) ? methodAttribute.MethodName : method.Name;
                 this.JavascriptMethods.Add(methodPrefix + methodName,
-                    Expression.Lambda<Func<IJSRequest, IJSResponse>>(call, new ParameterExpression[] {requestParam})
-                        .Compile());
+                    new JSMethod(method, Expression.Lambda<Func<IJSRequest, IJSResponse>>(call, new ParameterExpression[] { requestParam })
+                        .Compile()));
             }
         }
     }

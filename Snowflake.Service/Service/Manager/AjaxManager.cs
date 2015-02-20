@@ -37,7 +37,7 @@ namespace Snowflake.Service.Manager
         {
             try
             {
-                IJSResponse result = this.GlobalNamespace[request.NameSpace].JavascriptMethods[request.MethodName].Invoke(request);
+                IJSResponse result = this.GlobalNamespace[request.NameSpace].JavascriptMethods[request.MethodName].Method.Invoke(request);
                 return result.GetJson();
             }
             catch (Exception e)
