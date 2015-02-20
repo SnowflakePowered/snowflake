@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Snowflake.Service.Manager;
 using Snowflake.Service.HttpServer;
+using Snowflake.Service.JSWebSocketServer;
 using Snowflake.Emulator.Configuration;
 using Snowflake.Controller;
 using Snowflake.Game;
@@ -21,6 +22,10 @@ namespace Snowflake.Service
         /// The Ajax API server
         /// </summary>
         IBaseHttpServer APIServer { get; }
+        /// <summary>
+        /// The WebSocket API server
+        /// </summary>
+        IJSWebSocketServer APIWebSocketServer { get; }
         /// <summary>
         /// The Emulator assemblies manager
         /// </summary>

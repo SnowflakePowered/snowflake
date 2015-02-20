@@ -28,17 +28,22 @@ using Snowflake.Emulator.Input;
 using Snowflake.Emulator.Input.Constants;
 using Snowflake.Emulator;
 using Snowflake.Utility;
+using Snowflake.Service.JSWebSocketServer;
+using Fleck;
 namespace Snowflake.Service.Init
 {
     public partial class Form1 : Form
     {
+        JsonApiWebSocketServer server;
         static CoreService fcRef;
         public Form1()
         {
             InitializeComponent();
-            Console.SetOut(new MultiTextWriter(new ControlWriter(this.textBox1), Console.Out));
+            Console.SetOut(new MultiTextWriter(new ControlWriter(this.textBox1, this), Console.Out));
+            server = new JsonApiWebSocketServer(8181);
+            server.StartServer();
             start();
-            string x_ = @"
+ string x_ = @"
 [
     {
         key: 'fullscreen_toggle',
@@ -125,7 +130,6 @@ namespace Snowflake.Service.Init
           //  Console.WriteLine(keyControl);
             // bridge.StartRom(game,controllerProfile);
             int playerIndex = 1;
-            
 
             //   Console.WriteLine(new EmulatorBridge().CompileController(1, controllerDefinition, controllerTemplate, profile, inputTemplate));
             //  var configuration = ConfigurationTemplate.FromJsonProtoTemplate(new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText("retroarch.cfg.yml")));
@@ -157,19 +161,38 @@ namespace Snowflake.Service.Init
             //  Console.WriteLine(JsonConvert.SerializeObject(x.MediaStore.Images));
 
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            server.SendMessage("I AM TEST");
+        }
     }
     //http://stackoverflow.com/questions/18726852/redirecting-console-writeline-to-textbox
     public class ControlWriter : TextWriter
     {
         private Control textbox;
-        public ControlWriter(Control textbox)
+        private Form form;
+        public ControlWriter(Control textbox, Form form)
         {
             this.textbox = textbox;
+            this.form = form;
         }
 
         public override void Write(char value)
         {
-            textbox.Text += Regex.Replace(value.ToString(), "(?<!\r)\n", "\r\n");
+            try
+            {
+                form.BeginInvoke((Action)(() =>
+                {
+                    textbox.Text += Regex.Replace(value.ToString(), "(?<!\r)\n", "\r\n");
+                }));
+            }
+            catch (InvalidOperationException)
+            {
+                textbox.Text += Regex.Replace(value.ToString(), "(?<!\r)\n", "\r\n");
+            }
+           
+          
         }
 
         public override void Write(string value)
