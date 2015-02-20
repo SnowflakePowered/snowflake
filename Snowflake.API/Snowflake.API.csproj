@@ -38,6 +38,9 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Fleck">
+      <HintPath>..\packages\Fleck.0.12.0.38\lib\net40\Fleck.dll</HintPath>
+    </Reference>
     <Reference Include="Mono.Net.HttpListener">
       <HintPath>..\packages\Mono.Net.HttpListener.1.0.0.0\lib\net45\Mono.Net.HttpListener.dll</HintPath>
     </Reference>
@@ -131,12 +134,14 @@
     <Compile Include="Scraper\IScraper.cs" />
     <Compile Include="Service\HttpServer\BaseHttpServer.cs" />
     <Compile Include="Service\ICoreService.cs" />
+    <Compile Include="Service\WebSocketServer\IJsonWebSocketServer.cs" />
     <Compile Include="Service\IScrapeService.cs" />
     <Compile Include="Service\Manager\IAjaxManager.cs" />
     <Compile Include="Service\HttpServer\IBaseHttpServer.cs" />
     <Compile Include="Service\Manager\IEmulatorAssembliesManager.cs" />
     <Compile Include="Service\Manager\ILoadableManager.cs" />
     <Compile Include="Service\Manager\IPluginManager.cs" />
+    <Compile Include="Service\WebSocketServer\JsonWebSocketServerEventArgs.cs" />
     <Compile Include="Utility\BaseDatabase.cs" />
     <Compile Include="Utility\BiDictionary.cs" />
     <Compile Include="Utility\FileHash.cs" />
