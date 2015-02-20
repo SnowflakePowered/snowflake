@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Fleck">
+      <HintPath>..\packages\Fleck.0.12.0.38\lib\net40\Fleck.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -67,7 +70,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SnowflakeEventSource.ServiceEvents.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Snowflake.API\Snowflake.API.csproj">
       <Project>{2841aeea-03d5-47b0-9d90-375dfa19559a}</Project>

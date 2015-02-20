@@ -36,6 +36,9 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Fleck">
+      <HintPath>..\packages\Fleck.0.12.0.38\lib\net40\Fleck.dll</HintPath>
+    </Reference>
     <Reference Include="Mono.Net.HttpListener">
       <HintPath>..\packages\Mono.Net.HttpListener.1.0.0.0\lib\net45\Mono.Net.HttpListener.dll</HintPath>
     </Reference>
@@ -79,6 +82,7 @@
     <Compile Include="Service\ScrapeService.cs" />
     <Compile Include="Service\Server\FileMediaStoreServer.cs" />
     <Compile Include="Service\Server\JsonApiServer.cs" />
+    <Compile Include="Service\Server\JsonApiWebSocketServer.cs" />
     <Compile Include="Service\Server\MimeTypes.cs" />
     <Compile Include="Service\Server\ThemeServer.cs" />
   </ItemGroup>

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Platform;
 using Snowflake.Service.HttpServer;
+using Snowflake.Service.JSWebSocketServer;
 using System.IO;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
@@ -41,6 +42,9 @@ namespace Snowflake.Service
         public IBaseHttpServer APIServer { get; private set; }
         public IBaseHttpServer MediaStoreServer { get; private set; }
 
+        public IJSWebSocketServer APIWebSocketServer { get; private set; }
+
+
         public static void InitCore()
         {
             var core = new CoreService();
@@ -48,6 +52,7 @@ namespace Snowflake.Service
             CoreService.LoadedCore.ThemeServer.StartServer();
             CoreService.LoadedCore.APIServer.StartServer();
             CoreService.LoadedCore.MediaStoreServer.StartServer();
+            CoreService.LoadedCore.APIWebSocketServer.StartServer();
         }
       
         public async static Task InitPluginManagerAsync()
@@ -86,6 +91,7 @@ namespace Snowflake.Service
 
             this.ThemeServer = new ThemeServer(Path.Combine(this.AppDataDirectory, "theme"));
             this.APIServer = new ApiServer();
+            this.APIWebSocketServer = new JsonApiWebSocketServer(30003);
             this.MediaStoreServer = new FileMediaStoreServer(Path.Combine(this.AppDataDirectory, "mediastores"));
         }
         private IDictionary<string, IPlatformInfo> LoadPlatforms(string platformDirectory)

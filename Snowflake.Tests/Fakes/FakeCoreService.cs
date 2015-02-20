@@ -70,5 +70,11 @@ namespace Snowflake.Tests.Fakes
         {
             get { throw new NotImplementedException(); }
         }
+
+
+        public Service.JSWebSocketServer.IJSWebSocketServer APIWebSocketServer
+        {
+            get { throw new NotImplementedException(); }
+        }
     }
 }
