@@ -18,6 +18,6 @@ namespace Snowflake.Ajax
         /// <summary>
         /// The generated dictionary of Javascript Methods
         /// </summary>
-        IDictionary<string, Func<IJSRequest, IJSResponse>> JavascriptMethods { get; }
+        IDictionary<string, IJSMethod> JavascriptMethods { get; }
     }
 }

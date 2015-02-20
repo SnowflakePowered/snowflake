@@ -85,6 +85,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Ajax\BaseAjaxNamespace.cs" />
+    <Compile Include="Ajax\JSMethod.cs" />
     <Compile Include="Ajax\JSRequest.cs" />
     <Compile Include="Ajax\JSResponse.cs" />
     <Compile Include="Controller\ControllerProfileStore.cs" />
