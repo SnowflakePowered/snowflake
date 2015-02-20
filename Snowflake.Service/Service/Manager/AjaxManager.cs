@@ -41,7 +41,7 @@ namespace Snowflake.Service.Manager
                 IJSMethod jsMethod = this.GlobalNamespace[request.NameSpace].JavascriptMethods[request.MethodName];
                 foreach (AjaxMethodParameterAttribute attr in jsMethod.MethodInfo.GetCustomAttributes<AjaxMethodParameterAttribute>().Where(attr => attr.Required = true))
                 {
-                    result = new JSResponse(request, new Dictionary<string, string>() { { "error", String.Format("missing required param {0}", attr.ParameterName) } }, false);
+                    result = new JSResponse(request, JSResponse.GetErrorResponse(String.Format("missing required param {0}", attr.ParameterName)), false);
                     return result.GetJson();
                 }
 
