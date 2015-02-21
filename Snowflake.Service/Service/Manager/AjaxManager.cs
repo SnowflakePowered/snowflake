@@ -39,10 +39,13 @@ namespace Snowflake.Service.Manager
             {
                 IJSResponse result;
                 IJSMethod jsMethod = this.GlobalNamespace[request.NameSpace].JavascriptMethods[request.MethodName];
-                foreach (AjaxMethodParameterAttribute attr in jsMethod.MethodInfo.GetCustomAttributes<AjaxMethodParameterAttribute>().Where(attr => attr.Required = true))
+                foreach (AjaxMethodParameterAttribute attr in jsMethod.MethodInfo.GetCustomAttributes<AjaxMethodParameterAttribute>().Where(attr => attr.Required == true))
                 {
-                    result = new JSResponse(request, JSResponse.GetErrorResponse(String.Format("missing required param {0}", attr.ParameterName)), false);
-                    return result.GetJson();
+                    if (!(request.MethodParameters.Keys.Contains(attr.ParameterName)))
+                    {
+                        result = new JSResponse(request, JSResponse.GetErrorResponse(String.Format("missing required param {0}", attr.ParameterName)), false);
+                        return result.GetJson();
+                    }
                 }
 
                 result = jsMethod.Method.Invoke(request);
