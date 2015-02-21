@@ -56,7 +56,7 @@ namespace Snowflake.StandardAjax
 
         [AjaxMethod(MethodPrefix = "Game")]
         [AjaxMethodParameter(ParameterName = "platform", ParameterType = AjaxMethodParameterType.StringParameter)]
-        public IJSResponse GetGamesForPlatform(IJSRequest request)
+        public IJSResponse GetGamesByPlatform(IJSRequest request)
         {
             string platform = request.GetParameter("platform");
             return new JSResponse(request, this.CoreInstance.GameDatabase.GetGamesByPlatform(platform));
