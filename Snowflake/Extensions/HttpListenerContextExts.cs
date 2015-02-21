@@ -15,7 +15,6 @@ namespace Snowflake.Extensions
             context.Response.AppendHeader("Access-Control-Allow-Origin", "*");
             context.Response.AppendHeader("Access-Control-Origin", "*");
             context.Response.AppendHeader("Access-Control-Allow-Headers", "X-Requested-With, Content-Type");
-            context.Response.AppendHeader("Content-Type", "application/json");
 
         }
     }

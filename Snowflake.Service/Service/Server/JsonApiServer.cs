@@ -34,12 +34,19 @@ namespace Snowflake.Service.HttpServer
                 var nvcParams = HttpUtility.ParseQueryString(rawParams);
                 dictParams = nvcParams.AllKeys.ToDictionary(o => o, o => nvcParams[o]);
             }
+            
             var request = getRequest.Split('/').Count() >= 2 ?
                 new JSRequest(getRequest.Split('/')[0], getRequest.Split('/')[1], dictParams) :
                 new JSRequest("", "", new Dictionary<string, string>());
-            
+            if (request.MethodParameters.ContainsKey("jsoncallback"))
+            {
+                context.Response.AppendHeader("Content-Type", "application/javascript");
+            }
+            else
+            {
+                context.Response.AppendHeader("Content-Type", "application/json");
+            }
             var writer = new StreamWriter(context.Response.OutputStream);
-            
             writer.WriteLine(await ProcessRequest(request));
             writer.Flush();
    
