@@ -58,7 +58,7 @@ namespace Snowflake.Service.JSWebSocketServer
             }
             catch (JsonException)
             {
-                this.SendMessage(JsonConvert.SerializeObject(new Dictionary<string, string>() {{"error" , "invalid json"}}));
+                this.SendMessage(JsonConvert.SerializeObject(JSResponse.GetErrorResponse("invalid json")));
                 return;
             }
             if (requestObject.ContainsKey("method") && requestObject.ContainsKey("namespace"))
@@ -68,7 +68,7 @@ namespace Snowflake.Service.JSWebSocketServer
             }
             else
             {
-                this.SendMessage(JsonConvert.SerializeObject(new Dictionary<string, string>() { { "error", "missing method or namespace" } }));
+                this.SendMessage(JsonConvert.SerializeObject(JSResponse.GetErrorResponse("missing method or namespace")));
                 return;
             }
             if (requestObject.ContainsKey("params"))

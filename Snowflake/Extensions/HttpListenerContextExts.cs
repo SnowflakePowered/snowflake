@@ -14,6 +14,8 @@ namespace Snowflake.Extensions
             context.Response.AppendHeader("Access-Control-Allow-Credentials", "true");
             context.Response.AppendHeader("Access-Control-Allow-Origin", "*");
             context.Response.AppendHeader("Access-Control-Origin", "*");
+            context.Response.AppendHeader("Access-Control-Allow-Headers", "X-Requested-With, Content-Type");
+
         }
     }
 }

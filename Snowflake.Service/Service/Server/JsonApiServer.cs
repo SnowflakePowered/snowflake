@@ -22,28 +22,61 @@ namespace Snowflake.Service.HttpServer
 
         protected override async Task Process(HttpListenerContext context)
         {
+            var writer = new StreamWriter(context.Response.OutputStream);
             context.AddAccessControlHeaders();
             string getRequest = context.Request.Url.AbsolutePath.Remove(0,1); //Remove first slash
             string getUri = context.Request.Url.AbsoluteUri;
             int index = getUri.IndexOf("?", StringComparison.Ordinal);
-            var dictParams = new Dictionary<string, string>();
-            
-            if (index > 0)
+            IDictionary<string, string> dictParams = new Dictionary<string, string>();
+
+            if (getUri.Contains("?post"))
             {
-                string rawParams = getUri.Substring(index).Remove(0, 1);
-                var nvcParams = HttpUtility.ParseQueryString(rawParams);
-                dictParams = nvcParams.AllKeys.ToDictionary(o => o, o => nvcParams[o]);
+                try
+                {
+                    using (var reader = new StreamReader(context.Request.InputStream)){
+                        IDictionary<string, string> _dictParams = JsonConvert.DeserializeObject<IDictionary<string, string>>(reader.ReadToEnd());
+                        if (!(_dictParams == null))
+                        {
+                            dictParams = _dictParams;
+                        }
+                    }
+                }
+                catch (JsonException)
+                {
+                    writer.WriteLine(JsonConvert.SerializeObject(JSResponse.GetErrorResponse("missing methodname or namespace")));
+                    writer.Flush();
+                    context.Response.OutputStream.Close();
+                }
             }
-            var request = getRequest.Split('/').Count() >= 2 ?
-                new JSRequest(getRequest.Split('/')[0], getRequest.Split('/')[1], dictParams) :
-                new JSRequest("", "", new Dictionary<string, string>());
+            else
+            {
+                if (index > 0)
+                {
+                    string rawParams = getUri.Substring(index).Remove(0, 1);
+                    var nvcParams = HttpUtility.ParseQueryString(rawParams);
+                    dictParams = nvcParams.AllKeys.ToDictionary(o => o, o => nvcParams[o]);
+                }
+            }
             
-            var writer = new StreamWriter(context.Response.OutputStream);
+            if(!(getRequest.Split('/').Count() >= 2))
+            {
+                writer.WriteLine(JsonConvert.SerializeObject(JSResponse.GetErrorResponse("missing methodname or namespace")));
+                writer.Flush();
+                context.Response.OutputStream.Close();
+            }
+            var request = new JSRequest(getRequest.Split('/')[0], getRequest.Split('/')[1], dictParams);
+
+            if (request.MethodParameters.ContainsKey("jsoncallback"))
+            {
+                context.Response.AppendHeader("Content-Type", "application/javascript");
+            }
+            else
+            {
+                context.Response.AppendHeader("Content-Type", "application/json");
+            }
             
             writer.WriteLine(await ProcessRequest(request));
             writer.Flush();
-   
-          
             context.Response.OutputStream.Close();
         }
 

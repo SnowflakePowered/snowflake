@@ -23,6 +23,13 @@ namespace Snowflake.Ajax
         {
             return JSResponse.ProcessJSONP(this.Payload, this.Success, this.Request);
         }
+        public static IDictionary<string, object> GetErrorResponse(string errorMessage)
+        {
+            return new Dictionary<string, object>() { 
+                {"error", errorMessage},
+                {"success", false},
+            };
+        }
         private static string ProcessJSONP(dynamic output, bool success, IJSRequest request)
         {
             if (request.MethodParameters.ContainsKey("jsoncallback"))
