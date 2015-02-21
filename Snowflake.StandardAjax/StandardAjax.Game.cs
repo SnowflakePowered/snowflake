@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Ajax;
 using Snowflake.Game;
+using Snowflake.Platform;
 using Snowflake.Extensions;
 using Snowflake.Utility;
 using Snowflake.Emulator;
@@ -66,6 +67,21 @@ namespace Snowflake.StandardAjax
         public IJSResponse GetAllGames(IJSRequest request)
         {
             return new JSResponse(request, this.CoreInstance.GameDatabase.GetAllGames());
+        }
+
+        [AjaxMethod(MethodPrefix = "Game")]
+        public IJSResponse GetAllGamesSorted(IJSRequest request)
+        {
+            IList<IGameInfo> games = this.CoreInstance.GameDatabase.GetAllGames();
+            IDictionary<string, List<IGameInfo>> sortedGames = this.CoreInstance.LoadedPlatforms.ToDictionary(platform => platform.Key, platform => new List<IGameInfo>());
+            foreach(IGameInfo game in games)
+            {
+                if (sortedGames.ContainsKey(game.PlatformId))
+                {
+                    sortedGames[game.PlatformId].Add(game);
+                }
+            }
+            return new JSResponse(request, sortedGames);
         }
         [AjaxMethod(MethodPrefix = "Game")]
         [AjaxMethodParameter(ParameterName = "emulator", ParameterType = AjaxMethodParameterType.StringParameter)]
