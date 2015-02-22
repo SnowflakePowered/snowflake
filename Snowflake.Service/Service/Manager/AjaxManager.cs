@@ -51,6 +51,10 @@ namespace Snowflake.Service.Manager
                 result = jsMethod.Method.Invoke(request);
                 return result.GetJson();
             }
+            catch (KeyNotFoundException)
+            {
+                return new JSResponse(request, JSResponse.GetErrorResponse(String.Format("method {0} not found in namespace {1}", request.MethodName, request.NameSpace)), false).GetJson();
+            }
             catch (Exception e)
             {
                 return new JSResponse(request, e, false).GetJson();
