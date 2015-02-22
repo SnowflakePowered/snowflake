@@ -41,8 +41,8 @@ namespace Snowflake.StandardAjax
         {
             IDictionary<string, IDictionary<string, dynamic>> response = this.CoreInstance.PluginManager.LoadedScrapers.ToDictionary
                (
-                   emulatorBridge => emulatorBridge.Key,
-                   emulatorBridge => emulatorBridge.Value.PluginInfo
+                   scraper => scraper.Key,
+                   scraper => scraper.Value.PluginInfo
                );
             return new JSResponse(request, response);
         }
