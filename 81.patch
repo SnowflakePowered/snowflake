@@ -1,0 +1,24 @@
+From 401c0003bf780ef2442f7b13eef65061f6d57201 Mon Sep 17 00:00:00 2001
+From: Ronny Chan <ronny6993@gmail.com>
+Date: Sun, 22 Feb 2015 17:43:04 -0500
+Subject: [PATCH] JSAPI: Correct symbol names (emulatorBridge -> scraper)
+
+---
+ Snowflake.StandardAjax/StandardAjax.System.cs | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Snowflake.StandardAjax/StandardAjax.System.cs b/Snowflake.StandardAjax/StandardAjax.System.cs
+index 9f26ea5..85bdb32 100644
+--- a/Snowflake.StandardAjax/StandardAjax.System.cs
++++ b/Snowflake.StandardAjax/StandardAjax.System.cs
+@@ -41,8 +41,8 @@ public IJSResponse GetScrapers(IJSRequest request)
+         {
+             IDictionary<string, IDictionary<string, dynamic>> response = this.CoreInstance.PluginManager.LoadedScrapers.ToDictionary
+                (
+-                   emulatorBridge => emulatorBridge.Key,
+-                   emulatorBridge => emulatorBridge.Value.PluginInfo
++                   scraper => scraper.Key,
++                   scraper => scraper.Value.PluginInfo
+                );
+             return new JSResponse(request, response);
+         }
