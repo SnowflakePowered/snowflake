@@ -110,6 +110,19 @@ namespace Snowflake.StandardAjax
         [AjaxMethod(MethodPrefix = "Game")]
         [AjaxMethodParameter(ParameterName = "emulator", ParameterType = AjaxMethodParameterType.StringParameter)]
         [AjaxMethodParameter(ParameterName = "id", ParameterType = AjaxMethodParameterType.StringParameter)]
+        public IJSResponse GetFlagValues(IJSRequest request)
+        {
+            string emulator = request.GetParameter("emulator");
+            string id = request.GetParameter("id");
+            IEmulatorBridge bridge = this.CoreInstance.PluginManager.LoadedEmulators[emulator];
+            IGameInfo game = this.CoreInstance.GameDatabase.GetGameByUUID(id);
+            IList<dynamic> flags = bridge.ConfigurationFlags.Select(flag => bridge.ConfigurationFlagStore.GetValue(game, flag.Value.Key, flag.Value.Type)).ToList();
+            return new JSResponse(request, flags);
+        }
+
+        [AjaxMethod(MethodPrefix = "Game")]
+        [AjaxMethodParameter(ParameterName = "emulator", ParameterType = AjaxMethodParameterType.StringParameter)]
+        [AjaxMethodParameter(ParameterName = "id", ParameterType = AjaxMethodParameterType.StringParameter)]
         [AjaxMethodParameter(ParameterName = "key", ParameterType = AjaxMethodParameterType.StringParameter)]
         [AjaxMethodParameter(ParameterName = "value", ParameterType = AjaxMethodParameterType.StringParameter)]
         public IJSResponse SetFlagValue(IJSRequest request)
