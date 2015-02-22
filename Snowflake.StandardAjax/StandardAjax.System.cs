@@ -18,7 +18,7 @@ namespace Snowflake.StandardAjax
 
         [AjaxMethod(MethodPrefix = "System")]
         [AjaxMethodParameter(ParameterName = "platform", ParameterType = AjaxMethodParameterType.StringParameter)]
-        public IJSResponse GetEmulatorBridgesForPlatform(IJSRequest request)
+        public IJSResponse GetEmulatorBridgesByPlatform(IJSRequest request)
         {
             return new JSResponse(request, this.CoreInstance.PluginManager.LoadedEmulators.Where(bridge => bridge.Value.SupportedPlatforms.Contains(request.GetParameter("platform"))));
         }
@@ -31,7 +31,7 @@ namespace Snowflake.StandardAjax
 
         [AjaxMethod(MethodPrefix = "System")]
         [AjaxMethodParameter(ParameterName = "platform", ParameterType = AjaxMethodParameterType.StringParameter)]
-        public IJSResponse GetScrapersForPlatform(IJSRequest request)
+        public IJSResponse GetScrapersByPlatform(IJSRequest request)
         {
             return new JSResponse(request, this.CoreInstance.PluginManager.LoadedScrapers.Where(scraper => scraper.Value.SupportedPlatforms.Contains(request.GetParameter("platform"))));
         }
