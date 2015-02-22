@@ -116,7 +116,7 @@ namespace Snowflake.StandardAjax
             string id = request.GetParameter("id");
             IEmulatorBridge bridge = this.CoreInstance.PluginManager.LoadedEmulators[emulator];
             IGameInfo game = this.CoreInstance.GameDatabase.GetGameByUUID(id);
-            IList<dynamic> flags = bridge.ConfigurationFlags.Select(flag => bridge.ConfigurationFlagStore.GetValue(game, flag.Value.Key, flag.Value.Type)).ToList();
+            IDictionary<string, dynamic> flags = bridge.ConfigurationFlags.ToDictionary(flag => flag.Value.Key, flag => bridge.ConfigurationFlagStore.GetValue(game, flag.Value.Key, flag.Value.Type));
             return new JSResponse(request, flags);
         }
 
@@ -203,6 +203,18 @@ namespace Snowflake.StandardAjax
             IConfigurationFlag flag = bridge.ConfigurationFlags[key];
             return new JSResponse(request, bridge.ConfigurationFlagStore.GetDefaultValue(flag.Key, flag.Type));
         }
+
+        [AjaxMethod(MethodPrefix = "Game")]
+        [AjaxMethodParameter(ParameterName = "emulator", ParameterType = AjaxMethodParameterType.StringParameter)]
+        public IJSResponse GetFlagDefaultValues(IJSRequest request)
+        {
+            string emulator = request.GetParameter("emulator");
+            string key = request.GetParameter("key");
+            IEmulatorBridge bridge = this.CoreInstance.PluginManager.LoadedEmulators[emulator];
+            IDictionary<string, dynamic> flags = bridge.ConfigurationFlags.ToDictionary(flag => flag.Value.Key, flag => bridge.ConfigurationFlagStore.GetDefaultValue(flag.Value.Key, flag.Value.Type));
+            return new JSResponse(request, flags);
+        }
+            
         [AjaxMethod(MethodPrefix = "Game")]
         [AjaxMethodParameter(ParameterName = "emulator", ParameterType = AjaxMethodParameterType.StringParameter)]
         [AjaxMethodParameter(ParameterName = "id", ParameterType = AjaxMethodParameterType.StringParameter)]
