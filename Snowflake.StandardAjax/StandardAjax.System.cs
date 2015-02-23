@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Dynamic;
-using System.Reflection;
 using Snowflake.Ajax;
 using Snowflake.Service;
 
@@ -15,49 +13,36 @@ namespace Snowflake.StandardAjax
         [AjaxMethod(MethodPrefix = "System")]
         public IJSResponse GetEmulatorBridges(IJSRequest request)
         {
-            IDictionary<string, IDictionary<string, dynamic>> response = this.CoreInstance.PluginManager.LoadedEmulators.ToDictionary
-                (
-                    emulatorBridge => emulatorBridge.Key,
-                    emulatorBridge => emulatorBridge.Value.PluginInfo
-                );
-            return new JSResponse(request, response);
+            return new JSResponse(request, this.CoreInstance.PluginManager.LoadedEmulators);
         }
 
         [AjaxMethod(MethodPrefix = "System")]
         [AjaxMethodParameter(ParameterName = "platform", ParameterType = AjaxMethodParameterType.StringParameter)]
         public IJSResponse GetEmulatorBridgesByPlatform(IJSRequest request)
         {
-            IDictionary<string, IDictionary<string, dynamic>> response = this.CoreInstance.PluginManager.LoadedEmulators
-                .Where(bridge => bridge.Value.SupportedPlatforms.Contains(request.GetParameter("platform"))).ToDictionary
-                (
-                    emulatorBridge => emulatorBridge.Key,
-                    emulatorBridge => emulatorBridge.Value.PluginInfo
-                );
-            return new JSResponse(request, response);
+            return new JSResponse(request, this.CoreInstance.PluginManager.LoadedEmulators.Where(bridge => bridge.Value.SupportedPlatforms.Contains(request.GetParameter("platform"))));
         }
 
         [AjaxMethod(MethodPrefix = "System")]
         public IJSResponse GetScrapers(IJSRequest request)
         {
+<<<<<<< HEAD
             IDictionary<string, IDictionary<string, dynamic>> response = this.CoreInstance.PluginManager.LoadedScrapers.ToDictionary
                (
                    scraper => scraper.Key,
                    scraper => scraper.Value.PluginInfo
                );
             return new JSResponse(request, response);
+=======
+            return new JSResponse(request, this.CoreInstance.PluginManager.LoadedScrapers);
+>>>>>>> 35335e30cf68baa7d14321afbba5488a637fac5f
         }
 
         [AjaxMethod(MethodPrefix = "System")]
         [AjaxMethodParameter(ParameterName = "platform", ParameterType = AjaxMethodParameterType.StringParameter)]
         public IJSResponse GetScrapersByPlatform(IJSRequest request)
         {
-            IDictionary<string, IDictionary<string, dynamic>> response = this.CoreInstance.PluginManager.LoadedScrapers
-                .Where(scraper => scraper.Value.SupportedPlatforms.Contains(request.GetParameter("platform"))).ToDictionary
-               (
-                   scraper => scraper.Key,
-                   scraper => scraper.Value.PluginInfo
-               );
-            return new JSResponse(request, response);
+            return new JSResponse(request, this.CoreInstance.PluginManager.LoadedScrapers.Where(scraper => scraper.Value.SupportedPlatforms.Contains(request.GetParameter("platform"))));
         }
 
         [AjaxMethod(MethodPrefix = "System")]
@@ -70,25 +55,7 @@ namespace Snowflake.StandardAjax
         [AjaxMethod(MethodPrefix = "System")]
         public IJSResponse GetAllAjaxMethods(IJSRequest request)
         {
-            List<object> ajaxMethods = new List<object>();
-
-            foreach (KeyValuePair<string, IBaseAjaxNamespace> ajaxNamespace in this.CoreInstance.AjaxManager.GlobalNamespace)
-            {
-                foreach (KeyValuePair<string, IJSMethod> jsMethod in ajaxNamespace.Value.JavascriptMethods)
-                {
-                    dynamic methodInfo = new ExpandoObject();
-                    methodInfo.Namespace = ajaxNamespace.Key;
-                    methodInfo.MethodName = jsMethod.Key;
-                    methodInfo.Parameters = jsMethod.Value.MethodInfo.GetCustomAttributes<AjaxMethodParameterAttribute>()
-                        .Select(attr => new Dictionary<string, object>() {
-                        {"ParameterName", attr.ParameterName},
-                        {"ParameterType", Enum.GetName(typeof(AjaxMethodParameterType), attr.ParameterType)},
-                        {"Required", attr.Required}
-                    });
-                    ajaxMethods.Add(methodInfo);
-                }
-            }
-            return new JSResponse(request, ajaxMethods);
+            return new JSResponse(request, this.CoreInstance.AjaxManager.GlobalNamespace.ToDictionary(ajax => ajax.Key, ajax => ajax.Value.JavascriptMethods));
         }
 
         [AjaxMethod(MethodPrefix = "System")]
