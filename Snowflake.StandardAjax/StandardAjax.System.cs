@@ -26,7 +26,16 @@ namespace Snowflake.StandardAjax
         [AjaxMethod(MethodPrefix = "System")]
         public IJSResponse GetScrapers(IJSRequest request)
         {
+<<<<<<< HEAD
+            IDictionary<string, IDictionary<string, dynamic>> response = this.CoreInstance.PluginManager.LoadedScrapers.ToDictionary
+               (
+                   scraper => scraper.Key,
+                   scraper => scraper.Value.PluginInfo
+               );
+            return new JSResponse(request, response);
+=======
             return new JSResponse(request, this.CoreInstance.PluginManager.LoadedScrapers);
+>>>>>>> 35335e30cf68baa7d14321afbba5488a637fac5f
         }
 
         [AjaxMethod(MethodPrefix = "System")]
