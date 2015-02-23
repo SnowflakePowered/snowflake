@@ -38,11 +38,11 @@ namespace Snowflake.StandardAjax
         }
 
         [AjaxMethod(MethodPrefix = "Game")]
-        [AjaxMethodParameter(ParameterName = "enc_gameinfo", ParameterType = AjaxMethodParameterType.ObjectParameter)]
+        [AjaxMethodParameter(ParameterName = "gameinfo", ParameterType = AjaxMethodParameterType.ObjectParameter)]
         public IJSResponse AddGameInfo(IJSRequest request)
         {
-            string gameinfo_pre = request.GetParameter("enc_gameinfo");
-            IGameInfo game = JsonConvert.DeserializeObject<GameInfo>(StringEncode.btoa(gameinfo_pre));
+            string gameinfo_pre = request.GetParameter("gameinfo");
+            IGameInfo game = JsonConvert.DeserializeObject<GameInfo>(gameinfo_pre);
             this.CoreInstance.GameDatabase.AddGame(game);
             return new JSResponse(request, "added " + game.FileName, true);
         }
