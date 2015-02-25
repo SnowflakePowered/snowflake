@@ -30,7 +30,7 @@ namespace Snowflake.Platform
         public void AddPlatform(IPlatformInfo platformInfo)
         {
             this.DBConnection.Open();
-            using (var sqlCommand = new SQLiteCommand(@"INSERT OR REPLACE INTO platformprefs VALUES(
+            using (var sqlCommand = new SQLiteCommand(@"INSERT OR IGNORE INTO platformprefs VALUES(
                                           @platform_id,
                                           @emulator,
                                           @scraper,
