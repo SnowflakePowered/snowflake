@@ -5,12 +5,18 @@
 [![Windows Build status](https://ci.appveyor.com/api/projects/status/mhei9fdtja5j04kk?svg=true)](https://ci.appveyor.com/project/RonnChyran/snowflake) [![Linux Build Status](https://travis-ci.org/SnowflakePowered/snowflake.svg?branch=master)](https://travis-ci.org/SnowflakePowered/snowflake) [![MyGetFeed](https://img.shields.io/myget/snowflake-nightly/vpre/Snowflake.API.svg?style=flat)](https://www.myget.org/gallery/snowflake-nightly) [![Coverage Status](https://coveralls.io/repos/SnowflakePowered/snowflake/badge.svg?branch=master)](https://coveralls.io/r/SnowflakePowered/snowflake?branch=master)  [![Coverity code defect analysis](https://scan.coverity.com/projects/4039/badge.svg?flat=1)](https://scan.coverity.com/projects/4039)
  [![License](https://img.shields.io/badge/license-apache%202.0-blue.svg?style=flat)](https://github.com/SnowflakePowered/snowflake/blob/master/LICENSE)
 
-Snowflake provides a plugin-based backend and a set of APIs powering an modern HTML5 frontend for Emulators with unprecendented integration and easy of use, without needing to modify or recompile the base emulator; allowing for maximum compatibility.
+Extendible through plugins and built using bleeding-edge technologies on the web and the desktop, Snowflake is a modern, hackable emulator frontend built for today's machines. Not the 80's. 
 
+
+Features
+--------
+Snowflake provides a powerful set of APIs for us to build a frontend that just works, no matter what it looks like, on Windows, Linux and OSX*. Using powerful but moddable HTML5 and Javascript to build our user interface and a C# API that's easy to work with, Snowflake allows for powerful integration with currently existing emulators, and a wealth of custom features just a click away.
+
+_*Linux through Mono or CoreCLR support currently planned. OSX support to be evaluated after_
 
 Documentation
 -------------
-Preliminary documentation is available [here](http://snowflakepowe.red/doc/html/). As we document out API, we'll also be writing quick start guides on creating plugins.
+Preliminary technical documentation is available [here](http://snowflakepowe.red/doc/html/). As we go further along in Snowflake's development, design documents will become available.
 
 Contributing
 ------------
@@ -18,13 +24,13 @@ Please feel free to explore the current API, please be aware that Snowflake is s
 
 What's Possible?
 ----------------
-Anything that's possible to do in HTML5 will be possible on Snowflake. Including Material Design (coming soon)
+Anything that's possible to do in HTML5 will be possible on Snowflake. Snowflakes initial interface will be done in Material Design, for a beautiful looking window to your games.
 
 ![mockup](branding/mockups/ngcopen.png)
 
 I don't code, what can I do with Snowflake?
 -------------------------------------------
-Nothing yet, hang on while we get our API stable and start to write the UI!
+Star our repository and bookmark our [website at http://snowflakepowe.red](http://snowflakepowe.red/) to keep up with Snowflake's development. We'll have something new in store for you soon!
 
 Legal
 -----
