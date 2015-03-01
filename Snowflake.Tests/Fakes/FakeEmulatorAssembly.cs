@@ -13,7 +13,7 @@ namespace Snowflake.Tests.Fakes
             get { throw new NotImplementedException(); }
         }
 
-        public string EmulatorId
+        public string EmulatorID
         {
             get { throw new NotImplementedException(); }
         }
