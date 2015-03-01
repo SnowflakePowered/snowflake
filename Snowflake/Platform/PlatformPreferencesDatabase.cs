@@ -36,7 +36,7 @@ namespace Snowflake.Platform
                                           @scraper,
                                           @identifier)", this.DBConnection))
             {
-                sqlCommand.Parameters.AddWithValue("@platform_id", platformInfo.PlatformId);
+                sqlCommand.Parameters.AddWithValue("@platform_id", platformInfo.PlatformID);
                 sqlCommand.Parameters.AddWithValue("@emulator", platformInfo.Defaults.Emulator);
                 sqlCommand.Parameters.AddWithValue("@scraper", platformInfo.Defaults.Scraper);
                 sqlCommand.Parameters.AddWithValue("@identifier", platformInfo.Defaults.Identifier);
@@ -51,7 +51,7 @@ namespace Snowflake.Platform
             using (var sqlCommand = new SQLiteCommand(@"SELECT * FROM `platformprefs` WHERE `platform_id` == @platform_id"
                 , this.DBConnection))
             {
-                sqlCommand.Parameters.AddWithValue("@platform_id", platformInfo.PlatformId);
+                sqlCommand.Parameters.AddWithValue("@platform_id", platformInfo.PlatformID);
                 using (var reader = sqlCommand.ExecuteReader())
                 {
                     var result = new DataTable();
@@ -88,7 +88,7 @@ namespace Snowflake.Platform
                 sqlCommand.CommandText = sqlCommand.CommandText.Replace("%colName", column);
 
                 sqlCommand.Parameters.AddWithValue("@value", value);
-                sqlCommand.Parameters.AddWithValue("@platform_id", platformInfo.PlatformId);
+                sqlCommand.Parameters.AddWithValue("@platform_id", platformInfo.PlatformID);
                 sqlCommand.ExecuteNonQuery();
             }
             this.DBConnection.Close();

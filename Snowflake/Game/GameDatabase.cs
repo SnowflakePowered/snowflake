@@ -50,7 +50,7 @@ namespace Snowflake.Game
                                           @metadata,
                                           @crc32)", this.DBConnection))
             {
-                sqlCommand.Parameters.AddWithValue("@platform_id", game.PlatformId);
+                sqlCommand.Parameters.AddWithValue("@platform_id", game.PlatformID);
                 sqlCommand.Parameters.AddWithValue("@uuid", game.UUID);
                 sqlCommand.Parameters.AddWithValue("@filename", game.FileName);
                 sqlCommand.Parameters.AddWithValue("@name", game.Name);

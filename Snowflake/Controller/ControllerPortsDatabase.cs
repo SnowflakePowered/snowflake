@@ -51,7 +51,7 @@ namespace Snowflake.Controller
                                                                 null
                                                                 )", this.DBConnection))
             {
-                sqlCommand.Parameters.AddWithValue("@platform_id", platformInfo.PlatformId);
+                sqlCommand.Parameters.AddWithValue("@platform_id", platformInfo.PlatformID);
                 sqlCommand.ExecuteNonQuery();
                 this.DBConnection.Close();
             }/*
@@ -74,7 +74,7 @@ namespace Snowflake.Controller
             using (var sqlCommand = new SQLiteCommand("SELECT `%portNumber` FROM `ports` WHERE `platform_id` == @platformId", this.DBConnection))
             {
                 sqlCommand.CommandText = sqlCommand.CommandText.Replace("%portNumber", "port"+portNumber);
-                sqlCommand.Parameters.AddWithValue("@platformId", platformInfo.PlatformId);
+                sqlCommand.Parameters.AddWithValue("@platformId", platformInfo.PlatformID);
                 using (var reader = sqlCommand.ExecuteReader())
                 {
                     var result = new DataTable();
@@ -97,7 +97,7 @@ namespace Snowflake.Controller
             {
                 sqlCommand.CommandText = sqlCommand.CommandText.Replace("%portNumber", "port" + portNumber);
                 sqlCommand.Parameters.AddWithValue("@controllerId", deviceName);
-                sqlCommand.Parameters.AddWithValue("@platformId", platformInfo.PlatformId);
+                sqlCommand.Parameters.AddWithValue("@platformId", platformInfo.PlatformID);
                 sqlCommand.ExecuteNonQuery();
             }
             this.DBConnection.Close();
