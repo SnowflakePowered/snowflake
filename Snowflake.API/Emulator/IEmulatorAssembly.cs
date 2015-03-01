@@ -15,7 +15,7 @@ namespace Snowflake.Emulator
         /// <summary>
         /// The ID that emulator bridges can refer to 
         /// </summary>
-        string EmulatorId { get; }
+        string EmulatorID { get; }
         /// <summary>
         /// The name of this emulator
         /// </summary>

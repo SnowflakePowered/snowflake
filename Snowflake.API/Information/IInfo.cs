@@ -13,7 +13,7 @@ namespace Snowflake.Information
         /// <summary>
         /// The id of the platform that this object is related to
         /// </summary>
-        string PlatformId { get; }
+        string PlatformID { get; }
         /// <summary>
         /// The name of this object
         /// </summary>

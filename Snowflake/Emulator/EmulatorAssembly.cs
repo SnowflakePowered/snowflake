@@ -10,7 +10,7 @@ namespace Snowflake.Emulator
     public class EmulatorAssembly : IEmulatorAssembly
     {
         public string MainAssembly { get; private set; }
-        public string EmulatorId { get; private set; }
+        public string EmulatorID { get; private set; }
         public string EmulatorName { get; private set; }
         public EmulatorAssemblyType AssemblyType { get; private set; }
 
@@ -19,7 +19,7 @@ namespace Snowflake.Emulator
             EmulatorAssemblyType assemblyType;
             if (!Enum.TryParse<EmulatorAssemblyType>(assemblyTypeString, true, out assemblyType)) assemblyType = EmulatorAssemblyType.EMULATOR_MISC;
             this.MainAssembly = mainAssembly;
-            this.EmulatorId = emulatorId;
+            this.EmulatorID = emulatorId;
             this.EmulatorName = name;
             this.AssemblyType = assemblyType;
         }
@@ -27,7 +27,7 @@ namespace Snowflake.Emulator
         public EmulatorAssembly(string mainAssembly, string emulatorId, string name, EmulatorAssemblyType assemblyType)
         {
             this.MainAssembly = mainAssembly;
-            this.EmulatorId = emulatorId;
+            this.EmulatorID = emulatorId;
             this.EmulatorName = name;
             this.AssemblyType = assemblyType;
         }

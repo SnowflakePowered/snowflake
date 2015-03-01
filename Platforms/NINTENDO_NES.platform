@@ -1,5 +1,5 @@
 {
-    "PlatformId": "NINTENDO_NES",
+    "PlatformID": "NINTENDO_NES",
     "Name": "Nintendo Entertainment System",
     "MediaStoreKey": "platform.NINTENDO_NES",
     "FileExtensions": [

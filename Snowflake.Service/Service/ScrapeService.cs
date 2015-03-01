@@ -28,14 +28,14 @@ namespace Snowflake.Service
         public IList<IGameScrapeResult> GetGameResults(string fileName)
         {
             IDictionary<string, string> identifiedMetadata = CoreService.LoadedCore.PluginManager.LoadedIdentifiers.Values
-                .Where(identifier => identifier.SupportedPlatforms.Contains(this.ScrapePlatform.PlatformId))
+                .Where(identifier => identifier.SupportedPlatforms.Contains(this.ScrapePlatform.PlatformID))
                 .ToDictionary(identifier => identifier.PluginName,
-                    identifier => identifier.IdentifyGame(fileName, this.ScrapePlatform.PlatformId));
+                    identifier => identifier.IdentifyGame(fileName, this.ScrapePlatform.PlatformID));
             identifiedMetadata["md5"] = FileHash.GetMD5(fileName);
             identifiedMetadata["crc32"] = FileHash.GetCRC32(fileName);
             identifiedMetadata["sha1"] = FileHash.GetSHA1(fileName);
             identifiedMetadata["filename"] = fileName; 
-            return this.ScraperPlugin.SortBestResults(identifiedMetadata, this.ScraperPlugin.GetSearchResults(identifiedMetadata, this.ScrapePlatform.PlatformId));
+            return this.ScraperPlugin.SortBestResults(identifiedMetadata, this.ScraperPlugin.GetSearchResults(identifiedMetadata, this.ScrapePlatform.PlatformID));
 
         }
 
@@ -50,7 +50,7 @@ namespace Snowflake.Service
             var gameinfo = resultdetails.Item1;
             var gameUuid = FileHash.GetMD5(fileName);
             return new GameInfo(
-                this.ScrapePlatform.PlatformId,
+                this.ScrapePlatform.PlatformID,
                 gameinfo[GameInfoFields.game_title],
                 resultdetails.Item2.ToMediaStore("game." + ScrapeService.ValidateFilename(gameinfo[GameInfoFields.game_title]).Replace(' ', '_') + gameUuid),
                 gameinfo,

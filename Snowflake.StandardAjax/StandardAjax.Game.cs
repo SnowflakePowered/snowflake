@@ -76,9 +76,9 @@ namespace Snowflake.StandardAjax
             IDictionary<string, List<IGameInfo>> sortedGames = this.CoreInstance.LoadedPlatforms.ToDictionary(platform => platform.Key, platform => new List<IGameInfo>());
             foreach(IGameInfo game in games)
             {
-                if (sortedGames.ContainsKey(game.PlatformId))
+                if (sortedGames.ContainsKey(game.PlatformID))
                 {
-                    sortedGames[game.PlatformId].Add(game);
+                    sortedGames[game.PlatformID].Add(game);
                 }
             }
             return new JSResponse(request, sortedGames);

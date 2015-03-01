@@ -28,11 +28,11 @@ namespace Snowflake.Service.Manager
                 if (!(Path.GetExtension(fileName) == ".yml")) continue;
                 
                 var emulatorCore = EmulatorAssembliesManager.ParseEmulatorAssembly(fileName);
-                this.emulatorAssemblies.Add(emulatorCore.EmulatorId, emulatorCore);
+                this.emulatorAssemblies.Add(emulatorCore.EmulatorID, emulatorCore);
             }
         }
         public string GetAssemblyDirectory(IEmulatorAssembly assembly){
-            return Path.Combine(this.AssembliesLocation, assembly.EmulatorId);
+            return Path.Combine(this.AssembliesLocation, assembly.EmulatorID);
         }
         public static IEmulatorAssembly ParseEmulatorAssembly(string emulatorCorePath)
         {

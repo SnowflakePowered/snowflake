@@ -28,7 +28,7 @@ namespace Snowflake.Platform.Tests
             string platformDefinition = TestUtilities.GetStringResource("Platforms." + platformId + ".platform");
             var protoTemplate = JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(platformDefinition);
             var platform = PlatformInfo.FromJsonProtoTemplate(protoTemplate);
-            Assert.Equal(platformId, platform.PlatformId);
+            Assert.Equal(platformId, platform.PlatformID);
         }
 
         public static IEnumerable<object[]> TestedPlatforms

@@ -41,7 +41,7 @@ namespace Snowflake.Tests.Fakes
             get { throw new NotImplementedException(); }
         }
 
-        public string PlatformId
+        public string PlatformID
         {
             get { throw new NotImplementedException(); }
         }

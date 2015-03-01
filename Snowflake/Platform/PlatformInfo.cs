@@ -33,7 +33,7 @@ namespace Snowflake.Platform
             IPlatformDefaults platformDefaults = jsonDictionary["Defaults"].ToObject<PlatformDefaults>();
 
             return new PlatformInfo(
-                    jsonDictionary["PlatformId"],
+                    jsonDictionary["PlatformID"],
                     jsonDictionary["Name"],
                     new FileMediaStore(jsonDictionary["MediaStoreKey"]),
                     jsonDictionary["Metadata"].ToObject<Dictionary<string, string>>(),
