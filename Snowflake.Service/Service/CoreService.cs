@@ -38,21 +38,17 @@ namespace Snowflake.Service
 
         public string AppDataDirectory { get; private set; }
         public static ICoreService LoadedCore { get; private set; }
-        public IBaseHttpServer ThemeServer { get; private set; }
-        public IBaseHttpServer APIServer { get; private set; }
-        public IBaseHttpServer MediaStoreServer { get; private set; }
-
-        public IJSWebSocketServer APIWebSocketServer { get; private set; }
-
+        public IServerManager ServerManager { get; private set; }
 
         public static void InitCore()
         {
             var core = new CoreService();
             CoreService.LoadedCore = core;
-            CoreService.LoadedCore.ThemeServer.StartServer();
-            CoreService.LoadedCore.APIServer.StartServer();
-            CoreService.LoadedCore.MediaStoreServer.StartServer();
-            CoreService.LoadedCore.APIWebSocketServer.StartServer();
+            foreach (string serverName in CoreService.LoadedCore.ServerManager.RegisteredServers)
+            {
+                CoreService.LoadedCore.ServerManager.StartServer(serverName);
+            }
+          
         }
       
         public async static Task InitPluginManagerAsync()
@@ -76,7 +72,7 @@ namespace Snowflake.Service
 #endif
             this.LoadedPlatforms = this.LoadPlatforms(Path.Combine(this.AppDataDirectory, "platforms"));
             this.LoadedControllers = this.LoadControllers(Path.Combine(this.AppDataDirectory, "controllers"));
-
+            this.ServerManager = new ServerManager();
             this.GameDatabase = new GameDatabase(Path.Combine(this.AppDataDirectory, "games.db"));
             this.PlatformPreferenceDatabase = new PlatformPreferencesDatabase(Path.Combine(this.AppDataDirectory, "platformprefs.db"));
             this.ControllerPortsDatabase = new ControllerPortsDatabase(Path.Combine(this.AppDataDirectory, "ports.db"));
@@ -89,10 +85,11 @@ namespace Snowflake.Service
             this.AjaxManager = new AjaxManager(this.AppDataDirectory);
             this.EmulatorManager = new EmulatorAssembliesManager(Path.Combine(this.AppDataDirectory, "emulators"));
 
-            this.ThemeServer = new ThemeServer(Path.Combine(this.AppDataDirectory, "theme"));
-            this.APIServer = new ApiServer();
-            this.APIWebSocketServer = new JsonApiWebSocketServer(30003);
-            this.MediaStoreServer = new FileMediaStoreServer(Path.Combine(this.AppDataDirectory, "mediastores"));
+            this.ServerManager.RegisterServer("ThemeServer", new ThemeServer(Path.Combine(this.AppDataDirectory, "theme")));
+            this.ServerManager.RegisterServer("AjaxApiServer", new ApiServer());
+            this.ServerManager.RegisterServer("WebSocketApiServer", new JsonApiWebSocketServer(30003));
+            this.ServerManager.RegisterServer("MediaStoreServer", new FileMediaStoreServer(Path.Combine(this.AppDataDirectory, "mediastores")));
+            
         }
         private IDictionary<string, IPlatformInfo> LoadPlatforms(string platformDirectory)
         {

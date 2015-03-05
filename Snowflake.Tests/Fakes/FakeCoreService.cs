@@ -76,5 +76,55 @@ namespace Snowflake.Tests.Fakes
         {
             get { throw new NotImplementedException(); }
         }
+
+        Service.Manager.IAjaxManager ICoreService.AjaxManager
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        Service.Manager.IEmulatorAssembliesManager ICoreService.EmulatorManager
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        string ICoreService.AppDataDirectory
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        Controller.IControllerPortsDatabase ICoreService.ControllerPortsDatabase
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        Game.IGameDatabase ICoreService.GameDatabase
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        Platform.IPlatformPreferenceDatabase ICoreService.PlatformPreferenceDatabase
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        IDictionary<string, Platform.IPlatformInfo> ICoreService.LoadedPlatforms
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        IDictionary<string, Controller.IControllerDefinition> ICoreService.LoadedControllers
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        Service.Manager.IPluginManager ICoreService.PluginManager
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        Service.Manager.IServerManager ICoreService.ServerManager
+        {
+            get { throw new NotImplementedException(); }
+        }
     }
 }

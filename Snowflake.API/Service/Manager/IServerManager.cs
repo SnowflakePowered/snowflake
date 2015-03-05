@@ -8,9 +8,9 @@ namespace Snowflake.Service.Manager
 {
     public interface IServerManager
     {
-        public void RegisterServer(string serverName, IBaseHttpServer httpServer);
-        public void StartServer(string serverName);
-        public void StopServer(string serverName);
-        public IList<string> RegisteredServers { get; }
+        void RegisterServer(string serverName, IBaseHttpServer httpServer);
+        void StartServer(string serverName);
+        void StopServer(string serverName);
+        IList<string> RegisteredServers { get; }
     }
 }
