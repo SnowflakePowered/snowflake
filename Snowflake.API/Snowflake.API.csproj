@@ -143,6 +143,7 @@
     <Compile Include="Service\Manager\ILoadableManager.cs" />
     <Compile Include="Service\Manager\IPluginManager.cs" />
     <Compile Include="Service\JSWebSocketServer\JSWebSocketServerEventArgs.cs" />
+    <Compile Include="Service\Manager\IServerManager.cs" />
     <Compile Include="Utility\BaseDatabase.cs" />
     <Compile Include="Utility\BiDictionary.cs" />
     <Compile Include="Utility\FileHash.cs" />

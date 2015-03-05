@@ -79,6 +79,7 @@
     <Compile Include="Service\Manager\AjaxManager.cs" />
     <Compile Include="Service\Manager\EmulatorAssembliesManager.cs" />
     <Compile Include="Service\Manager\PluginManager.cs" />
+    <Compile Include="Service\Manager\ServerManager.cs" />
     <Compile Include="Service\ScrapeService.cs" />
     <Compile Include="Service\Server\FileMediaStoreServer.cs" />
     <Compile Include="Service\Server\JsonApiServer.cs" />
