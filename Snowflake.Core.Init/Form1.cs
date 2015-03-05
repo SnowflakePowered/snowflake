@@ -29,19 +29,17 @@ using Snowflake.Emulator.Input.Constants;
 using Snowflake.Emulator;
 using Snowflake.Utility;
 using Snowflake.Service.JSWebSocketServer;
+using Snowflake.Service.HttpServer;
 using Fleck;
 namespace Snowflake.Service.Init
 {
     public partial class Form1 : Form
     {
-        JsonApiWebSocketServer server;
         static CoreService fcRef;
         public Form1()
         {
             InitializeComponent();
             Console.SetOut(new MultiTextWriter(new ControlWriter(this.textBox1, this), Console.Out));
-            server = new JsonApiWebSocketServer(8181);
-            server.StartServer();
             start();
  string x_ = @"
 [
@@ -164,7 +162,6 @@ namespace Snowflake.Service.Init
 
         private void button1_Click(object sender, EventArgs e)
         {
-            server.SendMessage("I AM TEST");
         }
     }
     //http://stackoverflow.com/questions/18726852/redirecting-console-writeline-to-textbox
