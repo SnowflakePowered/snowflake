@@ -97,6 +97,10 @@ namespace Snowflake.Service.JSWebSocketServer
             this.serverThread.Start();
         }
 
+        public void StopServer()
+        {
+            this.serverThread.Abort();
+        }
         private void OnSocketOpen(IWebSocketConnection connection)
         {
             if (this.SocketOpen != null)
