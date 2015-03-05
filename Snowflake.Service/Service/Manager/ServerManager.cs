@@ -35,5 +35,16 @@ namespace Snowflake.Service.Manager
                 return this.servers.Select(server => server.Key).ToList();
             }
         }
+        public IBaseHttpServer GetServer(string serverName)
+        {
+            return this.servers[serverName];
+        }
+        public IBaseHttpServer this[string serverName]
+        {
+            get
+            {
+                return this.GetServer(serverName);
+            }
+        }
     }
 }

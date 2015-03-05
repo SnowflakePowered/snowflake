@@ -12,5 +12,7 @@ namespace Snowflake.Service.Manager
         void StartServer(string serverName);
         void StopServer(string serverName);
         IList<string> RegisteredServers { get; }
+        IBaseHttpServer GetServer(string serverName);
+        IBaseHttpServer this[string serverName] { get; }
     }
 }
