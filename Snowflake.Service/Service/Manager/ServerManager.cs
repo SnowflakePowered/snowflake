@@ -9,6 +9,10 @@ namespace Snowflake.Service.Manager
     public class ServerManager : IServerManager
     {
         private IDictionary<string, IBaseHttpServer> servers;
+        public ServerManager()
+        {
+            this.servers = new Dictionary<string, IBaseHttpServer>();
+        }
         public void RegisterServer(string serverName, IBaseHttpServer httpServer)
         {
             servers.Add(serverName, httpServer);

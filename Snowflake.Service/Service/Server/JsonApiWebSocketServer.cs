@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Ajax;
+using Snowflake.Service.HttpServer;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Threading;
@@ -84,7 +85,8 @@ namespace Snowflake.Service.JSWebSocketServer
             return await CoreService.LoadedCore.AjaxManager.CallMethodAsync(args);
         }
 
-        public void StartServer(){
+        void IBaseHttpServer.StartServer()
+        {
             this.serverThread = new Thread(
                 () =>
                     server.Start(socket =>
@@ -97,7 +99,7 @@ namespace Snowflake.Service.JSWebSocketServer
             this.serverThread.Start();
         }
 
-        public void StopServer()
+        void IBaseHttpServer.StopServer()
         {
             this.serverThread.Abort();
         }
