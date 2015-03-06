@@ -20,7 +20,7 @@ namespace Snowflake.Service.HttpServer.Tests
         [Fact]
         public void BaseHttpServerStart_Test()
         {
-            var server = new FakeHttpServer();
+            IBaseHttpServer server = new FakeHttpServer();
             server.StartServer();
             using (WebClient client = new WebClient())
             {
@@ -30,7 +30,7 @@ namespace Snowflake.Service.HttpServer.Tests
         [Fact]
         public void BaseHttpServerStop_Test()
         {
-            var server = new FakeHttpServer();
+            IBaseHttpServer server = new FakeHttpServer();
             bool unableToDownload = false;
             server.StartServer();
             server.StopServer();
