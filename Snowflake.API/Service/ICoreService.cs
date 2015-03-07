@@ -19,14 +19,6 @@ namespace Snowflake.Service
         /// </summary>
         IAjaxManager AjaxManager { get; }
         /// <summary>
-        /// The Ajax API server
-        /// </summary>
-        IBaseHttpServer APIServer { get; }
-        /// <summary>
-        /// The WebSocket API server
-        /// </summary>
-        IJSWebSocketServer APIWebSocketServer { get; }
-        /// <summary>
         /// The Emulator assemblies manager
         /// </summary>
         IEmulatorAssembliesManager EmulatorManager { get; }
@@ -55,16 +47,12 @@ namespace Snowflake.Service
         /// </summary>
         IDictionary<string, IControllerDefinition> LoadedControllers { get; }
         /// <summary>
-        /// The server that servers mediastore requests
-        /// </summary>
-        IBaseHttpServer MediaStoreServer { get; }
-        /// <summary>
         /// The plugin manager
         /// </summary>
         IPluginManager PluginManager { get; }
         /// <summary>
-        /// The server thats serves themes
+        /// The webserver manager
         /// </summary>
-        IBaseHttpServer ThemeServer { get; }
+        IServerManager ServerManager { get; }
     }
 }

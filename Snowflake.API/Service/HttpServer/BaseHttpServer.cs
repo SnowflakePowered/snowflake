@@ -19,7 +19,7 @@ namespace Snowflake.Service.HttpServer
             serverListener = new HttpListener();
             serverListener.Prefixes.Add("http://localhost:" + port.ToString() + "/");
         }
-        public void StartServer()
+        void IBaseHttpServer.StartServer()
         {
             this.serverThread = new Thread(
                 () =>
@@ -36,7 +36,7 @@ namespace Snowflake.Service.HttpServer
             this.serverThread.Start();
         }
 
-        public void StopServer()
+        void IBaseHttpServer.StopServer()
         {
             this.cancel = true;
             this.serverThread.Join();

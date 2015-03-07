@@ -1,10 +1,11 @@
 ﻿using System;
+using Snowflake.Service.HttpServer;
 namespace Snowflake.Service.JSWebSocketServer
 {
     /// <summary>
     /// Represents a web socket server for 2 way duplex communication
     /// </summary>
-    public interface IJSWebSocketServer
+    public interface IJSWebSocketServer : IBaseHttpServer
     {
         /// <summary>
         /// Send a message to all connected clients
@@ -23,9 +24,5 @@ namespace Snowflake.Service.JSWebSocketServer
         /// When a new socket connection has opened
         /// </summary>
         event EventHandler<SocketConnectionEventArgs> SocketOpen;
-        /// <summary>
-        /// Start the WebSocketServer on a new thread
-        /// </summary>
-        void StartServer();
     }
 }

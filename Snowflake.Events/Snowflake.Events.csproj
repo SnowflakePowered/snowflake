@@ -64,6 +64,8 @@
     <Compile Include="ServiceEvents\CoreLoadedEventArgs.cs" />
     <Compile Include="ServiceEvents\CoreShutdownEventArgs.cs" />
     <Compile Include="ServiceEvents\EmulatorPromptEventArgs.cs" />
+    <Compile Include="ServiceEvents\ServerStartEventArgs.cs" />
+    <Compile Include="ServiceEvents\ServerStopEventArgs.cs" />
     <Compile Include="SnowflakeEventArgs.cs" />
     <Compile Include="SnowflakeEventSource.cs" />
     <Compile Include="SnowflakeEventSource.Game.cs" />
