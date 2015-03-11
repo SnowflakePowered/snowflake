@@ -24,9 +24,9 @@ Please feel free to explore the current API, please be aware that Snowflake is s
 
 What's Possible?
 ----------------
-Anything that's possible to do in HTML5 will be possible on Snowflake. Snowflakes initial interface will be done in Material Design, for a beautiful looking window to your games.
+Anything that's possible to do in HTML5 will be possible on Snowflake. Snowflakes initial interface will be done in Material Design, for a beautiful looking window to your games. (Actual WIP screenshot)
 
-![mockup](branding/mockups/ngcopen.png)
+![mockup](http://i.imgur.com/HSEx7me.png)
 
 I don't code, what can I do with Snowflake?
 -------------------------------------------
