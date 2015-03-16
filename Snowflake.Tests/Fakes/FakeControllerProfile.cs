@@ -14,7 +14,7 @@ namespace Snowflake.Tests.Fakes
             get { throw new NotImplementedException(); }
         }
 
-        public IReadOnlyDictionary<string, string> InputConfiguration
+        public IDictionary<string, string> InputConfiguration
         {
             get { throw new NotImplementedException(); }
         }

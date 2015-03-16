@@ -10,15 +10,14 @@ namespace Snowflake.Controller
 {
     public class ControllerProfile : IControllerProfile
     {
-        public IReadOnlyDictionary<string, string> InputConfiguration { get { return this.inputConfiguration.AsReadOnly(); } }
-        private IDictionary<string, string> inputConfiguration;
+        public IDictionary<string, string> InputConfiguration { get; private set; }
         public string ControllerID { get; private set; }
         public ControllerProfileType ProfileType { get; private set; }
         public ControllerProfile(string controllerId, ControllerProfileType profileType, IDictionary<string, string> inputConfiguration)
         {
             this.ControllerID = controllerId;
             this.ProfileType = profileType;
-            this.inputConfiguration = inputConfiguration;
+            this.InputConfiguration = inputConfiguration;
         }
 
         public static ControllerProfile FromJsonProtoTemplate(IDictionary<string, dynamic> protoTemplate){
@@ -29,11 +28,11 @@ namespace Snowflake.Controller
             return new ControllerProfile(controllerId, profileType, inputConfiguration);
         }
 
-        public IDictionary<string, dynamic> ToSerializable()
+        public IDictionary<string, object> ToSerializable()
         {
-            var serializable = new Dictionary<string, dynamic>();
+            var serializable = new Dictionary<string, object>();
             serializable["ControllerID"] = this.ControllerID;
-            serializable["InputConfiguration"] = this.inputConfiguration;
+            serializable["InputConfiguration"] = this.InputConfiguration;
             serializable["ProfileType"] = Enum.GetName(typeof(ControllerProfileType), this.ProfileType);
             return serializable;
         }

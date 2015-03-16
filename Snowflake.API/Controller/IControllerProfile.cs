@@ -17,7 +17,7 @@ namespace Snowflake.Controller
         /// The mapping of inputs to keyboard or gamepad.
         /// <see cref="Snowflake.Controller.IControllerInput"/>
         /// </summary>
-        IReadOnlyDictionary<string, string> InputConfiguration { get; }
+        IDictionary<string, string> InputConfiguration { get; }
         /// <summary>
         /// Whether this profile is for a gamepad, keyboard, or unhandled (custom)
         /// </summary>
@@ -26,6 +26,6 @@ namespace Snowflake.Controller
         /// Generates an IDictionary that can be serialized to json or yaml
         /// </summary>
         /// <returns>An IDictionary that is to be serialized to json or yaml</returns>
-        IDictionary<string, dynamic> ToSerializable();
+        IDictionary<string, object> ToSerializable();
     }
 }
