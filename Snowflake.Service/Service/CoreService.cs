@@ -18,6 +18,7 @@ using Snowflake.Service.Manager;
 using Snowflake.Controller;
 using Snowflake.Game;
 using Snowflake.Emulator.Configuration;
+using Snowflake.Emulator.Input.InputManager;
 namespace Snowflake.Service
 {
     [Export(typeof(ICoreService))]
@@ -31,6 +32,7 @@ namespace Snowflake.Service
         public IPluginManager PluginManager { get; private set; }
         public IAjaxManager AjaxManager { get; private set; }
         public IGameDatabase GameDatabase { get; private set; }
+        public IInputManager InputManager { get { return new Snowflake.InputManager.InputManager(); } }
         public IControllerPortsDatabase ControllerPortsDatabase { get; private set; }
         public IPlatformPreferenceDatabase PlatformPreferenceDatabase { get; private set; }
         public IEmulatorAssembliesManager EmulatorManager { get; private set; }

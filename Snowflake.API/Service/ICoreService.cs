@@ -4,6 +4,7 @@ using Snowflake.Service.Manager;
 using Snowflake.Service.HttpServer;
 using Snowflake.Service.JSWebSocketServer;
 using Snowflake.Emulator.Configuration;
+using Snowflake.Emulator.Input.InputManager;
 using Snowflake.Controller;
 using Snowflake.Game;
 using Snowflake.Platform;
@@ -54,5 +55,10 @@ namespace Snowflake.Service
         /// The webserver manager
         /// </summary>
         IServerManager ServerManager { get; }
+        /// <summary>
+        /// The input device manager
+        /// </summary>
+        IInputManager InputManager { get; }
+        
     }
 }
