@@ -73,7 +73,17 @@ namespace Snowflake.StandardAjax
             int port = Int32.Parse(request.GetParameter("port"));
             this.CoreInstance.ControllerPortsDatabase.SetDeviceInPort(platform, port, deviceName);
 
-            return new JSResponse(request, null);
+            return new JSResponse(request, "success");
+        }
+        [AjaxMethod(MethodPrefix = "Controller")]
+        [AjaxMethodParameter(ParameterName = "platform", ParameterType = AjaxMethodParameterType.StringParameter)]
+        [AjaxMethodParameter(ParameterName = "port", ParameterType = AjaxMethodParameterType.IntParameter)]
+        public IJSResponse GetDeviceInPort(IJSRequest request)
+        {
+            IPlatformInfo platform = this.CoreInstance.LoadedPlatforms[request.GetParameter("platform")];
+            int port = Int32.Parse(request.GetParameter("port"));
+
+            return new JSResponse(request, this.CoreInstance.ControllerPortsDatabase.GetDeviceInPort(platform, port));
         }
         [AjaxMethod(MethodPrefix = "Controller")]
         public IJSResponse GetInputDevices(IJSRequest request)
