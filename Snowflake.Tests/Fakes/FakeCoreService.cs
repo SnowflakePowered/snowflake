@@ -126,5 +126,11 @@ namespace Snowflake.Tests.Fakes
         {
             get { throw new NotImplementedException(); }
         }
+
+
+        Emulator.Input.InputManager.IInputManager ICoreService.InputManager
+        {
+            get { throw new NotImplementedException(); }
+        }
     }
 }
