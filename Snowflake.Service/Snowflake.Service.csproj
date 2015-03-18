@@ -105,6 +105,10 @@
       <Project>{7ae8e842-e2a9-4f01-bec1-8a7a60cc16bb}</Project>
       <Name>Snowflake.Events</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Snowflake.InputManager.DirectInput\Snowflake.InputManager.DirectInput.csproj">
+      <Project>{f668fd18-74cb-4774-88a4-41614b2fb0ab}</Project>
+      <Name>Snowflake.InputManager.DirectInput</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Snowflake\Snowflake.csproj">
       <Project>{8f1d65ed-4a96-4a0a-8371-53655a60a2b3}</Project>
       <Name>Snowflake</Name>
