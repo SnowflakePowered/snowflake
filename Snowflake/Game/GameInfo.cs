@@ -27,8 +27,14 @@ namespace Snowflake.Game
         public static IGameInfo FromJson(dynamic json)
         {
             var metadata = json.Metadata.ToObject<IDictionary<string, string>>();
-            var mediastore = new FileMediaStore(json.MediaStore.MediaStoreKey);
-            return new GameInfo(json.PlatformID, json.Name, mediastore, metadata, json.UUID, json.FileName, json.CRC32);
+            string mediaStoreKey = json.MediaStore.MediaStoreKey;
+            var mediastore = new FileMediaStore(mediaStoreKey);
+            string platformId = json.PlatformID;
+            string name = json.Name;
+            string uuid = json.UUID;
+            string fileName = json.FileName;
+            string crc32 = json.CRC32;
+            return new GameInfo(platformId, name, mediastore, metadata, uuid, fileName, crc32);
         }
     }
 }
