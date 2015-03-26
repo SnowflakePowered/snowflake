@@ -42,7 +42,7 @@ namespace Snowflake.StandardAjax
         public IJSResponse AddGameInfo(IJSRequest request)
         {
             string gameinfo_pre = request.GetParameter("gameinfo");
-            IGameInfo game = JsonConvert.DeserializeObject<GameInfo>(gameinfo_pre);
+            IGameInfo game = GameInfo.FromJson(JsonConvert.DeserializeObject(gameinfo_pre));
             this.CoreInstance.GameDatabase.AddGame(game);
             return new JSResponse(request, "added " + game.FileName, true);
         }
