@@ -55,7 +55,6 @@ namespace Snowflake.Service.HttpServer
             catch
             {
                 input = new MemoryStream(new UTF8Encoding().GetBytes("404 not found"));
-
             }
            
             byte[] buffer = new byte[1024 * 16];
