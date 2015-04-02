@@ -49,5 +49,11 @@ namespace Snowflake.Tests.Fakes
         {
             get { throw new NotImplementedException(); }
         }
+
+
+        public string MediaStoreKey
+        {
+            get { throw new NotImplementedException(); }
+        }
     }
 }
