@@ -30,7 +30,6 @@ namespace Snowflake.Game
                                                                 uuid TEXT PRIMARY KEY,
                                                                 filename TEXT,
                                                                 name TEXT,
-                                                                mediastorekey TEXT,
                                                                 metadata TEXT,
                                                                 crc32 TEXT
                                                                 )", this.DBConnection);
@@ -46,7 +45,6 @@ namespace Snowflake.Game
                                           @uuid,
                                           @filename,
                                           @name,
-                                          @mediastorekey,
                                           @metadata,
                                           @crc32)", this.DBConnection))
             {
@@ -54,7 +52,6 @@ namespace Snowflake.Game
                 sqlCommand.Parameters.AddWithValue("@uuid", game.UUID);
                 sqlCommand.Parameters.AddWithValue("@filename", game.FileName);
                 sqlCommand.Parameters.AddWithValue("@name", game.Name);
-                sqlCommand.Parameters.AddWithValue("@mediastorekey", game.MediaStore.MediaStoreKey);
                 sqlCommand.Parameters.AddWithValue("@metadata", JsonConvert.SerializeObject(game.Metadata));
                 sqlCommand.Parameters.AddWithValue("@crc32", game.CRC32);
                 sqlCommand.ExecuteNonQuery();
