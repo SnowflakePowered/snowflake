@@ -1,7 +1,6 @@
 {
     "PlatformID": "NINTENDO_SNES",
     "Name": "Super Nintendo Entertainment System",
-    "MediaStoreKey": "platform.NINTENDO_SNES",
     "FileExtensions": [
         ".sfc",
 		".smc"
