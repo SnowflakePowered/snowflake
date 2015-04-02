@@ -14,9 +14,12 @@ namespace Snowflake.Game
         public string UUID { get; private set; }
         public string FileName { get; private set; }
         public string CRC32 { get; private set; }
+        public string MediaStoreKey { get; private set; }
+        public IMediaStore MediaStore { get { return new FileMediaStore(this.MediaStoreKey); } }
         public GameInfo(string platformId, string name, IMediaStore mediaStore, IDictionary<string, string> metadata, string uuid, string fileName, string crc32)
-            : base(platformId, name, mediaStore, metadata)
+            : base(platformId, name, metadata)
         {
+            this.MediaStoreKey = this.Metadata["kori_mediastorekey"];
             this.UUID = uuid;
             this.FileName = fileName;
             this.CRC32 = crc32;

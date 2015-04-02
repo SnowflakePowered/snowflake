@@ -1,5 +1,6 @@
 ﻿using System;
 using Snowflake.Information;
+using Snowflake.Information.MediaStore;
 namespace Snowflake.Game
 {
     /// <summary>
@@ -19,5 +20,11 @@ namespace Snowflake.Game
         /// The unique ID of the game
         /// </summary>
         string UUID { get; }
+        //Gets the mediastore
+        IMediaStore MediaStore { get; }
+        /// <summary>
+        /// The mediastore key
+        /// </summary>
+        string MediaStoreKey { get; }
     }
 }

@@ -22,10 +22,5 @@ namespace Snowflake.Information
         /// Any metadata that is attached to this object, such as descriptions
         /// </summary>
         IDictionary<string, string> Metadata { get; set; }
-        /// <summary>
-        /// The mediastore that is attached to this object.
-        /// </summary>
-        IMediaStore MediaStore { get;  }
-
     }
 }
