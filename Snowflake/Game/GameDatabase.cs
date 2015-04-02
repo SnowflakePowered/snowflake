@@ -119,11 +119,10 @@ namespace Snowflake.Game
             var uuid = row.Field<string>("uuid");
             var fileName = row.Field<string>("filename");
             var name = row.Field<string>("name");
-            var mediaStore = new FileMediaStore(row.Field<string>("mediastorekey"));
             var metadata = JsonConvert.DeserializeObject<IDictionary<string, string>>(row.Field<string>("metadata"));
             var crc32 = row.Field<string>("crc32");
 
-            return new GameInfo(platformId, name, mediaStore, metadata, uuid, fileName, crc32);
+            return new GameInfo(platformId, name, metadata, uuid, fileName, crc32);
         }
 
     }

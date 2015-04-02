@@ -49,14 +49,16 @@ namespace Snowflake.Service
             var resultdetails = this.ScraperPlugin.GetGameDetails(id);
             var gameinfo = resultdetails.Item1;
             var gameUuid = FileHash.GetMD5(fileName);
-            return new GameInfo(
+            gameinfo.Add("snowflake_mediastorekey", ScrapeService.ValidateFilename(gameinfo[GameInfoFields.game_title]).Replace(' ', '_') + gameUuid);
+            var gameResult = new GameInfo(
                 this.ScrapePlatform.PlatformID,
                 gameinfo[GameInfoFields.game_title],
-                resultdetails.Item2.ToMediaStore("game." + ScrapeService.ValidateFilename(gameinfo[GameInfoFields.game_title]).Replace(' ', '_') + gameUuid),
                 gameinfo,
                 gameUuid,
                 fileName
             );
+            resultdetails.Item2.ToMediaStore(gameResult.MediaStoreKey);
+            return gameResult;
         }
 
         public IGameInfo GetGameInfo(string fileName)
