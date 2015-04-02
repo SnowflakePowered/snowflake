@@ -57,7 +57,7 @@ namespace Snowflake.Service
                 gameUuid,
                 fileName
             );
-            resultdetails.Item2.ToMediaStore(gameResult.MediaStoreKey);
+            resultdetails.Item2.ToMediaStore(gameResult.Metadata["snowflake_mediastorekey"]);
             return gameResult;
         }
 
