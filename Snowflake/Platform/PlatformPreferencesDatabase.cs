@@ -22,7 +22,6 @@ namespace Snowflake.Platform
                                                                 platform_id TEXT PRIMARY KEY,
                                                                 emulator TEXT,
                                                                 scraper TEXT,
-                                                                identifier TEXT
                                                                 )", this.DBConnection);
             sqlCommand.ExecuteNonQuery();
             this.DBConnection.Close();
@@ -33,13 +32,11 @@ namespace Snowflake.Platform
             using (var sqlCommand = new SQLiteCommand(@"INSERT OR IGNORE INTO platformprefs VALUES(
                                           @platform_id,
                                           @emulator,
-                                          @scraper,
-                                          @identifier)", this.DBConnection))
+                                          @scraper)", this.DBConnection))
             {
                 sqlCommand.Parameters.AddWithValue("@platform_id", platformInfo.PlatformID);
                 sqlCommand.Parameters.AddWithValue("@emulator", platformInfo.Defaults.Emulator);
                 sqlCommand.Parameters.AddWithValue("@scraper", platformInfo.Defaults.Scraper);
-                sqlCommand.Parameters.AddWithValue("@identifier", platformInfo.Defaults.Identifier);
                 sqlCommand.ExecuteNonQuery();
             }
             this.DBConnection.Close();
@@ -75,11 +72,6 @@ namespace Snowflake.Platform
         {
             this.SetColumn(platformInfo, "scraper", value);
         }
-        public void SetIdentifier(IPlatformInfo platformInfo, string value)
-        {
-            this.SetColumn(platformInfo, "identifier", value);
-        }
-
         private void SetColumn(IPlatformInfo platformInfo, string column, string value)
         {
             this.DBConnection.Open();
