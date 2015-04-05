@@ -14,7 +14,7 @@ namespace Snowflake.Platform
 {
     public class PlatformInfo : Info, IPlatformInfo
     {
-        public PlatformInfo(string platformId, string name, IMediaStore mediastore, IDictionary<string, string> metadata, IList<string> fileExtensions, IPlatformDefaults platformDefaults, IList<string> controllers, int maximumInputs, IPlatformControllerPorts controllerPorts): base(platformId, name, mediastore, metadata)
+        public PlatformInfo(string platformId, string name, IDictionary<string, string> metadata, IList<string> fileExtensions, IPlatformDefaults platformDefaults, IList<string> controllers, int maximumInputs, IPlatformControllerPorts controllerPorts): base(platformId, name, metadata)
         {
             this.FileExtensions = fileExtensions;
             this.Defaults = platformDefaults;
@@ -35,7 +35,6 @@ namespace Snowflake.Platform
             return new PlatformInfo(
                     jsonDictionary["PlatformID"],
                     jsonDictionary["Name"],
-                    new FileMediaStore(jsonDictionary["MediaStoreKey"]),
                     jsonDictionary["Metadata"].ToObject<Dictionary<string, string>>(),
                     jsonDictionary["FileExtensions"].ToObject<List<string>>(),
                     platformDefaults,
