@@ -12,10 +12,6 @@ namespace Snowflake.Platform
         /// </summary>
         string Emulator { get; set; }
         /// <summary>
-        /// The default identifier plugin
-        /// </summary>
-        string Identifier { get; set; }
-        /// <summary>
         /// The default scraper plugin
         /// </summary>
         string Scraper { get; set; }
