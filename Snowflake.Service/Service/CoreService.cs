@@ -63,6 +63,11 @@ namespace Snowflake.Service
             CoreService.LoadedCore.EmulatorManager.LoadEmulatorAssemblies();
             CoreService.LoadedCore.PluginManager.LoadAll();
             CoreService.LoadedCore.AjaxManager.LoadAll();
+            foreach (PlatformInfo platform in CoreService.LoadedCore.LoadedPlatforms.Values)
+            {
+                CoreService.LoadedCore.ControllerPortsDatabase.AddPlatform(platform);
+                CoreService.LoadedCore.PlatformPreferenceDatabase.AddPlatform(platform);
+            }
         }
 
         public CoreService() : this(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Snowflake")) { }
@@ -76,16 +81,11 @@ namespace Snowflake.Service
             this.LoadedControllers = this.LoadControllers(Path.Combine(this.AppDataDirectory, "controllers"));
             this.ServerManager = new ServerManager();
             this.GameDatabase = new GameDatabase(Path.Combine(this.AppDataDirectory, "games.db"));
-            this.PlatformPreferenceDatabase = new PlatformPreferencesDatabase(Path.Combine(this.AppDataDirectory, "platformprefs.db"));
             this.ControllerPortsDatabase = new ControllerPortsDatabase(Path.Combine(this.AppDataDirectory, "ports.db"));
-            foreach (PlatformInfo platform in this.LoadedPlatforms.Values)
-            {
-                this.ControllerPortsDatabase.AddPlatform(platform);
-                this.PlatformPreferenceDatabase.AddPlatform(platform);
-            }
             this.PluginManager = new PluginManager(this.AppDataDirectory);
             this.AjaxManager = new AjaxManager(this.AppDataDirectory);
             this.EmulatorManager = new EmulatorAssembliesManager(Path.Combine(this.AppDataDirectory, "emulators"));
+            this.PlatformPreferenceDatabase = new PlatformPreferencesDatabase(Path.Combine(this.AppDataDirectory, "platformprefs.db"), this.PluginManager);
 
             this.ServerManager.RegisterServer("ThemeServer", new ThemeServer(Path.Combine(this.AppDataDirectory, "theme")));
             this.ServerManager.RegisterServer("AjaxApiServer", new ApiServer());
