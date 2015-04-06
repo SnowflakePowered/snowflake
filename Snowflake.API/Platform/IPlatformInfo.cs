@@ -11,10 +11,6 @@ namespace Snowflake.Platform
     public interface IPlatformInfo : IInfo
     {
         /// <summary>
-        /// The defaults used to populate IPlatformPreferenceDatabase entry
-        /// </summary>
-        IPlatformDefaults Defaults { get; set; }
-        /// <summary>
         /// The file extensions ROMs of this platform are known to have.
         /// </summary>
         IList<string> FileExtensions { get; }
