@@ -6,14 +6,19 @@ using System.Threading.Tasks;
 using System.Data.SQLite;
 using System.Data;
 using Snowflake.Utility;
+using Snowflake.Emulator;
+using Snowflake.Scraper;
+using Snowflake.Service.Manager;
 namespace Snowflake.Platform
 {
     public class PlatformPreferencesDatabase : BaseDatabase, IPlatformPreferenceDatabase
     {
-        public PlatformPreferencesDatabase(string fileName)
+        private IPluginManager pluginManager;
+        public PlatformPreferencesDatabase(string fileName, IPluginManager pluginManager)
             : base(fileName)
         {
             this.CreateDatabase();
+            this.pluginManager = pluginManager;
         }
         private void CreateDatabase()
         {
@@ -21,8 +26,7 @@ namespace Snowflake.Platform
             var sqlCommand = new SQLiteCommand(@"CREATE TABLE IF NOT EXISTS platformprefs(
                                                                 platform_id TEXT PRIMARY KEY,
                                                                 emulator TEXT,
-                                                                scraper TEXT,
-                                                                )", this.DBConnection);
+                                                                scraper TEXT)", this.DBConnection);
             sqlCommand.ExecuteNonQuery();
             this.DBConnection.Close();
         }
@@ -35,8 +39,12 @@ namespace Snowflake.Platform
                                           @scraper)", this.DBConnection))
             {
                 sqlCommand.Parameters.AddWithValue("@platform_id", platformInfo.PlatformID);
-                sqlCommand.Parameters.AddWithValue("@emulator", platformInfo.Defaults.Emulator);
-                sqlCommand.Parameters.AddWithValue("@scraper", platformInfo.Defaults.Scraper);
+                KeyValuePair<string, IEmulatorBridge> emulator = pluginManager.LoadedEmulators.Where(x => x.Value.SupportedPlatforms.Contains(platformInfo.PlatformID)).FirstOrDefault();
+                KeyValuePair<string, IScraper> scraper = pluginManager.LoadedScrapers.Where(x => x.Value.SupportedPlatforms.Contains(platformInfo.PlatformID)).FirstOrDefault();
+                string emulatorId = emulator.Equals(default(KeyValuePair<string, IEmulatorBridge>)) ?  "null" : emulator.Key;
+                string scraperId = scraper.Equals(default(KeyValuePair<string, IScraper>)) ? "null" : scraper.Key;
+                sqlCommand.Parameters.AddWithValue("@emulator", emulatorId);
+                sqlCommand.Parameters.AddWithValue("@scraper", scraperId);
                 sqlCommand.ExecuteNonQuery();
             }
             this.DBConnection.Close();
@@ -55,10 +63,9 @@ namespace Snowflake.Platform
                     result.Load(reader);
                     var row = result.Rows[0];
                     string scraper = result.Rows[0].Field<string>("scraper");
-                    string identifier = result.Rows[0].Field<string>("identifier");
                     string emulator = result.Rows[0].Field<string>("emulator");
                     IPlatformDefaults platformDefaults =
-                        new PlatformDefaults(scraper, identifier, emulator);
+                        new PlatformDefaults(scraper,  emulator);
                     this.DBConnection.Close();
                     return platformDefaults;
                 }
