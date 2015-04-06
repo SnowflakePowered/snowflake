@@ -5,11 +5,6 @@
         ".sfc",
 		".smc"
     ],
-    "Defaults": {
-		"Scraper": "Scraper.TheGamesDB",
-		"Identifier": "Identifier.ClrMameProDat",
-		"Emulator": "Emulator.RetroArch" 
-	},
     "Metadata": {
         "platform_shortname": "SNES",
         "platform_company": "Nintendo",
