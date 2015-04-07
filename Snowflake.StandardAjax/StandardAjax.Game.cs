@@ -25,6 +25,20 @@ namespace Snowflake.StandardAjax
             string platform = request.GetParameter("platform");
             return new JSResponse(request, this.CoreInstance.LoadedPlatforms[platform].GetScrapeEngine().GetGameResults(filename));
         }
+
+        [AjaxMethod(MethodPrefix = "Game")]
+        [AjaxMethodParameter(ParameterName = "filename", ParameterType = AjaxMethodParameterType.StringParameter)]
+        [AjaxMethodParameter(ParameterName = "platform", ParameterType = AjaxMethodParameterType.StringParameter)]
+        [AjaxMethodParameter(ParameterName = "scraper", ParameterType = AjaxMethodParameterType.StringParameter)]
+        public IJSResponse GetGameResultsUsingScraper(IJSRequest request)
+        {
+            string filename = request.GetParameter("filename");
+            string platform = request.GetParameter("platform");
+            string scraperId = request.GetParameter("scraper");
+
+            return new JSResponse(request, this.CoreInstance.LoadedPlatforms[platform].GetScrapeEngine(scraperId).GetGameResults(filename));
+        }
+
         [AjaxMethod(MethodPrefix = "Game")]
         [AjaxMethodParameter(ParameterName = "resultid", ParameterType = AjaxMethodParameterType.StringParameter)]
         [AjaxMethodParameter(ParameterName = "filename", ParameterType = AjaxMethodParameterType.StringParameter)]
