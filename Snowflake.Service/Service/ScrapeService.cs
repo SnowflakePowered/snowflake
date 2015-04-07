@@ -23,7 +23,7 @@ namespace Snowflake.Service
             this.ScrapePlatform = scrapePlatform;
             this.ScraperPlugin = CoreService.LoadedCore.PluginManager.LoadedScrapers[scraperName];
         }
-        public ScrapeService(IPlatformInfo scrapePlatform) : this(scrapePlatform, CoreService.LoadedCore.PlatformPreferenceDatabase.GetPreferences(this.ScrapePlatform).Scraper)
+        public ScrapeService(IPlatformInfo scrapePlatform) : this (scrapePlatform, CoreService.LoadedCore.PlatformPreferenceDatabase.GetPreferences(scrapePlatform).Scraper)
         {
         }
 
