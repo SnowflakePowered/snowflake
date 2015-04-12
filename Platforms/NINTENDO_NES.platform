@@ -4,11 +4,6 @@
     "FileExtensions": [
         ".nes"
     ],
-    "Defaults": {
-        "Scraper": "Scraper.TheGamesDB",
-        "Identifier": "Identifier.ClrMameProDat",
-        "Emulator": "Emulator.RetroArch"
-    },
     "Metadata": {
         "platform_shortname": "NES",
         "platform_company": "Nintendo",

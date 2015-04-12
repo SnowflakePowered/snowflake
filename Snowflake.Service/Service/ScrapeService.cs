@@ -18,11 +18,13 @@ namespace Snowflake.Service
     {
         private IPlatformInfo ScrapePlatform { get; set; }
         private IScraper ScraperPlugin { get; set; }
-        public ScrapeService(IPlatformInfo scrapePlatform)
+        public ScrapeService(IPlatformInfo scrapePlatform, string scraperName)
         {
             this.ScrapePlatform = scrapePlatform;
-            var scraperName = CoreService.LoadedCore.PlatformPreferenceDatabase.GetPreferences(this.ScrapePlatform).Scraper;
             this.ScraperPlugin = CoreService.LoadedCore.PluginManager.LoadedScrapers[scraperName];
+        }
+        public ScrapeService(IPlatformInfo scrapePlatform) : this (scrapePlatform, CoreService.LoadedCore.PlatformPreferenceDatabase.GetPreferences(scrapePlatform).Scraper)
+        {
         }
 
         public IList<IGameScrapeResult> GetGameResults(string fileName)
