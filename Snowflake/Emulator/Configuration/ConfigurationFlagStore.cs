@@ -61,7 +61,15 @@ namespace Snowflake.Emulator.Configuration
         }
         private void SetValue(string key, object value, ConfigurationFlagTypes type, string filename)
         {
-            IDictionary<string, string> keys = JsonConvert.DeserializeObject<IDictionary<string, string>>(File.ReadAllText(filename));
+            IDictionary<string, string> keys;
+            try
+            {
+               keys = JsonConvert.DeserializeObject<IDictionary<string, string>>(File.ReadAllText(filename));
+            }
+            catch
+            {
+               keys = new Dictionary<string, string>();
+            }
             keys[key] = value.ToString();
             File.WriteAllText(filename, JsonConvert.SerializeObject(keys));
         }
