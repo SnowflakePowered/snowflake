@@ -64,6 +64,7 @@
     <Reference Include="System.Data.SQLite.Linq">
       <HintPath>..\packages\System.Data.SQLite.Linq.1.0.93.0\lib\net45\System.Data.SQLite.Linq.dll</HintPath>
     </Reference>
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -86,6 +87,7 @@
     <Compile Include="Emulator\Configuration\IConfigurationFlagStore.cs" />
     <Compile Include="Emulator\Input\InputManager\IInputDevice.cs" />
     <Compile Include="Emulator\Input\InputManager\IInputManager.cs" />
+    <Compile Include="Game\IGameMediaCache.cs" />
     <Compile Include="Platform\IPlatformControllerPorts.cs" />
     <Compile Include="Platform\IPlatformPreferenceDatabase.cs" />
     <Compile Include="Platform\StonePlatforms.cs" />
