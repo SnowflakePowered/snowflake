@@ -10,6 +10,7 @@ namespace Snowflake.Game
     public interface IGameMediaCache
     {
         string RootPath { get; }
+        string CacheKey { get; }
         void SetBoxartFront(Uri boxartFrontUri);
         void SetBoxartBack(Uri boxartBackUri);
         void SetBoxartFull(Uri boxartFrontUri);
