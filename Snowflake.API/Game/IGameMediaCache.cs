@@ -20,5 +20,7 @@ namespace Snowflake.Game
         Image GetBoxartBackImage();
         Image GetBoxartFullImage();
         Image GetGameFanartImage();
+        string GameVideoFileName { get; }
+        string GameMusicFileName { get; }
     }
 }
