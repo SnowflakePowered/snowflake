@@ -73,6 +73,7 @@
     <Reference Include="System.Data.SQLite.Linq">
       <HintPath>..\packages\System.Data.SQLite.Linq.1.0.93.0\lib\net45\System.Data.SQLite.Linq.dll</HintPath>
     </Reference>
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
@@ -93,6 +94,7 @@
     <Compile Include="Emulator\Configuration\ConfigurationFlagSelectValue.cs" />
     <Compile Include="Emulator\Configuration\ConfigurationFlagStore.cs" />
     <Compile Include="Emulator\EmulatorBridge.cs" />
+    <Compile Include="Game\GameMediaCache.cs" />
     <Compile Include="Identifier\BaseIdentifier.cs" />
     <Compile Include="Information\MediaStore\FileMediaStore.cs" />
     <Compile Include="Information\MediaStore\FileMediaStoreSection.cs" />
