@@ -40,7 +40,15 @@ namespace Snowflake.Game
             using (var webClient = new WebClient())
                 try
                 {
-                    byte[] imageData = webClient.DownloadData(imageUri);
+                    byte[] imageData;
+                    if (imageUri.Scheme == "file")
+                    {
+                        imageData = File.ReadAllBytes(imageUri.LocalPath);
+                    }
+                    else
+                    {
+                        imageData = webClient.DownloadData(imageUri);
+                    }
                     using (Stream imageStream = new MemoryStream(imageData))
                     using (Image image = Image.FromStream(imageStream, true, true))
                     {
