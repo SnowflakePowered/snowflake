@@ -38,6 +38,7 @@ namespace Snowflake.Game
         private void SetImage(Uri imageUri, string fileName)
         {
             using (var webClient = new WebClient())
+            {
                 try
                 {
                     byte[] imageData;
@@ -71,6 +72,7 @@ namespace Snowflake.Game
                 {
                     Console.WriteLine(String.Format("[WARN] Swallowed UnknownException: Unable to download {0} to game cache"), imageUri.AbsoluteUri);
                 }
+            }
         }
 
         private Image GetImage(string fileName)
@@ -98,14 +100,30 @@ namespace Snowflake.Game
             this.SetImage(fanartUri, fileGameFanart);
         }
 
+        private void DownloadFile(Uri fileUri, string fileName)
+        {
+            using (var webClient = new WebClient())
+            {
+                if (File.Exists(Path.Combine(this.fullPath, fileName))) File.Delete(Path.Combine(this.fullPath, fileName));
+                if (fileUri.Scheme == "file")
+                {
+                    File.Copy(fileUri.LocalPath, Path.Combine(this.fullPath, fileName));
+                }
+                else
+                {
+                    webClient.DownloadFile(fileUri, Path.Combine(this.fullPath, fileName));
+                }
+            }
+        }
+
         public void SetGameVideo(Uri videoUri)
         {
-            throw new NotImplementedException();
+            this.DownloadFile(videoUri, fileGameVideo);
         }
 
         public void SetGameMusic(Uri musicUri)
         {
-            throw new NotImplementedException();
+            this.DownloadFile(musicUri, fileGameMusic);
         }
 
         public Image GetBoxartFrontImage()
