@@ -8,6 +8,7 @@ namespace Snowflake.Information.MediaStore
     /// <summary>
     /// Represents a section in the mediastore.
     /// </summary>
+    [Obsolete("MediaStore has been superseded by GameMediaCache")]
     public interface IMediaStoreSection
     {
         /// <summary>

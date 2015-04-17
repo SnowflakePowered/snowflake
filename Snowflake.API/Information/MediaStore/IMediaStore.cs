@@ -9,6 +9,7 @@ namespace Snowflake.Information.MediaStore
     /// <summary>
     /// Represents a mediastore that is able to store pieces of media for an IInfo
     /// </summary>
+    [Obsolete("MediaStore has been superseded by GameMediaCache")]
     public interface IMediaStore
     {
         /// <summary>
