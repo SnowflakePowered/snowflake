@@ -100,30 +100,39 @@ namespace Snowflake.Game
             this.SetImage(fanartUri, fileGameFanart);
         }
 
-        private void DownloadFile(Uri fileUri, string fileName)
+        /// <summary>
+        /// Downloads a file and returns the full filename of the downloaded file
+        /// </summary>
+        /// <param name="fileUri">The Uri to download</param>
+        /// <param name="fileName">Filename to save as without extension</param>
+        /// <returns></returns>
+        private string DownloadFile(Uri fileUri, string fileName)
         {
+            string extension = Path.GetExtension(fileUri.AbsoluteUri);
+            string _fileName = fileName + "." + extension;
             using (var webClient = new WebClient())
             {
-                if (File.Exists(Path.Combine(this.fullPath, fileName))) File.Delete(Path.Combine(this.fullPath, fileName));
+                if (File.Exists(Path.Combine(this.fullPath, _fileName))) File.Delete(Path.Combine(this.fullPath, _fileName));
                 if (fileUri.Scheme == "file")
                 {
-                    File.Copy(fileUri.LocalPath, Path.Combine(this.fullPath, fileName));
+                    File.Copy(fileUri.LocalPath, Path.Combine(this.fullPath, _fileName));
                 }
                 else
                 {
-                    webClient.DownloadFile(fileUri, Path.Combine(this.fullPath, fileName));
+                    webClient.DownloadFile(fileUri, Path.Combine(this.fullPath, _fileName));
                 }
+                return _fileName;
             }
         }
 
         public void SetGameVideo(Uri videoUri)
         {
-            this.DownloadFile(videoUri, fileGameVideo);
+            this.GameVideoFileName = this.DownloadFile(videoUri, fileGameVideo);
         }
 
         public void SetGameMusic(Uri musicUri)
         {
-            this.DownloadFile(musicUri, fileGameMusic);
+            this.GameMusicFileName = this.DownloadFile(musicUri, fileGameMusic);
         }
 
         public Image GetBoxartFrontImage()
