@@ -62,6 +62,11 @@ namespace Snowflake.Service
             resultdetails.Item2.ToMediaStore(gameResult.Metadata["snowflake_mediastorekey"]);
             return gameResult;
         }
+        public IGameImagesResult GetGameImageResults(string id)
+        {
+            var resultdetails = this.ScraperPlugin.GetGameDetails(id);
+            return resultdetails.Item2;
+        }
 
         public IGameInfo GetGameInfo(string fileName)
         {

@@ -27,6 +27,7 @@ namespace Snowflake.Service
         /// <summary>
         /// Gets the game information given an ID
         /// </summary>
+        /// <param name="id">The game result id</param>
         /// <param name="fileName">The filename of the game</param>
         /// <returns>The game information</returns>
         IGameInfo GetGameInfo(string id, string fileName);
@@ -36,6 +37,11 @@ namespace Snowflake.Service
         /// <param name="fileName">The filename of the game</param>
         /// <returns>The game scrape results</returns>
         IList<IGameScrapeResult> GetGameResults(string fileName);
-
+        /// <summary>
+        /// Get only game image results
+        /// </summary>
+        /// <param name="id">The game result id</param>
+        /// <returns></returns>
+        IGameImagesResult GetGameImageResults(string id);
     }
 }
