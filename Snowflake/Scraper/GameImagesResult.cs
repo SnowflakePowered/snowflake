@@ -47,6 +47,7 @@ namespace Snowflake.Scraper
             }
         }
 
+        [Obsolete]
         public IMediaStore ToMediaStore(string mediaStoreKey)
         {
             IMediaStore mediaStore = new FileMediaStore(mediaStoreKey);

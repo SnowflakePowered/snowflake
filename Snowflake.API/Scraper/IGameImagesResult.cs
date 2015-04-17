@@ -13,6 +13,7 @@ namespace Snowflake.Scraper
         IList<string> Fanarts { get; set; }
         string ImagesID { get; }
         IList<string> Screenshots { get; set; }
+        [Obsolete]
         IMediaStore ToMediaStore(string mediaStoreKey);
     }
 }
