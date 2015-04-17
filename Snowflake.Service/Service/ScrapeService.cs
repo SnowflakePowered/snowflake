@@ -38,7 +38,6 @@ namespace Snowflake.Service
             identifiedMetadata["sha1"] = FileHash.GetSHA1(fileName);
             identifiedMetadata["filename"] = fileName; 
             return this.ScraperPlugin.SortBestResults(identifiedMetadata, this.ScraperPlugin.GetSearchResults(identifiedMetadata, this.ScrapePlatform.PlatformID));
-
         }
 
         public IGameInfo GetGameInfo(IGameScrapeResult gameResult, string fileName)
@@ -59,7 +58,7 @@ namespace Snowflake.Service
                 gameUuid,
                 fileName
             );
-            resultdetails.Item2.ToMediaStore(gameResult.Metadata["snowflake_mediastorekey"]);
+            this.DownloadResults(resultdetails.Item2, gameResult.UUID);
             return gameResult;
         }
         public IGameImagesResult GetGameImageResults(string id)
@@ -67,7 +66,19 @@ namespace Snowflake.Service
             var resultdetails = this.ScraperPlugin.GetGameDetails(id);
             return resultdetails.Item2;
         }
-
+        private IGameMediaCache DownloadResults(IGameImagesResult imagesResult, string cacheKey)
+        {
+            IGameMediaCache mediaCache = new GameMediaCache(cacheKey);
+            if (imagesResult.Boxarts.ContainsKey(ImagesInfoFields.img_boxart_back))
+                mediaCache.SetBoxartBack(new Uri(imagesResult.Boxarts[ImagesInfoFields.img_boxart_back]));
+            if (imagesResult.Boxarts.ContainsKey(ImagesInfoFields.img_boxart_front))
+                mediaCache.SetBoxartFront(new Uri(imagesResult.Boxarts[ImagesInfoFields.img_boxart_front]));
+            if (imagesResult.Boxarts.ContainsKey(ImagesInfoFields.img_boxart_full))
+                mediaCache.SetBoxartFull(new Uri(imagesResult.Boxarts[ImagesInfoFields.img_boxart_full]));
+            if(imagesResult.Fanarts.Count > 0)
+                mediaCache.SetGameFanart(new Uri(imagesResult.Fanarts[0]));
+            return mediaCache;
+        }
         public IGameInfo GetGameInfo(string fileName)
         {
             var results = this.GetGameResults(fileName);
