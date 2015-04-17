@@ -20,10 +20,5 @@ namespace Snowflake.Game
         /// The unique ID of the game
         /// </summary>
         string UUID { get; }
-        ///<summary>
-        ///If the mediastore exists, returns the mediastore.
-        ///The key to access the mediastore is accessed under snowflake_mediastore in the game metadata
-        ///</summary>
-        IMediaStore MediaStore { get; }
     }
 }
