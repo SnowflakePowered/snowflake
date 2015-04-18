@@ -20,8 +20,8 @@ namespace Snowflake.Game
             this.CacheKey = cacheKey;
             this.fullPath = Path.Combine(this.RootPath, this.CacheKey);
             if (!Directory.Exists(this.fullPath)) Directory.CreateDirectory(this.fullPath);
-            this.LoadScreenshotCollection();
             this.registerFile = Path.Combine(this.fullPath, "screenshots.json");
+            this.LoadScreenshotCollection();
         }
         public GameScreenshotCache(string cacheKey) : this(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Snowflake", "screenshots"), cacheKey) { }
         public string RootPath { get; private set; }
