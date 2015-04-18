@@ -21,7 +21,7 @@ namespace Snowflake.Game
             this.fullPath = Path.Combine(this.RootPath, this.CacheKey);
             if (!Directory.Exists(this.fullPath)) Directory.CreateDirectory(this.fullPath);
             this.LoadScreenshotCollection();
-            this.registerFile = Path.Combine(this.fullPath, "register.json");
+            this.registerFile = Path.Combine(this.fullPath, "screenshots.json");
         }
         public GameScreenshotCache(string cacheKey) : this(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Snowflake", "screenshots"), cacheKey) { }
         public string RootPath { get; private set; }
@@ -91,13 +91,10 @@ namespace Snowflake.Game
 
         public void AddScreenshot(Image screenshotData)
         {
-            int index = this.ScreenshotCollection.Count + 1;
             string fileName;
-            using (FileStream _imageData = new FileStream())
-            {
-                screenshotData.Save(_imageData, ImageFormat.Png);
-                fileName = DateTime.Now.ToString("yyyy-MM-dd-HH-mm") + "_" + FileHash.GetCRC32(_imageData) + ".png";
-            }
+
+            fileName = DateTime.Now.ToString("yyyy-MM-dd-HH-mm") + "_" + Guid.NewGuid().ToString() +".png";
+            
             try
             {
                 if (File.Exists(Path.Combine(this.fullPath, fileName))) File.Delete(Path.Combine(this.fullPath, fileName));
