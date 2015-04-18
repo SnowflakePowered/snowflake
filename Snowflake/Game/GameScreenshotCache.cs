@@ -9,6 +9,7 @@ using System.IO;
 using System.Net;
 using Newtonsoft.Json;
 using Snowflake.Extensions;
+using Snowflake.Utility;
 namespace Snowflake.Game
 {
     public class GameScreenshotCache : IGameScreenshotCache
@@ -91,7 +92,12 @@ namespace Snowflake.Game
         public void AddScreenshot(Image screenshotData)
         {
             int index = this.ScreenshotCollection.Count + 1;
-            string fileName = DateTime.Now.ToString("yyyy-MM-dd-HH-mm") + "_" + index.ToString() + ".png";
+            string fileName;
+            using (FileStream _imageData = new FileStream())
+            {
+                screenshotData.Save(_imageData, ImageFormat.Png);
+                fileName = DateTime.Now.ToString("yyyy-MM-dd-HH-mm") + "_" + FileHash.GetCRC32(_imageData) + ".png";
+            }
             try
             {
                 if (File.Exists(Path.Combine(this.fullPath, fileName))) File.Delete(Path.Combine(this.fullPath, fileName));
