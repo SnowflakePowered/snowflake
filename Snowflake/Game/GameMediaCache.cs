@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing.Imaging;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Net;
 using System.IO;
 
@@ -57,6 +58,27 @@ namespace Snowflake.Game
                         {
                             if (File.Exists(Path.Combine(this.fullPath, fileName))) File.Delete(Path.Combine(this.fullPath, fileName));
                             image.Save(Path.Combine(this.fullPath, fileName), ImageFormat.Png);
+                            //Create high quality resizes
+                            if (File.Exists(Path.Combine(this.fullPath, "@75_" + fileName))) File.Delete(Path.Combine(this.fullPath, "@50_" + fileName));
+                            using (Image resizedImage = this.ResizeImage(image, 0.75))
+                            {
+                                resizedImage.Save(Path.Combine(this.fullPath, "@75_" + fileName), ImageFormat.Png);
+                            }
+                            if (File.Exists(Path.Combine(this.fullPath, "@50_" + fileName))) File.Delete(Path.Combine(this.fullPath, "@50_" + fileName));
+                            using (Image resizedImage = this.ResizeImage(image, 0.5))
+                            {
+                                resizedImage.Save(Path.Combine(this.fullPath, "@50_" + fileName), ImageFormat.Png);
+                            }
+                            if (File.Exists(Path.Combine(this.fullPath, "@25_" + fileName))) File.Delete(Path.Combine(this.fullPath, "@25_" + fileName));
+                            using (Image resizedImage = this.ResizeImage(image, 0.25))
+                            {
+                                resizedImage.Save(Path.Combine(this.fullPath, "@25_" + fileName), ImageFormat.Png);
+                            }
+                            if (File.Exists(Path.Combine(this.fullPath, "@10_" + fileName))) File.Delete(Path.Combine(this.fullPath, this.fullPath, "@10_" + fileName));
+                            using (Image resizedImage = this.ResizeImage(image, 0.1))
+                            {
+                                resizedImage.Save(Path.Combine(this.fullPath, "@10_" + fileName), ImageFormat.Png);
+                            }
                         }
                         catch (ArgumentException)
                         {
@@ -80,6 +102,49 @@ namespace Snowflake.Game
             return Bitmap.FromFile(Path.Combine(this.fullPath, fileName));
         }
 
+        /// <summary>
+        /// Resize the image to the specified width and height.
+        /// http://stackoverflow.com/a/24199315/1822679
+        /// </summary>
+        /// <param name="image">The image to resize.</param>
+        /// <param name="width">The width to resize to.</param>
+        /// <param name="height">The height to resize to.</param>
+        /// <returns>The resized image.</returns>
+        private Bitmap ResizeImage(Image image, int width, int height)
+        {
+            var destRect = new Rectangle(0, 0, width, height);
+            var destImage = new Bitmap(width, height);
+
+            destImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
+
+            using (var graphics = Graphics.FromImage(destImage))
+            {
+                graphics.CompositingMode = CompositingMode.SourceCopy;
+                graphics.CompositingQuality = CompositingQuality.HighQuality;
+                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                graphics.SmoothingMode = SmoothingMode.HighQuality;
+                graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+                using (var wrapMode = new ImageAttributes())
+                {
+                    wrapMode.SetWrapMode(WrapMode.TileFlipXY);
+                    graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
+                }
+            }
+            return destImage;
+        }
+        /// <summary>
+        /// Resize an image by a percentage factor
+        /// </summary>
+        /// <param name="image">The image to resize</param>
+        /// <param name="factor">The factor to resize by in decimal form</param>
+        /// <returns></returns>
+        private Bitmap ResizeImage(Image image, double factor)
+        {
+            int newHeight = Convert.ToInt32(Math.Ceiling(image.Size.Height * factor));
+            int newWidth = Convert.ToInt32(Math.Ceiling(image.Size.Width * factor));
+            return this.ResizeImage(image, newWidth, newHeight);
+        }
         public void SetBoxartFront(Uri boxartFrontUri)
         {
             this.SetImage(boxartFrontUri, fileBoxartFront);
