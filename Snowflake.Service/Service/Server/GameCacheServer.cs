@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Web;
 using System.Drawing.Imaging;
+using System.Drawing;
 using Snowflake.Extensions;
 using Snowflake.Game;
 using Mono.Net;
@@ -156,16 +157,36 @@ namespace Snowflake.Service.HttpServer
             }
             catch (FileNotFoundException)
             {
-                input = new MemoryStream(new UTF8Encoding().GetBytes("404 not found"));
+                context.Response.AddHeader("Content-Type", "text/plain");
+                context.Response.StatusCode = 404;
+                context.Response.StatusDescription = "404 Not Found";
+                input = new MemoryStream(new UTF8Encoding().GetBytes("404 Not Found"));
+            }
+            catch (IndexOutOfRangeException)
+            {
+                context.Response.AddHeader("Content-Type", "text/plain");
+                context.Response.StatusCode = 404;
+                context.Response.StatusDescription = "404 Not Found";
+                input = new MemoryStream(new UTF8Encoding().GetBytes("404 Not Found"));
             }
             catch
             {
-                input = new MemoryStream(new UTF8Encoding().GetBytes("404 not found"));
+                context.Response.AddHeader("Content-Type", "text/plain");
+                context.Response.StatusCode = 404;
+                context.Response.StatusDescription = "404 Not Found";
+                input = new MemoryStream(new UTF8Encoding().GetBytes("404 Not Found"));
             }
             byte[] buffer = new byte[1024 * 16];
             int nbytes;
             await Task.Run(() =>
             {
+                if (input == null)
+                {
+                    context.Response.AddHeader("Content-Type", "text/plain");
+                    context.Response.StatusCode = 404;
+                    context.Response.StatusDescription = "404 Not Found";
+                    input = new MemoryStream(new UTF8Encoding().GetBytes("404 Not Found"));
+                }
                 while ((nbytes = input.Read(buffer, 0, buffer.Length)) > 0)
                     context.Response.OutputStream.Write(buffer, 0, nbytes);
             });
