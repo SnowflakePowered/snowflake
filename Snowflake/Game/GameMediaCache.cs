@@ -21,8 +21,8 @@ namespace Snowflake.Game
 
         public string RootPath { get; private set; }
         public string CacheKey { get; private set; }
-        public string GameVideoFileName { get; private set; }
-        public string GameMusicFileName { get; private set; }
+        public string GameVideoFileName { get { return Directory.EnumerateFiles(this.fullPath).Where(file => file.StartsWith(fileGameVideo)).FirstOrDefault(); } }
+        public string GameMusicFileName { get { return Directory.EnumerateFiles(this.fullPath).Where(file => file.StartsWith(fileGameMusic)).FirstOrDefault(); } }
 
         string fullPath;
 
@@ -112,7 +112,13 @@ namespace Snowflake.Game
             string _fileName = fileName + "." + extension;
             using (var webClient = new WebClient())
             {
-                if (File.Exists(Path.Combine(this.fullPath, _fileName))) File.Delete(Path.Combine(this.fullPath, _fileName));
+                foreach (string existingFileName in Directory.EnumerateFiles(this.fullPath))
+                {
+                    if (existingFileName.StartsWith(fileName))
+                    {
+                        File.Delete(Path.Combine(this.fullPath, existingFileName));
+                    }
+                } 
                 if (fileUri.Scheme == "file")
                 {
                     File.Copy(fileUri.LocalPath, Path.Combine(this.fullPath, _fileName));
@@ -127,12 +133,12 @@ namespace Snowflake.Game
 
         public void SetGameVideo(Uri videoUri)
         {
-            this.GameVideoFileName = this.DownloadFile(videoUri, fileGameVideo);
+            this.DownloadFile(videoUri, fileGameVideo);
         }
 
         public void SetGameMusic(Uri musicUri)
         {
-            this.GameMusicFileName = this.DownloadFile(musicUri, fileGameMusic);
+            this.DownloadFile(musicUri, fileGameMusic);
         }
 
         public Image GetBoxartFrontImage()
