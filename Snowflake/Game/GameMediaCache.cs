@@ -108,7 +108,8 @@ namespace Snowflake.Game
         /// <returns></returns>
         private string DownloadFile(Uri fileUri, string fileName)
         {
-            string extension = Path.GetExtension(fileUri.AbsoluteUri);
+            string filePath = String.Format("{0}{1}{2}{3}", fileUri.Scheme, Uri.SchemeDelimiter, fileUri.Authority, fileUri.AbsolutePath);
+            string extension = Path.GetExtension(filePath);
             string _fileName = fileName + "." + extension;
             using (var webClient = new WebClient())
             {
@@ -133,12 +134,30 @@ namespace Snowflake.Game
 
         public void SetGameVideo(Uri videoUri)
         {
-            this.DownloadFile(videoUri, fileGameVideo);
+            string filePath = String.Format("{0}{1}{2}{3}", videoUri.Scheme, Uri.SchemeDelimiter, videoUri.Authority, videoUri.AbsolutePath);
+            string extension = Path.GetExtension(filePath);
+            if (extension.Contains("mp4") || extension.Contains("webm"))
+            {
+                this.DownloadFile(videoUri, fileGameVideo);
+            }
+            else
+            {
+                Console.WriteLine("[WARN] Attempted to download unknown video format");
+            }
         }
 
         public void SetGameMusic(Uri musicUri)
         {
-            this.DownloadFile(musicUri, fileGameMusic);
+            string filePath = String.Format("{0}{1}{2}{3}", musicUri.Scheme, Uri.SchemeDelimiter, musicUri.Authority, musicUri.AbsolutePath);
+            string extension = Path.GetExtension(filePath);
+            if (extension.Contains("mp3") || extension.Contains("ogg") || extension.Contains("wav"))
+            {
+                this.DownloadFile(musicUri, fileGameMusic);
+            }
+            else
+            {
+                Console.WriteLine("[WARN] Attempted to download unknown music format");
+            }
         }
 
         public Image GetBoxartFrontImage()
