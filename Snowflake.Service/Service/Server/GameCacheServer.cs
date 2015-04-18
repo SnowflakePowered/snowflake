@@ -46,6 +46,44 @@ namespace Snowflake.Service.HttpServer
                     string filePath = Path.Combine(mediaCache.RootPath, mediaCache.CacheKey, _fileName);
                     input = new FileStream(filePath, FileMode.Open);
                 }
+                if (fileName.StartsWith("screenshot"))
+                {
+                    context.Response.AddHeader("Content-Type", "image/png");
+                    int index;
+                    Int32.TryParse(fileName.Split('~')[1], out index);
+                    IGameScreenshotCache screenCache = new GameScreenshotCache(gameUUID);
+                    string _fileName = screenCache.ScreenshotCollection[index];
+                    string filePath = Path.Combine(screenCache.RootPath, screenCache.CacheKey, _fileName);
+                    if (context.Request.QueryString["scale"] != null)
+                    {
+                        string _scalePercentage = context.Request.QueryString["scale"];
+                        int scalePercentage;
+                        if (Int32.TryParse(_scalePercentage, out scalePercentage))
+                        {
+                            if (scalePercentage <= 100 && scalePercentage > 0)
+                            {
+                                double trueScalePercentage = scalePercentage / 100D;
+                                using (Image initialImage = Image.FromFile(Path.Combine(filePath)))
+                                {
+                                    using (Image resizedImage = GameMediaCache.ResizeImage(initialImage, trueScalePercentage))
+                                    {
+                                        using (MemoryStream _input = new MemoryStream())
+                                        {
+                                            resizedImage.Save(_input, ImageFormat.Png);
+                                            input = new MemoryStream(_input.ToArray());
+                                        }
+                                    }
+                                }
+
+                            }
+
+                        }
+                    }
+                    else
+                    {
+                        input = new FileStream(filePath, FileMode.Open);
+                    }
+                }
                 if (fileName.StartsWith("BoxartBack") || fileName.StartsWith("BoxartFront") || fileName.StartsWith("BoxartFull") || fileName.StartsWith("GameFanart"))
                 {
                     StringBuilder imageFileName = new StringBuilder();
@@ -85,7 +123,35 @@ namespace Snowflake.Service.HttpServer
 
                     context.Response.AddHeader("Content-Type", "image/png");
                     IGameMediaCache mediaCache = new GameMediaCache(gameUUID);
+                    if (context.Request.QueryString["scale"] != null)
+                    {
+                        string _scalePercentage = context.Request.QueryString["scale"];
+                        int scalePercentage;
+                        if (Int32.TryParse(_scalePercentage, out scalePercentage))
+                        {
+                            if (scalePercentage <= 100 && scalePercentage > 0){
+                                double trueScalePercentage = scalePercentage / 100D ;
+                                using (Image initialImage = Image.FromFile(Path.Combine(mediaCache.RootPath, mediaCache.CacheKey, imageFileName.ToString())))
+                                {
+                                  using (Image resizedImage = GameMediaCache.ResizeImage(initialImage, trueScalePercentage))
+                                  {
+                                      using (MemoryStream _input = new MemoryStream())
+                                      {
+                                          resizedImage.Save(_input, ImageFormat.Png);
+                                          input = new MemoryStream(_input.ToArray());
+                                      }
+                                  }
+                                }
 
+                            }
+                            
+                        }
+                    }
+                    else 
+                    {
+                       input = new FileStream(Path.Combine(mediaCache.RootPath, mediaCache.CacheKey, imageFileName.ToString()), FileMode.Open);
+                    }
+                    
                 }
             }
             catch (FileNotFoundException)
