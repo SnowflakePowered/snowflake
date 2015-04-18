@@ -60,22 +60,22 @@ namespace Snowflake.Game
                             image.Save(Path.Combine(this.fullPath, fileName), ImageFormat.Png);
                             //Create high quality resizes
                             if (File.Exists(Path.Combine(this.fullPath, "@75_" + fileName))) File.Delete(Path.Combine(this.fullPath, "@50_" + fileName));
-                            using (Image resizedImage = this.ResizeImage(image, 0.75))
+                            using (Image resizedImage = GameMediaCache.ResizeImage(image, 0.75))
                             {
                                 resizedImage.Save(Path.Combine(this.fullPath, "@75_" + fileName), ImageFormat.Png);
                             }
                             if (File.Exists(Path.Combine(this.fullPath, "@50_" + fileName))) File.Delete(Path.Combine(this.fullPath, "@50_" + fileName));
-                            using (Image resizedImage = this.ResizeImage(image, 0.5))
+                            using (Image resizedImage = GameMediaCache.ResizeImage(image, 0.5))
                             {
                                 resizedImage.Save(Path.Combine(this.fullPath, "@50_" + fileName), ImageFormat.Png);
                             }
                             if (File.Exists(Path.Combine(this.fullPath, "@25_" + fileName))) File.Delete(Path.Combine(this.fullPath, "@25_" + fileName));
-                            using (Image resizedImage = this.ResizeImage(image, 0.25))
+                            using (Image resizedImage = GameMediaCache.ResizeImage(image, 0.25))
                             {
                                 resizedImage.Save(Path.Combine(this.fullPath, "@25_" + fileName), ImageFormat.Png);
                             }
                             if (File.Exists(Path.Combine(this.fullPath, "@10_" + fileName))) File.Delete(Path.Combine(this.fullPath, this.fullPath, "@10_" + fileName));
-                            using (Image resizedImage = this.ResizeImage(image, 0.1))
+                            using (Image resizedImage = GameMediaCache.ResizeImage(image, 0.1))
                             {
                                 resizedImage.Save(Path.Combine(this.fullPath, "@10_" + fileName), ImageFormat.Png);
                             }
@@ -110,7 +110,7 @@ namespace Snowflake.Game
         /// <param name="width">The width to resize to.</param>
         /// <param name="height">The height to resize to.</param>
         /// <returns>The resized image.</returns>
-        private Bitmap ResizeImage(Image image, int width, int height)
+        public static Bitmap ResizeImage(Image image, int width, int height)
         {
             var destRect = new Rectangle(0, 0, width, height);
             var destImage = new Bitmap(width, height);
@@ -139,11 +139,11 @@ namespace Snowflake.Game
         /// <param name="image">The image to resize</param>
         /// <param name="factor">The factor to resize by in decimal form</param>
         /// <returns></returns>
-        private Bitmap ResizeImage(Image image, double factor)
+        public static Bitmap ResizeImage(Image image, double factor)
         {
             int newHeight = Convert.ToInt32(Math.Ceiling(image.Size.Height * factor));
             int newWidth = Convert.ToInt32(Math.Ceiling(image.Size.Width * factor));
-            return this.ResizeImage(image, newWidth, newHeight);
+            return GameMediaCache.ResizeImage(image, newWidth, newHeight);
         }
         public void SetBoxartFront(Uri boxartFrontUri)
         {
