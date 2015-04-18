@@ -95,6 +95,7 @@
     <Compile Include="Emulator\Configuration\ConfigurationFlagStore.cs" />
     <Compile Include="Emulator\EmulatorBridge.cs" />
     <Compile Include="Game\GameMediaCache.cs" />
+    <Compile Include="Game\GameScreenshotCache.cs" />
     <Compile Include="Identifier\BaseIdentifier.cs" />
     <Compile Include="Information\MediaStore\FileMediaStore.cs" />
     <Compile Include="Information\MediaStore\FileMediaStoreSection.cs" />
