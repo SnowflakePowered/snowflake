@@ -30,6 +30,22 @@ namespace Snowflake.Service.HttpServer
             {
                 string gameUUID = HttpUtility.UrlDecode(getRequest.Split('/')[0]);
                 string fileName = HttpUtility.UrlDecode(getRequest.Split('/')[1]);
+                if (fileName.StartsWith("GameMusic"))
+                {
+                    IGameMediaCache mediaCache = new GameMediaCache(gameUUID);
+                    string _fileName = mediaCache.GameMusicFileName;
+                    context.Response.AddHeader("Content-Type", MimeTypes.GetMimeType(_fileName));
+                    string filePath = Path.Combine(mediaCache.RootPath, mediaCache.CacheKey, _fileName);
+                    input = new FileStream(filePath, FileMode.Open);
+                }
+                if (fileName.StartsWith("GameVideo"))
+                {
+                    IGameMediaCache mediaCache = new GameMediaCache(gameUUID);
+                    string _fileName = mediaCache.GameVideoFileName;
+                    context.Response.AddHeader("Content-Type", MimeTypes.GetMimeType(_fileName));
+                    string filePath = Path.Combine(mediaCache.RootPath, mediaCache.CacheKey, _fileName);
+                    input = new FileStream(filePath, FileMode.Open);
+                }
                 if (fileName.StartsWith("BoxartBack") || fileName.StartsWith("BoxartFront") || fileName.StartsWith("BoxartFull") || fileName.StartsWith("GameFanart"))
                 {
                     StringBuilder imageFileName = new StringBuilder();
@@ -69,34 +85,6 @@ namespace Snowflake.Service.HttpServer
 
                     context.Response.AddHeader("Content-Type", "image/png");
                     IGameMediaCache mediaCache = new GameMediaCache(gameUUID);
-                    input = new FileStream(Path.Combine(mediaCache.RootPath, mediaCache.CacheKey, imageFileName.ToString()), FileMode.Open);
-                    
-                }
-                if (fileName.StartsWith("GameMusic"))
-                {
-                    IGameMediaCache mediaCache = new GameMediaCache(gameUUID);
-                    string _fileName = mediaCache.GameMusicFileName;
-                    context.Response.AddHeader("Content-Type", MimeTypes.GetMimeType(_fileName));
-                    string filePath = Path.Combine(mediaCache.RootPath, mediaCache.CacheKey, _fileName);
-                    input = new FileStream(filePath, FileMode.Open);
-                }
-                if (fileName.StartsWith("GameVideo"))
-                {
-                    IGameMediaCache mediaCache = new GameMediaCache(gameUUID);
-                    string _fileName = mediaCache.GameVideoFileName;
-                    context.Response.AddHeader("Content-Type", MimeTypes.GetMimeType(_fileName));
-                    string filePath = Path.Combine(mediaCache.RootPath, mediaCache.CacheKey, _fileName);
-                    input = new FileStream(filePath, FileMode.Open);
-                }
-                if (fileName.StartsWith("screenshot"))
-                {
-                    context.Response.AddHeader("Content-Type", "image/png");
-                    int index;
-                    Int32.TryParse(fileName.Split('~')[1], out index);
-                    IGameScreenshotCache screenCache = new GameScreenshotCache(gameUUID);
-                    string _fileName = screenCache.ScreenshotCollection[index];
-                    string filePath = Path.Combine(screenCache.RootPath, screenCache.CacheKey, _fileName);
-                    input = new FileStream(filePath, FileMode.Open);
 
                 }
             }
