@@ -30,30 +30,47 @@ namespace Snowflake.Service.HttpServer
             {
                 string gameUUID = HttpUtility.UrlDecode(getRequest.Split('/')[0]);
                 string fileName = HttpUtility.UrlDecode(getRequest.Split('/')[1]);
-                if (fileName.StartsWith("BoxartFront"))
+                if (fileName.StartsWith("BoxartBack") || fileName.StartsWith("BoxartFront") || fileName.StartsWith("BoxartFull") || fileName.StartsWith("GameFanart"))
                 {
-                    context.Response.AddHeader("Content-Type", "image/png");
-                    IGameMediaCache mediaCache = new GameMediaCache(gameUUID);
-                    input = new FileStream(Path.Combine(mediaCache.RootPath, mediaCache.CacheKey, "BoxartFront.png"), FileMode.Open);
-                }
-                if (fileName.StartsWith("BoxartBack"))
-                {
-                    context.Response.AddHeader("Content-Type", "image/png");
-                    IGameMediaCache mediaCache = new GameMediaCache(gameUUID);
-                    input = new FileStream(Path.Combine(mediaCache.RootPath, mediaCache.CacheKey, "BoxartBack.png"), FileMode.Open);
-                }
-                if (fileName.StartsWith("BoxartFull"))
-                {
-                    context.Response.AddHeader("Content-Type", "image/png");
-                    IGameMediaCache mediaCache = new GameMediaCache(gameUUID);
-                    input = new FileStream(Path.Combine(mediaCache.RootPath, mediaCache.CacheKey, "BoxartFull.png"), FileMode.Open);
-                }
-                if (fileName.StartsWith("GameFanart"))
-                {
-                    context.Response.AddHeader("Content-Type", "image/png");
-                    IGameMediaCache mediaCache = new GameMediaCache(gameUUID);
-                    input = new FileStream(Path.Combine(mediaCache.RootPath, mediaCache.CacheKey, "GameFanart.png"), FileMode.Open);
+                    StringBuilder imageFileName = new StringBuilder();
+                    if (fileName.StartsWith("BoxartBack"))
+                    {
+                        imageFileName.Append("BoxartBack.png");
+                    }
+                    else if (fileName.StartsWith("BoxartFront"))
+                    {
+                        imageFileName.Append("BoxartFront.png");
+                    }
+                    else if (fileName.StartsWith("BoxartFull"))
+                    {
+                        imageFileName.Append("BoxartFull.png");
+                    }
+                    else if (fileName.StartsWith("GameFanart"))
+                    {
+                        imageFileName.Append("GameFanart.png");
+                    }
+                    
+                    if (fileName.Contains("@10"))
+                    {
+                        imageFileName.Insert(0, "@10_");
+                    }
+                    else if (fileName.Contains("@25"))
+                    {
+                        imageFileName.Insert(0, "@25_");
+                    }
+                    else if (fileName.Contains("@50"))
+                    {
+                        imageFileName.Insert(0, "@50_");
+                    }
+                    else if (fileName.Contains("@75_"))
+                    {
+                        imageFileName.Insert(0, "@75_");
+                    }
 
+                    context.Response.AddHeader("Content-Type", "image/png");
+                    IGameMediaCache mediaCache = new GameMediaCache(gameUUID);
+                    input = new FileStream(Path.Combine(mediaCache.RootPath, mediaCache.CacheKey, imageFileName.ToString()), FileMode.Open);
+                    
                 }
                 if (fileName.StartsWith("GameMusic"))
                 {
