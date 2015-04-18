@@ -59,6 +59,7 @@ namespace Snowflake.Service
                 fileName
             );
             this.DownloadResults(resultdetails.Item2, gameResult.UUID);
+            this.DownloadScreenshots(resultdetails.Item2, gameResult.UUID);
             return gameResult;
         }
         public IGameImagesResult GetGameImageResults(string id)
@@ -78,6 +79,15 @@ namespace Snowflake.Service
             if(imagesResult.Fanarts.Count > 0)
                 mediaCache.SetGameFanart(new Uri(imagesResult.Fanarts[0]));
             return mediaCache;
+        }
+        private IGameScreenshotCache DownloadScreenshots(IGameImagesResult imagesResult, string cacheKey)
+        {
+            IGameScreenshotCache screenshotCache = new GameScreenshotCache(cacheKey);
+            foreach (string screenshotUri in imagesResult.Screenshots)
+            {
+                screenshotCache.AddScreenshot(new Uri(screenshotUri));
+            }
+            return screenshotCache;
         }
         public IGameInfo GetGameInfo(string fileName)
         {
