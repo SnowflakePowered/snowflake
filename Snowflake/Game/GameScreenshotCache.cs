@@ -91,10 +91,7 @@ namespace Snowflake.Game
 
         public void AddScreenshot(Image screenshotData)
         {
-            string fileName;
-
-            fileName = DateTime.Now.ToString("yyyy-MM-dd-HH-mm") + "_" + Guid.NewGuid().ToString() +".png";
-            
+            string fileName = DateTime.Now.ToString("yyyy-MM-dd-HH-mm") + "_" + Guid.NewGuid().ToString() +".png";
             try
             {
                 if (File.Exists(Path.Combine(this.fullPath, fileName))) File.Delete(Path.Combine(this.fullPath, fileName));
