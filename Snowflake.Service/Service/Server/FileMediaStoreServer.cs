@@ -11,6 +11,7 @@ using Snowflake.Information.MediaStore;
 
 namespace Snowflake.Service.HttpServer
 {
+    [Obsolete("Superseded by GameCacheServer on the same port.")]
     public class FileMediaStoreServer : BaseHttpServer
     {
         public string MediaStoreRoot { get; set; }
