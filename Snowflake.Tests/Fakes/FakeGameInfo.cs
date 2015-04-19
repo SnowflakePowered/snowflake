@@ -44,16 +44,5 @@ namespace Snowflake.Tests.Fakes
                 throw new NotImplementedException();
             }
         }
-
-        public Information.MediaStore.IMediaStore MediaStore
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-
-        public string MediaStoreKey
-        {
-            get { throw new NotImplementedException(); }
-        }
     }
 }
