@@ -207,7 +207,7 @@ namespace Snowflake.Game
             if (extension.Contains("mp4") || extension.Contains("webm"))
             {
                 File.Delete(Path.Combine(this.fullPath, fileGameVideo + ".mp4"));
-                File.Delete(Path.Combine(this.fullPath, fileGameMusic + ".webm"));
+                File.Delete(Path.Combine(this.fullPath, fileGameVideo + ".webm"));
                 this.DownloadFile(videoUri, fileGameVideo);
             }
             else
