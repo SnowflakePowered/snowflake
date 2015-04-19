@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 namespace Snowflake.Information.MediaStore
 {
+    [Obsolete("MediaStore has been superseded by GameMediaCache")]
     public class FileMediaStore : IMediaStore
     {
         private Dictionary<string, IMediaStoreSection> sections;
