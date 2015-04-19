@@ -90,7 +90,7 @@ namespace Snowflake.Service
             this.ServerManager.RegisterServer("ThemeServer", new ThemeServer(Path.Combine(this.AppDataDirectory, "theme")));
             this.ServerManager.RegisterServer("AjaxApiServer", new ApiServer());
             this.ServerManager.RegisterServer("WebSocketApiServer", new JsonApiWebSocketServer(30003));
-            this.ServerManager.RegisterServer("MediaStoreServer", new FileMediaStoreServer(Path.Combine(appDataDirectory, "mediastores")));
+            this.ServerManager.RegisterServer("GameCacheServer", new GameCacheServer());
             
         }
         private IDictionary<string, IPlatformInfo> LoadPlatforms(string platformDirectory)

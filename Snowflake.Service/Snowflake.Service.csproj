@@ -65,6 +65,7 @@
     <Reference Include="System.Data.SQLite.Linq">
       <HintPath>..\packages\System.Data.SQLite.Linq.1.0.93.0\lib\net45\System.Data.SQLite.Linq.dll</HintPath>
     </Reference>
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -82,6 +83,7 @@
     <Compile Include="Service\Manager\ServerManager.cs" />
     <Compile Include="Service\ScrapeService.cs" />
     <Compile Include="Service\Server\FileMediaStoreServer.cs" />
+    <Compile Include="Service\Server\GameCacheServer.cs" />
     <Compile Include="Service\Server\JsonApiServer.cs" />
     <Compile Include="Service\Server\JsonApiWebSocketServer.cs" />
     <Compile Include="Service\Server\MimeTypes.cs" />

@@ -7,6 +7,7 @@ using Snowflake.Information.MediaStore;
 
 namespace Snowflake.Tests.Fakes
 {
+    [Obsolete]
     internal class FakeMediaStore : IMediaStore
     {
         public IMediaStoreSection Resources { get; set; }

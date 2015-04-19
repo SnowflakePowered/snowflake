@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using Snowflake.Extensions;
 namespace Snowflake.Information.MediaStore
 {
+    [Obsolete("MediaStore has been superseded by GameMediaCache")]
     public sealed class FileMediaStoreSection : IMediaStoreSection
     {
         public string SectionName { get; set; }
