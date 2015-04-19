@@ -17,14 +17,16 @@ namespace Snowflake.Game.Tests
         [Fact]
         public void GameMediaCacheCreation_Test()
         {
-            IGameMediaCache mediaCache = new GameMediaCache("TESTKey");
+            string testKey = Guid.NewGuid().ToString();
+            IGameMediaCache mediaCache = new GameMediaCache(testKey);
             Assert.True(Directory.Exists(Path.Combine(mediaCache.RootPath, mediaCache.CacheKey)));
         }
         
         [Fact]
         public void SetBoxartFront_Test()
         {
-            IGameMediaCache mediaCache = new GameMediaCache("TESTKey");
+            string testKey = Guid.NewGuid().ToString();
+            IGameMediaCache mediaCache = new GameMediaCache(testKey); 
             string tempFileName = Path.GetTempFileName();
             using (Stream stream = TestUtilities.GetResource("GameCache.600x600.gif"))
             {
@@ -38,7 +40,8 @@ namespace Snowflake.Game.Tests
         [Fact]
         public void SetBoxartBack_Test()
         {
-            IGameMediaCache mediaCache = new GameMediaCache("TESTKey");
+            string testKey = Guid.NewGuid().ToString();
+            IGameMediaCache mediaCache = new GameMediaCache(testKey); 
             string tempFileName = Path.GetTempFileName();
             using (Stream stream = TestUtilities.GetResource("GameCache.600x600.gif"))
             {
@@ -52,7 +55,8 @@ namespace Snowflake.Game.Tests
         [Fact]
         public void SetBoxartFull_Test()
         {
-            IGameMediaCache mediaCache = new GameMediaCache("TESTKey");
+            string testKey = Guid.NewGuid().ToString();
+            IGameMediaCache mediaCache = new GameMediaCache(testKey); 
             string tempFileName = Path.GetTempFileName();
             using (Stream stream = TestUtilities.GetResource("GameCache.600x600.gif"))
             {
@@ -66,7 +70,8 @@ namespace Snowflake.Game.Tests
         [Fact]
         public void SetGameFanart_Test()
         {
-            IGameMediaCache mediaCache = new GameMediaCache("TESTKey");
+            string testKey = Guid.NewGuid().ToString();
+            IGameMediaCache mediaCache = new GameMediaCache(testKey); 
             string tempFileName = Path.GetTempFileName();
             using (Stream stream = TestUtilities.GetResource("GameCache.600x600.gif"))
             {
@@ -92,12 +97,15 @@ namespace Snowflake.Game.Tests
             }
         }
 
-        [Fact]
-        public void SetGameMusic_Test()
+        [Theory]
+        [InlineData("dmmy.mp3")]
+        [InlineData("dmmy.ogg")]
+        public void SetGameMusic_Test(string fileName)
         {
-            IGameMediaCache mediaCache = new GameMediaCache("TESTKey");
-            string tempFileName = Path.GetTempFileName() + ".mp3";
-            using (Stream stream = TestUtilities.GetResource("GameCache.dmmy.mp3"))
+            string testKey = Guid.NewGuid().ToString();
+            IGameMediaCache mediaCache = new GameMediaCache(testKey); 
+            string tempFileName = Path.GetTempFileName() + Path.GetExtension(fileName);
+            using (Stream stream = TestUtilities.GetResource("GameCache." + fileName))
             {
                 using (FileStream writeStream = new FileStream(tempFileName, FileMode.Create))
                 {
@@ -107,7 +115,29 @@ namespace Snowflake.Game.Tests
             }
             Uri musicUri = new Uri(tempFileName);
             mediaCache.SetGameMusic(musicUri);
-            Assert.NotNull(mediaCache.GameMusicFileName);
+            Assert.Equal(Path.GetExtension(fileName), Path.GetExtension(mediaCache.GameMusicFileName));
+        }
+
+      
+        [Theory]
+        [InlineData("test.mp4")]
+        [InlineData("test.webm")]
+        public void SetGameVideo_Test(string fileName)
+        {
+            string testKey = Guid.NewGuid().ToString();
+            IGameMediaCache mediaCache = new GameMediaCache(testKey); 
+            string tempFileName = Path.GetTempFileName() + Path.GetExtension(fileName);
+            using (Stream stream = TestUtilities.GetResource("GameCache." + fileName))
+            {
+                using (FileStream writeStream = new FileStream(tempFileName, FileMode.Create))
+                {
+                    stream.Seek(0, SeekOrigin.Begin);
+                    stream.CopyTo(writeStream);
+                }
+            }
+            Uri musicUri = new Uri(tempFileName);
+            mediaCache.SetGameVideo(musicUri);
+            Assert.Equal(Path.GetExtension(fileName), Path.GetExtension(mediaCache.GameVideoFileName));
         }
     }
 }
