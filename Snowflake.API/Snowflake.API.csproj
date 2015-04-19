@@ -86,6 +86,8 @@
     <Compile Include="Emulator\Configuration\IConfigurationFlagStore.cs" />
     <Compile Include="Emulator\Input\InputManager\IInputDevice.cs" />
     <Compile Include="Emulator\Input\InputManager\IInputManager.cs" />
+    <Compile Include="Identifier\IdentifiedValueTypes.cs" />
+    <Compile Include="Identifier\IIdentifiedMetadata.cs" />
     <Compile Include="Platform\IPlatformControllerPorts.cs" />
     <Compile Include="Platform\IPlatformPreferenceDatabase.cs" />
     <Compile Include="Platform\StonePlatforms.cs" />

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using Snowflake.Utility;
 using Snowflake.Plugin;
+using Snowflake.Identifier;
 namespace Snowflake.Scraper
 {
     /// <summary>
@@ -35,7 +36,7 @@ namespace Snowflake.Scraper
         /// <param name="identifiedMetadata">The identified metadata gleaned from the ROM file</param>
         /// <param name="searchQuery">The string to search</param>
         /// <returns>A list of search results</returns>
-        IList<IGameScrapeResult> GetSearchResults(IDictionary<string, string> identifiedMetadata, string platformId);
+        IList<IGameScrapeResult> GetSearchResults(IList<IIdentifiedMetadata> identifiedMetadata, string platformId);
         /// <summary>
         /// Gets the search results given a string query and the Snowflake platform ID of a platform
         /// </summary>
@@ -43,7 +44,7 @@ namespace Snowflake.Scraper
         /// <param name="searchQuery">The string to search</param>
         /// <param name="platformId">The Snowflake platform ID</param>
         /// <returns>A list of search results</returns>
-        IList<IGameScrapeResult> GetSearchResults(IDictionary<string, string> identifiedMetadata, string searchQuery, string platformId);
+        IList<IGameScrapeResult> GetSearchResults(IList<IIdentifiedMetadata> identifiedMetadata, string searchQuery, string platformId);
         /// <summary>
         /// Sorts the list of results from best match to worst match given the available metadata from
         /// the game scrape results and the identified metadata for the game
@@ -51,7 +52,7 @@ namespace Snowflake.Scraper
         /// <param name="identifiedMetadata">The identified metadata gleaned from the ROM file</param>
         /// <param name="searchResults">The search results to sort</param>
         /// <returns>A sorted list of search results ordered from best to worst</returns>
-        IList<IGameScrapeResult> SortBestResults(IDictionary<string, string> identifiedMetadata, IList<IGameScrapeResult> searchResults);
+        IList<IGameScrapeResult> SortBestResults(IList<IIdentifiedMetadata> identifiedMetadata, IList<IGameScrapeResult> searchResults);
         /// <summary>
         /// Gets the details of the games from the result id
         /// </summary>

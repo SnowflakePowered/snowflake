@@ -94,6 +94,7 @@
     <Compile Include="Emulator\Configuration\ConfigurationFlagStore.cs" />
     <Compile Include="Emulator\EmulatorBridge.cs" />
     <Compile Include="Identifier\BaseIdentifier.cs" />
+    <Compile Include="Identifier\IdentifiedMetadata.cs" />
     <Compile Include="Information\MediaStore\FileMediaStore.cs" />
     <Compile Include="Information\MediaStore\FileMediaStoreSection.cs" />
     <Compile Include="Platform\PlatformControllerPorts.cs" />
