@@ -22,8 +22,18 @@ namespace Snowflake.Game
 
         public string RootPath { get; private set; }
         public string CacheKey { get; private set; }
-        public string GameVideoFileName { get { return Directory.EnumerateFiles(this.fullPath).Where(file => file.StartsWith(fileGameVideo)).FirstOrDefault(); } }
-        public string GameMusicFileName { get { return Directory.EnumerateFiles(this.fullPath).Where(file => file.StartsWith(fileGameMusic)).FirstOrDefault(); } }
+        public string GameVideoFileName { 
+            get 
+            {
+                return Directory.EnumerateFiles(this.fullPath).Where(file => Path.GetFileNameWithoutExtension(file) == fileGameVideo).FirstOrDefault();
+            } 
+        }
+        public string GameMusicFileName { 
+            get 
+            {
+                return Directory.EnumerateFiles(this.fullPath).Where(file => Path.GetFileNameWithoutExtension(file) == fileGameMusic).FirstOrDefault(); 
+            } 
+        }
 
         string fullPath;
 
