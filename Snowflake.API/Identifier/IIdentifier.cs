@@ -24,5 +24,9 @@ namespace Snowflake.Identifier
         /// <param name="platformId">The platform of the game</param>
         /// <returns>An identifier that a scraper can use to get results. Usually the title of the game.</returns>
         string IdentifyGame(FileStream file, string platformId);
+        /// <summary>
+        /// The metadata value type this identifier returns
+        /// </summary>
+        string IdentifiedValueType { get; }
     }
 }
