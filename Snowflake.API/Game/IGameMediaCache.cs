@@ -83,7 +83,7 @@ namespace Snowflake.Game
         /// </summary>
         string GameVideoFileName { get; }
         /// <summary>
-        /// Gets the video file name. Empty if not exists
+        /// Gets the music file name. Empty if not exists
         /// </summary>
         string GameMusicFileName { get; }
     }

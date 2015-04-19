@@ -175,16 +175,9 @@ namespace Snowflake.Game
         {
             string filePath = String.Format("{0}{1}{2}{3}", fileUri.Scheme, Uri.SchemeDelimiter, fileUri.Authority, fileUri.AbsolutePath);
             string extension = Path.GetExtension(filePath);
-            string _fileName = fileName + "." + extension;
+            string _fileName = fileName + extension;
             using (var webClient = new WebClient())
             {
-                foreach (string existingFileName in Directory.EnumerateFiles(this.fullPath))
-                {
-                    if (existingFileName.StartsWith(fileName))
-                    {
-                        File.Delete(Path.Combine(this.fullPath, existingFileName));
-                    }
-                } 
                 if (fileUri.Scheme == "file")
                 {
                     File.Copy(fileUri.LocalPath, Path.Combine(this.fullPath, _fileName));
@@ -203,6 +196,8 @@ namespace Snowflake.Game
             string extension = Path.GetExtension(filePath);
             if (extension.Contains("mp4") || extension.Contains("webm"))
             {
+                File.Delete(Path.Combine(this.fullPath, fileGameVideo + ".mp4"));
+                File.Delete(Path.Combine(this.fullPath, fileGameMusic + ".webm"));
                 this.DownloadFile(videoUri, fileGameVideo);
             }
             else
@@ -217,6 +212,10 @@ namespace Snowflake.Game
             string extension = Path.GetExtension(filePath);
             if (extension.Contains("mp3") || extension.Contains("ogg") || extension.Contains("wav"))
             {
+                File.Delete(Path.Combine(this.fullPath, fileGameMusic + ".mp3"));
+                File.Delete(Path.Combine(this.fullPath, fileGameMusic + ".ogg"));
+                File.Delete(Path.Combine(this.fullPath, fileGameMusic + ".wav"));
+
                 this.DownloadFile(musicUri, fileGameMusic);
             }
             else
