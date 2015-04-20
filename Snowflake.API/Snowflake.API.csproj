@@ -89,6 +89,8 @@
     <Compile Include="Emulator\Input\InputManager\IInputManager.cs" />
     <Compile Include="Game\IGameMediaCache.cs" />
     <Compile Include="Game\IGameScreenshotCache.cs" />
+    <Compile Include="Identifier\IdentifiedValueTypes.cs" />
+    <Compile Include="Identifier\IIdentifiedMetadata.cs" />
     <Compile Include="Platform\IPlatformControllerPorts.cs" />
     <Compile Include="Platform\IPlatformPreferenceDatabase.cs" />
     <Compile Include="Platform\StonePlatforms.cs" />
