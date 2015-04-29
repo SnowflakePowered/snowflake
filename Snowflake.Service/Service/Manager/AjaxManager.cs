@@ -69,6 +69,7 @@ namespace Snowflake.Service.Manager
 
         private void ComposeImports()
         {
+            if (!Directory.Exists(Path.Combine(this.LoadablesLocation, "ajax"))) Directory.CreateDirectory(Path.Combine(this.LoadablesLocation, "ajax"));
             var catalog = new DirectoryCatalog(Path.Combine(this.LoadablesLocation, "ajax"));
             var container = new CompositionContainer(catalog);
             container.ComposeExportedValue("coreInstance", CoreService.LoadedCore);
