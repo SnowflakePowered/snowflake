@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using Snowflake.Utility;
 using Snowflake.Plugin;
 using Snowflake.Service;
+using Snowflake.Identifier;
 namespace Snowflake.Scraper
 {
     public abstract class BaseScraper: BasePlugin, IScraper
@@ -25,9 +26,9 @@ namespace Snowflake.Scraper
         }
         public abstract IList<IGameScrapeResult> GetSearchResults(string searchQuery);
         public abstract IList<IGameScrapeResult> GetSearchResults(string searchQuery, string platformId);
-        public abstract IList<IGameScrapeResult> GetSearchResults(IDictionary<string, string> identifiedMetadata, string platformId);
-        public abstract IList<IGameScrapeResult> GetSearchResults(IDictionary<string, string> identifiedMetadata, string searchQuery, string platformId);
-        public abstract IList<IGameScrapeResult> SortBestResults(IDictionary<string, string> identifiedMetadata, IList<IGameScrapeResult> searchResults);
+        public abstract IList<IGameScrapeResult> GetSearchResults(IList<IIdentifiedMetadata> identifiedMetadata, string platformId);
+        public abstract IList<IGameScrapeResult> GetSearchResults(IList<IIdentifiedMetadata> identifiedMetadata, string searchQuery, string platformId);
+        public abstract IList<IGameScrapeResult> SortBestResults(IList<IIdentifiedMetadata> identifiedMetadata, IList<IGameScrapeResult> searchResults);
         public abstract Tuple<IDictionary<string, string>, IGameImagesResult> GetGameDetails(string id);
 
     }
