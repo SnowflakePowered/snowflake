@@ -87,7 +87,7 @@ namespace Snowflake.Emulator.Configuration
             switch (type)
             {
                 case ConfigurationFlagTypes.SELECT_FLAG:
-                    return value;
+                    return Int32.Parse(value);
                 case ConfigurationFlagTypes.INTEGER_FLAG:
                     return Int32.Parse(value);
                 case ConfigurationFlagTypes.BOOLEAN_FLAG:
