@@ -158,14 +158,7 @@ namespace Snowflake.StandardAjax
                     castedValue = Int32.Parse(value);
                     break;
                 case ConfigurationFlagTypes.SELECT_FLAG:
-                    if (!flag.SelectValues.Select(values => values.Value).Contains(value))
-                    {
-                        throw new ArgumentException("Value not expected");
-                    }
-                    else
-                    {
-                        castedValue = value;
-                    }
+                    castedValue = Int32.Parse(value);
                     break;
             }
             bridge.ConfigurationFlagStore.SetValue(game, flag.Key, castedValue, flag.Type);
@@ -193,14 +186,7 @@ namespace Snowflake.StandardAjax
                     castedValue = Int32.Parse(value);
                     break;
                 case ConfigurationFlagTypes.SELECT_FLAG:
-                    if (!flag.SelectValues.Select(values => values.Value).Contains(value))
-                    {
-                        throw new ArgumentException("Value not expected");
-                    }
-                    else
-                    {
-                        castedValue = value;
-                    }
+                    castedValue = Int32.Parse(value);
                     break;
             }
             bridge.ConfigurationFlagStore.SetDefaultValue(flag.Key, castedValue, flag.Type);
