@@ -59,6 +59,8 @@ namespace Snowflake.Service.Manager
         }
         private void ComposeImports()
         {
+            if (!Directory.Exists(Path.Combine(this.LoadablesLocation, "plugins"))) Directory.CreateDirectory(Path.Combine(this.LoadablesLocation, "plugins"));
+
             var catalog = new DirectoryCatalog(Path.Combine(this.LoadablesLocation, "plugins"));
             var container = new CompositionContainer(catalog);
             container.ComposeExportedValue("coreInstance", CoreService.LoadedCore);

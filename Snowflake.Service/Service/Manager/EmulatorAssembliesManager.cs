@@ -22,7 +22,8 @@ namespace Snowflake.Service.Manager
         }
 
         public void LoadEmulatorAssemblies()
-        { 
+        {
+            if (!Directory.Exists(this.AssembliesLocation)) Directory.CreateDirectory(this.AssembliesLocation);
             foreach (string fileName in Directory.GetFiles(this.AssembliesLocation))
             {
                 if (!(Path.GetExtension(fileName) == ".yml")) continue;

@@ -96,7 +96,7 @@ namespace Snowflake.Service
         private IDictionary<string, IPlatformInfo> LoadPlatforms(string platformDirectory)
         {
             var loadedPlatforms = new Dictionary<string, IPlatformInfo>();
-
+            if (!Directory.Exists(platformDirectory)) Directory.CreateDirectory(platformDirectory);
             foreach (string fileName in Directory.GetFiles(platformDirectory).Where(fileName => Path.GetExtension(fileName) == ".platform"))
             {
                 try
@@ -117,7 +117,7 @@ namespace Snowflake.Service
         private IDictionary<string, IControllerDefinition> LoadControllers(string controllerDirectory)
         {
             var loadedControllers = new Dictionary<string, IControllerDefinition>();
-
+            if (!Directory.Exists(controllerDirectory)) Directory.CreateDirectory(controllerDirectory);
             foreach (string fileName in Directory.GetFiles(controllerDirectory).Where(fileName => Path.GetExtension(fileName) == ".controller"))
             {
                 try
