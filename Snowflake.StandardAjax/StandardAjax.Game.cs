@@ -164,7 +164,38 @@ namespace Snowflake.StandardAjax
             bridge.ConfigurationFlagStore.SetValue(game, flag.Key, castedValue, flag.Type);
             return new JSResponse(request, bridge.ConfigurationFlagStore.GetValue(game, flag.Key, flag.Type));
         }
-
+        [AjaxMethod(MethodPrefix = "Game")]
+        [AjaxMethodParameter(ParameterName = "emulator", ParameterType = AjaxMethodParameterType.StringParameter)]
+        [AjaxMethodParameter(ParameterName = "id", ParameterType = AjaxMethodParameterType.StringParameter)]
+        [AjaxMethodParameter(ParameterName = "values", ParameterType = AjaxMethodParameterType.StringParameter)]
+        public IJSResponse SetFlagValues(IJSRequest request)
+        {
+            string emulator = request.GetParameter("emulator");
+            string id = request.GetParameter("id");
+            string values_pre = request.GetParameter("values");
+            IDictionary<string, string> values = JsonConvert.DeserializeObject<IDictionary<string, string>>(values_pre);
+            IEmulatorBridge bridge = this.CoreInstance.PluginManager.LoadedEmulators[emulator];
+            IGameInfo game = this.CoreInstance.GameDatabase.GetGameByUUID(id);
+            foreach (KeyValuePair<string, string> value in values)
+            {
+                IConfigurationFlag flag = bridge.ConfigurationFlags[value.Key];
+                dynamic castedValue = bridge.ConfigurationFlagStore.GetDefaultValue(flag.Key, flag.Type);
+                switch (flag.Type)
+                {
+                    case ConfigurationFlagTypes.BOOLEAN_FLAG:
+                        castedValue = Boolean.Parse(value.Value);
+                        break;
+                    case ConfigurationFlagTypes.INTEGER_FLAG:
+                        castedValue = Int32.Parse(value.Value);
+                        break;
+                    case ConfigurationFlagTypes.SELECT_FLAG:
+                        castedValue = Int32.Parse(value.Value);
+                        break;
+                }
+                bridge.ConfigurationFlagStore.SetValue(game, flag.Key, castedValue, flag.Type);
+            }
+            return new JSResponse(request, values_pre);
+        }
         [AjaxMethod(MethodPrefix = "Game")]
         [AjaxMethodParameter(ParameterName = "emulator", ParameterType = AjaxMethodParameterType.StringParameter)]
         [AjaxMethodParameter(ParameterName = "key", ParameterType = AjaxMethodParameterType.StringParameter)]
