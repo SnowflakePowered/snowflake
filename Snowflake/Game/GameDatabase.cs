@@ -90,10 +90,12 @@ namespace Snowflake.Game
                 using (var reader = sqlCommand.ExecuteReader())
                 {
                     var result = new DataTable();
-                    result.Load(reader);
-                    var gamesResults = (from DataRow row in result.Rows select GetGameFromDataRow(row)).ToList();
-                    this.DBConnection.Close();
-                    return gamesResults;
+                    lock (result) {
+                        result.Load(reader);
+                        var gamesResults = (from DataRow row in result.Rows select GetGameFromDataRow(row)).ToList();
+                        this.DBConnection.Close();
+                        return gamesResults;
+                    }
                 }
             }
         }
