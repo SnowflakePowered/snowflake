@@ -11,7 +11,7 @@ namespace Snowflake.Utility
     public abstract class BaseDatabase
     {
         public string FileName { get; private set; }
-        protected SQLiteConnection DBConnection { get; set; }
+        private readonly string DBConnectionString;
         public BaseDatabase(string fileName)
         {
             this.FileName = fileName;
@@ -20,7 +20,11 @@ namespace Snowflake.Utility
             {
                 SQLiteConnection.CreateFile(this.FileName);
             }
-            this.DBConnection = new SQLiteConnection("Data Source=" + this.FileName + ";Version=3;");
+            this.DBConnectionString = "Data Source=" + this.FileName + ";Version=3;";
+        }
+        public SQLiteConnection GetConnection()
+        {
+            return new SQLiteConnection(this.DBConnectionString);
         }
     }
 }

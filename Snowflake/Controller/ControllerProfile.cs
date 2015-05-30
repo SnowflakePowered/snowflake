@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Emulator.Input;
 using Snowflake.Extensions;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Snowflake.Controller
 {
@@ -12,6 +14,7 @@ namespace Snowflake.Controller
     {
         public IDictionary<string, string> InputConfiguration { get; private set; }
         public string ControllerID { get; private set; }
+        [JsonConverter(typeof(StringEnumConverter))]
         public ControllerProfileType ProfileType { get; private set; }
         public ControllerProfile(string controllerId, ControllerProfileType profileType, IDictionary<string, string> inputConfiguration)
         {
