@@ -27,6 +27,7 @@ namespace Snowflake.Controller
         }
         public IControllerProfile GetControllerProfile(string deviceName)
         {
+            if (deviceName == null) deviceName = "null";
             return ControllerProfile.FromJsonProtoTemplate(
                 JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(
                     File.ReadAllText(this.GetControllerProfileFilename(deviceName))));

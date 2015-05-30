@@ -20,7 +20,8 @@ namespace Snowflake.Controller
 
         private void CreateDatabase()
         {
-            this.DBConnection.Open();
+            SQLiteConnection dbConnection = this.GetConnection();
+            dbConnection.Open();
             var sqlCommand = new SQLiteCommand(@"CREATE TABLE IF NOT EXISTS ports(
                                                                 platform_id TEXT PRIMARY KEY,
                                                                 port1 TEXT,
@@ -31,14 +32,15 @@ namespace Snowflake.Controller
                                                                 port6 TEXT,
                                                                 port7 TEXT,
                                                                 port8 TEXT
-                                                                )", this.DBConnection);
+                                                                )", dbConnection);
             sqlCommand.ExecuteNonQuery();
-            this.DBConnection.Close();
+            dbConnection.Close();
         }
 
         public void AddPlatform(IPlatformInfo platformInfo)
         {
-            this.DBConnection.Open();
+            SQLiteConnection dbConnection = this.GetConnection();
+            dbConnection.Open();
             using (var sqlCommand = new SQLiteCommand(@"INSERT OR IGNORE INTO ports VALUES(
                                                                 @platform_id,
                                                                 null,
@@ -49,11 +51,11 @@ namespace Snowflake.Controller
                                                                 null,
                                                                 null,
                                                                 null
-                                                                )", this.DBConnection))
+                                                                )", dbConnection))
             {
                 sqlCommand.Parameters.AddWithValue("@platform_id", platformInfo.PlatformID);
                 sqlCommand.ExecuteNonQuery();
-                this.DBConnection.Close();
+                dbConnection.Close();
             }/*
             if (Environment.OSVersion.Platform == PlatformID.Win32NT)
             {
@@ -69,9 +71,9 @@ namespace Snowflake.Controller
             if (portNumber > 8 || portNumber < 1){
                 return String.Empty;
             }
-           
-            this.DBConnection.Open();
-            using (var sqlCommand = new SQLiteCommand("SELECT `%portNumber` FROM `ports` WHERE `platform_id` == @platformId", this.DBConnection))
+            SQLiteConnection dbConnection = this.GetConnection();
+            dbConnection.Open();
+            using (var sqlCommand = new SQLiteCommand("SELECT `%portNumber` FROM `ports` WHERE `platform_id` == @platformId", dbConnection))
             {
                 sqlCommand.CommandText = sqlCommand.CommandText.Replace("%portNumber", "port"+portNumber);
                 sqlCommand.Parameters.AddWithValue("@platformId", platformInfo.PlatformID);
@@ -80,7 +82,7 @@ namespace Snowflake.Controller
                     var result = new DataTable();
                     result.Load(reader);
                     var row = result.Rows[0];
-                    this.DBConnection.Close();
+                    dbConnection.Close();
                     return row.Field<string>("port"+portNumber);
                 }
             }
@@ -88,19 +90,20 @@ namespace Snowflake.Controller
 
         public void SetDeviceInPort(IPlatformInfo platformInfo, int portNumber, string deviceName)
         {
+            SQLiteConnection dbConnection = this.GetConnection();
             if (portNumber > 8 || portNumber < 1)
             {
                 throw new IndexOutOfRangeException("Snowflake only supports consoles up to 8 controller ports");
             }
-            this.DBConnection.Open();
-            using (var sqlCommand = new SQLiteCommand("UPDATE `ports` SET `%portNumber` = @controllerId WHERE `platform_id` == @platformId", this.DBConnection))
+            dbConnection.Open();
+            using (var sqlCommand = new SQLiteCommand("UPDATE `ports` SET `%portNumber` = @controllerId WHERE `platform_id` == @platformId", dbConnection))
             {
                 sqlCommand.CommandText = sqlCommand.CommandText.Replace("%portNumber", "port" + portNumber);
                 sqlCommand.Parameters.AddWithValue("@controllerId", deviceName);
                 sqlCommand.Parameters.AddWithValue("@platformId", platformInfo.PlatformID);
                 sqlCommand.ExecuteNonQuery();
             }
-            this.DBConnection.Close();
+            dbConnection.Close();
         }
 
         private void SetDefaults_Win32(IPlatformInfo platformInfo)

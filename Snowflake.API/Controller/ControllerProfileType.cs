@@ -23,6 +23,10 @@ namespace Snowflake.Controller
         /// A custom (unknown) type of profile. 
         /// <remarks>A controller with type <b>CUSTOM_PROFILE</b> is unhandled, the <see cref="Snowflake.Emulator.IEmulatorBridge"/> must handle this case manually</remarks>
         /// </summary>
-        CUSTOM_PROFILE
+        CUSTOM_PROFILE,
+        /// <summary>
+        /// A stubbed, empty profile
+        /// </summary>
+        NULL_PROFILE
     }
 }

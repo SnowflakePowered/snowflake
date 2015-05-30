@@ -84,6 +84,7 @@ namespace Snowflake.Emulator
 
         public virtual string CompileController(int playerIndex, IPlatformInfo platformInfo, IControllerDefinition controllerDefinition, IControllerTemplate controllerTemplate, IControllerProfile controllerProfile, IInputTemplate inputTemplate)
         {
+            if (controllerProfile.ProfileType == ControllerProfileType.NULL_PROFILE) return String.Empty;
             var controllerMappings = controllerProfile.ProfileType == ControllerProfileType.KEYBOARD_PROFILE ?
                 controllerTemplate.KeyboardControllerMappings : controllerTemplate.GamepadControllerMappings;
             return this.CompileController(playerIndex, platformInfo, controllerDefinition, controllerTemplate, controllerProfile, inputTemplate, controllerMappings);
@@ -91,6 +92,7 @@ namespace Snowflake.Emulator
 
         public virtual string CompileController(int playerIndex, IPlatformInfo platformInfo, IControllerDefinition controllerDefinition, IControllerTemplate controllerTemplate, IControllerProfile controllerProfile, IInputTemplate inputTemplate, IReadOnlyDictionary<string, IControllerMapping> controllerMappings)
         {
+            if (controllerProfile.ProfileType == ControllerProfileType.NULL_PROFILE) return String.Empty;
             var template = new StringBuilder(inputTemplate.StringTemplate);
             foreach (IControllerInput input in controllerDefinition.ControllerInputs.Values)
             {

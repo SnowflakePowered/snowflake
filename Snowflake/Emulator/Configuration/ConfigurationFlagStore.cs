@@ -88,6 +88,7 @@ namespace Snowflake.Emulator.Configuration
             {
                 case ConfigurationFlagTypes.SELECT_FLAG:
                     return Int32.Parse(value);
+
                 case ConfigurationFlagTypes.INTEGER_FLAG:
                     return Int32.Parse(value);
                 case ConfigurationFlagTypes.BOOLEAN_FLAG:
@@ -109,7 +110,12 @@ namespace Snowflake.Emulator.Configuration
         }
         private string GetCacheFileName(IGameInfo gameInfo)
         {
-            return Path.Combine(this.configurationFlagLocation, String.Format("{0}.{1}.cfg", gameInfo.UUID, this.EmulatorBridgeID));
+            try
+            {
+                return Path.Combine(this.configurationFlagLocation, String.Format("{0}.{1}.cfg", gameInfo.UUID, this.EmulatorBridgeID));
+            }catch{
+                return String.Empty;
+            }
         }
         private string GetDefaultFileName()
         {

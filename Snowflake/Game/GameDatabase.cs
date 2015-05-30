@@ -24,7 +24,8 @@ namespace Snowflake.Game
 
         private void CreateDatabase()
         {
-            this.DBConnection.Open();
+            SQLiteConnection dbConnection = this.GetConnection();
+            dbConnection.Open();
             var sqlCommand = new SQLiteCommand(@"CREATE TABLE IF NOT EXISTS games(
                                                                 platform_id TEXT,
                                                                 uuid TEXT PRIMARY KEY,
@@ -32,21 +33,22 @@ namespace Snowflake.Game
                                                                 name TEXT,
                                                                 metadata TEXT,
                                                                 crc32 TEXT
-                                                                )", this.DBConnection);
+                                                                )", dbConnection);
             sqlCommand.ExecuteNonQuery();
-            this.DBConnection.Close();
+            dbConnection.Close();
         }
 
         public void AddGame(IGameInfo game)
         {
-            this.DBConnection.Open();
+            SQLiteConnection dbConnection = this.GetConnection();
+            dbConnection.Open();
             using (var sqlCommand = new SQLiteCommand(@"INSERT OR REPLACE INTO games VALUES(
                                           @platform_id,
                                           @uuid,
                                           @filename,
                                           @name,
                                           @metadata,
-                                          @crc32)", this.DBConnection))
+                                          @crc32)", dbConnection))
             {
                 sqlCommand.Parameters.AddWithValue("@platform_id", game.PlatformID);
                 sqlCommand.Parameters.AddWithValue("@uuid", game.UUID);
@@ -56,7 +58,7 @@ namespace Snowflake.Game
                 sqlCommand.Parameters.AddWithValue("@crc32", game.CRC32);
                 sqlCommand.ExecuteNonQuery();
             }
-            this.DBConnection.Close();
+            dbConnection.Close();
         }
 
         public IGameInfo GetGameByUUID(string uuid)
@@ -81,19 +83,28 @@ namespace Snowflake.Game
         }
         private IList<IGameInfo> GetGamesByColumn(string colName, string searchQuery)
         {
-            this.DBConnection.Open();
+            SQLiteConnection dbConnection = this.GetConnection();
+            dbConnection.Open();
             using (var sqlCommand = new SQLiteCommand(@"SELECT * FROM `games` WHERE `%colName` == @searchQuery"
-                , this.DBConnection))
+                , dbConnection))
             {
                 sqlCommand.CommandText = sqlCommand.CommandText.Replace("%colName", colName); //Easier to read than string replacement.
                 sqlCommand.Parameters.AddWithValue("@searchQuery", searchQuery);
                 using (var reader = sqlCommand.ExecuteReader())
                 {
                     var result = new DataTable();
-                    lock (result) {
-                        result.Load(reader);
+                    lock (reader) {
+                        try
+                        {
+                            result.Load(reader);
+                        }
+                        catch (AccessViolationException)
+                        {
+                            System.Threading.Thread.Sleep(500);
+                            result.Load(reader);
+                        }
                         var gamesResults = (from DataRow row in result.Rows select GetGameFromDataRow(row)).ToList();
-                        this.DBConnection.Close();
+                        dbConnection.Close();
                         return gamesResults;
                     }
                 }
@@ -101,16 +112,17 @@ namespace Snowflake.Game
         }
         public IList<IGameInfo> GetAllGames()
         {
-            this.DBConnection.Open();
+            SQLiteConnection dbConnection = this.GetConnection();
+            dbConnection.Open();
             using (var sqlCommand = new SQLiteCommand(@"SELECT * FROM `games`"
-                , this.DBConnection))
+                , dbConnection))
             {
                 using (var reader = sqlCommand.ExecuteReader())
                 {
                     var result = new DataTable();
                     result.Load(reader);
                     var gamesResults = (from DataRow row in result.Rows select this.GetGameFromDataRow(row)).ToList();
-                    this.DBConnection.Close();
+                    dbConnection.Close();
                     return gamesResults;
                 }
             }
