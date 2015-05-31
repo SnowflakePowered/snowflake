@@ -20,14 +20,14 @@ namespace Snowflake.Emulator.Input
         public string GAMEPAD_R1 { get; private set; }
         public string GAMEPAD_R2 { get; private set; }
         public string GAMEPAD_R3 { get; private set; }
-        public string GAMEPAD_L_X_UP { get; private set; }
-        public string GAMEPAD_L_X_DOWN { get; private set; }
-        public string GAMEPAD_L_Y_RIGHT { get; private set; }
-        public string GAMEPAD_L_Y_LEFT { get; private set; }
-        public string GAMEPAD_R_X_UP { get; private set; }
-        public string GAMEPAD_R_X_DOWN { get; private set; }
-        public string GAMEPAD_R_Y_RIGHT { get; private set; }
-        public string GAMEPAD_R_Y_LEFT { get; private set; }
+        public string GAMEPAD_L_X_LEFT { get; private set; }
+        public string GAMEPAD_L_X_RIGHT { get; private set; }
+        public string GAMEPAD_L_Y_UP { get; private set; }
+        public string GAMEPAD_L_Y_DOWN { get; private set; }
+        public string GAMEPAD_R_X_LEFT { get; private set; }
+        public string GAMEPAD_R_X_RIGHT { get; private set; }
+        public string GAMEPAD_R_Y_UP { get; private set; }
+        public string GAMEPAD_R_Y_DOWN { get; private set; }
         public string GAMEPAD_GUIDE { get; private set; }
         public string GAMEPAD_DPAD_UP { get; private set; }
         public string GAMEPAD_DPAD_DOWN { get; private set; }
@@ -49,14 +49,14 @@ namespace Snowflake.Emulator.Input
             this.GAMEPAD_R1 = mappingData["GAMEPAD_R1"];
             this.GAMEPAD_R2 = mappingData["GAMEPAD_R2"];
             this.GAMEPAD_R3 = mappingData["GAMEPAD_R3"];
-            this.GAMEPAD_L_X_UP = mappingData["GAMEPAD_L_X_UP"];
-            this.GAMEPAD_L_X_DOWN = mappingData["GAMEPAD_L_X_DOWN"];
-            this.GAMEPAD_L_Y_RIGHT = mappingData["GAMEPAD_L_Y_RIGHT"];
-            this.GAMEPAD_L_Y_LEFT = mappingData["GAMEPAD_L_Y_LEFT"];
-            this.GAMEPAD_R_X_UP = mappingData["GAMEPAD_R_X_UP"];
-            this.GAMEPAD_R_X_DOWN = mappingData["GAMEPAD_R_X_DOWN"];
-            this.GAMEPAD_R_Y_RIGHT = mappingData["GAMEPAD_R_Y_RIGHT"];
-            this.GAMEPAD_R_Y_LEFT = mappingData["GAMEPAD_R_Y_LEFT"];
+            this.GAMEPAD_L_X_LEFT = mappingData["GAMEPAD_L_X_LEFT"];
+            this.GAMEPAD_L_X_RIGHT = mappingData["GAMEPAD_L_X_RIGHT"];
+            this.GAMEPAD_L_Y_UP = mappingData["GAMEPAD_L_Y_UP"];
+            this.GAMEPAD_L_Y_DOWN = mappingData["GAMEPAD_L_Y_DOWN"];
+            this.GAMEPAD_R_X_LEFT = mappingData["GAMEPAD_R_X_LEFT"];
+            this.GAMEPAD_R_X_RIGHT = mappingData["GAMEPAD_R_X_RIGHT"];
+            this.GAMEPAD_R_Y_UP = mappingData["GAMEPAD_R_Y_UP"];
+            this.GAMEPAD_R_Y_DOWN = mappingData["GAMEPAD_R_Y_DOWN"];
             this.GAMEPAD_GUIDE = mappingData["GAMEPAD_GUIDE"];
             this.GAMEPAD_DPAD_UP = mappingData["GAMEPAD_DPAD_UP"];
             this.GAMEPAD_DPAD_DOWN = mappingData["GAMEPAD_DPAD_DOWN"];
