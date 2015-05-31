@@ -5,7 +5,7 @@
 [![Windows Build status](https://ci.appveyor.com/api/projects/status/mhei9fdtja5j04kk?svg=true)](https://ci.appveyor.com/project/RonnChyran/snowflake) [![Linux Build Status](https://travis-ci.org/SnowflakePowered/snowflake.svg?branch=master)](https://travis-ci.org/SnowflakePowered/snowflake) [![MyGetFeed](https://img.shields.io/myget/snowflake-nightly/vpre/Snowflake.API.svg?style=flat)](https://www.myget.org/gallery/snowflake-nightly) [![Coverage Status](https://coveralls.io/repos/SnowflakePowered/snowflake/badge.svg?branch=master)](https://coveralls.io/r/SnowflakePowered/snowflake?branch=master)  [![Coverity code defect analysis](https://scan.coverity.com/projects/4039/badge.svg?flat=1)](https://scan.coverity.com/projects/4039)
  [![License](https://img.shields.io/badge/license-apache%202.0-blue.svg?style=flat)](https://github.com/SnowflakePowered/snowflake/blob/master/LICENSE)
 
-Extendible through plugins and built using bleeding-edge technologies on the web and the desktop, Snowflake is a modern, hackable emulator frontend built for today's machines. Not the 80's. 
+Snowflake is a powerful, extensible emulator frontend that works out-of-the-box, built using bleeding edge techonogies on the web and desktop.
 
 
 Features
