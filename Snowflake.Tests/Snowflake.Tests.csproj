@@ -111,6 +111,7 @@
     <EmbeddedResource Include="..\Platforms\NINTENDO_SNES.platform">
       <Link>TestResources\Platforms\NINTENDO_SNES.platform</Link>
     </EmbeddedResource>
+    <None Include="app.config" />
     <None Include="packages.config" />
     <EmbeddedResource Include="TestResources\ControllerProfiles\NES_CONTROLLER\KeyboardDevice-NES_CONTROLLER.json" />
     <EmbeddedResource Include="TestResources\ControllerProfiles\NES_CONTROLLER\XInputDevice1-NES_CONTROLLER.json" />

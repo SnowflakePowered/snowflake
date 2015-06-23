@@ -157,7 +157,6 @@
     <Compile Include="Utility\Hash\SHA1.cs" />
     <Compile Include="Utility\StringEncode.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="x86\SQLite.Interop.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

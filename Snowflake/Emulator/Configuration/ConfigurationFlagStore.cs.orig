@@ -1,0 +1,128 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+using Snowflake.Game;
+using Newtonsoft.Json;
+using Snowflake.Service;
+using RaptorDB;
+namespace Snowflake.Emulator.Configuration
+{
+    public class ConfigurationFlagStore : IConfigurationFlagStore
+    {
+        public string EmulatorBridgeID { get; private set; }
+        readonly string configurationFlagLocation;
+        readonly IEmulatorBridge emulatorBridge;
+        public ConfigurationFlagStore(IEmulatorBridge emulatorBridge)
+        {
+            this.EmulatorBridgeID = emulatorBridge.PluginName;
+            this.emulatorBridge = emulatorBridge;
+            this.configurationFlagLocation = Path.Combine(emulatorBridge.PluginDataPath, "flagscache");
+            if (!Directory.Exists(configurationFlagLocation)) Directory.CreateDirectory(configurationFlagLocation);
+            this.AddDefaults(emulatorBridge.ConfigurationFlags);
+        }
+       
+        public void AddGame(IGameInfo gameInfo, IDictionary<string, string> flagValues)
+        {
+            RaptorDB<string> flagDb = this.GetDB(this.GetCacheFileName(gameInfo));
+            foreach(KeyValuePair<string, string> flagPair in flagValues){
+                flagDb.Set(flagPair.Key, flagPair.Value);
+            }
+            flagDb.Shutdown();
+        }
+        public void AddGame(IGameInfo gameInfo)
+        {
+            IDictionary<string, string> flagValues = new Dictionary<string, string>();
+            this.AddGame(gameInfo, flagValues);
+        }
+        public dynamic GetValue(IGameInfo gameInfo, string key, ConfigurationFlagTypes type)
+        {
+            return this.GetValue(key, type, this.GetCacheFileName(gameInfo), this.GetDefaultValue(key, type));
+        }
+        public void SetValue(IGameInfo gameInfo, string key, object value, ConfigurationFlagTypes type)
+        {
+            this.SetValue(key, value, type, this.GetCacheFileName(gameInfo));
+        }
+        public dynamic GetDefaultValue(string key, ConfigurationFlagTypes type)
+        {
+            return this.GetValue(key, type, this.GetDefaultFileName(), this.emulatorBridge.ConfigurationFlags[key].DefaultValue);
+        }
+        public void SetDefaultValue(string key, object value, ConfigurationFlagTypes type)
+        {
+            this.SetValue(key, value, type, this.GetDefaultFileName());
+        }
+        private void AddDefaults(IDictionary<string, IConfigurationFlag> configurationFlags)
+        {
+            IDictionary<string, string> flagValues = configurationFlags.ToDictionary(flag => flag.Key, flag => flag.Value.DefaultValue);
+            RaptorDB<string> flagDb = this.GetDB(this.GetDefaultFileName());
+            foreach (KeyValuePair<string, string> flagPair in flagValues)
+            {
+                flagDb.Set(flagPair.Key, flagPair.Value);
+            }
+            flagDb.Shutdown();
+        }
+        private void SetValue(string key, object value, ConfigurationFlagTypes type, string filename)
+        {
+            RaptorDB<string> flagDb = this.GetDB(filename);
+            flagDb.Set(key, value.ToString());
+            flagDb.Shutdown();
+        }
+        private dynamic GetValue(string key, ConfigurationFlagTypes type, string filename, object fallback)
+        {
+            string value = String.Empty;
+            RaptorDB<string> flagDb = this.GetDB(filename);
+            if (!flagDb.Get(key, out value))
+            {
+                value = fallback.ToString();
+            }
+            flagDb.Shutdown();
+            switch (type)
+            {
+                case ConfigurationFlagTypes.SELECT_FLAG:
+                    return Int32.Parse(value);
+
+                case ConfigurationFlagTypes.INTEGER_FLAG:
+                    return Int32.Parse(value);
+                case ConfigurationFlagTypes.BOOLEAN_FLAG:
+                    return Boolean.Parse(value);
+                default:
+                    return value;
+            }
+        }
+
+        RaptorDB<string> GetDB(string dbFileName)
+        {
+            return RaptorDB.RaptorDB<string>.Open(dbFileName, true);
+        }
+        public dynamic this[IGameInfo gameInfo, string key, ConfigurationFlagTypes type]
+        {
+            get
+            {
+                return this.GetValue(gameInfo, key, type);
+            }
+            set
+            {
+                this.SetValue(gameInfo, key, value, type);
+            }
+        }
+        private string GetCacheFileName(IGameInfo gameInfo)
+        {
+<<<<<<< Updated upstream
+            try
+            {
+                return Path.Combine(this.configurationFlagLocation, String.Format("{0}.{1}.cfg", gameInfo.UUID, this.EmulatorBridgeID));
+            }catch{
+                return String.Empty;
+            }
+=======
+            return Path.Combine(this.configurationFlagLocation, String.Format("{0}.{1}.db", gameInfo.UUID, this.EmulatorBridgeID));
+>>>>>>> Stashed changes
+        }
+        private string GetDefaultFileName()
+        {
+            return Path.Combine(this.configurationFlagLocation, String.Format("{0}.{1}.db", "default", this.EmulatorBridgeID));
+        }
+    }
+}
