@@ -39,7 +39,7 @@ namespace Snowflake.Service.Init
         public Form1()
         {
             InitializeComponent();
-            Console.SetOut(new MultiTextWriter(new ControlWriter(this.textBox1, this), Console.Out));
+            //Console.SetOut(new MultiTextWriter(new ControlWriter(this.textBox1, this), Console.Out));
             start();
 
  string x_ = @"

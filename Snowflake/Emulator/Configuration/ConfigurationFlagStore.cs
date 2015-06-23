@@ -7,36 +7,52 @@ using System.IO;
 using Snowflake.Game;
 using Newtonsoft.Json;
 using Snowflake.Service;
-
+using Snowflake.Utility;
+using System.Data.SQLite;
 namespace Snowflake.Emulator.Configuration
 {
-    public class ConfigurationFlagStore : IConfigurationFlagStore
+    public class ConfigurationFlagStore : BaseDatabase, IConfigurationFlagStore
     {
         public string EmulatorBridgeID { get; private set; }
         readonly string configurationFlagLocation;
         readonly IEmulatorBridge emulatorBridge;
         public ConfigurationFlagStore(IEmulatorBridge emulatorBridge)
+            : base(Path.Combine(emulatorBridge.PluginDataPath, "flagscache.db"))
         {
+            this.CreateDatabase();
             this.EmulatorBridgeID = emulatorBridge.PluginName;
-            this.emulatorBridge = emulatorBridge;
-            this.configurationFlagLocation = Path.Combine(emulatorBridge.PluginDataPath, "flagscache");
-            if (!Directory.Exists(configurationFlagLocation)) Directory.CreateDirectory(configurationFlagLocation);
+            this.configurationFlagLocation = Path.Combine(emulatorBridge.PluginDataPath, "flagscache.db");
             this.AddDefaults(emulatorBridge.ConfigurationFlags);
+            this.emulatorBridge = emulatorBridge;
         }
-        private void AddDefaults(IDictionary<string, IConfigurationFlag> configurationFlags)
+        private void CreateDatabase()
         {
-            IDictionary<string, string> flagValues = configurationFlags.ToDictionary(flag => flag.Key, flag => flag.Value.DefaultValue);
-            if (!File.Exists(this.GetDefaultFileName()))
-            {
-                File.WriteAllText(this.GetDefaultFileName(), JsonConvert.SerializeObject(flagValues));
-            }
+            SQLiteConnection dbConnection = this.GetConnection();
+            dbConnection.Open();
+            var sqlCommand = new SQLiteCommand(@"CREATE TABLE IF NOT EXISTS flags(
+                                                                flagKey TEXT PRIMARY KEY,
+                                                                flagValue TEXT)", dbConnection);
+            sqlCommand.ExecuteNonQuery();
+            dbConnection.Close();
         }
         public void AddGame(IGameInfo gameInfo, IDictionary<string, string> flagValues)
         {
-            if (!File.Exists(this.GetCacheFileName(gameInfo)))
+
+
+            var flagDb = this.GetConnection();
+            flagDb.Open();
+            foreach (KeyValuePair<string, string> flagPair in flagValues)
             {
-                File.WriteAllText(this.GetCacheFileName(gameInfo), JsonConvert.SerializeObject(flagValues));
+                using (var sqliteCommand = new SQLiteCommand(@"INSERT OR REPLACE INTO flags VALUES(
+                                          @flagKey,
+                                          @flagValue)", flagDb))
+                {
+                    sqliteCommand.Parameters.AddWithValue("@flagKey", gameInfo.UUID + flagPair.Key);
+                    sqliteCommand.Parameters.AddWithValue("@flagValue", flagPair.Value.ToString());
+                    sqliteCommand.ExecuteNonQuery();
+                }
             }
+            flagDb.Close();
         }
         public void AddGame(IGameInfo gameInfo)
         {
@@ -45,42 +61,78 @@ namespace Snowflake.Emulator.Configuration
         }
         public dynamic GetValue(IGameInfo gameInfo, string key, ConfigurationFlagTypes type)
         {
-            return this.GetValue(key, type, this.GetCacheFileName(gameInfo), this.GetDefaultValue(key, type));
+            return this.GetValue(key, type, gameInfo.UUID, this.GetDefaultValue(key, type));
         }
         public void SetValue(IGameInfo gameInfo, string key, object value, ConfigurationFlagTypes type)
         {
-            this.SetValue(key, value, type, this.GetCacheFileName(gameInfo));
+            this.SetValue(key, value, type, gameInfo.UUID);
         }
         public dynamic GetDefaultValue(string key, ConfigurationFlagTypes type)
         {
-            return this.GetValue(key, type, this.GetDefaultFileName(), this.emulatorBridge.ConfigurationFlags[key].DefaultValue);
+            return this.GetValue(key, type, "default", this.emulatorBridge.ConfigurationFlags[key].DefaultValue);
         }
         public void SetDefaultValue(string key, object value, ConfigurationFlagTypes type)
         {
-            this.SetValue(key, value, type, this.GetDefaultFileName());
+            this.SetValue(key, value, type, "default");
         }
-        private void SetValue(string key, object value, ConfigurationFlagTypes type, string filename)
+        private void AddDefaults(IDictionary<string, IConfigurationFlag> configurationFlags)
         {
-            IDictionary<string, string> keys;
-            try
+            IDictionary<string, string> flagValues = configurationFlags.ToDictionary(flag => flag.Key, flag => flag.Value.DefaultValue);
+            var flagDb = this.GetConnection();
+            flagDb.Open();
+            foreach (KeyValuePair<string, string> flagPair in flagValues)
             {
-               keys = JsonConvert.DeserializeObject<IDictionary<string, string>>(File.ReadAllText(filename));
+               using(var sqliteCommand = new SQLiteCommand(@"INSERT OR REPLACE INTO flags VALUES(
+                                          @flagKey,
+                                          @flagValue)", flagDb)){
+                   sqliteCommand.Parameters.AddWithValue("@flagKey", "default-"+flagPair.Key);
+                   sqliteCommand.Parameters.AddWithValue("@flagValue", flagPair.Value.ToString());
+                   sqliteCommand.ExecuteNonQuery();
+               }
             }
-            catch
-            {
-               keys = new Dictionary<string, string>();
-            }
-            keys[key] = value.ToString();
-            File.WriteAllText(filename, JsonConvert.SerializeObject(keys));
+            flagDb.Close();
+            
+
         }
-        private dynamic GetValue(string key, ConfigurationFlagTypes type, string filename, object fallback)
+        private void SetValue(string key, object value, ConfigurationFlagTypes type, string prefix)
         {
+            var flagDb = this.GetConnection();
+            flagDb.Open();
+            using (var sqliteCommand = new SQLiteCommand(@"INSERT OR REPLACE INTO flags VALUES(
+                                          @flagKey,
+                                          @flagValue)", flagDb))
+            {
+                sqliteCommand.Parameters.AddWithValue("@flagKey", prefix + "-" + key);
+                sqliteCommand.Parameters.AddWithValue("@flagValue", value.ToString());
+                sqliteCommand.ExecuteNonQuery();
+            }
+            flagDb.Close();
+            
+        }
+        private dynamic GetValue(string key, ConfigurationFlagTypes type, string prefix, object fallback)
+        {
+            var dbConnection = this.GetConnection();
+            dbConnection.Open();
             string value = String.Empty;
-            try
+            using (var sqlCommand = new SQLiteCommand(@"SELECT `flagValue` FROM `flags` WHERE `flagKey` == @searchQuery"
+               , dbConnection))
             {
-                value = JsonConvert.DeserializeObject<IDictionary<string, string>>(File.ReadAllText(filename))[key];
+                sqlCommand.Parameters.AddWithValue("@searchQuery", prefix + "-" + key);
+                
+                    try
+                    {
+                        value = (string)sqlCommand.ExecuteScalar();
+                    }
+                    catch (AccessViolationException)
+                    {
+                        System.Threading.Thread.Sleep(500); //le concurrency hack :(
+                        value = (string)sqlCommand.ExecuteScalar();
+                    }
+                   
+                
             }
-            catch
+            dbConnection.Close();
+            if (value == null)
             {
                 value = fallback.ToString();
             }
@@ -88,7 +140,6 @@ namespace Snowflake.Emulator.Configuration
             {
                 case ConfigurationFlagTypes.SELECT_FLAG:
                     return Int32.Parse(value);
-
                 case ConfigurationFlagTypes.INTEGER_FLAG:
                     return Int32.Parse(value);
                 case ConfigurationFlagTypes.BOOLEAN_FLAG:
@@ -97,6 +148,7 @@ namespace Snowflake.Emulator.Configuration
                     return value;
             }
         }
+
         public dynamic this[IGameInfo gameInfo, string key, ConfigurationFlagTypes type]
         {
             get
@@ -107,19 +159,6 @@ namespace Snowflake.Emulator.Configuration
             {
                 this.SetValue(gameInfo, key, value, type);
             }
-        }
-        private string GetCacheFileName(IGameInfo gameInfo)
-        {
-            try
-            {
-                return Path.Combine(this.configurationFlagLocation, String.Format("{0}.{1}.cfg", gameInfo.UUID, this.EmulatorBridgeID));
-            }catch{
-                return String.Empty;
-            }
-        }
-        private string GetDefaultFileName()
-        {
-            return Path.Combine(this.configurationFlagLocation, String.Format("{0}.{1}.cfg", "default", this.EmulatorBridgeID));
         }
     }
 }
