@@ -34,7 +34,7 @@
             "IsAnalog": false,
             "InputName": "BTN_R",
             "KeyboardDefault": "KEY_X",
-            "GamepadDefault": "GAMEPAD_R2"
+            "GamepadDefault": "GAMEPAD_R1"
         },
         "BTN_START": {
             "IsAnalog": false,
