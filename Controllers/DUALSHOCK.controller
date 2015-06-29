@@ -3,146 +3,122 @@
         "BTN_CROSS": {
             "IsAnalog": false,
             "InputName": "BTN_CROSS",
-            "KeyboardDefault": "KEY_Z",
-            "GamepadDefault": "GAMEPAD_A"
+            "GamepadAbstraction": "A"
         },
         "BTN_CIRCLE": {
             "IsAnalog": false,
             "InputName": "BTN_CIRCLE",
-            "KeyboardDefault": "KEY_X",
-            "GamepadDefault": "GAMEPAD_B"
-		}
+            "GamepadAbstraction": "B"
+		},
 		"BTN_TRIANGLE": {
             "IsAnalog": false,
             "InputName": "BTN_TRIANGLE",
-            "KeyboardDefault": "KEY_C",
-            "GamepadDefault": "GAMEPAD_A"
+            "GamepadAbstraction": "Y"
         },
         "BTN_SQUARE": {
             "IsAnalog": false,
             "InputName": "BTN_SQUARE",
-            "KeyboardDefault": "KEY_V",
-            "GamepadDefault": "GAMEPAD_B"
+            "GamepadAbstraction": "X"
         },
         "BTN_L1": {
             "IsAnalog": false,
             "InputName": "BTN_L1",
-            "KeyboardDefault": "KEY_Q",
-            "GamepadDefault": "GAMEPAD_L1"
+            "GamepadAbstraction": "L1"
         },
         "BTN_R1": {
             "IsAnalog": false,
             "InputName": "BTN_R1",
-            "KeyboardDefault": "KEY_E",
-            "GamepadDefault": "GAMEPAD_R1"
+            "GamepadAbstraction": "R1"
         },
         "BTN_L2": {
             "IsAnalog": true,
             "InputName": "BTN_L2",
-            "KeyboardDefault": "KEY_T",
-            "GamepadDefault": "GAMEPAD_L2"
+            "GamepadAbstraction": "L2"
         },
         "BTN_R2": {
             "IsAnalog": true,
             "InputName": "BTN_R2",
-            "KeyboardDefault": "KEY_Y",
-            "GamepadDefault": "GAMEPAD_R2"
+            "GamepadAbstraction": "R2"
         },
 		"BTN_L3": {
             "IsAnalog": false,
             "InputName": "BTN_L3",
-            "KeyboardDefault": "KEY_U",
-            "GamepadDefault": "GAMEPAD_L3"
+            "GamepadAbstraction": "L3"
         },
         "BTN_R3": {
             "IsAnalog": false,
             "InputName": "BTN_R3",
-            "KeyboardDefault": "KEY_I",
-            "GamepadDefault": "GAMEPAD_R3"
+            "GamepadAbstraction": "R3"
         },
 		"BTN_START": {
             "IsAnalog": false,
             "InputName": "BTN_START",
-            "KeyboardDefault": "KEY_SPACEBAR",
-            "GamepadDefault": "GAMEPAD_START"
+            "GamepadAbstraction": "Start"
         },
 		"BTN_SELECT": {
             "IsAnalog": false,
             "InputName": "BTN_SELECT",
-            "KeyboardDefault": "KEY_ENTER",
-            "GamepadDefault": "GAMEPAD_SELECT"
+            "GamepadAbstraction": "Select"
         },
         "BTN_DPAD_UP": {
             "IsAnalog": false,
             "InputName": "BTN_DPAD_UP",
-            "KeyboardDefault": "KEY_UP",
-            "GamepadDefault": "GAMEPAD_DPAD_UP"
+            "GamepadAbstraction": "DpadUp"
         },
         "BTN_DPAD_DOWN": {
             "IsAnalog": false,
             "InputName": "BTN_DPAD_DOWN",
-            "KeyboardDefault": "KEY_DOWN",
-            "GamepadDefault": "GAMEPAD_DPAD_DOWN"
+            "GamepadAbstraction": "DpadDown"
         },
         "BTN_DPAD_LEFT": {
             "IsAnalog": false,
             "InputName": "BTN_DPAD_LEFT",
-            "KeyboardDefault": "KEY_LEFT",
-            "GamepadDefault": "GAMEPAD_DPAD_LEFT"
+            "GamepadAbstraction": "DpadLeft"
         },
         "BTN_DPAD_RIGHT": {
             "IsAnalog": false,
             "InputName": "BTN_DPAD_RIGHT",
-            "KeyboardDefault": "KEY_RIGHT",
-            "GamepadDefault": "GAMEPAD_DPAD_RIGHT"
+            "GamepadAbstraction": "DpadRight"
         },
 		"BTN_RANALOG_UP": {
             "IsAnalog": true,
             "InputName": "BTN_RANALOG_UP",
-            "KeyboardDefault": "KEY_NUMPAD_8",
-            "GamepadDefault": "GAMEPAD_R_Y_UP"
+            "GamepadAbstraction": "RightAnalogYUp"
         },
         "BTN_RANALOG_DOWN": {
             "IsAnalog": true,
             "InputName": "BTN_RANALOG_DOWN",
-            "KeyboardDefault": "KEY_NUMPAD_2",
-            "GamepadDefault": "GAMEPAD_R_Y_DOWN"
+            "GamepadAbstraction": "RightAnalogYDown"
         },
         "BTN_RANALOG_LEFT": {
             "IsAnalog": true,
             "InputName": "BTN_RANALOG_LEFT",
-            "KeyboardDefault": "KEY_NUMPAD_4",
-            "GamepadDefault": " GAMEPAD_R_X_LEFT"
+            "GamepadAbstraction": " RightAnalogXLeft"
         },
         "BTN_RANALOG_RIGHT": {
             "IsAnalog": true,
             "InputName": "BTN_RANALOG_RIGHT",
-            "KeyboardDefault": "KEY_NUMPAD_6",
-            "GamepadDefault": "GAMEPAD_R_X_RIGHT"
+            "GamepadAbstraction": "RightAnalogXRight"
         },
 		"BTN_LANALOG_UP": {
             "IsAnalog": true,
             "InputName": "BTN_LANALOG_UP",
-            "KeyboardDefault": "KEY_W",
-            "GamepadDefault": "GAMEPAD_L_Y_UP"
+            "GamepadAbstraction": "LeftAnalogYUp"
         },
         "BTN_LANALOG_DOWN": {
             "IsAnalog": true,
             "InputName": "BTN_LANALOG_DOWN",
-            "KeyboardDefault": "KEY_S",
-            "GamepadDefault": "GAMEPAD_L_Y_DOWN"
+            "GamepadAbstraction": "LeftAnalogYDown"
         },
         "BTN_LANALOG_LEFT": {
             "IsAnalog": true,
             "InputName": "BTN_LANALOG_LEFT",
-            "KeyboardDefault": "KEY_A",
-            "GamepadDefault": "GAMEPAD_L_X_LEFT"
+            "GamepadAbstraction": "LeftAnalogXLeft"
         },
         "BTN_LANALOG_RIGHT": {
             "IsAnalog": true,
             "InputName": "BTN_LANALOG_RIGHT",
-            "KeyboardDefault": "KEY_D",
-            "GamepadDefault": "GAMEPAD_L_X_RIGHT"
+            "GamepadAbstraction": "LeftAnalogXRight"
         }
 
     },

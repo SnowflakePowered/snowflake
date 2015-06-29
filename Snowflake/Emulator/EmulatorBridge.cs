@@ -72,33 +72,32 @@ namespace Snowflake.Emulator
             string deviceName = this.CoreInstance.ControllerPortsDatabase.GetDeviceInPort(platformInfo, playerIndex);
             string controllerId = platformInfo.ControllerPorts[playerIndex];
             IControllerDefinition controllerDefinition = this.CoreInstance.LoadedControllers[controllerId];
-            IControllerProfile controllerProfile = controllerDefinition.ProfileStore[deviceName];
-
+            IGamepadAbstraction gamepadAbstraction = this.CoreInstance.GamepadAbstractionDatabase[deviceName];
             return this.CompileController(playerIndex, 
                 platformInfo,
                 controllerDefinition,
-                this.ControllerTemplates[controllerProfile.ControllerID],
-                controllerProfile,
+                this.ControllerTemplates[controllerId],
+                gamepadAbstraction,
                 inputTemplate);
         }
 
-        public virtual string CompileController(int playerIndex, IPlatformInfo platformInfo, IControllerDefinition controllerDefinition, IControllerTemplate controllerTemplate, IControllerProfile controllerProfile, IInputTemplate inputTemplate)
+        public virtual string CompileController(int playerIndex, IPlatformInfo platformInfo, IControllerDefinition controllerDefinition, IControllerTemplate controllerTemplate, IGamepadAbstraction gamepadAbstraction, IInputTemplate inputTemplate)
         {
-            if (controllerProfile.ProfileType == ControllerProfileType.NULL_PROFILE) return String.Empty;
-            var controllerMappings = controllerProfile.ProfileType == ControllerProfileType.KEYBOARD_PROFILE ?
+            if (gamepadAbstraction.ProfileType == ControllerProfileType.NULL_PROFILE) return String.Empty;
+            var controllerMappings = gamepadAbstraction.ProfileType == ControllerProfileType.KEYBOARD_PROFILE ?
                 controllerTemplate.KeyboardControllerMappings : controllerTemplate.GamepadControllerMappings;
-            return this.CompileController(playerIndex, platformInfo, controllerDefinition, controllerTemplate, controllerProfile, inputTemplate, controllerMappings);
+            return this.CompileController(playerIndex, platformInfo, controllerDefinition, controllerTemplate, gamepadAbstraction, inputTemplate, controllerMappings);
         }
 
-        public virtual string CompileController(int playerIndex, IPlatformInfo platformInfo, IControllerDefinition controllerDefinition, IControllerTemplate controllerTemplate, IControllerProfile controllerProfile, IInputTemplate inputTemplate, IReadOnlyDictionary<string, IControllerMapping> controllerMappings)
+        public virtual string CompileController(int playerIndex, IPlatformInfo platformInfo, IControllerDefinition controllerDefinition, IControllerTemplate controllerTemplate, IGamepadAbstraction gamepadAbstraction, IInputTemplate inputTemplate, IReadOnlyDictionary<string, IControllerMapping> controllerMappings)
         {
-            if (controllerProfile.ProfileType == ControllerProfileType.NULL_PROFILE) return String.Empty;
+            if (gamepadAbstraction.ProfileType == ControllerProfileType.NULL_PROFILE) return String.Empty;
             var template = new StringBuilder(inputTemplate.StringTemplate);
             foreach (IControllerInput input in controllerDefinition.ControllerInputs.Values)
             {
                 string templateKey = controllerMappings["default"].InputMappings[input.InputName];
-                string inputSetting = controllerProfile.InputConfiguration[input.InputName];
-                string emulatorValue = controllerProfile.ProfileType == ControllerProfileType.KEYBOARD_PROFILE ? 
+                string inputSetting = gamepadAbstraction[input.GamepadAbstraction];
+                string emulatorValue = gamepadAbstraction.ProfileType == ControllerProfileType.KEYBOARD_PROFILE ? 
                     inputTemplate.KeyboardMappings.First().Value[inputSetting] : inputTemplate.GamepadMappings.First().Value[inputSetting]; 
                 template.Replace("{" + templateKey + "}", emulatorValue);
             }

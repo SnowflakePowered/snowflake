@@ -90,7 +90,6 @@
     <Compile Include="Ajax\JSMethod.cs" />
     <Compile Include="Ajax\JSRequest.cs" />
     <Compile Include="Ajax\JSResponse.cs" />
-    <Compile Include="Controller\ControllerProfileStore.cs" />
     <Compile Include="Controller\GamepadAbstraction.cs" />
     <Compile Include="Controller\GamepadAbstractionDatabase.cs" />
     <Compile Include="Emulator\Configuration\ConfigurationFlagSelectValue.cs" />
@@ -113,7 +112,6 @@
     <Compile Include="Emulator\Input\InputTemplate.cs" />
     <Compile Include="Extensions\JObjectExts.cs" />
     <Compile Include="Controller\ControllerPortsDatabase.cs" />
-    <Compile Include="Controller\ControllerProfile.cs" />
     <Compile Include="Controller\ControllerDefinition.cs" />
     <Compile Include="Scraper\BaseScraper.cs" />
     <Compile Include="Scraper\GameImagesResult.cs" />

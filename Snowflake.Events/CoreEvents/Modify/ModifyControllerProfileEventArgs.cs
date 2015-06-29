@@ -10,9 +10,9 @@ namespace Snowflake.Events.CoreEvents.ModifyEvent
 {
     public class ModifyControllerProfileEventArgs : SnowflakeEventArgs
     {
-        public IControllerProfile PreviousProfile { get; private set; }
-        public IControllerProfile ModifiedProfile { get; set; }
-        public ModifyControllerProfileEventArgs(ICoreService eventCoreInstance, IControllerProfile previousProfile, IControllerProfile modifiedProfile)
+        public IGamepadAbstraction PreviousProfile { get; private set; }
+        public IGamepadAbstraction ModifiedProfile { get; set; }
+        public ModifyControllerProfileEventArgs(ICoreService eventCoreInstance, IGamepadAbstraction previousProfile, IGamepadAbstraction modifiedProfile)
             : base(eventCoreInstance)
         {
             this.PreviousProfile = previousProfile;

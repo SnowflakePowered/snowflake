@@ -301,6 +301,18 @@ namespace Snowflake.Controller
             }
             dbConnection.Close();
         }
+
+        public IGamepadAbstraction this[string deviceName]
+        {
+            get
+            {
+                return this.GetGamepadAbstraction(deviceName);
+            }
+            set
+            {
+                this.SetGamepadAbstraction(deviceName, value);
+            }
+        }
     }
 }
 

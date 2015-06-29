@@ -70,9 +70,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Controller\ControllerDefinitionTests.cs" />
-    <Compile Include="Controller\ControllerProfileTests.cs" />
     <Compile Include="Events\SnowflakeEventSourceTests.cs" />
-    <Compile Include="Fakes\FakeControllerProfile.cs" />
     <Compile Include="Fakes\FakeCoreService.cs" />
     <Compile Include="Fakes\FakeEmulatorAssembly.cs" />
     <Compile Include="Fakes\FakeEmulatorBridge.cs" />

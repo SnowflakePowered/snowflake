@@ -10,6 +10,7 @@ namespace Snowflake.Controller
     {
         IGamepadAbstraction GetGamepadAbstraction(string deviceName);
         void SetGamepadAbstraction(string deviceName, IGamepadAbstraction gamepadAbstraction);
+        IGamepadAbstraction this[string deviceName] { get; set; }
         void RemoveGamepadAbstraction(string deviceName);
         IList<IGamepadAbstraction> GetAllGamepadAbstractions();
     }

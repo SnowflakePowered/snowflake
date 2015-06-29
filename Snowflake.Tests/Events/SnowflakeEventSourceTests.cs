@@ -99,16 +99,7 @@ namespace Snowflake.Events.Tests
             };
             SnowflakeEventSource.EventSource.OnGameResultScraped(args);
         }
-        [Fact]
-        public void ModifyControllerProfileEvent_Test()
-        {
-            var args = new ModifyControllerProfileEventArgs(new FakeCoreService(), new FakeControllerProfile(), new FakeControllerProfile());
-            SnowflakeEventSource.EventSource.ControllerProfileModify += (s, e) =>
-            {
-                Assert.Equal(args, e);
-            };
-            SnowflakeEventSource.EventSource.OnControllerProfileModify(args);
-        }
+      
         [Fact]
         public void ModifyConfigurationFlagEvent_Test()
         {

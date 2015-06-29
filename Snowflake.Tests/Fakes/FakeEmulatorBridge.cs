@@ -9,6 +9,7 @@ namespace Snowflake.Tests.Fakes
     internal class FakeEmulatorBridge : Snowflake.Emulator.IEmulatorBridge
     {
 
+
         public Emulator.IEmulatorAssembly EmulatorAssembly
         {
             get { throw new NotImplementedException(); }
@@ -54,7 +55,7 @@ namespace Snowflake.Tests.Fakes
             throw new NotImplementedException();
         }
 
-        public string CompileController(int playerIndex, Platform.IPlatformInfo platformInfo, Controller.IControllerDefinition controllerDefinition, Emulator.Input.IControllerTemplate controllerTemplate, Controller.IControllerProfile controllerProfile, Emulator.Input.IInputTemplate inputTemplate)
+        public string CompileController(int playerIndex, Platform.IPlatformInfo platformInfo, Controller.IControllerDefinition controllerDefinition, Emulator.Input.IControllerTemplate controllerTemplate, Controller.IGamepadAbstraction gamepadAbstraction, Emulator.Input.IInputTemplate inputTemplate)
         {
             throw new NotImplementedException();
         }
@@ -64,7 +65,7 @@ namespace Snowflake.Tests.Fakes
             throw new NotImplementedException();
         }
 
-        public string CompileController(int playerIndex, Platform.IPlatformInfo platformInfo, Controller.IControllerDefinition controllerDefinition, Emulator.Input.IControllerTemplate controllerTemplate, Controller.IControllerProfile controllerProfile, Emulator.Input.IInputTemplate inputTemplate, IReadOnlyDictionary<string, Emulator.Input.IControllerMapping> controllerMappings)
+        public string CompileController(int playerIndex, Platform.IPlatformInfo platformInfo, Controller.IControllerDefinition controllerDefinition, Emulator.Input.IControllerTemplate controllerTemplate, Controller.IGamepadAbstraction gamepadAbstraction, Emulator.Input.IInputTemplate inputTemplate, IReadOnlyDictionary<string, Emulator.Input.IControllerMapping> controllerMappings)
         {
             throw new NotImplementedException();
         }

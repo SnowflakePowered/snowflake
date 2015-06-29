@@ -84,7 +84,6 @@
     <Compile Include="Controller\IGamepadAbstraction.cs" />
     <Compile Include="Controller\IGamepadAbstractionDatabase.cs" />
     <Compile Include="Emulator\Input\InputManager\InputDeviceNames.cs" />
-    <Compile Include="Controller\IControllerProfileStore.cs" />
     <Compile Include="Emulator\Configuration\IConfigurationFlagSelectValue.cs" />
     <Compile Include="Emulator\Configuration\IConfigurationFlagStore.cs" />
     <Compile Include="Emulator\Input\InputManager\IInputDevice.cs" />
@@ -101,7 +100,6 @@
     <Compile Include="Controller\IControllerDefinition.cs" />
     <Compile Include="Controller\IControllerInput.cs" />
     <Compile Include="Controller\IControllerPortsDatabase.cs" />
-    <Compile Include="Controller\IControllerProfile.cs" />
     <Compile Include="Emulator\Configuration\ConfigurationFlagTypes.cs" />
     <Compile Include="Emulator\Input\ControllerMappingType.cs" />
     <Compile Include="Emulator\Input\Constants\GamepadConstants.cs" />

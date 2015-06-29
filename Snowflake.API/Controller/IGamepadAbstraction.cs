@@ -48,5 +48,7 @@ namespace Snowflake.Controller
         string B { get; set; }
         string X { get; set; }
         string Y { get; set; }
+
+        string this[string keyName] { get; set; }
     }
 }
