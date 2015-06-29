@@ -18,6 +18,7 @@ namespace Snowflake.Controller
     public interface IGamepadAbstraction
     {
         string DeviceName { get; }
+        ControllerProfileType ProfileType { get; }
 
         string L1 { get; set; }
         string L2 { get; set; }
@@ -43,5 +44,9 @@ namespace Snowflake.Controller
 
         string Select { get; set; }
         string Start { get; set; }
+        string A { get; set; }
+        string B { get; set; }
+        string X { get; set; }
+        string Y { get; set; }
     }
 }
