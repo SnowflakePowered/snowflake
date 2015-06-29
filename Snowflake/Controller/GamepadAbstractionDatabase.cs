@@ -62,7 +62,7 @@ namespace Snowflake.Controller
 
         }
 
-        private const IGamepadAbstraction DefaultGamepad =
+        private readonly IGamepadAbstraction DefaultGamepad =
             new GamepadAbstraction("~defaultGamepad", ControllerProfileType.GAMEPAD_PROFILE)
             {
                 L1 = GamepadConstants.GAMEPAD_L1,
@@ -91,7 +91,7 @@ namespace Snowflake.Controller
                 Y = GamepadConstants.GAMEPAD_Y
             };
 
-        private const IGamepadAbstraction DefaultKeyboard =
+        private readonly IGamepadAbstraction DefaultKeyboard =
             new GamepadAbstraction("~defaultKeyboard", ControllerProfileType.KEYBOARD_PROFILE)
             {
                 L1 = GamepadConstants.GAMEPAD_L1,
@@ -219,11 +219,86 @@ namespace Snowflake.Controller
 
         private void SetGamepadAbstraction(string deviceName, IGamepadAbstraction gamepadAbstraction, bool overwrite)
         {
-            throw new NotImplementedException();
+            SQLiteConnection dbConnection = this.GetConnection();
+            dbConnection.Open();
+            string command;
+            if (overwrite)
+            {
+                command = "INSERT OR REPLACE";
+            }
+            else
+            {
+                command = "INSERT OR IGNORE";
+            }
+
+            using (var sqlCommand = new SQLiteCommand(command + @" INTO gamepadabstraction VALUES(
+                                                               @DeviceName,
+                                                               @ProfileType,
+                                                               @L1,
+                                                               @L2,
+                                                               @L3,
+                                                               @R1,
+                                                               @R2,
+                                                               @R3,
+                                                               @DpadUp,
+                                                               @DpadDown,
+                                                               @DpadLeft,
+                                                               @DpadRight,
+                                                               @RightAnalogXLeft,
+                                                               @RightAnalogXRight,
+                                                               @RightAnalogYUp,
+                                                               @RightAnalogYDown,
+                                                               @LeftAnalogXLeft,
+                                                               @LeftAnalogXRight,
+                                                               @LeftAnalogYUp,
+                                                               @LeftAnalogYDown,
+                                                               @Start,
+                                                               @Select,
+                                                               @A,
+                                                               @B,
+                                                               @X,
+                                                               @Y)", dbConnection))
+            {
+                sqlCommand.Parameters.AddWithValue("@DeviceName", deviceName);
+                sqlCommand.Parameters.AddWithValue("@ProfileType", (int)gamepadAbstraction.ProfileType);
+                sqlCommand.Parameters.AddWithValue("@L1", gamepadAbstraction.L1);
+                sqlCommand.Parameters.AddWithValue("@L2", gamepadAbstraction.L2);
+                sqlCommand.Parameters.AddWithValue("@L3", gamepadAbstraction.L3);
+                sqlCommand.Parameters.AddWithValue("@R1", gamepadAbstraction.R1);
+                sqlCommand.Parameters.AddWithValue("@R2", gamepadAbstraction.R2);
+                sqlCommand.Parameters.AddWithValue("@R3", gamepadAbstraction.R3);
+                sqlCommand.Parameters.AddWithValue("@DpadUp", gamepadAbstraction.DpadUp);
+                sqlCommand.Parameters.AddWithValue("@DpadDown", gamepadAbstraction.DpadDown);
+                sqlCommand.Parameters.AddWithValue("@DpadLeft", gamepadAbstraction.DpadLeft);
+                sqlCommand.Parameters.AddWithValue("@DpadRight", gamepadAbstraction.DpadRight);
+                sqlCommand.Parameters.AddWithValue("@RightAnalogXLeft", gamepadAbstraction.RightAnalogXLeft);
+                sqlCommand.Parameters.AddWithValue("@RightAnalogXRight", gamepadAbstraction.RightAnalogXRight);
+                sqlCommand.Parameters.AddWithValue("@RightAnalogYUp", gamepadAbstraction.RightAnalogYUp);
+                sqlCommand.Parameters.AddWithValue("@RightAnalogYDown", gamepadAbstraction.RightAnalogYDown);
+                sqlCommand.Parameters.AddWithValue("@LeftAnalogXLeft", gamepadAbstraction.LeftAnalogXLeft);
+                sqlCommand.Parameters.AddWithValue("@LeftAnalogXRight", gamepadAbstraction.LeftAnalogXRight);
+                sqlCommand.Parameters.AddWithValue("@LeftAnalogYUp", gamepadAbstraction.LeftAnalogYUp);
+                sqlCommand.Parameters.AddWithValue("@LeftAnalogYDown", gamepadAbstraction.LeftAnalogYDown);
+                sqlCommand.Parameters.AddWithValue("@Start", gamepadAbstraction.Start);
+                sqlCommand.Parameters.AddWithValue("@Select", gamepadAbstraction.Select);
+                sqlCommand.Parameters.AddWithValue("@A", gamepadAbstraction.A);
+                sqlCommand.Parameters.AddWithValue("@B", gamepadAbstraction.B);
+                sqlCommand.Parameters.AddWithValue("@X", gamepadAbstraction.X);
+                sqlCommand.Parameters.AddWithValue("@Y", gamepadAbstraction.Y);
+                sqlCommand.ExecuteNonQuery();
+            }
+            dbConnection.Close();
         }
         public void RemoveGamepadAbstraction(string deviceName)
         {
-            throw new NotImplementedException();
+            SQLiteConnection dbConnection = this.GetConnection();
+            dbConnection.Open();
+            using (var sqlCommand = new SQLiteCommand("DELETE `*` FROM `gamepadabstraction` WHERE `DeviceName` == @DeviceName", dbConnection))
+            {
+                sqlCommand.Parameters.AddWithValue("@DeviceName", deviceName);
+                sqlCommand.ExecuteNonQuery();
+            }
+            dbConnection.Close();
         }
     }
 }

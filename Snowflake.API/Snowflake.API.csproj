@@ -82,6 +82,7 @@
     <Compile Include="Ajax\IJSRequest.cs" />
     <Compile Include="Ajax\IJSResponse.cs" />
     <Compile Include="Controller\IGamepadAbstraction.cs" />
+    <Compile Include="Controller\IGamepadAbstractionDatabase.cs" />
     <Compile Include="Emulator\Input\InputManager\InputDeviceNames.cs" />
     <Compile Include="Controller\IControllerProfileStore.cs" />
     <Compile Include="Emulator\Configuration\IConfigurationFlagSelectValue.cs" />
