@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake", "Snowflake\Snow
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Platforms", "Platforms", "{95E5C1D6-192C-42AC-80F4-B10FD82B4062}"
 	ProjectSection(SolutionItems) = preProject
-		NINTENDO_N64.platform = NINTENDO_N64.platform
+		Platforms\NINTENDO_N64.platform = Platforms\NINTENDO_N64.platform
 		Platforms\NINTENDO_NES.platform = Platforms\NINTENDO_NES.platform
 		Platforms\NINTENDO_SNES.platform = Platforms\NINTENDO_SNES.platform
 	EndProjectSection
@@ -20,7 +20,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.InputManager.Dire
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Controllers", "Controllers", "{52A92EB4-E1D3-450E-ACCD-382EC888C6B0}"
 	ProjectSection(SolutionItems) = preProject
-		DUALSHOCK.controller = DUALSHOCK.controller
+		Controllers\DUALSHOCK.controller = Controllers\DUALSHOCK.controller
 		N64_CONTROLLER.controller = N64_CONTROLLER.controller
 		Controllers\NES_CONTROLLER.controller = Controllers\NES_CONTROLLER.controller
 		Controllers\SNES_CONTROLLER.controller = Controllers\SNES_CONTROLLER.controller

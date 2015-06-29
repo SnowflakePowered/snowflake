@@ -91,6 +91,7 @@
     <Compile Include="Ajax\JSRequest.cs" />
     <Compile Include="Ajax\JSResponse.cs" />
     <Compile Include="Controller\ControllerProfileStore.cs" />
+    <Compile Include="Controller\GamepadAbstraction.cs" />
     <Compile Include="Emulator\Configuration\ConfigurationFlagSelectValue.cs" />
     <Compile Include="Emulator\Configuration\ConfigurationFlagStore.cs" />
     <Compile Include="Emulator\EmulatorBridge.cs" />
