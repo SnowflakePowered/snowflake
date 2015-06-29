@@ -42,19 +42,20 @@ namespace Snowflake.Controller
                                                                 LeftAnalogXRight TEXT,
                                                                 LeftAnalogYUp TEXT,
                                                                 LeftAnalogYDown TEXT,
-                                                                Start TEXT,
-                                                                Select TEXT,
-                                                                A TEXT,
-                                                                B TEXT,
-                                                                X TEXT,
-                                                                Y TEXT
-                                                                )", dbConnection);
+                                                                btnStart TEXT, 
+                                                                btnSelect TEXT,
+                                                                btnA TEXT,
+                                                                btnB TEXT,
+                                                                btnX TEXT,
+                                                                btnY TEXT
+                                                                )", dbConnection); //serialize btnSelect due to reserved sql keyword. other btn for consistency
             sqlCommand.ExecuteNonQuery();
             dbConnection.Close();
-            this.SetGamepadAbstraction("~defaultGamepad", DefaultGamepad, true);
             this.SetGamepadAbstraction("~defaultKeyboard", DefaultKeyboard, true);
             this.SetGamepadAbstraction("KeyboardDevice", DefaultKeyboard, false);
-            this.SetGamepadAbstraction("XInputDevice1", DefaultKeyboard, false);
+
+            this.SetGamepadAbstraction("~defaultGamepad", DefaultGamepad, true);
+            this.SetGamepadAbstraction("XInputDevice1", DefaultGamepad, false);
             this.SetGamepadAbstraction("XInputDevice2", DefaultGamepad, false);
             this.SetGamepadAbstraction("XInputDevice3", DefaultGamepad, false);
             this.SetGamepadAbstraction("XInputDevice4", DefaultGamepad, false);
@@ -94,12 +95,12 @@ namespace Snowflake.Controller
         private readonly IGamepadAbstraction DefaultKeyboard =
             new GamepadAbstraction("~defaultKeyboard", ControllerProfileType.KEYBOARD_PROFILE)
             {
-                L1 = GamepadConstants.GAMEPAD_L1,
-                L2 = GamepadConstants.GAMEPAD_L2,
-                L3 = GamepadConstants.GAMEPAD_L3,
-                R1 = GamepadConstants.GAMEPAD_R1,
-                R2 = GamepadConstants.GAMEPAD_R2,
-                R3 = GamepadConstants.GAMEPAD_R3,
+                L1 = KeyboardConstants.KEY_SHIFT,
+                L2 = KeyboardConstants.KEY_CTRL,
+                L3 = KeyboardConstants.KEY_ALT,
+                R1 = KeyboardConstants.KEY_RIGHT_SHIFT,
+                R2 = KeyboardConstants.KEY_RIGHT_CTRL,
+                R3 = KeyboardConstants.KEY_RIGHT_ALT,
                 DpadUp = KeyboardConstants.KEY_UP,
                 DpadDown = KeyboardConstants.KEY_DOWN,
                 DpadLeft = KeyboardConstants.KEY_LEFT,
@@ -155,12 +156,12 @@ namespace Snowflake.Controller
                         RightAnalogYDown = row.Field<string>("RightAnalogYDown"),
                         RightAnalogXLeft = row.Field<string>("RightAnalogXLeft"),
                         RightAnalogXRight = row.Field<string>("RightAnalogXRight"),
-                        Select = row.Field<string>("Select"),
-                        Start = row.Field<string>("Start"),
-                        A = row.Field<string>("A"),
-                        B = row.Field<string>("B"),
-                        X = row.Field<string>("X"),
-                        Y = row.Field<string>("Y")
+                        Select = row.Field<string>("btnSelect"),
+                        Start = row.Field<string>("btnStart"),
+                        A = row.Field<string>("btnA"),
+                        B = row.Field<string>("btnB"),
+                        X = row.Field<string>("btnX"),
+                        Y = row.Field<string>("btnY")
                     };
                 }
             }
@@ -198,12 +199,12 @@ namespace Snowflake.Controller
                             RightAnalogYDown = row.Field<string>("RightAnalogYDown"),
                             RightAnalogXLeft = row.Field<string>("RightAnalogXLeft"),
                             RightAnalogXRight = row.Field<string>("RightAnalogXRight"),
-                            Select = row.Field<string>("Select"),
-                            Start = row.Field<string>("Start"),
-                            A = row.Field<string>("A"),
-                            B = row.Field<string>("B"),
-                            X = row.Field<string>("X"),
-                            Y = row.Field<string>("Y")
+                            Select = row.Field<string>("btnSelect"),
+                            Start = row.Field<string>("btnStart"),
+                            A = row.Field<string>("btnA"),
+                            B = row.Field<string>("btnB"),
+                            X = row.Field<string>("btnX"),
+                            Y = row.Field<string>("btnY")
                         });
                     }
                     dbConnection.Close();
@@ -252,12 +253,12 @@ namespace Snowflake.Controller
                                                                @LeftAnalogXRight,
                                                                @LeftAnalogYUp,
                                                                @LeftAnalogYDown,
-                                                               @Start,
-                                                               @Select,
-                                                               @A,
-                                                               @B,
-                                                               @X,
-                                                               @Y)", dbConnection))
+                                                               @btnStart,
+                                                               @btnSelect,
+                                                               @btnA,
+                                                               @btnB,
+                                                               @btnX,
+                                                               @btnY)", dbConnection))
             {
                 sqlCommand.Parameters.AddWithValue("@DeviceName", deviceName);
                 sqlCommand.Parameters.AddWithValue("@ProfileType", (int)gamepadAbstraction.ProfileType);
@@ -279,12 +280,12 @@ namespace Snowflake.Controller
                 sqlCommand.Parameters.AddWithValue("@LeftAnalogXRight", gamepadAbstraction.LeftAnalogXRight);
                 sqlCommand.Parameters.AddWithValue("@LeftAnalogYUp", gamepadAbstraction.LeftAnalogYUp);
                 sqlCommand.Parameters.AddWithValue("@LeftAnalogYDown", gamepadAbstraction.LeftAnalogYDown);
-                sqlCommand.Parameters.AddWithValue("@Start", gamepadAbstraction.Start);
-                sqlCommand.Parameters.AddWithValue("@Select", gamepadAbstraction.Select);
-                sqlCommand.Parameters.AddWithValue("@A", gamepadAbstraction.A);
-                sqlCommand.Parameters.AddWithValue("@B", gamepadAbstraction.B);
-                sqlCommand.Parameters.AddWithValue("@X", gamepadAbstraction.X);
-                sqlCommand.Parameters.AddWithValue("@Y", gamepadAbstraction.Y);
+                sqlCommand.Parameters.AddWithValue("@btnStart", gamepadAbstraction.Start);
+                sqlCommand.Parameters.AddWithValue("@btnSelect", gamepadAbstraction.Select);
+                sqlCommand.Parameters.AddWithValue("@btnA", gamepadAbstraction.A);
+                sqlCommand.Parameters.AddWithValue("@btnB", gamepadAbstraction.B);
+                sqlCommand.Parameters.AddWithValue("@btnX", gamepadAbstraction.X);
+                sqlCommand.Parameters.AddWithValue("@btnY", gamepadAbstraction.Y);
                 sqlCommand.ExecuteNonQuery();
             }
             dbConnection.Close();

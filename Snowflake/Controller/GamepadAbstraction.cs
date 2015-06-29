@@ -9,11 +9,11 @@ namespace Snowflake.Controller
     public class GamepadAbstraction : IGamepadAbstraction
     {
         public string DeviceName { get; private set; }
-        public ControllerProfileType ProfileType {get; private set;}
+        public ControllerProfileType ProfileType { get; private set; }
         public GamepadAbstraction(string deviceName, ControllerProfileType profileType)
         {
             this.DeviceName = deviceName;
-            this.ProfileType = ProfileType;
+            this.ProfileType = profileType;
         }
         public string  L1 { get; set; }
         public string  L2 { get; set; }
