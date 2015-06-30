@@ -10,7 +10,7 @@ using System.Net;
 using Xunit;
 namespace Snowflake.Service.HttpServer.Tests
 {
-    public class BaseHttpServerTests
+    /*public*/ class BaseHttpServerTests
     {
         [Fact]
         public void BaseHttpServerCreation_Test()
