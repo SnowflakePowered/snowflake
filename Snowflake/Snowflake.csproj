@@ -60,9 +60,6 @@
       <HintPath>..\packages\SharpYaml.1.4.0\lib\SharpYaml.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ShortGuid">
-      <HintPath>..\packages\ShortGuid.1.0.0\lib\net45\ShortGuid.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.Composition.Registration" />
