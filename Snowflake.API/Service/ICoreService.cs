@@ -40,6 +40,10 @@ namespace Snowflake.Service
         /// </summary>
         IPlatformPreferenceDatabase PlatformPreferenceDatabase { get; }
         /// <summary>
+        /// The database that contains the gamepad abstraction profiles
+        /// </summary>
+        IGamepadAbstractionDatabase GamepadAbstractionDatabase { get; }
+        /// <summary>
         /// All currently loaded platforms
         /// </summary>
         IDictionary<string, IPlatformInfo> LoadedPlatforms { get; }

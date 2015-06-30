@@ -13,49 +13,52 @@ namespace Snowflake.StandardAjax
     public partial class StandardAjax
     {
         [AjaxMethod(MethodPrefix = "Controller")]
-        [AjaxMethodParameter(ParameterName = "controller", ParameterType = AjaxMethodParameterType.StringParameter)]
-        public IJSResponse GetProfiles(IJSRequest request)
+        public IJSResponse GetGamepadAbstractions(IJSRequest request)
         {
-            string controllerId = request.GetParameter("controller");
-            IControllerProfileStore profileStore = this.CoreInstance.LoadedControllers[controllerId].ProfileStore;
-            IDictionary<string, object> controllerProfiles = new Dictionary<string, object>();
-            foreach (string deviceName in profileStore.AvailableProfiles)
-            {
-                controllerProfiles.Add(deviceName, profileStore.GetControllerProfile(deviceName));
-            }
-            return new JSResponse(request, controllerProfiles);
+            IList<IGamepadAbstraction> gamepadAbstractions = this.CoreInstance.GamepadAbstractionDatabase.GetAllGamepadAbstractions();
+            return new JSResponse(request, gamepadAbstractions);
         }
         [AjaxMethod(MethodPrefix = "Controller")]
-        [AjaxMethodParameter(ParameterName = "controller", ParameterType = AjaxMethodParameterType.StringParameter)]
         [AjaxMethodParameter(ParameterName = "device", ParameterType = AjaxMethodParameterType.StringParameter)]
 
-        public IJSResponse GetProfileForDevice(IJSRequest request)
+        public IJSResponse GetAbstractionForDevice(IJSRequest request)
         {
-            string controllerId = request.GetParameter("controller");
             string deviceName = request.GetParameter("device");
-            IControllerProfile profile = this.CoreInstance.LoadedControllers[controllerId].ProfileStore[deviceName];
-            return new JSResponse(request, profile);
+            IGamepadAbstraction gamepadAbstraction = this.CoreInstance.GamepadAbstractionDatabase[deviceName];
+            return new JSResponse(request, gamepadAbstraction);
         }
 
         [AjaxMethod(MethodPrefix = "Controller")]
         [AjaxMethodParameter(ParameterName = "inputconfig", ParameterType = AjaxMethodParameterType.ObjectParameter)]
-        [AjaxMethodParameter(ParameterName = "controller", ParameterType = AjaxMethodParameterType.StringParameter)]
         [AjaxMethodParameter(ParameterName = "device", ParameterType = AjaxMethodParameterType.StringParameter)]
+        [AjaxMethodParameter(ParameterName = "profiletype", ParameterType = AjaxMethodParameterType.StringParameter)]
 
-        public IJSResponse SetInputConfiguration(IJSRequest request)
+        public IJSResponse SetGamepadAbstraction(IJSRequest request)
         {
-            string controllerId = request.GetParameter("controller");
             string deviceName = request.GetParameter("device");
+            string _profileType = request.GetParameter("profiletype");
+            IGamepadAbstraction gamepadAbstraction;
+            try
+            {
+                gamepadAbstraction = this.CoreInstance.GamepadAbstractionDatabase[deviceName];
+            }
+            catch
+            {
+                ControllerProfileType profileType;
+                if(Enum.TryParse<ControllerProfileType>(_profileType, true, out profileType)){
+                    gamepadAbstraction = new GamepadAbstraction(deviceName, profileType);
+                }else{
+                    gamepadAbstraction = new GamepadAbstraction(deviceName, ControllerProfileType.GAMEPAD_PROFILE);
+                }
+            }
             IDictionary<string, string> changes = JsonConvert.DeserializeObject<Dictionary<string, string>>(request.GetParameter("inputconfig"));
-            IControllerProfile profile = this.CoreInstance.LoadedControllers[controllerId].ProfileStore[deviceName];
             foreach (KeyValuePair<string, string> change in changes) 
             {
-                profile.InputConfiguration[change.Key] = change.Value;
+                gamepadAbstraction[change.Key] = change.Value;
             }
-            this.CoreInstance.LoadedControllers[controllerId].ProfileStore.SetControllerProfile(deviceName, profile);
+            this.CoreInstance.GamepadAbstractionDatabase[deviceName] = gamepadAbstraction;
             return new JSResponse(request, "success");
         }
-
         [AjaxMethod(MethodPrefix = "Controller")]
         public IJSResponse GetControllers(IJSRequest request)
         {

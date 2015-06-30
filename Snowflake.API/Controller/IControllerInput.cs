@@ -13,11 +13,7 @@ namespace Snowflake.Controller
         /// <summary>
         /// The default profile mapping on a Gamepad
         /// </summary>
-        string GamepadDefault { get; }
-        /// <summary>
-        /// The default profile mapping on a Keyboard
-        /// </summary>
-        string KeyboardDefault { get; }
+        string GamepadAbstraction{ get; }
         /// <summary>
         /// The name of the input
         /// </summary>

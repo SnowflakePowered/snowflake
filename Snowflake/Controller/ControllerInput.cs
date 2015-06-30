@@ -10,15 +10,13 @@ namespace Snowflake.Controller
     {
         public bool IsAnalog { get; private set; }
         public string InputName { get; private set; }
-        public string KeyboardDefault { get; private set; }
-        public string GamepadDefault { get; private set; }
+        public string GamepadAbstraction { get; private set; }
 
-        public ControllerInput(string inputName, string keyboardDefault, string gamepadDefault, bool isAnalog = false)
+        public ControllerInput(string inputName, string gamepadAbstraction, bool isAnalog = false)
         {
             this.InputName = inputName;
             this.IsAnalog = isAnalog;
-            this.KeyboardDefault = keyboardDefault;
-            this.GamepadDefault = gamepadDefault;
+            this.GamepadAbstraction = gamepadAbstraction;
         }
     }
 }

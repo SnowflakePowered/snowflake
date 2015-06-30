@@ -19,10 +19,6 @@ namespace Snowflake.Controller
         /// Inputs are stored with the input name as the key.
         /// </summary>
         IReadOnlyDictionary<string, IControllerInput> ControllerInputs { get; }
-        /// <summary>
-        /// Get the profile store associated with this controller
-        /// </summary>
-        IControllerProfileStore ProfileStore { get; }
 
     }
 }

@@ -70,9 +70,8 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Controller\ControllerDefinitionTests.cs" />
-    <Compile Include="Controller\ControllerProfileTests.cs" />
+    <Compile Include="Controller\GamepadAbstractionDatabaseTests.cs" />
     <Compile Include="Events\SnowflakeEventSourceTests.cs" />
-    <Compile Include="Fakes\FakeControllerProfile.cs" />
     <Compile Include="Fakes\FakeCoreService.cs" />
     <Compile Include="Fakes\FakeEmulatorAssembly.cs" />
     <Compile Include="Fakes\FakeEmulatorBridge.cs" />
@@ -113,10 +112,6 @@
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <EmbeddedResource Include="TestResources\ControllerProfiles\NES_CONTROLLER\KeyboardDevice-NES_CONTROLLER.json" />
-    <EmbeddedResource Include="TestResources\ControllerProfiles\NES_CONTROLLER\XInputDevice1-NES_CONTROLLER.json" />
-    <EmbeddedResource Include="TestResources\ControllerProfiles\SNES_CONTROLLER\KeyboardDevice-SNES_CONTROLLER.json" />
-    <EmbeddedResource Include="TestResources\ControllerProfiles\SNES_CONTROLLER\XInputDevice1-SNES_CONTROLLER.json" />
     <EmbeddedResource Include="TestResources\GameCache\dmmy.ogg" />
     <EmbeddedResource Include="TestResources\GameCache\test.webm" />
   </ItemGroup>

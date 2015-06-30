@@ -132,5 +132,11 @@ namespace Snowflake.Tests.Fakes
         {
             get { throw new NotImplementedException(); }
         }
+
+
+        public Controller.IGamepadAbstractionDatabase GamepadAbstractionDatabase
+        {
+            get { throw new NotImplementedException(); }
+        }
     }
 }
