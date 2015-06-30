@@ -132,37 +132,43 @@ namespace Snowflake.Controller
                 {
                     //gonna have to replace datatable one day
                     var result = new DataTable();
-                    result.Load(reader);
-
-                    var row = result.Rows[0];
-                    dbConnection.Close();
-                    return new GamepadAbstraction(deviceName, (ControllerProfileType)Convert.ToInt32((row.Field<long>("ProfileType"))))
+                    if (reader.HasRows)
                     {
-                        L1 = row.Field<string>("L1"),
-                        L2 = row.Field<string>("L2"),
-                        L3 = row.Field<string>("L3"),
-                        R1 = row.Field<string>("R1"),
-                        R2 = row.Field<string>("R2"),
-                        R3 = row.Field<string>("R2"),
-                        DpadUp = row.Field<string>("DpadUp"),
-                        DpadDown = row.Field<string>("DpadDown"),
-                        DpadLeft = row.Field<string>("DpadLeft"),
-                        DpadRight = row.Field<string>("DpadRight"),
-                        LeftAnalogYUp = row.Field<string>("LeftAnalogYUp"),
-                        LeftAnalogYDown = row.Field<string>("LeftAnalogYDown"),
-                        LeftAnalogXLeft = row.Field<string>("LeftAnalogXLeft"),
-                        LeftAnalogXRight = row.Field<string>("LeftAnalogXRight"),
-                        RightAnalogYUp = row.Field<string>("RightAnalogYUp"),
-                        RightAnalogYDown = row.Field<string>("RightAnalogYDown"),
-                        RightAnalogXLeft = row.Field<string>("RightAnalogXLeft"),
-                        RightAnalogXRight = row.Field<string>("RightAnalogXRight"),
-                        Select = row.Field<string>("btnSelect"),
-                        Start = row.Field<string>("btnStart"),
-                        A = row.Field<string>("btnA"),
-                        B = row.Field<string>("btnB"),
-                        X = row.Field<string>("btnX"),
-                        Y = row.Field<string>("btnY")
-                    };
+                        result.Load(reader);
+                        var row = result.Rows[0];
+                        dbConnection.Close();
+                        return new GamepadAbstraction(deviceName, (ControllerProfileType)Convert.ToInt32((row.Field<long>("ProfileType"))))
+                        {
+                            L1 = row.Field<string>("L1"),
+                            L2 = row.Field<string>("L2"),
+                            L3 = row.Field<string>("L3"),
+                            R1 = row.Field<string>("R1"),
+                            R2 = row.Field<string>("R2"),
+                            R3 = row.Field<string>("R2"),
+                            DpadUp = row.Field<string>("DpadUp"),
+                            DpadDown = row.Field<string>("DpadDown"),
+                            DpadLeft = row.Field<string>("DpadLeft"),
+                            DpadRight = row.Field<string>("DpadRight"),
+                            LeftAnalogYUp = row.Field<string>("LeftAnalogYUp"),
+                            LeftAnalogYDown = row.Field<string>("LeftAnalogYDown"),
+                            LeftAnalogXLeft = row.Field<string>("LeftAnalogXLeft"),
+                            LeftAnalogXRight = row.Field<string>("LeftAnalogXRight"),
+                            RightAnalogYUp = row.Field<string>("RightAnalogYUp"),
+                            RightAnalogYDown = row.Field<string>("RightAnalogYDown"),
+                            RightAnalogXLeft = row.Field<string>("RightAnalogXLeft"),
+                            RightAnalogXRight = row.Field<string>("RightAnalogXRight"),
+                            Select = row.Field<string>("btnSelect"),
+                            Start = row.Field<string>("btnStart"),
+                            A = row.Field<string>("btnA"),
+                            B = row.Field<string>("btnB"),
+                            X = row.Field<string>("btnX"),
+                            Y = row.Field<string>("btnY")
+                        };
+                    }
+                    else
+                    {
+                        return null;
+                    }
                 }
             }
         }
@@ -294,7 +300,7 @@ namespace Snowflake.Controller
         {
             SQLiteConnection dbConnection = this.GetConnection();
             dbConnection.Open();
-            using (var sqlCommand = new SQLiteCommand("DELETE `*` FROM `gamepadabstraction` WHERE `DeviceName` == @DeviceName", dbConnection))
+            using (var sqlCommand = new SQLiteCommand("DELETE FROM `gamepadabstraction` WHERE `DeviceName` == @DeviceName", dbConnection))
             {
                 sqlCommand.Parameters.AddWithValue("@DeviceName", deviceName);
                 sqlCommand.ExecuteNonQuery();

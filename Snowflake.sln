@@ -35,20 +35,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{A3EE47
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Service", "Snowflake.Service\Snowflake.Service.csproj", "{F3A129D6-0C4C-41BC-B60B-5B7E7E6D1A77}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ControllerProfiles", "ControllerProfiles", "{920C691B-AF35-4855-AAC9-AD745D74B397}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NES_CONTROLLER", "NES_CONTROLLER", "{6ED2D66B-9AEB-43CA-993F-1BC88E3DD0BF}"
-	ProjectSection(SolutionItems) = preProject
-		ControllerProfiles\NES_CONTROLLER\KeyboardDevice-NES_CONTROLLER.json = ControllerProfiles\NES_CONTROLLER\KeyboardDevice-NES_CONTROLLER.json
-		ControllerProfiles\NES_CONTROLLER\XInputDevice1-NES_CONTROLLER.json = ControllerProfiles\NES_CONTROLLER\XInputDevice1-NES_CONTROLLER.json
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SNES_CONTROLLER", "SNES_CONTROLLER", "{35351C6F-1421-4F2A-9355-F260E56664A8}"
-	ProjectSection(SolutionItems) = preProject
-		ControllerProfiles\SNES_CONTROLLER\KeyboardDevice-SNES_CONTROLLER.json = ControllerProfiles\SNES_CONTROLLER\KeyboardDevice-SNES_CONTROLLER.json
-		ControllerProfiles\SNES_CONTROLLER\XInputDevice1-SNES_CONTROLLER.json = ControllerProfiles\SNES_CONTROLLER\XInputDevice1-SNES_CONTROLLER.json
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Events", "Snowflake.Events\Snowflake.Events.csproj", "{7AE8E842-E2A9-4F01-BEC1-8A7A60CC16BB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.StandardAjax", "Snowflake.StandardAjax\Snowflake.StandardAjax.csproj", "{25E40ACB-3872-4BEB-8937-AE70104E7F3B}"
@@ -93,9 +79,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{6ED2D66B-9AEB-43CA-993F-1BC88E3DD0BF} = {920C691B-AF35-4855-AAC9-AD745D74B397}
-		{35351C6F-1421-4F2A-9355-F260E56664A8} = {920C691B-AF35-4855-AAC9-AD745D74B397}
 	EndGlobalSection
 EndGlobal
