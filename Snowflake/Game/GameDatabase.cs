@@ -61,6 +61,18 @@ namespace Snowflake.Game
             dbConnection.Close();
         }
 
+        public void RemoveGame(IGameInfo game)
+        {
+            SQLiteConnection dbConnection = this.GetConnection();
+            dbConnection.Open();
+            using (var sqlCommand = new SQLiteCommand("DELETE FROM `games` WHERE `uuid` == @uuid", dbConnection))
+            {
+                sqlCommand.Parameters.AddWithValue("@uuid", game.UUID);
+                sqlCommand.ExecuteNonQuery();
+            }
+            dbConnection.Close();
+        }
+
         public IGameInfo GetGameByUUID(string uuid)
         {
             try

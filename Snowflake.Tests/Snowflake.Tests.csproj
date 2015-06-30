@@ -43,6 +43,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Mono.Net.HttpListener.1.0.0.0\lib\net45\Mono.Security.dll</HintPath>
     </Reference>
+    <Reference Include="Moq, Version=4.2.1506.2515, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\packages\Moq.4.2.1506.2515\lib\net40\Moq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -70,25 +74,16 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Controller\ControllerDefinitionTests.cs" />
+    <Compile Include="Controller\ControllerPortsDatabaseTests.cs" />
     <Compile Include="Controller\GamepadAbstractionDatabaseTests.cs" />
+    <Compile Include="Emulator\ConfigurationFlagStoreTests.cs" />
     <Compile Include="Events\SnowflakeEventSourceTests.cs" />
-    <Compile Include="Fakes\FakeCoreService.cs" />
-    <Compile Include="Fakes\FakeEmulatorAssembly.cs" />
-    <Compile Include="Fakes\FakeEmulatorBridge.cs" />
-    <Compile Include="Fakes\FakeGameDatabase.cs" />
-    <Compile Include="Fakes\FakeConfigurationFlag.cs" />
-    <Compile Include="Fakes\FakeGameInfo.cs" />
-    <Compile Include="Fakes\FakeJSRequest.cs" />
-    <Compile Include="Fakes\FakeJSResponse.cs" />
-    <Compile Include="Fakes\FakeMediaStore.cs" />
-    <Compile Include="Fakes\FakePlatformInfo.cs" />
-    <Compile Include="Fakes\FakeControllerPortsDatabase.cs" />
-    <Compile Include="Fakes\FakePlatformPreferencesDatabase.cs" />
-    <Compile Include="Fakes\FakeScraper.cs" />
+    <Compile Include="Game\GameDatabaseTests.cs" />
     <Compile Include="Game\GameInfoTests.cs" />
     <Compile Include="Game\GameMediaCacheTests.cs" />
     <Compile Include="Game\GameScreenshotCacheTests.cs" />
     <Compile Include="Platform\PlatformInfoTests.cs" />
+    <Compile Include="Platform\PlatformPreferencesDatabaseTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scraper\GameImagesResultTests.cs" />
     <Compile Include="Service\HttpServer\BaseHttpServerTests.cs" />

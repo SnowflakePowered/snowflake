@@ -47,7 +47,7 @@ namespace Snowflake.Emulator.Configuration
                                           @flagKey,
                                           @flagValue)", flagDb))
                 {
-                    sqliteCommand.Parameters.AddWithValue("@flagKey", gameInfo.UUID + flagPair.Key);
+                    sqliteCommand.Parameters.AddWithValue("@flagKey", gameInfo.UUID + "-" + flagPair.Key);
                     sqliteCommand.Parameters.AddWithValue("@flagValue", flagPair.Value.ToString());
                     sqliteCommand.ExecuteNonQuery();
                 }
