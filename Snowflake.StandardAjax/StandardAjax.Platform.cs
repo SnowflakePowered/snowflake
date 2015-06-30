@@ -11,7 +11,7 @@ namespace Snowflake.StandardAjax
     public partial class StandardAjax
     {
         [AjaxMethod(MethodPrefix = "Platform")]
-        [AjaxMethodParameter(ParameterName = "platform", ParameterType = AjaxMethodParameterType.StringParameter)]
+        [AjaxMethodParameter(ParameterName = "platform", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
         public IJSResponse GetPreferences(IJSRequest request)
         {
             IPlatformInfo platform = this.CoreInstance.LoadedPlatforms[request.GetParameter("platform")];
@@ -19,9 +19,9 @@ namespace Snowflake.StandardAjax
         }
 
         [AjaxMethod(MethodPrefix = "Platform")]
-        [AjaxMethodParameter(ParameterName = "platform", ParameterType = AjaxMethodParameterType.StringParameter)]
-        [AjaxMethodParameter(ParameterName = "preference", ParameterType = AjaxMethodParameterType.StringParameter)]
-        [AjaxMethodParameter(ParameterName = "value", ParameterType = AjaxMethodParameterType.StringParameter)]
+        [AjaxMethodParameter(ParameterName = "platform", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
+        [AjaxMethodParameter(ParameterName = "preference", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
+        [AjaxMethodParameter(ParameterName = "value", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
         public IJSResponse SetPreference(IJSRequest request)
         {
             IPlatformInfo platform = this.CoreInstance.LoadedPlatforms[request.GetParameter("platform")];

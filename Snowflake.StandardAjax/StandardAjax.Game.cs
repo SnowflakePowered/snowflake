@@ -17,8 +17,8 @@ namespace Snowflake.StandardAjax
     public partial class StandardAjax
     {
         [AjaxMethod(MethodPrefix = "Game")]
-        [AjaxMethodParameter(ParameterName = "filename", ParameterType = AjaxMethodParameterType.StringParameter)]
-        [AjaxMethodParameter(ParameterName = "platform", ParameterType = AjaxMethodParameterType.StringParameter)]
+        [AjaxMethodParameter(ParameterName = "filename", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
+        [AjaxMethodParameter(ParameterName = "platform", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
         public IJSResponse GetGameResults(IJSRequest request)
         {
             string filename = request.GetParameter("filename");
@@ -27,9 +27,9 @@ namespace Snowflake.StandardAjax
         }
 
         [AjaxMethod(MethodPrefix = "Game")]
-        [AjaxMethodParameter(ParameterName = "filename", ParameterType = AjaxMethodParameterType.StringParameter)]
-        [AjaxMethodParameter(ParameterName = "platform", ParameterType = AjaxMethodParameterType.StringParameter)]
-        [AjaxMethodParameter(ParameterName = "scraper", ParameterType = AjaxMethodParameterType.StringParameter)]
+        [AjaxMethodParameter(ParameterName = "filename", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
+        [AjaxMethodParameter(ParameterName = "platform", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
+        [AjaxMethodParameter(ParameterName = "scraper", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
         public IJSResponse GetGameResultsUsingScraper(IJSRequest request)
         {
             string filename = request.GetParameter("filename");
@@ -40,9 +40,9 @@ namespace Snowflake.StandardAjax
         }
 
         [AjaxMethod(MethodPrefix = "Game")]
-        [AjaxMethodParameter(ParameterName = "resultid", ParameterType = AjaxMethodParameterType.StringParameter)]
-        [AjaxMethodParameter(ParameterName = "filename", ParameterType = AjaxMethodParameterType.StringParameter)]
-        [AjaxMethodParameter(ParameterName = "platform", ParameterType = AjaxMethodParameterType.StringParameter)]
+        [AjaxMethodParameter(ParameterName = "resultid", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
+        [AjaxMethodParameter(ParameterName = "filename", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
+        [AjaxMethodParameter(ParameterName = "platform", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
         public IJSResponse GetGameInfo(IJSRequest request)
         {
             string resultid = request.GetParameter("resultid");
@@ -52,7 +52,7 @@ namespace Snowflake.StandardAjax
         }
 
         [AjaxMethod(MethodPrefix = "Game")]
-        [AjaxMethodParameter(ParameterName = "gameinfo", ParameterType = AjaxMethodParameterType.ObjectParameter)]
+        [AjaxMethodParameter(ParameterName = "gameinfo", ParameterType = AjaxMethodParameterType.ObjectParameter, Required = true)]
         public IJSResponse AddGameInfo(IJSRequest request)
         {
             string gameinfo_pre = request.GetParameter("gameinfo");
@@ -62,7 +62,7 @@ namespace Snowflake.StandardAjax
         }
 
         [AjaxMethod(MethodPrefix = "Game")]
-        [AjaxMethodParameter(ParameterName = "id", ParameterType = AjaxMethodParameterType.StringParameter)]
+        [AjaxMethodParameter(ParameterName = "id", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
         public IJSResponse GetGame(IJSRequest request)
         {
             string id = request.GetParameter("id");
@@ -70,7 +70,7 @@ namespace Snowflake.StandardAjax
         }
 
         [AjaxMethod(MethodPrefix = "Game")]
-        [AjaxMethodParameter(ParameterName = "platform", ParameterType = AjaxMethodParameterType.StringParameter)]
+        [AjaxMethodParameter(ParameterName = "platform", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
         public IJSResponse GetGamesByPlatform(IJSRequest request)
         {
             string platform = request.GetParameter("platform");
@@ -102,7 +102,7 @@ namespace Snowflake.StandardAjax
             return new JSResponse(request, sortedGames);
         }
         [AjaxMethod(MethodPrefix = "Game")]
-        [AjaxMethodParameter(ParameterName = "emulator", ParameterType = AjaxMethodParameterType.StringParameter)]
+        [AjaxMethodParameter(ParameterName = "emulator", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
         public IJSResponse GetFlags(IJSRequest request)
         {
             string emulator = request.GetParameter("emulator");
@@ -111,9 +111,9 @@ namespace Snowflake.StandardAjax
         }
 
         [AjaxMethod(MethodPrefix = "Game")]
-        [AjaxMethodParameter(ParameterName = "emulator", ParameterType = AjaxMethodParameterType.StringParameter)]
-        [AjaxMethodParameter(ParameterName = "id", ParameterType = AjaxMethodParameterType.StringParameter)]
-        [AjaxMethodParameter(ParameterName = "key", ParameterType = AjaxMethodParameterType.StringParameter)]
+        [AjaxMethodParameter(ParameterName = "emulator", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
+        [AjaxMethodParameter(ParameterName = "id", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
+        [AjaxMethodParameter(ParameterName = "key", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
         public IJSResponse GetFlagValue(IJSRequest request)
         {
             string emulator = request.GetParameter("emulator");
@@ -126,8 +126,8 @@ namespace Snowflake.StandardAjax
         }
 
         [AjaxMethod(MethodPrefix = "Game")]
-        [AjaxMethodParameter(ParameterName = "emulator", ParameterType = AjaxMethodParameterType.StringParameter)]
-        [AjaxMethodParameter(ParameterName = "id", ParameterType = AjaxMethodParameterType.StringParameter)]
+        [AjaxMethodParameter(ParameterName = "emulator", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
+        [AjaxMethodParameter(ParameterName = "id", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
         public IJSResponse GetFlagValues(IJSRequest request)
         {
             string emulator = request.GetParameter("emulator");
@@ -139,10 +139,10 @@ namespace Snowflake.StandardAjax
         }
 
         [AjaxMethod(MethodPrefix = "Game")]
-        [AjaxMethodParameter(ParameterName = "emulator", ParameterType = AjaxMethodParameterType.StringParameter)]
-        [AjaxMethodParameter(ParameterName = "id", ParameterType = AjaxMethodParameterType.StringParameter)]
-        [AjaxMethodParameter(ParameterName = "key", ParameterType = AjaxMethodParameterType.StringParameter)]
-        [AjaxMethodParameter(ParameterName = "value", ParameterType = AjaxMethodParameterType.StringParameter)]
+        [AjaxMethodParameter(ParameterName = "emulator", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
+        [AjaxMethodParameter(ParameterName = "id", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
+        [AjaxMethodParameter(ParameterName = "key", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
+        [AjaxMethodParameter(ParameterName = "value", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
         public IJSResponse SetFlagValue(IJSRequest request)
         {
             string emulator = request.GetParameter("emulator");
@@ -169,9 +169,9 @@ namespace Snowflake.StandardAjax
             return new JSResponse(request, bridge.ConfigurationFlagStore.GetValue(game, flag.Key, flag.Type));
         }
         [AjaxMethod(MethodPrefix = "Game")]
-        [AjaxMethodParameter(ParameterName = "emulator", ParameterType = AjaxMethodParameterType.StringParameter)]
-        [AjaxMethodParameter(ParameterName = "id", ParameterType = AjaxMethodParameterType.StringParameter)]
-        [AjaxMethodParameter(ParameterName = "values", ParameterType = AjaxMethodParameterType.StringParameter)]
+        [AjaxMethodParameter(ParameterName = "emulator", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
+        [AjaxMethodParameter(ParameterName = "id", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
+        [AjaxMethodParameter(ParameterName = "values", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
         public IJSResponse SetFlagValues(IJSRequest request)
         {
             string emulator = request.GetParameter("emulator");
@@ -201,9 +201,9 @@ namespace Snowflake.StandardAjax
             return new JSResponse(request, values_pre);
         }
         [AjaxMethod(MethodPrefix = "Game")]
-        [AjaxMethodParameter(ParameterName = "emulator", ParameterType = AjaxMethodParameterType.StringParameter)]
-        [AjaxMethodParameter(ParameterName = "key", ParameterType = AjaxMethodParameterType.StringParameter)]
-        [AjaxMethodParameter(ParameterName = "value", ParameterType = AjaxMethodParameterType.StringParameter)]
+        [AjaxMethodParameter(ParameterName = "emulator", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
+        [AjaxMethodParameter(ParameterName = "key", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
+        [AjaxMethodParameter(ParameterName = "value", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
         public IJSResponse SetFlagDefaultValue(IJSRequest request)
         {
             string emulator = request.GetParameter("emulator");
@@ -228,8 +228,8 @@ namespace Snowflake.StandardAjax
             return new JSResponse(request, bridge.ConfigurationFlagStore.GetDefaultValue(flag.Key, flag.Type));
         }
         [AjaxMethod(MethodPrefix = "Game")]
-        [AjaxMethodParameter(ParameterName = "emulator", ParameterType = AjaxMethodParameterType.StringParameter)]
-        [AjaxMethodParameter(ParameterName = "key", ParameterType = AjaxMethodParameterType.StringParameter)]
+        [AjaxMethodParameter(ParameterName = "emulator", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
+        [AjaxMethodParameter(ParameterName = "key", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
         public IJSResponse GetFlagDefaultValue(IJSRequest request)
         {
             string emulator = request.GetParameter("emulator");
@@ -240,7 +240,7 @@ namespace Snowflake.StandardAjax
         }
 
         [AjaxMethod(MethodPrefix = "Game")]
-        [AjaxMethodParameter(ParameterName = "emulator", ParameterType = AjaxMethodParameterType.StringParameter)]
+        [AjaxMethodParameter(ParameterName = "emulator", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
         public IJSResponse GetFlagDefaultValues(IJSRequest request)
         {
             string emulator = request.GetParameter("emulator");
@@ -251,8 +251,8 @@ namespace Snowflake.StandardAjax
         }
             
         [AjaxMethod(MethodPrefix = "Game")]
-        [AjaxMethodParameter(ParameterName = "emulator", ParameterType = AjaxMethodParameterType.StringParameter)]
-        [AjaxMethodParameter(ParameterName = "id", ParameterType = AjaxMethodParameterType.StringParameter)]
+        [AjaxMethodParameter(ParameterName = "emulator", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
+        [AjaxMethodParameter(ParameterName = "id", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
         public IJSResponse StartGame(IJSRequest request)
         {
             string emulator = request.GetParameter("emulator");
