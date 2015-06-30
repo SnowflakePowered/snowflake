@@ -56,8 +56,9 @@
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="SharpYaml">
-      <HintPath>..\packages\SharpYaml.1.2.0\lib\SharpYaml.dll</HintPath>
+    <Reference Include="SharpYaml, Version=1.4.0.43042, Culture=neutral, PublicKeyToken=1ced8108e942bc02, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpYaml.1.4.0\lib\SharpYaml.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="ShortGuid">
       <HintPath>..\packages\ShortGuid.1.0.0\lib\net45\ShortGuid.dll</HintPath>
