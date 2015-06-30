@@ -18,7 +18,8 @@ environment:
     COVERALLS_REPO_TOKEN:
       secure: nBi3LwnqgslaH8hbsvjnWTqpe/UbKn705TJujxqJwtcL5OLGfcydM8AnVyld6Ngu
 install:
-    - choco install doxygen.portable
+    - nuget update -self
+    - choco install -y doxygen.portable
     - nuget restore
 after_build:
     - echo Generating doxygen documentation
