@@ -187,3 +187,5 @@ Snowflake.API/classlist.txt
 Snowflake/classlist.txt
 mockups/material/*.ai
 Snowflake*.nupkg
+
+!SQLite.Interop.dll
