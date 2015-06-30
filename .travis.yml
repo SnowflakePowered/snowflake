@@ -3,6 +3,7 @@ solution: Snowflake.sln
 install:
   - sudo mozroots --import --sync
   - ls
+  - mono ./.nuget/NuGet.exe update -self
   - mono ./.nuget/NuGet.exe restore Snowflake.sln
   - mono ./.nuget/NuGet.exe install xunit.runners -Version 2.0.0-rc1-build2826 -OutputDirectory testrunner
 script:
@@ -16,4 +17,3 @@ notifications:
     use_notice: false
     skip_join: true
   webhooks: http://fure-kun.herokuapp.com/hubot/travis?room=%23snowflake
-  

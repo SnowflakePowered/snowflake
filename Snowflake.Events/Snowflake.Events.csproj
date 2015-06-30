@@ -30,8 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Fleck">
-      <HintPath>..\packages\Fleck.0.12.0.38\lib\net40\Fleck.dll</HintPath>
+    <Reference Include="Fleck, Version=0.13.0.52, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fleck.0.13.0.52\lib\net40\Fleck.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -73,9 +74,6 @@
     <Compile Include="SnowflakeEventSource.ServiceEvents.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Snowflake.API\Snowflake.API.csproj">
       <Project>{2841aeea-03d5-47b0-9d90-375dfa19559a}</Project>
       <Name>Snowflake.API</Name>
@@ -83,6 +81,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="SnowflakeEventSource.Modify.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

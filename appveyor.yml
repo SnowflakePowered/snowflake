@@ -18,16 +18,17 @@ environment:
     COVERALLS_REPO_TOKEN:
       secure: nBi3LwnqgslaH8hbsvjnWTqpe/UbKn705TJujxqJwtcL5OLGfcydM8AnVyld6Ngu
 install:
-    - choco install doxygen.portable
+    - nuget update -self
+    - choco install -y doxygen.portable
     - nuget restore
 after_build:
     - echo Generating doxygen documentation
-    - doxygen.exe "C:\projects\snowflake\snowflake.doxygen" 2> nul
+    - doxygen.exe "C:\projects\snowflake\snowflake.doxygen" > nul 2>&1
 after_test:
     - echo Generating Code Coverage Report
-    - packages\OpenCover.4.5.3522\OpenCover.Console.exe -register:user -filter:"+[Snowflake*]*" -target:"packages/xunit.runners.2.0.0-rc1-build2826\tools\xunit.console.exe" -targetargs:"Snowflake.Tests\bin\%CONFIGURATION%\Snowflake.Tests.dll -noshadow" -output:coverage.xml
+    - packages\OpenCover.4.5.4107-rc122\OpenCover.Console.exe -register:user -filter:"+[Snowflake*]*" -target:"packages\xunit.runner.console.2.1.0-beta2-build2981\tools\xunit.console.exe" -targetargs:"Snowflake.Tests\bin\%CONFIGURATION%\Snowflake.Tests.dll -noshadow" -output:coverage.xml
     - echo Uploading Code Coverage Report to Coveralls
-    - packages\coveralls.io.1.1.86\tools\coveralls.net.exe --opencover coverage.xml
+    - packages\coveralls.io.1.3.4\tools\coveralls.net.exe --opencover coverage.xml
     - echo Packing NuGet packages
     - nuget pack Snowflake.API\Snowflake.API.csproj -IncludeReferencedProjects -Symbols
     - nuget pack Snowflake.Events\Snowflake.Events.csproj -IncludeReferencedProjects -Symbols

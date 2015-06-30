@@ -18,7 +18,7 @@ namespace Snowflake.Scraper
         public string ImagesID { get; private set; }
         public GameImagesResult()
         {
-            this.ImagesID = ShortGuid.NewShortGuid();
+            this.ImagesID = Guid.NewGuid().ToString();
             this.Fanarts = new List<string>();
             this.Screenshots = new List<string>();
             this.Boxarts = new Dictionary<string, string>();
