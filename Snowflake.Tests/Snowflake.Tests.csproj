@@ -78,6 +78,7 @@
     <Compile Include="Controller\GamepadAbstractionDatabaseTests.cs" />
     <Compile Include="Emulator\ConfigurationFlagStoreTests.cs" />
     <Compile Include="Events\SnowflakeEventSourceTests.cs" />
+    <Compile Include="Game\GameDatabaseTests.cs" />
     <Compile Include="Game\GameInfoTests.cs" />
     <Compile Include="Game\GameMediaCacheTests.cs" />
     <Compile Include="Game\GameScreenshotCacheTests.cs" />

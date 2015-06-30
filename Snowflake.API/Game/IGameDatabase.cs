@@ -13,6 +13,11 @@ namespace Snowflake.Game
         /// <param name="game">The game to add</param>
         void AddGame(IGameInfo game);
         /// <summary>
+        /// Removes a game from the database
+        /// </summary>
+        /// <param name="game"></param>
+        void RemoveGame(IGameInfo game);
+        /// <summary>
         /// Get a list of all games in the database
         /// </summary>
         /// <returns>A list of all games in the database</returns>
