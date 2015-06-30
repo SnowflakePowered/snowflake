@@ -36,8 +36,9 @@
       <HintPath>..\packages\SharpDX.3.0.0-alpha02\lib\net45\SharpDX.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="SharpDX.DirectInput">
-      <HintPath>$(SharpDXPackageBinDir)\SharpDX.DirectInput.dll</HintPath>
+    <Reference Include="SharpDX.DirectInput, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpDX.DirectInput.3.0.0-alpha02\lib\net45\SharpDX.DirectInput.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
