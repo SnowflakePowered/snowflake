@@ -19,7 +19,7 @@ namespace Snowflake.StandardAjax
             return new JSResponse(request, gamepadAbstractions);
         }
         [AjaxMethod(MethodPrefix = "Controller")]
-        [AjaxMethodParameter(ParameterName = "device", ParameterType = AjaxMethodParameterType.StringParameter)]
+        [AjaxMethodParameter(ParameterName = "device", ParameterType = AjaxMethodParameterType.StringParameter, Required=true)]
 
         public IJSResponse GetAbstractionForDevice(IJSRequest request)
         {
@@ -29,9 +29,9 @@ namespace Snowflake.StandardAjax
         }
 
         [AjaxMethod(MethodPrefix = "Controller")]
-        [AjaxMethodParameter(ParameterName = "inputconfig", ParameterType = AjaxMethodParameterType.ObjectParameter)]
-        [AjaxMethodParameter(ParameterName = "device", ParameterType = AjaxMethodParameterType.StringParameter)]
-        [AjaxMethodParameter(ParameterName = "profiletype", ParameterType = AjaxMethodParameterType.StringParameter)]
+        [AjaxMethodParameter(ParameterName = "inputconfig", ParameterType = AjaxMethodParameterType.ObjectParameter, Required = true)]
+        [AjaxMethodParameter(ParameterName = "device", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
+        [AjaxMethodParameter(ParameterName = "profiletype", ParameterType = AjaxMethodParameterType.StringParameter, Required = false)]
 
         public IJSResponse SetGamepadAbstraction(IJSRequest request)
         {
@@ -66,9 +66,9 @@ namespace Snowflake.StandardAjax
         }
 
         [AjaxMethod(MethodPrefix = "Controller")]
-        [AjaxMethodParameter(ParameterName = "platform", ParameterType = AjaxMethodParameterType.StringParameter)]
-        [AjaxMethodParameter(ParameterName = "port", ParameterType = AjaxMethodParameterType.IntParameter)]
-        [AjaxMethodParameter(ParameterName = "device", ParameterType = AjaxMethodParameterType.IntParameter)]
+        [AjaxMethodParameter(ParameterName = "platform", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
+        [AjaxMethodParameter(ParameterName = "port", ParameterType = AjaxMethodParameterType.IntParameter, Required = true)]
+        [AjaxMethodParameter(ParameterName = "device", ParameterType = AjaxMethodParameterType.IntParameter, Required = true)]
         public IJSResponse SetDeviceInPort(IJSRequest request)
         {
             IPlatformInfo platform = this.CoreInstance.LoadedPlatforms[request.GetParameter("platform")];
@@ -79,8 +79,8 @@ namespace Snowflake.StandardAjax
             return new JSResponse(request, "success");
         }
         [AjaxMethod(MethodPrefix = "Controller")]
-        [AjaxMethodParameter(ParameterName = "platform", ParameterType = AjaxMethodParameterType.StringParameter)]
-        [AjaxMethodParameter(ParameterName = "port", ParameterType = AjaxMethodParameterType.IntParameter)]
+        [AjaxMethodParameter(ParameterName = "platform", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
+        [AjaxMethodParameter(ParameterName = "port", ParameterType = AjaxMethodParameterType.IntParameter, Required = true)]
         public IJSResponse GetDeviceInPort(IJSRequest request)
         {
             IPlatformInfo platform = this.CoreInstance.LoadedPlatforms[request.GetParameter("platform")];
