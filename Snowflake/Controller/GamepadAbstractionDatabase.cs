@@ -118,14 +118,14 @@ namespace Snowflake.Controller
                 A = KeyboardConstants.KEY_Z,
                 B = KeyboardConstants.KEY_X,
                 X = KeyboardConstants.KEY_C,
-                Y = KeyboardConstants.KEY_Y
+                Y = KeyboardConstants.KEY_V
             };
 
         public IGamepadAbstraction GetGamepadAbstraction(string deviceName)
         {
             SQLiteConnection dbConnection = this.GetConnection();
             dbConnection.Open();
-            using (var sqlCommand = new SQLiteCommand("SELECT `*` FROM `gamepadabstraction` WHERE `DeviceName` == @DeviceName", dbConnection))
+            using (var sqlCommand = new SQLiteCommand("SELECT * FROM `gamepadabstraction` WHERE `DeviceName` == @DeviceName", dbConnection))
             {
                 sqlCommand.Parameters.AddWithValue("@DeviceName", deviceName);
                 using (var reader = sqlCommand.ExecuteReader())
@@ -136,7 +136,7 @@ namespace Snowflake.Controller
 
                     var row = result.Rows[0];
                     dbConnection.Close();
-                    return new GamepadAbstraction(deviceName, (ControllerProfileType) row.Field<int>("ProfileType"))
+                    return new GamepadAbstraction(deviceName, (ControllerProfileType)Convert.ToInt32((row.Field<long>("ProfileType"))))
                     {
                         L1 = row.Field<string>("L1"),
                         L2 = row.Field<string>("L2"),
@@ -170,7 +170,7 @@ namespace Snowflake.Controller
         public IList<IGamepadAbstraction> GetAllGamepadAbstractions () {
             SQLiteConnection dbConnection = this.GetConnection();
             dbConnection.Open();
-            using (var sqlCommand = new SQLiteCommand("SELECT `*` FROM `gamepadabstraction`", dbConnection))
+            using (var sqlCommand = new SQLiteCommand("SELECT * FROM `gamepadabstraction`", dbConnection))
             {
                 IList<IGamepadAbstraction> gamepadAbstractions = new List<IGamepadAbstraction>();
                 using (var reader = sqlCommand.ExecuteReader())
@@ -179,7 +179,7 @@ namespace Snowflake.Controller
                     var result = new DataTable();
                     result.Load(reader);
                     foreach(DataRow row in result.Rows){
-                        gamepadAbstractions.Add(new GamepadAbstraction(row.Field<string>("DeviceName"), (ControllerProfileType) row.Field<int>("ProfileType"))
+                        gamepadAbstractions.Add(new GamepadAbstraction(row.Field<string>("DeviceName"), (ControllerProfileType)Convert.ToInt32((row.Field<long>("ProfileType"))))
                         {
                             L1 = row.Field<string>("L1"),
                             L2 = row.Field<string>("L2"),
