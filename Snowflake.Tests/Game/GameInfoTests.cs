@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Game;
-using Snowflake.Tests.Fakes;
 using Xunit;
 namespace Snowflake.Game.Tests
 {
