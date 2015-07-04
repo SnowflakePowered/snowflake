@@ -40,6 +40,7 @@ namespace Snowflake.Service.Manager
             var callMethodEvent = new AjaxRequestReceivedEventArgs(CoreService.LoadedCore, request);
             SnowflakeEventSource.EventSource.OnAjaxRequestReceived(callMethodEvent);
             request = callMethodEvent.ReceivedRequest;
+            AjaxResponseSendingEventArgs sendResultEvent;
             try
             {
                 IJSResponse result;
@@ -49,26 +50,28 @@ namespace Snowflake.Service.Manager
                     if (!(request.MethodParameters.Keys.Contains(attr.ParameterName)))
                     {
                         result = new JSResponse(request, JSResponse.GetErrorResponse(String.Format("missing required param {0}", attr.ParameterName)), false);
-                        var sendResultEvent = new AjaxResponseSendingEventArgs(CoreService.LoadedCore, result);
+                        sendResultEvent = new AjaxResponseSendingEventArgs(CoreService.LoadedCore, result);
                         SnowflakeEventSource.EventSource.OnAjaxResponseSending(sendResultEvent);
                         return sendResultEvent.SendingResponse.GetJson();
                     }
                 }
 
                 result = jsMethod.Method.Invoke(request);
-                return result.GetJson();
+                sendResultEvent = new AjaxResponseSendingEventArgs(CoreService.LoadedCore, result);
+                SnowflakeEventSource.EventSource.OnAjaxResponseSending(sendResultEvent);
+                return sendResultEvent.SendingResponse.GetJson();
             }
             catch (KeyNotFoundException)
             {
                 var result = new JSResponse(request, JSResponse.GetErrorResponse(String.Format("method {0} not found in namespace {1}", request.MethodName, request.NameSpace)), false);
-                var sendResultEvent = new AjaxResponseSendingEventArgs(CoreService.LoadedCore, result);
+                sendResultEvent = new AjaxResponseSendingEventArgs(CoreService.LoadedCore, result);
                 SnowflakeEventSource.EventSource.OnAjaxResponseSending(sendResultEvent);
                 return sendResultEvent.SendingResponse.GetJson();
             }
             catch (Exception e)
             {
                 var result = new JSResponse(request, e, false);
-                var sendResultEvent = new AjaxResponseSendingEventArgs(CoreService.LoadedCore, result);
+                sendResultEvent = new AjaxResponseSendingEventArgs(CoreService.LoadedCore, result);
                 SnowflakeEventSource.EventSource.OnAjaxResponseSending(sendResultEvent);
                 return sendResultEvent.SendingResponse.GetJson();
             }
