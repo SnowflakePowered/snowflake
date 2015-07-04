@@ -19,6 +19,8 @@ using Snowflake.Controller;
 using Snowflake.Game;
 using Snowflake.Emulator.Configuration;
 using Snowflake.Emulator.Input.InputManager;
+using Snowflake.Events.ServiceEvents;
+using Snowflake.Events;
 namespace Snowflake.Service
 {
     [Export(typeof(ICoreService))]
@@ -45,11 +47,13 @@ namespace Snowflake.Service
 
         public static void InitCore()
         {
+            SnowflakeEventSource.InitEventSource();
             var core = new CoreService();
             CoreService.LoadedCore = core;
             foreach (string serverName in CoreService.LoadedCore.ServerManager.RegisteredServers)
             {
                 CoreService.LoadedCore.ServerManager.StartServer(serverName);
+                SnowflakeEventSource.EventSource.OnServerStart(new ServerStartEventArgs(core, serverName));
             }
           
         }

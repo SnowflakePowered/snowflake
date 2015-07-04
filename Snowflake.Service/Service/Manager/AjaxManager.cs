@@ -10,6 +10,7 @@ using System.Reflection;
 using System;
 using System.Linq;
 using Snowflake.Extensions;
+using Snowflake.Events;
 using Snowflake.Events.ServiceEvents;
 
 namespace Snowflake.Service.Manager
@@ -37,6 +38,7 @@ namespace Snowflake.Service.Manager
         public string CallMethod(IJSRequest request)
         {
             var callMethodEvent = new AjaxRequestReceivedEventArgs(CoreService.LoadedCore, request);
+            SnowflakeEventSource.EventSource.OnAjaxRequestReceived(callMethodEvent);
             request = callMethodEvent.ReceivedRequest;
             try
             {
@@ -48,6 +50,7 @@ namespace Snowflake.Service.Manager
                     {
                         result = new JSResponse(request, JSResponse.GetErrorResponse(String.Format("missing required param {0}", attr.ParameterName)), false);
                         var sendResultEvent = new AjaxResponseSendingEventArgs(CoreService.LoadedCore, result);
+                        SnowflakeEventSource.EventSource.OnAjaxResponseSending(sendResultEvent);
                         return sendResultEvent.SendingResponse.GetJson();
                     }
                 }
@@ -59,12 +62,14 @@ namespace Snowflake.Service.Manager
             {
                 var result = new JSResponse(request, JSResponse.GetErrorResponse(String.Format("method {0} not found in namespace {1}", request.MethodName, request.NameSpace)), false);
                 var sendResultEvent = new AjaxResponseSendingEventArgs(CoreService.LoadedCore, result);
+                SnowflakeEventSource.EventSource.OnAjaxResponseSending(sendResultEvent);
                 return sendResultEvent.SendingResponse.GetJson();
             }
             catch (Exception e)
             {
                 var result = new JSResponse(request, e, false);
                 var sendResultEvent = new AjaxResponseSendingEventArgs(CoreService.LoadedCore, result);
+                SnowflakeEventSource.EventSource.OnAjaxResponseSending(sendResultEvent);
                 return sendResultEvent.SendingResponse.GetJson();
             }
         }
