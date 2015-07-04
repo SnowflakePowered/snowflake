@@ -96,7 +96,7 @@ namespace Snowflake.Service.Init
 
                     textBox1.Text += Regex.Replace(
                     "Sending Response " +
-                    e.SendingResponse.GetJson() +
+                    JsonConvert.SerializeObject(e.SendingResponse.Payload) +
                     Environment.NewLine
                     , "(?<!\r)\n", "\r\n");
                 }));

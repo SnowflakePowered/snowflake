@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <!-- Latest compiled and minified JavaScript -->
+    <script type="text/javascript">
+      window.$ = window.jQuery = require("jQuery");
+      require("bootstrap");
+      window.fs = require('fs');
+      window.download = require('./download.js');
+    </script>
+
+    <title>Welcome to Snowflake</title>
+    <style>
+      body {
+        width: 100vw;
+        height: 100vh;
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #EBDCC2;
+        overflow: hidden;
+      }
+      .container {
+        padding-top: 30px;
+        text-align: center;
+      }
+      img {
+        position: relative;
+        text-align: center;
+        font-family: Roboto;
+        font-size: 2em;
+        display: block;
+        width: 100%;
+        overflow: hidden;
+        height: 200px;
+        -webkit-user-select: none;
+        cursor: default;
+      }
+      .main {
+        padding-top: 20px;
+      }
+      .welcome {
+        width: 100%;
+        padding-top: 20px;
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        align-items: flex-end;
+        -webkit-user-select: none;
+        cursor: default;
+      }
+      #startbutton{
+        margin-top: 10px;
+        font-size: 1.5em;
+      }
+    </style>
+  </head>
+  <body onresize="window.keepSize()">
+    <div class="container">
+        <img src="./banner.svg">
+
+        <div class="main">
+          <div class="welcome">
+            <h1>
+              Welcome to Snowflake
+            </h1>
+            <p style="text-align: left;">
+              <em>Snowflake is still in beta, please excuse any bugs you come across.</em><br/>
+              To get you started, we're going to help you install some emulators to play your legally acquired games.<br/>
+              Click the big <strong>Next</strong> button to continue.
+            </p>
+          </div>
+          <a href="./firstrun_packageinstaller.html" type="button" id="startbutton" class="btn btn-primary" role="button">Next</a>
+        </div>
+    </div>
+
+  </body>
+</html>

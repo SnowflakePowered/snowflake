@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap-theme.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script type="text/javascript">
+      window.$ = window.jQuery = require("jQuery");
+      require("bootstrap");
+      window.fs = require('fs');
+      window.download = require('./download.js');
+      $(function() {
+          window.themeView = $("#themeView")[0];
+          localStorage.setItem('packageManagerUrl', require('remote').getGlobal('packageManagerUrl'));
+          $("#themeView").on('did-start-loading', function(e){
+            $(this)[0].openDevTools();
+          });
+          $("#chromeCloseButton").on('click', function(e){
+            window.close();
+          });
+          $("#chromeMinimizeButton").on('click', function(e){
+            require('remote').getCurrentWindow().minimize();
+          })
+      });
+
+    </script>
+    <style>
+      body, #themeView {
+        width: 100vw;
+        height: 100vh;
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #EBDCC2;
+        margin: 0;
+      }
+      #dragbar {
+        -webkit-app-region: drag;
+        width: 100vw;
+        height: 25px;
+        position: absolute;
+        background-color: rgba(255,255,255,0.5);
+        left: 0;
+        right: 0;
+        top: 0;
+        z-index: 1000;
+        margin: 0;
+      }
+      .chromebutton {
+        font-size: 1em;
+        z-index: 10000000;
+        float: right;
+        -webkit-app-region: no-drag;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="dragbar">
+      <button class="chromebutton" id="chromeCloseButton">X</button>
+      <button class="chromebutton" id="chromeMinimizeButton">_</button>
+    </div>
+    <webview id="themeView" src="_firstrun.html" nodeintegration plugins disablewebsecurity preload="./themeboot.js"></webview>
+  </body>
+</html>

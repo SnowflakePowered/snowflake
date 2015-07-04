@@ -1,0 +1,19 @@
+{
+  "name": "snowflake-shell-win32",
+  "version": "1.0.0",
+  "description": "Snowflake Windows Shell npm",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Snowflake",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "bootstrap": "^3.3.5",
+    "bootstrap-table": "^1.8.1",
+    "electron-prebuilt": "^0.29.1",
+    "jquery": "^2.1.4",
+    "snowflake.js": "^0.2.2",
+    "ws": "^0.7.2"
+  }
+}

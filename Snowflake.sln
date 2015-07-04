@@ -39,6 +39,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Events", "Snowfla
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.StandardAjax", "Snowflake.StandardAjax\Snowflake.StandardAjax.csproj", "{25E40ACB-3872-4BEB-8937-AE70104E7F3B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Shell.Windows", "Snowflake.Shell.Windows\Snowflake.Shell.Windows.csproj", "{F7A99F10-7770-490C-BF02-92C8B58AD2F3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -76,6 +78,10 @@ Global
 		{25E40ACB-3872-4BEB-8937-AE70104E7F3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{25E40ACB-3872-4BEB-8937-AE70104E7F3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{25E40ACB-3872-4BEB-8937-AE70104E7F3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7A99F10-7770-490C-BF02-92C8B58AD2F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7A99F10-7770-490C-BF02-92C8B58AD2F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7A99F10-7770-490C-BF02-92C8B58AD2F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7A99F10-7770-490C-BF02-92C8B58AD2F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
