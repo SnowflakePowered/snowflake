@@ -206,17 +206,6 @@ namespace Snowflake.Events.Tests
             SnowflakeEventSource.EventSource.OnCoreShutdown(args);
         }
         [Fact]
-        public void EmulatorPromptEvent_Test()
-        {
-            var fakeCoreService = new Mock<ICoreService>();
-            var args = new EmulatorPromptEventArgs(fakeCoreService.Object, "testprompt", "testbridge");
-            SnowflakeEventSource.EventSource.EmulatorPrompt += (s, e) =>
-            {
-                Assert.Equal(args, e);
-            };
-            SnowflakeEventSource.EventSource.OnEmulatorPrompt(args);
-        }
-        [Fact]
         public void AjaxRequestReceivedEvent_Test()
         {
             var fakeCoreService = new Mock<ICoreService>();
