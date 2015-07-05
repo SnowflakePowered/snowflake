@@ -51,6 +51,7 @@ namespace Snowflake.Service.Manager
             foreach (var server in this.RegisteredServers)
             {
                 this.StopServer(server);
+                this.servers[server] = null;
             }
             this.servers = null;
         }

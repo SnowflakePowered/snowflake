@@ -39,8 +39,10 @@ namespace Snowflake.Service.HttpServer
         void IBaseHttpServer.StopServer()
         {
             this.cancel = true;
-            this.serverThread.Join();
-            this.serverListener.Stop();
+            this.serverListener.Abort();
+            this.serverThread.Abort();
+            this.serverListener = null;
+            this.serverThread = null;
         }
 
         /// <summary>

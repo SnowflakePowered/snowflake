@@ -159,6 +159,8 @@ namespace Snowflake.Service
                 this.PlatformPreferenceDatabase = null;
                 this.PluginManager.Dispose();
                 this.ServerManager.Dispose();
+                this.ServerManager = null;
+                this.PluginManager = null;
                 this.EmulatorManager = null;
             }
 
@@ -169,8 +171,11 @@ namespace Snowflake.Service
 
         public static void DisposeLoadedCore()
         {
-            CoreService.LoadedCore.Dispose();
-            CoreService.LoadedCore = null;
+            if (CoreService.LoadedCore != null)
+            {
+                CoreService.LoadedCore.Dispose();
+                CoreService.LoadedCore = null;
+            }
         }
     }
 }
