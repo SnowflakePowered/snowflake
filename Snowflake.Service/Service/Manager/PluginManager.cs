@@ -36,6 +36,7 @@ namespace Snowflake.Service.Manager
         private IDictionary<string, IEmulatorBridge> loadedEmulators;
         private IDictionary<string, IScraper> loadedScrapers;
         private IDictionary<string, IGeneralPlugin> loadedPlugins;
+        private CompositionContainer container;
 
         public IReadOnlyDictionary<string, IIdentifier> LoadedIdentifiers { get { return this.loadedIdentifiers.AsReadOnly(); } }
         public IReadOnlyDictionary<string, IEmulatorBridge> LoadedEmulators { get { return this.loadedEmulators.AsReadOnly(); } }
@@ -62,9 +63,9 @@ namespace Snowflake.Service.Manager
             if (!Directory.Exists(Path.Combine(this.LoadablesLocation, "plugins"))) Directory.CreateDirectory(Path.Combine(this.LoadablesLocation, "plugins"));
 
             var catalog = new DirectoryCatalog(Path.Combine(this.LoadablesLocation, "plugins"));
-            var container = new CompositionContainer(catalog);
-            container.ComposeExportedValue("coreInstance", CoreService.LoadedCore);
-            container.ComposeParts(this);
+            this.container = new CompositionContainer(catalog);
+            this.container.ComposeExportedValue("coreInstance", CoreService.LoadedCore);
+            this.container.ComposeParts(this);
         }
 
         private Dictionary<string, T> LoadPlugin<T>(IEnumerable<Lazy<T>> unloadedPlugins) where T : IBasePlugin
@@ -85,6 +86,19 @@ namespace Snowflake.Service.Manager
                 }
             }
             return loadedPlugins;
+        }
+
+        public void Dispose()
+        {
+            this.emulators = null;
+            this.identifiers = null;
+            this.registry = null;
+            this.scrapers = null;
+            this.loadedEmulators = null;
+            this.loadedPlugins = null;
+            this.loadedScrapers = null;
+            this.loadedIdentifiers = null;
+            this.container.Dispose();
         }
     }
 }

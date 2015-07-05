@@ -19,7 +19,6 @@ using Snowflake.Controller;
 using Snowflake.Game;
 using Snowflake.Emulator.Configuration;
 using Snowflake.Emulator.Input.InputManager;
-using Snowflake.Events.ServiceEvents;
 using Snowflake.Events;
 namespace Snowflake.Service
 {
@@ -44,18 +43,24 @@ namespace Snowflake.Service
         public string AppDataDirectory { get; private set; }
         public static ICoreService LoadedCore { get; private set; }
         public IServerManager ServerManager { get; private set; }
-
+        // Flag: Has Dispose already been called? 
+        bool disposed = false;
+        // Instantiate a SafeHandle instance.
         public static void InitCore()
         {
+            CoreService.InitCore(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Snowflake"));
+        }
+        public static void InitCore(string dataDirectory)
+        {
             SnowflakeEventSource.InitEventSource();
-            var core = new CoreService();
+            var core = new CoreService(dataDirectory);
             CoreService.LoadedCore = core;
             foreach (string serverName in CoreService.LoadedCore.ServerManager.RegisteredServers)
             {
                 CoreService.LoadedCore.ServerManager.StartServer(serverName);
                 SnowflakeEventSource.EventSource.OnServerStart(new ServerStartEventArgs(core, serverName));
             }
-          
+
         }
       
         public async static Task InitPluginManagerAsync()
@@ -75,13 +80,9 @@ namespace Snowflake.Service
             }
         }
 
-        public CoreService() : this(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Snowflake")) { }
-        public CoreService(string appDataDirectory)
+        internal CoreService(string appDataDirectory)
         {
             this.AppDataDirectory = appDataDirectory;
-#if DEBUG
-            this.AppDataDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-#endif
             this.LoadedPlatforms = this.LoadPlatforms(Path.Combine(this.AppDataDirectory, "platforms"));
             this.LoadedControllers = this.LoadControllers(Path.Combine(this.AppDataDirectory, "controllers"));
             this.ServerManager = new ServerManager();
@@ -139,6 +140,37 @@ namespace Snowflake.Service
                 }
             }
             return loadedControllers;
+        }
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        // Protected implementation of Dispose pattern. 
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposed)
+                return;
+
+            if (disposing)
+            {
+                this.LoadedPlatforms = null;
+                this.LoadedControllers = null;
+                this.PlatformPreferenceDatabase = null;
+                this.PluginManager.Dispose();
+                this.ServerManager.Dispose();
+                this.EmulatorManager = null;
+            }
+
+            // Free any unmanaged objects here. 
+            //
+            disposed = true;
+        }
+
+        public static void DisposeLoadedCore()
+        {
+            CoreService.LoadedCore.Dispose();
+            CoreService.LoadedCore = null;
         }
     }
 }
