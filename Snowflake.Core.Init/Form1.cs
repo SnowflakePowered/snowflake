@@ -75,6 +75,32 @@ namespace Snowflake.Service.Init
         {
             CoreService.InitCore();
             CoreService.InitPluginManager();
+            Snowflake.Events.SnowflakeEventSource.EventSource.AjaxRequestReceived += (s, e) =>
+            {
+                textBox1.BeginInvoke((Action)(() =>
+                {
+
+                    textBox1.Text += Regex.Replace(
+                    "Received Request " +
+                    e.ReceivedRequest.MethodName +
+                    " " +
+                    JsonConvert.SerializeObject(e.ReceivedRequest.MethodParameters) + 
+                    Environment.NewLine
+                    , "(?<!\r)\n", "\r\n");
+                }));
+            };
+            Snowflake.Events.SnowflakeEventSource.EventSource.AjaxResponseSending += (s, e) =>
+            {
+                textBox1.BeginInvoke((Action)(() =>
+                {
+
+                    textBox1.Text += Regex.Replace(
+                    "Sending Response " +
+                    e.SendingResponse.GetJson() +
+                    Environment.NewLine
+                    , "(?<!\r)\n", "\r\n");
+                }));
+            };
          //   var x = CoreService.LoadedCore.ControllerPortsDatabase.GetDeviceInPort(CoreService.LoadedCore.LoadedPlatforms.First().Value, 1);
        /*     var homebrew = new GameInfo("NINTENDO_SNES", "SNES_TEST", new FileMediaStore(gameUuid), new Dictionary<string, string>(), gameUuid, "christmascraze.smc");
             CoreService.LoadedCore.GameDatabase.AddGame(homebrew);*/

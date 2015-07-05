@@ -12,7 +12,6 @@ namespace Snowflake.Events
         public event EventHandler<AjaxResponseSendingEventArgs> AjaxResponseSending;
         public event EventHandler<CoreLoadedEventArgs> CoreLoaded;
         public event EventHandler<CoreShutdownEventArgs> CoreShutdown;
-        public event EventHandler<EmulatorPromptEventArgs> EmulatorPrompt;
         public event EventHandler<ServerStartEventArgs> ServerStart;
         public event EventHandler<ServerStopEventArgs> ServerStop;
 
@@ -42,13 +41,6 @@ namespace Snowflake.Events
             if (this.CoreShutdown != null)
             {
                 this.CoreShutdown(this, e);
-            }
-        }
-        public void OnEmulatorPrompt(EmulatorPromptEventArgs e)
-        {
-            if (this.EmulatorPrompt != null)
-            {
-                this.EmulatorPrompt(this, e);
             }
         }
         public void OnServerStart(ServerStartEventArgs e)
