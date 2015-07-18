@@ -6,12 +6,21 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Reflection;
 using Snowflake.Service;
+using System.Diagnostics;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 namespace Snowflake.Shell.Windows
 {
     internal class SnowflakeShell
     {
+        string ShellRoot
+        {
+            get
+            {
+                return Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "electron");
+            }
+        }
+        Process currentShellInstance;
         internal SnowflakeShell()
         {
 #if DEBUG
@@ -19,37 +28,7 @@ namespace Snowflake.Shell.Windows
 #else
             CoreService.InitCore();
 #endif
-            
-            CoreService.InitPluginManager();
-
-         /*   Snowflake.Events.SnowflakeEventSource.EventSource.AjaxRequestReceived += (s, e) =>
-            {
-                Console.WriteLine
-                (
-                     Regex.Replace
-                     (
-                     "Received Request " +
-                     e.ReceivedRequest.MethodName +
-                     " " +
-                     JsonConvert.SerializeObject(e.ReceivedRequest.MethodParameters) +
-                     Environment.NewLine
-                     , "(?<!\r)\n", "\r\n"
-                     )
-                 );
-            };
-            Snowflake.Events.SnowflakeEventSource.EventSource.AjaxResponseSending += (s, e) =>
-            {
-                Console.WriteLine
-                (
-                    Regex.Replace
-                    (
-                     "Sending Response " +
-                     e.SendingResponse.GetJson() +
-                     Environment.NewLine
-                     , "(?<!\r)\n", "\r\n"
-                     )
-                 );
-            };*/
+            CoreService.InitPluginManager();  
         }
 
         public void RestartCore()
@@ -70,5 +49,32 @@ namespace Snowflake.Shell.Windows
             CoreService.DisposeLoadedCore();
             GC.WaitForPendingFinalizers();
         }
+
+       
+        public Process StartShell(params string[] args)
+        {
+            if (this.ShellAvailable())
+            {
+                IList<string> arguments = new List<string>(args);
+                arguments.Insert(0, this.ShellRoot);
+                var electronShell = this.GetShell();
+                electronShell.Arguments = String.Join(" ", arguments);
+                if (this.currentShellInstance != null) this.currentShellInstance.Close();
+                this.currentShellInstance = Process.Start(electronShell);
+                return this.currentShellInstance;
+            }
+            return null;
+        }
+
+        public bool ShellAvailable()
+        {
+            return File.Exists(Path.Combine(this.ShellRoot, "node_modules", "electron-prebuilt", "dist", "electron.exe"));
+        }
+
+        public ProcessStartInfo GetShell()
+        {
+            return new ProcessStartInfo(Path.Combine(this.ShellRoot, "node_modules", "electron-prebuilt", "dist", "electron.exe"));
+        }
+  
     }
 }

@@ -20,6 +20,7 @@ namespace Snowflake.Shell.Windows
             Application.SetCompatibleTextRenderingDefault(false);
             var snowflakeIcon = new ShellIcon();
             var snowflakeShell = new SnowflakeShell();
+            snowflakeShell.StartShell();
             snowflakeIcon.AddMenuItem("Quit Snowflake", Program.menuQuitHandler);
             snowflakeIcon.AddMenuItem("Shutdown Core", (s, e) =>
             {
