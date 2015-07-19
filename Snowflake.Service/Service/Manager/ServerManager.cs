@@ -46,5 +46,14 @@ namespace Snowflake.Service.Manager
                 return this.GetServer(serverName);
             }
         }
+        public void Dispose()
+        {
+            foreach (var server in this.RegisteredServers)
+            {
+                this.StopServer(server);
+                this.servers[server] = null;
+            }
+            this.servers = null;
+        }
     }
 }

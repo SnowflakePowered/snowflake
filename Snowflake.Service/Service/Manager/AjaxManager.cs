@@ -10,6 +10,8 @@ using System.Reflection;
 using System;
 using System.Linq;
 using Snowflake.Extensions;
+using Snowflake.Events;
+using Snowflake.Events.ServiceEvents;
 
 namespace Snowflake.Service.Manager
 {
@@ -35,6 +37,10 @@ namespace Snowflake.Service.Manager
         }
         public string CallMethod(IJSRequest request)
         {
+            var callMethodEvent = new AjaxRequestReceivedEventArgs(CoreService.LoadedCore, request);
+            SnowflakeEventSource.EventSource.OnAjaxRequestReceived(callMethodEvent);
+            request = callMethodEvent.ReceivedRequest;
+            AjaxResponseSendingEventArgs sendResultEvent;
             try
             {
                 IJSResponse result;
@@ -44,20 +50,30 @@ namespace Snowflake.Service.Manager
                     if (!(request.MethodParameters.Keys.Contains(attr.ParameterName)))
                     {
                         result = new JSResponse(request, JSResponse.GetErrorResponse(String.Format("missing required param {0}", attr.ParameterName)), false);
-                        return result.GetJson();
+                        sendResultEvent = new AjaxResponseSendingEventArgs(CoreService.LoadedCore, result);
+                        SnowflakeEventSource.EventSource.OnAjaxResponseSending(sendResultEvent);
+                        return sendResultEvent.SendingResponse.GetJson();
                     }
                 }
 
                 result = jsMethod.Method.Invoke(request);
-                return result.GetJson();
+                sendResultEvent = new AjaxResponseSendingEventArgs(CoreService.LoadedCore, result);
+                SnowflakeEventSource.EventSource.OnAjaxResponseSending(sendResultEvent);
+                return sendResultEvent.SendingResponse.GetJson();
             }
             catch (KeyNotFoundException)
             {
-                return new JSResponse(request, JSResponse.GetErrorResponse(String.Format("method {0} not found in namespace {1}", request.MethodName, request.NameSpace)), false).GetJson();
+                var result = new JSResponse(request, JSResponse.GetErrorResponse(String.Format("method {0} not found in namespace {1}", request.MethodName, request.NameSpace)), false);
+                sendResultEvent = new AjaxResponseSendingEventArgs(CoreService.LoadedCore, result);
+                SnowflakeEventSource.EventSource.OnAjaxResponseSending(sendResultEvent);
+                return sendResultEvent.SendingResponse.GetJson();
             }
             catch (Exception e)
             {
-                return new JSResponse(request, e, false).GetJson();
+                var result = new JSResponse(request, e, false);
+                sendResultEvent = new AjaxResponseSendingEventArgs(CoreService.LoadedCore, result);
+                SnowflakeEventSource.EventSource.OnAjaxResponseSending(sendResultEvent);
+                return sendResultEvent.SendingResponse.GetJson();
             }
         }
         public async Task<string> CallMethodAsync(IJSRequest request)

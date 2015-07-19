@@ -102,12 +102,10 @@ namespace Snowflake.Emulator.Configuration
                                           @flagKey,
                                           @flagValue)", flagDb))
             {
-                Console.WriteLine("Setting value " + value + " for key " + key + " for prefix " + prefix);
                 sqliteCommand.Parameters.AddWithValue("@flagKey", prefix + "-" + key);
                 sqliteCommand.Parameters.AddWithValue("@flagValue", value.ToString());
                 sqliteCommand.ExecuteNonQuery();
             }
-            Console.WriteLine("Commit value " + value + " for key " + key + " for prefix " + prefix);
             flagDb.Close();
             
         }
@@ -130,15 +128,12 @@ namespace Snowflake.Emulator.Configuration
                         System.Threading.Thread.Sleep(500); //le concurrency hack :(
                         value = (string)sqlCommand.ExecuteScalar();
                     }
-                    Console.WriteLine("Received value " + value + " for key " + key + " for prefix " + prefix);
             }
             dbConnection.Close();
             if (value == null)
             {
                 value = fallback.ToString();
             }
-            Console.WriteLine("Final value " + value + " for key " + key + " for prefix " + prefix);
-
             switch (type)
             {
                 case ConfigurationFlagTypes.SELECT_FLAG:

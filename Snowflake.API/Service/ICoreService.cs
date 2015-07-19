@@ -13,7 +13,7 @@ namespace Snowflake.Service
     /// <summary>
     /// The core frontend service that handles all the functions of the frontend core.
     /// </summary>
-    public interface ICoreService
+    public interface ICoreService : IDisposable
     {
         /// <summary>
         /// The Ajax endpoint manager

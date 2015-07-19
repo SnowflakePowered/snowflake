@@ -10,7 +10,7 @@ namespace Snowflake.Service.Manager
     /// <summary>
     /// The IPluginManager manages all plugins except for Ajax plugins
     /// </summary>
-    public interface IPluginManager : ILoadableManager
+    public interface IPluginManager : ILoadableManager, IDisposable
     {
         /// <summary>
         /// The loaded emulator plugins

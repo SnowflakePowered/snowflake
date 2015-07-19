@@ -5,7 +5,6 @@ install:
   - ls
   - mono ./.nuget/NuGet.exe update -self
   - mono ./.nuget/NuGet.exe restore Snowflake.sln
-  - mono ./.nuget/NuGet.exe install xunit.runners -Version 2.0.0-rc1-build2826 -OutputDirectory testrunner
 script:
   - xbuild /p:Configuration=Debug Snowflake.sln
 notifications:

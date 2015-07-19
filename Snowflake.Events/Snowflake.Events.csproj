@@ -46,6 +46,8 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="CoreEvents\Game\GamePreAddEventArgs.cs" />
+    <Compile Include="CoreEvents\Game\GamePreDeleteEventArgs.cs" />
     <Compile Include="CoreEvents\Game\GameDeleteEventArgs.cs" />
     <Compile Include="CoreEvents\Game\GameEventArgs.cs" />
     <Compile Include="CoreEvents\Game\GameInfoScrapedEventArgs.cs" />
@@ -64,7 +66,6 @@
     <Compile Include="ServiceEvents\AjaxRequestReceivedEventArgs.cs" />
     <Compile Include="ServiceEvents\CoreLoadedEventArgs.cs" />
     <Compile Include="ServiceEvents\CoreShutdownEventArgs.cs" />
-    <Compile Include="ServiceEvents\EmulatorPromptEventArgs.cs" />
     <Compile Include="ServiceEvents\ServerStartEventArgs.cs" />
     <Compile Include="ServiceEvents\ServerStopEventArgs.cs" />
     <Compile Include="SnowflakeEventArgs.cs" />

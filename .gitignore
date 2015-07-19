@@ -189,3 +189,5 @@ mockups/material/*.ai
 Snowflake*.nupkg
 
 !SQLite.Interop.dll
+cov-int
+cov-int.*

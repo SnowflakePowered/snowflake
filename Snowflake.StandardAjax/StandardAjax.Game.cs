@@ -11,7 +11,8 @@ using Snowflake.Utility;
 using Snowflake.Emulator;
 using Snowflake.Emulator.Configuration;
 using Newtonsoft.Json;
-
+using Snowflake.Events.CoreEvents.GameEvent;
+using Snowflake.Events;
 namespace Snowflake.StandardAjax
 {
     public partial class StandardAjax
@@ -57,7 +58,16 @@ namespace Snowflake.StandardAjax
         {
             string gameinfo_pre = request.GetParameter("gameinfo");
             IGameInfo game = GameInfo.FromJson(JsonConvert.DeserializeObject(gameinfo_pre));
-            this.CoreInstance.GameDatabase.AddGame(game);
+            var gamePreAddEvent = new GamePreAddEventArgs(this.CoreInstance, game, this.CoreInstance.GameDatabase);
+            SnowflakeEventSource.EventSource.OnGamePreAdd(gamePreAddEvent);
+            if (!gamePreAddEvent.Cancel)
+            {
+                game = gamePreAddEvent.GameInfo;
+                this.CoreInstance.GameDatabase.AddGame(game);
+                var gameAddEvent = new GameAddEventArgs(this.CoreInstance, game, this.CoreInstance.GameDatabase);
+                SnowflakeEventSource.EventSource.OnGameAdd(gameAddEvent);
+
+            }
             return new JSResponse(request, "added " + game.FileName, true);
         }
 
@@ -259,7 +269,11 @@ namespace Snowflake.StandardAjax
             string id = request.GetParameter("id");
             IEmulatorBridge bridge = this.CoreInstance.PluginManager.LoadedEmulators[emulator];
             IGameInfo gameInfo = this.CoreInstance.GameDatabase.GetGameByUUID(id);
-            bridge.StartRom(gameInfo);
+            var gameStartEvent = new GameStartEventArgs(this.CoreInstance, gameInfo, bridge.EmulatorAssembly, bridge);
+            if (!gameStartEvent.Cancel)
+            {
+                gameStartEvent.GameEmulatorBridge.StartRom(gameStartEvent.GameInfo);
+            }
             return new JSResponse(request, "Game Started " + gameInfo.UUID);
         }
 

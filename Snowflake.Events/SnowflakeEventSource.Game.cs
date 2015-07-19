@@ -13,6 +13,8 @@ namespace Snowflake.Events
 
         public event EventHandler<GameAddEventArgs> GameAdd;
         public event EventHandler<GameDeleteEventArgs> GameDelete;
+        public event EventHandler<GamePreAddEventArgs> GamePreAdd;
+        public event EventHandler<GamePreDeleteEventArgs> GamePreDelete;
         public event EventHandler<GameInfoScrapedEventArgs> GameInfoScraped;
         public event EventHandler<GameResultsScrapedEventArgs> GameResultsScraped;
         public event EventHandler<GameStartEventArgs> GameStart;
@@ -32,6 +34,20 @@ namespace Snowflake.Events
             if (this.GameDelete != null)
             {
                 this.GameDelete(this, e);
+            }
+        }
+        public void OnGamePreAdd(GamePreAddEventArgs e)
+        {
+            if (this.GamePreAdd != null)
+            {
+                this.GamePreAdd(this, e);
+            }
+        }
+        public void OnGamePreDelete(GamePreDeleteEventArgs e)
+        {
+            if (this.GamePreDelete != null)
+            {
+                this.GamePreDelete(this, e);
             }
         }
         public void OnGameResultScraped(GameResultsScrapedEventArgs e)

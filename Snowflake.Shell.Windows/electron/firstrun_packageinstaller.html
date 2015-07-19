@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Latest compiled and minified CSS -->
+  <!-- Latest compiled and minified JavaScript -->
+  <script type="text/javascript">
+    window.$ = window.jQuery = require("jQuery");
+    require("bootstrap");
+    window.fs = require('fs');
+    window.download = require('./download.js');
+    require('remote').getCurrentWindow().setSize(800, 900);
+    require('remote').getCurrentWindow().center();
+    Array.prototype.uniq = function (key) {
+    var set = {};
+    return $.grep(this, function (item) {
+        var k = key
+            ? key.apply(item)
+            : item;
+        return k in set
+            ? false
+            : set[k] = true;
+    });
+  }
+    $(function() {
+      $.ajax("update.json")
+        .done(function(updateData) {
+          window.data = JSON.parse(updateData);
+          $('#table').bootstrapTable({
+            data: window.data.bridges
+          });
+          $("tr").on('click', function(e) {
+            var checkbox = $(this).children(".bs-checkbox").children("input");
+            $(this).addClass("selected");
+            checkbox.prop("checked", !checkbox.prop("checked"));
+          });
+        });
+
+      $("#startbutton").on('click', function(e) {
+        $(this)[0].openDevTools();
+      });
+
+      $("#install").on('click', function(e) {
+        var bridgesToInstall = [];
+        var packagesToInstall = [];
+        $("tr[class=selected]").each(function(_data) {
+          bridgesToInstall.push(window.data.bridges[$(this).attr("data-index")]);
+          $.each(bridgesToInstall, function(index, __data) {
+            var item = [
+              __data.name,
+              localStorage.packageManagerUrl + "/bridges/" + __data.id + "~latest.package"
+            ]
+            packagesToInstall.push(item);
+
+            if (__data.dependencies.length > 0) {
+              $.each(__data.dependencies, function(index, ___data) {
+                var split = ___data.split("/");
+                var path = localStorage.packageManagerUrl + "/" + split[0] + "/" + split[1] + "/" + "~" + split[2] + ".package";
+                var item = [
+                  "Dependencies",
+                  path
+                ];
+                packagesToInstall.push(item);
+              });
+            }
+          });
+        });
+        if (packagesToInstall.length > 0) {
+          packagesToInstall = packagesToInstall.uniq([].join);
+          localStorage.setItem('firstruninstall', JSON.stringify(packagesToInstall));
+          window.location.href = "./download.html";
+        } else {
+          alert("You must install at least one emulator to use Snowflake");
+        }
+      })
+    });
+  </script>
+
+  <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./node_modules/bootstrap-table/dist/bootstrap-table.min.css">
+  <script src="./node_modules/bootstrap-table/dist/bootstrap-table.min.js"></script>
+  <title>Welcome to Snowflake</title>
+  <style>
+    body {
+      width: 100vw;
+      height: 100vh;
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #EBDCC2;
+    }
+
+    .container {
+      padding-top: 30px;
+      text-align: center;
+    }
+
+    img {
+      position: relative;
+      text-align: center;
+      font-family: Roboto;
+      font-size: 2em;
+      display: block;
+      width: 100%;
+      overflow: hidden;
+      height: 100px;
+      padding-bottom: 10px;
+    }
+
+    .list-group {
+      height: 300px;
+      text-align: left;
+      overflow-y: scroll;
+    }
+
+    .state-icon {
+      left: -5px;
+    }
+
+    .list-group-item-primary {
+      color: rgb(255, 255, 255);
+      background-color: rgb(66, 139, 202);
+    }
+
+    .ls-wrapper {
+      overflow: hidden;
+    }
+
+    .liquid-slider {
+      overflow: hidden !important;
+      background: transparent;
+    }
+
+    .main {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      padding: 20px;
+    }
+
+    .bootstrap-table {
+      width: 100%;
+      background: #efefef;
+      text-align: left;
+      height: 500px;
+      overflow-y: scroll;
+    }
+
+    .table-condensed>tbody>tr>td,
+    .table-condensed>tbody>tr>th,
+    .table-condensed>tfoot>tr>td,
+    .table-condensed>tfoot>tr>th,
+    .table-condensed>thead>tr>td,
+    .table-condensed>thead>tr>th {
+      padding: 5px !important;
+    }
+
+    .bootstrap-table .table,
+    .bootstrap-table .table>tbody>tr>td,
+    .bootstrap-table .table>tbody>tr>th,
+    .bootstrap-table .table>tfoot>tr>td,
+    .bootstrap-table .table>tfoot>tr>th,
+    .bootstrap-table .table>thead>tr>td {
+      padding: 2px !important;
+      font-size: 0.9em;
+    }
+
+    thead {
+      padding: 2px !important;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <img src="./banner.svg">
+    <div class="download-progress-status">To play your games, you have to install some emulators first. Snowflake will download and install the latest version of the emulators you choose.</div>
+
+    <div class="main">
+      <table id="table" data-classes="table table-hover table-no-bordered table-condensed" data-sort-name="name" data-striped="true">
+        <thead>
+          <tr>
+            <th data-checkbox="true" data-formatter="stateFormatter"></th>
+            <th data-field="name">Name</th>
+            <th data-field="description">Description</th>
+            <th data-field="tags">Tags</th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+
+    <button class="btn btn-primary col-xs-12" id="install">Install Selected Emulators</button>
+  </div>
+
+</body>
+
+</html>

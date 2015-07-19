@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Snowflake.Service.HttpServer;
 namespace Snowflake.Service.Manager
 {
-    public interface IServerManager
+    public interface IServerManager: IDisposable
     {
         void RegisterServer(string serverName, IBaseHttpServer httpServer);
         void StartServer(string serverName);
