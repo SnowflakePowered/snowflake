@@ -93,7 +93,6 @@ namespace Snowflake.Service
             this.AjaxManager = new AjaxManager(this.AppDataDirectory);
             this.EmulatorManager = new EmulatorAssembliesManager(Path.Combine(this.AppDataDirectory, "emulators"));
             this.PlatformPreferenceDatabase = new PlatformPreferencesDatabase(Path.Combine(this.AppDataDirectory, "platformprefs.db"), this.PluginManager);
-            this.ServerManager.RegisterServer("ThemeServer", new ThemeServer(Path.Combine(this.AppDataDirectory, "theme")));
             this.ServerManager.RegisterServer("AjaxApiServer", new ApiServer());
             this.ServerManager.RegisterServer("WebSocketApiServer", new JsonApiWebSocketServer(30003));
             this.ServerManager.RegisterServer("GameCacheServer", new GameCacheServer());

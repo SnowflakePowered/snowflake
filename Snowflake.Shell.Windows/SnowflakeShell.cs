@@ -23,25 +23,24 @@ namespace Snowflake.Shell.Windows
         Process currentShellInstance;
         internal SnowflakeShell()
         {
+            this.StartCore();
+        }
+
+        public void StartCore()
+        {
 #if DEBUG
             CoreService.InitCore(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location));
 #else
             CoreService.InitCore();
 #endif
-            CoreService.InitPluginManager();  
+            CoreService.InitPluginManager();
+            CoreService.LoadedCore.ServerManager.RegisterServer("ThemeServer", new ThemeServer(Path.Combine(CoreService.LoadedCore.AppDataDirectory, "theme")));
+            CoreService.LoadedCore.ServerManager.StartServer("ThemeServer");
         }
-
         public void RestartCore()
         {
             this.ShutdownCore();
-#if DEBUG
-            CoreService.InitCore(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location));
-            CoreService.InitPluginManager();
-            Console.WriteLine("Core Service Restarted");
-#else
-            CoreService.InitCore();
-            CoreService.InitPluginManager();
-#endif
+            this.StartCore();
         }
 
         public void ShutdownCore()
