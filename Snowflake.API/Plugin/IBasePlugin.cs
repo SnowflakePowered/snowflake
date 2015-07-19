@@ -2,13 +2,14 @@
 using System.Reflection;
 using Snowflake.Service;
 using System.IO;
+using System;
 namespace Snowflake.Plugin
 {
     /// <summary>
     /// The common interface between all plugins. 
     /// Only classes that are derived from IBasePlugin will be imported
     /// </summary>
-    public interface IBasePlugin
+    public interface IBasePlugin : IDisposable
     {
         /// <summary>
         /// The name of the plugin
@@ -52,6 +53,6 @@ namespace Snowflake.Plugin
         /// The IPluginConfiguration configuration associated with this plugin.
         /// This is null unless it has been initialized by the plugin.
         /// </summary>
-        IPluginConfiguration PluginConfiguration { get; }
+        IPluginConfiguration PluginConfiguration { get; }        
     }
 }

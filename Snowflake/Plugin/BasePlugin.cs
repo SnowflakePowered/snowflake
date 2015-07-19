@@ -50,5 +50,10 @@ namespace Snowflake.Plugin
                 return file;
             }
         }
+
+        public virtual void Dispose()
+        {
+
+        }
     }
 }
