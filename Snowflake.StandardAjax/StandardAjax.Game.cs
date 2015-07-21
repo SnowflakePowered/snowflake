@@ -208,7 +208,9 @@ namespace Snowflake.StandardAjax
                 }
                 bridge.ConfigurationFlagStore.SetValue(game, flag.Key, castedValue, flag.Type);
             }
-            return new JSResponse(request, values_pre);
+            IDictionary<string, dynamic> flags = bridge.ConfigurationFlags.ToDictionary(flag => flag.Value.Key, flag => bridge.ConfigurationFlagStore.GetValue(game, flag.Value.Key, flag.Value.Type));
+
+            return new JSResponse(request, flags);
         }
         [AjaxMethod(MethodPrefix = "Game")]
         [AjaxMethodParameter(ParameterName = "emulator", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
