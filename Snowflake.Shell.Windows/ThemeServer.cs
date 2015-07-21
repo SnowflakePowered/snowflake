@@ -21,6 +21,10 @@ namespace Snowflake.Shell.Windows
         public ThemeServer(string themeRoot) 
         {
             this.ThemeRoot = themeRoot;
+            if (!Directory.Exists(this.ThemeRoot))
+            {
+                Directory.CreateDirectory(this.ThemeRoot);
+            }
             var url = "http://localhost:30000/";
             this.themeWebServer = new WebServer(url);
         }
