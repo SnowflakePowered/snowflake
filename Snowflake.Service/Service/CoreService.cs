@@ -50,15 +50,22 @@ namespace Snowflake.Service
         {
             CoreService.InitCore(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Snowflake"));
         }
+        public EventHandler<ServerStartEventArgs> ServerStartEvent; 
         public static void InitCore(string dataDirectory)
         {
-            SnowflakeEventSource.InitEventSource();
             var core = new CoreService(dataDirectory);
             CoreService.LoadedCore = core;
+            SnowflakeEventManager.EventSource.RegisterEvent<ServerStartEventArgs>(core.ServerStartEvent);
+            SnowflakeEventManager.EventSource.Subscribe<ServerStartEventArgs>((s, e) =>
+            {
+                Console.WriteLine(e.ServerName);
+            });
             foreach (string serverName in CoreService.LoadedCore.ServerManager.RegisteredServers)
             {
                 CoreService.LoadedCore.ServerManager.StartServer(serverName);
-                SnowflakeEventSource.EventSource.OnServerStart(new ServerStartEventArgs(core, serverName));
+                var serverStartEvent = new ServerStartEventArgs(core, serverName);
+                SnowflakeEventManager.EventSource.RaiseEvent<ServerStartEventArgs>(serverStartEvent); //todo Move event registration to SnowflakeEVentManager
+
             }
 
         }
