@@ -10,8 +10,21 @@ using Snowflake.Events.ServiceEvents;
 
 namespace Snowflake.Events
 {
-    internal class SnowflakeEventSource
+    public class SnowflakeEventSource
     {
+        public void RegisterSnowflakeEvents(SnowflakeEventManager eventManager)
+        {
+            eventManager.RegisterEvent<GameAddEventArgs>(this.GameAdd);
+            eventManager.RegisterEvent<GameDeleteEventArgs>(this.GameDelete);
+            eventManager.RegisterEvent<GamePreAddEventArgs>(this.GamePreAdd);
+            eventManager.RegisterEvent<GamePreDeleteEventArgs>(this.GamePreDelete);
+            eventManager.RegisterEvent<GameInfoScrapedEventArgs>(this.GameInfoScraped);
+            eventManager.RegisterEvent<GameResultsScrapedEventArgs>(this.GameResultsScraped);
+            eventManager.RegisterEvent<GameStartEventArgs>(this.GameStart);
+            eventManager.RegisterEvent<GameQuitEventArgs>(this.GameQuit);
+            eventManager.RegisterEvent<GameProcessQuitEventArgs>(this.GameProcessQuit);
+            eventManager.RegisterEvent<GameProcessStartEventArgs>(this.GameProcessStart);
+        }
         //todo Register these events
         public event EventHandler<GameAddEventArgs> GameAdd;
         public event EventHandler<GameDeleteEventArgs> GameDelete;
