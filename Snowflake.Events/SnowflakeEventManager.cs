@@ -43,7 +43,10 @@ namespace Snowflake.Events
         /// <param name="eventHandler">The event handler to register with. Can be null.</param>
         public void RegisterEvent<T>(EventHandler<T> eventHandler) where T : SnowflakeEventArgs
         {
-            eventContainer[typeof(T)] = eventHandler;
+            if (!eventContainer.ContainsKey(typeof(T)))
+            {
+                eventContainer[typeof(T)] = eventHandler;
+            }
         }
         /// <summary>
         /// Removes an event from the event manager.
@@ -52,9 +55,12 @@ namespace Snowflake.Events
         /// <typeparam name="T"></typeparam>
         public void UnregisterEvent<T>() where T : SnowflakeEventArgs
         {
-            eventContainer[typeof(T)] = null;
-            Delegate value;
-            eventContainer.TryRemove(typeof(T), out value);
+            if (eventContainer.ContainsKey(typeof(T)))
+            {
+                eventContainer[typeof(T)] = null;
+                Delegate value;
+                eventContainer.TryRemove(typeof(T), out value);
+            }
         }
         /// <summary>
         /// Raise an event
@@ -63,10 +69,13 @@ namespace Snowflake.Events
         /// <param name="eventArgs">The event arguments to raise the event with</param>
         public void RaiseEvent<T>(T eventArgs) where T : SnowflakeEventArgs
         {
-            var snowflakeEvent = GetEvent<T>();
-            if (snowflakeEvent != null)
+            if (eventContainer.ContainsKey(typeof(T)))
             {
-                snowflakeEvent(this, eventArgs);
+                var snowflakeEvent = GetEvent<T>();
+                if (snowflakeEvent != null)
+                {
+                    snowflakeEvent(this, eventArgs);
+                }
             }
         }
         /// <summary>
@@ -90,13 +99,16 @@ namespace Snowflake.Events
         /// <param name="eventHandler">The event handler</param>
         public void Subscribe<T>(EventHandler<T> eventHandler) where T : SnowflakeEventArgs
         {
-            if (eventContainer[typeof(T)] != null)
+            if (eventContainer.ContainsKey(typeof(T)))
             {
-                eventContainer[typeof(T)] = (eventContainer[typeof(T)] as EventHandler<T>) + eventHandler;
-            }
-            else
-            {
-                eventContainer[typeof(T)] = eventHandler;
+                if (eventContainer[typeof(T)] != null)
+                {
+                    eventContainer[typeof(T)] = (eventContainer[typeof(T)] as EventHandler<T>) + eventHandler;
+                }
+                else
+                {
+                    eventContainer[typeof(T)] = eventHandler;
+                }
             }
         }
         /// <summary>
@@ -106,9 +118,12 @@ namespace Snowflake.Events
         /// <param name="eventHandler">The event handler to remove</param>
         public void Unsubscribe<T>(EventHandler<T> eventHandler) where T : SnowflakeEventArgs
         {
-            if (eventContainer[typeof(T)] != null)
+            if (eventContainer.ContainsKey(typeof(T)))
             {
-                eventContainer[typeof(T)] = (eventContainer[typeof(T)] as EventHandler<T>) - eventHandler;
+                if (eventContainer[typeof(T)] != null)
+                {
+                    eventContainer[typeof(T)] = (eventContainer[typeof(T)] as EventHandler<T>) - eventHandler;
+                }
             }
         }
     }
