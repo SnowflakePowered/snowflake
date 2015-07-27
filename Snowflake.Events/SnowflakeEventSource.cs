@@ -12,7 +12,7 @@ namespace Snowflake.Events
 {
     public class SnowflakeEventSource
     {
-        public void RegisterSnowflakeEvents(SnowflakeEventManager eventManager)
+        public void RegisterSnowflakeEvents(ISnowflakeEventManager eventManager)
         {
             eventManager.RegisterEvent<GameAddEventArgs>(this.GameAdd);
             eventManager.RegisterEvent<GameDeleteEventArgs>(this.GameDelete);
@@ -24,6 +24,22 @@ namespace Snowflake.Events
             eventManager.RegisterEvent<GameQuitEventArgs>(this.GameQuit);
             eventManager.RegisterEvent<GameProcessQuitEventArgs>(this.GameProcessQuit);
             eventManager.RegisterEvent<GameProcessStartEventArgs>(this.GameProcessStart);
+
+            eventManager.RegisterEvent<AjaxRequestReceivedEventArgs>(this.AjaxRequestReceived);
+            eventManager.RegisterEvent<AjaxResponseSendingEventArgs>(this.AjaxResponseSending);
+
+            eventManager.RegisterEvent<CoreLoadedEventArgs>(this.CoreLoaded);
+            eventManager.RegisterEvent<CoreShutdownEventArgs>(this.CoreShutdown);
+
+            eventManager.RegisterEvent<ServerStartEventArgs>(this.ServerStart);
+            eventManager.RegisterEvent<ServerStopEventArgs>(this.ServerStop);
+
+            eventManager.RegisterEvent<ModifyControllerProfileEventArgs>(this.ControllerProfileModify);
+            eventManager.RegisterEvent<ModifyConfigurationFlagEventArgs>(this.ConfigurationFlagModify);
+            eventManager.RegisterEvent<ModifyGameInfoEventArgs>(this.GameInfoModify);
+            eventManager.RegisterEvent<ModifyPlatformPreferenceEventArgs>(this.PlatformPreferenceModify);
+            eventManager.RegisterEvent<ModifyPortInputDeviceEventArgs>(this.PortInputDeviceModify);
+
         }
         //todo Register these events
         public event EventHandler<GameAddEventArgs> GameAdd;
@@ -39,6 +55,7 @@ namespace Snowflake.Events
 
         public event EventHandler<AjaxRequestReceivedEventArgs> AjaxRequestReceived;
         public event EventHandler<AjaxResponseSendingEventArgs> AjaxResponseSending;
+
         public event EventHandler<CoreLoadedEventArgs> CoreLoaded;
         public event EventHandler<CoreShutdownEventArgs> CoreShutdown;
         public event EventHandler<ServerStartEventArgs> ServerStart;
