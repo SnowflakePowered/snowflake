@@ -103,7 +103,7 @@
     <Compile Include="Controller\GamepadAbstractionDatabaseTests.cs" />
     <Compile Include="Emulator\ConfigurationFlagStoreTests.cs" />
     <Compile Include="Events\SnowflakeEventManagerTests.cs" />
-    <Compile Include="Events\SnowflakeEventSourceTest.cs" />
+    <Compile Include="Events\StandardEventsTests.cs" />
     <Compile Include="Game\GameDatabaseTests.cs" />
     <Compile Include="Game\GameInfoTests.cs" />
     <Compile Include="Game\GameMediaCacheTests.cs" />

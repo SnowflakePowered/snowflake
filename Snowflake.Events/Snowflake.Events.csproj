@@ -71,7 +71,7 @@
     <Compile Include="ServiceEvents\ServerStopEventArgs.cs" />
     <Compile Include="SnowflakeEventArgs.cs" />
     <Compile Include="SnowflakeEventManager.cs" />
-    <Compile Include="SnowflakeEventSource.cs" />
+    <Compile Include="StandardEvents.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
