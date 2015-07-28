@@ -34,7 +34,7 @@ namespace Snowflake.Events
             if (SnowflakeEventManager.EventSource == null)
             {
                 SnowflakeEventManager.EventSource = new SnowflakeEventManager();
-                var stdEvents = new SnowflakeEventSource();
+                var stdEvents = new StandardEvents();
                 stdEvents.RegisterSnowflakeEvents(SnowflakeEventManager.EventSource);
             }
         }

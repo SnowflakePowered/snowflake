@@ -10,7 +10,7 @@ using Snowflake.Events.ServiceEvents;
 
 namespace Snowflake.Events
 {
-    public class SnowflakeEventSource
+    public class StandardEvents
     {
         public void RegisterSnowflakeEvents(ISnowflakeEventManager eventManager)
         {
