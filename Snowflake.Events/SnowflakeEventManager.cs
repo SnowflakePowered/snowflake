@@ -38,7 +38,11 @@ namespace Snowflake.Events
                 stdEvents.RegisterSnowflakeEvents(SnowflakeEventManager.EventSource);
             }
         }
-      
+
+        public bool Contains<T>() where T : SnowflakeEventArgs
+        {
+            return this.eventContainer.ContainsKey(typeof(T));
+        }
         public void RegisterEvent<T>(EventHandler<T> eventHandler) where T : SnowflakeEventArgs
         {
             if (!eventContainer.ContainsKey(typeof(T)))
