@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
+using Snowflake.Events;
 
 namespace Snowflake.Shell.Windows
 {
@@ -18,8 +19,11 @@ namespace Snowflake.Shell.Windows
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
             var snowflakeIcon = new ShellIcon();
+            SnowflakeEventManager.InitEventSource();
             var snowflakeShell = new SnowflakeShell();
+
             snowflakeShell.StartShell();
             snowflakeIcon.AddMenuItem("Quit Snowflake", Program.menuQuitHandler);
             snowflakeIcon.AddMenuItem("Shutdown Core", (s, e) =>
@@ -29,8 +33,7 @@ namespace Snowflake.Shell.Windows
             snowflakeIcon.AddMenuItem("Restart Core", (s, e) =>
             {
                 snowflakeShell.RestartCore();
-            }); 
-
+            });
             Application.Run();
         }
 

@@ -12,7 +12,7 @@ namespace Snowflake.Events
         public ICoreService EventCoreInstance { get; private set;}
         public bool Cancel { get; set; }
     
-        internal SnowflakeEventArgs(ICoreService eventCoreInstance){
+        public SnowflakeEventArgs(ICoreService eventCoreInstance){
             this.EventCoreInstance = eventCoreInstance;
             this.Cancel = false;
         }

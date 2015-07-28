@@ -59,13 +59,13 @@ namespace Snowflake.StandardAjax
             string gameinfo_pre = request.GetParameter("gameinfo");
             IGameInfo game = GameInfo.FromJson(JsonConvert.DeserializeObject(gameinfo_pre));
             var gamePreAddEvent = new GamePreAddEventArgs(this.CoreInstance, game, this.CoreInstance.GameDatabase);
-            SnowflakeEventSource.EventSource.OnGamePreAdd(gamePreAddEvent);
+            SnowflakeEventManager.EventSource.RaiseEvent<GamePreAddEventArgs>(gamePreAddEvent);
             if (!gamePreAddEvent.Cancel)
             {
                 game = gamePreAddEvent.GameInfo;
                 this.CoreInstance.GameDatabase.AddGame(game);
                 var gameAddEvent = new GameAddEventArgs(this.CoreInstance, game, this.CoreInstance.GameDatabase);
-                SnowflakeEventSource.EventSource.OnGameAdd(gameAddEvent);
+                SnowflakeEventManager.EventSource.RaiseEvent<GameAddEventArgs>(gameAddEvent);
 
             }
             return new JSResponse(request, "added " + game.FileName, true);
