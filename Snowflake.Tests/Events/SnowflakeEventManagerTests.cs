@@ -48,7 +48,6 @@ namespace Snowflake.Events.Test
         {
             SnowflakeEventManager.InitEventSource();
             SnowflakeEventManager.EventSource.RegisterEvent<SnowflakeEventArgs>(null);
-           
             SnowflakeEventManager.EventSource.Subscribe<SnowflakeEventArgs>(this.handleEvent);
             Assert.NotNull(SnowflakeEventManager.EventSource.GetEvent<SnowflakeEventArgs>());
             SnowflakeEventManager.EventSource.Unsubscribe<SnowflakeEventArgs>(this.handleEvent);
