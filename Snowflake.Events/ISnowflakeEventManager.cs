@@ -41,5 +41,11 @@ namespace Snowflake.Events
         /// <typeparam name="T">The event to unsubscribe from</typeparam>
         /// <param name="eventHandler">The event handler to remove</param>
         void Unsubscribe<T>(EventHandler<T> eventHandler) where T : SnowflakeEventArgs;
+
+        /// <summary>
+        /// Check if the event manager has a certain event registered
+        /// </summary>
+        /// <typeparam name="T">The event to check</typeparam>
+        bool Contains<T>() where T : SnowflakeEventArgs;
     }
 }
