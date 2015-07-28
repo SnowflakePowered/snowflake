@@ -102,6 +102,10 @@ namespace Snowflake.Emulator.Input
         public string KEY_F_10 { get; private set; }
         public string KEY_F_11 { get; private set; }
         public string KEY_F_12 { get; private set; }
+        public string MOUSE_Y_DOWN { get; private set; }
+        public string MOUSE_Y_UP { get; private set; }
+        public string MOUSE_X_LEFT { get; private set; }
+        public string MOUSE_X_RIGHT { get; private set; }
         private IDictionary<string, string> mappingData;
 
         public KeyboardMapping(IDictionary<string, string> mappingData)
@@ -201,6 +205,10 @@ namespace Snowflake.Emulator.Input
             this.KEY_F_10 = mappingData["KEY_F_10"];
             this.KEY_F_11 = mappingData["KEY_F_11"];
             this.KEY_F_12 = mappingData["KEY_F_12"];
+            this.MOUSE_Y_DOWN = mappingData["MOUSE_Y_DOWN"];
+            this.MOUSE_Y_UP = mappingData["MOUSE_Y_UP"];
+            this.MOUSE_X_LEFT = mappingData["MOUSE_X_LEFT"];
+            this.MOUSE_X_RIGHT = mappingData["MOUSE_X_RIGHT"];
         }
 
         public string this[string key]
