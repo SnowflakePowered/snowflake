@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 using Snowflake.Constants.Plugin;
 using Snowflake.Service;
 using Snowflake.Plugin;
-
+using NLog;
 namespace Snowflake.Plugin
 {
     public abstract class BasePlugin : IBasePlugin
@@ -21,16 +21,17 @@ namespace Snowflake.Plugin
         public virtual IPluginConfiguration PluginConfiguration { get; protected set; }
         public ICoreService CoreInstance { get; private set; }
         public IList<string> SupportedPlatforms { get; private set; }
+        protected ILogger Logger { get; private set; }
         protected BasePlugin(Assembly pluginAssembly, ICoreService coreInstance)
         {
             this.PluginAssembly = pluginAssembly;
             this.CoreInstance = coreInstance;
-            
             string file = this.GetStringResource("plugin.json");
             var pluginInfo = JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(file);
             this.PluginInfo = pluginInfo;
             
             this.PluginName = this.PluginInfo[PluginInfoFields.Name];
+            this.Logger = LogManager.GetLogger(this.PluginName);
             this.SupportedPlatforms = this.PluginInfo[PluginInfoFields.SupportedPlatforms].ToObject<IList<string>>();
             this.PluginDataPath = Path.Combine(coreInstance.AppDataDirectory, "plugins", PluginName);
             if (!Directory.Exists(this.PluginDataPath)) Directory.CreateDirectory(this.PluginDataPath);
