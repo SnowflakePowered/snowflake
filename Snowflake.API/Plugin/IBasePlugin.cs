@@ -54,6 +54,10 @@ namespace Snowflake.Plugin
         /// The IPluginConfiguration configuration associated with this plugin.
         /// This is null unless it has been initialized by the plugin.
         /// </summary>
-        IPluginConfiguration PluginConfiguration { get; }        
+        IPluginConfiguration PluginConfiguration { get; }
+        /// <summary>
+        /// A list of options exposed to the frontend. This writes to PluginConfiguration on save.
+        /// </summary>
+        IList<IPluginConfigOption> PluginConfigurationOptions { get; }
     }
 }

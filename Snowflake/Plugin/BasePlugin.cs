@@ -20,6 +20,7 @@ namespace Snowflake.Plugin
         public Assembly PluginAssembly { get; private set; }
         public string PluginDataPath { get; private set; }
         public virtual IPluginConfiguration PluginConfiguration { get; protected set; }
+        public virtual IList<IPluginConfigOption> PluginConfigurationOptions { get; protected set; }
         public ICoreService CoreInstance { get; private set; }
         public IList<string> SupportedPlatforms { get; private set; }
         protected ILogger Logger { get; private set; }
@@ -37,7 +38,10 @@ namespace Snowflake.Plugin
             this.PluginDataPath = Path.Combine(coreInstance.AppDataDirectory, "plugins", PluginName);
             if (!Directory.Exists(this.PluginDataPath)) Directory.CreateDirectory(this.PluginDataPath);
         }
-
+        public void LoadConfigurationOptions()
+        {
+            this.PluginConfigurationOptions = new List<IPluginConfigOption>();
+        }
         public Stream GetResource(string resourceName)
         {
             return this.PluginAssembly.GetManifestResourceStream(this.PluginAssembly.GetName().Name + ".resource." + resourceName);
