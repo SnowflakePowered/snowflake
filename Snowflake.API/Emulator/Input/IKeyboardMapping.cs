@@ -101,6 +101,10 @@ namespace Snowflake.Emulator.Input
         string KEY_X { get; }
         string KEY_Y { get; }
         string KEY_Z { get; }
+        string MOUSE_Y_DOWN { get; }
+        string MOUSE_Y_UP { get; }
+        string MOUSE_X_LEFT { get; }
+        string MOUSE_X_RIGHT { get; }
         string this[string key] { get; }
     }
 }
