@@ -31,12 +31,12 @@ namespace Snowflake.Emulator.Input
             this.templateKeys = templateKeys;
         }
 
-        public static IInputTemplate FromJsonProtoTemplate(IDictionary<string, dynamic> protoTemplate)
+        public static IInputTemplate FromJsonProtoTemplate(IDictionary<string, dynamic> protoTemplate, EmulatorBridge bridge)
         {
-            string template = protoTemplate["template"];
             IList<string> templateKeys = protoTemplate["templatekeys"].ToObject<IList<string>>();
             string nobind = protoTemplate["nobind"];
             string name = protoTemplate["name"];
+            string template = bridge.GetStringResource(name + ".template");
             IDictionary<string, IGamepadMapping> gamepadMappings = new Dictionary<string, IGamepadMapping>();
             IDictionary<string, IKeyboardMapping> keyboardMappings = new Dictionary<string, IKeyboardMapping>();
 
