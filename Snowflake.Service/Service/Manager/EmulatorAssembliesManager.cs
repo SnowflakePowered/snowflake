@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Snowflake.Extensions;
 using Snowflake.Emulator;
 using System.IO;
-using SharpYaml.Serialization;
+using Newtonsoft.Json;
 
 namespace Snowflake.Service.Manager
 {
@@ -26,7 +26,7 @@ namespace Snowflake.Service.Manager
             if (!Directory.Exists(this.AssembliesLocation)) Directory.CreateDirectory(this.AssembliesLocation);
             foreach (string fileName in Directory.GetFiles(this.AssembliesLocation))
             {
-                if (!(Path.GetExtension(fileName) == ".yml")) continue;
+                if (!(Path.GetExtension(fileName) == ".emulatordef")) continue;
                 
                 var emulatorCore = EmulatorAssembliesManager.ParseEmulatorAssembly(fileName);
                 this.emulatorAssemblies.Add(emulatorCore.EmulatorID, emulatorCore);
@@ -37,7 +37,7 @@ namespace Snowflake.Service.Manager
         }
         public static IEmulatorAssembly ParseEmulatorAssembly(string emulatorCorePath)
         {
-            var emulator = new Serializer().Deserialize<Dictionary<string, dynamic>>(File.ReadAllText(emulatorCorePath));
+            var emulator = JsonConvert.DeserializeObject<IDictionary<string, string>>(File.ReadAllText(emulatorCorePath));
             return EmulatorAssembly.FromJsonProtoTemplate(emulator);
         }
 
