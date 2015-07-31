@@ -106,6 +106,12 @@ namespace Snowflake.Emulator.Input
         public string MOUSE_Y_UP { get; private set; }
         public string MOUSE_X_LEFT { get; private set; }
         public string MOUSE_X_RIGHT { get; private set; }
+        public string MOUSE_LCLICK { get; private set; }
+        public string MOUSE_RCLICK { get; private set; }
+        public string MOUSE_MCLICK { get; private set; }
+        public string MOUSE_WHEELUP { get; private set; }
+        public string MOUSE_WHEELDOWN { get; private set; }
+
         private IDictionary<string, string> mappingData;
 
         public KeyboardMapping(IDictionary<string, string> mappingData)
@@ -209,6 +215,11 @@ namespace Snowflake.Emulator.Input
             this.MOUSE_Y_UP = mappingData["MOUSE_Y_UP"];
             this.MOUSE_X_LEFT = mappingData["MOUSE_X_LEFT"];
             this.MOUSE_X_RIGHT = mappingData["MOUSE_X_RIGHT"];
+            this.MOUSE_LCLICK = mappingData["MOUSE_LCLICK"];
+            this.MOUSE_RCLICK = mappingData["MOUSE_RCLICK"];
+            this.MOUSE_MCLICK = mappingData["MOUSE_MCLICK"];
+            this.MOUSE_WHEELUP = mappingData["MOUSE_WHEELUP"];
+            this.MOUSE_WHEELDOWN = mappingData["MOUSE_WHEELDOWN"];
         }
 
         public string this[string key]
