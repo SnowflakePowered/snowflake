@@ -26,7 +26,7 @@ install:
     - nuget restore
 after_build:
     - echo Generating Sandcastle documentation
-    - msbuild "C:\projects\snowflake\snowflake.shfbproj"
+    - msbuild "C:\projects\snowflake\Snowflake.Documentation.shfbproj"
 after_test:
     - echo Generating Code Coverage Report
     - packages\OpenCover.4.5.4107-rc122\OpenCover.Console.exe -register:user -filter:"+[Snowflake*]*" -target:"packages\xunit.runner.console.2.1.0-beta2-build2981\tools\xunit.console.exe" -targetargs:"Snowflake.Tests\bin\%CONFIGURATION%\Snowflake.Tests.dll -noshadow" -output:coverage.xml
