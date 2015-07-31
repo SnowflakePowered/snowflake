@@ -19,7 +19,7 @@ environment:
       secure: nBi3LwnqgslaH8hbsvjnWTqpe/UbKn705TJujxqJwtcL5OLGfcydM8AnVyld6Ngu
 install:
     - nuget update -self
-    - choco install -y sandcastle
+    - choco install -y sandcastle -version 2015.5.2.0 
     - nuget restore
 after_build:
     - echo Generating Sandcastle documentation
