@@ -56,6 +56,9 @@
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog.4.0.1\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="SharpYaml, Version=1.4.0.43042, Culture=neutral, PublicKeyToken=1ced8108e942bc02, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpYaml.1.4.0\lib\SharpYaml.dll</HintPath>
       <Private>True</Private>
@@ -108,7 +111,6 @@
     <Compile Include="Platform\PlatformControllerPorts.cs" />
     <Compile Include="Platform\PlatformPreferencesDatabase.cs" />
     <Compile Include="Plugin\BasePlugin.cs" />
-    <Compile Include="Plugin\YamlConfiguration.cs" />
     <Compile Include="Emulator\Configuration\ConfigurationStore.cs" />
     <Compile Include="Emulator\Configuration\ConfigurationFlag.cs" />
     <Compile Include="Emulator\Input\ControllerMapping.cs" />
@@ -117,6 +119,7 @@
     <Compile Include="Extensions\JObjectExts.cs" />
     <Compile Include="Controller\ControllerPortsDatabase.cs" />
     <Compile Include="Controller\ControllerDefinition.cs" />
+    <Compile Include="Plugin\YamlConfiguration.cs" />
     <Compile Include="Scraper\BaseScraper.cs" />
     <Compile Include="Scraper\GameImagesResult.cs" />
     <Compile Include="Scraper\GameScrapeResult.cs" />
@@ -142,6 +145,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

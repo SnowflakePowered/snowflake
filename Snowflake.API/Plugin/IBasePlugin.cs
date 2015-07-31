@@ -3,6 +3,7 @@ using System.Reflection;
 using Snowflake.Service;
 using System.IO;
 using System;
+using Snowflake.Plugin.Configuration;
 namespace Snowflake.Plugin
 {
     /// <summary>
@@ -53,6 +54,10 @@ namespace Snowflake.Plugin
         /// The IPluginConfiguration configuration associated with this plugin.
         /// This is null unless it has been initialized by the plugin.
         /// </summary>
-        IPluginConfiguration PluginConfiguration { get; }        
+        IPluginConfiguration PluginConfiguration { get; }
+        /// <summary>
+        /// A list of options exposed to the frontend. This writes to PluginConfiguration on save.
+        /// </summary>
+        IList<IPluginConfigOption> PluginConfigurationOptions { get; }
     }
 }

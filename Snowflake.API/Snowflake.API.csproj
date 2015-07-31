@@ -101,6 +101,9 @@
     <Compile Include="Platform\IPlatformControllerPorts.cs" />
     <Compile Include="Platform\IPlatformPreferenceDatabase.cs" />
     <Compile Include="Platform\StonePlatforms.cs" />
+    <Compile Include="Plugin\Configuration\IPluginConfigOption.cs" />
+    <Compile Include="Plugin\Configuration\IPluginSelectOption.cs" />
+    <Compile Include="Plugin\Configuration\PluginOptionType.cs" />
     <Compile Include="Scraper\ImagesInfoFields.cs" />
     <Compile Include="Controller\ControllerProfileType.cs" />
     <Compile Include="Controller\IControllerDefinition.cs" />
@@ -136,7 +139,7 @@
     <Compile Include="Information\MediaStore\IMediaStoreSection.cs" />
     <Compile Include="Platform\IPlatformDefaults.cs" />
     <Compile Include="Platform\IPlatformInfo.cs" />
-    <Compile Include="Plugin\IPluginConfiguration.cs" />
+    <Compile Include="Plugin\Configuration\IPluginConfiguration.cs" />
     <Compile Include="Plugin\IBasePlugin.cs" />
     <Compile Include="Plugin\IGeneralPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
