@@ -19,11 +19,11 @@ environment:
       secure: nBi3LwnqgslaH8hbsvjnWTqpe/UbKn705TJujxqJwtcL5OLGfcydM8AnVyld6Ngu
 install:
     - nuget update -self
-    - choco install -y doxygen.portable
+    - choco install -y sandcastle
     - nuget restore
 after_build:
-    - echo Generating doxygen documentation
-    - doxygen.exe "C:\projects\snowflake\snowflake.doxygen" > nul 2>&1
+    - echo Generating Sandcastle documentation
+    - msbuild "C:\projects\snowflake\snowflake.shfbproj"
 after_test:
     - echo Generating Code Coverage Report
     - packages\OpenCover.4.5.4107-rc122\OpenCover.Console.exe -register:user -filter:"+[Snowflake*]*" -target:"packages\xunit.runner.console.2.1.0-beta2-build2981\tools\xunit.console.exe" -targetargs:"Snowflake.Tests\bin\%CONFIGURATION%\Snowflake.Tests.dll -noshadow" -output:coverage.xml
@@ -39,8 +39,8 @@ artifacts:
     - path: Snowflake\bin\$(configuration)
       name: Snowflake Base Libraries
       type: zip
-    - path: doc
-      name: Generated doxygen documentation
+    - path: Help
+      name: Generated Documentation
       type: zip
     - path: 'Snowflake\Snowflake.{version}-pre-alpha-nightly.nupkg'
       name: Snowflake NuGet Packages
