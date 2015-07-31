@@ -29,14 +29,13 @@ namespace Snowflake.Emulator.Configuration
             this.ConfigurationStore = new ConfigurationStore(this.GetDefaultProfile());
         }
 
-        public static IConfigurationTemplate FromJsonProtoTemplate(IDictionary<string, dynamic> protoTemplate)
+        public static IConfigurationTemplate FromJsonProtoTemplate(IDictionary<string, dynamic> protoTemplate, EmulatorBridge bridge)
         {
-            
-            string stringTemplate = protoTemplate["template"];
             var booleanMapping = new BooleanMapping((string)protoTemplate["boolean"]["true"], (string)protoTemplate["boolean"]["false"]);
             var entries = new List<IConfigurationEntry>();
             var fileName = protoTemplate["filename"];
             var configName = protoTemplate["templateid"];
+            string stringTemplate = bridge.GetStringResource(configName + ".template");
             var defaults = new Dictionary<string, dynamic>();
            
             foreach (var value in protoTemplate["keys"])
