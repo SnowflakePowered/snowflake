@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using Snowflake.Constants.Plugin;
 using Snowflake.Service;
 using Snowflake.Plugin;
+using Snowflake.Plugin.Configuration;
 using NLog;
 namespace Snowflake.Plugin
 {
@@ -41,7 +42,6 @@ namespace Snowflake.Plugin
         {
             return this.PluginAssembly.GetManifestResourceStream(this.PluginAssembly.GetName().Name + ".resource." + resourceName);
         }
-
         public string GetStringResource(string resourceName)
         {
             using (Stream stream = this.GetResource(resourceName))
@@ -54,7 +54,10 @@ namespace Snowflake.Plugin
 
         public virtual void Dispose()
         {
-
+            if (this.PluginConfiguration != null)
+            {
+                this.PluginConfiguration.SaveConfiguration();
+            }
         }
     }
 }

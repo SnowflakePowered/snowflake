@@ -3,6 +3,7 @@ using System.Reflection;
 using Snowflake.Service;
 using System.IO;
 using System;
+using Snowflake.Plugin.Configuration;
 namespace Snowflake.Plugin
 {
     /// <summary>

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Dynamic;
 
-namespace Snowflake.Plugin
+namespace Snowflake.Plugin.Configuration
 {
     /// <summary>
     /// Represents a configuration file a plugin can access.

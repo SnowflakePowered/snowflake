@@ -111,7 +111,6 @@
     <Compile Include="Platform\PlatformControllerPorts.cs" />
     <Compile Include="Platform\PlatformPreferencesDatabase.cs" />
     <Compile Include="Plugin\BasePlugin.cs" />
-    <Compile Include="Plugin\YamlConfiguration.cs" />
     <Compile Include="Emulator\Configuration\ConfigurationStore.cs" />
     <Compile Include="Emulator\Configuration\ConfigurationFlag.cs" />
     <Compile Include="Emulator\Input\ControllerMapping.cs" />
@@ -120,6 +119,7 @@
     <Compile Include="Extensions\JObjectExts.cs" />
     <Compile Include="Controller\ControllerPortsDatabase.cs" />
     <Compile Include="Controller\ControllerDefinition.cs" />
+    <Compile Include="Plugin\YamlConfiguration.cs" />
     <Compile Include="Scraper\BaseScraper.cs" />
     <Compile Include="Scraper\GameImagesResult.cs" />
     <Compile Include="Scraper\GameScrapeResult.cs" />

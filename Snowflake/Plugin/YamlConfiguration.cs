@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Dynamic;
 using SharpYaml.Serialization;
 using System.IO;
+using Snowflake.Plugin.Configuration;
 
 namespace Snowflake.Plugin
 {
