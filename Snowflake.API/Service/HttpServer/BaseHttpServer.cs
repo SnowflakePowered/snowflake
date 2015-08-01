@@ -7,7 +7,6 @@ using Mono.Net;
 using System.Threading;
 namespace Snowflake.Service.HttpServer
 {
-    /// <inheritdoc/>
     public abstract class BaseHttpServer : IBaseHttpServer
     {
         HttpListener serverListener;

@@ -191,3 +191,6 @@ Snowflake*.nupkg
 !SQLite.Interop.dll
 cov-int
 cov-int.*
+Help/
+comments.xml
+documentation.xml
