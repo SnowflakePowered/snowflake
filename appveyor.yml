@@ -43,7 +43,7 @@ artifacts:
       name: Snowflake Base Libraries
       type: zip
     - path: Help
-      name: Generated Documentation
+      name: Snowflake.Documentation
       type: zip
     - path: 'Snowflake\Snowflake.{version}-pre-alpha-nightly.nupkg'
       name: Snowflake NuGet Packages
