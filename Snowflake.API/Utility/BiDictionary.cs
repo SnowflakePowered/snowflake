@@ -21,35 +21,17 @@ namespace Snowflake.Utility
             this._reverseDictionary = new ReverseDictionary(this);
         }
 
-        public IDictionary<TSecond, TFirst> Reverse
-        {
-            get { return this._reverseDictionary; }
-        }
+        public IDictionary<TSecond, TFirst> Reverse => this._reverseDictionary;
 
-        public int Count
-        {
-            get { return this._firstToSecond.Count; }
-        }
+        public int Count => this._firstToSecond.Count;
 
-        object ICollection.SyncRoot
-        {
-            get { return ((ICollection) this._firstToSecond).SyncRoot; }
-        }
+        object ICollection.SyncRoot => ((ICollection) this._firstToSecond).SyncRoot;
 
-        bool ICollection.IsSynchronized
-        {
-            get { return ((ICollection) this._firstToSecond).IsSynchronized; }
-        }
+        bool ICollection.IsSynchronized => ((ICollection) this._firstToSecond).IsSynchronized;
 
-        bool IDictionary.IsFixedSize
-        {
-            get { return ((IDictionary) this._firstToSecond).IsFixedSize; }
-        }
+        bool IDictionary.IsFixedSize => ((IDictionary) this._firstToSecond).IsFixedSize;
 
-        public bool IsReadOnly
-        {
-            get { return this._firstToSecond.IsReadOnly || this._secondToFirst.IsReadOnly; }
-        }
+        public bool IsReadOnly => this._firstToSecond.IsReadOnly || this._secondToFirst.IsReadOnly;
 
         public TSecond this[TFirst key]
         {
@@ -71,35 +53,17 @@ namespace Snowflake.Utility
             }
         }
 
-        public ICollection<TFirst> Keys
-        {
-            get { return this._firstToSecond.Keys; }
-        }
+        public ICollection<TFirst> Keys => this._firstToSecond.Keys;
 
-        ICollection IDictionary.Keys
-        {
-            get { return ((IDictionary) this._firstToSecond).Keys; }
-        }
+        ICollection IDictionary.Keys => ((IDictionary) this._firstToSecond).Keys;
 
-        IEnumerable<TFirst> IReadOnlyDictionary<TFirst, TSecond>.Keys
-        {
-            get { return ((IReadOnlyDictionary<TFirst, TSecond>) this._firstToSecond).Keys; }
-        }
+        IEnumerable<TFirst> IReadOnlyDictionary<TFirst, TSecond>.Keys => ((IReadOnlyDictionary<TFirst, TSecond>) this._firstToSecond).Keys;
 
-        public ICollection<TSecond> Values
-        {
-            get { return this._firstToSecond.Values; }
-        }
+        public ICollection<TSecond> Values => this._firstToSecond.Values;
 
-        ICollection IDictionary.Values
-        {
-            get { return ((IDictionary) this._firstToSecond).Values; }
-        }
+        ICollection IDictionary.Values => ((IDictionary) this._firstToSecond).Values;
 
-        IEnumerable<TSecond> IReadOnlyDictionary<TFirst, TSecond>.Values
-        {
-            get { return ((IReadOnlyDictionary<TFirst, TSecond>) this._firstToSecond).Values; }
-        }
+        IEnumerable<TSecond> IReadOnlyDictionary<TFirst, TSecond>.Values => ((IReadOnlyDictionary<TFirst, TSecond>) this._firstToSecond).Values;
 
         public IEnumerator<KeyValuePair<TFirst, TSecond>> GetEnumerator()
         {
@@ -215,30 +179,15 @@ namespace Snowflake.Utility
                 this._owner = owner;
             }
 
-            public int Count
-            {
-                get { return this._owner._secondToFirst.Count; }
-            }
+            public int Count => this._owner._secondToFirst.Count;
 
-            object ICollection.SyncRoot
-            {
-                get { return ((ICollection) this._owner._secondToFirst).SyncRoot; }
-            }
+            object ICollection.SyncRoot => ((ICollection) this._owner._secondToFirst).SyncRoot;
 
-            bool ICollection.IsSynchronized
-            {
-                get { return ((ICollection) this._owner._secondToFirst).IsSynchronized; }
-            }
+            bool ICollection.IsSynchronized => ((ICollection) this._owner._secondToFirst).IsSynchronized;
 
-            bool IDictionary.IsFixedSize
-            {
-                get { return ((IDictionary) this._owner._secondToFirst).IsFixedSize; }
-            }
+            bool IDictionary.IsFixedSize => ((IDictionary) this._owner._secondToFirst).IsFixedSize;
 
-            public bool IsReadOnly
-            {
-                get { return this._owner._secondToFirst.IsReadOnly || this._owner._firstToSecond.IsReadOnly; }
-            }
+            public bool IsReadOnly => this._owner._secondToFirst.IsReadOnly || this._owner._firstToSecond.IsReadOnly;
 
             public TFirst this[TSecond key]
             {
@@ -260,35 +209,17 @@ namespace Snowflake.Utility
                 }
             }
 
-            public ICollection<TSecond> Keys
-            {
-                get { return this._owner._secondToFirst.Keys; }
-            }
+            public ICollection<TSecond> Keys => this._owner._secondToFirst.Keys;
 
-            ICollection IDictionary.Keys
-            {
-                get { return ((IDictionary) this._owner._secondToFirst).Keys; }
-            }
+            ICollection IDictionary.Keys => ((IDictionary) this._owner._secondToFirst).Keys;
 
-            IEnumerable<TSecond> IReadOnlyDictionary<TSecond, TFirst>.Keys
-            {
-                get { return ((IReadOnlyDictionary<TSecond, TFirst>) this._owner._secondToFirst).Keys; }
-            }
+            IEnumerable<TSecond> IReadOnlyDictionary<TSecond, TFirst>.Keys => ((IReadOnlyDictionary<TSecond, TFirst>) this._owner._secondToFirst).Keys;
 
-            public ICollection<TFirst> Values
-            {
-                get { return this._owner._secondToFirst.Values; }
-            }
+            public ICollection<TFirst> Values => this._owner._secondToFirst.Values;
 
-            ICollection IDictionary.Values
-            {
-                get { return ((IDictionary) this._owner._secondToFirst).Values; }
-            }
+            ICollection IDictionary.Values => ((IDictionary) this._owner._secondToFirst).Values;
 
-            IEnumerable<TFirst> IReadOnlyDictionary<TSecond, TFirst>.Values
-            {
-                get { return ((IReadOnlyDictionary<TSecond, TFirst>) this._owner._secondToFirst).Values; }
-            }
+            IEnumerable<TFirst> IReadOnlyDictionary<TSecond, TFirst>.Values => ((IReadOnlyDictionary<TSecond, TFirst>) this._owner._secondToFirst).Values;
 
             public IEnumerator<KeyValuePair<TSecond, TFirst>> GetEnumerator()
             {

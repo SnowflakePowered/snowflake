@@ -13,7 +13,7 @@ namespace Snowflake.Information.MediaStore
     public sealed class FileMediaStoreSection : IMediaStoreSection
     {
         public string SectionName { get; set; }
-        public IReadOnlyDictionary<string, string> MediaStoreItems { get { return this.mediaStoreItems.AsReadOnly(); } }
+        public IReadOnlyDictionary<string, string> MediaStoreItems => this.mediaStoreItems.AsReadOnly();
         private IDictionary<string, string> mediaStoreItems;
 
         private string mediaStoreRoot;

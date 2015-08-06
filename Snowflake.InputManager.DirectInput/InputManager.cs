@@ -22,15 +22,17 @@ namespace Snowflake.InputManager
             {
                 var gamepadDevice = new Joystick(directInput, device.InstanceGuid);
 
-                var info = new InputDevice();
-                info.DeviceIndex = i;
-                info.DI_InstanceGUID = gamepadDevice.Information.InstanceGuid.ToString();
-                info.DI_InstanceName = gamepadDevice.Information.InstanceName;
-                info.DI_InterfacePath = gamepadDevice.Properties.InterfacePath;
-                info.DI_ProductGUID = gamepadDevice.Information.ProductGuid.ToString();
-                info.DI_ProductID = gamepadDevice.Properties.ProductId;
-                info.DI_JoystickID = gamepadDevice.Properties.JoystickId;
-                info.DI_ProductName = gamepadDevice.Information.ProductName;
+                var info = new InputDevice
+                {
+                    DeviceIndex = i,
+                    DI_InstanceGUID = gamepadDevice.Information.InstanceGuid.ToString(),
+                    DI_InstanceName = gamepadDevice.Information.InstanceName,
+                    DI_InterfacePath = gamepadDevice.Properties.InterfacePath,
+                    DI_ProductGUID = gamepadDevice.Information.ProductGuid.ToString(),
+                    DI_ProductID = gamepadDevice.Properties.ProductId,
+                    DI_JoystickID = gamepadDevice.Properties.JoystickId,
+                    DI_ProductName = gamepadDevice.Information.ProductName
+                };
 
                 if (info.DI_InterfacePath.Contains("IG_", StringComparison.OrdinalIgnoreCase))
                 {

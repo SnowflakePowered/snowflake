@@ -61,7 +61,7 @@ namespace Snowflake.Utility.Hash
             return hashBuffer;
         }
 
-        public override int HashSize { get { return 32; } }
+        public override int HashSize => 32;
 
         public static UInt32 Compute(byte[] buffer)
         {

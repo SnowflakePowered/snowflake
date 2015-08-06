@@ -15,7 +15,7 @@ namespace Snowflake.Emulator.Configuration
         public string StringTemplate { get; set; }
         private IList<IConfigurationEntry> configurationEntries;
         public string TemplateID { get; }
-        public IList<IConfigurationEntry> ConfigurationEntries { get { return this.configurationEntries.AsReadOnly(); } }
+        public IList<IConfigurationEntry> ConfigurationEntries => this.configurationEntries.AsReadOnly();
         public string FileName { get; }
         public IBooleanMapping BooleanMapping { get; }
         public IConfigurationStore ConfigurationStore { get; }

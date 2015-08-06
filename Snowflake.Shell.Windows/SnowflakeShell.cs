@@ -13,13 +13,7 @@ namespace Snowflake.Shell.Windows
 {
     internal class SnowflakeShell
     {
-        string ShellRoot
-        {
-            get
-            {
-                return Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "electron");
-            }
-        }
+        string ShellRoot => Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "electron");
         Process currentShellInstance;
         internal SnowflakeShell()
         {

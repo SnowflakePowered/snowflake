@@ -39,13 +39,8 @@ namespace Snowflake.Service.Manager
         {
             return this.servers[serverName];
         }
-        public IBaseHttpServer this[string serverName]
-        {
-            get
-            {
-                return this.GetServer(serverName);
-            }
-        }
+        public IBaseHttpServer this[string serverName] => this.GetServer(serverName);
+
         public void Dispose()
         {
             foreach (var server in this.RegisteredServers)

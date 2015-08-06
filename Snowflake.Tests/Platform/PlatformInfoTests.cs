@@ -31,18 +31,10 @@ namespace Snowflake.Platform.Tests
             Assert.Equal(platformId, platform.PlatformID);
         }
 
-        public static IEnumerable<object[]> TestedPlatforms
+        public static IEnumerable<object[]> TestedPlatforms => new[]
         {
-            get
-            {
-                // Or this could read from a file. :)
-                return new[]
-                {
-                    new object[] { StonePlatforms.NINTENDO_NES },
-                    new object[] { StonePlatforms.NINTENDO_SNES }
-                };
-            }
-        }
-
+            new object[] { StonePlatforms.NINTENDO_NES },
+            new object[] { StonePlatforms.NINTENDO_SNES }
+        };
     }
 }

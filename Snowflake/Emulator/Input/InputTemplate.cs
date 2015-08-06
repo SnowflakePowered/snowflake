@@ -11,13 +11,13 @@ namespace Snowflake.Emulator.Input
     public class InputTemplate : IInputTemplate
     {
         public string StringTemplate { get; }
-        public IReadOnlyList<string> TemplateKeys { get { return this.templateKeys.AsReadOnly(); } }
+        public IReadOnlyList<string> TemplateKeys => this.templateKeys.AsReadOnly();
         private IList<string> templateKeys;
         public string NoBind { get; }
         public string Name { get; }
-        public IReadOnlyDictionary<string, IGamepadMapping> GamepadMappings { get { return this.gamepadMappings.AsReadOnly(); } }
+        public IReadOnlyDictionary<string, IGamepadMapping> GamepadMappings => this.gamepadMappings.AsReadOnly();
         private IDictionary<string, IGamepadMapping> gamepadMappings;
-        public IReadOnlyDictionary<string, IKeyboardMapping> KeyboardMappings { get { return this.keyboardMappings.AsReadOnly(); } }
+        public IReadOnlyDictionary<string, IKeyboardMapping> KeyboardMappings => this.keyboardMappings.AsReadOnly();
         private IDictionary<string, IKeyboardMapping> keyboardMappings;
 
 

@@ -25,13 +25,7 @@ namespace Snowflake.Game
         }
         public GameScreenshotCache(string cacheKey) : this(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Snowflake", "screenshots"), cacheKey) { }
         public string RootPath { get; }
-        public IReadOnlyList<string> ScreenshotCollection
-        {
-            get
-            {
-                return this.screenshotCollection.AsReadOnly();
-            }
-        }
+        public IReadOnlyList<string> ScreenshotCollection => this.screenshotCollection.AsReadOnly();
         private IList<string> screenshotCollection;
         private string registerFile;
         private void LoadScreenshotCollection()

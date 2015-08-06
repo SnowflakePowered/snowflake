@@ -10,22 +10,13 @@ namespace Snowflake.Information.MediaStore
     public class FileMediaStore : IMediaStore
     {
         private Dictionary<string, IMediaStoreSection> sections;
-        public IMediaStoreSection Images
-        {
-            get { return this.sections["Images"]; }
-        }
-        public IMediaStoreSection Audio
-        {
-            get { return this.sections["Audio"]; }
-        }
-        public IMediaStoreSection Video
-        {
-            get { return this.sections["Video"]; }
-        }
-        public IMediaStoreSection Resources
-        {
-            get { return this.sections["Resources"]; }
-        }
+        public IMediaStoreSection Images => this.sections["Images"];
+
+        public IMediaStoreSection Audio => this.sections["Audio"];
+
+        public IMediaStoreSection Video => this.sections["Video"];
+
+        public IMediaStoreSection Resources => this.sections["Resources"];
         public string MediaStoreKey { get; }
         public string MediaStoreRoot { get; private set; }
         public FileMediaStore(string mediastoreKey, string mediastoreRoot)

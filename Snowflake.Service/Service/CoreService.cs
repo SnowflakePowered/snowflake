@@ -34,7 +34,7 @@ namespace Snowflake.Service
         public IAjaxManager AjaxManager { get; }
         public IGameDatabase GameDatabase { get; }
         public IGamepadAbstractionDatabase GamepadAbstractionDatabase { get; }
-        public IInputManager InputManager { get { return new InputManager.InputManager(); } }
+        public IInputManager InputManager => new InputManager.InputManager();
         public IControllerPortsDatabase ControllerPortsDatabase { get; }
         public IPlatformPreferenceDatabase PlatformPreferenceDatabase { get; private set; }
         public IEmulatorAssembliesManager EmulatorManager { get; private set; }

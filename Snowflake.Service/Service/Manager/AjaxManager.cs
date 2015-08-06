@@ -19,11 +19,13 @@ namespace Snowflake.Service.Manager
     {
         public string LoadablesLocation { get; }
         private IDictionary<string, Type> registry;
-        public IReadOnlyDictionary<string, Type> Registry { get { return this.registry.AsReadOnly(); } }
+        public IReadOnlyDictionary<string, Type> Registry => this.registry.AsReadOnly();
+
         [ImportMany(typeof(IBaseAjaxNamespace))]
         IEnumerable<Lazy<IBaseAjaxNamespace>> ajaxNamespaces;
         private IDictionary<string, IBaseAjaxNamespace> globalNamespace;
-        public IReadOnlyDictionary<string, IBaseAjaxNamespace> GlobalNamespace { get { return this.globalNamespace.AsReadOnly(); } }
+        public IReadOnlyDictionary<string, IBaseAjaxNamespace> GlobalNamespace => this.globalNamespace.AsReadOnly();
+
         public AjaxManager(string loadablesLocation)
         {
             this.globalNamespace = new Dictionary<string, IBaseAjaxNamespace>();

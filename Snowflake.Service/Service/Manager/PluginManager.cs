@@ -20,7 +20,8 @@ namespace Snowflake.Service.Manager
         public string LoadablesLocation { get; }
 
         private IDictionary<string, Type> registry;
-        public IReadOnlyDictionary<string, Type> Registry { get { return this.registry.AsReadOnly(); } }
+        public IReadOnlyDictionary<string, Type> Registry => this.registry.AsReadOnly();
+
         [ImportMany(typeof(IIdentifier))]
         IEnumerable<Lazy<IIdentifier>> identifiers;
         [ImportMany(typeof(IEmulatorBridge))]
@@ -38,10 +39,10 @@ namespace Snowflake.Service.Manager
         private IDictionary<string, IGeneralPlugin> loadedPlugins;
         private CompositionContainer container;
 
-        public IReadOnlyDictionary<string, IIdentifier> LoadedIdentifiers { get { return this.loadedIdentifiers.AsReadOnly(); } }
-        public IReadOnlyDictionary<string, IEmulatorBridge> LoadedEmulators { get { return this.loadedEmulators.AsReadOnly(); } }
-        public IReadOnlyDictionary<string, IScraper> LoadedScrapers { get { return this.loadedScrapers.AsReadOnly(); } }
-        public IReadOnlyDictionary<string, IGeneralPlugin> LoadedPlugins { get { return this.loadedPlugins.AsReadOnly(); } }
+        public IReadOnlyDictionary<string, IIdentifier> LoadedIdentifiers => this.loadedIdentifiers.AsReadOnly();
+        public IReadOnlyDictionary<string, IEmulatorBridge> LoadedEmulators => this.loadedEmulators.AsReadOnly();
+        public IReadOnlyDictionary<string, IScraper> LoadedScrapers => this.loadedScrapers.AsReadOnly();
+        public IReadOnlyDictionary<string, IGeneralPlugin> LoadedPlugins => this.loadedPlugins.AsReadOnly();
 
         public PluginManager(string loadablesLocation)
         {

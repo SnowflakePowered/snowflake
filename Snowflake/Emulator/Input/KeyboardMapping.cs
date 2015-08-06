@@ -222,9 +222,6 @@ namespace Snowflake.Emulator.Input
             this.MOUSE_WHEELDOWN = mappingData["MOUSE_WHEELDOWN"];
         }
 
-        public string this[string key]
-        {
-            get { return this.mappingData[key]; }
-        }
+        public string this[string key] => this.mappingData[key];
     }
 }

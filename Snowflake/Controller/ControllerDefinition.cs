@@ -10,7 +10,7 @@ namespace Snowflake.Controller
 {
     public class ControllerDefinition : IControllerDefinition
     {
-        public IReadOnlyDictionary<string, IControllerInput> ControllerInputs { get { return this.controllerInputs.AsReadOnly(); } }
+        public IReadOnlyDictionary<string, IControllerInput> ControllerInputs => this.controllerInputs.AsReadOnly();
         private IDictionary<string, IControllerInput> controllerInputs;
         public string ControllerID { get; }
         public ControllerDefinition(IDictionary<string, IControllerInput> controllerInputs, string controllerId)

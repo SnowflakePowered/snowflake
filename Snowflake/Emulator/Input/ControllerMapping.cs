@@ -10,7 +10,7 @@ namespace Snowflake.Emulator.Input
     {
         public ControllerMappingType MappingType { get; }
         public IDictionary<string, string> KeyMappings { get; }
-        public IReadOnlyDictionary<string, string> InputMappings { get { return this.inputMappings.AsReadOnly(); } }
+        public IReadOnlyDictionary<string, string> InputMappings => this.inputMappings.AsReadOnly();
         private IDictionary<string, string> inputMappings;
 
         public ControllerMapping(ControllerMappingType mappingType, IDictionary<string, string> keyMappings, IDictionary<string, string> inputMappings)

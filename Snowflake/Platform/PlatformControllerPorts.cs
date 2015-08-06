@@ -40,13 +40,8 @@ namespace Snowflake.Platform
                     throw new ArgumentOutOfRangeException("Snowflake only supports ports 1 to 8");
             }
         }
-        public string this[int portNumber]
-        {
-            get
-            {
-                return this.GetPort(portNumber);
-            }
-        }
+        public string this[int portNumber] => this.GetPort(portNumber);
+
         internal static IPlatformControllerPorts ParseControllerPorts(IDictionary<string, string> portsDictionary)
         {
             var controllerPorts = new PlatformControllerPorts();

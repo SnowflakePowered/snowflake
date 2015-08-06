@@ -63,8 +63,6 @@ namespace Snowflake.Emulator.Input
             this.GAMEPAD_DPAD_LEFT = mappingData["GAMEPAD_DPAD_LEFT"];
             this.GAMEPAD_DPAD_RIGHT = mappingData["GAMEPAD_DPAD_RIGHT"];
         }
-        public string this[string key] {
-            get { return this.mappingData[key]; }
-        }
+        public string this[string key] => this.mappingData[key];
     }
 }

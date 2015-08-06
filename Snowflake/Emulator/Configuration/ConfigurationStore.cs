@@ -60,13 +60,7 @@ namespace Snowflake.Emulator.Configuration
                 return ConfigurationProfile.FromJsonProtoTemplate(JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(File.ReadAllText(fileName)));
             }
         }
-        public IConfigurationProfile this[IGameInfo gameInfo]
-        {
-            get
-            {
-                return this.GetConfigurationProfile(gameInfo);
-            }
-        }
+        public IConfigurationProfile this[IGameInfo gameInfo] => this.GetConfigurationProfile(gameInfo);
 
         public ConfigurationStore(IConfigurationProfile defaultProfile) : this(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Snowflake", "configurationstores"), defaultProfile) { }
 
