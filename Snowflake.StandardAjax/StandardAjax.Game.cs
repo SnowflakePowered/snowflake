@@ -98,16 +98,13 @@ namespace Snowflake.StandardAjax
         {
             IList<IGameInfo> games = this.CoreInstance.GameDatabase.GetAllGames();
             IDictionary<string, List<IGameInfo>> sortedGames = this.CoreInstance.LoadedPlatforms.ToDictionary(platform => platform.Key, platform => new List<IGameInfo>());
-            foreach (IGameInfo game in games)
+            foreach (IGameInfo game in games.Where(game => sortedGames.ContainsKey(game.PlatformID)))
             {
-                if (sortedGames.ContainsKey(game.PlatformID))
-                {
-                    sortedGames[game.PlatformID].Add(game);
-                }
+                sortedGames[game.PlatformID].Add(game);
             }
             foreach (List<IGameInfo> gameInfos in sortedGames.Values)
             {
-                gameInfos.Sort((x, y) => String.Compare(x.Name, y.Name));
+                gameInfos.Sort((x, y) => String.CompareOrdinal(x.Name, y.Name));
             }
             return new JSResponse(request, sortedGames);
         }

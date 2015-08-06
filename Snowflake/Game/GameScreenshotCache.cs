@@ -49,11 +49,9 @@ namespace Snowflake.Game
                 catch (JsonException)
                 {
                     this.screenshotCollection = new List<string>(); //try to rebuild screenshot cache
-                    foreach(string screenshotFile in Directory.EnumerateFiles(this.fullPath)){
-                        if (Path.GetExtension(screenshotFile) == ".png")
-                        {
-                            this.screenshotCollection.Add(screenshotFile);
-                        }
+                    foreach (string screenshotFile in Directory.EnumerateFiles(this.fullPath).Where(screenshotFile => Path.GetExtension(screenshotFile) == ".png"))
+                    {
+                        this.screenshotCollection.Add(screenshotFile);
                     }
                 }
             }

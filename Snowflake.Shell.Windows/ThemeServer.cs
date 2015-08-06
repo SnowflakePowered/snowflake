@@ -42,12 +42,11 @@ namespace Snowflake.Shell.Windows
         private bool EchoThemes(HttpListenerContext context, WebServer server, bool sendBuffer = true)
         {
             HashSet<object> themesDirectory = new HashSet<object>();
-            foreach (string directory in Directory.GetDirectories(this.ThemeRoot))
+            foreach (string themeInfo in from directory in Directory.GetDirectories(this.ThemeRoot)
+                                         where File.Exists(Path.Combine(directory, "theme.json"))
+                                         select File.ReadAllText(Path.Combine(directory, "theme.json")))
             {
-                if (File.Exists(Path.Combine(directory, "theme.json"))) {
-                    string themeInfo = File.ReadAllText(Path.Combine(directory, "theme.json"));
-                    themesDirectory.Add(JsonConvert.DeserializeObject(themeInfo));
-                }
+                themesDirectory.Add(JsonConvert.DeserializeObject(themeInfo));
             }
             byte[]output = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(themesDirectory));
             context.Response.OutputStream.Write(output, 0, output.Length);

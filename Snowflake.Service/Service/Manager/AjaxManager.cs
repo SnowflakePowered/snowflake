@@ -45,15 +45,14 @@ namespace Snowflake.Service.Manager
             {
                 IJSResponse result;
                 IJSMethod jsMethod = this.GlobalNamespace[request.NameSpace].JavascriptMethods[request.MethodName];
-                foreach (AjaxMethodParameterAttribute attr in jsMethod.MethodInfo.GetCustomAttributes<AjaxMethodParameterAttribute>().Where(attr => attr.Required == true))
+                foreach (AjaxMethodParameterAttribute attr in jsMethod.MethodInfo.GetCustomAttributes<AjaxMethodParameterAttribute>()
+                    .Where(attr => attr.Required == true)
+                    .Where(attr => !(request.MethodParameters.Keys.Contains(attr.ParameterName))))
                 {
-                    if (!(request.MethodParameters.Keys.Contains(attr.ParameterName)))
-                    {
-                        result = new JSResponse(request, JSResponse.GetErrorResponse($"missing required param {attr.ParameterName}"), false);
-                        sendResultEvent = new AjaxResponseSendingEventArgs(CoreService.LoadedCore, result);
-                        SnowflakeEventManager.EventSource.RaiseEvent<AjaxResponseSendingEventArgs>(sendResultEvent);
-                        return sendResultEvent.SendingResponse.GetJson();
-                    }
+                    result = new JSResponse(request, JSResponse.GetErrorResponse($"missing required param {attr.ParameterName}"), false);
+                    sendResultEvent = new AjaxResponseSendingEventArgs(CoreService.LoadedCore, result);
+                    SnowflakeEventManager.EventSource.RaiseEvent<AjaxResponseSendingEventArgs>(sendResultEvent);
+                    return sendResultEvent.SendingResponse.GetJson();
                 }
 
                 result = jsMethod.Method.Invoke(request);
@@ -94,13 +93,13 @@ namespace Snowflake.Service.Manager
         public void LoadAll()
         {
             this.ComposeImports();
-            foreach (var ajaxNamespace in this.ajaxNamespaces)
+            foreach (var instance in this.ajaxNamespaces.Select(ajaxNamespace => ajaxNamespace.Value))
             {
-                var instance = ajaxNamespace.Value;
                 this.RegisterNamespace(instance.PluginInfo["namespace"], instance);
                 this.registry.Add(instance.PluginName, typeof(IBaseAjaxNamespace));
             }
         }
+
         #endregion
     }
 }

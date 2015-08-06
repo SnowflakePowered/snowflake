@@ -13,7 +13,7 @@ namespace Snowflake.Service.Manager
     public class EmulatorAssembliesManager : IEmulatorAssembliesManager
     {
         private IDictionary<string, IEmulatorAssembly> emulatorAssemblies;
-        public IReadOnlyDictionary<string, IEmulatorAssembly> EmulatorAssemblies { get { return this.emulatorAssemblies.AsReadOnly(); } }
+        public IReadOnlyDictionary<string, IEmulatorAssembly> EmulatorAssemblies => this.emulatorAssemblies.AsReadOnly();
         public string AssembliesLocation { get; }
         public EmulatorAssembliesManager(string assembliesLocation)
         {
@@ -24,14 +24,15 @@ namespace Snowflake.Service.Manager
         public void LoadEmulatorAssemblies()
         {
             if (!Directory.Exists(this.AssembliesLocation)) Directory.CreateDirectory(this.AssembliesLocation);
-            foreach (string fileName in Directory.GetFiles(this.AssembliesLocation))
+            foreach (var emulatorCore in 
+                from fileName in Directory.GetFiles(this.AssembliesLocation)
+                where Path.GetExtension(fileName) == ".emulatordef"
+                select EmulatorAssembliesManager.ParseEmulatorAssembly(fileName))
             {
-                if (!(Path.GetExtension(fileName) == ".emulatordef")) continue;
-                
-                var emulatorCore = EmulatorAssembliesManager.ParseEmulatorAssembly(fileName);
                 this.emulatorAssemblies.Add(emulatorCore.EmulatorID, emulatorCore);
             }
         }
+
         public string GetAssemblyDirectory(IEmulatorAssembly assembly){
             return Path.Combine(this.AssembliesLocation, assembly.EmulatorID);
         }

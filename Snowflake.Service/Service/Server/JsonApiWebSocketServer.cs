@@ -31,22 +31,19 @@ namespace Snowflake.Service.JSWebSocketServer
 
         public void SendMessage(string message)
         {
-            foreach (IWebSocketConnection connection in this.connections)
+            foreach (IWebSocketConnection connection in this.connections.Where(connection => connection.IsAvailable))
             {
-                if (connection.IsAvailable)
+                try
                 {
-                    try
-                    {
-                        connection.Send(message);
-                    }
-                    catch (Exception)
-                    {
-                        Console.WriteLine($"Unable to send message '{message}' to connection {connection.ConnectionInfo.ClientIpAddress}");
-                    }
+                    connection.Send(message);
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine($"Unable to send message '{message}' to connection {connection.ConnectionInfo.ClientIpAddress}");
                 }
             }
-            
         }
+
         private async void Process(object sender, SocketMessageReceivedEventArgs e)
         {
             string methodName;
@@ -80,7 +77,7 @@ namespace Snowflake.Service.JSWebSocketServer
             this.SendMessage(await this.ProcessRequest(request));
         }
         
-        private async Task<string> ProcessRequest(JSRequest args)
+        private async Task<string> ProcessRequest(IJSRequest args)
         {
             return await CoreService.LoadedCore.AjaxManager.CallMethodAsync(args);
         }
@@ -92,7 +89,7 @@ namespace Snowflake.Service.JSWebSocketServer
                      {
                          socket.OnOpen = () => this.OnSocketOpen(socket);
                          socket.OnClose = () => this.OnSocketClose(socket);
-                         socket.OnMessage = message => this.OnMessage(message);
+                         socket.OnMessage = this.OnMessage;
                      }));
             this.serverThread.IsBackground = true;
             this.serverThread.Start();

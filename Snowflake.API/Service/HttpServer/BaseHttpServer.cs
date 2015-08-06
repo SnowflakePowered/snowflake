@@ -34,8 +34,7 @@ namespace Snowflake.Service.HttpServer
                         Task.Run(() => this.Process(context));
                     }
                 }
-            );
-            this.serverThread.IsBackground = true;
+                ) {IsBackground = true};
             this.serverThread.Start();
         }
 
