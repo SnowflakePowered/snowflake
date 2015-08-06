@@ -128,14 +128,14 @@ namespace Snowflake.Controller
             using (var sqlCommand = new SQLiteCommand("SELECT * FROM `gamepadabstraction` WHERE `DeviceName` == @DeviceName", dbConnection))
             {
                 sqlCommand.Parameters.AddWithValue("@DeviceName", deviceName);
-                using (var reader = sqlCommand.ExecuteReader())
+                using (SQLiteDataReader reader = sqlCommand.ExecuteReader())
                 {
                     //gonna have to replace datatable one day
                     var result = new DataTable();
                     if (reader.HasRows)
                     {
                         result.Load(reader);
-                        var row = result.Rows[0];
+                        DataRow row = result.Rows[0];
                         dbConnection.Close();
                         return new GamepadAbstraction(deviceName, (ControllerProfileType)Convert.ToInt32((row.Field<long>("ProfileType"))))
                         {

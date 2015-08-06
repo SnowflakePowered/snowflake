@@ -48,7 +48,7 @@ namespace Snowflake.Controller
         {
             get
             {
-                var _keyName = keyName.ToLowerInvariant(); //prevent case issues
+                string _keyName = keyName.ToLowerInvariant(); //prevent case issues
                 switch (_keyName)
                 {
                     case "l1":
@@ -105,7 +105,7 @@ namespace Snowflake.Controller
             }
             set
             {
-                var _keyName = keyName.ToLowerInvariant(); //prevent case issues
+                string _keyName = keyName.ToLowerInvariant(); //prevent case issues
                 switch (_keyName)
                 {
                     case "l1":

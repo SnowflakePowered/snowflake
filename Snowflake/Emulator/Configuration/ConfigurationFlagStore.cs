@@ -39,7 +39,7 @@ namespace Snowflake.Emulator.Configuration
         {
 
 
-            var flagDb = this.GetConnection();
+            SQLiteConnection flagDb = this.GetConnection();
             flagDb.Open();
             foreach (KeyValuePair<string, string> flagPair in flagValues)
             {
@@ -78,7 +78,7 @@ namespace Snowflake.Emulator.Configuration
         private void AddDefaults(IDictionary<string, IConfigurationFlag> configurationFlags)
         {
             IDictionary<string, string> flagValues = configurationFlags.ToDictionary(flag => flag.Key, flag => flag.Value.DefaultValue);
-            var flagDb = this.GetConnection();
+            SQLiteConnection flagDb = this.GetConnection();
             flagDb.Open();
             foreach (KeyValuePair<string, string> flagPair in flagValues)
             {
@@ -96,7 +96,7 @@ namespace Snowflake.Emulator.Configuration
         }
         private void SetValue(string key, object value, ConfigurationFlagTypes type, string prefix)
         {
-            var flagDb = this.GetConnection();
+            SQLiteConnection flagDb = this.GetConnection();
             flagDb.Open();
             using (var sqliteCommand = new SQLiteCommand(@"INSERT OR REPLACE INTO flags VALUES(
                                           @flagKey,
@@ -111,7 +111,7 @@ namespace Snowflake.Emulator.Configuration
         }
         private dynamic GetValue(string key, ConfigurationFlagTypes type, string prefix, object fallback)
         {
-            var dbConnection = this.GetConnection();
+            SQLiteConnection dbConnection = this.GetConnection();
             dbConnection.Open();
             string value = String.Empty;
             using (var sqlCommand = new SQLiteCommand(@"SELECT `flagValue` FROM `flags` WHERE `flagKey` == @searchQuery"

@@ -30,13 +30,13 @@ namespace Snowflake.Ajax
                 if (!method.GetCustomAttributes(typeof(AjaxMethodAttribute), false).Any()) continue;
                 if (!(method.ReturnType.Equals(typeof(IJSResponse)))) continue;
                 if (!(method.GetParameters().First().ParameterType.Equals(typeof(IJSRequest)))) continue;
-                var requestParam = Expression.Parameter(typeof(IJSRequest));
-                var instanceRef = Expression.Constant(this, this.GetType());
-                var call = Expression.Call(
+                ParameterExpression requestParam = Expression.Parameter(typeof(IJSRequest));
+                ConstantExpression instanceRef = Expression.Constant(this, this.GetType());
+                MethodCallExpression call = Expression.Call(
                     instanceRef, method, new Expression[] { requestParam }
                     );
-                var methodAttribute = method.GetCustomAttribute<AjaxMethodAttribute>();
-                var methodPrefix = (methodAttribute.MethodPrefix != null) ? $"{methodAttribute.MethodPrefix}." : "";
+                AjaxMethodAttribute methodAttribute = method.GetCustomAttribute<AjaxMethodAttribute>();
+                string methodPrefix = (methodAttribute.MethodPrefix != null) ? $"{methodAttribute.MethodPrefix}." : "";
                 string methodName = (methodAttribute.MethodName != null) ? methodAttribute.MethodName : method.Name;
                 this.JavascriptMethods.Add(methodPrefix + methodName,
                     new JSMethod(method, Expression.Lambda<Func<IJSRequest, IJSResponse>>(call, new ParameterExpression[] { requestParam })

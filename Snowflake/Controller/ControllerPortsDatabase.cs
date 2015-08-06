@@ -80,7 +80,7 @@ namespace Snowflake.Controller
                 {
                     var result = new DataTable();
                     result.Load(reader);
-                    var row = result.Rows[0];
+                    DataRow row = result.Rows[0];
                     dbConnection.Close();
                     return row.Field<string>($"port{portNumber}");
                 }

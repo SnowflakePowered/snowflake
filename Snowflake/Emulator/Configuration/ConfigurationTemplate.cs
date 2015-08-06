@@ -33,10 +33,10 @@ namespace Snowflake.Emulator.Configuration
         {
             var booleanMapping = new BooleanMapping((string)protoTemplate["boolean"]["true"], (string)protoTemplate["boolean"]["false"]);
             var entries = new List<IConfigurationEntry>();
-            var fileName = protoTemplate["filename"];
-            var configName = protoTemplate["templateid"];
+            string fileName = protoTemplate["filename"];
+            string configName = protoTemplate["templateid"];
             string stringTemplate = bridge.GetStringResource($"{configName}.template");
-            var defaults = new Dictionary<string, dynamic>();
+            IDictionary<string, dynamic> defaults = new Dictionary<string, dynamic>();
            
             foreach (var value in protoTemplate["keys"])
             {
