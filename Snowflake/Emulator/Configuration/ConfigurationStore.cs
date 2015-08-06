@@ -1,19 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
-using Snowflake.Game;
 using Newtonsoft.Json;
-using Snowflake.Emulator.Configuration;
+using Snowflake.Game;
 
 namespace Snowflake.Emulator.Configuration
 {
     //new config store per config
     public class ConfigurationStore : IConfigurationStore
     {
-        public string TemplateID { get; private set; }
+        public string TemplateID { get; }
         public IConfigurationProfile DefaultProfile
         {
             get
@@ -25,7 +21,7 @@ namespace Snowflake.Emulator.Configuration
                 File.WriteAllText(Path.Combine(this.ConfigurationStorePath, ".default"), JsonConvert.SerializeObject(value));
             }
         }
-        public string ConfigurationStorePath { get; private set; }
+        public string ConfigurationStorePath { get; }
         private ConfigurationStore(string configurationstoreRoot, IConfigurationProfile defaultProfile)
         {
             if (!Directory.Exists(configurationstoreRoot)) Directory.CreateDirectory(configurationstoreRoot);
@@ -37,16 +33,16 @@ namespace Snowflake.Emulator.Configuration
 
         public bool ContainsFilename(IGameInfo gameInfo)
         {
-            return File.Exists(Path.Combine(this.ConfigurationStorePath, gameInfo.FileName + ".json"));
+            return File.Exists(Path.Combine(this.ConfigurationStorePath, $"{gameInfo.FileName}.json"));
         }
         public bool ContainsCRC32(IGameInfo gameInfo)
         {
-            return File.Exists(Path.Combine(this.ConfigurationStorePath, gameInfo.CRC32 +  ".json"));
+            return File.Exists(Path.Combine(this.ConfigurationStorePath, $"{gameInfo.CRC32}.json"));
         }
 
         public bool Contains(IGameInfo gameInfo)
         {
-            return (ContainsFilename(gameInfo) || ContainsCRC32(gameInfo));
+            return (this.ContainsFilename(gameInfo) || this.ContainsCRC32(gameInfo));
         }
         public IConfigurationProfile GetConfigurationProfile(IGameInfo gameInfo)
         {
@@ -54,19 +50,10 @@ namespace Snowflake.Emulator.Configuration
             {
                 return this.DefaultProfile;
             }
-            else
-            {
-                string fileName = ContainsFilename(gameInfo) ? Path.Combine(this.ConfigurationStorePath, gameInfo.FileName + ".json") : Path.Combine(this.ConfigurationStorePath, gameInfo.CRC32 + ".json");
-                return ConfigurationProfile.FromJsonProtoTemplate(JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(File.ReadAllText(fileName)));
-            }
+            string fileName = this.ContainsFilename(gameInfo) ? Path.Combine(this.ConfigurationStorePath, $"{gameInfo.FileName}.json") : Path.Combine(this.ConfigurationStorePath, $"{gameInfo.CRC32}.json");
+            return ConfigurationProfile.FromJsonProtoTemplate(JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(File.ReadAllText(fileName)));
         }
-        public IConfigurationProfile this[IGameInfo gameInfo]
-        {
-            get
-            {
-                return this.GetConfigurationProfile(gameInfo);
-            }
-        }
+        public IConfigurationProfile this[IGameInfo gameInfo] => this.GetConfigurationProfile(gameInfo);
 
         public ConfigurationStore(IConfigurationProfile defaultProfile) : this(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Snowflake", "configurationstores"), defaultProfile) { }
 

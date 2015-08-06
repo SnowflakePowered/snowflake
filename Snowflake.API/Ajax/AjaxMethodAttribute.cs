@@ -1,5 +1,4 @@
 using System;
-using System.Security.Policy;
 
 namespace Snowflake.Ajax
 {
@@ -10,7 +9,7 @@ namespace Snowflake.Ajax
     /// <seealso cref="Snowflake.Ajax.BaseAjaxNamespace"/> for the implementation of <seealso cref="Snowflake.Ajax.IBaseAjaxNamespace"/>
     /// </remarks>
     /// </summary>
-    [AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Method, Inherited = false)]
     public class AjaxMethodAttribute : Attribute
     {
         /// <summary>

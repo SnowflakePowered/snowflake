@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Mono.Net;
 using System.IO;
-using System.Threading;
-using Newtonsoft.Json;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
+using Mono.Net;
+using Newtonsoft.Json;
 using Snowflake.Ajax;
 using Snowflake.Extensions;
 
@@ -35,10 +33,7 @@ namespace Snowflake.Service.HttpServer
                 {
                     using (var reader = new StreamReader(context.Request.InputStream)){
                         IDictionary<string, string> _dictParams = JsonConvert.DeserializeObject<IDictionary<string, string>>(reader.ReadToEnd());
-                        if (!(_dictParams == null))
-                        {
-                            dictParams = _dictParams;
-                        }
+                        dictParams = _dictParams ?? dictParams;
                     }
                 }
                 catch (JsonException)
@@ -75,7 +70,7 @@ namespace Snowflake.Service.HttpServer
                 context.Response.AppendHeader("Content-Type", "application/json");
             }
             
-            writer.WriteLine(await ProcessRequest(request));
+            writer.WriteLine(await this.ProcessRequest(request));
             writer.Flush();
             context.Response.OutputStream.Close();
         }

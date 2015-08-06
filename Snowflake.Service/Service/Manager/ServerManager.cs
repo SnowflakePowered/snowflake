@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Snowflake.Service.HttpServer;
+
 namespace Snowflake.Service.Manager
 {
     public class ServerManager : IServerManager
@@ -15,17 +13,17 @@ namespace Snowflake.Service.Manager
         }
         public void RegisterServer(string serverName, IBaseHttpServer httpServer)
         {
-            servers.Add(serverName, httpServer);
+            this.servers.Add(serverName, httpServer);
         }
 
         public void StartServer(string serverName)
         {
-            servers[serverName].StartServer();
+            this.servers[serverName].StartServer();
         }
 
         public void StopServer(string serverName)
         {
-            servers[serverName].StopServer();
+            this.servers[serverName].StopServer();
         }
 
         public IList<string> RegisteredServers
@@ -39,13 +37,8 @@ namespace Snowflake.Service.Manager
         {
             return this.servers[serverName];
         }
-        public IBaseHttpServer this[string serverName]
-        {
-            get
-            {
-                return this.GetServer(serverName);
-            }
-        }
+        public IBaseHttpServer this[string serverName] => this.GetServer(serverName);
+
         public void Dispose()
         {
             foreach (var server in this.RegisteredServers)

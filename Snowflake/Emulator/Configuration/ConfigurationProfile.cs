@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Snowflake.Extensions;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using SharpYaml.Serialization;
-using Snowflake.Emulator.Configuration;
+
 namespace Snowflake.Emulator.Configuration
 {
     public class ConfigurationProfile : IConfigurationProfile 
     {
-        public IDictionary<string, dynamic> ConfigurationValues { get; private set; }
-        public string TemplateID { get; private set; }
+        public IDictionary<string, dynamic> ConfigurationValues { get; }
+        public string TemplateID { get; }
      
         public ConfigurationProfile (string templateId, IDictionary<string, dynamic> value)
         {

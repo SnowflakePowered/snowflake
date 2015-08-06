@@ -9,7 +9,7 @@ namespace Snowflake.Service.HttpServer
 
         static MimeTypes()
         {
-            TypeMap = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase){
+            MimeTypes.TypeMap = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase){
             {"323", "text/h323"},
 			{"3dmf", "x-world/x-3dmf"},
 			{"3dm", "x-world/x-3dmf"},
@@ -580,7 +580,7 @@ namespace Snowflake.Service.HttpServer
 
             if (dotIndex != -1 && fileName.Length > dotIndex + 1)
             {
-                TypeMap.TryGetValue(fileName.Substring(dotIndex + 1), out result);
+                MimeTypes.TypeMap.TryGetValue(fileName.Substring(dotIndex + 1), out result);
             }
 
             return result ?? "application/octet-stream";

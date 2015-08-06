@@ -1,32 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
+
 namespace Snowflake.Information.MediaStore
 {
     [Obsolete("MediaStore has been superseded by GameMediaCache")]
     public class FileMediaStore : IMediaStore
     {
-        private Dictionary<string, IMediaStoreSection> sections;
-        public IMediaStoreSection Images
-        {
-            get { return this.sections["Images"]; }
-        }
-        public IMediaStoreSection Audio
-        {
-            get { return this.sections["Audio"]; }
-        }
-        public IMediaStoreSection Video
-        {
-            get { return this.sections["Video"]; }
-        }
-        public IMediaStoreSection Resources
-        {
-            get { return this.sections["Resources"]; }
-        }
-        public string MediaStoreKey { get; private set; }
+        private readonly Dictionary<string, IMediaStoreSection> sections;
+        public IMediaStoreSection Images => this.sections["Images"];
+
+        public IMediaStoreSection Audio => this.sections["Audio"];
+
+        public IMediaStoreSection Video => this.sections["Video"];
+
+        public IMediaStoreSection Resources => this.sections["Resources"];
+        public string MediaStoreKey { get; }
         public string MediaStoreRoot { get; private set; }
         public FileMediaStore(string mediastoreKey, string mediastoreRoot)
         {
@@ -34,7 +23,7 @@ namespace Snowflake.Information.MediaStore
            if (!Directory.Exists(Path.Combine(mediastoreRoot, mediastoreKey))) Directory.CreateDirectory(Path.Combine(mediastoreRoot, mediastoreKey));
            this.MediaStoreKey = mediastoreKey;
            this.MediaStoreRoot = mediastoreRoot;
-           this.sections = new Dictionary<string, IMediaStoreSection>()
+           this.sections = new Dictionary<string, IMediaStoreSection>
            {
                {"Images", new FileMediaStoreSection("Images", this) },
                {"Audio", new FileMediaStoreSection("Audio", this) },

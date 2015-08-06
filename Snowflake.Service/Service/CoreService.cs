@@ -1,50 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
+using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Snowflake.Controller;
+using Snowflake.Emulator.Input.InputManager;
+using Snowflake.Events;
+using Snowflake.Events.ServiceEvents;
+using Snowflake.Game;
 using Snowflake.Platform;
 using Snowflake.Service.HttpServer;
 using Snowflake.Service.JSWebSocketServer;
-using System.IO;
-using System.ComponentModel.Composition;
-using System.ComponentModel.Composition.Hosting;
-using Newtonsoft.Json;
-using Snowflake.Events.ServiceEvents;
-using System.Threading;
-using Snowflake.Information;
-using System.Reflection;
 using Snowflake.Service.Manager;
-using Snowflake.Controller;
-using Snowflake.Game;
-using Snowflake.Emulator.Configuration;
-using Snowflake.Emulator.Input.InputManager;
-using Snowflake.Events;
+
 namespace Snowflake.Service
 {
     [Export(typeof(ICoreService))]
     [PartCreationPolicy(CreationPolicy.Shared)]
-    public partial class CoreService : ICoreService 
+    public class CoreService : ICoreService 
     {
         #region Loaded Objects
         public IDictionary<string, IPlatformInfo> LoadedPlatforms { get; private set; }
         public IDictionary<string, IControllerDefinition> LoadedControllers { get; private set; }
 
         public IPluginManager PluginManager { get; private set; }
-        public IAjaxManager AjaxManager { get; private set; }
-        public IGameDatabase GameDatabase { get; private set; }
-        public IGamepadAbstractionDatabase GamepadAbstractionDatabase { get; private set; }
-        public IInputManager InputManager { get { return new Snowflake.InputManager.InputManager(); } }
-        public IControllerPortsDatabase ControllerPortsDatabase { get; private set; }
+        public IAjaxManager AjaxManager { get; }
+        public IGameDatabase GameDatabase { get; }
+        public IGamepadAbstractionDatabase GamepadAbstractionDatabase { get; }
+        public IInputManager InputManager => new InputManager.InputManager();
+        public IControllerPortsDatabase ControllerPortsDatabase { get; }
         public IPlatformPreferenceDatabase PlatformPreferenceDatabase { get; private set; }
         public IEmulatorAssembliesManager EmulatorManager { get; private set; }
         #endregion
 
-        public string AppDataDirectory { get; private set; }
+        public string AppDataDirectory { get; }
         public static ICoreService LoadedCore { get; private set; }
         public IServerManager ServerManager { get; private set; }
         // Flag: Has Dispose already been called? 
-        bool disposed = false;
+        bool disposed;
         // Instantiate a SafeHandle instance.
         public static void InitCore()
         {
@@ -55,7 +50,7 @@ namespace Snowflake.Service
         {
             var core = new CoreService(dataDirectory);
             CoreService.LoadedCore = core;
-            SnowflakeEventManager.EventSource.RegisterEvent<ServerStartEventArgs>(core.ServerStartEvent);
+            SnowflakeEventManager.EventSource.RegisterEvent(core.ServerStartEvent);
             SnowflakeEventManager.EventSource.Subscribe<ServerStartEventArgs>((s, e) =>
             {
                 Console.WriteLine(e.ServerName);
@@ -64,7 +59,7 @@ namespace Snowflake.Service
             {
                 CoreService.LoadedCore.ServerManager.StartServer(serverName);
                 var serverStartEvent = new ServerStartEventArgs(core, serverName);
-                SnowflakeEventManager.EventSource.RaiseEvent<ServerStartEventArgs>(serverStartEvent); //todo Move event registration to SnowflakeEVentManager
+                SnowflakeEventManager.EventSource.RaiseEvent(serverStartEvent); //todo Move event registration to SnowflakeEVentManager
 
             }
 
@@ -72,7 +67,7 @@ namespace Snowflake.Service
       
         public async static Task InitPluginManagerAsync()
         {
-            await Task.Run(() => InitPluginManager());
+            await Task.Run(() => CoreService.InitPluginManager());
         }
 
         public static void InitPluginManager()
@@ -120,8 +115,7 @@ namespace Snowflake.Service
                 catch (Exception)
                 {
                     //log
-                    Console.WriteLine("Exception occured when importing platform " + fileName);
-                    continue;
+                    Console.WriteLine($"Exception occured when importing platform {fileName}");
                 }
             }
             return loadedPlatforms;
@@ -141,8 +135,7 @@ namespace Snowflake.Service
                 catch (Exception)
                 {
                     //log
-                    Console.WriteLine("Exception occured when importing controller " + fileName);
-                    continue;
+                    Console.WriteLine($"Exception occured when importing controller {fileName}");
                 }
             }
             return loadedControllers;
@@ -155,7 +148,7 @@ namespace Snowflake.Service
         // Protected implementation of Dispose pattern. 
         protected virtual void Dispose(bool disposing)
         {
-            if (disposed)
+            if (this.disposed)
                 return;
 
             if (disposing)
@@ -172,16 +165,14 @@ namespace Snowflake.Service
 
             // Free any unmanaged objects here. 
             //
-            disposed = true;
+            this.disposed = true;
         }
 
         public static void DisposeLoadedCore()
         {
-            if (CoreService.LoadedCore != null)
-            {
-                CoreService.LoadedCore.Dispose();
-                CoreService.LoadedCore = null;
-            }
+            
+           CoreService.LoadedCore?.Dispose();
+           CoreService.LoadedCore = null;
         }
     }
 }

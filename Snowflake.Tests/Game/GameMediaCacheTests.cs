@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-using Snowflake.Game;
 using System.Drawing;
-using System.Drawing.Imaging;
+using System.IO;
 using Snowflake.Tests;
 using Xunit;
 
@@ -105,7 +99,7 @@ namespace Snowflake.Game.Tests
             string testKey = Guid.NewGuid().ToString();
             IGameMediaCache mediaCache = new GameMediaCache(testKey); 
             string tempFileName = Path.GetTempFileName() + Path.GetExtension(fileName);
-            using (Stream stream = TestUtilities.GetResource("GameCache." + fileName))
+            using (Stream stream = TestUtilities.GetResource($"GameCache.{fileName}"))
             {
                 using (FileStream writeStream = new FileStream(tempFileName, FileMode.Create))
                 {
@@ -127,7 +121,7 @@ namespace Snowflake.Game.Tests
             string testKey = Guid.NewGuid().ToString();
             IGameMediaCache mediaCache = new GameMediaCache(testKey); 
             string tempFileName = Path.GetTempFileName() + Path.GetExtension(fileName);
-            using (Stream stream = TestUtilities.GetResource("GameCache." + fileName))
+            using (Stream stream = TestUtilities.GetResource($"GameCache.{fileName}"))
             {
                 using (FileStream writeStream = new FileStream(tempFileName, FileMode.Create))
                 {

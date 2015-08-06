@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Mono.Net;
-using System.IO;
-using System.Web;
+﻿using System.IO;
 using System.Net;
+using System.Threading.Tasks;
 using Xunit;
+
 namespace Snowflake.Service.HttpServer.Tests
 {
     /*public*/ class BaseHttpServerTests
@@ -24,7 +19,7 @@ namespace Snowflake.Service.HttpServer.Tests
             server.StartServer();
             using (WebClient client = new WebClient())
             {
-                Assert.Equal(String.Empty, client.DownloadString("http://localhost:25566"));
+                Assert.Equal(string.Empty, client.DownloadString("http://localhost:25566"));
             }
         }
         [Fact]
@@ -38,7 +33,7 @@ namespace Snowflake.Service.HttpServer.Tests
             {
                 try
                 {
-                    Assert.Equal(String.Empty, client.DownloadString("http://localhost:25566"));
+                    Assert.Equal(string.Empty, client.DownloadString("http://localhost:25566"));
                 }
                 catch (WebException)
                 {
@@ -55,7 +50,7 @@ namespace Snowflake.Service.HttpServer.Tests
         protected async override Task Process(Mono.Net.HttpListenerContext context)
         {
             var writer = new StreamWriter(context.Response.OutputStream);
-            writer.Write(String.Empty);
+            writer.Write(string.Empty);
             writer.Flush();
             context.Response.OutputStream.Close();
         }

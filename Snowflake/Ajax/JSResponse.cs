@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace Snowflake.Ajax
 {
     public class JSResponse : IJSResponse
     {
-        public IJSRequest Request { get; private set; }
-        public dynamic Payload { get; private set; }
+        public IJSRequest Request { get; }
+        public dynamic Payload { get; }
         public bool Success { get; set; }
         public JSResponse(IJSRequest request, dynamic payload, bool success = true)
         {
@@ -25,31 +21,33 @@ namespace Snowflake.Ajax
         }
         public static IDictionary<string, object> GetErrorResponse(string errorMessage)
         {
-            return new Dictionary<string, object>() { 
+            return new Dictionary<string, object>
+            { 
                 {"error", errorMessage},
-                {"success", false},
+                {"success", false}
             };
         }
         private static string ProcessJSONP(dynamic output, bool success, IJSRequest request)
         {
             if (request.MethodParameters.ContainsKey("jsoncallback"))
             {
-                return request.MethodParameters["jsoncallback"] + "(" + JsonConvert.SerializeObject(new Dictionary<string, object>(){
-                    {"request", request},
-                    {"payload", output},
-                    {"success", success},
-                    {"type", "methodresponse"}
-                }) + ");";
+                return request.MethodParameters["jsoncallback"] + $@"({
+                    JsonConvert.SerializeObject(new Dictionary<string, object>
+                    {
+                        {"request", request},
+                        {"payload", output},
+                        {"success", success},
+                        {"type", "methodresponse"}
+                    })}
+                );";
             }
-            else
+            return JsonConvert.SerializeObject(new Dictionary<string, object>
             {
-                return JsonConvert.SerializeObject(new Dictionary<string, object>(){
-                    {"request", request},
-                    {"payload", output},
-                    {"success", success},
-                    {"type", "methodresponse"}
-                });
-            }
+                {"request", request},
+                {"payload", output},
+                {"success", success},
+                {"type", "methodresponse"}
+            });
         }
     }
 }

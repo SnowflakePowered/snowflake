@@ -1,22 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
 using System.IO;
-using System.Collections.ObjectModel;
+using Newtonsoft.Json;
 using Snowflake.Extensions;
+
 namespace Snowflake.Information.MediaStore
 {
     [Obsolete("MediaStore has been superseded by GameMediaCache")]
     public sealed class FileMediaStoreSection : IMediaStoreSection
     {
         public string SectionName { get; set; }
-        public IReadOnlyDictionary<string, string> MediaStoreItems { get { return this.mediaStoreItems.AsReadOnly(); } }
-        private IDictionary<string, string> mediaStoreItems;
+        public IReadOnlyDictionary<string, string> MediaStoreItems => this.mediaStoreItems.AsReadOnly();
+        private readonly IDictionary<string, string> mediaStoreItems;
 
-        private string mediaStoreRoot;
+        private readonly string mediaStoreRoot;
         public FileMediaStoreSection(string sectionName, FileMediaStore mediaStore)
         {
             this.mediaStoreRoot = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Snowflake", "mediastores", mediaStore.MediaStoreKey, sectionName);
@@ -28,8 +25,8 @@ namespace Snowflake.Information.MediaStore
         {
             try
             {
-                var record = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(Path.Combine(mediaStoreRoot, ".mediastore")));
-                return (record != null) ? record : new Dictionary<string, string>();
+                var record = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(Path.Combine(this.mediaStoreRoot, ".mediastore")));
+                return record ?? new Dictionary<string, string>();
             }
             catch
             {
@@ -70,7 +67,7 @@ namespace Snowflake.Information.MediaStore
 
         private void UpdateMediaStoreRecord(){
             string record = JsonConvert.SerializeObject(this.MediaStoreItems);
-            File.WriteAllText(Path.Combine(mediaStoreRoot, ".mediastore"), record);
+            File.WriteAllText(Path.Combine(this.mediaStoreRoot, ".mediastore"), record);
         }
 
         public string this[string key]

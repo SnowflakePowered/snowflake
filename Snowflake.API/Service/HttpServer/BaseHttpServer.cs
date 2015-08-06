@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Mono.Net;
-using System.Threading;
+
 namespace Snowflake.Service.HttpServer
 {
     public abstract class BaseHttpServer : IBaseHttpServer
@@ -13,25 +10,28 @@ namespace Snowflake.Service.HttpServer
         Thread serverThread;
         bool cancel;
 
-        public BaseHttpServer(int port)
+        /// <summary>
+        /// The base httpserver
+        /// </summary>
+        /// <param name="port"></param>
+        protected BaseHttpServer(int port)
         {
-            serverListener = new HttpListener();
-            serverListener.Prefixes.Add("http://localhost:" + port.ToString() + "/");
+            this.serverListener = new HttpListener();
+            this.serverListener.Prefixes.Add($"http://localhost:{port}/");
         }
         void IBaseHttpServer.StartServer()
         {
             this.serverThread = new Thread(
                 () =>
                 {
-                    serverListener.Start();
+                    this.serverListener.Start();
                     while (!this.cancel)
                     {
-                        HttpListenerContext context = serverListener.GetContext();
+                        HttpListenerContext context = this.serverListener.GetContext();
                         Task.Run(() => this.Process(context));
                     }
                 }
-            );
-            this.serverThread.IsBackground = true;
+                ) {IsBackground = true};
             this.serverThread.Start();
         }
 

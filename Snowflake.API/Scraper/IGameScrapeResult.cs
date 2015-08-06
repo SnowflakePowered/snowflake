@@ -1,5 +1,4 @@
-﻿using System;
-namespace Snowflake.Scraper
+﻿namespace Snowflake.Scraper
 {
     /// <summary>
     /// Represents a result returned from scraping

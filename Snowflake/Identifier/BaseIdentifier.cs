@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using System.Reflection;
-using System.IO;
 using Snowflake.Plugin;
 using Snowflake.Service;
-using Snowflake.Platform;
+
 namespace Snowflake.Identifier
 {
     public abstract class BaseIdentifier : BasePlugin, IIdentifier
@@ -21,7 +16,7 @@ namespace Snowflake.Identifier
                 this.IdentifiedValueType = IdentifiedValueTypes.Unknown;
             }
         }
-        public string IdentifiedValueType { get; private set; }
+        public string IdentifiedValueType { get; }
         public abstract string IdentifyGame(string fileName, string platformId);
         public abstract string IdentifyGame(FileStream file, string platformId);
 

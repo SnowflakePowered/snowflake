@@ -1,22 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Snowflake.Extensions;
-using Newtonsoft.Json;
 
 namespace Snowflake.Emulator.Configuration
 {
-    public class ConfigurationFlag : Snowflake.Emulator.Configuration.IConfigurationFlag
+    public class ConfigurationFlag : IConfigurationFlag
     {
-        public string Key { get; private set; }
-        public ConfigurationFlagTypes Type { get; private set; }
-        public string DefaultValue { get; private set; }
-        public string Description { get; private set; }
-        public int RangeMin { get; private set; }
-        public int RangeMax { get; private set; }
-        public IList<IConfigurationFlagSelectValue> SelectValues { get; private set; }
+        public string Key { get; }
+        public ConfigurationFlagTypes Type { get; }
+        public string DefaultValue { get; }
+        public string Description { get; }
+        public int RangeMin { get; }
+        public int RangeMax { get; }
+        public IList<IConfigurationFlagSelectValue> SelectValues { get; }
 
         public ConfigurationFlag(string key, ConfigurationFlagTypes type, string defaultValue, string description, int rangeMin = 0, int rangeMax = 0, IList<IConfigurationFlagSelectValue> selectValues = null)
         {
@@ -53,7 +49,7 @@ namespace Snowflake.Emulator.Configuration
                     .Select(x => (IConfigurationFlagSelectValue)x).ToList();
             }
            
-            return new ConfigurationFlag(key, type, defaultValue, description, (int)max, (int)min, selectTypes);
+            return new ConfigurationFlag(key, type, defaultValue, description, max, min, selectTypes);
 
         }
     }

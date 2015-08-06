@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
-using Moq;
 using System.IO;
+using Moq;
 using Snowflake.Emulator.Configuration;
 using Snowflake.Game;
+using Xunit;
+
 namespace Snowflake.Emulator.Tests
 {
     public class ConfigurationFlagStoreTests
@@ -39,7 +37,8 @@ namespace Snowflake.Emulator.Tests
             fakeConfigurationFlag.SetupGet(flag => flag.Key).Returns("TESTKEY");
             fakeConfigurationFlag.SetupGet(flag => flag.Type).Returns(ConfigurationFlagTypes.BOOLEAN_FLAG);
 
-            var dict = new Dictionary<string, IConfigurationFlag>(){
+            var dict = new Dictionary<string, IConfigurationFlag>
+            {
                 {"TESTKEY", fakeConfigurationFlag.Object}
             };
             fakeEmulatorBridge.SetupGet(bridge => bridge.ConfigurationFlags).Returns(dict);
@@ -63,7 +62,8 @@ namespace Snowflake.Emulator.Tests
             fakeConfigurationFlag.SetupGet(flag => flag.Key).Returns("TESTKEY");
             fakeConfigurationFlag.SetupGet(flag => flag.Type).Returns(ConfigurationFlagTypes.BOOLEAN_FLAG);
 
-            var dict = new Dictionary<string, IConfigurationFlag>(){
+            var dict = new Dictionary<string, IConfigurationFlag>
+            {
                 {"TESTKEY", fakeConfigurationFlag.Object}
             };
             fakeEmulatorBridge.SetupGet(bridge => bridge.ConfigurationFlags).Returns(dict);
@@ -88,11 +88,13 @@ namespace Snowflake.Emulator.Tests
             fakeConfigurationFlag.SetupGet(flag => flag.Key).Returns("TESTKEY");
             fakeConfigurationFlag.SetupGet(flag => flag.Type).Returns(ConfigurationFlagTypes.BOOLEAN_FLAG);
 
-            var dict = new Dictionary<string, IConfigurationFlag>(){
+            var dict = new Dictionary<string, IConfigurationFlag>
+            {
                 {"TESTKEY", fakeConfigurationFlag.Object}
             };
 
-            var flagValues = new Dictionary<string, string>(){
+            var flagValues = new Dictionary<string, string>
+            {
                 {"TESTKEY", "false"}
             };
             fakeEmulatorBridge.SetupGet(bridge => bridge.ConfigurationFlags).Returns(dict);

@@ -1,5 +1,5 @@
-﻿using System;
-using Snowflake.Game;
+﻿using Snowflake.Game;
+
 namespace Snowflake.Emulator.Configuration
 {
     /// <summary>

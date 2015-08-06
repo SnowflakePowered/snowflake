@@ -1,15 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.SQLite;
 using System.Data;
-using System.IO;
+using System.Data.SQLite;
+using System.Linq;
 using Newtonsoft.Json;
-using Snowflake.Platform;
-using Snowflake.Game;
-using Snowflake.Information.MediaStore;
 using Snowflake.Utility;
 
 namespace Snowflake.Game
@@ -77,7 +71,7 @@ namespace Snowflake.Game
         {
             try
             {
-                return GetGamesByColumn("uuid", uuid)[0];
+                return this.GetGamesByColumn("uuid", uuid)[0];
             }
             catch
             {
@@ -87,20 +81,19 @@ namespace Snowflake.Game
 
         public IList<IGameInfo> GetGamesByPlatform(string platformId)
         {
-            return GetGamesByColumn("platform_id", platformId);
+            return this.GetGamesByColumn("platform_id", platformId);
         }
         public IList<IGameInfo> GetGamesByName(string nameSearch)
         {
-            return GetGamesByColumn("name", nameSearch);
+            return this.GetGamesByColumn("name", nameSearch);
         }
         private IList<IGameInfo> GetGamesByColumn(string colName, string searchQuery)
         {
             SQLiteConnection dbConnection = this.GetConnection();
             dbConnection.Open();
-            using (var sqlCommand = new SQLiteCommand(@"SELECT * FROM `games` WHERE `%colName` == @searchQuery"
+            using (var sqlCommand = new SQLiteCommand($@"SELECT * FROM `games` WHERE `{colName}` == @searchQuery"
                 , dbConnection))
             {
-                sqlCommand.CommandText = sqlCommand.CommandText.Replace("%colName", colName); //Easier to read than string replacement.
                 sqlCommand.Parameters.AddWithValue("@searchQuery", searchQuery);
                 using (var reader = sqlCommand.ExecuteReader())
                 {
@@ -115,7 +108,7 @@ namespace Snowflake.Game
                             System.Threading.Thread.Sleep(500);
                             result.Load(reader);
                         }
-                        var gamesResults = (from DataRow row in result.Rows select GetGameFromDataRow(row)).ToList();
+                        var gamesResults = (from DataRow row in result.Rows select this.GetGameFromDataRow(row)).ToList();
                         dbConnection.Close();
                         return gamesResults;
                     }

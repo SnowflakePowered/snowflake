@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Snowflake.Game;
+﻿using System.Collections.Generic;
 using Xunit;
+
 namespace Snowflake.Game.Tests
 {
     public class GameInfoTests
@@ -12,7 +8,7 @@ namespace Snowflake.Game.Tests
         [Fact]
         public void GameInfoCreation_Test()
         {
-            Assert.NotNull(new GameInfo("TEST", "TEST", new Dictionary<string, string>(){{"snowflake_mediastore", "TEST"}}, "TEST", "TEST.TEST", "TEST"));
+            Assert.NotNull(new GameInfo("TEST", "TEST", new Dictionary<string, string> {{"snowflake_mediastore", "TEST"}}, "TEST", "TEST.TEST", "TEST"));
         }
 
     }

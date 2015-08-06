@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Snowflake.Information.MediaStore;
+
 namespace Snowflake.Scraper
 {
     /// <summary>

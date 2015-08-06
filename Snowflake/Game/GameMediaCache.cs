@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing.Imaging;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Net;
+using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
+using System.Net;
 
 namespace Snowflake.Game
 {
@@ -20,22 +17,22 @@ namespace Snowflake.Game
         const string fileGameVideo = "GameVideo";
         const string fileGameMusic = "GameMusic";
 
-        public string RootPath { get; private set; }
-        public string CacheKey { get; private set; }
+        public string RootPath { get; }
+        public string CacheKey { get; }
         public string GameVideoFileName { 
             get 
             {
-                return Directory.EnumerateFiles(this.fullPath).Where(file => Path.GetFileNameWithoutExtension(file) == fileGameVideo).FirstOrDefault();
+                return Directory.EnumerateFiles(this.fullPath).Where(file => Path.GetFileNameWithoutExtension(file) == GameMediaCache.fileGameVideo).FirstOrDefault();
             } 
         }
         public string GameMusicFileName { 
             get 
             {
-                return Directory.EnumerateFiles(this.fullPath).Where(file => Path.GetFileNameWithoutExtension(file) == fileGameMusic).FirstOrDefault(); 
+                return Directory.EnumerateFiles(this.fullPath).Where(file => Path.GetFileNameWithoutExtension(file) == GameMediaCache.fileGameMusic).FirstOrDefault(); 
             } 
         }
 
-        string fullPath;
+        readonly string fullPath;
 
         public GameMediaCache(string rootPath, string cacheKey)
         {
@@ -69,47 +66,47 @@ namespace Snowflake.Game
                             if (File.Exists(Path.Combine(this.fullPath, fileName))) File.Delete(Path.Combine(this.fullPath, fileName));
                             image.Save(Path.Combine(this.fullPath, fileName), ImageFormat.Png);
                             //Create high quality resizes
-                            if (File.Exists(Path.Combine(this.fullPath, "@75_" + fileName))) File.Delete(Path.Combine(this.fullPath, "@50_" + fileName));
+                            if (File.Exists(Path.Combine(this.fullPath, $"@75_{fileName}"))) File.Delete(Path.Combine(this.fullPath, $"@75_{fileName}"));
                             using (Image resizedImage = GameMediaCache.ResizeImage(image, 0.75))
                             {
-                                resizedImage.Save(Path.Combine(this.fullPath, "@75_" + fileName), ImageFormat.Png);
+                                resizedImage.Save(Path.Combine(this.fullPath, $"@75_{fileName}"), ImageFormat.Png);
                             }
-                            if (File.Exists(Path.Combine(this.fullPath, "@50_" + fileName))) File.Delete(Path.Combine(this.fullPath, "@50_" + fileName));
+                            if (File.Exists(Path.Combine(this.fullPath, $"@50_{fileName}"))) File.Delete(Path.Combine(this.fullPath, $"@50_{fileName}"));
                             using (Image resizedImage = GameMediaCache.ResizeImage(image, 0.5))
                             {
-                                resizedImage.Save(Path.Combine(this.fullPath, "@50_" + fileName), ImageFormat.Png);
+                                resizedImage.Save(Path.Combine(this.fullPath, $"@50_{fileName}"), ImageFormat.Png);
                             }
-                            if (File.Exists(Path.Combine(this.fullPath, "@25_" + fileName))) File.Delete(Path.Combine(this.fullPath, "@25_" + fileName));
+                            if (File.Exists(Path.Combine(this.fullPath, $"@25_{fileName}"))) File.Delete(Path.Combine(this.fullPath, $"@25_{fileName}"));
                             using (Image resizedImage = GameMediaCache.ResizeImage(image, 0.25))
                             {
-                                resizedImage.Save(Path.Combine(this.fullPath, "@25_" + fileName), ImageFormat.Png);
+                                resizedImage.Save(Path.Combine(this.fullPath, $"@25_{fileName}"), ImageFormat.Png);
                             }
-                            if (File.Exists(Path.Combine(this.fullPath, "@10_" + fileName))) File.Delete(Path.Combine(this.fullPath, this.fullPath, "@10_" + fileName));
+                            if (File.Exists(Path.Combine(this.fullPath, $"@10_{fileName}"))) File.Delete(Path.Combine(this.fullPath, this.fullPath, $"@10_{fileName}"));
                             using (Image resizedImage = GameMediaCache.ResizeImage(image, 0.1))
                             {
-                                resizedImage.Save(Path.Combine(this.fullPath, "@10_" + fileName), ImageFormat.Png);
+                                resizedImage.Save(Path.Combine(this.fullPath, $"@10_{fileName}"), ImageFormat.Png);
                             }
                         }
                         catch (ArgumentException)
                         {
-                            Console.WriteLine(String.Format("[WARN] Swallowed ArgumentException: Attemped to add invalid image to game cache {0}"), imageUri.AbsoluteUri);
+                            Console.WriteLine($"[WARN] Swallowed ArgumentException: Attemped to add invalid image to game cache {imageUri.AbsoluteUri}");
                         }
                         catch
                         {
-                            Console.WriteLine(String.Format("[WARN] Swallowed UnknownException: Unable to save image {0} to game cache"), imageUri.AbsoluteUri);
+                            Console.WriteLine($"[WARN] Swallowed UnknownException: Unable to save image {imageUri.AbsoluteUri} to game cache");
                         }
                     }
                 }
                 catch
                 {
-                    Console.WriteLine(String.Format("[WARN] Swallowed UnknownException: Unable to download {0} to game cache"), imageUri.AbsoluteUri);
+                    Console.WriteLine($"[WARN] Swallowed UnknownException: Unable to download {imageUri.AbsoluteUri} to game cache");
                 }
             }
         }
 
         private Image GetImage(string fileName)
         {
-            return Bitmap.FromFile(Path.Combine(this.fullPath, fileName));
+            return Image.FromFile(Path.Combine(this.fullPath, fileName));
         }
 
         /// <summary>
@@ -157,22 +154,22 @@ namespace Snowflake.Game
         }
         public void SetBoxartFront(Uri boxartFrontUri)
         {
-            this.SetImage(boxartFrontUri, fileBoxartFront);
+            this.SetImage(boxartFrontUri, GameMediaCache.fileBoxartFront);
         }
 
         public void SetBoxartBack(Uri boxartBackUri)
         {
-            this.SetImage(boxartBackUri, fileBoxartBack);
+            this.SetImage(boxartBackUri, GameMediaCache.fileBoxartBack);
         }
 
         public void SetBoxartFull(Uri boxartFullUri)
         {
-            this.SetImage(boxartFullUri, fileBoxartFull);
+            this.SetImage(boxartFullUri, GameMediaCache.fileBoxartFull);
         }
 
         public void SetGameFanart(Uri fanartUri)
         {
-            this.SetImage(fanartUri, fileGameFanart);
+            this.SetImage(fanartUri, GameMediaCache.fileGameFanart);
         }
 
         /// <summary>
@@ -183,7 +180,7 @@ namespace Snowflake.Game
         /// <returns></returns>
         private string DownloadFile(Uri fileUri, string fileName)
         {
-            string filePath = String.Format("{0}{1}{2}{3}", fileUri.Scheme, Uri.SchemeDelimiter, fileUri.Authority, fileUri.AbsolutePath);
+            string filePath = $"{fileUri.Scheme}{Uri.SchemeDelimiter}{fileUri.AbsoluteUri}{fileUri.AbsolutePath}";
             string extension = Path.GetExtension(filePath);
             string _fileName = fileName + extension;
             using (var webClient = new WebClient())
@@ -202,13 +199,13 @@ namespace Snowflake.Game
 
         public void SetGameVideo(Uri videoUri)
         {
-            string filePath = String.Format("{0}{1}{2}{3}", videoUri.Scheme, Uri.SchemeDelimiter, videoUri.Authority, videoUri.AbsolutePath);
+            string filePath = $"{videoUri.Scheme}{Uri.SchemeDelimiter}{videoUri.Authority}{videoUri.AbsolutePath}";
             string extension = Path.GetExtension(filePath);
             if (extension.Contains("mp4") || extension.Contains("webm"))
             {
-                File.Delete(Path.Combine(this.fullPath, fileGameVideo + ".mp4"));
-                File.Delete(Path.Combine(this.fullPath, fileGameVideo + ".webm"));
-                this.DownloadFile(videoUri, fileGameVideo);
+                File.Delete(Path.Combine(this.fullPath, $"{GameMediaCache.fileGameVideo}.mp4"));
+                File.Delete(Path.Combine(this.fullPath, $"{GameMediaCache.fileGameVideo}.webm"));
+                this.DownloadFile(videoUri, GameMediaCache.fileGameVideo);
             }
             else
             {
@@ -218,15 +215,15 @@ namespace Snowflake.Game
 
         public void SetGameMusic(Uri musicUri)
         {
-            string filePath = String.Format("{0}{1}{2}{3}", musicUri.Scheme, Uri.SchemeDelimiter, musicUri.Authority, musicUri.AbsolutePath);
+            string filePath = $"{musicUri.Scheme}{Uri.SchemeDelimiter}{musicUri.Authority}{musicUri.AbsolutePath}";
             string extension = Path.GetExtension(filePath);
             if (extension.Contains("mp3") || extension.Contains("ogg") || extension.Contains("wav"))
             {
-                File.Delete(Path.Combine(this.fullPath, fileGameMusic + ".mp3"));
-                File.Delete(Path.Combine(this.fullPath, fileGameMusic + ".ogg"));
-                File.Delete(Path.Combine(this.fullPath, fileGameMusic + ".wav"));
+                File.Delete(Path.Combine(this.fullPath, $"{GameMediaCache.fileGameMusic}.mp3"));
+                File.Delete(Path.Combine(this.fullPath, $"{GameMediaCache.fileGameMusic}.ogg"));
+                File.Delete(Path.Combine(this.fullPath, $"{GameMediaCache.fileGameMusic}.wav"));
 
-                this.DownloadFile(musicUri, fileGameMusic);
+                this.DownloadFile(musicUri, GameMediaCache.fileGameMusic);
             }
             else
             {
@@ -236,22 +233,22 @@ namespace Snowflake.Game
 
         public Image GetBoxartFrontImage()
         {
-            return this.GetImage(fileBoxartFront);
+            return this.GetImage(GameMediaCache.fileBoxartFront);
         }
 
         public Image GetBoxartBackImage()
         {
-            return this.GetImage(fileBoxartBack);
+            return this.GetImage(GameMediaCache.fileBoxartBack);
         }
 
         public Image GetBoxartFullImage()
         {
-            return this.GetImage(fileBoxartFull);
+            return this.GetImage(GameMediaCache.fileBoxartFull);
         }
 
         public Image GetGameFanartImage()
         {
-            return this.GetImage(fileGameFanart);
+            return this.GetImage(GameMediaCache.fileGameFanart);
         }
 
 

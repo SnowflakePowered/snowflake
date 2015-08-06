@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Snowflake.Controller
+﻿namespace Snowflake.Controller
 {
     public class GamepadAbstraction : IGamepadAbstraction
     {
-        public string DeviceName { get; private set; }
-        public ControllerProfileType ProfileType { get; private set; }
+        public string DeviceName { get; }
+        public ControllerProfileType ProfileType { get; }
         public GamepadAbstraction(string deviceName, ControllerProfileType profileType)
         {
             this.DeviceName = deviceName;
@@ -48,7 +42,7 @@ namespace Snowflake.Controller
         {
             get
             {
-                var _keyName = keyName.ToLowerInvariant(); //prevent case issues
+                string _keyName = keyName.ToLowerInvariant(); //prevent case issues
                 switch (_keyName)
                 {
                     case "l1":
@@ -100,12 +94,12 @@ namespace Snowflake.Controller
                     case "select":
                         return this.Select;
                     default:
-                        return String.Empty;
+                        return string.Empty;
                 }
             }
             set
             {
-                var _keyName = keyName.ToLowerInvariant(); //prevent case issues
+                string _keyName = keyName.ToLowerInvariant(); //prevent case issues
                 switch (_keyName)
                 {
                     case "l1":

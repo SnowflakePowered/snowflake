@@ -1,22 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Snowflake.Events;
+﻿using System.Collections.Generic;
+using Moq;
+using Snowflake.Ajax;
+using Snowflake.Emulator;
+using Snowflake.Emulator.Configuration;
 using Snowflake.Events.CoreEvents.GameEvent;
 using Snowflake.Events.CoreEvents.ModifyEvent;
 using Snowflake.Events.ServiceEvents;
-using Snowflake.Service;
 using Snowflake.Game;
 using Snowflake.Platform;
-using Snowflake.Emulator;
 using Snowflake.Scraper;
-using Snowflake.Emulator.Configuration;
-using Snowflake.Emulator.Input;
-using Snowflake.Ajax;
+using Snowflake.Service;
 using Xunit;
-using Moq;
+
 namespace Snowflake.Events.Tests
 {
 
@@ -139,7 +134,7 @@ namespace Snowflake.Events.Tests
             new StandardEvents().RegisterSnowflakeEvents(SnowflakeEventManager.EventSource);
             var fakeCoreService = new Mock<ICoreService>();
             var fakeScraper = new Mock<IScraper>();
-            var args = new GameResultsScrapedEventArgs(fakeCoreService.Object, "TEST", new List<Snowflake.Scraper.IGameScrapeResult>(), fakeScraper.Object);
+            var args = new GameResultsScrapedEventArgs(fakeCoreService.Object, "TEST", new List<IGameScrapeResult>(), fakeScraper.Object);
             SnowflakeEventManager.EventSource.Subscribe<GameResultsScrapedEventArgs>((s, e) =>
             {
                 Assert.Equal(args, e);
@@ -196,7 +191,7 @@ namespace Snowflake.Events.Tests
             new StandardEvents().RegisterSnowflakeEvents(SnowflakeEventManager.EventSource);
             var fakeCoreService = new Mock<ICoreService>();
             var fakePlatformInfo = new Mock<IPlatformInfo>();
-            var args = new ModifyPortInputDeviceEventArgs(fakeCoreService.Object, 1, fakePlatformInfo.Object, Snowflake.Controller.InputDeviceNames.KeyboardDevice, Snowflake.Controller.InputDeviceNames.KeyboardDevice);
+            var args = new ModifyPortInputDeviceEventArgs(fakeCoreService.Object, 1, fakePlatformInfo.Object, Controller.InputDeviceNames.KeyboardDevice, Controller.InputDeviceNames.KeyboardDevice);
             SnowflakeEventManager.EventSource.Subscribe<ModifyPortInputDeviceEventArgs>((s, e) =>
             {
                 Assert.Equal(args, e);

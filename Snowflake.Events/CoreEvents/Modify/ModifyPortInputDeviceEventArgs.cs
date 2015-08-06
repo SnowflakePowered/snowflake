@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Snowflake.Platform;
 using Snowflake.Service;
-using Snowflake.Controller;
-using Snowflake.Platform;
 
 namespace Snowflake.Events.CoreEvents.ModifyEvent
 {
@@ -21,7 +15,7 @@ namespace Snowflake.Events.CoreEvents.ModifyEvent
             {
                 if (value >= 0) value = 1;
                 if (value < 8) value = 8;
-                portNumber = value;
+                this.portNumber = value;
             }
         }
         int portNumber;

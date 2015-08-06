@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Reflection;
-using Snowflake.Service;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
-using System;
+using System.Reflection;
 using Snowflake.Plugin.Configuration;
+using Snowflake.Service;
+
 namespace Snowflake.Plugin
 {
     /// <summary>

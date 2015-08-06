@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data;
 using System.Data.SQLite;
 using Snowflake.Platform;
-using System.Data;
 using Snowflake.Utility;
 
 namespace Snowflake.Controller
@@ -69,21 +65,20 @@ namespace Snowflake.Controller
         public string GetDeviceInPort(IPlatformInfo platformInfo, int portNumber)
         {
             if (portNumber > 8 || portNumber < 1){
-                return String.Empty;
+                return string.Empty;
             }
             SQLiteConnection dbConnection = this.GetConnection();
             dbConnection.Open();
-            using (var sqlCommand = new SQLiteCommand("SELECT `%portNumber` FROM `ports` WHERE `platform_id` == @platformId", dbConnection))
+            using (var sqlCommand = new SQLiteCommand($"SELECT `port{portNumber}` FROM `ports` WHERE `platform_id` == @platformId", dbConnection))
             {
-                sqlCommand.CommandText = sqlCommand.CommandText.Replace("%portNumber", "port"+portNumber);
                 sqlCommand.Parameters.AddWithValue("@platformId", platformInfo.PlatformID);
                 using (var reader = sqlCommand.ExecuteReader())
                 {
                     var result = new DataTable();
                     result.Load(reader);
-                    var row = result.Rows[0];
+                    DataRow row = result.Rows[0];
                     dbConnection.Close();
-                    return row.Field<string>("port"+portNumber);
+                    return row.Field<string>($"port{portNumber}");
                 }
             }
         }
@@ -96,9 +91,8 @@ namespace Snowflake.Controller
                 throw new IndexOutOfRangeException("Snowflake only supports consoles up to 8 controller ports");
             }
             dbConnection.Open();
-            using (var sqlCommand = new SQLiteCommand("UPDATE `ports` SET `%portNumber` = @controllerId WHERE `platform_id` == @platformId", dbConnection))
+            using (var sqlCommand = new SQLiteCommand($"UPDATE `ports` SET `port{portNumber}` = @controllerId WHERE `platform_id` == @platformId", dbConnection))
             {
-                sqlCommand.CommandText = sqlCommand.CommandText.Replace("%portNumber", "port" + portNumber);
                 sqlCommand.Parameters.AddWithValue("@controllerId", deviceName);
                 sqlCommand.Parameters.AddWithValue("@platformId", platformInfo.PlatformID);
                 sqlCommand.ExecuteNonQuery();

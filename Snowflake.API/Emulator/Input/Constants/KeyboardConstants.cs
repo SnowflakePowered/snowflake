@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Snowflake.Emulator.Input.Constants
+﻿namespace Snowflake.Emulator.Input.Constants
 {
     public static class KeyboardConstants
     {

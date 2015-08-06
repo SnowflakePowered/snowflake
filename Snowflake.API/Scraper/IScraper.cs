@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using Snowflake.Utility;
-using Snowflake.Plugin;
 using Snowflake.Identifier;
+using Snowflake.Plugin;
+using Snowflake.Utility;
+
 namespace Snowflake.Scraper
 {
     /// <summary>

@@ -1,118 +1,114 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Snowflake.Emulator.Input
 {
     public class KeyboardMapping : IKeyboardMapping
     {
-        public string KEY_A { get; private set; }
-        public string KEY_B { get; private set; }
-        public string KEY_C { get; private set; }
-        public string KEY_D { get; private set; }
-        public string KEY_E { get; private set; }
-        public string KEY_F { get; private set; }
-        public string KEY_G { get; private set; }
-        public string KEY_H { get; private set; }
-        public string KEY_I { get; private set; }
-        public string KEY_J { get; private set; }
-        public string KEY_K { get; private set; }
-        public string KEY_L { get; private set; }
-        public string KEY_M { get; private set; }
-        public string KEY_N { get; private set; }
-        public string KEY_O { get; private set; }
-        public string KEY_P { get; private set; }
-        public string KEY_Q { get; private set; }
-        public string KEY_R { get; private set; }
-        public string KEY_S { get; private set; }
-        public string KEY_T { get; private set; }
-        public string KEY_U { get; private set; }
-        public string KEY_V { get; private set; }
-        public string KEY_W { get; private set; }
-        public string KEY_X { get; private set; }
-        public string KEY_Y { get; private set; }
-        public string KEY_Z { get; private set; }
-        public string KEY_0 { get; private set; }
-        public string KEY_1 { get; private set; }
-        public string KEY_2 { get; private set; }
-        public string KEY_3 { get; private set; }
-        public string KEY_4 { get; private set; }
-        public string KEY_5 { get; private set; }
-        public string KEY_6 { get; private set; }
-        public string KEY_7 { get; private set; }
-        public string KEY_8 { get; private set; }
-        public string KEY_9 { get; private set; }
-        public string KEY_EQUALS { get; private set; }
-        public string KEY_MINUS { get; private set; }
-        public string KEY_BACKSPACE { get; private set; }
-        public string KEY_SPACEBAR { get; private set; }
-        public string KEY_ENTER { get; private set; }
-        public string KEY_UP { get; private set; }
-        public string KEY_DOWN { get; private set; }
-        public string KEY_LEFT { get; private set; }
-        public string KEY_RIGHT { get; private set; }
-        public string KEY_TAB { get; private set; }
-        public string KEY_INSERT { get; private set; }
-        public string KEY_DELETE { get; private set; }
-        public string KEY_HOME { get; private set; }
-        public string KEY_END { get; private set; }
-        public string KEY_PAGE_UP { get; private set; }
-        public string KEY_PAGE_DOWN { get; private set; }
-        public string KEY_SHIFT { get; private set; }
-        public string KEY_CTRL { get; private set; }
-        public string KEY_ALT { get; private set; }
-        public string KEY_ESCAPE { get; private set; }
-        public string KEY_TILDE { get; private set; }
-        public string KEY_QUOTE { get; private set; }
-        public string KEY_SEMICOLON { get; private set; }
-        public string KEY_COMMA { get; private set; }
-        public string KEY_PERIOD { get; private set; }
-        public string KEY_SLASH { get; private set; }
-        public string KEY_BRACKET_LEFT { get; private set; }
-        public string KEY_BRACKET_RIGHT { get; private set; }
-        public string KEY_BACKSLASH { get; private set; }
-        public string KEY_RIGHT_ALT { get; private set; }
-        public string KEY_RIGHT_CTRL { get; private set; }
-        public string KEY_RIGHT_SHIFT { get; private set; }
-        public string KEY_NUMPAD_0 { get; private set; }
-        public string KEY_NUMPAD_1 { get; private set; }
-        public string KEY_NUMPAD_2 { get; private set; }
-        public string KEY_NUMPAD_3 { get; private set; }
-        public string KEY_NUMPAD_4 { get; private set; }
-        public string KEY_NUMPAD_5 { get; private set; }
-        public string KEY_NUMPAD_6 { get; private set; }
-        public string KEY_NUMPAD_7 { get; private set; }
-        public string KEY_NUMPAD_8 { get; private set; }
-        public string KEY_NUMPAD_9 { get; private set; }
-        public string KEY_NUMPAD_PERIOD { get; private set; }
-        public string KEY_NUMPAD_PLUS { get; private set; }
-        public string KEY_NUMPAD_MINUS { get; private set; }
-        public string KEY_NUMPAD_ENTER { get; private set; }
-        public string KEY_F_1 { get; private set; }
-        public string KEY_F_2 { get; private set; }
-        public string KEY_F_3 { get; private set; }
-        public string KEY_F_4 { get; private set; }
-        public string KEY_F_5 { get; private set; }
-        public string KEY_F_6 { get; private set; }
-        public string KEY_F_7 { get; private set; }
-        public string KEY_F_8 { get; private set; }
-        public string KEY_F_9 { get; private set; }
-        public string KEY_F_10 { get; private set; }
-        public string KEY_F_11 { get; private set; }
-        public string KEY_F_12 { get; private set; }
-        public string MOUSE_Y_DOWN { get; private set; }
-        public string MOUSE_Y_UP { get; private set; }
-        public string MOUSE_X_LEFT { get; private set; }
-        public string MOUSE_X_RIGHT { get; private set; }
+        public string KEY_A { get; }
+        public string KEY_B { get; }
+        public string KEY_C { get; }
+        public string KEY_D { get; }
+        public string KEY_E { get; }
+        public string KEY_F { get; }
+        public string KEY_G { get; }
+        public string KEY_H { get; }
+        public string KEY_I { get; }
+        public string KEY_J { get; }
+        public string KEY_K { get; }
+        public string KEY_L { get; }
+        public string KEY_M { get; }
+        public string KEY_N { get; }
+        public string KEY_O { get; }
+        public string KEY_P { get; }
+        public string KEY_Q { get; }
+        public string KEY_R { get; }
+        public string KEY_S { get; }
+        public string KEY_T { get; }
+        public string KEY_U { get; }
+        public string KEY_V { get; }
+        public string KEY_W { get; }
+        public string KEY_X { get; }
+        public string KEY_Y { get; }
+        public string KEY_Z { get; }
+        public string KEY_0 { get; }
+        public string KEY_1 { get; }
+        public string KEY_2 { get; }
+        public string KEY_3 { get; }
+        public string KEY_4 { get; }
+        public string KEY_5 { get; }
+        public string KEY_6 { get; }
+        public string KEY_7 { get; }
+        public string KEY_8 { get; }
+        public string KEY_9 { get; }
+        public string KEY_EQUALS { get; }
+        public string KEY_MINUS { get; }
+        public string KEY_BACKSPACE { get; }
+        public string KEY_SPACEBAR { get; }
+        public string KEY_ENTER { get; }
+        public string KEY_UP { get; }
+        public string KEY_DOWN { get; }
+        public string KEY_LEFT { get; }
+        public string KEY_RIGHT { get; }
+        public string KEY_TAB { get; }
+        public string KEY_INSERT { get; }
+        public string KEY_DELETE { get; }
+        public string KEY_HOME { get; }
+        public string KEY_END { get; }
+        public string KEY_PAGE_UP { get; }
+        public string KEY_PAGE_DOWN { get; }
+        public string KEY_SHIFT { get; }
+        public string KEY_CTRL { get; }
+        public string KEY_ALT { get; }
+        public string KEY_ESCAPE { get; }
+        public string KEY_TILDE { get; }
+        public string KEY_QUOTE { get; }
+        public string KEY_SEMICOLON { get; }
+        public string KEY_COMMA { get; }
+        public string KEY_PERIOD { get; }
+        public string KEY_SLASH { get; }
+        public string KEY_BRACKET_LEFT { get; }
+        public string KEY_BRACKET_RIGHT { get; }
+        public string KEY_BACKSLASH { get; }
+        public string KEY_RIGHT_ALT { get; }
+        public string KEY_RIGHT_CTRL { get; }
+        public string KEY_RIGHT_SHIFT { get; }
+        public string KEY_NUMPAD_0 { get; }
+        public string KEY_NUMPAD_1 { get; }
+        public string KEY_NUMPAD_2 { get; }
+        public string KEY_NUMPAD_3 { get; }
+        public string KEY_NUMPAD_4 { get; }
+        public string KEY_NUMPAD_5 { get; }
+        public string KEY_NUMPAD_6 { get; }
+        public string KEY_NUMPAD_7 { get; }
+        public string KEY_NUMPAD_8 { get; }
+        public string KEY_NUMPAD_9 { get; }
+        public string KEY_NUMPAD_PERIOD { get; }
+        public string KEY_NUMPAD_PLUS { get; }
+        public string KEY_NUMPAD_MINUS { get; }
+        public string KEY_NUMPAD_ENTER { get; }
+        public string KEY_F_1 { get; }
+        public string KEY_F_2 { get; }
+        public string KEY_F_3 { get; }
+        public string KEY_F_4 { get; }
+        public string KEY_F_5 { get; }
+        public string KEY_F_6 { get; }
+        public string KEY_F_7 { get; }
+        public string KEY_F_8 { get; }
+        public string KEY_F_9 { get; }
+        public string KEY_F_10 { get; }
+        public string KEY_F_11 { get; }
+        public string KEY_F_12 { get; }
+        public string MOUSE_Y_DOWN { get; }
+        public string MOUSE_Y_UP { get; }
+        public string MOUSE_X_LEFT { get; }
+        public string MOUSE_X_RIGHT { get; }
         public string MOUSE_LCLICK { get; private set; }
         public string MOUSE_RCLICK { get; private set; }
         public string MOUSE_MCLICK { get; private set; }
         public string MOUSE_WHEELUP { get; private set; }
         public string MOUSE_WHEELDOWN { get; private set; }
 
-        private IDictionary<string, string> mappingData;
+        private readonly IDictionary<string, string> mappingData;
 
         public KeyboardMapping(IDictionary<string, string> mappingData)
         {
@@ -222,9 +218,6 @@ namespace Snowflake.Emulator.Input
             this.MOUSE_WHEELDOWN = mappingData["MOUSE_WHEELDOWN"];
         }
 
-        public string this[string key]
-        {
-            get { return this.mappingData[key]; }
-        }
+        public string this[string key] => this.mappingData[key];
     }
 }

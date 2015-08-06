@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
-using Snowflake.Controller;
 using Snowflake.Emulator.Input.Constants;
 using Xunit;
+
 namespace Snowflake.Controller.Tests
 {
     public class GamepadAbstractionDabataseTests

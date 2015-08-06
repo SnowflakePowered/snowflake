@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
-using Snowflake.Information.MediaStore;
 
 namespace Snowflake.Information
 {
     public class Info: IInfo
     {
-        public string PlatformID { get; private set; }
-        public string Name { get; private set; }
+        public string PlatformID { get; }
+        public string Name { get; }
         public IDictionary<string, string> Metadata { get; set; }
 
         public Info(string platformId, string name, IDictionary<string,string> metadata)

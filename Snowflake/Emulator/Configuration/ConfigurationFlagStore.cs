@@ -1,19 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-using Snowflake.Game;
-using Newtonsoft.Json;
-using Snowflake.Service;
-using Snowflake.Utility;
 using System.Data.SQLite;
+using System.IO;
+using System.Linq;
+using Snowflake.Game;
+using Snowflake.Utility;
+
 namespace Snowflake.Emulator.Configuration
 {
     public class ConfigurationFlagStore : BaseDatabase, IConfigurationFlagStore
     {
-        public string EmulatorBridgeID { get; private set; }
+        public string EmulatorBridgeID { get; }
         readonly string configurationFlagLocation;
         readonly IEmulatorBridge emulatorBridge;
         public ConfigurationFlagStore(IEmulatorBridge emulatorBridge)
@@ -39,7 +36,7 @@ namespace Snowflake.Emulator.Configuration
         {
 
 
-            var flagDb = this.GetConnection();
+            SQLiteConnection flagDb = this.GetConnection();
             flagDb.Open();
             foreach (KeyValuePair<string, string> flagPair in flagValues)
             {
@@ -47,8 +44,8 @@ namespace Snowflake.Emulator.Configuration
                                           @flagKey,
                                           @flagValue)", flagDb))
                 {
-                    sqliteCommand.Parameters.AddWithValue("@flagKey", gameInfo.UUID + "-" + flagPair.Key);
-                    sqliteCommand.Parameters.AddWithValue("@flagValue", flagPair.Value.ToString());
+                    sqliteCommand.Parameters.AddWithValue("@flagKey", $"{gameInfo.UUID}-{flagPair.Key}");
+                    sqliteCommand.Parameters.AddWithValue("@flagValue", flagPair.Value);
                     sqliteCommand.ExecuteNonQuery();
                 }
             }
@@ -78,15 +75,15 @@ namespace Snowflake.Emulator.Configuration
         private void AddDefaults(IDictionary<string, IConfigurationFlag> configurationFlags)
         {
             IDictionary<string, string> flagValues = configurationFlags.ToDictionary(flag => flag.Key, flag => flag.Value.DefaultValue);
-            var flagDb = this.GetConnection();
+            SQLiteConnection flagDb = this.GetConnection();
             flagDb.Open();
             foreach (KeyValuePair<string, string> flagPair in flagValues)
             {
                using(var sqliteCommand = new SQLiteCommand(@"INSERT OR REPLACE INTO flags VALUES(
                                           @flagKey,
                                           @flagValue)", flagDb)){
-                   sqliteCommand.Parameters.AddWithValue("@flagKey", "default-"+flagPair.Key);
-                   sqliteCommand.Parameters.AddWithValue("@flagValue", flagPair.Value.ToString());
+                   sqliteCommand.Parameters.AddWithValue("@flagKey", $"default-{flagPair.Key}");
+                   sqliteCommand.Parameters.AddWithValue("@flagValue", flagPair.Value);
                    sqliteCommand.ExecuteNonQuery();
                }
             }
@@ -96,13 +93,13 @@ namespace Snowflake.Emulator.Configuration
         }
         private void SetValue(string key, object value, ConfigurationFlagTypes type, string prefix)
         {
-            var flagDb = this.GetConnection();
+            SQLiteConnection flagDb = this.GetConnection();
             flagDb.Open();
             using (var sqliteCommand = new SQLiteCommand(@"INSERT OR REPLACE INTO flags VALUES(
                                           @flagKey,
                                           @flagValue)", flagDb))
             {
-                sqliteCommand.Parameters.AddWithValue("@flagKey", prefix + "-" + key);
+                sqliteCommand.Parameters.AddWithValue("@flagKey", $"{prefix}-{key}");
                 sqliteCommand.Parameters.AddWithValue("@flagValue", value.ToString());
                 sqliteCommand.ExecuteNonQuery();
             }
@@ -111,13 +108,13 @@ namespace Snowflake.Emulator.Configuration
         }
         private dynamic GetValue(string key, ConfigurationFlagTypes type, string prefix, object fallback)
         {
-            var dbConnection = this.GetConnection();
+            SQLiteConnection dbConnection = this.GetConnection();
             dbConnection.Open();
-            string value = String.Empty;
+            string value = string.Empty;
             using (var sqlCommand = new SQLiteCommand(@"SELECT `flagValue` FROM `flags` WHERE `flagKey` == @searchQuery"
                , dbConnection))
             {
-                sqlCommand.Parameters.AddWithValue("@searchQuery", prefix + "-" + key);
+                sqlCommand.Parameters.AddWithValue("@searchQuery", $"{prefix}-{key}");
                
                     try
                     {
@@ -130,18 +127,15 @@ namespace Snowflake.Emulator.Configuration
                     }
             }
             dbConnection.Close();
-            if (value == null)
-            {
-                value = fallback.ToString();
-            }
+            value = value ?? fallback.ToString();
             switch (type)
             {
                 case ConfigurationFlagTypes.SELECT_FLAG:
-                    return Int32.Parse(value);
+                    return int.Parse(value);
                 case ConfigurationFlagTypes.INTEGER_FLAG:
-                    return Int32.Parse(value);
+                    return int.Parse(value);
                 case ConfigurationFlagTypes.BOOLEAN_FLAG:
-                    return Boolean.Parse(value);
+                    return bool.Parse(value);
                 default:
                     return value;
             }

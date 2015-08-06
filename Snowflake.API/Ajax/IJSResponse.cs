@@ -1,5 +1,4 @@
-﻿using System;
-namespace Snowflake.Ajax
+﻿namespace Snowflake.Ajax
 {
     /// <summary>
     /// Represents a Javascript (JSON) response to an AJAX request

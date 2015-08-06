@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Snowflake.Platform
+﻿namespace Snowflake.Platform
 {
     /// <summary>
     /// This database keeps the preferred plugins of a platform.

@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.Concurrent;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Snowflake.Events
 {
@@ -24,7 +20,7 @@ namespace Snowflake.Events
         /// <summary>
         /// Stores the EventHandlers
         /// </summary>
-        private ConcurrentDictionary<Type, Delegate> eventContainer = new ConcurrentDictionary<Type, Delegate>();
+        private readonly ConcurrentDictionary<Type, Delegate> eventContainer = new ConcurrentDictionary<Type, Delegate>();
 
         /// <summary>
         /// Initiates the EventSource singleton.
@@ -45,65 +41,52 @@ namespace Snowflake.Events
         }
         public void RegisterEvent<T>(EventHandler<T> eventHandler) where T : SnowflakeEventArgs
         {
-            if (!eventContainer.ContainsKey(typeof(T)))
+            if (!this.eventContainer.ContainsKey(typeof(T)))
             {
-                eventContainer[typeof(T)] = eventHandler;
+                this.eventContainer[typeof(T)] = eventHandler;
             }
         }
         
         public void UnregisterEvent<T>() where T : SnowflakeEventArgs
         {
-            if (eventContainer.ContainsKey(typeof(T)))
+            if (this.eventContainer.ContainsKey(typeof(T)))
             {
-                eventContainer[typeof(T)] = null;
+                this.eventContainer[typeof(T)] = null;
                 Delegate value;
-                eventContainer.TryRemove(typeof(T), out value);
+                this.eventContainer.TryRemove(typeof(T), out value);
             }
         }
      
         public void RaiseEvent<T>(T eventArgs) where T : SnowflakeEventArgs
         {
-            if (eventContainer.ContainsKey(typeof(T)))
+            if (this.eventContainer.ContainsKey(typeof(T)))
             {
-                var snowflakeEvent = GetEvent<T>();
-                if (snowflakeEvent != null)
-                {
-                    snowflakeEvent(this, eventArgs);
-                }
+                var snowflakeEvent = this.GetEvent<T>();
+                snowflakeEvent?.Invoke(this, eventArgs);
             }
         }
       
         public EventHandler<T> GetEvent<T>() where T : SnowflakeEventArgs
         {
             Delegate eventHandler;
-            eventContainer.TryGetValue(typeof(T), out eventHandler);
+            this.eventContainer.TryGetValue(typeof(T), out eventHandler);
             return eventHandler as EventHandler<T>;
 
         }
    
         public void Subscribe<T>(EventHandler<T> eventHandler) where T : SnowflakeEventArgs
         {
-            if (eventContainer.ContainsKey(typeof(T)))
+            if (this.eventContainer.ContainsKey(typeof(T)))
             {
-                if (eventContainer[typeof(T)] != null)
-                {
-                    eventContainer[typeof(T)] = (eventContainer[typeof(T)] as EventHandler<T>) + eventHandler;
-                }
-                else
-                {
-                    eventContainer[typeof(T)] = eventHandler;
-                }
+                this.eventContainer[typeof(T)] = (this.eventContainer?[typeof(T)] as EventHandler<T>) + eventHandler ?? eventHandler;
             }
         }
      
         public void Unsubscribe<T>(EventHandler<T> eventHandler) where T : SnowflakeEventArgs
         {
-            if (eventContainer.ContainsKey(typeof(T)))
+            if (this.eventContainer.ContainsKey(typeof(T)))
             {
-                if (eventContainer[typeof(T)] != null)
-                {
-                    eventContainer[typeof(T)] = (eventContainer[typeof(T)] as EventHandler<T>) - eventHandler;
-                }
+                this.eventContainer[typeof(T)] = (this.eventContainer?[typeof(T)] as EventHandler<T>) - eventHandler ?? null;
             }
         }
     }

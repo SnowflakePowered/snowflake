@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Snowflake.Emulator.Configuration
+﻿namespace Snowflake.Emulator.Configuration
 {
     public class ConfigurationFlagSelectValue : IConfigurationFlagSelectValue
     {
-        public string Value { get; private set; }
+        public string Value { get; }
         public string Description { get; set; }
         public ConfigurationFlagSelectValue(string value, string description)
         {

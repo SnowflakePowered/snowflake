@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.SQLite;
 using System.IO;
-using System.Data.SQLite;
 
 namespace Snowflake.Utility
 {
     public abstract class BaseDatabase
     {
-        public string FileName { get; private set; }
+        public string FileName { get; }
         private readonly string DBConnectionString;
         public BaseDatabase(string fileName)
         {
@@ -20,7 +15,7 @@ namespace Snowflake.Utility
             {
                 SQLiteConnection.CreateFile(this.FileName);
             }
-            this.DBConnectionString = "Data Source=" + this.FileName + ";Version=3;PRAGMA journal_mode=WAL;";
+            this.DBConnectionString = $"Data Source={this.FileName};Version=3;PRAGMA journal_mode=WAL;";
         }
         public SQLiteConnection GetConnection()
         {

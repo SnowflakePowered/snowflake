@@ -1,21 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Dynamic;
-using SharpYaml.Serialization;
+﻿using System.Collections.Generic;
 using System.IO;
+using SharpYaml.Serialization;
 using Snowflake.Plugin.Configuration;
 
 namespace Snowflake.Plugin
 {
     public class YamlConfiguration : IPluginConfiguration
     {
-        public string ConfigurationFileName { get; private set; }
+        public string ConfigurationFileName { get; }
         public IDictionary<string, dynamic> Configuration { get; private set; }
 
-        private string DefaultValues { get; set; }
+        private string DefaultValues { get; }
         public YamlConfiguration(string configFileName, string defaultValues)
         {
             this.ConfigurationFileName = configFileName;
@@ -24,7 +19,7 @@ namespace Snowflake.Plugin
         }
         public void LoadConfiguration()
         {
-            var serializer = new Serializer(new SerializerSettings()
+            var serializer = new Serializer(new SerializerSettings
             {
                 EmitTags = false
             });
@@ -39,12 +34,12 @@ namespace Snowflake.Plugin
 
         public void SaveConfiguration()
         {
-            var serializer = new Serializer(new SerializerSettings()
+            var serializer = new Serializer(new SerializerSettings
             {
                 EmitTags = false
             });
             string serializedYaml = serializer.Serialize(this.Configuration);
-            File.WriteAllText(ConfigurationFileName, serializedYaml);
+            File.WriteAllText(this.ConfigurationFileName, serializedYaml);
         }
     }
 }

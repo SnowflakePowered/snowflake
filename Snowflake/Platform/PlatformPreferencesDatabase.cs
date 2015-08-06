@@ -1,19 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.SQLite;
+﻿using System.Collections.Generic;
 using System.Data;
-using Snowflake.Utility;
+using System.Data.SQLite;
+using System.Linq;
 using Snowflake.Emulator;
 using Snowflake.Scraper;
 using Snowflake.Service.Manager;
+using Snowflake.Utility;
+
 namespace Snowflake.Platform
 {
     public class PlatformPreferencesDatabase : BaseDatabase, IPlatformPreferenceDatabase
     {
-        private IPluginManager pluginManager;
+        private readonly IPluginManager pluginManager;
         public PlatformPreferencesDatabase(string fileName, IPluginManager pluginManager)
             : base(fileName)
         {
@@ -41,8 +39,8 @@ namespace Snowflake.Platform
                                           @scraper)", dbConnection))
             {
                 sqlCommand.Parameters.AddWithValue("@platform_id", platformInfo.PlatformID);
-                KeyValuePair<string, IEmulatorBridge> emulator = pluginManager.LoadedEmulators.Where(x => x.Value.SupportedPlatforms.Contains(platformInfo.PlatformID)).FirstOrDefault();
-                KeyValuePair<string, IScraper> scraper = pluginManager.LoadedScrapers.Where(x => x.Value.SupportedPlatforms.Contains(platformInfo.PlatformID)).FirstOrDefault();
+                KeyValuePair<string, IEmulatorBridge> emulator = this.pluginManager.LoadedEmulators.Where(x => x.Value.SupportedPlatforms.Contains(platformInfo.PlatformID)).FirstOrDefault();
+                KeyValuePair<string, IScraper> scraper = this.pluginManager.LoadedScrapers.Where(x => x.Value.SupportedPlatforms.Contains(platformInfo.PlatformID)).FirstOrDefault();
                 string emulatorId = emulator.Equals(default(KeyValuePair<string, IEmulatorBridge>)) ?  "null" : emulator.Key;
                 string scraperId = scraper.Equals(default(KeyValuePair<string, IScraper>)) ? "null" : scraper.Key;
                 sqlCommand.Parameters.AddWithValue("@emulator", emulatorId);

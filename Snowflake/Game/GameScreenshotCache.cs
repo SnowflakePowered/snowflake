@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 using System.Net;
 using Newtonsoft.Json;
 using Snowflake.Extensions;
-using Snowflake.Utility;
+
 namespace Snowflake.Game
 {
     public class GameScreenshotCache : IGameScreenshotCache
@@ -24,16 +22,10 @@ namespace Snowflake.Game
             this.LoadScreenshotCollection();
         }
         public GameScreenshotCache(string cacheKey) : this(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Snowflake", "screenshots"), cacheKey) { }
-        public string RootPath { get; private set; }
-        public IReadOnlyList<string> ScreenshotCollection
-        {
-            get
-            {
-                return this.screenshotCollection.AsReadOnly();
-            }
-        }
+        public string RootPath { get; }
+        public IReadOnlyList<string> ScreenshotCollection => this.screenshotCollection.AsReadOnly();
         private IList<string> screenshotCollection;
-        private string registerFile;
+        private readonly string registerFile;
         private void LoadScreenshotCollection()
         {
             if (!File.Exists(this.registerFile))
@@ -49,33 +41,23 @@ namespace Snowflake.Game
                 catch (JsonException)
                 {
                     this.screenshotCollection = new List<string>(); //try to rebuild screenshot cache
-                    foreach(string screenshotFile in Directory.EnumerateFiles(this.fullPath)){
-                        if (Path.GetExtension(screenshotFile) == ".png")
-                        {
-                            this.screenshotCollection.Add(screenshotFile);
-                        }
+                    foreach (string screenshotFile in Directory.EnumerateFiles(this.fullPath).Where(screenshotFile => Path.GetExtension(screenshotFile) == ".png"))
+                    {
+                        this.screenshotCollection.Add(screenshotFile);
                     }
                 }
             }
             File.WriteAllText(this.registerFile, JsonConvert.SerializeObject(this.screenshotCollection));
         }
-        public string CacheKey { get; private set; }
-        string fullPath;
+        public string CacheKey { get; }
+        readonly string fullPath;
         public void AddScreenshot(Uri screenshotUri)
         {
             using (var webClient = new WebClient())
             {
                 try
                 {
-                    byte[] imageData;
-                    if (screenshotUri.Scheme == "file")
-                    {
-                        imageData = File.ReadAllBytes(screenshotUri.LocalPath);
-                    }
-                    else
-                    {
-                        imageData = webClient.DownloadData(screenshotUri);
-                    }
+                    byte[] imageData = screenshotUri.Scheme == "file" ? File.ReadAllBytes(screenshotUri.LocalPath) : webClient.DownloadData(screenshotUri);
                     using (Stream imageStream = new MemoryStream(imageData))
                     using (Image image = Image.FromStream(imageStream, true, true))
                     {
@@ -84,14 +66,14 @@ namespace Snowflake.Game
                 }
                 catch
                 {
-                    Console.WriteLine(String.Format("[WARN] Swallowed UnknownException: Unable to download {0} to game cache"), screenshotUri.AbsoluteUri);
+                    Console.WriteLine($"[WARN] Swallowed UnknownException: Unable to download {screenshotUri.AbsoluteUri} to game cache");
                 }
             }
         }
 
         public void AddScreenshot(Image screenshotData)
         {
-            string fileName = DateTime.Now.ToString("yyyy-MM-dd-HH-mm") + "_" + Guid.NewGuid().ToString() +".png";
+            string fileName = $"{DateTime.Now.ToString("yyyy-MM-dd-HH-mm")}_{Guid.NewGuid()}.png";
             try
             {
                 if (File.Exists(Path.Combine(this.fullPath, fileName))) File.Delete(Path.Combine(this.fullPath, fileName));

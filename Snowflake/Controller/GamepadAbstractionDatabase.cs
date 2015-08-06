@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Snowflake.Utility;
-using Snowflake.Emulator.Input.Constants;
-using System.Data.SQLite;
 using System.Data;
+using System.Data.SQLite;
+using Snowflake.Emulator.Input.Constants;
+using Snowflake.Utility;
+
 namespace Snowflake.Controller
 {
     public class GamepadAbstractionDatabase : BaseDatabase, IGamepadAbstractionDatabase
@@ -51,14 +49,14 @@ namespace Snowflake.Controller
                                                                 )", dbConnection); //serialize btnSelect due to reserved sql keyword. other btn for consistency
             sqlCommand.ExecuteNonQuery();
             dbConnection.Close();
-            this.SetGamepadAbstraction("~defaultKeyboard", DefaultKeyboard, true);
-            this.SetGamepadAbstraction("KeyboardDevice", DefaultKeyboard, false);
+            this.SetGamepadAbstraction("~defaultKeyboard", this.DefaultKeyboard, true);
+            this.SetGamepadAbstraction("KeyboardDevice", this.DefaultKeyboard, false);
 
-            this.SetGamepadAbstraction("~defaultGamepad", DefaultGamepad, true);
-            this.SetGamepadAbstraction("XInputDevice1", DefaultGamepad, false);
-            this.SetGamepadAbstraction("XInputDevice2", DefaultGamepad, false);
-            this.SetGamepadAbstraction("XInputDevice3", DefaultGamepad, false);
-            this.SetGamepadAbstraction("XInputDevice4", DefaultGamepad, false);
+            this.SetGamepadAbstraction("~defaultGamepad", this.DefaultGamepad, true);
+            this.SetGamepadAbstraction("XInputDevice1", this.DefaultGamepad, false);
+            this.SetGamepadAbstraction("XInputDevice2", this.DefaultGamepad, false);
+            this.SetGamepadAbstraction("XInputDevice3", this.DefaultGamepad, false);
+            this.SetGamepadAbstraction("XInputDevice4", this.DefaultGamepad, false);
 
 
         }
@@ -128,14 +126,14 @@ namespace Snowflake.Controller
             using (var sqlCommand = new SQLiteCommand("SELECT * FROM `gamepadabstraction` WHERE `DeviceName` == @DeviceName", dbConnection))
             {
                 sqlCommand.Parameters.AddWithValue("@DeviceName", deviceName);
-                using (var reader = sqlCommand.ExecuteReader())
+                using (SQLiteDataReader reader = sqlCommand.ExecuteReader())
                 {
                     //gonna have to replace datatable one day
                     var result = new DataTable();
                     if (reader.HasRows)
                     {
                         result.Load(reader);
-                        var row = result.Rows[0];
+                        DataRow row = result.Rows[0];
                         dbConnection.Close();
                         return new GamepadAbstraction(deviceName, (ControllerProfileType)Convert.ToInt32((row.Field<long>("ProfileType"))))
                         {
@@ -165,10 +163,7 @@ namespace Snowflake.Controller
                             Y = row.Field<string>("btnY")
                         };
                     }
-                    else
-                    {
-                        return null;
-                    }
+                    return null;
                 }
             }
         }
@@ -238,7 +233,7 @@ namespace Snowflake.Controller
                 command = "INSERT OR IGNORE";
             }
 
-            using (var sqlCommand = new SQLiteCommand(command + @" INTO gamepadabstraction VALUES(
+            using (var sqlCommand = new SQLiteCommand($@"{command} INTO gamepadabstraction VALUES(
                                                                @DeviceName,
                                                                @ProfileType,
                                                                @L1,

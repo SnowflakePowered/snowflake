@@ -1,23 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using Snowflake.Platform;
-using Snowflake.Game;
-using Snowflake.Plugin;
 using Snowflake.Constants;
-using Snowflake.Scraper;
-using System.IO;
+using Snowflake.Game;
 using Snowflake.Identifier;
+using Snowflake.Platform;
+using Snowflake.Scraper;
 using Snowflake.Utility;
 
 namespace Snowflake.Service
 {
     public class ScrapeService : IScrapeService
     {
-        private IPlatformInfo ScrapePlatform { get; set; }
-        private IScraper ScraperPlugin { get; set; }
+        private IPlatformInfo ScrapePlatform { get; }
+        private IScraper ScraperPlugin { get; }
         public ScrapeService(IPlatformInfo scrapePlatform, string scraperName)
         {
             this.ScrapePlatform = scrapePlatform;

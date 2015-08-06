@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Snowflake.Service;
-using Snowflake.Emulator;
+﻿using Snowflake.Emulator;
 using Snowflake.Game;
+using Snowflake.Service;
 
 namespace Snowflake.Events.CoreEvents.GameEvent
 {
@@ -17,7 +12,7 @@ namespace Snowflake.Events.CoreEvents.GameEvent
             : base(eventCoreInstance, gameInfo)
         {
             this.GameEmulatorAssembly = emulatorAssembly;
-            this.GameEmulatorBridge = GameEmulatorBridge;
+            this.GameEmulatorBridge = this.GameEmulatorBridge;
         }
 
     

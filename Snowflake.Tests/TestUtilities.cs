@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
+﻿using System.IO;
 using System.Reflection;
 
 namespace Snowflake.Tests
@@ -17,7 +12,7 @@ namespace Snowflake.Tests
         /// <returns>The TestResource<</returns>
         internal static Stream GetResource(string resourceName)
         {
-            return Assembly.GetCallingAssembly().GetManifestResourceStream(Assembly.GetCallingAssembly().GetName().Name + ".TestResources." + resourceName);
+            return Assembly.GetCallingAssembly().GetManifestResourceStream($"{Assembly.GetCallingAssembly().GetName().Name}.TestResources.{resourceName}");
         }
 
         /// <summary>

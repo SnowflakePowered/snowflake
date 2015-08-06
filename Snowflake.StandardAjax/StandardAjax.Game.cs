@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Snowflake.Ajax;
-using Snowflake.Game;
-using Snowflake.Platform;
-using Snowflake.Extensions;
-using Snowflake.Utility;
 using Snowflake.Emulator;
 using Snowflake.Emulator.Configuration;
-using Newtonsoft.Json;
-using Snowflake.Events.CoreEvents.GameEvent;
 using Snowflake.Events;
+using Snowflake.Events.CoreEvents.GameEvent;
+using Snowflake.Extensions;
+using Snowflake.Game;
+
 namespace Snowflake.StandardAjax
 {
     public partial class StandardAjax
@@ -59,16 +55,16 @@ namespace Snowflake.StandardAjax
             string gameinfo_pre = request.GetParameter("gameinfo");
             IGameInfo game = GameInfo.FromJson(JsonConvert.DeserializeObject(gameinfo_pre));
             var gamePreAddEvent = new GamePreAddEventArgs(this.CoreInstance, game, this.CoreInstance.GameDatabase);
-            SnowflakeEventManager.EventSource.RaiseEvent<GamePreAddEventArgs>(gamePreAddEvent);
+            SnowflakeEventManager.EventSource.RaiseEvent(gamePreAddEvent);
             if (!gamePreAddEvent.Cancel)
             {
                 game = gamePreAddEvent.GameInfo;
                 this.CoreInstance.GameDatabase.AddGame(game);
                 var gameAddEvent = new GameAddEventArgs(this.CoreInstance, game, this.CoreInstance.GameDatabase);
-                SnowflakeEventManager.EventSource.RaiseEvent<GameAddEventArgs>(gameAddEvent);
+                SnowflakeEventManager.EventSource.RaiseEvent(gameAddEvent);
 
             }
-            return new JSResponse(request, "added " + game.FileName, true);
+            return new JSResponse(request, $"added {game.FileName}", true);
         }
 
         [AjaxMethod(MethodPrefix = "Game")]
@@ -98,16 +94,13 @@ namespace Snowflake.StandardAjax
         {
             IList<IGameInfo> games = this.CoreInstance.GameDatabase.GetAllGames();
             IDictionary<string, List<IGameInfo>> sortedGames = this.CoreInstance.LoadedPlatforms.ToDictionary(platform => platform.Key, platform => new List<IGameInfo>());
-            foreach (IGameInfo game in games)
+            foreach (IGameInfo game in games.Where(game => sortedGames.ContainsKey(game.PlatformID)))
             {
-                if (sortedGames.ContainsKey(game.PlatformID))
-                {
-                    sortedGames[game.PlatformID].Add(game);
-                }
+                sortedGames[game.PlatformID].Add(game);
             }
             foreach (List<IGameInfo> gameInfos in sortedGames.Values)
             {
-                gameInfos.Sort((x, y) => String.Compare(x.Name, y.Name));
+                gameInfos.Sort((x, y) => string.CompareOrdinal(x.Name, y.Name));
             }
             return new JSResponse(request, sortedGames);
         }
@@ -166,13 +159,13 @@ namespace Snowflake.StandardAjax
             switch (flag.Type)
             {
                 case ConfigurationFlagTypes.BOOLEAN_FLAG:
-                    castedValue = Boolean.Parse(value);
+                    castedValue = bool.Parse(value);
                     break;
                 case ConfigurationFlagTypes.INTEGER_FLAG:
-                    castedValue = Int32.Parse(value);
+                    castedValue = int.Parse(value);
                     break;
                 case ConfigurationFlagTypes.SELECT_FLAG:
-                    castedValue = Int32.Parse(value);
+                    castedValue = int.Parse(value);
                     break;
             }
             bridge.ConfigurationFlagStore.SetValue(game, flag.Key, castedValue, flag.Type);
@@ -197,13 +190,13 @@ namespace Snowflake.StandardAjax
                 switch (flag.Type)
                 {
                     case ConfigurationFlagTypes.BOOLEAN_FLAG:
-                        castedValue = Boolean.Parse(value.Value);
+                        castedValue = bool.Parse(value.Value);
                         break;
                     case ConfigurationFlagTypes.INTEGER_FLAG:
-                        castedValue = Int32.Parse(value.Value);
+                        castedValue = int.Parse(value.Value);
                         break;
                     case ConfigurationFlagTypes.SELECT_FLAG:
-                        castedValue = Int32.Parse(value.Value);
+                        castedValue = int.Parse(value.Value);
                         break;
                 }
                 bridge.ConfigurationFlagStore.SetValue(game, flag.Key, castedValue, flag.Type);
@@ -227,13 +220,13 @@ namespace Snowflake.StandardAjax
             switch (flag.Type)
             {
                 case ConfigurationFlagTypes.BOOLEAN_FLAG:
-                    castedValue = Boolean.Parse(value);
+                    castedValue = bool.Parse(value);
                     break;
                 case ConfigurationFlagTypes.INTEGER_FLAG:
-                    castedValue = Int32.Parse(value);
+                    castedValue = int.Parse(value);
                     break;
                 case ConfigurationFlagTypes.SELECT_FLAG:
-                    castedValue = Int32.Parse(value);
+                    castedValue = int.Parse(value);
                     break;
             }
             bridge.ConfigurationFlagStore.SetDefaultValue(flag.Key, castedValue, flag.Type);
@@ -276,7 +269,7 @@ namespace Snowflake.StandardAjax
             {
                 gameStartEvent.GameEmulatorBridge.StartRom(gameStartEvent.GameInfo);
             }
-            return new JSResponse(request, "Game Started " + gameInfo.UUID);
+            return new JSResponse(request, $"Game Started {gameInfo.UUID}"); //todo return started gameInfo
         }
 
         [AjaxMethod(MethodPrefix = "Game")]

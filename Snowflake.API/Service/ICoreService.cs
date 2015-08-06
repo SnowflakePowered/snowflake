@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Snowflake.Service.Manager;
-using Snowflake.Service.HttpServer;
-using Snowflake.Service.JSWebSocketServer;
-using Snowflake.Emulator.Configuration;
-using Snowflake.Emulator.Input.InputManager;
 using Snowflake.Controller;
+using Snowflake.Emulator.Input.InputManager;
 using Snowflake.Game;
 using Snowflake.Platform;
+using Snowflake.Service.Manager;
+
 namespace Snowflake.Service
 {
     /// <summary>

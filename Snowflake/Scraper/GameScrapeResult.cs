@@ -2,9 +2,9 @@
 {
     public class GameScrapeResult : IGameScrapeResult
     {
-        public string ID { get; private set; }
-        public string PlatformID { get; private set; }
-        public string GameTitle { get; private set; }
+        public string ID { get; }
+        public string PlatformID { get; }
+        public string GameTitle { get; }
 
 
         public GameScrapeResult(string id, string platformid, string gameTitle)

@@ -1,28 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Reflection;
+﻿using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using Newtonsoft.Json;
-using Snowflake.Constants.Plugin;
-using Snowflake.Service;
-using Snowflake.Plugin;
-using Snowflake.Plugin.Configuration;
 using NLog;
+using Snowflake.Constants.Plugin;
+using Snowflake.Plugin.Configuration;
+using Snowflake.Service;
+
 namespace Snowflake.Plugin
 {
     public abstract class BasePlugin : IBasePlugin
     {
-        public string PluginName { get; private set; }
-        public IDictionary<string, dynamic> PluginInfo { get; private set; }
-        public Assembly PluginAssembly { get; private set; }
-        public string PluginDataPath { get; private set; }
+        public string PluginName { get; }
+        public IDictionary<string, dynamic> PluginInfo { get; }
+        public Assembly PluginAssembly { get; }
+        public string PluginDataPath { get; }
         public virtual IPluginConfiguration PluginConfiguration { get; protected set; }
         public virtual IList<IPluginConfigOption> PluginConfigurationOptions { get; protected set; }
-        public ICoreService CoreInstance { get; private set; }
-        public IList<string> SupportedPlatforms { get; private set; }
+        public ICoreService CoreInstance { get; }
+        public IList<string> SupportedPlatforms { get; }
         protected ILogger Logger { get; private set; }
         protected BasePlugin(Assembly pluginAssembly, ICoreService coreInstance)
         {
@@ -35,7 +31,7 @@ namespace Snowflake.Plugin
             this.PluginName = this.PluginInfo[PluginInfoFields.Name];
             this.Logger = LogManager.GetLogger(this.PluginName);
             this.SupportedPlatforms = this.PluginInfo[PluginInfoFields.SupportedPlatforms].ToObject<IList<string>>();
-            this.PluginDataPath = Path.Combine(coreInstance.AppDataDirectory, "plugins", PluginName);
+            this.PluginDataPath = Path.Combine(coreInstance.AppDataDirectory, "plugins", this.PluginName);
             if (!Directory.Exists(this.PluginDataPath)) Directory.CreateDirectory(this.PluginDataPath);
         }
         public void LoadConfigurationOptions()
@@ -44,7 +40,7 @@ namespace Snowflake.Plugin
         }
         public Stream GetResource(string resourceName)
         {
-            return this.PluginAssembly.GetManifestResourceStream(this.PluginAssembly.GetName().Name + ".resource." + resourceName);
+            return this.PluginAssembly.GetManifestResourceStream($"{this.PluginAssembly.GetName().Name}.resource.{resourceName}");
         }
         public string GetStringResource(string resourceName)
         {
@@ -58,10 +54,8 @@ namespace Snowflake.Plugin
 
         public virtual void Dispose()
         {
-            if (this.PluginConfiguration != null)
-            {
-                this.PluginConfiguration.SaveConfiguration();
-            }
+            
+           this.PluginConfiguration?.SaveConfiguration();
         }
     }
 }
