@@ -25,7 +25,7 @@ namespace Snowflake.Extensions
                               select key).ToList();
 
             JArrayKeys.ForEach(key => result[key] = ((JArray)result[key]).Values().Select(x => ((JValue)x).Value).ToArray());
-            JObjectKeys.ForEach(key => result[key] = ToDictionary(result[key] as JObject));
+            JObjectKeys.ForEach(key => result[key] = JObjectExts.ToDictionary(result[key] as JObject));
 
             return result;
         }

@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace Snowflake.Emulator.Configuration
 {
-    public class ConfigurationFlag : Snowflake.Emulator.Configuration.IConfigurationFlag
+    public class ConfigurationFlag : IConfigurationFlag
     {
         public string Key { get; }
         public ConfigurationFlagTypes Type { get; }

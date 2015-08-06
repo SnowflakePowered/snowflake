@@ -15,17 +15,17 @@ namespace Snowflake.Service.Manager
         }
         public void RegisterServer(string serverName, IBaseHttpServer httpServer)
         {
-            servers.Add(serverName, httpServer);
+            this.servers.Add(serverName, httpServer);
         }
 
         public void StartServer(string serverName)
         {
-            servers[serverName].StartServer();
+            this.servers[serverName].StartServer();
         }
 
         public void StopServer(string serverName)
         {
-            servers[serverName].StopServer();
+            this.servers[serverName].StopServer();
         }
 
         public IList<string> RegisteredServers

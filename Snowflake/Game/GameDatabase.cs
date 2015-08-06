@@ -77,7 +77,7 @@ namespace Snowflake.Game
         {
             try
             {
-                return GetGamesByColumn("uuid", uuid)[0];
+                return this.GetGamesByColumn("uuid", uuid)[0];
             }
             catch
             {
@@ -87,11 +87,11 @@ namespace Snowflake.Game
 
         public IList<IGameInfo> GetGamesByPlatform(string platformId)
         {
-            return GetGamesByColumn("platform_id", platformId);
+            return this.GetGamesByColumn("platform_id", platformId);
         }
         public IList<IGameInfo> GetGamesByName(string nameSearch)
         {
-            return GetGamesByColumn("name", nameSearch);
+            return this.GetGamesByColumn("name", nameSearch);
         }
         private IList<IGameInfo> GetGamesByColumn(string colName, string searchQuery)
         {
@@ -114,7 +114,7 @@ namespace Snowflake.Game
                             System.Threading.Thread.Sleep(500);
                             result.Load(reader);
                         }
-                        var gamesResults = (from DataRow row in result.Rows select GetGameFromDataRow(row)).ToList();
+                        var gamesResults = (from DataRow row in result.Rows select this.GetGameFromDataRow(row)).ToList();
                         dbConnection.Close();
                         return gamesResults;
                     }

@@ -34,30 +34,30 @@ namespace Snowflake.Utility.Hash
         private UInt32 hash;
 
         public Crc32()
-            : this(DefaultPolynomial, DefaultSeed)
+            : this(Crc32.DefaultPolynomial, Crc32.DefaultSeed)
         {
         }
 
         public Crc32(UInt32 polynomial, UInt32 seed)
         {
-            table = InitializeTable(polynomial);
-            this.seed = hash = seed;
+            this.table = Crc32.InitializeTable(polynomial);
+            this.seed = this.hash = seed;
         }
 
         public override void Initialize()
         {
-            hash = seed;
+            this.hash = this.seed;
         }
 
         protected override void HashCore(byte[] buffer, int start, int length)
         {
-            hash = CalculateHash(table, hash, buffer, start, length);
+            this.hash = Crc32.CalculateHash(this.table, this.hash, buffer, start, length);
         }
 
         protected override byte[] HashFinal()
         {
-            var hashBuffer = UInt32ToBigEndianBytes(~hash);
-            HashValue = hashBuffer;
+            var hashBuffer = Crc32.UInt32ToBigEndianBytes(~this.hash);
+            this.HashValue = hashBuffer;
             return hashBuffer;
         }
 
@@ -65,23 +65,23 @@ namespace Snowflake.Utility.Hash
 
         public static UInt32 Compute(byte[] buffer)
         {
-            return Compute(DefaultSeed, buffer);
+            return Crc32.Compute(Crc32.DefaultSeed, buffer);
         }
 
         public static UInt32 Compute(UInt32 seed, byte[] buffer)
         {
-            return Compute(DefaultPolynomial, seed, buffer);
+            return Crc32.Compute(Crc32.DefaultPolynomial, seed, buffer);
         }
 
         public static UInt32 Compute(UInt32 polynomial, UInt32 seed, byte[] buffer)
         {
-            return ~CalculateHash(InitializeTable(polynomial), seed, buffer, 0, buffer.Length);
+            return ~Crc32.CalculateHash(Crc32.InitializeTable(polynomial), seed, buffer, 0, buffer.Length);
         }
 
         private static UInt32[] InitializeTable(UInt32 polynomial)
         {
-            if (polynomial == DefaultPolynomial && defaultTable != null)
-                return defaultTable;
+            if (polynomial == Crc32.DefaultPolynomial && Crc32.defaultTable != null)
+                return Crc32.defaultTable;
 
             var createTable = new UInt32[256];
             for (var i = 0; i < 256; i++)
@@ -95,8 +95,8 @@ namespace Snowflake.Utility.Hash
                 createTable[i] = entry;
             }
 
-            if (polynomial == DefaultPolynomial)
-                defaultTable = createTable;
+            if (polynomial == Crc32.DefaultPolynomial)
+                Crc32.defaultTable = createTable;
 
             return createTable;
         }

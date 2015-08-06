@@ -12,9 +12,11 @@ namespace Snowflake.Shell.Windows
         public NotifyIcon notifyIcon;
         internal ShellIcon()
         {
-            this.notifyIcon = new NotifyIcon();
-            this.notifyIcon.Text = "Snowflake is running.";
-            this.notifyIcon.ContextMenu = new ContextMenu();
+            this.notifyIcon = new NotifyIcon
+            {
+                Text = "Snowflake is running.",
+                ContextMenu = new ContextMenu()
+            };
             Bitmap bmp = Properties.Resources.icon;
             this.notifyIcon.Icon = Icon.FromHandle(bmp.GetHicon());
             this.notifyIcon.Visible = true;  // Shows the notify icon in the system tray

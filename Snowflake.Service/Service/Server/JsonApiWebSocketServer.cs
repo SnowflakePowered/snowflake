@@ -22,11 +22,11 @@ namespace Snowflake.Service.JSWebSocketServer
         public event EventHandler<SocketMessageReceivedEventArgs> SocketMessage;
         public JsonApiWebSocketServer(int port)
         {
-            server = new WebSocketServer($"ws://0.0.0.0:{port}");
+            this.server = new WebSocketServer($"ws://0.0.0.0:{port}");
             this.connections = new List<IWebSocketConnection>();
-            this.SocketMessage += Process;
-            this.SocketOpen += (s, e) => connections.Add(e.Connection);
-            this.SocketClose += (s, e) => connections.Remove(e.Connection);
+            this.SocketMessage += this.Process;
+            this.SocketOpen += (s, e) => this.connections.Add(e.Connection);
+            this.SocketClose += (s, e) => this.connections.Remove(e.Connection);
         }
 
         public void SendMessage(string message)
@@ -88,8 +88,7 @@ namespace Snowflake.Service.JSWebSocketServer
         void IBaseHttpServer.StartServer()
         {
             this.serverThread = new Thread(
-                () =>
-                    server.Start(socket =>
+                () => this.server.Start(socket =>
                      {
                          socket.OnOpen = () => this.OnSocketOpen(socket);
                          socket.OnClose = () => this.OnSocketClose(socket);

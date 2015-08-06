@@ -41,8 +41,8 @@ namespace Snowflake.Platform
                                           @scraper)", dbConnection))
             {
                 sqlCommand.Parameters.AddWithValue("@platform_id", platformInfo.PlatformID);
-                KeyValuePair<string, IEmulatorBridge> emulator = pluginManager.LoadedEmulators.Where(x => x.Value.SupportedPlatforms.Contains(platformInfo.PlatformID)).FirstOrDefault();
-                KeyValuePair<string, IScraper> scraper = pluginManager.LoadedScrapers.Where(x => x.Value.SupportedPlatforms.Contains(platformInfo.PlatformID)).FirstOrDefault();
+                KeyValuePair<string, IEmulatorBridge> emulator = this.pluginManager.LoadedEmulators.Where(x => x.Value.SupportedPlatforms.Contains(platformInfo.PlatformID)).FirstOrDefault();
+                KeyValuePair<string, IScraper> scraper = this.pluginManager.LoadedScrapers.Where(x => x.Value.SupportedPlatforms.Contains(platformInfo.PlatformID)).FirstOrDefault();
                 string emulatorId = emulator.Equals(default(KeyValuePair<string, IEmulatorBridge>)) ?  "null" : emulator.Key;
                 string scraperId = scraper.Equals(default(KeyValuePair<string, IScraper>)) ? "null" : scraper.Key;
                 sqlCommand.Parameters.AddWithValue("@emulator", emulatorId);

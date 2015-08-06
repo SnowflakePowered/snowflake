@@ -72,7 +72,7 @@ namespace Snowflake.Service.HttpServer
                 context.Response.AppendHeader("Content-Type", "application/json");
             }
             
-            writer.WriteLine(await ProcessRequest(request));
+            writer.WriteLine(await this.ProcessRequest(request));
             writer.Flush();
             context.Response.OutputStream.Close();
         }

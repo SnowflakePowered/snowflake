@@ -21,7 +21,7 @@ namespace Snowflake.Events.CoreEvents.ModifyEvent
             {
                 if (value >= 0) value = 1;
                 if (value < 8) value = 8;
-                portNumber = value;
+                this.portNumber = value;
             }
         }
         int portNumber;

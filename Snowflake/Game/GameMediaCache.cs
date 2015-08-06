@@ -25,13 +25,13 @@ namespace Snowflake.Game
         public string GameVideoFileName { 
             get 
             {
-                return Directory.EnumerateFiles(this.fullPath).Where(file => Path.GetFileNameWithoutExtension(file) == fileGameVideo).FirstOrDefault();
+                return Directory.EnumerateFiles(this.fullPath).Where(file => Path.GetFileNameWithoutExtension(file) == GameMediaCache.fileGameVideo).FirstOrDefault();
             } 
         }
         public string GameMusicFileName { 
             get 
             {
-                return Directory.EnumerateFiles(this.fullPath).Where(file => Path.GetFileNameWithoutExtension(file) == fileGameMusic).FirstOrDefault(); 
+                return Directory.EnumerateFiles(this.fullPath).Where(file => Path.GetFileNameWithoutExtension(file) == GameMediaCache.fileGameMusic).FirstOrDefault(); 
             } 
         }
 
@@ -109,7 +109,7 @@ namespace Snowflake.Game
 
         private Image GetImage(string fileName)
         {
-            return Bitmap.FromFile(Path.Combine(this.fullPath, fileName));
+            return Image.FromFile(Path.Combine(this.fullPath, fileName));
         }
 
         /// <summary>
@@ -157,22 +157,22 @@ namespace Snowflake.Game
         }
         public void SetBoxartFront(Uri boxartFrontUri)
         {
-            this.SetImage(boxartFrontUri, fileBoxartFront);
+            this.SetImage(boxartFrontUri, GameMediaCache.fileBoxartFront);
         }
 
         public void SetBoxartBack(Uri boxartBackUri)
         {
-            this.SetImage(boxartBackUri, fileBoxartBack);
+            this.SetImage(boxartBackUri, GameMediaCache.fileBoxartBack);
         }
 
         public void SetBoxartFull(Uri boxartFullUri)
         {
-            this.SetImage(boxartFullUri, fileBoxartFull);
+            this.SetImage(boxartFullUri, GameMediaCache.fileBoxartFull);
         }
 
         public void SetGameFanart(Uri fanartUri)
         {
-            this.SetImage(fanartUri, fileGameFanart);
+            this.SetImage(fanartUri, GameMediaCache.fileGameFanart);
         }
 
         /// <summary>
@@ -206,9 +206,9 @@ namespace Snowflake.Game
             string extension = Path.GetExtension(filePath);
             if (extension.Contains("mp4") || extension.Contains("webm"))
             {
-                File.Delete(Path.Combine(this.fullPath, $"{fileGameVideo}.mp4"));
-                File.Delete(Path.Combine(this.fullPath, $"{fileGameVideo}.webm"));
-                this.DownloadFile(videoUri, fileGameVideo);
+                File.Delete(Path.Combine(this.fullPath, $"{GameMediaCache.fileGameVideo}.mp4"));
+                File.Delete(Path.Combine(this.fullPath, $"{GameMediaCache.fileGameVideo}.webm"));
+                this.DownloadFile(videoUri, GameMediaCache.fileGameVideo);
             }
             else
             {
@@ -222,11 +222,11 @@ namespace Snowflake.Game
             string extension = Path.GetExtension(filePath);
             if (extension.Contains("mp3") || extension.Contains("ogg") || extension.Contains("wav"))
             {
-                File.Delete(Path.Combine(this.fullPath, $"{fileGameMusic}.mp3"));
-                File.Delete(Path.Combine(this.fullPath, $"{fileGameMusic}.ogg"));
-                File.Delete(Path.Combine(this.fullPath, $"{fileGameMusic}.wav"));
+                File.Delete(Path.Combine(this.fullPath, $"{GameMediaCache.fileGameMusic}.mp3"));
+                File.Delete(Path.Combine(this.fullPath, $"{GameMediaCache.fileGameMusic}.ogg"));
+                File.Delete(Path.Combine(this.fullPath, $"{GameMediaCache.fileGameMusic}.wav"));
 
-                this.DownloadFile(musicUri, fileGameMusic);
+                this.DownloadFile(musicUri, GameMediaCache.fileGameMusic);
             }
             else
             {
@@ -236,22 +236,22 @@ namespace Snowflake.Game
 
         public Image GetBoxartFrontImage()
         {
-            return this.GetImage(fileBoxartFront);
+            return this.GetImage(GameMediaCache.fileBoxartFront);
         }
 
         public Image GetBoxartBackImage()
         {
-            return this.GetImage(fileBoxartBack);
+            return this.GetImage(GameMediaCache.fileBoxartBack);
         }
 
         public Image GetBoxartFullImage()
         {
-            return this.GetImage(fileBoxartFull);
+            return this.GetImage(GameMediaCache.fileBoxartFull);
         }
 
         public Image GetGameFanartImage()
         {
-            return this.GetImage(fileGameFanart);
+            return this.GetImage(GameMediaCache.fileGameFanart);
         }
 
 

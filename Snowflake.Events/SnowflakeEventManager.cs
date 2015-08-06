@@ -45,27 +45,27 @@ namespace Snowflake.Events
         }
         public void RegisterEvent<T>(EventHandler<T> eventHandler) where T : SnowflakeEventArgs
         {
-            if (!eventContainer.ContainsKey(typeof(T)))
+            if (!this.eventContainer.ContainsKey(typeof(T)))
             {
-                eventContainer[typeof(T)] = eventHandler;
+                this.eventContainer[typeof(T)] = eventHandler;
             }
         }
         
         public void UnregisterEvent<T>() where T : SnowflakeEventArgs
         {
-            if (eventContainer.ContainsKey(typeof(T)))
+            if (this.eventContainer.ContainsKey(typeof(T)))
             {
-                eventContainer[typeof(T)] = null;
+                this.eventContainer[typeof(T)] = null;
                 Delegate value;
-                eventContainer.TryRemove(typeof(T), out value);
+                this.eventContainer.TryRemove(typeof(T), out value);
             }
         }
      
         public void RaiseEvent<T>(T eventArgs) where T : SnowflakeEventArgs
         {
-            if (eventContainer.ContainsKey(typeof(T)))
+            if (this.eventContainer.ContainsKey(typeof(T)))
             {
-                var snowflakeEvent = GetEvent<T>();
+                var snowflakeEvent = this.GetEvent<T>();
                 snowflakeEvent?.Invoke(this, eventArgs);
             }
         }
@@ -73,24 +73,24 @@ namespace Snowflake.Events
         public EventHandler<T> GetEvent<T>() where T : SnowflakeEventArgs
         {
             Delegate eventHandler;
-            eventContainer.TryGetValue(typeof(T), out eventHandler);
+            this.eventContainer.TryGetValue(typeof(T), out eventHandler);
             return eventHandler as EventHandler<T>;
 
         }
    
         public void Subscribe<T>(EventHandler<T> eventHandler) where T : SnowflakeEventArgs
         {
-            if (eventContainer.ContainsKey(typeof(T)))
+            if (this.eventContainer.ContainsKey(typeof(T)))
             {
-                eventContainer[typeof(T)] = (eventContainer?[typeof(T)] as EventHandler<T>) + eventHandler ?? eventHandler;
+                this.eventContainer[typeof(T)] = (this.eventContainer?[typeof(T)] as EventHandler<T>) + eventHandler ?? eventHandler;
             }
         }
      
         public void Unsubscribe<T>(EventHandler<T> eventHandler) where T : SnowflakeEventArgs
         {
-            if (eventContainer.ContainsKey(typeof(T)))
+            if (this.eventContainer.ContainsKey(typeof(T)))
             {
-                eventContainer[typeof(T)] = (eventContainer?[typeof(T)] as EventHandler<T>) - eventHandler ?? null;
+                this.eventContainer[typeof(T)] = (this.eventContainer?[typeof(T)] as EventHandler<T>) - eventHandler ?? null;
             }
         }
     }

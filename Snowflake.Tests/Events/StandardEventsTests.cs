@@ -139,7 +139,7 @@ namespace Snowflake.Events.Tests
             new StandardEvents().RegisterSnowflakeEvents(SnowflakeEventManager.EventSource);
             var fakeCoreService = new Mock<ICoreService>();
             var fakeScraper = new Mock<IScraper>();
-            var args = new GameResultsScrapedEventArgs(fakeCoreService.Object, "TEST", new List<Snowflake.Scraper.IGameScrapeResult>(), fakeScraper.Object);
+            var args = new GameResultsScrapedEventArgs(fakeCoreService.Object, "TEST", new List<IGameScrapeResult>(), fakeScraper.Object);
             SnowflakeEventManager.EventSource.Subscribe<GameResultsScrapedEventArgs>((s, e) =>
             {
                 Assert.Equal(args, e);
@@ -196,7 +196,7 @@ namespace Snowflake.Events.Tests
             new StandardEvents().RegisterSnowflakeEvents(SnowflakeEventManager.EventSource);
             var fakeCoreService = new Mock<ICoreService>();
             var fakePlatformInfo = new Mock<IPlatformInfo>();
-            var args = new ModifyPortInputDeviceEventArgs(fakeCoreService.Object, 1, fakePlatformInfo.Object, Snowflake.Controller.InputDeviceNames.KeyboardDevice, Snowflake.Controller.InputDeviceNames.KeyboardDevice);
+            var args = new ModifyPortInputDeviceEventArgs(fakeCoreService.Object, 1, fakePlatformInfo.Object, Controller.InputDeviceNames.KeyboardDevice, Controller.InputDeviceNames.KeyboardDevice);
             SnowflakeEventManager.EventSource.Subscribe<ModifyPortInputDeviceEventArgs>((s, e) =>
             {
                 Assert.Equal(args, e);

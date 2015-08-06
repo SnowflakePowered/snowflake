@@ -17,7 +17,7 @@ namespace Snowflake.Events.CoreEvents.GameEvent
             : base(eventCoreInstance, gameInfo)
         {
             this.GameEmulatorAssembly = emulatorAssembly;
-            this.GameEmulatorBridge = GameEmulatorBridge;
+            this.GameEmulatorBridge = this.GameEmulatorBridge;
         }
 
     

@@ -44,7 +44,7 @@ namespace Snowflake.Plugin
                 EmitTags = false
             });
             string serializedYaml = serializer.Serialize(this.Configuration);
-            File.WriteAllText(ConfigurationFileName, serializedYaml);
+            File.WriteAllText(this.ConfigurationFileName, serializedYaml);
         }
     }
 }

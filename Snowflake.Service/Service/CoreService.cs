@@ -34,7 +34,7 @@ namespace Snowflake.Service
         public IAjaxManager AjaxManager { get; }
         public IGameDatabase GameDatabase { get; }
         public IGamepadAbstractionDatabase GamepadAbstractionDatabase { get; }
-        public IInputManager InputManager { get { return new Snowflake.InputManager.InputManager(); } }
+        public IInputManager InputManager { get { return new InputManager.InputManager(); } }
         public IControllerPortsDatabase ControllerPortsDatabase { get; }
         public IPlatformPreferenceDatabase PlatformPreferenceDatabase { get; private set; }
         public IEmulatorAssembliesManager EmulatorManager { get; private set; }
@@ -72,7 +72,7 @@ namespace Snowflake.Service
       
         public async static Task InitPluginManagerAsync()
         {
-            await Task.Run(() => InitPluginManager());
+            await Task.Run(() => CoreService.InitPluginManager());
         }
 
         public static void InitPluginManager()
@@ -155,7 +155,7 @@ namespace Snowflake.Service
         // Protected implementation of Dispose pattern. 
         protected virtual void Dispose(bool disposing)
         {
-            if (disposed)
+            if (this.disposed)
                 return;
 
             if (disposing)
@@ -172,7 +172,7 @@ namespace Snowflake.Service
 
             // Free any unmanaged objects here. 
             //
-            disposed = true;
+            this.disposed = true;
         }
 
         public static void DisposeLoadedCore()

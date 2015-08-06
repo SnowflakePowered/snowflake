@@ -51,14 +51,14 @@ namespace Snowflake.Controller
                                                                 )", dbConnection); //serialize btnSelect due to reserved sql keyword. other btn for consistency
             sqlCommand.ExecuteNonQuery();
             dbConnection.Close();
-            this.SetGamepadAbstraction("~defaultKeyboard", DefaultKeyboard, true);
-            this.SetGamepadAbstraction("KeyboardDevice", DefaultKeyboard, false);
+            this.SetGamepadAbstraction("~defaultKeyboard", this.DefaultKeyboard, true);
+            this.SetGamepadAbstraction("KeyboardDevice", this.DefaultKeyboard, false);
 
-            this.SetGamepadAbstraction("~defaultGamepad", DefaultGamepad, true);
-            this.SetGamepadAbstraction("XInputDevice1", DefaultGamepad, false);
-            this.SetGamepadAbstraction("XInputDevice2", DefaultGamepad, false);
-            this.SetGamepadAbstraction("XInputDevice3", DefaultGamepad, false);
-            this.SetGamepadAbstraction("XInputDevice4", DefaultGamepad, false);
+            this.SetGamepadAbstraction("~defaultGamepad", this.DefaultGamepad, true);
+            this.SetGamepadAbstraction("XInputDevice1", this.DefaultGamepad, false);
+            this.SetGamepadAbstraction("XInputDevice2", this.DefaultGamepad, false);
+            this.SetGamepadAbstraction("XInputDevice3", this.DefaultGamepad, false);
+            this.SetGamepadAbstraction("XInputDevice4", this.DefaultGamepad, false);
 
 
         }

@@ -28,7 +28,7 @@ namespace Snowflake.Information.MediaStore
         {
             try
             {
-                var record = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(Path.Combine(mediaStoreRoot, ".mediastore")));
+                var record = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(Path.Combine(this.mediaStoreRoot, ".mediastore")));
                 return record ?? new Dictionary<string, string>();
             }
             catch
@@ -70,7 +70,7 @@ namespace Snowflake.Information.MediaStore
 
         private void UpdateMediaStoreRecord(){
             string record = JsonConvert.SerializeObject(this.MediaStoreItems);
-            File.WriteAllText(Path.Combine(mediaStoreRoot, ".mediastore"), record);
+            File.WriteAllText(Path.Combine(this.mediaStoreRoot, ".mediastore"), record);
         }
 
         public string this[string key]

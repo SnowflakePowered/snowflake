@@ -36,7 +36,7 @@ namespace Snowflake.Shell.Windows
             this.themeWebServer.Module<StaticFilesModule>().UseRamCache = true;
             this.themeWebServer.Module<StaticFilesModule>().DefaultExtension = ".html";
             this.themeWebServer.Module<StaticFilesModule>().DefaultDocument = "index.html";
-            this.themeWebServer.Module<StaticFilesModule>().AddHandler(ModuleMap.AnyPath, HttpVerbs.Post, (server, context) => EchoThemes(context, server));
+            this.themeWebServer.Module<StaticFilesModule>().AddHandler(ModuleMap.AnyPath, HttpVerbs.Post, (server, context) => this.EchoThemes(context, server));
             this.themeWebServer.RunAsync();
         }
         private bool EchoThemes(HttpListenerContext context, WebServer server, bool sendBuffer = true)
