@@ -31,16 +31,16 @@ namespace Snowflake.Service
         public IDictionary<string, IControllerDefinition> LoadedControllers { get; private set; }
 
         public IPluginManager PluginManager { get; private set; }
-        public IAjaxManager AjaxManager { get; private set; }
-        public IGameDatabase GameDatabase { get; private set; }
-        public IGamepadAbstractionDatabase GamepadAbstractionDatabase { get; private set; }
+        public IAjaxManager AjaxManager { get; }
+        public IGameDatabase GameDatabase { get; }
+        public IGamepadAbstractionDatabase GamepadAbstractionDatabase { get; }
         public IInputManager InputManager { get { return new Snowflake.InputManager.InputManager(); } }
-        public IControllerPortsDatabase ControllerPortsDatabase { get; private set; }
+        public IControllerPortsDatabase ControllerPortsDatabase { get; }
         public IPlatformPreferenceDatabase PlatformPreferenceDatabase { get; private set; }
         public IEmulatorAssembliesManager EmulatorManager { get; private set; }
         #endregion
 
-        public string AppDataDirectory { get; private set; }
+        public string AppDataDirectory { get; }
         public static ICoreService LoadedCore { get; private set; }
         public IServerManager ServerManager { get; private set; }
         // Flag: Has Dispose already been called? 

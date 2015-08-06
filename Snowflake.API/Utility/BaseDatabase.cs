@@ -10,7 +10,7 @@ namespace Snowflake.Utility
 {
     public abstract class BaseDatabase
     {
-        public string FileName { get; private set; }
+        public string FileName { get; }
         private readonly string DBConnectionString;
         public BaseDatabase(string fileName)
         {

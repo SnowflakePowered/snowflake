@@ -24,7 +24,7 @@ namespace Snowflake.Game
             this.LoadScreenshotCollection();
         }
         public GameScreenshotCache(string cacheKey) : this(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Snowflake", "screenshots"), cacheKey) { }
-        public string RootPath { get; private set; }
+        public string RootPath { get; }
         public IReadOnlyList<string> ScreenshotCollection
         {
             get
@@ -59,7 +59,7 @@ namespace Snowflake.Game
             }
             File.WriteAllText(this.registerFile, JsonConvert.SerializeObject(this.screenshotCollection));
         }
-        public string CacheKey { get; private set; }
+        public string CacheKey { get; }
         string fullPath;
         public void AddScreenshot(Uri screenshotUri)
         {

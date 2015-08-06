@@ -17,7 +17,7 @@ namespace Snowflake.Service.Manager
 {
     public class PluginManager : IPluginManager
     {
-        public string LoadablesLocation { get; private set; }
+        public string LoadablesLocation { get; }
 
         private IDictionary<string, Type> registry;
         public IReadOnlyDictionary<string, Type> Registry { get { return this.registry.AsReadOnly(); } }

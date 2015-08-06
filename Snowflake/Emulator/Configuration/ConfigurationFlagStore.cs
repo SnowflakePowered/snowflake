@@ -13,7 +13,7 @@ namespace Snowflake.Emulator.Configuration
 {
     public class ConfigurationFlagStore : BaseDatabase, IConfigurationFlagStore
     {
-        public string EmulatorBridgeID { get; private set; }
+        public string EmulatorBridgeID { get; }
         readonly string configurationFlagLocation;
         readonly IEmulatorBridge emulatorBridge;
         public ConfigurationFlagStore(IEmulatorBridge emulatorBridge)

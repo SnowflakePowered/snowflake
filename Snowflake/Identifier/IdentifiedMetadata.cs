@@ -9,9 +9,9 @@ namespace Snowflake.Identifier
     public class IdentifiedMetadata : IIdentifiedMetadata
     {
 
-        public string IdentifierName { get; private set; }
-        public string ValueType { get; private set; }
-        public string Value { get; private set; }
+        public string IdentifierName { get; }
+        public string ValueType { get; }
+        public string Value { get; }
 
         public IdentifiedMetadata(string identifierName, string valueType, string value)
         {

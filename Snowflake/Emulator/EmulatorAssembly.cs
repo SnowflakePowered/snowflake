@@ -9,10 +9,10 @@ namespace Snowflake.Emulator
 {
     public class EmulatorAssembly : IEmulatorAssembly
     {
-        public string MainAssembly { get; private set; }
-        public string EmulatorID { get; private set; }
-        public string EmulatorName { get; private set; }
-        public EmulatorAssemblyType AssemblyType { get; private set; }
+        public string MainAssembly { get; }
+        public string EmulatorID { get; }
+        public string EmulatorName { get; }
+        public EmulatorAssemblyType AssemblyType { get; }
 
         public EmulatorAssembly(string mainAssembly, string emulatorId, string name, string assemblyTypeString)
         {

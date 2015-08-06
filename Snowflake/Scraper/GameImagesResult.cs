@@ -15,7 +15,7 @@ namespace Snowflake.Scraper
         public IList<string> Fanarts { get; set; }
         public IList<string> Screenshots { get; set; }
         public IDictionary<string, string> Boxarts { get; set; }
-        public string ImagesID { get; private set; }
+        public string ImagesID { get; }
         public GameImagesResult()
         {
             this.ImagesID = Guid.NewGuid().ToString();

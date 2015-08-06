@@ -16,8 +16,8 @@ namespace Snowflake.Service
 {
     public class ScrapeService : IScrapeService
     {
-        private IPlatformInfo ScrapePlatform { get; set; }
-        private IScraper ScraperPlugin { get; set; }
+        private IPlatformInfo ScrapePlatform { get; }
+        private IScraper ScraperPlugin { get; }
         public ScrapeService(IPlatformInfo scrapePlatform, string scraperName)
         {
             this.ScrapePlatform = scrapePlatform;

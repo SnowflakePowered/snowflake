@@ -11,7 +11,7 @@ namespace Snowflake.Scraper
 {
     public abstract class BaseScraper: BasePlugin, IScraper
     {
-        public BiDictionary<string, string> ScraperMap { get; private set; }
+        public BiDictionary<string, string> ScraperMap { get; }
 
         protected BaseScraper(Assembly pluginAssembly, ICoreService coreInstance) : base(pluginAssembly, coreInstance)
         {

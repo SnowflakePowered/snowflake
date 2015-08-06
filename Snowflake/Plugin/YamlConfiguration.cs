@@ -12,10 +12,10 @@ namespace Snowflake.Plugin
 {
     public class YamlConfiguration : IPluginConfiguration
     {
-        public string ConfigurationFileName { get; private set; }
+        public string ConfigurationFileName { get; }
         public IDictionary<string, dynamic> Configuration { get; private set; }
 
-        private string DefaultValues { get; set; }
+        private string DefaultValues { get; }
         public YamlConfiguration(string configFileName, string defaultValues)
         {
             this.ConfigurationFileName = configFileName;

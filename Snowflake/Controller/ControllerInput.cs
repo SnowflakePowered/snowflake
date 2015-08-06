@@ -8,9 +8,9 @@ namespace Snowflake.Controller
 {
     public class ControllerInput : IControllerInput
     {
-        public bool IsAnalog { get; private set; }
-        public string InputName { get; private set; }
-        public string GamepadAbstraction { get; private set; }
+        public bool IsAnalog { get; }
+        public string InputName { get; }
+        public string GamepadAbstraction { get; }
 
         public ControllerInput(string inputName, string gamepadAbstraction, bool isAnalog = false)
         {

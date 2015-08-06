@@ -26,7 +26,7 @@ namespace Snowflake.Information.MediaStore
         {
             get { return this.sections["Resources"]; }
         }
-        public string MediaStoreKey { get; private set; }
+        public string MediaStoreKey { get; }
         public string MediaStoreRoot { get; private set; }
         public FileMediaStore(string mediastoreKey, string mediastoreRoot)
         {

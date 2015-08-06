@@ -14,7 +14,7 @@ namespace Snowflake.Ajax
     /// <inheritdoc/>
     public abstract class BaseAjaxNamespace : BasePlugin, IBaseAjaxNamespace
     {
-        public IDictionary<string, IJSMethod> JavascriptMethods { get; private set; }
+        public IDictionary<string, IJSMethod> JavascriptMethods { get; }
 
         protected BaseAjaxNamespace(Assembly pluginAssembly, ICoreService coreInstance)
             : base(pluginAssembly, coreInstance)

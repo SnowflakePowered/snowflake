@@ -21,7 +21,7 @@ namespace Snowflake.Identifier
                 this.IdentifiedValueType = IdentifiedValueTypes.Unknown;
             }
         }
-        public string IdentifiedValueType { get; private set; }
+        public string IdentifiedValueType { get; }
         public abstract string IdentifyGame(string fileName, string platformId);
         public abstract string IdentifyGame(FileStream file, string platformId);
 

@@ -12,8 +12,8 @@ namespace Snowflake.Emulator.Configuration
 {
     public class ConfigurationProfile : IConfigurationProfile 
     {
-        public IDictionary<string, dynamic> ConfigurationValues { get; private set; }
-        public string TemplateID { get; private set; }
+        public IDictionary<string, dynamic> ConfigurationValues { get; }
+        public string TemplateID { get; }
      
         public ConfigurationProfile (string templateId, IDictionary<string, dynamic> value)
         {

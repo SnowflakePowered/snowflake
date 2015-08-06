@@ -4,9 +4,9 @@ namespace Snowflake.Ajax
 {
     public class JSRequest : IJSRequest
     {
-        public string MethodName { get; private set; }
-        public string NameSpace { get; private set; }
-        public IDictionary<string, string> MethodParameters { get; private set; }
+        public string MethodName { get; }
+        public string NameSpace { get; }
+        public IDictionary<string, string> MethodParameters { get; }
         public JSRequest(string nameSpace, string methodName, IDictionary<string, string> parameters)
         {
             this.NameSpace = nameSpace;

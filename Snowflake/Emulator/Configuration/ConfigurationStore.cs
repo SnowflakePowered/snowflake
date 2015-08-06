@@ -13,7 +13,7 @@ namespace Snowflake.Emulator.Configuration
     //new config store per config
     public class ConfigurationStore : IConfigurationStore
     {
-        public string TemplateID { get; private set; }
+        public string TemplateID { get; }
         public IConfigurationProfile DefaultProfile
         {
             get
@@ -25,7 +25,7 @@ namespace Snowflake.Emulator.Configuration
                 File.WriteAllText(Path.Combine(this.ConfigurationStorePath, ".default"), JsonConvert.SerializeObject(value));
             }
         }
-        public string ConfigurationStorePath { get; private set; }
+        public string ConfigurationStorePath { get; }
         private ConfigurationStore(string configurationstoreRoot, IConfigurationProfile defaultProfile)
         {
             if (!Directory.Exists(configurationstoreRoot)) Directory.CreateDirectory(configurationstoreRoot);

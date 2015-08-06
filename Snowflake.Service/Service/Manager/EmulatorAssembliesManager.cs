@@ -14,7 +14,7 @@ namespace Snowflake.Service.Manager
     {
         private IDictionary<string, IEmulatorAssembly> emulatorAssemblies;
         public IReadOnlyDictionary<string, IEmulatorAssembly> EmulatorAssemblies { get { return this.emulatorAssemblies.AsReadOnly(); } }
-        public string AssembliesLocation { get; private set; }
+        public string AssembliesLocation { get; }
         public EmulatorAssembliesManager(string assembliesLocation)
         {
             this.emulatorAssemblies = new Dictionary<string, IEmulatorAssembly>();

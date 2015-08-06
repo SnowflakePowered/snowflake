@@ -10,11 +10,11 @@ namespace Snowflake.Emulator.Input
 {
     public class InputTemplate : IInputTemplate
     {
-        public string StringTemplate { get; private set; }
+        public string StringTemplate { get; }
         public IReadOnlyList<string> TemplateKeys { get { return this.templateKeys.AsReadOnly(); } }
         private IList<string> templateKeys;
-        public string NoBind { get; private set; }
-        public string Name { get; private set; }
+        public string NoBind { get; }
+        public string Name { get; }
         public IReadOnlyDictionary<string, IGamepadMapping> GamepadMappings { get { return this.gamepadMappings.AsReadOnly(); } }
         private IDictionary<string, IGamepadMapping> gamepadMappings;
         public IReadOnlyDictionary<string, IKeyboardMapping> KeyboardMappings { get { return this.keyboardMappings.AsReadOnly(); } }

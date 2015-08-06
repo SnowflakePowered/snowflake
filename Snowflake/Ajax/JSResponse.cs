@@ -9,8 +9,8 @@ namespace Snowflake.Ajax
 {
     public class JSResponse : IJSResponse
     {
-        public IJSRequest Request { get; private set; }
-        public dynamic Payload { get; private set; }
+        public IJSRequest Request { get; }
+        public dynamic Payload { get; }
         public bool Success { get; set; }
         public JSResponse(IJSRequest request, dynamic payload, bool success = true)
         {

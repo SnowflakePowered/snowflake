@@ -20,8 +20,8 @@ namespace Snowflake.Game
         const string fileGameVideo = "GameVideo";
         const string fileGameMusic = "GameMusic";
 
-        public string RootPath { get; private set; }
-        public string CacheKey { get; private set; }
+        public string RootPath { get; }
+        public string CacheKey { get; }
         public string GameVideoFileName { 
             get 
             {

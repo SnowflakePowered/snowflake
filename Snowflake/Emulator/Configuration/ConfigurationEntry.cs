@@ -8,9 +8,9 @@ namespace Snowflake.Emulator.Configuration
 {
     public class ConfigurationEntry : IConfigurationEntry
     {
-        public string Description { get; private set; }
-        public string Name { get; private set; }
-        public dynamic DefaultValue { get; private set; }
+        public string Description { get; }
+        public string Name { get; }
+        public dynamic DefaultValue { get; }
         public ConfigurationEntry(string description, string name, dynamic defaultValue)
         {
             this.Description = description;

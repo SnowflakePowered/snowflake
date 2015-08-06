@@ -12,7 +12,7 @@ namespace Snowflake.Events.CoreEvents.GameEvent
     public class GameQuitEventArgs : GameEventArgs
     {
         public IEmulatorAssembly GameEmulatorAssembly { get; private set; }
-        public IEmulatorBridge GameEmulatorBridge { get; private set; }
+        public IEmulatorBridge GameEmulatorBridge { get; }
         public GameQuitEventArgs(ICoreService eventCoreInstance, IGameInfo gameInfo, IEmulatorAssembly emulatorAssembly, IEmulatorBridge emulatorBridge)
             : base(eventCoreInstance, gameInfo)
         {

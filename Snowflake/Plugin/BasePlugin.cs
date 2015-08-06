@@ -15,14 +15,14 @@ namespace Snowflake.Plugin
 {
     public abstract class BasePlugin : IBasePlugin
     {
-        public string PluginName { get; private set; }
-        public IDictionary<string, dynamic> PluginInfo { get; private set; }
-        public Assembly PluginAssembly { get; private set; }
-        public string PluginDataPath { get; private set; }
+        public string PluginName { get; }
+        public IDictionary<string, dynamic> PluginInfo { get; }
+        public Assembly PluginAssembly { get; }
+        public string PluginDataPath { get; }
         public virtual IPluginConfiguration PluginConfiguration { get; protected set; }
         public virtual IList<IPluginConfigOption> PluginConfigurationOptions { get; protected set; }
-        public ICoreService CoreInstance { get; private set; }
-        public IList<string> SupportedPlatforms { get; private set; }
+        public ICoreService CoreInstance { get; }
+        public IList<string> SupportedPlatforms { get; }
         protected ILogger Logger { get; private set; }
         protected BasePlugin(Assembly pluginAssembly, ICoreService coreInstance)
         {

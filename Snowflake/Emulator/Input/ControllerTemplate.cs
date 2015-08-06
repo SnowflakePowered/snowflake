@@ -8,9 +8,9 @@ namespace Snowflake.Emulator.Input
 {
     public class ControllerTemplate : IControllerTemplate
     {
-        public string ControllerID { get; private set; }
-        public string InputTemplateName { get; private set; }
-        public string PlatformID { get; private set; }
+        public string ControllerID { get; }
+        public string InputTemplateName { get; }
+        public string PlatformID { get; }
 
         public IReadOnlyDictionary<string, IControllerMapping> KeyboardControllerMappings { get { return this.keyboardControllerMappings.AsReadOnly(); } }
         private IDictionary<string, IControllerMapping> keyboardControllerMappings;

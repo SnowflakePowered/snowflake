@@ -13,8 +13,8 @@ namespace Snowflake.Events.CoreEvents.GameEvent
     public class GameProcessStartEventArgs : GameEventArgs
     {
         public IEmulatorAssembly GameEmulatorAssembly { get; private set; }
-        public IEmulatorBridge GameEmulatorBridge { get; private set; }
-        public Process GameEmulatorProcess { get; private set; }
+        public IEmulatorBridge GameEmulatorBridge { get; }
+        public Process GameEmulatorProcess { get; }
         public GameProcessStartEventArgs(ICoreService eventCoreInstance, IGameInfo gameInfo, IEmulatorAssembly emulatorAssembly, IEmulatorBridge emulatorBridge, Process process)
             : base(eventCoreInstance, gameInfo)
         {

@@ -10,13 +10,13 @@ namespace Snowflake.Emulator.Configuration
 {
     public class ConfigurationFlag : Snowflake.Emulator.Configuration.IConfigurationFlag
     {
-        public string Key { get; private set; }
-        public ConfigurationFlagTypes Type { get; private set; }
-        public string DefaultValue { get; private set; }
-        public string Description { get; private set; }
-        public int RangeMin { get; private set; }
-        public int RangeMax { get; private set; }
-        public IList<IConfigurationFlagSelectValue> SelectValues { get; private set; }
+        public string Key { get; }
+        public ConfigurationFlagTypes Type { get; }
+        public string DefaultValue { get; }
+        public string Description { get; }
+        public int RangeMin { get; }
+        public int RangeMax { get; }
+        public IList<IConfigurationFlagSelectValue> SelectValues { get; }
 
         public ConfigurationFlag(string key, ConfigurationFlagTypes type, string defaultValue, string description, int rangeMin = 0, int rangeMax = 0, IList<IConfigurationFlagSelectValue> selectValues = null)
         {

@@ -17,7 +17,7 @@ namespace Snowflake.Service.Manager
 {
     public class AjaxManager : IAjaxManager, ILoadableManager
     {
-        public string LoadablesLocation { get; private set; }
+        public string LoadablesLocation { get; }
         private IDictionary<string, Type> registry;
         public IReadOnlyDictionary<string, Type> Registry { get { return this.registry.AsReadOnly(); } }
         [ImportMany(typeof(IBaseAjaxNamespace))]
