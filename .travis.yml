@@ -7,7 +7,7 @@ install:
   - nuget restore ./Snowflake.sln
 
 script:
-  - xbuild /p:Configuration=Debug Snowflake.sln
+  - xbuild /p:Configuration=Debug Snowflake.sln /tv:14.0
 notifications:
   irc:
     channels:
