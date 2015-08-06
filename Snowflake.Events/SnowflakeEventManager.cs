@@ -66,10 +66,7 @@ namespace Snowflake.Events
             if (eventContainer.ContainsKey(typeof(T)))
             {
                 var snowflakeEvent = GetEvent<T>();
-                if (snowflakeEvent != null)
-                {
-                    snowflakeEvent(this, eventArgs);
-                }
+                snowflakeEvent?.Invoke(this, eventArgs);
             }
         }
       
@@ -85,14 +82,7 @@ namespace Snowflake.Events
         {
             if (eventContainer.ContainsKey(typeof(T)))
             {
-                if (eventContainer[typeof(T)] != null)
-                {
-                    eventContainer[typeof(T)] = (eventContainer[typeof(T)] as EventHandler<T>) + eventHandler;
-                }
-                else
-                {
-                    eventContainer[typeof(T)] = eventHandler;
-                }
+                eventContainer[typeof(T)] = (eventContainer?[typeof(T)] as EventHandler<T>) + eventHandler ?? eventHandler;
             }
         }
      
@@ -100,10 +90,7 @@ namespace Snowflake.Events
         {
             if (eventContainer.ContainsKey(typeof(T)))
             {
-                if (eventContainer[typeof(T)] != null)
-                {
-                    eventContainer[typeof(T)] = (eventContainer[typeof(T)] as EventHandler<T>) - eventHandler;
-                }
+                eventContainer[typeof(T)] = (eventContainer?[typeof(T)] as EventHandler<T>) - eventHandler ?? null;
             }
         }
     }

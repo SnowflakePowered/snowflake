@@ -58,10 +58,8 @@ namespace Snowflake.Plugin
 
         public virtual void Dispose()
         {
-            if (this.PluginConfiguration != null)
-            {
-                this.PluginConfiguration.SaveConfiguration();
-            }
+            
+           this.PluginConfiguration?.SaveConfiguration();
         }
     }
 }

@@ -177,11 +177,9 @@ namespace Snowflake.Service
 
         public static void DisposeLoadedCore()
         {
-            if (CoreService.LoadedCore != null)
-            {
-                CoreService.LoadedCore.Dispose();
-                CoreService.LoadedCore = null;
-            }
+            
+           CoreService.LoadedCore?.Dispose();
+           CoreService.LoadedCore = null;
         }
     }
 }

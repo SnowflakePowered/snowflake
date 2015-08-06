@@ -108,24 +108,16 @@ namespace Snowflake.Service.JSWebSocketServer
         }
         private void OnSocketOpen(IWebSocketConnection connection)
         {
-            if (this.SocketOpen != null)
-            {
-                this.SocketOpen(this, new SocketConnectionEventArgs(connection));
-            }
+            this.SocketOpen?.Invoke(this, new SocketConnectionEventArgs(connection));
         }
         private void OnSocketClose(IWebSocketConnection connection)
         {
-            if (this.SocketClose != null)
-            {
-                this.SocketClose(this, new SocketConnectionEventArgs(connection));
-            }
+            this.SocketClose?.Invoke(this, new SocketConnectionEventArgs(connection));
         }
         private void OnMessage(string message)
         {
-            if (this.SocketMessage != null)
-            {
-                this.SocketMessage(this, new SocketMessageReceivedEventArgs(message));
-            }
+
+           this.SocketMessage?.Invoke(this, new SocketMessageReceivedEventArgs(message));
         }
     }
 }

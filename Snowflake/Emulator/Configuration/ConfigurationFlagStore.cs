@@ -130,10 +130,7 @@ namespace Snowflake.Emulator.Configuration
                     }
             }
             dbConnection.Close();
-            if (value == null)
-            {
-                value = fallback.ToString();
-            }
+            value = value ?? fallback.ToString();
             switch (type)
             {
                 case ConfigurationFlagTypes.SELECT_FLAG:

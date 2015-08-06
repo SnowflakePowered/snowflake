@@ -180,7 +180,7 @@ namespace Snowflake.Service.HttpServer
             int nbytes;
             await Task.Run(() =>
             {
-                if (input == null)
+                if (input == null) //not a null check but a conditional
                 {
                     context.Response.AddHeader("Content-Type", "text/plain");
                     context.Response.StatusCode = 404;

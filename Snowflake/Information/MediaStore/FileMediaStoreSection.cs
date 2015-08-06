@@ -29,7 +29,7 @@ namespace Snowflake.Information.MediaStore
             try
             {
                 var record = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(Path.Combine(mediaStoreRoot, ".mediastore")));
-                return (record != null) ? record : new Dictionary<string, string>();
+                return record ?? new Dictionary<string, string>();
             }
             catch
             {

@@ -35,10 +35,7 @@ namespace Snowflake.Service.HttpServer
                 {
                     using (var reader = new StreamReader(context.Request.InputStream)){
                         IDictionary<string, string> _dictParams = JsonConvert.DeserializeObject<IDictionary<string, string>>(reader.ReadToEnd());
-                        if (!(_dictParams == null))
-                        {
-                            dictParams = _dictParams;
-                        }
+                        dictParams = _dictParams ?? dictParams;
                     }
                 }
                 catch (JsonException)
