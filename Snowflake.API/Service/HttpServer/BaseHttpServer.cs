@@ -16,7 +16,7 @@ namespace Snowflake.Service.HttpServer
         public BaseHttpServer(int port)
         {
             serverListener = new HttpListener();
-            serverListener.Prefixes.Add("http://localhost:" + port.ToString() + "/");
+            serverListener.Prefixes.Add($"http://localhost:{port}/");
         }
         void IBaseHttpServer.StartServer()
         {

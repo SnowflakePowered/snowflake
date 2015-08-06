@@ -17,7 +17,7 @@ namespace Snowflake.Controller.Tests
         [InlineData("SNES_CONTROLLER")]
         public void LoadControllersFromJson_Test(string controllerId)
         {
-            string controllerDefinition = TestUtilities.GetStringResource("Controllers." + controllerId + ".controller");
+            string controllerDefinition = TestUtilities.GetStringResource($"Controllers.{controllerId}.controller");
             var protoTemplate = JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(controllerDefinition);
             var controller = ControllerDefinition.FromJsonProtoTemplate(protoTemplate);
             Assert.NotNull(controller);
@@ -28,7 +28,7 @@ namespace Snowflake.Controller.Tests
         [InlineData("SNES_CONTROLLER")]
         public void AssertValidControllerName_Test(string controllerId)
         {
-            string controllerDefinition = TestUtilities.GetStringResource("Controllers." + controllerId + ".controller");
+            string controllerDefinition = TestUtilities.GetStringResource($"Controllers.{controllerId}.controller");
             var protoTemplate = JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(controllerDefinition);
             var controller = ControllerDefinition.FromJsonProtoTemplate(protoTemplate);
             Assert.Equal(controllerId, controller.ControllerID);

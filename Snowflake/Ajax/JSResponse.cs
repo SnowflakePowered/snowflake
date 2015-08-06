@@ -34,12 +34,14 @@ namespace Snowflake.Ajax
         {
             if (request.MethodParameters.ContainsKey("jsoncallback"))
             {
-                return request.MethodParameters["jsoncallback"] + "(" + JsonConvert.SerializeObject(new Dictionary<string, object>(){
-                    {"request", request},
-                    {"payload", output},
-                    {"success", success},
-                    {"type", "methodresponse"}
-                }) + ");";
+                return request.MethodParameters["jsoncallback"] + $@"({
+                    JsonConvert.SerializeObject(new Dictionary<string, object>(){
+                        {"request", request},
+                        {"payload", output},
+                        {"success", success},
+                        {"type", "methodresponse"}
+                    })}
+                );";
             }
             else
             {

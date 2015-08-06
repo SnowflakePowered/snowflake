@@ -105,7 +105,7 @@ namespace Snowflake.Game.Tests
             string testKey = Guid.NewGuid().ToString();
             IGameMediaCache mediaCache = new GameMediaCache(testKey); 
             string tempFileName = Path.GetTempFileName() + Path.GetExtension(fileName);
-            using (Stream stream = TestUtilities.GetResource("GameCache." + fileName))
+            using (Stream stream = TestUtilities.GetResource($"GameCache.{fileName}"))
             {
                 using (FileStream writeStream = new FileStream(tempFileName, FileMode.Create))
                 {
@@ -127,7 +127,7 @@ namespace Snowflake.Game.Tests
             string testKey = Guid.NewGuid().ToString();
             IGameMediaCache mediaCache = new GameMediaCache(testKey); 
             string tempFileName = Path.GetTempFileName() + Path.GetExtension(fileName);
-            using (Stream stream = TestUtilities.GetResource("GameCache." + fileName))
+            using (Stream stream = TestUtilities.GetResource($"GameCache.{fileName}"))
             {
                 using (FileStream writeStream = new FileStream(tempFileName, FileMode.Create))
                 {

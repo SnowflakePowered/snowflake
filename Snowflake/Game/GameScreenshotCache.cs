@@ -84,14 +84,14 @@ namespace Snowflake.Game
                 }
                 catch
                 {
-                    Console.WriteLine(String.Format("[WARN] Swallowed UnknownException: Unable to download {0} to game cache"), screenshotUri.AbsoluteUri);
+                    Console.WriteLine($"[WARN] Swallowed UnknownException: Unable to download {screenshotUri.AbsoluteUri} to game cache");
                 }
             }
         }
 
         public void AddScreenshot(Image screenshotData)
         {
-            string fileName = DateTime.Now.ToString("yyyy-MM-dd-HH-mm") + "_" + Guid.NewGuid().ToString() +".png";
+            string fileName = $"{DateTime.Now.ToString("yyyy-MM-dd-HH-mm")}_{Guid.NewGuid().ToString()}.png";
             try
             {
                 if (File.Exists(Path.Combine(this.fullPath, fileName))) File.Delete(Path.Combine(this.fullPath, fileName));

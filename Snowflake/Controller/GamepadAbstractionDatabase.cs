@@ -238,7 +238,7 @@ namespace Snowflake.Controller
                 command = "INSERT OR IGNORE";
             }
 
-            using (var sqlCommand = new SQLiteCommand(command + @" INTO gamepadabstraction VALUES(
+            using (var sqlCommand = new SQLiteCommand($@"{command} INTO gamepadabstraction VALUES(
                                                                @DeviceName,
                                                                @ProfileType,
                                                                @L1,

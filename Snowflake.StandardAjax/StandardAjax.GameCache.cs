@@ -18,7 +18,7 @@ namespace Snowflake.StandardAjax
             Uri imageUri = new Uri(request.GetParameter("url"));
             IGameMediaCache gameCache = new GameMediaCache(cacheKey);
             gameCache.SetBoxartBack(imageUri);
-            return new JSResponse(request, gameCache.CacheKey + "/BoxartBack.png");
+            return new JSResponse(request, $"{gameCache.CacheKey}/BoxartBack.png");
         }
         [AjaxMethod(MethodPrefix = "GameCache")]
         [AjaxMethodParameter(ParameterName = "id", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
@@ -29,7 +29,7 @@ namespace Snowflake.StandardAjax
             Uri imageUri = new Uri(request.GetParameter("url"));
             IGameMediaCache gameCache = new GameMediaCache(cacheKey);
             gameCache.SetBoxartBack(imageUri);
-            return new JSResponse(request, gameCache.CacheKey + "/BoxartFront.png");
+            return new JSResponse(request, $"{gameCache.CacheKey}/BoxartFront.png");
         }
         [AjaxMethod(MethodPrefix = "GameCache")]
         [AjaxMethodParameter(ParameterName = "id", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
@@ -40,7 +40,7 @@ namespace Snowflake.StandardAjax
             Uri imageUri = new Uri(request.GetParameter("url"));
             IGameMediaCache gameCache = new GameMediaCache(cacheKey);
             gameCache.SetBoxartBack(imageUri);
-            return new JSResponse(request, gameCache.CacheKey + "/BoxartFull.png");
+            return new JSResponse(request, $"{gameCache.CacheKey}/BoxartFull.png");
         }
         [AjaxMethod(MethodPrefix = "GameCache")]
         [AjaxMethodParameter(ParameterName = "id", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
@@ -51,7 +51,7 @@ namespace Snowflake.StandardAjax
             Uri imageUri = new Uri(request.GetParameter("url"));
             IGameMediaCache gameCache = new GameMediaCache(cacheKey);
             gameCache.SetBoxartBack(imageUri);
-            return new JSResponse(request, gameCache.CacheKey + "/GameFanart.png");
+            return new JSResponse(request, $"{gameCache.CacheKey}/GameFanart.png");
         }
         [AjaxMethod(MethodPrefix = "GameCache")]
         [AjaxMethodParameter(ParameterName = "id", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
@@ -62,7 +62,7 @@ namespace Snowflake.StandardAjax
             Uri imageUri = new Uri(request.GetParameter("url"));
             IGameMediaCache gameCache = new GameMediaCache(cacheKey);
             gameCache.SetBoxartBack(imageUri);
-            return new JSResponse(request, gameCache.CacheKey + "/" + gameCache.GameMusicFileName);
+            return new JSResponse(request, $"{gameCache.CacheKey}/{gameCache.GameMusicFileName}");
 
         }
         [AjaxMethod(MethodPrefix = "GameCache")]
@@ -74,7 +74,7 @@ namespace Snowflake.StandardAjax
             Uri imageUri = new Uri(request.GetParameter("url"));
             IGameMediaCache gameCache = new GameMediaCache(cacheKey);
             gameCache.SetBoxartBack(imageUri);
-            return new JSResponse(request, gameCache.CacheKey + "/" + gameCache.GameVideoFileName);
+            return new JSResponse(request, $"{gameCache.CacheKey}/{gameCache.GameVideoFileName}");
         }
         [AjaxMethod(MethodPrefix = "GameCache")]
         [AjaxMethodParameter(ParameterName = "id", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]

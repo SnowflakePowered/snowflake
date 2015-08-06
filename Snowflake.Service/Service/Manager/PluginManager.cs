@@ -80,7 +80,7 @@ namespace Snowflake.Service.Manager
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Unable to load plugin: " + ex.Source);
+                    Console.WriteLine($"Unable to load plugin: {ex.Source}");
                     Console.WriteLine(ex.ToString());
                     continue;
                 }

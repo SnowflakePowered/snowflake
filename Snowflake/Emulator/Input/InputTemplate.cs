@@ -36,7 +36,7 @@ namespace Snowflake.Emulator.Input
             IList<string> templateKeys = protoTemplate["templatekeys"].ToObject<IList<string>>();
             string nobind = protoTemplate["nobind"];
             string name = protoTemplate["name"];
-            string template = bridge.GetStringResource(name + ".template");
+            string template = bridge.GetStringResource($"{name}.template");
             IDictionary<string, IGamepadMapping> gamepadMappings = new Dictionary<string, IGamepadMapping>();
             IDictionary<string, IKeyboardMapping> keyboardMappings = new Dictionary<string, IKeyboardMapping>();
 

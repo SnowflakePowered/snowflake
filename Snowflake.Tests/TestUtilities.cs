@@ -17,7 +17,7 @@ namespace Snowflake.Tests
         /// <returns>The TestResource<</returns>
         internal static Stream GetResource(string resourceName)
         {
-            return Assembly.GetCallingAssembly().GetManifestResourceStream(Assembly.GetCallingAssembly().GetName().Name + ".TestResources." + resourceName);
+            return Assembly.GetCallingAssembly().GetManifestResourceStream($"{Assembly.GetCallingAssembly().GetName().Name}.TestResources.{resourceName}");
         }
 
         /// <summary>

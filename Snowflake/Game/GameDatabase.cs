@@ -97,10 +97,9 @@ namespace Snowflake.Game
         {
             SQLiteConnection dbConnection = this.GetConnection();
             dbConnection.Open();
-            using (var sqlCommand = new SQLiteCommand(@"SELECT * FROM `games` WHERE `%colName` == @searchQuery"
+            using (var sqlCommand = new SQLiteCommand($@"SELECT * FROM `games` WHERE `{colName}` == @searchQuery"
                 , dbConnection))
             {
-                sqlCommand.CommandText = sqlCommand.CommandText.Replace("%colName", colName); //Easier to read than string replacement.
                 sqlCommand.Parameters.AddWithValue("@searchQuery", searchQuery);
                 using (var reader = sqlCommand.ExecuteReader())
                 {

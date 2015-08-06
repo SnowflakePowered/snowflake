@@ -47,7 +47,7 @@ namespace Snowflake.Emulator.Configuration
                                           @flagKey,
                                           @flagValue)", flagDb))
                 {
-                    sqliteCommand.Parameters.AddWithValue("@flagKey", gameInfo.UUID + "-" + flagPair.Key);
+                    sqliteCommand.Parameters.AddWithValue("@flagKey", $"{gameInfo.UUID}-{flagPair.Key}");
                     sqliteCommand.Parameters.AddWithValue("@flagValue", flagPair.Value.ToString());
                     sqliteCommand.ExecuteNonQuery();
                 }
@@ -85,7 +85,7 @@ namespace Snowflake.Emulator.Configuration
                using(var sqliteCommand = new SQLiteCommand(@"INSERT OR REPLACE INTO flags VALUES(
                                           @flagKey,
                                           @flagValue)", flagDb)){
-                   sqliteCommand.Parameters.AddWithValue("@flagKey", "default-"+flagPair.Key);
+                   sqliteCommand.Parameters.AddWithValue("@flagKey", $"default-{flagPair.Key}");
                    sqliteCommand.Parameters.AddWithValue("@flagValue", flagPair.Value.ToString());
                    sqliteCommand.ExecuteNonQuery();
                }
@@ -102,7 +102,7 @@ namespace Snowflake.Emulator.Configuration
                                           @flagKey,
                                           @flagValue)", flagDb))
             {
-                sqliteCommand.Parameters.AddWithValue("@flagKey", prefix + "-" + key);
+                sqliteCommand.Parameters.AddWithValue("@flagKey", $"{prefix}-{key}");
                 sqliteCommand.Parameters.AddWithValue("@flagValue", value.ToString());
                 sqliteCommand.ExecuteNonQuery();
             }
@@ -117,7 +117,7 @@ namespace Snowflake.Emulator.Configuration
             using (var sqlCommand = new SQLiteCommand(@"SELECT `flagValue` FROM `flags` WHERE `flagKey` == @searchQuery"
                , dbConnection))
             {
-                sqlCommand.Parameters.AddWithValue("@searchQuery", prefix + "-" + key);
+                sqlCommand.Parameters.AddWithValue("@searchQuery", $"{prefix}-{key}");
                
                     try
                     {

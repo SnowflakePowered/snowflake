@@ -63,7 +63,7 @@ namespace Snowflake.Emulator
                 {
                     stringValue = configurationValue.Value.ToString();
                 }
-                template.Replace("{" + configurationValue.Key + "}", stringValue);
+                template.Replace($"{{{configurationValue.Key}}}", stringValue);
             }
             return template.ToString();
         }
@@ -99,7 +99,7 @@ namespace Snowflake.Emulator
                 string inputSetting = gamepadAbstraction[input.GamepadAbstraction];
                 string emulatorValue = gamepadAbstraction.ProfileType == ControllerProfileType.KEYBOARD_PROFILE ? 
                     inputTemplate.KeyboardMappings.First().Value[inputSetting] : inputTemplate.GamepadMappings.First().Value[inputSetting]; 
-                template.Replace("{" + templateKey + "}", emulatorValue);
+                template.Replace($"{{{templateKey}}}", emulatorValue);
             }
 
             foreach (var key in inputTemplate.TemplateKeys)
@@ -107,11 +107,11 @@ namespace Snowflake.Emulator
                 template.Replace("{N}", playerIndex.ToString()); //Player Index
                 if (controllerMappings["default"].KeyMappings.ContainsKey(key))
                 {
-                    template.Replace("{" + key + "}", controllerMappings["default"].KeyMappings[key]); //Non-input keys
+                    template.Replace($"{{{key}}}", controllerMappings["default"].KeyMappings[key]); //Non-input keys
                 }
                 else
                 {
-                    template.Replace("{" + key + "}", inputTemplate.NoBind); //Non-input keys
+                    template.Replace($"{{{key}}}", inputTemplate.NoBind); //Non-input keys
                 }
             }
             return template.ToString();

@@ -44,7 +44,7 @@ namespace Snowflake.Plugin
         }
         public Stream GetResource(string resourceName)
         {
-            return this.PluginAssembly.GetManifestResourceStream(this.PluginAssembly.GetName().Name + ".resource." + resourceName);
+            return this.PluginAssembly.GetManifestResourceStream($"{this.PluginAssembly.GetName().Name}.resource.{resourceName}");
         }
         public string GetStringResource(string resourceName)
         {

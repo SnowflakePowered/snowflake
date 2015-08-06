@@ -120,7 +120,7 @@ namespace Snowflake.Service
                 catch (Exception)
                 {
                     //log
-                    Console.WriteLine("Exception occured when importing platform " + fileName);
+                    Console.WriteLine($"Exception occured when importing platform {fileName}");
                     continue;
                 }
             }
@@ -141,7 +141,7 @@ namespace Snowflake.Service
                 catch (Exception)
                 {
                     //log
-                    Console.WriteLine("Exception occured when importing controller " + fileName);
+                    Console.WriteLine($"Exception occured when importing controller {fileName}");
                     continue;
                 }
             }

@@ -20,7 +20,7 @@ namespace Snowflake.Utility
             {
                 SQLiteConnection.CreateFile(this.FileName);
             }
-            this.DBConnectionString = "Data Source=" + this.FileName + ";Version=3;PRAGMA journal_mode=WAL;";
+            this.DBConnectionString = $"Data Source={this.FileName};Version=3;PRAGMA journal_mode=WAL;";
         }
         public SQLiteConnection GetConnection()
         {

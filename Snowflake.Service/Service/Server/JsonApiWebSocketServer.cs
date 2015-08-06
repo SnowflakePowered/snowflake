@@ -22,7 +22,7 @@ namespace Snowflake.Service.JSWebSocketServer
         public event EventHandler<SocketMessageReceivedEventArgs> SocketMessage;
         public JsonApiWebSocketServer(int port)
         {
-            server = new WebSocketServer("ws://0.0.0.0:" + port.ToString());
+            server = new WebSocketServer($"ws://0.0.0.0:{port}");
             this.connections = new List<IWebSocketConnection>();
             this.SocketMessage += Process;
             this.SocketOpen += (s, e) => connections.Add(e.Connection);
@@ -41,7 +41,7 @@ namespace Snowflake.Service.JSWebSocketServer
                     }
                     catch (Exception)
                     {
-                        Console.WriteLine(String.Format("Unable to send message '{0}' to connection {1}", message, connection.ConnectionInfo.ClientIpAddress));
+                        Console.WriteLine($"Unable to send message '{message}' to connection {connection.ConnectionInfo.ClientIpAddress}");
                     }
                 }
             }

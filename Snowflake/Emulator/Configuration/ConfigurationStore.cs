@@ -37,11 +37,11 @@ namespace Snowflake.Emulator.Configuration
 
         public bool ContainsFilename(IGameInfo gameInfo)
         {
-            return File.Exists(Path.Combine(this.ConfigurationStorePath, gameInfo.FileName + ".json"));
+            return File.Exists(Path.Combine(this.ConfigurationStorePath, $"{gameInfo.FileName}.json"));
         }
         public bool ContainsCRC32(IGameInfo gameInfo)
         {
-            return File.Exists(Path.Combine(this.ConfigurationStorePath, gameInfo.CRC32 +  ".json"));
+            return File.Exists(Path.Combine(this.ConfigurationStorePath, $"{gameInfo.CRC32}.json"));
         }
 
         public bool Contains(IGameInfo gameInfo)
@@ -56,7 +56,7 @@ namespace Snowflake.Emulator.Configuration
             }
             else
             {
-                string fileName = ContainsFilename(gameInfo) ? Path.Combine(this.ConfigurationStorePath, gameInfo.FileName + ".json") : Path.Combine(this.ConfigurationStorePath, gameInfo.CRC32 + ".json");
+                string fileName = ContainsFilename(gameInfo) ? Path.Combine(this.ConfigurationStorePath, $"{gameInfo.FileName}.json") : Path.Combine(this.ConfigurationStorePath, $"{gameInfo.CRC32}.json");
                 return ConfigurationProfile.FromJsonProtoTemplate(JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(File.ReadAllText(fileName)));
             }
         }

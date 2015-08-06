@@ -33,7 +33,7 @@ namespace Snowflake.StandardAjax
                     if (this.CoreInstance.PluginManager.LoadedEmulators.ContainsKey(value))
                     {
                         this.CoreInstance.PlatformPreferenceDatabase.SetEmulator(platform, value);
-                        return new JSResponse(request, "Emulator set to " + value, true);
+                        return new JSResponse(request, "Emulator set to {value}", true); //return emulator that was set
                     }
                     else
                     {
@@ -43,7 +43,7 @@ namespace Snowflake.StandardAjax
                     if (this.CoreInstance.PluginManager.LoadedEmulators.ContainsKey(value))
                     {
                         this.CoreInstance.PlatformPreferenceDatabase.SetScraper(platform, value);
-                        return new JSResponse(request, "Scraper set to " + value, true);
+                        return new JSResponse(request, $"Scraper set to {value}", true); //return scraper that was set
                     }
                     else
                     {
