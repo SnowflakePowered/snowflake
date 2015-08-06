@@ -8,7 +8,6 @@ install:
 
 script:
   - xbuild /p:Configuration=Debug Snowflake.sln
-  - mono ./packages/xunit.runner.console.*/tools/xunit.console.exe ./Snowflake.Tests/bin/Debug/Snowflake.Tests.dll
 notifications:
   irc:
     channels:
