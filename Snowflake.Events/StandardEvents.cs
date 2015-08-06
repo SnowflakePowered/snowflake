@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Snowflake.Service;
 using Snowflake.Events.CoreEvents.GameEvent;
 using Snowflake.Events.CoreEvents.ModifyEvent;
 using Snowflake.Events.ServiceEvents;
@@ -14,31 +9,31 @@ namespace Snowflake.Events
     {
         public void RegisterSnowflakeEvents(ISnowflakeEventManager eventManager)
         {
-            eventManager.RegisterEvent<GameAddEventArgs>(this.GameAdd);
-            eventManager.RegisterEvent<GameDeleteEventArgs>(this.GameDelete);
-            eventManager.RegisterEvent<GamePreAddEventArgs>(this.GamePreAdd);
-            eventManager.RegisterEvent<GamePreDeleteEventArgs>(this.GamePreDelete);
-            eventManager.RegisterEvent<GameInfoScrapedEventArgs>(this.GameInfoScraped);
-            eventManager.RegisterEvent<GameResultsScrapedEventArgs>(this.GameResultsScraped);
-            eventManager.RegisterEvent<GameStartEventArgs>(this.GameStart);
-            eventManager.RegisterEvent<GameQuitEventArgs>(this.GameQuit);
-            eventManager.RegisterEvent<GameProcessQuitEventArgs>(this.GameProcessQuit);
-            eventManager.RegisterEvent<GameProcessStartEventArgs>(this.GameProcessStart);
+            eventManager.RegisterEvent(this.GameAdd);
+            eventManager.RegisterEvent(this.GameDelete);
+            eventManager.RegisterEvent(this.GamePreAdd);
+            eventManager.RegisterEvent(this.GamePreDelete);
+            eventManager.RegisterEvent(this.GameInfoScraped);
+            eventManager.RegisterEvent(this.GameResultsScraped);
+            eventManager.RegisterEvent(this.GameStart);
+            eventManager.RegisterEvent(this.GameQuit);
+            eventManager.RegisterEvent(this.GameProcessQuit);
+            eventManager.RegisterEvent(this.GameProcessStart);
 
-            eventManager.RegisterEvent<AjaxRequestReceivedEventArgs>(this.AjaxRequestReceived);
-            eventManager.RegisterEvent<AjaxResponseSendingEventArgs>(this.AjaxResponseSending);
+            eventManager.RegisterEvent(this.AjaxRequestReceived);
+            eventManager.RegisterEvent(this.AjaxResponseSending);
 
-            eventManager.RegisterEvent<CoreLoadedEventArgs>(this.CoreLoaded);
-            eventManager.RegisterEvent<CoreShutdownEventArgs>(this.CoreShutdown);
+            eventManager.RegisterEvent(this.CoreLoaded);
+            eventManager.RegisterEvent(this.CoreShutdown);
 
-            eventManager.RegisterEvent<ServerStartEventArgs>(this.ServerStart);
-            eventManager.RegisterEvent<ServerStopEventArgs>(this.ServerStop);
+            eventManager.RegisterEvent(this.ServerStart);
+            eventManager.RegisterEvent(this.ServerStop);
 
-            eventManager.RegisterEvent<ModifyControllerProfileEventArgs>(this.ControllerProfileModify);
-            eventManager.RegisterEvent<ModifyConfigurationFlagEventArgs>(this.ConfigurationFlagModify);
-            eventManager.RegisterEvent<ModifyGameInfoEventArgs>(this.GameInfoModify);
-            eventManager.RegisterEvent<ModifyPlatformPreferenceEventArgs>(this.PlatformPreferenceModify);
-            eventManager.RegisterEvent<ModifyPortInputDeviceEventArgs>(this.PortInputDeviceModify);
+            eventManager.RegisterEvent(this.ControllerProfileModify);
+            eventManager.RegisterEvent(this.ConfigurationFlagModify);
+            eventManager.RegisterEvent(this.GameInfoModify);
+            eventManager.RegisterEvent(this.PlatformPreferenceModify);
+            eventManager.RegisterEvent(this.PortInputDeviceModify);
 
         }
         //todo Register these events

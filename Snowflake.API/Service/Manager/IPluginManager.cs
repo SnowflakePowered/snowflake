@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Snowflake.Emulator;
+using Snowflake.Identifier;
 using Snowflake.Plugin;
 using Snowflake.Scraper;
-using Snowflake.Identifier;
 
 namespace Snowflake.Service.Manager
 {

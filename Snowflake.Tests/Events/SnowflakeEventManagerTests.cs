@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Moq;
 using Snowflake.Service;
 using Xunit;
-using Moq;
+
 namespace Snowflake.Events.Test
 {
     public class SnowflakeEventManagerTests
@@ -37,7 +33,7 @@ namespace Snowflake.Events.Test
                 Assert.NotNull(e);
             });
             var fakeCoreService = new Mock<ICoreService>();
-            SnowflakeEventManager.EventSource.RaiseEvent<SnowflakeEventArgs>(new SnowflakeEventArgs(fakeCoreService.Object));
+            SnowflakeEventManager.EventSource.RaiseEvent(new SnowflakeEventArgs(fakeCoreService.Object));
         }
         public void handleEvent(object sender, SnowflakeEventArgs args)
         {
@@ -53,7 +49,7 @@ namespace Snowflake.Events.Test
             SnowflakeEventManager.EventSource.Unsubscribe<SnowflakeEventArgs>(this.handleEvent);
             Assert.Null(SnowflakeEventManager.EventSource.GetEvent<SnowflakeEventArgs>());
             var fakeCoreService = new Mock<ICoreService>();
-            SnowflakeEventManager.EventSource.RaiseEvent<SnowflakeEventArgs>(new SnowflakeEventArgs(fakeCoreService.Object));
+            SnowflakeEventManager.EventSource.RaiseEvent(new SnowflakeEventArgs(fakeCoreService.Object));
         }
     }
 }

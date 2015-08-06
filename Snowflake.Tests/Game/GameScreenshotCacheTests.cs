@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Snowflake.Game;
 using System.Drawing;
 using System.IO;
-using Xunit;
 using Snowflake.Tests;
+using Xunit;
+
 namespace Snowflake.Game.Tests
 {
     public class GameScreenshotCacheTests

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Snowflake.Extensions;
+
 namespace Snowflake.Emulator.Input
 {
     public class ControllerMapping : IControllerMapping
@@ -11,7 +8,7 @@ namespace Snowflake.Emulator.Input
         public ControllerMappingType MappingType { get; }
         public IDictionary<string, string> KeyMappings { get; }
         public IReadOnlyDictionary<string, string> InputMappings => this.inputMappings.AsReadOnly();
-        private IDictionary<string, string> inputMappings;
+        private readonly IDictionary<string, string> inputMappings;
 
         public ControllerMapping(ControllerMappingType mappingType, IDictionary<string, string> keyMappings, IDictionary<string, string> inputMappings)
         {

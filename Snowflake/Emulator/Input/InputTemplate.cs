@@ -1,24 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Snowflake.Emulator.Input;
+﻿using System.Collections.Generic;
 using Snowflake.Extensions;
-using Newtonsoft.Json.Linq;
+
 namespace Snowflake.Emulator.Input
 {
     public class InputTemplate : IInputTemplate
     {
         public string StringTemplate { get; }
         public IReadOnlyList<string> TemplateKeys => this.templateKeys.AsReadOnly();
-        private IList<string> templateKeys;
+        private readonly IList<string> templateKeys;
         public string NoBind { get; }
         public string Name { get; }
         public IReadOnlyDictionary<string, IGamepadMapping> GamepadMappings => this.gamepadMappings.AsReadOnly();
-        private IDictionary<string, IGamepadMapping> gamepadMappings;
+        private readonly IDictionary<string, IGamepadMapping> gamepadMappings;
         public IReadOnlyDictionary<string, IKeyboardMapping> KeyboardMappings => this.keyboardMappings.AsReadOnly();
-        private IDictionary<string, IKeyboardMapping> keyboardMappings;
+        private readonly IDictionary<string, IKeyboardMapping> keyboardMappings;
 
 
         public InputTemplate(string name, string stringTemplate, IList<string> templateKeys, string noBind, IDictionary<string, IGamepadMapping> gamepadMappings, IDictionary<string, IKeyboardMapping> keyboardMappings)

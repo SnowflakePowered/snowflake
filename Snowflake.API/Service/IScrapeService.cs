@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Snowflake.Game;
 using Snowflake.Scraper;
+
 namespace Snowflake.Service
 {
     /// <summary>

@@ -1,12 +1,11 @@
-﻿using System.ComponentModel.Composition;
-using Snowflake.Game;
-using Snowflake.Plugin;
+﻿using System.Collections.Generic;
+using System.ComponentModel.Composition;
+using Snowflake.Controller;
 using Snowflake.Emulator.Configuration;
 using Snowflake.Emulator.Input;
-using Snowflake.Controller;
-using System.Collections.Generic;
-using System;
+using Snowflake.Game;
 using Snowflake.Platform;
+using Snowflake.Plugin;
 
 namespace Snowflake.Emulator
 {

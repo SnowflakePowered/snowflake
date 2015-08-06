@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Snowflake.Extensions;
-using Snowflake.Emulator;
+﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Newtonsoft.Json;
+using Snowflake.Emulator;
+using Snowflake.Extensions;
 
 namespace Snowflake.Service.Manager
 {
     public class EmulatorAssembliesManager : IEmulatorAssembliesManager
     {
-        private IDictionary<string, IEmulatorAssembly> emulatorAssemblies;
+        private readonly IDictionary<string, IEmulatorAssembly> emulatorAssemblies;
         public IReadOnlyDictionary<string, IEmulatorAssembly> EmulatorAssemblies => this.emulatorAssemblies.AsReadOnly();
         public string AssembliesLocation { get; }
         public EmulatorAssembliesManager(string assembliesLocation)

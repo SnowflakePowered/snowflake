@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data;
 using System.Data.SQLite;
 using Snowflake.Platform;
-using System.Data;
 using Snowflake.Utility;
 
 namespace Snowflake.Controller
@@ -69,7 +65,7 @@ namespace Snowflake.Controller
         public string GetDeviceInPort(IPlatformInfo platformInfo, int portNumber)
         {
             if (portNumber > 8 || portNumber < 1){
-                return String.Empty;
+                return string.Empty;
             }
             SQLiteConnection dbConnection = this.GetConnection();
             dbConnection.Open();

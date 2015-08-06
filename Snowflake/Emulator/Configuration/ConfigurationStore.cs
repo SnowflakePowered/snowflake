@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
-using Snowflake.Game;
 using Newtonsoft.Json;
-using Snowflake.Emulator.Configuration;
+using Snowflake.Game;
 
 namespace Snowflake.Emulator.Configuration
 {
@@ -54,11 +50,8 @@ namespace Snowflake.Emulator.Configuration
             {
                 return this.DefaultProfile;
             }
-            else
-            {
-                string fileName = this.ContainsFilename(gameInfo) ? Path.Combine(this.ConfigurationStorePath, $"{gameInfo.FileName}.json") : Path.Combine(this.ConfigurationStorePath, $"{gameInfo.CRC32}.json");
-                return ConfigurationProfile.FromJsonProtoTemplate(JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(File.ReadAllText(fileName)));
-            }
+            string fileName = this.ContainsFilename(gameInfo) ? Path.Combine(this.ConfigurationStorePath, $"{gameInfo.FileName}.json") : Path.Combine(this.ConfigurationStorePath, $"{gameInfo.CRC32}.json");
+            return ConfigurationProfile.FromJsonProtoTemplate(JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(File.ReadAllText(fileName)));
         }
         public IConfigurationProfile this[IGameInfo gameInfo] => this.GetConfigurationProfile(gameInfo);
 

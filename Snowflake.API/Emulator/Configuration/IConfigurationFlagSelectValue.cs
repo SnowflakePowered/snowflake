@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Snowflake.Emulator.Configuration
+﻿namespace Snowflake.Emulator.Configuration
 {
     /// <summary>
     /// Represents a selectable value for a flag with a value and a description

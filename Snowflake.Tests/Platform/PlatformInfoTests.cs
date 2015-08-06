@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Snowflake.Platform;
-using Snowflake.Tests;
+﻿using System.Collections.Generic;
 using Newtonsoft.Json;
+using Snowflake.Tests;
 using Xunit;
+
 namespace Snowflake.Platform.Tests
 {
     public class PlatformInfoTests

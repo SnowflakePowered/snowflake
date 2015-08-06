@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 using System.Net;
 using Newtonsoft.Json;
 using Snowflake.Extensions;
-using Snowflake.Utility;
+
 namespace Snowflake.Game
 {
     public class GameScreenshotCache : IGameScreenshotCache
@@ -27,7 +25,7 @@ namespace Snowflake.Game
         public string RootPath { get; }
         public IReadOnlyList<string> ScreenshotCollection => this.screenshotCollection.AsReadOnly();
         private IList<string> screenshotCollection;
-        private string registerFile;
+        private readonly string registerFile;
         private void LoadScreenshotCollection()
         {
             if (!File.Exists(this.registerFile))
@@ -52,22 +50,14 @@ namespace Snowflake.Game
             File.WriteAllText(this.registerFile, JsonConvert.SerializeObject(this.screenshotCollection));
         }
         public string CacheKey { get; }
-        string fullPath;
+        readonly string fullPath;
         public void AddScreenshot(Uri screenshotUri)
         {
             using (var webClient = new WebClient())
             {
                 try
                 {
-                    byte[] imageData;
-                    if (screenshotUri.Scheme == "file")
-                    {
-                        imageData = File.ReadAllBytes(screenshotUri.LocalPath);
-                    }
-                    else
-                    {
-                        imageData = webClient.DownloadData(screenshotUri);
-                    }
+                    byte[] imageData = screenshotUri.Scheme == "file" ? File.ReadAllBytes(screenshotUri.LocalPath) : webClient.DownloadData(screenshotUri);
                     using (Stream imageStream = new MemoryStream(imageData))
                     using (Image image = Image.FromStream(imageStream, true, true))
                     {
@@ -83,7 +73,7 @@ namespace Snowflake.Game
 
         public void AddScreenshot(Image screenshotData)
         {
-            string fileName = $"{DateTime.Now.ToString("yyyy-MM-dd-HH-mm")}_{Guid.NewGuid().ToString()}.png";
+            string fileName = $"{DateTime.Now.ToString("yyyy-MM-dd-HH-mm")}_{Guid.NewGuid()}.png";
             try
             {
                 if (File.Exists(Path.Combine(this.fullPath, fileName))) File.Delete(Path.Combine(this.fullPath, fileName));

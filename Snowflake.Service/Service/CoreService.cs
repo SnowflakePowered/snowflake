@@ -1,30 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
+using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Snowflake.Controller;
+using Snowflake.Emulator.Input.InputManager;
+using Snowflake.Events;
+using Snowflake.Events.ServiceEvents;
+using Snowflake.Game;
 using Snowflake.Platform;
 using Snowflake.Service.HttpServer;
 using Snowflake.Service.JSWebSocketServer;
-using System.IO;
-using System.ComponentModel.Composition;
-using System.ComponentModel.Composition.Hosting;
-using Newtonsoft.Json;
-using Snowflake.Events.ServiceEvents;
-using System.Threading;
-using Snowflake.Information;
-using System.Reflection;
 using Snowflake.Service.Manager;
-using Snowflake.Controller;
-using Snowflake.Game;
-using Snowflake.Emulator.Configuration;
-using Snowflake.Emulator.Input.InputManager;
-using Snowflake.Events;
+
 namespace Snowflake.Service
 {
     [Export(typeof(ICoreService))]
     [PartCreationPolicy(CreationPolicy.Shared)]
-    public partial class CoreService : ICoreService 
+    public class CoreService : ICoreService 
     {
         #region Loaded Objects
         public IDictionary<string, IPlatformInfo> LoadedPlatforms { get; private set; }
@@ -44,7 +39,7 @@ namespace Snowflake.Service
         public static ICoreService LoadedCore { get; private set; }
         public IServerManager ServerManager { get; private set; }
         // Flag: Has Dispose already been called? 
-        bool disposed = false;
+        bool disposed;
         // Instantiate a SafeHandle instance.
         public static void InitCore()
         {
@@ -55,7 +50,7 @@ namespace Snowflake.Service
         {
             var core = new CoreService(dataDirectory);
             CoreService.LoadedCore = core;
-            SnowflakeEventManager.EventSource.RegisterEvent<ServerStartEventArgs>(core.ServerStartEvent);
+            SnowflakeEventManager.EventSource.RegisterEvent(core.ServerStartEvent);
             SnowflakeEventManager.EventSource.Subscribe<ServerStartEventArgs>((s, e) =>
             {
                 Console.WriteLine(e.ServerName);
@@ -64,7 +59,7 @@ namespace Snowflake.Service
             {
                 CoreService.LoadedCore.ServerManager.StartServer(serverName);
                 var serverStartEvent = new ServerStartEventArgs(core, serverName);
-                SnowflakeEventManager.EventSource.RaiseEvent<ServerStartEventArgs>(serverStartEvent); //todo Move event registration to SnowflakeEVentManager
+                SnowflakeEventManager.EventSource.RaiseEvent(serverStartEvent); //todo Move event registration to SnowflakeEVentManager
 
             }
 
@@ -121,7 +116,6 @@ namespace Snowflake.Service
                 {
                     //log
                     Console.WriteLine($"Exception occured when importing platform {fileName}");
-                    continue;
                 }
             }
             return loadedPlatforms;
@@ -142,7 +136,6 @@ namespace Snowflake.Service
                 {
                     //log
                     Console.WriteLine($"Exception occured when importing controller {fileName}");
-                    continue;
                 }
             }
             return loadedControllers;

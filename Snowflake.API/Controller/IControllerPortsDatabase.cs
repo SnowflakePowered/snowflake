@@ -1,5 +1,5 @@
-﻿using System;
-using Snowflake.Platform;
+﻿using Snowflake.Platform;
+
 namespace Snowflake.Controller
 {
     /// <summary>

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-namespace Snowflake.Emulator.Input.InputManager
+﻿namespace Snowflake.Emulator.Input.InputManager
 {
     /// <summary>
     /// A platform agnostic representation of the properties of an input device.

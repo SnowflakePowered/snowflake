@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Dynamic;
-using SharpYaml.Serialization;
+﻿using System.Collections.Generic;
 using System.IO;
+using SharpYaml.Serialization;
 using Snowflake.Plugin.Configuration;
 
 namespace Snowflake.Plugin
@@ -24,7 +19,7 @@ namespace Snowflake.Plugin
         }
         public void LoadConfiguration()
         {
-            var serializer = new Serializer(new SerializerSettings()
+            var serializer = new Serializer(new SerializerSettings
             {
                 EmitTags = false
             });
@@ -39,7 +34,7 @@ namespace Snowflake.Plugin
 
         public void SaveConfiguration()
         {
-            var serializer = new Serializer(new SerializerSettings()
+            var serializer = new Serializer(new SerializerSettings
             {
                 EmitTags = false
             });

@@ -1,4 +1,5 @@
 ﻿using System;
+
 namespace Snowflake.Events
 {
     public interface ISnowflakeEventManager

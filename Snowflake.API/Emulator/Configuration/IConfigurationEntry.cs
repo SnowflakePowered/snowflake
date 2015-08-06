@@ -1,5 +1,4 @@
-﻿using System;
-namespace Snowflake.Emulator.Configuration
+﻿namespace Snowflake.Emulator.Configuration
 {
     /// <summary>
     /// An IConfigurationEntry represents 1 entry in an emulator configuration

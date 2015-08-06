@@ -1,5 +1,4 @@
-﻿using System;
-namespace Snowflake.Controller
+﻿namespace Snowflake.Controller
 {
     /// <summary>
     /// Represents a single input on the controller.

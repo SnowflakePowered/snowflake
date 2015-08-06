@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.Concurrent;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Snowflake.Events
 {
@@ -24,7 +20,7 @@ namespace Snowflake.Events
         /// <summary>
         /// Stores the EventHandlers
         /// </summary>
-        private ConcurrentDictionary<Type, Delegate> eventContainer = new ConcurrentDictionary<Type, Delegate>();
+        private readonly ConcurrentDictionary<Type, Delegate> eventContainer = new ConcurrentDictionary<Type, Delegate>();
 
         /// <summary>
         /// Initiates the EventSource singleton.

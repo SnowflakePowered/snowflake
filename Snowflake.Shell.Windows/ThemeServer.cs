@@ -1,23 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
-using System.Threading;
-using Snowflake.Extensions;
-using Snowflake.Service.HttpServer;
+using System.Text;
 using Newtonsoft.Json;
+using Snowflake.Service.HttpServer;
 using Unosquare.Labs.EmbedIO;
-using Unosquare.Labs.EmbedIO.Log;
 using Unosquare.Labs.EmbedIO.Modules;
+
 namespace Snowflake.Shell.Windows
 {
     public class ThemeServer : IBaseHttpServer
     {
         public string ThemeRoot { get; set; }
-        private WebServer themeWebServer;
+        private readonly WebServer themeWebServer;
         public ThemeServer(string themeRoot) 
         {
             this.ThemeRoot = themeRoot;

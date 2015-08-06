@@ -1,12 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Dynamic;
+using System.Linq;
 using System.Reflection;
 using Snowflake.Ajax;
-using Snowflake.Service;
 
 namespace Snowflake.StandardAjax
 {
@@ -80,7 +77,8 @@ namespace Snowflake.StandardAjax
                     methodInfo.Namespace = ajaxNamespace.Key;
                     methodInfo.MethodName = jsMethod.Key;
                     methodInfo.Parameters = jsMethod.Value.MethodInfo.GetCustomAttributes<AjaxMethodParameterAttribute>()
-                        .Select(attr => new Dictionary<string, object>() {
+                        .Select(attr => new Dictionary<string, object>
+                        {
                         {"ParameterName", attr.ParameterName},
                         {"ParameterType", Enum.GetName(typeof(AjaxMethodParameterType), attr.ParameterType)},
                         {"Required", attr.Required}

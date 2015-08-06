@@ -1,5 +1,4 @@
-﻿using System;
-namespace Snowflake.Platform
+﻿namespace Snowflake.Platform
 {
     /// <summary>
     /// Represents the default-use plugins for a certain platform

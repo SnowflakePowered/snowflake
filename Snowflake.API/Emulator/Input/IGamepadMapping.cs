@@ -1,5 +1,4 @@
-﻿using System;
-namespace Snowflake.Emulator.Input
+﻿namespace Snowflake.Emulator.Input
 {
     /// <summary>
     /// An IGamepadMapping maps a standard XInput-style gamepad to the values that represent each button in an emulator.

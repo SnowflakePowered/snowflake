@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Snowflake.Platform;
 using Snowflake.Service;
-using Snowflake.Controller;
-using Snowflake.Platform;
 
 namespace Snowflake.Events.CoreEvents.ModifyEvent
 {

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Snowflake.Extensions;
+
 namespace Snowflake.Emulator.Input
 {
     public class ControllerTemplate : IControllerTemplate
@@ -13,9 +10,9 @@ namespace Snowflake.Emulator.Input
         public string PlatformID { get; }
 
         public IReadOnlyDictionary<string, IControllerMapping> KeyboardControllerMappings => this.keyboardControllerMappings.AsReadOnly();
-        private IDictionary<string, IControllerMapping> keyboardControllerMappings;
+        private readonly IDictionary<string, IControllerMapping> keyboardControllerMappings;
         public IReadOnlyDictionary<string, IControllerMapping> GamepadControllerMappings => this.gamepadControllerMappings.AsReadOnly();
-        private IDictionary<string, IControllerMapping> gamepadControllerMappings;
+        private readonly IDictionary<string, IControllerMapping> gamepadControllerMappings;
 
         public ControllerTemplate(string controllerId, string emulatorId, string platformId, IDictionary<string, IControllerMapping> keyboardControllerMappings, IDictionary<string, IControllerMapping> gamepadControllerMappings)
         {

@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Snowflake.Emulator.Input.Constants;
+﻿using System.Collections.Generic;
+
 namespace Snowflake.Controller
 {
     public interface IGamepadAbstractionDatabase

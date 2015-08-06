@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections.ObjectModel;
 using Snowflake.Extensions;
 
 namespace Snowflake.Controller
@@ -11,7 +7,7 @@ namespace Snowflake.Controller
     public class ControllerDefinition : IControllerDefinition
     {
         public IReadOnlyDictionary<string, IControllerInput> ControllerInputs => this.controllerInputs.AsReadOnly();
-        private IDictionary<string, IControllerInput> controllerInputs;
+        private readonly IDictionary<string, IControllerInput> controllerInputs;
         public string ControllerID { get; }
         public ControllerDefinition(IDictionary<string, IControllerInput> controllerInputs, string controllerId)
         {

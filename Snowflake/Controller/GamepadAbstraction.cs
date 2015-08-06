@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Snowflake.Controller
+﻿namespace Snowflake.Controller
 {
     public class GamepadAbstraction : IGamepadAbstraction
     {
@@ -100,7 +94,7 @@ namespace Snowflake.Controller
                     case "select":
                         return this.Select;
                     default:
-                        return String.Empty;
+                        return string.Empty;
                 }
             }
             set

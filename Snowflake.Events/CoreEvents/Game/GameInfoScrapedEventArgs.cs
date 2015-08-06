@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Snowflake.Service;
-using Snowflake.Platform;
-using Snowflake.Game;
+﻿using Snowflake.Game;
 using Snowflake.Scraper;
+using Snowflake.Service;
+
 namespace Snowflake.Events.CoreEvents.GameEvent
 {
     public class GameInfoScrapedEventArgs : GameEventArgs

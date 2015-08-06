@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using System.Net;
 using Snowflake.Constants;
@@ -65,7 +62,6 @@ namespace Snowflake.Scraper
                     }
                     catch
                     {
-                        continue;
                     }
                 }
                 for (int i = 0; i < this.Screenshots.Count; i++)
@@ -80,7 +76,6 @@ namespace Snowflake.Scraper
                     }
                     catch
                     {
-                        continue;
                     }
                 }
                 foreach (KeyValuePair<string, string> boxart in this.Boxarts)
@@ -95,7 +90,6 @@ namespace Snowflake.Scraper
                     }
                     catch
                     {
-                        continue;
                     }
                 }
             }

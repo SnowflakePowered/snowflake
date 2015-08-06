@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Snowflake.Utility;
-using Snowflake.Emulator.Input.Constants;
-using System.Data.SQLite;
 using System.Data;
+using System.Data.SQLite;
+using Snowflake.Emulator.Input.Constants;
+using Snowflake.Utility;
+
 namespace Snowflake.Controller
 {
     public class GamepadAbstractionDatabase : BaseDatabase, IGamepadAbstractionDatabase
@@ -165,10 +163,7 @@ namespace Snowflake.Controller
                             Y = row.Field<string>("btnY")
                         };
                     }
-                    else
-                    {
-                        return null;
-                    }
+                    return null;
                 }
             }
         }

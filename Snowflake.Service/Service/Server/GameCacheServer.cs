@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using System.IO;
 using System.Web;
-using System.Drawing.Imaging;
-using System.Drawing;
+using Mono.Net;
 using Snowflake.Extensions;
 using Snowflake.Game;
-using Mono.Net;
 
 namespace Snowflake.Service.HttpServer
 {
@@ -51,7 +49,7 @@ namespace Snowflake.Service.HttpServer
                 {
                     context.Response.AddHeader("Content-Type", "image/png");
                     int index;
-                    Int32.TryParse(fileName.Split('~')[1], out index);
+                    int.TryParse(fileName.Split('~')[1], out index);
                     IGameScreenshotCache screenCache = new GameScreenshotCache(gameUUID);
                     string _fileName = screenCache.ScreenshotCollection[index];
                     string filePath = Path.Combine(screenCache.RootPath, screenCache.CacheKey, _fileName);
@@ -59,7 +57,7 @@ namespace Snowflake.Service.HttpServer
                     {
                         string _scalePercentage = context.Request.QueryString["scale"];
                         int scalePercentage;
-                        if (Int32.TryParse(_scalePercentage, out scalePercentage))
+                        if (int.TryParse(_scalePercentage, out scalePercentage))
                         {
                             if (scalePercentage <= 100 && scalePercentage > 0)
                             {
@@ -128,7 +126,7 @@ namespace Snowflake.Service.HttpServer
                     {
                         string _scalePercentage = context.Request.QueryString["scale"];
                         int scalePercentage;
-                        if (Int32.TryParse(_scalePercentage, out scalePercentage))
+                        if (int.TryParse(_scalePercentage, out scalePercentage))
                         {
                             if (scalePercentage <= 100 && scalePercentage > 0){
                                 double trueScalePercentage = scalePercentage / 100D ;

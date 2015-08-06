@@ -1,21 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using Fleck;
+using Newtonsoft.Json;
 using Snowflake.Ajax;
 using Snowflake.Service.HttpServer;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System.Threading;
-using Fleck;
 
 namespace Snowflake.Service.JSWebSocketServer
 {
     public class JsonApiWebSocketServer : IJSWebSocketServer
     {
         IWebSocketServer server;
-        IList<IWebSocketConnection> connections;
+        readonly IList<IWebSocketConnection> connections;
         Thread serverThread;
         public event EventHandler<SocketConnectionEventArgs> SocketOpen;
         public event EventHandler<SocketConnectionEventArgs> SocketClose;

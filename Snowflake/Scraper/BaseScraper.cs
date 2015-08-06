@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using Newtonsoft.Json;
-using Snowflake.Utility;
+using Snowflake.Identifier;
 using Snowflake.Plugin;
 using Snowflake.Service;
-using Snowflake.Identifier;
+using Snowflake.Utility;
+
 namespace Snowflake.Scraper
 {
     public abstract class BaseScraper: BasePlugin, IScraper

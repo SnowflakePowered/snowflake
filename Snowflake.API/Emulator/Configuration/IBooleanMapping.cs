@@ -1,5 +1,4 @@
-﻿using System;
-namespace Snowflake.Emulator.Configuration
+﻿namespace Snowflake.Emulator.Configuration
 {
     /// <summary>
     /// Maps the value of true and false to how an emulator configuration file stores booleans

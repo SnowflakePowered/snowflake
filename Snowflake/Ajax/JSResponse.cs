@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace Snowflake.Ajax
@@ -25,9 +21,10 @@ namespace Snowflake.Ajax
         }
         public static IDictionary<string, object> GetErrorResponse(string errorMessage)
         {
-            return new Dictionary<string, object>() { 
+            return new Dictionary<string, object>
+            { 
                 {"error", errorMessage},
-                {"success", false},
+                {"success", false}
             };
         }
         private static string ProcessJSONP(dynamic output, bool success, IJSRequest request)
@@ -35,7 +32,8 @@ namespace Snowflake.Ajax
             if (request.MethodParameters.ContainsKey("jsoncallback"))
             {
                 return request.MethodParameters["jsoncallback"] + $@"({
-                    JsonConvert.SerializeObject(new Dictionary<string, object>(){
+                    JsonConvert.SerializeObject(new Dictionary<string, object>
+                    {
                         {"request", request},
                         {"payload", output},
                         {"success", success},
@@ -43,15 +41,13 @@ namespace Snowflake.Ajax
                     })}
                 );";
             }
-            else
+            return JsonConvert.SerializeObject(new Dictionary<string, object>
             {
-                return JsonConvert.SerializeObject(new Dictionary<string, object>(){
-                    {"request", request},
-                    {"payload", output},
-                    {"success", success},
-                    {"type", "methodresponse"}
-                });
-            }
+                {"request", request},
+                {"payload", output},
+                {"success", success},
+                {"type", "methodresponse"}
+            });
         }
     }
 }

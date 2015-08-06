@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Snowflake.Extensions;
-using Newtonsoft.Json;
 
 namespace Snowflake.Emulator.Configuration
 {
@@ -53,7 +49,7 @@ namespace Snowflake.Emulator.Configuration
                     .Select(x => (IConfigurationFlagSelectValue)x).ToList();
             }
            
-            return new ConfigurationFlag(key, type, defaultValue, description, (int)max, (int)min, selectTypes);
+            return new ConfigurationFlag(key, type, defaultValue, description, max, min, selectTypes);
 
         }
     }

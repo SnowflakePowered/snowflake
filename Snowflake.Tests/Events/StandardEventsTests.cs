@@ -1,22 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Snowflake.Events;
+﻿using System.Collections.Generic;
+using Moq;
+using Snowflake.Ajax;
+using Snowflake.Emulator;
+using Snowflake.Emulator.Configuration;
 using Snowflake.Events.CoreEvents.GameEvent;
 using Snowflake.Events.CoreEvents.ModifyEvent;
 using Snowflake.Events.ServiceEvents;
-using Snowflake.Service;
 using Snowflake.Game;
 using Snowflake.Platform;
-using Snowflake.Emulator;
 using Snowflake.Scraper;
-using Snowflake.Emulator.Configuration;
-using Snowflake.Emulator.Input;
-using Snowflake.Ajax;
+using Snowflake.Service;
 using Xunit;
-using Moq;
+
 namespace Snowflake.Events.Tests
 {
 

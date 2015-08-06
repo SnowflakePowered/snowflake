@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing.Imaging;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Net;
+using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
+using System.Net;
 
 namespace Snowflake.Game
 {
@@ -35,7 +32,7 @@ namespace Snowflake.Game
             } 
         }
 
-        string fullPath;
+        readonly string fullPath;
 
         public GameMediaCache(string rootPath, string cacheKey)
         {

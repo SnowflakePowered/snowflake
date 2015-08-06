@@ -1,5 +1,4 @@
-﻿using System;
-namespace Snowflake.Emulator.Input
+﻿namespace Snowflake.Emulator.Input
 {
     /// <summary>
     /// Represents the buttons on a keyboard.

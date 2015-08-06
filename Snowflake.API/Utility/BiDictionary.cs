@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Runtime.Serialization;
+
 // from https://github.com/Athari/Alba.Framework
 
 namespace Snowflake.Utility
@@ -122,8 +122,7 @@ namespace Snowflake.Utility
                 this._secondToFirst.Remove(value);
                 return true;
             }
-            else
-                return false;
+            return false;
         }
 
         void IDictionary.Remove(object key)
@@ -278,8 +277,7 @@ namespace Snowflake.Utility
                     this._owner._firstToSecond.Remove(value);
                     return true;
                 }
-                else
-                    return false;
+                return false;
             }
 
             void IDictionary.Remove(object key)

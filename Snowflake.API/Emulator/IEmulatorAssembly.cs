@@ -1,5 +1,4 @@
-﻿using System;
-namespace Snowflake.Emulator
+﻿namespace Snowflake.Emulator
 {
     /// <summary>
     /// Represents the assembly that an IEmulatorBridge will bridge to. An Emulator Assembly does not need to be 

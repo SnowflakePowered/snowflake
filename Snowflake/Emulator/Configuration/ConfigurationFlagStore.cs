@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-using Snowflake.Game;
-using Newtonsoft.Json;
-using Snowflake.Service;
-using Snowflake.Utility;
 using System.Data.SQLite;
+using System.IO;
+using System.Linq;
+using Snowflake.Game;
+using Snowflake.Utility;
+
 namespace Snowflake.Emulator.Configuration
 {
     public class ConfigurationFlagStore : BaseDatabase, IConfigurationFlagStore
@@ -48,7 +45,7 @@ namespace Snowflake.Emulator.Configuration
                                           @flagValue)", flagDb))
                 {
                     sqliteCommand.Parameters.AddWithValue("@flagKey", $"{gameInfo.UUID}-{flagPair.Key}");
-                    sqliteCommand.Parameters.AddWithValue("@flagValue", flagPair.Value.ToString());
+                    sqliteCommand.Parameters.AddWithValue("@flagValue", flagPair.Value);
                     sqliteCommand.ExecuteNonQuery();
                 }
             }
@@ -86,7 +83,7 @@ namespace Snowflake.Emulator.Configuration
                                           @flagKey,
                                           @flagValue)", flagDb)){
                    sqliteCommand.Parameters.AddWithValue("@flagKey", $"default-{flagPair.Key}");
-                   sqliteCommand.Parameters.AddWithValue("@flagValue", flagPair.Value.ToString());
+                   sqliteCommand.Parameters.AddWithValue("@flagValue", flagPair.Value);
                    sqliteCommand.ExecuteNonQuery();
                }
             }
@@ -113,7 +110,7 @@ namespace Snowflake.Emulator.Configuration
         {
             SQLiteConnection dbConnection = this.GetConnection();
             dbConnection.Open();
-            string value = String.Empty;
+            string value = string.Empty;
             using (var sqlCommand = new SQLiteCommand(@"SELECT `flagValue` FROM `flags` WHERE `flagKey` == @searchQuery"
                , dbConnection))
             {
@@ -134,11 +131,11 @@ namespace Snowflake.Emulator.Configuration
             switch (type)
             {
                 case ConfigurationFlagTypes.SELECT_FLAG:
-                    return Int32.Parse(value);
+                    return int.Parse(value);
                 case ConfigurationFlagTypes.INTEGER_FLAG:
-                    return Int32.Parse(value);
+                    return int.Parse(value);
                 case ConfigurationFlagTypes.BOOLEAN_FLAG:
-                    return Boolean.Parse(value);
+                    return bool.Parse(value);
                 default:
                     return value;
             }

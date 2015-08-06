@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Snowflake.Ajax;
 using Snowflake.Controller;
 using Snowflake.Platform;
-using Snowflake.Emulator.Input;
-using Newtonsoft.Json;
+
 namespace Snowflake.StandardAjax
 {
     public partial class StandardAjax
@@ -45,7 +42,7 @@ namespace Snowflake.StandardAjax
             catch
             {
                 ControllerProfileType profileType;
-                if(Enum.TryParse<ControllerProfileType>(_profileType, true, out profileType)){
+                if(Enum.TryParse(_profileType, true, out profileType)){
                     gamepadAbstraction = new GamepadAbstraction(deviceName, profileType);
                 }else{
                     gamepadAbstraction = new GamepadAbstraction(deviceName, ControllerProfileType.GAMEPAD_PROFILE);
@@ -73,7 +70,7 @@ namespace Snowflake.StandardAjax
         {
             IPlatformInfo platform = this.CoreInstance.LoadedPlatforms[request.GetParameter("platform")];
             string deviceName = request.GetParameter("device");
-            int port = Int32.Parse(request.GetParameter("port"));
+            int port = int.Parse(request.GetParameter("port"));
             this.CoreInstance.ControllerPortsDatabase.SetDeviceInPort(platform, port, deviceName);
 
             return new JSResponse(request, "success");
@@ -84,7 +81,7 @@ namespace Snowflake.StandardAjax
         public IJSResponse GetDeviceInPort(IJSRequest request)
         {
             IPlatformInfo platform = this.CoreInstance.LoadedPlatforms[request.GetParameter("platform")];
-            int port = Int32.Parse(request.GetParameter("port"));
+            int port = int.Parse(request.GetParameter("port"));
 
             return new JSResponse(request, this.CoreInstance.ControllerPortsDatabase.GetDeviceInPort(platform, port));
         }

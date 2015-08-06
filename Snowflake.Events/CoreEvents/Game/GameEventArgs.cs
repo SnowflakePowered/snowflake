@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Snowflake.Game;
 using Snowflake.Service;
-using Snowflake.Game;
-using Snowflake.Emulator;
+
 namespace Snowflake.Events.CoreEvents.GameEvent
 {
     public abstract class GameEventArgs : SnowflakeEventArgs

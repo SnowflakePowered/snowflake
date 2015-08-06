@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections.ObjectModel;
 using Snowflake.Extensions;
-using Snowflake.Emulator.Configuration;
-using SharpYaml.Serialization;
 
 namespace Snowflake.Emulator.Configuration
 {
     public class ConfigurationTemplate : IConfigurationTemplate
     {
         public string StringTemplate { get; set; }
-        private IList<IConfigurationEntry> configurationEntries;
+        private readonly IList<IConfigurationEntry> configurationEntries;
         public string TemplateID { get; }
         public IList<IConfigurationEntry> ConfigurationEntries => this.configurationEntries.AsReadOnly();
         public string FileName { get; }

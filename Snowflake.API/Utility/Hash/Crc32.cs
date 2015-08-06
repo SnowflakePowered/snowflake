@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using System.IO;
+using System.Security.Cryptography;
 
 namespace Snowflake.Utility.Hash
 {
@@ -24,21 +24,21 @@ namespace Snowflake.Utility.Hash
     /// </remarks>
     internal sealed class Crc32 : HashAlgorithm
     {
-        public const UInt32 DefaultPolynomial = 0xedb88320u;
-        public const UInt32 DefaultSeed = 0xffffffffu;
+        public const uint DefaultPolynomial = 0xedb88320u;
+        public const uint DefaultSeed = 0xffffffffu;
 
-        private static UInt32[] defaultTable;
+        private static uint[] defaultTable;
 
-        private readonly UInt32 seed;
-        private readonly UInt32[] table;
-        private UInt32 hash;
+        private readonly uint seed;
+        private readonly uint[] table;
+        private uint hash;
 
         public Crc32()
             : this(Crc32.DefaultPolynomial, Crc32.DefaultSeed)
         {
         }
 
-        public Crc32(UInt32 polynomial, UInt32 seed)
+        public Crc32(uint polynomial, uint seed)
         {
             this.table = Crc32.InitializeTable(polynomial);
             this.seed = this.hash = seed;
@@ -63,30 +63,30 @@ namespace Snowflake.Utility.Hash
 
         public override int HashSize => 32;
 
-        public static UInt32 Compute(byte[] buffer)
+        public static uint Compute(byte[] buffer)
         {
             return Crc32.Compute(Crc32.DefaultSeed, buffer);
         }
 
-        public static UInt32 Compute(UInt32 seed, byte[] buffer)
+        public static uint Compute(uint seed, byte[] buffer)
         {
             return Crc32.Compute(Crc32.DefaultPolynomial, seed, buffer);
         }
 
-        public static UInt32 Compute(UInt32 polynomial, UInt32 seed, byte[] buffer)
+        public static uint Compute(uint polynomial, uint seed, byte[] buffer)
         {
             return ~Crc32.CalculateHash(Crc32.InitializeTable(polynomial), seed, buffer, 0, buffer.Length);
         }
 
-        private static UInt32[] InitializeTable(UInt32 polynomial)
+        private static uint[] InitializeTable(uint polynomial)
         {
             if (polynomial == Crc32.DefaultPolynomial && Crc32.defaultTable != null)
                 return Crc32.defaultTable;
 
-            var createTable = new UInt32[256];
+            var createTable = new uint[256];
             for (var i = 0; i < 256; i++)
             {
-                var entry = (UInt32)i;
+                var entry = (uint)i;
                 for (var j = 0; j < 8; j++)
                     if ((entry & 1) == 1)
                         entry = (entry >> 1) ^ polynomial;
@@ -101,7 +101,7 @@ namespace Snowflake.Utility.Hash
             return createTable;
         }
 
-        private static UInt32 CalculateHash(UInt32[] table, UInt32 seed, IList<byte> buffer, int start, int size)
+        private static uint CalculateHash(uint[] table, uint seed, IList<byte> buffer, int start, int size)
         {
             var crc = seed;
             for (var i = start; i < size - start; i++)
@@ -109,7 +109,7 @@ namespace Snowflake.Utility.Hash
             return crc;
         }
 
-        private static byte[] UInt32ToBigEndianBytes(UInt32 uint32)
+        private static byte[] UInt32ToBigEndianBytes(uint uint32)
         {
             var result = BitConverter.GetBytes(uint32);
 
@@ -122,7 +122,7 @@ namespace Snowflake.Utility.Hash
         public static string GetHash(FileStream file)
         {
             using (var crc32 = new Crc32())
-                return BitConverter.ToString(crc32.ComputeHash(file)).Replace("-", String.Empty).ToLowerInvariant();
+                return BitConverter.ToString(crc32.ComputeHash(file)).Replace("-", string.Empty).ToLowerInvariant();
 
         }
     }

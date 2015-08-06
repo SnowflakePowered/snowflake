@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Snowflake.Emulator.Input
 {
@@ -112,7 +108,7 @@ namespace Snowflake.Emulator.Input
         public string MOUSE_WHEELUP { get; private set; }
         public string MOUSE_WHEELDOWN { get; private set; }
 
-        private IDictionary<string, string> mappingData;
+        private readonly IDictionary<string, string> mappingData;
 
         public KeyboardMapping(IDictionary<string, string> mappingData)
         {

@@ -1,18 +1,14 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.ComponentModel.Composition;
-using Snowflake.Ajax;
-using Snowflake.Emulator;
-using Snowflake.Extensions;
-using Snowflake.Plugin;
 using System.ComponentModel.Composition.Hosting;
 using System.IO;
-using Snowflake.Scraper;
+using Snowflake.Emulator;
+using Snowflake.Extensions;
 using Snowflake.Identifier;
+using Snowflake.Plugin;
+using Snowflake.Scraper;
+
 namespace Snowflake.Service.Manager
 {
     public class PluginManager : IPluginManager
@@ -83,7 +79,6 @@ namespace Snowflake.Service.Manager
                 {
                     Console.WriteLine($"Unable to load plugin: {ex.Source}");
                     Console.WriteLine(ex.ToString());
-                    continue;
                 }
             }
             return loadedPlugins;

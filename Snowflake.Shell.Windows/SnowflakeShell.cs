@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using Snowflake.Service;
-using System.Diagnostics;
-using System.Text.RegularExpressions;
-using Newtonsoft.Json;
+
 namespace Snowflake.Shell.Windows
 {
     internal class SnowflakeShell
@@ -51,7 +47,7 @@ namespace Snowflake.Shell.Windows
                 IList<string> arguments = new List<string>(args);
                 arguments.Insert(0, this.ShellRoot);
                 var electronShell = this.GetShell();
-                electronShell.Arguments = String.Join(" ", arguments);
+                electronShell.Arguments = string.Join(" ", arguments);
                 if (this.currentShellInstance != null) this.currentShellInstance.Close();
                 this.currentShellInstance = Process.Start(electronShell);
                 return this.currentShellInstance;

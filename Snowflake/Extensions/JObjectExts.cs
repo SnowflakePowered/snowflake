@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
+
 namespace Snowflake.Extensions
 {
     public static class JObjectExts
@@ -25,7 +23,7 @@ namespace Snowflake.Extensions
                               select key).ToList();
 
             JArrayKeys.ForEach(key => result[key] = ((JArray)result[key]).Values().Select(x => ((JValue)x).Value).ToArray());
-            JObjectKeys.ForEach(key => result[key] = JObjectExts.ToDictionary(result[key] as JObject));
+            JObjectKeys.ForEach(key => result[key] = (result[key] as JObject).ToDictionary());
 
             return result;
         }

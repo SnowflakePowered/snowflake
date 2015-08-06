@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
-using System.Reflection;
-using System.Linq.Expressions;
-using System.Runtime.CompilerServices;
-using Snowflake.Plugin;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
+using Snowflake.Plugin;
 using Snowflake.Service;
 
 namespace Snowflake.Ajax
@@ -33,13 +30,12 @@ namespace Snowflake.Ajax
                 ParameterExpression requestParam = Expression.Parameter(typeof(IJSRequest));
                 ConstantExpression instanceRef = Expression.Constant(this, this.GetType());
                 MethodCallExpression call = Expression.Call(
-                    instanceRef, method, new Expression[] { requestParam }
-                    );
+                    instanceRef, method, requestParam);
                 AjaxMethodAttribute methodAttribute = method.GetCustomAttribute<AjaxMethodAttribute>();
                 string methodPrefix = $"{methodAttribute?.MethodPrefix}." ?? "";
                 string methodName = methodAttribute.MethodName ?? method.Name;
                 this.JavascriptMethods.Add(methodPrefix + methodName,
-                    new JSMethod(method, Expression.Lambda<Func<IJSRequest, IJSResponse>>(call, new ParameterExpression[] { requestParam })
+                    new JSMethod(method, Expression.Lambda<Func<IJSRequest, IJSResponse>>(call, requestParam)
                         .Compile()));
             }
         }

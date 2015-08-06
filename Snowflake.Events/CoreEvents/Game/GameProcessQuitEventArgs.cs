@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using Snowflake.Service;
+﻿using System.Diagnostics;
 using Snowflake.Emulator;
 using Snowflake.Game;
+using Snowflake.Service;
 
 namespace Snowflake.Events.CoreEvents.GameEvent
 {

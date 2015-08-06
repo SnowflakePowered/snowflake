@@ -1,19 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.SQLite;
+﻿using System.Collections.Generic;
 using System.Data;
-using Snowflake.Utility;
+using System.Data.SQLite;
+using System.Linq;
 using Snowflake.Emulator;
 using Snowflake.Scraper;
 using Snowflake.Service.Manager;
+using Snowflake.Utility;
+
 namespace Snowflake.Platform
 {
     public class PlatformPreferencesDatabase : BaseDatabase, IPlatformPreferenceDatabase
     {
-        private IPluginManager pluginManager;
+        private readonly IPluginManager pluginManager;
         public PlatformPreferencesDatabase(string fileName, IPluginManager pluginManager)
             : base(fileName)
         {

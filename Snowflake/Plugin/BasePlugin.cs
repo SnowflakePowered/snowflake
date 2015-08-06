@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Reflection;
+﻿using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using Newtonsoft.Json;
-using Snowflake.Constants.Plugin;
-using Snowflake.Service;
-using Snowflake.Plugin;
-using Snowflake.Plugin.Configuration;
 using NLog;
+using Snowflake.Constants.Plugin;
+using Snowflake.Plugin.Configuration;
+using Snowflake.Service;
+
 namespace Snowflake.Plugin
 {
     public abstract class BasePlugin : IBasePlugin

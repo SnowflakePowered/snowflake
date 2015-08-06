@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Snowflake.Emulator.Input
 {
@@ -33,7 +29,7 @@ namespace Snowflake.Emulator.Input
         public string GAMEPAD_DPAD_DOWN { get; }
         public string GAMEPAD_DPAD_LEFT { get; }
         public string GAMEPAD_DPAD_RIGHT { get; }
-        private IDictionary<string, string> mappingData;
+        private readonly IDictionary<string, string> mappingData;
         public GamepadMapping(IDictionary<string, string> mappingData)
         {
             this.mappingData = mappingData;

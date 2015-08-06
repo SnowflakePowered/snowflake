@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using System.Reflection;
-using System.IO;
 using Snowflake.Plugin;
 using Snowflake.Service;
-using Snowflake.Platform;
+
 namespace Snowflake.Identifier
 {
     public abstract class BaseIdentifier : BasePlugin, IIdentifier

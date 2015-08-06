@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
-using Snowflake.Service.Manager;
+using Moq;
 using Snowflake.Emulator;
 using Snowflake.Scraper;
+using Snowflake.Service.Manager;
 using Xunit;
-using Moq;
+
 namespace Snowflake.Platform.Tests
 {
     public class PlatformPreferencesDatabaseTests
@@ -21,18 +19,21 @@ namespace Snowflake.Platform.Tests
             var fakeEmulatorBridge = new Mock<IEmulatorBridge>();
             var fakeScraper = new Mock<IScraper>();
 
-            IList<string> supportedPlatforms = new List<string>(){
-                {"TESTPLATFORM"}
+            IList<string> supportedPlatforms = new List<string>
+            {
+                "TESTPLATFORM"
             };
 
             fakeEmulatorBridge.SetupGet(bridge => bridge.PluginName).Returns("FakeEmulator");
             fakeEmulatorBridge.SetupGet(bridge => bridge.SupportedPlatforms).Returns(supportedPlatforms);
             fakeScraper.SetupGet(scraper => scraper.PluginName).Returns("FakeScraper");
             fakeScraper.SetupGet(scraper => scraper.SupportedPlatforms).Returns(supportedPlatforms);
-            IReadOnlyDictionary<string, IEmulatorBridge> loadedEmulators = new Dictionary<string, IEmulatorBridge>(){
+            IReadOnlyDictionary<string, IEmulatorBridge> loadedEmulators = new Dictionary<string, IEmulatorBridge>
+            {
                 {"FakeEmulator", fakeEmulatorBridge.Object}
             };
-            IReadOnlyDictionary<string, IScraper> loadedScrapers = new Dictionary<string, IScraper>(){
+            IReadOnlyDictionary<string, IScraper> loadedScrapers = new Dictionary<string, IScraper>
+            {
                 {"FakeScraper", fakeScraper.Object}
             };
 
@@ -54,18 +55,21 @@ namespace Snowflake.Platform.Tests
             var fakeEmulatorBridge = new Mock<IEmulatorBridge>();
             var fakeScraper = new Mock<IScraper>();
             var fakePlatform = new Mock<IPlatformInfo>();
-            IList<string> supportedPlatforms = new List<string>(){
-                {"TESTPLATFORM"}
+            IList<string> supportedPlatforms = new List<string>
+            {
+                "TESTPLATFORM"
             };
 
             fakeEmulatorBridge.SetupGet(bridge => bridge.PluginName).Returns("FakeEmulator");
             fakeEmulatorBridge.SetupGet(bridge => bridge.SupportedPlatforms).Returns(supportedPlatforms);
             fakeScraper.SetupGet(scraper => scraper.PluginName).Returns("FakeScraper");
             fakeScraper.SetupGet(scraper => scraper.SupportedPlatforms).Returns(supportedPlatforms);
-            IReadOnlyDictionary<string, IEmulatorBridge> loadedEmulators = new Dictionary<string, IEmulatorBridge>(){
+            IReadOnlyDictionary<string, IEmulatorBridge> loadedEmulators = new Dictionary<string, IEmulatorBridge>
+            {
                 {"FakeEmulator", fakeEmulatorBridge.Object}
             };
-            IReadOnlyDictionary<string, IScraper> loadedScrapers = new Dictionary<string, IScraper>(){
+            IReadOnlyDictionary<string, IScraper> loadedScrapers = new Dictionary<string, IScraper>
+            {
                 {"FakeScraper", fakeScraper.Object}
             };
 
@@ -94,18 +98,21 @@ namespace Snowflake.Platform.Tests
             var fakeEmulatorBridge = new Mock<IEmulatorBridge>();
             var fakeScraper = new Mock<IScraper>();
             var fakePlatform = new Mock<IPlatformInfo>();
-            IList<string> supportedPlatforms = new List<string>(){
-                {"TESTPLATFORM"}
+            IList<string> supportedPlatforms = new List<string>
+            {
+                "TESTPLATFORM"
             };
 
             fakeEmulatorBridge.SetupGet(bridge => bridge.PluginName).Returns("FakeEmulator");
             fakeEmulatorBridge.SetupGet(bridge => bridge.SupportedPlatforms).Returns(supportedPlatforms);
             fakeScraper.SetupGet(scraper => scraper.PluginName).Returns("FakeScraper");
             fakeScraper.SetupGet(scraper => scraper.SupportedPlatforms).Returns(supportedPlatforms);
-            IReadOnlyDictionary<string, IEmulatorBridge> loadedEmulators = new Dictionary<string, IEmulatorBridge>(){
+            IReadOnlyDictionary<string, IEmulatorBridge> loadedEmulators = new Dictionary<string, IEmulatorBridge>
+            {
                 {"FakeEmulator", fakeEmulatorBridge.Object}
             };
-            IReadOnlyDictionary<string, IScraper> loadedScrapers = new Dictionary<string, IScraper>(){
+            IReadOnlyDictionary<string, IScraper> loadedScrapers = new Dictionary<string, IScraper>
+            {
                 {"FakeScraper", fakeScraper.Object}
             };
 
@@ -132,18 +139,21 @@ namespace Snowflake.Platform.Tests
             var fakeEmulatorBridge = new Mock<IEmulatorBridge>();
             var fakeScraper = new Mock<IScraper>();
             var fakePlatform = new Mock<IPlatformInfo>();
-            IList<string> supportedPlatforms = new List<string>(){
-                {"TESTPLATFORM"}
+            IList<string> supportedPlatforms = new List<string>
+            {
+                "TESTPLATFORM"
             };
 
             fakeEmulatorBridge.SetupGet(bridge => bridge.PluginName).Returns("FakeEmulator");
             fakeEmulatorBridge.SetupGet(bridge => bridge.SupportedPlatforms).Returns(supportedPlatforms);
             fakeScraper.SetupGet(scraper => scraper.PluginName).Returns("FakeScraper");
             fakeScraper.SetupGet(scraper => scraper.SupportedPlatforms).Returns(supportedPlatforms);
-            IReadOnlyDictionary<string, IEmulatorBridge> loadedEmulators = new Dictionary<string, IEmulatorBridge>(){
+            IReadOnlyDictionary<string, IEmulatorBridge> loadedEmulators = new Dictionary<string, IEmulatorBridge>
+            {
                 {"FakeEmulator", fakeEmulatorBridge.Object}
             };
-            IReadOnlyDictionary<string, IScraper> loadedScrapers = new Dictionary<string, IScraper>(){
+            IReadOnlyDictionary<string, IScraper> loadedScrapers = new Dictionary<string, IScraper>
+            {
                 {"FakeScraper", fakeScraper.Object}
             };
 

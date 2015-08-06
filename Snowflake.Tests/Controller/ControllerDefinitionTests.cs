@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
+﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 using Snowflake.Tests;
-using Snowflake.Controller;
+using Xunit;
 
 namespace Snowflake.Controller.Tests
 {

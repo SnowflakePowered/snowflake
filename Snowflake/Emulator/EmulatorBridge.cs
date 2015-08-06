@@ -1,20 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Snowflake.Emulator.Configuration;
-using Snowflake.Controller;
-using Snowflake.Service;
-using Snowflake.Game;
-using System.Diagnostics;
-using System.Collections;
-using System.IO;
-using Snowflake.Emulator.Input;
-using Snowflake.Plugin;
-using Snowflake.Platform;
 using System.Reflection;
+using System.Text;
 using Newtonsoft.Json;
+using Snowflake.Controller;
+using Snowflake.Emulator.Configuration;
+using Snowflake.Emulator.Input;
+using Snowflake.Game;
+using Snowflake.Platform;
+using Snowflake.Plugin;
+using Snowflake.Service;
 
 namespace Snowflake.Emulator
 {
@@ -83,7 +79,7 @@ namespace Snowflake.Emulator
 
         public virtual string CompileController(int playerIndex, IPlatformInfo platformInfo, IControllerDefinition controllerDefinition, IControllerTemplate controllerTemplate, IGamepadAbstraction gamepadAbstraction, IInputTemplate inputTemplate)
         {
-            if (gamepadAbstraction.ProfileType == ControllerProfileType.NULL_PROFILE) return String.Empty;
+            if (gamepadAbstraction.ProfileType == ControllerProfileType.NULL_PROFILE) return string.Empty;
             var controllerMappings = gamepadAbstraction.ProfileType == ControllerProfileType.KEYBOARD_PROFILE ?
                 controllerTemplate.KeyboardControllerMappings : controllerTemplate.GamepadControllerMappings;
             return this.CompileController(playerIndex, platformInfo, controllerDefinition, controllerTemplate, gamepadAbstraction, inputTemplate, controllerMappings);
@@ -91,7 +87,7 @@ namespace Snowflake.Emulator
 
         public virtual string CompileController(int playerIndex, IPlatformInfo platformInfo, IControllerDefinition controllerDefinition, IControllerTemplate controllerTemplate, IGamepadAbstraction gamepadAbstraction, IInputTemplate inputTemplate, IReadOnlyDictionary<string, IControllerMapping> controllerMappings)
         {
-            if (gamepadAbstraction.ProfileType == ControllerProfileType.NULL_PROFILE) return String.Empty;
+            if (gamepadAbstraction.ProfileType == ControllerProfileType.NULL_PROFILE) return string.Empty;
             var template = new StringBuilder(inputTemplate.StringTemplate);
             foreach (IControllerInput input in controllerDefinition.ControllerInputs.Values)
             {
