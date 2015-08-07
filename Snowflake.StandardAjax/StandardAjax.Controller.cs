@@ -42,11 +42,8 @@ namespace Snowflake.StandardAjax
             catch
             {
                 ControllerProfileType profileType;
-                if(Enum.TryParse(_profileType, true, out profileType)){
-                    gamepadAbstraction = new GamepadAbstraction(deviceName, profileType);
-                }else{
-                    gamepadAbstraction = new GamepadAbstraction(deviceName, ControllerProfileType.GAMEPAD_PROFILE);
-                }
+                gamepadAbstraction = Enum.TryParse(_profileType, true, out profileType) ? 
+                    new GamepadAbstraction(deviceName, profileType) : new GamepadAbstraction(deviceName, ControllerProfileType.GAMEPAD_PROFILE);
             }
             IDictionary<string, string> changes = JsonConvert.DeserializeObject<Dictionary<string, string>>(request.GetParameter("inputconfig"));
             foreach (KeyValuePair<string, string> change in changes) 
@@ -54,7 +51,7 @@ namespace Snowflake.StandardAjax
                 gamepadAbstraction[change.Key] = change.Value;
             }
             this.CoreInstance.GamepadAbstractionDatabase[deviceName] = gamepadAbstraction;
-            return new JSResponse(request, "success");
+            return new JSResponse(request, this.CoreInstance.GamepadAbstractionDatabase[deviceName]);
         }
         [AjaxMethod(MethodPrefix = "Controller")]
         public IJSResponse GetControllers(IJSRequest request)
@@ -73,7 +70,7 @@ namespace Snowflake.StandardAjax
             int port = int.Parse(request.GetParameter("port"));
             this.CoreInstance.ControllerPortsDatabase.SetDeviceInPort(platform, port, deviceName);
 
-            return new JSResponse(request, "success");
+            return new JSResponse(request, this.CoreInstance.ControllerPortsDatabase.GetDeviceInPort(platform, port));
         }
         [AjaxMethod(MethodPrefix = "Controller")]
         [AjaxMethodParameter(ParameterName = "platform", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]

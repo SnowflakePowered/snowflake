@@ -64,7 +64,7 @@ namespace Snowflake.StandardAjax
                 SnowflakeEventManager.EventSource.RaiseEvent(gameAddEvent);
 
             }
-            return new JSResponse(request, $"added {game.FileName}", true);
+            return new JSResponse(request, game, true);
         }
 
         [AjaxMethod(MethodPrefix = "Game")]
@@ -270,7 +270,7 @@ namespace Snowflake.StandardAjax
             {
                 gameStartEvent.GameEmulatorBridge.StartRom(gameStartEvent.GameInfo);
             }
-            return new JSResponse(request, $"Game Started {gameInfo.UUID}"); //todo return started gameInfo
+            return new JSResponse(request, gameInfo);
         }
 
         [AjaxMethod(MethodPrefix = "Game")]
