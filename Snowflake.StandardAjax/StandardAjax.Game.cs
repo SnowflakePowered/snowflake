@@ -265,6 +265,7 @@ namespace Snowflake.StandardAjax
             IEmulatorBridge bridge = this.CoreInstance.PluginManager.LoadedEmulators[emulator];
             IGameInfo gameInfo = this.CoreInstance.GameDatabase.GetGameByUUID(id);
             var gameStartEvent = new GameStartEventArgs(this.CoreInstance, gameInfo, bridge.EmulatorAssembly, bridge);
+            SnowflakeEventManager.EventSource.RaiseEvent(gameStartEvent);
             if (!gameStartEvent.Cancel)
             {
                 gameStartEvent.GameEmulatorBridge.StartRom(gameStartEvent.GameInfo);
