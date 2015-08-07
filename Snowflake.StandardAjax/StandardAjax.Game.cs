@@ -64,7 +64,7 @@ namespace Snowflake.StandardAjax
                 SnowflakeEventManager.EventSource.RaiseEvent(gameAddEvent);
 
             }
-            return new JSResponse(request, $"added {game.FileName}", true);
+            return new JSResponse(request, game, true);
         }
 
         [AjaxMethod(MethodPrefix = "Game")]
@@ -265,11 +265,12 @@ namespace Snowflake.StandardAjax
             IEmulatorBridge bridge = this.CoreInstance.PluginManager.LoadedEmulators[emulator];
             IGameInfo gameInfo = this.CoreInstance.GameDatabase.GetGameByUUID(id);
             var gameStartEvent = new GameStartEventArgs(this.CoreInstance, gameInfo, bridge.EmulatorAssembly, bridge);
+            SnowflakeEventManager.EventSource.RaiseEvent(gameStartEvent);
             if (!gameStartEvent.Cancel)
             {
                 gameStartEvent.GameEmulatorBridge.StartRom(gameStartEvent.GameInfo);
             }
-            return new JSResponse(request, $"Game Started {gameInfo.UUID}"); //todo return started gameInfo
+            return new JSResponse(request, gameInfo);
         }
 
         [AjaxMethod(MethodPrefix = "Game")]
