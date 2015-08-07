@@ -50,15 +50,7 @@ namespace Snowflake.Emulator
             foreach (var configurationValue in configProfile.ConfigurationValues)
             {
                 Type configurationvalueType = configurationValue.Value.GetType();
-                string stringValue;
-                if (configurationvalueType == typeof(bool))
-                {
-                    stringValue = configTemplate.BooleanMapping.FromBool(configurationValue.Value);
-                }
-                else
-                {
-                    stringValue = configurationValue.Value.ToString();
-                }
+                string stringValue = configurationvalueType == typeof(bool) ? configTemplate.BooleanMapping.FromBool(configurationValue.Value) : configurationValue.Value.ToString();
                 template.Replace($"{{{configurationValue.Key}}}", stringValue);
             }
             return template.ToString();
