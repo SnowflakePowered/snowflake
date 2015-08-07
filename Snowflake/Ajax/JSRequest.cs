@@ -16,14 +16,9 @@ namespace Snowflake.Ajax
 
         public string GetParameter(string paramKey)
         {
-            try
-            {
-                return this.MethodParameters[paramKey];
-            }
-            catch (KeyNotFoundException)
-            {
-                return null;
-            }
+            string methodParameters;
+            this.MethodParameters.TryGetValue(paramKey, out methodParameters);
+            return methodParameters;
         }
 
     }
