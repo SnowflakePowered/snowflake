@@ -29,25 +29,18 @@ namespace Snowflake.Ajax
         }
         private static string ProcessJSONP(dynamic output, bool success, IJSRequest request)
         {
+             string json = JsonConvert.SerializeObject(new Dictionary<string, object>
+             {
+                 {"request", request},
+                 {"payload", output},
+                 {"success", success},
+                 {"type", "methodresponse"}
+             });
             if (request.MethodParameters.ContainsKey("jsoncallback"))
             {
-                return request.MethodParameters["jsoncallback"] + $@"({
-                    JsonConvert.SerializeObject(new Dictionary<string, object>
-                    {
-                        {"request", request},
-                        {"payload", output},
-                        {"success", success},
-                        {"type", "methodresponse"}
-                    })}
-                );";
+                json = request.MethodParameters["jsoncallback"] + $"({json});";
             }
-            return JsonConvert.SerializeObject(new Dictionary<string, object>
-            {
-                {"request", request},
-                {"payload", output},
-                {"success", success},
-                {"type", "methodresponse"}
-            });
+            return json;
         }
     }
 }
