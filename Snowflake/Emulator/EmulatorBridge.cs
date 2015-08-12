@@ -44,11 +44,11 @@ namespace Snowflake.Emulator
         public abstract void StartRom(IGameInfo gameInfo);
         public abstract void HandlePrompt(string messagge);
         public abstract void ShutdownEmulator();
-        public virtual string CompileConfiguration(IConfigurationProfile configProfile)
+        public virtual string CompileConfiguration(IConfigurationProfile configProfile, IGameInfo gameInfo)
         {
-            return this.CompileConfiguration(this.ConfigurationTemplates[configProfile.TemplateID], configProfile);
+            return this.CompileConfiguration(this.ConfigurationTemplates[configProfile.TemplateID], configProfile, gameInfo);
         }
-        public virtual string CompileConfiguration(IConfigurationTemplate configTemplate, IConfigurationProfile configProfile)
+        public virtual string CompileConfiguration(IConfigurationTemplate configTemplate, IConfigurationProfile configProfile, IGameInfo gameInfo)
         {
             var template = new StringBuilder(configTemplate.StringTemplate);
             foreach (var configurationValue in configProfile.ConfigurationValues)
@@ -67,7 +67,7 @@ namespace Snowflake.Emulator
             }
             return template.ToString();
         }
-        public virtual string CompileController(int playerIndex, IPlatformInfo platformInfo, IInputTemplate inputTemplate)
+        public virtual string CompileController(int playerIndex, IPlatformInfo platformInfo, IInputTemplate inputTemplate, IGameInfo gameInfo)
         {
             string deviceName = this.CoreInstance.ControllerPortsDatabase.GetDeviceInPort(platformInfo, playerIndex);
             string controllerId = platformInfo.ControllerPorts[playerIndex];
@@ -78,18 +78,19 @@ namespace Snowflake.Emulator
                 controllerDefinition,
                 this.ControllerTemplates[controllerId],
                 gamepadAbstraction,
-                inputTemplate);
+                inputTemplate,
+                gameInfo);
         }
 
-        public virtual string CompileController(int playerIndex, IPlatformInfo platformInfo, IControllerDefinition controllerDefinition, IControllerTemplate controllerTemplate, IGamepadAbstraction gamepadAbstraction, IInputTemplate inputTemplate)
+        public virtual string CompileController(int playerIndex, IPlatformInfo platformInfo, IControllerDefinition controllerDefinition, IControllerTemplate controllerTemplate, IGamepadAbstraction gamepadAbstraction, IInputTemplate inputTemplate, IGameInfo gameInfo)
         {
             if (gamepadAbstraction.ProfileType == ControllerProfileType.NULL_PROFILE) return String.Empty;
             var controllerMappings = gamepadAbstraction.ProfileType == ControllerProfileType.KEYBOARD_PROFILE ?
                 controllerTemplate.KeyboardControllerMappings : controllerTemplate.GamepadControllerMappings;
-            return this.CompileController(playerIndex, platformInfo, controllerDefinition, controllerTemplate, gamepadAbstraction, inputTemplate, controllerMappings);
+            return this.CompileController(playerIndex, platformInfo, controllerDefinition, controllerTemplate, gamepadAbstraction, inputTemplate, controllerMappings, gameInfo);
         }
 
-        public virtual string CompileController(int playerIndex, IPlatformInfo platformInfo, IControllerDefinition controllerDefinition, IControllerTemplate controllerTemplate, IGamepadAbstraction gamepadAbstraction, IInputTemplate inputTemplate, IReadOnlyDictionary<string, IControllerMapping> controllerMappings)
+        public virtual string CompileController(int playerIndex, IPlatformInfo platformInfo, IControllerDefinition controllerDefinition, IControllerTemplate controllerTemplate, IGamepadAbstraction gamepadAbstraction, IInputTemplate inputTemplate, IReadOnlyDictionary<string, IControllerMapping> controllerMappings, IGameInfo gameInfo)
         {
             if (gamepadAbstraction.ProfileType == ControllerProfileType.NULL_PROFILE) return String.Empty;
             var template = new StringBuilder(inputTemplate.StringTemplate);

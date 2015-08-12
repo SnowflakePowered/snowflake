@@ -54,24 +54,25 @@ namespace Snowflake.Emulator
         /// </summary>
         /// <param name="configurationProfile">The configuration profile to compile</param>
         /// <returns>The compiled configuration</returns>
-        string CompileConfiguration(IConfigurationProfile configurationProfile);
+        string CompileConfiguration(IConfigurationProfile configurationProfile, IGameInfo gameInfo);
         /// <summary>
         /// Compile configuration
         /// </summary>
         /// <param name="configurationTemplate">The configuration template for the profile</param>
         /// <param name="configurationProfile">The configuration profile to compile</param>
         /// <returns></returns>
-        string CompileConfiguration(IConfigurationTemplate configurationTemplate, IConfigurationProfile configurationProfile);
+        
+        string CompileConfiguration(IConfigurationTemplate configurationTemplate, IConfigurationProfile configurationProfile, IGameInfo game);
         /// <summary>
         /// Compile the controller for a specified player index
         /// </summary>
         /// <param name="playerIndex">The player index to compile for</param>
         /// <param name="controllerDefinition">The controller definition to compile for</param>
         /// <param name="controllerTemplate">The controller template to compile for</param>
-        /// <param name="controllerProfile">The controller profile to compile for</param>
         /// <param name="inputTemplate">The input template to compile for</param>
         /// <returns></returns>
-        string CompileController(int playerIndex, IPlatformInfo platformInfo, IControllerDefinition controllerDefinition, IControllerTemplate controllerTemplate, IGamepadAbstraction gamepadAbstraction, IInputTemplate inputTemplate);
+        /// 
+        string CompileController(int playerIndex, IPlatformInfo platformInfo, IControllerDefinition controllerDefinition, IControllerTemplate controllerTemplate, IGamepadAbstraction gamepadAbstraction, IInputTemplate inputTemplate, IGameInfo game);
         /// <summary>
         /// Compile a controller given a specific platform
         /// </summary>
@@ -79,8 +80,20 @@ namespace Snowflake.Emulator
         /// <param name="platformInfo">The platform to compile for</param>
         /// <param name="inputTemplate">The input template to compile for</param>
         /// <returns></returns>
-        string CompileController(int playerIndex, IPlatformInfo platformInfo, IInputTemplate inputTemplate);
-        string CompileController(int playerIndex, IPlatformInfo platformInfo, IControllerDefinition controllerDefinition, IControllerTemplate controllerTemplate, IGamepadAbstraction gamepadAbstraction, IInputTemplate inputTemplate, IReadOnlyDictionary<string, IControllerMapping> controllerMappings);
+        string CompileController(int playerIndex, IPlatformInfo platformInfo, IInputTemplate inputTemplate, IGameInfo game);
+
+        /// <summary>
+        /// Compile Controller given all available information
+        /// </summary>
+        /// <param name="playerIndex">The player index to compile for</param>
+        /// <param name="platformInfo">The platform to compile for</param>
+        /// <param name="inputTemplate">The input template to compile for</param>
+        /// <param name="controllerDefinition"></param>
+        /// <param name="controllerTemplate"></param>
+        /// <param name="gamepadAbstraction"></param>
+        /// <param name="controllerMappings"></param>
+        /// <returns></returns>
+        string CompileController(int playerIndex, IPlatformInfo platformInfo, IControllerDefinition controllerDefinition, IControllerTemplate controllerTemplate, IGamepadAbstraction gamepadAbstraction, IInputTemplate inputTemplate, IReadOnlyDictionary<string, IControllerMapping> controllerMappings, IGameInfo game);
 
         /// <summary>
         /// Shutdownt the currently running emulator
