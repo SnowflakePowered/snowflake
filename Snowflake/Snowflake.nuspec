@@ -13,5 +13,10 @@
     <description>Snowflake C# API Implementation Library</description>
     <copyright>Copyright Ronny Chan 2015</copyright>
     <tags>Snowflake Emulator Frontend</tags>
+    <dependencies>
+     <group>
+        <dependency id="Snowflake.API"/>
+     </group>
+  </dependencies>
   </metadata>
 </package>
