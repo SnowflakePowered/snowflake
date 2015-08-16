@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://raw.githubusercontent.com/SnowflakePowered/snowflake/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/SnowflakePowered/snowflake</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/SnowflakePowered/snowflake/master/branding/Snowflake-Ring-128.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Snowflake StandardAjax Endpoints (use with snowflake.js)</description>
+    <copyright>Copyright Ronny Chan 2015</copyright>
+    <tags>Snowflake Emulator Frontend</tags>
+    <dependencies>
+      <dependency id="Snowflake.API"/>
+      <dependency id="Snowflake.Service"/>
+      <dependency id="Snowflake"/>
+      <dependency id="Snowflake.Events"/>
+    </dependencies>
+  </metadata>
+
+</package>
