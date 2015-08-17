@@ -26,7 +26,7 @@ install:
     - nuget update -self
     - choco install -y sandcastle -version 2015.5.2.0
     - choco install -y doxygen.portable
-    - nuget restore
+    - nuget restore ./Snowflake.sln
 after_test:
     - echo Generating Sandcastle Documentation
     - msbuild "C:\projects\snowflake\Snowflake.Documentation.shfbproj"
