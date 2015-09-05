@@ -97,6 +97,9 @@
     <Compile Include="Emulator\Input\InputManager\IInputManager.cs" />
     <Compile Include="Game\IGameMediaCache.cs" />
     <Compile Include="Game\IGameScreenshotCache.cs" />
+    <Compile Include="Romfile\IROMFileSignature.cs" />
+    <Compile Include="Romfile\IStructuredFilename.cs" />
+    <Compile Include="Romfile\IScrapableInfo.cs" />
     <Compile Include="Identifier\IdentifiedValueTypes.cs" />
     <Compile Include="Identifier\IIdentifiedMetadata.cs" />
     <Compile Include="Platform\IPlatformControllerPorts.cs" />
