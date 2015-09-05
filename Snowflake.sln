@@ -1,5 +1,5 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 14.00
+Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
@@ -39,6 +39,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.StandardAjax", "S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Shell.Windows", "Snowflake.Shell.Windows\Snowflake.Shell.Windows.csproj", "{F7A99F10-7770-490C-BF02-92C8B58AD2F3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Scraping", "Snowflake.Scraping\Snowflake.Scraping.csproj", "{4620E264-BB5D-4A3D-84FC-36D8C3C9034E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +79,10 @@ Global
 		{F7A99F10-7770-490C-BF02-92C8B58AD2F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7A99F10-7770-490C-BF02-92C8B58AD2F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7A99F10-7770-490C-BF02-92C8B58AD2F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4620E264-BB5D-4A3D-84FC-36D8C3C9034E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4620E264-BB5D-4A3D-84FC-36D8C3C9034E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4620E264-BB5D-4A3D-84FC-36D8C3C9034E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4620E264-BB5D-4A3D-84FC-36D8C3C9034E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
