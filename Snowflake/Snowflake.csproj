@@ -120,6 +120,7 @@
     <Compile Include="Controller\ControllerPortsDatabase.cs" />
     <Compile Include="Controller\ControllerDefinition.cs" />
     <Compile Include="Plugin\YamlConfiguration.cs" />
+    <Compile Include="Romfile\StructuredFilename.cs" />
     <Compile Include="Scraper\BaseScraper.cs" />
     <Compile Include="Scraper\GameImagesResult.cs" />
     <Compile Include="Scraper\GameScrapeResult.cs" />
@@ -147,6 +148,7 @@
     <None Include="app.config" />
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>

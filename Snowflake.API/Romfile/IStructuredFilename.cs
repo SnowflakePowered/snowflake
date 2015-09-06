@@ -51,6 +51,10 @@ namespace Snowflake.Romfile
         /// this value is serialized into the ISO code 'ZZ' for Unknown or Invalid Territory.
         /// </remarks>
         string RegionCode { get; }
+        /// <summary>
+        /// The source filename
+        /// </summary>
+        string OriginalFilename { get; }
 
     }
 
