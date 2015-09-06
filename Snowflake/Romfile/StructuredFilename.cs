@@ -62,7 +62,7 @@ namespace Snowflake.Romfile
         {
             var tagData = Regex.Matches(this.OriginalFilename,
                @"(\()([^)]+)(\))");
-            foreach (string match in from Match tag in tagData select tag.Groups[2].Value.Trim())
+            foreach (string match in from Match tag in tagData select tag.Groups[2].Value.Trim().ToLowerInvariant())
             {
                 if (StructuredFilename.goodToolsLookupTable.ContainsKey(match))
                 {
@@ -122,57 +122,57 @@ namespace Snowflake.Romfile
 
         private static readonly IDictionary<string, string> goodToolsLookupTable = new Dictionary<string, string>()
         {
-            {"A", "AU"},
-            {"As", "ZZ"},
-            {"B", "BR"},
-            {"C", "CA"},
-            {"Ch", "CN"},
-            {"D", "NL"}, //D for Dutch (Netherlands)
-            {"E", "EU"},
-            {"F", "FR"},
-            {"G", "DE"},
-            {"Gr", "GR"},
-            {"HK", "HK"},
-            {"I", "IT"},
-            {"J", "JP"},
-            {"K", "KR"},
-            {"Nl", "NL"}, //Still Netherlands
-            {"No", "NO"},
-            {"R", "RU"},
-            {"S", "ES"},
-            {"Sw", "SE"},
-            {"U", "US"},
-            {"UK", "GB"},
-            {"W", "ZZ"},
-            {"Unl", "ZZ"},
-            {"PD", "ZZ"},
-            {"Unk", "ZZ"}
+            {"a", "AU"},
+            {"as", "ZZ"},
+            {"b", "BR"},
+            {"c", "CA"},
+            {"ch", "CN"},
+            {"d", "NL"}, //D for Dutch (Netherlands)
+            {"e", "EU"},
+            {"f", "FR"},
+            {"g", "DE"},
+            {"gr", "GR"},
+            {"hk", "HK"},
+            {"i", "IT"},
+            {"j", "JP"},
+            {"k", "KR"},
+            {"nk", "NL"}, //Still Netherlands
+            {"no", "NO"},
+            {"r", "RU"},
+            {"s", "ES"},
+            {"sw", "SE"},
+            {"u", "US"},
+            {"uk", "GB"},
+            {"w", "ZZ"},
+            {"unl", "ZZ"},
+            {"pd", "ZZ"},
+            {"unk", "ZZ"}
         };
 
         private static readonly IDictionary<string, string> nointroLookupTable = new Dictionary<string, string>()
         {
-            {"Australia", "AU"},
-            {"Brazil", "BR"},
-            {"Canada", "CA"},
-            {"China", "CN"},
-            {"Netherlands", "NL"},
-            {"Europe", "EU"},
-            {"France", "FR"},
-            {"Germany", "DE"},
-            {"Greece", "GR"},
-            {"Hong Kong", "HK"},
-            {"Italy", "IT"},
-            {"Japan", "JP"},
-            {"Korea", "KR"},
-            {"Norway", "NO"},
-            {"Russia", "RU"},
-            {"Spain", "ES"},
-            {"Sweden", "SE"},
-            {"USA", "US"},
-            {"UK", "GB"},
-            {"World", "ZZ"},
-            {"Asia", "ZZ"},
-            {"Unknown", "ZZ"}
+            {"australia", "AU"},
+            {"brazil", "BR"},
+            {"canada", "CA"},
+            {"china", "CN"},
+            {"netherlands", "NL"},
+            {"europe", "EU"},
+            {"france", "FR"},
+            {"germany", "DE"},
+            {"greece", "GR"},
+            {"hong kong", "HK"},
+            {"italy", "IT"},
+            {"japan", "JP"},
+            {"korea", "KR"},
+            {"norway", "NO"},
+            {"russia", "RU"},
+            {"spain", "ES"},
+            {"sweden", "SE"},
+            {"usa", "US"},
+            {"uk", "GB"},
+            {"world", "ZZ"},
+            {"asia", "ZZ"},
+            {"unknown", "ZZ"}
         };
     }
 }
