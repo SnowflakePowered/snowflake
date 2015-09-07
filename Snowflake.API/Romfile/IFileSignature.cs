@@ -46,7 +46,10 @@ namespace Snowflake.Romfile
         /// <param name="fileName">The filename of the ROM</param>
         /// <returns>If this ROM is executable data for this platform, it should return true.</returns>
         bool HeaderSignatureMatches(string fileName);
-
+        /// <summary>
+        /// Gets the game id from the file signature if possible
+        /// </summary>
+        string GetGameID(string fileName);
   
     }
 }
