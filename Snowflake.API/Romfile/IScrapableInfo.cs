@@ -10,7 +10,7 @@ namespace Snowflake.Romfile
     /// Represents all data that is able to be gleaned from the file without any other data source
     /// such as a database or online-scraper. This object is to be passed to whatever scraper plugin is used.
     /// </summary>
-    interface IScrapableInfo
+    public interface IScrapableInfo
     {
         /// <summary>
         /// A searchable game title.
