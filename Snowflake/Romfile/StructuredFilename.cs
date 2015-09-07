@@ -117,6 +117,7 @@ namespace Snowflake.Romfile
                     return returnCountry.Length > 5 ? "ZZ" : returnCountry;
                 }
             }
+            this.NamingConvention = StructuredFilenameConvention.Unknown;
             return "ZZ";
         }
 

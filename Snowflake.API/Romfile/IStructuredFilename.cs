@@ -74,7 +74,11 @@ namespace Snowflake.Romfile
         /// <summary>
         /// GoodTools naming convention
         /// </summary>
-        GoodTools
+        GoodTools,
+        /// <summary>
+        /// Unknown naming convention, possibly invalid filename
+        /// </summary>
+        Unknown
     }
 
 }
