@@ -14,53 +14,37 @@ namespace Snowflake.Service
     public interface ICoreService : IDisposable
     {
         /// <summary>
-        /// The Ajax endpoint manager
+        /// The list of platforms loaded for this core service
         /// </summary>
-        IAjaxManager AjaxManager { get; }
+        IDictionary<string, IPlatformInfo> Platforms { get; }
         /// <summary>
-        /// The Emulator assemblies manager
+        /// THe list of controllers loaded for this core service
         /// </summary>
-        IEmulatorAssembliesManager EmulatorManager { get; }
+        IDictionary<string, IControllerDefinition> Controllers { get; }
         /// <summary>
-        /// The directory from which application data is stored
+        /// The directory to store appdata in this core service
         /// </summary>
         string AppDataDirectory { get; }
         /// <summary>
-        /// The database that holds controller ports information
+        /// Register a service with this coreservice
         /// </summary>
-        IControllerPortsDatabase ControllerPortsDatabase { get; }
+        /// <typeparam name="T"></typeparam>
+        /// <param name="serviceObject"></param>
+        void RegisterService<T>(T serviceObject);
         /// <summary>
-        /// The database that contains games information
+        /// Get a list of registered services
         /// </summary>
-        IGameDatabase GameDatabase { get; }
+        /// <returns></returns>
+        IEnumerable<string> AvailableServices();
         /// <summary>
-        /// The database that contains platform preferences
+        /// Get a service
         /// </summary>
-        IPlatformPreferenceDatabase PlatformPreferenceDatabase { get; }
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        T Get<T>();
         /// <summary>
-        /// The database that contains the gamepad abstraction profiles
+        /// Dispose the core
         /// </summary>
-        IGamepadAbstractionDatabase GamepadAbstractionDatabase { get; }
-        /// <summary>
-        /// All currently loaded platforms
-        /// </summary>
-        IDictionary<string, IPlatformInfo> LoadedPlatforms { get; }
-        /// <summary>
-        /// All currently loaded controllers
-        /// </summary>
-        IDictionary<string, IControllerDefinition> LoadedControllers { get; }
-        /// <summary>
-        /// The plugin manager
-        /// </summary>
-        IPluginManager PluginManager { get; }
-        /// <summary>
-        /// The webserver manager
-        /// </summary>
-        IServerManager ServerManager { get; }
-        /// <summary>
-        /// The input device manager
-        /// </summary>
-        IInputManager InputManager { get; }
-        
+        void Dispose();
     }
 }
