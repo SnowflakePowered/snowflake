@@ -41,7 +41,11 @@ namespace Snowflake.Service.Manager
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="pluginName"></param>
-        /// <returns></returns>
+        /// <returns>The plugin</returns>
         T Plugin<T>(string pluginName) where T : IBasePlugin;
+        /// <summary>
+        /// Whethere or not the plugin manager has been initialized
+        /// </summary>
+        bool IsInitialized { get; }
     }
 }

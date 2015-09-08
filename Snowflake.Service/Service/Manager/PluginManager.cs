@@ -20,7 +20,7 @@ namespace Snowflake.Service.Manager
     public class PluginManager : IPluginManager
     {
         public string LoadablesLocation { get; }
-
+        public bool IsInitialized { get; private set; }
         private readonly IDictionary<string, Type> registry;
         public IReadOnlyDictionary<string, Type> Registry => this.registry.AsReadOnly();
 
@@ -53,6 +53,7 @@ namespace Snowflake.Service.Manager
                 var composeImports = typeof (PluginManager).GetMethod("ComposeImports", BindingFlags.NonPublic | BindingFlags.Instance);
                 composeImports.MakeGenericMethod(T).Invoke(this, null);
             }
+            this.IsInitialized = true;
         }
 
         public IDictionary<string, T> Plugins<T>() where T : IBasePlugin
