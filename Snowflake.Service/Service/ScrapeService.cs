@@ -19,7 +19,7 @@ namespace Snowflake.Service
         public ScrapeService(IPlatformInfo scrapePlatform, string scraperName)
         {
             this.ScrapePlatform = scrapePlatform;
-            this.ScraperPlugin = CoreService.LoadedCore.PluginManager.LoadedScrapers[scraperName];
+            this.ScraperPlugin = CoreService.LoadedCore.PluginManager.Plugins<IScraper>()[scraperName];
         }
         public ScrapeService(IPlatformInfo scrapePlatform) : this (scrapePlatform, CoreService.LoadedCore.PlatformPreferenceDatabase.GetPreferences(scrapePlatform).Scraper)
         {
@@ -28,7 +28,7 @@ namespace Snowflake.Service
         public IList<IGameScrapeResult> GetGameResults(string fileName)
         {
             IList<IIdentifiedMetadata> identifiedMetadata = new List<IIdentifiedMetadata>();
-            foreach(IIdentifier identifier in CoreService.LoadedCore.PluginManager.LoadedIdentifiers.Values.Where(identifier => identifier.SupportedPlatforms.Contains(this.ScrapePlatform.PlatformID)))
+            foreach(IIdentifier identifier in CoreService.LoadedCore.PluginManager.Plugins<IIdentifier>().Values.Where(identifier => identifier.SupportedPlatforms.Contains(this.ScrapePlatform.PlatformID)))
             {
                 string value = identifier.IdentifyGame(fileName, this.ScrapePlatform.PlatformID);
                 identifiedMetadata.Add(new IdentifiedMetadata(identifier.PluginName, identifier.IdentifiedValueType, value));

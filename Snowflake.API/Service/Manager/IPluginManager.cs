@@ -16,7 +16,6 @@ namespace Snowflake.Service.Manager
         /// The location from which plugins are loaded
         /// </summary>
         string LoadablesLocation { get; }
-
         /// <summary>
         /// A list of loaded plugins by plugin name
         /// </summary>

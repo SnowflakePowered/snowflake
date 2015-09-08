@@ -78,7 +78,7 @@ namespace Snowflake.Service
         {
             CoreService.LoadedCore.EmulatorManager.LoadEmulatorAssemblies();
             CoreService.LoadedCore.PluginManager.Initialize();
-            CoreService.LoadedCore.AjaxManager.LoadAll();
+            CoreService.LoadedCore.AjaxManager.Initialize(CoreService.LoadedCore.PluginManager);
             foreach (PlatformInfo platform in CoreService.LoadedCore.LoadedPlatforms.Values)
             {
                 CoreService.LoadedCore.ControllerPortsDatabase.AddPlatform(platform);
@@ -96,7 +96,7 @@ namespace Snowflake.Service
             this.GamepadAbstractionDatabase = new GamepadAbstractionDatabase(Path.Combine(this.AppDataDirectory, "gamepads.db"));
             this.ControllerPortsDatabase = new ControllerPortsDatabase(Path.Combine(this.AppDataDirectory, "ports.db"));
             this.PluginManager = new PluginManager(this.AppDataDirectory, typeof(IEmulatorBridge), typeof(IScraper), typeof(IGeneralPlugin), typeof(IBaseAjaxNamespace));
-            this.AjaxManager = new AjaxManager(this.AppDataDirectory);
+            this.AjaxManager = new AjaxManager();
             this.EmulatorManager = new EmulatorAssembliesManager(Path.Combine(this.AppDataDirectory, "emulators"));
             this.PlatformPreferenceDatabase = new PlatformPreferencesDatabase(Path.Combine(this.AppDataDirectory, "platformprefs.db"), this.PluginManager);
             this.ServerManager.RegisterServer("AjaxApiServer", new ApiServer());

@@ -109,7 +109,7 @@ namespace Snowflake.StandardAjax
         public IJSResponse GetFlags(IJSRequest request)
         {
             string emulator = request.GetParameter("emulator");
-            IEmulatorBridge bridge = this.CoreInstance.PluginManager.LoadedEmulators[emulator];
+            IEmulatorBridge bridge = this.CoreInstance.PluginManager.Plugins<IEmulatorBridge>()[emulator];
             return new JSResponse(request, bridge.ConfigurationFlags);
         }
 
@@ -122,7 +122,7 @@ namespace Snowflake.StandardAjax
             string emulator = request.GetParameter("emulator");
             string id = request.GetParameter("id");
             string key = request.GetParameter("key");
-            IEmulatorBridge bridge = this.CoreInstance.PluginManager.LoadedEmulators[emulator];
+            IEmulatorBridge bridge = this.CoreInstance.PluginManager.Plugins<IEmulatorBridge>()[emulator];
             IGameInfo game = this.CoreInstance.GameDatabase.GetGameByUUID(id);
             IConfigurationFlag flag = bridge.ConfigurationFlags[key];
             return new JSResponse(request, bridge.ConfigurationFlagStore.GetValue(game, flag.Key, flag.Type));
@@ -135,7 +135,7 @@ namespace Snowflake.StandardAjax
         {
             string emulator = request.GetParameter("emulator");
             string id = request.GetParameter("id");
-            IEmulatorBridge bridge = this.CoreInstance.PluginManager.LoadedEmulators[emulator];
+            IEmulatorBridge bridge = this.CoreInstance.PluginManager.Plugins<IEmulatorBridge>()[emulator];
             IGameInfo game = this.CoreInstance.GameDatabase.GetGameByUUID(id);
             IDictionary<string, dynamic> flags = bridge.ConfigurationFlags.ToDictionary(flag => flag.Value.Key, flag => bridge.ConfigurationFlagStore.GetValue(game, flag.Value.Key, flag.Value.Type));
             return new JSResponse(request, flags);
@@ -152,7 +152,7 @@ namespace Snowflake.StandardAjax
             string id = request.GetParameter("id");
             string key = request.GetParameter("key");
             string value = request.GetParameter("value");
-            IEmulatorBridge bridge = this.CoreInstance.PluginManager.LoadedEmulators[emulator];
+            IEmulatorBridge bridge = this.CoreInstance.PluginManager.Plugins<IEmulatorBridge>()[emulator];
             IGameInfo game = this.CoreInstance.GameDatabase.GetGameByUUID(id);
             IConfigurationFlag flag = bridge.ConfigurationFlags[key];
             dynamic castedValue = bridge.ConfigurationFlagStore.GetDefaultValue(flag.Key, flag.Type);
@@ -181,7 +181,7 @@ namespace Snowflake.StandardAjax
             string id = request.GetParameter("id");
             string values_pre = request.GetParameter("values");
             IDictionary<string, string> values = JsonConvert.DeserializeObject<IDictionary<string, string>>(values_pre);
-            IEmulatorBridge bridge = this.CoreInstance.PluginManager.LoadedEmulators[emulator];
+            IEmulatorBridge bridge = this.CoreInstance.PluginManager.Plugins<IEmulatorBridge>()[emulator];
             IGameInfo game = this.CoreInstance.GameDatabase.GetGameByUUID(id);
             foreach (KeyValuePair<string, string> value in values)
             {
@@ -214,7 +214,7 @@ namespace Snowflake.StandardAjax
             string emulator = request.GetParameter("emulator");
             string key = request.GetParameter("key");
             string value = request.GetParameter("value");
-            IEmulatorBridge bridge = this.CoreInstance.PluginManager.LoadedEmulators[emulator];
+            IEmulatorBridge bridge = this.CoreInstance.PluginManager.Plugins<IEmulatorBridge>()[emulator];
             IConfigurationFlag flag = bridge.ConfigurationFlags[key];
             dynamic castedValue = bridge.ConfigurationFlagStore.GetDefaultValue(flag.Key, flag.Type);
             switch (flag.Type)
@@ -239,7 +239,7 @@ namespace Snowflake.StandardAjax
         {
             string emulator = request.GetParameter("emulator");
             string key = request.GetParameter("key");
-            IEmulatorBridge bridge = this.CoreInstance.PluginManager.LoadedEmulators[emulator];
+            IEmulatorBridge bridge = this.CoreInstance.PluginManager.Plugins<IEmulatorBridge>()[emulator];
             IConfigurationFlag flag = bridge.ConfigurationFlags[key];
             return new JSResponse(request, bridge.ConfigurationFlagStore.GetDefaultValue(flag.Key, flag.Type));
         }
@@ -250,7 +250,7 @@ namespace Snowflake.StandardAjax
         {
             string emulator = request.GetParameter("emulator");
             string key = request.GetParameter("key");
-            IEmulatorBridge bridge = this.CoreInstance.PluginManager.LoadedEmulators[emulator];
+            IEmulatorBridge bridge = this.CoreInstance.PluginManager.Plugins<IEmulatorBridge>()[emulator];
             IDictionary<string, dynamic> flags = bridge.ConfigurationFlags.ToDictionary(flag => flag.Value.Key, flag => bridge.ConfigurationFlagStore.GetDefaultValue(flag.Value.Key, flag.Value.Type));
             return new JSResponse(request, flags);
         }
@@ -262,7 +262,7 @@ namespace Snowflake.StandardAjax
         {
             string emulator = request.GetParameter("emulator");
             string id = request.GetParameter("id");
-            IEmulatorBridge bridge = this.CoreInstance.PluginManager.LoadedEmulators[emulator];
+            IEmulatorBridge bridge = this.CoreInstance.PluginManager.Plugins<IEmulatorBridge>()[emulator];
             IGameInfo gameInfo = this.CoreInstance.GameDatabase.GetGameByUUID(id);
             var gameStartEvent = new GameStartEventArgs(this.CoreInstance, gameInfo, bridge.EmulatorAssembly, bridge);
             SnowflakeEventManager.EventSource.RaiseEvent(gameStartEvent);
@@ -276,7 +276,7 @@ namespace Snowflake.StandardAjax
         [AjaxMethod(MethodPrefix = "Game")]
         public IJSResponse HaltRunningGames(IJSRequest request)
         {
-            foreach (IEmulatorBridge emulator in this.CoreInstance.PluginManager.LoadedEmulators.Values)
+            foreach (IEmulatorBridge emulator in this.CoreInstance.PluginManager.Plugins<IEmulatorBridge>().Values)
             {
                 emulator.ShutdownEmulator();
             }
