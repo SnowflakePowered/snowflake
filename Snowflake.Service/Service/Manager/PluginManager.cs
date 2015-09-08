@@ -1,79 +1,85 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using Snowflake.Emulator;
 using Snowflake.Extensions;
 using Snowflake.Identifier;
 using Snowflake.Plugin;
+using Snowflake.Plugin.Configuration;
 using Snowflake.Scraper;
 
 namespace Snowflake.Service.Manager
 {
+
     public class PluginManager : IPluginManager
     {
         public string LoadablesLocation { get; }
 
-        private IDictionary<string, Type> registry;
+        private readonly IDictionary<string, Type> registry;
         public IReadOnlyDictionary<string, Type> Registry => this.registry.AsReadOnly();
 
-        [ImportMany(typeof(IIdentifier))]
-        IEnumerable<Lazy<IIdentifier>> identifiers;
-        [ImportMany(typeof(IEmulatorBridge))]
-        IEnumerable<Lazy<IEmulatorBridge>> emulators;
-        [ImportMany(typeof(IScraper))]
-        IEnumerable<Lazy<IScraper>> scrapers;
-        [ImportMany(typeof(IGeneralPlugin))]
-        IEnumerable<Lazy<IGeneralPlugin>> plugins;
-
-
-
-        private IDictionary<string, IIdentifier> loadedIdentifiers;
-        private IDictionary<string, IEmulatorBridge> loadedEmulators;
-        private IDictionary<string, IScraper> loadedScrapers;
-        private IDictionary<string, IGeneralPlugin> loadedPlugins;
+        private readonly IList<Type> importingTypes;
+        private readonly IDictionary<Type, IDictionary<string, IBasePlugin>> loadedPlugins;
         private CompositionContainer container;
 
-        public IReadOnlyDictionary<string, IIdentifier> LoadedIdentifiers => this.loadedIdentifiers.AsReadOnly();
-        public IReadOnlyDictionary<string, IEmulatorBridge> LoadedEmulators => this.loadedEmulators.AsReadOnly();
-        public IReadOnlyDictionary<string, IScraper> LoadedScrapers => this.loadedScrapers.AsReadOnly();
-        public IReadOnlyDictionary<string, IGeneralPlugin> LoadedPlugins => this.loadedPlugins.AsReadOnly();
-
-        public PluginManager(string loadablesLocation)
+        public PluginManager(string loadablesLocation, params Type[] pluginTypes)
         {
             this.LoadablesLocation = loadablesLocation;
+            this.loadedPlugins = new Dictionary<Type, IDictionary<string, IBasePlugin>>();
             this.registry = new Dictionary<string, Type>();
+            this.importingTypes = new List<Type>();
+            var addType = typeof (PluginManager).GetMethod("AddType");
+            foreach (Type T in pluginTypes)
+            {
+                addType.MakeGenericMethod(T)?.Invoke(this, null);
+            }
         }
 
-        public void LoadAll()
+        public void AddType<T>() where T: IBasePlugin
         {
-            this.ComposeImports();
-            this.loadedIdentifiers = this.LoadPlugin(this.identifiers);
-            this.loadedEmulators = this.LoadPlugin(this.emulators);
-            this.loadedScrapers = this.LoadPlugin(this.scrapers);
-            this.loadedPlugins = this.LoadPlugin(this.plugins);
-
+            this.importingTypes.Add(typeof(T));
+            this.loadedPlugins.Add(typeof(T), new Dictionary<string, IBasePlugin>());
         }
-        private void ComposeImports()
+        public void Initialize()
+        {
+            foreach (Type T in this.importingTypes)
+            {
+                var composeImports = typeof (PluginManager).GetMethod("ComposeImports", BindingFlags.NonPublic | BindingFlags.Instance);
+                composeImports.MakeGenericMethod(T).Invoke(this, null);
+            }
+        }
+
+        public IDictionary<string, T> Plugins<T>() where T : IBasePlugin
+        {
+            return this.loadedPlugins[typeof (T)].ToDictionary(plugin => plugin.Key, plugin => (T)plugin.Value);
+        }
+
+        public T Plugin<T>(string pluginName) where T : IBasePlugin
+        {
+            return (T) this.loadedPlugins[typeof (T)][pluginName];
+        }
+
+        private void ComposeImports<T>() where T : IBasePlugin
         {
             if (!Directory.Exists(Path.Combine(this.LoadablesLocation, "plugins"))) Directory.CreateDirectory(Path.Combine(this.LoadablesLocation, "plugins"));
 
             var catalog = new DirectoryCatalog(Path.Combine(this.LoadablesLocation, "plugins"));
             this.container = new CompositionContainer(catalog);
             this.container.ComposeExportedValue("coreInstance", CoreService.LoadedCore);
-            this.container.ComposeParts(this);
-        }
-
-        private Dictionary<string, T> LoadPlugin<T>(IEnumerable<Lazy<T>> unloadedPlugins) where T : IBasePlugin
-        {
-            var loadedPlugins = new Dictionary<string, T>();
-            foreach (var plugin in unloadedPlugins)
+            this.container.ComposeParts();
+            var exports = this.container.GetExports<T>();
+            foreach (var plugin in exports)
             {
                 try
                 {
-                    loadedPlugins.Add(plugin.Value.PluginName, plugin.Value);
-                    this.registry.Add(plugin.Value.PluginName, typeof(T));
+                    this.loadedPlugins[typeof (T)].Add(plugin.Value.PluginName, plugin.Value);
+                    this.registry.Add(plugin.Value.PluginName, typeof (T));
                 }
                 catch (Exception ex)
                 {
@@ -81,19 +87,13 @@ namespace Snowflake.Service.Manager
                     Console.WriteLine(ex.ToString());
                 }
             }
-            return loadedPlugins;
+
         }
 
+     
         public void Dispose()
         {
-            this.emulators = null;
-            this.identifiers = null;
-            this.registry = null;
-            this.scrapers = null;
-            this.loadedEmulators = null;
-            this.loadedPlugins = null;
-            this.loadedScrapers = null;
-            this.loadedIdentifiers = null;
+          
             this.container.Dispose();
         }
     }

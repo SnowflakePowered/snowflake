@@ -10,23 +10,38 @@ namespace Snowflake.Service.Manager
     /// <summary>
     /// The IPluginManager manages all plugins except for Ajax plugins
     /// </summary>
-    public interface IPluginManager : ILoadableManager, IDisposable
+    public interface IPluginManager : IDisposable
     {
         /// <summary>
-        /// The loaded emulator plugins
+        /// The location from which plugins are loaded
         /// </summary>
-        IReadOnlyDictionary<string, IEmulatorBridge> LoadedEmulators { get; }
+        string LoadablesLocation { get; }
+
         /// <summary>
-        /// The loaded identifier plugins
+        /// A list of loaded plugins by plugin name
         /// </summary>
-        IReadOnlyDictionary<string, IIdentifier> LoadedIdentifiers { get; }
+        IReadOnlyDictionary<string, Type> Registry { get; }
         /// <summary>
-        /// The loaded general plugins
+        /// Add a loadable type to register
         /// </summary>
-        IReadOnlyDictionary<string, IGeneralPlugin> LoadedPlugins { get; }
+        /// <typeparam name="T"></typeparam>
+        void AddType<T>() where T : IBasePlugin;
         /// <summary>
-        /// The loaded scraper plugins
+        /// Initialize the plugin manager by loading all plugins
         /// </summary>
-        IReadOnlyDictionary<string, IScraper> LoadedScrapers { get; }
+        void Initialize();
+        /// <summary>
+        /// Get a dictionary of plugins by IBasePlugin type
+        /// </summary>
+        /// <typeparam name="T">Type to get</typeparam>
+        /// <returns></returns>
+        IDictionary<string, T> Plugins<T>() where T : IBasePlugin;
+        /// <summary>
+        /// Get a plugin by plugin name and expected type
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="pluginName"></param>
+        /// <returns></returns>
+        T Plugin<T>(string pluginName) where T : IBasePlugin;
     }
 }

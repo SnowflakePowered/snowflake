@@ -9,7 +9,7 @@ namespace Snowflake.StandardAjax
 {
     public partial class StandardAjax
     {
-        [AjaxMethod(MethodPrefix = "System")]
+     /*   [AjaxMethod(MethodPrefix = "System")]
         public IJSResponse GetEmulatorBridges(IJSRequest request)
         {
             IDictionary<string, IDictionary<string, dynamic>> response = this.CoreInstance.PluginManager.LoadedEmulators.ToDictionary
@@ -62,7 +62,7 @@ namespace Snowflake.StandardAjax
         {
             return new JSResponse(request, this.CoreInstance.PluginManager.Registry);
 
-        }
+        }*/
 
         [AjaxMethod(MethodPrefix = "System")]
         public IJSResponse GetAllAjaxMethods(IJSRequest request)
