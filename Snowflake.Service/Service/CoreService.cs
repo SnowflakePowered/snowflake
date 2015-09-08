@@ -92,14 +92,14 @@ namespace Snowflake.Service
             this.RegisterService<IGameDatabase>(new GameDatabase(Path.Combine(this.AppDataDirectory, "games.db")));
             this.RegisterService<IGamepadAbstractionDatabase>(new GamepadAbstractionDatabase(Path.Combine(this.AppDataDirectory, "gamepads.db")));
             this.RegisterService<IControllerPortsDatabase>(new ControllerPortsDatabase(Path.Combine(this.AppDataDirectory, "ports.db")));
-            this.RegisterService<IPluginManager>(new PluginManager(this.AppDataDirectory, typeof(IEmulatorBridge), typeof(IScraper), typeof(IGeneralPlugin), typeof(IBaseAjaxNamespace)));
+            this.RegisterService<IPluginManager>(new PluginManager(this.AppDataDirectory, this, typeof(IEmulatorBridge), typeof(IScraper), typeof(IGeneralPlugin), typeof(IBaseAjaxNamespace)));
             this.RegisterService<IAjaxManager>(new AjaxManager(this));
             this.RegisterService<IEmulatorAssembliesManager>(new EmulatorAssembliesManager(Path.Combine(this.AppDataDirectory, "emulators")));
-            this.RegisterService<IPlatformPreferenceDatabase>(new PlatformPreferencesDatabase(Path.Combine(this.AppDataDirectory, "platformprefs.db"), this.PluginManager));
+            this.RegisterService<IPlatformPreferenceDatabase>(new PlatformPreferencesDatabase(Path.Combine(this.AppDataDirectory, "platformprefs.db"), this.Get<IPluginManager>()));
             this.RegisterService<IInputManager>(new InputManager.InputManager());
             var serverManager = this.Get<IServerManager>();
-            serverManager.RegisterServer("AjaxApiServer", new ApiServer());
-            serverManager.RegisterServer("WebSocketApiServer", new JsonApiWebSocketServer(30003));
+            serverManager.RegisterServer("AjaxApiServer", new ApiServer(this));
+            serverManager.RegisterServer("WebSocketApiServer", new JsonApiWebSocketServer(30003, this));
             serverManager.RegisterServer("GameCacheServer", new GameCacheServer());
             
         }
@@ -173,14 +173,7 @@ namespace Snowflake.Service
 
             if (disposing)
             {
-                this.LoadedPlatforms = null;
-                this.LoadedControllers = null;
-                this.PlatformPreferenceDatabase = null;
-                this.PluginManager.Dispose();
-                this.ServerManager.Dispose();
-                this.ServerManager = null;
-                this.PluginManager = null;
-                this.EmulatorManager = null;
+              
             }
 
             // Free any unmanaged objects here. 
@@ -191,8 +184,7 @@ namespace Snowflake.Service
         public static void DisposeLoadedCore()
         {
             
-           CoreService.LoadedCore?.Dispose();
-           CoreService.LoadedCore = null;
+          
         }
     }
 }

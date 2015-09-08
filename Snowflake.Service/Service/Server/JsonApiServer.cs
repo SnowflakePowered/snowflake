@@ -8,14 +8,17 @@ using Mono.Net;
 using Newtonsoft.Json;
 using Snowflake.Ajax;
 using Snowflake.Extensions;
+using Snowflake.Service.Manager;
 
 namespace Snowflake.Service.HttpServer
 {
     public class ApiServer : BaseHttpServer
     {
-        public ApiServer():base(30001)
+        private ICoreService coreInstance;
+
+        public ApiServer(ICoreService coreInstance):base(30001)
         {
-            
+            this.coreInstance = coreInstance;
         }
 
         protected override async Task Process(HttpListenerContext context)
@@ -77,7 +80,7 @@ namespace Snowflake.Service.HttpServer
 
         private async Task<string> ProcessRequest(JSRequest args)
         {
-            return await CoreService.LoadedCore.AjaxManager.CallMethodAsync(args);
+            return await this.coreInstance.Get<IAjaxManager>().CallMethodAsync(args);
         }
     }
 }

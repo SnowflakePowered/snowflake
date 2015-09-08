@@ -23,13 +23,14 @@ namespace Snowflake.Service.Manager
         public bool IsInitialized { get; private set; }
         private readonly IDictionary<string, Type> registry;
         public IReadOnlyDictionary<string, Type> Registry => this.registry.AsReadOnly();
-
+        public ICoreService CoreInstance { get; }
         private readonly IList<Type> importingTypes;
         private readonly IDictionary<Type, IDictionary<string, IBasePlugin>> loadedPlugins;
         private CompositionContainer container;
 
-        public PluginManager(string loadablesLocation, params Type[] pluginTypes)
+        public PluginManager(string loadablesLocation, ICoreService coreInstance, params Type[] pluginTypes)
         {
+            this.CoreInstance = coreInstance;
             this.LoadablesLocation = loadablesLocation;
             this.loadedPlugins = new Dictionary<Type, IDictionary<string, IBasePlugin>>();
             this.registry = new Dictionary<string, Type>();
@@ -73,7 +74,7 @@ namespace Snowflake.Service.Manager
 
             var catalog = new DirectoryCatalog(Path.Combine(this.LoadablesLocation, "plugins"));
             this.container = new CompositionContainer(catalog);
-            this.container.ComposeExportedValue("coreInstance", CoreService.LoadedCore);
+            this.container.ComposeExportedValue("coreInstance", this.CoreInstance);
             this.container.ComposeParts();
             var exports = this.container.GetExports<T>();
             foreach (var plugin in exports)

@@ -11,6 +11,7 @@ using Snowflake.Game;
 using Snowflake.Platform;
 using Snowflake.Plugin;
 using Snowflake.Service;
+using Snowflake.Service.Manager;
 
 namespace Snowflake.Emulator
 {
@@ -33,7 +34,7 @@ namespace Snowflake.Emulator
             this.InputTemplates = inputProtoTemplates.Select(protoTemplate => InputTemplate.FromJsonProtoTemplate(protoTemplate, this)).ToDictionary(key => key.Name, key => key);
             var controllerProtoTemplates = JsonConvert.DeserializeObject<IList<IDictionary<string, dynamic>>>(this.GetStringResource("controllers.json"));
             this.ControllerTemplates = controllerProtoTemplates.Select(protoTemplate => ControllerTemplate.FromJsonProtoTemplate(protoTemplate)).ToDictionary(key => key.ControllerID, key => key);
-            this.EmulatorAssembly = coreInstance.EmulatorManager.EmulatorAssemblies[this.PluginInfo["emulator_assembly"]];
+            this.EmulatorAssembly = coreInstance.Get<IEmulatorAssembliesManager>().EmulatorAssemblies[this.PluginInfo["emulator_assembly"]];
             this.ConfigurationFlagStore = new ConfigurationFlagStore(this);
         }
 
@@ -57,10 +58,10 @@ namespace Snowflake.Emulator
         }
         public virtual string CompileController(int playerIndex, IPlatformInfo platformInfo, IInputTemplate inputTemplate, IGameInfo gameInfo)
         {
-            string deviceName = this.CoreInstance.ControllerPortsDatabase.GetDeviceInPort(platformInfo, playerIndex);
+            string deviceName = this.CoreInstance.Get<IControllerPortsDatabase>().GetDeviceInPort(platformInfo, playerIndex);
             string controllerId = platformInfo.ControllerPorts[playerIndex];
-            IControllerDefinition controllerDefinition = this.CoreInstance.LoadedControllers[controllerId];
-            IGamepadAbstraction gamepadAbstraction = this.CoreInstance.GamepadAbstractionDatabase[deviceName];
+            IControllerDefinition controllerDefinition = this.CoreInstance.Controllers[controllerId];
+            IGamepadAbstraction gamepadAbstraction = this.CoreInstance.Get<IGamepadAbstractionDatabase>()[deviceName];
             return this.CompileController(playerIndex, 
                 platformInfo,
                 controllerDefinition,

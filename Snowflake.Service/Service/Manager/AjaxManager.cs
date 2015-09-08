@@ -18,8 +18,10 @@ namespace Snowflake.Service.Manager
 
         private readonly IDictionary<string, IBaseAjaxNamespace> globalNamespace;
         public IReadOnlyDictionary<string, IBaseAjaxNamespace> GlobalNamespace => this.globalNamespace.AsReadOnly();
-        public AjaxManager()
+        public ICoreService CoreInstance { get; }
+        public AjaxManager(ICoreService coreInstance)
         {
+            this.CoreInstance = coreInstance;
             this.globalNamespace = new Dictionary<string, IBaseAjaxNamespace>();
         }
         public void RegisterNamespace(string namespaceName, IBaseAjaxNamespace namespaceObject)
@@ -29,7 +31,7 @@ namespace Snowflake.Service.Manager
         }
         public string CallMethod(IJSRequest request)
         {
-            var callMethodEvent = new AjaxRequestReceivedEventArgs(CoreService.LoadedCore, request);
+            var callMethodEvent = new AjaxRequestReceivedEventArgs(this.CoreInstance, request);
             SnowflakeEventManager.EventSource.RaiseEvent(callMethodEvent);
             request = callMethodEvent.ReceivedRequest;
             AjaxResponseSendingEventArgs sendResultEvent;
@@ -42,27 +44,27 @@ namespace Snowflake.Service.Manager
                     .Where(attr => !(request.MethodParameters.Keys.Contains(attr.ParameterName))))
                 {
                     result = new JSResponse(request, JSResponse.GetErrorResponse($"missing required param {attr.ParameterName}"), false);
-                    sendResultEvent = new AjaxResponseSendingEventArgs(CoreService.LoadedCore, result);
+                    sendResultEvent = new AjaxResponseSendingEventArgs(this.CoreInstance, result);
                     SnowflakeEventManager.EventSource.RaiseEvent(sendResultEvent);
                     return sendResultEvent.SendingResponse.GetJson();
                 }
 
                 result = jsMethod.Method.Invoke(request);
-                sendResultEvent = new AjaxResponseSendingEventArgs(CoreService.LoadedCore, result);
+                sendResultEvent = new AjaxResponseSendingEventArgs(this.CoreInstance, result);
                 SnowflakeEventManager.EventSource.RaiseEvent(sendResultEvent);
                 return sendResultEvent.SendingResponse.GetJson();
             }
             catch (KeyNotFoundException)
             {
                 var result = new JSResponse(request, JSResponse.GetErrorResponse($"method {request.MethodName} not found in namespace {request.NameSpace}"), false);
-                sendResultEvent = new AjaxResponseSendingEventArgs(CoreService.LoadedCore, result);
+                sendResultEvent = new AjaxResponseSendingEventArgs(this.CoreInstance, result);
                 SnowflakeEventManager.EventSource.RaiseEvent(sendResultEvent);
                 return sendResultEvent.SendingResponse.GetJson();
             }
             catch (Exception e)
             {
                 var result = new JSResponse(request, e, false);
-                sendResultEvent = new AjaxResponseSendingEventArgs(CoreService.LoadedCore, result);
+                sendResultEvent = new AjaxResponseSendingEventArgs(this.CoreInstance, result);
                 SnowflakeEventManager.EventSource.RaiseEvent(sendResultEvent);
                 return sendResultEvent.SendingResponse.GetJson();
             }
