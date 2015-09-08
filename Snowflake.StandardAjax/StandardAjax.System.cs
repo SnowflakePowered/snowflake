@@ -4,6 +4,7 @@ using System.Dynamic;
 using System.Linq;
 using System.Reflection;
 using Snowflake.Ajax;
+using Snowflake.Service.Manager;
 
 namespace Snowflake.StandardAjax
 {
@@ -69,7 +70,7 @@ namespace Snowflake.StandardAjax
         {
             List<object> ajaxMethods = new List<object>();
 
-            foreach (KeyValuePair<string, IBaseAjaxNamespace> ajaxNamespace in this.CoreInstance.AjaxManager.GlobalNamespace)
+            foreach (KeyValuePair<string, IBaseAjaxNamespace> ajaxNamespace in this.CoreInstance.Get<IAjaxManager>().GlobalNamespace)
             {
                 foreach (KeyValuePair<string, IJSMethod> jsMethod in ajaxNamespace.Value.JavascriptMethods)
                 {
