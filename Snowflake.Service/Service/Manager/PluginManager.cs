@@ -48,9 +48,10 @@ namespace Snowflake.Service.Manager
         }
         public void Initialize()
         {
+            if (this.IsInitialized) return;
             foreach (Type T in this.importingTypes)
             {
-                var composeImports = typeof (PluginManager).GetMethod("ComposeImports", BindingFlags.NonPublic | BindingFlags.Instance);
+                var composeImports = typeof(PluginManager).GetMethod("ComposeImports", BindingFlags.NonPublic | BindingFlags.Instance);
                 composeImports.MakeGenericMethod(T).Invoke(this, null);
             }
             this.IsInitialized = true;
