@@ -7,7 +7,7 @@ namespace Snowflake.Service.Manager
     /// <summary>
     /// The Ajax Manager manages Ajax loadables
     /// </summary>
-    public interface IAjaxManager : ILoadableManager
+    public interface IAjaxManager 
     {
         /// <summary>
         /// The Ajax namespaces
@@ -31,5 +31,10 @@ namespace Snowflake.Service.Manager
         /// <param name="request">The IJSRequest object</param>
         /// <returns>A task containing the serialized IJSResponse</returns>
         string CallMethod(IJSRequest request);
+        /// <summary>
+        /// Loads IBaseAjaxNamespaces from a plugin manager
+        /// </summary>
+        /// <param name="pluginManager"></param>
+        void Initialize(IPluginManager pluginManager);
     }
 }

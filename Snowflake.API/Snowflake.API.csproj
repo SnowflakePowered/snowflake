@@ -155,7 +155,6 @@
     <Compile Include="Service\Manager\IAjaxManager.cs" />
     <Compile Include="Service\HttpServer\IBaseHttpServer.cs" />
     <Compile Include="Service\Manager\IEmulatorAssembliesManager.cs" />
-    <Compile Include="Service\Manager\ILoadableManager.cs" />
     <Compile Include="Service\Manager\IPluginManager.cs" />
     <Compile Include="Service\JSWebSocketServer\JSWebSocketServerEventArgs.cs" />
     <Compile Include="Service\Manager\IServerManager.cs" />

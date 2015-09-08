@@ -13,22 +13,14 @@ using Snowflake.Extensions;
 
 namespace Snowflake.Service.Manager
 {
-    public class AjaxManager : IAjaxManager, ILoadableManager
+    public class AjaxManager : IAjaxManager
     {
-        public string LoadablesLocation { get; }
-        private readonly IDictionary<string, Type> registry;
-        public IReadOnlyDictionary<string, Type> Registry => this.registry.AsReadOnly();
 
-        [ImportMany(typeof(IBaseAjaxNamespace))]
-        IEnumerable<Lazy<IBaseAjaxNamespace>> ajaxNamespaces;
         private readonly IDictionary<string, IBaseAjaxNamespace> globalNamespace;
         public IReadOnlyDictionary<string, IBaseAjaxNamespace> GlobalNamespace => this.globalNamespace.AsReadOnly();
-
-        public AjaxManager(string loadablesLocation)
+        public AjaxManager()
         {
             this.globalNamespace = new Dictionary<string, IBaseAjaxNamespace>();
-            this.LoadablesLocation = loadablesLocation;
-            this.registry = new Dictionary<string, Type>();
         }
         public void RegisterNamespace(string namespaceName, IBaseAjaxNamespace namespaceObject)
         {
@@ -80,26 +72,14 @@ namespace Snowflake.Service.Manager
             return await Task.Run(() => this.CallMethod(request));
         }
 
-        #region ILoadableManager Members
 
-        private void ComposeImports()
+        public void Initialize(IPluginManager pluginManager)
         {
-            if (!Directory.Exists(Path.Combine(this.LoadablesLocation, "ajax"))) Directory.CreateDirectory(Path.Combine(this.LoadablesLocation, "ajax"));
-            var catalog = new DirectoryCatalog(Path.Combine(this.LoadablesLocation, "ajax"));
-            var container = new CompositionContainer(catalog);
-            container.ComposeExportedValue("coreInstance", CoreService.LoadedCore);
-            container.ComposeParts(this);
-        }
-        public void LoadAll()
-        {
-            this.ComposeImports();
-            foreach (var instance in this.ajaxNamespaces.Select(ajaxNamespace => ajaxNamespace.Value))
+            foreach (var instance in pluginManager.Plugins<IBaseAjaxNamespace>().Select(ajaxNamespace => ajaxNamespace.Value))
             {
                 this.RegisterNamespace(instance.PluginInfo["namespace"], instance);
-                this.registry.Add(instance.PluginName, typeof(IBaseAjaxNamespace));
             }
         }
 
-        #endregion
     }
 }

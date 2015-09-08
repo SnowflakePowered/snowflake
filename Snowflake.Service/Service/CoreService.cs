@@ -5,12 +5,16 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Snowflake.Ajax;
 using Snowflake.Controller;
+using Snowflake.Emulator;
 using Snowflake.Emulator.Input.InputManager;
 using Snowflake.Events;
 using Snowflake.Events.ServiceEvents;
 using Snowflake.Game;
 using Snowflake.Platform;
+using Snowflake.Plugin;
+using Snowflake.Scraper;
 using Snowflake.Service.HttpServer;
 using Snowflake.Service.JSWebSocketServer;
 using Snowflake.Service.Manager;
@@ -73,7 +77,7 @@ namespace Snowflake.Service
         public static void InitPluginManager()
         {
             CoreService.LoadedCore.EmulatorManager.LoadEmulatorAssemblies();
-            CoreService.LoadedCore.PluginManager.LoadAll();
+            CoreService.LoadedCore.PluginManager.Initialize();
             CoreService.LoadedCore.AjaxManager.LoadAll();
             foreach (PlatformInfo platform in CoreService.LoadedCore.LoadedPlatforms.Values)
             {
@@ -91,7 +95,7 @@ namespace Snowflake.Service
             this.GameDatabase = new GameDatabase(Path.Combine(this.AppDataDirectory, "games.db"));
             this.GamepadAbstractionDatabase = new GamepadAbstractionDatabase(Path.Combine(this.AppDataDirectory, "gamepads.db"));
             this.ControllerPortsDatabase = new ControllerPortsDatabase(Path.Combine(this.AppDataDirectory, "ports.db"));
-            this.PluginManager = new PluginManager(this.AppDataDirectory);
+            this.PluginManager = new PluginManager(this.AppDataDirectory, typeof(IEmulatorBridge), typeof(IScraper), typeof(IGeneralPlugin), typeof(IBaseAjaxNamespace));
             this.AjaxManager = new AjaxManager(this.AppDataDirectory);
             this.EmulatorManager = new EmulatorAssembliesManager(Path.Combine(this.AppDataDirectory, "emulators"));
             this.PlatformPreferenceDatabase = new PlatformPreferencesDatabase(Path.Combine(this.AppDataDirectory, "platformprefs.db"), this.PluginManager);
