@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -40,47 +41,7 @@ namespace Snowflake.Service
         bool disposed;
 
         // Instantiate a SafeHandle instance.
-      /*  public static void InitCore()
-        {
-            CoreService.InitCore(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Snowflake"));
-        }*/
-        public EventHandler<ServerStartEventArgs> ServerStartEvent; 
-     /*   public static void InitCore(string dataDirectory)
-        {
-            var core = new CoreService(dataDirectory);
-            CoreService.LoadedCore = core;
-            SnowflakeEventManager.EventSource.RegisterEvent(core.ServerStartEvent);
-            SnowflakeEventManager.EventSource.Subscribe<ServerStartEventArgs>((s, e) =>
-            {
-                Console.WriteLine(e.ServerName);
-            });
-            foreach (string serverName in CoreService.LoadedCore.ServerManager.RegisteredServers)
-            {
-                CoreService.LoadedCore.ServerManager.StartServer(serverName);
-                var serverStartEvent = new ServerStartEventArgs(core, serverName);
-                SnowflakeEventManager.EventSource.RaiseEvent(serverStartEvent); //todo Move event registration to SnowflakeEVentManager
-
-            }
-
-        }*/
-      
-    /*    public async static Task InitPluginManagerAsync()
-        {
-            await Task.Run(() => CoreService.InitPluginManager());
-        }*/
-
-      /*  public static void InitPluginManager()
-        {
-            CoreService.LoadedCore.EmulatorManager.LoadEmulatorAssemblies();
-            CoreService.LoadedCore.PluginManager.Initialize();
-            CoreService.LoadedCore.AjaxManager.Initialize(CoreService.LoadedCore.PluginManager);
-            foreach (PlatformInfo platform in CoreService.LoadedCore.LoadedPlatforms.Values)
-            {
-                CoreService.LoadedCore.ControllerPortsDatabase.AddPlatform(platform);
-                CoreService.LoadedCore.PlatformPreferenceDatabase.AddPlatform(platform);
-            }
-        }*/
-
+    
         public CoreService(string appDataDirectory)
         {
             this.serviceContainer = new Dictionary<Type, dynamic>();
@@ -92,11 +53,11 @@ namespace Snowflake.Service
             this.RegisterService<IGameDatabase>(new GameDatabase(Path.Combine(this.AppDataDirectory, "games.db")));
             this.RegisterService<IGamepadAbstractionDatabase>(new GamepadAbstractionDatabase(Path.Combine(this.AppDataDirectory, "gamepads.db")));
             this.RegisterService<IControllerPortsDatabase>(new ControllerPortsDatabase(Path.Combine(this.AppDataDirectory, "ports.db")));
+            this.RegisterService<IEmulatorAssembliesManager>(new EmulatorAssembliesManager(Path.Combine(this.AppDataDirectory, "emulators")));
+            this.RegisterService<IInputManager>(new InputManager.InputManager());
             this.RegisterService<IPluginManager>(new PluginManager(this.AppDataDirectory, this, typeof(IEmulatorBridge), typeof(IScraper), typeof(IGeneralPlugin), typeof(IBaseAjaxNamespace)));
             this.RegisterService<IAjaxManager>(new AjaxManager(this));
-            this.RegisterService<IEmulatorAssembliesManager>(new EmulatorAssembliesManager(Path.Combine(this.AppDataDirectory, "emulators")));
             this.RegisterService<IPlatformPreferenceDatabase>(new PlatformPreferencesDatabase(Path.Combine(this.AppDataDirectory, "platformprefs.db"), this.Get<IPluginManager>()));
-            this.RegisterService<IInputManager>(new InputManager.InputManager());
             var serverManager = this.Get<IServerManager>();
             serverManager.RegisterServer("AjaxApiServer", new ApiServer(this));
             serverManager.RegisterServer("WebSocketApiServer", new JsonApiWebSocketServer(30003, this));
