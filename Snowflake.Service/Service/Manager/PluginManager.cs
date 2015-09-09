@@ -26,7 +26,6 @@ namespace Snowflake.Service.Manager
         public ICoreService CoreInstance { get; }
         private readonly IList<Type> importingTypes;
         private readonly IDictionary<Type, IDictionary<string, IBasePlugin>> loadedPlugins;
-        private CompositionContainer container;
 
         public PluginManager(string loadablesLocation, ICoreService coreInstance, params Type[] pluginTypes)
         {
@@ -52,7 +51,8 @@ namespace Snowflake.Service.Manager
             if (this.IsInitialized) return;
             foreach (Type T in this.importingTypes)
             {
-                var composeImports = typeof(PluginManager).GetMethod("ComposeImports", BindingFlags.NonPublic | BindingFlags.Instance);
+                //We have to use reflection as we only know what type T is at runtime
+                var composeImports = typeof(PluginManager).GetMethod("ComposeImports", BindingFlags.NonPublic | BindingFlags.Instance); 
                 composeImports.MakeGenericMethod(T).Invoke(this, null);
             }
             this.IsInitialized = true;
@@ -73,15 +73,15 @@ namespace Snowflake.Service.Manager
             if (!Directory.Exists(Path.Combine(this.LoadablesLocation, "plugins"))) Directory.CreateDirectory(Path.Combine(this.LoadablesLocation, "plugins"));
 
             var catalog = new DirectoryCatalog(Path.Combine(this.LoadablesLocation, "plugins"));
-            this.container = new CompositionContainer(catalog);
-            this.container.ComposeExportedValue("coreInstance", this.CoreInstance);
-            this.container.ComposeParts();
-            var exports = this.container.GetExports<T>();
+            var container = new CompositionContainer(catalog);
+            container.ComposeExportedValue("coreInstance", this.CoreInstance);
+            container.ComposeParts();
+            var exports = container.GetExports<T>(); //Only initialize exports of type T
             foreach (var plugin in exports)
             {
                 try
                 {
-                    this.loadedPlugins[typeof (T)].Add(plugin.Value.PluginName, plugin.Value);
+                    this.loadedPlugins[typeof (T)].Add(plugin.Value.PluginName, plugin.Value); //initialize and load plugins of type T
                     this.registry.Add(plugin.Value.PluginName, typeof (T));
                 }
                 catch (Exception ex)
@@ -97,7 +97,6 @@ namespace Snowflake.Service.Manager
         public void Dispose()
         {
           
-            this.container.Dispose();
         }
     }
 }

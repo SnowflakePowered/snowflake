@@ -32,7 +32,7 @@ namespace Snowflake.Service
         public IDictionary<string, IPlatformInfo> Platforms { get; }
         public IDictionary<string, IControllerDefinition> Controllers { get; }
         public string AppDataDirectory { get; }
-        private IDictionary<Type, dynamic> serviceContainer;
+        private readonly IDictionary<Type, dynamic> serviceContainer;
 
 
         #endregion
