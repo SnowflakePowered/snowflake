@@ -8,6 +8,7 @@ using Snowflake.Events;
 using Snowflake.Events.CoreEvents.GameEvent;
 using Snowflake.Extensions;
 using Snowflake.Game;
+using Snowflake.Service;
 using Snowflake.Service.Manager;
 
 namespace Snowflake.StandardAjax
@@ -21,7 +22,7 @@ namespace Snowflake.StandardAjax
         {
             string filename = request.GetParameter("filename");
             string platform = request.GetParameter("platform");
-            return new JSResponse(request, this.CoreInstance.Platforms[platform].GetScrapeEngine().GetGameResults(filename));
+            return new JSResponse(request, new ScrapeService(this.CoreInstance.Platforms[platform], this.CoreInstance).GetGameResults(filename));
         }
 
         [AjaxMethod(MethodPrefix = "Game")]
@@ -34,7 +35,7 @@ namespace Snowflake.StandardAjax
             string platform = request.GetParameter("platform");
             string scraperId = request.GetParameter("scraper");
 
-            return new JSResponse(request, this.CoreInstance.Platforms[platform].GetScrapeEngine(scraperId).GetGameResults(filename));
+            return new JSResponse(request, new ScrapeService(this.CoreInstance.Platforms[platform], scraperId, this.CoreInstance).GetGameResults(filename));
         }
 
         [AjaxMethod(MethodPrefix = "Game")]
@@ -46,7 +47,7 @@ namespace Snowflake.StandardAjax
             string resultid = request.GetParameter("resultid");
             string platform = request.GetParameter("platform");
             string filename = request.GetParameter("filename");
-            return new JSResponse(request, this.CoreInstance.Platforms[platform].GetScrapeEngine().GetGameInfo(resultid, filename));
+            return new JSResponse(request, new ScrapeService(this.CoreInstance.Platforms[platform], this.CoreInstance).GetGameInfo(resultid, filename));
         }
 
         [AjaxMethod(MethodPrefix = "Game")]
