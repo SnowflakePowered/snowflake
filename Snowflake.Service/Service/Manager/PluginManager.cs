@@ -96,7 +96,11 @@ namespace Snowflake.Service.Manager
      
         public void Dispose()
         {
-          
+            foreach (var plugin in this.Registry)
+            {
+                this.loadedPlugins[plugin.Value][plugin.Key].Dispose();
+                this.loadedPlugins[plugin.Value].Remove(plugin.Key);
+            }
         }
     }
 }

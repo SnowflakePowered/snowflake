@@ -134,18 +134,15 @@ namespace Snowflake.Service
 
             if (disposing)
             {
-              
+              this.Get<IPluginManager>().Dispose();
+              this.Get<IServerManager>().Dispose();
+              GC.Collect();
+
             }
 
             // Free any unmanaged objects here. 
             //
             this.disposed = true;
-        }
-
-        public static void DisposeLoadedCore()
-        {
-            
-          
         }
     }
 }
