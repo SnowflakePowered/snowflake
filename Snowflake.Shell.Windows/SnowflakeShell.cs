@@ -54,7 +54,7 @@ namespace Snowflake.Shell.Windows
 
         public void ShutdownCore()
         {
-            CoreService.DisposeLoadedCore();
+            this.loadedCore.Dispose();
             GC.WaitForPendingFinalizers();
         }
 
