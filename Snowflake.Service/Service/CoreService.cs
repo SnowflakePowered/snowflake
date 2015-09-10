@@ -3,103 +3,84 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Snowflake.Ajax;
 using Snowflake.Controller;
+using Snowflake.Emulator;
 using Snowflake.Emulator.Input.InputManager;
 using Snowflake.Events;
 using Snowflake.Events.ServiceEvents;
 using Snowflake.Game;
 using Snowflake.Platform;
+using Snowflake.Plugin;
+using Snowflake.Scraper;
 using Snowflake.Service.HttpServer;
 using Snowflake.Service.JSWebSocketServer;
 using Snowflake.Service.Manager;
 
 namespace Snowflake.Service
 {
+   
     [Export(typeof(ICoreService))]
     [PartCreationPolicy(CreationPolicy.Shared)]
-    public class CoreService : ICoreService 
+    public class CoreService : ICoreService
     {
         #region Loaded Objects
-        public IDictionary<string, IPlatformInfo> LoadedPlatforms { get; private set; }
-        public IDictionary<string, IControllerDefinition> LoadedControllers { get; private set; }
+        public IDictionary<string, IPlatformInfo> Platforms { get; }
+        public IDictionary<string, IControllerDefinition> Controllers { get; }
+        public string AppDataDirectory { get; }
+        private readonly IDictionary<Type, dynamic> serviceContainer;
 
-        public IPluginManager PluginManager { get; private set; }
-        public IAjaxManager AjaxManager { get; }
-        public IGameDatabase GameDatabase { get; }
-        public IGamepadAbstractionDatabase GamepadAbstractionDatabase { get; }
-        public IInputManager InputManager => new InputManager.InputManager();
-        public IControllerPortsDatabase ControllerPortsDatabase { get; }
-        public IPlatformPreferenceDatabase PlatformPreferenceDatabase { get; private set; }
-        public IEmulatorAssembliesManager EmulatorManager { get; private set; }
+
         #endregion
 
-        public string AppDataDirectory { get; }
-        public static ICoreService LoadedCore { get; private set; }
-        public IServerManager ServerManager { get; private set; }
         // Flag: Has Dispose already been called? 
         bool disposed;
+
         // Instantiate a SafeHandle instance.
-        public static void InitCore()
+    
+        public CoreService(string appDataDirectory)
         {
-            CoreService.InitCore(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Snowflake"));
-        }
-        public EventHandler<ServerStartEventArgs> ServerStartEvent; 
-        public static void InitCore(string dataDirectory)
-        {
-            var core = new CoreService(dataDirectory);
-            CoreService.LoadedCore = core;
-            SnowflakeEventManager.EventSource.RegisterEvent(core.ServerStartEvent);
-            SnowflakeEventManager.EventSource.Subscribe<ServerStartEventArgs>((s, e) =>
-            {
-                Console.WriteLine(e.ServerName);
-            });
-            foreach (string serverName in CoreService.LoadedCore.ServerManager.RegisteredServers)
-            {
-                CoreService.LoadedCore.ServerManager.StartServer(serverName);
-                var serverStartEvent = new ServerStartEventArgs(core, serverName);
-                SnowflakeEventManager.EventSource.RaiseEvent(serverStartEvent); //todo Move event registration to SnowflakeEVentManager
-
-            }
-
-        }
-      
-        public async static Task InitPluginManagerAsync()
-        {
-            await Task.Run(() => CoreService.InitPluginManager());
-        }
-
-        public static void InitPluginManager()
-        {
-            CoreService.LoadedCore.EmulatorManager.LoadEmulatorAssemblies();
-            CoreService.LoadedCore.PluginManager.LoadAll();
-            CoreService.LoadedCore.AjaxManager.LoadAll();
-            foreach (PlatformInfo platform in CoreService.LoadedCore.LoadedPlatforms.Values)
-            {
-                CoreService.LoadedCore.ControllerPortsDatabase.AddPlatform(platform);
-                CoreService.LoadedCore.PlatformPreferenceDatabase.AddPlatform(platform);
-            }
-        }
-
-        internal CoreService(string appDataDirectory)
-        {
+            this.serviceContainer = new Dictionary<Type, dynamic>();
             this.AppDataDirectory = appDataDirectory;
-            this.LoadedPlatforms = this.LoadPlatforms(Path.Combine(this.AppDataDirectory, "platforms"));
-            this.LoadedControllers = this.LoadControllers(Path.Combine(this.AppDataDirectory, "controllers"));
-            this.ServerManager = new ServerManager();
-            this.GameDatabase = new GameDatabase(Path.Combine(this.AppDataDirectory, "games.db"));
-            this.GamepadAbstractionDatabase = new GamepadAbstractionDatabase(Path.Combine(this.AppDataDirectory, "gamepads.db"));
-            this.ControllerPortsDatabase = new ControllerPortsDatabase(Path.Combine(this.AppDataDirectory, "ports.db"));
-            this.PluginManager = new PluginManager(this.AppDataDirectory);
-            this.AjaxManager = new AjaxManager(this.AppDataDirectory);
-            this.EmulatorManager = new EmulatorAssembliesManager(Path.Combine(this.AppDataDirectory, "emulators"));
-            this.PlatformPreferenceDatabase = new PlatformPreferencesDatabase(Path.Combine(this.AppDataDirectory, "platformprefs.db"), this.PluginManager);
-            this.ServerManager.RegisterServer("AjaxApiServer", new ApiServer());
-            this.ServerManager.RegisterServer("WebSocketApiServer", new JsonApiWebSocketServer(30003));
-            this.ServerManager.RegisterServer("GameCacheServer", new GameCacheServer());
+            this.Platforms = this.LoadPlatforms(Path.Combine(this.AppDataDirectory, "platforms"));
+            this.Controllers = this.LoadControllers(Path.Combine(this.AppDataDirectory, "controllers"));
+
+            this.RegisterService<IServerManager>(new ServerManager());
+            this.RegisterService<IGameDatabase>(new GameDatabase(Path.Combine(this.AppDataDirectory, "games.db")));
+            this.RegisterService<IGamepadAbstractionDatabase>(new GamepadAbstractionDatabase(Path.Combine(this.AppDataDirectory, "gamepads.db")));
+            this.RegisterService<IControllerPortsDatabase>(new ControllerPortsDatabase(Path.Combine(this.AppDataDirectory, "ports.db")));
+            this.RegisterService<IEmulatorAssembliesManager>(new EmulatorAssembliesManager(Path.Combine(this.AppDataDirectory, "emulators")));
+            this.RegisterService<IInputManager>(new InputManager.InputManager());
+            this.RegisterService<IPluginManager>(new PluginManager(this.AppDataDirectory, this, typeof(IEmulatorBridge), typeof(IScraper), typeof(IGeneralPlugin), typeof(IBaseAjaxNamespace)));
+            this.RegisterService<IAjaxManager>(new AjaxManager(this));
+            this.RegisterService<IPlatformPreferenceDatabase>(new PlatformPreferencesDatabase(Path.Combine(this.AppDataDirectory, "platformprefs.db"), this.Get<IPluginManager>()));
+            var serverManager = this.Get<IServerManager>();
+            serverManager.RegisterServer("AjaxApiServer", new ApiServer(this));
+            serverManager.RegisterServer("WebSocketApiServer", new JsonApiWebSocketServer(30003, this));
+            serverManager.RegisterServer("GameCacheServer", new GameCacheServer());
             
         }
+
+        public void RegisterService<T>(T serviceObject)
+        {
+            if (this.serviceContainer.ContainsKey(typeof (T))) return;
+            this.serviceContainer.Add(typeof(T), serviceObject);
+        }
+
+        public IEnumerable<string> AvailableServices()
+        {
+            return this.serviceContainer.Keys.Select(service => service.Name);
+        } 
+
+        public T Get<T>()
+        {
+            return this.serviceContainer[typeof (T)];
+        }
+
         private IDictionary<string, IPlatformInfo> LoadPlatforms(string platformDirectory)
         {
             var loadedPlatforms = new Dictionary<string, IPlatformInfo>();
@@ -153,26 +134,15 @@ namespace Snowflake.Service
 
             if (disposing)
             {
-                this.LoadedPlatforms = null;
-                this.LoadedControllers = null;
-                this.PlatformPreferenceDatabase = null;
-                this.PluginManager.Dispose();
-                this.ServerManager.Dispose();
-                this.ServerManager = null;
-                this.PluginManager = null;
-                this.EmulatorManager = null;
+              this.Get<IPluginManager>().Dispose();
+              this.Get<IServerManager>().Dispose();
+              GC.Collect();
+
             }
 
             // Free any unmanaged objects here. 
             //
             this.disposed = true;
-        }
-
-        public static void DisposeLoadedCore()
-        {
-            
-           CoreService.LoadedCore?.Dispose();
-           CoreService.LoadedCore = null;
         }
     }
 }

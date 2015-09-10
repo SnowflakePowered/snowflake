@@ -86,7 +86,6 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Extensions\PlatformExts.cs" />
     <Compile Include="Service\CoreService.cs" />
     <Compile Include="Service\Manager\AjaxManager.cs" />
     <Compile Include="Service\Manager\EmulatorAssembliesManager.cs" />

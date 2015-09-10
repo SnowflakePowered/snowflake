@@ -13,22 +13,16 @@ using Snowflake.Extensions;
 
 namespace Snowflake.Service.Manager
 {
-    public class AjaxManager : IAjaxManager, ILoadableManager
+    public class AjaxManager : IAjaxManager
     {
-        public string LoadablesLocation { get; }
-        private readonly IDictionary<string, Type> registry;
-        public IReadOnlyDictionary<string, Type> Registry => this.registry.AsReadOnly();
 
-        [ImportMany(typeof(IBaseAjaxNamespace))]
-        IEnumerable<Lazy<IBaseAjaxNamespace>> ajaxNamespaces;
         private readonly IDictionary<string, IBaseAjaxNamespace> globalNamespace;
         public IReadOnlyDictionary<string, IBaseAjaxNamespace> GlobalNamespace => this.globalNamespace.AsReadOnly();
-
-        public AjaxManager(string loadablesLocation)
+        public ICoreService CoreInstance { get; }
+        public AjaxManager(ICoreService coreInstance)
         {
+            this.CoreInstance = coreInstance;
             this.globalNamespace = new Dictionary<string, IBaseAjaxNamespace>();
-            this.LoadablesLocation = loadablesLocation;
-            this.registry = new Dictionary<string, Type>();
         }
         public void RegisterNamespace(string namespaceName, IBaseAjaxNamespace namespaceObject)
         {
@@ -37,7 +31,7 @@ namespace Snowflake.Service.Manager
         }
         public string CallMethod(IJSRequest request)
         {
-            var callMethodEvent = new AjaxRequestReceivedEventArgs(CoreService.LoadedCore, request);
+            var callMethodEvent = new AjaxRequestReceivedEventArgs(this.CoreInstance, request);
             SnowflakeEventManager.EventSource.RaiseEvent(callMethodEvent);
             request = callMethodEvent.ReceivedRequest;
             AjaxResponseSendingEventArgs sendResultEvent;
@@ -50,27 +44,27 @@ namespace Snowflake.Service.Manager
                     .Where(attr => !(request.MethodParameters.Keys.Contains(attr.ParameterName))))
                 {
                     result = new JSResponse(request, JSResponse.GetErrorResponse($"missing required param {attr.ParameterName}"), false);
-                    sendResultEvent = new AjaxResponseSendingEventArgs(CoreService.LoadedCore, result);
+                    sendResultEvent = new AjaxResponseSendingEventArgs(this.CoreInstance, result);
                     SnowflakeEventManager.EventSource.RaiseEvent(sendResultEvent);
                     return sendResultEvent.SendingResponse.GetJson();
                 }
 
                 result = jsMethod.Method.Invoke(request);
-                sendResultEvent = new AjaxResponseSendingEventArgs(CoreService.LoadedCore, result);
+                sendResultEvent = new AjaxResponseSendingEventArgs(this.CoreInstance, result);
                 SnowflakeEventManager.EventSource.RaiseEvent(sendResultEvent);
                 return sendResultEvent.SendingResponse.GetJson();
             }
             catch (KeyNotFoundException)
             {
                 var result = new JSResponse(request, JSResponse.GetErrorResponse($"method {request.MethodName} not found in namespace {request.NameSpace}"), false);
-                sendResultEvent = new AjaxResponseSendingEventArgs(CoreService.LoadedCore, result);
+                sendResultEvent = new AjaxResponseSendingEventArgs(this.CoreInstance, result);
                 SnowflakeEventManager.EventSource.RaiseEvent(sendResultEvent);
                 return sendResultEvent.SendingResponse.GetJson();
             }
             catch (Exception e)
             {
                 var result = new JSResponse(request, e, false);
-                sendResultEvent = new AjaxResponseSendingEventArgs(CoreService.LoadedCore, result);
+                sendResultEvent = new AjaxResponseSendingEventArgs(this.CoreInstance, result);
                 SnowflakeEventManager.EventSource.RaiseEvent(sendResultEvent);
                 return sendResultEvent.SendingResponse.GetJson();
             }
@@ -80,26 +74,14 @@ namespace Snowflake.Service.Manager
             return await Task.Run(() => this.CallMethod(request));
         }
 
-        #region ILoadableManager Members
 
-        private void ComposeImports()
+        public void Initialize(IPluginManager pluginManager)
         {
-            if (!Directory.Exists(Path.Combine(this.LoadablesLocation, "ajax"))) Directory.CreateDirectory(Path.Combine(this.LoadablesLocation, "ajax"));
-            var catalog = new DirectoryCatalog(Path.Combine(this.LoadablesLocation, "ajax"));
-            var container = new CompositionContainer(catalog);
-            container.ComposeExportedValue("coreInstance", CoreService.LoadedCore);
-            container.ComposeParts(this);
-        }
-        public void LoadAll()
-        {
-            this.ComposeImports();
-            foreach (var instance in this.ajaxNamespaces.Select(ajaxNamespace => ajaxNamespace.Value))
+            foreach (var instance in pluginManager.Plugins<IBaseAjaxNamespace>().Select(ajaxNamespace => ajaxNamespace.Value))
             {
                 this.RegisterNamespace(instance.PluginInfo["namespace"], instance);
-                this.registry.Add(instance.PluginName, typeof(IBaseAjaxNamespace));
             }
         }
 
-        #endregion
     }
 }

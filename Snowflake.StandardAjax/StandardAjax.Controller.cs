@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using Snowflake.Ajax;
 using Snowflake.Controller;
+using Snowflake.Emulator.Input.InputManager;
 using Snowflake.Platform;
 
 namespace Snowflake.StandardAjax
@@ -12,7 +13,7 @@ namespace Snowflake.StandardAjax
         [AjaxMethod(MethodPrefix = "Controller")]
         public IJSResponse GetGamepadAbstractions(IJSRequest request)
         {
-            IList<IGamepadAbstraction> gamepadAbstractions = this.CoreInstance.GamepadAbstractionDatabase.GetAllGamepadAbstractions();
+            IList<IGamepadAbstraction> gamepadAbstractions = this.CoreInstance.Get<IGamepadAbstractionDatabase>().GetAllGamepadAbstractions();
             return new JSResponse(request, gamepadAbstractions);
         }
         [AjaxMethod(MethodPrefix = "Controller")]
@@ -21,7 +22,7 @@ namespace Snowflake.StandardAjax
         public IJSResponse GetAbstractionForDevice(IJSRequest request)
         {
             string deviceName = request.GetParameter("device");
-            IGamepadAbstraction gamepadAbstraction = this.CoreInstance.GamepadAbstractionDatabase[deviceName];
+            IGamepadAbstraction gamepadAbstraction = this.CoreInstance.Get<IGamepadAbstractionDatabase>()[deviceName];
             return new JSResponse(request, gamepadAbstraction);
         }
 
@@ -37,7 +38,7 @@ namespace Snowflake.StandardAjax
             IGamepadAbstraction gamepadAbstraction;
             try
             {
-                gamepadAbstraction = this.CoreInstance.GamepadAbstractionDatabase[deviceName];
+                gamepadAbstraction = this.CoreInstance.Get<IGamepadAbstractionDatabase>()[deviceName];
             }
             catch
             {
@@ -50,13 +51,13 @@ namespace Snowflake.StandardAjax
             {
                 gamepadAbstraction[change.Key] = change.Value;
             }
-            this.CoreInstance.GamepadAbstractionDatabase[deviceName] = gamepadAbstraction;
-            return new JSResponse(request, this.CoreInstance.GamepadAbstractionDatabase[deviceName]);
+            this.CoreInstance.Get<IGamepadAbstractionDatabase>()[deviceName] = gamepadAbstraction;
+            return new JSResponse(request, this.CoreInstance.Get<IGamepadAbstractionDatabase>()[deviceName]);
         }
         [AjaxMethod(MethodPrefix = "Controller")]
         public IJSResponse GetControllers(IJSRequest request)
         {
-            return new JSResponse(request, this.CoreInstance.LoadedControllers);
+            return new JSResponse(request, this.CoreInstance.Controllers);
         }
 
         [AjaxMethod(MethodPrefix = "Controller")]
@@ -65,38 +66,38 @@ namespace Snowflake.StandardAjax
         [AjaxMethodParameter(ParameterName = "device", ParameterType = AjaxMethodParameterType.IntParameter, Required = true)]
         public IJSResponse SetDeviceInPort(IJSRequest request)
         {
-            IPlatformInfo platform = this.CoreInstance.LoadedPlatforms[request.GetParameter("platform")];
+            IPlatformInfo platform = this.CoreInstance.Platforms[request.GetParameter("platform")];
             string deviceName = request.GetParameter("device");
             int port = int.Parse(request.GetParameter("port"));
-            this.CoreInstance.ControllerPortsDatabase.SetDeviceInPort(platform, port, deviceName);
+            this.CoreInstance.Get<IControllerPortsDatabase>().SetDeviceInPort(platform, port, deviceName);
 
-            return new JSResponse(request, this.CoreInstance.ControllerPortsDatabase.GetDeviceInPort(platform, port));
+            return new JSResponse(request, this.CoreInstance.Get<IControllerPortsDatabase>().GetDeviceInPort(platform, port));
         }
         [AjaxMethod(MethodPrefix = "Controller")]
         [AjaxMethodParameter(ParameterName = "platform", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
         [AjaxMethodParameter(ParameterName = "port", ParameterType = AjaxMethodParameterType.IntParameter, Required = true)]
         public IJSResponse GetDeviceInPort(IJSRequest request)
         {
-            IPlatformInfo platform = this.CoreInstance.LoadedPlatforms[request.GetParameter("platform")];
+            IPlatformInfo platform = this.CoreInstance.Platforms[request.GetParameter("platform")];
             int port = int.Parse(request.GetParameter("port"));
 
-            return new JSResponse(request, this.CoreInstance.ControllerPortsDatabase.GetDeviceInPort(platform, port));
+            return new JSResponse(request, this.CoreInstance.Get<IControllerPortsDatabase>().GetDeviceInPort(platform, port));
         }
         [AjaxMethod(MethodPrefix = "Controller")]
         [AjaxMethodParameter(ParameterName = "platform", ParameterType = AjaxMethodParameterType.StringParameter)]
         public IJSResponse GetDeviceInPorts(IJSRequest request)
         {
-            IPlatformInfo platform = this.CoreInstance.LoadedPlatforms[request.GetParameter("platform")];
+            IPlatformInfo platform = this.CoreInstance.Platforms[request.GetParameter("platform")];
             string[] ports = new string[9];
             for(int i = 1; i <= 8; i++){
-                ports[i] = this.CoreInstance.ControllerPortsDatabase.GetDeviceInPort(platform, i);
+                ports[i] = this.CoreInstance.Get<IControllerPortsDatabase>().GetDeviceInPort(platform, i);
             }
             return new JSResponse(request, ports);
         }
         [AjaxMethod(MethodPrefix = "Controller")]
         public IJSResponse GetInputDevices(IJSRequest request)
         {
-            return new JSResponse(request, this.CoreInstance.InputManager.GetGamepads());
+            return new JSResponse(request, this.CoreInstance.Get<IInputManager>().GetGamepads());
         }
     }
 }

@@ -1,7 +1,10 @@
 ﻿using System;
+using System.IO;
+using System.Reflection;
 using System.Windows.Forms;
+using Snowflake.Emulator;
 using Snowflake.Events;
-
+using Snowflake.Service.Manager;
 namespace Snowflake.Shell.Windows
 {
     static class Program

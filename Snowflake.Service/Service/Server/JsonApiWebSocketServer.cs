@@ -7,19 +7,22 @@ using Fleck;
 using Newtonsoft.Json;
 using Snowflake.Ajax;
 using Snowflake.Service.HttpServer;
+using Snowflake.Service.Manager;
 
 namespace Snowflake.Service.JSWebSocketServer
 {
     public class JsonApiWebSocketServer : IJSWebSocketServer
     {
         IWebSocketServer server;
+        private ICoreService coreInstance;
         readonly IList<IWebSocketConnection> connections;
         Thread serverThread;
         public event EventHandler<SocketConnectionEventArgs> SocketOpen;
         public event EventHandler<SocketConnectionEventArgs> SocketClose;
         public event EventHandler<SocketMessageReceivedEventArgs> SocketMessage;
-        public JsonApiWebSocketServer(int port)
+        public JsonApiWebSocketServer(int port, ICoreService coreInstance)
         {
+            this.coreInstance = coreInstance;
             this.server = new WebSocketServer($"ws://0.0.0.0:{port}");
             this.connections = new List<IWebSocketConnection>();
             this.SocketMessage += this.Process;
@@ -77,19 +80,18 @@ namespace Snowflake.Service.JSWebSocketServer
         
         private async Task<string> ProcessRequest(IJSRequest args)
         {
-            return await CoreService.LoadedCore.AjaxManager.CallMethodAsync(args);
+            return await this.coreInstance.Get<IAjaxManager>().CallMethodAsync(args);
         }
 
         void IBaseHttpServer.StartServer()
         {
             this.serverThread = new Thread(
                 () => this.server.Start(socket =>
-                     {
-                         socket.OnOpen = () => this.OnSocketOpen(socket);
-                         socket.OnClose = () => this.OnSocketClose(socket);
-                         socket.OnMessage = this.OnMessage;
-                     }));
-            this.serverThread.IsBackground = true;
+                {
+                    socket.OnOpen = () => this.OnSocketOpen(socket);
+                    socket.OnClose = () => this.OnSocketClose(socket);
+                    socket.OnMessage = this.OnMessage;
+                })) {IsBackground = true};
             this.serverThread.Start();
         }
 

@@ -8,6 +8,8 @@ using Snowflake.Events;
 using Snowflake.Events.CoreEvents.GameEvent;
 using Snowflake.Extensions;
 using Snowflake.Game;
+using Snowflake.Service;
+using Snowflake.Service.Manager;
 
 namespace Snowflake.StandardAjax
 {
@@ -20,7 +22,7 @@ namespace Snowflake.StandardAjax
         {
             string filename = request.GetParameter("filename");
             string platform = request.GetParameter("platform");
-            return new JSResponse(request, this.CoreInstance.LoadedPlatforms[platform].GetScrapeEngine().GetGameResults(filename));
+            return new JSResponse(request, new ScrapeService(this.CoreInstance.Platforms[platform], this.CoreInstance).GetGameResults(filename));
         }
 
         [AjaxMethod(MethodPrefix = "Game")]
@@ -33,7 +35,7 @@ namespace Snowflake.StandardAjax
             string platform = request.GetParameter("platform");
             string scraperId = request.GetParameter("scraper");
 
-            return new JSResponse(request, this.CoreInstance.LoadedPlatforms[platform].GetScrapeEngine(scraperId).GetGameResults(filename));
+            return new JSResponse(request, new ScrapeService(this.CoreInstance.Platforms[platform], scraperId, this.CoreInstance).GetGameResults(filename));
         }
 
         [AjaxMethod(MethodPrefix = "Game")]
@@ -45,7 +47,7 @@ namespace Snowflake.StandardAjax
             string resultid = request.GetParameter("resultid");
             string platform = request.GetParameter("platform");
             string filename = request.GetParameter("filename");
-            return new JSResponse(request, this.CoreInstance.LoadedPlatforms[platform].GetScrapeEngine().GetGameInfo(resultid, filename));
+            return new JSResponse(request, new ScrapeService(this.CoreInstance.Platforms[platform], this.CoreInstance).GetGameInfo(resultid, filename));
         }
 
         [AjaxMethod(MethodPrefix = "Game")]
@@ -54,13 +56,13 @@ namespace Snowflake.StandardAjax
         {
             string gameinfo_pre = request.GetParameter("gameinfo");
             IGameInfo game = GameInfo.FromJson(JsonConvert.DeserializeObject(gameinfo_pre));
-            var gamePreAddEvent = new GamePreAddEventArgs(this.CoreInstance, game, this.CoreInstance.GameDatabase);
+            var gamePreAddEvent = new GamePreAddEventArgs(this.CoreInstance, game, this.CoreInstance.Get<IGameDatabase>());
             SnowflakeEventManager.EventSource.RaiseEvent(gamePreAddEvent);
             if (!gamePreAddEvent.Cancel)
             {
                 game = gamePreAddEvent.GameInfo;
-                this.CoreInstance.GameDatabase.AddGame(game);
-                var gameAddEvent = new GameAddEventArgs(this.CoreInstance, game, this.CoreInstance.GameDatabase);
+                this.CoreInstance.Get<IGameDatabase>().AddGame(game);
+                var gameAddEvent = new GameAddEventArgs(this.CoreInstance, game, this.CoreInstance.Get<IGameDatabase>());
                 SnowflakeEventManager.EventSource.RaiseEvent(gameAddEvent);
 
             }
@@ -72,7 +74,7 @@ namespace Snowflake.StandardAjax
         public IJSResponse GetGame(IJSRequest request)
         {
             string id = request.GetParameter("id");
-            return new JSResponse(request, this.CoreInstance.GameDatabase.GetGameByUUID(id));
+            return new JSResponse(request, this.CoreInstance.Get<IGameDatabase>().GetGameByUUID(id));
         }
 
         [AjaxMethod(MethodPrefix = "Game")]
@@ -80,20 +82,20 @@ namespace Snowflake.StandardAjax
         public IJSResponse GetGamesByPlatform(IJSRequest request)
         {
             string platform = request.GetParameter("platform");
-            return new JSResponse(request, this.CoreInstance.GameDatabase.GetGamesByPlatform(platform));
+            return new JSResponse(request, this.CoreInstance.Get<IGameDatabase>().GetGamesByPlatform(platform));
         }
 
         [AjaxMethod(MethodPrefix = "Game")]
         public IJSResponse GetAllGames(IJSRequest request)
         {
-            return new JSResponse(request, this.CoreInstance.GameDatabase.GetAllGames());
+            return new JSResponse(request, this.CoreInstance.Get<IGameDatabase>().GetAllGames());
         }
 
         [AjaxMethod(MethodPrefix = "Game")]
         public IJSResponse GetAllGamesSorted(IJSRequest request)
         {
-            IList<IGameInfo> games = this.CoreInstance.GameDatabase.GetAllGames();
-            IDictionary<string, List<IGameInfo>> sortedGames = this.CoreInstance.LoadedPlatforms.ToDictionary(platform => platform.Key, platform => new List<IGameInfo>());
+            IList<IGameInfo> games = this.CoreInstance.Get<IGameDatabase>().GetAllGames();
+            IDictionary<string, List<IGameInfo>> sortedGames = this.CoreInstance.Platforms.ToDictionary(platform => platform.Key, platform => new List<IGameInfo>());
             foreach (IGameInfo game in games.Where(game => sortedGames.ContainsKey(game.PlatformID)))
             {
                 sortedGames[game.PlatformID].Add(game);
@@ -109,7 +111,7 @@ namespace Snowflake.StandardAjax
         public IJSResponse GetFlags(IJSRequest request)
         {
             string emulator = request.GetParameter("emulator");
-            IEmulatorBridge bridge = this.CoreInstance.PluginManager.LoadedEmulators[emulator];
+            IEmulatorBridge bridge = this.CoreInstance.Get<IPluginManager>().Plugins<IEmulatorBridge>()[emulator];
             return new JSResponse(request, bridge.ConfigurationFlags);
         }
 
@@ -122,8 +124,8 @@ namespace Snowflake.StandardAjax
             string emulator = request.GetParameter("emulator");
             string id = request.GetParameter("id");
             string key = request.GetParameter("key");
-            IEmulatorBridge bridge = this.CoreInstance.PluginManager.LoadedEmulators[emulator];
-            IGameInfo game = this.CoreInstance.GameDatabase.GetGameByUUID(id);
+            IEmulatorBridge bridge = this.CoreInstance.Get<IPluginManager>().Plugins<IEmulatorBridge>()[emulator];
+            IGameInfo game = this.CoreInstance.Get<IGameDatabase>().GetGameByUUID(id);
             IConfigurationFlag flag = bridge.ConfigurationFlags[key];
             return new JSResponse(request, bridge.ConfigurationFlagStore.GetValue(game, flag.Key, flag.Type));
         }
@@ -135,8 +137,8 @@ namespace Snowflake.StandardAjax
         {
             string emulator = request.GetParameter("emulator");
             string id = request.GetParameter("id");
-            IEmulatorBridge bridge = this.CoreInstance.PluginManager.LoadedEmulators[emulator];
-            IGameInfo game = this.CoreInstance.GameDatabase.GetGameByUUID(id);
+            IEmulatorBridge bridge = this.CoreInstance.Get<IPluginManager>().Plugins<IEmulatorBridge>()[emulator];
+            IGameInfo game = this.CoreInstance.Get<IGameDatabase>().GetGameByUUID(id);
             IDictionary<string, dynamic> flags = bridge.ConfigurationFlags.ToDictionary(flag => flag.Value.Key, flag => bridge.ConfigurationFlagStore.GetValue(game, flag.Value.Key, flag.Value.Type));
             return new JSResponse(request, flags);
         }
@@ -152,8 +154,8 @@ namespace Snowflake.StandardAjax
             string id = request.GetParameter("id");
             string key = request.GetParameter("key");
             string value = request.GetParameter("value");
-            IEmulatorBridge bridge = this.CoreInstance.PluginManager.LoadedEmulators[emulator];
-            IGameInfo game = this.CoreInstance.GameDatabase.GetGameByUUID(id);
+            IEmulatorBridge bridge = this.CoreInstance.Get<IPluginManager>().Plugins<IEmulatorBridge>()[emulator];
+            IGameInfo game = this.CoreInstance.Get<IGameDatabase>().GetGameByUUID(id);
             IConfigurationFlag flag = bridge.ConfigurationFlags[key];
             dynamic castedValue = bridge.ConfigurationFlagStore.GetDefaultValue(flag.Key, flag.Type);
             switch (flag.Type)
@@ -181,8 +183,8 @@ namespace Snowflake.StandardAjax
             string id = request.GetParameter("id");
             string values_pre = request.GetParameter("values");
             IDictionary<string, string> values = JsonConvert.DeserializeObject<IDictionary<string, string>>(values_pre);
-            IEmulatorBridge bridge = this.CoreInstance.PluginManager.LoadedEmulators[emulator];
-            IGameInfo game = this.CoreInstance.GameDatabase.GetGameByUUID(id);
+            IEmulatorBridge bridge = this.CoreInstance.Get<IPluginManager>().Plugins<IEmulatorBridge>()[emulator];
+            IGameInfo game = this.CoreInstance.Get<IGameDatabase>().GetGameByUUID(id);
             foreach (KeyValuePair<string, string> value in values)
             {
                 IConfigurationFlag flag = bridge.ConfigurationFlags[value.Key];
@@ -214,7 +216,7 @@ namespace Snowflake.StandardAjax
             string emulator = request.GetParameter("emulator");
             string key = request.GetParameter("key");
             string value = request.GetParameter("value");
-            IEmulatorBridge bridge = this.CoreInstance.PluginManager.LoadedEmulators[emulator];
+            IEmulatorBridge bridge = this.CoreInstance.Get<IPluginManager>().Plugins<IEmulatorBridge>()[emulator];
             IConfigurationFlag flag = bridge.ConfigurationFlags[key];
             dynamic castedValue = bridge.ConfigurationFlagStore.GetDefaultValue(flag.Key, flag.Type);
             switch (flag.Type)
@@ -239,7 +241,7 @@ namespace Snowflake.StandardAjax
         {
             string emulator = request.GetParameter("emulator");
             string key = request.GetParameter("key");
-            IEmulatorBridge bridge = this.CoreInstance.PluginManager.LoadedEmulators[emulator];
+            IEmulatorBridge bridge = this.CoreInstance.Get<IPluginManager>().Plugins<IEmulatorBridge>()[emulator];
             IConfigurationFlag flag = bridge.ConfigurationFlags[key];
             return new JSResponse(request, bridge.ConfigurationFlagStore.GetDefaultValue(flag.Key, flag.Type));
         }
@@ -250,7 +252,7 @@ namespace Snowflake.StandardAjax
         {
             string emulator = request.GetParameter("emulator");
             string key = request.GetParameter("key");
-            IEmulatorBridge bridge = this.CoreInstance.PluginManager.LoadedEmulators[emulator];
+            IEmulatorBridge bridge = this.CoreInstance.Get<IPluginManager>().Plugins<IEmulatorBridge>()[emulator];
             IDictionary<string, dynamic> flags = bridge.ConfigurationFlags.ToDictionary(flag => flag.Value.Key, flag => bridge.ConfigurationFlagStore.GetDefaultValue(flag.Value.Key, flag.Value.Type));
             return new JSResponse(request, flags);
         }
@@ -262,8 +264,8 @@ namespace Snowflake.StandardAjax
         {
             string emulator = request.GetParameter("emulator");
             string id = request.GetParameter("id");
-            IEmulatorBridge bridge = this.CoreInstance.PluginManager.LoadedEmulators[emulator];
-            IGameInfo gameInfo = this.CoreInstance.GameDatabase.GetGameByUUID(id);
+            IEmulatorBridge bridge = this.CoreInstance.Get<IPluginManager>().Plugins<IEmulatorBridge>()[emulator];
+            IGameInfo gameInfo = this.CoreInstance.Get<IGameDatabase>().GetGameByUUID(id);
             var gameStartEvent = new GameStartEventArgs(this.CoreInstance, gameInfo, bridge.EmulatorAssembly, bridge);
             SnowflakeEventManager.EventSource.RaiseEvent(gameStartEvent);
             if (!gameStartEvent.Cancel)
@@ -276,7 +278,7 @@ namespace Snowflake.StandardAjax
         [AjaxMethod(MethodPrefix = "Game")]
         public IJSResponse HaltRunningGames(IJSRequest request)
         {
-            foreach (IEmulatorBridge emulator in this.CoreInstance.PluginManager.LoadedEmulators.Values)
+            foreach (IEmulatorBridge emulator in this.CoreInstance.Get<IPluginManager>().Plugins<IEmulatorBridge>().Values)
             {
                 emulator.ShutdownEmulator();
             }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Snowflake.Service.HttpServer;
 
@@ -39,14 +40,33 @@ namespace Snowflake.Service.Manager
         }
         public IBaseHttpServer this[string serverName] => this.GetServer(serverName);
 
+        bool disposed;
         public void Dispose()
         {
-            foreach (var server in this.RegisteredServers)
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (this.disposed)
+                return;
+            if (disposing)
             {
-                this.StopServer(server);
-                this.servers[server] = null;
+                foreach (string server in this.RegisteredServers)
+                {
+                    try
+                    {
+                        this.StopServer(server);
+                    }
+                    catch (ObjectDisposedException)
+                    {
+                        continue;
+                    }
+                }
+                this.servers = null;
             }
-            this.servers = null;
+            this.disposed = true;
         }
     }
 }

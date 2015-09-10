@@ -36,7 +36,6 @@ namespace Snowflake.Events
             eventManager.RegisterEvent(this.PortInputDeviceModify);
 
         }
-        //todo Register these events
         public event EventHandler<GameAddEventArgs> GameAdd;
         public event EventHandler<GameDeleteEventArgs> GameDelete;
         public event EventHandler<GamePreAddEventArgs> GamePreAdd;

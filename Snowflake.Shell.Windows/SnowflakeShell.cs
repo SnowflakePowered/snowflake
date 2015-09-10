@@ -3,13 +3,19 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using Snowflake.Controller;
+using Snowflake.Events;
+using Snowflake.Events.ServiceEvents;
+using Snowflake.Platform;
 using Snowflake.Service;
+using Snowflake.Service.Manager;
 
 namespace Snowflake.Shell.Windows
 {
     internal class SnowflakeShell
     {
         string ShellRoot => Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "electron");
+        private ICoreService loadedCore;
         Process currentShellInstance;
         internal SnowflakeShell()
         {
@@ -19,13 +25,26 @@ namespace Snowflake.Shell.Windows
         public void StartCore()
         {
 #if DEBUG
-            CoreService.InitCore(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location));
+            this.loadedCore = new CoreService(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location));
 #else
-            CoreService.InitCore();
+            this.loadedCore = new CoreService(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Snowflake"));
 #endif
-            CoreService.InitPluginManager();
-            CoreService.LoadedCore.ServerManager.RegisterServer("ThemeServer", new ThemeServer(Path.Combine(CoreService.LoadedCore.AppDataDirectory, "theme")));
-            CoreService.LoadedCore.ServerManager.StartServer("ThemeServer");
+            this.loadedCore.Get<IEmulatorAssembliesManager>().LoadEmulatorAssemblies();
+            this.loadedCore.Get<IPluginManager>().Initialize();
+            this.loadedCore.Get<IAjaxManager>().Initialize(this.loadedCore.Get<IPluginManager>());
+            foreach (IPlatformInfo platform in this.loadedCore.Platforms.Values)
+            {
+                this.loadedCore.Get<IControllerPortsDatabase>().AddPlatform(platform);
+                this.loadedCore.Get <IPlatformPreferenceDatabase>().AddPlatform(platform);
+            }
+            this.loadedCore.Get<IServerManager>().RegisterServer("ThemeServer", new ThemeServer(Path.Combine(this.loadedCore.AppDataDirectory, "theme")));
+            foreach (string serverName in this.loadedCore.Get<IServerManager>().RegisteredServers)
+            {
+                this.loadedCore.Get<IServerManager>().StartServer(serverName);
+                var serverStartEvent = new ServerStartEventArgs(this.loadedCore, serverName);
+                SnowflakeEventManager.EventSource.RaiseEvent(serverStartEvent); //todo Move event registration to SnowflakeEVentManager
+
+            }
         }
         public void RestartCore()
         {
@@ -35,7 +54,7 @@ namespace Snowflake.Shell.Windows
 
         public void ShutdownCore()
         {
-            CoreService.DisposeLoadedCore();
+            this.loadedCore.Dispose();
             GC.WaitForPendingFinalizers();
         }
 

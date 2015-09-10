@@ -8,6 +8,7 @@ using Snowflake.Game;
 using Snowflake.Identifier;
 using Snowflake.Platform;
 using Snowflake.Scraper;
+using Snowflake.Service.Manager;
 using Snowflake.Utility;
 
 namespace Snowflake.Service
@@ -16,23 +17,24 @@ namespace Snowflake.Service
     {
         private IPlatformInfo ScrapePlatform { get; }
         private IScraper ScraperPlugin { get; }
-        public ScrapeService(IPlatformInfo scrapePlatform, string scraperName)
+        public ICoreService CoreInstance { get; }
+        public ScrapeService(IPlatformInfo scrapePlatform, string scraperName, ICoreService coreInstance)
         {
             this.ScrapePlatform = scrapePlatform;
-            this.ScraperPlugin = CoreService.LoadedCore.PluginManager.LoadedScrapers[scraperName];
+            this.CoreInstance = coreInstance;
+            this.ScraperPlugin = this.CoreInstance.Get<IPluginManager>().Plugins<IScraper>()[scraperName];
         }
-        public ScrapeService(IPlatformInfo scrapePlatform) : this (scrapePlatform, CoreService.LoadedCore.PlatformPreferenceDatabase.GetPreferences(scrapePlatform).Scraper)
+        public ScrapeService(IPlatformInfo scrapePlatform, ICoreService coreInstance) : this (scrapePlatform, coreInstance.Get<IPlatformPreferenceDatabase>().GetPreferences(scrapePlatform).Scraper, coreInstance)
         {
         }
 
         public IList<IGameScrapeResult> GetGameResults(string fileName)
         {
-            IList<IIdentifiedMetadata> identifiedMetadata = new List<IIdentifiedMetadata>();
-            foreach(IIdentifier identifier in CoreService.LoadedCore.PluginManager.LoadedIdentifiers.Values.Where(identifier => identifier.SupportedPlatforms.Contains(this.ScrapePlatform.PlatformID)))
-            {
-                string value = identifier.IdentifyGame(fileName, this.ScrapePlatform.PlatformID);
-                identifiedMetadata.Add(new IdentifiedMetadata(identifier.PluginName, identifier.IdentifiedValueType, value));
-            }
+            IList<IIdentifiedMetadata> identifiedMetadata = (from identifier in this.CoreInstance.Get<IPluginManager>().Plugins<IIdentifier>().Values
+                                                             .Where(identifier => identifier.SupportedPlatforms.Contains(this.ScrapePlatform.PlatformID))
+                                                             let value = identifier.IdentifyGame(fileName, this.ScrapePlatform.PlatformID)
+                                                             select new IdentifiedMetadata(identifier.PluginName, identifier.IdentifiedValueType, value))
+                                                             .Cast<IIdentifiedMetadata>().ToList();
 
             identifiedMetadata.Add(new IdentifiedMetadata("md5", IdentifiedValueTypes.FileHash, FileHash.GetMD5(fileName)));
             identifiedMetadata.Add(new IdentifiedMetadata("crc32", IdentifiedValueTypes.FileHash, FileHash.GetSHA1(fileName)));

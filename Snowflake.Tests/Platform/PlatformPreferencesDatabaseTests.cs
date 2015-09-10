@@ -28,17 +28,17 @@ namespace Snowflake.Platform.Tests
             fakeEmulatorBridge.SetupGet(bridge => bridge.SupportedPlatforms).Returns(supportedPlatforms);
             fakeScraper.SetupGet(scraper => scraper.PluginName).Returns("FakeScraper");
             fakeScraper.SetupGet(scraper => scraper.SupportedPlatforms).Returns(supportedPlatforms);
-            IReadOnlyDictionary<string, IEmulatorBridge> loadedEmulators = new Dictionary<string, IEmulatorBridge>
+            IDictionary<string, IEmulatorBridge> loadedEmulators = new Dictionary<string, IEmulatorBridge>
             {
                 {"FakeEmulator", fakeEmulatorBridge.Object}
             };
-            IReadOnlyDictionary<string, IScraper> loadedScrapers = new Dictionary<string, IScraper>
+            IDictionary<string, IScraper> loadedScrapers = new Dictionary<string, IScraper>
             {
                 {"FakeScraper", fakeScraper.Object}
             };
 
-            fakePluginManager.SetupGet(manager => manager.LoadedEmulators).Returns(loadedEmulators);
-            fakePluginManager.SetupGet(manager => manager.LoadedScrapers).Returns(loadedScrapers);
+            fakePluginManager.SetupGet(manager => manager.Plugins<IEmulatorBridge>()).Returns(loadedEmulators);
+            fakePluginManager.SetupGet(manager => manager.Plugins<IScraper>()).Returns(loadedScrapers);
 
             IPlatformPreferenceDatabase database = new PlatformPreferencesDatabase(filename, fakePluginManager.Object);
 
@@ -64,17 +64,17 @@ namespace Snowflake.Platform.Tests
             fakeEmulatorBridge.SetupGet(bridge => bridge.SupportedPlatforms).Returns(supportedPlatforms);
             fakeScraper.SetupGet(scraper => scraper.PluginName).Returns("FakeScraper");
             fakeScraper.SetupGet(scraper => scraper.SupportedPlatforms).Returns(supportedPlatforms);
-            IReadOnlyDictionary<string, IEmulatorBridge> loadedEmulators = new Dictionary<string, IEmulatorBridge>
+            IDictionary<string, IEmulatorBridge> loadedEmulators = new Dictionary<string, IEmulatorBridge>
             {
                 {"FakeEmulator", fakeEmulatorBridge.Object}
             };
-            IReadOnlyDictionary<string, IScraper> loadedScrapers = new Dictionary<string, IScraper>
+            IDictionary<string, IScraper> loadedScrapers = new Dictionary<string, IScraper>
             {
                 {"FakeScraper", fakeScraper.Object}
             };
 
-            fakePluginManager.SetupGet(manager => manager.LoadedEmulators).Returns(loadedEmulators);
-            fakePluginManager.SetupGet(manager => manager.LoadedScrapers).Returns(loadedScrapers);
+            fakePluginManager.SetupGet(manager => manager.Plugins<IEmulatorBridge>()).Returns(loadedEmulators);
+            fakePluginManager.SetupGet(manager => manager.Plugins<IScraper>()).Returns(loadedScrapers);
 
             fakePlatform.SetupGet(platform => platform.PlatformID).Returns("TESTPLATFORM");
             IPlatformPreferenceDatabase database = new PlatformPreferencesDatabase(filename, fakePluginManager.Object);
@@ -107,17 +107,17 @@ namespace Snowflake.Platform.Tests
             fakeEmulatorBridge.SetupGet(bridge => bridge.SupportedPlatforms).Returns(supportedPlatforms);
             fakeScraper.SetupGet(scraper => scraper.PluginName).Returns("FakeScraper");
             fakeScraper.SetupGet(scraper => scraper.SupportedPlatforms).Returns(supportedPlatforms);
-            IReadOnlyDictionary<string, IEmulatorBridge> loadedEmulators = new Dictionary<string, IEmulatorBridge>
+            IDictionary<string, IEmulatorBridge> loadedEmulators = new Dictionary<string, IEmulatorBridge>
             {
                 {"FakeEmulator", fakeEmulatorBridge.Object}
             };
-            IReadOnlyDictionary<string, IScraper> loadedScrapers = new Dictionary<string, IScraper>
+            IDictionary<string, IScraper> loadedScrapers = new Dictionary<string, IScraper>
             {
                 {"FakeScraper", fakeScraper.Object}
             };
 
-            fakePluginManager.SetupGet(manager => manager.LoadedEmulators).Returns(loadedEmulators);
-            fakePluginManager.SetupGet(manager => manager.LoadedScrapers).Returns(loadedScrapers);
+            fakePluginManager.SetupGet(manager => manager.Plugins<IEmulatorBridge>()).Returns(loadedEmulators);
+            fakePluginManager.SetupGet(manager => manager.Plugins<IScraper>()).Returns(loadedScrapers);
 
             fakePlatform.SetupGet(platform => platform.PlatformID).Returns("TESTPLATFORM");
             IPlatformPreferenceDatabase database = new PlatformPreferencesDatabase(filename, fakePluginManager.Object);
@@ -148,17 +148,17 @@ namespace Snowflake.Platform.Tests
             fakeEmulatorBridge.SetupGet(bridge => bridge.SupportedPlatforms).Returns(supportedPlatforms);
             fakeScraper.SetupGet(scraper => scraper.PluginName).Returns("FakeScraper");
             fakeScraper.SetupGet(scraper => scraper.SupportedPlatforms).Returns(supportedPlatforms);
-            IReadOnlyDictionary<string, IEmulatorBridge> loadedEmulators = new Dictionary<string, IEmulatorBridge>
+            IDictionary<string, IEmulatorBridge> loadedEmulators = new Dictionary<string, IEmulatorBridge>
             {
                 {"FakeEmulator", fakeEmulatorBridge.Object}
             };
-            IReadOnlyDictionary<string, IScraper> loadedScrapers = new Dictionary<string, IScraper>
+            IDictionary<string, IScraper> loadedScrapers = new Dictionary<string, IScraper>
             {
                 {"FakeScraper", fakeScraper.Object}
             };
 
-            fakePluginManager.SetupGet(manager => manager.LoadedEmulators).Returns(loadedEmulators);
-            fakePluginManager.SetupGet(manager => manager.LoadedScrapers).Returns(loadedScrapers);
+            fakePluginManager.SetupGet(manager => manager.Plugins<IEmulatorBridge>()).Returns(loadedEmulators);
+            fakePluginManager.SetupGet(manager => manager.Plugins<IScraper>()).Returns(loadedScrapers);
 
             fakePlatform.SetupGet(platform => platform.PlatformID).Returns("TESTPLATFORM");
             IPlatformPreferenceDatabase database = new PlatformPreferencesDatabase(filename, fakePluginManager.Object);
