@@ -93,14 +93,25 @@ namespace Snowflake.Service.Manager
 
         }
 
-     
+        bool disposed;
         public void Dispose()
         {
-            foreach (var plugin in this.Registry)
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        private void Dispose(bool disposing)
+        {
+            if (this.disposed)
+                return;
+            if (disposing)
             {
-                this.loadedPlugins[plugin.Value][plugin.Key].Dispose();
-                this.loadedPlugins[plugin.Value].Remove(plugin.Key);
+                foreach (var plugin in this.Registry)
+                {
+                    this.loadedPlugins[plugin.Value][plugin.Key].Dispose();
+                    this.loadedPlugins[plugin.Value].Remove(plugin.Key);
+                }
             }
+            this.disposed = true;
         }
     }
 }
