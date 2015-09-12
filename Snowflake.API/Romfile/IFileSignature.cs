@@ -13,12 +13,13 @@ namespace Snowflake.Romfile
     public interface IFileSignature : IBasePlugin
     {
         /// <summary>
-        /// The fileextension for this file signature comparator
+        /// The file extensions for this file signature comparator
+        /// Usually the same if only one method is used.
         /// </summary>
         /// <example>
         /// .iso, .cso, .wbfs for Wii games
         /// </example>
-        string FileExtension { get; }
+        IList<string> FileExtensions { get; }
         /// <summary>
         /// The byte array from byte position 0 containing the header or other identifier of the ROM.
         /// Usually the first 1024 bytes.
@@ -50,7 +51,7 @@ namespace Snowflake.Romfile
         /// Gets the game id from the file signature if possible
         /// <param name="fileName">The filename of the ROM</param>
         /// </summary>
-        string GetGameID(string fileName);
+        string GetGameId(string fileName);
   
     }
 }
