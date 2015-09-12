@@ -33,7 +33,7 @@ namespace Snowflake.Romfile
         /// <summary>
         /// The Stone Platform ID this file signature uses
         /// </summary>
-        string StonePlatformId{ get; }
+        string SupportedPlatform{ get; }
         /// <summary>
         /// Whether or not the filename's file extension is in IFileSignature.FileExtensions
         /// </summary>
