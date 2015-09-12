@@ -3,22 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Snowflake.Plugin;
 
 namespace Snowflake.Romfile
 {
     /// <summary>
     /// Represents the ROM file signature
     /// </summary>
-    public interface IFileSignature
+    public interface IFileSignature : IBasePlugin
     {
         /// <summary>
-        /// Accepted file extensions for the ROM file.
-        /// Cuesheets are not considered ROM data.
+        /// The fileextension for this file signature comparator
         /// </summary>
         /// <example>
         /// .iso, .cso, .wbfs for Wii games
         /// </example>
-        HashSet<string> FileExtensions { get; }
+        string FileExtension { get; }
         /// <summary>
         /// The byte array from byte position 0 containing the header or other identifier of the ROM.
         /// Usually the first 1024 bytes.
@@ -48,6 +48,7 @@ namespace Snowflake.Romfile
         bool HeaderSignatureMatches(string fileName);
         /// <summary>
         /// Gets the game id from the file signature if possible
+        /// <param name="fileName">The filename of the ROM</param>
         /// </summary>
         string GetGameID(string fileName);
   
