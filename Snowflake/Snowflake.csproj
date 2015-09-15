@@ -120,6 +120,7 @@
     <Compile Include="Controller\ControllerPortsDatabase.cs" />
     <Compile Include="Controller\ControllerDefinition.cs" />
     <Compile Include="Plugin\YamlConfiguration.cs" />
+    <Compile Include="Romfile\FileSignature.cs" />
     <Compile Include="Romfile\ScrapableInfo.cs" />
     <Compile Include="Romfile\StructuredFilename.cs" />
     <Compile Include="Scraper\BaseScraper.cs" />

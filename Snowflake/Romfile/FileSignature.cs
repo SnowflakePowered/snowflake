@@ -20,7 +20,6 @@ namespace Snowflake.Romfile
         public abstract long HeaderOffset { get; }
         public abstract byte[] HeaderSignature { get; }
 
-        public abstract bool FileExtensionMatches(string fileName);
         public abstract string GetGameId(string fileName);
         public abstract bool HeaderSignatureMatches(string fileName);
 
@@ -28,5 +27,11 @@ namespace Snowflake.Romfile
             this.FileExtensions = this.PluginInfo["file_extensions"].ToObject<IList<string>>();
             this.SupportedPlatform = this.SupportedPlatforms.First();
         }
+
+        public virtual bool FileExtensionMatches(string fileName)
+        {
+            return this.FileExtensions.Contains(Path.GetExtension(fileName));
+        }
+
     }
 }
