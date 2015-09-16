@@ -26,11 +26,6 @@ namespace Snowflake.Romfile
         /// </summary>
         byte[] HeaderSignature { get; }
         /// <summary>
-        /// The offset from byte position 0 to the start of the header. 
-        /// IFileSignature.HeaderSignature[IFileSignature.HeaderOffset] should return the first byte of the header
-        /// </summary>
-        long HeaderOffset { get; }
-        /// <summary>
         /// The Stone Platform ID this file signature uses
         /// </summary>
         string SupportedPlatform{ get; }
@@ -52,6 +47,10 @@ namespace Snowflake.Romfile
         /// <param name="fileName">The filename of the ROM</param>
         /// </summary>
         string GetGameId(string fileName);
+        ///<summary>
+        /// Gets the internal name of the ROM if possible
+        /// </summary>
+        string GetInternalName(string fileName);
   
     }
 }

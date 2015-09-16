@@ -18,19 +18,18 @@ namespace Snowflake.FileSignatures.SONY_PSX_ISO
         public SonyPSXISOFileSignature([Import("coreInstance")] ICoreService coreInstance)
             : base(Assembly.GetExecutingAssembly(), coreInstance)
         {
-            this.HeaderOffset = 1024*128;
             this.HeaderSignature = Encoding.UTF8.GetBytes("PLAYSTATION");
             
         }
 
-        public override long HeaderOffset { get; }
+
         public override byte[] HeaderSignature { get; }
 
         public override bool HeaderSignatureMatches(string fileName)
         {
             using (FileStream isoStream = File.Open(fileName, FileMode.Open))
             {
-                byte[] buffer = new byte[this.HeaderOffset]; // read the first 256 KiB
+                byte[] buffer = new byte[1024 * 128]; // read the first 128 KiB
                 isoStream.Read(buffer, 0, buffer.Length);
                 string code = Encoding.UTF8.GetString(buffer);
                 return code.Contains(Encoding.UTF8.GetString(this.HeaderSignature));
@@ -41,7 +40,7 @@ namespace Snowflake.FileSignatures.SONY_PSX_ISO
         {
             using (FileStream isoStream = File.Open(fileName, FileMode.Open))
             {
-                byte[] buffer = new byte[this.HeaderOffset]; // read the first 10 kilobytes
+                byte[] buffer = new byte[1024 * 128]; // read the first 128 KiB
                 isoStream.Read(buffer, 0, buffer.Length);
 
                 string raw =

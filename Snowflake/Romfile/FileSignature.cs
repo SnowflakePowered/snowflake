@@ -17,10 +17,16 @@ namespace Snowflake.Romfile
         public IList<string> FileExtensions { get; }
         public string SupportedPlatform { get; }
 
-        public abstract long HeaderOffset { get; }
         public abstract byte[] HeaderSignature { get; }
 
-        public abstract string GetGameId(string fileName);
+        public virtual string GetGameId(string fileName)
+        {
+            return "";
+        }
+        public virtual string GetInternalName(string fileName)
+        {
+            return "";
+        }
         public abstract bool HeaderSignatureMatches(string fileName);
 
         protected FileSignature(Assembly pluginAssembly, ICoreService coreInstance) : base(pluginAssembly, coreInstance) {
