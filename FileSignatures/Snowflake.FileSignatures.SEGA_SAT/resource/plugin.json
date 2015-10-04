@@ -1,0 +1,17 @@
+﻿{
+    "name": "SnowflakeFileSignature-SEGA_SAT",
+    "type": "plugin_filesignature",
+    "version": "1.0.0.0",
+    "authors": [
+        "Snowflake"
+    ],
+    "description": "Sega Saturn File Signature Comparator",
+    "platforms": [
+      "SEGA_SAT"
+    ],
+    "file_extensions": [
+      ".iso",
+	  ".cdi",
+	  ".bin"
+    ]
+}
