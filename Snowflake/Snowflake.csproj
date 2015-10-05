@@ -104,8 +104,6 @@
     <Compile Include="Emulator\EmulatorBridge.cs" />
     <Compile Include="Game\GameMediaCache.cs" />
     <Compile Include="Game\GameScreenshotCache.cs" />
-    <Compile Include="Identifier\BaseIdentifier.cs" />
-    <Compile Include="Identifier\IdentifiedMetadata.cs" />
     <Compile Include="Information\MediaStore\FileMediaStore.cs" />
     <Compile Include="Information\MediaStore\FileMediaStoreSection.cs" />
     <Compile Include="Platform\PlatformControllerPorts.cs" />
@@ -145,6 +143,7 @@
     <Compile Include="Information\Info.cs" />
     <Compile Include="Platform\PlatformInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scraper\ScrapeEngine.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
