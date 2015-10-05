@@ -58,6 +58,7 @@ namespace Snowflake.Service
             this.RegisterService<IPluginManager>(new PluginManager(this.AppDataDirectory, this, typeof(IEmulatorBridge), typeof(IScraper), typeof(IGeneralPlugin), typeof(IBaseAjaxNamespace)));
             this.RegisterService<IAjaxManager>(new AjaxManager(this));
             this.RegisterService<IPlatformPreferenceDatabase>(new PlatformPreferencesDatabase(Path.Combine(this.AppDataDirectory, "platformprefs.db"), this.Get<IPluginManager>()));
+            this.RegisterService<IScrapeEngine>(new ScrapeEngine(this));
             var serverManager = this.Get<IServerManager>();
             serverManager.RegisterServer("AjaxApiServer", new ApiServer(this));
             serverManager.RegisterServer("WebSocketApiServer", new JsonApiWebSocketServer(30003, this));
