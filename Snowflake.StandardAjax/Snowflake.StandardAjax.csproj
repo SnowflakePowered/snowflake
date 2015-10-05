@@ -60,10 +60,6 @@
       <Project>{7ae8e842-e2a9-4f01-bec1-8a7a60cc16bb}</Project>
       <Name>Snowflake.Events</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Snowflake.Service\Snowflake.Service.csproj">
-      <Project>{f3a129d6-0c4c-41bc-b60b-5b7e7e6d1a77}</Project>
-      <Name>Snowflake.Service</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Snowflake\Snowflake.csproj">
       <Project>{8f1d65ed-4a96-4a0a-8371-53655a60a2b3}</Project>
       <Name>Snowflake</Name>

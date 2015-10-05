@@ -9,7 +9,6 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using Snowflake.Emulator;
 using Snowflake.Extensions;
-using Snowflake.Identifier;
 using Snowflake.Plugin;
 using Snowflake.Plugin.Configuration;
 using Snowflake.Scraper;

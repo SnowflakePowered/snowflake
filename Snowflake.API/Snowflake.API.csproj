@@ -100,8 +100,6 @@
     <Compile Include="Romfile\IFileSignature.cs" />
     <Compile Include="Romfile\IStructuredFilename.cs" />
     <Compile Include="Romfile\IScrapableInfo.cs" />
-    <Compile Include="Identifier\IdentifiedValueTypes.cs" />
-    <Compile Include="Identifier\IIdentifiedMetadata.cs" />
     <Compile Include="Platform\IPlatformControllerPorts.cs" />
     <Compile Include="Platform\IPlatformPreferenceDatabase.cs" />
     <Compile Include="Platform\StonePlatforms.cs" />
@@ -119,6 +117,7 @@
     <Compile Include="Emulator\Input\Constants\KeyboardConstants.cs" />
     <Compile Include="Game\GameInfoFields.cs" />
     <Compile Include="Plugin\PluginInfoFields.cs" />
+    <Compile Include="Scraper\IScrapeEngine.cs" />
     <Compile Include="Scraper\ScraperInfoFields.cs" />
     <Compile Include="Emulator\Configuration\IBooleanMapping.cs" />
     <Compile Include="Emulator\Configuration\IConfigurationEntry.cs" />
@@ -137,7 +136,6 @@
     <Compile Include="Events\PluginManagerLoadedEventArgs.cs" />
     <Compile Include="Game\IGameDatabase.cs" />
     <Compile Include="Game\IGameInfo.cs" />
-    <Compile Include="Identifier\IIdentifier.cs" />
     <Compile Include="Information\IInfo.cs" />
     <Compile Include="Information\MediaStore\IMediaStore.cs" />
     <Compile Include="Information\MediaStore\IMediaStoreSection.cs" />
@@ -154,7 +152,6 @@
     <Compile Include="Service\HttpServer\BaseHttpServer.cs" />
     <Compile Include="Service\ICoreService.cs" />
     <Compile Include="Service\JSWebSocketServer\IJSWebSocketServer.cs" />
-    <Compile Include="Service\IScrapeService.cs" />
     <Compile Include="Service\Manager\IAjaxManager.cs" />
     <Compile Include="Service\HttpServer\IBaseHttpServer.cs" />
     <Compile Include="Service\Manager\IEmulatorAssembliesManager.cs" />
