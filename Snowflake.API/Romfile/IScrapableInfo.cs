@@ -21,9 +21,13 @@ namespace Snowflake.Romfile
         /// </summary>
         string QueryableTitle { get; }
         /// <summary>
+        /// Any applicable internal name of the rom
+        /// </summary>
+        string RomInternalName { get; }
+        /// <summary>
         /// Any applicable Game ID such as Wii Disc ID, Playsation Disc ID or 4-letter DS ROM ID
         /// </summary>
-        string GameId { get; }
+        string RomId { get; }
         /// <summary>
         /// The original filename of the rom
         /// </summary>
@@ -50,5 +54,7 @@ namespace Snowflake.Romfile
         /// <remarks>This is a very expensive operation taking around 15 seconds. If possible use GameId instead</remarks>
         /// <returns>The MD5 hash of the rom</returns>
         string HashMd5();
+
+        string GetUUID();
     }
 }
