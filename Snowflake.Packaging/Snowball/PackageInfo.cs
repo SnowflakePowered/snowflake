@@ -52,6 +52,6 @@ namespace Snowflake.Packaging.Snowball
     {
         Plugin,
         Theme,
-        EmulatorBridge
+        EmulatorAssembly
     }
 }
