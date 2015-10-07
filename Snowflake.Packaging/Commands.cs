@@ -16,20 +16,18 @@ namespace Snowflake.Packaging
         public string OutputDirectory { get; set; }
     }
 
-
     [Verb("make-plugin", HelpText = "Make a snowball package for a plugin")]
     internal class MakePluginOptions
     {
         [Option('p', "plugin", HelpText = "The path to the main plugin dll.", Required = true)]
         public string PluginFile { get; set; }
-        [Option('i', "info", HelpText = "Specify the package info file. The plugin must have a snowball.json in it's embedded resources otherwise")]
+        [Option('i', "info", HelpText = "Specify the package info file. The plugin must have a snowball.json in it's embedded resources otherwise", Default = null, Required = false)]
         public string PackageInfoFile { get; set; }
         [Option('o', "output", HelpText = "The output directory. Defaults to current working directory", Required = false, Default = null)]
         public string OutputDirectory { get; set; }
         [Option('b', "bare", HelpText = "Do not pack the plugin, return the raw directory instead", Default = false)]
         public bool Bare { get; set; }
-        [Option('f', "files", Separator = ',', HelpText = "Other files to pack into the commandline besides the main plugin dll that aren't in the main folder")]
-        public IList<string> OtherFiles { get; set; }
+       
     }
     [Verb("make-theme", HelpText = "Make a snowball package for a theme")]
     internal class MakeThemeOptions
@@ -56,7 +54,6 @@ namespace Snowflake.Packaging
         public bool Bare { get; set; }
 
     }
-
 
     [Verb("install", HelpText = "Install a snowball package")]
     internal class InstallOptions
