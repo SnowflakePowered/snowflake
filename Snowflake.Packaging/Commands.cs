@@ -7,6 +7,18 @@ using CommandLine;
 using System.Reflection;
 namespace Snowflake.Packaging
 {
+    [Verb("sign", HelpText = "Sign a snowball generating public key and signature")]
+    internal class SignOptions
+    {
+        [Value(0, HelpText = "File to sign", Required = true)]
+        public string FileName { get; set; }
+    }
+    [Verb("verify", HelpText = "Sign a snowball generating public key and signature")]
+    internal class VerifyOptions
+    {
+        [Value(0, HelpText = "File to verify", Required = true)]
+        public string FileName { get; set; }
+    }
     [Verb("pack", HelpText = "Pack a folder into a snowball package")]
     internal class PackOptions
     {

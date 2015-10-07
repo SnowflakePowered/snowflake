@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
 using Snowflake.Packaging.Snowball;
+using Snowflake.Packaging.Publishing;
 using Newtonsoft.Json;
 using CommandLine;
 namespace Snowflake.Packaging
@@ -17,7 +18,7 @@ namespace Snowflake.Packaging
         {
             var result = Parser.Default.ParseArguments<PackOptions, 
                 MakePluginOptions, MakeThemeOptions, MakeEmulatorAssemblyOptions, 
-                InstallOptions, UninstallOptions, PublishOptions, SetupOptions>(args)
+                InstallOptions, UninstallOptions, PublishOptions, SetupOptions, SignOptions, VerifyOptions>(args)
                 .WithParsed<PackOptions>(options =>
                 {
                     var package = Package.LoadDirectory(options.PluginRoot);
@@ -37,7 +38,16 @@ namespace Snowflake.Packaging
                 {
                      options.OutputDirectory = options.OutputDirectory ?? Environment.CurrentDirectory;
                      Package.MakeFromTheme(options.ThemeDirectory, options.PackageInfoFile, options.OutputDirectory);
-               });
+                })
+                .WithParsed<SignOptions>(options =>
+                {
+                    Signing.SignSnowball(options.FileName);
+                })
+                .WithParsed<VerifyOptions>(options =>
+                {
+                    bool signed = Signing.VerifySnowball(options.FileName, options.FileName + ".sig", options.FileName + ".key");
+                    Console.WriteLine(signed);
+                });
             
 
             var packageInfo = new PackageInfo("name-Test", "desc-Test", new List<string>() {"test-Auth"}, "1.0.0", new List<string>() { "testdep@1.0.0" }, PackageType.Plugin);
