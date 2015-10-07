@@ -99,12 +99,10 @@ namespace Snowflake.Packaging.Snowball
             
             File.Copy(Path.Combine(packageRoot, "snowball.json"), Path.Combine(tempDir, "snowball.json"));
             string outputFilename = Path.Combine(outputDirectory,
-                $"{this.PackageInfo.PackageType}!{this.PackageInfo.Name}@{this.PackageInfo.Version}.snowball"
+                $"{this.PackageInfo.PackageType}!{this.PackageInfo.Name}-{this.PackageInfo.Version}.snowball"
                     .ToLowerInvariant());
             if (File.Exists(outputFilename)) File.Delete(outputFilename);
           
-           
-            ZipFile.CreateFromDirectory(tempDir, outputFilename, CompressionLevel.NoCompression, false);
             Directory.CreateDirectory(Path.Combine(tempDir, "snowball"));
             Package.CopyFilesRecursively(new DirectoryInfo(Path.Combine(Path.Combine(packageRoot, "snowball"))),
                 new DirectoryInfo(Path.Combine(Path.Combine(tempDir, "snowball"))));

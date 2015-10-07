@@ -16,8 +16,8 @@ namespace Snowflake.Packaging
         
         public static void Main(string[] args)
         {
-            var result = Parser.Default.ParseArguments<PackOptions, 
-                MakePluginOptions, MakeThemeOptions, MakeEmulatorAssemblyOptions, 
+            var result = Parser.Default.ParseArguments<PackOptions,
+                MakePluginOptions, MakeThemeOptions, MakeEmulatorAssemblyOptions,
                 InstallOptions, UninstallOptions, PublishOptions, SetupOptions, SignOptions, VerifyOptions>(args)
                 .WithParsed<PackOptions>(options =>
                 {
@@ -36,8 +36,8 @@ namespace Snowflake.Packaging
                 })
                 .WithParsed<MakeThemeOptions>(options =>
                 {
-                     options.OutputDirectory = options.OutputDirectory ?? Environment.CurrentDirectory;
-                     Package.MakeFromTheme(options.ThemeDirectory, options.PackageInfoFile, options.OutputDirectory);
+                    options.OutputDirectory = options.OutputDirectory ?? Environment.CurrentDirectory;
+                    Package.MakeFromTheme(options.ThemeDirectory, options.PackageInfoFile, options.OutputDirectory);
                 })
                 .WithParsed<SignOptions>(options =>
                 {
@@ -47,7 +47,11 @@ namespace Snowflake.Packaging
                 {
                     bool signed = Signing.VerifySnowball(options.FileName, options.FileName + ".sig", options.FileName + ".key");
                     Console.WriteLine(signed);
-                });
+                })
+                .WithParsed<PublishOptions>(options =>
+                {
+                    NuGetPackage.PackNuget(options.PackageFile);
+                }); ;
             
 
             var packageInfo = new PackageInfo("name-Test", "desc-Test", new List<string>() {"test-Auth"}, "1.0.0", new List<string>() { "testdep@1.0.0" }, PackageType.Plugin);

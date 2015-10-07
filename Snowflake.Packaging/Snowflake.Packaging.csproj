@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands.cs" />
+    <Compile Include="Publishing\NuGet.cs" />
     <Compile Include="Publishing\Signing.cs" />
     <Compile Include="Snowball\Dependency.cs" />
     <Compile Include="Snowball\Package.cs" />

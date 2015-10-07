@@ -10,7 +10,6 @@ namespace Snowflake.Packaging.Publishing
     public class Signing
     {
        
-
         public static void SignSnowball(string plainFilePath)
         {
             using (FileStream snowballFile = File.Open(plainFilePath, FileMode.Open, FileAccess.Read))
@@ -28,7 +27,6 @@ namespace Snowflake.Packaging.Publishing
                 File.WriteAllText(outputKey, rsaPublic);
             }
         }
-
         public static bool VerifySnowball(string plainFilePath, string signaturePath, string rsaPublicPath)
         {
             string rsaPublic = File.ReadAllText(rsaPublicPath);
