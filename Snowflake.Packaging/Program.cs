@@ -22,8 +22,22 @@ namespace Snowflake.Packaging
                 {
                     var package = Package.LoadDirectory(options.PluginRoot);
                     package.Pack(options.OutputDirectory ?? Environment.CurrentDirectory, options.PluginRoot);
-                }
-            );
+                })
+                .WithParsed<MakePluginOptions>(options =>
+                {
+                    options.OutputDirectory = options.OutputDirectory ?? Environment.CurrentDirectory;
+                    Package.MakeFromPlugin(options.PluginFile, options.PackageInfoFile, options.OutputDirectory);
+                })
+                .WithParsed<MakeEmulatorAssemblyOptions>(options =>
+                {
+                    options.OutputDirectory = options.OutputDirectory ?? Environment.CurrentDirectory;
+                    Package.MakeFromEmulatorDefinition(options.EmulatorDefinitionFile, options.PackageInfoFile, options.OutputDirectory);
+                })
+                .WithParsed<MakeThemeOptions>(options =>
+                {
+                     options.OutputDirectory = options.OutputDirectory ?? Environment.CurrentDirectory;
+                     Package.MakeFromTheme(options.ThemeDirectory, options.PackageInfoFile, options.OutputDirectory);
+               });
             
 
             var packageInfo = new PackageInfo("name-Test", "desc-Test", new List<string>() {"test-Auth"}, "1.0.0", new List<string>() { "testdep@1.0.0" }, PackageType.Plugin);

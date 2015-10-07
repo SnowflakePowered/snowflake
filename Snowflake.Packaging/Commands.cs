@@ -12,7 +12,7 @@ namespace Snowflake.Packaging
     {
         [Value(0, HelpText ="The snowball package root with a snowball folder and a snowball.json file", Required = true)]
         public string PluginRoot { get; set; }
-        [Value(1, HelpText = "The output directory. Defaults to current working directory", Required = false, Default = null)]
+        [Value(1, HelpText = "The output directory. Defaults to current working directory", Required = false)]
         public string OutputDirectory { get; set; }
     }
 
@@ -21,11 +21,11 @@ namespace Snowflake.Packaging
     {
         [Option('p', "plugin", HelpText = "The path to the main plugin dll.", Required = true)]
         public string PluginFile { get; set; }
-        [Option('i', "info", HelpText = "Specify the package info file. The plugin must have a snowball.json in it's embedded resources otherwise", Default = null, Required = false)]
+        [Option('i', "info", HelpText = "Specify the package info file. The plugin must have a snowball.json in it's embedded resources otherwise", Required = false)]
         public string PackageInfoFile { get; set; }
-        [Option('o', "output", HelpText = "The output directory. Defaults to current working directory", Required = false, Default = null)]
+        [Option('o', "output", HelpText = "The output directory. Defaults to current working directory", Required = false)]
         public string OutputDirectory { get; set; }
-        [Option('b', "bare", HelpText = "Do not pack the plugin, return the raw directory instead", Default = false)]
+        [Option('b', "bare", HelpText = "Do not pack the plugin, return the raw directory instead")]
         public bool Bare { get; set; }
        
     }
@@ -36,9 +36,9 @@ namespace Snowflake.Packaging
         public string ThemeDirectory { get; set; }
         [Option('i', "info", HelpText = "Specify the package info file. The theme must have a snowball.json in it's theme root otherwise")]
         public string PackageInfoFile { get; set; }
-        [Option('o', "output", HelpText = "The output directory. Defaults to current working directory", Required = false, Default = null)]
+        [Option('o', "output", HelpText = "The output directory. Defaults to current working directory", Required = false)]
         public string OutputDirectory { get; set; }
-        [Option('b', "bare", HelpText = "Do not pack the plugin, return the raw directory instead", Default = false)]
+        [Option('b', "bare", HelpText = "Do not pack the plugin, return the raw directory instead")]
         public bool Bare { get; set; }
     }
     [Verb("make-emulator", HelpText = "Make a snowball package for an emulator assembly")]
@@ -48,9 +48,9 @@ namespace Snowflake.Packaging
         public string EmulatorDefinitionFile { get; set; }
         [Option('i', "info", HelpText = "Specify the package info file. The emulator assembly folder must have a snowflake.json otherwise")]
         public string PackageInfoFile { get; set; }
-        [Option('o', "output", HelpText = "The output directory. Defaults to current working directory", Required = false, Default = null)]
+        [Option('o', "output", HelpText = "The output directory. Defaults to current working directory", Required = false)]
         public string OutputDirectory { get; set; }
-        [Option('b', "bare", HelpText = "Do not pack the plugin, return the raw directory instead", Default = false)]
+        [Option('b', "bare", HelpText = "Do not pack the plugin, return the raw directory instead")]
         public bool Bare { get; set; }
 
     }
@@ -60,9 +60,9 @@ namespace Snowflake.Packaging
     {
         [Value(0, HelpText = "The package file or id", Required = true)]
         public string PackageFile { get; set; }
-        [Value(1, HelpText = "The snowflake root. Defaults to %appdata%/snowflake", Required = false, Default = null)]
+        [Value(1, HelpText = "The snowflake root. Defaults to %appdata%/snowflake", Required = false)]
         public string SnowflakeRoot { get; set; }
-        [Option('l', "local", HelpText = "Treat the first argument as a file path to install a local package", Default = false)]
+        [Option('l', "local", HelpText = "Treat the first argument as a file path to install a local package")]
         public bool LocalInstall { get; set; }
     }
     
@@ -71,7 +71,7 @@ namespace Snowflake.Packaging
     {
         [Value(0, HelpText = "The package id to install", Required = true)]
         public string PackageId { get; set; }
-        [Value(1, HelpText = "The snowflake root. Defaults to %appdata%/snowflake", Required = false, Default = null)]
+        [Value(1, HelpText = "The snowflake root. Defaults to %appdata%/snowflake", Required = false)]
         public string SnowflakeRoot { get; set; }
 
     }

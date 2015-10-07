@@ -33,29 +33,40 @@ namespace Snowflake.Packaging.Snowball
                 var pluginRoot = Path.GetDirectoryName(pluginFile);
             var pluginAssembly = Assembly.ReflectionOnlyLoadFrom(pluginFile);
             string pluginName = JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(Package.GetPluginStringResource("plugin.json", pluginAssembly))["name"];
-            infoFile = infoFile ?? Package.GetPluginStringResource("snowflake.json", pluginAssembly);
+            infoFile = String.IsNullOrWhiteSpace(infoFile)
+                ? Package.GetPluginStringResource("snowflake.json", pluginAssembly)
+                : File.ReadAllText(infoFile);
             var packageInfo = JsonConvert.DeserializeObject<PackageInfo>(infoFile);
             Package.GetPluginStringResource("plugin.json", pluginAssembly);
             var tempDir = Package.GetTemporaryDirectory();
+            Console.WriteLine(
+          $"Packing {packageInfo.PackageType} {packageInfo.Name} v{packageInfo.Version} to {outputDirectory}");
             Directory.CreateDirectory(Path.Combine(tempDir, "snowball"));
             Directory.CreateDirectory(Path.Combine(tempDir, "snowball", pluginName));
+            File.Copy(pluginFile, Path.Combine(tempDir, "snowball", pluginFile));
             Package.CopyFilesRecursively(new DirectoryInfo(Path.Combine(pluginRoot, pluginName)), new DirectoryInfo(Path.Combine(tempDir, "snowball", pluginName)));
             File.WriteAllText(Path.Combine(tempDir, "snowball.json"), JsonConvert.SerializeObject(packageInfo));
-            return Package.LoadDirectory(tempDir).Pack(outputDirectory, tempDir);
+            string packagePath = Package.LoadDirectory(tempDir).Pack(outputDirectory, tempDir, true);
+            Directory.Delete(tempDir, true);
+            return packagePath;
         }
 
         public static string MakeFromTheme(string themeRoot, string infoFile, string outputDirectory)
         {
             if (!File.Exists(Path.Combine(themeRoot, "theme.json"))) throw new FileNotFoundException("Unable to find theme.json");
-            string themeName = JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(File.ReadAllText(Path.Combine(themeRoot, "theme.json")))["name"];
-            infoFile = infoFile ?? File.ReadAllText(Path.Combine(themeRoot, "snowball.json"));
+            string themeName = JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(File.ReadAllText(Path.Combine(themeRoot, "theme.json")))["id"];
+            infoFile = String.IsNullOrWhiteSpace(infoFile) ? File.ReadAllText(Path.Combine(themeRoot, "snowball.json")) : File.ReadAllText(infoFile);
             var packageInfo = JsonConvert.DeserializeObject<PackageInfo>(infoFile);
             var tempDir = Package.GetTemporaryDirectory();
+            Console.WriteLine(
+          $"Packing {packageInfo.PackageType} {packageInfo.Name} v{packageInfo.Version} to {outputDirectory}");
             Directory.CreateDirectory(Path.Combine(tempDir, "snowball"));
             Directory.CreateDirectory(Path.Combine(tempDir, "snowball", themeName));
             Package.CopyFilesRecursively(new DirectoryInfo(Path.Combine(themeRoot)), new DirectoryInfo(Path.Combine(tempDir, "snowball", themeName)));
             File.WriteAllText(Path.Combine(tempDir, "snowball.json"), JsonConvert.SerializeObject(packageInfo));
-            return Package.LoadDirectory(tempDir).Pack(outputDirectory, tempDir);
+            string packagePath = Package.LoadDirectory(tempDir).Pack(outputDirectory, tempDir, true);
+            Directory.Delete(tempDir, true);
+            return packagePath;
         }
 
         public static string MakeFromEmulatorDefinition(string emulatorDefinitionFile, string infoFile, string outputDirectory)
@@ -64,19 +75,22 @@ namespace Snowflake.Packaging.Snowball
             string defId = JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(File.ReadAllText(emulatorDefinitionFile))["id"]; 
             string emulatorRoot = Path.Combine(Path.GetDirectoryName(emulatorDefinitionFile), defId);
 
-            infoFile = infoFile ?? File.ReadAllText(Path.Combine(emulatorRoot, "snowball.json"));
+            infoFile = String.IsNullOrWhiteSpace(infoFile) ? File.ReadAllText(Path.Combine(emulatorRoot, "snowball.json")) : File.ReadAllText(infoFile);
             var packageInfo = JsonConvert.DeserializeObject<PackageInfo>(infoFile);
+            Console.WriteLine(
+              $"Packing {packageInfo.PackageType} {packageInfo.Name} v{packageInfo.Version} to {outputDirectory}");
             var tempDir = Package.GetTemporaryDirectory();
             Directory.CreateDirectory(Path.Combine(tempDir, "snowball"));
             Directory.CreateDirectory(Path.Combine(tempDir, "snowball", defId));
             Package.CopyFilesRecursively(new DirectoryInfo(Path.Combine(emulatorRoot)), new DirectoryInfo(Path.Combine(tempDir, "snowball", emulatorRoot)));
-            File.Copy(emulatorDefinitionFile, Path.Combine(tempDir, Path.GetFileName(emulatorDefinitionFile)));
+            File.Copy(emulatorDefinitionFile, Path.Combine(tempDir, "snowball", Path.GetFileName(emulatorDefinitionFile)));
             File.WriteAllText(Path.Combine(tempDir, "snowball.json"), JsonConvert.SerializeObject(packageInfo));
-            return Package.LoadDirectory(tempDir).Pack(outputDirectory, tempDir);
+            string packagePath = Package.LoadDirectory(tempDir).Pack(outputDirectory, tempDir, true);
+            Directory.Delete(tempDir, true);
+            return packagePath;
         }
 
-
-        public string Pack(string outputDirectory, string packageRoot)
+        public string Pack(string outputDirectory, string packageRoot, bool nocopy = false)
         {
             var tempDir = Package.GetTemporaryDirectory();
             if (!Directory.Exists(Path.Combine(packageRoot, "snowball"))) throw new FileNotFoundException("Unable to locate package root");
@@ -88,19 +102,31 @@ namespace Snowflake.Packaging.Snowball
                 $"{this.PackageInfo.PackageType}!{this.PackageInfo.Name}@{this.PackageInfo.Version}.snowball"
                     .ToLowerInvariant());
             if (File.Exists(outputFilename)) File.Delete(outputFilename);
+          
+           
+            ZipFile.CreateFromDirectory(tempDir, outputFilename, CompressionLevel.NoCompression, false);
             Directory.CreateDirectory(Path.Combine(tempDir, "snowball"));
-            Package.CopyFilesRecursively(new DirectoryInfo(Path.Combine(Path.Combine(packageRoot, "snowball"))), new DirectoryInfo(Path.Combine(Path.Combine(tempDir, "snowball"))));
+            Package.CopyFilesRecursively(new DirectoryInfo(Path.Combine(Path.Combine(packageRoot, "snowball"))),
+                new DirectoryInfo(Path.Combine(Path.Combine(tempDir, "snowball"))));
             ZipFile.CreateFromDirectory(tempDir, outputFilename, CompressionLevel.NoCompression, false);
             Directory.Delete(tempDir, true);
             return Path.Combine(outputFilename);
+            
+
+
         }
         public static void CopyFilesRecursively(DirectoryInfo source, DirectoryInfo target)
         {
-            foreach (DirectoryInfo dir in source.GetDirectories())
+            foreach (DirectoryInfo dir in source.GetDirectories().Where(dir => !dir.Name.StartsWith(".")))
+            {
                 Package.CopyFilesRecursively(dir, target.CreateSubdirectory(dir.Name));
-            foreach (FileInfo file in source.GetFiles())
+            }
+            foreach (FileInfo file in source.GetFiles().Where(file => !file.Name.StartsWith(".")))
+            {
                 file.CopyTo(Path.Combine(target.FullName, file.Name));
+            }
         }
+
         private static string GetTemporaryDirectory()
         {
             string tempDirectory = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
