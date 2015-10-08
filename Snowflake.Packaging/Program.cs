@@ -50,8 +50,19 @@ namespace Snowflake.Packaging
                 })
                 .WithParsed<PublishOptions>(options =>
                 {
-                    NuGetPackage.PackNuget(options.PackageFile);
-                }); ;
+                    // PublishActions.UploadNuget(PublishActions.PackNuget(options.PackageFile));
+                    Task.Run(async () =>
+                    {
+                        await PublishActions.MakeGithubIndex(Package.FromZip(options.PackageFile).PackageInfo);
+                    }).Wait();
+                })
+                .WithParsed<SetupOptions>(options =>
+                {
+                Task.Run(async () => {
+                    Account.SaveDetails(await Account.CreateGithubToken(options.GithubUser, options.GithubPassword), options.NuGetAPIKey);
+                    await Account.MakeRepoFork(Account.GetGithubToken());
+                    }).Wait();
+                }); 
             
 
             var packageInfo = new PackageInfo("name-Test", "desc-Test", new List<string>() {"test-Auth"}, "1.0.0", new List<string>() { "testdep@1.0.0" }, PackageType.Plugin);

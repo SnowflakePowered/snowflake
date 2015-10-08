@@ -18,6 +18,13 @@ namespace Snowflake.Packaging.Snowball
             this.PackageInfo = packageInfo;
         }
 
+        public static Package FromZip(string zipFile)
+        {
+            using (ZipArchive snowball = new ZipArchive(File.Open(zipFile, FileMode.Open), ZipArchiveMode.Read))
+            {
+                return new Package(JsonConvert.DeserializeObject<PackageInfo>(new StreamReader(snowball.GetEntry("snowball.json").Open()).ReadToEnd()));
+            }
+        }
         public static Package LoadDirectory(string packageRoot)
         {
             if (!Directory.Exists(Path.Combine(packageRoot, "snowball"))) throw new FileNotFoundException("Unable to locate package root");
