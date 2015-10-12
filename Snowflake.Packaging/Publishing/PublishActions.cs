@@ -30,6 +30,7 @@ namespace Snowflake.Packaging.Publishing
                 Tags = "snowflake snowball"
             };
 
+            Console.WriteLine($"Packing {packageInfo.PackageType} {packageInfo.Name} v{packageInfo.Version}");
             PackageBuilder builder = new PackageBuilder();
             var files = new string[3]
             {
@@ -56,7 +57,9 @@ namespace Snowflake.Packaging.Publishing
             IPackage package = new OptimizedZipPackage(Path.GetFullPath(nupkg));
             var nugetServer = new PackageServer("https://www.nuget.org/", "userAgent");
             string token = Account.GetNugetToken();
-            try {
+            try
+            {
+                Console.WriteLine("Uploading snowball to NuGet");
                 nugetServer.PushPackage(token, package, File.Open(nupkg, System.IO.FileMode.Open, FileAccess.Read).Length, 10000, false);
             }
             catch (WebException e)
@@ -68,9 +71,9 @@ namespace Snowflake.Packaging.Publishing
                 Console.WriteLine("Error: " + e.Message);
             }
             Console.WriteLine($"Uploaded package {nupkg} to NuGet");
+            File.Delete(nupkg);
 
         }
-
         public async static Task MakeGithubIndex(PackageInfo packageInfo)
         {
             var gh = new GitHubClient(new ProductHeaderValue("snowball"));

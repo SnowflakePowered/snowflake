@@ -50,11 +50,18 @@ namespace Snowflake.Packaging
                 })
                 .WithParsed<PublishOptions>(options =>
                 {
-                    // PublishActions.UploadNuget(PublishActions.PackNuget(options.PackageFile));
-                    Task.Run(async () =>
+                    if (!String.IsNullOrWhiteSpace(Properties.Settings.Default.githubToken) && !String.IsNullOrWhiteSpace(Properties.Settings.Default.nugetToken))
                     {
-                        await PublishActions.MakeGithubIndex(Package.FromZip(options.PackageFile).PackageInfo);
-                    }).Wait();
+                        Task.Run(async () =>
+                        {
+                            PublishActions.UploadNuget(PublishActions.PackNuget(options.PackageFile));
+                            await PublishActions.MakeGithubIndex(Package.FromZip(options.PackageFile).PackageInfo);
+                        }).Wait();
+                    }
+                    else
+                    {
+                        Console.WriteLine("Unable to find GitHub or NuGet details. Please run snowball setup to enter your GitHub details and NuGet API key.");
+                    }
                 })
                 .WithParsed<SetupOptions>(options =>
                 {
