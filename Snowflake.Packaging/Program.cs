@@ -54,7 +54,7 @@ namespace Snowflake.Packaging
                     {
                         Task.Run(async () =>
                         {
-                            PublishActions.UploadNuget(PublishActions.PackNuget(options.PackageFile));
+                            PublishActions.PackNuget(options.PackageFile);
                             await PublishActions.MakeGithubIndex(Package.FromZip(options.PackageFile).PackageInfo);
                         }).Wait();
                     }
