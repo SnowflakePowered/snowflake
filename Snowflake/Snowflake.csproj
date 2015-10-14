@@ -119,7 +119,6 @@
     <Compile Include="Controller\ControllerDefinition.cs" />
     <Compile Include="Plugin\YamlConfiguration.cs" />
     <Compile Include="Romfile\FileSignature.cs" />
-    <Compile Include="Romfile\ScrapableInfo.cs" />
     <Compile Include="Romfile\StructuredFilename.cs" />
     <Compile Include="Scraper\BaseScraper.cs" />
     <Compile Include="Scraper\GameImagesResult.cs" />
@@ -143,6 +142,7 @@
     <Compile Include="Information\Info.cs" />
     <Compile Include="Platform\PlatformInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scraper\ScrapableInfo.cs" />
     <Compile Include="Scraper\ScrapeEngine.cs" />
   </ItemGroup>
   <ItemGroup>

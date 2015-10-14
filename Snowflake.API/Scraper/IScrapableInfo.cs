@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Snowflake.Romfile;
 
-namespace Snowflake.Romfile
+namespace Snowflake.Scraper
 {
     /// <summary>
     /// Represents all data that is able to be gleaned from the file without any other data source
@@ -33,7 +34,7 @@ namespace Snowflake.Romfile
         /// </summary>
         string OriginalFilename { get; }
         /// <summary>
-        /// The determined stone platform ID of the ROM. This is heuristically detected by looking at the ROM's file structure.
+        /// The determined stone Platform ID of the ROM. This is heuristically detected by looking at the ROM's file structure.
         /// Usually only the header is required, so to save on memory requirements never load more than 1024 bytes of the ROM in memory.
         /// </summary>
         string StonePlatformId { get; }

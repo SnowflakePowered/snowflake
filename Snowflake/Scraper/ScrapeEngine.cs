@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Snowflake.Service;
 using Snowflake.Service.Manager;
 using Snowflake.Romfile;
+using Snowflake.Scraper;
 using System.IO;
 using System.Security.Cryptography;
 using Snowflake.Constants;
@@ -67,7 +68,7 @@ namespace Snowflake.Scraper
                 if (bestMatch.Accuracy*scraper.ScraperAccuracy > acceptableAccuracy) break;
             }
             var bestResult =
-                candidateResults.OrderBy(result => result.Key.Accuracy*result.Value.ScraperAccuracy).First();
+                candidateResults.OrderBy(result => result.Key.Accuracy * result.Value.ScraperAccuracy).First();
 
             return this.GetGameData(information, bestResult.Key, bestResult.Value);
         }

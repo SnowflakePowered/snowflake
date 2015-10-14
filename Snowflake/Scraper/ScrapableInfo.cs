@@ -5,9 +5,10 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Snowflake.Romfile;
 using Snowflake.Utility;
 using Snowflake.Utility.Hash;
-namespace Snowflake.Romfile
+namespace Snowflake.Scraper
 {
     public class ScrapableInfo : IScrapableInfo
     {
@@ -44,7 +45,11 @@ namespace Snowflake.Romfile
         public ScrapableInfo(string originalFilename, string romId, string romInternalName, string stonePlatformId)
         {
             this.StructuredFilename = new StructuredFilename(originalFilename);
-            this.QueryableTitle = this.StructuredFilename.Title;
+
+            this.QueryableTitle = this.StructuredFilename.NamingConvention != StructuredFilenameConvention.Unknown
+                ? this.StructuredFilename.Title
+                : this.RomInternalName;
+
             this.OriginalFilename = originalFilename;
             this.RomId = romId;
             this.RomInternalName = romInternalName;
@@ -58,26 +63,30 @@ namespace Snowflake.Romfile
         public ScrapableInfo(string originalFilename, IFileSignature fileSignature)
         {
             this.StructuredFilename = new StructuredFilename(originalFilename);
-            this.QueryableTitle = this.StructuredFilename.Title;
             this.OriginalFilename = originalFilename;
             this.RomId = fileSignature?.GetGameId(originalFilename);
             this.RomInternalName = fileSignature?.GetInternalName(originalFilename);
             this.StonePlatformId = fileSignature?.SupportedPlatform;
+            this.QueryableTitle = this.StructuredFilename.NamingConvention != StructuredFilenameConvention.Unknown
+             ? this.StructuredFilename.Title
+             : this.RomInternalName;
         }
         /// <summary>
         /// Initialize a ScrapableInfo with a vetted filesignature
         /// </summary>
         /// <param name="originalFilename">Original Filename</param>
         /// <param name="fileSignature">A confirmed filesignature</param>
-        /// <param name="stonePlatformId">The platform id. Should match the fileSignature</param>
+        /// <param name="stonePlatformId">The Platform id. Should match the fileSignature</param>
         public ScrapableInfo(string originalFilename, IFileSignature fileSignature, string stonePlatformId)
         {
             this.StructuredFilename = new StructuredFilename(originalFilename);
-            this.QueryableTitle = this.StructuredFilename.Title;
             this.OriginalFilename = originalFilename;
             this.RomId = fileSignature?.GetGameId(originalFilename);
             this.RomInternalName = fileSignature?.GetInternalName(originalFilename);
             this.StonePlatformId = stonePlatformId;
+            this.QueryableTitle = this.StructuredFilename.NamingConvention != StructuredFilenameConvention.Unknown
+             ? this.StructuredFilename.Title
+             : this.RomInternalName;
         }
         /// <summary>
         /// Initialize a ScrapableInfo with parsable queryable title filename without a game id or internal name
@@ -101,7 +110,7 @@ namespace Snowflake.Romfile
         public string GetUUID()
         {
             MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
-            //The UUID format is the game title, plus the game's rom ID if available (if it is not it is "null"), and the platform id. 
+            //The UUID format is the game title, plus the game's rom ID if available (if it is not it is "null"), and the Platform id. 
             //Preferably a rom's internal name is used to be deterministic, but if its not available, the CRC32 hash of the filename is used as the rom's internal name
             //A deterministic UUID is indicated by the i prefix.
             string determinismPrefix = (this.RomInternalName != String.Empty) ? "i_" : "_";

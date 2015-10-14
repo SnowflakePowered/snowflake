@@ -99,7 +99,7 @@
     <Compile Include="Game\IGameScreenshotCache.cs" />
     <Compile Include="Romfile\IFileSignature.cs" />
     <Compile Include="Romfile\IStructuredFilename.cs" />
-    <Compile Include="Romfile\IScrapableInfo.cs" />
+    <Compile Include="Scraper\IScrapableInfo.cs" />
     <Compile Include="Platform\IPlatformControllerPorts.cs" />
     <Compile Include="Platform\IPlatformPreferenceDatabase.cs" />
     <Compile Include="Platform\StonePlatforms.cs" />
