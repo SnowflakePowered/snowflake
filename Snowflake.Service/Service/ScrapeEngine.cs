@@ -31,8 +31,15 @@ namespace Snowflake.Service
             var fileSignatures = this.coreService.Get<IPluginManager>().Plugins<IFileSignature>();
             var vettedSignature = fileSignatures
                 .Where(signature => signature.Value.FileExtensionMatches(fileName)).FirstOrDefault(signature => signature.Value.HeaderSignatureMatches(fileName)).Value;
-            var romPlatform = this.coreService.Platforms[vettedSignature?.SupportedPlatform] ??
-            knownPlatform ?? this.coreService.Platforms.FirstOrDefault(platform => platform.Value.FileExtensions.Contains(Path.GetExtension(fileName))).Value;
+            var platformFromFileExtension =
+                this.coreService.Platforms.FirstOrDefault(
+                    platform => platform.Value.FileExtensions.Contains(Path.GetExtension(fileName))).Value;
+            var romPlatform =
+                this.coreService.Platforms[
+                    vettedSignature?.SupportedPlatform ??
+                    knownPlatform?.PlatformID ?? 
+                    platformFromFileExtension.PlatformID
+                    ];
             return new ScrapableInfo(fileName, vettedSignature, romPlatform.PlatformID);
         }
 
