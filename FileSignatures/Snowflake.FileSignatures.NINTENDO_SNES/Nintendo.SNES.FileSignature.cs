@@ -45,7 +45,9 @@ namespace Snowflake.FileSignatures.NINTENDO_SNES
                     }
                     romStream.Seek(0x7FB6 + offset, SeekOrigin.Begin);
                     romStream.Read(buffer, 0, buffer.Length);
-                    return buffer.SequenceEqual(this.HeaderSignature); // this should equal to 7 bytes of 0 starting from 0x7FB6 (+ 0x200 if HiRom)
+                    romStream.Seek(0x7FDA + offset, SeekOrigin.Begin);
+                    int fixedByte = romStream.ReadByte();
+                    return (buffer.SequenceEqual(this.HeaderSignature) && fixedByte == 0x33); // this should equal to 7 bytes of 0 starting from 0x7FB6 (+ 0x200 if HiRom)
 
                 }
             }
