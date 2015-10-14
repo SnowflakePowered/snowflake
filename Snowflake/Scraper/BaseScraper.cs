@@ -23,9 +23,9 @@ namespace Snowflake.Scraper
                 string file = reader.ReadToEnd();
                 var scraperMapValues = JsonConvert.DeserializeObject<BiDictionary<string, string>>(file);
                 this.ScraperMap = scraperMapValues;
-                this.ScraperAccuracy = Convert.ToDecimal(this.PluginInfo["scraper_accuracy"]) > 1.0
+                this.ScraperAccuracy = Convert.ToDouble(this.PluginInfo["scraper_accuracy"]) > 1.0
                     ? 1.0
-                    : Convert.ToDecimal(this.PluginInfo["scraper_accuracy"]);
+                    : Convert.ToDouble(this.PluginInfo["scraper_accuracy"]);
             }
             
         }
