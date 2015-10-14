@@ -32,7 +32,7 @@ namespace Snowflake.Scraper
         /// <summary>
         /// The original filename of the rom
         /// </summary>
-        string OriginalFilename { get; }
+        string OriginalFilePath { get; }
         /// <summary>
         /// The determined stone Platform ID of the ROM. This is heuristically detected by looking at the ROM's file structure.
         /// Usually only the header is required, so to save on memory requirements never load more than 1024 bytes of the ROM in memory.

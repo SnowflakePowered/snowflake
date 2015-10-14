@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Security.Policy;
 using System.Text;
@@ -24,7 +25,7 @@ namespace Snowflake.Romfile
 
         public StructuredFilename(string originalFilename)
         {
-            this.OriginalFilename = originalFilename;
+            this.OriginalFilename = Path.GetFileName(originalFilename);
             this.RegionCode = this.ParseRegion();
             this.Title = this.ParseTitle();
             this.Year = this.ParseYear();

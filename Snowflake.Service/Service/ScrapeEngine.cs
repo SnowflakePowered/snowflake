@@ -86,7 +86,7 @@ namespace Snowflake.Service
                 gameInfo.Item1[GameInfoFields.game_title],
                 gameInfo.Item1,
                 information.GetUUID(),
-                information.OriginalFilename);
+                information.OriginalFilePath);
             ScrapeEngine.GetMediaCache(gameInfo.Item2, gameResult);
             ScrapeEngine.GetScreenshotCache(gameInfo.Item2, gameResult);
             gameResult.Metadata.Add("rom_id", information.RomId);
@@ -110,7 +110,7 @@ namespace Snowflake.Service
                 gameInfo.Item1[GameInfoFields.game_title],
                 gameInfo.Item1,
                 information.GetUUID(),
-                information.OriginalFilename);
+                information.OriginalFilePath);
             ScrapeEngine.GetMediaCache(gameInfo.Item2, gameResult);
             ScrapeEngine.GetScreenshotCache(gameInfo.Item2, gameResult);
             gameResult.Metadata.Add("rom_id", information.RomId);

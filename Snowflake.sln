@@ -77,6 +77,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.FileSignatures.SE
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.FileSignatures.SEGA_SAT", "FileSignatures\Snowflake.FileSignatures.SEGA_SAT\Snowflake.FileSignatures.SEGA_SAT.csproj", "{49FF3801-4FF6-439A-AE88-8F369199A614}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.FileSignatures.Package", "Snowflake.FileSignatures.Package\Snowflake.FileSignatures.Package.csproj", "{FFBF7DC1-BB8E-4EFC-9915-ABA661714C2C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -293,6 +295,14 @@ Global
 		{49FF3801-4FF6-439A-AE88-8F369199A614}.Release|Any CPU.Build.0 = Release|Any CPU
 		{49FF3801-4FF6-439A-AE88-8F369199A614}.Release|x86.ActiveCfg = Release|Any CPU
 		{49FF3801-4FF6-439A-AE88-8F369199A614}.Release|x86.Build.0 = Release|Any CPU
+		{FFBF7DC1-BB8E-4EFC-9915-ABA661714C2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFBF7DC1-BB8E-4EFC-9915-ABA661714C2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFBF7DC1-BB8E-4EFC-9915-ABA661714C2C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FFBF7DC1-BB8E-4EFC-9915-ABA661714C2C}.Debug|x86.Build.0 = Debug|Any CPU
+		{FFBF7DC1-BB8E-4EFC-9915-ABA661714C2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFBF7DC1-BB8E-4EFC-9915-ABA661714C2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFBF7DC1-BB8E-4EFC-9915-ABA661714C2C}.Release|x86.ActiveCfg = Release|Any CPU
+		{FFBF7DC1-BB8E-4EFC-9915-ABA661714C2C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -316,5 +326,6 @@ Global
 		{EDBE7128-FDD2-4871-89E0-CEAB6230A2E3} = {3BE10560-7E96-4F7E-9028-AC03442B1E1B}
 		{C1150A1C-C6B2-495B-8FE3-B7875F8248BC} = {3BE10560-7E96-4F7E-9028-AC03442B1E1B}
 		{49FF3801-4FF6-439A-AE88-8F369199A614} = {3BE10560-7E96-4F7E-9028-AC03442B1E1B}
+		{FFBF7DC1-BB8E-4EFC-9915-ABA661714C2C} = {3BE10560-7E96-4F7E-9028-AC03442B1E1B}
 	EndGlobalSection
 EndGlobal
