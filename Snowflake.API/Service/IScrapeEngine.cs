@@ -2,8 +2,9 @@ using System.Collections.Generic;
 using Snowflake.Game;
 using Snowflake.Platform;
 using Snowflake.Romfile;
+using Snowflake.Scraper;
 
-namespace Snowflake.Scraper
+namespace Snowflake.Service
 {
     /// <summary>
     /// Performs intellisent scraping given only the known filename

@@ -117,7 +117,7 @@
     <Compile Include="Emulator\Input\Constants\KeyboardConstants.cs" />
     <Compile Include="Game\GameInfoFields.cs" />
     <Compile Include="Plugin\PluginInfoFields.cs" />
-    <Compile Include="Scraper\IScrapeEngine.cs" />
+    <Compile Include="Service\IScrapeEngine.cs" />
     <Compile Include="Scraper\ScraperInfoFields.cs" />
     <Compile Include="Emulator\Configuration\IBooleanMapping.cs" />
     <Compile Include="Emulator\Configuration\IConfigurationEntry.cs" />

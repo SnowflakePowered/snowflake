@@ -14,7 +14,7 @@ using Snowflake.Game;
 using Snowflake.Platform;
 using Snowflake.Utility;
 
-namespace Snowflake.Scraper
+namespace Snowflake.Service
 {
     public class ScrapeEngine : IScrapeEngine
     {

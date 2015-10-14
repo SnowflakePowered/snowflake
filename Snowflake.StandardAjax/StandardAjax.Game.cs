@@ -9,6 +9,7 @@ using Snowflake.Events.CoreEvents.GameEvent;
 using Snowflake.Extensions;
 using Snowflake.Game;
 using Snowflake.Scraper;
+using Snowflake.Service;
 using Snowflake.Service.Manager;
 
 namespace Snowflake.StandardAjax
