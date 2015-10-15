@@ -4,16 +4,18 @@ using System.Dynamic;
 using System.Linq;
 using System.Reflection;
 using Snowflake.Ajax;
+using Snowflake.Emulator;
+using Snowflake.Scraper;
 using Snowflake.Service.Manager;
 
 namespace Snowflake.StandardAjax
 {
     public partial class StandardAjax
     {
-     /*   [AjaxMethod(MethodPrefix = "System")]
+        [AjaxMethod(MethodPrefix = "System")]
         public IJSResponse GetEmulatorBridges(IJSRequest request)
         {
-            IDictionary<string, IDictionary<string, dynamic>> response = this.CoreInstance.PluginManager.LoadedEmulators.ToDictionary
+            IDictionary<string, IDictionary<string, dynamic>> response = this.CoreInstance.Get<IPluginManager>().Plugins<IEmulatorBridge>().ToDictionary
                 (
                     emulatorBridge => emulatorBridge.Key,
                     emulatorBridge => emulatorBridge.Value.PluginInfo
@@ -25,7 +27,7 @@ namespace Snowflake.StandardAjax
         [AjaxMethodParameter(ParameterName = "platform", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
         public IJSResponse GetEmulatorBridgesByPlatform(IJSRequest request)
         {
-            IDictionary<string, IDictionary<string, dynamic>> response = this.CoreInstance.PluginManager.LoadedEmulators
+            IDictionary<string, IDictionary<string, dynamic>> response = this.CoreInstance.Get<IPluginManager>().Plugins<IEmulatorBridge>()
                 .Where(bridge => bridge.Value.SupportedPlatforms.Contains(request.GetParameter("platform"))).ToDictionary
                 (
                     emulatorBridge => emulatorBridge.Key,
@@ -37,7 +39,7 @@ namespace Snowflake.StandardAjax
         [AjaxMethod(MethodPrefix = "System")]
         public IJSResponse GetScrapers(IJSRequest request)
         {
-            IDictionary<string, IDictionary<string, dynamic>> response = this.CoreInstance.PluginManager.LoadedScrapers.ToDictionary
+            IDictionary<string, IDictionary<string, dynamic>> response = this.CoreInstance.Get<IPluginManager>().Plugins<IScraper>().ToDictionary
                (
                    scrapers => scrapers.Key,
                    scrapers => scrapers.Value.PluginInfo
@@ -49,7 +51,7 @@ namespace Snowflake.StandardAjax
         [AjaxMethodParameter(ParameterName = "platform", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
         public IJSResponse GetScrapersByPlatform(IJSRequest request)
         {
-            IDictionary<string, IDictionary<string, dynamic>> response = this.CoreInstance.PluginManager.LoadedScrapers
+            IDictionary<string, IDictionary<string, dynamic>> response = this.CoreInstance.Get<IPluginManager>().Plugins<IScraper>()
                 .Where(scraper => scraper.Value.SupportedPlatforms.Contains(request.GetParameter("platform"))).ToDictionary
                (
                    scraper => scraper.Key,
@@ -61,9 +63,9 @@ namespace Snowflake.StandardAjax
         [AjaxMethod(MethodPrefix = "System")]
         public IJSResponse GetAllPlugins(IJSRequest request)
         {
-            return new JSResponse(request, this.CoreInstance.PluginManager.Registry);
+            return new JSResponse(request, this.CoreInstance.Get<IPluginManager>().Registry);
 
-        }*/
+        }
 
         [AjaxMethod(MethodPrefix = "System")]
         public IJSResponse GetAllAjaxMethods(IJSRequest request)
