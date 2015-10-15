@@ -80,7 +80,7 @@ namespace Snowflake.Packaging.Publishing
             gh.Credentials = new Credentials(Account.GetGithubToken());
             var user = await gh.User.Current();
             string owner = user.Login;
-            string pluginIndexFile = packageInfo.PackageType + "-" + packageInfo.Name + ".json";
+            string pluginIndexFile = packageInfo.Name + ".json";
             var forkRepository = await gh.Repository.Get(owner, "snowball-packages");
             var contents = await gh.Repository.Content.GetAllContents(owner, "snowball-packages", "index/");
             var masterContents = await gh.Repository.Content.GetAllContents("SnowflakePowered-Packages", "snowball-packages", "index/");

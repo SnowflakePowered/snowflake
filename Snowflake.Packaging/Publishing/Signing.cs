@@ -18,6 +18,7 @@ namespace Snowflake.Packaging.Publishing
                 string sha256Hash = Signing.HashSHA256(snowballFile);
                 byte[] signature = rsaCrypt.SignData(Encoding.UTF8.GetBytes(sha256Hash), CryptoConfig.MapNameToOID("SHA512"));
                 rsaCrypt.PersistKeyInCsp = false;
+                
                 string rsaPublic = rsaCrypt.ToXmlString(false);
                 string outputSig = plainFilePath + ".sig";
                 string outputKey = plainFilePath + ".key";
@@ -25,6 +26,7 @@ namespace Snowflake.Packaging.Publishing
                 if (File.Exists(outputKey)) File.Delete(outputKey);
                 File.WriteAllBytes(outputSig, signature);
                 File.WriteAllText(outputKey, rsaPublic);
+                
             }
         }
         public static bool VerifySnowball(string plainFilePath, string signaturePath, string rsaPublicPath)
