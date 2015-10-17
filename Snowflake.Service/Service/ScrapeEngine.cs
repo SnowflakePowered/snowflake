@@ -48,12 +48,13 @@ namespace Snowflake.Service
             var scrapers =
                this.coreService.Get<IPluginManager>()
                    .Plugins<IScraper>()
-                   .Where(scraper => scraper.Value.SupportedPlatforms.Contains(information.StonePlatformId)).Select(scraper => scraper.Value).OrderBy(scraper => scraper.ScraperAccuracy);
-            return scrapers.Select(scraper => scraper.GetSearchResults(information).OrderBy(result => result.Accuracy*scraper.ScraperAccuracy).First()).ToList();
+                   .Where(scraper => scraper.Value.SupportedPlatforms.Contains(information.StonePlatformId)).Select(scraper => scraper.Value).OrderByDescending(scraper => scraper.ScraperAccuracy);
+            return
+                scrapers.SelectMany(scraper => scraper.GetSearchResults(information).OrderByDescending(result => result.Accuracy*scraper.ScraperAccuracy)).ToList();
         }
         public IList<IGameScrapeResult> GetScrapeResults(IScrapableInfo information, IScraper scraper)
         {
-            return scraper.GetSearchResults(information).OrderBy(result => result.Accuracy*scraper.ScraperAccuracy).ToList();
+            return scraper.GetSearchResults(information).OrderByDescending(result => result.Accuracy * scraper.ScraperAccuracy).ToList();
         }
 
         public IGameInfo GetGameData(IScrapableInfo information, double acceptableAccuracy)
@@ -63,19 +64,19 @@ namespace Snowflake.Service
                     .Plugins<IScraper>()
                     .Where(scraper => scraper.Value.SupportedPlatforms.Contains(information.StonePlatformId))
                     .Select(scraper => scraper.Value)
-                    .OrderBy(scraper => scraper.ScraperAccuracy);
+                    .OrderByDescending(scraper => scraper.ScraperAccuracy);
             IDictionary<IGameScrapeResult, IScraper> candidateResults = new Dictionary<IGameScrapeResult, IScraper>();
             foreach (var scraper in scrapers)
             {
                 var bestMatch =
                     scraper.GetSearchResults(information)
-                        .OrderBy(result => result.Accuracy*scraper.ScraperAccuracy)?
+                        .OrderByDescending(result => result.Accuracy*scraper.ScraperAccuracy)?
                         .First();
                 candidateResults.Add(bestMatch, scraper);
                 if (bestMatch.Accuracy*scraper.ScraperAccuracy > acceptableAccuracy) break;
             }
             var bestResult =
-                candidateResults.OrderBy(result => result.Key.Accuracy * result.Value.ScraperAccuracy).First();
+                candidateResults.OrderByDescending(result => result.Key.Accuracy * result.Value.ScraperAccuracy).First();
 
             return this.GetGameData(information, bestResult.Key, bestResult.Value);
         }
@@ -109,7 +110,7 @@ namespace Snowflake.Service
         public IGameInfo GetGameData(IScrapableInfo information, IScraper scraper)
         {
             var bestResult = scraper.GetSearchResults(information)
-                       .OrderBy(result => result.Accuracy * scraper.ScraperAccuracy)?
+                       .OrderByDescending(result => result.Accuracy * scraper.ScraperAccuracy)?
                        .First();
             var gameInfo = scraper.GetGameDetails(bestResult);
             var gameResult = new GameInfo(
