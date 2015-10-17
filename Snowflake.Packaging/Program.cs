@@ -80,7 +80,25 @@ namespace Snowflake.Packaging
                                                 Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                                                 "Snowflake");
                     var manager = new InstallManager(options.SnowflakeRoot);
-                    manager.InstallSinglePackage(options.PackageFiles[0]);
+                    if (options.LocalInstall)
+                    {
+                        foreach (string file in options.PackageFiles)
+                        {
+                            try
+                            {
+                                manager.InstallSinglePackage(file);
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine($"Could not install package {file}: {ex.Message}");
+                                continue;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        
+                    }
                     //todo wrap in try/catch
 
                 })

@@ -83,9 +83,6 @@ namespace Snowflake.Packaging
         public IList<string> PackageIds { get; set; }
         [Option('r', "snowflakeroot", HelpText = "The snowflake root. Defaults to %appdata%/snowflake", Required = false)]
         public string SnowflakeRoot { get; set; }
-        [Option('l', "local", HelpText = "Treat the first argument as a file path to install a local package")]
-        public bool LocalInstall { get; set; }
-
     }
 
     [Verb("publish", HelpText = "Publish a snowball package for approval")]

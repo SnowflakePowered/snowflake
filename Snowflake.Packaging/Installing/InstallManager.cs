@@ -7,11 +7,13 @@ using System.IO;
 using System.IO.Compression;
 using Newtonsoft.Json;
 using Snowflake.Packaging.Snowball;
+
 namespace Snowflake.Packaging.Installing
 {
     public class InstallManager
     {
         public string AppDataPath { get; }
+
         public InstallManager(string appDataPath)
         {
             if (!Directory.Exists(Path.Combine(appDataPath, ".snowballmanifest")))
@@ -46,7 +48,7 @@ namespace Snowflake.Packaging.Installing
                     string emulatorPath = Path.Combine(this.AppDataPath, "emulators");
                     foreach (ZipArchiveEntry entry in zip.Entries.Where(entry => entry.FullName != "snowball.json"))
                     {
-                        string extractPath = Path.Combine(emulatorPath, entry.FullName.Remove(0,9));
+                        string extractPath = Path.Combine(emulatorPath, entry.FullName.Remove(0, 9));
                         //9 chars in snowball/
                         if (!Directory.Exists(Path.GetDirectoryName(extractPath)))
                             Directory.CreateDirectory(Path.GetDirectoryName(extractPath));
@@ -58,7 +60,7 @@ namespace Snowflake.Packaging.Installing
                     string themePath = Path.Combine(this.AppDataPath, "themes");
                     foreach (ZipArchiveEntry entry in zip.Entries.Where(entry => entry.FullName != "snowball.json"))
                     {
-                        string extractPath = Path.Combine(themePath, entry.FullName.Remove(0,9));
+                        string extractPath = Path.Combine(themePath, entry.FullName.Remove(0, 9));
                         //9 chars in snowball/
                         if (!Directory.Exists(Path.GetDirectoryName(extractPath)))
                             Directory.CreateDirectory(Path.GetDirectoryName(extractPath));
@@ -67,38 +69,29 @@ namespace Snowflake.Packaging.Installing
                     }
                     break;
             }
-            File.WriteAllLines(Path.Combine(this.AppDataPath, ".snowballmanifest", $"{packageObj.Name}.manifest"), uninstallManifest);
+            File.WriteAllLines(Path.Combine(this.AppDataPath, ".snowballmanifest", $"{packageObj.Name}.manifest"),
+                uninstallManifest);
         }
 
         public void UninstallPackage(string packageId)
         {
-            IList<string> uninstallManifest = File.ReadAllLines(Path.Combine(this.AppDataPath, ".snowballmanifest", $"{packageId}.manifest"));
+            IList<string> uninstallManifest =
+                File.ReadAllLines(Path.Combine(this.AppDataPath, ".snowballmanifest", $"{packageId}.manifest"));
             foreach (string file in uninstallManifest)
             {
                 string directoryName = Path.GetDirectoryName(file);
                 File.Delete(file);
-                if (!Directory.EnumerateFiles(directoryName).Any() && Path.GetFullPath(Path.GetDirectoryName(directoryName)) != this.AppDataPath)
+                if (!Directory.EnumerateFiles(directoryName).Any() &&
+                    Path.GetFullPath(Path.GetDirectoryName(directoryName)) != this.AppDataPath)
                 {
                     Directory.Delete(Path.GetDirectoryName(file));
                 }
             }
-
             File.Delete(Path.Combine(this.AppDataPath, ".snowballmanifest", $"{packageId}.manifest"));
 
         }
 
-        public void InstallPackages (IList<string> packageQueue, string tempPath, string appDataDirectory)
-        {
-
-            foreach(string packageString in packageQueue)
-            {
-
-                string packageId = packageString.Split('@')[0];
-                string packageVersion = packageString.Split('@')[1];
-                string packagePath =  Directory.EnumerateFiles(tempPath).FirstOrDefault(path => path.Contains($"!{packageId}-"));
-                
-                };
-            }
-        }
+       
     }
+}
 
