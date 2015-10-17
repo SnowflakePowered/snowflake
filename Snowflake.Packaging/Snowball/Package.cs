@@ -46,8 +46,7 @@ namespace Snowflake.Packaging.Snowball
             var packageInfo = JsonConvert.DeserializeObject<PackageInfo>(infoFile);
             Package.GetPluginStringResource("plugin.json", pluginAssembly);
             var tempDir = Package.GetTemporaryDirectory();
-            Console.WriteLine(
-          $"Packing {packageInfo.PackageType} {packageInfo.Name} v{packageInfo.Version} to {outputDirectory}");
+            Console.WriteLine($"Packing {packageInfo.PackageType} {packageInfo.Name} v{packageInfo.Version} to {outputDirectory}");
             Directory.CreateDirectory(Path.Combine(tempDir, "snowball"));
             Directory.CreateDirectory(Path.Combine(tempDir, "snowball", pluginName));
             File.Copy(pluginFile, Path.Combine(tempDir, "snowball", pluginFile));

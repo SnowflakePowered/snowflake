@@ -71,6 +71,7 @@ namespace Snowflake.Packaging.Installing
             }
             File.WriteAllLines(Path.Combine(this.AppDataPath, ".snowballmanifest", $"{packageObj.Name}.manifest"),
                 uninstallManifest);
+            Console.WriteLine($"Installed {packageObj.PackageType} {packageObj.Name} v{packageObj.Version}");
         }
 
         public void UninstallPackage(string packageId)
@@ -90,8 +91,6 @@ namespace Snowflake.Packaging.Installing
             File.Delete(Path.Combine(this.AppDataPath, ".snowballmanifest", $"{packageId}.manifest"));
 
         }
-
-       
     }
 }
 

@@ -80,16 +80,17 @@ namespace Snowflake.Packaging.Publishing
             Properties.Settings.Default.githubToken = cipherGithubToken;
             Properties.Settings.Default.nugetToken = cipherNugetToken;
             Properties.Settings.Default.Save();
+            Console.WriteLine("Successfully stored and secured authorization details for NuGet and GitHub.");
         }
 
 
         public async static Task MakeRepoFork(string githubToken)
         {
-            var gh = new GitHubClient(new ProductHeaderValue("snowball"));
-            gh.Credentials = new Credentials(githubToken);
+            var gh = new GitHubClient(new ProductHeaderValue("snowball")) {Credentials = new Credentials(githubToken)};
             await gh.Repository.Forks.Create("SnowflakePowered-Packages", "snowball-packages", new NewRepositoryFork());
+            Console.WriteLine("snowball-package has been forked to your GitHub account.");
         }
-        public async static Task<string> CreateGithubToken(string username, string password)
+        public async static Task<string> CreateGithubToken(string username, string password, string twoFactorAuthenticationCode = "")
         {
             var gh = new GitHubClient(new ProductHeaderValue("snowball"));
             gh.Credentials = new Credentials(username, password);
@@ -100,7 +101,22 @@ namespace Snowflake.Packaging.Publishing
                 "user",
                 "repo_deployment"
             }, Guid.NewGuid().ToString());
-            var appAuth = await gh.Authorization.Create("e58f96af40993609ba34", "a7201762659569213809889c4873af6aa46a7c01", authorization);
+            ApplicationAuthorization appAuth;
+            if (!String.IsNullOrWhiteSpace(twoFactorAuthenticationCode))
+            {
+                appAuth =
+                    await
+                        gh.Authorization.Create("e58f96af40993609ba34", "a7201762659569213809889c4873af6aa46a7c01",
+                            authorization, twoFactorAuthenticationCode);
+            }
+            else
+            {
+                appAuth =
+                    await
+                        gh.Authorization.Create("e58f96af40993609ba34", "a7201762659569213809889c4873af6aa46a7c01",
+                            authorization);
+            }
+            Console.WriteLine("A new authorization has been created for Snowflake on your GitHub account");
             return appAuth.Token;
         }
 

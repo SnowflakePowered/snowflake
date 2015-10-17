@@ -92,15 +92,17 @@ namespace Snowflake.Packaging
         public string PackageFile { get; set; }
     }
 
-    [Verb("setup", HelpText = "Setup to publish. Requires a GitHub account.")]
-    internal class SetupOptions
+    [Verb("auth", HelpText = "Setup to publish. Requires a GitHub account.")]
+    internal class AuthOptions
     {
         [Option("nuget", HelpText = "Your NuGet API Key", Required = true)]
         public string NuGetAPIKey { get; set; }
-        [Option("gh-user", HelpText = "Your NuGet API Key", Required = true)]
+        [Option("gh-user", HelpText = "Your GitHub username", Required = true)]
         public string GithubUser { get; set; }
-        [Option("gh-pass", HelpText = "Your NuGet API Key", Required = true)]
+        [Option("gh-pass", HelpText = "Your GitHub password", Required = true)]
         public string GithubPassword { get; set; }
+        [Option("gh-auth", HelpText = "Your GitHub 2-factor authentication code", Required = false, Default = "")]
+        public string GitHub2FA { get; set; }
 
 
     }

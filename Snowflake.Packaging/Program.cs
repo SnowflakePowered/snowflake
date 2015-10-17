@@ -21,7 +21,7 @@ namespace Snowflake.Packaging
         {
             var result = Parser.Default.ParseArguments<PackOptions,
                 MakePluginOptions, MakeThemeOptions, MakeEmulatorAssemblyOptions,
-                InstallOptions, UninstallOptions, PublishOptions, SetupOptions, SignOptions, VerifyOptions>(args)
+                InstallOptions, UninstallOptions, PublishOptions, AuthOptions, SignOptions, VerifyOptions>(args)
                 .WithParsed<PackOptions>(options =>
                 {
                     var package = Package.LoadDirectory(options.PluginRoot);
@@ -63,15 +63,17 @@ namespace Snowflake.Packaging
                     }
                     else
                     {
-                        Console.WriteLine("Unable to find GitHub or NuGet details. Please run snowball setup to enter your GitHub details and NuGet API key.");
+                        Console.WriteLine("Unable to find GitHub or NuGet details. Please run snowball auth to enter your GitHub details and NuGet API key.");
                     }
                 })
-                .WithParsed<SetupOptions>(options =>
+                .WithParsed<AuthOptions>(options =>
                 {
-                Task.Run(async () => {
-                    Account.SaveDetails(await Account.CreateGithubToken(options.GithubUser, options.GithubPassword), options.NuGetAPIKey);
-                    await Account.MakeRepoFork(Account.GetGithubToken());
-                    }).Wait();
+                    Console.Clear();
+                    Console.WriteLine("Console cleared for security purposes.");
+                    Task.Run(async () => {
+                        Account.SaveDetails(await Account.CreateGithubToken(options.GithubUser, options.GithubPassword), options.NuGetAPIKey);
+                        await Account.MakeRepoFork(Account.GetGithubToken());
+                        }).Wait();
                 })
                 .WithParsed<InstallOptions>(options =>
                 {
