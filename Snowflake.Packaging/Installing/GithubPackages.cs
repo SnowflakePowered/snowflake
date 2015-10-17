@@ -25,7 +25,7 @@ namespace Snowflake.Packaging.Installing
             var gh = new GitHubClient(new ProductHeaderValue("snowball"));
             string pluginIndexFile = packageId + ".json";
             var masterContents = await gh.Repository.Content.GetAllContents("SnowflakePowered-Packages", "snowball-packages", "index/");
-            var ghReleaseInfoContent = masterContents.Where(content => content.Name == pluginIndexFile).First();
+            var ghReleaseInfoContent = masterContents.First(content => content.Name == pluginIndexFile);
             string jsonFile = await new WebClient().DownloadStringTaskAsync(ghReleaseInfoContent.DownloadUrl);
             var releaseInfo = JsonConvert.DeserializeObject<ReleaseInfo>(jsonFile);
             return releaseInfo;

@@ -27,7 +27,6 @@ namespace Snowflake.Packaging
         [Value(1, HelpText = "The output directory. Defaults to current working directory", Required = false)]
         public string OutputDirectory { get; set; }
     }
-
     [Verb("make-plugin", HelpText = "Make a snowball package for a plugin")]
     internal class MakePluginOptions
     {
@@ -66,13 +65,12 @@ namespace Snowflake.Packaging
         public bool Bare { get; set; }
 
     }
-
     [Verb("install", HelpText = "Install a snowball package")]
     internal class InstallOptions
     {
-        [Value(0, HelpText = "The package file or id", Required = true)]
-        public string PackageFile { get; set; }
-        [Value(1, HelpText = "The snowflake root. Defaults to %appdata%/snowflake", Required = false)]
+        [Value(0, HelpText = "The package files or ids", Required = true)]
+        public IList<string> PackageFiles { get; set; }
+        [Option('r', "snowflakeroot", HelpText = "The snowflake root. Defaults to %appdata%/snowflake", Required = false)]
         public string SnowflakeRoot { get; set; }
         [Option('l', "local", HelpText = "Treat the first argument as a file path to install a local package")]
         public bool LocalInstall { get; set; }
@@ -81,10 +79,12 @@ namespace Snowflake.Packaging
     [Verb("uninstall", HelpText = "Uninstall a snowball package")]
     internal class UninstallOptions
     {
-        [Value(0, HelpText = "The package id to install", Required = true)]
-        public string PackageId { get; set; }
-        [Value(1, HelpText = "The snowflake root. Defaults to %appdata%/snowflake", Required = false)]
+        [Value(0, HelpText = "The package files or ids", Required = true)]
+        public IList<string> PackageIds { get; set; }
+        [Option('r', "snowflakeroot", HelpText = "The snowflake root. Defaults to %appdata%/snowflake", Required = false)]
         public string SnowflakeRoot { get; set; }
+        [Option('l', "local", HelpText = "Treat the first argument as a file path to install a local package")]
+        public bool LocalInstall { get; set; }
 
     }
 

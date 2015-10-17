@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,8 @@ using Snowflake.Packaging.Snowball;
 using Snowflake.Packaging.Publishing;
 using Newtonsoft.Json;
 using CommandLine;
+using Snowflake.Packaging.Installing;
+
 namespace Snowflake.Packaging
 {
     static class Program
@@ -69,6 +72,27 @@ namespace Snowflake.Packaging
                     Account.SaveDetails(await Account.CreateGithubToken(options.GithubUser, options.GithubPassword), options.NuGetAPIKey);
                     await Account.MakeRepoFork(Account.GetGithubToken());
                     }).Wait();
+                })
+                .WithParsed<InstallOptions>(options =>
+                {
+                    options.SnowflakeRoot = options.SnowflakeRoot ??
+                                            Path.Combine(
+                                                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                                                "Snowflake");
+                    var manager = new InstallManager(options.SnowflakeRoot);
+                    manager.InstallSinglePackage(options.PackageFiles[0]);
+                    //todo wrap in try/catch
+
+                })
+                .WithParsed<UninstallOptions>(options =>
+                {
+                        options.SnowflakeRoot = options.SnowflakeRoot ??
+                                                Path.Combine(
+                                                    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                                                    "Snowflake");
+                        var manager = new InstallManager(options.SnowflakeRoot);
+                        manager.UninstallPackage(options.PackageIds[0]);
+                        //todo wrap in try/catch
                 }); 
             
 

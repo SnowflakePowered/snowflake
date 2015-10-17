@@ -11,12 +11,81 @@ namespace Snowflake.Packaging.Installing
 {
     public class InstallManager
     {
-        public IDictionary<string, IList<string>> FileManifest { get; }
+        public string AppDataPath { get; }
         public InstallManager(string appDataPath)
         {
-            this.FileManifest = JsonConvert.DeserializeObject<IDictionary<string, IList<string>>>(File.ReadAllText(Path.Combine(appDataPath, ".snowballdb")));
+            if (!Directory.Exists(Path.Combine(appDataPath, ".snowballmanifest")))
+                Directory.CreateDirectory(Path.Combine(appDataPath, ".snowballmanifest"));
+            this.AppDataPath = Path.GetFullPath(appDataPath);
         }
 
+        public void InstallSinglePackage(string packagePath)
+        {
+            if (String.IsNullOrWhiteSpace(packagePath)) return;
+            var zip = new ZipArchive(File.Open(packagePath, FileMode.Open), ZipArchiveMode.Read, false);
+            var packageObj =
+                JsonConvert.DeserializeObject<PackageInfo>(
+                    new StreamReader(zip.GetEntry("snowball.json").Open()).ReadToEnd());
+            string packageId = packageObj.Name;
+            IList<string> uninstallManifest = new List<string>();
+            switch (packageObj.PackageType)
+            {
+                case PackageType.Plugin:
+                    string pluginPath = Path.Combine(this.AppDataPath, "plugins");
+                    foreach (ZipArchiveEntry entry in zip.Entries.Where(entry => entry.FullName != "snowball.json"))
+                    {
+                        string extractPath = Path.Combine(pluginPath, entry.FullName.Remove(0, 9));
+                        //9 chars in snowball/
+                        if (!Directory.Exists(Path.GetDirectoryName(extractPath)))
+                            Directory.CreateDirectory(Path.GetDirectoryName(extractPath));
+                        entry.ExtractToFile(extractPath, true);
+                        uninstallManifest.Add(extractPath);
+                    }
+                    break;
+                case PackageType.EmulatorAssembly:
+                    string emulatorPath = Path.Combine(this.AppDataPath, "emulators");
+                    foreach (ZipArchiveEntry entry in zip.Entries.Where(entry => entry.FullName != "snowball.json"))
+                    {
+                        string extractPath = Path.Combine(emulatorPath, entry.FullName.Remove(0,9));
+                        //9 chars in snowball/
+                        if (!Directory.Exists(Path.GetDirectoryName(extractPath)))
+                            Directory.CreateDirectory(Path.GetDirectoryName(extractPath));
+                        entry.ExtractToFile(extractPath, true);
+                        uninstallManifest.Add(extractPath);
+                    }
+                    break;
+                case PackageType.Theme:
+                    string themePath = Path.Combine(this.AppDataPath, "themes");
+                    foreach (ZipArchiveEntry entry in zip.Entries.Where(entry => entry.FullName != "snowball.json"))
+                    {
+                        string extractPath = Path.Combine(themePath, entry.FullName.Remove(0,9));
+                        //9 chars in snowball/
+                        if (!Directory.Exists(Path.GetDirectoryName(extractPath)))
+                            Directory.CreateDirectory(Path.GetDirectoryName(extractPath));
+                        entry.ExtractToFile(extractPath, true);
+                        uninstallManifest.Add(extractPath);
+                    }
+                    break;
+            }
+            File.WriteAllLines(Path.Combine(this.AppDataPath, ".snowballmanifest", $"{packageObj.Name}.manifest"), uninstallManifest);
+        }
+
+        public void UninstallPackage(string packageId)
+        {
+            IList<string> uninstallManifest = File.ReadAllLines(Path.Combine(this.AppDataPath, ".snowballmanifest", $"{packageId}.manifest"));
+            foreach (string file in uninstallManifest)
+            {
+                string directoryName = Path.GetDirectoryName(file);
+                File.Delete(file);
+                if (!Directory.EnumerateFiles(directoryName).Any() && Path.GetFullPath(Path.GetDirectoryName(directoryName)) != this.AppDataPath)
+                {
+                    Directory.Delete(Path.GetDirectoryName(file));
+                }
+            }
+
+            File.Delete(Path.Combine(this.AppDataPath, ".snowballmanifest", $"{packageId}.manifest"));
+
+        }
 
         public void InstallPackages (IList<string> packageQueue, string tempPath, string appDataDirectory)
         {
@@ -27,43 +96,9 @@ namespace Snowflake.Packaging.Installing
                 string packageId = packageString.Split('@')[0];
                 string packageVersion = packageString.Split('@')[1];
                 string packagePath =  Directory.EnumerateFiles(tempPath).FirstOrDefault(path => path.Contains($"!{packageId}-"));
-                if (!String.IsNullOrWhiteSpace(packagePath))
-                {
-                    var zip = new ZipArchive(File.Open(packagePath, FileMode.Open), ZipArchiveMode.Read, false);
-                    var packageObj = JsonConvert.DeserializeObject<PackageInfo>(new StreamReader(zip.GetEntry("snowball.json").Open()).ReadToEnd());
-                    if (!this.FileManifest.ContainsKey(packageId)) this.FileManifest.Add(packageId, new List<string>());
-                    switch (packageObj.PackageType)
-                    {
-                        case PackageType.Plugin:
-                            string pluginPath = Path.Combine(appDataDirectory, "plugins");
-                            foreach(ZipArchiveEntry entry in zip.Entries.Where(entry => entry.FullName != "snowball.json"))
-                            {
-                                string extractPath = Path.Combine(pluginPath, entry.FullName.Remove(9)); //9 chars in snowball/
-                                entry.ExtractToFile(extractPath);
-                                this.FileManifest[packageId].Add(extractPath);
-                            }
-                            break;
-                        case PackageType.EmulatorAssembly:
-                            string emulatorPath = Path.Combine(appDataDirectory, "emulators");
-                            foreach (ZipArchiveEntry entry in zip.Entries.Where(entry => entry.FullName != "snowball.json"))
-                            {
-                                string extractPath = Path.Combine(emulatorPath, entry.FullName.Remove(9)); //9 chars in snowball/
-                                entry.ExtractToFile(extractPath);
-                                this.FileManifest[packageId].Add(extractPath);
-                            }
-                            break;
-                        case PackageType.Theme:
-                            string themePath = Path.Combine(appDataDirectory, "themes");
-                            foreach (ZipArchiveEntry entry in zip.Entries.Where(entry => entry.FullName != "snowball.json"))
-                            {
-                                string extractPath = Path.Combine(themePath, entry.FullName.Remove(9)); //9 chars in snowball/
-                                entry.ExtractToFile(extractPath);
-                                this.FileManifest[packageId].Add(extractPath);
-                            }
-                            break;
-                    }
+                
                 };
             }
         }
     }
-}
+
