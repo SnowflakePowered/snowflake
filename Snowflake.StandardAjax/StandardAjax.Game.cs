@@ -8,6 +8,7 @@ using Snowflake.Events;
 using Snowflake.Events.CoreEvents.GameEvent;
 using Snowflake.Extensions;
 using Snowflake.Game;
+using Snowflake.Platform;
 using Snowflake.Scraper;
 using Snowflake.Service;
 using Snowflake.Service.Manager;
@@ -24,7 +25,8 @@ namespace Snowflake.StandardAjax
             string filename = request.GetParameter("filename");
             string platform = request.GetParameter("platform");
             var engine = this.CoreInstance.Get<IScrapeEngine>();
-            var info = engine.GetScrapableInfo(filename, this.CoreInstance.Platforms[platform]);
+            var platformInfo = (platform == null) ? null : !this.CoreInstance.Platforms.ContainsKey(platform) ? null : this.CoreInstance.Platforms[platform];
+            var info = engine.GetScrapableInfo(filename, platformInfo);
             return new JSResponse(request, engine.GetScrapeResults(info));
         }
 
@@ -38,7 +40,8 @@ namespace Snowflake.StandardAjax
             string platform = request.GetParameter("platform");
             string scraperId = request.GetParameter("scraper");
             var engine = this.CoreInstance.Get<IScrapeEngine>();
-            var info = engine.GetScrapableInfo(filename, this.CoreInstance.Platforms[platform]);
+            var platformInfo = (platform == null) ? null : !this.CoreInstance.Platforms.ContainsKey(platform) ? null : this.CoreInstance.Platforms[platform];
+            var info = engine.GetScrapableInfo(filename, platformInfo);
             var scraper = this.CoreInstance.Get<IPluginManager>().Plugin<IScraper>(scraperId);
             return new JSResponse(request, engine.GetScrapeResults(info, scraper));
         }
@@ -54,7 +57,8 @@ namespace Snowflake.StandardAjax
             string platform = request.GetParameter("platform");
             string filename = request.GetParameter("filename");
             var engine = this.CoreInstance.Get<IScrapeEngine>();
-            var info = engine.GetScrapableInfo(filename, this.CoreInstance.Platforms[platform]);
+            var platformInfo = (platform == null) ? null : !this.CoreInstance.Platforms.ContainsKey(platform) ? null : this.CoreInstance.Platforms[platform];
+            var info = engine.GetScrapableInfo(filename, platformInfo);
             return new JSResponse(request, engine.GetGameData(info, result));
         }
 
@@ -66,7 +70,8 @@ namespace Snowflake.StandardAjax
             string platform = request.GetParameter("platform");
             string filename = request.GetParameter("filename");
             var engine = this.CoreInstance.Get<IScrapeEngine>();
-            var info = engine.GetScrapableInfo(filename, this.CoreInstance.Platforms[platform]);
+            var platformInfo = (platform == null) ? null : !this.CoreInstance.Platforms.ContainsKey(platform) ? null : this.CoreInstance.Platforms[platform];
+            var info = engine.GetScrapableInfo(filename, platformInfo);
             return new JSResponse(request, engine.GetGameData(info));
         }
 
