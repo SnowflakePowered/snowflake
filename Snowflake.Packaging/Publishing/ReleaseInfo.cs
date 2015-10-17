@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,21 +18,18 @@ namespace Snowflake.Packaging.Publishing
         public string Description { get; }
         [JsonProperty("authors")]
         public IList<string> Authors { get; }
-        [JsonProperty("dependencies")]
-        public IList<Dependency> Dependencies { get; }
         [JsonProperty("packagetype")]
         [JsonConverter(typeof(StringEnumConverter))]
         public PackageType PackageType { get; }
         [JsonProperty("versions")]
-        public IList<SemanticVersion> ReleaseVersions { get; }
+        public IDictionary<SemanticVersion, IList<Dependency>> ReleaseVersions { get; }
         [JsonConstructor]
-        public ReleaseInfo(string name, string description, IList<string> authors, IList<string> versions, IList<string> dependencies, PackageType packageType)
+        public ReleaseInfo(string name, string description, IList<string> authors, IDictionary<SemanticVersion, IList<Dependency>> versions, PackageType packageType)
         {
-            this.ReleaseVersions = versions.Select(version => new SemanticVersion(version)).ToList();
+            this.ReleaseVersions = versions;
             this.Name = name;
             this.Description = description;
             this.Authors = authors;
-            this.Dependencies = dependencies.Select(dependency => new Dependency(dependency)).ToList();
             this.PackageType = packageType;
         }
 

@@ -53,17 +53,27 @@ namespace Snowflake.Packaging
                 })
                 .WithParsed<PublishOptions>(options =>
                 {
-                    if (!String.IsNullOrWhiteSpace(Properties.Settings.Default.githubToken) && !String.IsNullOrWhiteSpace(Properties.Settings.Default.nugetToken))
+                    try
                     {
-                        Task.Run(async () =>
+                        if (!String.IsNullOrWhiteSpace(Properties.Settings.Default.githubToken) &&
+                            !String.IsNullOrWhiteSpace(Properties.Settings.Default.nugetToken))
                         {
-                            PublishActions.PackNuget(options.PackageFile);
-                            await PublishActions.MakeGithubIndex(Package.FromZip(options.PackageFile).PackageInfo);
-                        }).Wait();
+                            Task.Run(async () =>
+                            {
+                                PublishActions.PackNuget(options.PackageFile);
+                                await PublishActions.MakeGithubIndex(Package.FromZip(options.PackageFile).PackageInfo);
+                            }).Wait();
+                        }
+                        else
+                        {
+                            Console.WriteLine(
+                                "Unable to find GitHub or NuGet details. Please run snowball auth to enter your GitHub details and NuGet API key.");
+                        }
                     }
-                    else
+                    catch (AggregateException ex)
                     {
-                        Console.WriteLine("Unable to find GitHub or NuGet details. Please run snowball auth to enter your GitHub details and NuGet API key.");
+                        Console.WriteLine(
+                            $"Unable to publish package {options.PackageFile}: {String.Join(", ", ex.InnerExceptions.Select(_ex => _ex.Message))}");
                     }
                 })
                 .WithParsed<AuthOptions>(options =>

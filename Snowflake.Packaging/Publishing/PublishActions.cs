@@ -49,6 +49,8 @@ namespace Snowflake.Packaging.Publishing
                 stream.Close();
                 IPackage package = new OptimizedZipPackage(fileName);
                 var nugetServer = new PackageServer("https://www.nuget.org/", "userAgent");
+                File.Delete(sigFile);
+                File.Delete(keyFile);
                 string token = Account.GetNugetToken();
                 try
                 {
@@ -66,9 +68,7 @@ namespace Snowflake.Packaging.Publishing
                 }
                 stream.Close();
             }
-           
-            File.Delete(sigFile);
-            File.Delete(keyFile);
+        
             return packagePath;
 
 
@@ -76,8 +76,10 @@ namespace Snowflake.Packaging.Publishing
      
         public async static Task MakeGithubIndex(PackageInfo packageInfo)
         {
-            var gh = new GitHubClient(new ProductHeaderValue("snowball"));
-            gh.Credentials = new Credentials(Account.GetGithubToken());
+            var gh = new GitHubClient(new ProductHeaderValue("snowball"))
+            {
+                Credentials = new Credentials(Account.GetGithubToken())
+            };
             var user = await gh.User.Current();
             string owner = user.Login;
             string pluginIndexFile = packageInfo.Name + ".json";
@@ -89,7 +91,7 @@ namespace Snowflake.Packaging.Publishing
             Console.WriteLine($"Creating index entry for {packageInfo.PackageType}-{packageInfo.Name} on personal branch");
             var refs = gh.GitDatabase.Reference;
             var _refs = await refs.GetAll("SnowflakePowered-Packages", "snowball-packages");
-            string masterSha = _refs.Where(branch => branch.Ref == "refs/heads/master").First().Object.Sha;
+            string masterSha = _refs.First(branch => branch.Ref == "refs/heads/master").Object.Sha;
             string branchName = $"{packageInfo.Name}v{packageInfo.Version}-{Guid.NewGuid().ToString()}";
             var newBranch = new NewReference($"refs/heads/{branchName}", masterSha);
             await refs.Create(owner, "snowball-packages", newBranch);
@@ -97,21 +99,23 @@ namespace Snowflake.Packaging.Publishing
             
             if(update)
             {
-                var ghReleaseInfoContent = masterContents.Where(content => content.Name == pluginIndexFile).First();
+                var ghReleaseInfoContent = masterContents.First(content => content.Name == pluginIndexFile);
                 string jsonFile = await new WebClient().DownloadStringTaskAsync(ghReleaseInfoContent.DownloadUrl);
                 var releaseInfo = JsonConvert.DeserializeObject<ReleaseInfo>(jsonFile);
-                releaseInfo.ReleaseVersions.Add(packageInfo.Version);
-                string newRelease = JsonConvert.SerializeObject(releaseInfo, Formatting.Indented);
-                var req = new UpdateFileRequest($"Add {packageInfo.PackageType} {packageInfo.Name} v{packageInfo.Version}", newRelease, ghReleaseInfoContent.Sha);
-                req.Branch = $"refs/heads/{branchName}";
+                releaseInfo.ReleaseVersions.Add(packageInfo.Version, packageInfo.Dependencies);
+                string newRelease = JsonConvert.SerializeObject(releaseInfo, Formatting.Indented) + Environment.NewLine;
+                var req =
+                    new UpdateFileRequest($"Add {packageInfo.PackageType} {packageInfo.Name} v{packageInfo.Version}",
+                        newRelease, ghReleaseInfoContent.Sha) {Branch = $"refs/heads/{branchName}"};
                 await gh.Repository.Content.UpdateFile(owner, "snowball-packages", $"index/{pluginIndexFile}", req);
             }
             else
             {
-                var releaseInfo = new ReleaseInfo(packageInfo.Name, packageInfo.Description, packageInfo.Authors, new List<string>() { packageInfo.Version.ToString() }, packageInfo.Dependencies.Select(dep => dep.ToString()).ToList(), packageInfo.PackageType);
-                string newRelease = JsonConvert.SerializeObject(releaseInfo, Formatting.Indented);
-                var req = new CreateFileRequest($"Add {packageInfo.PackageType} {packageInfo.Name} v{packageInfo.Version}", newRelease);
-                req.Branch = $"refs/heads/{branchName}";
+                var releaseInfo = new ReleaseInfo(packageInfo.Name, packageInfo.Description, packageInfo.Authors, new Dictionary<SemanticVersion, IList<Dependency>>() { { packageInfo.Version, packageInfo.Dependencies} }, packageInfo.PackageType);
+                string newRelease = JsonConvert.SerializeObject(releaseInfo, Formatting.Indented) + Environment.NewLine;
+                var req =
+                    new CreateFileRequest($"Add {packageInfo.PackageType} {packageInfo.Name} v{packageInfo.Version}",
+                        newRelease) {Branch = $"refs/heads/{branchName}"};
                 await gh.Repository.Content.CreateFile(owner, "snowball-packages", $"index/{pluginIndexFile}", req);
 
             }
