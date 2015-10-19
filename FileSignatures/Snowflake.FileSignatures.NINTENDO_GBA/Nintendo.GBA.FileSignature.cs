@@ -28,7 +28,7 @@ namespace Snowflake.FileSignatures.NINTENDO_GBA
         {
             try
             {
-                using (FileStream romStream = File.Open(fileName, FileMode.Open))
+                using (FileStream romStream = File.OpenRead(fileName))
                 {
                     byte[] buffer = new byte[8]; // read the 8 bytes
                     romStream.Seek(4, SeekOrigin.Begin); //ignore first 4 bytes
@@ -54,7 +54,7 @@ namespace Snowflake.FileSignatures.NINTENDO_GBA
         {
             try
             {
-                using (FileStream romStream = File.Open(fileName, FileMode.Open))
+                using (FileStream romStream = File.OpenRead(fileName))
                 {
                     byte[] buffer = new byte[4]; // the code is 4 bytes long
                     romStream.Seek(0xAC, SeekOrigin.Begin); //seek to game code
@@ -71,7 +71,7 @@ namespace Snowflake.FileSignatures.NINTENDO_GBA
 
         public override string GetInternalName(string fileName)
         {
-            using (FileStream romStream = File.Open(fileName, FileMode.Open))
+            using (FileStream romStream = File.OpenRead(fileName))
             {
                 byte[] buffer = new byte[12]; // read 12 bytes
                 romStream.Seek(0xA0, SeekOrigin.Begin);

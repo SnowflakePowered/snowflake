@@ -26,7 +26,7 @@ namespace Snowflake.FileSignatures.SEGA_GG
         {
             try
             {
-                using (FileStream romStream = File.Open(fileName, FileMode.Open))
+                using (FileStream romStream = File.OpenRead(fileName))
                 {
                     byte[] buffer = new byte[8];
                     romStream.Seek(0x7FF0, SeekOrigin.Begin);
@@ -45,7 +45,7 @@ namespace Snowflake.FileSignatures.SEGA_GG
         {
             try
             {
-                using (FileStream romStream = File.Open(fileName, FileMode.Open))
+                using (FileStream romStream = File.OpenRead(fileName))
                 {
                     byte[] buffer = new byte[3];
                     romStream.Seek(0x7FFC, SeekOrigin.Begin);

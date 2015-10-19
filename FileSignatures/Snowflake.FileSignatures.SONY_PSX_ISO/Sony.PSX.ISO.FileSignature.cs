@@ -27,7 +27,7 @@ namespace Snowflake.FileSignatures.SONY_PSX_ISO
 
         public override bool HeaderSignatureMatches(string fileName)
         {
-            using (FileStream isoStream = File.Open(fileName, FileMode.Open))
+            using (FileStream isoStream = File.OpenRead(fileName))
             {
                 byte[] buffer = new byte[1024 * 128]; // read the first 128 KiB
                 isoStream.Read(buffer, 0, buffer.Length);
@@ -38,7 +38,7 @@ namespace Snowflake.FileSignatures.SONY_PSX_ISO
 
         public override string GetGameId(string fileName)
         {
-            using (FileStream isoStream = File.Open(fileName, FileMode.Open))
+            using (FileStream isoStream = File.OpenRead(fileName))
             {
                 byte[] buffer = new byte[1024 * 128]; // read the first 128 KiB
                 isoStream.Read(buffer, 0, buffer.Length);

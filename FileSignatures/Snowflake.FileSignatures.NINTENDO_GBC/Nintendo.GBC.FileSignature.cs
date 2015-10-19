@@ -28,7 +28,7 @@ namespace Snowflake.FileSignatures.NINTENDO_GBC
         {
             try
             {
-                using (FileStream romStream = File.Open(fileName, FileMode.Open))
+                using (FileStream romStream = File.OpenRead(fileName))
                 {
                     byte[] buffer = new byte[8]; // read the 8 bytes
 
@@ -47,7 +47,7 @@ namespace Snowflake.FileSignatures.NINTENDO_GBC
         
         public override string GetInternalName(string fileName)
         {
-            using (FileStream romStream = File.Open(fileName, FileMode.Open))
+            using (FileStream romStream = File.OpenRead(fileName))
             {
                 byte[] buffer = new byte[11]; // cgb internal names are only 11 bytes long
                 romStream.Seek(0x134, SeekOrigin.Begin);

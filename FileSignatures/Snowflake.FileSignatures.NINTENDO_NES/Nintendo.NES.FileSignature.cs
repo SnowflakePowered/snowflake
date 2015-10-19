@@ -25,7 +25,7 @@ namespace Snowflake.FileSignatures.NINTENDO_NES
         {
             try
             {
-                using (FileStream romStream = File.Open(fileName, FileMode.Open))
+                using (FileStream romStream = File.OpenRead(fileName))
                 {
                     byte[] buffer = new byte[4];
                     romStream.Read(buffer, 0, buffer.Length);

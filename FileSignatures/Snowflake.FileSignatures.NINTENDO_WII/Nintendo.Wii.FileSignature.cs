@@ -28,7 +28,7 @@ namespace Snowflake.FileSignatures.NINTENDO_WII
         {
             try
             {
-                using (FileStream romStream = File.Open(fileName, FileMode.Open))
+                using (FileStream romStream = File.OpenRead(fileName))
                 {
 
                     byte[] buffer = new byte[4];
@@ -49,7 +49,7 @@ namespace Snowflake.FileSignatures.NINTENDO_WII
         }
         public override string GetGameId(string fileName)
         {
-            using (FileStream romStream = File.Open(fileName, FileMode.Open))
+            using (FileStream romStream = File.OpenRead(fileName))
             {
 
                 byte[] buffer = new byte[4];
@@ -67,7 +67,7 @@ namespace Snowflake.FileSignatures.NINTENDO_WII
 
         public override string GetInternalName(string fileName)
         {
-            using (FileStream romStream = File.Open(fileName, FileMode.Open))
+            using (FileStream romStream = File.OpenRead(fileName))
             {
 
                 byte[] buffer = new byte[4];

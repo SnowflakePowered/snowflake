@@ -28,7 +28,7 @@ namespace Snowflake.FileSignatures.NINTENDO_GCN
         {
             try
             {
-                using (FileStream romStream = File.Open(fileName, FileMode.Open))
+                using (FileStream romStream = File.OpenRead(fileName))
                 {
                     BinaryReader reader = new BinaryReader(new Int32SwapStream(romStream));
                     switch (reader.ReadUInt32())
@@ -49,7 +49,7 @@ namespace Snowflake.FileSignatures.NINTENDO_GCN
         }
         public override string GetGameId(string fileName)
         {
-            using (FileStream romStream = File.Open(fileName, FileMode.Open))
+            using (FileStream romStream = File.OpenRead(fileName))
             {
                 BinaryReader reader = new BinaryReader(new Int32SwapStream(romStream));
                 Stream swappedRomStream;
@@ -76,7 +76,7 @@ namespace Snowflake.FileSignatures.NINTENDO_GCN
 
         public override string GetInternalName(string fileName)
         {
-            using (FileStream romStream = File.Open(fileName, FileMode.Open))
+            using (FileStream romStream = File.OpenRead(fileName))
             {
                 BinaryReader reader = new BinaryReader(new Int32SwapStream(romStream));
                 Stream swappedRomStream;

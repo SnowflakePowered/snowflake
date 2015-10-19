@@ -28,7 +28,7 @@ namespace Snowflake.FileSignatures.NINTENDO_NDS
         {
             try
             {
-                using (FileStream romStream = File.Open(fileName, FileMode.Open))
+                using (FileStream romStream = File.OpenRead(fileName))
                 {
                     byte[] buffer = new byte[8]; // read the 8 bytes
                     romStream.Seek(0x156, SeekOrigin.Begin); //read from 342 to 350 (last bytes of nintendo logo and nintendo logo crc)
@@ -47,7 +47,7 @@ namespace Snowflake.FileSignatures.NINTENDO_NDS
         {
             try
             {
-                using (FileStream romStream = File.Open(fileName, FileMode.Open))
+                using (FileStream romStream = File.OpenRead(fileName))
                 {
                     byte[] buffer = new byte[4]; // read the first 16 bytes
                     romStream.Seek(0x0C, SeekOrigin.Begin); //seek 12 bytes after the game name
@@ -64,7 +64,7 @@ namespace Snowflake.FileSignatures.NINTENDO_NDS
 
         public override string GetInternalName(string fileName)
         {
-            using (FileStream romStream = File.Open(fileName, FileMode.Open))
+            using (FileStream romStream = File.OpenRead(fileName))
             {
                 byte[] buffer = new byte[12]; // read 12 bytes
                 romStream.Read(buffer, 0, buffer.Length);

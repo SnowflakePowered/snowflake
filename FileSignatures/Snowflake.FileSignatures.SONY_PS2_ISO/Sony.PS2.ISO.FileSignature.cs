@@ -31,7 +31,7 @@ namespace Snowflake.FileSignatures.SONY_PS2_ISO
         {
             try
             {
-                using (FileStream isoStream = File.Open(fileName, FileMode.Open))
+                using (FileStream isoStream = File.OpenRead(fileName))
                 {
                     var reader = new CDReader(isoStream, true);
                     var system = reader.OpenFile("SYSTEM.CNF", FileMode.Open);
@@ -49,7 +49,7 @@ namespace Snowflake.FileSignatures.SONY_PS2_ISO
         {
             try
             {
-                using (FileStream isoStream = File.Open(fileName, FileMode.Open))
+                using (FileStream isoStream = File.OpenRead(fileName))
                 {
                     var reader = new CDReader(isoStream, true);
                     var system = reader.OpenFile("SYSTEM.CNF", FileMode.Open);

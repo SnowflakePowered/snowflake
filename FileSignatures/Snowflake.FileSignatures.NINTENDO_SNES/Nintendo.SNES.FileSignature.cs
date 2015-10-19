@@ -25,7 +25,7 @@ namespace Snowflake.FileSignatures.NINTENDO_SNES
         {
             try
             {
-                using (FileStream romStream = File.Open(fileName, FileMode.Open))
+                using (FileStream romStream = File.OpenRead(fileName))
                 {
                     byte[] buffer = new byte[7];
                     int offset = 0;
@@ -58,7 +58,7 @@ namespace Snowflake.FileSignatures.NINTENDO_SNES
         }
         public override string GetGameId(string fileName)
         {
-            using (FileStream romStream = File.Open(fileName, FileMode.Open))
+            using (FileStream romStream = File.OpenRead(fileName))
             {
 
                 byte[] buffer = new byte[4];
@@ -81,7 +81,7 @@ namespace Snowflake.FileSignatures.NINTENDO_SNES
 
         public override string GetInternalName(string fileName)
         {
-            using (FileStream romStream = File.Open(fileName, FileMode.Open))
+            using (FileStream romStream = File.OpenRead(fileName))
             {
                 byte[] buffer = new byte[21];
                 int offset = 0;

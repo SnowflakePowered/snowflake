@@ -25,7 +25,7 @@ namespace Snowflake.FileSignatures.SEGA_GEN
         {
             try
             {
-                using (FileStream romStream = File.Open(fileName, FileMode.Open))
+                using (FileStream romStream = File.OpenRead(fileName))
                 {
                     romStream.Seek(0x10, SeekOrigin.Begin);
                     byte[] buffer = new byte[0xE];
@@ -40,7 +40,7 @@ namespace Snowflake.FileSignatures.SEGA_GEN
         }
         public override string GetGameId(string fileName)
         {
-            using (FileStream romStream = File.Open(fileName, FileMode.Open))
+            using (FileStream romStream = File.OpenRead(fileName))
             {
 
                 romStream.Seek(0x193, SeekOrigin.Begin);
@@ -52,7 +52,7 @@ namespace Snowflake.FileSignatures.SEGA_GEN
 
         public override string GetInternalName(string fileName)
         {
-            using (FileStream romStream = File.Open(fileName, FileMode.Open))
+            using (FileStream romStream = File.OpenRead(fileName))
             {
                 romStream.Seek(0x130, SeekOrigin.Begin);
                 byte[] buffer = new byte[48];

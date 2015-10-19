@@ -62,7 +62,7 @@ namespace Snowflake.FileSignatures.SEGA_DC
         {
             try
             {
-                using (FileStream romStream = File.Open(fileName, FileMode.Open))
+                using (FileStream romStream = File.OpenRead(fileName))
                 {
                     long headerPos = this.GetHeaderOffset(romStream);
                     return headerPos != 0;
@@ -75,7 +75,7 @@ namespace Snowflake.FileSignatures.SEGA_DC
         }
         public override string GetGameId(string fileName)
         {
-            using (FileStream romStream = File.Open(fileName, FileMode.Open))
+            using (FileStream romStream = File.OpenRead(fileName))
             {
 
                 long headerPos = this.GetHeaderOffset(romStream);
@@ -96,7 +96,7 @@ namespace Snowflake.FileSignatures.SEGA_DC
 
         public override string GetInternalName(string fileName)
         {
-            using (FileStream romStream = File.Open(fileName, FileMode.Open))
+            using (FileStream romStream = File.OpenRead(fileName))
             {
 
                 long headerPos = this.GetHeaderOffset(romStream);
