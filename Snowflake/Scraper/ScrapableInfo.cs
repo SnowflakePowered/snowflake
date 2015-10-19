@@ -108,18 +108,5 @@ namespace Snowflake.Scraper
         {
             return FileHash.GetMD5(this.OriginalFilePath);
         }
-
-        public string GetUUID()
-        {
-            MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
-            //The UUID format is the game title, plus the game's rom ID if available (if it is not it is "null"), and the Platform id. 
-            //Preferably a rom's internal name is used to be deterministic, but if its not available, the CRC32 hash of the filename is used as the rom's internal name
-            //A deterministic UUID is indicated by the i prefix.
-            string determinismPrefix = (this.RomInternalName != String.Empty) ? "i_" : "_";
-            string hashName = (this.RomInternalName != String.Empty)
-                ? this.RomInternalName
-                : this.HashCrc32();
-            return determinismPrefix + BitConverter.ToString(md5.ComputeHash(new MemoryStream(Encoding.UTF8.GetBytes($"{this.RomInternalName}|{this.RomId}|{this.StonePlatformId}|")))).Replace("-", string.Empty).ToLowerInvariant();
-        }
     }
 }

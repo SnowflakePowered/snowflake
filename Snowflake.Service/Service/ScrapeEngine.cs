@@ -93,7 +93,6 @@ namespace Snowflake.Service
                 information.StonePlatformId,
                 gameInfo.Item1[GameInfoFields.game_title],
                 gameInfo.Item1,
-                information.GetUUID(),
                 information.OriginalFilePath);
             ScrapeEngine.GetMediaCache(gameInfo.Item2, gameResult);
             ScrapeEngine.GetScreenshotCache(gameInfo.Item2, gameResult);
@@ -117,7 +116,6 @@ namespace Snowflake.Service
                 information.StonePlatformId,
                 gameInfo.Item1[GameInfoFields.game_title],
                 gameInfo.Item1,
-                information.GetUUID(),
                 information.OriginalFilePath);
             ScrapeEngine.GetMediaCache(gameInfo.Item2, gameResult);
             ScrapeEngine.GetScreenshotCache(gameInfo.Item2, gameResult);

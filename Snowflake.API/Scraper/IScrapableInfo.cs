@@ -55,7 +55,5 @@ namespace Snowflake.Scraper
         /// <remarks>This is a very expensive operation taking around 15 seconds. If possible use GameId instead</remarks>
         /// <returns>The MD5 hash of the rom</returns>
         string HashMd5();
-
-        string GetUUID();
     }
 }
