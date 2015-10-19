@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{FFBF7DC1-BB8E-4EFC-9915-ABA661714C2C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Snowflake.FileSignatures.Package</RootNamespace>
+    <AssemblyName>Snowflake.FileSignatures.Package</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FileSignatures\Snowflake.FileSignatures.NINTENDO_GBA\Snowflake.FileSignatures.NINTENDO_GBA.csproj">
+      <Project>{3c074d5d-ee9c-44d2-be35-6800c50f25dd}</Project>
+      <Name>Snowflake.FileSignatures.NINTENDO_GBA</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FileSignatures\Snowflake.FileSignatures.NINTENDO_GBC\Snowflake.FileSignatures.NINTENDO_GBC.csproj">
+      <Project>{a95ad583-cc77-407b-885d-77abd2f8baaa}</Project>
+      <Name>Snowflake.FileSignatures.NINTENDO_GBC</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FileSignatures\Snowflake.FileSignatures.NINTENDO_GB\Snowflake.FileSignatures.NINTENDO_GB.csproj">
+      <Project>{2e37a6ef-802f-489f-8c90-73a2095ff624}</Project>
+      <Name>Snowflake.FileSignatures.NINTENDO_GB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FileSignatures\Snowflake.FileSignatures.NINTENDO_GCN_ISO\Snowflake.FileSignatures.NINTENDO_GCN_ISO.csproj">
+      <Project>{a6ff71b6-1a73-4986-b369-6b0455615013}</Project>
+      <Name>Snowflake.FileSignatures.NINTENDO_GCN_ISO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FileSignatures\Snowflake.FileSignatures.NINTENDO_N64\Snowflake.FileSignatures.NINTENDO_N64.csproj">
+      <Project>{9ab92de7-2b3d-4eba-895d-4c3576d97af7}</Project>
+      <Name>Snowflake.FileSignatures.NINTENDO_N64</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FileSignatures\Snowflake.FileSignatures.NINTENDO_NDS\Snowflake.FileSignatures.NINTENDO_NDS.csproj">
+      <Project>{28896de5-62b5-4970-81bf-e4637e94749b}</Project>
+      <Name>Snowflake.FileSignatures.NINTENDO_NDS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FileSignatures\Snowflake.FileSignatures.NINTENDO_NES\Snowflake.FileSignatures.NINTENDO_NES.csproj">
+      <Project>{d8c2f2ba-c105-427e-bd25-97fdd72dd419}</Project>
+      <Name>Snowflake.FileSignatures.NINTENDO_NES</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FileSignatures\Snowflake.FileSignatures.NINTENDO_SNES\Snowflake.FileSignatures.NINTENDO_SNES.csproj">
+      <Project>{0002cb6b-9c2e-4573-a643-b1b71ba08df7}</Project>
+      <Name>Snowflake.FileSignatures.NINTENDO_SNES</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FileSignatures\Snowflake.FileSignatures.NINTENDO_WII\Snowflake.FileSignatures.NINTENDO_WII.csproj">
+      <Project>{31362440-b83d-4075-a7f9-ff7aa211f361}</Project>
+      <Name>Snowflake.FileSignatures.NINTENDO_WII</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FileSignatures\Snowflake.FileSignatures.SEGA_32X\Snowflake.FileSignatures.SEGA_32X.csproj">
+      <Project>{edbe7128-fdd2-4871-89e0-ceab6230a2e3}</Project>
+      <Name>Snowflake.FileSignatures.SEGA_32X</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FileSignatures\Snowflake.FileSignatures.SEGA_CD\Snowflake.FileSignatures.SEGA_CD.csproj">
+      <Project>{c1150a1c-c6b2-495b-8fe3-b7875f8248bc}</Project>
+      <Name>Snowflake.FileSignatures.SEGA_CD</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FileSignatures\Snowflake.FileSignatures.SEGA_DC\Snowflake.FileSignatures.SEGA_DC.csproj">
+      <Project>{57fb294d-a3bc-4fbd-9814-25f23f721e69}</Project>
+      <Name>Snowflake.FileSignatures.SEGA_DC</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FileSignatures\Snowflake.FileSignatures.SEGA_GEN\Snowflake.FileSignatures.SEGA_GEN.csproj">
+      <Project>{621adcdd-8983-46d4-b9ad-125879a010b3}</Project>
+      <Name>Snowflake.FileSignatures.SEGA_GEN</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FileSignatures\Snowflake.FileSignatures.SEGA_GG\Snowflake.FileSignatures.SEGA_GG.csproj">
+      <Project>{6584094e-f4a8-4c16-86b0-56c1a975c45c}</Project>
+      <Name>Snowflake.FileSignatures.SEGA_GG</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FileSignatures\Snowflake.FileSignatures.SEGA_SAT\Snowflake.FileSignatures.SEGA_SAT.csproj">
+      <Project>{49ff3801-4ff6-439a-ae88-8f369199a614}</Project>
+      <Name>Snowflake.FileSignatures.SEGA_SAT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FileSignatures\Snowflake.FileSignatures.SONY_PS2_ISO\Snowflake.FileSignatures.SONY_PS2_ISO.csproj">
+      <Project>{abe0f2af-95b9-42c4-a825-359b2e869cf2}</Project>
+      <Name>Snowflake.FileSignatures.SONY_PS2_ISO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FileSignatures\Snowflake.FileSignatures.SONY_PSP_ISO\Snowflake.FileSignatures.SONY_PSP_ISO.csproj">
+      <Project>{c141609c-8b26-4e1d-8332-a4094d196a16}</Project>
+      <Name>Snowflake.FileSignatures.SONY_PSP_ISO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FileSignatures\Snowflake.FileSignatures.SONY_PSX_ISO\Snowflake.FileSignatures.SONY_PSX_ISO.csproj">
+      <Project>{489d3fce-ea29-4a1b-a434-a47e428e17ec}</Project>
+      <Name>Snowflake.FileSignatures.SONY_PSX_ISO</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>DEL "$(TargetDir)\$(TargetName).*"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

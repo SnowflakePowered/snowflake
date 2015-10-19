@@ -9,7 +9,6 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using Snowflake.Emulator;
 using Snowflake.Extensions;
-using Snowflake.Identifier;
 using Snowflake.Plugin;
 using Snowflake.Plugin.Configuration;
 using Snowflake.Scraper;
@@ -60,7 +59,14 @@ namespace Snowflake.Service.Manager
 
         public IDictionary<string, T> Plugins<T>() where T : IBasePlugin
         {
-            return this.loadedPlugins[typeof (T)].ToDictionary(plugin => plugin.Key, plugin => (T)plugin.Value);
+            try
+            {
+                return this.loadedPlugins[typeof (T)].ToDictionary(plugin => plugin.Key, plugin => (T) plugin.Value);
+            }
+            catch (KeyNotFoundException)
+            {
+                return null;
+            }
         }
 
         public T Plugin<T>(string pluginName) where T : IBasePlugin

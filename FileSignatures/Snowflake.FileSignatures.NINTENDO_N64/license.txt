@@ -1,0 +1,1 @@
+Snowflake.FileSignatures.NINTENDO_N64 is licensed under GPLv3 (see gpl.txt) due to the use of code from https://github.com/bryanperris/Soft64-Bryan/, as opposed to the Apache License v2 throughout the majority of Snowflake.

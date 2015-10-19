@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using Snowflake.Controller;
 using Snowflake.Events;
 using Snowflake.Events.ServiceEvents;
 using Snowflake.Platform;
+using Snowflake.Scraper;
 using Snowflake.Service;
 using Snowflake.Service.Manager;
 
@@ -43,7 +45,6 @@ namespace Snowflake.Shell.Windows
                 this.loadedCore.Get<IServerManager>().StartServer(serverName);
                 var serverStartEvent = new ServerStartEventArgs(this.loadedCore, serverName);
                 SnowflakeEventManager.EventSource.RaiseEvent(serverStartEvent); //todo Move event registration to SnowflakeEVentManager
-
             }
         }
         public void RestartCore()

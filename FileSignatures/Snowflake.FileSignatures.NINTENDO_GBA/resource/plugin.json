@@ -1,0 +1,15 @@
+﻿{
+    "name": "SnowflakeFileSignature-NINTENDO_GBA",
+    "type": "plugin_filesignature",
+    "version": "1.0.0.0",
+    "authors": [
+        "Snowflake"
+    ],
+    "description": "Nintendo Gameboy Advanced File Signature Comparator",
+    "platforms": [
+      "NINTENDO_GBA"
+    ],
+    "file_extensions": [
+      ".gba"
+    ]
+}

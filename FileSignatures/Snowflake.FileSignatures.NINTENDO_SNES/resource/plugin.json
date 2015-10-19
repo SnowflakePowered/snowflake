@@ -1,0 +1,16 @@
+﻿{
+    "name": "SnowflakeFileSignature-NINTENDO_SNES",
+    "type": "plugin_filesignature",
+    "version": "1.0.0.0",
+    "authors": [
+        "Snowflake"
+    ],
+    "description": "Super Nintendo Entertainment System File Signature Comparator",
+    "platforms": [
+      "NINTENDO_SNES"
+    ],
+    "file_extensions": [
+      ".sfc",
+	  ".smc"
+    ]
+}

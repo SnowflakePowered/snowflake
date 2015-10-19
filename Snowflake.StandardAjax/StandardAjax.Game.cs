@@ -8,6 +8,8 @@ using Snowflake.Events;
 using Snowflake.Events.CoreEvents.GameEvent;
 using Snowflake.Extensions;
 using Snowflake.Game;
+using Snowflake.Platform;
+using Snowflake.Scraper;
 using Snowflake.Service;
 using Snowflake.Service.Manager;
 
@@ -17,37 +19,60 @@ namespace Snowflake.StandardAjax
     {
         [AjaxMethod(MethodPrefix = "Game")]
         [AjaxMethodParameter(ParameterName = "filename", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
-        [AjaxMethodParameter(ParameterName = "platform", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
+        [AjaxMethodParameter(ParameterName = "platform", ParameterType = AjaxMethodParameterType.StringParameter, Required = false)]
         public IJSResponse GetGameResults(IJSRequest request)
         {
             string filename = request.GetParameter("filename");
             string platform = request.GetParameter("platform");
-            return new JSResponse(request, new ScrapeService(this.CoreInstance.Platforms[platform], this.CoreInstance).GetGameResults(filename));
+            var engine = this.CoreInstance.Get<IScrapeEngine>();
+            var platformInfo = (platform == null) ? null : !this.CoreInstance.Platforms.ContainsKey(platform) ? null : this.CoreInstance.Platforms[platform];
+            var info = engine.GetScrapableInfo(filename, platformInfo);
+            return new JSResponse(request, engine.GetScrapeResults(info));
         }
 
         [AjaxMethod(MethodPrefix = "Game")]
         [AjaxMethodParameter(ParameterName = "filename", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
-        [AjaxMethodParameter(ParameterName = "platform", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
+        [AjaxMethodParameter(ParameterName = "platform", ParameterType = AjaxMethodParameterType.StringParameter, Required = false)]
         [AjaxMethodParameter(ParameterName = "scraper", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
         public IJSResponse GetGameResultsUsingScraper(IJSRequest request)
         {
             string filename = request.GetParameter("filename");
             string platform = request.GetParameter("platform");
             string scraperId = request.GetParameter("scraper");
-
-            return new JSResponse(request, new ScrapeService(this.CoreInstance.Platforms[platform], scraperId, this.CoreInstance).GetGameResults(filename));
+            var engine = this.CoreInstance.Get<IScrapeEngine>();
+            var platformInfo = (platform == null) ? null : !this.CoreInstance.Platforms.ContainsKey(platform) ? null : this.CoreInstance.Platforms[platform];
+            var info = engine.GetScrapableInfo(filename, platformInfo);
+            var scraper = this.CoreInstance.Get<IPluginManager>().Plugin<IScraper>(scraperId);
+            return new JSResponse(request, engine.GetScrapeResults(info, scraper));
         }
 
         [AjaxMethod(MethodPrefix = "Game")]
-        [AjaxMethodParameter(ParameterName = "resultid", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
+        [AjaxMethodParameter(ParameterName = "result", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
         [AjaxMethodParameter(ParameterName = "filename", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
-        [AjaxMethodParameter(ParameterName = "platform", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
-        public IJSResponse GetGameInfo(IJSRequest request)
+        [AjaxMethodParameter(ParameterName = "platform", ParameterType = AjaxMethodParameterType.StringParameter, Required = false)]
+        public IJSResponse GetGameInfoFromResult(IJSRequest request)
         {
-            string resultid = request.GetParameter("resultid");
+            string result_pre = request.GetParameter("result");
+            IGameScrapeResult result = JsonConvert.DeserializeObject<GameScrapeResult>(result_pre);
             string platform = request.GetParameter("platform");
             string filename = request.GetParameter("filename");
-            return new JSResponse(request, new ScrapeService(this.CoreInstance.Platforms[platform], this.CoreInstance).GetGameInfo(resultid, filename));
+            var engine = this.CoreInstance.Get<IScrapeEngine>();
+            var platformInfo = (platform == null) ? null : !this.CoreInstance.Platforms.ContainsKey(platform) ? null : this.CoreInstance.Platforms[platform];
+            var info = engine.GetScrapableInfo(filename, platformInfo);
+            return new JSResponse(request, engine.GetGameData(info, result));
+        }
+
+        [AjaxMethod(MethodPrefix = "Game")]
+        [AjaxMethodParameter(ParameterName = "filename", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
+        [AjaxMethodParameter(ParameterName = "platform", ParameterType = AjaxMethodParameterType.StringParameter, Required = false)]
+        public IJSResponse GetGameInfo(IJSRequest request)
+        {
+            string platform = request.GetParameter("platform");
+            string filename = request.GetParameter("filename");
+            var engine = this.CoreInstance.Get<IScrapeEngine>();
+            var platformInfo = (platform == null) ? null : !this.CoreInstance.Platforms.ContainsKey(platform) ? null : this.CoreInstance.Platforms[platform];
+            var info = engine.GetScrapableInfo(filename, platformInfo);
+            return new JSResponse(request, engine.GetGameData(info));
         }
 
         [AjaxMethod(MethodPrefix = "Game")]
