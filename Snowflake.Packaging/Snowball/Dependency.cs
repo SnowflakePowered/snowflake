@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using NuGet;
 
 namespace Snowflake.Packaging.Snowball
 {
-    [JsonConverter(typeof(ToStringConverter))]
+    [JsonConverter(typeof(DependencyStringConverter))]
     public class Dependency
     {
         public string PackageName { get; }
@@ -18,17 +19,18 @@ namespace Snowflake.Packaging.Snowball
         {
             var _dependency = dependencyString.Split('@');
             this.PackageName = _dependency[0];
-            this.DependencyVersion = new SemanticVersion(_dependency[1]);
+            this.DependencyVersion = _dependency.Length == 2 ? new SemanticVersion(_dependency[1]) : null;
         }
 
         public override string ToString()
         {
-            return $"{this.PackageName}@{this.DependencyVersion}";
+
+            return this.DependencyVersion == null ? this.PackageName : $"{this.PackageName}@{this.DependencyVersion}";
         }
 
 
     }
-    public class ToStringConverter : JsonConverter
+    public class DependencyStringConverter : JsonConverter
     {
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
@@ -37,12 +39,22 @@ namespace Snowflake.Packaging.Snowball
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            throw new NotImplementedException();
+
+            // Load JObject from stream.  Turns out we're also called for null arrays of our objects,
+            // so handle a null by returning one.
+            var jToken = JToken.Load(reader);
+            if (jToken.Type == JTokenType.Null)
+                return null;
+            if (jToken.Type != JTokenType.String)
+            {
+                throw new InvalidOperationException("Json: expected string ; got " + jToken.Type);
+            }
+            return new Dependency((string)jToken);
         }
 
         public override bool CanConvert(Type objectType)
         {
-            return false;
+            return objectType == typeof(Dependency);
         }
     }
 }

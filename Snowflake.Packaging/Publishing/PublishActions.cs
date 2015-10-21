@@ -122,7 +122,7 @@ namespace Snowflake.Packaging.Publishing
             Console.WriteLine($"Submitting {packageInfo.PackageType}-{packageInfo.Name} to master repository");
             var pr = new NewPullRequest($"Add {packageInfo.PackageType} {packageInfo.Name} v{packageInfo.Version}", $"{user.Login}:{branchName}", "master");
             var prs = await gh.PullRequest.Create("SnowflakePowered-Packages", "snowball-packages", pr);
-            Console.WriteLine($"Submission complete. Please wait for approval for at {prs.IssueUrl} before your package is available.");
+            Console.WriteLine($"Submission complete. Please wait for approval for at {prs.HtmlUrl} before your package is available.");
 
         }
     }
