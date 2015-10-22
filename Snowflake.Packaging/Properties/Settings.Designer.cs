@@ -46,5 +46,17 @@ namespace Snowflake.Packaging.Properties {
                 this["nugetToken"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string cachedRepoHash {
+            get {
+                return ((string)(this["cachedRepoHash"]));
+            }
+            set {
+                this["cachedRepoHash"] = value;
+            }
+        }
     }
 }

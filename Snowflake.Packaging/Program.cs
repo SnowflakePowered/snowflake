@@ -109,7 +109,20 @@ namespace Snowflake.Packaging
                     }
                     else
                     {
-                        
+                        Task.Run(async () =>
+                        {
+                            try {
+                                var deps = await GithubPackages.ResolveDependencies(options.PackageFiles[0]);
+                                foreach (var dep in deps)
+                                {
+                                    Console.WriteLine(dep.Name);
+                                }
+                            }
+                            catch (Octokit.ApiException)
+                            {
+                                Console.WriteLine("Rate limit exceeded, log in with GitHub credentials using snowball auth");
+                            }
+                        }).Wait();
                     }
                     //todo wrap in try/catch
 

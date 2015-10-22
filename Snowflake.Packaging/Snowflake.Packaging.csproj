@@ -72,6 +72,7 @@
     <Compile Include="Commands.cs" />
     <Compile Include="Installing\GithubPackages.cs" />
     <Compile Include="Installing\InstallManager.cs" />
+    <Compile Include="Installing\LocalRepository.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>

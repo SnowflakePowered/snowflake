@@ -13,12 +13,22 @@ namespace Snowflake.Packaging.Installing
     public class InstallManager
     {
         public string AppDataPath { get; }
-
+        public LocalRepository PackageRepository { get; }
         public InstallManager(string appDataPath)
         {
             if (!Directory.Exists(Path.Combine(appDataPath, ".snowballmanifest")))
                 Directory.CreateDirectory(Path.Combine(appDataPath, ".snowballmanifest"));
             this.AppDataPath = Path.GetFullPath(appDataPath);
+            this.PackageRepository = new LocalRepository(this.AppDataPath);
+            Task.Run(
+                async () =>
+                {
+                    if(await this.PackageRepository.UpdatedRequired())
+                    {
+                        await this.PackageRepository.UpdateRepository();
+                    }
+                }
+            ).Wait();
         }
 
         public void InstallSinglePackage(string packagePath)
