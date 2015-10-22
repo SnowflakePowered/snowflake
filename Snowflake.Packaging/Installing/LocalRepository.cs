@@ -14,8 +14,25 @@ using Snowflake.Packaging.Publishing;
 
 namespace Snowflake.Packaging.Installing
 {
+    static class IEnumerableExtensions
+    {
+        internal static IEnumerable<TSource> DistinctBy<TSource, TKey>
+        (this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
+        {
+            HashSet<TKey> knownKeys = new HashSet<TKey>();
+            foreach (TSource element in source)
+            {
+                if (knownKeys.Add(keySelector(element)))
+                {
+                    yield return element;
+                }
+            }
+        }
+    }
+
     public class LocalRepository
     {
+       
         public string AppDataDirectory { get; }
         public string RepositoryOrg{ get; }
         public string RepositoryName { get; }
@@ -67,22 +84,42 @@ namespace Snowflake.Packaging.Installing
             return jsonFile != null ? JsonConvert.DeserializeObject<ReleaseInfo>(jsonFile) : null;
         }
 
-
-        public IEnumerable<ReleaseInfo> ResolveDependencies(string packageId, SemanticVersion releaseVersion = null)
+        public IEnumerable<Tuple<ReleaseInfo, SemanticVersion>> ResolveDependencies(string packageId, SemanticVersion releaseVersion = null)
         {
-            IList<ReleaseInfo> releaseInfos = new List<ReleaseInfo>();
+            IList<Tuple<ReleaseInfo, SemanticVersion>> releaseInfos = new List<Tuple<ReleaseInfo, SemanticVersion>>();
             var initialReleaseInfo = this.GetReleaseInfo(packageId);
             if (initialReleaseInfo == null) return null;
-            releaseInfos.Add(initialReleaseInfo);
+            releaseInfos.Add(Tuple.Create(initialReleaseInfo, releaseVersion));
             var versionDeps = releaseVersion != null ? initialReleaseInfo.ReleaseVersions[releaseVersion] : initialReleaseInfo.ReleaseVersions.OrderByDescending(version => version.Key).First().Value;
             foreach (var dependency in versionDeps)
             {
                 //Traverse the dependency tree using recursion
                 releaseInfos.AddRange(this.ResolveDependencies(dependency.PackageName, dependency.DependencyVersion));
             }
-            return releaseInfos.Distinct();
+            return releaseInfos.DistinctBy(key => key.Item1.Name);
         }
 
+        public IEnumerable<Tuple<ReleaseInfo, SemanticVersion>> ResolveDependencies(IEnumerable<string> releaseStrings)
+        {
+            var _installList = new List<Tuple<ReleaseInfo, SemanticVersion>>();
+            foreach (string installPackage in releaseStrings)
+            {
+                string packageName = String.Empty;
+                SemanticVersion packageVersion = null;
+
+                if (installPackage.Contains('@'))
+                {
+                    packageName = installPackage.Split('@')[1];
+                    packageVersion = new SemanticVersion(installPackage.Split('@')[2]);
+                }
+                else
+                {
+                    packageName = installPackage;
+                }
+                _installList.AddRange(this.ResolveDependencies(packageName, packageVersion));
+            }
+            return _installList.DistinctBy(key => key.Item1.Name);
+        }
         public static string GetNugetDownload(ReleaseInfo releaseinfo, string version = "")
         {
             return $"https://www.nuget.org/api/v2/package/snowflake-snowball-{releaseinfo.PackageType.ToString()}-{releaseinfo.Name}/{version}";

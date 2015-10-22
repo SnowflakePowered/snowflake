@@ -10,13 +10,14 @@ using Snowflake.Packaging.Snowball;
 using Snowflake.Packaging.Publishing;
 using Newtonsoft.Json;
 using CommandLine;
+using System.Net;
 using Snowflake.Packaging.Installing;
 
 namespace Snowflake.Packaging
 {
     static class Program
     {
-        
+
         public static void Main(string[] args)
         {
             var result = Parser.Default.ParseArguments<PackOptions,
@@ -83,7 +84,7 @@ namespace Snowflake.Packaging
                     Task.Run(async () => {
                         Account.SaveDetails(await Account.CreateGithubToken(options.GithubUser, options.GithubPassword), options.NuGetAPIKey);
                         await Account.MakeRepoFork(Account.GetGithubToken());
-                        }).Wait();
+                    }).Wait();
                 })
                 .WithParsed<InstallOptions>(options =>
                 {
@@ -98,7 +99,7 @@ namespace Snowflake.Packaging
                         {
                             try
                             {
-                                manager.InstallSinglePackage(file);
+                                manager.InstallPackage(file);
                             }
                             catch (Exception ex)
                             {
@@ -109,13 +110,28 @@ namespace Snowflake.Packaging
                     }
                     else
                     {
-                        foreach (var dep in manager.PackageRepository.ResolveDependencies("testplugin"))
-                        {
-                            Console.WriteLine(dep.Name);
-                        };
-                    }
-                    //todo wrap in try/catch
 
+                        var dependencies = manager.PackageRepository.ResolveDependencies(options.PackageFiles);
+                        string tempPath = Program.GetTemporaryDirectory();
+
+                        using (var webClient = new WebClient())
+                        {
+                            foreach (var dependency in dependencies)
+                            {
+                                string version = dependency.Item2?.ToString() ?? dependency.Item1.ReleaseVersions.OrderByDescending(_version => _version.Key).First().Key.ToString();
+                                Console.WriteLine($"Downloading {dependency.Item1.Name} {version}");
+                                webClient.DownloadData(LocalRepository.GetNugetDownload(dependency.Item1, version));
+
+                                //todo confirm valid signature and extract package file.
+                            }
+                        }
+
+                        foreach(string fileName in Directory.EnumerateFiles(tempPath))
+                        {
+                            manager.InstallPackage(fileName);
+                        }
+                       
+                    }
                 })
                 .WithParsed<UninstallOptions>(options =>
                 {
@@ -133,6 +149,12 @@ namespace Snowflake.Packaging
             string serialized = JsonConvert.SerializeObject(packageInfo);
             var newPackage = JsonConvert.DeserializeObject<PackageInfo>(serialized);
 
+        }
+        private static string GetTemporaryDirectory()
+        {
+            string tempDirectory = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+            Directory.CreateDirectory(tempDirectory);
+            return tempDirectory;
         }
     }
 }

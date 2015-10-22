@@ -31,7 +31,8 @@ namespace Snowflake.Packaging.Installing
             ).Wait();
         }
 
-        public void InstallSinglePackage(string packagePath)
+       
+        public void InstallPackage(string packagePath)
         {
             if (String.IsNullOrWhiteSpace(packagePath)) return;
             var zip = new ZipArchive(File.Open(packagePath, FileMode.Open), ZipArchiveMode.Read, false);
