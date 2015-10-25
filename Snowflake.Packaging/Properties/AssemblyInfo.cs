@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Snowflake.Packaging")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("snowball Package Manager for Snowflake")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Snowflake.Packaging")]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
+[assembly: AssemblyProduct("Snowball Package Manager for Snowflake")]
+[assembly: AssemblyCopyright("Copyright © Snowflake Authors 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

@@ -18,9 +18,9 @@ namespace Snowflake.Packaging
 {
     static class Program
     {
-
         public static void Main(string[] args)
         {
+            
             var result = Parser.Default.ParseArguments<PackOptions,
                 MakePluginOptions, MakeThemeOptions, MakeEmulatorAssemblyOptions,
                 InstallOptions, UninstallOptions, PublishOptions, AuthOptions, SignOptions, VerifyOptions>(args)
@@ -154,20 +154,25 @@ namespace Snowflake.Packaging
                 })
                 .WithParsed<UninstallOptions>(options =>
                 {
+                    
                         options.SnowflakeRoot = options.SnowflakeRoot ??
                                                 Path.Combine(
                                                     Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                                                     "Snowflake");
                         var manager = new InstallManager(options.SnowflakeRoot);
-                        manager.UninstallPackage(options.PackageIds[0]);
-                        //todo wrap in try/catch
+                    foreach (string packageId in options.PackageIds)
+                    {
+                        try
+                        {
+                            manager.UninstallPackage(packageId);
+                            Console.WriteLine($"Uninstalled package {packageId}");
+                        }
+                        catch(Exception ex)
+                        {
+                            Console.WriteLine($"Unable to uninstall {packageId}: {ex.Message}");
+                        }
+                    }
                 }); 
-            
-
-            var packageInfo = new PackageInfo("name-Test", "desc-Test", new List<string>() {"test-Auth"}, "1.0.0", new List<string>() { "testdep@1.0.0" }, PackageType.Plugin);
-            string serialized = JsonConvert.SerializeObject(packageInfo);
-            var newPackage = JsonConvert.DeserializeObject<PackageInfo>(serialized);
-
         }
         private static string GetTemporaryDirectory()
         {
