@@ -26,11 +26,8 @@ namespace Snowflake.Shell.Windows
 
         public void StartCore()
         {
-#if DEBUG
-            this.loadedCore = new CoreService(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location));
-#else
+
             this.loadedCore = new CoreService(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Snowflake"));
-#endif
             this.loadedCore.Get<IEmulatorAssembliesManager>().LoadEmulatorAssemblies();
             this.loadedCore.Get<IPluginManager>().Initialize();
             this.loadedCore.Get<IAjaxManager>().Initialize(this.loadedCore.Get<IPluginManager>());
