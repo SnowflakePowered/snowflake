@@ -11,6 +11,7 @@ using Snowflake.Packaging.Publishing;
 using Newtonsoft.Json;
 using CommandLine;
 using System.Net;
+using System.IO.Compression;
 using Snowflake.Packaging.Installing;
 
 namespace Snowflake.Packaging
@@ -113,16 +114,34 @@ namespace Snowflake.Packaging
 
                         var dependencies = manager.PackageRepository.ResolveDependencies(options.PackageFiles);
                         string tempPath = Program.GetTemporaryDirectory();
+                        string downloadPath = Program.GetTemporaryDirectory();
 
                         using (var webClient = new WebClient())
                         {
                             foreach (var dependency in dependencies)
                             {
+                                string nugetDownloadPath = downloadPath + Path.GetRandomFileName();
                                 string version = dependency.Item2?.ToString() ?? dependency.Item1.ReleaseVersions.OrderByDescending(_version => _version.Key).First().Key.ToString();
                                 Console.WriteLine($"Downloading {dependency.Item1.Name} {version}");
-                                webClient.DownloadData(LocalRepository.GetNugetDownload(dependency.Item1, version));
-
-                                //todo confirm valid signature and extract package file.
+                                webClient.DownloadFile(LocalRepository.GetNugetDownload(dependency.Item1, version), nugetDownloadPath);
+                                using (var nugetPkg = new ZipArchive(File.OpenRead(nugetDownloadPath)))
+                                {
+                                    var snowballEntry = nugetPkg.Entries.First(entry => entry.Name.EndsWith(".snowball"));
+                                    var _snowballSig = nugetPkg.GetEntry(snowballEntry.Name +".sig");
+                                    var snowballKey = nugetPkg.GetEntry(snowballEntry.Name + ".key");
+                                    var snowballSig = new MemoryStream();
+                                    _snowballSig.Open().CopyTo(snowballSig);
+                                    bool signed = Signing.VerifySnowball(snowballEntry.Open(), snowballSig.ToArray(),
+                                        new StreamReader(snowballKey.Open()).ReadToEnd());
+                                    if (signed)
+                                    {
+                                        snowballEntry.ExtractToFile(Path.Combine(tempPath, Path.GetRandomFileName()));
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine($"Unable to install {dependency.Item1.Name}, it is improperly signed. File an issue at https://github.com/SnowflakePowered-Packages/snowball-packages/issues/new");
+                                    }
+                                }
                             }
                         }
 

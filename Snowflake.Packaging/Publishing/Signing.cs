@@ -42,7 +42,17 @@ namespace Snowflake.Packaging.Publishing
                 return rsaCrypt.VerifyData(Encoding.UTF8.GetBytes(sha256Hash), CryptoConfig.MapNameToOID("SHA512"), signature);
             }
         }
-        public static string HashSHA256(FileStream fileStream)
+        public static bool VerifySnowball(Stream snowballFile, byte[] signature, string rsaPublic)
+        {
+            using (RSACryptoServiceProvider rsaCrypt = new RSACryptoServiceProvider())
+            {
+                string sha256Hash = Signing.HashSHA256(snowballFile);
+                rsaCrypt.PersistKeyInCsp = false;
+                rsaCrypt.FromXmlString(rsaPublic);
+                return rsaCrypt.VerifyData(Encoding.UTF8.GetBytes(sha256Hash), CryptoConfig.MapNameToOID("SHA512"), signature);
+            }
+        }
+        public static string HashSHA256(Stream fileStream)
         {
             using (var sha256 = SHA256.Create())
                 return BitConverter.ToString(sha256.ComputeHash(fileStream)).Replace("-", string.Empty).ToLowerInvariant();
