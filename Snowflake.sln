@@ -41,6 +41,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Shell.Windows", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FileSignatures", "FileSignatures", "{3BE10560-7E96-4F7E-9028-AC03442B1E1B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Packaging", "Snowflake.Packaging\Snowflake.Packaging.csproj", "{ECD941C9-3925-4C38-8071-D1393E146C4A}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.FileSignatures.SONY_PSX_ISO", "FileSignatures\Snowflake.FileSignatures.SONY_PSX_ISO\Snowflake.FileSignatures.SONY_PSX_ISO.csproj", "{489D3FCE-EA29-4A1B-A434-A47E428E17EC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.FileSignatures.SONY_PS2_ISO", "FileSignatures\Snowflake.FileSignatures.SONY_PS2_ISO\Snowflake.FileSignatures.SONY_PS2_ISO.csproj", "{ABE0F2AF-95B9-42C4-A825-359B2E869CF2}"
@@ -151,6 +153,14 @@ Global
 		{F7A99F10-7770-490C-BF02-92C8B58AD2F3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F7A99F10-7770-490C-BF02-92C8B58AD2F3}.Release|x86.ActiveCfg = Release|Any CPU
 		{F7A99F10-7770-490C-BF02-92C8B58AD2F3}.Release|x86.Build.0 = Release|Any CPU
+		{ECD941C9-3925-4C38-8071-D1393E146C4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECD941C9-3925-4C38-8071-D1393E146C4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECD941C9-3925-4C38-8071-D1393E146C4A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{ECD941C9-3925-4C38-8071-D1393E146C4A}.Debug|x86.Build.0 = Debug|Any CPU
+		{ECD941C9-3925-4C38-8071-D1393E146C4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECD941C9-3925-4C38-8071-D1393E146C4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECD941C9-3925-4C38-8071-D1393E146C4A}.Release|x86.ActiveCfg = Release|Any CPU
+		{ECD941C9-3925-4C38-8071-D1393E146C4A}.Release|x86.Build.0 = Release|Any CPU
 		{489D3FCE-EA29-4A1B-A434-A47E428E17EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{489D3FCE-EA29-4A1B-A434-A47E428E17EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{489D3FCE-EA29-4A1B-A434-A47E428E17EC}.Debug|x86.ActiveCfg = Debug|Any CPU
