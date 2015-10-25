@@ -9,7 +9,7 @@ bower_components/
 bower_*/
 bower_*/*
 !dummysmb.nes
-
+.vs/
 # User-specific files
 *.suo
 *.user
