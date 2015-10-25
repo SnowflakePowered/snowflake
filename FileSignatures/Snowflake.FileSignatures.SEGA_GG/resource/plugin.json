@@ -1,0 +1,16 @@
+﻿{
+    "name": "SnowflakeFileSignature-SEGA_GG",
+    "type": "plugin_filesignature",
+    "version": "1.0.0.0",
+    "authors": [
+        "Snowflake"
+    ],
+    "description": "Sega Game Gear File Signature Comparator",
+    "platforms": [
+      "SEGA_GG"
+    ],
+    "file_extensions": [
+      ".gg",
+	  ".bin"
+    ]
+}

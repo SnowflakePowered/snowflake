@@ -1,0 +1,16 @@
+﻿{
+    "name": "SnowflakeFileSignature-NINTENDO_WII",
+    "type": "plugin_filesignature",
+    "version": "1.0.0.0",
+    "authors": [
+        "Snowflake"
+    ],
+    "description": "Nintendo Wii File Signature Comparator",
+    "platforms": [
+      "NINTENDO_WII"
+    ],
+    "file_extensions": [
+      ".iso",
+	  ".wbfs"
+    ]
+}

@@ -1,0 +1,16 @@
+﻿{
+    "name": "SnowflakeFileSignature-SONY_PS2_ISO",
+    "type": "plugin_filesignature",
+    "version": "1.0.0.0",
+    "authors": [
+        "Snowflake"
+    ],
+    "description": "Sony Playstation 2 ISO File Signature Comparator",
+    "platforms": [
+      "SONY_PS2"
+    ],
+    "file_extensions": [
+      ".iso",
+	  ".bin"
+    ]
+}

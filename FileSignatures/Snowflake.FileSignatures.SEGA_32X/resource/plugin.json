@@ -1,0 +1,16 @@
+﻿{
+    "name": "SnowflakeFileSignature-SEGA_32X",
+    "type": "plugin_filesignature",
+    "version": "1.0.0.0",
+    "authors": [
+        "Snowflake"
+    ],
+    "description": "Sega 32X File Signature Comparator",
+    "platforms": [
+      "SEGA_32X"
+    ],
+    "file_extensions": [
+      ".32x",
+	  ".bin"
+    ]
+}

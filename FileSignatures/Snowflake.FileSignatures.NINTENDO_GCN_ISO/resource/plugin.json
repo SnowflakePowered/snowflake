@@ -1,0 +1,15 @@
+﻿{
+    "name": "SnowflakeFileSignature-NINTENDO_GCN_ISO",
+    "type": "plugin_filesignature",
+    "version": "1.0.0.0",
+    "authors": [
+        "Snowflake"
+    ],
+    "description": "Nintendo GameCube ISO File Signature Comparator",
+    "platforms": [
+      "NINTENDO_GBC"
+    ],
+    "file_extensions": [
+      ".iso"
+    ]
+}
