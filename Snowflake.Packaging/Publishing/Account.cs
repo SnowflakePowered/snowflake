@@ -1,27 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Security;
 using System.Security.Cryptography;
+using System.Text;
+using System.Threading.Tasks;
 using Octokit;
 
 namespace Snowflake.Packaging.Publishing
 {
+
     #region encryption
+
     /// <summary>
     /// http://stackoverflow.com/a/8874634
     /// </summary>
-    class SecureIt
+    internal class SecureIt
     {
-        static byte[] entropy = System.Text.Encoding.Unicode.GetBytes("SNOWFLAKESNOWBALLPWD");
+        private static readonly byte[] entropy = Encoding.Unicode.GetBytes("SNOWFLAKESNOWBALLPWD");
 
-        public static string EncryptString(System.Security.SecureString input)
+        public static string EncryptString(SecureString input)
         {
-            byte[] encryptedData = System.Security.Cryptography.ProtectedData.Protect(
-                Encoding.Unicode.GetBytes(ToInsecureString(input)),
-                entropy,
+            byte[] encryptedData = ProtectedData.Protect(
+                Encoding.Unicode.GetBytes(SecureIt.ToInsecureString(input)),
+                SecureIt.entropy,
                 DataProtectionScope.CurrentUser);
             return Convert.ToBase64String(encryptedData);
         }
@@ -30,11 +30,11 @@ namespace Snowflake.Packaging.Publishing
         {
             try
             {
-                byte[] decryptedData = System.Security.Cryptography.ProtectedData.Unprotect(
+                byte[] decryptedData = ProtectedData.Unprotect(
                     Convert.FromBase64String(encryptedData),
-                    entropy,
-                    System.Security.Cryptography.DataProtectionScope.CurrentUser);
-                return ToSecureString(System.Text.Encoding.Unicode.GetString(decryptedData));
+                    SecureIt.entropy,
+                    DataProtectionScope.CurrentUser);
+                return SecureIt.ToSecureString(Encoding.Unicode.GetString(decryptedData));
             }
             catch
             {
@@ -46,9 +46,7 @@ namespace Snowflake.Packaging.Publishing
         {
             SecureString secure = new SecureString();
             foreach (char c in input)
-            {
                 secure.AppendChar(c);
-            }
             secure.MakeReadOnly();
             return secure;
         }
@@ -67,12 +65,12 @@ namespace Snowflake.Packaging.Publishing
             }
             return returnValue;
         }
-
     }
+
     #endregion
+
     public class Account
     {
-
         public static void SaveDetails(string githubToken, string nugetToken)
         {
             var cipherGithubToken = SecureIt.EncryptString(SecureIt.ToSecureString(githubToken));
@@ -84,17 +82,20 @@ namespace Snowflake.Packaging.Publishing
         }
 
 
-        public async static Task MakeRepoFork(string githubToken)
+        public static async Task MakeRepoFork(string githubToken)
         {
             var gh = new GitHubClient(new ProductHeaderValue("snowball")) {Credentials = new Credentials(githubToken)};
             await gh.Repository.Forks.Create("SnowflakePowered-Packages", "snowball-packages", new NewRepositoryFork());
             Console.WriteLine("snowball-package has been forked to your GitHub account.");
         }
-        public async static Task<string> CreateGithubToken(string username, string password, string twoFactorAuthenticationCode = "")
+
+        public static async Task<string> CreateGithubToken(string username, string password,
+            string twoFactorAuthenticationCode = "")
         {
             var gh = new GitHubClient(new ProductHeaderValue("snowball"));
             gh.Credentials = new Credentials(username, password);
-            var authorization = new NewAuthorization("Snowball Packaging Publish", new string[] {
+            var authorization = new NewAuthorization("Snowball Packaging Publish", new[]
+            {
                 "public_repo",
                 "repo:status",
                 "repo",
@@ -102,7 +103,7 @@ namespace Snowflake.Packaging.Publishing
                 "repo_deployment"
             }, Guid.NewGuid().ToString());
             ApplicationAuthorization appAuth;
-            if (!String.IsNullOrWhiteSpace(twoFactorAuthenticationCode))
+            if (!string.IsNullOrWhiteSpace(twoFactorAuthenticationCode))
             {
                 appAuth =
                     await
@@ -125,10 +126,11 @@ namespace Snowflake.Packaging.Publishing
             //probably a bad idea but we'll do it anyways, we don't have much of a choice but to have the entire string in memory
             return SecureIt.ToInsecureString(SecureIt.DecryptString(Properties.Settings.Default.githubToken));
         }
+
         public static string GetNugetToken()
         {
             //same here, we don't have much of a choice but to have the entire string in memory
-            return SecureIt.ToInsecureString(SecureIt.DecryptString(Properties.Settings.Default.nugetToken)); 
+            return SecureIt.ToInsecureString(SecureIt.DecryptString(Properties.Settings.Default.nugetToken));
         }
     }
 }

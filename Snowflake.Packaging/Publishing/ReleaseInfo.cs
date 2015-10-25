@@ -1,30 +1,32 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Snowflake.Packaging.Snowball;
-using NuGet;
+﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using NuGet;
+using Snowflake.Packaging.Snowball;
+
 namespace Snowflake.Packaging.Publishing
 {
     public class ReleaseInfo
     {
         [JsonProperty("name")]
         public string Name { get; }
+
         [JsonProperty("description")]
         public string Description { get; }
+
         [JsonProperty("authors")]
         public IList<string> Authors { get; }
+
         [JsonProperty("packagetype")]
-        [JsonConverter(typeof(StringEnumConverter))]
+        [JsonConverter(typeof (StringEnumConverter))]
         public PackageType PackageType { get; }
+
         [JsonProperty("versions")]
         public IDictionary<SemanticVersion, IList<Dependency>> ReleaseVersions { get; }
+
         [JsonConstructor]
-        public ReleaseInfo(string name, string description, IList<string> authors, IDictionary<SemanticVersion, IList<Dependency>> versions, PackageType packageType)
+        public ReleaseInfo(string name, string description, IList<string> authors,
+            IDictionary<SemanticVersion, IList<Dependency>> versions, PackageType packageType)
         {
             this.ReleaseVersions = versions;
             this.Name = name;
@@ -32,6 +34,5 @@ namespace Snowflake.Packaging.Publishing
             this.Authors = authors;
             this.PackageType = packageType;
         }
-
     }
 }

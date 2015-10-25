@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NuGet;
 
 namespace Snowflake.Packaging.Snowball
 {
-    [JsonConverter(typeof(DependencyStringConverter))]
+    [JsonConverter(typeof (DependencyStringConverter))]
     public class Dependency
     {
         public string PackageName { get; }
@@ -24,12 +20,10 @@ namespace Snowflake.Packaging.Snowball
 
         public override string ToString()
         {
-
             return this.DependencyVersion == null ? this.PackageName : $"{this.PackageName}@{this.DependencyVersion}";
         }
-
-
     }
+
     public class DependencyStringConverter : JsonConverter
     {
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
@@ -37,24 +31,22 @@ namespace Snowflake.Packaging.Snowball
             writer.WriteValue(value.ToString());
         }
 
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
+            JsonSerializer serializer)
         {
-
             // Load JObject from stream.  Turns out we're also called for null arrays of our objects,
             // so handle a null by returning one.
             var jToken = JToken.Load(reader);
             if (jToken.Type == JTokenType.Null)
                 return null;
             if (jToken.Type != JTokenType.String)
-            {
                 throw new InvalidOperationException("Json: expected string ; got " + jToken.Type);
-            }
-            return new Dependency((string)jToken);
+            return new Dependency((string) jToken);
         }
 
         public override bool CanConvert(Type objectType)
         {
-            return objectType == typeof(Dependency);
+            return objectType == typeof (Dependency);
         }
     }
 }

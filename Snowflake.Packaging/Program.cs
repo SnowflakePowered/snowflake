@@ -1,26 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Reflection;
-using Snowflake.Packaging.Snowball;
-using Snowflake.Packaging.Publishing;
-using Newtonsoft.Json;
-using CommandLine;
-using System.Net;
 using System.IO.Compression;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
+using CommandLine;
 using Snowflake.Packaging.Installing;
+using Snowflake.Packaging.Publishing;
+using Snowflake.Packaging.Snowball;
 
 namespace Snowflake.Packaging
 {
-    static class Program
+    internal static class Program
     {
         public static void Main(string[] args)
         {
-            
             var result = Parser.Default.ParseArguments<PackOptions,
                 MakePluginOptions, MakeThemeOptions, MakeEmulatorAssemblyOptions,
                 InstallOptions, UninstallOptions, PublishOptions, AuthOptions, SignOptions, VerifyOptions>(args)
@@ -37,28 +31,27 @@ namespace Snowflake.Packaging
                 .WithParsed<MakeEmulatorAssemblyOptions>(options =>
                 {
                     options.OutputDirectory = options.OutputDirectory ?? Environment.CurrentDirectory;
-                    Package.MakeFromEmulatorDefinition(options.EmulatorDefinitionFile, options.PackageInfoFile, options.OutputDirectory);
+                    Package.MakeFromEmulatorDefinition(options.EmulatorDefinitionFile, options.PackageInfoFile,
+                        options.OutputDirectory);
                 })
                 .WithParsed<MakeThemeOptions>(options =>
                 {
                     options.OutputDirectory = options.OutputDirectory ?? Environment.CurrentDirectory;
                     Package.MakeFromTheme(options.ThemeDirectory, options.PackageInfoFile, options.OutputDirectory);
                 })
-                .WithParsed<SignOptions>(options =>
-                {
-                    Signing.SignSnowball(options.FileName);
-                })
+                .WithParsed<SignOptions>(options => { Signing.SignSnowball(options.FileName); })
                 .WithParsed<VerifyOptions>(options =>
                 {
-                    bool signed = Signing.VerifySnowball(options.FileName, options.FileName + ".sig", options.FileName + ".key");
+                    bool signed = Signing.VerifySnowball(options.FileName, options.FileName + ".sig",
+                        options.FileName + ".key");
                     Console.WriteLine(signed);
                 })
                 .WithParsed<PublishOptions>(options =>
                 {
                     try
                     {
-                        if (!String.IsNullOrWhiteSpace(Properties.Settings.Default.githubToken) &&
-                            !String.IsNullOrWhiteSpace(Properties.Settings.Default.nugetToken))
+                        if (!string.IsNullOrWhiteSpace(Properties.Settings.Default.githubToken) &&
+                            !string.IsNullOrWhiteSpace(Properties.Settings.Default.nugetToken))
                         {
                             Task.Run(async () =>
                             {
@@ -75,15 +68,18 @@ namespace Snowflake.Packaging
                     catch (AggregateException ex)
                     {
                         Console.WriteLine(
-                            $"Unable to publish package {options.PackageFile}: {String.Join(", ", ex.InnerExceptions.Select(_ex => _ex.Message))}");
+                            $"Unable to publish package {options.PackageFile}: {string.Join(", ", ex.InnerExceptions.Select(_ex => _ex.Message))}");
                     }
                 })
                 .WithParsed<AuthOptions>(options =>
                 {
                     Console.Clear();
                     Console.WriteLine("Console cleared for security purposes.");
-                    Task.Run(async () => {
-                        Account.SaveDetails(await Account.CreateGithubToken(options.GithubUser, options.GithubPassword), options.NuGetAPIKey);
+                    Task.Run(async () =>
+                    {
+                        Account.SaveDetails(
+                            await Account.CreateGithubToken(options.GithubUser, options.GithubPassword),
+                            options.NuGetAPIKey);
                         await Account.MakeRepoFork(Account.GetGithubToken());
                     }).Wait();
                 })
@@ -105,13 +101,11 @@ namespace Snowflake.Packaging
                             catch (Exception ex)
                             {
                                 Console.WriteLine($"Could not install package {file}: {ex.Message}");
-                                continue;
                             }
                         }
                     }
                     else
                     {
-
                         var dependencies = manager.PackageRepository.ResolveDependencies(options.PackageFiles);
                         string tempPath = Program.GetTemporaryDirectory();
                         string downloadPath = Program.GetTemporaryDirectory();
@@ -121,45 +115,43 @@ namespace Snowflake.Packaging
                             foreach (var dependency in dependencies)
                             {
                                 string nugetDownloadPath = downloadPath + Path.GetRandomFileName();
-                                string version = dependency.Item2?.ToString() ?? dependency.Item1.ReleaseVersions.OrderByDescending(_version => _version.Key).First().Key.ToString();
+                                string version = dependency.Item2?.ToString() ??
+                                                 dependency.Item1.ReleaseVersions.OrderByDescending(
+                                                     _version => _version.Key).First().Key.ToString();
                                 Console.WriteLine($"Downloading {dependency.Item1.Name} {version}");
-                                webClient.DownloadFile(LocalRepository.GetNugetDownload(dependency.Item1, version), nugetDownloadPath);
+                                webClient.DownloadFile(LocalRepository.GetNugetDownload(dependency.Item1, version),
+                                    nugetDownloadPath);
                                 using (var nugetPkg = new ZipArchive(File.OpenRead(nugetDownloadPath)))
                                 {
                                     var snowballEntry = nugetPkg.Entries.First(entry => entry.Name.EndsWith(".snowball"));
-                                    var _snowballSig = nugetPkg.GetEntry(snowballEntry.Name +".sig");
+                                    var _snowballSig = nugetPkg.GetEntry(snowballEntry.Name + ".sig");
                                     var snowballKey = nugetPkg.GetEntry(snowballEntry.Name + ".key");
                                     var snowballSig = new MemoryStream();
                                     _snowballSig.Open().CopyTo(snowballSig);
                                     bool signed = Signing.VerifySnowball(snowballEntry.Open(), snowballSig.ToArray(),
                                         new StreamReader(snowballKey.Open()).ReadToEnd());
                                     if (signed)
-                                    {
                                         snowballEntry.ExtractToFile(Path.Combine(tempPath, Path.GetRandomFileName()));
-                                    }
                                     else
                                     {
-                                        Console.WriteLine($"Unable to install {dependency.Item1.Name}, it is improperly signed. File an issue at https://github.com/SnowflakePowered-Packages/snowball-packages/issues/new");
+                                        Console.WriteLine(
+                                            $"Unable to install {dependency.Item1.Name}, it is improperly signed. File an issue at https://github.com/SnowflakePowered-Packages/snowball-packages/issues/new");
                                     }
                                 }
                             }
                         }
 
-                        foreach(string fileName in Directory.EnumerateFiles(tempPath))
-                        {
+                        foreach (string fileName in Directory.EnumerateFiles(tempPath))
                             manager.InstallPackage(fileName);
-                        }
-                       
                     }
                 })
                 .WithParsed<UninstallOptions>(options =>
                 {
-                    
-                        options.SnowflakeRoot = options.SnowflakeRoot ??
-                                                Path.Combine(
-                                                    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                                                    "Snowflake");
-                        var manager = new InstallManager(options.SnowflakeRoot);
+                    options.SnowflakeRoot = options.SnowflakeRoot ??
+                                            Path.Combine(
+                                                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                                                "Snowflake");
+                    var manager = new InstallManager(options.SnowflakeRoot);
                     foreach (string packageId in options.PackageIds)
                     {
                         try
@@ -167,13 +159,14 @@ namespace Snowflake.Packaging
                             manager.UninstallPackage(packageId);
                             Console.WriteLine($"Uninstalled package {packageId}");
                         }
-                        catch(Exception ex)
+                        catch (Exception ex)
                         {
                             Console.WriteLine($"Unable to uninstall {packageId}: {ex.Message}");
                         }
                     }
-                }); 
+                });
         }
+
         private static string GetTemporaryDirectory()
         {
             string tempDirectory = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());

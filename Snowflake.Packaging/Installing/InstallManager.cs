@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Snowflake.Packaging.Snowball;
 
@@ -14,6 +13,7 @@ namespace Snowflake.Packaging.Installing
     {
         public string AppDataPath { get; }
         public LocalRepository PackageRepository { get; }
+
         public InstallManager(string appDataPath)
         {
             if (!Directory.Exists(Path.Combine(appDataPath, ".snowballmanifest")))
@@ -23,18 +23,16 @@ namespace Snowflake.Packaging.Installing
             Task.Run(
                 async () =>
                 {
-                    if(await this.PackageRepository.UpdatedRequired())
-                    {
+                    if (await this.PackageRepository.UpdatedRequired())
                         await this.PackageRepository.UpdateRepository();
-                    }
                 }
-            ).Wait();
+                ).Wait();
         }
 
-       
+
         public void InstallPackage(string packagePath)
         {
-            if (String.IsNullOrWhiteSpace(packagePath)) return;
+            if (string.IsNullOrWhiteSpace(packagePath)) return;
             var zip = new ZipArchive(File.Open(packagePath, FileMode.Open), ZipArchiveMode.Read, false);
             var packageObj =
                 JsonConvert.DeserializeObject<PackageInfo>(
@@ -95,13 +93,9 @@ namespace Snowflake.Packaging.Installing
                 File.Delete(file);
                 if (!Directory.EnumerateFiles(directoryName).Any() &&
                     Path.GetFullPath(Path.GetDirectoryName(directoryName)) != this.AppDataPath)
-                {
                     Directory.Delete(Path.GetDirectoryName(file));
-                }
             }
             File.Delete(Path.Combine(this.AppDataPath, ".snowballmanifest", $"{packageId}.manifest"));
-
         }
     }
 }
-
