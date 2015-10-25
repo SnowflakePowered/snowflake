@@ -112,11 +112,7 @@ namespace Snowflake.Packaging.Publishing
             }
             else
             {
-                var releaseInfo = new ReleaseInfo(packageInfo.Name, packageInfo.Description, packageInfo.Authors,
-                    new Dictionary<SemanticVersion, IList<Dependency>>
-                    {
-                        {packageInfo.Version, packageInfo.Dependencies}
-                    }, packageInfo.PackageType);
+                var releaseInfo = new ReleaseInfo(packageInfo);
                 string newRelease = JsonConvert.SerializeObject(releaseInfo, Formatting.Indented) + Environment.NewLine;
                 var req =
                     new CreateFileRequest($"Add {packageInfo.PackageType} {packageInfo.Name} v{packageInfo.Version}",
