@@ -24,13 +24,13 @@ global.packageManagerUrl = "http://localhost:33333";
 // initialization and ready for creating browser windows.
 app.on('ready', function() {
   // Create the browser window.
-  mainWindow = new BrowserWindow({'width': 800, 'height': firstRun ? 500 : 600, 'frame': false, resizable: !firstRun, icon: 'icon.png', center: firstRun});
+  mainWindow = new BrowserWindow({'node-integration' : true, 'width': 800, 'height': firstRun ? 500 : 600, 'frame': true, resizable: !firstRun, icon: 'icon.png', center: firstRun});
 
   // and load the index.html of the app.
   if(firstRun){
-    mainWindow.loadUrl('file://' + __dirname + '/_firstrun_index.html');
+  //  mainWindow.loadUrl('file://' + __dirname + '/_firstrun_index.html');
   }else{
-    mainWindow.loadUrl('file://' + __dirname + '/index.html');
+    mainWindow.loadUrl('file://' + __dirname + '/_test.html');
   }
   // Open the devtools.
   //mainWindow.openDevTools();
