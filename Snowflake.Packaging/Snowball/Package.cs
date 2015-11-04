@@ -49,7 +49,7 @@ namespace Snowflake.Packaging.Snowball
                 JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(
                     Package.GetPluginStringResource("plugin.json", pluginAssembly))["name"];
             infoFile = string.IsNullOrWhiteSpace(infoFile)
-                ? Package.GetPluginStringResource("snowflake.json", pluginAssembly)
+                ? Package.GetPluginStringResource("snowball.json", pluginAssembly)
                 : File.ReadAllText(infoFile);
             var packageInfo = JsonConvert.DeserializeObject<PackageInfo>(infoFile);
             Package.GetPluginStringResource("plugin.json", pluginAssembly);
