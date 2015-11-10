@@ -38,7 +38,7 @@ namespace Snowflake.Emulator
             this.ConfigurationFlagStore = new ConfigurationFlagStore(this);
         }
 
-        public abstract void StartRom(IGameInfo gameInfo);
+        public abstract IEmulatorInstance CreateInstance(IGameInfo gameInfo);
         public abstract void HandlePrompt(string messagge);
         public abstract void ShutdownEmulator();
         public virtual string CompileConfiguration(IConfigurationProfile configProfile, IGameInfo gameInfo)
