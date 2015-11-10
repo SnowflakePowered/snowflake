@@ -120,7 +120,7 @@ namespace Snowflake.Service
             ScrapeEngine.GetMediaCache(gameInfo.Item2, gameResult);
             ScrapeEngine.GetScreenshotCache(gameInfo.Item2, gameResult);
             gameResult.Metadata.Add("rom_id", information.RomId);
-            gameResult.Metadata.Add("rom_intername_name", information.RomInternalName);
+            gameResult.Metadata.Add("rom_internal_name", information.RomInternalName);
             gameResult.Metadata.Add("rom_region", information.StructuredFilename.RegionCode);
             return gameResult;
         }
