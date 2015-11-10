@@ -7,12 +7,13 @@ using Snowflake.Emulator;
 
 namespace Snowflake.Service.Manager
 {
-    public interface IEmulatorBridgeManager : IDisposable
+    public interface IEmulatorInstanceManager : IDisposable
     {
         /// <summary>
-        /// Adds an instance to the container, and returns a unique ID for the instance
+        /// Adds an instance to the container, and returns the instance.
+        /// <returns>The instance that was added.</returns>
         /// </summary>
-        void AddInstance(IEmulatorInstance instance);
+        IEmulatorInstance AddInstance(IEmulatorInstance instance);
         /// <summary>
         /// Removes an instance from the container;
         /// </summary>

@@ -295,18 +295,16 @@ namespace Snowflake.StandardAjax
             SnowflakeEventManager.EventSource.RaiseEvent(gameStartEvent);
             if (!gameStartEvent.Cancel)
             {
-                gameStartEvent.GameEmulatorBridge.CreateInstance(gameStartEvent.GameInfo);
-            }
-            return new JSResponse(request, gameInfo);
+                var instance = gameStartEvent.GameEmulatorBridge.CreateInstance(gameStartEvent.GameInfo);
+                this.CoreInstance.Get<IEmulatorInstanceManager>().AddInstance(instance).StartGame();
+                }
+                return new JSResponse(request, gameInfo);
         }
 
         [AjaxMethod(MethodPrefix = "Game")]
         public IJSResponse HaltRunningGames(IJSRequest request)
         {
-            foreach (IEmulatorBridge emulator in this.CoreInstance.Get<IPluginManager>().Plugins<IEmulatorBridge>().Values)
-            {
-                emulator.ShutdownEmulator();
-            }
+            this.CoreInstance.Get<IEmulatorInstanceManager>().ShutdownInstances();
             return new JSResponse(request, null);
         }
 
