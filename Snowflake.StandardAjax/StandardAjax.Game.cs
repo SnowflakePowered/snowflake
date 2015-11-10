@@ -295,7 +295,7 @@ namespace Snowflake.StandardAjax
             SnowflakeEventManager.EventSource.RaiseEvent(gameStartEvent);
             if (!gameStartEvent.Cancel)
             {
-                gameStartEvent.GameEmulatorBridge.StartRom(gameStartEvent.GameInfo);
+                gameStartEvent.GameEmulatorBridge.CreateInstance(gameStartEvent.GameInfo);
             }
             return new JSResponse(request, gameInfo);
         }

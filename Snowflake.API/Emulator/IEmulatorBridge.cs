@@ -44,10 +44,10 @@ namespace Snowflake.Emulator
         /// </summary>
         IConfigurationFlagStore ConfigurationFlagStore { get; }
         /// <summary>
-        /// Start a game rom
+        /// Creates and prepares an emulator instance to get ready to start the game.
         /// </summary>
         /// <param name="gameInfo">The game to start</param>
-        void StartRom(IGameInfo gameInfo);
+        IEmulatorInstance CreateInstance(IGameInfo gameInfo);
         /// <summary>
         /// Compile configuration
         /// </summary>
@@ -93,16 +93,6 @@ namespace Snowflake.Emulator
         /// <param name="controllerMappings"></param>
         /// <returns></returns>
         string CompileController(int playerIndex, IPlatformInfo platformInfo, IControllerDefinition controllerDefinition, IControllerTemplate controllerTemplate, IGamepadAbstraction gamepadAbstraction, IInputTemplate inputTemplate, IReadOnlyDictionary<string, IControllerMapping> controllerMappings, IGameInfo game);
-
-        /// <summary>
-        /// Shutdownt the currently running emulator
-        /// </summary>
-        void ShutdownEmulator();
-        /// <summary>
-        /// Handle a message sent to the emulator bridge 
-        /// </summary>
-        /// <param name="promptMessage">The message sent to the emulator</param>
-        void HandlePrompt(string promptMessage);
-       
+  
     }
 }
