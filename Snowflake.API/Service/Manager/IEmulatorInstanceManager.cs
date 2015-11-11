@@ -10,10 +10,9 @@ namespace Snowflake.Service.Manager
     public interface IEmulatorInstanceManager : IDisposable
     {
         /// <summary>
-        /// Adds an instance to the container, and returns the instance.
-        /// <returns>The instance that was added.</returns>
+        /// Adds an instance to the container.
         /// </summary>
-        IEmulatorInstance AddInstance(IEmulatorInstance instance);
+        void AddInstance(IEmulatorInstance instance);
         /// <summary>
         /// Removes an instance from the container;
         /// </summary>
@@ -23,21 +22,21 @@ namespace Snowflake.Service.Manager
         /// Gets an instance given it's instance ID
         /// </summary>
         /// <param name="instanceId"></param>
-        void GetInstance(string instanceId);
+        IEmulatorInstance GetInstance(string instanceId);
         /// <summary>
         /// Gets all instances that belong to a certain emulator
         /// </summary>
         /// <param name="bridge">The emulator bridge to get</param>
-        void GetInstances(IEmulatorBridge bridge);
+        IEnumerable<IEmulatorInstance> GetInstances(IEmulatorBridge bridge);
         /// <summary>
         /// Get instances of a certain state.
         /// </summary>
         /// <param name="state">The state of the instances</param>
-        void GetInstances(EmulatorInstanceState state);
+        IEnumerable<IEmulatorInstance> GetInstances(EmulatorInstanceState state);
         /// <summary>
-        /// Shuts down every single instance in the container, and purges the container.
+        /// Closes every single instance in the container, and purges the container.
         /// </summary>
-        void ShutdownInstances();
+        void CloseInstances();
         /// <summary>
         /// Removes hanging instances (ones that have shut down) from the container
         /// </summary>
@@ -45,6 +44,6 @@ namespace Snowflake.Service.Manager
         /// <summary>
         /// Disposes the container, shutting down all hanging instances.
         /// </summary>
-        void Dispose();
+        new void Dispose();
     }
 }

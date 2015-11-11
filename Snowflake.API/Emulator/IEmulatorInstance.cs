@@ -46,7 +46,7 @@ namespace Snowflake.Emulator
         /// <returns>The resultant state of the action</returns>
         EmulatorInstanceState ShutdownGame();
         /// <summary>
-        /// Cleansup the instance.
+        /// Closes and cleans up the instance.
         /// </summary>
         /// <returns>The resultant state of the action</returns>
         EmulatorInstanceState CleanupInstance();
@@ -55,6 +55,10 @@ namespace Snowflake.Emulator
         /// </summary>
         /// <returns>The resultant state of the action</returns>
         EmulatorInstanceState SendCustomMessage(string message, out string response);
+        /// <summary>
+        /// A unique identifier of the instance
+        /// </summary>
+        string InstanceId { get; }
 
     }
 }

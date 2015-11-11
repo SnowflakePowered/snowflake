@@ -103,6 +103,7 @@
     <Compile Include="Emulator\Configuration\ConfigurationFlagSelectValue.cs" />
     <Compile Include="Emulator\Configuration\ConfigurationFlagStore.cs" />
     <Compile Include="Emulator\EmulatorBridge.cs" />
+    <Compile Include="Emulator\ProcessEmulatorInstance.cs" />
     <Compile Include="Game\GameMediaCache.cs" />
     <Compile Include="Game\GameScreenshotCache.cs" />
     <Compile Include="Information\MediaStore\FileMediaStore.cs" />
