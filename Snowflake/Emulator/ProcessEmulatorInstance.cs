@@ -16,13 +16,12 @@ namespace Snowflake.Emulator
     {
 
         public Process runningEmulatorProcess;
-        public ProcessStartInfo processInfo;
-        public ProcessEmulatorInstance(IGameInfo gameInfo, IEmulatorBridge emulatorBridge, ProcessStartInfo processInfo)
+        public ProcessStartInfo ProcessInfo { get; set; }
+        public ProcessEmulatorInstance(IGameInfo gameInfo, IEmulatorBridge emulatorBridge)
         {
             this.InstanceGame = gameInfo;
             this.InstanceEmulator = emulatorBridge;
             this.InstanceState = EmulatorInstanceState.InstanceNotStarted;
-            this.processInfo = processInfo;
             this.InstanceId = $"{this.InstanceGame.UUID}_{Guid.NewGuid()}";
             this.InstanceTemporaryDirectory = Path.Combine(Path.GetTempPath(), "snowflake", this.InstanceId);
         }
@@ -35,7 +34,7 @@ namespace Snowflake.Emulator
         {
             try
             {
-                this.runningEmulatorProcess = Process.Start(this.processInfo);
+                this.runningEmulatorProcess = Process.Start(this.ProcessInfo);
                 this.InstanceState = EmulatorInstanceState.GameRunning;
             }
             catch

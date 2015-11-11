@@ -295,7 +295,7 @@ namespace Snowflake.StandardAjax
             SnowflakeEventManager.EventSource.RaiseEvent(gameStartEvent);
             if (!gameStartEvent.Cancel)
             {
-                var instance = gameStartEvent.GameEmulatorBridge.CreateInstance(gameStartEvent.GameInfo);
+                var instance = gameStartEvent.GameEmulatorBridge.SetupInstance(gameStartEvent.GameInfo);
                 this.CoreInstance.Get<IEmulatorInstanceManager>().AddInstance(instance);
                 instance.StartGame();
             }
