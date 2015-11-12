@@ -39,8 +39,6 @@ namespace Snowflake.Emulator
         }
 
         public abstract IEmulatorInstance SetupInstance(IGameInfo gameInfo);
-        public abstract void HandlePrompt(string messagge);
-        public abstract void ShutdownEmulator();
         public virtual string CompileConfiguration(IConfigurationProfile configProfile, IEmulatorInstance instance)
         {
             return this.CompileConfiguration(this.ConfigurationTemplates[configProfile.TemplateID], configProfile, instance);
