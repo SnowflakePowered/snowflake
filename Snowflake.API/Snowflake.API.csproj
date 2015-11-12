@@ -90,6 +90,8 @@
     <Compile Include="Ajax\IJSResponse.cs" />
     <Compile Include="Controller\IGamepadAbstraction.cs" />
     <Compile Include="Controller\IGamepadAbstractionDatabase.cs" />
+    <Compile Include="Emulator\EmulatorInstanceState.cs" />
+    <Compile Include="Emulator\IEmulatorInstance.cs" />
     <Compile Include="Emulator\Input\InputManager\InputDeviceNames.cs" />
     <Compile Include="Emulator\Configuration\IConfigurationFlagSelectValue.cs" />
     <Compile Include="Emulator\Configuration\IConfigurationFlagStore.cs" />
@@ -117,6 +119,7 @@
     <Compile Include="Emulator\Input\Constants\KeyboardConstants.cs" />
     <Compile Include="Game\GameInfoFields.cs" />
     <Compile Include="Plugin\PluginInfoFields.cs" />
+    <Compile Include="Service\Manager\IEmulatorInstanceManager.cs" />
     <Compile Include="Service\IScrapeEngine.cs" />
     <Compile Include="Scraper\ScraperInfoFields.cs" />
     <Compile Include="Emulator\Configuration\IBooleanMapping.cs" />
