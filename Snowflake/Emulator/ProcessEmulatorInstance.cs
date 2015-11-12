@@ -25,7 +25,7 @@ namespace Snowflake.Emulator
             this.InstanceId = $"{this.InstanceGame.UUID}_{Guid.NewGuid()}";
             this.InstanceTemporaryDirectory = Path.Combine(Path.GetTempPath(), "snowflake", this.InstanceId);
         }
-        public EmulatorInstanceState InstanceState { get; private set; }
+        public EmulatorInstanceState InstanceState { get; protected set; }
         public IGameInfo InstanceGame { get; }
         public string InstanceTemporaryDirectory { get; }
         public IEmulatorBridge InstanceEmulator { get; }
