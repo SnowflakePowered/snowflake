@@ -54,7 +54,7 @@ namespace Snowflake.Packaging.Publishing
                 try
                 {
                     Console.WriteLine("Uploading snowball to NuGet");
-                    nugetServer.PushPackage(token, package, streamLength, 10000, false);
+                    nugetServer.PushPackage(token, package, streamLength, 1800000, false);
                     Console.WriteLine($"Successfully uploaded package {package.Id} v{package.Version} to NuGet");
                 }
                 catch (WebException e)
