@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7AE8E842-E2A9-4F01-BEC1-8A7A60CC16BB}</ProjectGuid>
+    <ProjectGuid>{A7191A2F-1478-4E46-A633-BF592230B38E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Snowflake.Events</RootNamespace>
-    <AssemblyName>Snowflake.Events</AssemblyName>
+    <RootNamespace>Snowflake.Shell.Windows.ElectronUserInterface</RootNamespace>
+    <AssemblyName>Snowflake.Shell.Windows.ElectronUserInterface</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,50 +30,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Fleck, Version=0.13.0.57, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fleck.0.13.0.57\lib\net40\Fleck.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\SharedAssemblyInfo.cs">
-      <Link>Properties\SharedAssemblyInfo.cs</Link>
-    </Compile>
-    <Compile Include="CoreEvents\Game\GamePreAddEventArgs.cs" />
-    <Compile Include="CoreEvents\Game\GamePreDeleteEventArgs.cs" />
-    <Compile Include="CoreEvents\Game\GameDeleteEventArgs.cs" />
-    <Compile Include="CoreEvents\Game\GameEventArgs.cs" />
-    <Compile Include="CoreEvents\Game\GameInfoScrapedEventArgs.cs" />
-    <Compile Include="CoreEvents\Game\GameProcessStartEventArgs.cs" />
-    <Compile Include="CoreEvents\Game\GameProcessQuitEventArgs.cs" />
-    <Compile Include="CoreEvents\Game\GameAddEventArgs.cs" />
-    <Compile Include="CoreEvents\Game\GameQuitEventArgs.cs" />
-    <Compile Include="CoreEvents\Game\GameResultsScrapedEventArgs.cs" />
-    <Compile Include="CoreEvents\Game\GameStartEventArgs.cs" />
-    <Compile Include="CoreEvents\Modify\ModifyControllerProfileEventArgs.cs" />
-    <Compile Include="CoreEvents\Modify\ModifyConfigurationFlagEventArgs.cs" />
-    <Compile Include="CoreEvents\Modify\ModifyGameInfoEventArgs.cs" />
-    <Compile Include="CoreEvents\Modify\ModifyPlatformPreferenceEventArgs.cs" />
-    <Compile Include="CoreEvents\Modify\ModifyPortInputDeviceEventArgs.cs" />
-    <Compile Include="ISnowflakeEventManager.cs" />
-    <Compile Include="ServiceEvents\AjaxResponseSendingEventArgs.cs" />
-    <Compile Include="ServiceEvents\AjaxRequestReceivedEventArgs.cs" />
-    <Compile Include="ServiceEvents\CoreLoadedEventArgs.cs" />
-    <Compile Include="ServiceEvents\CoreShutdownEventArgs.cs" />
-    <Compile Include="ServiceEvents\ServerStartEventArgs.cs" />
-    <Compile Include="ServiceEvents\UIStartEventArgs.cs" />
-    <Compile Include="ServiceEvents\UIStopEventArgs.cs" />
-    <Compile Include="ServiceEvents\ServerStopEventArgs.cs" />
-    <Compile Include="SnowflakeEventArgs.cs" />
-    <Compile Include="SnowflakeEventManager.cs" />
-    <Compile Include="StandardEvents.cs" />
+    <Compile Include="ElectronInterface.cs" />
+    <Compile Include="ServiceRegistrar.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -81,11 +50,33 @@
       <Project>{2841aeea-03d5-47b0-9d90-375dfa19559a}</Project>
       <Name>Snowflake.API</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Snowflake.Events\Snowflake.Events.csproj">
+      <Project>{7ae8e842-e2a9-4f01-bec1-8a7a60cc16bb}</Project>
+      <Name>Snowflake.Events</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Snowflake\Snowflake.csproj">
+      <Project>{8f1d65ed-4a96-4a0a-8371-53655a60a2b3}</Project>
+      <Name>Snowflake</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <EmbeddedResource Include="resource\plugin.json" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="resource\snowball.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ui-electron-win64\" />
+  </ItemGroup>
+
+
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="AfterBuild">
+    <ItemGroup>
+      <Electron Include="ui-electron-win64\**\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(Electron)" DestinationFolder="$(OutputPath)\ui-electron-win64\%(RecursiveDir)"></Copy>
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
