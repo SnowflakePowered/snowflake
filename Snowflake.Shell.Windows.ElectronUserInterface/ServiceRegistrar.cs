@@ -16,7 +16,7 @@ namespace Snowflake.Shell.Windows.ElectronUserInterface
         public ServiceRegistrar([Import("coreInstance")] ICoreService coreInstance)
             : base(Assembly.GetExecutingAssembly(), coreInstance)
         {
-            this.CoreInstance.RegisterService(new ElectronInterface(coreInstance, this.PluginDataPath));
+            this.CoreInstance.RegisterService<IUserInterface>(new ElectronInterface(coreInstance, this.PluginDataPath));
         }
     }
 }

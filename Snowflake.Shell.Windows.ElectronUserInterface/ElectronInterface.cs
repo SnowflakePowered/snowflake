@@ -26,7 +26,7 @@ namespace Snowflake.Shell.Windows.ElectronUserInterface
 
         public void StartUserInterface(string[] args)
         {
-            this.electronProcess.Arguments = $"./ {String.Join(" ", args)}";
+            this.electronProcess.Arguments = $"{String.Join(" ", args)}";
             var uiStartEvent = new UIStartEventArgs(this.coreInstance, this);
             SnowflakeEventManager.EventSource.RaiseEvent(uiStartEvent);
             if (uiStartEvent.Cancel) return;
