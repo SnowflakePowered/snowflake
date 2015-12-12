@@ -56,10 +56,12 @@
     <ProjectReference Include="..\..\Snowflake.API\Snowflake.API.csproj">
       <Project>{2841aeea-03d5-47b0-9d90-375dfa19559a}</Project>
       <Name>Snowflake.API</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\Snowflake\Snowflake.csproj">
       <Project>{8f1d65ed-4a96-4a0a-8371-53655a60a2b3}</Project>
       <Name>Snowflake</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -67,7 +69,7 @@
     <EmbeddedResource Include="resource\plugin.json" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
