@@ -15,11 +15,11 @@ namespace Snowflake.Service
         /// <summary>
         /// Starts the user interface
         /// </summary>
-        void StartUserInterface(string[] args);
+        void StartUserInterface(params string[] args);
         /// <summary>
         /// Stops the user interface
         /// </summary>
-        void StopUserInterface(string[] args);
+        void StopUserInterface(params string[] args);
         
     }
 }

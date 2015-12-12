@@ -68,8 +68,12 @@
   <ItemGroup>
     <EmbeddedResource Include="resource\snowball.json" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="ui-electron-win64\" />
+    <Content Include="ui-electron-win64\bootstrap\main.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ui-electron-win64\bootstrap\package.json" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterBuild">

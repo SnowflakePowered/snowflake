@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 using System.Linq;
 using System.Reflection;
 using Snowflake.Controller;
@@ -44,8 +45,10 @@ namespace Snowflake.Shell.Windows
                 SnowflakeEventManager.EventSource.RaiseEvent(serverStartEvent); //todo Move event registration to SnowflakeEVentManager
             }
             var electronUi = this.loadedCore.Get<IUserInterface>();
-            
+            electronUi.StartUserInterface();
         }
+
+
         public void RestartCore()
         {
             this.ShutdownCore();
