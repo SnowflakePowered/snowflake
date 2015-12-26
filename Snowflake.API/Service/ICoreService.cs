@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Snowflake.Controller;
-using Snowflake.Emulator.Input.InputManager;
-using Snowflake.Game;
 using Snowflake.Platform;
-using Snowflake.Service.Manager;
 
 namespace Snowflake.Service
 {
@@ -13,6 +10,10 @@ namespace Snowflake.Service
     /// </summary>
     public interface ICoreService : IDisposable
     {
+        /// <summary>
+        /// Raw info blob by loading info.json
+        /// </summary>
+        dynamic InfoBlob { get; }
         /// <summary>
         /// The list of platforms loaded for this core service
         /// </summary>
@@ -46,5 +47,6 @@ namespace Snowflake.Service
         /// Dispose the core
         /// </summary>
         void Dispose();
+
     }
 }
