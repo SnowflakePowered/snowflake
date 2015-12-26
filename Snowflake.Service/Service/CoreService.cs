@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Snowflake.Ajax;
 using Snowflake.Controller;
@@ -21,6 +18,7 @@ using Snowflake.Scraper;
 using Snowflake.Service.HttpServer;
 using Snowflake.Service.JSWebSocketServer;
 using Snowflake.Service.Manager;
+using NLog;
 
 namespace Snowflake.Service
 {
@@ -33,8 +31,9 @@ namespace Snowflake.Service
         public IDictionary<string, IPlatformInfo> Platforms { get; }
         public IDictionary<string, IControllerDefinition> Controllers { get; }
         public string AppDataDirectory { get; }
+        public dynamic InfoBlob { get; }
         private readonly IDictionary<Type, dynamic> serviceContainer;
-
+        private ILogger logger;
 
         #endregion
 
@@ -45,10 +44,12 @@ namespace Snowflake.Service
     
         public CoreService(string appDataDirectory)
         {
+            this.logger = LogManager.GetLogger("~CORESERVICE");
             this.serviceContainer = new Dictionary<Type, dynamic>();
             this.AppDataDirectory = appDataDirectory;
-            this.Platforms = this.LoadPlatforms(Path.Combine(this.AppDataDirectory, "platforms"));
-            this.Controllers = this.LoadControllers(Path.Combine(this.AppDataDirectory, "controllers"));
+            this.InfoBlob = JsonConvert.DeserializeObject(File.ReadAllText(Path.Combine(this.AppDataDirectory, "info.json")));
+            this.Platforms = this.LoadPlatforms();
+            this.Controllers = this.LoadControllers();
 
             this.RegisterService<IServerManager>(new ServerManager());
             this.RegisterService<IGameDatabase>(new GameDatabase(Path.Combine(this.AppDataDirectory, "games.db")));
@@ -84,42 +85,37 @@ namespace Snowflake.Service
             return this.serviceContainer.ContainsKey(typeof (T)) ? this.serviceContainer[typeof (T)] : default(T);
         }
 
-        private IDictionary<string, IPlatformInfo> LoadPlatforms(string platformDirectory)
+        private IDictionary<string, IPlatformInfo> LoadPlatforms()
         {
             var loadedPlatforms = new Dictionary<string, IPlatformInfo>();
-            if (!Directory.Exists(platformDirectory)) Directory.CreateDirectory(platformDirectory);
-            foreach (string fileName in Directory.GetFiles(platformDirectory).Where(fileName => Path.GetExtension(fileName) == ".platform"))
+            foreach (var _platform in this.InfoBlob["platforms"])
             {
                 try
                 {
-                    var _platform = JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(File.ReadAllText(fileName));
                     var platform = PlatformInfo.FromJsonProtoTemplate(_platform); //Convert MediaStoreKey reference to full MediaStore object
                     loadedPlatforms.Add(platform.PlatformID, platform);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    //log
-                    Console.WriteLine($"Exception occured when importing platform {fileName}");
+                  logger.Error(ex, "Something went wrong when loading a platform from the info blob. Regenerate it by deleting info.json");
                 }
             }
             return loadedPlatforms;
         }
-        private IDictionary<string, IControllerDefinition> LoadControllers(string controllerDirectory)
+        private IDictionary<string, IControllerDefinition> LoadControllers()
         {
             var loadedControllers = new Dictionary<string, IControllerDefinition>();
-            if (!Directory.Exists(controllerDirectory)) Directory.CreateDirectory(controllerDirectory);
-            foreach (string fileName in Directory.GetFiles(controllerDirectory).Where(fileName => Path.GetExtension(fileName) == ".controller"))
+            foreach (var _controller in this.InfoBlob["controllers"])
             {
                 try
                 {
-                    var _controller = JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(File.ReadAllText(fileName));
                     var controller = ControllerDefinition.FromJsonProtoTemplate(_controller);
                     loadedControllers.Add(controller.ControllerID, controller);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     //log
-                    Console.WriteLine($"Exception occured when importing controller {fileName}");
+                    logger.Error(ex, "Something went wrong when loading a controller from the info blob. Regenerate it by deleting info.json");
                 }
             }
             return loadedControllers;
