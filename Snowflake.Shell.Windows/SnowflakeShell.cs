@@ -17,18 +17,30 @@ namespace Snowflake.Shell.Windows
 {
     internal class SnowflakeShell
     {
-        string ShellRoot => Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "electron");
         private ICoreService loadedCore;
-        Process currentShellInstance;
+        private readonly string appDataDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Snowflake");
         internal SnowflakeShell()
         {
+            this.WriteInfoJson();
             this.StartCore();
         }
-
+        private void WriteInfoJson()
+        {
+            if (!File.Exists(Path.Combine(this.appDataDirectory, "info.json")))
+            {
+                var currentAssembly = Assembly.GetExecutingAssembly();
+                var infoJsonStream = currentAssembly.GetManifestResourceStream($"{currentAssembly.GetName().Name}.Resources.info.json");
+                using (Stream file = File.Create(Path.Combine(this.appDataDirectory, "info.json")))
+                {
+                    file.Seek(0, SeekOrigin.Begin);
+                    infoJsonStream.CopyTo(file);
+                }
+            }
+        }
         public void StartCore()
         {
 
-            this.loadedCore = new CoreService(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Snowflake"));
+            this.loadedCore = new CoreService(this.appDataDirectory);
             this.loadedCore.Get<IEmulatorAssembliesManager>()?.LoadEmulatorAssemblies();
             this.loadedCore.Get<IPluginManager>()?.Initialize();
             this.loadedCore.Get<IAjaxManager>()?.Initialize(this.loadedCore.Get<IPluginManager>());
@@ -44,10 +56,13 @@ namespace Snowflake.Shell.Windows
                 var serverStartEvent = new ServerStartEventArgs(this.loadedCore, serverName);
                 SnowflakeEventManager.EventSource.RaiseEvent(serverStartEvent); //todo Move event registration to SnowflakeEVentManager
             }
+           
+        }
+
+        public void StartShell() {
             var electronUi = this.loadedCore.Get<IUserInterface>();
             electronUi.StartUserInterface();
         }
-
 
         public void RestartCore()
         {
@@ -59,33 +74,6 @@ namespace Snowflake.Shell.Windows
         {
             this.loadedCore.Dispose();
             GC.WaitForPendingFinalizers();
-        }
-
-       
-        public Process StartShell(params string[] args)
-        {
-            if (this.ShellAvailable())
-            {
-                IList<string> arguments = new List<string>(args);
-                arguments.Insert(0, this.ShellRoot);
-                var electronShell = this.GetShell();
-                electronShell.Arguments = string.Join(" ", arguments);
-                if (this.currentShellInstance != null) this.currentShellInstance.Close();
-                this.currentShellInstance = Process.Start(electronShell);
-                return this.currentShellInstance;
-            }
-            return null;
-        }
-
-        public bool ShellAvailable()
-        {
-            return File.Exists(Path.Combine(this.ShellRoot, "node_modules", "electron-prebuilt", "dist", "electron.exe"));
-        }
-
-        public ProcessStartInfo GetShell()
-        {
-            return new ProcessStartInfo(Path.Combine(this.ShellRoot, "node_modules", "electron-prebuilt", "dist", "electron.exe"));
-        }
-  
+        }  
     }
 }
