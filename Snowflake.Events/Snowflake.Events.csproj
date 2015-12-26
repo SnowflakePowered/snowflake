@@ -68,6 +68,8 @@
     <Compile Include="ServiceEvents\CoreLoadedEventArgs.cs" />
     <Compile Include="ServiceEvents\CoreShutdownEventArgs.cs" />
     <Compile Include="ServiceEvents\ServerStartEventArgs.cs" />
+    <Compile Include="ServiceEvents\UIStartEventArgs.cs" />
+    <Compile Include="ServiceEvents\UIStopEventArgs.cs" />
     <Compile Include="ServiceEvents\ServerStopEventArgs.cs" />
     <Compile Include="SnowflakeEventArgs.cs" />
     <Compile Include="SnowflakeEventManager.cs" />

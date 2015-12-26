@@ -1,0 +1,9 @@
+﻿﻿{
+  "name": "ui-electron-win64",
+  "description": "Electron User Interface for Snowflake.",
+  "version": "1.0.0",
+  "dependencies": [],
+  "packagetype": "Plugin",
+  "tags": [ "~snowflakeDefault", "electron", "ui"],
+  "authors": [ "Snowflake"]
+}

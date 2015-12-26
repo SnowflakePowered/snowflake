@@ -81,7 +81,7 @@ namespace Snowflake.Service
 
         public T Get<T>()
         {
-            return this.serviceContainer[typeof (T)];
+            return this.serviceContainer.ContainsKey(typeof (T)) ? this.serviceContainer[typeof (T)] : default(T);
         }
 
         private IDictionary<string, IPlatformInfo> LoadPlatforms(string platformDirectory)
