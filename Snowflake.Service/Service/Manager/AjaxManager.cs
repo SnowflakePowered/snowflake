@@ -43,7 +43,7 @@ namespace Snowflake.Service.Manager
                     .Where(attr => attr.Required)
                     .Where(attr => !(request.MethodParameters.Keys.Contains(attr.ParameterName))))
                 {
-                    result = new JSResponse(request, JSResponse.GetErrorResponse($"missing required param {attr.ParameterName}"), false);
+                    result = new JSResponse(request, JSResponse.GetErrorResponse(new JSException(new InvalidOperationException($"{attr.ParameterName}"))), false);
                     sendResultEvent = new AjaxResponseSendingEventArgs(this.CoreInstance, result);
                     SnowflakeEventManager.EventSource.RaiseEvent(sendResultEvent);
                     return sendResultEvent.SendingResponse.GetJson();
@@ -54,16 +54,9 @@ namespace Snowflake.Service.Manager
                 SnowflakeEventManager.EventSource.RaiseEvent(sendResultEvent);
                 return sendResultEvent.SendingResponse.GetJson();
             }
-            catch (KeyNotFoundException)
-            {
-                var result = new JSResponse(request, JSResponse.GetErrorResponse($"method {request.MethodName} not found in namespace {request.NameSpace}"), false);
-                sendResultEvent = new AjaxResponseSendingEventArgs(this.CoreInstance, result);
-                SnowflakeEventManager.EventSource.RaiseEvent(sendResultEvent);
-                return sendResultEvent.SendingResponse.GetJson();
-            }
             catch (Exception e)
             {
-                var result = new JSResponse(request, e, false);
+                var result = new JSResponse(request, JSResponse.GetErrorResponse(new JSException(e, request)), false);
                 sendResultEvent = new AjaxResponseSendingEventArgs(this.CoreInstance, result);
                 SnowflakeEventManager.EventSource.RaiseEvent(sendResultEvent);
                 return sendResultEvent.SendingResponse.GetJson();

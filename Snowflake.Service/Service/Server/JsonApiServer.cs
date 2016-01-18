@@ -39,9 +39,9 @@ namespace Snowflake.Service.HttpServer
                         dictParams = _dictParams ?? dictParams;
                     }
                 }
-                catch (JsonException)
+                catch (JsonException ex)
                 {
-                    writer.WriteLine(JsonConvert.SerializeObject(JSResponse.GetErrorResponse("missing methodname or namespace")));
+                    writer.WriteLine(JsonConvert.SerializeObject(JSResponse.GetErrorResponse(new JSException(ex))));
                     writer.Flush();
                     context.Response.OutputStream.Close();
                 }
@@ -58,7 +58,8 @@ namespace Snowflake.Service.HttpServer
             
             if(!(getRequest.Split('/').Count() >= 2))
             {
-                writer.WriteLine(JsonConvert.SerializeObject(JSResponse.GetErrorResponse("missing methodname or namespace")));
+
+                writer.WriteLine(JsonConvert.SerializeObject(JSResponse.GetErrorResponse(new JSException(new KeyNotFoundException("Method or Namespace key not found in request JSON")))));
                 writer.Flush();
                 context.Response.OutputStream.Close();
             }

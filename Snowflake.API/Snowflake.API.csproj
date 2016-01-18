@@ -85,6 +85,7 @@
     <Compile Include="Ajax\AjaxMethodAttribute.cs" />
     <Compile Include="Ajax\AjaxMethodParameterAttribute.cs" />
     <Compile Include="Ajax\IBaseAjaxNamespace.cs" />
+    <Compile Include="Ajax\IJSException.cs" />
     <Compile Include="Ajax\IJSMethod.cs" />
     <Compile Include="Ajax\IJSRequest.cs" />
     <Compile Include="Ajax\IJSResponse.cs" />
