@@ -19,11 +19,11 @@ namespace Snowflake.Ajax
         {
             return JSResponse.ProcessJSONP(this.Payload, this.Success, this.Request);
         }
-        public static IDictionary<string, object> GetErrorResponse(string errorMessage)
+        public static IDictionary<string, object> GetErrorResponse(IJSException exception)
         {
             return new Dictionary<string, object>
             { 
-                {"error", errorMessage},
+                {"exception", exception},
                 {"success", false}
             };
         }
