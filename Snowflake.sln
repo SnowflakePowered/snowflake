@@ -83,6 +83,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.FileSignatures.Pa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Shell.Windows.ElectronUserInterface", "Snowflake.Shell.Windows.ElectronUserInterface\Snowflake.Shell.Windows.ElectronUserInterface.csproj", "{A7191A2F-1478-4E46-A633-BF592230B38E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7A6BC9D0-06E7-412E-BD4A-9329635CBA61}"
+	ProjectSection(SolutionItems) = preProject
+		info.json = info.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
