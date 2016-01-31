@@ -47,6 +47,11 @@ namespace Snowflake.Packaging.Installing
                     {
                         string extractPath = Path.Combine(pluginPath, entry.FullName.Remove(0, 9));
                         //9 chars in snowball/
+                        if (entry.FullName.EndsWith(@"\"))
+                        {
+                            Directory.CreateDirectory(entry.FullName);
+                            continue;
+                        }
                         if (!Directory.Exists(Path.GetDirectoryName(extractPath)))
                             Directory.CreateDirectory(Path.GetDirectoryName(extractPath));
                         entry.ExtractToFile(extractPath, true);
@@ -59,6 +64,12 @@ namespace Snowflake.Packaging.Installing
                     {
                         string extractPath = Path.Combine(emulatorPath, entry.FullName.Remove(0, 9));
                         //9 chars in snowball/
+                        if (entry.FullName.EndsWith(@"\"))
+                        {
+                            Directory.CreateDirectory(entry.FullName);
+                            continue;
+                        }
+
                         if (!Directory.Exists(Path.GetDirectoryName(extractPath)))
                             Directory.CreateDirectory(Path.GetDirectoryName(extractPath));
                         entry.ExtractToFile(extractPath, true);
@@ -71,6 +82,11 @@ namespace Snowflake.Packaging.Installing
                     {
                         string extractPath = Path.Combine(themePath, entry.FullName.Remove(0, 9));
                         //9 chars in snowball/
+                        if (entry.FullName.EndsWith(@"\"))
+                        {
+                            Directory.CreateDirectory(entry.FullName);
+                            continue;
+                        }
                         if (!Directory.Exists(Path.GetDirectoryName(extractPath)))
                             Directory.CreateDirectory(Path.GetDirectoryName(extractPath));
                         entry.ExtractToFile(extractPath, true);

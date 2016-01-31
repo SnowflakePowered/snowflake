@@ -55,8 +55,35 @@ namespace Snowflake.Packaging
                         {
                             Task.Run(async () =>
                             {
-                                PublishActions.PackNuget(options.PackageFile);
-                                await PublishActions.MakeGithubIndex(Package.FromZip(options.PackageFile).PackageInfo);
+                                try
+                                {
+                                    PublishActions.PackNuget(options.PackageFile);
+                                }
+                                catch (Exception ex)
+                                {
+                                    if (ex.Message.Contains("Conflict"))
+                                    {
+                                        Console.WriteLine("Attempting to continue publishing due to NuGet conflict");
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine(
+                               $"Unable to publish package {options.PackageFile}: {ex.Message}");
+                                        return;
+
+                                    }
+
+                                }
+                                try
+                                {
+                                    await
+                                        PublishActions.MakeGithubIndex(Package.FromZip(options.PackageFile).PackageInfo);
+
+                                }
+                                catch
+                                {
+                                    
+                                }
                             }).Wait();
                         }
                         else

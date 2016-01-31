@@ -4,6 +4,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using Newtonsoft.Json;
 
 namespace Snowflake.Packaging.Snowball
@@ -43,24 +44,39 @@ namespace Snowflake.Packaging.Snowball
         {
             if (!File.Exists(Path.Combine(pluginFile)))
                 throw new FileNotFoundException("Unable to find the plugin file");
-            var pluginRoot = Path.GetDirectoryName(pluginFile);
+            string pluginRoot = Path.GetDirectoryName(pluginFile);
             var pluginAssembly = Assembly.ReflectionOnlyLoadFrom(pluginFile);
-            string pluginName =
-                JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(
-                    Package.GetPluginStringResource("plugin.json", pluginAssembly))["name"];
+            string pluginName = null;
+            try
+            {
+               pluginName =
+                    JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(
+                        Package.GetPluginStringResource("plugin.json", pluginAssembly))["name"];
+            }
+            catch (ArgumentException)
+            {
+               pluginName = null;
+                Console.WriteLine(
+                    "Hacky hack used to package support files as plugin snowball. Support package type coming soon.");
+            }
+        
             infoFile = string.IsNullOrWhiteSpace(infoFile)
                 ? Package.GetPluginStringResource("snowball.json", pluginAssembly)
                 : File.ReadAllText(infoFile);
             var packageInfo = JsonConvert.DeserializeObject<PackageInfo>(infoFile);
-            Package.GetPluginStringResource("plugin.json", pluginAssembly);
             var tempDir = Package.GetTemporaryDirectory();
             Console.WriteLine(
                 $"Packing {packageInfo.PackageType} {packageInfo.Name} v{packageInfo.Version} to {outputDirectory}");
             Directory.CreateDirectory(Path.Combine(tempDir, "snowball"));
-            Directory.CreateDirectory(Path.Combine(tempDir, "snowball", pluginName));
+            if (!String.IsNullOrWhiteSpace(pluginName))
+            {
+                Directory.CreateDirectory(Path.Combine(tempDir, "snowball", pluginName));
+                if (Directory.Exists(Path.Combine(pluginRoot, pluginName)))
+                {
+                    Package.CopyFilesRecursively(new DirectoryInfo(Path.Combine(pluginRoot, pluginName)), new DirectoryInfo(Path.Combine(tempDir, "snowball", pluginName)));
+                }
+            }
             File.Copy(pluginFile, Path.Combine(tempDir, "snowball", pluginFile));
-            Package.CopyFilesRecursively(new DirectoryInfo(Path.Combine(pluginRoot, pluginName)),
-                new DirectoryInfo(Path.Combine(tempDir, "snowball", pluginName)));
             File.WriteAllText(Path.Combine(tempDir, "snowball.json"), JsonConvert.SerializeObject(packageInfo));
             string packagePath = Package.LoadDirectory(tempDir).Pack(outputDirectory, tempDir, true);
             Directory.Delete(tempDir, true);
@@ -163,11 +179,18 @@ namespace Snowflake.Packaging.Snowball
 
         private static string GetPluginStringResource(string resourceName, Assembly assembly)
         {
-            using (Stream stream = Package.GetPluginResource(resourceName, assembly))
-            using (var reader = new StreamReader(stream))
+            try
             {
-                string file = reader.ReadToEnd();
-                return file;
+                using (Stream stream = Package.GetPluginResource(resourceName, assembly))
+                using (var reader = new StreamReader(stream, Encoding.UTF8, true))
+                {
+                    string file = reader.ReadToEnd();
+                    return file;
+                }
+            }
+            catch (ArgumentNullException)
+            {
+                return null;
             }
         }
     }
