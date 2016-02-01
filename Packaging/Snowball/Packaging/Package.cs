@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using Newtonsoft.Json;
+using Snowball.Packaging.Packagers;
 
 namespace Snowball.Packaging
 {
@@ -37,101 +38,6 @@ namespace Snowball.Packaging
             var packageInfo =
                 JsonConvert.DeserializeObject<PackageInfo>(File.ReadAllText(Path.Combine(packageRoot, "snowball.json")));
             return new Package(packageInfo);
-        }
-
-        public static string MakeFromPlugin(string pluginFile, string infoFile, string outputDirectory)
-        {
-            if (!File.Exists(Path.Combine(pluginFile)))
-                throw new FileNotFoundException("Unable to find the plugin file");
-            string pluginRoot = Path.GetDirectoryName(pluginFile);
-            var pluginAssembly = Assembly.ReflectionOnlyLoadFrom(pluginFile);
-            string pluginName = null;
-            try
-            {
-                pluginName =
-                     JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(
-                         Package.GetPluginStringResource("plugin.json", pluginAssembly))["name"];
-            }
-            catch (ArgumentException)
-            {
-                pluginName = null;
-                Console.WriteLine(
-                    "Hacky hack used to package support files as plugin snowball. Support package type coming soon.");
-            }
-
-            infoFile = string.IsNullOrWhiteSpace(infoFile)
-                ? Package.GetPluginStringResource("snowball.json", pluginAssembly)
-                : File.ReadAllText(infoFile);
-            var packageInfo = JsonConvert.DeserializeObject<PackageInfo>(infoFile);
-            var tempDir = Package.GetTemporaryDirectory();
-            Console.WriteLine(
-                $"Packing {packageInfo.PackageType} {packageInfo.Name} v{packageInfo.Version} to {outputDirectory}");
-            Directory.CreateDirectory(Path.Combine(tempDir, "snowball"));
-            if (!String.IsNullOrWhiteSpace(pluginName))
-            {
-                Directory.CreateDirectory(Path.Combine(tempDir, "snowball", pluginName));
-                if (Directory.Exists(Path.Combine(pluginRoot, pluginName)))
-                {
-                    Package.CopyFilesRecursively(new DirectoryInfo(Path.Combine(pluginRoot, pluginName)), new DirectoryInfo(Path.Combine(tempDir, "snowball", pluginName)));
-                }
-            }
-            File.Copy(pluginFile, Path.Combine(tempDir, "snowball", pluginFile));
-            File.WriteAllText(Path.Combine(tempDir, "snowball.json"), JsonConvert.SerializeObject(packageInfo));
-            string packagePath = Package.LoadDirectory(tempDir).Pack(outputDirectory, tempDir, true);
-            Directory.Delete(tempDir, true);
-            return packagePath;
-        }
-
-        public static string MakeFromTheme(string themeRoot, string infoFile, string outputDirectory)
-        {
-            if (!File.Exists(Path.Combine(themeRoot, "theme.json")))
-                throw new FileNotFoundException("Unable to find theme.json");
-            string themeName =
-                JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(
-                    File.ReadAllText(Path.Combine(themeRoot, "theme.json")))["id"];
-            infoFile = string.IsNullOrWhiteSpace(infoFile)
-                ? File.ReadAllText(Path.Combine(themeRoot, "snowball.json"))
-                : File.ReadAllText(infoFile);
-            var packageInfo = JsonConvert.DeserializeObject<PackageInfo>(infoFile);
-            var tempDir = Package.GetTemporaryDirectory();
-            Console.WriteLine(
-                $"Packing {packageInfo.PackageType} {packageInfo.Name} v{packageInfo.Version} to {outputDirectory}");
-            Directory.CreateDirectory(Path.Combine(tempDir, "snowball"));
-            Directory.CreateDirectory(Path.Combine(tempDir, "snowball", themeName));
-            Package.CopyFilesRecursively(new DirectoryInfo(Path.Combine(themeRoot)),
-                new DirectoryInfo(Path.Combine(tempDir, "snowball", themeName)));
-            File.WriteAllText(Path.Combine(tempDir, "snowball.json"), JsonConvert.SerializeObject(packageInfo));
-            string packagePath = Package.LoadDirectory(tempDir).Pack(outputDirectory, tempDir, true);
-            Directory.Delete(tempDir, true);
-            return packagePath;
-        }
-
-        public static string MakeFromEmulatorDefinition(string emulatorDefinitionFile, string infoFile,
-            string outputDirectory)
-        {
-            if (!File.Exists(emulatorDefinitionFile)) throw new FileNotFoundException("Unable to find emulatordef");
-            string defId =
-                JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(File.ReadAllText(emulatorDefinitionFile))[
-                    "id"];
-            string emulatorRoot = Path.Combine(Path.GetDirectoryName(emulatorDefinitionFile), defId);
-
-            infoFile = string.IsNullOrWhiteSpace(infoFile)
-                ? File.ReadAllText(Path.Combine(emulatorRoot, "snowball.json"))
-                : File.ReadAllText(infoFile);
-            var packageInfo = JsonConvert.DeserializeObject<PackageInfo>(infoFile);
-            Console.WriteLine(
-                $"Packing {packageInfo.PackageType} {packageInfo.Name} v{packageInfo.Version} to {outputDirectory}");
-            var tempDir = Package.GetTemporaryDirectory();
-            Directory.CreateDirectory(Path.Combine(tempDir, "snowball"));
-            Directory.CreateDirectory(Path.Combine(tempDir, "snowball", defId));
-            Package.CopyFilesRecursively(new DirectoryInfo(Path.Combine(emulatorRoot)),
-                new DirectoryInfo(Path.Combine(tempDir, "snowball", emulatorRoot)));
-            File.Copy(emulatorDefinitionFile,
-                Path.Combine(tempDir, "snowball", Path.GetFileName(emulatorDefinitionFile)));
-            File.WriteAllText(Path.Combine(tempDir, "snowball.json"), JsonConvert.SerializeObject(packageInfo));
-            string packagePath = Package.LoadDirectory(tempDir).Pack(outputDirectory, tempDir, true);
-            Directory.Delete(tempDir, true);
-            return packagePath;
         }
 
         public string Pack(string outputDirectory, string packageRoot, bool nocopy = false)
@@ -169,28 +75,6 @@ namespace Snowball.Packaging
             string tempDirectory = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
             Directory.CreateDirectory(tempDirectory);
             return tempDirectory;
-        }
-
-        private static Stream GetPluginResource(string resourceName, Assembly assembly)
-        {
-            return assembly.GetManifestResourceStream($"{assembly.GetName().Name}.resource.{resourceName}");
-        }
-
-        private static string GetPluginStringResource(string resourceName, Assembly assembly)
-        {
-            try
-            {
-                using (Stream stream = Package.GetPluginResource(resourceName, assembly))
-                using (var reader = new StreamReader(stream, Encoding.UTF8, true))
-                {
-                    string file = reader.ReadToEnd();
-                    return file;
-                }
-            }
-            catch (ArgumentNullException)
-            {
-                return null;
-            }
         }
     }
 }

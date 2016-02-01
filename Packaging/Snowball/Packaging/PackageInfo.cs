@@ -4,6 +4,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using NuGet;
+using Snowball.Packaging.Packagers;
 
 namespace Snowball.Packaging
 {
