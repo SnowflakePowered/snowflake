@@ -13,7 +13,6 @@ namespace Snowball.Packaging
     public class Package
     {
         public PackageInfo PackageInfo { get; }
-
         public Package(PackageInfo packageInfo)
         {
             this.PackageInfo = packageInfo;
@@ -40,25 +39,17 @@ namespace Snowball.Packaging
             return new Package(packageInfo);
         }
 
-        public string Pack(string outputDirectory, string packageRoot, bool nocopy = false)
+        public string Pack(string outputDirectory, string packageRoot, bool overwrite = true)
         {
-            var tempDir = Package.GetTemporaryDirectory();
             if (!Directory.Exists(Path.Combine(packageRoot, "snowball")))
                 throw new FileNotFoundException("Unable to locate package root");
             if (!File.Exists(Path.Combine(packageRoot, "snowball.json")))
                 throw new FileNotFoundException("Unable to locate package manifest");
-
-            File.Copy(Path.Combine(packageRoot, "snowball.json"), Path.Combine(tempDir, "snowball.json"));
             string outputFilename = Path.Combine(outputDirectory,
                 $"{this.PackageInfo.PackageType}!{this.PackageInfo.Name}-{this.PackageInfo.Version}.snowball"
                     .ToLowerInvariant());
-            if (File.Exists(outputFilename)) File.Delete(outputFilename);
-
-            Directory.CreateDirectory(Path.Combine(tempDir, "snowball"));
-            Package.CopyFilesRecursively(new DirectoryInfo(Path.Combine(Path.Combine(packageRoot, "snowball"))),
-                new DirectoryInfo(Path.Combine(Path.Combine(tempDir, "snowball"))));
-            ZipFile.CreateFromDirectory(tempDir, outputFilename, CompressionLevel.NoCompression, false);
-            Directory.Delete(tempDir, true);
+            if (File.Exists(outputFilename)) File.Delete(outputFilename); //todo implement no overwrite
+            ZipFile.CreateFromDirectory(packageRoot, outputFilename, CompressionLevel.NoCompression, false);
             return Path.Combine(outputFilename);
         }
 

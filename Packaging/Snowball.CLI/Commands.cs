@@ -28,63 +28,48 @@ namespace Snowflake.Packaging
         public string OutputDirectory { get; set; }
     }
 
-    [Verb("make-plugin", HelpText = "Make a snowball package for a plugin")]
-    internal class MakePluginOptions
+    [Verb("make", HelpText = "Make a snowball package")]
+    internal class MakePackageOptions
     {
-        [Option('p', "plugin", HelpText = "The path to the main plugin dll.", Required = true)]
-        public string PluginFile { get; set; }
+        [Value(0, 
+           HelpText = "The file to make the snowball package for. This can either be a Plugin .dll file, a .emulatordef Emulator Assembly Definition, or a Theme directory",
+           Required = true)]
+        public string FileName { get; set; }
 
         [Option('i', "info",
-            HelpText =
-                "Specify the package info file. The plugin must have a snowball.json in it's embedded resources otherwise",
-            Required = false)]
+            HelpText = "Specify the package info file.")]
         public string PackageInfoFile { get; set; }
+
+        [Option('p', "plugin",
+            SetName = "Make Type", 
+            HelpText = "Make a snowball for a plugin. " +
+                       "A plugin is expected to have an EMBEDDED snowball.json, " +
+                       "and be in the format of a .dll file. " +
+                       "Any files in the plugin's resource folder will also be copied",
+            Required = false)]
+        public bool MakePlugin { get; set; }
+
+        [Option('e', "emulator",
+            SetName = "Make Type", 
+            HelpText = "Make a snowball for an emulator assembly. " +
+                       "An emulator assembly is expected to have contents in a folder named the ID, " +
+                       "and include a snowball.json inside the folder. " +
+                       "The input file is expected to be a format of an .emulatordef file describing the assembly.",
+            Required = false)]
+        public bool MakeEmulator { get; set; }
+
+        [Option('t', "theme",
+            SetName = "Make Type",
+            HelpText = "Make a snowball for a theme. " +
+                       "A theme is expected to be in the format of a folder containing the theme contents, " +
+                       "and include a snowball.json and a theme.json inside the folder.", 
+            Required = false)]
+        public bool MakeTheme { get; set; }
 
         [Option('o', "output", HelpText = "The output directory. Defaults to current working directory",
             Required = false)]
         public string OutputDirectory { get; set; }
 
-        [Option('b', "bare", HelpText = "Do not pack the plugin, return the raw directory instead")]
-        public bool Bare { get; set; }
-    }
-
-    [Verb("make-theme", HelpText = "Make a snowball package for a theme")]
-    internal class MakeThemeOptions
-    {
-        [Option('t', "theme", HelpText = "The path to the theme root. Must have a theme.json inside", Required = true)]
-        public string ThemeDirectory { get; set; }
-
-        [Option('i', "info",
-            HelpText = "Specify the package info file. The theme must have a snowball.json in it's theme root otherwise"
-            )]
-        public string PackageInfoFile { get; set; }
-
-        [Option('o', "output", HelpText = "The output directory. Defaults to current working directory",
-            Required = false)]
-        public string OutputDirectory { get; set; }
-
-        [Option('b', "bare", HelpText = "Do not pack the plugin, return the raw directory instead")]
-        public bool Bare { get; set; }
-    }
-
-    [Verb("make-emulator", HelpText = "Make a snowball package for an emulator assembly")]
-    internal class MakeEmulatorAssemblyOptions
-    {
-        [Option('d', "definition", HelpText = "The path to the emulatordef file. Must have emulator files beside this.",
-            Required = true)]
-        public string EmulatorDefinitionFile { get; set; }
-
-        [Option('i', "info",
-            HelpText =
-                "Specify the package info file. The emulator assembly folder must have a snowflake.json otherwise")]
-        public string PackageInfoFile { get; set; }
-
-        [Option('o', "output", HelpText = "The output directory. Defaults to current working directory",
-            Required = false)]
-        public string OutputDirectory { get; set; }
-
-        [Option('b', "bare", HelpText = "Do not pack the plugin, return the raw directory instead")]
-        public bool Bare { get; set; }
     }
 
     [Verb("install", HelpText = "Install a snowball package")]
