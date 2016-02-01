@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using NuGet;
 
-namespace Snowflake.Packaging.Snowball
+namespace Snowball.Packaging
 {
     public class PackageInfo
     {
@@ -28,7 +28,7 @@ namespace Snowflake.Packaging.Snowball
         public IList<Dependency> Dependencies { get; }
 
         [JsonProperty("packagetype")]
-        [JsonConverter(typeof (StringEnumConverter))]
+        [JsonConverter(typeof(StringEnumConverter))]
         public PackageType PackageType { get; }
 
         public PackageInfo(string name, string description, IList<string> authors, string version, IList<string> tags,
@@ -48,15 +48,8 @@ namespace Snowflake.Packaging.Snowball
             IList<string> dependencies, string packageType)
             : this(
                 name, description, authors, version, tags, dependencies,
-                (PackageType) Enum.Parse(typeof (PackageType), packageType, true))
+                (PackageType)Enum.Parse(typeof(PackageType), packageType, true))
         {
         }
-    }
-
-    public enum PackageType
-    {
-        Plugin,
-        Theme,
-        EmulatorAssembly
     }
 }
