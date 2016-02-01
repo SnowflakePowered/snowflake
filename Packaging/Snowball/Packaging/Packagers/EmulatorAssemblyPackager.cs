@@ -11,7 +11,7 @@ namespace Snowball.Packaging.Packagers
 {
     public class EmulatorAssemblyPackager : Packager
     {
-        public EmulatorAssemblyPackager() : base("emulators", PackageType.Plugin)
+        public EmulatorAssemblyPackager() : base("emulators", PackageType.EmulatorAssembly)
         {
 
         }

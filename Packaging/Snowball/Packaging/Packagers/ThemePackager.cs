@@ -11,7 +11,7 @@ namespace Snowball.Packaging.Packagers
 {
     public class ThemePackager : Packager
     {
-        public ThemePackager() : base("themes", PackageType.Plugin)
+        public ThemePackager() : base("themes", PackageType.Theme)
         {
 
         }
