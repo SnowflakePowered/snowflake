@@ -17,17 +17,6 @@ namespace Snowflake.Packaging
         public string FileName { get; set; }
     }
 
-    [Verb("pack", HelpText = "Pack a folder into a snowball package")]
-    internal class PackOptions
-    {
-        [Value(0, HelpText = "The snowball package root with a snowball folder and a snowball.json file",
-            Required = true)]
-        public string PluginRoot { get; set; }
-
-        [Value(1, HelpText = "The output directory. Defaults to current working directory", Required = false)]
-        public string OutputDirectory { get; set; }
-    }
-
     [Verb("make", HelpText = "Make a snowball package")]
     internal class MakePackageOptions
     {

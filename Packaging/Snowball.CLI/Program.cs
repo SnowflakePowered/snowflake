@@ -22,14 +22,9 @@ namespace Snowflake.Packaging
                 Environment.Exit(1);
             };
 #endif
-            var result = Parser.Default.ParseArguments<PackOptions,
-                MakePackageOptions,
+            var result = Parser.Default.ParseArguments<MakePackageOptions,
                 InstallOptions, UninstallOptions, PublishOptions, AuthOptions, SignOptions, VerifyOptions>(args)
-                .WithParsed<PackOptions>(options =>
-                {
-                    var package = Package.LoadDirectory(options.PluginRoot);
-                    package.Pack(options.OutputDirectory ?? Environment.CurrentDirectory, options.PluginRoot);
-                })
+                
                 .WithParsed<MakePackageOptions>(options =>
                 {
 
