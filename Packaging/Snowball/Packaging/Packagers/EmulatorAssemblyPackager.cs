@@ -18,38 +18,38 @@ namespace Snowball.Packaging.Packagers
         /// <summary>
         /// Make an emulator package
         /// </summary>
-        /// <param name="inputFile">The input emulatordef</param>
+        /// <param name="themeFolder">The input emulatordef</param>
         /// <param name="infoFile"></param>
         /// <returns></returns>
-        public override string Make(string inputFile, string infoFile)
+        public override string Make(string themeFolder, string infoFile)
         {
-            if (!File.Exists(inputFile))
+            if (!File.Exists(themeFolder))
                 throw new FileNotFoundException("Unable to find emulatordef");
             string defId =
-                JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(File.ReadAllText(inputFile))["id"];
-            string emulatorRoot = Path.Combine(Path.GetDirectoryName(inputFile), defId);
+                JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(File.ReadAllText(themeFolder))["id"];
+            string emulatorRoot = Path.Combine(Path.GetDirectoryName(themeFolder), defId);
             if (!Directory.Exists(emulatorRoot))
                 throw new FileNotFoundException($"Unable to find emulator contents at {emulatorRoot}");
             infoFile = string.IsNullOrWhiteSpace(infoFile)
                ? File.ReadAllText(Path.Combine(emulatorRoot, "snowball.json"))
                : File.ReadAllText(infoFile);
             var packageInfo = JsonConvert.DeserializeObject<PackageInfo>(infoFile);
-            return this.Make(inputFile, packageInfo);
+            return this.Make(themeFolder, packageInfo);
         }
 
-        public override string Make(string inputFile, PackageInfo packageInfo)
+        public override string Make(string themeFolder, PackageInfo packageInfo)
         {
-            if (!File.Exists(inputFile))
+            if (!File.Exists(themeFolder))
                 throw new FileNotFoundException("Unable to find emulatordef");
             string defId =
-                JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(File.ReadAllText(inputFile))[
+                JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(File.ReadAllText(themeFolder))[
                     "id"];
-            string emulatorRoot = Path.Combine(Path.GetDirectoryName(inputFile), defId);
+            string emulatorRoot = Path.Combine(Path.GetDirectoryName(themeFolder), defId);
             if (!Directory.Exists(emulatorRoot))
                 throw new FileNotFoundException($"Unable to find emulator contents at {emulatorRoot}");
 
             string snowballDir = Packager.CopyResourceFiles(emulatorRoot, packageInfo);
-            File.Copy(inputFile, Path.Combine(snowballDir, Path.GetFileName(inputFile)));
+            File.Copy(themeFolder, Path.Combine(snowballDir, Path.GetFileName(themeFolder)));
             return snowballDir;
         }
     }

@@ -18,33 +18,32 @@ namespace Snowball.Packaging.Packagers
         /// <summary>
         /// Make a theme package
         /// </summary>
-        /// <param name="inputFile">The input theme.json</param>
+        /// <param name="themeFolder">The input theme folder</param>
         /// <param name="infoFile"></param>
         /// <returns></returns>
-        public override string Make(string inputFile, string infoFile)
+        public override string Make(string themeFolder, string infoFile)
         {
-            if (!File.Exists(inputFile))
+            if (!File.Exists(Path.Combine(themeFolder, "theme.json")))
                 throw new FileNotFoundException("Unable to find theme.json");
             infoFile = string.IsNullOrWhiteSpace(infoFile)
-                ? File.ReadAllText(Path.Combine(inputFile, "snowball.json"))
+                ? File.ReadAllText(Path.Combine(themeFolder, "snowball.json"))
                 : File.ReadAllText(infoFile);
             var packageInfo = JsonConvert.DeserializeObject<PackageInfo>(infoFile);
           
-            return this.Make(inputFile, packageInfo);
+            return this.Make(themeFolder, packageInfo);
         }
 
-        public override string Make(string inputFile, PackageInfo packageInfo)
+        public override string Make(string themeFolder, PackageInfo packageInfo)
         {
-            if (!File.Exists(inputFile))
+            if (!File.Exists(Path.Combine(themeFolder, "theme.json")))
                 throw new FileNotFoundException("Unable to find theme.json");
             string themeName =
                 JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(
-                    File.ReadAllText(inputFile))["id"];
-            string themeRoot = Path.GetDirectoryName(inputFile);
-            string themeFolderName = Path.GetFileName(themeRoot);
-            if (themeName != themeFolderName)
+                    File.ReadAllText(Path.Combine(themeFolder, "theme.json")))["id"];
+            string themeRootName = Path.GetFileName(themeFolder);
+            if (themeName != themeRootName)
                 throw new InvalidOperationException("Theme name and folder name are mismatched");
-            string snowballDir = Packager.CopyResourceFiles(themeRoot, packageInfo);
+            string snowballDir = Packager.CopyResourceFiles(themeFolder, packageInfo);
             return snowballDir;
         }
     }

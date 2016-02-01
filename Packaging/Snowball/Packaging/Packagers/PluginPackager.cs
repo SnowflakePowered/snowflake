@@ -16,30 +16,30 @@ namespace Snowball.Packaging.Packagers
             
         }
 
-        public override string Make(string inputFile, string infoFile)
+        public override string Make(string themeFolder, string infoFile)
         {
-            if (!File.Exists(Path.Combine(inputFile)))
+            if (!File.Exists(Path.Combine(themeFolder)))
                 throw new FileNotFoundException("Unable to find the plugin file");
-            var pluginAssembly = Assembly.ReflectionOnlyLoadFrom(inputFile);
+            var pluginAssembly = Assembly.ReflectionOnlyLoadFrom(themeFolder);
             infoFile = String.IsNullOrWhiteSpace(infoFile)
                 ? PluginPackager.GetPluginStringResource("snowball.json", pluginAssembly)
                 : File.ReadAllText(infoFile);
             var packageInfo = JsonConvert.DeserializeObject<PackageInfo>(infoFile);
-            return this.Make(inputFile, packageInfo);
+            return this.Make(themeFolder, packageInfo);
         }
 
-        public override string Make(string inputFile, PackageInfo packageInfo)
+        public override string Make(string themeFolder, PackageInfo packageInfo)
         {
-            if (!File.Exists(Path.Combine(inputFile)))
+            if (!File.Exists(Path.Combine(themeFolder)))
                 throw new FileNotFoundException("Unable to find the plugin file");
-            var pluginAssembly = Assembly.ReflectionOnlyLoadFrom(inputFile);
-            string pluginRoot = Path.GetDirectoryName(inputFile);
+            var pluginAssembly = Assembly.ReflectionOnlyLoadFrom(themeFolder);
+            string pluginRoot = Path.GetDirectoryName(themeFolder);
             string pluginName =
                      JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(
                          PluginPackager.GetPluginStringResource("plugin.json", pluginAssembly))["name"];
             string resourceRoot = Path.Combine(pluginRoot, pluginName);
             string snowballDir = Packager.CopyResourceFiles(resourceRoot, packageInfo);
-            File.Copy(inputFile, Path.Combine(snowballDir, Path.GetFileName(inputFile)));
+            File.Copy(themeFolder, Path.Combine(snowballDir, Path.GetFileName(themeFolder)));
             return snowballDir;
         }
 

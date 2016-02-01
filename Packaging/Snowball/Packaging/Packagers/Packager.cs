@@ -60,18 +60,18 @@ namespace Snowball.Packaging.Packagers
         /// <summary>
         /// Make a temporary directory with an unpacked snowball structure to be packed 
         /// </summary>
-        /// <param name="inputFile">The source input file. Expects a fully qualified path name</param>
+        /// <param name="themeFolder">The source input file. Expects a fully qualified path name</param>
         /// <param name="infoFile">The path to the snowball.json</param>
         /// <returns>The temporary directory with the unpacked Snowball</returns>
-        public abstract string Make(string inputFile, string infoFile);
+        public abstract string Make(string themeFolder, string infoFile);
 
         /// <summary>
         /// Make a temporary directory with an unpacked snowball structure to be packed
         /// </summary>
-        /// <param name="inputFile">The source input file  Expects a fully qualified path name</param>
+        /// <param name="themeFolder">The source input file  Expects a fully qualified path name</param>
         /// <param name="packageInfo">A packageInfo file</param>
         /// <returns>The temporary directory with the unpacked Snowball</returns>
-        public abstract string Make(string inputFile, PackageInfo packageInfo);
+        public abstract string Make(string themeFolder, PackageInfo packageInfo);
 
         /// <summary>
         /// Sets up a temporary snowball directory given the resource root of the files
