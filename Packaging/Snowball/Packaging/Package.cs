@@ -51,11 +51,10 @@ namespace Snowball.Packaging
                    .ToLowerInvariant());
             if (this.IsPacked)
             {
-                File.Copy(this.PackageRoot, outputFilename);
+                File.Copy(this.PackageRoot, outputFilename, true);
             }
             else
             {
-
                 if (!Directory.Exists(Path.Combine(this.PackageRoot, "snowball")))
                     throw new FileNotFoundException("Unable to locate package root");
                 if (!File.Exists(Path.Combine(this.PackageRoot, "snowball.json")))
