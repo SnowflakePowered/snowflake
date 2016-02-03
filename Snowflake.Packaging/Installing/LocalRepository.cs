@@ -32,6 +32,7 @@ namespace Snowflake.Packaging.Installing
         public string RepositoryOrg { get; }
         public string RepositoryName { get; }
         private string ArchivePath { get; }
+        private string CachedRepoToken { get; }
         private ZipArchive RepositoryZip { get; set; }
 
         public LocalRepository(string appDataDirectory,
@@ -41,6 +42,8 @@ namespace Snowflake.Packaging.Installing
             this.RepositoryOrg = repositorySlug.Split('/')[0];
             this.RepositoryName = repositorySlug.Split('/')[1];
             this.ArchivePath = Path.Combine(this.AppDataDirectory, "snowball.repo");
+            this.CachedRepoToken = Path.Combine(this.AppDataDirectory, ".snowballrepo");
+
             if (File.Exists(this.ArchivePath)) this.RepositoryZip = new ZipArchive(File.OpenRead(this.ArchivePath));
         }
 
@@ -54,6 +57,14 @@ namespace Snowflake.Packaging.Installing
             return remoteRepoHash != Properties.Settings.Default.cachedRepoHash;
         }
 
+        public string GetCachedRepoHash()
+        {
+            return File.ReadAllText(this.CachedRepoToken);
+        }
+        public void SetCachedRepoHash(string repoHash)
+        {
+            File.WriteAllText(this.CachedRepoToken, repoHash);
+        }
         public async Task UpdateRepository()
         {
             using (var downloader = new WebClient())
@@ -77,19 +88,17 @@ namespace Snowflake.Packaging.Installing
         public bool PluginExistsInRepository(string packageId)
         {
             return
-                this.RepositoryZip?.Entries.Where(
-                    entry => StringComparer.InvariantCultureIgnoreCase.Equals(entry.Name, $"{packageId}.json")).Any() ??
-                false;
+                this.RepositoryZip?.Entries.Any(entry => StringComparer.InvariantCultureIgnoreCase.Equals(entry.Name, $"{packageId}.json")) ?? false;
         }
 
         public ReleaseInfo GetReleaseInfo(string packageId)
         {
-            string jsonFile =
-                new StreamReader(
-                    this.RepositoryZip?.Entries.FirstOrDefault(
-                        entry => StringComparer.InvariantCultureIgnoreCase.Equals(entry.Name, $"{packageId}.json"))?
-                        .Open()).ReadToEnd();
-            return jsonFile != null ? JsonConvert.DeserializeObject<ReleaseInfo>(jsonFile) : null;
+            var zipArchiveStream =
+                this.RepositoryZip.Entries.FirstOrDefault(
+                    entry => StringComparer.InvariantCultureIgnoreCase.Equals(entry.Name, $"{packageId}.json"))?
+                    .Open();
+            
+            return zipArchiveStream != null ? JsonConvert.DeserializeObject<ReleaseInfo>(new StreamReader(zipArchiveStream).ReadToEnd()) : null;
         }
 
         public IEnumerable<Tuple<ReleaseInfo, SemanticVersion>> ResolveDependencies(string packageId,

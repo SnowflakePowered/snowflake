@@ -63,6 +63,8 @@
     <Compile Include="Packaging\Packagers\EmulatorAssemblyPackager.cs" />
     <Compile Include="Packaging\Packagers\ThemePackager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Releases\LocalRepository.cs" />
+    <Compile Include="Releases\ReleaseInfo.cs" />
     <Compile Include="Secure\AccountKeyStore.cs" />
   </ItemGroup>
   <ItemGroup>
