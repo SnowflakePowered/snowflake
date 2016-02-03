@@ -39,7 +39,7 @@ namespace Snowflake.Packaging
                     string packageRoot =
                         Path.GetDirectoryName(packager.Make(Path.GetFullPath(options.FileName),
                             options.PackageInfoFile));
-                    Console.WriteLine(Package.LoadDirectory(packageRoot).Pack(options.OutputDirectory, packageRoot));
+                    Console.WriteLine(Package.LoadDirectory(packageRoot).Pack(options.OutputDirectory));
                 });
         }
         private static bool AtLeastTwo(bool a, bool b, bool c)
