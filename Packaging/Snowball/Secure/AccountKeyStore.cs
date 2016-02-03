@@ -13,13 +13,9 @@ namespace Snowball.Secure
         private static readonly byte[] ProtectDataEntropy = Encoding.UTF8.GetBytes("SNOWFLAKESNOWBALLPWD");
         private readonly string keystoreFile;
 
-        public AccountKeyStore() : this(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tokens.secure"))
+        public AccountKeyStore(string appDataDirectory)
         {
-        }
-
-        public AccountKeyStore(string keystoreFile)
-        {
-            this.keystoreFile = keystoreFile;
+            this.keystoreFile = Path.Combine(appDataDirectory, "tokens.secure");
         }
 
         /// <summary>
