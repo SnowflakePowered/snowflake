@@ -66,6 +66,7 @@
     <Compile Include="Releases\LocalRepository.cs" />
     <Compile Include="Releases\ReleaseInfo.cs" />
     <Compile Include="Publishing\LocalRepository.cs" />
+    <Compile Include="Publishing\ReleaseInfo.cs" />
     <Compile Include="Secure\AccountKeyStore.cs" />
     <Compile Include="Secure\PackageKeyStore.cs" />
   </ItemGroup>
