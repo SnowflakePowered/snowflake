@@ -6,7 +6,7 @@ using System.Net;
 using System.Threading.Tasks;
 using CommandLine;
 using Newtonsoft.Json;
-using Snowball.Installing;
+using Snowball.Installation;
 using Snowball.Packaging;
 using Snowball.Packaging.Packagers;
 using Snowball.Publishing;

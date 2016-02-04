@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using NuGet;
 using Octokit;
+using Snowball.Publishing;
 
-namespace Snowball.Publishing
+namespace Snowball.Installation
 {
     internal static class IEnumerableExtensions
     {
@@ -89,12 +90,36 @@ namespace Snowball.Publishing
 
         public ReleaseInfo GetReleaseInfo(string packageId)
         {
-            string jsonFile =
-                new StreamReader(
-                    this.RepositoryZip?.Entries.FirstOrDefault(
-                        entry => StringComparer.InvariantCultureIgnoreCase.Equals(entry.Name, $"{packageId}.json"))?
-                        .Open()).ReadToEnd();
-            return jsonFile != null ? JsonConvert.DeserializeObject<ReleaseInfo>(jsonFile) : null;
+            var zipArchiveStream =
+              this.RepositoryZip.Entries.FirstOrDefault(
+                  entry => StringComparer.InvariantCultureIgnoreCase.Equals(entry.Name, $"{packageId}.re l.json"))?
+                  .Open();
+
+            return zipArchiveStream != null ? JsonConvert.DeserializeObject<ReleaseInfo>(new StreamReader(zipArchiveStream).ReadToEnd()) : null;
+        }
+
+        public IEnumerable<ReleaseInfo> GetAllReleases()
+        {
+            return this.RepositoryZip?.Entries.Where(releaseEntry => releaseEntry.Name.EndsWith(".rel.json"))
+                .Select(entry => JsonConvert.DeserializeObject<ReleaseInfo>(new StreamReader(entry.Open()).ReadToEnd()));
+        }
+
+        public bool CheckPublishUpdate(ReleaseInfo releaseInfo)
+        {
+            return this.RepositoryZip.Entries.FirstOrDefault(
+                entry => StringComparer.InvariantCultureIgnoreCase.Equals(entry.Name, $"{releaseInfo.Name}.rel.json")) !=
+                   null;
+        }
+
+        public ReleaseInfo MergeReleaseVersions(ReleaseInfo releaseInfo)
+        {
+            if (!this.CheckPublishUpdate(releaseInfo)) return releaseInfo;
+            var oldReleaseInfo = this.GetReleaseInfo(releaseInfo.Name);
+            foreach (var version in releaseInfo.ReleaseVersions.Where(version => !oldReleaseInfo.ReleaseVersions.ContainsKey(version.Key)))
+            {
+                oldReleaseInfo.ReleaseVersions.Add(version);
+            }
+            return oldReleaseInfo;
         }
 
         public IEnumerable<Tuple<ReleaseInfo, SemanticVersion>> ResolveDependencies(string packageId,
