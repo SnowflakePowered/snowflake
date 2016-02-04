@@ -3,20 +3,8 @@ using CommandLine;
 
 namespace Snowflake.Packaging
 {
-    [Verb("sign", HelpText = "Sign a snowball generating public key and signature")]
-    internal class SignOptions
-    {
-        [Value(0, HelpText = "File to sign", Required = true)]
-        public string FileName { get; set; }
-    }
 
-    [Verb("verify", HelpText = "Sign a snowball generating public key and signature")]
-    internal class VerifyOptions
-    {
-        [Value(0, HelpText = "File to verify", Required = true)]
-        public string FileName { get; set; }
-    }
-
+  
     [Verb("make", HelpText = "Make a snowball package")]
     internal class MakePackageOptions
     {
@@ -54,6 +42,12 @@ namespace Snowflake.Packaging
                        "and include a snowball.json and a theme.json inside the folder.", 
             Required = false)]
         public bool MakeTheme { get; set; }
+
+        [Option('n', "nuget",
+        HelpText = "Sign and wrap the resulting package instead of returning the package",
+        Required = false)]
+        public bool WrapNuget { get; set; }
+    
 
         [Option('o', "output", HelpText = "The output directory. Defaults to current working directory",
             Required = false)]

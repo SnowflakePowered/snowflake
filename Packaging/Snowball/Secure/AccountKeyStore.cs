@@ -8,7 +8,7 @@ using System.Security;
 using System.Security.Cryptography;
 namespace Snowball.Secure
 {
-    internal class AccountKeyStore
+    public class AccountKeyStore
     {
         private static readonly byte[] ProtectDataEntropy = Encoding.UTF8.GetBytes("SNOWFLAKESNOWBALLPWD");
         private readonly string keystoreFile;

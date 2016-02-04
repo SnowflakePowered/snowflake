@@ -29,14 +29,15 @@ namespace Snowball.Publishing
         {
 
         }
-        public dynamic MakeNugetPackage()
+
+        public Tuple<string, ReleaseInfo> MakeNugetPackage()
         {
             string temporaryDirectory = NugetWrapper.GetTemporaryDirectory();
             string packagePath = this.Package.Pack(temporaryDirectory);
             byte[] packageSig = this.SignSnowball(packagePath);
             string packageSigPath = Path.Combine(temporaryDirectory, "signature.bin");
             File.WriteAllBytes(packageSigPath, packageSig);
-            return new { PackagePath =  this.BuildNugetPackage(packagePath, packageSigPath), ReleaseInfo = this.MakeReleaseInfo() };
+            return new Tuple<string, ReleaseInfo>(this.BuildNugetPackage(packagePath, packageSigPath), this.MakeReleaseInfo());
         }
         
         private string BuildNugetPackage(string packagePath, string packageSigPath)
@@ -57,11 +58,12 @@ namespace Snowball.Publishing
             {
                 packagePath,
                 packageSigPath
-            }.Select(f => new ManifestFile { Source = f, Target = f.Replace(Path.GetDirectoryName(f), "") })
+            }
+            .Select(f => new ManifestFile { Source = f, Target = f.Replace(Path.GetDirectoryName(f), "") })
                 .ToList();
             builder.PopulateFiles("", files);
             builder.Populate(metadata);
-            string fileName = Path.GetTempFileName() + ".nupkg";
+            string fileName = packagePath + ".nupkg";
             using (FileStream stream = File.Create(fileName, 1024, FileOptions.Asynchronous))
             {
                 builder.Save(stream);
