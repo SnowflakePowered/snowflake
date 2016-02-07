@@ -4,6 +4,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Threading.Tasks;
 using CommandLine;
 using Newtonsoft.Json;
@@ -50,24 +51,23 @@ namespace Snowflake.Packaging
                         Console.WriteLine($"Error ocurred when building your package: {e.Message}");
                     }
                 })
-                .WithParsed<AuthOptions>(async options =>
+                .WithParsed<AuthOptions>(options =>
                 {
-                    try
+                    Task.Run(async () =>
                     {
-                        await Program.ProcessAuthOptions(options, accountKeyStore);
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine($"Error ocurred when saving your details: {e.Message}");
-                    }
-                    finally
-                    {
-                        Console.WriteLine("Waiting 5 seconds to clear your console for security purposes...");
-                        await Task.Delay(5000);
-                        Console.Clear();
-                        Program.FreeConsole(); //clear history
-                        Program.AllocConsole();
-                    }
+                        try
+                        {
+                            await Program.ProcessAuthOptions(options, accountKeyStore);
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine($"Error ocurred when saving your details: {e.Message}");
+                        }
+                    }).Wait();
+                    Console.WriteLine("Waiting 5 seconds to clear your console for security purposes...");
+                    Thread.Sleep(5000);
+                    Console.Clear();
+                    ConsoleEx.ClearConsoleHistory();
                 });
         }
 
@@ -135,6 +135,51 @@ namespace Snowflake.Packaging
             string tempDirectory = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
             Directory.CreateDirectory(tempDirectory);
             return tempDirectory;
+        }
+
+    }
+    //http://stackoverflow.com/a/23947777
+    public static class ConsoleEx
+    {
+        [DllImport("kernel32.dll", SetLastError = true)]
+        static extern bool SetConsoleHistoryInfo(CONSOLE_HISTORY_INFO ConsoleHistoryInfo);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        static extern bool GetConsoleHistoryInfo(CONSOLE_HISTORY_INFO ConsoleHistoryInfo);
+
+        [StructLayout(LayoutKind.Sequential)]
+        private class CONSOLE_HISTORY_INFO
+        {
+            public uint cbSize;
+            public uint BufferSize;
+            public uint BufferCount;
+            public uint TrimDuplicates;
+        }
+
+        public static void ClearConsoleHistory()
+        {
+            var chi = new CONSOLE_HISTORY_INFO();
+            chi.cbSize = (uint)System.Runtime.InteropServices.Marshal.SizeOf(typeof(CONSOLE_HISTORY_INFO));
+
+            if (!GetConsoleHistoryInfo(chi))
+            {
+                return;
+            }
+
+            var originalBufferSize = chi.BufferSize;
+            chi.BufferSize = 0;
+
+            if (!SetConsoleHistoryInfo(chi))
+            {
+                return;
+            }
+
+            chi.BufferSize = originalBufferSize;
+
+            if (!SetConsoleHistoryInfo(chi))
+            {
+                return;
+            }
         }
     }
 }
