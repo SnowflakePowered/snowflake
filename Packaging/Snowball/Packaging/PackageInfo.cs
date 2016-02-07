@@ -35,6 +35,7 @@ namespace Snowball.Packaging
         public PackageInfo(string name, string description, IList<string> authors, string version, IList<string> tags,
             IList<string> dependencies, PackageType packageType)
         {
+            if (name.Contains(".")) throw new InvalidOperationException("Package name contains invalid separator character '.'"); //we don't want to screw up name parsing 
             this.Version = new SemanticVersion(version);
             this.Name = name;
             this.Description = description;

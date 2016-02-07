@@ -46,10 +46,17 @@ namespace Snowball.Secure
         /// <param name="tokens">The tokens in the store.</param>
         public void GetTokens(out string[] tokens)
         {
-            if (!File.Exists(this.keystoreFile)) tokens = new string[2];
-            byte[] cipherKeystore = File.ReadAllBytes(this.keystoreFile);
-            tokens = Encoding.UTF8.GetString(ProtectedData.Unprotect(cipherKeystore, AccountKeyStore.ProtectDataEntropy,
-               DataProtectionScope.CurrentUser)).Split(';');
+            if (!File.Exists(this.keystoreFile))
+            {
+                tokens = new string[2];
+            }
+            else
+            {
+                byte[] cipherKeystore = File.ReadAllBytes(this.keystoreFile);
+                tokens = Encoding.UTF8.GetString(ProtectedData.Unprotect(cipherKeystore, AccountKeyStore.ProtectDataEntropy,
+                   DataProtectionScope.CurrentUser)).Split(';');
+            }
+         
         }
 
     }

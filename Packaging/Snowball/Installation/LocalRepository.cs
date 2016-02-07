@@ -84,15 +84,14 @@ namespace Snowball.Installation
         public bool PluginExistsInRepository(string packageId)
         {
             return
-                this.RepositoryZip?.Entries.Any(entry => StringComparer.InvariantCultureIgnoreCase.Equals(entry.Name, $"{packageId}.json")) ??
+                this.RepositoryZip?.Entries.Any(entry => entry.Name.StartsWith($"{packageId}.") && entry.Name.EndsWith(".rel.json")) ??
                 false;
         }
 
         public ReleaseInfo GetReleaseInfo(string packageId)
         {
             var zipArchiveStream =
-              this.RepositoryZip.Entries.FirstOrDefault(
-                  entry => StringComparer.InvariantCultureIgnoreCase.Equals(entry.Name, $"{packageId}.re l.json"))?
+              this.RepositoryZip.Entries.FirstOrDefault(entry => entry.Name.StartsWith($"{packageId}.") && entry.Name.EndsWith(".rel.json"))?
                   .Open();
 
             return zipArchiveStream != null ? JsonConvert.DeserializeObject<ReleaseInfo>(new StreamReader(zipArchiveStream).ReadToEnd()) : null;
@@ -107,7 +106,7 @@ namespace Snowball.Installation
         public bool CheckPublishUpdate(ReleaseInfo releaseInfo)
         {
             return this.RepositoryZip.Entries.FirstOrDefault(
-                entry => StringComparer.InvariantCultureIgnoreCase.Equals(entry.Name, $"{releaseInfo.Name}.rel.json")) !=
+                entry => StringComparer.InvariantCultureIgnoreCase.Equals(entry.Name, $"{releaseInfo.Name}.{releaseInfo.PackageType}.rel.json".ToLowerInvariant())) !=
                    null;
         }
 
@@ -145,7 +144,7 @@ namespace Snowball.Installation
             var _installList = new List<Tuple<ReleaseInfo, SemanticVersion>>();
             foreach (string installPackage in releaseStrings)
             {
-                string packageName = string.Empty;
+                string packageName;
                 SemanticVersion packageVersion = null;
 
                 if (installPackage.Contains('@'))
@@ -164,6 +163,12 @@ namespace Snowball.Installation
         {
             return
                 $"https://www.nuget.org/api/v2/package/snowflake-snowball-{releaseinfo.PackageType}-{releaseinfo.Name}/{version}";
+        }
+
+        public static string GetNugetPage(ReleaseInfo releaseinfo, string version = "")
+        {
+            return
+                $"https://www.nuget.org/packages/snowflake-snowball-{releaseinfo.PackageType}-{releaseinfo.Name}/{version}";
         }
     }
 }
