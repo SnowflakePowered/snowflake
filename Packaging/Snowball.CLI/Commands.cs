@@ -83,8 +83,8 @@ namespace Snowflake.Packaging
     [Verb("publish", HelpText = "Publish a snowball package for approval")]
     internal class PublishOptions
     {
-        [Value(0, HelpText = "The package to publish", Required = true)]
-        public string PackageFile { get; set; }
+        [Value(0, HelpText = "The snowball package or make target", Required = true)]
+        public string FileName { get; set; }
     }
 
     [Verb("auth", HelpText = "Setup to publish. Requires a GitHub account.")]
