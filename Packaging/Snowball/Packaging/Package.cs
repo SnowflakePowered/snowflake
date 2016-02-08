@@ -23,7 +23,7 @@ namespace Snowball.Packaging
         }
 
 
-        public static Package FromZip(string zipFile)
+        public static Package LoadZip(string zipFile)
         {
             using (ZipArchive snowball = new ZipArchive(File.Open(zipFile, FileMode.Open), ZipArchiveMode.Read))
             {

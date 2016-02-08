@@ -25,7 +25,7 @@ namespace Snowball.Publishing
             this.KeyPair = packageKeyStore.GetKeyPair(this.Package.PackageInfo.Name);
         }
 
-        public NugetWrapper(string packagePath, PackageKeyStore packageKeyStore) : this(Package.FromZip(packagePath), packageKeyStore)
+        public NugetWrapper(string packagePath, PackageKeyStore packageKeyStore) : this(Package.LoadZip(packagePath), packageKeyStore)
         {
 
         }

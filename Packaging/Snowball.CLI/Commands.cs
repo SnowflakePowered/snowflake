@@ -81,10 +81,62 @@ namespace Snowflake.Packaging
     }
 
     [Verb("publish", HelpText = "Publish a snowball package for approval")]
-    internal class PublishOptions
+    internal class PublishOptions 
     {
-        [Value(0, HelpText = "The snowball package or make target", Required = true)]
+        [Value(0,
+          HelpText = "The package id of the built snowball, or the full filename of the snowball if (--fullpath), or The file to make the snowball package for if (--make)",
+          Required = true)]
         public string FileName { get; set; }
+
+        [Option('i', "info",
+            HelpText = "Specify the package info file. (--make only)")]
+        public string PackageInfoFile { get; set; }
+
+        [Option('p', "plugin",
+            SetName = "Make Type",
+            HelpText = "(--make only) Make a snowball for a plugin. " +
+                       "A plugin is expected to have an EMBEDDED snowball.json, " +
+                       "and be in the format of a .dll file. " +
+                       "Any files in the plugin's resource folder will also be copied",
+            Required = false)]
+        public bool MakePlugin { get; set; }
+
+        [Option('e', "emulator",
+            SetName = "Make Type",
+            HelpText = "(--make only) Make a snowball for an emulator assembly. " +
+                       "An emulator assembly is expected to have contents in a folder named the ID, " +
+                       "and include a snowball.json inside the folder. " +
+                       "The input file is expected to be a format of an .emulatordef file describing the assembly.",
+            Required = false)]
+        public bool MakeEmulator { get; set; }
+
+        [Option('t', "theme",
+            SetName = "Make Type",
+            HelpText = "(--make only) Make a snowball for a theme. " +
+                       "A theme is expected to be in the format of a folder containing the theme contents, " +
+                       "and include a snowball.json and a theme.json inside the folder.",
+            Required = false)]
+        public bool MakeTheme { get; set; }
+
+        [Option('m', "make", HelpText = "Make a package rather than publish an existing one")]
+        public bool MakePackage { get; set; }
+
+        [Option('s', "snowball", HelpText = "Publish an existing package", Default = true)]
+        public bool Prebuilt { get; set; }
+
+        [Option('f', "fullpath", HelpText = "Specify the full path to the package", Default = true)]
+        public bool FullPath { get; set; }
+
+        [Option('r', "retry", HelpText = "Publish an existing package", Default = true)]
+        public int RetryCount { get; set; }
+
+        [Option('t', "timeout", HelpText = "Timeout when uploading to NuGet in seconds", Default = 300)]
+        public int Timeout { get; set; }
+
+        [Option('g', "gh-only", HelpText = "Only publish github index.")]
+        public bool GithubOnly { get; set; }
+
+
     }
 
     [Verb("auth", HelpText = "Setup to publish. Requires a GitHub account.")]

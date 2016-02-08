@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using CommandLine;
 using Newtonsoft.Json;
+using Octokit;
 using Snowball.Installation;
 using Snowball.Packaging;
 using Snowball.Packaging.Packagers;
@@ -69,9 +70,117 @@ namespace Snowball.CLI
                     Thread.Sleep(5000);
                     Console.Clear();
                     ConsoleEx.ClearConsoleHistory();
+                })
+                .WithParsed<PublishOptions>(options =>
+                {
+                    try
+                    {
+                        Program.ProcessPublishOptions(options, packageKeyStore, accountKeyStore, localRepository);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine($"Error ocurred when pulishing your package: {e.Message}");
+                        Console.WriteLine($"If NuGet package was successfully uploaded");
+
+                    }
                 });
         }
 
+        private static void ProcessPublishOptions(PublishOptions options , PackageKeyStore packageKeyStore,
+            AccountKeyStore accountKeyStore, LocalRepository localRepository)
+        {
+            NugetWrapper wrappedPackage = null;
+            if (options.MakePackage)
+            {
+                if (Program.AtLeastTwo(options.MakePlugin, options.MakeTheme, options.MakeEmulator))
+                    throw new InvalidOperationException("You can only specify a single type.");
+                Packager packager = null;
+                if (options.MakePlugin)
+                {
+                    Console.WriteLine("Building a plugin snowball...");
+                    packager = new PluginPackager();
+                }
+                else if (options.MakeEmulator)
+                {
+                    Console.WriteLine("Building an emulator assembly snowball...");
+                    packager = new EmulatorAssemblyPackager();
+                }
+                else if (options.MakeTheme)
+                {
+                    Console.WriteLine("Building a theme snowball...");
+                    packager = new ThemePackager();
+                }
+                if (packager == null)
+                    throw new InvalidOperationException("No package type specified.");
+                //todo probably a more elegant way to this
+                string packageRoot =
+                    Path.GetDirectoryName(packager.Make(Path.GetFullPath(options.FileName),
+                        options.PackageInfoFile));
+                wrappedPackage = new NugetWrapper(Package.LoadDirectory(packageRoot), packageKeyStore);
+            }
+            else if (options.Prebuilt)
+            {
+                if (options.FullPath)
+                {
+                    Console.WriteLine(
+                        "WARNING: --fullpath specified, will not confirm proper filename format. Your package may be rejected!");
+                    if (!options.FileName.EndsWith(".snowball"))
+                        throw new InvalidDataException("Snowball is not valid.");
+                    wrappedPackage = new NugetWrapper(Package.LoadZip(options.FileName), packageKeyStore);
+                }
+                else
+                {
+                    string fileName =
+                        Directory.EnumerateFiles(Environment.CurrentDirectory)
+                            .FirstOrDefault(
+                                _fileName =>
+                                    (_fileName.EndsWith(".snowball") &&
+                                     _fileName.Contains($"!{options.FileName}-")));
+                    if (String.IsNullOrWhiteSpace(fileName))
+                        throw new FileNotFoundException("Unable to find matching snowball in current directory");
+                    wrappedPackage = new NugetWrapper(Package.LoadZip(fileName), packageKeyStore);
+                }
+            }
+            if (wrappedPackage == null) throw new FileNotFoundException($"Unable to find snowball {options.FileName}");
+            var publisher = new Publisher(wrappedPackage, accountKeyStore, localRepository);
+
+            if (!options.GithubOnly)
+            {
+                for (int i = 0; i >= options.RetryCount; i++)
+                {
+                    try
+                    {
+                        publisher.PushPackageToNuGet(options.Timeout);
+                        break;
+                    }
+                    catch (WebException)
+                    {
+                        if (i == options.RetryCount) throw;
+                        Console.WriteLine("ERROR: Web exception encountered, attempting to retry...");
+                        continue;
+                    }
+                }
+            }
+            PullRequest prResult = null;
+            for (int i = 0; i >= options.RetryCount; i++)
+            {
+                try
+                {
+                    var pullRequest = publisher.MakePullRequest();
+                    prResult = publisher.PublishPullRequest(pullRequest);
+                    break;
+                }
+                catch (Exception e)
+                {
+                    if (i == options.RetryCount) throw;
+                    Console.WriteLine("ERROR: Exception encountered, attempting to retry...");
+                    Console.WriteLine(e.Message);
+                    continue;
+                }
+            }
+
+            Console.WriteLine($"Package published for review at {prResult?.IssueUrl}.");
+        }
         private static void ProcessMakePackageOptions(MakePackageOptions options, PackageKeyStore packageKeyStore)
         {
             if (Program.AtLeastTwo(options.MakePlugin, options.MakeTheme, options.MakeEmulator))
