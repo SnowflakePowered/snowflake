@@ -74,7 +74,7 @@ namespace Snowball.Publishing.Secure
 
         internal async Task<NewReference> CreateRemotePersonalBranch(PackageInfo packageInfo)
         {
-            var refs = this.Client.GitDatabase.Reference;
+            var refs = this.Client.Git.Reference;
             var _refs = await refs.GetAll("SnowflakePowered-Packages", "snowball-packages");
             string masterSha = _refs.First(branch => branch.Ref == "refs/heads/master").Object.Sha;
             string branchName = $"{packageInfo.Name}v{packageInfo.Version}-{Guid.NewGuid()}";

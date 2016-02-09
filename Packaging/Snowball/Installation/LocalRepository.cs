@@ -6,22 +6,18 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using NuGet;
 using Octokit;
+using semver.tools;
 
 namespace Snowball.Installation
 {
-    internal static class IEnumerableExtensions
+    internal static class EnumerableExtensions
     {
         internal static IEnumerable<TSource> DistinctBy<TSource, TKey>
             (this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
         {
-            HashSet<TKey> knownKeys = new HashSet<TKey>();
-            foreach (TSource element in source)
-            {
-                if (knownKeys.Add(keySelector(element)))
-                    yield return element;
-            }
+            var knownKeys = new HashSet<TKey>();
+            return source.Where(element => knownKeys.Add(keySelector(element)));
         }
     }
 
@@ -126,7 +122,7 @@ namespace Snowball.Installation
         public IEnumerable<Tuple<ReleaseInfo, SemanticVersion>> ResolveDependencies(string packageId,
             SemanticVersion releaseVersion = null)
         {
-            IList<Tuple<ReleaseInfo, SemanticVersion>> releaseInfos = new List<Tuple<ReleaseInfo, SemanticVersion>>();
+            var releaseInfos = new List<Tuple<ReleaseInfo, SemanticVersion>>();
             var initialReleaseInfo = this.GetReleaseInfo(packageId);
             if (initialReleaseInfo == null) return null;
             releaseInfos.Add(Tuple.Create(initialReleaseInfo, releaseVersion));
@@ -136,7 +132,7 @@ namespace Snowball.Installation
             foreach (var dependency in versionDeps)
             {
                 //Traverse the dependency tree using recursion
-                releaseInfos.AddRange(this.ResolveDependencies(dependency.PackageName, dependency.DependencyVersion));
+               releaseInfos.AddRange(this.ResolveDependencies(dependency.PackageName, dependency.DependencyVersion));
             }
             return releaseInfos.DistinctBy(key => key.Item1.Name);
         }
@@ -152,7 +148,7 @@ namespace Snowball.Installation
                 if (installPackage.Contains('@'))
                 {
                     packageName = installPackage.Split('@')[1];
-                    packageVersion = new SemanticVersion(installPackage.Split('@')[2]);
+                    packageVersion = SemanticVersion.Parse(installPackage.Split('@')[2]);
                 }
                 else
                     packageName = installPackage;

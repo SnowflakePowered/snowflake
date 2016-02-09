@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using NuGet;
+using semver.tools;
 using Snowball.Packaging.Packagers;
 
 namespace Snowball.Packaging
@@ -36,7 +36,7 @@ namespace Snowball.Packaging
             IList<string> dependencies, PackageType packageType)
         {
             if (name.Contains(".")) throw new InvalidOperationException("Package name contains invalid separator character '.'"); //we don't want to screw up name parsing 
-            this.Version = new SemanticVersion(version);
+            this.Version = SemanticVersion.Parse(version);
             this.Name = name;
             this.Description = description;
             this.Authors = authors;

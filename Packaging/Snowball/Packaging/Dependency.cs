@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using NuGet;
+using semver.tools;
 
 namespace Snowball.Packaging
 {
@@ -15,7 +15,7 @@ namespace Snowball.Packaging
         {
             var _dependency = dependencyString.Split('@');
             this.PackageName = _dependency[0];
-            this.DependencyVersion = _dependency.Length == 2 ? new SemanticVersion(_dependency[1]) : null;
+            this.DependencyVersion = _dependency.Length == 2 ? SemanticVersion.Parse(_dependency[1]) : null;
         }
 
         public override string ToString()

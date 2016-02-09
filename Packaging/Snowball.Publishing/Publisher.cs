@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using NuGet;
 using Octokit;
 using Snowball.Installation;
@@ -109,7 +108,7 @@ namespace Snowball.Publishing
             stringBuilder.AppendLine();
             stringBuilder.AppendLine($"**Package Name**: {publishReleaseInfo.Name}");
             stringBuilder.AppendLine($"**Package Type**: {publishReleaseInfo.PackageType}");
-            stringBuilder.AppendLine($"**Version**: {publishReleaseInfo.ReleaseVersions.First().Key.ToNormalizedString()}");
+            stringBuilder.AppendLine($"**Version**: {publishReleaseInfo.ReleaseVersions.First().Key}");
             stringBuilder.AppendLine($"**Description**: _{publishReleaseInfo.Description}_");
             stringBuilder.AppendLine($"**NuGet Package URL**: { LocalRepository.GetNugetPage(publishReleaseInfo)}");
             stringBuilder.AppendLine($"**NuGet Download URL**: { LocalRepository.GetNugetDownload(publishReleaseInfo)}");

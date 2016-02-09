@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using NuGet;
+using semver.tools;
 using Snowball.Packaging;
 using Snowball.Packaging.Packagers;
 

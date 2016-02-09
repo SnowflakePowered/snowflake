@@ -80,7 +80,6 @@ namespace Snowball.CLI
                     catch (Exception e)
                     {
                         Console.WriteLine($"Error ocurred when pulishing your package: {e.Message}");
-                        Console.WriteLine($"If NuGet package was successfully uploaded");
 
                     }
                 });
@@ -180,7 +179,7 @@ namespace Snowball.CLI
                 }
             }
 
-            Console.WriteLine($"Package published for review at {prResult?.IssueUrl}.");
+            Console.WriteLine($"Package published for review at {prResult?.HtmlUrl}.");
         }
         private static void ProcessMakePackageOptions(MakePackageOptions options, PackageKeyStore packageKeyStore)
         {
