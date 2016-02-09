@@ -5,7 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
-namespace Snowball.Secure
+using Snowball.Installation;
+
+namespace Snowball.Publishing.Secure
 {
     public class PackageKeyStore
     {
@@ -43,18 +45,5 @@ namespace Snowball.Secure
             }
         }
 
-    }
-
-    public class PackageKeyPair
-    {
-        public string PublicKey { get; }
-        public string FullKey { get; }
-        public string PackageId { get; }
-        public PackageKeyPair(string publicKey, string FullKey, string packageId)
-        {
-            this.PublicKey = publicKey;
-            this.FullKey = FullKey;
-            this.PackageId = packageId;
-        }
     }
 }

@@ -9,8 +9,9 @@ using System.Threading.Tasks;
 using NuGet;
 using Octokit;
 using Snowball.Packaging;
-using Snowball.Secure;
+using Snowball.Installation;
 using FileMode = System.IO.FileMode;
+using Snowball.Publishing.Secure;
 
 namespace Snowball.Publishing
 {

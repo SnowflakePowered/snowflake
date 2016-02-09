@@ -9,7 +9,7 @@ using NuGet;
 using Octokit;
 using Snowball.Installation;
 using Snowball.Packaging;
-using Snowball.Secure;
+using Snowball.Publishing.Secure;
 
 namespace Snowball.Publishing
 {

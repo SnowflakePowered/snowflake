@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake", "Snowflake\Snowflake.csproj", "{8F1D65ED-4A96-4A0A-8371-53655A60A2B3}"
 EndProject
@@ -95,6 +95,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.GUI", "Packaging\Snowball.GUI\Snowball.GUI.csproj", "{DBD7FF37-023A-49F1-A2E0-B4E40DB18E5E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.CLI", "Packaging\Snowball.CLI\Snowball.CLI.csproj", "{E05BE9C3-3E1E-4100-8DAC-DFF598C11477}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Publishing", "Packaging\Snowball.Publishing\Snowball.Publishing.csproj", "{B152A58A-7D3C-4C54-9BFC-77023180A4D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -360,6 +362,14 @@ Global
 		{E05BE9C3-3E1E-4100-8DAC-DFF598C11477}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E05BE9C3-3E1E-4100-8DAC-DFF598C11477}.Release|x86.ActiveCfg = Release|Any CPU
 		{E05BE9C3-3E1E-4100-8DAC-DFF598C11477}.Release|x86.Build.0 = Release|Any CPU
+		{B152A58A-7D3C-4C54-9BFC-77023180A4D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B152A58A-7D3C-4C54-9BFC-77023180A4D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B152A58A-7D3C-4C54-9BFC-77023180A4D7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B152A58A-7D3C-4C54-9BFC-77023180A4D7}.Debug|x86.Build.0 = Debug|Any CPU
+		{B152A58A-7D3C-4C54-9BFC-77023180A4D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B152A58A-7D3C-4C54-9BFC-77023180A4D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B152A58A-7D3C-4C54-9BFC-77023180A4D7}.Release|x86.ActiveCfg = Release|Any CPU
+		{B152A58A-7D3C-4C54-9BFC-77023180A4D7}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -387,5 +397,6 @@ Global
 		{E84493C8-0171-40A8-94C0-BEFA06C9138B} = {84DDAD8A-5C57-46EC-BE2C-EA7F1827AD76}
 		{DBD7FF37-023A-49F1-A2E0-B4E40DB18E5E} = {84DDAD8A-5C57-46EC-BE2C-EA7F1827AD76}
 		{E05BE9C3-3E1E-4100-8DAC-DFF598C11477} = {84DDAD8A-5C57-46EC-BE2C-EA7F1827AD76}
+		{B152A58A-7D3C-4C54-9BFC-77023180A4D7} = {84DDAD8A-5C57-46EC-BE2C-EA7F1827AD76}
 	EndGlobalSection
 EndGlobal

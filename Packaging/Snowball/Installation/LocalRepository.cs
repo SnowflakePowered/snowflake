@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using NuGet;
 using Octokit;
-using Snowball.Publishing;
 
 namespace Snowball.Installation
 {

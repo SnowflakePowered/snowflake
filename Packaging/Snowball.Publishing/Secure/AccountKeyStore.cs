@@ -6,7 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Security;
 using System.Security.Cryptography;
-namespace Snowball.Secure
+
+namespace Snowball.Publishing.Secure
 {
     public class AccountKeyStore
     {

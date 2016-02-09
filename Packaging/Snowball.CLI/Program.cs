@@ -13,7 +13,7 @@ using Snowball.Installation;
 using Snowball.Packaging;
 using Snowball.Packaging.Packagers;
 using Snowball.Publishing;
-using Snowball.Secure;
+using Snowball.Publishing.Secure;
 using Snowflake.Packaging;
 
 

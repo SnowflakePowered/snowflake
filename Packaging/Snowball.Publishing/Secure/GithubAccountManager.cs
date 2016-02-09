@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Octokit;
 using Snowball.Packaging;
-using Snowball.Publishing;
+using Snowball.Installation;
 
-namespace Snowball.Secure
+namespace Snowball.Publishing.Secure
 {
     public class GithubAccountManager
     {

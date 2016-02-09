@@ -4,9 +4,8 @@ using Newtonsoft.Json.Converters;
 using NuGet;
 using Snowball.Packaging;
 using Snowball.Packaging.Packagers;
-using Snowball.Secure;
 
-namespace Snowball.Publishing
+namespace Snowball.Installation
 {
     public class ReleaseInfo
     {

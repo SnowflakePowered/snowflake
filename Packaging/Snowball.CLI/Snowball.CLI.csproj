@@ -65,6 +65,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Snowball.Publishing\Snowball.Publishing.csproj">
+      <Project>{b152a58a-7d3c-4c54-9bfc-77023180a4d7}</Project>
+      <Name>Snowball.Publishing</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Snowball\Snowball.csproj">
       <Project>{e84493c8-0171-40a8-94c0-befa06c9138b}</Project>
       <Name>Snowball</Name>
