@@ -124,10 +124,10 @@ namespace Snowflake.Packaging
         [Option('s', "snowball", HelpText = "Publish an existing package", Default = true)]
         public bool Prebuilt { get; set; }
 
-        [Option('f', "fullpath", HelpText = "Specify the full path to the package", Default = true)]
+        [Option('f', "fullpath", HelpText = "Specify the full path to the package", Default = false)]
         public bool FullPath { get; set; }
 
-        [Option('r', "retry", HelpText = "Publish an existing package", Default = true)]
+        [Option('r', "retry", HelpText = "Sets the amount of retries", Default= 3)]
         public int RetryCount { get; set; }
 
         [Option('t', "timeout", HelpText = "Timeout when uploading to NuGet in seconds", Default = 300)]

@@ -59,62 +59,67 @@ namespace Snowball.Publishing
         
         public NewPullRequest MakePullRequest()
         {
-            return Task.Run(async () =>
+            Task.Run(async () =>
             {
                 if ((await this.LocalRepository.UpdatedRequired()))
                 {
                     await this.LocalRepository.UpdateRepository();
                 }
-                ReleaseInfo localReleaseInfo = this.WrappedPackageResult.Item2;
-                PackageInfo packageInfo = this.WrappedPackage.Package.PackageInfo;
-                bool indexIsUpdate = this.LocalRepository.CheckPublishUpdate(localReleaseInfo);
-                ReleaseInfo publishReleaseInfo = this.LocalRepository.MergeReleaseVersions(localReleaseInfo);
-                NewReference releaseBranch =
-                    await this.GithubAccountManager.CreateRemotePersonalBranch(packageInfo);
-                if (indexIsUpdate)
-                {
-                    await
-                        this.GithubAccountManager.UpdateRemotePersonalRelease(packageInfo, publishReleaseInfo,
-                            releaseBranch);
-                }
-                else
-                {
-                    await
-                        this.GithubAccountManager.CreateRemotePersonalRelease(packageInfo, publishReleaseInfo,
-                            releaseBranch);
-                }
-                return
+
+            }).Wait();
+            ReleaseInfo localReleaseInfo = this.WrappedPackageResult.Item2;
+            PackageInfo packageInfo = this.WrappedPackage.Package.PackageInfo;
+            bool indexIsUpdate = this.LocalRepository.CheckPublishUpdate(localReleaseInfo);
+            ReleaseInfo publishReleaseInfo = this.LocalRepository.MergeReleaseVersions(localReleaseInfo);
+            
+            NewReference releaseBranch = Task.Run(async () => await this.GithubAccountManager.CreateRemotePersonalBranch(packageInfo)).Result;
+            if (indexIsUpdate)
+            {
+                Task.Run(async () => await
+                    this.GithubAccountManager.UpdateRemotePersonalRelease(packageInfo, publishReleaseInfo,
+                        releaseBranch)).Wait();
+            }
+            else
+            {
+                Task.Run(async () => await
+                    this.GithubAccountManager.CreateRemotePersonalRelease(packageInfo, publishReleaseInfo, releaseBranch)).Wait();
+            }
+            return
                     new NewPullRequest(
                         $"{(indexIsUpdate ? "Update" : "Add")} {packageInfo.PackageType} {packageInfo.Name} v{packageInfo.Version}",
                         $"{this.GithubAccountManager.CurrentUser.Login}:{GithubAccountManager.GetRelativeBranchName(releaseBranch.Ref)}",
                         "master")
                     {
-                        Body = Publisher.GeneratePullRequestReport(localReleaseInfo, publishReleaseInfo, indexIsUpdate)
+                        Body = this.GeneratePullRequestReport(publishReleaseInfo)
                     };
-            }).Result;
         }
 
         public PullRequest PublishPullRequest(NewPullRequest pullRequest)
         {
-           return Task.Run(async () => await this.GithubAccountManager.Client.PullRequest.Create("SnowflakePowered-Packages", "snowball-packages", pullRequest)).Result;
+            return Task.Run(async () => await
+                this.GithubAccountManager.Client.PullRequest.Create("SnowflakePowered-Packages",
+                    "snowball-packages", pullRequest)).Result;
         }
 
-        private static string GeneratePullRequestReport(ReleaseInfo localReleaseInfo, ReleaseInfo publishReleaseInfo,
-            bool isUpdate)
+        private string GeneratePullRequestReport(ReleaseInfo publishReleaseInfo)
         {
+            var isUpdate = this.LocalRepository.CheckPublishUpdate(publishReleaseInfo);
             var stringBuilder = new StringBuilder();
-            stringBuilder.AppendLine($"This Pull Request {(isUpdate ? "**updates**" : "**adds**")} the package _{localReleaseInfo.PackageType}_.{localReleaseInfo.Name}");
+            stringBuilder.AppendLine($"This Pull Request {(isUpdate ? "**updates**" : "**adds**")} the package _{publishReleaseInfo.PackageType}_.{publishReleaseInfo.Name}");
             stringBuilder.AppendLine();
-            stringBuilder.AppendLine($"**Package Name**: {localReleaseInfo.Name}");
-            stringBuilder.AppendLine($"**Package Type**: {localReleaseInfo.PackageType}");
-            stringBuilder.AppendLine($"**Version**: {localReleaseInfo.ReleaseVersions.First().Key.ToNormalizedString()}");
-            stringBuilder.AppendLine($"**Description**: _{localReleaseInfo.Description}_");
+            stringBuilder.AppendLine($"**Package Name**: {publishReleaseInfo.Name}");
+            stringBuilder.AppendLine($"**Package Type**: {publishReleaseInfo.PackageType}");
+            stringBuilder.AppendLine($"**Version**: {publishReleaseInfo.ReleaseVersions.First().Key.ToNormalizedString()}");
+            stringBuilder.AppendLine($"**Description**: _{publishReleaseInfo.Description}_");
             stringBuilder.AppendLine($"**NuGet Package URL**: { LocalRepository.GetNugetPage(publishReleaseInfo)}");
             stringBuilder.AppendLine($"**NuGet Download URL**: { LocalRepository.GetNugetDownload(publishReleaseInfo)}");
 
-            if (!publishReleaseInfo.PublicKey.Equals(localReleaseInfo.PublicKey))
+            if (isUpdate)
             {
-                stringBuilder.AppendLine($"**!!PUBLIC KEYS ARE MISMATCHED FROM PREVIOUS VERSION!!**");
+                if (!publishReleaseInfo.PublicKey.Equals(this.LocalRepository.GetReleaseInfo(publishReleaseInfo.Name).PublicKey))
+                {
+                    stringBuilder.AppendLine($"**!!PUBLIC KEYS ARE MISMATCHED FROM PREVIOUS VERSION!!**");
+                }
             }
 
             stringBuilder.AppendLine(

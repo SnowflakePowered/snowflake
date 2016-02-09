@@ -41,7 +41,7 @@ namespace Snowball.CLI
             var accountKeyStore = new AccountKeyStore(appDataDirectory);
             var packageKeyStore = new PackageKeyStore(appDataDirectory);
 
-            var result = Parser.Default.ParseArguments<MakePackageOptions, AuthOptions>(args)
+            var result = Parser.Default.ParseArguments<MakePackageOptions, AuthOptions, PublishOptions>(args)
                 .WithParsed<MakePackageOptions>(options =>
                 {
                     try
@@ -146,7 +146,7 @@ namespace Snowball.CLI
 
             if (!options.GithubOnly)
             {
-                for (int i = 0; i >= options.RetryCount; i++)
+                for (int i = 0; i < options.RetryCount; i++)
                 {
                     try
                     {
@@ -162,7 +162,7 @@ namespace Snowball.CLI
                 }
             }
             PullRequest prResult = null;
-            for (int i = 0; i >= options.RetryCount; i++)
+            for (int i = 0; i < options.RetryCount; i++)
             {
                 try
                 {
@@ -174,6 +174,7 @@ namespace Snowball.CLI
                 {
                     if (i == options.RetryCount) throw;
                     Console.WriteLine("ERROR: Exception encountered, attempting to retry...");
+                    Console.WriteLine(e.InnerException?.Message);
                     Console.WriteLine(e.Message);
                     continue;
                 }

@@ -12,7 +12,6 @@ namespace Snowflake.Packaging.Snowball
     public class Package
     {
         public PackageInfo PackageInfo { get; }
-
         public Package(PackageInfo packageInfo)
         {
             this.PackageInfo = packageInfo;

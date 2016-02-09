@@ -49,6 +49,8 @@ namespace Snowball.Installation
             this.RepositoryName = repositorySlug.Split('/')[1];
             this.ArchivePath = Path.Combine(this.AppDataDirectory, "snowball.repo");
             if (File.Exists(this.ArchivePath)) this.RepositoryZip = new ZipArchive(File.OpenRead(this.ArchivePath));
+            if (!File.Exists(Path.Combine(this.AppDataDirectory, ".repohash")))
+                File.Create(Path.Combine(this.AppDataDirectory, ".repohash")).Close();
         }
 
         public async Task<bool> UpdatedRequired()
@@ -114,11 +116,12 @@ namespace Snowball.Installation
         {
             if (!this.CheckPublishUpdate(releaseInfo)) return releaseInfo;
             var oldReleaseInfo = this.GetReleaseInfo(releaseInfo.Name);
-            foreach (var version in releaseInfo.ReleaseVersions.Where(version => !oldReleaseInfo.ReleaseVersions.ContainsKey(version.Key)))
+            foreach (var version in oldReleaseInfo.ReleaseVersions.Where(version => !releaseInfo.ReleaseVersions.ContainsKey(version.Key)))
             {
-                oldReleaseInfo.ReleaseVersions.Add(version);
+               releaseInfo.ReleaseVersions.Add(version);
             }
-            return oldReleaseInfo;
+
+            return releaseInfo;
         }
 
         public IEnumerable<Tuple<ReleaseInfo, SemanticVersion>> ResolveDependencies(string packageId,
