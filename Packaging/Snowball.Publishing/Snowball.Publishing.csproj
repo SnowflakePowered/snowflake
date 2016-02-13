@@ -67,7 +67,6 @@
     <Compile Include="Publisher.cs" />
     <Compile Include="Secure\AccountKeyStore.cs" />
     <Compile Include="Secure\GithubAccountManager.cs" />
-    <Compile Include="Secure\PackageKeyStore.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

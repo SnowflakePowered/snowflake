@@ -55,7 +55,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Installation\InstallManager.cs" />
     <Compile Include="Installation\PackageKeyPair.cs" />
+    <Compile Include="Installation\PackageKeyStore.cs" />
     <Compile Include="Packaging\Dependency.cs" />
     <Compile Include="Packaging\Package.cs" />
     <Compile Include="Packaging\PackageInfo.cs" />

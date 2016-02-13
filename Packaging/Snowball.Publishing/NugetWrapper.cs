@@ -35,7 +35,7 @@ namespace Snowball.Publishing
         {
             string temporaryDirectory = NugetWrapper.GetTemporaryDirectory();
             string packagePath = this.Package.Pack(temporaryDirectory);
-            byte[] packageSig = this.SignSnowball(packagePath);
+            byte[] packageSig = PackageKeyStore.SignSnowball(File.OpenRead(packagePath), this.KeyPair);
             string packageSigPath = Path.Combine(temporaryDirectory, "signature.bin");
             File.WriteAllBytes(packageSigPath, packageSig);
             return new Tuple<string, ReleaseInfo>(this.BuildNugetPackage(packagePath, packageSigPath), this.MakeReleaseInfo());
@@ -78,29 +78,7 @@ namespace Snowball.Publishing
         {
             return new ReleaseInfo(this.Package.PackageInfo, this.KeyPair);
         }
-        private byte[] SignSnowball(string packagePath)
-        {
-            using (RSACryptoServiceProvider rsaCrypt = new RSACryptoServiceProvider())
-            {
-                rsaCrypt.FromXmlString(this.KeyPair.FullKey);
-                string sha256Hash = NugetWrapper.HashSHA256(packagePath);
-                return rsaCrypt.SignData(Encoding.UTF8.GetBytes(sha256Hash),
-                    CryptoConfig.MapNameToOID("SHA512"));
-            }
-        }
-        private static string HashSHA256(string fileName)
-        {
-            using (FileStream fileStream = File.OpenRead(fileName))
-            {
-                using (var sha256 = SHA256.Create())
-                {
-                    return
-                        BitConverter.ToString(sha256.ComputeHash(fileStream))
-                            .Replace("-", string.Empty)
-                            .ToLowerInvariant();
-                }
-            }
-        }
+        
         private static string GetTemporaryDirectory()
         {
             string tempDirectory = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
