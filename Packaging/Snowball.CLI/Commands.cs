@@ -58,14 +58,13 @@ namespace Snowflake.Packaging
     [Verb("install", HelpText = "Install a snowball package")]
     internal class InstallOptions
     {
-        [Value(0, HelpText = "The package files or ids", Required = true)]
-        public IList<string> PackageFiles { get; set; }
+        [Value(0, HelpText = "The package id or snowball to install", Required = true)]
+        public string Package { get; set; }
 
-        [Option('r', "snowflakeroot", HelpText = "The snowflake root. Defaults to %appdata%/snowflake", Required = false
-            )]
-        public string SnowflakeRoot { get; set; }
+        [Option('r', "remote", HelpText = "Install a remote package", Default = true)]
+        public bool RemoteInstall { get; set; }
 
-        [Option('l', "local", HelpText = "Treat the first argument as a file path to install a local package")]
+        [Option('l', "local", HelpText = "Install a local packaged .snowball package")]
         public bool LocalInstall { get; set; }
     }
 

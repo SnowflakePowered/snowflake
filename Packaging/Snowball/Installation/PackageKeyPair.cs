@@ -12,10 +12,10 @@ namespace Snowball.Installation
         public string PublicKey { get; }
         public string FullKey { get; }
         public string PackageId { get; }
-        public PackageKeyPair(string publicKey, string FullKey, string packageId)
+        public PackageKeyPair(string publicKey, string fullKey, string packageId)
         {
             this.PublicKey = publicKey;
-            this.FullKey = FullKey;
+            this.FullKey = fullKey;
             this.PackageId = packageId;
         }
     }

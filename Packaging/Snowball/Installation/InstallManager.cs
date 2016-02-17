@@ -18,12 +18,13 @@ namespace Snowball.Installation
         public LocalRepository PackageRepository { get; }
         public PackageKeyStore KeyStore { get; }
 
-        public InstallManager(string appDataPath, LocalRepository localRepository)
+        public InstallManager(string appDataPath, LocalRepository localRepository, PackageKeyStore keyStore)
         {
             if (!Directory.Exists(Path.Combine(appDataPath, ".snowballmanifest")))
                 Directory.CreateDirectory(Path.Combine(appDataPath, ".snowballmanifest"));
             this.AppDataPath = Path.GetFullPath(appDataPath);
             this.PackageRepository = localRepository;
+            this.KeyStore = keyStore;
         }
 
         public void InstallNupkg(ReleaseInfo releaseInfo, ZipArchive nupkgPackage)
@@ -32,10 +33,11 @@ namespace Snowball.Installation
             if (snowballEntry == null) throw new FileNotFoundException("Unable to find snowball package in nupkg");
             Stream snowballContents = snowballEntry.Open();
             ZipArchive snowballPackage = new ZipArchive(snowballContents);
-            Stream signatureStream = snowballPackage.GetEntry("signature.bin").Open();
+            MemoryStream signatureStream = new MemoryStream();
+            nupkgPackage.GetEntry("signature.bin").Open().CopyTo(signatureStream);
             byte[] signature = new byte[signatureStream.Length];
             signatureStream.Read(signature, 0, (int)signatureStream.Length);
-            if (!PackageKeyStore.VerifySnowball(snowballContents, this.KeyStore.GetKeyPair(releaseInfo.Name), signature))
+            if (!PackageKeyStore.VerifySnowball(snowballContents, this.KeyStore.GetPublicKey(releaseInfo), signature))
                 throw new InvalidOperationException("Key mismatch");
             this.InstallRawPackage(snowballPackage);
         }

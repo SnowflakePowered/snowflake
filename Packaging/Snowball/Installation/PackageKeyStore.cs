@@ -27,6 +27,14 @@ namespace Snowball.Installation
             }
         }
 
+        public PackageKeyPair GetPublicKey(ReleaseInfo releaseInfo)
+        {
+            using (var rsaCrypt = new RSACryptoServiceProvider())
+            {
+                rsaCrypt.FromXmlString(releaseInfo.PublicKey);
+                return new PackageKeyPair(rsaCrypt.ToXmlString(false), null, releaseInfo.Name);
+            }
+        }
         public PackageKeyPair GetKeyPair(string packageId)
         {
             string keyPairPath = Path.Combine(this.AppDataDirectory, $"{packageId}.keypair");

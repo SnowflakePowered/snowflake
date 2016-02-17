@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -40,8 +41,9 @@ namespace Snowball.CLI
             var localRepository = new LocalRepository(appDataDirectory);
             var accountKeyStore = new AccountKeyStore(appDataDirectory);
             var packageKeyStore = new PackageKeyStore(appDataDirectory);
-
-            var result = Parser.Default.ParseArguments<MakePackageOptions, AuthOptions, PublishOptions>(args)
+            var installManager = new InstallManager(appDataDirectory, localRepository, packageKeyStore);
+            var result = Parser.Default.ParseArguments<MakePackageOptions, AuthOptions, PublishOptions, InstallOptions>(
+                args)
                 .WithParsed<MakePackageOptions>(options =>
                 {
                     try
@@ -81,6 +83,51 @@ namespace Snowball.CLI
                     {
                         Console.WriteLine($"Error ocurred when pulishing your package: {e.Message}");
 
+                    }
+                })
+                .WithParsed<InstallOptions>(options =>
+                {
+                    if (options.LocalInstall)
+                    {
+                        using (var snowball = new ZipArchive(File.OpenRead(options.Package)))
+                            installManager.InstallRawPackage(snowball);
+                        return;
+                    }
+
+                    if (!localRepository.PluginExistsInRepository(options.Package))
+                        throw new FileNotFoundException("Package not found in repository");
+                    ReleaseInfo releaseInfo = localRepository.GetReleaseInfo(options.Package);
+                    var dependencies = localRepository.ResolveDependencies(options.Package);
+                    string downloadPath = Program.GetTemporaryDirectory();
+                    IDictionary<ReleaseInfo, string> nugetFiles = new Dictionary<ReleaseInfo, string>();
+                    Task.Run(async () =>
+                    {
+                        using (var webClient = new WebClient())
+                        {
+                            var progress = new ProgressBar();
+                            webClient.DownloadProgressChanged += (s, e) =>
+                            {
+                                progress?.Report(e.ProgressPercentage);
+                            };
+                            foreach (var dependency in dependencies)
+                            {
+                                string nugetDownloadPath = downloadPath + Path.GetRandomFileName();
+                                string version = dependency.Item2?.ToString() ??
+                                                 dependency.Item1.ReleaseVersions.OrderByDescending(
+                                                     _version => _version.Key).First().Key.ToString();
+                                string downloadUri = LocalRepository.GetNugetDownload(dependency.Item1, version);
+                                Console.WriteLine(downloadUri);
+                                Console.Write($"Downloading {dependency.Item1.Name} {version} | ");
+
+                                await webClient?.DownloadFileTaskAsync(downloadUri, nugetDownloadPath);
+                                nugetFiles.Add(dependency.Item1, nugetDownloadPath);
+                            }
+                        }
+                    }).Wait();
+                    foreach (KeyValuePair<ReleaseInfo, string> nugetPackages in nugetFiles)
+                    {
+                        using (var nupkg = new ZipArchive(File.OpenRead(nugetPackages.Value)))
+                            installManager.InstallNupkg(releaseInfo, nupkg);
                     }
                 });
         }
