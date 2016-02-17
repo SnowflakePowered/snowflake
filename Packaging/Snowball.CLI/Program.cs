@@ -42,7 +42,7 @@ namespace Snowball.CLI
             var accountKeyStore = new AccountKeyStore(appDataDirectory);
             var packageKeyStore = new PackageKeyStore(appDataDirectory);
             var installManager = new InstallManager(appDataDirectory, localRepository, packageKeyStore);
-            var result = Parser.Default.ParseArguments<MakePackageOptions, AuthOptions, PublishOptions, InstallOptions>(
+            var result = Parser.Default.ParseArguments<MakePackageOptions, AuthOptions, PublishOptions, InstallOptions, UninstallOptions>(
                 args)
                 .WithParsed<MakePackageOptions>(options =>
                 {
@@ -81,57 +81,82 @@ namespace Snowball.CLI
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine($"Error ocurred when pulishing your package: {e.Message}");
+                        Console.WriteLine($"Error ocurred when publishing your package: {e.Message}");
 
                     }
                 })
                 .WithParsed<InstallOptions>(options =>
                 {
-                    if (options.LocalInstall)
+                    try
                     {
-                        using (var snowball = new ZipArchive(File.OpenRead(options.Package)))
-                            installManager.InstallRawPackage(snowball);
-                        return;
+                        Program.ProcessInstallOptions(options, installManager, localRepository);
                     }
-
-                    if (!localRepository.PluginExistsInRepository(options.Package))
-                        throw new FileNotFoundException("Package not found in repository");
-                    ReleaseInfo releaseInfo = localRepository.GetReleaseInfo(options.Package);
-                    var dependencies = localRepository.ResolveDependencies(options.Package);
-                    string downloadPath = Program.GetTemporaryDirectory();
-                    IDictionary<ReleaseInfo, string> nugetFiles = new Dictionary<ReleaseInfo, string>();
-                    Task.Run(async () =>
+                    catch (Exception e)
                     {
-                        using (var webClient = new WebClient())
-                        {
-                            var progress = new ProgressBar();
-                            webClient.DownloadProgressChanged += (s, e) =>
-                            {
-                                progress?.Report(e.ProgressPercentage);
-                            };
-                            foreach (var dependency in dependencies)
-                            {
-                                string nugetDownloadPath = downloadPath + Path.GetRandomFileName();
-                                string version = dependency.Item2?.ToString() ??
-                                                 dependency.Item1.ReleaseVersions.OrderByDescending(
-                                                     _version => _version.Key).First().Key.ToString();
-                                string downloadUri = LocalRepository.GetNugetDownload(dependency.Item1, version);
-                                Console.WriteLine(downloadUri);
-                                Console.Write($"Downloading {dependency.Item1.Name} {version} | ");
+                        Console.WriteLine($"Error ocurred when installing your package: {e.Message}");
 
-                                await webClient?.DownloadFileTaskAsync(downloadUri, nugetDownloadPath);
-                                nugetFiles.Add(dependency.Item1, nugetDownloadPath);
-                            }
-                        }
-                    }).Wait();
-                    foreach (KeyValuePair<ReleaseInfo, string> nugetPackages in nugetFiles)
-                    {
-                        using (var nupkg = new ZipArchive(File.OpenRead(nugetPackages.Value)))
-                            installManager.InstallNupkg(releaseInfo, nupkg);
                     }
-                });
+                })
+                .WithParsed<UninstallOptions>(options =>
+                {
+                    try
+                    {
+                        installManager.UninstallPackage(options.PackageId);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine($"Error ocurred when uninstalling your package: {e.Message}");
+
+                    }
+                }); 
+
         }
 
+        private static void ProcessInstallOptions(InstallOptions options, InstallManager installManager, LocalRepository localRepository)
+        {
+            if (options.LocalInstall)
+            {
+                using (var snowball = new ZipArchive(File.OpenRead(options.Package)))
+                    installManager.InstallRawPackage(snowball);
+                return;
+            }
+
+            if (!localRepository.PluginExistsInRepository(options.Package))
+                throw new FileNotFoundException("Package not found in repository");
+            ReleaseInfo releaseInfo = localRepository.GetReleaseInfo(options.Package);
+            var dependencies = localRepository.ResolveDependencies(options.Package);
+            string downloadPath = Program.GetTemporaryDirectory();
+            IDictionary<ReleaseInfo, string> nugetFiles = new Dictionary<ReleaseInfo, string>();
+            Task.Run(async () =>
+            {
+                using (var webClient = new WebClient())
+                {
+                    var progress = new ProgressBar();
+                    webClient.DownloadProgressChanged += (s, e) =>
+                    {
+                        progress?.Report(e.ProgressPercentage);
+                    };
+                    foreach (var dependency in dependencies)
+                    {
+                        string nugetDownloadPath = downloadPath + Path.GetRandomFileName();
+                        string version = dependency.Item2?.ToString() ??
+                                         dependency.Item1.ReleaseVersions.OrderByDescending(
+                                             _version => _version.Key).First().Key.ToString();
+                        string downloadUri = LocalRepository.GetNugetDownload(dependency.Item1, version);
+                        Console.WriteLine(downloadUri);
+                        Console.Write($"Downloading {dependency.Item1.Name} {version} | ");
+
+                        await webClient?.DownloadFileTaskAsync(downloadUri, nugetDownloadPath);
+                        nugetFiles.Add(dependency.Item1, nugetDownloadPath);
+                    }
+                }
+            }).Wait();
+            foreach (KeyValuePair<ReleaseInfo, string> nugetPackages in nugetFiles)
+            {
+                using (var nupkg = new ZipArchive(File.OpenRead(nugetPackages.Value)))
+                    installManager.InstallNupkg(releaseInfo, nupkg);
+            }
+        }
         private static void ProcessPublishOptions(PublishOptions options , PackageKeyStore packageKeyStore,
             AccountKeyStore accountKeyStore, LocalRepository localRepository)
         {

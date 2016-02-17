@@ -71,12 +71,8 @@ namespace Snowflake.Packaging
     [Verb("uninstall", HelpText = "Uninstall a snowball package")]
     internal class UninstallOptions
     {
-        [Value(0, HelpText = "The package files or ids", Required = true)]
-        public IList<string> PackageIds { get; set; }
-
-        [Option('r', "snowflakeroot", HelpText = "The snowflake root. Defaults to %appdata%/snowflake", Required = false
-            )]
-        public string SnowflakeRoot { get; set; }
+        [Value(0, HelpText = "The package id to uninstall", Required = true)]
+        public string PackageId { get; set; }
     }
 
     [Verb("publish", HelpText = "Publish a snowball package for approval")]
