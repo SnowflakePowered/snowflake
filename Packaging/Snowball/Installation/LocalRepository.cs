@@ -4,9 +4,9 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Octokit;
 using semver.tools;
 
 namespace Snowball.Installation
@@ -27,13 +27,6 @@ namespace Snowball.Installation
         public string RepositoryOrg { get; }
         public string RepositoryName { get; }
         private string ArchivePath { get; }
-
-        private string CachedRepoHash
-        {
-            get { return File.ReadAllText(Path.Combine(this.AppDataDirectory, ".repohash")); }
-            set { File.WriteAllText(Path.Combine(this.AppDataDirectory, ".repohash"), value); }
-        }
-
         private ZipArchive RepositoryZip { get; set; }
 
         public LocalRepository(string appDataDirectory,
@@ -43,39 +36,57 @@ namespace Snowball.Installation
             this.RepositoryOrg = repositorySlug.Split('/')[0];
             this.RepositoryName = repositorySlug.Split('/')[1];
             this.ArchivePath = Path.Combine(this.AppDataDirectory, "snowball.repo");
-            if (File.Exists(this.ArchivePath)) this.RepositoryZip = new ZipArchive(File.OpenRead(this.ArchivePath));
-            if (!File.Exists(Path.Combine(this.AppDataDirectory, ".repohash")))
-                File.Create(Path.Combine(this.AppDataDirectory, ".repohash")).Close();
+            this.UpdateRepository();
+
         }
 
-        public async Task<bool> UpdatedRequired()
+        public bool UpdatedRequired()
         {
-            string cachedRepoHash = this.CachedRepoHash;
-            if (string.IsNullOrWhiteSpace(cachedRepoHash) || this.RepositoryZip == null)
-                return true;
-            var gh = new GitHubClient(new ProductHeaderValue("snowball"));
-            var _refs = await gh.GitDatabase.Reference.GetAll(this.RepositoryOrg, this.RepositoryName);
-            string remoteRepoHash = _refs.First(branch => branch.Ref == "refs/heads/master").Object.Sha;
-            return remoteRepoHash != cachedRepoHash;
-        }
+            try
+            {
 
-        public async Task UpdateRepository()
+
+                if (!File.Exists(this.ArchivePath))
+                    return true;
+                var oldRepository = File.OpenRead(this.ArchivePath);
+                var newRepository = this.GetRepository();
+                bool updateRequired =
+                    !String.Equals(LocalRepository.HashMD5(oldRepository), LocalRepository.HashMD5(newRepository));
+                oldRepository.Close();
+                oldRepository.Dispose();
+                return updateRequired;
+            }
+            catch
+            {
+                return false; 
+            }
+    }
+
+        public FileStream GetRepository()
         {
             using (var downloader = new WebClient())
             {
-                this.RepositoryZip?.Dispose();
-                if (File.Exists(this.ArchivePath)) File.Delete(this.ArchivePath);
-                Console.WriteLine($"Updating repository cache from {this.RepositoryOrg}/{this.RepositoryName}");
-                await
-                    downloader.DownloadFileTaskAsync(
-                        $"https://github.com/{this.RepositoryOrg}/{this.RepositoryName}/archive/master.zip",
-                        this.ArchivePath);
-                var gh = new GitHubClient(new ProductHeaderValue("snowball"));
-                var _refs = await gh.GitDatabase.Reference.GetAll(this.RepositoryOrg, this.RepositoryName);
-                string remoteRepoHash = _refs.First(branch => branch.Ref == "refs/heads/master").Object.Sha;
-                this.CachedRepoHash = remoteRepoHash;
-                this.RepositoryZip = new ZipArchive(File.OpenRead(this.ArchivePath));
+                string tempPath = Path.GetTempFileName();
+                downloader.DownloadFile($"https://github.com/{this.RepositoryOrg}/{this.RepositoryName}/archive/master.zip", tempPath);
+                return File.OpenRead(tempPath);
             }
+        }
+        public void UpdateRepository(Stream newRepository = null)
+        {
+            if (!this.UpdatedRequired())
+            {
+                this.RepositoryZip = new ZipArchive(File.OpenRead(this.ArchivePath));
+                return;
+            }
+            Console.WriteLine($"Updating repository cache from {this.RepositoryOrg}/{this.RepositoryName}");
+            if (File.Exists(this.ArchivePath)) File.Delete(this.ArchivePath);
+            this.RepositoryZip?.Dispose();
+            var cachedRepository = File.Open(this.ArchivePath, FileMode.Create, FileAccess.ReadWrite);
+            newRepository = newRepository ?? this.GetRepository();
+            this.RepositoryZip = new ZipArchive(newRepository);
+            newRepository?.CopyTo(cachedRepository);
+            cachedRepository.Close();
+            cachedRepository.Dispose();
         }
 
         public bool PluginExistsInRepository(string packageId)
@@ -167,6 +178,15 @@ namespace Snowball.Installation
         {
             return
                 $"https://www.nuget.org/packages/snowflake-snowball-{releaseinfo.PackageType}-{releaseinfo.Name}/{version}";
+        }
+
+        private static string HashMD5(Stream contents)
+        {
+            using (var md5 = MD5.Create())
+            {
+                return
+                    BitConverter.ToString(md5.ComputeHash(contents));
+            }
         }
     }
 }

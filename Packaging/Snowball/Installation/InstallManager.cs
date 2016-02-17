@@ -18,19 +18,12 @@ namespace Snowball.Installation
         public LocalRepository PackageRepository { get; }
         public PackageKeyStore KeyStore { get; }
 
-        public InstallManager(string appDataPath)
+        public InstallManager(string appDataPath, LocalRepository localRepository)
         {
             if (!Directory.Exists(Path.Combine(appDataPath, ".snowballmanifest")))
                 Directory.CreateDirectory(Path.Combine(appDataPath, ".snowballmanifest"));
             this.AppDataPath = Path.GetFullPath(appDataPath);
-            this.PackageRepository = new LocalRepository(this.AppDataPath);
-            Task.Run(
-                async () =>
-                {
-                    if (await this.PackageRepository.UpdatedRequired())
-                        await this.PackageRepository.UpdateRepository();
-                }
-                ).Wait();
+            this.PackageRepository = localRepository;
         }
 
         public void InstallNupkg(ReleaseInfo releaseInfo, ZipArchive nupkgPackage)

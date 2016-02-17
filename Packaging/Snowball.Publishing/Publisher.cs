@@ -58,14 +58,6 @@ namespace Snowball.Publishing
         
         public NewPullRequest MakePullRequest()
         {
-            Task.Run(async () =>
-            {
-                if ((await this.LocalRepository.UpdatedRequired()))
-                {
-                    await this.LocalRepository.UpdateRepository();
-                }
-
-            }).Wait();
             ReleaseInfo localReleaseInfo = this.WrappedPackageResult.Item2;
             PackageInfo packageInfo = this.WrappedPackage.Package.PackageInfo;
             bool indexIsUpdate = this.LocalRepository.CheckPublishUpdate(localReleaseInfo);
