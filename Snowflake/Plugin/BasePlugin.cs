@@ -27,7 +27,6 @@ namespace Snowflake.Plugin
             string file = this.GetStringResource("plugin.json");
             var pluginInfo = JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(file);
             this.PluginInfo = pluginInfo;
-            
             this.PluginName = this.PluginInfo[PluginInfoFields.Name];
             this.Logger = LogManager.GetLogger(this.PluginName);
             this.SupportedPlatforms = this.PluginInfo[PluginInfoFields.SupportedPlatforms].ToObject<IList<string>>();

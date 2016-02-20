@@ -7,6 +7,9 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using Newtonsoft.Json;
+using NLog;
+using Snowflake.Constants.Plugin;
 using Snowflake.Emulator;
 using Snowflake.Extensions;
 using Snowflake.Plugin;
@@ -33,6 +36,7 @@ namespace Snowflake.Service.Manager
             this.loadedPlugins = new Dictionary<Type, IDictionary<string, IBasePlugin>>();
             this.registry = new Dictionary<string, Type>();
             this.importingTypes = new List<Type>();
+            this.PreloadDependencies(); //preload deps for everything in the plugin folder
             var addType = typeof (PluginManager).GetMethod("AddType");
             foreach (Type T in pluginTypes)
             {
@@ -74,10 +78,42 @@ namespace Snowflake.Service.Manager
             return (T) this.loadedPlugins[typeof (T)][pluginName];
         }
 
+        private static string SafeGetPluginName(Assembly assembly)
+        {
+            using (Stream stream = assembly.GetManifestResourceStream($"{assembly.GetName().Name}.resource.plugin.json"))
+            using (var reader = new StreamReader(stream))
+            {
+                string file = reader.ReadToEnd();
+                return JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(file)[PluginInfoFields.Name];
+            }
+        }
+        private void PreloadDependencies()
+        {
+            if (!Directory.Exists(Path.Combine(this.LoadablesLocation, "plugins"))) Directory.CreateDirectory(Path.Combine(this.LoadablesLocation, "plugins"));
+            var catalog = new DirectoryCatalog(Path.Combine(this.LoadablesLocation, "plugins"));
+            foreach (string composable in catalog.LoadedFiles)
+            {
+                try
+                {
+                    string pluginName = PluginManager.SafeGetPluginName(Assembly.ReflectionOnlyLoadFrom(composable));
+                    string pluginDataPath = Path.Combine(this.CoreInstance.AppDataDirectory, "plugins", pluginName);
+                    AppDomain.CurrentDomain.AssemblyResolve += (s, args) =>
+                    {
+                        string assemblyPath = Path.Combine(pluginDataPath, new AssemblyName(args.Name).Name + ".dll");
+                        return File.Exists(assemblyPath) == false ? null : Assembly.LoadFrom(assemblyPath);
+                    };
+                }
+                catch
+                {
+                    Console.WriteLine($"Unable to load dependencies for {composable}. Possibly not a valid Snowflake plugin."); //replace with logger
+                }
+              
+            }
+        }
+
         private void ComposeImports<T>() where T : IBasePlugin
         {
             if (!Directory.Exists(Path.Combine(this.LoadablesLocation, "plugins"))) Directory.CreateDirectory(Path.Combine(this.LoadablesLocation, "plugins"));
-
             var catalog = new DirectoryCatalog(Path.Combine(this.LoadablesLocation, "plugins"));
             var container = new CompositionContainer(catalog);
             container.ComposeExportedValue("coreInstance", this.CoreInstance);
