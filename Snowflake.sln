@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake", "Snowflake\Snowflake.csproj", "{8F1D65ED-4A96-4A0A-8371-53655A60A2B3}"
 EndProject
@@ -40,8 +40,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Shell.Windows", "Snowflake.Shell.Windows\Snowflake.Shell.Windows.csproj", "{F7A99F10-7770-490C-BF02-92C8B58AD2F3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FileSignatures", "FileSignatures", "{3BE10560-7E96-4F7E-9028-AC03442B1E1B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Packaging", "Snowflake.Packaging\Snowflake.Packaging.csproj", "{ECD941C9-3925-4C38-8071-D1393E146C4A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.FileSignatures.SONY_PSX_ISO", "FileSignatures\Snowflake.FileSignatures.SONY_PSX_ISO\Snowflake.FileSignatures.SONY_PSX_ISO.csproj", "{489D3FCE-EA29-4A1B-A434-A47E428E17EC}"
 EndProject
@@ -87,6 +85,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		info.json = info.json
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Packaging", "Packaging", "{84DDAD8A-5C57-46EC-BE2C-EA7F1827AD76}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball", "Packaging\Snowball\Snowball.csproj", "{E84493C8-0171-40A8-94C0-BEFA06C9138B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.CLI", "Packaging\Snowball.CLI\Snowball.CLI.csproj", "{E05BE9C3-3E1E-4100-8DAC-DFF598C11477}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Publishing", "Packaging\Snowball.Publishing\Snowball.Publishing.csproj", "{B152A58A-7D3C-4C54-9BFC-77023180A4D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -160,14 +166,6 @@ Global
 		{F7A99F10-7770-490C-BF02-92C8B58AD2F3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F7A99F10-7770-490C-BF02-92C8B58AD2F3}.Release|x86.ActiveCfg = Release|Any CPU
 		{F7A99F10-7770-490C-BF02-92C8B58AD2F3}.Release|x86.Build.0 = Release|Any CPU
-		{ECD941C9-3925-4C38-8071-D1393E146C4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ECD941C9-3925-4C38-8071-D1393E146C4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ECD941C9-3925-4C38-8071-D1393E146C4A}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{ECD941C9-3925-4C38-8071-D1393E146C4A}.Debug|x86.Build.0 = Debug|Any CPU
-		{ECD941C9-3925-4C38-8071-D1393E146C4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ECD941C9-3925-4C38-8071-D1393E146C4A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ECD941C9-3925-4C38-8071-D1393E146C4A}.Release|x86.ActiveCfg = Release|Any CPU
-		{ECD941C9-3925-4C38-8071-D1393E146C4A}.Release|x86.Build.0 = Release|Any CPU
 		{489D3FCE-EA29-4A1B-A434-A47E428E17EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{489D3FCE-EA29-4A1B-A434-A47E428E17EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{489D3FCE-EA29-4A1B-A434-A47E428E17EC}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -328,6 +326,30 @@ Global
 		{A7191A2F-1478-4E46-A633-BF592230B38E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A7191A2F-1478-4E46-A633-BF592230B38E}.Release|x86.ActiveCfg = Release|Any CPU
 		{A7191A2F-1478-4E46-A633-BF592230B38E}.Release|x86.Build.0 = Release|Any CPU
+		{E84493C8-0171-40A8-94C0-BEFA06C9138B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E84493C8-0171-40A8-94C0-BEFA06C9138B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E84493C8-0171-40A8-94C0-BEFA06C9138B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E84493C8-0171-40A8-94C0-BEFA06C9138B}.Debug|x86.Build.0 = Debug|Any CPU
+		{E84493C8-0171-40A8-94C0-BEFA06C9138B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E84493C8-0171-40A8-94C0-BEFA06C9138B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E84493C8-0171-40A8-94C0-BEFA06C9138B}.Release|x86.ActiveCfg = Release|Any CPU
+		{E84493C8-0171-40A8-94C0-BEFA06C9138B}.Release|x86.Build.0 = Release|Any CPU
+		{E05BE9C3-3E1E-4100-8DAC-DFF598C11477}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E05BE9C3-3E1E-4100-8DAC-DFF598C11477}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E05BE9C3-3E1E-4100-8DAC-DFF598C11477}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E05BE9C3-3E1E-4100-8DAC-DFF598C11477}.Debug|x86.Build.0 = Debug|Any CPU
+		{E05BE9C3-3E1E-4100-8DAC-DFF598C11477}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E05BE9C3-3E1E-4100-8DAC-DFF598C11477}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E05BE9C3-3E1E-4100-8DAC-DFF598C11477}.Release|x86.ActiveCfg = Release|Any CPU
+		{E05BE9C3-3E1E-4100-8DAC-DFF598C11477}.Release|x86.Build.0 = Release|Any CPU
+		{B152A58A-7D3C-4C54-9BFC-77023180A4D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B152A58A-7D3C-4C54-9BFC-77023180A4D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B152A58A-7D3C-4C54-9BFC-77023180A4D7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B152A58A-7D3C-4C54-9BFC-77023180A4D7}.Debug|x86.Build.0 = Debug|Any CPU
+		{B152A58A-7D3C-4C54-9BFC-77023180A4D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B152A58A-7D3C-4C54-9BFC-77023180A4D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B152A58A-7D3C-4C54-9BFC-77023180A4D7}.Release|x86.ActiveCfg = Release|Any CPU
+		{B152A58A-7D3C-4C54-9BFC-77023180A4D7}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -352,5 +374,8 @@ Global
 		{C1150A1C-C6B2-495B-8FE3-B7875F8248BC} = {3BE10560-7E96-4F7E-9028-AC03442B1E1B}
 		{49FF3801-4FF6-439A-AE88-8F369199A614} = {3BE10560-7E96-4F7E-9028-AC03442B1E1B}
 		{FFBF7DC1-BB8E-4EFC-9915-ABA661714C2C} = {3BE10560-7E96-4F7E-9028-AC03442B1E1B}
+		{E84493C8-0171-40A8-94C0-BEFA06C9138B} = {84DDAD8A-5C57-46EC-BE2C-EA7F1827AD76}
+		{E05BE9C3-3E1E-4100-8DAC-DFF598C11477} = {84DDAD8A-5C57-46EC-BE2C-EA7F1827AD76}
+		{B152A58A-7D3C-4C54-9BFC-77023180A4D7} = {84DDAD8A-5C57-46EC-BE2C-EA7F1827AD76}
 	EndGlobalSection
 EndGlobal
