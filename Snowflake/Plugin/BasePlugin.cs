@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
 using Newtonsoft.Json;
@@ -25,9 +26,8 @@ namespace Snowflake.Plugin
             this.PluginAssembly = pluginAssembly;
             this.CoreInstance = coreInstance;
             string file = this.GetStringResource("plugin.json");
-            var pluginInfo = JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(file);
+            var pluginInfo = JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(file, new JsonSerializerSettings() {Culture = CultureInfo.InvariantCulture});
             this.PluginInfo = pluginInfo;
-            
             this.PluginName = this.PluginInfo[PluginInfoFields.Name];
             this.Logger = LogManager.GetLogger(this.PluginName);
             this.SupportedPlatforms = this.PluginInfo[PluginInfoFields.SupportedPlatforms].ToObject<IList<string>>();

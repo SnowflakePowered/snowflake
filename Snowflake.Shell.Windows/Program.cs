@@ -21,7 +21,7 @@ namespace Snowflake.Shell.Windows
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            using (var mgr = new UpdateManager(@"C:\squirrel\snowflake\rel"))
+         /*   using (var mgr = new UpdateManager(@"C:\squirrel\snowflake\rel"))
             {
                 SquirrelAwareApp.HandleEvents(
                 onInitialInstall: v => mgr.CreateShortcutForThisExe(),
@@ -32,7 +32,7 @@ namespace Snowflake.Shell.Windows
                     Process.Start("snowball.exe install builtins.snowball -l"); //todo call snowball from dll
                 });
 
-            }
+            }*/
             var snowflakeIcon = new ShellIcon();
             SnowflakeEventManager.InitEventSource();
             var snowflakeShell = new SnowflakeShell();
