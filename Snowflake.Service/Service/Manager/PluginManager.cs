@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -84,7 +85,7 @@ namespace Snowflake.Service.Manager
             using (var reader = new StreamReader(stream))
             {
                 string file = reader.ReadToEnd();
-                return JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(file)[PluginInfoFields.Name];
+                return JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(file, new JsonSerializerSettings {Culture = CultureInfo.InvariantCulture})[PluginInfoFields.Name];
             }
         }
         private void PreloadDependencies()
