@@ -145,9 +145,6 @@
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="NLog.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="packages.config" />
     <EmbeddedResource Include="TestResources\GameCache\dmmy.ogg" />
     <EmbeddedResource Include="TestResources\GameCache\test.webm" />
