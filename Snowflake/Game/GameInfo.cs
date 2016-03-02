@@ -17,7 +17,6 @@ namespace Snowflake.Game
         public GameInfo(string platformId, string name, IDictionary<string, string> metadata, string uuid, string fileName, string crc32)
             : base(platformId, name, metadata)
         {
-
             this.UUID = uuid;
             this.FileName = fileName;
             this.CRC32 = crc32;
