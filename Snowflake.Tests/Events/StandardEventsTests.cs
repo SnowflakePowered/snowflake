@@ -25,7 +25,7 @@ namespace Snowflake.Events.Tests
             new StandardEvents().RegisterSnowflakeEvents(SnowflakeEventManager.EventSource);
             var fakeCoreService = new Mock<ICoreService>();
             var fakeGameInfo = new Mock<IGameInfo>();
-            var fakeGameDatabase = new Mock<IGameDatabase>();
+            var fakeGameDatabase = new Mock<IGameLibrary>();
             var args = new GameAddEventArgs(fakeCoreService.Object, fakeGameInfo.Object, fakeGameDatabase.Object);
             SnowflakeEventManager.EventSource.Subscribe<GameAddEventArgs>((s, e) =>
             {
@@ -40,7 +40,7 @@ namespace Snowflake.Events.Tests
             new StandardEvents().RegisterSnowflakeEvents(SnowflakeEventManager.EventSource);
             var fakeCoreService = new Mock<ICoreService>();
             var fakeGameInfo = new Mock<IGameInfo>();
-            var fakeGameDatabase = new Mock<IGameDatabase>();
+            var fakeGameDatabase = new Mock<IGameLibrary>();
             var args = new GameDeleteEventArgs(fakeCoreService.Object, fakeGameInfo.Object, fakeGameDatabase.Object);
             SnowflakeEventManager.EventSource.Subscribe<GameDeleteEventArgs>((s, e) =>
             {

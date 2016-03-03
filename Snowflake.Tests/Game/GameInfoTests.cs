@@ -8,7 +8,7 @@ namespace Snowflake.Game.Tests
         [Fact]
         public void GameInfoCreation_Test()
         {
-            Assert.NotNull(new GameInfo("TEST", "TEST", new Dictionary<string, string> {{"snowflake_mediastore", "TEST"}}, "TEST", "TEST.TEST", "TEST"));
+            Assert.NotNull(new GameInfo("TEST", "TEST", "TEST.TEST", "TEST", "TEST", new Dictionary<string, string> {{"snowflake_mediastore", "TEST"}}));
         }
 
     }

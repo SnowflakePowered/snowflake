@@ -138,7 +138,7 @@
     <Compile Include="Emulator\Input\IGamepadMapping.cs" />
     <Compile Include="Emulator\Input\IInputTemplate.cs" />
     <Compile Include="Emulator\Input\IKeyboardMapping.cs" />
-    <Compile Include="Game\IGameDatabase.cs" />
+    <Compile Include="Game\IGameLibrary.cs" />
     <Compile Include="Game\IGameInfo.cs" />
     <Compile Include="Information\IInfo.cs" />
     <Compile Include="Information\MediaStore\IMediaStore.cs" />

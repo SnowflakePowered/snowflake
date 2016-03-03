@@ -5,11 +5,11 @@ namespace Snowflake.Events.CoreEvents.GameEvent
 {
     public class GameDeleteEventArgs : GameEventArgs
     {
-        public IGameDatabase GameDatabase { get; private set; }
-        public GameDeleteEventArgs(ICoreService eventCoreInstance, IGameInfo gameInfo, IGameDatabase gameDatabase)
+        public IGameLibrary GameLibrary { get; private set; }
+        public GameDeleteEventArgs(ICoreService eventCoreInstance, IGameInfo gameInfo, IGameLibrary gameLibrary)
             : base(eventCoreInstance, gameInfo)
         {
-            this.GameDatabase = gameDatabase;
+            this.GameLibrary = gameLibrary;
         }
 
     
