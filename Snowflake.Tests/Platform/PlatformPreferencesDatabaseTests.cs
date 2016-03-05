@@ -37,8 +37,8 @@ namespace Snowflake.Platform.Tests
                 {"FakeScraper", fakeScraper.Object}
             };
 
-            fakePluginManager.SetupGet(manager => manager.Plugins<IEmulatorBridge>()).Returns(loadedEmulators);
-            fakePluginManager.SetupGet(manager => manager.Plugins<IScraper>()).Returns(loadedScrapers);
+            fakePluginManager.Setup(manager => manager.Plugins<IEmulatorBridge>()).Returns(loadedEmulators);
+            fakePluginManager.Setup(manager => manager.Plugins<IScraper>()).Returns(loadedScrapers);
 
             IPlatformPreferenceDatabase database = new PlatformPreferencesDatabase(filename, fakePluginManager.Object);
 
@@ -73,10 +73,10 @@ namespace Snowflake.Platform.Tests
                 {"FakeScraper", fakeScraper.Object}
             };
 
-            fakePluginManager.SetupGet(manager => manager.Plugins<IEmulatorBridge>()).Returns(loadedEmulators);
-            fakePluginManager.SetupGet(manager => manager.Plugins<IScraper>()).Returns(loadedScrapers);
+            fakePluginManager.Setup(manager => manager.Plugins<IEmulatorBridge>()).Returns(loadedEmulators);
+            fakePluginManager.Setup(manager => manager.Plugins<IScraper>()).Returns(loadedScrapers);
 
-            fakePlatform.SetupGet(platform => platform.PlatformID).Returns("TESTPLATFORM");
+            fakePlatform.Setup(platform => platform.PlatformID).Returns("TESTPLATFORM");
             IPlatformPreferenceDatabase database = new PlatformPreferencesDatabase(filename, fakePluginManager.Object);
 
             database.AddPlatform(fakePlatform.Object);
@@ -116,8 +116,8 @@ namespace Snowflake.Platform.Tests
                 {"FakeScraper", fakeScraper.Object}
             };
 
-            fakePluginManager.SetupGet(manager => manager.Plugins<IEmulatorBridge>()).Returns(loadedEmulators);
-            fakePluginManager.SetupGet(manager => manager.Plugins<IScraper>()).Returns(loadedScrapers);
+            fakePluginManager.Setup(manager => manager.Plugins<IEmulatorBridge>()).Returns(loadedEmulators);
+            fakePluginManager.Setup(manager => manager.Plugins<IScraper>()).Returns(loadedScrapers);
 
             fakePlatform.SetupGet(platform => platform.PlatformID).Returns("TESTPLATFORM");
             IPlatformPreferenceDatabase database = new PlatformPreferencesDatabase(filename, fakePluginManager.Object);
@@ -157,8 +157,8 @@ namespace Snowflake.Platform.Tests
                 {"FakeScraper", fakeScraper.Object}
             };
 
-            fakePluginManager.SetupGet(manager => manager.Plugins<IEmulatorBridge>()).Returns(loadedEmulators);
-            fakePluginManager.SetupGet(manager => manager.Plugins<IScraper>()).Returns(loadedScrapers);
+            fakePluginManager.Setup(manager => manager.Plugins<IEmulatorBridge>()).Returns(loadedEmulators);
+            fakePluginManager.Setup(manager => manager.Plugins<IScraper>()).Returns(loadedScrapers);
 
             fakePlatform.SetupGet(platform => platform.PlatformID).Returns("TESTPLATFORM");
             IPlatformPreferenceDatabase database = new PlatformPreferencesDatabase(filename, fakePluginManager.Object);
