@@ -1,9 +1,18 @@
 ![Snowflake](branding/Snowflake-Banner-Katakana-256.png) 
 =========
 
-<!--[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/SnowflakePowered/snowflake?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)-->
-[![Windows Build status](https://ci.appveyor.com/api/projects/status/mhei9fdtja5j04kk?svg=true)](https://ci.appveyor.com/project/RonnChyran/snowflake) [![Linux Build Status](https://travis-ci.org/SnowflakePowered/snowflake.svg?branch=master)](https://travis-ci.org/SnowflakePowered/snowflake) [![MyGetFeed](https://img.shields.io/myget/snowflake-nightly/vpre/Snowflake.API.svg?style=flat)](https://www.myget.org/gallery/snowflake-nightly) [![Coverage Status](https://coveralls.io/repos/SnowflakePowered/snowflake/badge.svg?branch=master)](https://coveralls.io/r/SnowflakePowered/snowflake?branch=master)  [![Coverity code defect analysis](https://scan.coverity.com/projects/4039/badge.svg?flat=1)](https://scan.coverity.com/projects/4039)
- [![License](https://img.shields.io/badge/license-apache%202.0-blue.svg?style=flat)](https://github.com/SnowflakePowered/snowflake/blob/master/LICENSE)
+**Build Status**
+
+|<img src="https://cloud.githubusercontent.com/assets/1000503/13551021/797655f6-e2f9-11e5-8aea-a5caad2aeef8.png" width=25 alt="appveyor">|<img src="https://cloud.githubusercontent.com/assets/1000503/13550984/6042f432-e2f8-11e5-95cf-72fb4134c56d.png" width=25 alt="travis">|<img src="https://cloud.githubusercontent.com/assets/1000503/13551072/5f605ea8-e2fb-11e5-8641-d5efac977ead.png" width=25 alt="codecov">|<img src="https://cloud.githubusercontent.com/assets/1000503/13551053/7d735de2-e2fa-11e5-8a09-c42dcc27e917.png" width=25 alt="license">|
+|-----|-----|-----|-----|
+|[![Windows Build status](https://ci.appveyor.com/api/projects/status/mhei9fdtja5j04kk?svg=true)](https://ci.appveyor.com/project/RonnChyran/snowflake)|[![Travis](https://img.shields.io/travis/SnowflakePowered/snowflake.svg)](https://travis-ci.org/SnowflakePowered/snowflake)| [![Codecov](https://img.shields.io/codecov/c/github/SnowflakePowered/snowflake.svg)](https://codecov.io/github/SnowflakePowered/snowflake?ref=master)|[![License](https://img.shields.io/badge/license-apache%202.0-blue.svg?style=flat)](https://github.com/SnowflakePowered/snowflake/blob/master/LICENSE)|
+
+**Latest Version**
+
+|<img src="https://cloud.githubusercontent.com/assets/1000503/13551043/3b0ac2f6-e2fa-11e5-886b-f6dfdc0ba6f9.png" width=25>|<img src="https://cloud.githubusercontent.com/assets/1000503/13551114/29c1f598-e2fd-11e5-8ad5-b2fa3a44e5ab.png" height=25>|
+|--------------|--------|
+|[![MyGetFeed](https://img.shields.io/myget/snowflake-nightly/vpre/Snowflake.API.svg?style=flat)](https://www.myget.org/gallery/snowflake-nightly)|[![NuGet](https://img.shields.io/nuget/v/Snowflake.svg)](https://www.nuget.org/packages/Snowflake)|
+
 
 Snowflake is a powerful, extensible emulator frontend that works out-of-the-box, built using bleeding edge techonogies on the web and desktop.
 
