@@ -1,21 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Dapper;
-using DapperExtensions.Mapper;
-using Newtonsoft.Json;
+﻿using DapperExtensions.Mapper;
+using Snowflake.Game;
 
-namespace Snowflake.Game.Database
+namespace Snowflake.Information.Database
 {
     /// <summary>
     /// Maps a concrete GameInfo to the games table
     /// </summary>
-    internal class GameDatabaseMapper : ClassMapper<GameInfo>
+    internal class SqliteGameDatabaseMapper : ClassMapper<GameInfo>
     {
-        public GameDatabaseMapper()
+        public SqliteGameDatabaseMapper()
         {
             base.Table("games");
             this.Map(game => game.UUID).Column("uuid").Key(KeyType.Assigned);
@@ -30,9 +23,9 @@ namespace Snowflake.Game.Database
     /// <summary>
     /// Maps an IGameInfo to the games table
     /// </summary>
-    internal class IGameDatabaseMapper : ClassMapper<IGameInfo>
+    internal class SqliteIGameDatabaseMapper : ClassMapper<IGameInfo>
     {
-        public IGameDatabaseMapper()
+        public SqliteIGameDatabaseMapper()
         {
             base.Table("games");
             this.Map(game => game.UUID).Column("uuid").Key(KeyType.Assigned);

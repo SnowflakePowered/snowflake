@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Snowflake.Controller.Tests
 {
-    public class GamepadAbstractionDabataseTests
+    public class GamepadAbstractionDatabaseTests
     {
         [Fact]
         public void CreateDatabase_Test()

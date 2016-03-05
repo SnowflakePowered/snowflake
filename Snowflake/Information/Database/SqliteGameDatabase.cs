@@ -1,24 +1,20 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.SQLite;
-using System.IO;
 using Dapper;
 using DapperExtensions;
+using Snowflake.Game;
 using Snowflake.Utility;
 
-namespace Snowflake.Game.Database
+namespace Snowflake.Information.Database
 {
     /// <summary>
     /// Represents the database logic behind a game library
     /// </summary>
-    internal class GameDatabase : BaseDatabase, IGameLibrary
+    internal class SqliteGameDatabase : DapperDatabase, IGameLibrary
     {
-        public GameDatabase(string fileName) : base(fileName)
+        public SqliteGameDatabase(string fileName) : base(fileName, typeof(SqliteGameDatabaseMapper))
         {
             this.CreateDatabase();
-            DapperExtensions.DapperExtensions.SetMappingAssemblies(new[] { typeof(GameDatabaseMapper).Assembly });
-            DapperExtensions.DapperExtensions.SqlDialect = new DapperExtensions.Sql.SqliteDialect();
             SqlMapper.AddTypeHandler(new DictionaryStringStringTypeHandler());
         }
 

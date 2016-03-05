@@ -4,7 +4,7 @@ using System.Data;
 using System.Data.SQLite;
 using System.Linq;
 using Newtonsoft.Json;
-using Snowflake.Game.Database;
+using Snowflake.Information.Database;
 using Snowflake.Utility;
 
 namespace Snowflake.Game
@@ -14,7 +14,7 @@ namespace Snowflake.Game
         private readonly IGameLibrary backingGameDatabase;
         public GameLibrary(string fileName)
         {
-            this.backingGameDatabase = new GameDatabase(fileName);
+            this.backingGameDatabase = new SqliteGameDatabase(fileName);
         }
 
         public void AddGame(IGameInfo game)

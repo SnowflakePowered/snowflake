@@ -2,13 +2,19 @@
 {
     public class GamepadAbstraction : IGamepadAbstraction
     {
-        public string DeviceName { get; }
-        public ControllerProfileType ProfileType { get; }
+        public string DeviceName { get; internal set; }
+        public ControllerProfileType ProfileType { get; internal set; }
         public GamepadAbstraction(string deviceName, ControllerProfileType profileType)
         {
             this.DeviceName = deviceName;
             this.ProfileType = profileType;
         }
+
+        internal GamepadAbstraction()
+        {
+            
+        }
+
         public string L1 { get; set; }
         public string L2 { get; set; }
         public string L3 { get; set; }

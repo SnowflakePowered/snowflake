@@ -115,11 +115,14 @@
     <Compile Include="Emulator\Configuration\ConfigurationFlagStore.cs" />
     <Compile Include="Emulator\EmulatorBridge.cs" />
     <Compile Include="Emulator\ProcessEmulatorInstance.cs" />
-    <Compile Include="Game\Database\DictionaryStringStringTypeHandler.cs" />
-    <Compile Include="Game\Database\GameDatabaseMapper.cs" />
+    <Compile Include="Information\Database\DapperDatabase.cs" />
+    <Compile Include="Information\Database\DictionaryStringStringTypeHandler.cs" />
+    <Compile Include="Information\Database\SqliteGameDatabaseMapper.cs" />
     <Compile Include="Game\GameMediaCache.cs" />
-    <Compile Include="Game\Database\GameDatabase.cs" />
+    <Compile Include="Information\Database\SqliteGameDatabase.cs" />
     <Compile Include="Game\GameScreenshotCache.cs" />
+    <Compile Include="Information\Database\SqliteGamepadAbstractionDatabaseMapper.cs" />
+    <Compile Include="Information\Database\SqliteGamepadAbstractionDatabase.cs" />
     <Compile Include="Information\MediaStore\FileMediaStore.cs" />
     <Compile Include="Information\MediaStore\FileMediaStoreSection.cs" />
     <Compile Include="Platform\PlatformControllerPorts.cs" />
@@ -166,7 +169,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
-    <Compile Include="Game\Database\GameInfo.DatabaseCompat.cs" />
+    <Compile Include="Game\GameInfo.DatabaseCompat.cs" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

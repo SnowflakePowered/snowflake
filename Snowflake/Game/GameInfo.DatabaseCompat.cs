@@ -16,7 +16,7 @@ namespace Snowflake.Game
         /// 
         /// (string uuid, string platformId, string fileName, string name, string crc32, string metadata).
         /// 
-        /// Supplying raw string JSON is a very bad idea, and the only reason it is here is for use with the GameDatabase,
+        /// Supplying raw string JSON is a very bad idea, and the only reason it is here is for use with the DapperGameDatabase,
         /// where it can be guaranteed that the JSON is a dictionary.
         /// </summary>
         [Obsolete("Required for SQLite serialzation. Do Not Use.")]

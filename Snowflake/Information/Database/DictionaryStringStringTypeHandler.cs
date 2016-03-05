@@ -1,11 +1,10 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using Dapper;
 using Newtonsoft.Json;
 
-namespace Snowflake.Game.Database
+namespace Snowflake.Information.Database
 {
     /// <summary>
     /// Handles conversion of string dictionaries in SQL serialization

@@ -13,7 +13,7 @@ namespace Snowflake.StandardAjax
         [AjaxMethod(MethodPrefix = "Controller")]
         public IJSResponse GetGamepadAbstractions(IJSRequest request)
         {
-            IList<IGamepadAbstraction> gamepadAbstractions = this.CoreInstance.Get<IGamepadAbstractionDatabase>().GetAllGamepadAbstractions();
+            IEnumerable<IGamepadAbstraction> gamepadAbstractions = this.CoreInstance.Get<IGamepadAbstractionDatabase>().GetAllGamepadAbstractions();
             return new JSResponse(request, gamepadAbstractions);
         }
         [AjaxMethod(MethodPrefix = "Controller")]
