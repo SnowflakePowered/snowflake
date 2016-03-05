@@ -28,11 +28,12 @@ environment:
     PATH: C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
 install:
     - nuget update -self
+    - nuget install OpenCover -ExcludeVersion
+    - nuget install xunit.runner.console -Version 2.1.0
     - choco install -y sandcastle -version 2015.5.2.0
     - choco install -y doxygen.portable
     - nuget restore ./Snowflake.sln
-    - nuget install OpenCover -ExcludeVersion
-    - nuget install xunit.runner.console -Version 2.1.0
+
 after_build:
     - ps: |
         if ($env:CoverityProjectToken)
@@ -42,6 +43,7 @@ after_build:
           PublishCoverity\tools\PublishCoverity.exe compress -o coverity.zip -i cov-int
           PublishCoverity\tools\PublishCoverity.exe publish -t "$env:CoverityProjectToken" -e "$env:CoverityNotificationEmail" -r "$env:APPVEYOR_REPO_NAME" -z coverity.zip -d "AppVeyor $env:APPVEYOR_BUILD_VERSION" --codeVersion "$env:APPVEYOR_REPO_COMMIT"
         }
+
 after_test:
     - echo Generating Sandcastle Documentation
     - msbuild "C:\projects\snowflake\Snowflake.Documentation.shfbproj"
