@@ -5,9 +5,18 @@ mono:
   - 4.2.2
 install:
   - nuget restore ./Snowflake.sln
-
+ 
+addons:
+  coverity_scan:
+    project:
+      name: "SnowflakePowered/snowflake"
+      description: "Build submitted via Travis CI"
+    notification_email: ronny6993@gmail.com
+    build_command: "xbuild /p:Configuration=Debug Snowflake.sln /p:TargetFrameworkVersion=\"v4.5\""
+    branch_pattern: master
+    
 script:
-  - xbuild /p:Configuration=Debug Snowflake.sln /p:TargetFrameworkVersion="v4.5" 
+  -  xbuild /p:Configuration=Debug Snowflake.sln /p:TargetFrameworkVersion="v4.5"
   
 notifications:
   irc:
