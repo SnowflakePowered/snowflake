@@ -108,7 +108,7 @@ namespace Snowball.CLI
                         Console.WriteLine($"Error ocurred when uninstalling your package: {e.Message}");
 
                     }
-                }); 
+                });
 
         }
 
@@ -146,7 +146,7 @@ namespace Snowball.CLI
                         Console.WriteLine(downloadUri);
                         Console.Write($"Downloading {dependency.Item1.Name} {version} | ");
 
-                        await webClient?.DownloadFileTaskAsync(downloadUri, nugetDownloadPath);
+                        await webClient.DownloadFileTaskAsync(downloadUri, nugetDownloadPath);
                         nugetFiles.Add(dependency.Item1, nugetDownloadPath);
                     }
                 }
