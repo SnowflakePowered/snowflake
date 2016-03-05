@@ -2,12 +2,13 @@ language: csharp
 sudo: false
 solution: Snowflake.sln
 mono:
-  - nightly
+  - 4.2.2
 install:
   - nuget restore ./Snowflake.sln
 
 script:
-  - xbuild /p:Configuration=Debug Snowflake.sln /tv:12.0
+  - xbuild /p:Configuration=Debug Snowflake.sln /p:TargetFrameworkVersion="v4.5" 
+  
 notifications:
   irc:
     channels:
