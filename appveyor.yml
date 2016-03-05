@@ -38,6 +38,7 @@ after_build:
     - ps: |
         if ($env:CoverityProjectToken)
         {
+          cov-configure.exe --cs
           cov-build.exe --dir cov-int msbuild /t:Rebuild Snowflake.sln
           nuget.exe install PublishCoverity -ExcludeVersion
           PublishCoverity\tools\PublishCoverity.exe compress -o coverity.zip -i cov-int
@@ -45,19 +46,19 @@ after_build:
         }
 
 after_test:
-    - echo Generating Sandcastle Documentation
-    - msbuild "C:\projects\snowflake\Snowflake.Documentation.shfbproj"
-    - echo Generating Doxygen Documentation
+    - echo Generating Sandcastle Documentation...
+    - msbuild "C:\projects\snowflake\Snowflake.Documentation.shfbproj" /verbosity:quiet
+    - echo Generating Doxygen Documentation...
     - doxygen.exe "C:\projects\snowflake\snowflake.doxygen" > nul 2>&1
-    - echo Generating Code Coverage Report
+    - echo Generating Code Coverage Report...
     - OpenCover\tools\OpenCover.Console.exe -register:user -filter:"+[Snowflake*]*" -target:"xunit.runner.console.2.1.0\tools\xunit.console.exe" -targetargs:"Snowflake.Tests\bin\%CONFIGURATION%\Snowflake.Tests.dll -noshadow -appveyor" -output:coverage.xml
     - echo Uploading Code Coverage Report to Coveralls
     - packages\coveralls.io.1.3.4\tools\coveralls.net.exe --opencover coverage.xml
-    - echo Uploading Code Coverage Report to Codecov
+    - echo Uploading Code Coverage Report to Codecov...
     - "SET PATH=C:\\Python34;C:\\Python34\\Scripts;%PATH%"
     - pip install codecov
     - codecov -f "coverage.xml"
-    - echo Packing NuGet packages
+    - echo Packing NuGet packages...
     - nuget pack Snowflake.API\Snowflake.API.csproj -IncludeReferencedProjects -Symbols
     - nuget pack Snowflake.Events\Snowflake.Events.csproj -IncludeReferencedProjects -Symbols
     - nuget pack Snowflake\Snowflake.csproj -IncludeReferencedProjects -Symbols
