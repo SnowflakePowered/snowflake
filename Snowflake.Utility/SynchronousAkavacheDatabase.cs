@@ -68,36 +68,36 @@ namespace Snowflake.Utility
 
         public T GetObject<T>(string key)
         {
-            return this.GetObjectAsync<T>(key).Result;
+            return this.GetObjectAsync<T>(key).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         public IEnumerable<T> GetAllObjects<T>()
         {
-            return this.GetAllObjectsAsync<T>().Result;
+            return this.GetAllObjectsAsync<T>().ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         public IDictionary<string, T> GetObjects<T>(IEnumerable<string> keys)
         {
-            return this.GetObjectsAsync<T>(keys).Result;
+            return this.GetObjectsAsync<T>(keys).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         public void InsertObject<T>(string key, T value)
         {
-            this.InsertObjectAsync<T>(key, value).Wait();
+            this.InsertObjectAsync(key, value).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         public void InsertObjects<T>(IDictionary<string, T> keyValuePairs)
         {
-            this.InsertObjectsAsync(keyValuePairs).Wait();
+            this.InsertObjectsAsync(keyValuePairs).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         public void DeleteObject<T>(string key)
         {
-           this.DeleteObjectAsync<T>(key).Wait();
+           this.DeleteObjectAsync<T>(key).ConfigureAwait(false).GetAwaiter().GetResult();
         }
         public void DeleteObjects<T>(IEnumerable<string> keys)
         {
-            this.DeleteObjectsAsync<T>(keys).Wait();
+            this.DeleteObjectsAsync<T>(keys).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         public void Dispose()
@@ -107,7 +107,7 @@ namespace Snowflake.Utility
                 await this.blobCache.Flush();
                 this.blobCache.Dispose();
                 await this.blobCache.Shutdown;
-            }).Wait();
+            }).ConfigureAwait(false).GetAwaiter().GetResult();
 
         }
     }
