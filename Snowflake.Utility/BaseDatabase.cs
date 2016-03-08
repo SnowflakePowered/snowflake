@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Snowflake.Utility
 {
-    public abstract class BaseDatabase
+    public abstract class BaseDatabase 
     {
         public string FileName { get; }
         private readonly string dbConnectionString;
