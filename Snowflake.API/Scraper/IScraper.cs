@@ -4,7 +4,6 @@ using System.ComponentModel.Composition;
 using Snowflake.Platform;
 using Snowflake.Plugin;
 using Snowflake.Romfile;
-using Snowflake.Utility;
 
 namespace Snowflake.Scraper
 {
@@ -20,9 +19,8 @@ namespace Snowflake.Scraper
         double ScraperAccuracy { get; }
         /// <summary>
         /// A map of Snowflake's platform IDs to how the scraper source identifies platforms
-        /// BiDictionary allows for backwards mapping from how the scraper source identifiers platforms to Snowflake's platform IDs
         /// </summary>
-        BiDictionary<string, string> ScraperMap { get; }
+        IDictionary<string, string> ScraperMap { get; }
         /// <summary>
         /// Gets the search results given a string query
         /// </summary>

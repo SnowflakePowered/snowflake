@@ -8,7 +8,7 @@ namespace Snowflake.Utility
         public string FileName { get; }
         private readonly string dbConnectionString;
 
-        public BaseDatabase(string fileName)
+        protected BaseDatabase(string fileName)
         {
             this.FileName = fileName;
 

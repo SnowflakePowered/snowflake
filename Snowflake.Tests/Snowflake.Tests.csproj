@@ -107,7 +107,6 @@
     <Compile Include="Service\HttpServer\BaseHttpServerTests.cs" />
     <Compile Include="Service\WebSocketServer\JSWebSocketServerTests.cs" />
     <Compile Include="TestUtilities.cs" />
-    <Compile Include="Utility\BiDictionaryTests.cs" />
     <Compile Include="Utility\HashTests.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -138,6 +137,10 @@
     <ProjectReference Include="..\Snowflake.Events\Snowflake.Events.csproj">
       <Project>{7ae8e842-e2a9-4f01-bec1-8a7a60cc16bb}</Project>
       <Name>Snowflake.Events</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Snowflake.Utility\Snowflake.Utility.csproj">
+      <Project>{e683d4d7-759f-48c5-8df4-c3350c6362d8}</Project>
+      <Name>Snowflake.Utility</Name>
     </ProjectReference>
     <ProjectReference Include="..\Snowflake\Snowflake.csproj">
       <Project>{8f1d65ed-4a96-4a0a-8371-53655a60a2b3}</Project>

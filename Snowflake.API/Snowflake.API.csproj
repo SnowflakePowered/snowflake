@@ -151,13 +151,6 @@
     <Compile Include="Service\Manager\IPluginManager.cs" />
     <Compile Include="Service\JSWebSocketServer\JSWebSocketServerEventArgs.cs" />
     <Compile Include="Service\Manager\IServerManager.cs" />
-    <Compile Include="Utility\BaseDatabase.cs" />
-    <Compile Include="Utility\BiDictionary.cs" />
-    <Compile Include="Utility\FileHash.cs" />
-    <Compile Include="Utility\Hash\Crc32.cs" />
-    <Compile Include="Utility\Hash\Md5.cs" />
-    <Compile Include="Utility\Hash\SHA1.cs" />
-    <Compile Include="Utility\StringEncode.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">

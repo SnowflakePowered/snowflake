@@ -171,6 +171,10 @@
       <Project>{2841aeea-03d5-47b0-9d90-375dfa19559a}</Project>
       <Name>Snowflake.API</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Snowflake.Utility\Snowflake.Utility.csproj">
+      <Project>{e683d4d7-759f-48c5-8df4-c3350c6362d8}</Project>
+      <Name>Snowflake.Utility</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.99.0\build\net45\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.99.0\build\net45\System.Data.SQLite.Core.targets')" />
