@@ -5,6 +5,7 @@ using Moq;
 using Snowflake.Emulator;
 using Snowflake.Scraper;
 using Snowflake.Service.Manager;
+using Snowflake.Utility;
 using Xunit;
 
 namespace Snowflake.Platform.Tests
@@ -43,8 +44,6 @@ namespace Snowflake.Platform.Tests
             IPlatformPreferenceDatabase database = new PlatformPreferencesDatabase(filename, fakePluginManager.Object);
 
             Assert.NotNull(database);
-            this.DisposeSqlite();
-            File.Delete(filename);
         }
 
         [Fact]
@@ -85,9 +84,6 @@ namespace Snowflake.Platform.Tests
 
             Assert.Equal(expectedPrefs.Emulator, database.GetPreferences(fakePlatform.Object).Emulator);
             Assert.Equal(expectedPrefs.Scraper, database.GetPreferences(fakePlatform.Object).Scraper);
-
-            this.DisposeSqlite();
-            File.Delete(filename);
         }
 
         [Fact]
@@ -126,9 +122,6 @@ namespace Snowflake.Platform.Tests
 
             database.SetEmulator(fakePlatform.Object, "TESTEMULATOR~~");
             Assert.Equal("TESTEMULATOR~~", database.GetPreferences(fakePlatform.Object).Emulator);
-
-            this.DisposeSqlite();
-            File.Delete(filename);
         }
 
         [Fact]
@@ -167,14 +160,44 @@ namespace Snowflake.Platform.Tests
 
             database.SetScraper(fakePlatform.Object, "TESTSCRAPER~~");
             Assert.Equal("TESTSCRAPER~~", database.GetPreferences(fakePlatform.Object).Scraper);
-
-            this.DisposeSqlite();
-            File.Delete(filename);
         }
-        private void DisposeSqlite()
+
+        [Fact]
+        public void Dispose_Test()
         {
+
+            string filename = Path.GetTempFileName();
+            var fakePluginManager = new Mock<IPluginManager>();
+            var fakeEmulatorBridge = new Mock<IEmulatorBridge>();
+            var fakeScraper = new Mock<IScraper>();
+
+            IList<string> supportedPlatforms = new List<string>
+            {
+                "TESTPLATFORM"
+            };
+
+            fakeEmulatorBridge.SetupGet(bridge => bridge.PluginName).Returns("FakeEmulator");
+            fakeEmulatorBridge.SetupGet(bridge => bridge.SupportedPlatforms).Returns(supportedPlatforms);
+            fakeScraper.SetupGet(scraper => scraper.PluginName).Returns("FakeScraper");
+            fakeScraper.SetupGet(scraper => scraper.SupportedPlatforms).Returns(supportedPlatforms);
+            IDictionary<string, IEmulatorBridge> loadedEmulators = new Dictionary<string, IEmulatorBridge>
+            {
+                {"FakeEmulator", fakeEmulatorBridge.Object}
+            };
+            IDictionary<string, IScraper> loadedScrapers = new Dictionary<string, IScraper>
+            {
+                {"FakeScraper", fakeScraper.Object}
+            };
+
+            fakePluginManager.Setup(manager => manager.Plugins<IEmulatorBridge>()).Returns(loadedEmulators);
+            fakePluginManager.Setup(manager => manager.Plugins<IScraper>()).Returns(loadedScrapers);
+
+            IPlatformPreferenceDatabase database = new PlatformPreferencesDatabase(filename, fakePluginManager.Object);
+
+            ((SynchronousAkavacheDatabase)database).Dispose();
             GC.Collect();
             GC.WaitForPendingFinalizers();
+            File.Delete(filename);
         }
     }
 }
