@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.SQLite;
+using System.Linq;
 using Snowflake.Emulator.Input.Constants;
 using Snowflake.Information.Database;
 using Snowflake.Utility;
@@ -10,10 +9,10 @@ namespace Snowflake.Controller
 {
     public class GamepadAbstractionDatabase : IGamepadAbstractionDatabase
     {
-        private readonly IGamepadAbstractionDatabase backingDatabase;
+        private readonly ISimpleKeyValueStore backingDatabase;
         public GamepadAbstractionDatabase(string fileName)
         {
-            this.backingDatabase = new SqliteGamepadAbstractionDatabase(fileName);
+            this.backingDatabase = new SqliteKeyValueStore(fileName);
             this.SetGamepadAbstraction("~defaultKeyboard", this.DefaultKeyboard, true);
             this.SetGamepadAbstraction("KeyboardDevice", this.DefaultKeyboard, false);
 
@@ -84,17 +83,17 @@ namespace Snowflake.Controller
 
         public IGamepadAbstraction GetGamepadAbstraction(string deviceName)
         {
-            return this.backingDatabase.GetGamepadAbstraction(deviceName);
+            return this.backingDatabase.GetObject<IGamepadAbstraction>(deviceName);
         }
 
         public IEnumerable<IGamepadAbstraction> GetAllGamepadAbstractions()
         {
-            return this.backingDatabase.GetAllGamepadAbstractions();
+            return this.backingDatabase.GetAllObjects<IGamepadAbstraction>().Select(kvp => kvp.Value);
         }
         
         public void SetGamepadAbstraction(string deviceName, IGamepadAbstraction gamepadAbstraction)
         {
-            this.backingDatabase.SetGamepadAbstraction(deviceName, gamepadAbstraction);
+            this.backingDatabase.InsertObject(deviceName, gamepadAbstraction);
         }
 
         private void SetGamepadAbstraction(string deviceName, IGamepadAbstraction gamepadAbstraction, bool overwrite)
@@ -104,7 +103,7 @@ namespace Snowflake.Controller
 
         public void RemoveGamepadAbstraction(string deviceName)
         {
-            this.backingDatabase.RemoveGamepadAbstraction(deviceName);
+            this.backingDatabase.DeleteObject(deviceName);
         }
 
         public IGamepadAbstraction this[string deviceName]
