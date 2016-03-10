@@ -43,8 +43,6 @@ namespace Snowflake.Platform.Tests
             IPlatformPreferenceDatabase database = new PlatformPreferencesDatabase(filename, fakePluginManager.Object);
 
             Assert.NotNull(database);
-            this.DisposeSqlite();
-            File.Delete(filename);
         }
 
         [Fact]
@@ -85,9 +83,6 @@ namespace Snowflake.Platform.Tests
 
             Assert.Equal(expectedPrefs.Emulator, database.GetPreferences(fakePlatform.Object).Emulator);
             Assert.Equal(expectedPrefs.Scraper, database.GetPreferences(fakePlatform.Object).Scraper);
-
-            this.DisposeSqlite();
-            File.Delete(filename);
         }
 
         [Fact]
@@ -126,9 +121,6 @@ namespace Snowflake.Platform.Tests
 
             database.SetEmulator(fakePlatform.Object, "TESTEMULATOR~~");
             Assert.Equal("TESTEMULATOR~~", database.GetPreferences(fakePlatform.Object).Emulator);
-
-            this.DisposeSqlite();
-            File.Delete(filename);
         }
 
         [Fact]
@@ -167,14 +159,6 @@ namespace Snowflake.Platform.Tests
 
             database.SetScraper(fakePlatform.Object, "TESTSCRAPER~~");
             Assert.Equal("TESTSCRAPER~~", database.GetPreferences(fakePlatform.Object).Scraper);
-
-            this.DisposeSqlite();
-            File.Delete(filename);
-        }
-        private void DisposeSqlite()
-        {
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
         }
     }
 }
