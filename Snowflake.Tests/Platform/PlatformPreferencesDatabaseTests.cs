@@ -194,7 +194,6 @@ namespace Snowflake.Platform.Tests
 
             IPlatformPreferenceDatabase database = new PlatformPreferencesDatabase(filename, fakePluginManager.Object);
 
-            ((SimpleKeyValueStore)database).Dispose();
             GC.Collect();
             GC.WaitForPendingFinalizers();
             File.Delete(filename);

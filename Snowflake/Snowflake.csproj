@@ -107,7 +107,7 @@
     <Compile Include="Emulator\Configuration\ConfigurationFlagStore.cs" />
     <Compile Include="Emulator\EmulatorBridge.cs" />
     <Compile Include="Emulator\ProcessEmulatorInstance.cs" />
-    <Compile Include="Information\Database\DapperDatabase.cs" />
+    <Compile Include="Information\Database\DapperTypeMappedDatabase.cs" />
     <Compile Include="Information\Database\DictionaryStringStringTypeHandler.cs" />
     <Compile Include="Information\Database\SqliteGameDatabaseMapper.cs" />
     <Compile Include="Game\GameMediaCache.cs" />

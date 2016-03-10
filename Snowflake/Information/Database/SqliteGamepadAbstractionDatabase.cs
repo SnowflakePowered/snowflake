@@ -10,7 +10,7 @@ using Snowflake.Controller;
 
 namespace Snowflake.Information.Database
 {
-    internal class SqliteGamepadAbstractionDatabase : DapperDatabase, IGamepadAbstractionDatabase
+    internal class SqliteGamepadAbstractionDatabase : DapperTypeMappedDatabase, IGamepadAbstractionDatabase
     {
         public SqliteGamepadAbstractionDatabase(string fileName)
             : base(fileName, typeof (SqliteGamepadAbstractionDatabaseMapper))

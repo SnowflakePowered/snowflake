@@ -10,7 +10,7 @@ namespace Snowflake.Information.Database
     /// <summary>
     /// Represents the database logic behind a game library
     /// </summary>
-    internal class SqliteGameDatabase : DapperDatabase, IGameLibrary
+    internal class SqliteGameDatabase : DapperTypeMappedDatabase, IGameLibrary
     {
         public SqliteGameDatabase(string fileName) : base(fileName, typeof(SqliteGameDatabaseMapper))
         {

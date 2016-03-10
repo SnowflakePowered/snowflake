@@ -7,13 +7,14 @@ using Snowflake.Utility;
 
 namespace Snowflake.Platform
 {
-    public class PlatformPreferencesDatabase : SynchronousAkavacheDatabase, IPlatformPreferenceDatabase
+    public class PlatformPreferencesDatabase : IPlatformPreferenceDatabase
     {
         private readonly IPluginManager pluginManager;
+        private readonly ISimpleKeyValueStore backingValueStore;
         public PlatformPreferencesDatabase(string fileName, IPluginManager pluginManager)
-            : base(fileName)
         {
             this.pluginManager = pluginManager;
+            this.backingValueStore = new SqliteKeyValueStore(fileName);
         }
       
         public void AddPlatform(IPlatformInfo platformInfo)
@@ -22,14 +23,15 @@ namespace Snowflake.Platform
             KeyValuePair<string, IScraper> scraper = this.pluginManager.Plugins<IScraper>().FirstOrDefault(x => x.Value.SupportedPlatforms.Contains(platformInfo.PlatformID));
             string emulatorId = emulator.Equals(default(KeyValuePair<string, IEmulatorBridge>)) ? "null" : emulator.Key;
             string scraperId = scraper.Equals(default(KeyValuePair<string, IScraper>)) ? "null" : scraper.Key;
-            this.InsertObjects( new Dictionary<string, string>() {
+            this.backingValueStore.InsertObjects( new Dictionary<string, string>() {
                 { platformInfo.PlatformID + "_scraper", scraperId},
                 { platformInfo.PlatformID + "_emulator", emulatorId}
             });
         }
         public IPlatformDefaults GetPreferences(IPlatformInfo platformInfo)
         {
-            IDictionary<string, string> preferences = this.GetObjects<string>(new List<string>()
+            IDictionary<string, string> preferences = this.backingValueStore.GetObjects<string>(
+            new List<string>()
             {
                 platformInfo.PlatformID + "_scraper",
                 platformInfo.PlatformID + "_emulator"
@@ -40,11 +42,11 @@ namespace Snowflake.Platform
         }
         public void SetEmulator(IPlatformInfo platformInfo, string value)
         {
-            this.InsertObject(platformInfo.PlatformID + "_emulator", value);
+            this.backingValueStore.InsertObject(platformInfo.PlatformID + "_emulator", value);
         }
         public void SetScraper(IPlatformInfo platformInfo, string value)
         {
-            this.InsertObject(platformInfo.PlatformID + "_scraper", value);
+            this.backingValueStore.InsertObject(platformInfo.PlatformID + "_scraper", value);
         }
     }
 }
