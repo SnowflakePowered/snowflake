@@ -20,7 +20,7 @@ namespace Snowflake.Utility
             public string itemValue { get; set; }
         }
 
-        private JsonSerializerSettings jsonSettings;
+        private readonly JsonSerializerSettings jsonSettings;
         public SqliteKeyValueStore(string fileName) : base(fileName)
         {
             this.CreateDatabase();

@@ -42,10 +42,6 @@
       <HintPath>..\packages\Dapper.1.50.0-beta8\lib\net45\Dapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="DapperExtensions, Version=1.4.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DapperExtensions.1.4.4\lib\net40\DapperExtensions.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Fleck, Version=0.13.0.57, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fleck.0.13.0.57\lib\net40\Fleck.dll</HintPath>
       <Private>True</Private>
@@ -107,9 +103,7 @@
     <Compile Include="Emulator\Configuration\ConfigurationFlagStore.cs" />
     <Compile Include="Emulator\EmulatorBridge.cs" />
     <Compile Include="Emulator\ProcessEmulatorInstance.cs" />
-    <Compile Include="Information\Database\DapperTypeMappedDatabase.cs" />
     <Compile Include="Information\Database\DictionaryStringStringTypeHandler.cs" />
-    <Compile Include="Information\Database\SqliteGameDatabaseMapper.cs" />
     <Compile Include="Game\GameMediaCache.cs" />
     <Compile Include="Information\Database\SqliteGameDatabase.cs" />
     <Compile Include="Game\GameScreenshotCache.cs" />
@@ -161,7 +155,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
-    <Compile Include="Game\GameInfo.DatabaseCompat.cs" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
