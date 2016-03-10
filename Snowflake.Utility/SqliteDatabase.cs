@@ -3,12 +3,12 @@ using System.IO;
 
 namespace Snowflake.Utility
 {
-    public abstract class BaseDatabase 
+    public abstract class SqliteDatabase 
     {
         public string FileName { get; }
         private readonly string dbConnectionString;
 
-        protected BaseDatabase(string fileName)
+        protected SqliteDatabase(string fileName)
         {
             this.FileName = fileName;
 

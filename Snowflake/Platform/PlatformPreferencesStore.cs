@@ -7,11 +7,11 @@ using Snowflake.Utility;
 
 namespace Snowflake.Platform
 {
-    public class PlatformPreferencesDatabase : IPlatformPreferenceDatabase
+    public class PlatformPreferencesStore : IPlatformPreferenceStore
     {
         private readonly IPluginManager pluginManager;
         private readonly ISimpleKeyValueStore backingValueStore;
-        public PlatformPreferencesDatabase(string fileName, IPluginManager pluginManager)
+        public PlatformPreferencesStore(string fileName, IPluginManager pluginManager)
         {
             this.pluginManager = pluginManager;
             this.backingValueStore = new SqliteKeyValueStore(fileName);

@@ -8,9 +8,8 @@ namespace Snowflake.Controller
     /// the port number should indicate the slot of the controller profile to be used.
     /// Each port should correspond to a physical controller port on the console. 
     /// Thus, player 1 should use the profile in slot 1 of the controller in port 1
-    /// <see cref="Snowflake.Controller.IControllerDatabase"/>
     /// </summary>
-    public interface IControllerPortsDatabase
+    public interface IControllerPortStore
     {
         /// <summary>
         /// Adds a platform (console) to the database

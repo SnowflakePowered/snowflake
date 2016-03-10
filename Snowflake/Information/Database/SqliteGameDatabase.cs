@@ -11,7 +11,7 @@ namespace Snowflake.Information.Database
     /// <summary>
     /// Represents the database logic behind a game library
     /// </summary>
-    internal class SqliteGameDatabase : BaseDatabase, IGameLibrary
+    internal class SqliteGameDatabase : SqliteDatabase, IGameLibrary
     {
         public SqliteGameDatabase(string fileName) : base(fileName)
         {

@@ -4,7 +4,7 @@
     /// This database keeps the preferred plugins of a platform.
     /// Usually is populated with IPlatformDefaults, can be changed. 
     /// </summary>
-    public interface IPlatformPreferenceDatabase
+    public interface IPlatformPreferenceStore
     {
         /// <summary>
         /// Add a platform to database

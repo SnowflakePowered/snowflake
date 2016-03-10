@@ -13,7 +13,7 @@ namespace Snowflake.StandardAjax
         [AjaxMethod(MethodPrefix = "Controller")]
         public IJSResponse GetGamepadAbstractions(IJSRequest request)
         {
-            IEnumerable<IGamepadAbstraction> gamepadAbstractions = this.CoreInstance.Get<IGamepadAbstractionDatabase>().GetAllGamepadAbstractions();
+            IEnumerable<IGamepadAbstraction> gamepadAbstractions = this.CoreInstance.Get<IGamepadAbstractionStore>().GetAllGamepadAbstractions();
             return new JSResponse(request, gamepadAbstractions);
         }
         [AjaxMethod(MethodPrefix = "Controller")]
@@ -22,7 +22,7 @@ namespace Snowflake.StandardAjax
         public IJSResponse GetAbstractionForDevice(IJSRequest request)
         {
             string deviceName = request.GetParameter("device");
-            IGamepadAbstraction gamepadAbstraction = this.CoreInstance.Get<IGamepadAbstractionDatabase>()[deviceName];
+            IGamepadAbstraction gamepadAbstraction = this.CoreInstance.Get<IGamepadAbstractionStore>()[deviceName];
             return new JSResponse(request, gamepadAbstraction);
         }
 
@@ -38,7 +38,7 @@ namespace Snowflake.StandardAjax
             IGamepadAbstraction gamepadAbstraction;
             try
             {
-                gamepadAbstraction = this.CoreInstance.Get<IGamepadAbstractionDatabase>()[deviceName];
+                gamepadAbstraction = this.CoreInstance.Get<IGamepadAbstractionStore>()[deviceName];
             }
             catch
             {
@@ -51,8 +51,8 @@ namespace Snowflake.StandardAjax
             {
                 gamepadAbstraction[change.Key] = change.Value;
             }
-            this.CoreInstance.Get<IGamepadAbstractionDatabase>()[deviceName] = gamepadAbstraction;
-            return new JSResponse(request, this.CoreInstance.Get<IGamepadAbstractionDatabase>()[deviceName]);
+            this.CoreInstance.Get<IGamepadAbstractionStore>()[deviceName] = gamepadAbstraction;
+            return new JSResponse(request, this.CoreInstance.Get<IGamepadAbstractionStore>()[deviceName]);
         }
         [AjaxMethod(MethodPrefix = "Controller")]
         public IJSResponse GetControllers(IJSRequest request)
@@ -69,9 +69,9 @@ namespace Snowflake.StandardAjax
             IPlatformInfo platform = this.CoreInstance.Platforms[request.GetParameter("platform")];
             string deviceName = request.GetParameter("device");
             int port = int.Parse(request.GetParameter("port"));
-            this.CoreInstance.Get<IControllerPortsDatabase>().SetDeviceInPort(platform, port, deviceName);
+            this.CoreInstance.Get<IControllerPortStore>().SetDeviceInPort(platform, port, deviceName);
 
-            return new JSResponse(request, this.CoreInstance.Get<IControllerPortsDatabase>().GetDeviceInPort(platform, port));
+            return new JSResponse(request, this.CoreInstance.Get<IControllerPortStore>().GetDeviceInPort(platform, port));
         }
         [AjaxMethod(MethodPrefix = "Controller")]
         [AjaxMethodParameter(ParameterName = "platform", ParameterType = AjaxMethodParameterType.StringParameter, Required = true)]
@@ -81,7 +81,7 @@ namespace Snowflake.StandardAjax
             IPlatformInfo platform = this.CoreInstance.Platforms[request.GetParameter("platform")];
             int port = int.Parse(request.GetParameter("port"));
 
-            return new JSResponse(request, this.CoreInstance.Get<IControllerPortsDatabase>().GetDeviceInPort(platform, port));
+            return new JSResponse(request, this.CoreInstance.Get<IControllerPortStore>().GetDeviceInPort(platform, port));
         }
         [AjaxMethod(MethodPrefix = "Controller")]
         [AjaxMethodParameter(ParameterName = "platform", ParameterType = AjaxMethodParameterType.StringParameter)]
@@ -90,7 +90,7 @@ namespace Snowflake.StandardAjax
             IPlatformInfo platform = this.CoreInstance.Platforms[request.GetParameter("platform")];
             string[] ports = new string[9];
             for(int i = 1; i <= 8; i++){
-                ports[i] = this.CoreInstance.Get<IControllerPortsDatabase>().GetDeviceInPort(platform, i);
+                ports[i] = this.CoreInstance.Get<IControllerPortStore>().GetDeviceInPort(platform, i);
             }
             return new JSResponse(request, ports);
         }

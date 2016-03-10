@@ -6,13 +6,13 @@ using Xunit;
 
 namespace Snowflake.Controller.Tests
 {
-    public class ControllerPortsDatabaseTests
+    public class ControllerPortsStoreTests
     {
         [Fact]
         public void CreateDatabase_Test()
         {
             string filename = Path.GetTempFileName();
-            IControllerPortsDatabase database = new ControllerPortsDatabase(filename);
+            IControllerPortStore database = new ControllerPortStore(filename);
             Assert.NotNull(database);
             this.DisposeSqlite();
             File.Delete(filename);
@@ -22,7 +22,7 @@ namespace Snowflake.Controller.Tests
         public void AddPlatform_Test()
         {
             string filename = Path.GetTempFileName();
-            IControllerPortsDatabase database = new ControllerPortsDatabase(filename);
+            IControllerPortStore database = new ControllerPortStore(filename);
             var platform = new Mock<IPlatformInfo>();
             platform.SetupGet(platformInfo => platformInfo.PlatformID).Returns("TEST_PLATFORM"); database.AddPlatform(platform.Object);
             string deviceName = database.GetDeviceInPort(platform.Object, 1);
@@ -35,7 +35,7 @@ namespace Snowflake.Controller.Tests
         public void SetPort_Test()
         {
             string filename = Path.GetTempFileName();
-            IControllerPortsDatabase database = new ControllerPortsDatabase(filename);
+            IControllerPortStore database = new ControllerPortStore(filename);
             var platform = new Mock<IPlatformInfo>();
             platform.SetupGet(platformInfo => platformInfo.PlatformID).Returns("TEST_PLATFORM");
             database.AddPlatform(platform.Object);
@@ -48,7 +48,7 @@ namespace Snowflake.Controller.Tests
         public void GetPort_Test()
         {
             string filename = Path.GetTempFileName();
-            IControllerPortsDatabase database = new ControllerPortsDatabase(filename);
+            IControllerPortStore database = new ControllerPortStore(filename);
             var platform = new Mock<IPlatformInfo>();
             platform.SetupGet(platformInfo => platformInfo.PlatformID).Returns("TEST_PLATFORM");
             database.AddPlatform(platform.Object);

@@ -6,10 +6,10 @@ using Snowflake.Utility;
 
 namespace Snowflake.Controller
 {
-    public class ControllerPortsDatabase : IControllerPortsDatabase
+    public class ControllerPortStore : IControllerPortStore
     {
         private readonly ISimpleKeyValueStore backingValueStore;
-        public ControllerPortsDatabase(string fileName)
+        public ControllerPortStore(string fileName)
         {
             this.backingValueStore = new SqliteKeyValueStore(fileName);
         }

@@ -6,7 +6,7 @@ namespace Snowflake.Controller
     /// <summary>
     /// Stores a database of gamepad abstractions
     /// </summary>
-    public interface IGamepadAbstractionDatabase
+    public interface IGamepadAbstractionStore
     {
         /// <summary>
         /// Gets a gamepad abstraction given a device name

@@ -7,10 +7,10 @@ using Snowflake.Utility;
 
 namespace Snowflake.Controller
 {
-    public class GamepadAbstractionDatabase : IGamepadAbstractionDatabase
+    public class GamepadAbstractionStore : IGamepadAbstractionStore
     {
         private readonly ISimpleKeyValueStore backingDatabase;
-        public GamepadAbstractionDatabase(string fileName)
+        public GamepadAbstractionStore(string fileName)
         {
             this.backingDatabase = new SqliteKeyValueStore(fileName);
             this.SetGamepadAbstraction("~defaultKeyboard", this.DefaultKeyboard, true);

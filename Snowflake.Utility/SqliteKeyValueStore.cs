@@ -12,7 +12,7 @@ namespace Snowflake.Utility
 {
 
 
-    public class SqliteKeyValueStore : BaseDatabase, ISimpleKeyValueStore
+    public class SqliteKeyValueStore : SqliteDatabase, ISimpleKeyValueStore
     {
         private class SqliteKeyValueEntry
         {
@@ -38,12 +38,11 @@ namespace Snowflake.Utility
             using (SQLiteConnection dbConnection = this.GetConnection())
             {
                 dbConnection.Open();
-                var sqlCommand = new SQLiteCommand(@"CREATE TABLE IF NOT EXISTS kvstore(
+                dbConnection.Execute(@"CREATE TABLE IF NOT EXISTS kvstore(
                                                                 itemKey TEXT PRIMARY KEY,
                                                                 itemValue TEXT,
                                                                 itemType TEXT
-                                                                )", dbConnection);
-                sqlCommand.ExecuteNonQuery();
+                                                                )");
                 dbConnection.Close();
             }
         }

@@ -98,7 +98,7 @@
     <Compile Include="Ajax\JSRequest.cs" />
     <Compile Include="Ajax\JSResponse.cs" />
     <Compile Include="Controller\GamepadAbstraction.cs" />
-    <Compile Include="Controller\GamepadAbstractionDatabase.cs" />
+    <Compile Include="Controller\GamepadAbstractionStore.cs" />
     <Compile Include="Emulator\Configuration\ConfigurationFlagSelectValue.cs" />
     <Compile Include="Emulator\Configuration\ConfigurationFlagStore.cs" />
     <Compile Include="Emulator\EmulatorBridge.cs" />
@@ -110,7 +110,7 @@
     <Compile Include="Information\MediaStore\FileMediaStore.cs" />
     <Compile Include="Information\MediaStore\FileMediaStoreSection.cs" />
     <Compile Include="Platform\PlatformControllerPorts.cs" />
-    <Compile Include="Platform\PlatformPreferencesDatabase.cs" />
+    <Compile Include="Platform\PlatformPreferencesStore.cs" />
     <Compile Include="Plugin\BasePlugin.cs" />
     <Compile Include="Emulator\Configuration\ConfigurationStore.cs" />
     <Compile Include="Emulator\Configuration\ConfigurationFlag.cs" />
@@ -118,7 +118,7 @@
     <Compile Include="Emulator\Input\ControllerTemplate.cs" />
     <Compile Include="Emulator\Input\InputTemplate.cs" />
     <Compile Include="Extensions\JObjectExts.cs" />
-    <Compile Include="Controller\ControllerPortsDatabase.cs" />
+    <Compile Include="Controller\ControllerPortStore.cs" />
     <Compile Include="Controller\ControllerDefinition.cs" />
     <Compile Include="Plugin\YamlConfiguration.cs" />
     <Compile Include="Romfile\FileSignature.cs" />
