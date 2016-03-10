@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Moq;
 using Snowflake.Service;
 using Xunit;
@@ -48,9 +49,8 @@ namespace Snowflake.Events.Test
             SnowflakeEventManager.EventSource.Subscribe<SnowflakeEventArgs>(this.handleEvent);
             Assert.NotNull(SnowflakeEventManager.EventSource.GetEvent<SnowflakeEventArgs>());
             SnowflakeEventManager.EventSource.Unsubscribe<SnowflakeEventArgs>(this.handleEvent);
+            Thread.Sleep(1000);
             Assert.Null(SnowflakeEventManager.EventSource.GetEvent<SnowflakeEventArgs>());
-            var fakeCoreService = new Mock<ICoreService>();
-            SnowflakeEventManager.EventSource.RaiseEvent(new SnowflakeEventArgs(fakeCoreService.Object));
         }
     }
 }
