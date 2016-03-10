@@ -3,12 +3,14 @@ sudo: false
 solution: Snowflake.sln
 mono:
   - 4.2.2
+
 install:
   - nuget restore ./Snowflake.sln
-  
+
 script:
-  -  xbuild /p:Configuration=Debug Snowflake.sln /p:TargetFrameworkVersion="v4.5"
-  
+  - xbuild /p:Configuration=Debug Snowflake.sln /p:TargetFrameworkVersion="v4.5"
+  - mono ./packages/xunit.runner.console.2.1.0/tools/xunit.console.exe ./Snowflake.Tests/bin/Debug/Snowflake.Tests.dll -noshadow
+
 notifications:
   irc:
     channels:

@@ -21,8 +21,6 @@ namespace Snowflake.Emulator.Tests
             fakeEmulatorBridge.SetupGet(bridge => bridge.ConfigurationFlags).Returns(new Dictionary<string, IConfigurationFlag>());
             IConfigurationFlagStore flagStore = new ConfigurationFlagStore(fakeEmulatorBridge.Object);
             Assert.NotNull(flagStore);
-            this.DisposeSqlite();
-            Directory.Delete(filename, true);
         }
         [Fact]
         public void GetDefaultValue_Test()
@@ -45,8 +43,6 @@ namespace Snowflake.Emulator.Tests
 
             IConfigurationFlagStore flagStore = new ConfigurationFlagStore(fakeEmulatorBridge.Object);
             Assert.Equal(true, flagStore.GetDefaultValue("TESTKEY", ConfigurationFlagTypes.BOOLEAN_FLAG));
-            this.DisposeSqlite();
-            Directory.Delete(filename, true);
         }
 
         [Fact]
@@ -71,8 +67,6 @@ namespace Snowflake.Emulator.Tests
             IConfigurationFlagStore flagStore = new ConfigurationFlagStore(fakeEmulatorBridge.Object);
             flagStore.SetDefaultValue("TESTKEY", false, ConfigurationFlagTypes.BOOLEAN_FLAG);
             Assert.Equal(false, flagStore.GetDefaultValue("TESTKEY", ConfigurationFlagTypes.BOOLEAN_FLAG));
-            this.DisposeSqlite();
-            Directory.Delete(filename, true);
         }
 
         [Fact]
@@ -109,13 +103,6 @@ namespace Snowflake.Emulator.Tests
             flagStore.AddGame(fakeGameInfo.Object, flagValues);
             bool value = flagStore.GetValue(fakeGameInfo.Object, "TESTKEY", ConfigurationFlagTypes.BOOLEAN_FLAG);
             Assert.Equal(false, value);
-            this.DisposeSqlite();
-            Directory.Delete(filename, true);
-        }
-        private void DisposeSqlite()
-        {
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
         }
     }
 }

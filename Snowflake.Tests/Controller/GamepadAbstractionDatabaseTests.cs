@@ -13,8 +13,6 @@ namespace Snowflake.Controller.Tests
             string filename = Path.GetTempFileName();
             IGamepadAbstractionDatabase database = new GamepadAbstractionDatabase(filename);
             Assert.NotEmpty(database.GetAllGamepadAbstractions());
-            this.DisposeSqlite();
-            File.Delete(filename);
         }
 
         [Fact]
@@ -25,8 +23,6 @@ namespace Snowflake.Controller.Tests
             IGamepadAbstraction abstraction = new GamepadAbstraction("~test", ControllerProfileType.NULL_PROFILE);
             database.SetGamepadAbstraction("~test", abstraction);
             Assert.NotNull(database.GetGamepadAbstraction("~test"));
-            this.DisposeSqlite();
-            File.Delete(filename);
         }
 
         [Theory]
@@ -43,8 +39,6 @@ namespace Snowflake.Controller.Tests
             abstraction.A = KeyboardConstants.KEY_Z;
             database.SetGamepadAbstraction(deviceName, abstraction);
             Assert.Equal(KeyboardConstants.KEY_Z, database.GetGamepadAbstraction(deviceName).A);
-            this.DisposeSqlite();
-            File.Delete(filename);
         }
         [Theory]
         [InlineData("KeyboardDevice")]
@@ -58,13 +52,6 @@ namespace Snowflake.Controller.Tests
             IGamepadAbstractionDatabase database = new GamepadAbstractionDatabase(filename);
             database.RemoveGamepadAbstraction(deviceName);
             Assert.Null(database.GetGamepadAbstraction(deviceName));
-            this.DisposeSqlite();
-            File.Delete(filename);
-        }
-        private void DisposeSqlite()
-        {
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
         }
     }
 }

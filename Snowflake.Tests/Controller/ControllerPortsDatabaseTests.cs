@@ -14,8 +14,6 @@ namespace Snowflake.Controller.Tests
             string filename = Path.GetTempFileName();
             IControllerPortsDatabase database = new ControllerPortsDatabase(filename);
             Assert.NotNull(database);
-            this.DisposeSqlite();
-            File.Delete(filename);
         }
 
         [Fact]
@@ -27,8 +25,6 @@ namespace Snowflake.Controller.Tests
             platform.SetupGet(platformInfo => platformInfo.PlatformID).Returns("TEST_PLATFORM"); database.AddPlatform(platform.Object);
             string deviceName = database.GetDeviceInPort(platform.Object, 1);
             Assert.Null(deviceName);
-            this.DisposeSqlite();
-            File.Delete(filename);
         }
 
         [Fact]
@@ -40,8 +36,6 @@ namespace Snowflake.Controller.Tests
             platform.SetupGet(platformInfo => platformInfo.PlatformID).Returns("TEST_PLATFORM");
             database.AddPlatform(platform.Object);
             database.SetDeviceInPort(platform.Object, 1, "TEST_DEVICE");
-            this.DisposeSqlite();
-            File.Delete(filename);
         }
         
         [Fact]
@@ -55,15 +49,6 @@ namespace Snowflake.Controller.Tests
             database.SetDeviceInPort(platform.Object, 1, "TEST_DEVICE");
             string deviceName =  database.GetDeviceInPort(platform.Object, 1);
             Assert.Equal("TEST_DEVICE", deviceName);
-            this.DisposeSqlite();
-            File.Delete(filename);
         }
-
-        private void DisposeSqlite()
-        {
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-        }
-
     }
 }
