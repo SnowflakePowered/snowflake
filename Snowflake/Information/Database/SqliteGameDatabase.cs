@@ -41,6 +41,8 @@ namespace Snowflake.Information.Database
             using (SQLiteConnection dbConnection = this.GetConnection())
             {
                 dbConnection.Open();
+                if (dbConnection.Get<GameInfo>(game.UUID) != null)
+                    dbConnection.Delete(game);
                 dbConnection.Insert(game);
                 dbConnection.Close();
             }
