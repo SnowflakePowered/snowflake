@@ -10,19 +10,19 @@ using Snowflake.Utility;
 
 namespace Snowflake.Information.Database
 {
-    internal class DapperDatabase : BaseDatabase
+    internal class DapperTypeMappedDatabase : BaseDatabase
     {
         private static readonly IList<Assembly> mapperAssemblies = new List<Assembly>();
-        public DapperDatabase(string fileName, Type mapper) : base(fileName)
+        public DapperTypeMappedDatabase(string fileName, Type mapper) : base(fileName)
         {
             DapperExtensions.DapperExtensions.SqlDialect = new DapperExtensions.Sql.SqliteDialect();
-            DapperDatabase.AddMapperAssembly(mapper);
+            DapperTypeMappedDatabase.AddMapperAssembly(mapper);
         }
 
         private static void AddMapperAssembly(Type type)
         {
-            DapperDatabase.mapperAssemblies.Add(type.Assembly);
-            DapperExtensions.DapperExtensions.SetMappingAssemblies(DapperDatabase.mapperAssemblies);
+            DapperTypeMappedDatabase.mapperAssemblies.Add(type.Assembly);
+            DapperExtensions.DapperExtensions.SetMappingAssemblies(DapperTypeMappedDatabase.mapperAssemblies);
         }
     }
 }
