@@ -25,6 +25,14 @@ namespace Snowflake.Utility
         IDictionary<string, T> GetObjects<T>(IEnumerable<string> keys);
 
         /// <summary>
+        /// Gets multiple objects of a identical type
+        /// </summary>
+        /// <typeparam name="T">The type of the objects</typeparam>
+        /// <param name="keys">The key stored</param>
+        /// <returns>The keyed dictionary of the returned objects</returns>
+
+        IDictionary<string, T> GetAllObjects<T>();
+        /// <summary>
         /// Inserts or updates an object into the key value store
         /// </summary>
         /// <typeparam name="T">The type of object to insert</typeparam>
@@ -52,5 +60,17 @@ namespace Snowflake.Utility
         /// </summary>
         /// <param name="keys">The keys to delete</param>
         void DeleteObjects(IEnumerable<string> keys);
+
+        /// <summary>
+        /// Deletes multiple objects of a type with the keys
+        /// </summary>
+        /// <param name="keys">The keys to delete</param>
+        void DeleteObjects<T>(IEnumerable<string> keys);
+
+        /// <summary>
+        /// Deletes all objects of a type
+        /// </summary>
+        /// <param name="keys">The keys to delete</param>
+        void DeleteAllObjects<T>();
     }
 }

@@ -145,8 +145,8 @@ namespace Snowflake.Utility.Tests
             kvStore.InsertObject("testKey1", "test1");
             kvStore.InsertObject("testKey2", "test2");
 
-            var retrivedObjects = kvStore.GetObjects<string>(new[] { "testKey1", "testKey2" });
-            Assert.NotEmpty(retrivedObjects);
+            var retrievedObjects = kvStore.GetObjects<string>(new[] { "testKey1", "testKey2" });
+            Assert.NotEmpty(retrievedObjects);
         }
 
         [Theory]
@@ -185,6 +185,17 @@ namespace Snowflake.Utility.Tests
         }
 
         [Fact]
+        public void GetAllObjects()
+        {
+            var kvStore = new SqliteKeyValueStore(Path.GetTempFileName());
+            kvStore.InsertObject("testKey1", "test1");
+            kvStore.InsertObject("testKey2", 1);
+            var retrievedObjects = kvStore.GetAllObjects<string>();
+            Assert.Equal("test1", retrievedObjects["testKey1"]);
+            Assert.False(retrievedObjects.ContainsKey("testKey2"));
+        }
+
+        [Fact]
         public void DeleteObject_Test()
         {
             var kvStore = new SqliteKeyValueStore(Path.GetTempFileName());
@@ -201,9 +212,22 @@ namespace Snowflake.Utility.Tests
             kvStore.InsertObject("testKey2", "test2");
 
             kvStore.DeleteObjects(new[] {"testKey1", "testKey2"});
-            var retrivedObjects = kvStore.GetObjects<string>(new[] { "testKey1", "testKey2" });
-            Assert.Empty(retrivedObjects);
+            var retrievedObjects = kvStore.GetObjects<string>(new[] { "testKey1", "testKey2" });
+            Assert.Empty(retrievedObjects);
         }
 
+        [Fact]
+        public void DeleteAllObjects_Test()
+        {
+            var kvStore = new SqliteKeyValueStore(Path.GetTempFileName());
+            kvStore.InsertObject("testKey1", "test1");
+            kvStore.InsertObject("testKey2", "test2");
+            kvStore.InsertObject("testKey3", 1);
+
+            kvStore.DeleteAllObjects<string>();
+            var retrievedObjects = kvStore.GetObjects<string>(new[] { "testKey1", "testKey2" });
+            Assert.Empty(retrievedObjects);
+            Assert.Equal(1, kvStore.GetObject<int>("testKey3"));
+        }
     }
 }
