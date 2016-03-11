@@ -11,7 +11,7 @@
 
 |<img src="https://cloud.githubusercontent.com/assets/1000503/13551043/3b0ac2f6-e2fa-11e5-886b-f6dfdc0ba6f9.png" width=25>|<img src="https://cloud.githubusercontent.com/assets/1000503/13551114/29c1f598-e2fd-11e5-8ad5-b2fa3a44e5ab.png" height=25>|
 |--------------|--------|
-|[![MyGetFeed](https://img.shields.io/myget/snowflake-nightly/vpre/Snowflake.API.svg?style=flat)](https://www.myget.org/gallery/snowflake-nightly)|[![NuGet](https://img.shields.io/nuget/v/Snowflake.svg)](https://www.nuget.org/packages/Snowflake)|
+|[![MyGetFeed](https://img.shields.io/myget/snowflake-nightly/vpre/Snowflake.API.svg?style=flat)](https://www.myget.org/gallery/snowflake-nightly)|[![NuGet version](https://badge.fury.io/nu/Snowflake.svg)](https://www.nuget.org/packages/Snowflake)|
 
 
 Snowflake is a powerful, extensible emulator frontend that works out-of-the-box, built using bleeding edge techonogies on the web and desktop.
