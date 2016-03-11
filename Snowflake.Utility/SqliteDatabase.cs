@@ -3,11 +3,12 @@ using System.IO;
 
 namespace Snowflake.Utility
 {
-    public abstract class BaseDatabase
+    public abstract class SqliteDatabase 
     {
         public string FileName { get; }
-        private readonly string DBConnectionString;
-        public BaseDatabase(string fileName)
+        private readonly string dbConnectionString;
+
+        protected SqliteDatabase(string fileName)
         {
             this.FileName = fileName;
 
@@ -15,11 +16,12 @@ namespace Snowflake.Utility
             {
                 SQLiteConnection.CreateFile(this.FileName);
             }
-            this.DBConnectionString = $"Data Source={this.FileName};Version=3;PRAGMA journal_mode=WAL;";
+            this.dbConnectionString = $"Data Source={this.FileName};Version=3;PRAGMA journal_mode=WAL;";
         }
+
         public SQLiteConnection GetConnection()
         {
-            return new SQLiteConnection(this.DBConnectionString);
+            return new SQLiteConnection(this.dbConnectionString);
         }
     }
 }

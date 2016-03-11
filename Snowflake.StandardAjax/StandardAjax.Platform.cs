@@ -14,7 +14,7 @@ namespace Snowflake.StandardAjax
         public IJSResponse GetPreferences(IJSRequest request)
         {
             IPlatformInfo platform = this.CoreInstance.Platforms[request.GetParameter("platform")];
-            return new JSResponse(request, this.CoreInstance.Get<IPlatformPreferenceDatabase>().GetPreferences(platform));
+            return new JSResponse(request, this.CoreInstance.Get<IPlatformPreferenceStore>().GetPreferences(platform));
         }
 
         [AjaxMethod(MethodPrefix = "Platform")]
@@ -31,14 +31,14 @@ namespace Snowflake.StandardAjax
                 case "emulator":
                     if (this.CoreInstance.Get<IPluginManager>().Plugins<IEmulatorBridge>().ContainsKey(value))
                     {
-                        this.CoreInstance.Get<IPlatformPreferenceDatabase>().SetEmulator(platform, value);
+                        this.CoreInstance.Get<IPlatformPreferenceStore>().SetEmulator(platform, value);
                         return new JSResponse(request, "Emulator set to {value}", true); //return emulator that was set
                     }
                     throw new ArgumentException("Emulator Not Found", new KeyNotFoundException());
                 case "scraper":
                     if (this.CoreInstance.Get<IPluginManager>().Plugins<IEmulatorBridge>().ContainsKey(value))
                     {
-                        this.CoreInstance.Get<IPlatformPreferenceDatabase>().SetScraper(platform, value);
+                        this.CoreInstance.Get<IPlatformPreferenceStore>().SetScraper(platform, value);
                         return new JSResponse(request, $"Scraper set to {value}", true); //return scraper that was set
                     }
                     throw new ArgumentException("Scraper Not Found", new KeyNotFoundException());

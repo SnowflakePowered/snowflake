@@ -12,7 +12,7 @@ namespace Snowflake.Scraper
 {
     public abstract class BaseScraper: BasePlugin, IScraper
     {
-        public BiDictionary<string, string> ScraperMap { get; }
+        public IDictionary<string, string> ScraperMap { get; }
         public double ScraperAccuracy { get; }
 
         protected BaseScraper(Assembly pluginAssembly, ICoreService coreInstance) : base(pluginAssembly, coreInstance)
@@ -21,13 +21,12 @@ namespace Snowflake.Scraper
             using (var reader = new StreamReader(stream))
             {
                 string file = reader.ReadToEnd();
-                var scraperMapValues = JsonConvert.DeserializeObject<BiDictionary<string, string>>(file);
+                var scraperMapValues = JsonConvert.DeserializeObject<IDictionary<string, string>>(file);
                 this.ScraperMap = scraperMapValues;
                 this.ScraperAccuracy = Convert.ToDouble(this.PluginInfo["scraper_accuracy"]) > 1.0
                     ? 1.0
                     : Convert.ToDouble(this.PluginInfo["scraper_accuracy"]);
             }
-            
         }
         public abstract IList<IGameScrapeResult> GetSearchResults(string searchQuery);
         public abstract IList<IGameScrapeResult> GetSearchResults(string searchQuery, string platformId);

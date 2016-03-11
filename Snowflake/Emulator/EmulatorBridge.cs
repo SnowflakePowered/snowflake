@@ -56,10 +56,10 @@ namespace Snowflake.Emulator
         }
         public virtual string CompileController(int playerIndex, IPlatformInfo platformInfo, IInputTemplate inputTemplate, IEmulatorInstance instance)
         {
-            string deviceName = this.CoreInstance.Get<IControllerPortsDatabase>().GetDeviceInPort(platformInfo, playerIndex);
+            string deviceName = this.CoreInstance.Get<IControllerPortStore>().GetDeviceInPort(platformInfo, playerIndex);
             string controllerId = platformInfo.ControllerPorts[playerIndex];
             IControllerDefinition controllerDefinition = this.CoreInstance.Controllers[controllerId];
-            IGamepadAbstraction gamepadAbstraction = this.CoreInstance.Get<IGamepadAbstractionDatabase>()[deviceName];
+            IGamepadAbstraction gamepadAbstraction = this.CoreInstance.Get<IGamepadAbstractionStore>()[deviceName];
             return this.CompileController(playerIndex, 
                 platformInfo,
                 controllerDefinition,

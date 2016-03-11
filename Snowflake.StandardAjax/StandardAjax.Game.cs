@@ -81,13 +81,13 @@ namespace Snowflake.StandardAjax
         {
             string gameinfo_pre = request.GetParameter("gameinfo");
             IGameInfo game = GameInfo.FromJson(JsonConvert.DeserializeObject(gameinfo_pre));
-            var gamePreAddEvent = new GamePreAddEventArgs(this.CoreInstance, game, this.CoreInstance.Get<IGameDatabase>());
+            var gamePreAddEvent = new GamePreAddEventArgs(this.CoreInstance, game, this.CoreInstance.Get<IGameLibrary>());
             SnowflakeEventManager.EventSource.RaiseEvent(gamePreAddEvent);
             if (!gamePreAddEvent.Cancel)
             {
                 game = gamePreAddEvent.GameInfo;
-                this.CoreInstance.Get<IGameDatabase>().AddGame(game);
-                var gameAddEvent = new GameAddEventArgs(this.CoreInstance, game, this.CoreInstance.Get<IGameDatabase>());
+                this.CoreInstance.Get<IGameLibrary>().AddGame(game);
+                var gameAddEvent = new GameAddEventArgs(this.CoreInstance, game, this.CoreInstance.Get<IGameLibrary>());
                 SnowflakeEventManager.EventSource.RaiseEvent(gameAddEvent);
 
             }
@@ -99,7 +99,7 @@ namespace Snowflake.StandardAjax
         public IJSResponse GetGame(IJSRequest request)
         {
             string id = request.GetParameter("id");
-            return new JSResponse(request, this.CoreInstance.Get<IGameDatabase>().GetGameByUUID(id));
+            return new JSResponse(request, this.CoreInstance.Get<IGameLibrary>().GetGameByUUID(id));
         }
 
         [AjaxMethod(MethodPrefix = "Game")]
@@ -107,19 +107,19 @@ namespace Snowflake.StandardAjax
         public IJSResponse GetGamesByPlatform(IJSRequest request)
         {
             string platform = request.GetParameter("platform");
-            return new JSResponse(request, this.CoreInstance.Get<IGameDatabase>().GetGamesByPlatform(platform));
+            return new JSResponse(request, this.CoreInstance.Get<IGameLibrary>().GetGamesByPlatform(platform));
         }
 
         [AjaxMethod(MethodPrefix = "Game")]
         public IJSResponse GetAllGames(IJSRequest request)
         {
-            return new JSResponse(request, this.CoreInstance.Get<IGameDatabase>().GetAllGames());
+            return new JSResponse(request, this.CoreInstance.Get<IGameLibrary>().GetAllGames());
         }
 
         [AjaxMethod(MethodPrefix = "Game")]
         public IJSResponse GetAllGamesSorted(IJSRequest request)
         {
-            IList<IGameInfo> games = this.CoreInstance.Get<IGameDatabase>().GetAllGames();
+            IEnumerable<IGameInfo> games = this.CoreInstance.Get<IGameLibrary>().GetAllGames();
             IDictionary<string, List<IGameInfo>> sortedGames = this.CoreInstance.Platforms.ToDictionary(platform => platform.Key, platform => new List<IGameInfo>());
             foreach (IGameInfo game in games.Where(game => sortedGames.ContainsKey(game.PlatformID)))
             {
@@ -150,7 +150,7 @@ namespace Snowflake.StandardAjax
             string id = request.GetParameter("id");
             string key = request.GetParameter("key");
             IEmulatorBridge bridge = this.CoreInstance.Get<IPluginManager>().Plugins<IEmulatorBridge>()[emulator];
-            IGameInfo game = this.CoreInstance.Get<IGameDatabase>().GetGameByUUID(id);
+            IGameInfo game = this.CoreInstance.Get<IGameLibrary>().GetGameByUUID(id);
             IConfigurationFlag flag = bridge.ConfigurationFlags[key];
             return new JSResponse(request, bridge.ConfigurationFlagStore.GetValue(game, flag.Key, flag.Type));
         }
@@ -163,7 +163,7 @@ namespace Snowflake.StandardAjax
             string emulator = request.GetParameter("emulator");
             string id = request.GetParameter("id");
             IEmulatorBridge bridge = this.CoreInstance.Get<IPluginManager>().Plugins<IEmulatorBridge>()[emulator];
-            IGameInfo game = this.CoreInstance.Get<IGameDatabase>().GetGameByUUID(id);
+            IGameInfo game = this.CoreInstance.Get<IGameLibrary>().GetGameByUUID(id);
             IDictionary<string, dynamic> flags = bridge.ConfigurationFlags.ToDictionary(flag => flag.Value.Key, flag => bridge.ConfigurationFlagStore.GetValue(game, flag.Value.Key, flag.Value.Type));
             return new JSResponse(request, flags);
         }
@@ -180,7 +180,7 @@ namespace Snowflake.StandardAjax
             string key = request.GetParameter("key");
             string value = request.GetParameter("value");
             IEmulatorBridge bridge = this.CoreInstance.Get<IPluginManager>().Plugins<IEmulatorBridge>()[emulator];
-            IGameInfo game = this.CoreInstance.Get<IGameDatabase>().GetGameByUUID(id);
+            IGameInfo game = this.CoreInstance.Get<IGameLibrary>().GetGameByUUID(id);
             IConfigurationFlag flag = bridge.ConfigurationFlags[key];
             dynamic castedValue = bridge.ConfigurationFlagStore.GetDefaultValue(flag.Key, flag.Type);
             switch (flag.Type)
@@ -209,7 +209,7 @@ namespace Snowflake.StandardAjax
             string values_pre = request.GetParameter("values");
             IDictionary<string, string> values = JsonConvert.DeserializeObject<IDictionary<string, string>>(values_pre);
             IEmulatorBridge bridge = this.CoreInstance.Get<IPluginManager>().Plugins<IEmulatorBridge>()[emulator];
-            IGameInfo game = this.CoreInstance.Get<IGameDatabase>().GetGameByUUID(id);
+            IGameInfo game = this.CoreInstance.Get<IGameLibrary>().GetGameByUUID(id);
             foreach (KeyValuePair<string, string> value in values)
             {
                 IConfigurationFlag flag = bridge.ConfigurationFlags[value.Key];
@@ -290,7 +290,7 @@ namespace Snowflake.StandardAjax
             string emulator = request.GetParameter("emulator");
             string id = request.GetParameter("id");
             IEmulatorBridge bridge = this.CoreInstance.Get<IPluginManager>().Plugins<IEmulatorBridge>()[emulator];
-            IGameInfo gameInfo = this.CoreInstance.Get<IGameDatabase>().GetGameByUUID(id);
+            IGameInfo gameInfo = this.CoreInstance.Get<IGameLibrary>().GetGameByUUID(id);
             var gameStartEvent = new GameStartEventArgs(this.CoreInstance, gameInfo, bridge.EmulatorAssembly, bridge);
             SnowflakeEventManager.EventSource.RaiseEvent(gameStartEvent);
             if (!gameStartEvent.Cancel)

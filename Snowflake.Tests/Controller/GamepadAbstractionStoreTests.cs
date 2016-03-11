@@ -5,13 +5,13 @@ using Xunit;
 
 namespace Snowflake.Controller.Tests
 {
-    public class GamepadAbstractionDabataseTests
+    public class GamepadAbstractionStoreTests
     {
         [Fact]
         public void CreateDatabase_Test()
         {
             string filename = Path.GetTempFileName();
-            IGamepadAbstractionDatabase database = new GamepadAbstractionDatabase(filename);
+            IGamepadAbstractionStore database = new GamepadAbstractionStore(filename);
             Assert.NotEmpty(database.GetAllGamepadAbstractions());
             this.DisposeSqlite();
             File.Delete(filename);
@@ -21,7 +21,7 @@ namespace Snowflake.Controller.Tests
         public void AddNewAbstraction_Test()
         {
             string filename = Path.GetTempFileName();
-            IGamepadAbstractionDatabase database = new GamepadAbstractionDatabase(filename);
+            IGamepadAbstractionStore database = new GamepadAbstractionStore(filename);
             IGamepadAbstraction abstraction = new GamepadAbstraction("~test", ControllerProfileType.NULL_PROFILE);
             database.SetGamepadAbstraction("~test", abstraction);
             Assert.NotNull(database.GetGamepadAbstraction("~test"));
@@ -38,7 +38,7 @@ namespace Snowflake.Controller.Tests
         public void ChangeAbstraction_Test(string deviceName)
         {
             string filename = Path.GetTempFileName();
-            IGamepadAbstractionDatabase database = new GamepadAbstractionDatabase(filename);
+            IGamepadAbstractionStore database = new GamepadAbstractionStore(filename);
             IGamepadAbstraction abstraction = database.GetGamepadAbstraction(deviceName);
             abstraction.A = KeyboardConstants.KEY_Z;
             database.SetGamepadAbstraction(deviceName, abstraction);
@@ -55,7 +55,7 @@ namespace Snowflake.Controller.Tests
         public void RemoveAbstraction_Test(string deviceName)
         {
             string filename = Path.GetTempFileName();
-            IGamepadAbstractionDatabase database = new GamepadAbstractionDatabase(filename);
+            IGamepadAbstractionStore database = new GamepadAbstractionStore(filename);
             database.RemoveGamepadAbstraction(deviceName);
             Assert.Null(database.GetGamepadAbstraction(deviceName));
             this.DisposeSqlite();

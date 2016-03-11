@@ -52,14 +52,14 @@ namespace Snowflake.Service
             this.Controllers = this.LoadControllers();
 
             this.RegisterService<IServerManager>(new ServerManager());
-            this.RegisterService<IGameDatabase>(new GameDatabase(Path.Combine(this.AppDataDirectory, "games.db")));
-            this.RegisterService<IGamepadAbstractionDatabase>(new GamepadAbstractionDatabase(Path.Combine(this.AppDataDirectory, "gamepads.db")));
-            this.RegisterService<IControllerPortsDatabase>(new ControllerPortsDatabase(Path.Combine(this.AppDataDirectory, "ports.db")));
+            this.RegisterService<IGameLibrary>(new GameLibrary(Path.Combine(this.AppDataDirectory, "games.db")));
+            this.RegisterService<IGamepadAbstractionStore>(new GamepadAbstractionStore(Path.Combine(this.AppDataDirectory, "gamepads.db")));
+            this.RegisterService<IControllerPortStore>(new ControllerPortStore(Path.Combine(this.AppDataDirectory, "ports.db")));
             this.RegisterService<IEmulatorAssembliesManager>(new EmulatorAssembliesManager(Path.Combine(this.AppDataDirectory, "emulators")));
             this.RegisterService<IInputManager>(new InputManager.InputManager());
             this.RegisterService<IPluginManager>(new PluginManager(this.AppDataDirectory, this, typeof(IEmulatorBridge), typeof(IScraper), typeof(IFileSignature), typeof(IGeneralPlugin), typeof(IBaseAjaxNamespace)));
             this.RegisterService<IAjaxManager>(new AjaxManager(this));
-            this.RegisterService<IPlatformPreferenceDatabase>(new PlatformPreferencesDatabase(Path.Combine(this.AppDataDirectory, "platformprefs.db"), this.Get<IPluginManager>()));
+            this.RegisterService<IPlatformPreferenceStore>(new PlatformPreferencesStore(Path.Combine(this.AppDataDirectory, "platformprefs.db"), this.Get<IPluginManager>()));
             this.RegisterService<IScrapeEngine>(new ScrapeEngine(this));
             this.RegisterService<IEmulatorInstanceManager>(new EmulatorInstanceManager(this));
             var serverManager = this.Get<IServerManager>();

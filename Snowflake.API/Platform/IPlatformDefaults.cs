@@ -2,7 +2,7 @@
 {
     /// <summary>
     /// Represents the default-use plugins for a certain platform
-    /// Only used to populate initial <see cref="IPlatformPreferenceDatabase"/>  entry
+    /// Only used to populate initial <see cref="IPlatformPreferenceStore"/>  entry
     /// </summary>
     public interface IPlatformDefaults
     {

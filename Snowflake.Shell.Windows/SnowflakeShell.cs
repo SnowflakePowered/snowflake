@@ -46,8 +46,8 @@ namespace Snowflake.Shell.Windows
             this.loadedCore.Get<IAjaxManager>()?.Initialize(this.loadedCore.Get<IPluginManager>());
             foreach (IPlatformInfo platform in this.loadedCore.Platforms.Values)
             {
-                this.loadedCore.Get<IControllerPortsDatabase>()?.AddPlatform(platform);
-                this.loadedCore.Get<IPlatformPreferenceDatabase>()?.AddPlatform(platform);
+                this.loadedCore.Get<IControllerPortStore>()?.AddPlatform(platform);
+                this.loadedCore.Get<IPlatformPreferenceStore>()?.AddPlatform(platform);
             }
             this.loadedCore.Get<IServerManager>().RegisterServer("ThemeServer", new ThemeServer(Path.Combine(this.loadedCore.AppDataDirectory, "themes")));
             foreach (string serverName in this.loadedCore.Get<IServerManager>().RegisteredServers)

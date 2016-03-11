@@ -8,48 +8,26 @@ using Snowflake.Utility;
 
 namespace Snowflake.Emulator.Configuration
 {
-    public class ConfigurationFlagStore : BaseDatabase, IConfigurationFlagStore
+    public class ConfigurationFlagStore : IConfigurationFlagStore
     {
         public string EmulatorBridgeID { get; }
         readonly string configurationFlagLocation;
+        private readonly ISimpleKeyValueStore backingStore;
         readonly IEmulatorBridge emulatorBridge;
         public ConfigurationFlagStore(IEmulatorBridge emulatorBridge)
-            : base(Path.Combine(emulatorBridge.PluginDataPath, "flagscache.db"))
         {
-            this.CreateDatabase();
+            this.backingStore = new SqliteKeyValueStore(Path.Combine(emulatorBridge.PluginDataPath, "flagscache.db"));
             this.EmulatorBridgeID = emulatorBridge.PluginName;
             this.configurationFlagLocation = Path.Combine(emulatorBridge.PluginDataPath, "flagscache.db");
             this.AddDefaults(emulatorBridge.ConfigurationFlags);
             this.emulatorBridge = emulatorBridge;
         }
-        private void CreateDatabase()
-        {
-            SQLiteConnection dbConnection = this.GetConnection();
-            dbConnection.Open();
-            var sqlCommand = new SQLiteCommand(@"CREATE TABLE IF NOT EXISTS flags(
-                                                                flagKey TEXT PRIMARY KEY,
-                                                                flagValue TEXT)", dbConnection);
-            sqlCommand.ExecuteNonQuery();
-            dbConnection.Close();
-        }
+
         public void AddGame(IGameInfo gameInfo, IDictionary<string, string> flagValues)
         {
-
-
-            SQLiteConnection flagDb = this.GetConnection();
-            flagDb.Open();
-            foreach (KeyValuePair<string, string> flagPair in flagValues)
-            {
-                using (var sqliteCommand = new SQLiteCommand(@"INSERT OR REPLACE INTO flags VALUES(
-                                          @flagKey,
-                                          @flagValue)", flagDb))
-                {
-                    sqliteCommand.Parameters.AddWithValue("@flagKey", $"{gameInfo.UUID}-{flagPair.Key}");
-                    sqliteCommand.Parameters.AddWithValue("@flagValue", flagPair.Value);
-                    sqliteCommand.ExecuteNonQuery();
-                }
-            }
-            flagDb.Close();
+            this.backingStore.InsertObjects(flagValues
+                .ToDictionary(flagPair => $"{gameInfo.UUID}-{flagPair.Key}",
+                flagPair => flagPair.Value));
         }
         public void AddGame(IGameInfo gameInfo)
         {
@@ -74,70 +52,40 @@ namespace Snowflake.Emulator.Configuration
         }
         private void AddDefaults(IDictionary<string, IConfigurationFlag> configurationFlags)
         {
-            IDictionary<string, string> flagValues = configurationFlags.ToDictionary(flag => flag.Key, flag => flag.Value.DefaultValue);
-            SQLiteConnection flagDb = this.GetConnection();
-            flagDb.Open();
-            foreach (KeyValuePair<string, string> flagPair in flagValues)
-            {
-               using(var sqliteCommand = new SQLiteCommand(@"INSERT OR REPLACE INTO flags VALUES(
-                                          @flagKey,
-                                          @flagValue)", flagDb)){
-                   sqliteCommand.Parameters.AddWithValue("@flagKey", $"default-{flagPair.Key}");
-                   sqliteCommand.Parameters.AddWithValue("@flagValue", flagPair.Value);
-                   sqliteCommand.ExecuteNonQuery();
-               }
-            }
-            flagDb.Close();
-            
+            IDictionary<string, string> flagValues = configurationFlags
+                .ToDictionary(flag => flag.Key, flag => flag.Value.DefaultValue);
 
+            this.backingStore.InsertObjects(flagValues.ToDictionary(flagPair => $"default-{flagPair.Key}", 
+                flagPair => flagPair.Value));
         }
         private void SetValue(string key, object value, ConfigurationFlagTypes type, string prefix)
         {
-            SQLiteConnection flagDb = this.GetConnection();
-            flagDb.Open();
-            using (var sqliteCommand = new SQLiteCommand(@"INSERT OR REPLACE INTO flags VALUES(
-                                          @flagKey,
-                                          @flagValue)", flagDb))
-            {
-                sqliteCommand.Parameters.AddWithValue("@flagKey", $"{prefix}-{key}");
-                sqliteCommand.Parameters.AddWithValue("@flagValue", value.ToString());
-                sqliteCommand.ExecuteNonQuery();
-            }
-            flagDb.Close();
-            
-        }
-        private dynamic GetValue(string key, ConfigurationFlagTypes type, string prefix, object fallback)
-        {
-            SQLiteConnection dbConnection = this.GetConnection();
-            dbConnection.Open();
-            string value = string.Empty;
-            using (var sqlCommand = new SQLiteCommand(@"SELECT `flagValue` FROM `flags` WHERE `flagKey` == @searchQuery"
-               , dbConnection))
-            {
-                sqlCommand.Parameters.AddWithValue("@searchQuery", $"{prefix}-{key}");
-               
-                    try
-                    {
-                        value = (string)sqlCommand.ExecuteScalar();
-                    }
-                    catch (AccessViolationException)
-                    {
-                        System.Threading.Thread.Sleep(500); //le concurrency hack :(
-                        value = (string)sqlCommand.ExecuteScalar();
-                    }
-            }
-            dbConnection.Close();
-            value = value ?? fallback.ToString();
             switch (type)
             {
-                case ConfigurationFlagTypes.SELECT_FLAG:
-                    return int.Parse(value);
-                case ConfigurationFlagTypes.INTEGER_FLAG:
-                    return int.Parse(value);
                 case ConfigurationFlagTypes.BOOLEAN_FLAG:
-                    return bool.Parse(value);
+                    this.backingStore.InsertObject($"{prefix}-{key}", (bool)value);
+                    break;
+                case ConfigurationFlagTypes.INTEGER_FLAG:
+                    this.backingStore.InsertObject($"{prefix}-{key}", (int)value);
+                    break;
+                case ConfigurationFlagTypes.SELECT_FLAG:
+                    this.backingStore.InsertObject($"{prefix}-{key}", (int)value);
+                    break;
+            }
+        }
+
+        private dynamic GetValue(string key, ConfigurationFlagTypes type, string prefix, object fallback)
+        {
+            switch (type)
+            {
+                case ConfigurationFlagTypes.BOOLEAN_FLAG:
+                    return this.backingStore.GetObject<bool>($"{prefix}-{key}");
+                case ConfigurationFlagTypes.INTEGER_FLAG:
+                    return this.backingStore.GetObject<int>($"{prefix}-{key}");
+                case ConfigurationFlagTypes.SELECT_FLAG:
+                    return this.backingStore.GetObject<int>($"{prefix}-{key}");
                 default:
-                    return value;
+                    return fallback;
             }
         }
 
