@@ -35,7 +35,7 @@ namespace Snowflake.Configuration
         }
         
         public abstract string Serialize(IConfigurationSection configurationSection);
-        public abstract string SerializeIterable(IConfigurationSection iterableConfigurationSection, int iteration);
+        public abstract string Serialize(IIterableConfigurationSection iterableConfigurationSection);
 
     }
 }

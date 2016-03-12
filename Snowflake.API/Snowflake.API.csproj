@@ -79,6 +79,7 @@
     <Compile Include="Ajax\IJSRequest.cs" />
     <Compile Include="Ajax\IJSResponse.cs" />
     <Compile Include="Configuration\Attributes\ConfigurationOptionAttribute.cs" />
+    <Compile Include="Configuration\IIterableConfigurationSection.cs" />
     <Compile Include="Configuration\IConfigurationSection.cs" />
     <Compile Include="Configuration\IConfigurationSerializer.cs" />
     <Compile Include="Configuration\IConfigurationTypeMapper.cs" />

@@ -103,6 +103,7 @@
     <Compile Include="Configuration\ConfigurationSerializer.cs" />
     <Compile Include="Configuration\ExampleConfigurationSection.cs" />
     <Compile Include="Configuration\ConfigurationSection.cs" />
+    <Compile Include="Configuration\IterableConfigurationSection.cs" />
     <Compile Include="Controller\GamepadAbstraction.cs" />
     <Compile Include="Controller\GamepadAbstractionStore.cs" />
     <Compile Include="Emulator\Configuration\ConfigurationFlagSelectValue.cs" />
