@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Globalization;
@@ -91,8 +91,7 @@ namespace Snowflake.Utility
                 serializedObject = dbConnection.Query<string>("SELECT itemValue FROM kvstore WHERE itemKey = @itemKey",
                    new { itemKey = key , itemType = typeof(T).Name }).FirstOrDefault();
             }
-            return !String.IsNullOrWhiteSpace(serializedObject) ? 
-                JsonConvert.DeserializeObject<T>(serializedObject, this.jsonSettings) : default(T);
+            return serializedObject == null ? default(T) : JsonConvert.DeserializeObject<T>(serializedObject, this.jsonSettings);
         }
 
         public IDictionary<string, T> GetObjects<T>(IEnumerable<string> keys)
@@ -106,9 +105,9 @@ namespace Snowflake.Utility
 
             IDictionary<string, T> deserializedObjects = serializedObjects
                 .ToDictionary(serializedObject => serializedObject.itemKey,
-                    serializedObject => !String.IsNullOrWhiteSpace(serializedObject.itemValue)
-                        ? JsonConvert.DeserializeObject<T>(serializedObject.itemValue, this.jsonSettings)
-                        : default(T));
+                    serializedObject => (serializedObject.itemValue == null)
+                        ? default(T)
+                        : JsonConvert.DeserializeObject<T>(serializedObject.itemValue, this.jsonSettings));
             return deserializedObjects;
         }
 
@@ -123,9 +122,9 @@ namespace Snowflake.Utility
 
             IDictionary<string, T> deserializedObjects = serializedObjects
                 .ToDictionary(serializedObject => serializedObject.itemKey,
-                    serializedObject => !String.IsNullOrWhiteSpace(serializedObject.itemValue)
-                        ? JsonConvert.DeserializeObject<T>(serializedObject.itemValue, this.jsonSettings)
-                        : default(T));
+                    serializedObject => (serializedObject.itemValue == null)
+                        ? default(T)
+                        : JsonConvert.DeserializeObject<T>(serializedObject.itemValue, this.jsonSettings));
             return deserializedObjects;
         }
 
