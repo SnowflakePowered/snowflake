@@ -97,6 +97,13 @@
     <Compile Include="Ajax\JSMethod.cs" />
     <Compile Include="Ajax\JSRequest.cs" />
     <Compile Include="Ajax\JSResponse.cs" />
+    <Compile Include="Configuration\ConfigurationTypeMapper.cs" />
+    <Compile Include="Configuration\DefaultConfigurationTypeMapper.cs" />
+    <Compile Include="Configuration\INIConfigurationSerializer.cs" />
+    <Compile Include="Configuration\ConfigurationSerializer.cs" />
+    <Compile Include="Configuration\ExampleConfigurationSection.cs" />
+    <Compile Include="Configuration\IteratableConfigurationSection.cs" />
+    <Compile Include="Configuration\ConfigurationSection.cs" />
     <Compile Include="Controller\GamepadAbstraction.cs" />
     <Compile Include="Controller\GamepadAbstractionStore.cs" />
     <Compile Include="Emulator\Configuration\ConfigurationFlagSelectValue.cs" />
@@ -129,7 +136,7 @@
     <Compile Include="Emulator\Configuration\ConfigurationEntry.cs" />
     <Compile Include="Emulator\Configuration\ConfigurationProfile.cs" />
     <Compile Include="Emulator\Configuration\ConfigurationTemplate.cs" />
-    <Compile Include="Emulator\Configuration\BooleanMapping.cs" />
+    <Compile Include="Configuration\BooleanMapping.cs" />
     <Compile Include="Emulator\Input\GamepadMapping.cs" />
     <Compile Include="Emulator\Input\KeyboardMapping.cs" />
     <Compile Include="Emulator\EmulatorAssembly.cs" />

@@ -1,4 +1,5 @@
-﻿namespace Snowflake.Emulator.Configuration
+﻿
+namespace Snowflake.Configuration
 {
     public class BooleanMapping : IBooleanMapping
     {
