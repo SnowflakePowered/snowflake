@@ -11,6 +11,8 @@ namespace Snowflake.Configuration
 {
     public abstract class ConfigurationSerializer : IConfigurationSerializer
     {
+        protected const string IteratorKey = "{N}";
+
         protected ConfigurationSerializer(IConfigurationTypeMapper typeMapper)
         {
             this.TypeMapper = typeMapper;
@@ -23,6 +25,7 @@ namespace Snowflake.Configuration
 
         public IConfigurationTypeMapper TypeMapper { get; set; }
         public abstract string SerializeLine<T>(string key, T value);
+        public abstract string SerializeIterableLine<T>(string key, T value, int iteration);
 
         public string SerializeValue(object value)
         {
@@ -32,7 +35,7 @@ namespace Snowflake.Configuration
         }
         
         public abstract string Serialize(IConfigurationSection configurationSection);
-        public abstract string Serialize(IteratableConfigurationSection configurationSection);
+        public abstract string SerializeIterable(IConfigurationSection iterableConfigurationSection, int iteration);
 
     }
 }

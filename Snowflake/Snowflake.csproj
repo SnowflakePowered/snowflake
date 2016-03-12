@@ -99,10 +99,9 @@
     <Compile Include="Ajax\JSResponse.cs" />
     <Compile Include="Configuration\ConfigurationTypeMapper.cs" />
     <Compile Include="Configuration\DefaultConfigurationTypeMapper.cs" />
-    <Compile Include="Configuration\INIConfigurationSerializer.cs" />
+    <Compile Include="Configuration\IniConfigurationSerializer.cs" />
     <Compile Include="Configuration\ConfigurationSerializer.cs" />
     <Compile Include="Configuration\ExampleConfigurationSection.cs" />
-    <Compile Include="Configuration\IteratableConfigurationSection.cs" />
     <Compile Include="Configuration\ConfigurationSection.cs" />
     <Compile Include="Controller\GamepadAbstraction.cs" />
     <Compile Include="Controller\GamepadAbstractionStore.cs" />
