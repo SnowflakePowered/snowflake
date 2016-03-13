@@ -101,7 +101,6 @@
     <Compile Include="Configuration\DefaultConfigurationTypeMapper.cs" />
     <Compile Include="Configuration\IniConfigurationSerializer.cs" />
     <Compile Include="Configuration\ConfigurationSerializer.cs" />
-    <Compile Include="Configuration\ExampleConfigurationSection.cs" />
     <Compile Include="Configuration\ConfigurationSection.cs" />
     <Compile Include="Configuration\IterableConfigurationSection.cs" />
     <Compile Include="Controller\GamepadAbstraction.cs" />

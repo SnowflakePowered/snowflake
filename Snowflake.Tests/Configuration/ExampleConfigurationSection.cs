@@ -7,23 +7,23 @@ using Snowflake.Configuration.Attributes;
 
 namespace Snowflake.Configuration
 {
-    //todo move this to tests
-    //Taken from a section of Dolphin.ini
     /*
-    FullscreenResolution = Auto
-    Fullscreen = True
-    RenderToMain = True
-    RenderWindowXPos = -1
-    RenderWindowYPos = -1
-    RenderWindowWidth = 640
-    RenderWindowHeight = 480
-    RenderWindowAutoSize = False
-    KeepWindowOnTop = False
-    ProgressiveScan = False
-    PAL60 = False
+       Taken from a section of Dolphin.ini
+       FullscreenResolution = Auto
+       Fullscreen = True
+       RenderToMain = True
+       RenderWindowXPos = -1
+       RenderWindowYPos = -1
+       RenderWindowWidth = 640
+       RenderWindowHeight = 480
+       RenderWindowAutoSize = False
+       KeepWindowOnTop = False
+       ProgressiveScan = False
+       PAL60 = False
+       ISOPath0 = C:\Dumps\Wii\RMGE01.wbfs
     */
 
-    public class ExampleConfigurationSection : ConfigurationSection
+    public sealed class ExampleConfigurationSection : ConfigurationSection
     {
         [ConfigurationOption("FullscreenResolution")]
         public FullscreenResolution FullscreenResolution { get; set; } = FullscreenResolution.Auto;
@@ -40,8 +40,11 @@ namespace Snowflake.Configuration
         [ConfigurationOption("RenderWindowHeight")]
         public int RenderWindowHeight { get; set; } = 480;
 
-        [ConfigurationOption("SomeIterableOption{N}", IsIterable = true)]
-        public int MyOption { get; set; } = 480;
+        [ConfigurationOption("ISOPath0")]
+        public string ISOPath0 { get; set; } = @"C:\Dumps\Wii\RMGE01.wbfs";
+
+        [ConfigurationOption("NullSetting")]
+        public string NullSetting { get; set; } = null;
 
         public ExampleConfigurationSection()
         {

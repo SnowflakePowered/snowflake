@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
+using Snowflake.Configuration;
 using Snowflake.Emulator;
 using Snowflake.Events;
 using Snowflake.Service.Manager;
