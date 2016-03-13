@@ -95,6 +95,8 @@
     <Compile Include="Controller\ControllerPortsStoreTests.cs" />
     <Compile Include="Controller\GamepadAbstractionStoreTests.cs" />
     <Compile Include="Emulator\ConfigurationFlagStoreTests.cs" />
+    <Compile Include="Emulator\Input\GamepadMappingTests.cs" />
+    <Compile Include="Emulator\Input\KeyboardMappingTests.cs" />
     <Compile Include="Events\SnowflakeEventManagerTests.cs" />
     <Compile Include="Events\StandardEventsTests.cs" />
     <Compile Include="Game\GameDatabaseTests.cs" />
@@ -130,6 +132,8 @@
     <None Include="packages.config" />
     <EmbeddedResource Include="TestResources\GameCache\dmmy.ogg" />
     <EmbeddedResource Include="TestResources\GameCache\test.webm" />
+    <EmbeddedResource Include="TestResources\Mapping\GamepadMapping.json" />
+    <EmbeddedResource Include="TestResources\Mapping\KeyboardMapping.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Snowflake.API\Snowflake.API.csproj">
