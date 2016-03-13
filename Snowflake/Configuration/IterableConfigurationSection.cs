@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Snowflake.Configuration
 {
-    public class IterableConfigurationSection : ConfigurationSection, IIterableConfigurationSection
+    public abstract class IterableConfigurationSection : ConfigurationSection, IIterableConfigurationSection
     {
         public int InterationNumber { get; set; }  
     }
