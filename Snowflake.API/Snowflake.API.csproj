@@ -78,6 +78,12 @@
     <Compile Include="Ajax\IJSMethod.cs" />
     <Compile Include="Ajax\IJSRequest.cs" />
     <Compile Include="Ajax\IJSResponse.cs" />
+    <Compile Include="Configuration\Attributes\ConfigurationOptionAttribute.cs" />
+    <Compile Include="Configuration\IIterableConfigurationSection.cs" />
+    <Compile Include="Configuration\IConfigurationSection.cs" />
+    <Compile Include="Configuration\IConfigurationSerializer.cs" />
+    <Compile Include="Configuration\IConfigurationTypeMapper.cs" />
+    <Compile Include="Configuration\Attributes\SelectionOptionAttribute.cs" />
     <Compile Include="Controller\IGamepadAbstraction.cs" />
     <Compile Include="Controller\IGamepadAbstractionStore.cs" />
     <Compile Include="Emulator\EmulatorInstanceState.cs" />
@@ -113,7 +119,7 @@
     <Compile Include="Service\Manager\IEmulatorInstanceManager.cs" />
     <Compile Include="Service\IScrapeEngine.cs" />
     <Compile Include="Scraper\ScraperInfoFields.cs" />
-    <Compile Include="Emulator\Configuration\IBooleanMapping.cs" />
+    <Compile Include="Configuration\IBooleanMapping.cs" />
     <Compile Include="Emulator\Configuration\IConfigurationEntry.cs" />
     <Compile Include="Emulator\Configuration\IConfigurationFlag.cs" />
     <Compile Include="Emulator\Configuration\IConfigurationProfile.cs" />

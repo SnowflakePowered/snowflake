@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Snowflake.Configuration;
 
 namespace Snowflake.Emulator.Configuration
 {

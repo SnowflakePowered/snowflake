@@ -91,6 +91,9 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Configuration\ExampleConfigurationSection.cs" />
+    <Compile Include="Configuration\ExampleIterableConfigurationSection.cs" />
+    <Compile Include="Configuration\IniConfigurationSerializerTests.cs" />
     <Compile Include="Controller\ControllerDefinitionTests.cs" />
     <Compile Include="Controller\ControllerPortsStoreTests.cs" />
     <Compile Include="Controller\GamepadAbstractionStoreTests.cs" />
@@ -109,6 +112,8 @@
     <Compile Include="Scraper\GameImagesResultTests.cs" />
     <Compile Include="Service\HttpServer\BaseHttpServerTests.cs" />
     <Compile Include="Service\WebSocketServer\JSWebSocketServerTests.cs" />
+    <EmbeddedResource Include="TestResources\Configurations\ExampleConfigurationSection.ini" />
+    <EmbeddedResource Include="TestResources\Configurations\ExampleIterableConfigurationSection.ini" />
     <Compile Include="TestUtilities.cs" />
     <Compile Include="Utility\HashTests.cs" />
     <Compile Include="Utility\SqliteKeyValueStoreTests.cs" />
