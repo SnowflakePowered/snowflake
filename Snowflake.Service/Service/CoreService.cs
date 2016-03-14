@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 using Snowflake.Ajax;
 using Snowflake.Controller;
 using Snowflake.Emulator;
-using Snowflake.Emulator.Input.InputManager;
+using Snowflake.Input;
 using Snowflake.Events;
 using Snowflake.Events.ServiceEvents;
 using Snowflake.Game;

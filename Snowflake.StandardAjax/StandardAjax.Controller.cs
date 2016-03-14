@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using Snowflake.Ajax;
 using Snowflake.Controller;
-using Snowflake.Emulator.Input.InputManager;
+using Snowflake.Input;
 using Snowflake.Platform;
 
 namespace Snowflake.StandardAjax
@@ -97,7 +97,7 @@ namespace Snowflake.StandardAjax
         [AjaxMethod(MethodPrefix = "Controller")]
         public IJSResponse GetInputDevices(IJSRequest request)
         {
-            return new JSResponse(request, this.CoreInstance.Get<IInputManager>().GetGamepads());
+            return new JSResponse(request, this.CoreInstance.Get<IInputManager>().GetAllDevices());
         }
     }
 }

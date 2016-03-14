@@ -88,11 +88,12 @@
     <Compile Include="Controller\IGamepadAbstractionStore.cs" />
     <Compile Include="Emulator\EmulatorInstanceState.cs" />
     <Compile Include="Emulator\IEmulatorInstance.cs" />
+    <Compile Include="Input\DeviceType.cs" />
     <Compile Include="Emulator\Input\InputManager\InputDeviceNames.cs" />
     <Compile Include="Emulator\Configuration\IConfigurationFlagSelectValue.cs" />
     <Compile Include="Emulator\Configuration\IConfigurationFlagStore.cs" />
-    <Compile Include="Emulator\Input\InputManager\IInputDevice.cs" />
-    <Compile Include="Emulator\Input\InputManager\IInputManager.cs" />
+    <Compile Include="Input\IInputDevice.cs" />
+    <Compile Include="Input\IInputManager.cs" />
     <Compile Include="Game\IGameMediaCache.cs" />
     <Compile Include="Game\IGameScreenshotCache.cs" />
     <Compile Include="Romfile\IFileSignature.cs" />
