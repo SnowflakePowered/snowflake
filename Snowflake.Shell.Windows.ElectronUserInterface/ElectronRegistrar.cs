@@ -6,15 +6,15 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Service;
-using Snowflake.Plugin;
+using Snowflake.Extensibility;
 
 namespace Snowflake.Shell.Windows.ElectronUserInterface
 {
-    public class ServiceRegistrar : GeneralPlugin
+    [Plugin("ui-electron-win64")]
+    public class ElectronRegistrar : Plugin
     {
-        [ImportingConstructor]
-        public ServiceRegistrar([Import("coreInstance")] ICoreService coreInstance)
-            : base(Assembly.GetExecutingAssembly(), coreInstance)
+        public ElectronRegistrar(ICoreService coreInstance)
+            : base(coreInstance)
         {
             this.CoreInstance.RegisterService<IUserInterface>(new ElectronInterface(coreInstance, this.PluginDataPath));
         }
