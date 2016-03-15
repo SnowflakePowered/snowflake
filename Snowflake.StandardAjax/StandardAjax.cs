@@ -1,15 +1,16 @@
 ﻿using System.ComponentModel.Composition;
 using System.Reflection;
 using Snowflake.Ajax;
+using Snowflake.Extensibility;
 using Snowflake.Service;
 
 namespace Snowflake.StandardAjax
 {
-    public partial class StandardAjax : BaseAjaxNamespace
+    [Plugin("StandardAjax")]
+    public partial class StandardAjax : AjaxNamespace
     {
-        [ImportingConstructor]
-        public StandardAjax([Import("coreInstance")] ICoreService coreInstance)
-            : base(Assembly.GetExecutingAssembly(), coreInstance)
+        public StandardAjax(ICoreService coreInstance)
+            : base(coreInstance)
         {
             
         }

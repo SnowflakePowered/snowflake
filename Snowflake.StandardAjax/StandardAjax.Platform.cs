@@ -29,14 +29,14 @@ namespace Snowflake.StandardAjax
             switch (preference)
             {
                 case "emulator":
-                    if (this.CoreInstance.Get<IPluginManager>().Plugins<IEmulatorBridge>().ContainsKey(value))
+                    if (this.CoreInstance.Get<IPluginManager>().Get<IEmulatorBridge>().ContainsKey(value))
                     {
                         this.CoreInstance.Get<IPlatformPreferenceStore>().SetEmulator(platform, value);
                         return new JSResponse(request, "Emulator set to {value}", true); //return emulator that was set
                     }
                     throw new ArgumentException("Emulator Not Found", new KeyNotFoundException());
                 case "scraper":
-                    if (this.CoreInstance.Get<IPluginManager>().Plugins<IEmulatorBridge>().ContainsKey(value))
+                    if (this.CoreInstance.Get<IPluginManager>().Get<IEmulatorBridge>().ContainsKey(value))
                     {
                         this.CoreInstance.Get<IPlatformPreferenceStore>().SetScraper(platform, value);
                         return new JSResponse(request, $"Scraper set to {value}", true); //return scraper that was set
