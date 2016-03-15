@@ -13,10 +13,12 @@ using Newtonsoft.Json;
 using NLog;
 using Snowflake.Constants.Plugin;
 using Snowflake.Emulator;
+using Snowflake.Events;
 using Snowflake.Extensions;
 using Snowflake.Extensibility;
 using Snowflake.Extensibility.Configuration;
 using Snowflake.Scraper;
+using Snowflake.Events.ServiceEvents;
 
 namespace Snowflake.Service.Manager
 {
@@ -69,6 +71,7 @@ namespace Snowflake.Service.Manager
                 this.loadedPlugins.Add(typeof (T), new Dictionary<string, IPlugin>());
             this.loadedPlugins[typeof (T)].Add(plugin.PluginName, plugin);
             this.registry.Add(plugin.PluginName, typeof(T));
+            SnowflakeEventManager.EventSource?.RaiseEvent(new PluginLoadedEventArgs(this.CoreInstance, plugin));
         }
 
      
@@ -85,6 +88,7 @@ namespace Snowflake.Service.Manager
                 {
                     IPluginContainer pluginContainer = plugin.Value;
                     pluginContainer.Compose(this.CoreInstance);
+                    
                 }
                 catch (Exception ex)
                 {

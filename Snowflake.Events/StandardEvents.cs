@@ -25,6 +25,7 @@ namespace Snowflake.Events
 
             eventManager.RegisterEvent(this.CoreLoaded);
             eventManager.RegisterEvent(this.CoreShutdown);
+            eventManager.RegisterEvent(this.PluginLoaded);
 
             eventManager.RegisterEvent(this.ServerStart);
             eventManager.RegisterEvent(this.ServerStop);
@@ -54,6 +55,7 @@ namespace Snowflake.Events
         public event EventHandler<CoreShutdownEventArgs> CoreShutdown;
         public event EventHandler<ServerStartEventArgs> ServerStart;
         public event EventHandler<ServerStopEventArgs> ServerStop;
+        public event EventHandler<PluginLoadedEventArgs> PluginLoaded;
 
         public event EventHandler<ModifyControllerProfileEventArgs> ControllerProfileModify;
         public event EventHandler<ModifyConfigurationFlagEventArgs> ConfigurationFlagModify;
