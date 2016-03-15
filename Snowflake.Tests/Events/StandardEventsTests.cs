@@ -27,7 +27,7 @@ namespace Snowflake.Events.Tests
             var fakeGameInfo = new Mock<IGameInfo>();
             var fakeGameDatabase = new Mock<IGameLibrary>();
             var args = new GameAddEventArgs(fakeCoreService.Object, fakeGameInfo.Object, fakeGameDatabase.Object);
-            SnowflakeEventManager.EventSource.Subscribe<GameAddEventArgs>((s, e) =>
+            SnowflakeEventManager.EventSource.Subscribe<GameAddEventArgs>("TestHandler", (s, e) =>
             {
                 Assert.Equal(args, e);
             });
@@ -42,7 +42,7 @@ namespace Snowflake.Events.Tests
             var fakeGameInfo = new Mock<IGameInfo>();
             var fakeGameDatabase = new Mock<IGameLibrary>();
             var args = new GameDeleteEventArgs(fakeCoreService.Object, fakeGameInfo.Object, fakeGameDatabase.Object);
-            SnowflakeEventManager.EventSource.Subscribe<GameDeleteEventArgs>((s, e) =>
+            SnowflakeEventManager.EventSource.Subscribe<GameDeleteEventArgs>("TestHandler", (s, e) =>
             {
                 Assert.Equal(args, e);
             });
@@ -58,7 +58,7 @@ namespace Snowflake.Events.Tests
             var fakeEmulatorAssembly = new Mock<IEmulatorAssembly>();
             var fakeEmulatorBridge = new Mock<IEmulatorBridge>();
             var args = new GameProcessQuitEventArgs(fakeCoreService.Object, fakeGameInfo.Object, fakeEmulatorAssembly.Object, fakeEmulatorBridge.Object, new System.Diagnostics.Process());
-            SnowflakeEventManager.EventSource.Subscribe<GameProcessQuitEventArgs>((s, e) =>
+            SnowflakeEventManager.EventSource.Subscribe<GameProcessQuitEventArgs>("TestHandler", (s, e) =>
             {
                 Assert.Equal(args, e);
             });
@@ -74,7 +74,7 @@ namespace Snowflake.Events.Tests
             var fakeEmulatorAssembly = new Mock<IEmulatorAssembly>();
             var fakeEmulatorBridge = new Mock<IEmulatorBridge>();
             var args = new GameProcessStartEventArgs(fakeCoreService.Object, fakeGameInfo.Object, fakeEmulatorAssembly.Object, fakeEmulatorBridge.Object, new System.Diagnostics.Process());
-            SnowflakeEventManager.EventSource.Subscribe<GameProcessStartEventArgs>((s, e) =>
+            SnowflakeEventManager.EventSource.Subscribe<GameProcessStartEventArgs>("TestHandler", (s, e) =>
             {
                 Assert.Equal(args, e);
             });
@@ -90,7 +90,7 @@ namespace Snowflake.Events.Tests
             var fakeEmulatorAssembly = new Mock<IEmulatorAssembly>();
             var fakeEmulatorBridge = new Mock<IEmulatorBridge>();
             var args = new GameQuitEventArgs(fakeCoreService.Object, fakeGameInfo.Object, fakeEmulatorAssembly.Object, fakeEmulatorBridge.Object);
-            SnowflakeEventManager.EventSource.Subscribe<GameQuitEventArgs>((s, e) =>
+            SnowflakeEventManager.EventSource.Subscribe<GameQuitEventArgs>("TestHandler", (s, e) =>
             {
                 Assert.Equal(args, e);
             });
@@ -106,7 +106,7 @@ namespace Snowflake.Events.Tests
             var fakeEmulatorAssembly = new Mock<IEmulatorAssembly>();
             var fakeEmulatorBridge = new Mock<IEmulatorBridge>();
             var args = new GameStartEventArgs(fakeCoreService.Object, fakeGameInfo.Object, fakeEmulatorAssembly.Object, fakeEmulatorBridge.Object);
-            SnowflakeEventManager.EventSource.Subscribe<GameStartEventArgs>((s, e) =>
+            SnowflakeEventManager.EventSource.Subscribe<GameStartEventArgs>("TestHandler", (s, e) =>
             {
                 Assert.Equal(args, e);
             });
@@ -121,7 +121,7 @@ namespace Snowflake.Events.Tests
             var fakeGameInfo = new Mock<IGameInfo>();
             var fakeScraper = new Mock<IScraper>();
             var args = new GameInfoScrapedEventArgs(fakeCoreService.Object, fakeGameInfo.Object, fakeScraper.Object);
-            SnowflakeEventManager.EventSource.Subscribe<GameInfoScrapedEventArgs>((s, e) =>
+            SnowflakeEventManager.EventSource.Subscribe<GameInfoScrapedEventArgs>("TestHandler", (s, e) =>
             {
                 Assert.Equal(args, e);
             });
@@ -135,7 +135,7 @@ namespace Snowflake.Events.Tests
             var fakeCoreService = new Mock<ICoreService>();
             var fakeScraper = new Mock<IScraper>();
             var args = new GameResultsScrapedEventArgs(fakeCoreService.Object, "TEST", new List<IGameScrapeResult>(), fakeScraper.Object);
-            SnowflakeEventManager.EventSource.Subscribe<GameResultsScrapedEventArgs>((s, e) =>
+            SnowflakeEventManager.EventSource.Subscribe<GameResultsScrapedEventArgs>("TestHandler", (s, e) =>
             {
                 Assert.Equal(args, e);
             });
@@ -150,7 +150,7 @@ namespace Snowflake.Events.Tests
             var fakeCoreService = new Mock<ICoreService>();
             var fakeConfiguration = new Mock<IConfigurationFlag>();
             var args = new ModifyConfigurationFlagEventArgs(fakeCoreService.Object, new object(), new object(), fakeConfiguration.Object);
-            SnowflakeEventManager.EventSource.Subscribe<ModifyConfigurationFlagEventArgs>((s, e) =>
+            SnowflakeEventManager.EventSource.Subscribe<ModifyConfigurationFlagEventArgs>("TestHandler", (s, e) =>
             {
                 Assert.Equal(args, e);
             });
@@ -164,7 +164,7 @@ namespace Snowflake.Events.Tests
             var fakeCoreService = new Mock<ICoreService>();
             var fakeGameInfo = new Mock<IGameInfo>();
             var args = new ModifyGameInfoEventArgs(fakeCoreService.Object, fakeGameInfo.Object, fakeGameInfo.Object);
-            SnowflakeEventManager.EventSource.Subscribe<ModifyGameInfoEventArgs>((s, e) =>
+            SnowflakeEventManager.EventSource.Subscribe<ModifyGameInfoEventArgs>("TestHandler", (s, e) =>
             {
                 Assert.Equal(args, e);
             });
@@ -178,7 +178,7 @@ namespace Snowflake.Events.Tests
             var fakeCoreService = new Mock<ICoreService>();
             var fakePlatformInfo = new Mock<IPlatformInfo>();
             var args = new ModifyPlatformPreferenceEventArgs(fakeCoreService.Object, "test", "test", fakePlatformInfo.Object, PreferenceType.PREF_EMULATOR);
-            SnowflakeEventManager.EventSource.Subscribe<ModifyPlatformPreferenceEventArgs>((s, e) =>
+            SnowflakeEventManager.EventSource.Subscribe<ModifyPlatformPreferenceEventArgs>("TestHandler", (s, e) =>
             {
                 Assert.Equal(args, e);
             });
@@ -192,7 +192,7 @@ namespace Snowflake.Events.Tests
             var fakeCoreService = new Mock<ICoreService>();
             var fakePlatformInfo = new Mock<IPlatformInfo>();
             var args = new ModifyPortInputDeviceEventArgs(fakeCoreService.Object, 1, fakePlatformInfo.Object, Controller.InputDeviceNames.KeyboardDevice, Controller.InputDeviceNames.KeyboardDevice);
-            SnowflakeEventManager.EventSource.Subscribe<ModifyPortInputDeviceEventArgs>((s, e) =>
+            SnowflakeEventManager.EventSource.Subscribe<ModifyPortInputDeviceEventArgs>("TestHandler", (s, e) =>
             {
                 Assert.Equal(args, e);
             });
@@ -205,7 +205,7 @@ namespace Snowflake.Events.Tests
             new StandardEvents().RegisterSnowflakeEvents(SnowflakeEventManager.EventSource);
             var fakeCoreService = new Mock<ICoreService>();
             var args = new CoreLoadedEventArgs(fakeCoreService.Object);
-            SnowflakeEventManager.EventSource.Subscribe<CoreLoadedEventArgs>((s, e) =>
+            SnowflakeEventManager.EventSource.Subscribe<CoreLoadedEventArgs>("TestHandler", (s, e) =>
             {
                 Assert.Equal(args, e);
             });
@@ -219,7 +219,7 @@ namespace Snowflake.Events.Tests
             new StandardEvents().RegisterSnowflakeEvents(SnowflakeEventManager.EventSource);
             var fakeCoreService = new Mock<ICoreService>();
             var args = new CoreShutdownEventArgs(fakeCoreService.Object);
-            SnowflakeEventManager.EventSource.Subscribe<CoreShutdownEventArgs>((s, e) =>
+            SnowflakeEventManager.EventSource.Subscribe<CoreShutdownEventArgs>("TestHandler", (s, e) =>
             {
                 Assert.Equal(args, e);
             });
@@ -233,7 +233,7 @@ namespace Snowflake.Events.Tests
             var fakeCoreService = new Mock<ICoreService>();
             var fakeJsRequest = new Mock<IJSRequest>();
             var args = new AjaxRequestReceivedEventArgs(fakeCoreService.Object, fakeJsRequest.Object);
-            SnowflakeEventManager.EventSource.Subscribe<AjaxRequestReceivedEventArgs>((s, e) =>
+            SnowflakeEventManager.EventSource.Subscribe<AjaxRequestReceivedEventArgs>("TestHandler", (s, e) =>
             {
                 Assert.Equal(args, e);
             });
@@ -247,7 +247,7 @@ namespace Snowflake.Events.Tests
             var fakeCoreService = new Mock<ICoreService>();
             var fakeJsResponse = new Mock<IJSResponse>();
             var args = new AjaxResponseSendingEventArgs(fakeCoreService.Object, fakeJsResponse.Object);
-            SnowflakeEventManager.EventSource.Subscribe<AjaxResponseSendingEventArgs>((s, e) =>
+            SnowflakeEventManager.EventSource.Subscribe<AjaxResponseSendingEventArgs>("TestHandler", (s, e) =>
             {
                 Assert.Equal(args, e);
             });
