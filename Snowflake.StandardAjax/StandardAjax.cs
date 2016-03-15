@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.Composition;
-using System.Reflection;
+﻿using System.Reflection;
 using Snowflake.Ajax;
 using Snowflake.Extensibility;
 using Snowflake.Service;
