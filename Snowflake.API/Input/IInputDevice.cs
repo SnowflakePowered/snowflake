@@ -4,9 +4,9 @@ namespace Snowflake.Input
 {
     /// <summary>
     /// A platform agnostic representation of the properties of an input device.
-    /// Implementation is handled by a OS-dependent InputManager library. 
+    /// Implementation is handled by a OS-dependent InputManager library.
     /// Currently this interface supports only the DirectInput/XInput APIs on Windows and udev on Linux. OSX support is not planned.
-    /// Fields that are not used on an OS should be nulled and made unsettable. 
+    /// Fields that are not used on an OS should be nulled and made unsettable.
     /// </summary>
     public interface IInputDevice
     {
@@ -85,5 +85,10 @@ namespace Snowflake.Input
         /// This is given in the order that the inputmanager provides and may not be reliable.
         /// </summary>
         int? DI_EnumerationNumber { get; set; }
+
+        /// <summary>
+        /// Whether or not the XInput Device is connected
+        /// </summary>
+        bool? XI_IsConnected { get; set; }
     }
 }

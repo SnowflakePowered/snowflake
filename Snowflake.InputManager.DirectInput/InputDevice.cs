@@ -19,6 +19,7 @@ namespace Snowflake.InputManager
         public string UDEV_Vendor { get { return null; } set { } }
         public string UDEV_Model { get { return null; } set { } }
         public string UDEV_MountPath { get { return null; } set { } }
+        public bool? XI_IsConnected { get; set; }
         public DeviceType DI_DeviceType { get; set;}
     }
 }

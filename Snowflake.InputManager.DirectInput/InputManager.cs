@@ -8,6 +8,7 @@ using SharpDX.DirectInput;
 using SharpDX.XInput;
 using Snowflake.Input;
 using DeviceType = Snowflake.Input.DeviceType; 
+
 namespace Snowflake.InputManager
 {
     public class InputManager : IInputManager
@@ -18,8 +19,7 @@ namespace Snowflake.InputManager
             IList<IInputDevice> inputDevices = new List<IInputDevice>();
             var directInput = new DirectInput();
             var devices = directInput.GetDevices(DeviceClass.All, DeviceEnumerationFlags.AttachedOnly);
-                    
-                //    .Where(device => device.Information.IsHumanInterfaceDevice);
+            
 
             var directInputGamepads =
                 this.GetGenericGamepads(devices.Where(device => device.Usage == UsageId.GenericGamepad), directInput);
@@ -31,6 +31,7 @@ namespace Snowflake.InputManager
                 DI_ProductName = keyboard.ProductName.Trim('\0'),
                 DI_ProductGUID = keyboard.ProductGuid,
                 DI_DeviceType = DeviceType.Keyboard
+                
             });
 
             var mice = directInput.GetDevices(DeviceClass.Pointer, DeviceEnumerationFlags.AllDevices).Select(mouse => new InputDevice()
@@ -39,7 +40,7 @@ namespace Snowflake.InputManager
                 DI_InstanceName = mouse.InstanceName.Trim('\0'),
                 DI_ProductName = mouse.ProductName.Trim('\0'),
                 DI_ProductGUID = mouse.ProductGuid,
-                DI_DeviceType = DeviceType.Keyboard
+                DI_DeviceType = DeviceType.Mouse
             });
 
             return directInputGamepads.Concat(xinputGamepads).Concat(keyboards).Concat(mice);
@@ -51,7 +52,7 @@ namespace Snowflake.InputManager
             for (int i = 0; i < gamepads.Count(); i++)
             {
                 DeviceInstance deviceInstance = gamepads.ElementAt(i);
-                Device device = new Joystick(directInput, deviceInstance.InstanceGuid);
+                SharpDX.DirectInput.Device device = new Joystick(directInput, deviceInstance.InstanceGuid);
 
                 var inputDevice = new InputDevice()
                 {
@@ -61,6 +62,7 @@ namespace Snowflake.InputManager
                     DI_ProductGUID = deviceInstance.ProductGuid,
                     DI_DeviceType = DeviceType.Gamepad,
                     DI_EnumerationNumber = i
+
                 };
 
                 try
@@ -89,12 +91,12 @@ namespace Snowflake.InputManager
             for (int i = 0; i < 4; i++)
             {
                 var xinput = new SharpDX.XInput.Controller((UserIndex)i);
-                if (!xinput.IsConnected) continue;
                 var device = new InputDevice()
                 {
                     DI_DeviceType = DeviceType.Gamepad,
                     XI_GamepadIndex = i,
-                    XI_IsXInput = true
+                    XI_IsXInput = true,
+                    XI_IsConnected = xinput.IsConnected
                 };
                 inputDevices.Add(device);
             }
