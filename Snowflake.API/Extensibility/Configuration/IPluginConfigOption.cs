@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Snowflake.Plugin.Configuration
+namespace Snowflake.Extensibility.Configuration
 {
     public interface IPluginConfigOption
     {

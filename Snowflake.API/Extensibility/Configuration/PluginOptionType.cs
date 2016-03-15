@@ -1,4 +1,4 @@
-﻿namespace Snowflake.Plugin.Configuration
+﻿namespace Snowflake.Extensibility.Configuration
 {
     /// <summary>
     /// Types of Plugin Configuration Flags

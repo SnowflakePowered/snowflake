@@ -12,13 +12,13 @@ namespace Snowflake.Service.Manager
         /// <summary>
         /// The Ajax namespaces
         /// </summary>
-        IReadOnlyDictionary<string, IBaseAjaxNamespace> GlobalNamespace { get; }
+        IReadOnlyDictionary<string, IAjaxNamespace> GlobalNamespace { get; }
         /// <summary>
         /// Registers an Ajax namespace
         /// </summary>
         /// <param name="namespaceName">The name of the namespace</param>
-        /// <param name="namespaceObject">The IBaseAjaxNamespace that is this namespace</param>
-        void RegisterNamespace(string namespaceName, IBaseAjaxNamespace namespaceObject);
+        /// <param name="namespaceObject">The IAjaxNamespace that is this namespace</param>
+        void RegisterNamespace(string namespaceName, IAjaxNamespace namespaceObject);
         /// <summary>
         /// Calls an Ajax method asynchronously
         /// </summary>

@@ -1,4 +1,4 @@
-﻿namespace Snowflake.Plugin.Configuration
+﻿namespace Snowflake.Extensibility.Configuration
 {
     public interface IPluginSelectOption
     {

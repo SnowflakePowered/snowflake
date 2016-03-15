@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using Newtonsoft.Json;
-using Snowflake.Plugin;
+using Snowflake.Extensibility;
 using Snowflake.Romfile;
 using Snowflake.Service;
 using Snowflake.Utility;
 
 namespace Snowflake.Scraper
 {
-    public abstract class BaseScraper: BasePlugin, IScraper
+    public abstract class Scraper: Extensibility.Plugin, IScraper
     {
         public IDictionary<string, string> ScraperMap { get; }
         public double ScraperAccuracy { get; }
 
-        protected BaseScraper(Assembly pluginAssembly, ICoreService coreInstance) : base(pluginAssembly, coreInstance)
+        protected Scraper(ICoreService coreInstance) : base(coreInstance)
         {
             using (Stream stream = this.GetResource("scrapermap.json"))
             using (var reader = new StreamReader(stream))

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Snowflake.Plugin;
+using Snowflake.Extensibility;
 
 
 namespace Snowflake.Service.Manager
@@ -19,27 +19,28 @@ namespace Snowflake.Service.Manager
         /// </summary>
         IReadOnlyDictionary<string, Type> Registry { get; }
         /// <summary>
-        /// Add a loadable type to register
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        void AddType<T>() where T : IBasePlugin;
-        /// <summary>
         /// Initialize the plugin manager by loading all plugins
         /// </summary>
         void Initialize();
         /// <summary>
-        /// Get a dictionary of plugins by IBasePlugin type
+        /// Get a dictionary of plugins by IPlugin type
         /// </summary>
         /// <typeparam name="T">Type to get</typeparam>
         /// <returns></returns>
-        IDictionary<string, T> Plugins<T>() where T : IBasePlugin;
+        IDictionary<string, T> Get<T>() where T : IPlugin;
         /// <summary>
         /// Get a plugin by plugin name and expected type
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="pluginName"></param>
         /// <returns>The plugin</returns>
-        T Plugin<T>(string pluginName) where T : IBasePlugin;
+        T Get<T>(string pluginName) where T : IPlugin;
+        /// <summary>
+        /// Registers an object as a plugin
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="plugin"></param>
+        void Register<T>(T plugin) where T : IPlugin;
         /// <summary>
         /// Whethere or not the plugin manager has been initialized
         /// </summary>

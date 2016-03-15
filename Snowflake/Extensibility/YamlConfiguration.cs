@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using SharpYaml.Serialization;
-using Snowflake.Plugin.Configuration;
+using Snowflake.Extensibility.Configuration;
 
-namespace Snowflake.Plugin
+namespace Snowflake.Extensibility
 {
     public class YamlConfiguration : IPluginConfiguration
     {

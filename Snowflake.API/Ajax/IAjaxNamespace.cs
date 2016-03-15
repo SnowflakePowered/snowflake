@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using Snowflake.Plugin;
+using Snowflake.Extensibility;
 
 namespace Snowflake.Ajax
 {
     /// <summary>
-    /// Methods to be callable via the AjaxManager should be contained in an IBaseAjaxNamespace plugin.
+    /// Methods to be callable via the AjaxManager should be contained in an IAjaxNamespace plugin.
     /// <see cref="Snowflake.Ajax.BasePlugin"/> for the implementation
     /// </summary>
-    [InheritedExport(typeof(IBaseAjaxNamespace))]
-    public interface IBaseAjaxNamespace : IBasePlugin
+    public interface IAjaxNamespace : IPlugin
     {
         /// <summary>
         /// The generated dictionary of Javascript Methods

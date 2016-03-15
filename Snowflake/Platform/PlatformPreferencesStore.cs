@@ -19,8 +19,8 @@ namespace Snowflake.Platform
       
         public void AddPlatform(IPlatformInfo platformInfo)
         {
-            KeyValuePair<string, IEmulatorBridge> emulator = this.pluginManager.Plugins<IEmulatorBridge>().FirstOrDefault(x => x.Value.SupportedPlatforms.Contains(platformInfo.PlatformID));
-            KeyValuePair<string, IScraper> scraper = this.pluginManager.Plugins<IScraper>().FirstOrDefault(x => x.Value.SupportedPlatforms.Contains(platformInfo.PlatformID));
+            KeyValuePair<string, IEmulatorBridge> emulator = this.pluginManager.Get<IEmulatorBridge>().FirstOrDefault(x => x.Value.SupportedPlatforms.Contains(platformInfo.PlatformID));
+            KeyValuePair<string, IScraper> scraper = this.pluginManager.Get<IScraper>().FirstOrDefault(x => x.Value.SupportedPlatforms.Contains(platformInfo.PlatformID));
             string emulatorId = emulator.Equals(default(KeyValuePair<string, IEmulatorBridge>)) ? "null" : emulator.Key;
             string scraperId = scraper.Equals(default(KeyValuePair<string, IScraper>)) ? "null" : scraper.Key;
             this.backingValueStore.InsertObjects( new Dictionary<string, string>() {

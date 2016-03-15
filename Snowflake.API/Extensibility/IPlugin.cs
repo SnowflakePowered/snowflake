@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using Snowflake.Plugin.Configuration;
+using Snowflake.Extensibility.Configuration;
 using Snowflake.Service;
 
-namespace Snowflake.Plugin
+namespace Snowflake.Extensibility
 {
     /// <summary>
     /// The common interface between all plugins. 
-    /// Only classes that are derived from IBasePlugin will be imported
+    /// Only classes that are derived from IPlugin will be imported
     /// </summary>
-    public interface IBasePlugin : IDisposable
+    public interface IPlugin : IDisposable
     {
         /// <summary>
         /// The name of the plugin

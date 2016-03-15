@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using Snowflake.Plugin;
+using Snowflake.Extensibility;
 using Snowflake.Service;
 
 namespace Snowflake.Ajax
 {
     /// <inheritdoc/>
-    public abstract class BaseAjaxNamespace : BasePlugin, IBaseAjaxNamespace
+    public abstract class AjaxNamespace : Plugin, IAjaxNamespace
     {
         public IDictionary<string, IJSMethod> JavascriptMethods { get; }
 
-        protected BaseAjaxNamespace(Assembly pluginAssembly, ICoreService coreInstance)
-            : base(pluginAssembly, coreInstance)
+        protected AjaxNamespace(ICoreService coreInstance)
+            : base(coreInstance)
         {
             this.JavascriptMethods = new Dictionary<string, IJSMethod>();
             this.RegisterMethods();

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
+using System.ComponentModel.Composition.ReflectionModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -13,8 +14,8 @@ using NLog;
 using Snowflake.Constants.Plugin;
 using Snowflake.Emulator;
 using Snowflake.Extensions;
-using Snowflake.Plugin;
-using Snowflake.Plugin.Configuration;
+using Snowflake.Extensibility;
+using Snowflake.Extensibility.Configuration;
 using Snowflake.Scraper;
 
 namespace Snowflake.Service.Manager
@@ -27,42 +28,26 @@ namespace Snowflake.Service.Manager
         private readonly IDictionary<string, Type> registry;
         public IReadOnlyDictionary<string, Type> Registry => this.registry.AsReadOnly();
         public ICoreService CoreInstance { get; }
-        private readonly IList<Type> importingTypes;
-        private readonly IDictionary<Type, IDictionary<string, IBasePlugin>> loadedPlugins;
+        private readonly IDictionary<Type, IDictionary<string, IPlugin>> loadedPlugins;
 
-        public PluginManager(string loadablesLocation, ICoreService coreInstance, params Type[] pluginTypes)
+        public PluginManager(string loadablesLocation, ICoreService coreInstance)
         {
             this.CoreInstance = coreInstance;
             this.LoadablesLocation = loadablesLocation;
-            this.loadedPlugins = new Dictionary<Type, IDictionary<string, IBasePlugin>>();
+            this.loadedPlugins = new Dictionary<Type, IDictionary<string, IPlugin>>();
             this.registry = new Dictionary<string, Type>();
-            this.importingTypes = new List<Type>();
-            this.PreloadDependencies(); //preload deps for everything in the plugin folder
-            var addType = typeof (PluginManager).GetMethod("AddType");
-            foreach (Type T in pluginTypes)
-            {
-                addType.MakeGenericMethod(T)?.Invoke(this, null);
-            }
+          //  this.PreloadDependencies(); //preload deps for everything in the plugin folder 
         }
 
-        public void AddType<T>() where T: IBasePlugin
-        {
-            this.importingTypes.Add(typeof(T));
-            this.loadedPlugins.Add(typeof(T), new Dictionary<string, IBasePlugin>());
-        }
+    
         public void Initialize()
         {
             if (this.IsInitialized) return;
-            foreach (Type T in this.importingTypes)
-            {
-                //We have to use reflection as we only know what type T is at runtime
-                var composeImports = typeof(PluginManager).GetMethod("ComposeImports", BindingFlags.NonPublic | BindingFlags.Instance); 
-                composeImports.MakeGenericMethod(T).Invoke(this, null);
-            }
+            this.ComposeImports();
             this.IsInitialized = true;
         }
 
-        public IDictionary<string, T> Plugins<T>() where T : IBasePlugin
+        public IDictionary<string, T> Get<T>() where T : IPlugin
         {
             try
             {
@@ -74,62 +59,37 @@ namespace Snowflake.Service.Manager
             }
         }
 
-        public T Plugin<T>(string pluginName) where T : IBasePlugin
+        public T Get<T>(string pluginName) where T : IPlugin
         {
             return (T) this.loadedPlugins[typeof (T)][pluginName];
         }
 
-        private static string SafeGetPluginName(Assembly assembly)
+        public void Register<T>(T plugin) where T : IPlugin
         {
-            using (Stream stream = assembly.GetManifestResourceStream($"{assembly.GetName().Name}.resource.plugin.json"))
-            using (var reader = new StreamReader(stream))
-            {
-                string file = reader.ReadToEnd();
-                return JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(file, new JsonSerializerSettings {Culture = CultureInfo.InvariantCulture})[PluginInfoFields.Name];
-            }
-        }
-        private void PreloadDependencies()
-        {
-            if (!Directory.Exists(Path.Combine(this.LoadablesLocation, "plugins"))) Directory.CreateDirectory(Path.Combine(this.LoadablesLocation, "plugins"));
-            var catalog = new DirectoryCatalog(Path.Combine(this.LoadablesLocation, "plugins"));
-            foreach (string composable in catalog.LoadedFiles)
-            {
-                try
-                {
-                    string pluginName = PluginManager.SafeGetPluginName(Assembly.ReflectionOnlyLoadFrom(composable));
-                    string pluginDataPath = Path.Combine(this.CoreInstance.AppDataDirectory, "plugins", pluginName);
-                    AppDomain.CurrentDomain.AssemblyResolve += (s, args) =>
-                    {
-                        string assemblyPath = Path.Combine(pluginDataPath, new AssemblyName(args.Name).Name + ".dll");
-                        return File.Exists(assemblyPath) == false ? null : Assembly.LoadFrom(assemblyPath);
-                    };
-                }
-                catch
-                {
-                    Console.WriteLine($"Unable to load dependencies for {composable}. Possibly not a valid Snowflake plugin."); //replace with logger
-                }
-              
-            }
+            if (!this.loadedPlugins.ContainsKey(typeof (T)))
+                this.loadedPlugins.Add(typeof (T), new Dictionary<string, IPlugin>());
+            this.loadedPlugins[typeof (T)].Add(plugin.PluginName, plugin);
+            this.registry.Add(plugin.PluginName, typeof(T));
         }
 
-        private void ComposeImports<T>() where T : IBasePlugin
+     
+        private void ComposeImports() 
         {
             if (!Directory.Exists(Path.Combine(this.LoadablesLocation, "plugins"))) Directory.CreateDirectory(Path.Combine(this.LoadablesLocation, "plugins"));
             var catalog = new DirectoryCatalog(Path.Combine(this.LoadablesLocation, "plugins"));
             var container = new CompositionContainer(catalog);
-            container.ComposeExportedValue("coreInstance", this.CoreInstance);
             container.ComposeParts();
-            var exports = container.GetExports<T>(); //Only initialize exports of type T
+            var exports = container.GetExports<IPluginContainer>(); //Only initialize exports of type T
             foreach (var plugin in exports)
             {
                 try
                 {
-                    this.loadedPlugins[typeof (T)].Add(plugin.Value.PluginName, plugin.Value); //initialize and load plugins of type T
-                    this.registry.Add(plugin.Value.PluginName, typeof (T));
+                    IPluginContainer pluginContainer = plugin.Value;
+                    pluginContainer.Compose(this.CoreInstance);
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Unable to load plugin: {ex.Source}");
+                    Console.WriteLine($"Unable to load plugin container: {plugin?.GetType().AssemblyQualifiedName}");
                     Console.WriteLine(ex.ToString());
                 }
             }

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Snowflake.Plugin.Configuration
+namespace Snowflake.Extensibility.Configuration
 {
     /// <summary>
     /// Represents a configuration file a plugin can access.

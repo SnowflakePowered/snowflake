@@ -16,15 +16,15 @@ namespace Snowflake.Service.Manager
     public class AjaxManager : IAjaxManager
     {
 
-        private readonly IDictionary<string, IBaseAjaxNamespace> globalNamespace;
-        public IReadOnlyDictionary<string, IBaseAjaxNamespace> GlobalNamespace => this.globalNamespace.AsReadOnly();
+        private readonly IDictionary<string, IAjaxNamespace> globalNamespace;
+        public IReadOnlyDictionary<string, IAjaxNamespace> GlobalNamespace => this.globalNamespace.AsReadOnly();
         public ICoreService CoreInstance { get; }
         public AjaxManager(ICoreService coreInstance)
         {
             this.CoreInstance = coreInstance;
-            this.globalNamespace = new Dictionary<string, IBaseAjaxNamespace>();
+            this.globalNamespace = new Dictionary<string, IAjaxNamespace>();
         }
-        public void RegisterNamespace(string namespaceName, IBaseAjaxNamespace namespaceObject)
+        public void RegisterNamespace(string namespaceName, IAjaxNamespace namespaceObject)
         {
             if (!this.globalNamespace.ContainsKey(namespaceName))
                 this.globalNamespace.Add(namespaceName, namespaceObject);
@@ -70,7 +70,7 @@ namespace Snowflake.Service.Manager
 
         public void Initialize(IPluginManager pluginManager)
         {
-            foreach (var instance in pluginManager.Plugins<IBaseAjaxNamespace>().Select(ajaxNamespace => ajaxNamespace.Value))
+            foreach (var instance in pluginManager.Get<IAjaxNamespace>().Select(ajaxNamespace => ajaxNamespace.Value))
             {
                 this.RegisterNamespace(instance.PluginInfo["namespace"], instance);
             }
