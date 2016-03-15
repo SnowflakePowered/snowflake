@@ -28,8 +28,9 @@ namespace Snowflake.Events
         /// Subscribe to an event. 
         /// </summary>
         /// <typeparam name="T">The event to subscribe to</typeparam>
+        /// <param name="eventHandlerKey">The event key to the eventhandler</param>
         /// <param name="eventHandler">The event handler</param>
-        void Subscribe<T>(EventHandler<T> eventHandler) where T : SnowflakeEventArgs;
+        void Subscribe<T>(string eventHandlerKey, EventHandler<T> eventHandler) where T : SnowflakeEventArgs;
         /// <summary>
         /// Removes an event from the event manager.
         /// Once removed, events of the type removed will no longer fire.
@@ -40,8 +41,8 @@ namespace Snowflake.Events
         /// Unsubscribe from an event
         /// </summary>
         /// <typeparam name="T">The event to unsubscribe from</typeparam>
-        /// <param name="eventHandler">The event handler to remove</param>
-        void Unsubscribe<T>(EventHandler<T> eventHandler) where T : SnowflakeEventArgs;
+        /// <param name="eventHandlerKey">The key of the event handler previously subscribed</param>
+        void Unsubscribe<T>(string eventHandlerKey) where T : SnowflakeEventArgs;
 
         /// <summary>
         /// Check if the event manager has a certain event registered

@@ -1,0 +1,15 @@
+﻿{
+    "name": "SnowflakeFileSignature-SEGA_CD",
+    "type": "plugin_filesignature",
+    "version": "1.0.0.0",
+    "authors": [
+        "Snowflake"
+    ],
+    "description": "Sega CD File Signature Comparator",
+    "platforms": [
+      "SEGA_CD"
+    ],
+    "file_extensions": [
+      ".iso"
+    ]
+}

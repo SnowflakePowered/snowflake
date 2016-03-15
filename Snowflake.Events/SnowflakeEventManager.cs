@@ -15,13 +15,18 @@ namespace Snowflake.Events
         /// <summary>
         /// Singleton Events source from which all events propagate
         /// </summary>
-        public static ISnowflakeEventManager EventSource;
+        public static ISnowflakeEventManager EventSource { get; set; }
 
         /// <summary>
         /// Stores the EventHandlers
         /// </summary>
         private readonly ConcurrentDictionary<Type, Delegate> eventContainer = new ConcurrentDictionary<Type, Delegate>();
 
+        /// <summary>
+        /// Stores the event handlers
+        /// </summary>
+        private readonly ConcurrentDictionary<string, MulticastDelegate> eventHandlers =
+            new ConcurrentDictionary<string, MulticastDelegate>();
         /// <summary>
         /// Initiates the EventSource singleton.
         /// </summary>
@@ -39,6 +44,7 @@ namespace Snowflake.Events
         {
             return this.eventContainer.ContainsKey(typeof(T));
         }
+
         public void RegisterEvent<T>(EventHandler<T> eventHandler) where T : SnowflakeEventArgs
         {
             if (!this.eventContainer.ContainsKey(typeof(T)))
@@ -74,19 +80,22 @@ namespace Snowflake.Events
 
         }
    
-        public void Subscribe<T>(EventHandler<T> eventHandler) where T : SnowflakeEventArgs
+        public void Subscribe<T>(string eventHandlerKey, EventHandler<T> eventHandler) where T : SnowflakeEventArgs
         {
             if (this.eventContainer.ContainsKey(typeof(T)))
             {
-                this.eventContainer[typeof(T)] = (this.eventContainer?[typeof(T)] as EventHandler<T>) + eventHandler ?? eventHandler;
+                this.eventHandlers[eventHandlerKey] = eventHandler;
+                this.eventContainer[typeof(T)] = (this.eventContainer?[typeof(T)] as EventHandler<T>) + (this.eventHandlers[eventHandlerKey] as EventHandler<T>) ?? this.eventHandlers[eventHandlerKey];
             }
         }
      
-        public void Unsubscribe<T>(EventHandler<T> eventHandler) where T : SnowflakeEventArgs
+        public void Unsubscribe<T>(string eventHandlerKey) where T : SnowflakeEventArgs
         {
             if (this.eventContainer.ContainsKey(typeof(T)))
             {
-                this.eventContainer[typeof(T)] = (this.eventContainer?[typeof(T)] as EventHandler<T>) - eventHandler ?? null;
+                EventHandler<T> eventHandler = this.eventHandlers[eventHandlerKey] as EventHandler<T>;
+                this.eventContainer[typeof (T)] = Delegate.Remove(
+                    (this.eventContainer?[typeof (T)] as EventHandler<T>), eventHandler);
             }
         }
     }

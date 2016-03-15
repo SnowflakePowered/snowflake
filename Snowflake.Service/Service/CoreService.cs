@@ -12,7 +12,7 @@ using Snowflake.Events;
 using Snowflake.Events.ServiceEvents;
 using Snowflake.Game;
 using Snowflake.Platform;
-using Snowflake.Plugin;
+using Snowflake.Extensibility;
 using Snowflake.Romfile;
 using Snowflake.Scraper;
 using Snowflake.Service.HttpServer;
@@ -57,7 +57,7 @@ namespace Snowflake.Service
             this.RegisterService<IControllerPortStore>(new ControllerPortStore(Path.Combine(this.AppDataDirectory, "ports.db")));
             this.RegisterService<IEmulatorAssembliesManager>(new EmulatorAssembliesManager(Path.Combine(this.AppDataDirectory, "emulators")));
             this.RegisterService<IInputManager>(new InputManager.InputManager());
-            this.RegisterService<IPluginManager>(new PluginManager(this.AppDataDirectory, this, typeof(IEmulatorBridge), typeof(IScraper), typeof(IFileSignature), typeof(IGeneralPlugin), typeof(IBaseAjaxNamespace)));
+            this.RegisterService<IPluginManager>(new PluginManager(this.AppDataDirectory, this));
             this.RegisterService<IAjaxManager>(new AjaxManager(this));
             this.RegisterService<IPlatformPreferenceStore>(new PlatformPreferencesStore(Path.Combine(this.AppDataDirectory, "platformprefs.db"), this.Get<IPluginManager>()));
             this.RegisterService<IScrapeEngine>(new ScrapeEngine(this));

@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using Snowflake.Controller;
 using Snowflake.Emulator.Configuration;
 using Snowflake.Emulator.Input;
 using Snowflake.Game;
 using Snowflake.Platform;
-using Snowflake.Plugin;
+using Snowflake.Extensibility;
 
 namespace Snowflake.Emulator
 {
@@ -16,8 +15,7 @@ namespace Snowflake.Emulator
     /// the controller and emulator configuration for the emulator, converting from Snowflake's config format into 
     /// whatever format the assembly accepts.
     /// </summary>
-    [InheritedExport(typeof(IEmulatorBridge))]
-    public interface IEmulatorBridge : IBasePlugin
+    public interface IEmulatorBridge : IPlugin
     {
         /// <summary>
         /// The emulator assembly this plugin bridges to

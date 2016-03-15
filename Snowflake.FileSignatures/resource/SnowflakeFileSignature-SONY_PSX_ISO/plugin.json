@@ -1,0 +1,16 @@
+﻿{
+    "name": "SnowflakeFileSignature-SONY_PSX_ISO",
+    "type": "plugin_filesignature",
+    "version": "1.0.0.0",
+    "authors": [
+        "Snowflake"
+    ],
+    "description": "Sony Playstation One ISO File Signature Comparator",
+    "platforms": [
+      "SONY_PSX"
+    ],
+    "file_extensions": [
+      ".iso",
+	  ".bin"
+    ]
+}
