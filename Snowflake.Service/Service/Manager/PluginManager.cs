@@ -36,7 +36,6 @@ namespace Snowflake.Service.Manager
             this.LoadablesLocation = loadablesLocation;
             this.loadedPlugins = new Dictionary<Type, IDictionary<string, IPlugin>>();
             this.registry = new Dictionary<string, Type>();
-          //  this.PreloadDependencies(); //preload deps for everything in the plugin folder 
         }
 
     
