@@ -73,7 +73,7 @@
     </Compile>
     <Compile Include="Ajax\AjaxMethodAttribute.cs" />
     <Compile Include="Ajax\AjaxMethodParameterAttribute.cs" />
-    <Compile Include="Ajax\IBaseAjaxNamespace.cs" />
+    <Compile Include="Ajax\IAjaxNamespace.cs" />
     <Compile Include="Ajax\IJSException.cs" />
     <Compile Include="Ajax\IJSMethod.cs" />
     <Compile Include="Ajax\IJSRequest.cs" />
@@ -94,6 +94,7 @@
     <Compile Include="Emulator\Configuration\IConfigurationFlagStore.cs" />
     <Compile Include="Input\IInputDevice.cs" />
     <Compile Include="Input\IInputManager.cs" />
+    <Compile Include="Extensibility\PluginAttribute.cs" />
     <Compile Include="Game\IGameMediaCache.cs" />
     <Compile Include="Game\IGameScreenshotCache.cs" />
     <Compile Include="Romfile\IFileSignature.cs" />
@@ -102,9 +103,9 @@
     <Compile Include="Platform\IPlatformControllerPorts.cs" />
     <Compile Include="Platform\IPlatformPreferenceStore.cs" />
     <Compile Include="Platform\StonePlatforms.cs" />
-    <Compile Include="Plugin\Configuration\IPluginConfigOption.cs" />
-    <Compile Include="Plugin\Configuration\IPluginSelectOption.cs" />
-    <Compile Include="Plugin\Configuration\PluginOptionType.cs" />
+    <Compile Include="Extensibility\Configuration\IPluginConfigOption.cs" />
+    <Compile Include="Extensibility\Configuration\IPluginSelectOption.cs" />
+    <Compile Include="Extensibility\Configuration\PluginOptionType.cs" />
     <Compile Include="Scraper\ImagesInfoFields.cs" />
     <Compile Include="Controller\ControllerProfileType.cs" />
     <Compile Include="Controller\IControllerDefinition.cs" />
@@ -115,7 +116,7 @@
     <Compile Include="Emulator\Input\Constants\GamepadConstants.cs" />
     <Compile Include="Emulator\Input\Constants\KeyboardConstants.cs" />
     <Compile Include="Game\GameInfoFields.cs" />
-    <Compile Include="Plugin\PluginInfoFields.cs" />
+    <Compile Include="Extensibility\PluginInfoFields.cs" />
     <Compile Include="Service\IUserInterface.cs" />
     <Compile Include="Service\Manager\IEmulatorInstanceManager.cs" />
     <Compile Include="Service\IScrapeEngine.cs" />
@@ -141,9 +142,9 @@
     <Compile Include="Information\MediaStore\IMediaStoreSection.cs" />
     <Compile Include="Platform\IPlatformDefaults.cs" />
     <Compile Include="Platform\IPlatformInfo.cs" />
-    <Compile Include="Plugin\Configuration\IPluginConfiguration.cs" />
-    <Compile Include="Plugin\IBasePlugin.cs" />
-    <Compile Include="Plugin\IGeneralPlugin.cs" />
+    <Compile Include="Extensibility\Configuration\IPluginConfiguration.cs" />
+    <Compile Include="Extensibility\IPlugin.cs" />
+    <Compile Include="Extensibility\IPluginContainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scraper\GameImagesType.cs" />
     <Compile Include="Scraper\IGameImagesResult.cs" />

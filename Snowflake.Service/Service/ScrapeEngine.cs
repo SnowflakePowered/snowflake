@@ -28,7 +28,7 @@ namespace Snowflake.Service
 
         public IScrapableInfo GetScrapableInfo(string fileName, IPlatformInfo knownPlatform = null)
         {
-            var fileSignatures = this.coreService.Get<IPluginManager>().Plugins<IFileSignature>();
+            var fileSignatures = this.coreService.Get<IPluginManager>().Get<IFileSignature>();
             var vettedSignature = fileSignatures
                 .Where(signature => signature.Value.FileExtensionMatches(fileName)).FirstOrDefault(signature => signature.Value.HeaderSignatureMatches(fileName)).Value;
             var platformFromFileExtension =
@@ -47,7 +47,7 @@ namespace Snowflake.Service
         {
             var scrapers =
                this.coreService.Get<IPluginManager>()
-                   .Plugins<IScraper>()
+                   .Get<IScraper>()
                    .Where(scraper => scraper.Value.SupportedPlatforms.Contains(information.StonePlatformId)).Select(scraper => scraper.Value).OrderByDescending(scraper => scraper.ScraperAccuracy);
             return
                 scrapers.SelectMany(scraper => scraper.GetSearchResults(information).OrderByDescending(result => result.Accuracy*scraper.ScraperAccuracy)).ToList();
@@ -61,7 +61,7 @@ namespace Snowflake.Service
         {
             var scrapers =
                 this.coreService.Get<IPluginManager>()
-                    .Plugins<IScraper>()
+                    .Get<IScraper>()
                     .Where(scraper => scraper.Value.SupportedPlatforms.Contains(information.StonePlatformId))
                     .Select(scraper => scraper.Value)
                     .OrderByDescending(scraper => scraper.ScraperAccuracy);
@@ -83,7 +83,7 @@ namespace Snowflake.Service
 
         public IGameInfo GetGameData(IScrapableInfo information, IGameScrapeResult scrapeResult)
         {
-            var scraper = this.coreService.Get<IPluginManager>().Plugin<IScraper>(scrapeResult.Scraper);
+            var scraper = this.coreService.Get<IPluginManager>().Get<IScraper>(scrapeResult.Scraper);
             return this.GetGameData(information, scrapeResult, scraper);
         }
         public IGameInfo GetGameData(IScrapableInfo information, IGameScrapeResult scrapeResult, IScraper scraper)

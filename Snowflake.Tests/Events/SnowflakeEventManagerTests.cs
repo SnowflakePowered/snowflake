@@ -30,7 +30,7 @@ namespace Snowflake.Events.Test
         {
             SnowflakeEventManager.InitEventSource();
             SnowflakeEventManager.EventSource.RegisterEvent<SnowflakeEventArgs>(null);
-            SnowflakeEventManager.EventSource.Subscribe<SnowflakeEventArgs>((s, e) =>
+            SnowflakeEventManager.EventSource.Subscribe<SnowflakeEventArgs>("test", (s, e) =>
             {
                 Assert.NotNull(e);
             });
@@ -46,9 +46,9 @@ namespace Snowflake.Events.Test
         {
             SnowflakeEventManager.InitEventSource();
             SnowflakeEventManager.EventSource.RegisterEvent<SnowflakeEventArgs>(null);
-            SnowflakeEventManager.EventSource.Subscribe<SnowflakeEventArgs>(this.handleEvent);
+            SnowflakeEventManager.EventSource.Subscribe<SnowflakeEventArgs>("testHandle", this.handleEvent);
             Assert.NotNull(SnowflakeEventManager.EventSource.GetEvent<SnowflakeEventArgs>());
-            SnowflakeEventManager.EventSource.Unsubscribe<SnowflakeEventArgs>(this.handleEvent);
+            SnowflakeEventManager.EventSource.Unsubscribe<SnowflakeEventArgs>("testHandle");
             Thread.Sleep(1000);
             Assert.Null(SnowflakeEventManager.EventSource.GetEvent<SnowflakeEventArgs>());
         }

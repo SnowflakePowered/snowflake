@@ -10,6 +10,9 @@ test:
   assemblies:
     - Snowflake.Test.dll
 configuration: Debug
+# Fix line endings on Windows
+init:
+  - git config --global core.autocrlf true
 build:
   project: Snowflake.sln
   parallel: true

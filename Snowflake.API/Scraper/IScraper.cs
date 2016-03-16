@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using Snowflake.Platform;
-using Snowflake.Plugin;
+using Snowflake.Extensibility;
 using Snowflake.Romfile;
 
 namespace Snowflake.Scraper
@@ -10,8 +9,7 @@ namespace Snowflake.Scraper
     /// <summary>
     /// Represents a scraper plugin that is able to grab information from a source
     /// </summary>
-    [InheritedExport(typeof(IScraper))]
-    public interface IScraper : IBasePlugin
+    public interface IScraper : IPlugin
     {
         /// <summary>
         /// The estimated accuracy of this scraper

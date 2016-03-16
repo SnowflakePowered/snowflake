@@ -6,12 +6,12 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Constants.Plugin;
-using Snowflake.Plugin.Configuration;
+using Snowflake.Extensibility.Configuration;
 using Snowflake.Service;
-using Snowflake.Plugin;
+using Snowflake.Extensibility;
 namespace Snowflake.Romfile
 {
-    public abstract class FileSignature : BasePlugin, IFileSignature
+    public abstract class FileSignature : Extensibility.Plugin, IFileSignature
     {
 
         public IList<string> FileExtensions { get; }
@@ -29,7 +29,7 @@ namespace Snowflake.Romfile
         }
         public abstract bool HeaderSignatureMatches(string fileName);
 
-        protected FileSignature(Assembly pluginAssembly, ICoreService coreInstance) : base(pluginAssembly, coreInstance) {
+        protected FileSignature(ICoreService coreInstance) : base(coreInstance) {
             this.FileExtensions = this.PluginInfo["file_extensions"].ToObject<IList<string>>();
             this.SupportedPlatform = this.SupportedPlatforms.First();
         }

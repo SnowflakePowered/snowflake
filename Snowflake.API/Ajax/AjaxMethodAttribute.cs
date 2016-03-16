@@ -4,9 +4,9 @@ namespace Snowflake.Ajax
 {
     /// <summary>
     /// Methods that will be exported in a AjaxNamespace plugin should be marked with this attribute
-    /// Only methods in a <see cref="Snowflake.Ajax.IBaseAjaxNamespace"/> will be callable via Ajax
+    /// Only methods in a <see cref="IAjaxNamespace"/> will be callable via Ajax
     /// <remarks>
-    /// <seealso cref="Snowflake.Ajax.BaseAjaxNamespace"/> for the implementation of <seealso cref="Snowflake.Ajax.IBaseAjaxNamespace"/>
+    /// <seealso cref="Snowflake.Ajax.BaseAjaxNamespace"/> for the implementation of <seealso cref="IAjaxNamespace"/>
     /// </remarks>
     /// </summary>
     [AttributeUsage(AttributeTargets.Method, Inherited = false)]

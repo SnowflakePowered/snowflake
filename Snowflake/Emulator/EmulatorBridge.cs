@@ -9,13 +9,13 @@ using Snowflake.Emulator.Configuration;
 using Snowflake.Emulator.Input;
 using Snowflake.Game;
 using Snowflake.Platform;
-using Snowflake.Plugin;
+using Snowflake.Extensibility;
 using Snowflake.Service;
 using Snowflake.Service.Manager;
 
 namespace Snowflake.Emulator
 {
-    public abstract class EmulatorBridge : BasePlugin, IEmulatorBridge
+    public abstract class EmulatorBridge : Extensibility.Plugin, IEmulatorBridge
     {
         public IDictionary<string, IControllerTemplate> ControllerTemplates { get; }
         public IDictionary<string, IInputTemplate> InputTemplates { get; }
@@ -24,7 +24,7 @@ namespace Snowflake.Emulator
         public IConfigurationFlagStore ConfigurationFlagStore { get; }
         public IEmulatorAssembly EmulatorAssembly { get; }
 
-        protected EmulatorBridge(Assembly pluginAssembly, ICoreService coreInstance) : base(pluginAssembly, coreInstance) {
+        protected EmulatorBridge(ICoreService coreInstance) : base(coreInstance) {
 
             var flagsProtoTemplates = JsonConvert.DeserializeObject<IList<IDictionary<string, dynamic>>>(this.GetStringResource("flags.json"));
             this.ConfigurationFlags = flagsProtoTemplates.Select(protoTemplate => ConfigurationFlag.FromJsonProtoTemplate(protoTemplate)).ToDictionary(key => key.Key, key => key);

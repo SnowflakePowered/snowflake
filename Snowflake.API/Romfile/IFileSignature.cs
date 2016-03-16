@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Snowflake.Plugin;
+using Snowflake.Extensibility;
 using Snowflake.Scraper;
 
 namespace Snowflake.Romfile
@@ -12,8 +11,7 @@ namespace Snowflake.Romfile
     /// <summary>
     /// Represents the ROM file signature
     /// </summary>
-    [InheritedExport(typeof(IFileSignature))]
-    public interface IFileSignature : IBasePlugin
+    public interface IFileSignature : IPlugin
     {
         /// <summary>
         /// The file extensions for this file signature comparator
