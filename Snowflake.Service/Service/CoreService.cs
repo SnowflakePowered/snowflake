@@ -19,6 +19,7 @@ using Snowflake.Service.HttpServer;
 using Snowflake.Service.JSWebSocketServer;
 using Snowflake.Service.Manager;
 using NLog;
+using Snowflake.Input.Device;
 
 namespace Snowflake.Service
 {

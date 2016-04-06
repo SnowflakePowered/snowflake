@@ -106,6 +106,7 @@
     <Compile Include="Game\GameInfoTests.cs" />
     <Compile Include="Game\GameMediaCacheTests.cs" />
     <Compile Include="Game\GameScreenshotCacheTests.cs" />
+    <Compile Include="Input\ControllerLayoutTests.cs" />
     <Compile Include="Platform\PlatformInfoTests.cs" />
     <Compile Include="Platform\PlatformPreferencesStoreTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -120,12 +121,6 @@
     <Compile Include="Utility\SqliteKeyValueStoreTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="..\Controllers\NES_CONTROLLER.controller">
-      <Link>TestResources\Controllers\NES_CONTROLLER.controller</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Controllers\SNES_CONTROLLER.controller">
-      <Link>TestResources\Controllers\SNES_CONTROLLER.controller</Link>
-    </EmbeddedResource>
     <EmbeddedResource Include="..\Platforms\NINTENDO_NES.platform">
       <Link>TestResources\Platforms\NINTENDO_NES.platform</Link>
     </EmbeddedResource>
@@ -140,6 +135,7 @@
     <EmbeddedResource Include="TestResources\GameCache\test.webm" />
     <EmbeddedResource Include="TestResources\Mapping\GamepadMapping.json" />
     <EmbeddedResource Include="TestResources\Mapping\KeyboardMapping.json" />
+    <EmbeddedResource Include="TestResources\Controllers\NES_CONTROLLER.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Snowflake.API\Snowflake.API.csproj">

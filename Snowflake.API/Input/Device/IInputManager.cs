@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Snowflake.Input
+namespace Snowflake.Input.Device
 {
     public interface IInputManager
     {
@@ -8,6 +8,6 @@ namespace Snowflake.Input
         /// Get the currently usable gamepads for this computer
         /// </summary>
         /// <returns>A list of usable gamepad input devices</returns>
-        IEnumerable<IInputDevice> GetAllDevices();
+        IEnumerable<ILowLevelInputDevice> GetAllDevices();
     }
 }

@@ -1,9 +1,10 @@
 ﻿using System;
 using Snowflake.Input;
+using Snowflake.Input.Device;
 
 namespace Snowflake.InputManager
 {
-    internal class InputDevice : IInputDevice
+    internal class LowLevelInputDevice : ILowLevelInputDevice
     {
         public string DI_ProductName { get; set; }
         public string DI_InstanceName { get; set; }
