@@ -62,7 +62,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="InputDevice.cs" />
+    <Compile Include="LowLevelInputDevice.cs" />
     <Compile Include="InputManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

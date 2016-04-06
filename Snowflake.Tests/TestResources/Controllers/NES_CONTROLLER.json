@@ -1,0 +1,69 @@
+﻿{
+  "LayoutName": "WII_REMOTE",
+  "FriendlyName": "Wii Remote",
+  "PlatformsWhitelist": [
+    "NINTENDO_WII"
+  ],
+  "Layout": {
+    "ButtonA": {
+      "Label": "A",
+      "Type": "Button"
+    },
+    "ButtonB": {
+      "Label": "B",
+      "Type": "Button"
+    },
+    "ButtonStart": {
+      "Label": "+",
+      "Type": "Button"
+    },
+    "ButtonSelect": {
+      "Label": "-",
+      "Type": "Button"
+    },
+    "ButtonGuide": {
+      "Label": "Home",
+      "Type": "Button"
+    },
+    "DirectionalN": {
+      "Label": "D-Pad Up",
+      "Type": "Directional"
+    },
+    "DirectionalE": {
+      "Label": "D-Pad Right",
+      "Type": "Directional"
+    },
+    "DirectionalS": {
+      "Label": "D-Pad Down",
+      "Type": "Directional"
+    },
+    "DirectionalW": {
+      "Label": "D-Pad Left",
+      "Type": "Directional"
+    },
+    "PointerAxisPositiveX": {
+      "Label": "IR Right",
+      "Type": "AxisPositive"
+    },
+    "PointerAxisNegativeX": {
+      "Label": "IR Left",
+      "Type": "AxisNegative"
+    },
+    "PointerAxisPositiveY": {
+      "Label": "IR Up",
+      "Type": "AxisPositive"
+    },
+    "PointerAxisNegativeY": {
+      "Label": "IR Down",
+      "Type": "AxisNegative"
+    },
+    "RumbleBig": {
+      "Label": "Strong Rumble",
+      "Type": "Rumble"
+    },
+    "RumbleSmall": {
+      "Label": "Weak Rumble",
+      "Type": "Rumble"
+    }
+  }
+}

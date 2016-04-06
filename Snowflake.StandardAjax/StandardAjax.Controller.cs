@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using Snowflake.Ajax;
 using Snowflake.Controller;
 using Snowflake.Input;
+using Snowflake.Input.Device;
 using Snowflake.Platform;
 
 namespace Snowflake.StandardAjax
