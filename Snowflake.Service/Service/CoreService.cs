@@ -32,8 +32,8 @@ namespace Snowflake.Service
         public IDictionary<string, IPlatformInfo> Platforms { get; }
         public IDictionary<string, IControllerDefinition> Controllers { get; }
         public string AppDataDirectory { get; }
-        public dynamic InfoBlob { get; }
-        private readonly IDictionary<Type, dynamic> serviceContainer;
+        public dynamic InfoBlob { get; } //todo make this a init-first service
+        private readonly IDictionary<Type, object> serviceContainer;
         private ILogger logger;
 
         #endregion
@@ -46,26 +46,24 @@ namespace Snowflake.Service
         public CoreService(string appDataDirectory)
         {
             this.logger = LogManager.GetLogger("~CORESERVICE");
-            this.serviceContainer = new Dictionary<Type, dynamic>();
+            this.serviceContainer = new Dictionary<Type, object>();
             this.AppDataDirectory = appDataDirectory;
             this.InfoBlob = JsonConvert.DeserializeObject(File.ReadAllText(Path.Combine(this.AppDataDirectory, "info.json")));
             this.Platforms = this.LoadPlatforms();
             this.Controllers = this.LoadControllers();
-
             this.RegisterService<IServerManager>(new ServerManager());
             this.RegisterService<IGameLibrary>(new GameLibrary(Path.Combine(this.AppDataDirectory, "games.db")));
             this.RegisterService<IGamepadAbstractionStore>(new GamepadAbstractionStore(Path.Combine(this.AppDataDirectory, "gamepads.db")));
             this.RegisterService<IControllerPortStore>(new ControllerPortStore(Path.Combine(this.AppDataDirectory, "ports.db")));
             this.RegisterService<IEmulatorAssembliesManager>(new EmulatorAssembliesManager(Path.Combine(this.AppDataDirectory, "emulators")));
-            this.RegisterService<IInputManager>(new InputManager.InputManager());
-            this.RegisterService<IPluginManager>(new PluginManager(this.AppDataDirectory, this));
-            this.RegisterService<IAjaxManager>(new AjaxManager(this));
+            this.RegisterService<IPluginManager>(new PluginManager(this.AppDataDirectory, this)); //todo make this internal
+            this.RegisterService<IAjaxManager>(new AjaxManager(this)); //todo deprecate with michi-based ipc
             this.RegisterService<IPlatformPreferenceStore>(new PlatformPreferencesStore(Path.Combine(this.AppDataDirectory, "platformprefs.db"), this.Get<IPluginManager>()));
             this.RegisterService<IScrapeEngine>(new ScrapeEngine(this));
-            this.RegisterService<IEmulatorInstanceManager>(new EmulatorInstanceManager(this));
+            this.RegisterService<IEmulatorInstanceManager>(new EmulatorInstanceManager(this)); //todo expand instance-based emulators
             var serverManager = this.Get<IServerManager>();
-            serverManager.RegisterServer("AjaxApiServer", new ApiServer(this));
-            serverManager.RegisterServer("WebSocketApiServer", new JsonApiWebSocketServer(30003, this));
+            serverManager.RegisterServer("AjaxApiServer", new ApiServer(this)); //todo deprecate with michi-based ipc
+            serverManager.RegisterServer("WebSocketApiServer", new JsonApiWebSocketServer(30003, this)); //todo deprecate with michi-based ipc
             serverManager.RegisterServer("GameCacheServer", new GameCacheServer());
             
         }
@@ -83,7 +81,7 @@ namespace Snowflake.Service
 
         public T Get<T>()
         {
-            return this.serviceContainer.ContainsKey(typeof (T)) ? this.serviceContainer[typeof (T)] : default(T);
+            return this.serviceContainer.ContainsKey(typeof (T)) ? (T)this.serviceContainer[typeof (T)] : default(T);
         }
 
         private IDictionary<string, IPlatformInfo> LoadPlatforms()
@@ -93,7 +91,7 @@ namespace Snowflake.Service
             {
                 try
                 {
-                    var platform = PlatformInfo.FromJsonProtoTemplate(_platform); //Convert MediaStoreKey reference to full MediaStore object
+                    var platform = PlatformInfo.FromJsonProtoTemplate(_platform); //todo use a jsonserlaizer
                     loadedPlatforms.Add(platform.PlatformID, platform);
                 }
                 catch (Exception ex)
