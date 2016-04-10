@@ -4,6 +4,7 @@ using Snowflake.Service;
 
 namespace Snowflake.Plugin.InputManager.Win32
 {
+    [ContainerLoadPriority(ContainerLoadPriority.Service)]
     public class InputManagerContainer : IPluginContainer
     {
         public void Compose(ICoreService coreInstance)
