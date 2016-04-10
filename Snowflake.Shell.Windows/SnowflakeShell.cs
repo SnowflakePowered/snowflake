@@ -58,7 +58,6 @@ namespace Snowflake.Shell.Windows
                 SnowflakeEventManager.EventSource.RaiseEvent(serverStartEvent); //todo Move event registration to SnowflakeEVentManager
             }
 
-            var xinput = this.loadedCore.Get<IPluginManager>()?.Get<IInputEnumerator>().First().Value.GetConnectedDevices();
         }
 
         public void StartShell() {
