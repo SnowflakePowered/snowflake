@@ -88,6 +88,8 @@
     <Compile Include="Controller\IGamepadAbstractionStore.cs" />
     <Compile Include="Emulator\EmulatorInstanceState.cs" />
     <Compile Include="Emulator\IEmulatorInstance.cs" />
+    <Compile Include="Extensibility\ContainerLoadPriorityAttribute.cs" />
+    <Compile Include="Extensibility\ContainerLoadPriority.cs" />
     <Compile Include="Input\Controller\ControllerElement.cs" />
     <Compile Include="Input\Controller\IControllerElementCollection.cs" />
     <Compile Include="Input\Controller\ControllerElementType.cs" />

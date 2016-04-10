@@ -82,17 +82,26 @@ namespace Snowflake.Service.Manager
             var container = new CompositionContainer(catalog);
             container.ComposeParts();
             var exports = container.GetExports<IPluginContainer>(); //Only initialize exports of type T
-            foreach (var plugin in exports)
+           
+
+            foreach (var pluginContainer 
+                in from pluginContainers in exports
+                   let pluginContainer = pluginContainers.Value
+                   let loadPriority = pluginContainer
+                        .GetType()
+                        .GetCustomAttribute<ContainerLoadPriorityAttribute>(true)?
+                        .LoadPriority ?? ContainerLoadPriority.Default
+                   orderby loadPriority ascending
+                   select pluginContainer)
             {
                 try
                 {
-                    IPluginContainer pluginContainer = plugin.Value;
                     pluginContainer.Compose(this.CoreInstance);
                     
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Unable to load plugin container: {plugin?.GetType().AssemblyQualifiedName}");
+                    Console.WriteLine($"Unable to load plugin container: {pluginContainer?.GetType().AssemblyQualifiedName}");
                     Console.WriteLine(ex.ToString());
                 }
             }

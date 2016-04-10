@@ -12,6 +12,7 @@ namespace Snowflake.Extensibility
     /// Compose method.
     /// </summary>
     [InheritedExport(typeof(IPluginContainer))]
+    [ContainerLoadPriority(ContainerLoadPriority.Default)]
     public interface IPluginContainer
     {
         /// <summary>
