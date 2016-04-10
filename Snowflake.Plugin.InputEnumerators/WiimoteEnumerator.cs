@@ -65,9 +65,6 @@ namespace Snowflake.Plugin.InputEnumerators
                     let deviceId = "DEVICE_WII_REMOTE"
                     where WiimoteEnumerator.IsWiimoteConnected(wiimoteHandle)
                     select new InputDevice(InputApi.Other, device, this.ControllerLayout));
-            
-            //todo get deviceindex from wiimtoe
-
         }
     }
 }
