@@ -8,6 +8,7 @@ using System.Reflection;
 using Snowflake.Controller;
 using Snowflake.Events;
 using Snowflake.Events.ServiceEvents;
+using Snowflake.Input.Device;
 using Snowflake.Platform;
 using Snowflake.Scraper;
 using Snowflake.Service;
@@ -41,14 +42,14 @@ namespace Snowflake.Shell.Windows
         {
 
             this.loadedCore = new CoreService(this.appDataDirectory);
-            this.loadedCore.Get<IEmulatorAssembliesManager>()?.LoadEmulatorAssemblies();
+           // this.loadedCore.Get<IEmulatorAssembliesManager>()?.LoadEmulatorAssemblies();
             this.loadedCore.Get<IPluginManager>()?.Initialize();
-            this.loadedCore.Get<IAjaxManager>()?.Initialize(this.loadedCore.Get<IPluginManager>());
-            foreach (IPlatformInfo platform in this.loadedCore.Platforms.Values)
+       //     this.loadedCore.Get<IAjaxManager>()?.Initialize(this.loadedCore.Get<IPluginManager>());
+      /*      foreach (IPlatformInfo platform in this.loadedCore.Platforms.Values)
             {
                 this.loadedCore.Get<IControllerPortStore>()?.AddPlatform(platform);
                 this.loadedCore.Get<IPlatformPreferenceStore>()?.AddPlatform(platform);
-            }
+            }*/
             this.loadedCore.Get<IServerManager>().RegisterServer("ThemeServer", new ThemeServer(Path.Combine(this.loadedCore.AppDataDirectory, "themes")));
             foreach (string serverName in this.loadedCore.Get<IServerManager>().RegisteredServers)
             {
@@ -56,7 +57,8 @@ namespace Snowflake.Shell.Windows
                 var serverStartEvent = new ServerStartEventArgs(this.loadedCore, serverName);
                 SnowflakeEventManager.EventSource.RaiseEvent(serverStartEvent); //todo Move event registration to SnowflakeEVentManager
             }
-           
+
+            var xinput = this.loadedCore.Get<IPluginManager>()?.Get<IInputEnumerator>().First().Value.GetConnectedDevices();
         }
 
         public void StartShell() {

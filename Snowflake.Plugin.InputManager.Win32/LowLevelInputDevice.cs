@@ -1,9 +1,8 @@
 ﻿using System;
-using Snowflake.Input;
 using Snowflake.Input.Device;
 
-namespace Snowflake.InputManager
-{
+namespace Snowflake.Plugin.InputManager.Win32
+{ 
     internal class LowLevelInputDevice : ILowLevelInputDevice
     {
         public string DI_ProductName { get; set; }

@@ -11,13 +11,7 @@ namespace Snowflake.Input.Device
 {
     public abstract class InputEnumerator : Plugin, IInputEnumerator
     {
-        public IDictionary<string, IControllerLayout> ControllerLayouts
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public IControllerLayout ControllerLayout { get; }
 
         public abstract IEnumerable<IInputDevice> GetConnectedDevices();
 

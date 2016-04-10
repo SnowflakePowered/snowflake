@@ -2,6 +2,9 @@
 
 namespace Snowflake.Input.Device
 {
+    /// <summary>
+    /// Manages input devices from the operating system.
+    /// </summary>
     public interface IInputManager
     {
         /// <summary>
