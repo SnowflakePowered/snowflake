@@ -25,7 +25,7 @@ namespace Snowflake.Input.Device
         /// <summary>
         /// The device index differs from the enumeration number that it is the index in a set
         /// of the device rather than all devices.
-        /// For example, if the device is an Xinptu
+        /// For example, if the device is an Xinput device
         /// </summary>
         int? DeviceIndex { get; }
 
@@ -34,6 +34,9 @@ namespace Snowflake.Input.Device
         /// </summary>
         string ControllerName { get; }
 
+        /// <summary>
+        /// The device layout this input device implements
+        /// </summary>
         IControllerLayout DeviceLayout { get; }
 
         /// <summary>

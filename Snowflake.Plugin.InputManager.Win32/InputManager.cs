@@ -1,24 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using SharpDX;
-using SharpDX.Multimedia;
 using SharpDX.DirectInput;
+using SharpDX.Multimedia;
 using SharpDX.XInput;
-using Snowflake.Input;
 using Snowflake.Input.Device;
 using DeviceType = Snowflake.Input.Device.DeviceType;
 
-namespace Snowflake.InputManager
+namespace Snowflake.Plugin.InputManager.Win32
 {
     public class InputManager : IInputManager
     {
 
         public IEnumerable<ILowLevelInputDevice> GetAllDevices()
         {
-            IList<ILowLevelInputDevice> inputDevices = new List<ILowLevelInputDevice>();
-            var directInput = new DirectInput();
+            var directInput = new SharpDX.DirectInput.DirectInput();
             var devices = directInput.GetDevices(DeviceClass.All, DeviceEnumerationFlags.AttachedOnly);
             
 
@@ -47,7 +43,7 @@ namespace Snowflake.InputManager
             return directInputGamepads.Concat(xinputGamepads).Concat(keyboards).Concat(mice);
         }
 
-        private IEnumerable<ILowLevelInputDevice> GetGenericGamepads(IEnumerable<DeviceInstance> gamepads, DirectInput directInput)
+        private IEnumerable<ILowLevelInputDevice> GetGenericGamepads(IEnumerable<DeviceInstance> gamepads, SharpDX.DirectInput.DirectInput directInput)
         {
             var inputDevices = new List<ILowLevelInputDevice>();
             for (int i = 0; i < gamepads.Count(); i++)

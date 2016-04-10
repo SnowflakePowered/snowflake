@@ -1,0 +1,11 @@
+﻿{
+    "name": "InputEnumerator-Xbox360",
+    "type": "plugin_inputenumerator",
+    "version": "1.0.0.0",
+    "authors": [
+        "Snowflake"
+    ],
+    "description": "Wiimote Input Enumerator",
+    "platforms": [
+    ]
+}

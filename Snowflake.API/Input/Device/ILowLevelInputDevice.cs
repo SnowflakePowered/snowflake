@@ -4,7 +4,7 @@ namespace Snowflake.Input.Device
 {
     /// <summary>
     /// A platform agnostic representation of the low-level properties of an input device.
-    /// Implementation is handled by a OS-dependent InputManager library.
+    /// Implementation is handled by a OS-dependent InputManager implementation.
     /// Currently this interface supports only the DirectInput/XInput APIs on Windows and udev on Linux. OSX support is not planned.
     /// Fields that are not used on an OS should be nulled and made unsettable.
     /// </summary>

@@ -124,7 +124,6 @@
     <Compile Include="Input\Controller\Mapped\MappedControllerElement.cs" />
     <Compile Include="JsonConverters\ControllerLayoutConverter.cs" />
     <Compile Include="Input\Controller\ControllerLayout.cs" />
-    <Compile Include="Input\Device\WiimoteInputEnumerator.cs" />
     <Compile Include="Input\Device\InputDevice.cs" />
     <Compile Include="Platform\PlatformControllerPorts.cs" />
     <Compile Include="Platform\PlatformPreferencesStore.cs" />

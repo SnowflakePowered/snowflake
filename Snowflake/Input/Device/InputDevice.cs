@@ -17,10 +17,10 @@ namespace Snowflake.Input.Device
         public InputApi DeviceApi { get; }
         public IControllerLayout DeviceLayout { get; }
 
-        public InputDevice(string deviceId, string controllerName, InputApi deviceApi, ILowLevelInputDevice deviceInfo, IControllerLayout deviceLayout)
+        public InputDevice(InputApi deviceApi, ILowLevelInputDevice deviceInfo, IControllerLayout deviceLayout)
         {
-            this.DeviceId = deviceId;
-            this.ControllerName = controllerName;
+            this.DeviceId = deviceLayout.LayoutName;
+            this.ControllerName = deviceLayout.FriendlyName;
             this.DeviceApi = deviceApi;
             this.DeviceInfo = deviceInfo;
             this.DeviceLayout = deviceLayout;
