@@ -9,16 +9,19 @@ using Snowflake.Utility;
 
 namespace Snowflake.Game
 {
-    public partial class GameInfo : Info, IGameInfo
+    public partial class GameInfo :  IGameInfo
     {
         public string UUID { get; }
         public string FileName { get; }
         public string CRC32 { get; }
-
-        public GameInfo(string uuid, string platformId, string fileName, string name, string crc32, IDictionary<string, string> metadata)
-            : base(platformId, name, metadata)
+        public string PlatformID { get; }
+        public string Title { get; }
+        public IDictionary<string, string> Metadata { get; set; }
+        public GameInfo(string uuid, string platformName, string fileName, string title, string crc32, IDictionary<string, string> metadata)
         {
-
+            this.PlatformID = platformName;
+            this.Title = title;
+            this.Metadata = metadata;
             this.UUID = uuid;
             this.FileName = fileName;
             this.CRC32 = crc32;
@@ -34,7 +37,7 @@ namespace Snowflake.Game
             {
                 romFile.Read(hashBuffer, 0, hashBuffer.Length); //read the first two kilobytes of the rom
             }
-            
+            //todo use new algo for unique ids.
             return $"snowflakehash-{BitConverter.ToString(sha1.ComputeHash(hashBuffer)).Replace("-", string.Empty).ToLowerInvariant()}-{platformId}";
         }
 

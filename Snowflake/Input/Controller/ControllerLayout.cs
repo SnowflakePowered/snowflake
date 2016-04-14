@@ -16,19 +16,19 @@ namespace Snowflake.Input.Controller
     [JsonConverter(typeof(ControllerLayoutConverter))]
     public class ControllerLayout : IControllerLayout
     {
-        public string LayoutName { get; }
+        public string LayoutID { get; }
         public string FriendlyName { get; }
         public bool IsRealDevice { get; }
-        public IEnumerable<string> PlatformsWhitelist { get; }
+        public IEnumerable<string> Platforms { get; }
         public IControllerElementCollection Layout { get; }
 
-        public ControllerLayout(string layoutName, IEnumerable<string> platformsWhitelist, string friendlyName,
+        public ControllerLayout(string layoutId, IEnumerable<string> platforms, string friendlyName,
             IControllerElementCollection layout, bool isRealDevice = false)
         {
-            this.LayoutName = layoutName;
+            this.LayoutID = layoutId;
             this.FriendlyName = friendlyName;
             this.IsRealDevice = isRealDevice;
-            this.PlatformsWhitelist = platformsWhitelist;
+            this.Platforms = platforms;
             this.Layout = layout;
         }
 

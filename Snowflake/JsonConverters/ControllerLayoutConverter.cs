@@ -8,13 +8,13 @@ using Snowflake.Input.Controller;
 
 namespace Snowflake.JsonConverters
 {
-    public class ControllerLayoutConverter : JsonCreationConverter<ControllerLayout>
+    public class ControllerLayoutConverter : JsonCreationConverter<IControllerLayout>
     {
-        protected override ControllerLayout Create(Type objectType, JObject jObject)
+        protected override IControllerLayout Create(Type objectType, JObject jObject)
         {
-            string layoutName = jObject.Value<string>("LayoutName");
+            string layoutName = jObject.Value<string>("LayoutID");
             string friendlyName = jObject.Value<string>("FriendlyName");
-            IEnumerable<string> platformsWhitelist = jObject.Value<JArray>("PlatformsWhitelist").ToObject<IEnumerable<string>>();
+            IEnumerable<string> platformsWhitelist = jObject.Value<JArray>("Platforms").ToObject<IEnumerable<string>>();
             var jlayout = jObject.Value<JObject>("Layout");
             bool isDevice = jObject.Value<bool>("IsRealDevice");
 

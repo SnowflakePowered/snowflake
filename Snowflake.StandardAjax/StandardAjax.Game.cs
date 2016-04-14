@@ -127,7 +127,7 @@ namespace Snowflake.StandardAjax
             }
             foreach (List<IGameInfo> gameInfos in sortedGames.Values)
             {
-                gameInfos.Sort((x, y) => string.CompareOrdinal(x.Name, y.Name));
+                gameInfos.Sort((x, y) => string.CompareOrdinal(x.Title, y.Title));
             }
             return new JSResponse(request, sortedGames);
         }

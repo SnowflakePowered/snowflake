@@ -102,7 +102,7 @@ namespace Snowflake.Emulator.Tests
             IConfigurationFlagStore flagStore = new ConfigurationFlagStore(fakeEmulatorBridge.Object);
 
             var fakeGameInfo = new Mock<IGameInfo>();
-            fakeGameInfo.SetupGet(game => game.Name).Returns("TestGame");
+            fakeGameInfo.SetupGet(game => game.Title).Returns("TestGame");
             fakeGameInfo.SetupGet(game => game.UUID).Returns("TESTGAME");
             fakeGameInfo.SetupGet(game => game.PlatformID).Returns("TESTPLATFORM");
 

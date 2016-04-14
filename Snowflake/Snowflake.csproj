@@ -102,6 +102,7 @@
     <Compile Include="Configuration\IniConfigurationSerializer.cs" />
     <Compile Include="Configuration\ConfigurationSerializer.cs" />
     <Compile Include="Configuration\ConfigurationSection.cs" />
+    <Compile Include="Game\DictionaryStringStringTypeHandler.cs" />
     <Compile Include="Input\Controller\ControllerElementCollection.cs" />
     <Compile Include="Input\Controller\Mapped\MappedControllerElementCollection.cs" />
     <Compile Include="Input\Controller\Mapped\MappedControllerElementStore.cs" />
@@ -114,14 +115,12 @@
     <Compile Include="Emulator\Configuration\ConfigurationFlagStore.cs" />
     <Compile Include="Emulator\EmulatorBridge.cs" />
     <Compile Include="Emulator\ProcessEmulatorInstance.cs" />
-    <Compile Include="Information\Database\DictionaryStringStringTypeHandler.cs" />
     <Compile Include="Game\GameMediaCache.cs" />
-    <Compile Include="Information\Database\SqliteGameDatabase.cs" />
+    <Compile Include="Game\SqliteGameDatabase.cs" />
     <Compile Include="Game\GameScreenshotCache.cs" />
-    <Compile Include="Information\MediaStore\FileMediaStore.cs" />
-    <Compile Include="Information\MediaStore\FileMediaStoreSection.cs" />
     <Compile Include="Input\Controller\ControllerElementInfo.cs" />
     <Compile Include="Input\Controller\Mapped\MappedControllerElement.cs" />
+    <Compile Include="JsonConverters\PlatformInfoConverter.cs" />
     <Compile Include="JsonConverters\ControllerLayoutConverter.cs" />
     <Compile Include="Input\Controller\ControllerLayout.cs" />
     <Compile Include="Input\Device\InputDevice.cs" />
@@ -157,7 +156,6 @@
     <Compile Include="Game\GameLibrary.cs" />
     <Compile Include="Platform\PlatformDefaults.cs" />
     <Compile Include="Game\GameInfo.cs" />
-    <Compile Include="Information\Info.cs" />
     <Compile Include="Platform\PlatformInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scraper\ScrapableInfo.cs" />

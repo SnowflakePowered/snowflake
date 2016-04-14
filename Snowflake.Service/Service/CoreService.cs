@@ -29,10 +29,10 @@ namespace Snowflake.Service
     public class CoreService : ICoreService
     {
         #region Loaded Objects
+        public IStoneProvider StoneProvider { get; }
         public IDictionary<string, IPlatformInfo> Platforms { get; }
         public IDictionary<string, IControllerDefinition> Controllers { get; }
         public string AppDataDirectory { get; }
-        public dynamic InfoBlob { get; } //todo make this a init-first service
         private readonly IDictionary<Type, object> serviceContainer;
         private ILogger logger;
 
@@ -46,11 +46,9 @@ namespace Snowflake.Service
         public CoreService(string appDataDirectory)
         {
             this.logger = LogManager.GetLogger("~CORESERVICE");
+            this.StoneProvider = new StoneProvider();
             this.serviceContainer = new Dictionary<Type, object>();
             this.AppDataDirectory = appDataDirectory;
-            this.InfoBlob = JsonConvert.DeserializeObject(File.ReadAllText(Path.Combine(this.AppDataDirectory, "info.json")));
-            this.Platforms = this.LoadPlatforms();
-            this.Controllers = this.LoadControllers();
             this.RegisterService<IServerManager>(new ServerManager());
             this.RegisterService<IGameLibrary>(new GameLibrary(Path.Combine(this.AppDataDirectory, "games.db")));
             this.RegisterService<IGamepadAbstractionStore>(new GamepadAbstractionStore(Path.Combine(this.AppDataDirectory, "gamepads.db")));
@@ -84,41 +82,7 @@ namespace Snowflake.Service
             return this.serviceContainer.ContainsKey(typeof (T)) ? (T)this.serviceContainer[typeof (T)] : default(T);
         }
 
-        private IDictionary<string, IPlatformInfo> LoadPlatforms()
-        {
-            var loadedPlatforms = new Dictionary<string, IPlatformInfo>();
-            foreach (var _platform in this.InfoBlob["platforms"])
-            {
-                try
-                {
-                    var platform = PlatformInfo.FromJsonProtoTemplate(_platform); //todo use a jsonserlaizer
-                    loadedPlatforms.Add(platform.PlatformID, platform);
-                }
-                catch (Exception ex)
-                {
-                  logger.Error(ex, "Something went wrong when loading a platform from the info blob. Regenerate it by deleting info.json");
-                }
-            }
-            return loadedPlatforms;
-        }
-        private IDictionary<string, IControllerDefinition> LoadControllers()
-        {
-            var loadedControllers = new Dictionary<string, IControllerDefinition>();
-            foreach (var _controller in this.InfoBlob["controllers"])
-            {
-                try
-                {
-                    var controller = ControllerDefinition.FromJsonProtoTemplate(_controller);
-                    loadedControllers.Add(controller.ControllerID, controller);
-                }
-                catch (Exception ex)
-                {
-                    //log
-                    logger.Error(ex, "Something went wrong when loading a controller from the info blob. Regenerate it by deleting info.json");
-                }
-            }
-            return loadedControllers;
-        }
+        
         public void Dispose()
         {
             this.Dispose(true);

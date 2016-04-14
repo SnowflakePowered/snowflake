@@ -14,7 +14,7 @@ namespace Snowflake.Input.Controller
         /// <summary>
         /// The identifier or name of the layout.
         /// </summary>
-        string LayoutName { get; }
+        string LayoutID { get; }
         
         /// <summary>
         /// The friendly name of this layout
@@ -29,7 +29,7 @@ namespace Snowflake.Input.Controller
         /// <summary>
         /// The platforms this controller supports.
         /// </summary>
-        IEnumerable<string> PlatformsWhitelist { get; }
+        IEnumerable<string> Platforms { get; }
 
         /// <summary>
         /// The actual collection of layout elements
