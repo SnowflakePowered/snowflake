@@ -106,6 +106,9 @@ namespace Snowflake.Input.Controller
 
         //keyboard layout
         public IControllerElementInfo Keyboard => this[ControllerElement.Keyboard];
+
+        public IControllerElementInfo Touchscreen => this[ControllerElement.Touchscreen];
+
         private readonly IDictionary<ControllerElement, IControllerElementInfo> controllerElements;
 
         public IControllerElementInfo this[ControllerElement element] => this.controllerElements.ContainsKey(element) ? this.controllerElements[element] : null;

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
@@ -30,11 +29,11 @@ namespace Snowflake.Service
     public class CoreService : ICoreService
     {
         #region Loaded Objects
+        public IStoneProvider StoneProvider { get; }
         public IDictionary<string, IPlatformInfo> Platforms { get; }
         public IDictionary<string, IControllerDefinition> Controllers { get; }
         public string AppDataDirectory { get; }
-        public dynamic InfoBlob { get; }
-        private readonly IDictionary<Type, dynamic> serviceContainer;
+        private readonly IDictionary<Type, object> serviceContainer;
         private ILogger logger;
 
         #endregion
@@ -47,25 +46,22 @@ namespace Snowflake.Service
         public CoreService(string appDataDirectory)
         {
             this.logger = LogManager.GetLogger("~CORESERVICE");
-            this.serviceContainer = new ConcurrentDictionary<Type, object>();
-            this.RegisterService<IStoneProvider>(new StoneProvider());
+            this.StoneProvider = new StoneProvider();
+            this.serviceContainer = new Dictionary<Type, object>();
             this.AppDataDirectory = appDataDirectory;
-            this.InfoBlob = JsonConvert.DeserializeObject(File.ReadAllText(Path.Combine(this.AppDataDirectory, "info.json")));
-
             this.RegisterService<IServerManager>(new ServerManager());
             this.RegisterService<IGameLibrary>(new GameLibrary(Path.Combine(this.AppDataDirectory, "games.db")));
             this.RegisterService<IGamepadAbstractionStore>(new GamepadAbstractionStore(Path.Combine(this.AppDataDirectory, "gamepads.db")));
             this.RegisterService<IControllerPortStore>(new ControllerPortStore(Path.Combine(this.AppDataDirectory, "ports.db")));
             this.RegisterService<IEmulatorAssembliesManager>(new EmulatorAssembliesManager(Path.Combine(this.AppDataDirectory, "emulators")));
-            this.RegisterService<IInputManager>(new InputManager.InputManager());
-            this.RegisterService<IPluginManager>(new PluginManager(this.AppDataDirectory, this));
-            this.RegisterService<IAjaxManager>(new AjaxManager(this));
+            this.RegisterService<IPluginManager>(new PluginManager(this.AppDataDirectory, this)); //todo make this internal
+            this.RegisterService<IAjaxManager>(new AjaxManager(this)); //todo deprecate with michi-based ipc
             this.RegisterService<IPlatformPreferenceStore>(new PlatformPreferencesStore(Path.Combine(this.AppDataDirectory, "platformprefs.db"), this.Get<IPluginManager>()));
             this.RegisterService<IScrapeEngine>(new ScrapeEngine(this));
-            this.RegisterService<IEmulatorInstanceManager>(new EmulatorInstanceManager(this));
+            this.RegisterService<IEmulatorInstanceManager>(new EmulatorInstanceManager(this)); //todo expand instance-based emulators
             var serverManager = this.Get<IServerManager>();
-            serverManager.RegisterServer("AjaxApiServer", new ApiServer(this));
-            serverManager.RegisterServer("WebSocketApiServer", new JsonApiWebSocketServer(30003, this));
+            serverManager.RegisterServer("AjaxApiServer", new ApiServer(this)); //todo deprecate with michi-based ipc
+            serverManager.RegisterServer("WebSocketApiServer", new JsonApiWebSocketServer(30003, this)); //todo deprecate with michi-based ipc
             serverManager.RegisterServer("GameCacheServer", new GameCacheServer());
             
         }
@@ -83,9 +79,10 @@ namespace Snowflake.Service
 
         public T Get<T>()
         {
-            return this.serviceContainer.ContainsKey(typeof (T)) ? this.serviceContainer[typeof (T)] : default(T);
+            return this.serviceContainer.ContainsKey(typeof (T)) ? (T)this.serviceContainer[typeof (T)] : default(T);
         }
 
+        
         public void Dispose()
         {
             this.Dispose(true);

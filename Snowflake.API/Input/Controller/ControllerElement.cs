@@ -79,6 +79,7 @@ namespace Snowflake.Input.Controller
         PointerAxisNegativeX,
         PointerAxisPositiveY,
         PointerAxisNegativeY,
-        Keyboard
+        Keyboard,
+        Touchscreen
     }
 }

@@ -130,6 +130,7 @@
     <Compile Include="Emulator\Input\Constants\KeyboardConstants.cs" />
     <Compile Include="Game\GameInfoFields.cs" />
     <Compile Include="Extensibility\PluginInfoFields.cs" />
+    <Compile Include="Service\IStoneProvider.cs" />
     <Compile Include="Service\IUserInterface.cs" />
     <Compile Include="Service\Manager\IEmulatorInstanceManager.cs" />
     <Compile Include="Service\IScrapeEngine.cs" />
@@ -150,9 +151,6 @@
     <Compile Include="Emulator\Input\IKeyboardMapping.cs" />
     <Compile Include="Game\IGameLibrary.cs" />
     <Compile Include="Game\IGameInfo.cs" />
-    <Compile Include="Information\IInfo.cs" />
-    <Compile Include="Information\MediaStore\IMediaStore.cs" />
-    <Compile Include="Information\MediaStore\IMediaStoreSection.cs" />
     <Compile Include="Platform\IPlatformDefaults.cs" />
     <Compile Include="Platform\IPlatformInfo.cs" />
     <Compile Include="Extensibility\Configuration\IPluginConfiguration.cs" />

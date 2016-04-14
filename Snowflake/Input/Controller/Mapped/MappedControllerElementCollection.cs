@@ -44,7 +44,7 @@ namespace Snowflake.Input.Controller.Mapped
                                   where realDevice.Layout[element.Key] != null
                                   select new MappedControllerElement(element.Key) { DeviceElement = element.Key }
                 );
-            var elementCollection = new MappedControllerElementCollection(inputDevice.DeviceId, virtualDevice.LayoutName);
+            var elementCollection = new MappedControllerElementCollection(inputDevice.DeviceId, virtualDevice.LayoutID);
             foreach (var element in mappedElements)
             {
                 elementCollection.Add(element);

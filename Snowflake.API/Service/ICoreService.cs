@@ -36,8 +36,11 @@ namespace Snowflake.Service
         /// <returns></returns>
         IEnumerable<string> AvailableServices();
         /// <summary>
-        /// Get a service.
-        /// The StoneProvider service is guaranteed to be registered.
+        /// Provides stone platform and controller data
+        /// </summary>
+        IStoneProvider StoneProvider { get; }
+        /// <summary>
+        /// Get a service
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>

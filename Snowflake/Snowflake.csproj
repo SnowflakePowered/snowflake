@@ -102,6 +102,12 @@
     <Compile Include="Configuration\IniConfigurationSerializer.cs" />
     <Compile Include="Configuration\ConfigurationSerializer.cs" />
     <Compile Include="Configuration\ConfigurationSection.cs" />
+    <Compile Include="Game\DictionaryStringStringTypeHandler.cs" />
+    <Compile Include="Input\Controller\ControllerElementCollection.cs" />
+    <Compile Include="Input\Controller\Mapped\MappedControllerElementCollection.cs" />
+    <Compile Include="Input\Controller\Mapped\MappedControllerElementStore.cs" />
+    <Compile Include="Input\Device\InputEnumerator.cs" />
+    <Compile Include="Input\InputSerializer.cs" />
     <Compile Include="Configuration\IterableConfigurationSection.cs" />
     <Compile Include="Controller\GamepadAbstraction.cs" />
     <Compile Include="Controller\GamepadAbstractionStore.cs" />
@@ -112,7 +118,12 @@
     <Compile Include="Game\GameMediaCache.cs" />
     <Compile Include="Game\SqliteGameDatabase.cs" />
     <Compile Include="Game\GameScreenshotCache.cs" />
-    <Compile Include="Game\DictionaryStringStringTypeHandler.cs" />
+    <Compile Include="Input\Controller\ControllerElementInfo.cs" />
+    <Compile Include="Input\Controller\Mapped\MappedControllerElement.cs" />
+    <Compile Include="JsonConverters\PlatformInfoConverter.cs" />
+    <Compile Include="JsonConverters\ControllerLayoutConverter.cs" />
+    <Compile Include="Input\Controller\ControllerLayout.cs" />
+    <Compile Include="Input\Device\InputDevice.cs" />
     <Compile Include="Platform\PlatformControllerPorts.cs" />
     <Compile Include="Platform\PlatformPreferencesStore.cs" />
     <Compile Include="Extensibility\Plugin.cs" />
@@ -133,7 +144,6 @@
     <Compile Include="Emulator\Configuration\ConfigurationEntry.cs" />
     <Compile Include="Emulator\Configuration\ConfigurationProfile.cs" />
     <Compile Include="Emulator\Configuration\ConfigurationTemplate.cs" />
-    <Compile Include="JsonConverters\PlatformInfoConverter.cs" />
     <Compile Include="Configuration\BooleanMapping.cs" />
     <Compile Include="Emulator\Input\GamepadMapping.cs" />
     <Compile Include="Emulator\Input\KeyboardMapping.cs" />
@@ -170,6 +180,7 @@
       <Name>Snowflake.Utility</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.99.0\build\net45\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.99.0\build\net45\System.Data.SQLite.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
