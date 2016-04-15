@@ -13,6 +13,8 @@ configuration: Debug
 # Fix line endings on Windows
 init:
   - git config --global core.autocrlf true
+install:
+  - git submodule update --init --recursive
 build:
   project: Snowflake.sln
   parallel: true
