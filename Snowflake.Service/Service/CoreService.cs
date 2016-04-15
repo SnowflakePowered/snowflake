@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
@@ -29,7 +30,6 @@ namespace Snowflake.Service
     public class CoreService : ICoreService
     {
         #region Loaded Objects
-        public IStoneProvider StoneProvider { get; }
         public IDictionary<string, IPlatformInfo> Platforms { get; }
         public IDictionary<string, IControllerDefinition> Controllers { get; }
         public string AppDataDirectory { get; }
@@ -46,8 +46,8 @@ namespace Snowflake.Service
         public CoreService(string appDataDirectory)
         {
             this.logger = LogManager.GetLogger("~CORESERVICE");
-            this.StoneProvider = new StoneProvider();
-            this.serviceContainer = new Dictionary<Type, object>();
+            this.serviceContainer = new ConcurrentDictionary<Type, object>();
+            this.RegisterService<IStoneProvider>(new StoneProvider());
             this.AppDataDirectory = appDataDirectory;
             this.RegisterService<IServerManager>(new ServerManager());
             this.RegisterService<IGameLibrary>(new GameLibrary(Path.Combine(this.AppDataDirectory, "games.db")));
