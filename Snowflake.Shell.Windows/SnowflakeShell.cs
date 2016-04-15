@@ -50,7 +50,7 @@ namespace Snowflake.Shell.Windows
             var pluginManager = this.loadedCore.Get<IPluginManager>();
             var enumerator = pluginManager.Get<IInputEnumerator>("InputEnumerator-XInput");
             var layout = stoneProvider.Controllers["XBOX_CONTROLLER"];
-            var defaults = MappedControllerElementCollection.GetDefaultMappings(enumerator.ControllerLayout, layout);
+            var defaults = MappedControllerElementCollection.GetDefaultMappings(enumerator.DefaultControllerLayout, layout);
 
         }
 

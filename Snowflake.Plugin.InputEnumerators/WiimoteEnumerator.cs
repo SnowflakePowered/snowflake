@@ -64,7 +64,7 @@ namespace Snowflake.Plugin.InputEnumerators
                     let wiimoteHandle = WiimoteEnumerator.CreateFile(device.DI_InterfacePath)
                     let deviceId = "DEVICE_WII_REMOTE"
                     where WiimoteEnumerator.IsWiimoteConnected(wiimoteHandle)
-                    select new InputDevice(InputApi.Other, device, this.ControllerLayout));
+                    select new InputDevice(InputApi.Other, device, this.DefaultControllerLayout));
         }
     }
 }
