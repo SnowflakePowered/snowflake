@@ -20,9 +20,16 @@ namespace Snowflake.Input.Device
         IEnumerable<IInputDevice> GetConnectedDevices();
 
         /// <summary>
-        /// The controller layout associated with this input enumerator
+        /// The default controller layout associated with this input enumerator.
+        /// Usually keyed to the "default" controller layout.
         /// </summary>
-        IControllerLayout ControllerLayout { get; }
+        IControllerLayout DefaultControllerLayout { get; }
+
+        /// <summary>
+        /// All possible controller layouts with this input device.
+        /// The default layout should be in the key 'default'
+        /// </summary>
+        IDictionary<string, IControllerLayout> ControllerLayouts { get; }
         
     }
 }

@@ -12,13 +12,16 @@ namespace Snowflake.Input.Device
 {
     public abstract class InputEnumerator : Plugin, IInputEnumerator
     {
-        public IControllerLayout ControllerLayout { get; }
+        public IControllerLayout DefaultControllerLayout => this.ControllerLayouts["default"];
+        public IDictionary<string, IControllerLayout> ControllerLayouts { get; }
 
         public abstract IEnumerable<IInputDevice> GetConnectedDevices();
 
         protected InputEnumerator(ICoreService coreInstance) : base(coreInstance)
         {
-            this.ControllerLayout = this.PluginInfo["controllerLayout"].ToObject<ControllerLayout>();
+            this.ControllerLayouts = (this.PluginInfo["controllerLayouts"]
+                .ToObject<IDictionary<string, ControllerLayout>>() as IDictionary<string, ControllerLayout>)?
+                .ToDictionary(kvp => kvp.Key, kvp => kvp.Value as IControllerLayout);
         }
     }
 }
