@@ -13,8 +13,6 @@ configuration: Debug
 # Fix line endings on Windows
 init:
   - git config --global core.autocrlf true
-install:
-  - git submodule update --init --recursive
 build:
   project: Snowflake.sln
   parallel: true
@@ -41,6 +39,7 @@ install:
     - nuget install xunit.runner.console -Version 2.1.0
     - choco install -y sandcastle -version 2015.5.2.0
     - choco install -y doxygen.portable
+    - git submodule update --init --recursive
     - nuget restore ./Snowflake.sln
 
 #after_build:
