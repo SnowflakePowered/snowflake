@@ -8,10 +8,10 @@
 	"description": "XInput Device Enumerator",
 	"platforms": [],
 	"controllerLayout": {
-		"LayoutName": "DEVICE_XINPUT",
+		"LayoutID": "DEVICE_XINPUT",
 		"FriendlyName": "XInput Device",
-		"PlatformsWhitelist": [
-	
+		"Platforms": [
+
 		],
 		"Layout": {
 			"ButtonA": {

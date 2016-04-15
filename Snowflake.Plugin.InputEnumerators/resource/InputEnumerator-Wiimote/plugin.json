@@ -8,6 +8,5 @@
     "description": "Wiimote Input Enumerator",
     "platforms": [
       "NINTENDO_WII"
-    ],
-	""
+    ]
 }
