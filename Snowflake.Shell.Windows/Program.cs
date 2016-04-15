@@ -35,8 +35,6 @@ namespace Snowflake.Shell.Windows
                 });
 
             }*/
-            var stone = new StoneProvider();
-
             var snowflakeIcon = new ShellIcon();
             SnowflakeEventManager.InitEventSource();
             var snowflakeShell = new SnowflakeShell();

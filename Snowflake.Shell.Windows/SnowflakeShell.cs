@@ -8,6 +8,7 @@ using System.Reflection;
 using Snowflake.Controller;
 using Snowflake.Events;
 using Snowflake.Events.ServiceEvents;
+using Snowflake.Input.Controller.Mapped;
 using Snowflake.Input.Device;
 using Snowflake.Platform;
 using Snowflake.Scraper;
@@ -22,22 +23,9 @@ namespace Snowflake.Shell.Windows
         private readonly string appDataDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Snowflake");
         internal SnowflakeShell()
         {
-            this.WriteInfoJson();
             this.StartCore();
         }
-        private void WriteInfoJson()
-        {
-            if (!File.Exists(Path.Combine(this.appDataDirectory, "info.json")))
-            {
-                var currentAssembly = Assembly.GetExecutingAssembly();
-                var infoJsonStream = currentAssembly.GetManifestResourceStream($"{currentAssembly.GetName().Name}.Resources.info.json");
-                using (Stream file = File.Create(Path.Combine(this.appDataDirectory, "info.json")))
-                {
-                    file.Seek(0, SeekOrigin.Begin);
-                    infoJsonStream.CopyTo(file);
-                }
-            }
-        }
+       
         public void StartCore()
         {
 
@@ -57,6 +45,12 @@ namespace Snowflake.Shell.Windows
                 var serverStartEvent = new ServerStartEventArgs(this.loadedCore, serverName);
                 SnowflakeEventManager.EventSource.RaiseEvent(serverStartEvent); //todo Move event registration to SnowflakeEVentManager
             }
+
+            var stoneProvider = this.loadedCore.Get<IStoneProvider>();
+            var pluginManager = this.loadedCore.Get<IPluginManager>();
+            var enumerator = pluginManager.Get<IInputEnumerator>("InputEnumerator-XInput");
+            var layout = stoneProvider.Controllers["XBOX_CONTROLLER"];
+            var defaults = MappedControllerElementCollection.GetDefaultMappings(enumerator.ControllerLayout, layout);
 
         }
 

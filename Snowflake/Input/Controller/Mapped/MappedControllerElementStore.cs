@@ -11,7 +11,7 @@ namespace Snowflake.Input.Controller.Mapped
     public class MappedControllerElementStore
     {
 
-        private ISimpleKeyValueStore backingStore;
+        private readonly ISimpleKeyValueStore backingStore;
 
         public MappedControllerElementStore(string fileName)
         {
@@ -25,13 +25,14 @@ namespace Snowflake.Input.Controller.Mapped
         }
         public IMappedControllerElementCollection GetMappedElements(string deviceId, string controllerId, string profileName = "default")
         {
-            return null;
+            return this.backingStore.GetObject<IMappedControllerElementCollection>($"{deviceId}.{controllerId}.{profileName}");
         }
 
         public void SetMappedElements(string deviceId, string controllerId, 
             string profileName, IMappedControllerElementCollection controllerElements)
         {
-            
+            this.backingStore.InsertObject($"{deviceId}.{controllerId}.{profileName}", controllerElements);
+
         }
 
         public void SetMappedElements(string deviceId, string controllerId, IMappedControllerElementCollection controllerElements)
