@@ -32,7 +32,6 @@ namespace Snowflake.Input.Controller.Mapped
             string profileName, IMappedControllerElementCollection controllerElements)
         {
             this.backingStore.InsertObject($"{deviceId}.{controllerId}.{profileName}", controllerElements);
-
         }
 
         public void SetMappedElements(string deviceId, string controllerId, IMappedControllerElementCollection controllerElements)

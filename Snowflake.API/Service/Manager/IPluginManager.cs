@@ -42,7 +42,7 @@ namespace Snowflake.Service.Manager
         /// <param name="plugin"></param>
         void Register<T>(T plugin) where T : IPlugin;
         /// <summary>
-        /// Whethere or not the plugin manager has been initialized
+        /// Whether or not the plugin manager has been initialized
         /// </summary>
         bool IsInitialized { get; }
     }
