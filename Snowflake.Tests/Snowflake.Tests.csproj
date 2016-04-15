@@ -122,12 +122,6 @@
     <Compile Include="Utility\SqliteKeyValueStoreTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="..\Platforms\NINTENDO_NES.platform">
-      <Link>TestResources\Platforms\NINTENDO_NES.platform</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Platforms\NINTENDO_SNES.platform">
-      <Link>TestResources\Platforms\NINTENDO_SNES.platform</Link>
-    </EmbeddedResource>
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
@@ -136,7 +130,6 @@
     <EmbeddedResource Include="TestResources\GameCache\test.webm" />
     <EmbeddedResource Include="TestResources\Mapping\GamepadMapping.json" />
     <EmbeddedResource Include="TestResources\Mapping\KeyboardMapping.json" />
-    <EmbeddedResource Include="TestResources\Controllers\NES_CONTROLLER.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Snowflake.API\Snowflake.API.csproj">

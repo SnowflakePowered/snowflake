@@ -37,14 +37,19 @@ namespace Snowflake.Input.Controller.Mapped
             this.controllerElements.Add(controllerElement);
         }
 
-        public static IMappedControllerElementCollection GetDefaultMappings(IInputDevice inputDevice, IControllerLayout virtualDevice)
+        /// <summary>
+        /// Gets default mappings for a real device to a virtual device
+        /// </summary>
+        /// <param name="realDevice">The button layout of the real controller device</param>
+        /// <param name="virtualDevice">The button layout of the defined controller device</param>
+        /// <returns></returns>
+        public static IMappedControllerElementCollection GetDefaultMappings(IControllerLayout realDevice, IControllerLayout virtualDevice)
         {
-            var realDevice = inputDevice.DeviceLayout;
             var mappedElements = (from element in virtualDevice.Layout
                                   where realDevice.Layout[element.Key] != null
                                   select new MappedControllerElement(element.Key) { DeviceElement = element.Key }
                 );
-            var elementCollection = new MappedControllerElementCollection(inputDevice.DeviceId, virtualDevice.LayoutID);
+            var elementCollection = new MappedControllerElementCollection(realDevice.LayoutID, virtualDevice.LayoutID);
             foreach (var element in mappedElements)
             {
                 elementCollection.Add(element);

@@ -5,22 +5,7 @@ VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake", "Snowflake\Snowflake.csproj", "{8F1D65ED-4A96-4A0A-8371-53655A60A2B3}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Platforms", "Platforms", "{95E5C1D6-192C-42AC-80F4-B10FD82B4062}"
-	ProjectSection(SolutionItems) = preProject
-		Platforms\NINTENDO_N64.platform = Platforms\NINTENDO_N64.platform
-		Platforms\NINTENDO_NES.platform = Platforms\NINTENDO_NES.platform
-		Platforms\NINTENDO_SNES.platform = Platforms\NINTENDO_SNES.platform
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.API", "Snowflake.API\Snowflake.API.csproj", "{2841AEEA-03D5-47B0-9D90-375DFA19559A}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Controllers", "Controllers", "{52A92EB4-E1D3-450E-ACCD-382EC888C6B0}"
-	ProjectSection(SolutionItems) = preProject
-		Controllers\DUALSHOCK.controller = Controllers\DUALSHOCK.controller
-		N64_CONTROLLER.controller = N64_CONTROLLER.controller
-		Controllers\NES_CONTROLLER.controller = Controllers\NES_CONTROLLER.controller
-		Controllers\SNES_CONTROLLER.controller = Controllers\SNES_CONTROLLER.controller
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Tests", "Snowflake.Tests\Snowflake.Tests.csproj", "{F89D6C58-EC34-4B89-8E55-663A9087C9A4}"
 EndProject
