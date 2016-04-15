@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 using System;
 using System.IO;
 
-namespace Snowflake.FileSignatures
+namespace Snowflake.Plugin.FileSignatures
 {
     public abstract class ByteSwapStream : Stream
     {

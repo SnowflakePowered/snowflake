@@ -54,7 +54,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Publishing", "Pack
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Utility", "Snowflake.Utility\Snowflake.Utility.csproj", "{E683D4D7-759F-48C5-8DF4-C3350C6362D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.FileSignatures", "Snowflake.FileSignatures\Snowflake.FileSignatures.csproj", "{C66356E8-D95E-438A-8BA5-84A04B3D39A4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Plugin.FileSignatures", "Snowflake.FileSignatures\Snowflake.Plugin.FileSignatures.csproj", "{C66356E8-D95E-438A-8BA5-84A04B3D39A4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Plugin.InputEnumerators", "Snowflake.Plugin.InputEnumerators\Snowflake.Plugin.InputEnumerators.csproj", "{D4F012C1-CF84-487F-B1B2-48243F43EE1F}"
 EndProject

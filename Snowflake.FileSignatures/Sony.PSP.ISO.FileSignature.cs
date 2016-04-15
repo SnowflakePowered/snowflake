@@ -2,11 +2,11 @@
 using System.Text;
 using DiscUtils.Iso9660;
 using Snowflake.Extensibility;
-using Snowflake.FileSignatures.SFOSharp;
+using Snowflake.Plugin.FileSignatures.SFOSharp;
 using Snowflake.Romfile;
 using Snowflake.Service;
 
-namespace Snowflake.FileSignatures
+namespace Snowflake.Plugin.FileSignatures
 {
     [Plugin("SnowflakeFileSignature-SONY_PSP_ISO")]
     public sealed class SonyPSPISOFileSignature : FileSignature

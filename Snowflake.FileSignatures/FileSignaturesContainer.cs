@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using Snowflake.Extensibility;
+﻿using Snowflake.Extensibility;
 using Snowflake.Romfile;
 using Snowflake.Service;
 using Snowflake.Service.Manager;
 
-namespace Snowflake.FileSignatures
+namespace Snowflake.Plugin.FileSignatures
 {
     public class FileSignaturesContainer : IPluginContainer
     {

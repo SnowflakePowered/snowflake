@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace Snowflake.FileSignatures.SFOSharp
+namespace Snowflake.Plugin.FileSignatures.SFOSharp
 {
     class SFOValueTableEntry
     {

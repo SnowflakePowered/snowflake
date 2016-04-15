@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Text;
 
-namespace Snowflake.FileSignatures.SFOSharp
+namespace Snowflake.Plugin.FileSignatures.SFOSharp
 {
     public sealed class SFOIndexTableEntry
     {
