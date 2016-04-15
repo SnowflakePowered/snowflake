@@ -46,8 +46,8 @@ namespace Snowflake.Service
         public CoreService(string appDataDirectory)
         {
             this.logger = LogManager.GetLogger("~CORESERVICE");
-            this.StoneProvider = new StoneProvider();
-            this.serviceContainer = new Dictionary<Type, object>();
+            this.serviceContainer = new ConcurrentDictionary<Type, object>();
+            this.RegisterService<IStoneProvider>(new StoneProvider());
             this.AppDataDirectory = appDataDirectory;
             this.InfoBlob = JsonConvert.DeserializeObject(File.ReadAllText(Path.Combine(this.AppDataDirectory, "info.json")));
             this.Platforms = this.LoadPlatforms();
