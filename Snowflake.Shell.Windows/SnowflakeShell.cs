@@ -5,7 +5,6 @@ using System.IO;
 using System.Text;
 using System.Linq;
 using System.Reflection;
-using Snowflake.Controller;
 using Snowflake.Events;
 using Snowflake.Events.ServiceEvents;
 using Snowflake.Input.Controller.Mapped;

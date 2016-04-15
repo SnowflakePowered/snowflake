@@ -55,17 +55,9 @@
     <Compile Include="CoreEvents\Game\GameDeleteEventArgs.cs" />
     <Compile Include="CoreEvents\Game\GameEventArgs.cs" />
     <Compile Include="CoreEvents\Game\GameInfoScrapedEventArgs.cs" />
-    <Compile Include="CoreEvents\Game\GameProcessStartEventArgs.cs" />
-    <Compile Include="CoreEvents\Game\GameProcessQuitEventArgs.cs" />
     <Compile Include="CoreEvents\Game\GameAddEventArgs.cs" />
-    <Compile Include="CoreEvents\Game\GameQuitEventArgs.cs" />
     <Compile Include="CoreEvents\Game\GameResultsScrapedEventArgs.cs" />
-    <Compile Include="CoreEvents\Game\GameStartEventArgs.cs" />
-    <Compile Include="CoreEvents\Modify\ModifyControllerProfileEventArgs.cs" />
-    <Compile Include="CoreEvents\Modify\ModifyConfigurationFlagEventArgs.cs" />
     <Compile Include="CoreEvents\Modify\ModifyGameInfoEventArgs.cs" />
-    <Compile Include="CoreEvents\Modify\ModifyPlatformPreferenceEventArgs.cs" />
-    <Compile Include="CoreEvents\Modify\ModifyPortInputDeviceEventArgs.cs" />
     <Compile Include="ISnowflakeEventManager.cs" />
     <Compile Include="ServiceEvents\AjaxResponseSendingEventArgs.cs" />
     <Compile Include="ServiceEvents\AjaxRequestReceivedEventArgs.cs" />

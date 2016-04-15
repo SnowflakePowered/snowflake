@@ -4,23 +4,11 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
-using Newtonsoft.Json;
-using Snowflake.Ajax;
-using Snowflake.Controller;
-using Snowflake.Emulator;
-using Snowflake.Input;
-using Snowflake.Events;
-using Snowflake.Events.ServiceEvents;
 using Snowflake.Game;
-using Snowflake.Platform;
-using Snowflake.Extensibility;
-using Snowflake.Romfile;
-using Snowflake.Scraper;
 using Snowflake.Service.HttpServer;
 using Snowflake.Service.JSWebSocketServer;
 using Snowflake.Service.Manager;
 using NLog;
-using Snowflake.Input.Device;
 
 namespace Snowflake.Service
 {
@@ -49,14 +37,10 @@ namespace Snowflake.Service
             this.AppDataDirectory = appDataDirectory;
             this.RegisterService<IServerManager>(new ServerManager());
             this.RegisterService<IGameLibrary>(new GameLibrary(Path.Combine(this.AppDataDirectory, "games.db")));
-            this.RegisterService<IGamepadAbstractionStore>(new GamepadAbstractionStore(Path.Combine(this.AppDataDirectory, "gamepads.db")));
-            this.RegisterService<IControllerPortStore>(new ControllerPortStore(Path.Combine(this.AppDataDirectory, "ports.db")));
             this.RegisterService<IEmulatorAssembliesManager>(new EmulatorAssembliesManager(Path.Combine(this.AppDataDirectory, "emulators")));
             this.RegisterService<IPluginManager>(new PluginManager(this.AppDataDirectory, this)); 
             this.RegisterService<IAjaxManager>(new AjaxManager(this)); //todo deprecate with michi-based ipc
-            this.RegisterService<IPlatformPreferenceStore>(new PlatformPreferencesStore(Path.Combine(this.AppDataDirectory, "platformprefs.db"), this.Get<IPluginManager>()));
             this.RegisterService<IScrapeEngine>(new ScrapeEngine(this.Get<IStoneProvider>(), this.Get<IPluginManager>()));
-            this.RegisterService<IEmulatorInstanceManager>(new EmulatorInstanceManager(this)); //todo expand instance-based emulators
             var serverManager = this.Get<IServerManager>();
             serverManager.RegisterServer("AjaxApiServer", new ApiServer(this)); //todo deprecate with michi-based ipc
             serverManager.RegisterServer("WebSocketApiServer", new JsonApiWebSocketServer(30003, this)); //todo deprecate with michi-based ipc

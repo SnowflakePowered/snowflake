@@ -94,12 +94,6 @@
     <Compile Include="Configuration\ExampleConfigurationSection.cs" />
     <Compile Include="Configuration\ExampleIterableConfigurationSection.cs" />
     <Compile Include="Configuration\IniConfigurationSerializerTests.cs" />
-    <Compile Include="Controller\ControllerDefinitionTests.cs" />
-    <Compile Include="Controller\ControllerPortsStoreTests.cs" />
-    <Compile Include="Controller\GamepadAbstractionStoreTests.cs" />
-    <Compile Include="Emulator\ConfigurationFlagStoreTests.cs" />
-    <Compile Include="Emulator\Input\GamepadMappingTests.cs" />
-    <Compile Include="Emulator\Input\KeyboardMappingTests.cs" />
     <Compile Include="Events\SnowflakeEventManagerTests.cs" />
     <Compile Include="Events\StandardEventsTests.cs" />
     <Compile Include="Game\GameDatabaseTests.cs" />
@@ -162,7 +156,9 @@
   <ItemGroup>
     <EmbeddedResource Include="TestResources\GameCache\test.mp4" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Emulator\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.99.0\build\net45\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.99.0\build\net45\System.Data.SQLite.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

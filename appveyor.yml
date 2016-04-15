@@ -71,9 +71,7 @@ after_test:
     - nuget pack Snowflake.API\Snowflake.API.csproj -IncludeReferencedProjects -Symbols
     - nuget pack Snowflake.Events\Snowflake.Events.csproj -IncludeReferencedProjects -Symbols
     - nuget pack Snowflake\Snowflake.csproj -IncludeReferencedProjects -Symbols
-    - nuget pack Snowflake.InputManager.DirectInput\Snowflake.InputManager.DirectInput.csproj -IncludeReferencedProjects -Symbols
     - nuget pack Snowflake.Tests\Snowflake.Tests.csproj -IncludeReferencedProjects -Symbols
-    - nuget pack Snowflake.StandardAjax\Snowflake.StandardAjax.csproj -IncludeReferencedProjects -Symbols
     - nuget pack Snowflake.Service\Snowflake.Service.csproj -IncludeReferencedProjects -Symbols
 
 artifacts:

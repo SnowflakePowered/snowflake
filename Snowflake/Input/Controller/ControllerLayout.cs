@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Snowflake.Emulator.Input;
 using Snowflake.JsonConverters;
 using Snowflake.Platform;
 
