@@ -45,13 +45,6 @@ namespace Snowflake.Shell.Windows
                 var serverStartEvent = new ServerStartEventArgs(this.loadedCore, serverName);
                 SnowflakeEventManager.EventSource.RaiseEvent(serverStartEvent); //todo Move event registration to SnowflakeEVentManager
             }
-
-            var stoneProvider = this.loadedCore.Get<IStoneProvider>();
-            var pluginManager = this.loadedCore.Get<IPluginManager>();
-            var enumerator = pluginManager.Get<IInputEnumerator>("InputEnumerator-XInput");
-            var layout = stoneProvider.Controllers["XBOX_CONTROLLER"];
-            var defaults = MappedControllerElementCollection.GetDefaultMappings(enumerator.DefaultControllerLayout, layout);
-
         }
 
         public void StartShell() {

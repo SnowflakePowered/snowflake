@@ -10,6 +10,41 @@ namespace Snowflake.Input.Controller.Mapped
 {
     public class MappedControllerElementCollection : IMappedControllerElementCollection
     {
+        private static readonly IDictionary<ControllerElement, KeyboardKey> DefaultKeyboardMappings =
+            new Dictionary<ControllerElement, KeyboardKey>()
+            {
+                {ControllerElement.Button0, KeyboardKey.Key0},
+                {ControllerElement.Button1, KeyboardKey.Key1},
+                {ControllerElement.Button2, KeyboardKey.Key2},
+                {ControllerElement.Button3, KeyboardKey.Key3},
+                {ControllerElement.Button4, KeyboardKey.Key4},
+                {ControllerElement.Button5, KeyboardKey.Key5},
+                {ControllerElement.Button6, KeyboardKey.Key6},
+                {ControllerElement.Button7, KeyboardKey.Key7},
+                {ControllerElement.Button8, KeyboardKey.Key8},
+                {ControllerElement.Button9, KeyboardKey.Key9},
+                {ControllerElement.ButtonStart, KeyboardKey.KeySpacebar},
+                {ControllerElement.ButtonSelect, KeyboardKey.KeyEnter},
+                {ControllerElement.ButtonA, KeyboardKey.KeyZ},
+                {ControllerElement.ButtonB, KeyboardKey.KeyX},
+                {ControllerElement.ButtonX, KeyboardKey.KeyC},
+                {ControllerElement.ButtonY, KeyboardKey.KeyV},
+                {ControllerElement.ButtonC, KeyboardKey.KeyC},
+                {ControllerElement.ButtonL, KeyboardKey.KeyQ},
+                {ControllerElement.ButtonR, KeyboardKey.KeyE},
+                {ControllerElement.DirectionalN, KeyboardKey.KeyUp},
+                {ControllerElement.DirectionalE, KeyboardKey.KeyRight},
+                {ControllerElement.DirectionalS, KeyboardKey.KeyDown},
+                {ControllerElement.DirectionalW, KeyboardKey.KeyLeft},
+                {ControllerElement.AxisLeftAnalogPositiveY, KeyboardKey.KeyW},
+                {ControllerElement.AxisLeftAnalogNegativeX, KeyboardKey.KeyA},
+                {ControllerElement.AxisLeftAnalogNegativeY, KeyboardKey.KeyS},
+                {ControllerElement.AxisLeftAnalogPositiveX, KeyboardKey.KeyD},
+                {ControllerElement.AxisRightAnalogPositiveY, KeyboardKey.KeyI},
+                {ControllerElement.AxisRightAnalogNegativeX, KeyboardKey.KeyJ},
+                {ControllerElement.AxisRightAnalogNegativeY, KeyboardKey.KeyK},
+                {ControllerElement.AxisRightAnalogPositiveX, KeyboardKey.KeyL}
+            };
         public IEnumerator<IMappedControllerElement> GetEnumerator()
         {
             return this.controllerElements.GetEnumerator();
@@ -45,6 +80,31 @@ namespace Snowflake.Input.Controller.Mapped
         /// <returns></returns>
         public static IMappedControllerElementCollection GetDefaultMappings(IControllerLayout realDevice, IControllerLayout virtualDevice)
         {
+            return realDevice.Layout.Keyboard == null
+                ? MappedControllerElementCollection.GetDefaultDeviceMappings(realDevice, virtualDevice)
+                : MappedControllerElementCollection.GetDefaultKeyboardMappings(realDevice, virtualDevice);
+        }
+
+        private static IMappedControllerElementCollection GetDefaultKeyboardMappings(IControllerLayout realDevice, IControllerLayout virtualDevice)
+        {
+            var mappedElements = (from element in virtualDevice.Layout
+                                  where realDevice.Layout[element.Key] != null
+                                  select new MappedControllerElement(element.Key) { DeviceKeyboardKey = 
+                                  (MappedControllerElementCollection.DefaultKeyboardMappings.ContainsKey(element.Key) 
+                                  ? MappedControllerElementCollection.DefaultKeyboardMappings[element.Key] 
+                                  : KeyboardKey.KeyNone)}
+                           );
+            var elementCollection = new MappedControllerElementCollection(realDevice.LayoutID, virtualDevice.LayoutID);
+            foreach (var element in mappedElements)
+            {
+                elementCollection.Add(element);
+            }
+
+            return elementCollection;
+        }
+
+        private static IMappedControllerElementCollection GetDefaultDeviceMappings(IControllerLayout realDevice, IControllerLayout virtualDevice)
+        {
             var mappedElements = (from element in virtualDevice.Layout
                                   where realDevice.Layout[element.Key] != null
                                   select new MappedControllerElement(element.Key) { DeviceElement = element.Key }
@@ -56,7 +116,7 @@ namespace Snowflake.Input.Controller.Mapped
             }
 
             return elementCollection;
-
         }
+        
     }
 }
