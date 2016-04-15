@@ -5,7 +5,7 @@ using Snowflake.Service.HttpServer;
 
 namespace Snowflake.Service.Manager
 {
-    public class ServerManager : IServerManager
+    internal class ServerManager : IServerManager
     {
         private IDictionary<string, IBaseHttpServer> servers;
         public ServerManager()

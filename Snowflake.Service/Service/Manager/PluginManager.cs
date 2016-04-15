@@ -23,7 +23,7 @@ using Snowflake.Events.ServiceEvents;
 namespace Snowflake.Service.Manager
 {
 
-    public class PluginManager : IPluginManager
+    internal class PluginManager : IPluginManager
     {
         public string LoadablesLocation { get; }
         public bool IsInitialized { get; private set; }

@@ -16,26 +16,28 @@ using Snowflake.Utility;
 
 namespace Snowflake.Service
 {
-    public class ScrapeEngine : IScrapeEngine
+    internal class ScrapeEngine : IScrapeEngine
     {
       
-        private readonly ICoreService coreService;
+        private readonly IStoneProvider stoneProvider;
+        private readonly IPluginManager pluginManager;
         
-        public ScrapeEngine(ICoreService coreService)
+        public ScrapeEngine(IStoneProvider stoneProvider, IPluginManager pluginManager)
         {
-            this.coreService = coreService;
+            this.stoneProvider = stoneProvider;
+            this.pluginManager = pluginManager;
         }
 
         public IScrapableInfo GetScrapableInfo(string fileName, IPlatformInfo knownPlatform = null)
         {
-            var fileSignatures = this.coreService.Get<IPluginManager>().Get<IFileSignature>();
+            var fileSignatures = this.pluginManager.Get<IFileSignature>();
             var vettedSignature = fileSignatures
                 .Where(signature => signature.Value.FileExtensionMatches(fileName)).FirstOrDefault(signature => signature.Value.HeaderSignatureMatches(fileName)).Value;
             var platformFromFileExtension =
-                this.coreService.Platforms.FirstOrDefault(
+                this.stoneProvider.Platforms.FirstOrDefault(
                     platform => platform.Value.FileExtensions.Contains(Path.GetExtension(fileName))).Value;
             var romPlatform =
-                this.coreService.Platforms[
+                this.stoneProvider.Platforms[
                     vettedSignature?.SupportedPlatform ??
                     knownPlatform?.PlatformID ?? 
                     platformFromFileExtension.PlatformID
@@ -46,7 +48,7 @@ namespace Snowflake.Service
         public IList<IGameScrapeResult> GetScrapeResults(IScrapableInfo information)
         {
             var scrapers =
-               this.coreService.Get<IPluginManager>()
+               this.pluginManager
                    .Get<IScraper>()
                    .Where(scraper => scraper.Value.SupportedPlatforms.Contains(information.StonePlatformId)).Select(scraper => scraper.Value).OrderByDescending(scraper => scraper.ScraperAccuracy);
             return
@@ -60,7 +62,7 @@ namespace Snowflake.Service
         public IGameInfo GetGameData(IScrapableInfo information, double acceptableAccuracy)
         {
             var scrapers =
-                this.coreService.Get<IPluginManager>()
+                this.pluginManager
                     .Get<IScraper>()
                     .Where(scraper => scraper.Value.SupportedPlatforms.Contains(information.StonePlatformId))
                     .Select(scraper => scraper.Value)
@@ -83,7 +85,7 @@ namespace Snowflake.Service
 
         public IGameInfo GetGameData(IScrapableInfo information, IGameScrapeResult scrapeResult)
         {
-            var scraper = this.coreService.Get<IPluginManager>().Get<IScraper>(scrapeResult.Scraper);
+            var scraper = this.pluginManager.Get<IScraper>(scrapeResult.Scraper);
             return this.GetGameData(information, scrapeResult, scraper);
         }
         public IGameInfo GetGameData(IScrapableInfo information, IGameScrapeResult scrapeResult, IScraper scraper)

@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using System.Runtime.CompilerServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
@@ -6,6 +7,7 @@
 [assembly: AssemblyCompany("SnowflakePowered")]
 [assembly: AssemblyProduct("Snowflake")]
 [assembly: AssemblyCopyright("Copyright © Ronny Chan 2015")]
+[assembly: InternalsVisibleTo("Snowflake.Tests")]
 
 #pragma warning disable 7035
 [assembly: AssemblyVersion("0.1.*")]

@@ -30,8 +30,6 @@ namespace Snowflake.Service
     public class CoreService : ICoreService
     {
         #region Loaded Objects
-        public IDictionary<string, IPlatformInfo> Platforms { get; }
-        public IDictionary<string, IControllerDefinition> Controllers { get; }
         public string AppDataDirectory { get; }
         private readonly IDictionary<Type, object> serviceContainer;
         private ILogger logger;
@@ -54,10 +52,10 @@ namespace Snowflake.Service
             this.RegisterService<IGamepadAbstractionStore>(new GamepadAbstractionStore(Path.Combine(this.AppDataDirectory, "gamepads.db")));
             this.RegisterService<IControllerPortStore>(new ControllerPortStore(Path.Combine(this.AppDataDirectory, "ports.db")));
             this.RegisterService<IEmulatorAssembliesManager>(new EmulatorAssembliesManager(Path.Combine(this.AppDataDirectory, "emulators")));
-            this.RegisterService<IPluginManager>(new PluginManager(this.AppDataDirectory, this)); //todo make this internal
+            this.RegisterService<IPluginManager>(new PluginManager(this.AppDataDirectory, this)); 
             this.RegisterService<IAjaxManager>(new AjaxManager(this)); //todo deprecate with michi-based ipc
             this.RegisterService<IPlatformPreferenceStore>(new PlatformPreferencesStore(Path.Combine(this.AppDataDirectory, "platformprefs.db"), this.Get<IPluginManager>()));
-            this.RegisterService<IScrapeEngine>(new ScrapeEngine(this));
+            this.RegisterService<IScrapeEngine>(new ScrapeEngine(this.Get<IStoneProvider>(), this.Get<IPluginManager>()));
             this.RegisterService<IEmulatorInstanceManager>(new EmulatorInstanceManager(this)); //todo expand instance-based emulators
             var serverManager = this.Get<IServerManager>();
             serverManager.RegisterServer("AjaxApiServer", new ApiServer(this)); //todo deprecate with michi-based ipc
