@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace Snowflake.FileSignatures.SFOSharp
+namespace Snowflake.Plugin.FileSignatures.SFOSharp
 {
     internal static class SFOReaderUtilities
     {

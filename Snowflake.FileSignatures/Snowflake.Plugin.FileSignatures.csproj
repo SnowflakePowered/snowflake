@@ -7,8 +7,8 @@
     <ProjectGuid>{C66356E8-D95E-438A-8BA5-84A04B3D39A4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Snowflake.FileSignatures</RootNamespace>
-    <AssemblyName>Snowflake.FileSignatures</AssemblyName>
+    <RootNamespace>Snowflake.Plugin.FileSignatures</RootNamespace>
+    <AssemblyName>Snowflake.Plugin.FileSignatures</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -127,31 +127,18 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  
   <!-- ILRepack -->
-    <Target Name="AfterBuild" Condition="'$(Configuration)' == 'Release'">
-
-       <ItemGroup>
-        <InputAssemblies Include="$(OutputPath)\$(AssemblyName).dll" />
-        <InputAssemblies Include="$(OutputPath)\DiscUtils.dll" />
-        <InputAssemblies Include="$(OutputPath)\DiscUtils.Common.dll" />
-       </ItemGroup>
-
-       <ItemGroup>
-        <!-- Must be a fully qualified name -->
-        <DoNotInternalizeAssemblies Include="$(AssemblyName)" />
-       </ItemGroup>
-
-       <ILRepack 
-        Parallel="true"
-        Internalize="true"
-        InternalizeExclude="@(DoNotInternalizeAssemblies)"
-        InputAssemblies="@(InputAssemblies)"
-        TargetKind="Dll"
-        OutputFile="$(OutputPath)\$(AssemblyName).dll"
-       />
-
-    </Target>
-<!-- /ILRepack -->
-
+  <Target Name="AfterBuild" Condition="'$(Configuration)' == 'Release'">
+    <ItemGroup>
+      <InputAssemblies Include="$(OutputPath)\$(AssemblyName).dll" />
+      <InputAssemblies Include="$(OutputPath)\DiscUtils.dll" />
+      <InputAssemblies Include="$(OutputPath)\DiscUtils.Common.dll" />
+    </ItemGroup>
+    <ItemGroup>
+      <!-- Must be a fully qualified name -->
+      <DoNotInternalizeAssemblies Include="$(AssemblyName)" />
+    </ItemGroup>
+    <ILRepack Parallel="true" Internalize="true" InternalizeExclude="@(DoNotInternalizeAssemblies)" InputAssemblies="@(InputAssemblies)" TargetKind="Dll" OutputFile="$(OutputPath)\$(AssemblyName).dll" />
+  </Target>
+  <!-- /ILRepack -->
 </Project>

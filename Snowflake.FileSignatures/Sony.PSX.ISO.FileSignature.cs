@@ -7,7 +7,7 @@ using Snowflake.Extensibility;
 using Snowflake.Romfile;
 using Snowflake.Service;
 
-namespace Snowflake.FileSignatures
+namespace Snowflake.Plugin.FileSignatures
 {
     [Plugin("SnowflakeFileSignature-SONY_PSX_ISO")]
     public sealed class SonyPSXISOFileSignature : FileSignature

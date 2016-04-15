@@ -4,7 +4,7 @@ using Snowflake.Extensibility;
 using Snowflake.Romfile;
 using Snowflake.Service;
 
-namespace Snowflake.FileSignatures
+namespace Snowflake.Plugin.FileSignatures
 {
     [Plugin("SnowflakeFileSignature-NINTENDO_NES")]
     public sealed class NintendoNESFileSignature : FileSignature

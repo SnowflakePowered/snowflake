@@ -5,7 +5,7 @@ using Snowflake.Extensibility;
 using Snowflake.Romfile;
 using Snowflake.Service;
 
-namespace Snowflake.FileSignatures
+namespace Snowflake.Plugin.FileSignatures
 {
     [Plugin("SnowflakeFileSignature-SEGA_CD")]
     public sealed class SegaCDFileSignature : FileSignature
