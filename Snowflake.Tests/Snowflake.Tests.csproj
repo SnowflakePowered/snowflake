@@ -110,6 +110,7 @@
     <Compile Include="Scraper\GameImagesResultTests.cs" />
     <Compile Include="Service\HttpServer\BaseHttpServerTests.cs" />
     <Compile Include="Service\PluginManagerTests.cs" />
+    <Compile Include="Service\StoneProviderTests.cs" />
     <Compile Include="Service\WebSocketServer\JSWebSocketServerTests.cs" />
     <EmbeddedResource Include="TestResources\Configurations\ExampleConfigurationSection.ini" />
     <EmbeddedResource Include="TestResources\Configurations\ExampleIterableConfigurationSection.ini" />
