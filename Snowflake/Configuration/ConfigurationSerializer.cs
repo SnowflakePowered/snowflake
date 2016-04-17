@@ -28,7 +28,7 @@ namespace Snowflake.Configuration
 
         public string SerializeValue(object value)
         {
-            if (value == null) return this.TypeMapper.ConvertValue(value);
+            if (value == null) return this.TypeMapper.ConvertValue((object) null);
             Type valueType = value.GetType();
             var converter = typeof(IConfigurationTypeMapper).GetMethod("ConvertValue");
             return (string)converter.MakeGenericMethod(valueType).Invoke(this.TypeMapper, new[] { value });

@@ -11,7 +11,7 @@ namespace Snowflake.Configuration
     /// Inherit from this class and add your own properties, which will be serialized to a configuration file.
     /// </summary>
     //todo extend this doc
-    public interface IConfigurationSection
+    public interface IConfigurationSection : IEnumerable<IConfigurationProperty>
     {
         /// <summary>
         /// The name of the section as it appears in the emulator configuration file

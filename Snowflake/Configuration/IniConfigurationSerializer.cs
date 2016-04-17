@@ -32,18 +32,11 @@ namespace Snowflake.Configuration
         public override string Serialize(IConfigurationSection configurationSection)
         {
             StringBuilder stringBuilder = new StringBuilder();
-
-            IEnumerable<PropertyInfo> properties = configurationSection.GetType()
-                .GetRuntimeProperties()
-                .Where(propertyInfo => propertyInfo.IsDefined(typeof (ConfigurationOptionAttribute), true));
-
             if(this.OutputHeader) stringBuilder.AppendLine($"[{configurationSection.SectionName}]");
 
-            foreach (var prop in properties)
+            foreach (var config in configurationSection)
             {
-                var data = prop.GetCustomAttribute<ConfigurationOptionAttribute>();
-                var value = prop.GetValue(configurationSection);
-                stringBuilder.AppendLine(this.SerializeLine(data.OptionName, value));
+                stringBuilder.AppendLine(this.SerializeLine(config.Metadata.OptionName, config.Value));
             }
             return stringBuilder.ToString();
         }
@@ -52,20 +45,16 @@ namespace Snowflake.Configuration
         {
             StringBuilder stringBuilder = new StringBuilder();
 
-            IEnumerable<PropertyInfo> properties = iterableConfigurationSection.GetType()
-                .GetRuntimeProperties()
-                .Where(propertyInfo => propertyInfo.IsDefined(typeof(ConfigurationOptionAttribute), true));
-
+            
             if (this.OutputHeader) stringBuilder.AppendLine($@"[{iterableConfigurationSection.SectionName
                 .Replace(ConfigurationSerializer.IteratorKey, iterableConfigurationSection.InterationNumber.ToString())}]");
 
-            foreach (var prop in properties)
+            foreach (var config in iterableConfigurationSection)
             {
-                var data = prop.GetCustomAttribute<ConfigurationOptionAttribute>();
-                var value = prop.GetValue(iterableConfigurationSection);
-                stringBuilder.AppendLine(data.IsIterable
-                    ? this.SerializeIterableLine(data.OptionName, value, iterableConfigurationSection.InterationNumber)
-                    : this.SerializeLine(data.OptionName, value));
+              
+                stringBuilder.AppendLine(config.Metadata.Iterable
+                    ? this.SerializeIterableLine(config.Metadata.OptionName, config.Value, iterableConfigurationSection.InterationNumber)
+                    : this.SerializeLine(config.Metadata.OptionName, config.Value));
             }
             return stringBuilder.ToString();
         }
