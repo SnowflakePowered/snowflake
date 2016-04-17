@@ -20,9 +20,36 @@ namespace Snowflake.Configuration.Attributes
         public string DisplayName { get; set; }
 
         /// <summary>
+        /// A description of this configuration option
+        /// </summary>
+        public string Description { get; set; }
+
+        /// <summary>
         /// Whether or not this option is iterable, i.e. the OptionName contains a '{N}' to replace with the iteration
         /// </summary>
-        public bool IsIterable { get; set; } = false;
+        public bool Iterable { get; set; } = false;
+
+        /// <summary>
+        /// Whether or not this option maps to an input device
+        /// </summary>
+        public bool IsInput { get; set; } = false;
+
+        /// <summary>
+        /// Whether or not this option is a simple option (displayed in "Simple" configuration mode)
+        /// </summary>
+        public bool Simple { get; set; } = false;
+
+        /// <summary>
+        /// Whether or not this option is private (not ever displayed to the user)
+        /// </summary>
+        public bool Private { get; set; } = false;
+
+        /// <summary>
+        /// A 'flag' property is never serialized into the configuration option, and is instead used to cause
+        /// side effects to the configuration during emulator instance creation by the emulator handler.
+        /// If a flag affects the configuration, it should be placed in the same section it modifies.
+        /// </summary>
+        public bool Flag { get; set; } = false;
 
         /// <summary>
         /// The name of the option as it appears inside the emulator configuration 
