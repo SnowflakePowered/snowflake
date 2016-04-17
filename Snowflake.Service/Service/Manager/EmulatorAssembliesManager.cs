@@ -24,7 +24,7 @@ namespace Snowflake.Service.Manager
             foreach (var emulatorCore in 
                 from fileName in Directory.GetFiles(this.AssembliesLocation)
                 where Path.GetExtension(fileName) == ".emulatordef"
-                select EmulatorAssembliesManager.ParseEmulatorAssembly(fileName))
+                select JsonConvert.DeserializeObject<EmulatorAssembly>(fileName))
             {
                 this.emulatorAssemblies.Add(emulatorCore.EmulatorID, emulatorCore);
             }
@@ -33,12 +33,5 @@ namespace Snowflake.Service.Manager
         public string GetAssemblyDirectory(IEmulatorAssembly assembly){
             return Path.Combine(this.AssembliesLocation, assembly.EmulatorID);
         }
-        public static IEmulatorAssembly ParseEmulatorAssembly(string emulatorCorePath)
-        {
-            var emulator = JsonConvert.DeserializeObject<IDictionary<string, string>>(File.ReadAllText(emulatorCorePath));
-            return EmulatorAssembly.FromJsonProtoTemplate(emulator);
-        }
-
-       
     }
 }
