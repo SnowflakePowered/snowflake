@@ -38,6 +38,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Plugin.InputEnume
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Plugin.InputManager.Win32", "Snowflake.Plugin.InputManager.Win32\Snowflake.Plugin.InputManager.Win32.csproj", "{F359B3F3-D477-423A-B485-EA8D7C046836}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EmulatorHandlers", "EmulatorHandlers", "{413B8EE5-AB8D-4FB3-9832-8EBFCD24A116}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Plugin.EmulatorHandler.RetroArch", "EmulatorHandlers\Snowflake.Plugin.EmulatorHandler.RetroArch\Snowflake.Plugin.EmulatorHandler.RetroArch.csproj", "{287A6DA9-32DE-4488-9C6A-FD14571295CE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -158,6 +162,14 @@ Global
 		{F359B3F3-D477-423A-B485-EA8D7C046836}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F359B3F3-D477-423A-B485-EA8D7C046836}.Release|x86.ActiveCfg = Release|Any CPU
 		{F359B3F3-D477-423A-B485-EA8D7C046836}.Release|x86.Build.0 = Release|Any CPU
+		{287A6DA9-32DE-4488-9C6A-FD14571295CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{287A6DA9-32DE-4488-9C6A-FD14571295CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{287A6DA9-32DE-4488-9C6A-FD14571295CE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{287A6DA9-32DE-4488-9C6A-FD14571295CE}.Debug|x86.Build.0 = Debug|Any CPU
+		{287A6DA9-32DE-4488-9C6A-FD14571295CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{287A6DA9-32DE-4488-9C6A-FD14571295CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{287A6DA9-32DE-4488-9C6A-FD14571295CE}.Release|x86.ActiveCfg = Release|Any CPU
+		{287A6DA9-32DE-4488-9C6A-FD14571295CE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -166,5 +178,6 @@ Global
 		{E84493C8-0171-40A8-94C0-BEFA06C9138B} = {84DDAD8A-5C57-46EC-BE2C-EA7F1827AD76}
 		{E05BE9C3-3E1E-4100-8DAC-DFF598C11477} = {84DDAD8A-5C57-46EC-BE2C-EA7F1827AD76}
 		{B152A58A-7D3C-4C54-9BFC-77023180A4D7} = {84DDAD8A-5C57-46EC-BE2C-EA7F1827AD76}
+		{287A6DA9-32DE-4488-9C6A-FD14571295CE} = {413B8EE5-AB8D-4FB3-9832-8EBFCD24A116}
 	EndGlobalSection
 EndGlobal

@@ -79,12 +79,16 @@
     <Compile Include="Ajax\IJSRequest.cs" />
     <Compile Include="Ajax\IJSResponse.cs" />
     <Compile Include="Configuration\Attributes\ConfigurationOptionAttribute.cs" />
+    <Compile Include="Configuration\IConfigurationCollection.cs" />
+    <Compile Include="Configuration\IConfigurationProperty.cs" />
+    <Compile Include="Configuration\IInputConfigurationSection.cs" />
+    <Compile Include="Configuration\IInputConfigurationSerializer.cs" />
     <Compile Include="Configuration\IIterableConfigurationSection.cs" />
     <Compile Include="Configuration\IConfigurationSection.cs" />
     <Compile Include="Configuration\IConfigurationSerializer.cs" />
     <Compile Include="Configuration\IConfigurationTypeMapper.cs" />
     <Compile Include="Configuration\Attributes\SelectionOptionAttribute.cs" />
-    <Compile Include="Emulator\EmulatorInstanceState.cs" />
+    <Compile Include="Emulator\IEmulatorInstance.cs" />
     <Compile Include="Extensibility\ContainerLoadPriorityAttribute.cs" />
     <Compile Include="Extensibility\ContainerLoadPriority.cs" />
     <Compile Include="Input\Controller\ControllerElement.cs" />
