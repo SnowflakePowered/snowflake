@@ -1,4 +1,7 @@
-﻿namespace Snowflake.Configuration
+﻿using System.Collections.Generic;
+using Snowflake.Emulator;
+
+namespace Snowflake.Configuration
 {
     /// <summary>
     /// A configuration serializer serializes a ConfigurationSection into valid emulator configuration.
@@ -44,7 +47,7 @@
         string SerializeIterableLine<T>(string key, T value, int iteration);
 
         /// <summary>
-        /// Serializes the specified configuration section.
+        /// Serializes the specified configuration section, in an instance-unaware way.
         /// </summary>
         /// <param name="configurationSection">The configuration section object to serialize</param>
         /// <returns>The entire section serialized as a string</returns>

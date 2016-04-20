@@ -25,5 +25,9 @@ namespace Snowflake.Configuration
         /// The file this configuration section appears in
         /// </summary>
         string ConfigurationFileName { get; }
+        /// <summary>
+        /// A description of what this section does
+        /// </summary>
+        string Description { get; }
     }
 }

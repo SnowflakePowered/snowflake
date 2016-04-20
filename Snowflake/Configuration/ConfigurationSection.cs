@@ -11,9 +11,23 @@ namespace Snowflake.Configuration
 {
     public abstract class ConfigurationSection : IConfigurationSection
     {
-        public string SectionName { get; protected set; }
-        public string DisplayName { get; protected set; }
-        public string ConfigurationFileName { get; protected set; }
+        public string SectionName { get; }
+        public string DisplayName { get; }
+        public string ConfigurationFileName { get; }
+        public string Description { get; }
+
+        protected ConfigurationSection(string sectionName, string displayName, string configurationFilename, string description)
+        {
+            this.SectionName = sectionName;
+            this.DisplayName = displayName;
+            this.ConfigurationFileName = configurationFilename;
+            this.Description = description;
+        }
+
+        protected ConfigurationSection(string sectionName, string displayName, string configurationFilename)
+            : this(sectionName, displayName, configurationFilename, String.Empty)
+        {
+        }
 
         public IEnumerator<IConfigurationProperty> GetEnumerator()
         {

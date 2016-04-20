@@ -8,6 +8,7 @@ using Snowflake.Input.Device;
 
 namespace Snowflake.Configuration
 {
+    //todo revise this.
     /// <summary>
     /// A configuration serializer for an input configuration file.
     /// </summary>

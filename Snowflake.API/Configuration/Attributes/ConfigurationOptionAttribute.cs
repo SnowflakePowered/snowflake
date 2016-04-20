@@ -52,6 +52,26 @@ namespace Snowflake.Configuration.Attributes
         public bool Flag { get; set; } = false;
 
         /// <summary>
+        /// The maximum value allowable for a number value
+        /// </summary>
+        public double Max { get; set; } = 0;
+
+        /// <summary>
+        /// The minimum value allowable for a number value
+        /// </summary>
+        public double Min { get; set; } = 0;
+
+        /// <summary>
+        /// The increment to increase this by
+        /// </summary>
+        public double Increment { get; set; } = 1;
+
+        /// <summary>
+        /// Whether or not this string is a file path.
+        /// </summary>
+        public bool FilePath { get; set; } = false;
+
+        /// <summary>
         /// The name of the option as it appears inside the emulator configuration 
         /// </summary>
         public string OptionName { get; }
