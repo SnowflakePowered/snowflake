@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{287A6DA9-32DE-4488-9C6A-FD14571295CE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Snowflake.Plugin.EmulatorHandler.RetroArch</RootNamespace>
+    <AssemblyName>Snowflake.Plugin.EmulatorHandler.RetroArch</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Configuration\FramethrottleConfiguration.cs" />
+    <Compile Include="Configuration\AudioConfiguration.cs" />
+    <Compile Include="Configuration\Internal\BuiltinConfiguration.cs" />
+    <Compile Include="Configuration\Internal\BundleConfiguration.cs" />
+    <Compile Include="Configuration\Internal\CameraConfiguration.cs" />
+    <Compile Include="Configuration\Internal\AchievementConfiguration.cs" />
+    <Compile Include="Configuration\Internal\CoreConfiguration.cs" />
+    <Compile Include="Configuration\DirectoryConfiguration.cs" />
+    <Compile Include="Configuration\Internal\FilterConfiguration.cs" />
+    <Compile Include="Configuration\Internal\GameConfiguration.cs" />
+    <Compile Include="Configuration\InputConfiguration.cs" />
+    <Compile Include="Configuration\Internal\LocationConfiguration.cs" />
+    <Compile Include="Configuration\Internal\LogConfiguration.cs" />
+    <Compile Include="Configuration\Internal\MenuConfiguration.cs" />
+    <Compile Include="Configuration\NetplayConfiguration.cs" />
+    <Compile Include="Configuration\Internal\NetworkConfiguration.cs" />
+    <Compile Include="Configuration\PauseConfiguration.cs" />
+    <Compile Include="Configuration\Internal\RecordConfiguration.cs" />
+    <Compile Include="RetroArchConfigurationCollection.cs" />
+    <Compile Include="RetroArchConfigurationCollection.Make.cs" />
+    <Compile Include="Configuration\Internal\RewindConfiguration.cs" />
+    <Compile Include="Configuration\SaveConfiguration.cs" />
+    <Compile Include="Configuration\Internal\StdinConfiguration.cs" />
+    <Compile Include="Configuration\Internal\ThreadedConfiguration.cs" />
+    <Compile Include="Configuration\Internal\UiConfiguration.cs" />
+    <Compile Include="Configuration\Internal\UserConfiguration.cs" />
+    <Compile Include="Configuration\ConfigConfiguration.cs" />
+    <Compile Include="Configuration\VideoConfiguration.cs" />
+    <Compile Include="Configuration\Internal\XmbConfiguration.cs" />
+    <Compile Include="Selections\AudioConfiguration\AspectRatioIndex.cs" />
+    <Compile Include="Selections\AudioConfiguration\AudioDriver.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RetroArchConfigSerializer.cs" />
+    <Compile Include="Selections\AudioConfiguration\AudioResampler.cs" />
+    <Compile Include="Selections\InputConfiguration\InputDriver.cs" />
+    <Compile Include="Selections\InputConfiguration\InputJoypadDriver.cs" />
+    <Compile Include="Selections\InputConfiguration\InputPollType.cs" />
+    <Compile Include="Selections\MenuDriver.cs" />
+    <Compile Include="Selections\VideoConfiguration\VideoDriver.cs" />
+    <Compile Include="Selections\VideoConfiguration\VideoRotation.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\Snowflake.API\Snowflake.API.csproj">
+      <Project>{2841aeea-03d5-47b0-9d90-375dfa19559a}</Project>
+      <Name>Snowflake.API</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Snowflake\Snowflake.csproj">
+      <Project>{8f1d65ed-4a96-4a0a-8371-53655a60a2b3}</Project>
+      <Name>Snowflake</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
