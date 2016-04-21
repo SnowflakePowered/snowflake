@@ -60,7 +60,6 @@
     <Compile Include="Configuration\PauseConfiguration.cs" />
     <Compile Include="Configuration\Internal\RecordConfiguration.cs" />
     <Compile Include="RetroArchConfigurationCollection.cs" />
-    <Compile Include="RetroArchConfigurationCollection.Make.cs" />
     <Compile Include="Configuration\Internal\RewindConfiguration.cs" />
     <Compile Include="Configuration\SaveConfiguration.cs" />
     <Compile Include="Configuration\Internal\StdinConfiguration.cs" />

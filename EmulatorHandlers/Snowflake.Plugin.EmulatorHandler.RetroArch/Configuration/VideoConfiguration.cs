@@ -26,10 +26,10 @@ namespace Snowflake.Plugin.EmulatorHandler.RetroArch.Configuration
         [ConfigurationOption("video_driver", DisplayName = "Video Driver", Simple = true)]
         public VideoDriver VideoDriver { get; set; } = VideoDriver.OpenGL;
 
-        [ConfigurationOption("video_filter", DisplayName = "Video Filter", Private = true, FilePath = true)]
+        [ConfigurationOption("video_filter", DisplayName = "Video Filter", Private = true, IsPath = true)]
         public string VideoFilter { get; set; } = "";
 
-        [ConfigurationOption("video_filter_dir", DisplayName = "Video Filter Dir", FilePath = true, Private = true)]
+        [ConfigurationOption("video_filter_dir", DisplayName = "Video Filter Dir", IsPath = true, Private = true)]
         public string VideoFilterDir { get; set; } = "default";
 
         [ConfigurationOption("video_font_enable", DisplayName = "Video Font Enable", Private = true)]

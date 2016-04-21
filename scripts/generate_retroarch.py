@@ -69,8 +69,6 @@ def main(file):
             
             if type == 'string':
                 value = '"{0}"'.format(value);
-            if type == 'decimal':
-                value = ''.join([value, 'M'])
             option = template.format(optionname, friendly, type, pascal, value, ", FilePath = true, Private = true" if sectionname == "directory" else "")
             if type == 'string':
                 option = '\n'.join([strtodo, option])
@@ -119,7 +117,7 @@ def get_type(value):
         pass
     try:
         Decimal(value)
-        return 'decimal'
+        return 'double'
     except:
         pass
     if value in ['true', 'false']:
