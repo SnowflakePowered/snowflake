@@ -97,8 +97,9 @@
     <Compile Include="Ajax\JSMethod.cs" />
     <Compile Include="Ajax\JSRequest.cs" />
     <Compile Include="Ajax\JSResponse.cs" />
-    <Compile Include="Configuration\ConfigurationCollection.cs" />
+    <Compile Include="Configuration\ConfigurationOption.cs" />
     <Compile Include="Configuration\ConfigurationProperty.cs" />
+    <Compile Include="Configuration\ConfigurationCollection.cs" />
     <Compile Include="Configuration\ConfigurationSectionStore.cs" />
     <Compile Include="Configuration\ConfigurationTypeMapper.cs" />
     <Compile Include="Configuration\DefaultConfigurationTypeMapper.cs" />

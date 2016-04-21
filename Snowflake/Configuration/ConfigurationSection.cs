@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Snowflake.Configuration.Attributes;
 
 namespace Snowflake.Configuration
@@ -15,6 +17,7 @@ namespace Snowflake.Configuration
         public string DisplayName { get; }
         public string ConfigurationFileName { get; }
         public string Description { get; }
+        public IReadOnlyDictionary<string, IConfigurationOption> Options { get; }
 
         protected ConfigurationSection(string sectionName, string displayName, string configurationFilename, string description)
         {
@@ -22,26 +25,23 @@ namespace Snowflake.Configuration
             this.DisplayName = displayName;
             this.ConfigurationFileName = configurationFilename;
             this.Description = description;
+            //cache the configuration properties of this section
+            this.Options = this.GetConfigurationProperties();
         }
 
+        private IReadOnlyDictionary<string, IConfigurationOption> GetConfigurationProperties()
+        {
+            return (from propertyInfo in this.GetType().GetRuntimeProperties()
+                where propertyInfo.IsDefined(typeof (ConfigurationOptionAttribute), true)
+                let option = new ConfigurationOption(propertyInfo, this) as IConfigurationOption
+                select option)
+                .ToDictionary(option => option.KeyName, option => option);
+        }
+
+      
         protected ConfigurationSection(string sectionName, string displayName, string configurationFilename)
             : this(sectionName, displayName, configurationFilename, String.Empty)
         {
-        }
-
-        public IEnumerator<IConfigurationProperty> GetEnumerator()
-        {
-            return (from propertyInfo in this.GetType()
-                .GetRuntimeProperties()
-                where propertyInfo.IsDefined(typeof (ConfigurationOptionAttribute), true)
-                let metadata = propertyInfo.GetCustomAttribute<ConfigurationOptionAttribute>()
-                let value = propertyInfo.GetValue(this)
-                select new ConfigurationProperty(value, metadata)).GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
         }
     }
 }

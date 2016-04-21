@@ -8,6 +8,15 @@ namespace Snowflake.Configuration
 {
     public abstract class IterableConfigurationSection : ConfigurationSection, IIterableConfigurationSection
     {
-        public int InterationNumber { get; set; }  
+        public int InterationNumber { get; set; }
+
+        //todo add iteration number construct
+        protected IterableConfigurationSection(string sectionName, string displayName, string configurationFilename, string description) : base(sectionName, displayName, configurationFilename, description)
+        {
+        }
+
+        protected IterableConfigurationSection(string sectionName, string displayName, string configurationFilename) : base(sectionName, displayName, configurationFilename)
+        {
+        }
     }
 }

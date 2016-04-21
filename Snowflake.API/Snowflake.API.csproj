@@ -80,6 +80,7 @@
     <Compile Include="Ajax\IJSResponse.cs" />
     <Compile Include="Configuration\Attributes\ConfigurationOptionAttribute.cs" />
     <Compile Include="Configuration\IConfigurationCollection.cs" />
+    <Compile Include="Configuration\IConfigurationOption.cs" />
     <Compile Include="Configuration\IConfigurationProperty.cs" />
     <Compile Include="Configuration\IInputConfigurationSection.cs" />
     <Compile Include="Configuration\IInputConfigurationSerializer.cs" />

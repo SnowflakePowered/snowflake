@@ -1,87 +1,87 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System;
 
-namespace Snowflake.Configuration.Attributes
+namespace Snowflake.Configuration
 {
     /// <summary>
-    /// Represents one option in an emulator configuration inside a configuration section.
-    /// Typically configuration options must be a double, bool, integer or an enum value in order to be safe,
-    /// type information may be lost when serializing into a wire format.
+    /// Represents a configuration option.
     /// </summary>
-    /// <see cref="Snowflake.Configuration.IConfigurationSection"></see>
-    /// <seealso cref="System.Attribute" />
-    [AttributeUsage(AttributeTargets.Property)]
-    public sealed class ConfigurationOptionAttribute : Attribute
+    public interface IConfigurationOption
     {
         /// <summary>
         /// The display name for human readable purposes of this option
         /// </summary>
-        public string DisplayName { get; set; }
+        string DisplayName { get; }
 
         /// <summary>
         /// A description of this configuration option
         /// </summary>
-        public string Description { get; set; }
+        string Description { get; }
 
         /// <summary>
         /// Whether or not this option is iterable, i.e. the OptionName contains a '{N}' to replace with the iteration
         /// </summary>
-        public bool Iterable { get; set; } = false;
+        bool Iterable { get; }
 
         /// <summary>
         /// Whether or not this option maps to an input device
         /// </summary>
-        public bool IsInput { get; set; } = false;
+        bool IsInput { get; }
 
         /// <summary>
         /// Whether or not this option is a simple option (displayed in "Simple" configuration mode)
         /// </summary>
-        public bool Simple { get; set; } = false;
+        bool Simple { get; }
 
         /// <summary>
         /// Whether or not this option is private (not ever displayed to the user)
         /// </summary>
-        public bool Private { get; set; } = false;
+        bool Private { get; }
 
         /// <summary>
         /// A 'flag' property is never serialized into the configuration option, and is instead used to cause
         /// side effects to the configuration during emulator instance creation by the emulator handler.
         /// If a flag affects the configuration, it should be placed in the same section it modifies.
         /// </summary>
-        public bool Flag { get; set; } = false;
+        bool Flag { get; }
 
         /// <summary>
         /// The maximum value allowable for a number value
         /// </summary>
-        public double Max { get; set; } = 0;
+        double Max { get; }
 
         /// <summary>
         /// The minimum value allowable for a number value
         /// </summary>
-        public double Min { get; set; } = 0;
+        double Min { get; }
 
         /// <summary>
-        /// The increment to increase a numerical value by
+        /// The increment to increase this by
         /// </summary>
-        public double Increment { get; set; } = 1;
+        double Increment { get; }
 
         /// <summary>
         /// Whether or not this string is a file path.
         /// </summary>
-        public bool IsPath { get; set; } = false;
+        bool IsPath { get; }
 
         /// <summary>
         /// The name of the option as it appears inside the emulator configuration 
         /// </summary>
-        public string OptionName { get; }
+        string OptionName { get; }
 
-        public ConfigurationOptionAttribute(string optionName)
-        {
-            this.OptionName = optionName;
-        }
+        /// <summary>
+        /// The key of the configuration option
+        /// </summary>
+        string KeyName { get; }
 
+        /// <summary>
+        /// The type this configuration represents
+        /// </summary>
+        Type Type { get; }
+
+        /// <summary>
+        /// The value of this configuration option
+        /// </summary>
+        object Value { get; set; }
     }
 }

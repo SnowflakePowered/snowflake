@@ -34,9 +34,9 @@ namespace Snowflake.Configuration
             StringBuilder stringBuilder = new StringBuilder();
             if(this.OutputHeader) stringBuilder.AppendLine($"[{configurationSection.SectionName}]");
 
-            foreach (var config in configurationSection)
+            foreach (var config in configurationSection.Options.Values)
             {
-                stringBuilder.AppendLine(this.SerializeLine(config.Metadata.OptionName, config.Value));
+                stringBuilder.AppendLine(this.SerializeLine(config.OptionName, config.Value));
             }
             return stringBuilder.ToString();
         }
@@ -49,12 +49,13 @@ namespace Snowflake.Configuration
             if (this.OutputHeader) stringBuilder.AppendLine($@"[{iterableConfigurationSection.SectionName
                 .Replace(ConfigurationSerializer.IteratorKey, iterableConfigurationSection.InterationNumber.ToString())}]");
 
-            foreach (var config in iterableConfigurationSection)
+            foreach (var config in iterableConfigurationSection.Options.Values)
             {
               
-                stringBuilder.AppendLine(config.Metadata.Iterable
-                    ? this.SerializeIterableLine(config.Metadata.OptionName, config.Value, iterableConfigurationSection.InterationNumber)
-                    : this.SerializeLine(config.Metadata.OptionName, config.Value));
+                stringBuilder.AppendLine(config.Iterable
+                    ? this.SerializeIterableLine(config.OptionName, config.Value, 
+                    iterableConfigurationSection.InterationNumber)
+                    : this.SerializeLine(config.OptionName, config.Value));
             }
             return stringBuilder.ToString();
         }
