@@ -39,7 +39,7 @@ namespace Snowflake.Plugin.EmulatorHandler.RetroArch.Configuration
         public string VideoFontPath { get; set; } = "";
 
         [ConfigurationOption("video_font_size", DisplayName = "Video Font Size", Private = true)]
-        public decimal VideoFontSize { get; set; } = 32.000000M;
+        public double VideoFontSize { get; set; } = 32.000000;
 
         [ConfigurationOption("video_force_srgb_disable", DisplayName = "Force-disable sRGB FBO")]
         public bool VideoForceSrgbDisable { get; set; } = false;
@@ -69,22 +69,22 @@ namespace Snowflake.Plugin.EmulatorHandler.RetroArch.Configuration
         public string VideoMessageColor { get; set; } = "ffff00";
 
         [ConfigurationOption("video_message_pos_x", DisplayName = "Video Message Pos X", Private = true)]
-        public decimal VideoMessagePosX { get; set; } = 0.050000M;
+        public double VideoMessagePosX { get; set; } = 0.050000;
 
         [ConfigurationOption("video_message_pos_y", DisplayName = "Video Message Pos Y", Private = true)]
-        public decimal VideoMessagePosY { get; set; } = 0.050000M;
+        public double VideoMessagePosY { get; set; } = 0.050000;
 
         [ConfigurationOption("video_monitor_index", DisplayName = "Video Monitor Index", Private = true)]
         public int VideoMonitorIndex { get; set; } = 0;
 
         [ConfigurationOption("video_refresh_rate", DisplayName = "Video Refresh Rate", Private = true)]
-        public decimal VideoRefreshRate { get; set; } = 59.950001M;
+        public double VideoRefreshRate { get; set; } = 59.950001;
 
         [ConfigurationOption("video_rotation", DisplayName = "Video Rotation")]
         public VideoRotation VideoRotation { get; set; } = VideoRotation.Normal;
 
         [ConfigurationOption("video_scale", DisplayName = "Windowed Scale", Simple = true, Min = 1, Max = 10)]
-        public decimal VideoScale { get; set; } = 3.000000M;
+        public double VideoScale { get; set; } = 3.000000;
 
         [ConfigurationOption("video_scale_integer", DisplayName = "Integer Scaling", Simple = true)]
         public bool VideoScaleInteger { get; set; } = false;
@@ -135,7 +135,7 @@ namespace Snowflake.Plugin.EmulatorHandler.RetroArch.Configuration
 
         // This will never be used because the config aspect ratio index is not accessible in the enum by design
         [ConfigurationOption("video_aspect_ratio", DisplayName = "Video Aspect Ratio (deprecated)", Private = true)]
-        public decimal VideoAspectRatio { get; set; } = -1.000000M;
+        public double VideoAspectRatio { get; set; } = -1.000000;
 
         [ConfigurationOption("video_aspect_ratio_auto", DisplayName = "Video Aspect Ratio Auto (deprecated)", Private = true)]
         public bool VideoAspectRatioAuto { get; set; } = false;

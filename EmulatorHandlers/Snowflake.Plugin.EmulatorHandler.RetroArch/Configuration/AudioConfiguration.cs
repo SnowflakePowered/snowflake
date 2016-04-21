@@ -30,7 +30,7 @@ namespace Snowflake.Plugin.EmulatorHandler.RetroArch.Configuration
         public int AudioLatency { get; set; } = 64;
 
         [ConfigurationOption("audio_max_timing_skew", DisplayName = "Audio Max Timing Skew", Max = 0.5, Increment = 0.01)]
-        public decimal AudioMaxTimingSkew { get; set; } = 0.050000M;
+        public double AudioMaxTimingSkew { get; set; } = 0.050000;
 
         [ConfigurationOption("audio_mute_enable", DisplayName = "Audio Mute Enable")]
         public bool AudioMuteEnable { get; set; } = false;
@@ -42,7 +42,7 @@ namespace Snowflake.Plugin.EmulatorHandler.RetroArch.Configuration
         public bool AudioRateControl { get; set; } = true;
 
         [ConfigurationOption("audio_rate_control_delta", DisplayName = "Audio Rate Control Delta", Increment = 0.001, Max = 1.0 )]
-        public decimal AudioRateControlDelta { get; set; } = 0.005000M;
+        public double AudioRateControlDelta { get; set; } = 0.005000;
 
         [ConfigurationOption("audio_resampler", DisplayName = "Audio Resampler")]
         public AudioResampler AudioResampler { get; set; } = AudioResampler.Sinc;
@@ -51,7 +51,7 @@ namespace Snowflake.Plugin.EmulatorHandler.RetroArch.Configuration
         public bool AudioSync { get; set; } = true;
 
         [ConfigurationOption("audio_volume", DisplayName = "Audio Volume (db)", Increment = 1, Max = 10, Min = -80)]
-        public decimal AudioVolume { get; set; } = 0.000000M;
+        public double AudioVolume { get; set; } = 0.000000;
 
         public AudioConfiguration() : base("audio", "Audio Options", "retroarch.cfg")
         {

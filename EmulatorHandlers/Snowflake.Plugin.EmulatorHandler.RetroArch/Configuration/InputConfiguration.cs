@@ -13,7 +13,7 @@ namespace Snowflake.Plugin.EmulatorHandler.RetroArch.Configuration
         [ConfigurationOption("input_autodetect_enable", DisplayName = "Enable RetroArch Input Profile Auto Detection", Private = true)]
         public bool InputAutodetectEnable { get; set; } = false;
         [ConfigurationOption("input_axis_threshold", DisplayName = "Input Axis Threshold")]
-        public decimal InputAxisThreshold { get; set; } = 0.500000M;
+        public double InputAxisThreshold { get; set; } = 0.500000;
         [ConfigurationOption("input_descriptor_hide_unbound", DisplayName = "Input Descriptor Hide Unbound")]
         public bool InputDescriptorHideUnbound { get; set; } = false;
         [ConfigurationOption("input_descriptor_label_show", DisplayName = "Input Descriptor Label Show")]
@@ -55,10 +55,10 @@ namespace Snowflake.Plugin.EmulatorHandler.RetroArch.Configuration
         public bool InputOverlayHideInMenu { get; set; } = true;
 
         [ConfigurationOption("input_overlay_opacity", DisplayName = "Input Overlay Opacity", Private = true)]
-        public decimal InputOverlayOpacity { get; set; } = 0.700000M;
+        public double InputOverlayOpacity { get; set; } = 0.700000;
 
         [ConfigurationOption("input_overlay_scale", DisplayName = "Input Overlay Scale", Private = true)]
-        public decimal InputOverlayScale { get; set; } = 1.000000M;
+        public double InputOverlayScale { get; set; } = 1.000000;
         #endregion
         
         [ConfigurationOption("input_poll_type_behavior", DisplayName = "Input Poll Type Behavior")]

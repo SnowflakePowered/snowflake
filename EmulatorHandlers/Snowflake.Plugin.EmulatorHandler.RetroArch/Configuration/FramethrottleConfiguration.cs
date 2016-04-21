@@ -11,10 +11,10 @@ namespace Snowflake.Plugin.EmulatorHandler.RetroArch.Configuration
     public class FramethrottleConfiguration : ConfigurationSection
     {
         [ConfigurationOption("fastforward_ratio", DisplayName = "Maximum Run Speed")]
-        public decimal FastforwardRatio { get; set; } = 0.000000M;
+        public double FastforwardRatio { get; set; } = 0.000000;
 
         [ConfigurationOption("slowmotion_ratio", DisplayName = "Slowmotion Ratio")]
-        public decimal SlowmotionRatio { get; set; } = 3.000000M;
+        public double SlowmotionRatio { get; set; } = 3.000000;
 
         public FramethrottleConfiguration() : base("framethottle", "Framethrottle", "retroarch.cfg")
         {
