@@ -92,7 +92,6 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Configuration\ExampleConfigurationSection.cs" />
-    <Compile Include="Configuration\ExampleIterableConfigurationSection.cs" />
     <Compile Include="Configuration\IniConfigurationSerializerTests.cs" />
     <Compile Include="Events\SnowflakeEventManagerTests.cs" />
     <Compile Include="Events\StandardEventsTests.cs" />

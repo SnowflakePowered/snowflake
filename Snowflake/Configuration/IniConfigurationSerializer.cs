@@ -24,11 +24,6 @@ namespace Snowflake.Configuration
             return $"{key} = {this.SerializeValue(value)}";
         }
 
-        public override string SerializeIterableLine<T>(string key, T value, int iteration)
-        {
-            return $"{key.Replace(ConfigurationSerializer.IteratorKey, iteration.ToString())} = {this.SerializeValue(value)}";
-        }
-
         public override string Serialize(IConfigurationSection configurationSection)
         {
             StringBuilder stringBuilder = new StringBuilder();
@@ -37,25 +32,6 @@ namespace Snowflake.Configuration
             foreach (var config in configurationSection.Options.Values)
             {
                 stringBuilder.AppendLine(this.SerializeLine(config.OptionName, config.Value));
-            }
-            return stringBuilder.ToString();
-        }
-
-        public override string Serialize(IIterableConfigurationSection iterableConfigurationSection)
-        {
-            StringBuilder stringBuilder = new StringBuilder();
-
-            
-            if (this.OutputHeader) stringBuilder.AppendLine($@"[{iterableConfigurationSection.SectionName
-                .Replace(ConfigurationSerializer.IteratorKey, iterableConfigurationSection.InterationNumber.ToString())}]");
-
-            foreach (var config in iterableConfigurationSection.Options.Values)
-            {
-              
-                stringBuilder.AppendLine(config.Iterable
-                    ? this.SerializeIterableLine(config.OptionName, config.Value, 
-                    iterableConfigurationSection.InterationNumber)
-                    : this.SerializeLine(config.OptionName, config.Value));
             }
             return stringBuilder.ToString();
         }

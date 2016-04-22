@@ -82,9 +82,6 @@
     <Compile Include="Configuration\IConfigurationCollection.cs" />
     <Compile Include="Configuration\IConfigurationOption.cs" />
     <Compile Include="Configuration\IConfigurationProperty.cs" />
-    <Compile Include="Configuration\IInputConfigurationSection.cs" />
-    <Compile Include="Configuration\IInputConfigurationSerializer.cs" />
-    <Compile Include="Configuration\IIterableConfigurationSection.cs" />
     <Compile Include="Configuration\IConfigurationSection.cs" />
     <Compile Include="Configuration\IConfigurationSerializer.cs" />
     <Compile Include="Configuration\IConfigurationTypeMapper.cs" />

@@ -20,14 +20,5 @@ namespace Snowflake.Configuration.Tests
             Assert.Equal(TestUtilities.GetStringResource("Configurations.ExampleConfigurationSection.ini"),
                 serializedValue);
         }
-
-        [Fact]
-        public void IniConfigurationSerializer_SerializeIterableTest()
-        {
-            var serializer = new IniConfigurationSerializer(new BooleanMapping("true", "false"), "null", true);
-            string serializedValue = serializer.Serialize(new ExampleIterableConfigurationSection(278));
-            Assert.Equal(TestUtilities.GetStringResource("Configurations.ExampleIterableConfigurationSection.ini"),
-                serializedValue);
-        }
     }
 }

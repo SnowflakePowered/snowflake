@@ -27,16 +27,6 @@ namespace Snowflake.Configuration.Attributes
         public string Description { get; set; }
 
         /// <summary>
-        /// Whether or not this option is iterable, i.e. the OptionName contains a '{N}' to replace with the iteration
-        /// </summary>
-        public bool Iterable { get; set; } = false;
-
-        /// <summary>
-        /// Whether or not this option maps to an input device
-        /// </summary>
-        public bool IsInput { get; set; } = false;
-
-        /// <summary>
         /// Whether or not this option is a simple option (displayed in "Simple" configuration mode)
         /// </summary>
         public bool Simple { get; set; } = false;

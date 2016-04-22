@@ -44,10 +44,6 @@ namespace Snowflake.Emulator
         /// </summary>
         string InstanceDirectory { get; }
         /// <summary>
-        /// The input configuration associated with this instance
-        /// </summary>
-        IDictionary<IInputConfigurationSection, IInputConfigurationSerializer> InputConfiguration { get; }
-        /// <summary>
         /// The configuration sections associated with this instance
         /// </summary>
         IDictionary<IConfigurationSection, IConfigurationSerializer> ConfigurationSections { get; }

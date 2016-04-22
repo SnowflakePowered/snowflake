@@ -19,16 +19,13 @@ namespace Snowflake.Emulator
         public IEmulatorAssembly EmulatorAssembly { get; }
         public IGameInfo EmulatedGame { get; }
         public string InstanceDirectory { get; }
-        public IDictionary<IInputConfigurationSection, IInputConfigurationSerializer> InputConfiguration { get; }
         public IDictionary<IConfigurationSection, IConfigurationSerializer> ConfigurationSections { get; }
         public IConfigurationSection ConfigurationFlagSection { get; }
 
         public void Create()
         {
-            var configs = (from config in this.ConfigurationSections
-             let isIterable = config.Key is IIterableConfigurationSection
-             select isIterable ? Tuple.Create(config.Key.ConfigurationFileName, config.Value.Serialize(config.Key as IIterableConfigurationSection))
-             : Tuple.Create(config.Key.ConfigurationFileName, config.Value.Serialize(config.Key)));
+             var configs = (from config in this.ConfigurationSections
+             select Tuple.Create(config.Key.ConfigurationFileName, config.Value.Serialize(config.Key)));
 
             foreach (var config in configs)
             {

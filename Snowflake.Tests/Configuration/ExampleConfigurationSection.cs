@@ -46,11 +46,9 @@ namespace Snowflake.Configuration
         [ConfigurationOption("NullSetting")]
         public string NullSetting { get; set; } = null;
 
-        public ExampleConfigurationSection()
+        public ExampleConfigurationSection() :base("DIsplay", "Display Options", "Dolphin.ini")
         {
-            this.SectionName = "Display";
-            this.ConfigurationFileName = "Dolphin.ini";
-            this.DisplayName = "Display Options";
+         
         }
     }
 

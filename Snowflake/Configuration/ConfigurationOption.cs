@@ -51,8 +51,6 @@ namespace Snowflake.Configuration
             var configOption = this.propertyInfo.GetCustomAttribute<ConfigurationOptionAttribute>();
             this.DisplayName = configOption.DisplayName;
             this.Description = configOption.Description;
-            this.Iterable = configOption.Iterable;
-            this.IsInput = configOption.IsInput;
             this.IsPath = configOption.IsPath;
             this.Simple = configOption.Simple;
             this.Private = configOption.Private;
