@@ -14,9 +14,9 @@ namespace Snowflake.Plugin.EmulatorHandler.RetroArch.Configuration
         public bool InputAutodetectEnable { get; set; } = false;
         [ConfigurationOption("input_axis_threshold", DisplayName = "Input Axis Threshold")]
         public double InputAxisThreshold { get; set; } = 0.500000;
-        [ConfigurationOption("input_descriptor_hide_unbound", DisplayName = "Input Descriptor Hide Unbound")]
+        [ConfigurationOption("input_descriptor_hide_unbound", DisplayName = "Input Descriptor Hide Unbound", Private = true)]
         public bool InputDescriptorHideUnbound { get; set; } = false;
-        [ConfigurationOption("input_descriptor_label_show", DisplayName = "Input Descriptor Label Show")]
+        [ConfigurationOption("input_descriptor_label_show", DisplayName = "Input Descriptor Label Show", Private = true)]
         public bool InputDescriptorLabelShow { get; set; } = true;
 
         [ConfigurationOption("input_driver", DisplayName = "Input Driver")]
@@ -29,7 +29,7 @@ namespace Snowflake.Plugin.EmulatorHandler.RetroArch.Configuration
         public InputJoypadDriver InputJoypadDriver { get; set; } = InputJoypadDriver.XInput;
 
         [ConfigurationOption("input_max_users", DisplayName = "Input Max Users", Private = true)]
-        public int InputMaxUsers { get; set; } = 5;
+        public int InputMaxUsers { get; set; } = 4;
 
         [ConfigurationOption("input_menu_toggle_gamepad_combo", DisplayName = "Input Menu Toggle Gamepad Combo", Private = true)]
         public int InputMenuToggleGamepadCombo { get; set; } = 0;

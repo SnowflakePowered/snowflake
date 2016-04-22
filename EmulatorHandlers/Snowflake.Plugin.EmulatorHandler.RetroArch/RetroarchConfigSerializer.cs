@@ -22,10 +22,6 @@ namespace Snowflake.Plugin.EmulatorHandler.RetroArch
             }
         }
 
-        public string Serialize(IIterableConfigurationSection iterableConfigurationSection)
-        {
-            throw new NotImplementedException();
-        }
 
         public string Serialize(IConfigurationSection configurationSection)
         {

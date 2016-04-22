@@ -59,6 +59,7 @@
     <Compile Include="Configuration\Internal\NetworkConfiguration.cs" />
     <Compile Include="Configuration\PauseConfiguration.cs" />
     <Compile Include="Configuration\Internal\RecordConfiguration.cs" />
+    <Compile Include="InputTemplate.cs" />
     <Compile Include="RetroArchConfigurationCollection.cs" />
     <Compile Include="Configuration\Internal\RewindConfiguration.cs" />
     <Compile Include="Configuration\SaveConfiguration.cs" />
@@ -81,7 +82,9 @@
     <Compile Include="Selections\VideoConfiguration\VideoDriver.cs" />
     <Compile Include="Selections\VideoConfiguration\VideoRotation.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Compile Include="InputTemplate.InputOptions.cs" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Snowflake.API\Snowflake.API.csproj">
       <Project>{2841aeea-03d5-47b0-9d90-375dfa19559a}</Project>
@@ -91,6 +94,9 @@
       <Project>{8f1d65ed-4a96-4a0a-8371-53655a60a2b3}</Project>
       <Name>Snowflake</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="InputTemplate.HotkeyOptions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
