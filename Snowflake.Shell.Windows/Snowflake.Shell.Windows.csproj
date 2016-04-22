@@ -145,6 +145,10 @@
     <None Include="icon.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EmulatorHandlers\Snowflake.Plugin.EmulatorHandler.RetroArch\Snowflake.Plugin.EmulatorHandler.RetroArch.csproj">
+      <Project>{287a6da9-32de-4488-9c6a-fd14571295ce}</Project>
+      <Name>Snowflake.Plugin.EmulatorHandler.RetroArch</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Snowflake.API\Snowflake.API.csproj">
       <Project>{2841aeea-03d5-47b0-9d90-375dfa19559a}</Project>
       <Name>Snowflake.API</Name>
