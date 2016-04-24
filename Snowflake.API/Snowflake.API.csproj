@@ -80,6 +80,8 @@
     <Compile Include="Ajax\IJSResponse.cs" />
     <Compile Include="Configuration\Attributes\ConfigurationOptionAttribute.cs" />
     <Compile Include="Configuration\Input\HotkeyOptionAttribute.cs" />
+    <Compile Include="Configuration\Input\IInputOption.cs" />
+    <Compile Include="Configuration\Input\IInputTemplate.cs" />
     <Compile Include="Configuration\Input\InputOptionType.cs" />
     <Compile Include="Configuration\Input\InputOptionAttribute.cs" />
     <Compile Include="Configuration\IConfigurationCollection.cs" />

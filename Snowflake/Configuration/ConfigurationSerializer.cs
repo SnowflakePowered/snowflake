@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration.Attributes;
+using Snowflake.Configuration.Input;
 
 namespace Snowflake.Configuration
 {
@@ -21,7 +22,7 @@ namespace Snowflake.Configuration
             : this(new DefaultConfigurationTypeMapper(booleanMapping, nullSerializer))
         {
         }
-
+        //todo input type mapper?
         public IConfigurationTypeMapper TypeMapper { get; set; }
         public abstract string SerializeLine<T>(string key, T value);
 
@@ -32,7 +33,8 @@ namespace Snowflake.Configuration
             var converter = typeof(IConfigurationTypeMapper).GetMethod("ConvertValue");
             return (string)converter.MakeGenericMethod(valueType).Invoke(this.TypeMapper, new[] { value });
         }
-        
+
+       // public abstract string Serialize(IInputTemplate inputTemplate);
         public abstract string Serialize(IConfigurationSection configurationSection);
 
     }

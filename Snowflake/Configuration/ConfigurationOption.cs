@@ -14,8 +14,6 @@ namespace Snowflake.Configuration
 
         public string DisplayName { get; }
         public string Description { get; }
-        public bool Iterable { get; }
-        public bool IsInput { get; }
         public bool Simple { get; }
         public bool Private { get; }
         public bool Flag { get; }

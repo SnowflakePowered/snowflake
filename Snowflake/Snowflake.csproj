@@ -106,6 +106,8 @@
     <Compile Include="Configuration\IniConfigurationSerializer.cs" />
     <Compile Include="Configuration\ConfigurationSerializer.cs" />
     <Compile Include="Configuration\ConfigurationSection.cs" />
+    <Compile Include="Configuration\Input\InputOption.cs" />
+    <Compile Include="Configuration\Input\InputTemplate.cs" />
     <Compile Include="Emulator\EmulatorInstance.cs" />
     <Compile Include="Emulator\EmulatorHandler.cs" />
     <Compile Include="Game\DictionaryStringStringTypeHandler.cs" />

@@ -25,7 +25,8 @@ namespace Snowflake.Input.Device
         /// <summary>
         /// The device index differs from the enumeration number that it is the index in a set
         /// of the device rather than all devices.
-        /// For example, if the device is an Xinput device
+        /// For example, if the device is an Xinput device and is the 3rd input device, this index would be
+        /// 2 in the set of input devices.
         /// </summary>
         int? DeviceIndex { get; }
 

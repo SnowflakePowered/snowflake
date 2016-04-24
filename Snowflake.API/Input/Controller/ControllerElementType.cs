@@ -8,6 +8,7 @@ namespace Snowflake.Input.Controller
 {
     public enum ControllerElementType
     {
+        Null,
         Button,
         Directional,
         AxisPositive,
