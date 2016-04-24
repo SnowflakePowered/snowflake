@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Snowflake.Configuration;
 using Snowflake.Configuration.Input;
 using Snowflake.Input.Controller;
 using Snowflake.Input.Controller.Mapped;
 
 namespace Snowflake.Plugin.EmulatorHandler.RetroArch
 {
-    public partial class InputTemplate
+    public class HotkeyConfiguration 
     {
 
         [InputOption("input_player{N}_turbo_axis", InputOptionType.ControllerElementAxes, ControllerElement.NoElement)]

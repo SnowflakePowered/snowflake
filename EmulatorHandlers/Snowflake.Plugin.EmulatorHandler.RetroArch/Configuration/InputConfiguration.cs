@@ -19,7 +19,7 @@ namespace Snowflake.Plugin.EmulatorHandler.RetroArch.Configuration
         [ConfigurationOption("input_descriptor_label_show", DisplayName = "Input Descriptor Label Show", Private = true)]
         public bool InputDescriptorLabelShow { get; set; } = true;
 
-        [ConfigurationOption("input_driver", DisplayName = "Input Driver")]
+        [ConfigurationOption("input_driver", DisplayName = "Input Driver", Private = true)]
         public InputDriver InputDriver { get; set; } = InputDriver.DirectInput;
         //todo check max
         [ConfigurationOption("input_duty_cycle", DisplayName = "Input Duty Cycle")]

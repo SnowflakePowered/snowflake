@@ -59,7 +59,7 @@
     <Compile Include="Configuration\Internal\NetworkConfiguration.cs" />
     <Compile Include="Configuration\PauseConfiguration.cs" />
     <Compile Include="Configuration\Internal\RecordConfiguration.cs" />
-    <Compile Include="InputTemplate.cs" />
+    <Compile Include="RetroPadTemplate.cs" />
     <Compile Include="RetroArchConfigurationCollection.cs" />
     <Compile Include="Configuration\Internal\RewindConfiguration.cs" />
     <Compile Include="Configuration\SaveConfiguration.cs" />
@@ -79,11 +79,13 @@
     <Compile Include="Selections\InputConfiguration\InputJoypadDriver.cs" />
     <Compile Include="Selections\InputConfiguration\InputPollType.cs" />
     <Compile Include="Selections\MenuDriver.cs" />
+    <Compile Include="Selections\RetroPadTemplate\AnalogDpadMode.cs" />
+    <Compile Include="Selections\RetroPadTemplate\LibretroDevice.cs" />
     <Compile Include="Selections\VideoConfiguration\VideoDriver.cs" />
     <Compile Include="Selections\VideoConfiguration\VideoRotation.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="InputTemplate.InputOptions.cs" />
+    <Compile Include="RetroPadTemplate.InputOptions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Snowflake.API\Snowflake.API.csproj">
@@ -96,7 +98,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="InputTemplate.HotkeyOptions.cs" />
+    <Compile Include="RetroPadTemplate.HotkeyOptions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
