@@ -9,14 +9,14 @@ using Snowflake.Configuration.Attributes;
 
 namespace Snowflake.Configuration
 {
-    public class IniConfigurationSerializer : ConfigurationSerializer
+    public abstract class IniConfigurationSerializer : ConfigurationSerializer
     {
-        public bool OutputHeader { get; set; }
+        private readonly bool outputHeader;
        
-        public IniConfigurationSerializer(IBooleanMapping booleanMapping, string nullSerializer, bool outputHeader)
+        protected IniConfigurationSerializer(IBooleanMapping booleanMapping, string nullSerializer, bool outputHeader)
             : base(booleanMapping, nullSerializer)
         {
-            this.OutputHeader = outputHeader;
+            this.outputHeader = outputHeader;
         }
 
         public override string SerializeLine<T>(string key, T value)
@@ -27,7 +27,7 @@ namespace Snowflake.Configuration
         public override string Serialize(IConfigurationSection configurationSection)
         {
             StringBuilder stringBuilder = new StringBuilder();
-            if(this.OutputHeader) stringBuilder.AppendLine($"[{configurationSection.SectionName}]");
+            if(this.outputHeader) stringBuilder.AppendLine($"[{configurationSection.SectionName}]");
 
             foreach (var config in configurationSection.Options.Values)
             {
