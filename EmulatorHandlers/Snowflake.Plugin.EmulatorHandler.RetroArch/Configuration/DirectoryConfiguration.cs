@@ -108,7 +108,7 @@ namespace Snowflake.Plugin.EmulatorHandler.RetroArch.Configuration
         [ConfigurationOption("savestate_directory", DisplayName = "Savestate Directory", IsPath = true, Private = true)]
         public string SavestateDirectory { get; set; } = "default";
 
-        public DirectoryConfiguration() : base("directory", "Directory Options", "retroarch.cfg")
+        public DirectoryConfiguration() : base("directory", "Directory Options")
         {
 
         }

@@ -17,7 +17,7 @@ namespace Snowflake.Plugin.EmulatorHandler.RetroArch.Configuration.Internal
         [ConfigurationOption("video_gpu_record", DisplayName = "Enable Video Recording", Private = true)]
         public bool VideoGpuRecord { get; set; } = false;
 
-        public RecordConfiguration() : base("record", "Record Options", "retroarch.cfg")
+        public RecordConfiguration() : base("record", "Record Options")
         {
 
         }

@@ -10,7 +10,7 @@ namespace Snowflake.Plugin.EmulatorHandler.RetroArch.Configuration.Internal
        [ConfigurationOption("user_language", DisplayName = "User Language", Private = true)]
        public int UserLanguage { get; set; } = 0;
 
-       public UserConfiguration() : base ("user", "User Options", "retroarch.cfg")
+       public UserConfiguration() : base ("user", "User Options")
        {
 
        }

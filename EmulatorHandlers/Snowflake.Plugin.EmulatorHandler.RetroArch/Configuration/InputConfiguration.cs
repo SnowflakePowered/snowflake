@@ -82,7 +82,7 @@ namespace Snowflake.Plugin.EmulatorHandler.RetroArch.Configuration
         [ConfigurationOption("keyboard_gamepad_mapping_type", DisplayName = "Keyboard Gamepad Mapping Type", Private = true)]
         public int KeyboardGamepadMappingType { get; set; } = 1;
 
-        public InputConfiguration() : base("input", "Input Options", "retroarch.cfg")
+        public InputConfiguration() : base("input", "Input Options")
         {
 
         }

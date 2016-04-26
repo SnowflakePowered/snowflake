@@ -10,7 +10,7 @@ namespace Snowflake.Plugin.EmulatorHandler.RetroArch.Configuration
         [ConfigurationOption("pause_nonactive", DisplayName = "Pause when not in focus")]
         public bool PauseNonactive { get; set; } = true;
 
-        public PauseConfiguration() : base("pause", "Pause Options", "retroarch.cfg")
+        public PauseConfiguration() : base("pause", "Pause Options")
         {
 
         }

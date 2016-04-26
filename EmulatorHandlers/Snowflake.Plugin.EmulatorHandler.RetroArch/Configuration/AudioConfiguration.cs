@@ -53,7 +53,7 @@ namespace Snowflake.Plugin.EmulatorHandler.RetroArch.Configuration
         [ConfigurationOption("audio_volume", DisplayName = "Audio Volume (db)", Increment = 1, Max = 10, Min = -80)]
         public double AudioVolume { get; set; } = 0.000000;
 
-        public AudioConfiguration() : base("audio", "Audio Options", "retroarch.cfg")
+        public AudioConfiguration() : base("audio", "Audio Options")
         {
 
         }

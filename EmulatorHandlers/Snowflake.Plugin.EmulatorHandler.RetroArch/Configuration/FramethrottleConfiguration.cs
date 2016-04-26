@@ -16,7 +16,7 @@ namespace Snowflake.Plugin.EmulatorHandler.RetroArch.Configuration
         [ConfigurationOption("slowmotion_ratio", DisplayName = "Slowmotion Ratio")]
         public double SlowmotionRatio { get; set; } = 3.000000;
 
-        public FramethrottleConfiguration() : base("framethottle", "Framethrottle", "retroarch.cfg")
+        public FramethrottleConfiguration() : base("framethottle", "Framethrottle")
         {
         }
     }

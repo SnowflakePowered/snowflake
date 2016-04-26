@@ -16,7 +16,7 @@ namespace Snowflake.Plugin.EmulatorHandler.RetroArch.Configuration.Internal
         [ConfigurationOption("perfcnt_enable", DisplayName = "Enable Performance Counter", Private = true)]
         public bool PerfcntEnable { get; set; } = false;
 
-        public LogConfiguration() : base("log", "Log Options", "retroarch.cfg")
+        public LogConfiguration() : base("log", "Log Options")
         {
 
         }

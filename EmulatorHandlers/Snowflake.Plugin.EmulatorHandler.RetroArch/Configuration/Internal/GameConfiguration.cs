@@ -19,7 +19,7 @@ namespace Snowflake.Plugin.EmulatorHandler.RetroArch.Configuration.Internal
         public bool UpsPref { get; set; } = false;
 
 
-        public GameConfiguration() : base("game", "Game Options", "retroarch.cfg")
+        public GameConfiguration() : base("game", "Game Options")
         {
 
         }

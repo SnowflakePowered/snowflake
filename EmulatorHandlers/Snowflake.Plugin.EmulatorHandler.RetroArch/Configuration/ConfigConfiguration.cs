@@ -12,7 +12,7 @@ namespace Snowflake.Plugin.EmulatorHandler.RetroArch.Configuration
         public bool AutoOverridesEnable { get; set; } = false;
 
 
-        public ConfigConfiguration() : base("config", "Configuration Options", "retroarch.cfg")
+        public ConfigConfiguration() : base("config", "Configuration Options")
         {
         }
     }

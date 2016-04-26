@@ -16,7 +16,7 @@ namespace Snowflake.Plugin.EmulatorHandler.RetroArch.Configuration.Internal
         [ConfigurationOption("location_driver", DisplayName = "Location Driver", Private = true)]
         public string LocationDriver { get; set; } = "null";
 
-        public LocationConfiguration() : base("location", "Location Options", "retroarch.cfg")
+        public LocationConfiguration() : base("location", "Location Options")
         {
 
         }

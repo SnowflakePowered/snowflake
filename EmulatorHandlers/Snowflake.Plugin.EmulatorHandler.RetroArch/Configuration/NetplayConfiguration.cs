@@ -30,7 +30,7 @@ namespace Snowflake.Plugin.EmulatorHandler.RetroArch.Configuration
         [ConfigurationOption("netplay_spectator_mode_enable", DisplayName = "Netplay Spectator Mode Enable")]
         public bool NetplaySpectatorModeEnable { get; set; } = false;
 
-        public NetplayConfiguration() : base("netplay", "Netplay Options", "retroarch.cfg")
+        public NetplayConfiguration() : base("netplay", "Netplay Options")
         {
 
         }

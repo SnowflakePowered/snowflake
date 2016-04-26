@@ -19,7 +19,7 @@ namespace Snowflake.Plugin.EmulatorHandler.RetroArch.Configuration.Internal
         [ConfigurationOption("camera_driver", DisplayName = "Camera Driver", Private = true)]
         public string CameraDriver { get; set; } = "null";
 
-        public CameraConfiguration() : base("camera", "Camera Options", "retroarch.cfg")
+        public CameraConfiguration() : base("camera", "Camera Options")
         {
 
         }

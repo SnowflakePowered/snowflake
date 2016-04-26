@@ -32,7 +32,11 @@ namespace Snowflake.Plugin.EmulatorHandler.RetroArch
         public AudioConfiguration AudioConfiguration { get; set; }
         public FramethrottleConfiguration FrametrottleConfiguration { get; set; }
         public ConfigConfiguration ConfigConfiguration { get; set; }
-       
+
+        public RetroArchConfiguration() : base(new KeyValuePairConfigurationSerializer(BooleanMapping.LowercaseBooleanMapping, "nul", "="), "retroarch.cfg")
+        {
+
+        }
     }
 }
 

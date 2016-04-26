@@ -143,7 +143,7 @@ namespace Snowflake.Plugin.EmulatorHandler.RetroArch.Configuration
         [ConfigurationOption("fps_show", DisplayName = "Show FPS Overlay", Simple = true)]
         public bool FpsShow { get; set; } = false;
 
-        public VideoConfiguration() : base("video", "Video Options", "retroarch.cfg")
+        public VideoConfiguration() : base("video", "Video Options")
         {
 
         }

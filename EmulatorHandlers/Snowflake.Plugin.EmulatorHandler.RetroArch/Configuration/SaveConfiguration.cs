@@ -27,7 +27,7 @@ namespace Snowflake.Plugin.EmulatorHandler.RetroArch.Configuration
         [ConfigurationOption("state_slot", DisplayName = "Default save state slot")]
         public int StateSlot { get; set; } = 0;
 
-        public SaveConfiguration() : base("save", "Save Options", "retroarch.cfg")
+        public SaveConfiguration() : base("save", "Save Options")
         {
 
         }

@@ -20,7 +20,7 @@ namespace Snowflake.Plugin.EmulatorHandler.RetroArch.Configuration.Internal
         //todo check max
         [ConfigurationOption("soft_filter_index", DisplayName = "Soft Filter Index", Private = true)]
         public int SoftFilterIndex { get; set; } = 0;
-        public FilterConfiguration() : base("flicker", "Filter Options", "retroarch.cfg")
+        public FilterConfiguration() : base("flicker", "Filter Options")
         {
 
         }

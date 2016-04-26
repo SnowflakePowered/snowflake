@@ -19,7 +19,7 @@ namespace Snowflake.Plugin.EmulatorHandler.RetroArch.Configuration.Internal
         [ConfigurationOption("bundle_assets_extract_version_current", DisplayName = "Bundle Assets Extract Version Current", Private = true)]
         public int BundleAssetsExtractVersionCurrent { get; set; } = 0;
 
-        public BundleConfiguration() : base("bundle", "Bundle Options", "retroarch.cfg")
+        public BundleConfiguration() : base("bundle", "Bundle Options")
         {
 
         }

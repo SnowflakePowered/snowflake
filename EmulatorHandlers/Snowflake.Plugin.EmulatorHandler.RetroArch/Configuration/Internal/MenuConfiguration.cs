@@ -95,7 +95,7 @@ namespace Snowflake.Plugin.EmulatorHandler.RetroArch.Configuration.Internal
         [ConfigurationOption("suspend_screensaver_enable", DisplayName = "Suspend Screensaver Enable", Private = true)]
         public bool SuspendScreensaverEnable { get; set; } = true;
 
-        public MenuConfiguration() : base("menu", "Menu Options", "retroarch.cfg")
+        public MenuConfiguration() : base("menu", "Menu Options")
         {
 
         }

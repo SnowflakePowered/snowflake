@@ -11,7 +11,7 @@ namespace Snowflake.Plugin.EmulatorHandler.RetroArch.Configuration.Internal
        [ConfigurationOption("builtin_mediaplayer_enable", DisplayName = "Builtin Mediaplayer Enable", Private = true)]
        public bool BuiltinMediaplayerEnable { get; set; } = true;
 
-       public BuiltinConfiguration() : base ("builtin", "Builtin Options", "retroarch.cfg")
+       public BuiltinConfiguration() : base ("builtin", "Builtin Options")
        {
 
        }

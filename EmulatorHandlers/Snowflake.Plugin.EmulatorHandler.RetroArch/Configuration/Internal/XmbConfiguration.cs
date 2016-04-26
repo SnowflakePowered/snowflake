@@ -21,7 +21,7 @@ namespace Snowflake.Plugin.EmulatorHandler.RetroArch.Configuration.Internal
         [ConfigurationOption("xmb_theme", DisplayName = "Xmb Theme", Private = true)]
         public int XmbTheme { get; set; } = 0;
 
-        public XmbConfiguration() : base("xmb", "Xmb Options", "retroarch.cfg")
+        public XmbConfiguration() : base("xmb", "Xmb Options")
         {
 
         }

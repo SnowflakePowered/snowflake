@@ -51,7 +51,7 @@ namespace Snowflake.Plugin.EmulatorHandler.RetroArch.Configuration.Internal
         [ConfigurationOption("network_remote_enable_user_p9", DisplayName = "Network Remote Enable User P9", Private = true)]
         public bool NetworkRemoteEnableUserP9 { get; set; } = false;
 
-        public NetworkConfiguration() : base("network", "Network Options", "retroarch.cfg")
+        public NetworkConfiguration() : base("network", "Network Options")
         {
 
         }

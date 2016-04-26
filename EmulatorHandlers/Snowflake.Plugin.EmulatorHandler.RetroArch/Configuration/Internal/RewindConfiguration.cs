@@ -12,7 +12,7 @@ namespace Snowflake.Plugin.EmulatorHandler.RetroArch.Configuration.Internal
         [ConfigurationOption("rewind_granularity", DisplayName = "Rewind Granularity", Private = true)]
         public int RewindGranularity { get; set; } = 1;
 
-        public RewindConfiguration() : base("rewind", "Rewind Options", "retroarch.cfg")
+        public RewindConfiguration() : base("rewind", "Rewind Options")
         {
 
         }

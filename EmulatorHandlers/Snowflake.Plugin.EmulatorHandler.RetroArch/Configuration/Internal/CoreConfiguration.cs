@@ -20,7 +20,7 @@ namespace Snowflake.Plugin.EmulatorHandler.RetroArch.Configuration.Internal
         [ConfigurationOption("load_dummy_on_core_shutdown", DisplayName = "Load Dummy On Core Shutdown")]
         public bool LoadDummyOnCoreShutdown { get; set; } = true;
 
-        public CoreConfiguration() : base("core", "Core Options", "retroarch.cfg")
+        public CoreConfiguration() : base("core", "Core Options")
         {
 
         }

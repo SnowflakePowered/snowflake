@@ -13,7 +13,7 @@ namespace Snowflake.Plugin.EmulatorHandler.RetroArch.Configuration.Internal
        [ConfigurationOption("ui_menubar_enable", DisplayName = "Ui Menubar Enable")]
        public bool UiMenubarEnable { get; set; } = false;
 
-       public UiConfiguration() : base ("ui", "UI Options", "retroarch.cfg")
+       public UiConfiguration() : base ("ui", "UI Options")
        {
 
        }

@@ -21,7 +21,7 @@ namespace Snowflake.Plugin.EmulatorHandler.RetroArch.Configuration.Internal
         [ConfigurationOption("cheevos_username", DisplayName = "RetroAchivements Username", Private = true)]
         public string CheevosUsername { get; set; } = "";
 
-        public AchievementConfiguration() : base("cheevos", "Cheevos Options", "retroarch.cfg")
+        public AchievementConfiguration() : base("cheevos", "Cheevos Options")
         {
 
         }
