@@ -28,7 +28,10 @@ namespace Snowflake.Plugin.EmulatorHandler.RetroArch
         public ThreadedConfiguration ThreadedConfiguration { get; set; }
         public DirectoryConfiguration DirectoryConfiguration { get; set; }
         public UiConfiguration UiConfiguration { get; set; }
-
+        public VideoConfiguration VideoConfiguration { get; set; }
+        public AudioConfiguration AudioConfiguration { get; set; }
+        public FramethrottleConfiguration FrametrottleConfiguration { get; set; }
+        public ConfigConfiguration ConfigConfiguration { get; set; }
        
     }
 }
