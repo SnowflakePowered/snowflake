@@ -24,10 +24,6 @@ namespace Snowflake.Configuration
         /// </summary>
         string DisplayName { get; }
         /// <summary>
-        /// The file this configuration section appears in
-        /// </summary>
-        string ConfigurationFileName { get; }
-        /// <summary>
         /// A description of what this section does
         /// </summary>
         string Description { get; }

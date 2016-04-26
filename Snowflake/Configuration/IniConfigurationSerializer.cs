@@ -9,11 +9,11 @@ using Snowflake.Configuration.Attributes;
 
 namespace Snowflake.Configuration
 {
-    public abstract class IniConfigurationSerializer : ConfigurationSerializer
+    public class IniConfigurationSerializer : ConfigurationSerializer
     {
         private readonly bool outputHeader;
        
-        protected IniConfigurationSerializer(IBooleanMapping booleanMapping, string nullSerializer, bool outputHeader)
+        public IniConfigurationSerializer(IBooleanMapping booleanMapping, string nullSerializer, bool outputHeader)
             : base(booleanMapping, nullSerializer)
         {
             this.outputHeader = outputHeader;

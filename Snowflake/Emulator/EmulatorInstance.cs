@@ -24,13 +24,13 @@ namespace Snowflake.Emulator
 
         public void Create()
         {
-             var configs = (from config in this.ConfigurationSections
+           /*  var configs = (from config in this.ConfigurationSections
              select Tuple.Create(config.Key.ConfigurationFileName, config.Value.Serialize(config.Key)));
 
             foreach (var config in configs)
             {
                 File.AppendAllText(config.Item1, config.Item2 + Environment.NewLine);
-            }
+            }*/
         }
 
         public void Start()

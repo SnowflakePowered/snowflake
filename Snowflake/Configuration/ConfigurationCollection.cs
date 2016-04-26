@@ -21,5 +21,14 @@ namespace Snowflake.Configuration
                 setter();
             return configurationSection;
         }
+
+        public IConfigurationSerializer Serializer { get; }
+        public string FileName { get; }
+
+        protected ConfigurationCollection(IConfigurationSerializer serializer, string fileName)
+        {
+            this.Serializer = serializer;
+            this.FileName = fileName;
+        }
     }
 }

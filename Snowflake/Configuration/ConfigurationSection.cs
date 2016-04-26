@@ -15,15 +15,13 @@ namespace Snowflake.Configuration
     {
         public string SectionName { get; }
         public string DisplayName { get; }
-        public string ConfigurationFileName { get; }
         public string Description { get; }
         public IReadOnlyDictionary<string, IConfigurationOption> Options { get; }
 
-        protected ConfigurationSection(string sectionName, string displayName, string configurationFilename, string description)
+        protected ConfigurationSection(string sectionName, string displayName, string description)
         {
             this.SectionName = sectionName;
             this.DisplayName = displayName;
-            this.ConfigurationFileName = configurationFilename;
             this.Description = description;
             //cache the configuration properties of this section
             this.Options = this.GetConfigurationProperties();
@@ -39,8 +37,8 @@ namespace Snowflake.Configuration
         }
 
       
-        protected ConfigurationSection(string sectionName, string displayName, string configurationFilename)
-            : this(sectionName, displayName, configurationFilename, String.Empty)
+        protected ConfigurationSection(string sectionName, string displayName)
+            : this(sectionName, displayName, String.Empty)
         {
         }
     }

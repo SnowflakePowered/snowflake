@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Snowflake.Configuration
 {
-    public abstract class KeyValuePairConfigurationSerializer : ConfigurationSerializer
+    public class KeyValuePairConfigurationSerializer : ConfigurationSerializer
     {
         private readonly string separator;
         public override string SerializeLine<T>(string key, T value)
@@ -24,7 +24,7 @@ namespace Snowflake.Configuration
             return stringBuilder.ToString();
         }
 
-        protected KeyValuePairConfigurationSerializer(IBooleanMapping booleanMapping, string nullSerializer, string separator)
+        public KeyValuePairConfigurationSerializer(IBooleanMapping booleanMapping, string nullSerializer, string separator)
             : base(booleanMapping, nullSerializer)
         {
             this.separator = separator;
