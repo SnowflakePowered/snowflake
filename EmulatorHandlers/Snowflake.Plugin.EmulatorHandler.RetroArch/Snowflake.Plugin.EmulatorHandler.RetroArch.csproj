@@ -73,7 +73,6 @@
     <Compile Include="Selections\AudioConfiguration\AspectRatioIndex.cs" />
     <Compile Include="Selections\AudioConfiguration\AudioDriver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RetroArchConfigSerializer.cs" />
     <Compile Include="Selections\AudioConfiguration\AudioResampler.cs" />
     <Compile Include="Selections\InputConfiguration\InputDriver.cs" />
     <Compile Include="Selections\InputConfiguration\InputJoypadDriver.cs" />

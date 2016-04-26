@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 namespace Snowflake.Configuration
 {
+    /// <summary>
+    /// Provides a generic key value pair serializer with a 
+    /// configuration separator:
+    /// 
+    /// key separator value
+    /// </summary>
     public class KeyValuePairConfigurationSerializer : ConfigurationSerializer
     {
         private readonly string separator;
