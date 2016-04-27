@@ -15,7 +15,7 @@ namespace Snowflake.Configuration.Input
 
         public InputOptionType InputOptionType { get; }
         public ControllerElement TargetElement { get; }
-
+        public string OptionName { get; }
         [JsonIgnore]
         public IMappedControllerElement Value
         {
@@ -32,6 +32,7 @@ namespace Snowflake.Configuration.Input
             this.propertyInfo = propertyInfo;
             this.instance = instance;
             var attribute = propertyInfo.GetCustomAttribute<InputOptionAttribute>();
+            this.OptionName = attribute.OptionName;
             this.InputOptionType = attribute.InputOptionType;
             this.TargetElement = attribute.TargetElement;
         }

@@ -13,6 +13,11 @@ namespace Snowflake.Plugin.EmulatorHandler.RetroArch
 {
     public partial class RetroPadTemplate : InputTemplate
     {
+        public RetroPadTemplate() : base("input")
+        {
+            
+        }
+
         [ConfigurationOption("input_device_p{N}")]
         public int InputDevice { get; set; }
 

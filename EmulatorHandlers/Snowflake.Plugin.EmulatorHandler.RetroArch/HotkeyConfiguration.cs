@@ -13,9 +13,6 @@ namespace Snowflake.Plugin.EmulatorHandler.RetroArch
     public class HotkeyConfiguration 
     {
 
-        [InputOption("input_player{N}_turbo_axis", InputOptionType.ControllerElementAxes, ControllerElement.NoElement)]
-        public IMappedControllerElement InputPlayerTurboAxis { get; set; }
-
         [HotkeyOption("input_toggle_fast_forward", InputOptionType.KeyboardKey, DisplayName = "Input Toggle Fast Forward")]
         public IMappedControllerElement InputToggleFastForward { get; set; }
 

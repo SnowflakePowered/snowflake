@@ -11,6 +11,10 @@ namespace Snowflake.Configuration.Input
     public interface IInputOption
     {
         /// <summary>
+        /// The name of the input option as it appears in configuration.
+        /// </summary>
+        string OptionName { get; }
+        /// <summary>
         /// The value of this input option
         /// </summary>
         IMappedControllerElement Value { get; set; }

@@ -14,9 +14,14 @@ namespace Snowflake.Configuration.Input
         /// <summary>
         /// The controller index of this template instance.
         /// This is zero indexed, Player 1 for example is index 0.
-        /// todo put this and inputval inside the serializer instead.
         /// </summary>
         int PlayerIndex { get; set; }
+
+        /// <summary>
+        /// The section name for this input template.
+        /// May contain an {N} to be replaced with PlayerIndex.
+        /// </summary>
+        string SectionName { get; }
 
         /// <summary>
         /// Sets the template to use the appropriate input options for this
@@ -31,6 +36,11 @@ namespace Snowflake.Configuration.Input
         /// The input options of this input template.
         /// </summary>
         IEnumerable<IInputOption> InputOptions { get; }
+
+        /// <summary>
+        /// The options of this configuration section, without key names.
+        /// </summary>
+        IEnumerable<IConfigurationOption> ConfigurationOptions { get; }
 
     }
 }

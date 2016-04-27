@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration.Attributes;
 using Snowflake.Configuration.Input;
+using Snowflake.Input.Controller;
+using Snowflake.Input.Controller.Mapped;
 
 namespace Snowflake.Configuration
 {
@@ -22,9 +24,18 @@ namespace Snowflake.Configuration
             : this(new DefaultConfigurationTypeMapper(booleanMapping, nullSerializer))
         {
         }
-        //todo input type mapper?
+
         public IConfigurationTypeMapper TypeMapper { get; set; }
+
         public abstract string SerializeLine<T>(string key, T value);
+
+        public virtual string SerializeInput(string key, IMappedControllerElement element, IInputMapping inputMapping)
+        {
+            return
+                this.SerializeLine(key, element.DeviceElement == ControllerElement.Keyboard
+                    ? inputMapping[element.DeviceKeyboardKey]
+                    : inputMapping[element.DeviceElement]);
+        }
 
         public string SerializeValue(object value)
         {
@@ -34,7 +45,7 @@ namespace Snowflake.Configuration
             return (string)converter.MakeGenericMethod(valueType).Invoke(this.TypeMapper, new[] { value });
         }
 
-       // public abstract string Serialize(IInputTemplate inputTemplate);
+        public abstract string Serialize(IInputTemplate inputTemplate, IInputMapping inputMapping);
         public abstract string Serialize(IConfigurationSection configurationSection);
 
     }

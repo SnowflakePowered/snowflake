@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Snowflake.Configuration.Attributes;
+using Snowflake.Configuration.Input;
 
 namespace Snowflake.Configuration
 {
@@ -40,11 +41,12 @@ namespace Snowflake.Configuration
 
 
         private readonly PropertyInfo propertyInfo;
-        private readonly IConfigurationSection instance;
-        internal ConfigurationOption(PropertyInfo propertyInfo, IConfigurationSection instance)
+        private readonly object instance;
+
+        internal ConfigurationOption(PropertyInfo propertyInfo, object instance) 
         {
-            this.propertyInfo = propertyInfo;
             this.instance = instance;
+            this.propertyInfo = propertyInfo;
             this.Type = this.propertyInfo.PropertyType;
             var configOption = this.propertyInfo.GetCustomAttribute<ConfigurationOptionAttribute>();
             this.DisplayName = configOption.DisplayName;

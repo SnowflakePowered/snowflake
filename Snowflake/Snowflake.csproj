@@ -106,6 +106,7 @@
     <Compile Include="Configuration\IniConfigurationSerializer.cs" />
     <Compile Include="Configuration\ConfigurationSerializer.cs" />
     <Compile Include="Configuration\ConfigurationSection.cs" />
+    <Compile Include="Configuration\Input\InputMapping.cs" />
     <Compile Include="Configuration\Input\InputOption.cs" />
     <Compile Include="Configuration\Input\InputTemplate.cs" />
     <Compile Include="Configuration\KeyValuePairConfigurationSerializer.cs" />

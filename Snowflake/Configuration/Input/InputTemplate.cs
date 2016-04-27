@@ -14,11 +14,17 @@ namespace Snowflake.Configuration.Input
     public abstract class InputTemplate : IInputTemplate
     {
         public int PlayerIndex { get; set; }
+        public string SectionName { get; }
         public IEnumerable<IInputOption> InputOptions => this.inputOptions;
+        public IEnumerable<IConfigurationOption> ConfigurationOptions => this.configurationOptions;
         private readonly IList<IInputOption> inputOptions;
-        protected InputTemplate()
+        private readonly IList<IConfigurationOption> configurationOptions;
+
+        protected InputTemplate(string sectionName)
         {
+            this.SectionName = sectionName;
             this.inputOptions = this.GetInputProperties();
+            this.configurationOptions = this.GetConfigProperties();
         }
 
         private IList<IInputOption> GetInputProperties()
@@ -28,6 +34,13 @@ namespace Snowflake.Configuration.Input
                 select new InputOption(propertyInfo, this) as IInputOption).ToList();
         }
 
+        private IList<IConfigurationOption> GetConfigProperties()
+        {
+            return (from propertyInfo in this.GetType().GetRuntimeProperties()
+                    where propertyInfo.IsDefined(typeof(ConfigurationOptionAttribute), true)
+                    select new ConfigurationOption(propertyInfo, this) as IConfigurationOption).ToList();
+        }
+    
         public virtual void SetInputValues(IMappedControllerElementCollection mappedElements, IInputDevice inputDevice,
             int playerIndex)
         {

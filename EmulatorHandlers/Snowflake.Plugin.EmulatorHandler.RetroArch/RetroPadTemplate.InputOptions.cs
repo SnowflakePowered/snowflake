@@ -19,6 +19,9 @@ namespace Snowflake.Plugin.EmulatorHandler.RetroArch
         [InputOption("input_player{N}_turbo_btn", InputOptionType.ControllerElement, ControllerElement.NoElement)]
         public IMappedControllerElement InputPlayerTurboBtn { get; private set; }
 
+        [InputOption("input_player{N}_turbo_axis", InputOptionType.ControllerElementAxes, ControllerElement.NoElement)]
+        public IMappedControllerElement InputPlayerTurboAxis { get; set; }
+
         [InputOption("input_player{N}_b", InputOptionType.KeyboardKey, ControllerElement.ButtonB)]
         public IMappedControllerElement InputPlayerB { get; private set; }
 
