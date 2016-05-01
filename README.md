@@ -3,9 +3,9 @@
 
 **Build Status**
 
-|<img src="https://cloud.githubusercontent.com/assets/1000503/13551021/797655f6-e2f9-11e5-8aea-a5caad2aeef8.png" width=25 alt="appveyor">|<img src="https://cloud.githubusercontent.com/assets/1000503/13550984/6042f432-e2f8-11e5-95cf-72fb4134c56d.png" width=25 alt="travis">|<img src="https://cloud.githubusercontent.com/assets/1000503/13551072/5f605ea8-e2fb-11e5-8641-d5efac977ead.png" width=25 alt="codecov">|<img src="https://cloud.githubusercontent.com/assets/1000503/13551053/7d735de2-e2fa-11e5-8a09-c42dcc27e917.png" width=25 alt="license">|
+|<img src="https://cloud.githubusercontent.com/assets/1000503/13551021/797655f6-e2f9-11e5-8aea-a5caad2aeef8.png" width=25 alt="appveyor">|<img src="https://cloud.githubusercontent.com/assets/1000503/13550984/6042f432-e2f8-11e5-95cf-72fb4134c56d.png" width=25 alt="travis">|<img src="https://cloud.githubusercontent.com/assets/1000503/13551072/5f605ea8-e2fb-11e5-8641-d5efac977ead.png" width=25 alt="codecov">|<img src="https://cloud.githubusercontent.com/assets/1000503/14840198/d3013102-0bff-11e6-945b-98d0728fb0b3.png" width=25 alt="license">|
 |-----|-----|-----|-----|
-|[![Windows Build status](https://ci.appveyor.com/api/projects/status/mhei9fdtja5j04kk?svg=true)](https://ci.appveyor.com/project/RonnChyran/snowflake)|[![Travis](https://img.shields.io/travis/SnowflakePowered/snowflake.svg)](https://travis-ci.org/SnowflakePowered/snowflake)| [![Codecov](https://img.shields.io/codecov/c/github/SnowflakePowered/snowflake.svg)](https://codecov.io/github/SnowflakePowered/snowflake?ref=master)|[![License](https://img.shields.io/badge/license-apache%202.0-blue.svg?style=flat)](https://github.com/SnowflakePowered/snowflake/blob/master/LICENSE)|
+|[![Windows Build status](https://ci.appveyor.com/api/projects/status/mhei9fdtja5j04kk?svg=true)](https://ci.appveyor.com/project/RonnChyran/snowflake)|[![Travis](https://img.shields.io/travis/SnowflakePowered/snowflake.svg)](https://travis-ci.org/SnowflakePowered/snowflake)| [![Codecov](https://img.shields.io/codecov/c/github/SnowflakePowered/snowflake.svg)](https://codecov.io/github/SnowflakePowered/snowflake?ref=master)|[![License](https://img.shields.io/badge/license-mpl%202.0-blue.svg?style=flat)](https://github.com/SnowflakePowered/snowflake/blob/master/LICENSE)|
 
 **Latest Version**
 
@@ -43,4 +43,7 @@ Star our repository and bookmark our [website at http://snowflakepowe.red](http:
 
 Legal
 -----
-Snowflake is licensed under the Apache License 2.0. However any fork of the [codebase prior to the relicensing to Apache 2](https://github.com/snowflake-frontend/snowflake/commit/b0286553ec0887ce406420827a2ba0c20aa78117#diff-d41d8cd98f00b204e9800998ecf8427e) must be distributed under the GNU GPL v3. Any fork of the codebase after that commit is can be distributed under the Apache 2 license. Snowflake does not in any way facilitate the download of illegal ROM images or warez of any kind. 
+Snowflake is licensed under the Mozilla Public License 2.0 since Pull Request #231. Since May 1, 2016, this license is retroactively applied to all prior copies of Snowflake's source code. Any fork of the [codebase prior to the relicensing to Apache 2](https://github.com/snowflake-frontend/snowflake/commit/b0286553ec0887ce406420827a2ba0c20aa78117#diff-d41d8cd98f00b204e9800998ecf8427e) must be distributed under the GNU GPL v3. Any copy of the codebase that remains unmerged with the main repository prior to the relincensing on May 1, 2016, can be distributed under both the terms of the Apache Public License 2.0, or the Mozilla Public License, where legally possible. This means that, any copy of the code prior to the merging of Pull Request #226 can be distributed under the Apache Public License 2.0. However, any copy of the code after and including Pull Request #226 must only be distributed under the Mozilla Public License 2.0. 
+
+
+Snowflake does not in any way facilitate the download of illegal ROM images or warez of any kind. 
