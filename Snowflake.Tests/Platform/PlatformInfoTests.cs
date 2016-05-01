@@ -13,8 +13,7 @@ namespace Snowflake.Platform.Tests
         public void LoadPlatformFromJson_Test(string platformId)
         {
             string platformDefinition = TestUtilities.GetStringResource($"Platforms.{platformId}.platform");
-            var protoTemplate = JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(platformDefinition);
-            var platform = PlatformInfo.FromJsonProtoTemplate(protoTemplate);
+            var platform = JsonConvert.DeserializeObject<PlatformInfo>(platformDefinition);
             Assert.NotNull(platform);
         }
         [Theory]
@@ -22,8 +21,7 @@ namespace Snowflake.Platform.Tests
         public void AssertPlatformDefinitionIDs_Test(string platformId)
         {
             string platformDefinition = TestUtilities.GetStringResource($"Platforms.{platformId}.platform");
-            var protoTemplate = JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(platformDefinition);
-            var platform = PlatformInfo.FromJsonProtoTemplate(protoTemplate);
+            var platform = JsonConvert.DeserializeObject<PlatformInfo>(platformDefinition);
             Assert.Equal(platformId, platform.PlatformID);
         }
 

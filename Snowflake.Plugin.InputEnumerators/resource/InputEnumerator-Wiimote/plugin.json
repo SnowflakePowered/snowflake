@@ -1,0 +1,12 @@
+﻿{
+    "name": "InputEnumerator-Wiimote",
+    "type": "plugin_inputenumerator",
+    "version": "1.0.0.0",
+    "authors": [
+        "Snowflake"
+    ],
+    "description": "Wiimote Input Enumerator",
+    "platforms": [
+      "NINTENDO_WII"
+    ]
+}

@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using Snowflake.Configuration;
 using Snowflake.Emulator;
 using Snowflake.Events;
+using Snowflake.Service;
 using Snowflake.Service.Manager;
 using Squirrel;
 

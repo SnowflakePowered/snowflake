@@ -11,16 +11,14 @@ namespace Snowflake.Service
     public interface ICoreService : IDisposable
     {
         /// <summary>
-        /// Raw info blob by loading info.json
-        /// </summary>
-        dynamic InfoBlob { get; }
-        /// <summary>
         /// The list of platforms loaded for this core service
         /// </summary>
+        [Obsolete("Use StoneProvider instead. Will be removed in upcoming PR.")]
         IDictionary<string, IPlatformInfo> Platforms { get; }
         /// <summary>
         /// THe list of controllers loaded for this core service
         /// </summary>
+        [Obsolete("Use StoneProvider instead. Will be removed in upcoming PR.")]
         IDictionary<string, IControllerDefinition> Controllers { get; }
         /// <summary>
         /// The directory to store appdata in this core service
@@ -38,7 +36,8 @@ namespace Snowflake.Service
         /// <returns></returns>
         IEnumerable<string> AvailableServices();
         /// <summary>
-        /// Get a service
+        /// Get a service.
+        /// The StoneProvider service is guaranteed to be registered.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>

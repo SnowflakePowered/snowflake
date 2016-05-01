@@ -1,31 +1,27 @@
 ﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 using Snowflake.Information;
+using Snowflake.JsonConverters;
 
 namespace Snowflake.Platform
 {
-    public class PlatformInfo : Info, IPlatformInfo
+    [JsonConverter(typeof(PlatformInfoConverter))]
+    public class PlatformInfo : IPlatformInfo
     {
-        public PlatformInfo(string platformId, string name, IDictionary<string, string> metadata, IList<string> fileExtensions, IList<string> controllers, int maximumInputs, IPlatformControllerPorts controllerPorts) : base(platformId, name, metadata)
+        public PlatformInfo(string platformId, string name, IDictionary<string, string> metadata,
+            IEnumerable<string> fileExtensions, int maximumInputs)
         {
+            this.PlatformID = platformId;
+            this.Metadata = metadata;
             this.FileExtensions = fileExtensions;
-            this.Controllers = controllers;
-            this.ControllerPorts = controllerPorts;
             this.MaximumInputs = maximumInputs;
+            this.FriendlyName = name;
         }
 
-        public IList<string> FileExtensions { get; }
-        public IList<string> Controllers { get; }
-        public IPlatformControllerPorts ControllerPorts { get; }
+        public string FriendlyName { get; }
+        public string PlatformID { get; }
+        public IDictionary<string, string> Metadata { get; set; }
+        public IEnumerable<string> FileExtensions { get; }
         public int MaximumInputs { get; }
-        public static IPlatformInfo FromJsonProtoTemplate(dynamic jsonDictionary)
-        {
-            return new PlatformInfo(
-             (string)jsonDictionary["PlatformID"], (string)jsonDictionary["Name"],
-             jsonDictionary["Metadata"].ToObject<Dictionary<string, string>>(),
-             jsonDictionary["FileExtensions"].ToObject<List<string>>(),
-             jsonDictionary["Controllers"].ToObject<List<string>>(), (int)jsonDictionary["MaximumInputs"],
-             PlatformControllerPorts.ParseControllerPorts(jsonDictionary["ControllerPorts"].ToObject<Dictionary<string, string>>()));
-        }
-
     }
 }
