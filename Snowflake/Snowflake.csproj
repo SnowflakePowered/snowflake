@@ -111,7 +111,7 @@
     <Compile Include="Configuration\Input\InputTemplate.cs" />
     <Compile Include="Configuration\KeyValuePairConfigurationSerializer.cs" />
     <Compile Include="Emulator\EmulatorInstance.cs" />
-    <Compile Include="Emulator\EmulatorHandler.cs" />
+    <Compile Include="Emulator\EmulatorAdapter.cs" />
     <Compile Include="Game\DictionaryStringStringTypeHandler.cs" />
     <Compile Include="Input\Controller\ControllerElementCollection.cs" />
     <Compile Include="Input\Controller\Mapped\MappedControllerElementCollection.cs" />
