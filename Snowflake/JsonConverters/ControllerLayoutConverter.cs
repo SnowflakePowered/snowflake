@@ -14,7 +14,7 @@ namespace Snowflake.JsonConverters
         {
             string layoutName = jObject.Value<string>("LayoutID");
             string friendlyName = jObject.Value<string>("FriendlyName");
-            IEnumerable<string> platformsWhitelist = jObject.Value<JArray>("Platforms").ToObject<IEnumerable<string>>();
+            IEnumerable<string> platformsWhitelist = jObject.Value<JArray>("Platforms").Values<string>();
             var jlayout = jObject.Value<JObject>("Layout");
             bool isDevice = jObject.Value<bool>("IsRealDevice");
 
@@ -26,9 +26,9 @@ namespace Snowflake.JsonConverters
                 let elementLabel = layoutElements.Value.Value<string>("Label")
                 let elementType = (ControllerElementType)Enum.Parse(typeof(ControllerElementType),
                 layoutElements.Value.Value<string>("Type"))
-                select Tuple.Create(elementKey, new ControllerElementInfo(elementLabel, elementType)))
+                select new { elementKey, elementInfo = new ControllerElementInfo(elementLabel, elementType) })
             {
-                layout.Add(controllerElement.Item1, controllerElement.Item2); //todo wait for c# 7 real tuples
+                layout.Add(controllerElement.elementKey, controllerElement.elementInfo); //todo wait for c# 7 real tuples
             }
             return new ControllerLayout(layoutName, platformsWhitelist, friendlyName, layout, isDevice);
         }

@@ -11,8 +11,9 @@ namespace Snowflake.Input.Device
         XInput,
         DirectInput,
         RawInput,
-        UDev,
+        Udev,
         WndProc,
+        HID,
         Other
     }
 }

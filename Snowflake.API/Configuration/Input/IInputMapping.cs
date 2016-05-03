@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Input.Controller;
+using Snowflake.Input.Device;
 
 namespace Snowflake.Configuration.Input
 {
@@ -12,6 +13,14 @@ namespace Snowflake.Configuration.Input
     /// </summary>
     public interface IInputMapping
     {
+        /// <summary>
+        /// The input API this mapping supports. 
+        /// </summary>
+        InputApi InputApi { get; }
+        /// <summary>
+        /// The device layouts this input mapping supports within this input API.
+        /// </summary>
+        IEnumerable<string> DeviceLayouts { get; }
         /// <summary>
         /// Gets the mapping for this keyboard key
         /// </summary>

@@ -123,6 +123,7 @@
     <Compile Include="Input\Controller\ControllerElementInfo.cs" />
     <Compile Include="Input\Controller\Mapped\MappedControllerElement.cs" />
     <Compile Include="JsonConverters\EmulatorAssemblyConverter.cs" />
+    <Compile Include="JsonConverters\InputMappingConverter.cs" />
     <Compile Include="JsonConverters\PlatformInfoConverter.cs" />
     <Compile Include="JsonConverters\ControllerLayoutConverter.cs" />
     <Compile Include="Input\Controller\ControllerLayout.cs" />
