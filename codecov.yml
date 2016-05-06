@@ -13,8 +13,9 @@ coverage:
     patch:
       default:
         if_no_uploads: error
+        target: '50'
 
     changes: true
 comment:
-  layout: "header, diff, changes, suggestions"
+  layout: "header, diff, changes, suggestions, sunburst"
   behavior: default
