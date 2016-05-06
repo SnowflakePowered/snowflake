@@ -91,7 +91,11 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Configuration\ConfigurationCollectionTests.cs" />
+    <Compile Include="Configuration\ConfigurationSectionTests.cs" />
+    <Compile Include="Configuration\ExampleConfigurationCollection.cs" />
     <Compile Include="Configuration\ExampleConfigurationSection.cs" />
+    <Compile Include="Configuration\KeyValuePairConfigurationSerializerTests.cs" />
     <Compile Include="Configuration\IniConfigurationSerializerTests.cs" />
     <Compile Include="Events\SnowflakeEventManagerTests.cs" />
     <Compile Include="Events\StandardEventsTests.cs" />
@@ -120,6 +124,8 @@
     <EmbeddedResource Include="TestResources\GameCache\test.webm" />
     <EmbeddedResource Include="TestResources\Mapping\GamepadMapping.json" />
     <EmbeddedResource Include="TestResources\Mapping\KeyboardMapping.json" />
+    <EmbeddedResource Include="TestResources\Configurations\ExampleConfigurationSection.cfg" />
+    <EmbeddedResource Include="TestResources\Configurations\ConfigCollection.ini" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Snowflake.API\Snowflake.API.csproj">
@@ -155,9 +161,7 @@
   <ItemGroup>
     <EmbeddedResource Include="TestResources\GameCache\test.mp4" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Emulator\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.99.0\build\net45\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.99.0\build\net45\System.Data.SQLite.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
