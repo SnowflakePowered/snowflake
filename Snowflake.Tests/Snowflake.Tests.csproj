@@ -95,8 +95,10 @@
     <Compile Include="Configuration\ConfigurationSectionTests.cs" />
     <Compile Include="Configuration\ExampleConfigurationCollection.cs" />
     <Compile Include="Configuration\ExampleConfigurationSection.cs" />
+    <Compile Include="Configuration\InputMapperTests.cs" />
     <Compile Include="Configuration\KeyValuePairConfigurationSerializerTests.cs" />
     <Compile Include="Configuration\IniConfigurationSerializerTests.cs" />
+    <Compile Include="Configuration\TestInputTemplate.cs" />
     <Compile Include="Events\SnowflakeEventManagerTests.cs" />
     <Compile Include="Events\StandardEventsTests.cs" />
     <Compile Include="Game\GameDatabaseTests.cs" />
@@ -111,6 +113,9 @@
     <Compile Include="Service\WebSocketServer\JSWebSocketServerTests.cs" />
     <EmbeddedResource Include="TestResources\Configurations\ExampleConfigurationSection.ini" />
     <EmbeddedResource Include="TestResources\Configurations\ExampleIterableConfigurationSection.ini" />
+    <EmbeddedResource Include="TestResources\InputMappings\xinput_device.json" />
+    <EmbeddedResource Include="TestResources\Configurations\ExampleInput.ini" />
+    <EmbeddedResource Include="TestResources\Configurations\ExampleInput.cfg" />
     <Compile Include="TestUtilities.cs" />
     <Compile Include="Utility\HashTests.cs" />
     <Compile Include="Utility\SqliteKeyValueStoreTests.cs" />
@@ -122,10 +127,10 @@
     <None Include="packages.config" />
     <EmbeddedResource Include="TestResources\GameCache\dmmy.ogg" />
     <EmbeddedResource Include="TestResources\GameCache\test.webm" />
-    <EmbeddedResource Include="TestResources\Mapping\GamepadMapping.json" />
-    <EmbeddedResource Include="TestResources\Mapping\KeyboardMapping.json" />
     <EmbeddedResource Include="TestResources\Configurations\ExampleConfigurationSection.cfg" />
     <EmbeddedResource Include="TestResources\Configurations\ConfigCollection.ini" />
+    <EmbeddedResource Include="TestResources\InputMappings\DirectInput.DEVICE_KEYBOARD.json" />
+    <EmbeddedResource Include="TestResources\InputMappings\DirectInput.DEVICE_XINPUT.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Snowflake.API\Snowflake.API.csproj">

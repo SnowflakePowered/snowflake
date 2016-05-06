@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
 using Xunit;
-namespace Snowflake.Tests.Configuration
+namespace Snowflake.Configuration.Tests
 {
     public class ConfigurationCollectionTests
     {

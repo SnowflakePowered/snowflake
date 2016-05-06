@@ -31,8 +31,10 @@ namespace Snowflake.Configuration
 
         public virtual string SerializeInput(string key, IMappedControllerElement element, IInputMapping inputMapping)
         {
+           
             return
-                this.SerializeLine(key, element.DeviceElement == ControllerElement.Keyboard
+                element == null ? this.SerializeLine(key, this.TypeMapper.ConvertValue((object) null))
+                : this.SerializeLine(key, element.DeviceElement == ControllerElement.Keyboard
                     ? inputMapping[element.DeviceKeyboardKey]
                     : inputMapping[element.DeviceElement]);
         }
