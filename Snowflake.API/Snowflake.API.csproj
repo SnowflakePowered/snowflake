@@ -116,7 +116,6 @@
     <Compile Include="Romfile\IStructuredFilename.cs" />
     <Compile Include="Scraper\IScrapableInfo.cs" />
     <Compile Include="Platform\IPlatformControllerPorts.cs" />
-    <Compile Include="Platform\StonePlatforms.cs" />
     <Compile Include="Extensibility\Configuration\IPluginConfigOption.cs" />
     <Compile Include="Extensibility\Configuration\IPluginSelectOption.cs" />
     <Compile Include="Extensibility\Configuration\PluginOptionType.cs" />
