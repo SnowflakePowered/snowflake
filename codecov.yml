@@ -1,8 +1,5 @@
 codecov:
   branch: master       # the branch to show by default, inherited from your git repository settings
-                       # ex. master, stable or release
-                       # default: the default branch in git/mercurial
-  bot: RonnChyran    
 coverage:
   precision: 2
   round: down
