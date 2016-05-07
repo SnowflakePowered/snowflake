@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using Snowflake.Constants;
-using Snowflake.Information.MediaStore;
 
 namespace Snowflake.Scraper
 {
@@ -43,58 +42,7 @@ namespace Snowflake.Scraper
                     break;
             }
         }
-
-        [Obsolete("IMediaStore is no longer in use")]
-        public IMediaStore ToMediaStore(string mediaStoreKey)
-        {
-            IMediaStore mediaStore = new FileMediaStore(mediaStoreKey);
-            using (var webClient = new WebClient())
-            {
-                for (int i = 0; i < this.Fanarts.Count; i++)
-                {
-                    var fanart = this.Fanarts[i];
-                    string filename = Path.GetFileName(new Uri(fanart).AbsolutePath);
-                    try
-                    {
-                        string downloadPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.InternetCache), $"fanart_{filename}");
-                        webClient.DownloadFile(fanart, downloadPath);
-                        mediaStore.Images.Add($"fanart_{i}", downloadPath);
-                    }
-                    catch
-                    {
-                    }
-                }
-                for (int i = 0; i < this.Screenshots.Count; i++)
-                {
-                    var screenshot = this.Screenshots[i];
-                    string filename = Path.GetFileName(new Uri(screenshot).AbsolutePath);
-                    try
-                    {
-                        string downloadPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.InternetCache), $"screenshot_{filename}");
-                        webClient.DownloadFile(screenshot, downloadPath);
-                        mediaStore.Images.Add($"screenshot_{i}", downloadPath);
-                    }
-                    catch
-                    {
-                    }
-                }
-                foreach (KeyValuePair<string, string> boxart in this.Boxarts)
-                {
-                    
-                    string filename = Path.GetFileName(new Uri(boxart.Value).AbsolutePath);
-                    try
-                    {
-                        string downloadPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.InternetCache), $"boxart_{filename}");
-                        webClient.DownloadFile(boxart.Value, downloadPath);
-                        mediaStore.Images.Add(boxart.Key.Substring(4), downloadPath);//remove 'img_' prefix
-                    }
-                    catch
-                    {
-                    }
-                }
-            }
-            return mediaStore;
-        }
+     
         public static string GetFullImagePath(string imageFileName, string imagesId)
         {
             return GameImagesResult.GetFullImagePath(imageFileName, imageFileName, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Snowflake", "data", "imagescache"));

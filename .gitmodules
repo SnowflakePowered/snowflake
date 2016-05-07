@@ -1,3 +1,6 @@
 [submodule "Snowflake.Shell.Windows.ElectronUserInterface/ui-electron-win64"]
 	path = Snowflake.Shell.Windows.ElectronUserInterface/ui-electron-win64
 	url = https://github.com/SnowflakePowered/snowflake-electron-dist-win64
+[submodule "stone"]
+	path = stone
+	url = https://github.com/SnowflakePowered/stone/

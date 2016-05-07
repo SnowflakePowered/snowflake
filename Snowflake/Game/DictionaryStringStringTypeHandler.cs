@@ -4,7 +4,7 @@ using System.Data;
 using Dapper;
 using Newtonsoft.Json;
 
-namespace Snowflake.Information.Database
+namespace Snowflake.Utility
 {
     /// <summary>
     /// Handles conversion of string dictionaries in SQL serialization
