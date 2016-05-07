@@ -28,7 +28,7 @@ namespace Snowflake.Information.Database
                                                                 platform_id TEXT,
                                                                 uuid TEXT PRIMARY KEY,
                                                                 filename TEXT,
-                                                                name TEXT,
+                                                                title TEXT,
                                                                 metadata TEXT,
                                                                 crc32 TEXT
                                                                 )", dbConnection);
@@ -41,12 +41,12 @@ namespace Snowflake.Information.Database
             using (SQLiteConnection dbConnection = this.GetConnection())
             {
                 dbConnection.Open();
-                dbConnection.Execute(@"INSERT OR REPLACE INTO games(platform_id, uuid, filename, name, metadata, crc32) 
+                dbConnection.Execute(@"INSERT OR REPLACE INTO games(platform_id, uuid, filename, title, metadata, crc32) 
                                         VALUES (
                                           @platform_id,
                                           @uuid,
                                           @filename,
-                                          @name,
+                                          @title,
                                           @metadata,
                                           @crc32)",
                     new
@@ -54,7 +54,7 @@ namespace Snowflake.Information.Database
                         platform_id = game.PlatformID,
                         uuid = game.UUID,
                         filename = game.FileName,
-                        name = game.Name,
+                        title = game.Title,
                         metadata = JsonConvert.SerializeObject(game.Metadata),
                         crc32 = game.CRC32
                     });
@@ -87,7 +87,7 @@ namespace Snowflake.Information.Database
 
         IEnumerable<IGameInfo> IGameLibrary.GetGamesByName(string nameSearch)
         {
-            return this.GetGamesByColumn("name", nameSearch);
+            return this.GetGamesByColumn("title", nameSearch);
         }
 
         IEnumerable<IGameInfo> IGameLibrary.GetGamesByPlatform(string platformId)
@@ -119,7 +119,7 @@ namespace Snowflake.Information.Database
                 new GameInfo(game.uuid,
                 game.platform_id,
                 game.filename,
-                game.name,
+                game.title,
                 game.crc32,
                 JsonConvert.DeserializeObject<IDictionary<string, string>>(game.metadata)));
 

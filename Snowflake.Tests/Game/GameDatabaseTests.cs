@@ -26,7 +26,7 @@ namespace Snowflake.Game.Tests
             string filename = Path.GetTempFileName();
             IGameLibrary database = new GameLibrary(filename);
             var fakeGameInfo = new Mock<IGameInfo>();
-            fakeGameInfo.SetupGet(game => game.Name).Returns("TestGame");
+            fakeGameInfo.SetupGet(game => game.Title).Returns("TestGame");
             fakeGameInfo.SetupGet(game => game.UUID).Returns("TESTGAME");
             fakeGameInfo.SetupGet(game => game.PlatformID).Returns("TESTPLATFORM");
             fakeGameInfo.SetupGet(game => game.Metadata).Returns(new Dictionary<string, string>() { { "TEST", "GAME" } });
@@ -39,14 +39,14 @@ namespace Snowflake.Game.Tests
             string filename = Path.GetTempFileName();
             IGameLibrary database = new GameLibrary(filename);
             var fakeGameInfo = new Mock<IGameInfo>();
-            fakeGameInfo.SetupGet(game => game.Name).Returns("TestGame");
+            fakeGameInfo.SetupGet(game => game.Title).Returns("TestGame");
             fakeGameInfo.SetupGet(game => game.UUID).Returns("TESTGAME");
             fakeGameInfo.SetupGet(game => game.PlatformID).Returns("TESTPLATFORM");
             fakeGameInfo.SetupGet(game => game.Metadata).Returns(new Dictionary<string, string>() { { "TEST", "GAME" } });
             database.AddGame(fakeGameInfo.Object);
-            fakeGameInfo.SetupGet(game => game.Name).Returns("NewTestGame");
+            fakeGameInfo.SetupGet(game => game.Title).Returns("NewTestGame");
             database.AddGame(fakeGameInfo.Object);
-            Assert.Equal("NewTestGame", database.GetGameByUUID("TESTGAME").Name);
+            Assert.Equal("NewTestGame", database.GetGameByUUID("TESTGAME").Title);
         }
 
         [Fact]
@@ -55,13 +55,13 @@ namespace Snowflake.Game.Tests
             string filename = Path.GetTempFileName();
             IGameLibrary database = new GameLibrary(filename);
             var fakeGameInfo = new Mock<IGameInfo>();
-            fakeGameInfo.SetupGet(game => game.Name).Returns("TestGame");
+            fakeGameInfo.SetupGet(game => game.Title).Returns("TestGame");
             fakeGameInfo.SetupGet(game => game.UUID).Returns("TESTGAME");
             fakeGameInfo.SetupGet(game => game.PlatformID).Returns("TESTPLATFORM");
             fakeGameInfo.SetupGet(game => game.Metadata).Returns(new Dictionary<string, string>() { { "TEST", "GAME"} });
             database.AddGame(fakeGameInfo.Object);
             Assert.Equal(fakeGameInfo.Object.UUID, database.GetGameByUUID("TESTGAME").UUID);
-            Assert.Equal(fakeGameInfo.Object.Name, database.GetGameByUUID("TESTGAME").Name);
+            Assert.Equal(fakeGameInfo.Object.Title, database.GetGameByUUID("TESTGAME").Title);
             Assert.Equal(fakeGameInfo.Object.PlatformID, database.GetGameByUUID("TESTGAME").PlatformID);
 
             database.RemoveGame(fakeGameInfo.Object);
@@ -76,12 +76,12 @@ namespace Snowflake.Game.Tests
             string filename = Path.GetTempFileName();
             IGameLibrary database = new GameLibrary(filename);
             var fakeGameInfo = new Mock<IGameInfo>();
-            fakeGameInfo.SetupGet(game => game.Name).Returns("TestGame");
+            fakeGameInfo.SetupGet(game => game.Title).Returns("TestGame");
             fakeGameInfo.SetupGet(game => game.UUID).Returns("TESTGAME");
             fakeGameInfo.SetupGet(game => game.PlatformID).Returns("TESTPLATFORM");
             database.AddGame(fakeGameInfo.Object);
             Assert.Equal(fakeGameInfo.Object.UUID, database.GetGameByUUID("TESTGAME").UUID);
-            Assert.Equal(fakeGameInfo.Object.Name, database.GetGameByUUID("TESTGAME").Name);
+            Assert.Equal(fakeGameInfo.Object.Title, database.GetGameByUUID("TESTGAME").Title);
             Assert.Equal(fakeGameInfo.Object.PlatformID, database.GetGameByUUID("TESTGAME").PlatformID);
             this.DisposeSqlite();
             File.Delete(filename);
@@ -93,12 +93,12 @@ namespace Snowflake.Game.Tests
             string filename = Path.GetTempFileName();
             IGameLibrary database = new GameLibrary(filename);
             var fakeGameInfo = new Mock<IGameInfo>();
-            fakeGameInfo.SetupGet(game => game.Name).Returns("TestGame");
+            fakeGameInfo.SetupGet(game => game.Title).Returns("TestGame");
             fakeGameInfo.SetupGet(game => game.UUID).Returns("TESTGAME");
             fakeGameInfo.SetupGet(game => game.PlatformID).Returns("TESTPLATFORM");
             database.AddGame(fakeGameInfo.Object);
             Assert.Equal(fakeGameInfo.Object.UUID, database.GetGamesByName("TestGame").First().UUID);
-            Assert.Equal(fakeGameInfo.Object.Name, database.GetGamesByName("TestGame").First().Name);
+            Assert.Equal(fakeGameInfo.Object.Title, database.GetGamesByName("TestGame").First().Title);
             Assert.Equal(fakeGameInfo.Object.PlatformID, database.GetGamesByName("TestGame").First().PlatformID);
             this.DisposeSqlite();
             File.Delete(filename);
@@ -109,12 +109,12 @@ namespace Snowflake.Game.Tests
             string filename = Path.GetTempFileName();
             IGameLibrary database = new GameLibrary(filename);
             var fakeGameInfo = new Mock<IGameInfo>();
-            fakeGameInfo.SetupGet(game => game.Name).Returns("TestGame");
+            fakeGameInfo.SetupGet(game => game.Title).Returns("TestGame");
             fakeGameInfo.SetupGet(game => game.UUID).Returns("TESTGAME");
             fakeGameInfo.SetupGet(game => game.PlatformID).Returns("TESTPLATFORM");
             database.AddGame(fakeGameInfo.Object);
             Assert.Equal(fakeGameInfo.Object.UUID, database.GetGamesByPlatform("TESTPLATFORM").First().UUID);
-            Assert.Equal(fakeGameInfo.Object.Name, database.GetGamesByPlatform("TESTPLATFORM").First().Name);
+            Assert.Equal(fakeGameInfo.Object.Title, database.GetGamesByPlatform("TESTPLATFORM").First().Title);
             Assert.Equal(fakeGameInfo.Object.PlatformID, database.GetGamesByPlatform("TESTPLATFORM").First().PlatformID);
             this.DisposeSqlite();
             File.Delete(filename);
@@ -126,7 +126,7 @@ namespace Snowflake.Game.Tests
             string filename = Path.GetTempFileName();
             IGameLibrary database = new GameLibrary(filename);
             var fakeGameInfo = new Mock<IGameInfo>();
-            fakeGameInfo.SetupGet(game => game.Name).Returns("TestGame");
+            fakeGameInfo.SetupGet(game => game.Title).Returns("TestGame");
             fakeGameInfo.SetupGet(game => game.UUID).Returns("TESTGAME");
             fakeGameInfo.SetupGet(game => game.PlatformID).Returns("TESTPLATFORM");
             database.AddGame(fakeGameInfo.Object);

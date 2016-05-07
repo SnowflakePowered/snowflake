@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using Snowflake.Configuration;
 using Snowflake.Emulator;
 using Snowflake.Events;
+using Snowflake.Service;
 using Snowflake.Service.Manager;
 using Squirrel;
 
@@ -34,6 +35,8 @@ namespace Snowflake.Shell.Windows
                 });
 
             }*/
+            var stone = new StoneProvider();
+
             var snowflakeIcon = new ShellIcon();
             SnowflakeEventManager.InitEventSource();
             var snowflakeShell = new SnowflakeShell();

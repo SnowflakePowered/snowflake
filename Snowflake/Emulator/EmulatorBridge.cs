@@ -15,6 +15,7 @@ using Snowflake.Service.Manager;
 
 namespace Snowflake.Emulator
 {
+    [Obsolete]
     public abstract class EmulatorBridge : Extensibility.Plugin, IEmulatorBridge
     {
         public IDictionary<string, IControllerTemplate> ControllerTemplates { get; }
@@ -57,7 +58,7 @@ namespace Snowflake.Emulator
         public virtual string CompileController(int playerIndex, IPlatformInfo platformInfo, IInputTemplate inputTemplate, IEmulatorInstance instance)
         {
             string deviceName = this.CoreInstance.Get<IControllerPortStore>().GetDeviceInPort(platformInfo, playerIndex);
-            string controllerId = platformInfo.ControllerPorts[playerIndex];
+            string controllerId = null; //todo reimplement
             IControllerDefinition controllerDefinition = this.CoreInstance.Controllers[controllerId];
             IGamepadAbstraction gamepadAbstraction = this.CoreInstance.Get<IGamepadAbstractionStore>()[deviceName];
             return this.CompileController(playerIndex, 
