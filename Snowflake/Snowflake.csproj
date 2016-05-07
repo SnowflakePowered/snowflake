@@ -112,6 +112,7 @@
     <Compile Include="Game\GameMediaCache.cs" />
     <Compile Include="Game\SqliteGameDatabase.cs" />
     <Compile Include="Game\GameScreenshotCache.cs" />
+    <Compile Include="Game\DictionaryStringStringTypeHandler.cs" />
     <Compile Include="Platform\PlatformControllerPorts.cs" />
     <Compile Include="Platform\PlatformPreferencesStore.cs" />
     <Compile Include="Extensibility\Plugin.cs" />

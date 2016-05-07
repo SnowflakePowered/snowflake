@@ -50,8 +50,6 @@ namespace Snowflake.Service
             this.RegisterService<IStoneProvider>(new StoneProvider());
             this.AppDataDirectory = appDataDirectory;
             this.InfoBlob = JsonConvert.DeserializeObject(File.ReadAllText(Path.Combine(this.AppDataDirectory, "info.json")));
-            this.Platforms = this.LoadPlatforms();
-            this.Controllers = this.LoadControllers();
 
             this.RegisterService<IServerManager>(new ServerManager());
             this.RegisterService<IGameLibrary>(new GameLibrary(Path.Combine(this.AppDataDirectory, "games.db")));
@@ -87,41 +85,6 @@ namespace Snowflake.Service
             return this.serviceContainer.ContainsKey(typeof (T)) ? this.serviceContainer[typeof (T)] : default(T);
         }
 
-        private IDictionary<string, IPlatformInfo> LoadPlatforms()
-        {
-            var loadedPlatforms = new Dictionary<string, IPlatformInfo>();
-            foreach (var _platform in this.InfoBlob["platforms"])
-            {
-                try
-                {
-                    var platform = PlatformInfo.FromJsonProtoTemplate(_platform); //Convert MediaStoreKey reference to full MediaStore object
-                    loadedPlatforms.Add(platform.PlatformID, platform);
-                }
-                catch (Exception ex)
-                {
-                  logger.Error(ex, "Something went wrong when loading a platform from the info blob. Regenerate it by deleting info.json");
-                }
-            }
-            return loadedPlatforms;
-        }
-        private IDictionary<string, IControllerDefinition> LoadControllers()
-        {
-            var loadedControllers = new Dictionary<string, IControllerDefinition>();
-            foreach (var _controller in this.InfoBlob["controllers"])
-            {
-                try
-                {
-                    var controller = ControllerDefinition.FromJsonProtoTemplate(_controller);
-                    loadedControllers.Add(controller.ControllerID, controller);
-                }
-                catch (Exception ex)
-                {
-                    //log
-                    logger.Error(ex, "Something went wrong when loading a controller from the info blob. Regenerate it by deleting info.json");
-                }
-            }
-            return loadedControllers;
-        }
         public void Dispose()
         {
             this.Dispose(true);
