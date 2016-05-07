@@ -132,6 +132,7 @@
     <Compile Include="Emulator\Configuration\ConfigurationEntry.cs" />
     <Compile Include="Emulator\Configuration\ConfigurationProfile.cs" />
     <Compile Include="Emulator\Configuration\ConfigurationTemplate.cs" />
+    <Compile Include="JsonConverters\PlatformInfoConverter.cs" />
     <Compile Include="Configuration\BooleanMapping.cs" />
     <Compile Include="Emulator\Input\GamepadMapping.cs" />
     <Compile Include="Emulator\Input\KeyboardMapping.cs" />
