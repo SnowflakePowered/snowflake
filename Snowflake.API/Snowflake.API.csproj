@@ -118,6 +118,7 @@
     <Compile Include="Emulator\Input\Constants\KeyboardConstants.cs" />
     <Compile Include="Game\GameInfoFields.cs" />
     <Compile Include="Extensibility\PluginInfoFields.cs" />
+    <Compile Include="Service\IStoneProvider.cs" />
     <Compile Include="Service\IUserInterface.cs" />
     <Compile Include="Service\Manager\IEmulatorInstanceManager.cs" />
     <Compile Include="Service\IScrapeEngine.cs" />

@@ -28,6 +28,7 @@ namespace Snowflake.Service
     public class CoreService : ICoreService
     {
         #region Loaded Objects
+        public IStoneProvider StoneProvider { get; }
         public IDictionary<string, IPlatformInfo> Platforms { get; }
         public IDictionary<string, IControllerDefinition> Controllers { get; }
         public string AppDataDirectory { get; }
