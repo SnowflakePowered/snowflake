@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
@@ -28,7 +29,6 @@ namespace Snowflake.Service
     public class CoreService : ICoreService
     {
         #region Loaded Objects
-        public IStoneProvider StoneProvider { get; }
         public IDictionary<string, IPlatformInfo> Platforms { get; }
         public IDictionary<string, IControllerDefinition> Controllers { get; }
         public string AppDataDirectory { get; }
@@ -46,7 +46,8 @@ namespace Snowflake.Service
         public CoreService(string appDataDirectory)
         {
             this.logger = LogManager.GetLogger("~CORESERVICE");
-            this.serviceContainer = new Dictionary<Type, dynamic>();
+            this.StoneProvider = new StoneProvider();
+            this.serviceContainer = new Dictionary<Type, object>();
             this.AppDataDirectory = appDataDirectory;
             this.InfoBlob = JsonConvert.DeserializeObject(File.ReadAllText(Path.Combine(this.AppDataDirectory, "info.json")));
             this.Platforms = this.LoadPlatforms();
