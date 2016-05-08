@@ -125,6 +125,7 @@
     <Compile Include="Controller\ControllerPortStore.cs" />
     <Compile Include="Controller\ControllerDefinition.cs" />
     <Compile Include="Extensibility\YamlConfiguration.cs" />
+    <Compile Include="Records\Metadata\Metadata.cs" />
     <Compile Include="Romfile\FileSignature.cs" />
     <Compile Include="Romfile\StructuredFilename.cs" />
     <Compile Include="Scraper\Scraper.cs" />

@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GuidUtility.cs" />
     <Compile Include="JsonCreationConverter.cs" />
     <Compile Include="SqliteDatabase.cs" />
     <Compile Include="FileHash.cs" />
