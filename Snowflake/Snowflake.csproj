@@ -128,6 +128,7 @@
     <Compile Include="Records\File\FileRecord.cs" />
     <Compile Include="Records\Game\GameRecord.cs" />
     <Compile Include="Records\Metadata\RecordMetadata.cs" />
+    <Compile Include="Records\Metadata\SqliteMetadataStore.cs" />
     <Compile Include="Romfile\FileSignature.cs" />
     <Compile Include="Romfile\StructuredFilename.cs" />
     <Compile Include="Scraper\Scraper.cs" />
@@ -144,7 +145,6 @@
     <Compile Include="Extensions\HttpListenerContextExts.cs" />
     <Compile Include="Extensions\IDictionaryExtensions.cs" />
     <Compile Include="Extensions\IListExtensions.cs" />
-    <Compile Include="Extensions\MEFExtensions.cs" />
     <Compile Include="Controller\ControllerInput.cs" />
     <Compile Include="Game\GameLibrary.cs" />
     <Compile Include="Platform\PlatformDefaults.cs" />

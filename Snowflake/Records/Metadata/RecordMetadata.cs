@@ -7,7 +7,7 @@ namespace Snowflake.Records.Metadata
     {
         public string Key { get; }
         public string Value { get; }
-        public Guid MetadataGuid { get; }
+        public Guid Guid { get; }
         public Guid Record { get; }
 
         public RecordMetadata(string key, string value, Guid record)
@@ -15,15 +15,15 @@ namespace Snowflake.Records.Metadata
             this.Key = key;
             this.Value = value;
             this.Record = record;
-            this.MetadataGuid = GuidUtility.Create(this.Record, this.Key);
+            this.Guid = GuidUtility.Create(this.Record, this.Key);
         }
 
         public RecordMetadata(string key, string value, IRecord record) : this(key, value, record.Guid)
         {
         }
 
-        public bool Equals(IRecordMetadata metadata) => this.MetadataGuid == metadata.MetadataGuid;
-        public override int GetHashCode() => this.MetadataGuid.GetHashCode();
+        public bool Equals(IRecordMetadata metadata) => this.Guid == metadata.Guid;
+        public override int GetHashCode() => this.Guid.GetHashCode();
 
         public override bool Equals(object metadata)
         {
@@ -35,7 +35,7 @@ namespace Snowflake.Records.Metadata
             }
 
             // Return true if the fields match:
-            return m.MetadataGuid == this.MetadataGuid;
+            return m.Guid == this.Guid;
         }
 
         public static bool operator ==(RecordMetadata metadataX, IRecordMetadata metadataY) => metadataX.Equals(metadataY);

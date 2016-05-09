@@ -20,7 +20,7 @@ namespace Snowflake.Records.Metadata
         /// A metadata with the same key and element guid should produce the same Guidv3, with the
         /// UUID v3 namespace being the element guid.
         /// </summary>
-        Guid MetadataGuid { get; }
+        Guid Guid { get; }
         /// <summary>
         /// The guid of the element of the metadata
         /// </summary>
