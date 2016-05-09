@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Snowflake.Records.Metadata;
 
-namespace Snowflake.Records.Metadata
+namespace Snowflake.Records
 {
     /// <summary>
     /// Represents a class that can have metadata assigned to it.

@@ -52,7 +52,6 @@ namespace Snowflake.Records.Metadata
         /// <returns>All the metadata with matching key/values</returns>
         IEnumerable<IRecordMetadata> GetAll(string key, string exactValue);
 
-
         /// <summary>
         /// Gets all metadata in the store
         /// </summary>

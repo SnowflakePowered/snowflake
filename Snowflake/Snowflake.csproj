@@ -125,7 +125,9 @@
     <Compile Include="Controller\ControllerPortStore.cs" />
     <Compile Include="Controller\ControllerDefinition.cs" />
     <Compile Include="Extensibility\YamlConfiguration.cs" />
-    <Compile Include="Records\Metadata\Metadata.cs" />
+    <Compile Include="Records\File\FileRecord.cs" />
+    <Compile Include="Records\Game\GameRecord.cs" />
+    <Compile Include="Records\Metadata\RecordMetadata.cs" />
     <Compile Include="Romfile\FileSignature.cs" />
     <Compile Include="Romfile\StructuredFilename.cs" />
     <Compile Include="Scraper\Scraper.cs" />
@@ -171,6 +173,7 @@
       <Name>Snowflake.Utility</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.99.0\build\net45\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.99.0\build\net45\System.Data.SQLite.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
