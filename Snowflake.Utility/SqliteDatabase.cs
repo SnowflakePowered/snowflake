@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.SQLite;
 using System.IO;
@@ -27,38 +28,43 @@ namespace Snowflake.Utility
             return new SQLiteConnection(this.dbConnectionString);
         }
 
-        public IEnumerable<T> QuerySimple<T>(string query, object param = null)
-        {
-            IEnumerable<T> records;
-            using (SQLiteConnection dbConnection = this.GetConnection())
-            {
-                dbConnection.Open();
-                records = dbConnection.Query<T>(query, param);
-                dbConnection.Close();
-            }
-            return records;
-        }
-
-        public void ExecuteSimple(string query, object param = null)
-        {
-            using (SQLiteConnection dbConnection = this.GetConnection())
-            {
-                dbConnection.Open();
-                dbConnection.Execute(query, param);
-                dbConnection.Close();
-            }
-        }
-
-        public T QuerySingleSimple<T>(string query, object param = null)
+        public T Query<T>(Func<DbConnection, T> queryFunction)
         {
             T record;
             using (SQLiteConnection dbConnection = this.GetConnection())
             {
                 dbConnection.Open();
-                record = dbConnection.QueryFirst<T>(query);
+                record = queryFunction(dbConnection);
                 dbConnection.Close();
             }
             return record;
         }
+
+        public void Execute(Action<DbConnection> queryFunction)
+        {
+            using (SQLiteConnection dbConnection = this.GetConnection())
+            {
+                dbConnection.Open();
+                queryFunction(dbConnection);
+                dbConnection.Close();
+            }
+        }
+
+        public IEnumerable<T> QuerySimple<T>(string query, object param = null)
+        {
+            return this.Query(dbConnection => dbConnection.Query<T>(query, param));
+        }
+
+        public void ExecuteSimple(string query, object param = null)
+        {
+            this.Execute(dbConnection => dbConnection.Execute(query, param));
+        }
+
+        public T QuerySingleSimple<T>(string query, object param = null)
+        {
+            return this.Query(dbConnection => dbConnection.QueryFirst<T>(query, param));
+        }
+
+  
     }
 }
