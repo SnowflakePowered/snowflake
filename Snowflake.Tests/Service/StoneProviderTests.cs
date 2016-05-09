@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Service;
 using Xunit;
-namespace Snowflake.Tests.Service
+namespace Snowflake.Service.Tests
 {
     public class StoneProviderTests
     {
