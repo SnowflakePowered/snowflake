@@ -9,9 +9,9 @@ using Snowflake.Records.Metadata;
 namespace Snowflake.Records.Game
 {
     /// <summary>
-    /// Represents a game as a collection of <see cref="IMetadata"/> and <see cref="IFileRecord"/>s
+    /// Represents a game as a collection of <see cref="IRecordMetadata"/> and <see cref="IFileRecord"/>s
     /// </summary>
-    public interface IGameRecord : IMetadataAssignable
+    public interface IGameRecord : IRecord
     {
         /// <summary>
         /// The Stone platform ID of this record
@@ -20,7 +20,7 @@ namespace Snowflake.Records.Game
 
         /// <summary>
         /// The title of the game
-        /// (must be equivalent to &quot;game_title&quot; <see cref="IMetadataAssignable.Metadata"/>)
+        /// (must be equivalent to &quot;game_title&quot; <see cref="IRecord.Metadata"/>)
         /// </summary>
         string Title { get; }
 

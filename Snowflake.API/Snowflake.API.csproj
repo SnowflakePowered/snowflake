@@ -99,12 +99,13 @@
     <Compile Include="Game\IGameMediaCache.cs" />
     <Compile Include="Game\IGameScreenshotCache.cs" />
     <Compile Include="Records\File\IFileRecord.cs" />
+    <Compile Include="Records\Game\GameMetadataKeys.cs" />
     <Compile Include="Records\Game\IGameRecord.cs" />
     <Compile Include="Records\File\IFileLibrary.cs" />
     <Compile Include="Records\Game\IGameLibrary.cs" />
     <Compile Include="Records\ILibrary.cs" />
-    <Compile Include="Records\Metadata\IMetadata.cs" />
-    <Compile Include="Records\Metadata\IMetadataAssignable.cs" />
+    <Compile Include="Records\Metadata\IRecordMetadata.cs" />
+    <Compile Include="Records\IRecord.cs" />
     <Compile Include="Records\Metadata\IMetadatable.cs" />
     <Compile Include="Records\Metadata\IMetadataStore.cs" />
     <Compile Include="Romfile\IFileSignature.cs" />

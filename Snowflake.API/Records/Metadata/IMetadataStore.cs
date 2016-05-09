@@ -15,13 +15,13 @@ namespace Snowflake.Records.Metadata
         /// Adds or updates a metadata value
         /// </summary>
         /// <param name="metadata">The metadata to add</param>
-        void Set(IMetadata metadata);
+        void Set(IRecordMetadata metadata);
 
         /// <summary>
         /// Removes a metadata value
         /// </summary>
         /// <param name="metadata">The metadata to remove</param>
-        void Remove(IMetadata metadata);
+        void Remove(IRecordMetadata metadata);
 
         /// <summary>
         /// Removes a metadata value with the given ID
@@ -34,7 +34,7 @@ namespace Snowflake.Records.Metadata
         /// </summary>
         /// <param name="target">The element target</param>
         /// <returns>All the metadata for the target element</returns>
-        IDictionary<string, IMetadata> GetAllForElement(Guid target);
+        IDictionary<string, IRecordMetadata> GetAllForElement(Guid target);
 
         /// <summary>
         /// Executes a `LIKE` search on a metadata value
@@ -42,7 +42,7 @@ namespace Snowflake.Records.Metadata
         /// <param name="key">The key to search for</param>
         /// <param name="likeValue">The fuzzy search value</param>
         /// <returns>All the metadata with matching key/values</returns>
-        IEnumerable<IMetadata> Search(string key, string likeValue);
+        IEnumerable<IRecordMetadata> Search(string key, string likeValue);
 
         /// <summary>
         /// Gets metadata with exact metadata value match.
@@ -50,21 +50,21 @@ namespace Snowflake.Records.Metadata
         /// <param name="key">The metadata key to search for</param>
         /// <param name="exactValue">The exact metadata value match</param>
         /// <returns>All the metadata with matching key/values</returns>
-        IEnumerable<IMetadata> GetAll(string key, string exactValue);
+        IEnumerable<IRecordMetadata> GetAll(string key, string exactValue);
 
 
         /// <summary>
         /// Gets all metadata in the store
         /// </summary>
         /// <returns>All the metadata currently present</returns>
-        IEnumerable<IMetadata> GetAll();
+        IEnumerable<IRecordMetadata> GetAll();
 
         /// <summary>
         /// Gets a metadata by it's UUID
         /// </summary>
         /// <param name="metadataId">The metadata guid</param>
         /// <returns>The metadata guid</returns>
-        IMetadata Get(Guid metadataId);
+        IRecordMetadata Get(Guid metadataId);
 
         /// <summary>
         /// Gets the keyed metadata for a record
@@ -72,6 +72,6 @@ namespace Snowflake.Records.Metadata
         /// <param name="key">The metadata key</param>
         /// <param name="recordId">The metadata record Id</param>
         /// <returns></returns>
-        IMetadata Get(string key, Guid recordId);
+        IRecordMetadata Get(string key, Guid recordId);
     }
 }

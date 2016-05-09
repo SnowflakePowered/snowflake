@@ -5,7 +5,7 @@ namespace Snowflake.Records.Metadata
     /// <summary>
     /// Represents a piece of metadata for a game or a file.
     /// </summary>
-    public interface IMetadata
+    public interface IRecordMetadata
     {
         /// <summary>
         /// The key of the metadata
@@ -24,7 +24,7 @@ namespace Snowflake.Records.Metadata
         /// <summary>
         /// The guid of the element of the metadata
         /// </summary>
-        Guid Element { get; }
+        Guid Record { get; }
 
     }
 }

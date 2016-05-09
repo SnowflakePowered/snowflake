@@ -10,7 +10,7 @@ namespace Snowflake.Records.File
     /// <summary>
     /// Represents a file on disk.
     /// </summary>
-    public interface IFileRecord : IMetadataAssignable
+    public interface IFileRecord : IRecord
     {
         /// <summary>
         /// The mimetype of the file
