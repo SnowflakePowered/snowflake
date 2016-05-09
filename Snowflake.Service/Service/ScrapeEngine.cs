@@ -28,12 +28,13 @@ namespace Snowflake.Service
 
         public IScrapableInfo GetScrapableInfo(string fileName, IPlatformInfo knownPlatform = null)
         {
+            //todo write to take advantage of mimetypes.
             var fileSignatures = this.coreService.Get<IPluginManager>().Get<IFileSignature>();
             var vettedSignature = fileSignatures
                 .Where(signature => signature.Value.FileExtensionMatches(fileName)).FirstOrDefault(signature => signature.Value.HeaderSignatureMatches(fileName)).Value;
             var platformFromFileExtension =
                 this.coreService.Platforms.FirstOrDefault(
-                    platform => platform.Value.FileExtensions.Contains(Path.GetExtension(fileName))).Value;
+                    platform => platform.Value.FileTypes.Keys.Contains(Path.GetExtension(fileName))).Value;
             var romPlatform =
                 this.coreService.Platforms[
                     vettedSignature?.SupportedPlatform ??

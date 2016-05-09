@@ -20,9 +20,14 @@ namespace Snowflake.Platform
         /// </summary>
         IDictionary<string, string> Metadata { get; set; }
         /// <summary>
-        /// The file extensions ROMs of this platform are known to have.
+        /// The file types ROMs of this platform are known to have.
+        /// Included as a mapping of file extension to mime type application/x-romfile-*
         /// </summary>
-        IEnumerable<string> FileExtensions { get; }
+        IDictionary<string, string> FileTypes { get; }
+        /// <summary>
+        /// The list of bios files for this platform
+        /// </summary>
+        IEnumerable<string> BiosFiles { get; }
         /// <summary>
         /// The maximum amount of inputs that are physically possible for this platform to have.
         /// </summary>
