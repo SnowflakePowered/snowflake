@@ -20,7 +20,7 @@ namespace Snowflake.Records.Metadata
 
         private void CreateDatabase()
         {
-            this.backingDatabase.ExecuteSimple(@"CREATE TABLE IF NOT EXISTS metadata(
+            this.backingDatabase.Execute(@"CREATE TABLE IF NOT EXISTS metadata(
                                                                 uuid TEXT PRIMARY KEY,
                                                                 record TEXT,
                                                                 key TEXT,
@@ -31,7 +31,7 @@ namespace Snowflake.Records.Metadata
         public void Set(IRecordMetadata metadata)
         {
 
-            this.backingDatabase.ExecuteSimple(@"INSERT OR REPLACE INTO metadata(uuid, record, key, value) 
+            this.backingDatabase.Execute(@"INSERT OR REPLACE INTO metadata(uuid, record, key, value) 
                                         VALUES (
                                           @Guid,
                                           @Record,
@@ -42,7 +42,7 @@ namespace Snowflake.Records.Metadata
 
         public void Remove(IRecordMetadata metadata)
         {
-            this.backingDatabase.ExecuteSimple(@"INSERT OR REPLACE INTO metadata(uuid, record, key, value) 
+            this.backingDatabase.Execute(@"INSERT OR REPLACE INTO metadata(uuid, record, key, value) 
                                         VALUES (
                                           @Guid,
                                           @Record,
@@ -52,12 +52,13 @@ namespace Snowflake.Records.Metadata
 
         public void Remove(Guid metadataId)
         {
-            this.backingDatabase.ExecuteSimple("DELETE FROM metadata WHERE uuid = @uuid", metadataId);
+            this.backingDatabase.Execute("DELETE FROM metadata WHERE uuid = @metadataId", new { metadataId });
         }
 
         public IDictionary<string, IRecordMetadata> GetAllForElement(Guid target)
         {
-            return this.backingDatabase.QuerySimple<RecordMetadata>(@"SELECT * FROM metadata WHERE record = @target", target)
+            return this.backingDatabase.Query<RecordMetadata>
+                (@"SELECT * FROM metadata WHERE record = @target", new { target } )
                 .ToDictionary(m => m.Key, m => m as IRecordMetadata);
         }
 
@@ -65,31 +66,35 @@ namespace Snowflake.Records.Metadata
         public IEnumerable<IRecordMetadata> Search(string key, string likeValue)
         {
 
-            return this.backingDatabase.QuerySimple<RecordMetadata>(@"SELECT * FROM metadata WHERE key = @key AND value LIKE %@likeValue%",
+            return this.backingDatabase.Query<RecordMetadata>
+                (@"SELECT * FROM metadata WHERE key = @key AND value LIKE %@likeValue%",
                     new { key, likeValue });
         }
 
         public IEnumerable<IRecordMetadata> GetAll(string key, string exactValue)
         {
 
-            return this.backingDatabase.QuerySimple<RecordMetadata>(@"SELECT * FROM metadata WHERE key = @key AND value = @exactValue",
+            return this.backingDatabase.Query<RecordMetadata>
+                (@"SELECT * FROM metadata WHERE key = @key AND value = @exactValue",
                     new { key, exactValue });
         }
 
 
         public IEnumerable<IRecordMetadata> GetAll()
         {
-            return this.backingDatabase.QuerySimple<RecordMetadata>(@"SELECT * FROM metadata");
+            return this.backingDatabase.Query<RecordMetadata>(@"SELECT * FROM metadata");
         }
 
         public IRecordMetadata Get(Guid metadataId)
         {
-            return this.backingDatabase.QuerySingleSimple<RecordMetadata>(@"SELECT * FROM metadata WHERE uuid = @metadataId LIMIT 1", metadataId);
+            return this.backingDatabase.QueryFirstOrDefault<RecordMetadata>
+                (@"SELECT * FROM metadata WHERE uuid = @metadataId LIMIT 1", new { metadataId });
         }
 
         public IRecordMetadata Get(string key, Guid recordId)
         {
-            return this.backingDatabase.QuerySingleSimple<RecordMetadata>($@"SELECT * FROM metadata WHERE record = @recordId AND key = @key LIMIT 1",
+            return this.backingDatabase.QueryFirstOrDefault<RecordMetadata>
+                ($@"SELECT * FROM metadata WHERE record = @recordId AND key = @key LIMIT 1",
                     new { key, recordId });
         }
     }
