@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 
 namespace Snowflake.Utility
 {
-
+    //todo use simple execute api
 
     public class SqliteKeyValueStore : SqliteDatabase, ISimpleKeyValueStore
     {
@@ -35,75 +35,55 @@ namespace Snowflake.Utility
 
         private void CreateDatabase()
         {
-            using (SQLiteConnection dbConnection = this.GetConnection())
-            {
-                dbConnection.Open();
-                dbConnection.Execute(@"CREATE TABLE IF NOT EXISTS kvstore(
+            
+                this.Execute(@"CREATE TABLE IF NOT EXISTS kvstore(
                                                                 itemKey TEXT PRIMARY KEY,
                                                                 itemValue TEXT,
                                                                 itemType TEXT
                                                                 )");
-                dbConnection.Close();
-            }
+             
         }
 
         public void DeleteObject(string key)
         {
-            using (var dbConnection = this.GetConnection())
-            {
-                dbConnection.Execute("DELETE FROM kvstore WHERE itemKey = @itemKey",
-                    new { itemKey = key });
-            }
+            this.Execute("DELETE FROM kvstore WHERE itemKey = @key",
+                new { key });
         }
 
         public void DeleteObjects(IEnumerable<string> keys)
         {
-            using (var dbConnection = this.GetConnection())
-            {
-                dbConnection.Execute("DELETE FROM kvstore WHERE itemKey IN @itemKeys",
-                   new { itemKeys = keys });
-            }
-        }
+            this.Execute("DELETE FROM kvstore WHERE itemKey IN @keys", new { keys });
+        } 
 
         public void DeleteObjects<T>(IEnumerable<string> keys)
         {
-            using (var dbConnection = this.GetConnection())
-            {
-                dbConnection.Execute("DELETE FROM kvstore WHERE itemKey IN @itemKeys AND itemType = @itemType",
-                   new { itemKeys = keys , itemType = typeof(T).Name });
-            }
+            this.Execute("DELETE FROM kvstore WHERE itemKey IN @keys AND itemType = @itemType",
+                   new { keys , itemType = typeof(T).Name });
+            
         }
 
         public void DeleteAllObjects<T>()
         {
-            using (var dbConnection = this.GetConnection())
-            {
-                dbConnection.Execute("DELETE FROM kvstore WHERE itemType = @itemType",
+                this.Execute("DELETE FROM kvstore WHERE itemType = @itemType",
                    new { itemType = typeof(T).Name });
-            }
+            
         }
 
         public T GetObject<T>(string key)
         {
-            string serializedObject;
-            using (var dbConnection = this.GetConnection())
-            {
-                serializedObject = dbConnection.Query<string>("SELECT itemValue FROM kvstore WHERE itemKey = @itemKey",
-                   new { itemKey = key , itemType = typeof(T).Name }).FirstOrDefault();
-            }
+            string serializedObject =
+                this.QueryFirstOrDefault<string>("SELECT itemValue FROM kvstore WHERE itemKey = @itemKey LIMIT 1",
+                    new {itemKey = key, itemType = typeof(T).Name});
+          
             return serializedObject == null ? default(T) : JsonConvert.DeserializeObject<T>(serializedObject, this.jsonSettings);
         }
 
         public IDictionary<string, T> GetObjects<T>(IEnumerable<string> keys)
         {
-            IEnumerable<SqliteKeyValueEntry> serializedObjects;
-            using (var dbConnection = this.GetConnection())
-            {
-                serializedObjects = dbConnection.Query<SqliteKeyValueEntry>("SELECT * FROM kvstore WHERE itemKey IN @itemKeys",
-                    new {itemKeys = keys, itemType = typeof(T).Name });
-            }
-
-            IDictionary<string, T> deserializedObjects = serializedObjects
+          
+            IDictionary<string, T> deserializedObjects = this.Query<SqliteKeyValueEntry>
+                ("SELECT * FROM kvstore WHERE itemKey IN @keys",
+                    new { keys })
                 .ToDictionary(serializedObject => serializedObject.itemKey,
                     serializedObject => (serializedObject.itemValue == null)
                         ? default(T)
@@ -113,14 +93,9 @@ namespace Snowflake.Utility
 
         public IDictionary<string, T> GetAllObjects<T>()
         {
-            IEnumerable<SqliteKeyValueEntry> serializedObjects;
-            using (var dbConnection = this.GetConnection())
-            {
-                serializedObjects = dbConnection.Query<SqliteKeyValueEntry>("SELECT * FROM kvstore WHERE itemType = @itemType",
-                    new { itemType = typeof(T).Name });
-            }
-
-            IDictionary<string, T> deserializedObjects = serializedObjects
+            IDictionary<string, T> deserializedObjects = this.Query<SqliteKeyValueEntry>
+                ("SELECT * FROM kvstore WHERE itemType = @itemType",
+                    new { itemType = typeof(T).Name })
                 .ToDictionary(serializedObject => serializedObject.itemKey,
                     serializedObject => (serializedObject.itemValue == null)
                         ? default(T)
@@ -130,18 +105,19 @@ namespace Snowflake.Utility
 
         public void InsertObject<T>(string key, T value, bool ignoreIfExistent = false)
         {
-            using (var dbConnection = this.GetConnection())
-            {
-                dbConnection.Execute($"INSERT OR {(ignoreIfExistent ? "IGNORE" : "REPLACE")} INTO kvstore(itemKey, itemValue, itemType) VALUES (@itemKey, @itemValue, @itemType)",
-                    new {itemKey = key, itemValue = JsonConvert.SerializeObject(value, this.jsonSettings), itemType = typeof(T).Name });
-            }
+            this.Execute($@"INSERT OR {(ignoreIfExistent ? "IGNORE" : "REPLACE")} INTO 
+                                  kvstore(itemKey, itemValue, itemType) 
+                                  VALUES (@itemKey, @itemValue, @itemType)",
+                    new {itemKey = key, itemValue = JsonConvert.SerializeObject(value, this.jsonSettings),
+                        itemType = typeof(T).Name });
+            
         }
 
         public void InsertObjects<T>(IDictionary<string, T> keyValuePairs, bool ignoreIfExistent = false) 
         {
-            using (var dbConnection = this.GetConnection())
-            {
-                dbConnection.Execute($"INSERT OR {(ignoreIfExistent ? "IGNORE" : "REPLACE")} INTO kvstore(itemKey, itemValue, itemType) VALUES (@itemKey, @itemValue, @itemType)",
+            this.Execute($@"INSERT OR {(ignoreIfExistent ? "IGNORE" : "REPLACE")} INTO 
+                                  kvstore(itemKey, itemValue, itemType) 
+                                  VALUES (@itemKey, @itemValue, @itemType)",
                     keyValuePairs
                     .Select(kvp => new
                     {
@@ -149,7 +125,7 @@ namespace Snowflake.Utility
                         itemValue = JsonConvert.SerializeObject(kvp.Value, this.jsonSettings),
                         itemType = typeof(T).Name
                     }));
-            }
+            
         }
     }
 }
