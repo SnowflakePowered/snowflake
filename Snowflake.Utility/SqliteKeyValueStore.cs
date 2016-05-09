@@ -35,13 +35,7 @@ namespace Snowflake.Utility
 
         private void CreateDatabase()
         {
-            
-                this.Execute(@"CREATE TABLE IF NOT EXISTS kvstore(
-                                                                itemKey TEXT PRIMARY KEY,
-                                                                itemValue TEXT,
-                                                                itemType TEXT
-                                                                )");
-             
+            this.CreateTable("kvstore", "itemKey TEXT PRIMARY KEY", "itemValue TEXT", "itemType TEXT");
         }
 
         public void DeleteObject(string key)

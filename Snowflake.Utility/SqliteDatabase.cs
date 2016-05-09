@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.SQLite;
 using System.IO;
+using System.Linq;
+using System.Text;
 using Dapper;
 
 namespace Snowflake.Utility
@@ -103,6 +105,30 @@ namespace Snowflake.Utility
             return this.Query(dbConnection => dbConnection.QueryFirstOrDefault<T>(query, param));
         }
 
-  
+        /// <summary>
+        /// Creates a table in the database
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="args"></param>
+        public void CreateTable(string tableName, params string[] columns)
+        {
+           
+            this.Execute($@"CREATE TABLE IF NOT EXISTS {tableName}({String.Join(",", columns)})");
+        }
+    }
+
+    internal static class EnumerableExtensions
+    {
+        internal static IEnumerable<T> WithoutLast<T>(this IEnumerable<T> source)
+        {
+            using (var e = source.GetEnumerator())
+            {
+                if (!e.MoveNext()) yield break;
+                for (var value = e.Current; e.MoveNext(); value = e.Current)
+                {
+                    yield return value;
+                }
+            }
+        }
     }
 }

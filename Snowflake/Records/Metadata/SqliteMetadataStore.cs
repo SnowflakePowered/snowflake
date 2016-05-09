@@ -20,12 +20,11 @@ namespace Snowflake.Records.Metadata
 
         private void CreateDatabase()
         {
-            this.backingDatabase.Execute(@"CREATE TABLE IF NOT EXISTS metadata(
-                                                                uuid TEXT PRIMARY KEY,
-                                                                record TEXT,
-                                                                key TEXT,
-                                                                value TEXT
-                                                                )");
+            this.backingDatabase.CreateTable("metadata",
+                "uuid TEXT PRIMARY KEY", 
+                "record TEXT", 
+                "key TEXT",
+                "value TEXT");
         }
 
         public void Set(IRecordMetadata metadata)
