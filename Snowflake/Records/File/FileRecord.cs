@@ -15,16 +15,19 @@ namespace Snowflake.Records.File
         public Guid Guid { get; }
         public string MimeType { get; }
         public string FilePath { get; }
+        public Guid GameRecord { get; }
 
-        public FileRecord(Guid guid, IDictionary<string, IRecordMetadata> metadata, string filePath, string mimeType)
+        public FileRecord(Guid guid, Guid gameRecord, IDictionary<string, IRecordMetadata> metadata, string filePath, string mimeType)
         {
             this.Metadata = metadata;
             this.Guid = guid;
+            this.GameRecord = gameRecord;
             this.MimeType = mimeType;
             this.FilePath = filePath;
         }
 
-        public FileRecord(string filePath, string mimeType): this(Guid.NewGuid(), new Dictionary<string, IRecordMetadata>(), filePath, mimeType)
+        public FileRecord(string filePath, string mimeType, Guid gameRecord):
+            this(Guid.NewGuid(), gameRecord, new Dictionary<string, IRecordMetadata>(), filePath, mimeType)
         {
             
         }

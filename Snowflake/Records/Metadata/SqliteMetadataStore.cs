@@ -14,15 +14,16 @@ namespace Snowflake.Records.Metadata
         private readonly SqliteDatabase backingDatabase;
         public SqliteMetadataStore(SqliteDatabase database)
         {
-            this.backingDatabase = database;
-            this.CreateDatabase();
+            SqlMapper.AddTypeHandler<Guid>(new GuidTypeHandler());
+                            this.backingDatabase = database;
+           this.CreateDatabase();
         }
 
         private void CreateDatabase()
         {
             this.backingDatabase.CreateTable("metadata",
-                "uuid TEXT PRIMARY KEY", 
-                "record TEXT", 
+                "uuid UUID PRIMARY KEY", 
+                "record UUID", 
                 "key TEXT",
                 "value TEXT");
         }
@@ -35,18 +36,13 @@ namespace Snowflake.Records.Metadata
                                           @Guid,
                                           @Record,
                                           @Key,
-                                          @Value", metadata);
+                                          @Value)", metadata);
 
         }
 
         public void Remove(IRecordMetadata metadata)
         {
-            this.backingDatabase.Execute(@"INSERT OR REPLACE INTO metadata(uuid, record, key, value) 
-                                        VALUES (
-                                          @Guid,
-                                          @Record,
-                                          @Key,
-                                          @Value", metadata);
+            this.Remove(metadata.Guid);
         }
 
         public void Remove(Guid metadataId)

@@ -9,12 +9,12 @@ using Dapper;
 
 namespace Snowflake.Utility
 {
-    public abstract class SqliteDatabase 
+    public class SqliteDatabase 
     {
         public string FileName { get; }
         private readonly string dbConnectionString;
 
-        protected SqliteDatabase(string fileName)
+        public SqliteDatabase(string fileName)
         {
             this.FileName = fileName;
 

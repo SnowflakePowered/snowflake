@@ -10,6 +10,14 @@ namespace Snowflake.Records.Metadata
         public Guid Guid { get; }
         public Guid Record { get; }
 
+        internal RecordMetadata(byte[] uuid, byte[] record, string key, string value)
+        {
+            this.Key = key;
+            this.Value = value;
+            this.Record = new Guid(record);
+            this.Guid =  new Guid(uuid);
+        }
+
         public RecordMetadata(string key, string value, Guid record)
         {
             this.Key = key;
