@@ -165,6 +165,7 @@
       <SubType>Designer</SubType>
     </Content>
     <None Include="packages.config" />
+    <Compile Include="Records\Metadata\RecordMetadata.SqlConstructors.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Snowflake.API\Snowflake.API.csproj">

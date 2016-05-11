@@ -28,14 +28,14 @@ namespace Snowflake.Records.File
         IEnumerable<IFileRecord> GetFilesForGame(Guid game);
 
         /// <summary>
-        /// Gets a file by it's path
+        /// Gets a file by its path
         /// </summary>
         /// <param name="filePath">The path to look for</param>
         /// <returns>The file path</returns>
         IFileRecord GetFile(string filePath);
 
         /// <summary>
-        /// Gets a file by it's record.
+        /// Gets a file by its record.
         /// </summary>
         /// <param name="recordGuid"></param>
         /// <returns></returns>

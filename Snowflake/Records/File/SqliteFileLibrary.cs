@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -18,7 +20,7 @@ namespace Snowflake.Records.File
         private readonly SqliteDatabase backingDatabase;
         public SqliteFileLibrary(SqliteDatabase database)
         {
-            SqlMapper.AddTypeHandler<Guid>(new GuidTypeHandler());
+            SqlMapper.AddTypeHandler(new GuidTypeHandler());
             this.backingDatabase = database;
             this.MetadataStore = new SqliteMetadataStore(database);
             this.CreateDatabase();
@@ -54,21 +56,7 @@ namespace Snowflake.Records.File
 
         public IFileRecord Get(Guid guid)
         {
-            const string sql = @"
-            SELECT * FROM metadata where record = @guid
-            SELECT * FROM files where uuid = @guid
-            ";
-            return this.backingDatabase.Query<IFileRecord>(dbConnection =>
-            {
-                using (var query = dbConnection.QueryMultiple(sql, new { guid }))
-                {
-                    IDictionary<string, IRecordMetadata> metadata = query.Read<RecordMetadata>()
-                         .ToDictionary(m => m.Key, m => m as IRecordMetadata);
-                    dynamic file = query.Read().FirstOrDefault();
-                    return file == null ? null : 
-                    new FileRecord(file.uuid, file.game, metadata, file.path, file.mimetype);
-                }
-            });
+            return this.GetFile(guid);
         }
 
         public void Remove(Guid guid)
@@ -100,36 +88,96 @@ namespace Snowflake.Records.File
         {
             const string sql = @"SELECT * FROM metadata WHERE record IN (SELECT uuid FROM files WHERE game = @game);
                                 SELECT * FROM files WHERE game = @game";
-
             return this.backingDatabase.Query<IEnumerable<IFileRecord>>(dbConnection =>
             {
                 using (var query = dbConnection.QueryMultiple(sql, new { game }))
                 {
-                    var metadata = query.Read<RecordMetadata>();
-
-                    var files = query.Read().Select(file => new
+                    try
                     {
-                        Guid = new Guid(file.uuid),
-                        Game = new Guid(file.game),
-                        Path = file.path,
-                        MimeType = file.mimetype
-                    });
-                    return (from f in files
-                           let md = (from m in metadata where m.Record == f.Guid select m)
-                                    .ToDictionary(md => md.Key, md => md as IRecordMetadata)
-                           select new FileRecord(f.Guid, f.Game, md, f.Path, f.MimeType)).ToList();
+                        var metadata = query.Read<RecordMetadata>();
+                        var files = query.Read().Select(file => new
+                        {
+                            Guid = new Guid(file.uuid),
+                            Game = new Guid(file.game),
+                            Path = file.path,
+                            MimeType = file.mimetype
+                        });
+                        return (from f in files
+                                let md = (from m in metadata where m.Record == f.Guid select m)
+                                         .ToDictionary(md => md.Key, md => md as IRecordMetadata)
+                                select new FileRecord(f.Guid, f.Game, md, f.Path, f.MimeType)).ToList();
+                    }
+                    catch(SQLiteException)
+                    {
+                        return new List<FileRecord>();
+                    }
+                   
                 }
             });
         }
 
         public IFileRecord GetFile(string filePath)
         {
-            throw new NotImplementedException();
+            const string sql =
+                @"SELECT * FROM metadata WHERE record IN (SELECT uuid FROM files WHERE path = @filePath LIMIT 1);
+                                SELECT * FROM files WHERE path = @filePath LIMIT 1";
+
+            return this.backingDatabase.Query<IFileRecord>(dbConnection =>
+            {
+                using (var query = dbConnection.QueryMultiple(sql, new {filePath}))
+                {
+                    try
+                    {
+                        var metadata = query.Read<RecordMetadata>()?.ToDictionary(m => m.Key, m => m as IRecordMetadata);
+                        dynamic _file = query.ReadFirstOrDefault();
+                        if (_file == null) return null;
+                        var file = new
+                        {
+                            Guid = new Guid(_file.uuid),
+                            Game = new Guid(_file.game),
+                            Path = _file.path,
+                            MimeType = _file.mimetype
+                        };
+                        return new FileRecord(file.Guid, file.Game, metadata, file.Path, file.MimeType);
+                    }
+                    catch (SQLiteException)
+                    {
+                        return null;
+                    }
+                }
+            });
         }
 
         public IFileRecord GetFile(Guid recordGuid)
         {
-            throw new NotImplementedException();
+            const string sql =
+                            @"SELECT * FROM metadata WHERE record IN (SELECT uuid FROM files WHERE uuid = @recordGuid LIMIT 1);
+                                SELECT * FROM files WHERE uuid = @recordGuid LIMIT 1";
+
+            return this.backingDatabase.Query<IFileRecord>(dbConnection =>
+            {
+                using (var query = dbConnection.QueryMultiple(sql, new {recordGuid}))
+                {
+                    try
+                    {
+                        var metadata = query.Read<RecordMetadata>()?.ToDictionary(m => m.Key, m => m as IRecordMetadata);
+                        dynamic _file = query.ReadFirstOrDefault();
+                        if (_file == null) return null;
+                        var file = new
+                        {
+                            Guid = new Guid(_file.uuid),
+                            Game = new Guid(_file.game),
+                            Path = _file.path,
+                            MimeType = _file.mimetype
+                        };
+                        return new FileRecord(file.Guid, file.Game, metadata, file.Path, file.MimeType);
+                    }
+                    catch (SQLiteException)
+                    {
+                        return null;
+                    }
+                }
+            });
         }
     }
 }
