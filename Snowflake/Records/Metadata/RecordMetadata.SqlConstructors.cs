@@ -11,6 +11,7 @@ namespace Snowflake.Records.Metadata
     /// </summary>
     public partial class RecordMetadata
     {
+		//Used when materializing proper uuid
         internal RecordMetadata(byte[] uuid, byte[] record, string key, string value)
         {
             this.Key = key;
@@ -19,6 +20,7 @@ namespace Snowflake.Records.Metadata
             this.Guid = new Guid(uuid);
         }
 
+		//used when initializing null metadata.
         internal RecordMetadata(object uuid, object record, string key, string value)
         {
             this.Key = key;

@@ -14,16 +14,15 @@ namespace Snowflake.Records.Metadata
         private readonly SqliteDatabase backingDatabase;
         public SqliteMetadataStore(SqliteDatabase database)
         {
-            SqlMapper.AddTypeHandler<Guid>(new GuidTypeHandler());
-                            this.backingDatabase = database;
-           this.CreateDatabase();
+            this.backingDatabase = database;
+            this.CreateDatabase();
         }
 
         private void CreateDatabase()
         {
             this.backingDatabase.CreateTable("metadata",
-                "uuid UUID PRIMARY KEY", 
-                "record UUID", 
+                "uuid UUID PRIMARY KEY",
+                "record UUID",
                 "key TEXT",
                 "value TEXT");
         }
@@ -53,7 +52,7 @@ namespace Snowflake.Records.Metadata
         public IDictionary<string, IRecordMetadata> GetAllForElement(Guid target)
         {
             return this.backingDatabase.Query<RecordMetadata>
-                (@"SELECT * FROM metadata WHERE record = @target", new { target } )
+                (@"SELECT * FROM metadata WHERE record = @target", new { target })
                 .ToDictionary(m => m.Key, m => m as IRecordMetadata);
         }
 
@@ -62,8 +61,8 @@ namespace Snowflake.Records.Metadata
         {
 
             return this.backingDatabase.Query<RecordMetadata>
-                (@"SELECT * FROM metadata WHERE key = @key AND value LIKE %@likeValue%",
-                    new { key, likeValue });
+                (@"SELECT * FROM metadata WHERE key = @key AND value LIKE @likeValue",
+                    new { key, likeValue = $"%{likeValue}%" });
         }
 
         public IEnumerable<IRecordMetadata> GetAll(string key, string exactValue)
