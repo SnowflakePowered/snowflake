@@ -31,22 +31,14 @@ namespace Snowflake.Records.Metadata
         {
 
             this.backingDatabase.Execute(@"INSERT OR REPLACE INTO metadata(uuid, record, key, value) 
-                                        VALUES (
-                                          @Guid,
-                                          @Record,
-                                          @Key,
-                                          @Value)", metadata);
+                                        VALUES (@Guid, @Record, @Key, @Value)", metadata);
 
         }
 
         public void Set(IEnumerable<IRecordMetadata> metadata)
         {
             this.backingDatabase.Execute(@"INSERT OR REPLACE INTO metadata(uuid, record, key, value) 
-                                        VALUES (
-                                          @Guid,
-                                          @Record,
-                                          @Key,
-                                          @Value)", metadata);
+                                        VALUES (@Guid, @Record, @Key, @Value)", metadata);
         }
 
         public void Remove(IRecordMetadata metadata)

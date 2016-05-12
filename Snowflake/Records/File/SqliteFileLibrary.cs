@@ -36,24 +36,25 @@ namespace Snowflake.Records.File
 
         public void Set(IFileRecord record)
         {
-            this.backingDatabase.Execute(@"INSERT OR REPLACE INTO files(uuid, game, path, mimetype) 
-                                         VALUES (
-                                          @Guid,
-                                          @GameRecord,
-                                          @FilePath,
-                                          @MimeType)", record);
-            this.MetadataLibrary.Set(record.Metadata.Values); //try doing this in one round trip if possible.
+
+            this.backingDatabase.Execute(dbConnection =>
+            {
+                dbConnection.Execute(@"INSERT OR REPLACE INTO files(uuid, game, path, mimetype) 
+                                         VALUES (@Guid, @GameRecord, @FilePath, @MimeType)", record);
+                dbConnection.Execute(@"INSERT OR REPLACE INTO metadata(uuid, record, key, value) 
+                                        VALUES (@Guid, @Record, @Key, @Value)", record.Metadata.Values);
+            });
         }
 
         public void Set(IEnumerable<IFileRecord> records)
         {
-            this.backingDatabase.Execute(@"INSERT OR REPLACE INTO files(uuid, game, path, mimetype) 
-                                         VALUES (
-                                          @Guid,
-                                          @GameRecord,
-                                          @FilePath,
-                                          @MimeType)", records);
-            this.MetadataLibrary.Set(records.SelectMany(record => record.Metadata.Values)); 
+            this.backingDatabase.Execute(dbConnection =>
+            {
+                dbConnection.Execute(@"INSERT OR REPLACE INTO files(uuid, game, path, mimetype) 
+                                         VALUES (@Guid, @GameRecord, @FilePath, @MimeType)", records);
+                dbConnection.Execute(@"INSERT OR REPLACE INTO metadata(uuid, record, key, value) 
+                                        VALUES (@Guid, @Record, @Key, @Value)", records.SelectMany(record => record.Metadata.Values));
+            });
             //since metadata are unique across records, we can do this.
         }
 

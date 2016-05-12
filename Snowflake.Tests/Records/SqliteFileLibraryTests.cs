@@ -114,7 +114,7 @@ namespace Snowflake.Records.Tests
             var library = new SqliteFileLibrary(new SqliteDatabase(Path.GetTempFileName()));
             fileRecord.Metadata.Add("test_metadata", new RecordMetadata("test_metadata", "hello world", fileRecord.Guid));
             library.Set(fileRecord);
-            Assert.Null(library.Get(Guid.NewGuid()));
+             Assert.Null(library.Get(Guid.NewGuid()));
         }
     }
     
