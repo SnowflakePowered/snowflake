@@ -159,7 +159,7 @@ namespace Snowflake.Records.File
                         return (from f in files
                                 let md = (from m in metadata where m.Record == f.Guid select m)
                                          .ToDictionary(md => md.Key, md => md as IRecordMetadata)
-                                select new FileRecord(f.Guid, f.Game, md, f.Path, f.MimeType)).ToList();
+                                select new FileRecord(f.Game, md, f.Path, f.MimeType)).ToList();
                     }
                     catch (SQLiteException)
                     {
@@ -194,7 +194,7 @@ namespace Snowflake.Records.File
                             MimeType = _file.mimetype
                         };
                         var metadata = query.Read<RecordMetadata>()?.ToDictionary(m => m.Key, m => m as IRecordMetadata);
-                        return new FileRecord(file.Guid, file.Game, metadata, file.Path, file.MimeType);
+                        return new FileRecord(file.Game, metadata, file.Path, file.MimeType);
                     }
                     catch (SQLiteException)
                     {
