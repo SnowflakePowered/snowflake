@@ -20,5 +20,6 @@ namespace Snowflake.Records
         /// A metadata assignable must have a guid.
         /// </summary>
         Guid Guid { get; }
+
     }
 }

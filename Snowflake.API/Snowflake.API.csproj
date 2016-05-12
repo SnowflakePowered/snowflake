@@ -104,10 +104,11 @@
     <Compile Include="Records\File\IFileLibrary.cs" />
     <Compile Include="Records\Game\IGameLibrary.cs" />
     <Compile Include="Records\ILibrary.cs" />
+    <Compile Include="Records\IRecordLibrary.cs" />
     <Compile Include="Records\Metadata\IRecordMetadata.cs" />
     <Compile Include="Records\IRecord.cs" />
     <Compile Include="Records\Metadata\IMetadatable.cs" />
-    <Compile Include="Records\Metadata\IMetadataStore.cs" />
+    <Compile Include="Records\Metadata\IMetadataLibrary.cs" />
     <Compile Include="Romfile\IFileSignature.cs" />
     <Compile Include="Romfile\IStructuredFilename.cs" />
     <Compile Include="Scraper\IScrapableInfo.cs" />

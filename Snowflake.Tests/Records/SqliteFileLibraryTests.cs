@@ -20,7 +20,7 @@ namespace Snowflake.Records.Tests
             var fileRecord = new FileRecord(@"C:\somefile\test.txt", "text/plain", Guid.Empty);
             var library = new SqliteFileLibrary(new SqliteDatabase(Path.GetTempFileName()));
             fileRecord.Metadata.Add("test_metadata", new RecordMetadata("test_metadata", "hello world", fileRecord.Guid));
-            library.Add(fileRecord);
+            library.Set(fileRecord);
             Assert.NotEmpty(library.GetRecords());
         }
 
@@ -30,7 +30,7 @@ namespace Snowflake.Records.Tests
             var fileRecord = new FileRecord(@"C:\somefile\test.txt", "text/plain", Guid.Empty);
             var library = new SqliteFileLibrary(new SqliteDatabase(Path.GetTempFileName()));
             fileRecord.Metadata.Add("test_metadata", new RecordMetadata("test_metadata", "hello world", fileRecord.Guid));
-            library.Add(fileRecord);
+            library.Set(fileRecord);
             Assert.NotEmpty(library.GetByMetadata("test_metadata", "hello world"));
         }
 
@@ -40,7 +40,7 @@ namespace Snowflake.Records.Tests
             var fileRecord = new FileRecord(@"C:\somefile\test.txt", "text/plain", Guid.Empty);
             var library = new SqliteFileLibrary(new SqliteDatabase(Path.GetTempFileName()));
             fileRecord.Metadata.Add("test_metadata", new RecordMetadata("test_metadata", "hello world", fileRecord.Guid));
-            library.Add(fileRecord);
+            library.Set(fileRecord);
             Assert.Empty(library.GetByMetadata(String.Empty, String.Empty));
         }
 
@@ -50,7 +50,7 @@ namespace Snowflake.Records.Tests
             var fileRecord = new FileRecord(@"C:\somefile\test.txt", "text/plain", Guid.Empty);
             var library = new SqliteFileLibrary(new SqliteDatabase(Path.GetTempFileName()));
             fileRecord.Metadata.Add("test_metadata", new RecordMetadata("test_metadata", "hello world", fileRecord.Guid));
-            library.Add(fileRecord);
+            library.Set(fileRecord);
             Assert.NotEmpty(library.SearchByMetadata("test_metadata", "world"));
         }
 
@@ -60,7 +60,7 @@ namespace Snowflake.Records.Tests
             var fileRecord = new FileRecord(@"C:\somefile\test.txt", "text/plain", Guid.Empty);
             var library = new SqliteFileLibrary(new SqliteDatabase(Path.GetTempFileName()));
             fileRecord.Metadata.Add("test_metadata", new RecordMetadata("test_metadata", "hello world", fileRecord.Guid));
-            library.Add(fileRecord);
+            library.Set(fileRecord);
             Assert.Empty(library.SearchByMetadata(String.Empty, String.Empty));
         }
 
@@ -70,7 +70,7 @@ namespace Snowflake.Records.Tests
             var fileRecord = new FileRecord(@"C:\somefile\test.txt", "text/plain", Guid.Empty);
             var library = new SqliteFileLibrary(new SqliteDatabase(Path.GetTempFileName()));
             fileRecord.Metadata.Add("test_metadata", new RecordMetadata("test_metadata", "hello world", fileRecord.Guid));
-            library.Add(fileRecord);
+            library.Set(fileRecord);
             Assert.NotNull(library.GetFilesForGame(Guid.Empty)
                 .FirstOrDefault(g => g.Guid == fileRecord.Guid));
             Assert.NotEmpty(library.GetFilesForGame(Guid.Empty)
@@ -83,8 +83,8 @@ namespace Snowflake.Records.Tests
             var fileRecord = new FileRecord(@"C:\somefile\test.txt", "text/plain", Guid.Empty);
             var library = new SqliteFileLibrary(new SqliteDatabase(Path.GetTempFileName()));
             fileRecord.Metadata.Add("test_metadata", new RecordMetadata("test_metadata", "hello world", fileRecord.Guid));
-            library.Add(fileRecord);
-            Assert.NotNull(library.GetFile(@"C:\somefile\test.txt"));
+            library.Set(fileRecord);
+            Assert.NotNull(library.Get(@"C:\somefile\test.txt"));
         }
         [Fact]
         public void GetFilesByPathEmpty_Test()
@@ -92,8 +92,8 @@ namespace Snowflake.Records.Tests
             var fileRecord = new FileRecord(@"C:\somefile\test.txt", "text/plain", Guid.Empty);
             var library = new SqliteFileLibrary(new SqliteDatabase(Path.GetTempFileName()));
             fileRecord.Metadata.Add("test_metadata", new RecordMetadata("test_metadata", "hello world", fileRecord.Guid));
-            library.Add(fileRecord);
-            Assert.Null(library.GetFile(String.Empty));
+            library.Set(fileRecord);
+            Assert.Null(library.Get(String.Empty));
         }
 
 
@@ -103,7 +103,7 @@ namespace Snowflake.Records.Tests
             var fileRecord = new FileRecord(@"C:\somefile\test.txt", "text/plain", Guid.Empty);
             var library = new SqliteFileLibrary(new SqliteDatabase(Path.GetTempFileName()));
             fileRecord.Metadata.Add("test_metadata", new RecordMetadata("test_metadata", "hello world", fileRecord.Guid));
-            library.Add(fileRecord);
+            library.Set(fileRecord);
             Assert.NotNull(library.Get(fileRecord.Guid));
         }
 
@@ -113,7 +113,7 @@ namespace Snowflake.Records.Tests
             var fileRecord = new FileRecord(@"C:\somefile\test.txt", "text/plain", Guid.Empty);
             var library = new SqliteFileLibrary(new SqliteDatabase(Path.GetTempFileName()));
             fileRecord.Metadata.Add("test_metadata", new RecordMetadata("test_metadata", "hello world", fileRecord.Guid));
-            library.Add(fileRecord);
+            library.Set(fileRecord);
             Assert.Null(library.Get(Guid.NewGuid()));
         }
     }

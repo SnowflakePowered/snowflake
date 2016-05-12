@@ -10,13 +10,13 @@ namespace Snowflake.Records.Game
 {
     public class SqliteGameLibrary : IGameLibrary
     {
-        public IMetadataStore MetadataStore { get; }
+        public IMetadataLibrary MetadataLibrary { get; }
 
         private readonly SqliteDatabase backingDatabase;
         public SqliteGameLibrary(SqliteDatabase database)
         {
             this.backingDatabase = database;
-            this.MetadataStore = new SqliteMetadataStore(database);
+            this.MetadataLibrary = new SqliteMetadataLibrary(database);
             this.CreateDatabase();
         }
         private void CreateDatabase()
@@ -27,7 +27,12 @@ namespace Snowflake.Records.Game
                 "key TEXT",
                 "value TEXT");
         }
-        public void Add(IGameRecord record)
+        public void Set(IGameRecord record)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Set(IEnumerable<IGameRecord> records)
         {
             throw new NotImplementedException();
         }
@@ -37,7 +42,22 @@ namespace Snowflake.Records.Game
             throw new NotImplementedException();
         }
 
+        public void Remove(IEnumerable<IGameRecord> records)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Remove(IEnumerable<Guid> guids)
+        {
+            throw new NotImplementedException();
+        }
+
         public IGameRecord Get(Guid guid)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<IGameRecord> Get(IEnumerable<Guid> guids)
         {
             throw new NotImplementedException();
         }

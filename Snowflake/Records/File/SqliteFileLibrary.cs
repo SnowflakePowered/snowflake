@@ -15,13 +15,13 @@ namespace Snowflake.Records.File
 {
     public class SqliteFileLibrary : IFileLibrary
     {
-        public IMetadataStore MetadataStore { get; }
+        public IMetadataLibrary MetadataLibrary { get; }
 
         private readonly SqliteDatabase backingDatabase;
         public SqliteFileLibrary(SqliteDatabase database)
         {
             this.backingDatabase = database;
-            this.MetadataStore = new SqliteMetadataStore(database);
+            this.MetadataLibrary = new SqliteMetadataLibrary(database);
             this.CreateDatabase();
         }
 
@@ -34,7 +34,7 @@ namespace Snowflake.Records.File
                 "mimetype TEXT");
         }
 
-        public void Add(IFileRecord record)
+        public void Set(IFileRecord record)
         {
             this.backingDatabase.Execute(@"INSERT OR REPLACE INTO files(uuid, game, path, mimetype) 
                                          VALUES (
@@ -42,10 +42,19 @@ namespace Snowflake.Records.File
                                           @GameRecord,
                                           @FilePath,
                                           @MimeType)", record);
-            foreach (var metadata in record.Metadata.Values)
-            {
-                this.MetadataStore.Set(metadata); //todo optimize this
-            }
+            this.MetadataLibrary.Set(record.Metadata.Values); //try doing this in one round trip if possible.
+        }
+
+        public void Set(IEnumerable<IFileRecord> records)
+        {
+            this.backingDatabase.Execute(@"INSERT OR REPLACE INTO files(uuid, game, path, mimetype) 
+                                         VALUES (
+                                          @Guid,
+                                          @GameRecord,
+                                          @FilePath,
+                                          @MimeType)", records);
+            this.MetadataLibrary.Set(records.SelectMany(record => record.Metadata.Values)); 
+            //since metadata are unique across records, we can do this.
         }
 
         public void Remove(IFileRecord record)
@@ -53,9 +62,9 @@ namespace Snowflake.Records.File
             this.Remove(record.Guid);
         }
 
-        public IFileRecord Get(Guid guid)
+        public void Remove(IEnumerable<IFileRecord> records)
         {
-            return this.GetFile(guid);
+            this.Remove(records.Select(record => record.Guid));
         }
 
         public void Remove(Guid guid)
@@ -63,100 +72,37 @@ namespace Snowflake.Records.File
             this.backingDatabase.Execute("DELETE FROM metadata WHERE uuid = @guid", new { guid });
         }
 
+        public void Remove(IEnumerable<Guid> guids)
+        {
+            this.backingDatabase.Execute("DELETE FROM metadata WHERE uuid IN @guids", guids);
+        }
+
         public IEnumerable<IFileRecord> SearchByMetadata(string key, string likeValue)
         {
             const string sql = @"SELECT * FROM files WHERE uuid IN (SELECT record FROM metadata WHERE key = @key AND value LIKE @likeValue);
                                  SELECT * FROM metadata WHERE key = @key AND value LIKE @likeValue";
-            return this.backingDatabase.Query<IEnumerable<IFileRecord>>(dbConnection =>
-            {
-                using (var query = dbConnection.QueryMultiple(sql, new { key, likeValue = $"%{likeValue}%" }))
-                {
-                    try
-                    {
-                        var files = query.Read().Select(file => new
-                        {
-                            Guid = new Guid(file.uuid),
-                            Game = new Guid(file.game),
-                            Path = file.path,
-                            MimeType = file.mimetype
-                        });
-                        var metadata = query.Read<RecordMetadata>();
-                        return (from f in files
-                                let md = (from m in metadata where m.Record == f.Guid select m)
-                                         .ToDictionary(md => md.Key, md => md as IRecordMetadata)
-                                select new FileRecord(f.Guid, f.Game, md, f.Path, f.MimeType)).ToList();
-                    }
-                    catch (SQLiteException)
-                    {
-                        return new List<FileRecord>();
-                    }
-
-                }
-            });
+            return this.GetMultipleByQuery(sql, new {key, likeValue = $"%{likeValue}%"});
         }
 
         public IEnumerable<IFileRecord> GetByMetadata(string key, string exactValue)
         {
             const string sql = @"SELECT * FROM files WHERE uuid IN (SELECT record FROM metadata WHERE key = @key AND value = @exactValue);
                                  SELECT * FROM metadata WHERE key = @key AND value = @exactValue";
-            return this.backingDatabase.Query<IEnumerable<IFileRecord>>(dbConnection =>
-            {
-                using (var query = dbConnection.QueryMultiple(sql, new { key , exactValue }))
-                {
-                    try
-                    {
-                        var files = query.Read().Select(file => new
-                        {
-                            Guid = new Guid(file.uuid),
-                            Game = new Guid(file.game),
-                            Path = file.path,
-                            MimeType = file.mimetype
-                        });
-                        var metadata = query.Read<RecordMetadata>();
-                        return (from f in files
-                                let md = (from m in metadata where m.Record == f.Guid select m)
-                                         .ToDictionary(md => md.Key, md => md as IRecordMetadata)
-                                select new FileRecord(f.Guid, f.Game, md, f.Path, f.MimeType)).ToList();
-                    }
-                    catch (SQLiteException)
-                    {
-                        return new List<FileRecord>();
-                    }
+            return this.GetMultipleByQuery(sql, new {key, exactValue});
+        }
 
-                }
-            });
+        public IEnumerable<IFileRecord> Get(IEnumerable<Guid> guids)
+        {
+            const string sql = @"SELECT * FROM files WHERE uuid IN @guids;
+                                 SELECT * FROM metadata WHERE record IN (SELECT uuid FROM files WHERE uuid IN @guids)";
+            return this.GetMultipleByQuery(sql, guids); //todo test no idea if this works
         }
 
         public IEnumerable<IFileRecord> GetRecords()
         {
-            const string sql = @"SELECT * FROM metadata WHERE record IN (SELECT uuid FROM files);
-                                SELECT * FROM files";
-            return this.backingDatabase.Query<IEnumerable<IFileRecord>>(dbConnection =>
-            {
-                using (var query = dbConnection.QueryMultiple(sql))
-                {
-                    try
-                    {
-                        var metadata = query.Read<RecordMetadata>();
-                        var files = query.Read().Select(file => new
-                        {
-                            Guid = new Guid(file.uuid),
-                            Game = new Guid(file.game),
-                            Path = file.path,
-                            MimeType = file.mimetype
-                        });
-                        return (from f in files
-                                let md = (from m in metadata where m.Record == f.Guid select m)
-                                         .ToDictionary(md => md.Key, md => md as IRecordMetadata)
-                                select new FileRecord(f.Guid, f.Game, md, f.Path, f.MimeType)).ToList();
-                    }
-                    catch (SQLiteException)
-                    {
-                        return new List<FileRecord>();
-                    }
-
-                }
-            });
+            const string sql = @"SELECT * FROM files;
+                                 SELECT * FROM metadata WHERE record IN (SELECT uuid FROM files)";
+            return this.GetMultipleByQuery(sql, null);
         }
         
         public IEnumerable<IFileRecord> GetFilesForGame(IGameRecord game)
@@ -166,15 +112,42 @@ namespace Snowflake.Records.File
 
         public IEnumerable<IFileRecord> GetFilesForGame(Guid game)
         {
-            const string sql = @"SELECT * FROM metadata WHERE record IN (SELECT uuid FROM files WHERE game = @game);
-                                SELECT * FROM files WHERE game = @game";
+            const string sql = @"SELECT * FROM files WHERE game = @game;
+                                 SELECT * FROM metadata WHERE record IN (SELECT uuid FROM files WHERE game = @game)";
+            return this.GetMultipleByQuery(sql, new {game});
+        }
+
+        public IFileRecord Get(string filePath)
+        {
+            const string sql =
+                @"SELECT * FROM files WHERE path = @filePath LIMIT 1;
+                SELECT * FROM metadata WHERE record IN (SELECT uuid FROM files WHERE path = @filePath LIMIT 1)";
+            return this.GetSingleByQuery(sql, new {filePath});
+        }
+
+        public IFileRecord Get(Guid recordGuid)
+        {
+            const string sql =
+                            @"SELECT * FROM files WHERE uuid = @recordGuid LIMIT 1;
+                              SELECT * FROM metadata WHERE record IN (SELECT uuid FROM files WHERE uuid = @recordGuid LIMIT 1)";
+
+            return this.GetSingleByQuery(sql, new {recordGuid});
+        }
+
+        /// <summary>
+        /// Gets multiple file records according to the query
+        /// </summary>
+        /// <param name="sql">2 SQL queries together, the first gets file records, and the second gets corresponding metadata records</param>
+        /// <param name="param">The parameters</param>
+        /// <returns>A list of file records</returns>
+        private IEnumerable<IFileRecord> GetMultipleByQuery(string sql, object param)
+        {
             return this.backingDatabase.Query<IEnumerable<IFileRecord>>(dbConnection =>
             {
-                using (var query = dbConnection.QueryMultiple(sql, new { game }))
+                using (var query = dbConnection.QueryMultiple(sql, param))
                 {
                     try
                     {
-                        var metadata = query.Read<RecordMetadata>();
                         var files = query.Read().Select(file => new
                         {
                             Guid = new Guid(file.uuid),
@@ -182,33 +155,35 @@ namespace Snowflake.Records.File
                             Path = file.path,
                             MimeType = file.mimetype
                         });
+                        var metadata = query.Read<RecordMetadata>();
                         return (from f in files
                                 let md = (from m in metadata where m.Record == f.Guid select m)
                                          .ToDictionary(md => md.Key, md => md as IRecordMetadata)
                                 select new FileRecord(f.Guid, f.Game, md, f.Path, f.MimeType)).ToList();
                     }
-                    catch(SQLiteException)
+                    catch (SQLiteException)
                     {
                         return new List<FileRecord>();
                     }
-                   
+
                 }
             });
         }
 
-        public IFileRecord GetFile(string filePath)
+        /// <summary>
+        /// Gets a single file record in accordance to query
+        /// </summary>
+        /// <param name="sql">2 sql queries together, the first gets file records, and the second gets corresponding metadata records</param>
+        /// <param name="param">The parameters</param>
+        /// <returns>A single file record</returns>
+        private IFileRecord GetSingleByQuery(string sql, object param)
         {
-            const string sql =
-                @"SELECT * FROM metadata WHERE record IN (SELECT uuid FROM files WHERE path = @filePath LIMIT 1);
-                                SELECT * FROM files WHERE path = @filePath LIMIT 1";
-
             return this.backingDatabase.Query<IFileRecord>(dbConnection =>
             {
-                using (var query = dbConnection.QueryMultiple(sql, new {filePath}))
+                using (var query = dbConnection.QueryMultiple(sql, param))
                 {
                     try
                     {
-                        var metadata = query.Read<RecordMetadata>()?.ToDictionary(m => m.Key, m => m as IRecordMetadata);
                         dynamic _file = query.ReadFirstOrDefault();
                         if (_file == null) return null;
                         var file = new
@@ -218,38 +193,7 @@ namespace Snowflake.Records.File
                             Path = _file.path,
                             MimeType = _file.mimetype
                         };
-                        return new FileRecord(file.Guid, file.Game, metadata, file.Path, file.MimeType);
-                    }
-                    catch (SQLiteException)
-                    {
-                        return null;
-                    }
-                }
-            });
-        }
-
-        public IFileRecord GetFile(Guid recordGuid)
-        {
-            const string sql =
-                            @"SELECT * FROM metadata WHERE record IN (SELECT uuid FROM files WHERE uuid = @recordGuid LIMIT 1);
-                                SELECT * FROM files WHERE uuid = @recordGuid LIMIT 1";
-
-            return this.backingDatabase.Query<IFileRecord>(dbConnection =>
-            {
-                using (var query = dbConnection.QueryMultiple(sql, new {recordGuid}))
-                {
-                    try
-                    {
                         var metadata = query.Read<RecordMetadata>()?.ToDictionary(m => m.Key, m => m as IRecordMetadata);
-                        dynamic _file = query.ReadFirstOrDefault();
-                        if (_file == null) return null;
-                        var file = new
-                        {
-                            Guid = new Guid(_file.uuid),
-                            Game = new Guid(_file.game),
-                            Path = _file.path,
-                            MimeType = _file.mimetype
-                        };
                         return new FileRecord(file.Guid, file.Game, metadata, file.Path, file.MimeType);
                     }
                     catch (SQLiteException)

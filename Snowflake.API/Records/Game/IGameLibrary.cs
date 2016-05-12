@@ -9,7 +9,7 @@ namespace Snowflake.Records.Game
     /// <summary>
     /// A database used to store game information
     /// </summary>
-    public interface IGameLibrary : ILibrary<IGameRecord>
+    public interface IGameLibrary : IRecordLibrary<IGameRecord>
     {
 
         /// <summary>

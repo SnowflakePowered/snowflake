@@ -9,25 +9,8 @@ namespace Snowflake.Records.Metadata
     /// <summary>
     /// Represents a database of metadata
     /// </summary>
-    public interface IMetadataStore
+    public interface IMetadataLibrary : ILibrary<IRecordMetadata>
     {
-        /// <summary>
-        /// Adds or updates a metadata value
-        /// </summary>
-        /// <param name="metadata">The metadata to add</param>
-        void Set(IRecordMetadata metadata);
-
-        /// <summary>
-        /// Removes a metadata value
-        /// </summary>
-        /// <param name="metadata">The metadata to remove</param>
-        void Remove(IRecordMetadata metadata);
-
-        /// <summary>
-        /// Removes a metadata value with the given ID
-        /// </summary>
-        /// <param name="metadataId">The metadata uuid</param>
-        void Remove(Guid metadataId);
 
         /// <summary>
         /// Gets all metadata with a specific target guid
@@ -50,20 +33,7 @@ namespace Snowflake.Records.Metadata
         /// <param name="key">The metadata key to search for</param>
         /// <param name="exactValue">The exact metadata value match</param>
         /// <returns>All the metadata with matching key/values</returns>
-        IEnumerable<IRecordMetadata> GetAll(string key, string exactValue);
-
-        /// <summary>
-        /// Gets all metadata in the store
-        /// </summary>
-        /// <returns>All the metadata currently present</returns>
-        IEnumerable<IRecordMetadata> GetAll();
-
-        /// <summary>
-        /// Gets a metadata by it's UUID
-        /// </summary>
-        /// <param name="metadataId">The metadata guid</param>
-        /// <returns>The metadata guid</returns>
-        IRecordMetadata Get(Guid metadataId);
+        IEnumerable<IRecordMetadata> Get(string key, string exactValue);
 
         /// <summary>
         /// Gets the keyed metadata for a record

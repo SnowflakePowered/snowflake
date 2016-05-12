@@ -10,7 +10,7 @@ namespace Snowflake.Records.File
     /// <summary>
     /// A library to store file records that are related
     /// </summary>
-    public interface IFileLibrary : ILibrary<IFileRecord>
+    public interface IFileLibrary : IRecordLibrary<IFileRecord>
     {
 
         /// <summary>
@@ -32,14 +32,7 @@ namespace Snowflake.Records.File
         /// </summary>
         /// <param name="filePath">The path to look for</param>
         /// <returns>The file path</returns>
-        IFileRecord GetFile(string filePath);
+        IFileRecord Get(string filePath);
 
-        /// <summary>
-        /// Gets a file by its record.
-        /// </summary>
-        /// <param name="recordGuid"></param>
-        /// <returns></returns>
-        IFileRecord GetFile(Guid recordGuid);
-    
     }
 }
