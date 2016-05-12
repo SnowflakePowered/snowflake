@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Common;
 using System.Data.SQLite;
 using System.IO;
@@ -9,7 +10,7 @@ using Dapper;
 
 namespace Snowflake.Utility
 {
-    public class SqliteDatabase 
+    public class SqliteDatabase
     {
         public string FileName { get; }
         private readonly string dbConnectionString;
@@ -33,8 +34,6 @@ namespace Snowflake.Utility
         /// <summary>
         /// Queries on a new connection to the database.
         /// The connection will be safely closed after the operation.
-        /// <br/>
-        /// Attempting to close the connection yourself will result in an exception.
         /// </summary>
         /// <typeparam name="T">The type the query will return</typeparam>
         /// <param name="queryFunction">A function to query the database using the opened connection</param>
@@ -46,7 +45,7 @@ namespace Snowflake.Utility
             {
                 dbConnection.Open();
                 record = queryFunction(dbConnection);
-                dbConnection.Close();
+                if (dbConnection.State != ConnectionState.Closed) dbConnection.Close();
             }
             return record;
         }
@@ -54,8 +53,6 @@ namespace Snowflake.Utility
         /// <summary>
         /// Executes on a new connection to the database.
         /// The connection will be safely closed after the operation.
-        /// <br/>
-        /// Attempting to close the connection yourself will result in an exception.
         /// </summary>
         /// <param name="queryFunction">A function to query the database using the opened connection</param>
         public void Execute(Action<DbConnection> queryFunction)
@@ -64,7 +61,7 @@ namespace Snowflake.Utility
             {
                 dbConnection.Open();
                 queryFunction(dbConnection);
-                dbConnection.Close();
+                if (dbConnection.State != ConnectionState.Closed) dbConnection.Close();
             }
         }
 
@@ -108,27 +105,12 @@ namespace Snowflake.Utility
         /// <summary>
         /// Creates a table in the database
         /// </summary>
-        /// <param name="tableName"></param>
-        /// <param name="args"></param>
+        /// <param name="tableName">The name of the table to create</param>
+        /// <param name="columns">The names of the columns to create</param>
         public void CreateTable(string tableName, params string[] columns)
         {
-           
-            this.Execute($@"CREATE TABLE IF NOT EXISTS {tableName}({String.Join(",", columns)})");
-        }
-    }
 
-    internal static class EnumerableExtensions
-    {
-        internal static IEnumerable<T> WithoutLast<T>(this IEnumerable<T> source)
-        {
-            using (var e = source.GetEnumerator())
-            {
-                if (!e.MoveNext()) yield break;
-                for (var value = e.Current; e.MoveNext(); value = e.Current)
-                {
-                    yield return value;
-                }
-            }
+            this.Execute($@"CREATE TABLE IF NOT EXISTS {tableName}({String.Join(",", columns)})");
         }
     }
 }
