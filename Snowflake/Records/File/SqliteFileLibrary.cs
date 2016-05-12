@@ -25,6 +25,10 @@ namespace Snowflake.Records.File
             this.CreateDatabase();
         }
 
+        public SqliteFileLibrary(SqliteDatabase database) : this(database, new SqliteMetadataLibrary(database))
+        {
+            
+        }
         private void CreateDatabase()
         {
             this.backingDatabase.CreateTable("files",

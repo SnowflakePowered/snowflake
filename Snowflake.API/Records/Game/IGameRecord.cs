@@ -28,7 +28,7 @@ namespace Snowflake.Records.Game
         /// All executable files should be mimetype application/romfile-*, 
         /// or application/romfile-*+zip if in zip format.
         /// </summary>
-        IEnumerable<IFileRecord> Files { get; }
+        IList<IFileRecord> Files { get; }
         
 
     }
