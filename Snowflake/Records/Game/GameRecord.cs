@@ -15,16 +15,16 @@ namespace Snowflake.Records.Game
         public Guid Guid { get; }
         public string PlatformId => this.Metadata[GameMetadataKeys.Platform].Value;
         public string Title => this.Metadata[GameMetadataKeys.Title].Value;
-        public IEnumerable<IFileRecord> GameFiles { get; }
+        public IEnumerable<IFileRecord> Files { get; }
 
-        public GameRecord(Guid guid, IDictionary<string, IRecordMetadata> metadata, IEnumerable<IFileRecord> gameFiles)
+        public GameRecord(Guid guid, IDictionary<string, IRecordMetadata> metadata, IEnumerable<IFileRecord> files)
         {
             this.Guid = guid;
             this.Metadata = metadata;
-            this.GameFiles = gameFiles;
+            this.Files = files;
         }
 
-        public GameRecord(IPlatformInfo platformInfo, string title, IEnumerable<IFileRecord> gameFiles)
+        public GameRecord(IPlatformInfo platformInfo, string title, IEnumerable<IFileRecord> files)
         {
             this.Guid = Guid.NewGuid();
             this.Metadata = new Dictionary<string, IRecordMetadata>()
@@ -38,6 +38,7 @@ namespace Snowflake.Records.Game
                     new RecordMetadata(GameMetadataKeys.Title, title, this.Guid)
                 }
             };
+            this.Files = files;
         }
     }
 }

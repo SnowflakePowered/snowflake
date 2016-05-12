@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Snowflake.Records.File;
 
 namespace Snowflake.Records.Game
 { 
@@ -11,6 +12,11 @@ namespace Snowflake.Records.Game
     /// </summary>
     public interface IGameLibrary : IRecordLibrary<IGameRecord>
     {
+
+        /// <summary>
+        /// The file library that holds the file information for this game.
+        /// </summary>
+        IFileLibrary FileLibrary { get; }
 
         /// <summary>
         /// Get a list of all games in the library

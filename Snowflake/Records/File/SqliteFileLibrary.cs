@@ -18,10 +18,10 @@ namespace Snowflake.Records.File
         public IMetadataLibrary MetadataLibrary { get; }
 
         private readonly SqliteDatabase backingDatabase;
-        public SqliteFileLibrary(SqliteDatabase database)
+        public SqliteFileLibrary(SqliteDatabase database, IMetadataLibrary metadataLibrary)
         {
             this.backingDatabase = database;
-            this.MetadataLibrary = new SqliteMetadataLibrary(database);
+            this.MetadataLibrary = metadataLibrary;
             this.CreateDatabase();
         }
 
@@ -70,12 +70,15 @@ namespace Snowflake.Records.File
 
         public void Remove(Guid guid)
         {
-            this.backingDatabase.Execute("DELETE FROM metadata WHERE uuid = @guid", new { guid });
+
+            this.backingDatabase.Execute(@"DELETE FROM files WHERE uuid = @guid; 
+                                           DELETE FROM metadata WHERE record = @guid", new { guid });
         }
 
         public void Remove(IEnumerable<Guid> guids)
         {
-            this.backingDatabase.Execute("DELETE FROM metadata WHERE uuid IN @guids", guids);
+            this.backingDatabase.Execute(@"DELETE FROM files WHERE uuid IN @guids; 
+                                           DELETE FROM metadata WHERE record IN @guids", new { guids });
         }
 
         public IEnumerable<IFileRecord> SearchByMetadata(string key, string likeValue)
