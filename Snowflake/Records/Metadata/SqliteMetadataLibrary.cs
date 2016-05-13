@@ -88,7 +88,7 @@ namespace Snowflake.Records.Metadata
         }
 
 
-        public IEnumerable<IRecordMetadata> GetRecords()
+        public IEnumerable<IRecordMetadata> GetAllRecords()
         {
             return this.backingDatabase.Query<RecordMetadata>(@"SELECT * FROM metadata");
         }

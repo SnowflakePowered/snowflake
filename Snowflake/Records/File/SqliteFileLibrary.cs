@@ -106,7 +106,7 @@ namespace Snowflake.Records.File
             return this.GetMultipleByQuery(sql, guids); //todo test no idea if this works
         }
 
-        public IEnumerable<IFileRecord> GetRecords()
+        public IEnumerable<IFileRecord> GetAllRecords()
         {
             const string sql = @"SELECT * FROM files;
                                  SELECT * FROM metadata WHERE record IN (SELECT uuid FROM files)";
@@ -128,16 +128,16 @@ namespace Snowflake.Records.File
         public IFileRecord Get(string filePath)
         {
             const string sql =
-                @"SELECT * FROM files WHERE path = @filePath LIMIT 1;
-                SELECT * FROM metadata WHERE record IN (SELECT uuid FROM files WHERE path = @filePath LIMIT 1)";
+                @"SELECT * FROM files WHERE path = @filePath;
+                SELECT * FROM metadata WHERE record IN (SELECT uuid FROM files WHERE path = @filePath)";
             return this.GetSingleByQuery(sql, new {filePath});
         }
 
         public IFileRecord Get(Guid recordGuid)
         {
             const string sql =
-                            @"SELECT * FROM files WHERE uuid = @recordGuid LIMIT 1;
-                              SELECT * FROM metadata WHERE record IN (SELECT uuid FROM files WHERE uuid = @recordGuid LIMIT 1)";
+                            @"SELECT * FROM files WHERE uuid = @recordGuid;
+                              SELECT * FROM metadata WHERE record IN (SELECT uuid FROM files WHERE uuid = @recordGuid)";
 
             return this.GetSingleByQuery(sql, new {recordGuid});
         }
@@ -171,7 +171,7 @@ namespace Snowflake.Records.File
                     }
                     catch (SQLiteException)
                     {
-                        return new List<FileRecord>();
+                        return new List<IFileRecord>();
                     }
 
                 }

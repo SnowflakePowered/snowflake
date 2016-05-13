@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,7 +33,7 @@ namespace Snowflake.Records.Game
         private void CreateDatabase()
         {
             this.backingDatabase.CreateTable("games",
-                "uuid TEXT PRIMARY KEY");
+                "uuid UUID PRIMARY KEY");
         }
         public void Set(IGameRecord record)
         {
@@ -47,11 +48,11 @@ namespace Snowflake.Records.Game
             });
         }
 
-        public void Set(IEnumerable<IGameRecord> records)
+        public void Set(IEnumerable<IGameRecord> games)
         {
             this.backingDatabase.Execute(dbConnection =>
             {
-                var gameRecords = records as IList<IGameRecord> ?? records.ToList();
+                var gameRecords = games as IList<IGameRecord> ?? games.ToList();
                 dbConnection.Execute(@"INSERT OR REPLACE INTO games(uuid) VALUES @Guid", gameRecords);
                 dbConnection.Execute(@"INSERT OR REPLACE INTO files(uuid, game, path, mimetype) 
                                        VALUES (@Guid, @GameRecord, @FilePath, @MimeType)", 
@@ -73,63 +74,189 @@ namespace Snowflake.Records.Game
             this.Remove(records.Select(g => g.Guid));
         }
 
-        public void Remove(IEnumerable<Guid> guids)
+        public void Remove(IEnumerable<Guid> games)
         {
-            this.backingDatabase.Execute(@"DELETE FROM games WHERE uuid IN @guids;
-                                           DELETE FROM metadata WHERE record IN @guids", new { guids });
+            this.backingDatabase.Execute(@"DELETE FROM games WHERE uuid IN @games;
+                                           DELETE FROM metadata WHERE record IN @games", new { games });
         }
 
-        public IGameRecord Get(Guid guid)
+        public IGameRecord Get(Guid game)
         {
-            throw new NotImplementedException();
+            const string sql =
+                          @"SELECT * FROM games WHERE uuid = @game;
+                            SELECT * FROM files WHERE game = @game;
+                            SELECT * FROM metadata WHERE record IN 
+                                (SELECT uuid FROM files WHERE game = @game
+                                 UNION ALL SELECT uuid from games WHERE uuid = @game)";
+            return this.GetSingleByQuery(sql, new {game});
         }
 
-        public IEnumerable<IGameRecord> Get(IEnumerable<Guid> guids)
+        public IEnumerable<IGameRecord> Get(IEnumerable<Guid> games)
         {
-            throw new NotImplementedException();
+            const string sql = @"SELECT * from games WHERE uuid IN @games;
+                                 SELECT * FROM files WHERE game IN @games;
+                                 SELECT * FROM metadata WHERE record IN 
+                                        (SELECT uuid from games WHERE uuid IN @games 
+                                        UNION ALL SELECT uuid FROM files WHERE game IN @games)";
+            return this.GetMultipleByQuery(sql, games);
         }
 
         public void Remove(Guid guid)
         {
-            this.backingDatabase.Execute(@"DELETE FROM games WHERE uuid = @guid;
-                                           DELETE FROM metadata WHERE record = @guid", new { guid });
+            this.backingDatabase.Execute(@"DELETE FROM games WHERE uuid = @games;
+                                           DELETE FROM metadata WHERE record = @games", new { guid });
             //because file record guids are derived from game library, they can be safely left alone
         }
 
         public IEnumerable<IGameRecord> SearchByMetadata(string key, string likeValue)
         {
-            throw new NotImplementedException();
+            const string sql = @"SELECT * FROM games WHERE uuid IN 
+                                (SELECT record FROM metadata WHERE key = @key AND value LIKE @likeValue);
+
+                                SELECT * FROM files WHERE game IN 
+                                    (SELECT uuid FROM games WHERE uuid IN 
+                                        (SELECT record FROM metadata WHERE key = @key AND value LIKE @likeValue));
+
+                                SELECT * FROM metadata WHERE record IN (SELECT uuid FROM games WHERE uuid IN 
+                                    (SELECT record FROM metadata WHERE key = @key AND value LIKE @likeValue)
+                                    UNION ALL SELECT uuid FROM files WHERE game IN (SELECT uuid FROM games WHERE uuid IN 
+                                    (SELECT record FROM metadata WHERE key = @key AND value LIKE @likeValue)))";
+            //this sql is gross, can we shorten this somehow?
+            return this.GetMultipleByQuery(sql, new {key, likeValue});
         }
 
         public IEnumerable<IGameRecord> GetByMetadata(string key, string exactValue)
         {
-            throw new NotImplementedException();
+            const string sql = @"SELECT * FROM games WHERE uuid IN 
+                                (SELECT record FROM metadata WHERE key = @key AND value = @exactValue);
+
+                                SELECT * FROM files WHERE game IN 
+                                    (SELECT uuid FROM games WHERE uuid IN 
+                                        (SELECT record FROM metadata WHERE key = @key AND value = @exactValue));
+
+                                SELECT * FROM metadata WHERE record IN (SELECT uuid FROM games WHERE uuid IN 
+                                    (SELECT record FROM metadata WHERE key = @key AND value = @exactValue)
+                                    UNION ALL SELECT uuid FROM files WHERE game IN (SELECT uuid FROM games WHERE uuid IN 
+                                    (SELECT record FROM metadata WHERE key = @key AND value = @exactValue)))";
+            return this.GetMultipleByQuery(sql, new { key, exactValue });
+
         }
 
-        public IEnumerable<IGameRecord> GetRecords()
+        public IEnumerable<IGameRecord> GetAllRecords()
         {
-            throw new NotImplementedException();
-        }
-
-       
-        public IEnumerable<IGameRecord> GetGameRecords()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IGameRecord GetGameByUuid(Guid uuid)
-        {
-            throw new NotImplementedException();
+            const string sql = @"SELECT * FROM games;
+                                 SELECT * FROM files WHERE game IN (SELECT uuid FROM games);
+                                 SELECT * FROM metadata WHERE record IN 
+                                        (SELECT uuid FROM games 
+                                        UNION ALL SELECT uuid FROM files WHERE game IN (SELECT uuid FROM games)";
+            return this.GetMultipleByQuery(sql, null);
         }
 
         public IEnumerable<IGameRecord> GetGamesByTitle(string nameSearch)
         {
-            throw new NotImplementedException();
+            return this.SearchByMetadata(GameMetadataKeys.Title, nameSearch);
         }
 
         public IEnumerable<IGameRecord> GetGamesByPlatform(string platformId)
         {
-            throw new NotImplementedException();
+            return this.GetByMetadata(GameMetadataKeys.Platform, platformId);
+        }
+
+
+        /// <summary>
+        /// Gets multiple game records according to the query
+        /// </summary>
+        /// <param name="sql">3 SQL queries together, 
+        /// the first gets game records, 
+        /// the second gets file records,
+        /// and the third gets corresponding metadata records for both file and games.</param>
+        /// <param name="param">The parameters</param>
+        /// <returns>A list of file records</returns>
+        private IEnumerable<IGameRecord> GetMultipleByQuery(string sql, object param)
+        {
+            return this.backingDatabase.Query<IEnumerable<IGameRecord>>(dbConnection =>
+            {
+                using (var query = dbConnection.QueryMultiple(sql, param))
+                {
+                    try
+                    {
+                        var games = query.Read().Select(game => new
+                        {
+                            Guid = new Guid(game.uuid)
+                        });
+
+                        var files = query.Read().Select(file => new
+                        {
+                            Guid = new Guid(file.uuid),
+                            Game = new Guid(file.game),
+                            Path = file.path,
+                            MimeType = file.mimetype
+                        });
+
+                        var metadata = query.Read<RecordMetadata>();
+                        var fileRecords = (from f in files
+                                           let md = (from m in metadata where m.Record == f.Guid select m)
+                                               .ToDictionary(md => md.Key, md => md as IRecordMetadata)
+                                           select new FileRecord(f.Game, md, f.Path, f.MimeType)).ToList();
+                        return (from game in games
+                                let gameFiles =
+                                    (from f in fileRecords where f.GameRecord == game.Guid select f as IFileRecord).ToList()
+                                let md = (from m in metadata where m.Record == game.Guid select m)
+                                    .ToDictionary(md => md.Key, md => md as IRecordMetadata)
+                                select new GameRecord(game.Guid, md, gameFiles)).ToList();
+                    }
+                    catch (SQLiteException)
+                    {
+                        return new List<IGameRecord>();
+                    }
+
+                }
+            });
+        }
+
+        /// <summary>
+        /// Gets a single game record according to the query
+        /// </summary>
+        /// <param name="sql">3 SQL queries together, 
+        /// the first gets game records, 
+        /// the second gets file records,
+        /// and the third gets corresponding metadata records for both file and games.</param>
+        /// <param name="param">The parameters</param>
+        /// <returns>A single game record</returns>
+        private IGameRecord GetSingleByQuery(string sql, object param)
+        {
+            return this.backingDatabase.Query<IGameRecord>(dbConnection =>
+            {
+                using (var query = dbConnection.QueryMultiple(sql, param))
+                {
+                    try
+                    {
+                        dynamic _game = query.ReadFirstOrDefault();
+                        if (_game == null) return null;
+                        Guid gameGuid = _game.uuid;
+                        var files = query.Read().Select(f => new
+                        {
+                            Guid = new Guid(f.uuid),
+                            Game = new Guid(f.game),
+                            Path = f.path,
+                            MimeType = f.mimetype
+                        });
+
+                        var metadata = query.Read<RecordMetadata>();
+                        var fileRecords = (from f in files
+                                           let md = (from m in metadata where m.Record == f.Guid select m)
+                                               .ToDictionary(md => md.Key, md => md as IRecordMetadata)
+                                           select new FileRecord(f.Game, md, f.Path, f.MimeType) as IFileRecord).ToList();
+                        var gameMetadata =
+                            (from m in metadata where m.Guid == gameGuid select m).ToDictionary(m => m.Key, m => m as IRecordMetadata);
+                        return new GameRecord(gameGuid, gameMetadata, fileRecords);
+                    }
+                    catch (SQLiteException)
+                    {
+                        return null;
+                    }
+                }
+            });
         }
     }
 }

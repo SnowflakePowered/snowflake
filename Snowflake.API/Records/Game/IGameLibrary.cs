@@ -17,18 +17,6 @@ namespace Snowflake.Records.Game
         /// The file library that holds the file information for this game.
         /// </summary>
         IFileLibrary FileLibrary { get; }
-
-        /// <summary>
-        /// Get a list of all games in the library
-        /// </summary>
-        /// <returns>A list of all games in the database</returns>
-        IEnumerable<IGameRecord> GetGameRecords();
-        /// <summary>
-        /// Gets a game by it's unique id
-        /// </summary>
-        /// <param name="uuid">The unique id of the game</param>
-        /// <returns>The game with the unique id</returns>
-        IGameRecord GetGameByUuid(Guid uuid);
         /// <summary>
         /// Gets a list of games with a certain matching name
         /// </summary>

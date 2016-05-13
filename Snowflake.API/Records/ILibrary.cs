@@ -67,7 +67,7 @@ namespace Snowflake.Records
         /// Gets all the records in the library
         /// </summary>
         /// <returns></returns>
-        IEnumerable<T> GetRecords();
+        IEnumerable<T> GetAllRecords();
 
     }
 }
