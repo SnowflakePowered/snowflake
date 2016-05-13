@@ -9,7 +9,7 @@ using Snowflake.Utility;
 
 namespace Snowflake.Records.Metadata
 {
-    public class SqliteMetadataLibrary : IMetadataLibrary
+    internal class SqliteMetadataLibrary : IMetadataLibrary
     {
         private readonly SqliteDatabase backingDatabase;
         public SqliteMetadataLibrary(SqliteDatabase database)
@@ -81,7 +81,6 @@ namespace Snowflake.Records.Metadata
 
         public IEnumerable<IRecordMetadata> Get(string key, string exactValue)
         {
-
             return this.backingDatabase.Query<RecordMetadata>
                 (@"SELECT * FROM metadata WHERE key = @key AND value = @exactValue",
                     new { key, exactValue });

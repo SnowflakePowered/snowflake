@@ -11,7 +11,7 @@ using Snowflake.Utility;
 
 namespace Snowflake.Records.Game
 {
-    public class SqliteGameLibrary : IGameLibrary
+    internal class SqliteGameLibrary : IGameLibrary
     {
         public IMetadataLibrary MetadataLibrary { get; }
         public IFileLibrary FileLibrary { get; }
