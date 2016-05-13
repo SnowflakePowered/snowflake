@@ -109,6 +109,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Records\FileRecordTests.cs" />
     <Compile Include="Records\RecordMetadataTests.cs" />
+    <Compile Include="Records\SqliteGameLibraryTests.cs" />
     <Compile Include="Records\SqliteFileLibraryTests.cs" />
     <Compile Include="Scraper\GameImagesResultTests.cs" />
     <Compile Include="Service\HttpServer\BaseHttpServerTests.cs" />

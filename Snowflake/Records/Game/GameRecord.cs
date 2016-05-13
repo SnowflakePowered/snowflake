@@ -17,14 +17,14 @@ namespace Snowflake.Records.Game
         public string Title => this.Metadata[GameMetadataKeys.Title].Value;
         public IList<IFileRecord> Files { get; }
 
-        public GameRecord(Guid guid, IDictionary<string, IRecordMetadata> metadata, IList<IFileRecord> files)
+        internal GameRecord(Guid guid, IDictionary<string, IRecordMetadata> metadata, IList<IFileRecord> files)
         {
             this.Guid = guid;
             this.Metadata = metadata;
             this.Files = files;
         }
 
-        public GameRecord(IPlatformInfo platformInfo, string title, IList<IFileRecord> files)
+        public GameRecord(IPlatformInfo platformInfo, string title)
         {
             this.Guid = Guid.NewGuid();
             this.Metadata = new Dictionary<string, IRecordMetadata>()
@@ -38,7 +38,7 @@ namespace Snowflake.Records.Game
                     new RecordMetadata(GameMetadataKeys.Title, title, this.Guid)
                 }
             };
-            this.Files = files;
+            this.Files = new List<IFileRecord>();
         }
     }
 }

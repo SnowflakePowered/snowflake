@@ -18,7 +18,7 @@ namespace Snowflake.Records.File
         public string FilePath { get; }
         public Guid GameRecord { get; }
 
-        public FileRecord(Guid gameRecord, IDictionary<string, IRecordMetadata> metadata, string filePath, string mimeType)
+        internal FileRecord(Guid gameRecord, IDictionary<string, IRecordMetadata> metadata, string filePath, string mimeType)
         {
             this.Metadata = metadata;
             this.GameRecord = gameRecord;
@@ -32,6 +32,13 @@ namespace Snowflake.Records.File
             this(gameRecord, new Dictionary<string, IRecordMetadata>(), filePath, mimeType)
         {
             
+        }
+
+
+        public FileRecord(string filePath, string mimeType, IGameRecord gameRecord) :
+            this(gameRecord.Guid, new Dictionary<string, IRecordMetadata>(), filePath, mimeType)
+        {
+
         }
 
         public bool Equals(IFileRecord file) => this.Guid == file.Guid;
