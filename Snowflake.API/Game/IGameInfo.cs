@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using Snowflake.Records.Game;
 
 namespace Snowflake.Game
 {
     /// <summary>
     /// Represents a game with all it's information
     /// </summary>
-    public interface IGameInfo 
+    public interface IGameInfo : IGameRecord
     {
         /// <summary>
         /// The id of the platform that this object is related to

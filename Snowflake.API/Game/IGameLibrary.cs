@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Snowflake.Game
 {
     /// <summary>
     /// A database used to store game information
     /// </summary>
+    [Obsolete("Will be replaced with Snowflake.Records.IGameLibrary")]
     public interface IGameLibrary
     {
         /// <summary>

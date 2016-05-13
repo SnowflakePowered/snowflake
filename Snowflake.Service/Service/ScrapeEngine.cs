@@ -90,7 +90,7 @@ namespace Snowflake.Service
         public IGameInfo GetGameData(IScrapableInfo information, IGameScrapeResult scrapeResult, IScraper scraper)
         {
             var gameInfo = scraper?.GetGameDetails(scrapeResult);
-            var gameResult = new GameInfo(
+            IGameInfo gameResult = new GameInfo(
                 information.StonePlatformId,
                 gameInfo.Item1[GameInfoFields.game_title],
                 information.OriginalFilePath, gameInfo.Item1);
@@ -112,7 +112,7 @@ namespace Snowflake.Service
                        .OrderByDescending(result => result.Accuracy * scraper.ScraperAccuracy)?
                        .First();
             var gameInfo = scraper.GetGameDetails(bestResult);
-            var gameResult = new GameInfo(
+            IGameInfo gameResult = new GameInfo(
                 information.StonePlatformId,
                 gameInfo.Item1[GameInfoFields.game_title],
                 information.OriginalFilePath, gameInfo.Item1);

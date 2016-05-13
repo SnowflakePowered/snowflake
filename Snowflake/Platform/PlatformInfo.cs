@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
-using Snowflake.Information;
 using Snowflake.JsonConverters;
 
 namespace Snowflake.Platform
