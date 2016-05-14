@@ -12,7 +12,7 @@ namespace Snowflake.Records.File
 {
     public class FileRecord : IFileRecord
     {
-        public IDictionary<string, IRecordMetadata> Metadata { get; }
+        public IMetadataCollection Metadata { get; }
         public Guid Guid { get; }
         public string MimeType { get; }
         public string FilePath { get; }
@@ -20,12 +20,11 @@ namespace Snowflake.Records.File
 
         internal FileRecord(Guid record, IDictionary<string, IRecordMetadata> metadata, string filePath, string mimeType)
         {
-            this.Metadata = metadata;
             this.Record = record;
             this.MimeType = mimeType;
             this.FilePath = filePath;
             this.Guid = GuidUtility.Create(this.Record, this.FilePath);
-
+            this.Metadata = new MetadataCollection(this.Guid, metadata);
         }
 
         public FileRecord(string filePath, string mimeType, Guid record):

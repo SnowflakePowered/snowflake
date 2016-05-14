@@ -15,7 +15,7 @@ namespace Snowflake.Records
         /// <summary>
         /// The metadata related to this metadata
         /// </summary>
-        IDictionary<string, IRecordMetadata> Metadata { get; }
+        IMetadataCollection Metadata { get; }
         /// <summary>
         /// A metadata assignable must have a guid.
         /// </summary>

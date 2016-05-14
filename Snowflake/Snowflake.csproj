@@ -128,6 +128,7 @@
     <Compile Include="Records\File\SqliteFileLibrary.cs" />
     <Compile Include="Records\Game\GameRecord.cs" />
     <Compile Include="Records\Game\SqliteGameLibrary.cs" />
+    <Compile Include="Records\Metadata\MetadataCollection.cs" />
     <Compile Include="Records\Metadata\RecordMetadata.cs" />
     <Compile Include="Records\Metadata\SqliteMetadataLibrary.cs" />
     <Compile Include="Romfile\FileSignature.cs" />

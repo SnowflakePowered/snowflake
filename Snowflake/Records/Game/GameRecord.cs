@@ -11,7 +11,7 @@ namespace Snowflake.Records.Game
 {
     public class GameRecord : IGameRecord
     {
-        public IDictionary<string, IRecordMetadata> Metadata { get; }
+        public IMetadataCollection Metadata { get; }
         public Guid Guid { get; }
         public string PlatformId => this.Metadata[GameMetadataKeys.Platform].Value;
         public string Title => this.Metadata[GameMetadataKeys.Title].Value;
@@ -20,14 +20,14 @@ namespace Snowflake.Records.Game
         internal GameRecord(Guid guid, IDictionary<string, IRecordMetadata> metadata, IList<IFileRecord> files)
         {
             this.Guid = guid;
-            this.Metadata = metadata;
+            this.Metadata = new MetadataCollection(this.Guid, metadata);
             this.Files = files;
         }
 
         public GameRecord(IPlatformInfo platformInfo, string title)
         {
             this.Guid = Guid.NewGuid();
-            this.Metadata = new Dictionary<string, IRecordMetadata>()
+            this.Metadata = new MetadataCollection(this.Guid)
             {
                 {
                     GameMetadataKeys.Platform,
