@@ -41,7 +41,7 @@ namespace Snowflake.Records.Game
             {
                 dbConnection.Execute(@"INSERT OR REPLACE INTO games(uuid) VALUES (@Guid)", record);
                 dbConnection.Execute(@"INSERT OR REPLACE INTO files(uuid, game, path, mimetype) 
-                                         VALUES (@Guid, @GameRecord, @FilePath, @MimeType)", record.Files);
+                                         VALUES (@Guid, @Record, @FilePath, @MimeType)", record.Files);
                 dbConnection.Execute(@"INSERT OR REPLACE INTO metadata(uuid, record, key, value) 
                                         VALUES (@Guid, @Record, @Key, @Value)", 
                                         record.Metadata.Values.Concat(record.Files.SelectMany(m => m.Metadata.Values)));
@@ -55,7 +55,7 @@ namespace Snowflake.Records.Game
                 var gameRecords = games as IList<IGameRecord> ?? games.ToList();
                 dbConnection.Execute(@"INSERT OR REPLACE INTO games(uuid) VALUES (@Guid)", gameRecords);
                 dbConnection.Execute(@"INSERT OR REPLACE INTO files(uuid, game, path, mimetype) 
-                                       VALUES (@Guid, @GameRecord, @FilePath, @MimeType)", 
+                                       VALUES (@Guid, @Record, @FilePath, @MimeType)", 
                                        gameRecords.SelectMany(g => g.Files));
                 dbConnection.Execute(@"INSERT OR REPLACE INTO metadata(uuid, record, key, value) 
                                        VALUES (@Guid, @Record, @Key, @Value)",

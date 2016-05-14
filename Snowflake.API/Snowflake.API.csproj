@@ -78,6 +78,9 @@
     <Compile Include="Ajax\IJSMethod.cs" />
     <Compile Include="Ajax\IJSRequest.cs" />
     <Compile Include="Ajax\IJSResponse.cs" />
+    <Compile Include="Caching\IKeyedImageCache.cs" />
+    <Compile Include="Caching\ImageTypes.cs" />
+    <Compile Include="Caching\ImageMetadataKeys.cs" />
     <Compile Include="Configuration\Attributes\ConfigurationOptionAttribute.cs" />
     <Compile Include="Configuration\IIterableConfigurationSection.cs" />
     <Compile Include="Configuration\IConfigurationSection.cs" />

@@ -44,7 +44,7 @@ namespace Snowflake.Records.File
             this.backingDatabase.Execute(dbConnection =>
             {
                 dbConnection.Execute(@"INSERT OR REPLACE INTO files(uuid, game, path, mimetype) 
-                                         VALUES (@Guid, @GameRecord, @FilePath, @MimeType)", record);
+                                         VALUES (@Guid, @Record, @FilePath, @MimeType)", record);
                 dbConnection.Execute(@"INSERT OR REPLACE INTO metadata(uuid, record, key, value) 
                                         VALUES (@Guid, @Record, @Key, @Value)", record.Metadata.Values);
             });
@@ -55,7 +55,7 @@ namespace Snowflake.Records.File
             this.backingDatabase.Execute(dbConnection =>
             {
                 dbConnection.Execute(@"INSERT OR REPLACE INTO files(uuid, game, path, mimetype) 
-                                         VALUES (@Guid, @GameRecord, @FilePath, @MimeType)", records);
+                                         VALUES (@Guid, @Record, @FilePath, @MimeType)", records);
                 dbConnection.Execute(@"INSERT OR REPLACE INTO metadata(uuid, record, key, value) 
                                         VALUES (@Guid, @Record, @Key, @Value)", records.SelectMany(record => record.Metadata.Values));
             });

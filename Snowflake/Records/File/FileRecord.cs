@@ -16,20 +16,20 @@ namespace Snowflake.Records.File
         public Guid Guid { get; }
         public string MimeType { get; }
         public string FilePath { get; }
-        public Guid GameRecord { get; }
+        public Guid Record { get; }
 
-        internal FileRecord(Guid gameRecord, IDictionary<string, IRecordMetadata> metadata, string filePath, string mimeType)
+        internal FileRecord(Guid record, IDictionary<string, IRecordMetadata> metadata, string filePath, string mimeType)
         {
             this.Metadata = metadata;
-            this.GameRecord = gameRecord;
+            this.Record = record;
             this.MimeType = mimeType;
             this.FilePath = filePath;
-            this.Guid = GuidUtility.Create(this.GameRecord, this.FilePath);
+            this.Guid = GuidUtility.Create(this.Record, this.FilePath);
 
         }
 
-        public FileRecord(string filePath, string mimeType, Guid gameRecord):
-            this(gameRecord, new Dictionary<string, IRecordMetadata>(), filePath, mimeType)
+        public FileRecord(string filePath, string mimeType, Guid record):
+            this(record, new Dictionary<string, IRecordMetadata>(), filePath, mimeType)
         {
             
         }

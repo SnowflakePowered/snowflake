@@ -97,6 +97,7 @@
     <Compile Include="Ajax\JSMethod.cs" />
     <Compile Include="Ajax\JSRequest.cs" />
     <Compile Include="Ajax\JSResponse.cs" />
+    <Compile Include="Caching\KeyedImageCache.cs" />
     <Compile Include="Configuration\ConfigurationTypeMapper.cs" />
     <Compile Include="Configuration\DefaultConfigurationTypeMapper.cs" />
     <Compile Include="Configuration\IniConfigurationSerializer.cs" />

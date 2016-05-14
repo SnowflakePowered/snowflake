@@ -29,6 +29,6 @@ namespace Snowflake.Records.File
         /// <summary>
         /// The game record attached to this Guid.
         /// </summary>
-        Guid GameRecord { get; }
+        Guid Record { get; }
     }
 }

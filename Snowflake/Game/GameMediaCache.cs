@@ -8,6 +8,7 @@ using System.Net;
 
 namespace Snowflake.Game
 {
+    [Obsolete("Use KeyedImageCache")]
     public class GameMediaCache : IGameMediaCache
     {
         const string fileBoxartBack = "BoxartBack.png";
