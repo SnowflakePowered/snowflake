@@ -10,6 +10,7 @@ using Snowflake.Extensions;
 
 namespace Snowflake.Game
 {
+    [Obsolete("Use KeyedImageCache")]
     public class GameScreenshotCache : IGameScreenshotCache
     {
         public GameScreenshotCache(string rootPath, string cacheKey)

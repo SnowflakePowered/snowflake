@@ -28,12 +28,13 @@ namespace Snowflake.Service
 
         public IScrapableInfo GetScrapableInfo(string fileName, IPlatformInfo knownPlatform = null)
         {
+            //todo write to take advantage of mimetypes.
             var fileSignatures = this.coreService.Get<IPluginManager>().Get<IFileSignature>();
             var vettedSignature = fileSignatures
                 .Where(signature => signature.Value.FileExtensionMatches(fileName)).FirstOrDefault(signature => signature.Value.HeaderSignatureMatches(fileName)).Value;
             var platformFromFileExtension =
                 this.coreService.Platforms.FirstOrDefault(
-                    platform => platform.Value.FileExtensions.Contains(Path.GetExtension(fileName))).Value;
+                    platform => platform.Value.FileTypes.Keys.Contains(Path.GetExtension(fileName))).Value;
             var romPlatform =
                 this.coreService.Platforms[
                     vettedSignature?.SupportedPlatform ??
@@ -89,7 +90,7 @@ namespace Snowflake.Service
         public IGameInfo GetGameData(IScrapableInfo information, IGameScrapeResult scrapeResult, IScraper scraper)
         {
             var gameInfo = scraper?.GetGameDetails(scrapeResult);
-            var gameResult = new GameInfo(
+            IGameInfo gameResult = new GameInfo(
                 information.StonePlatformId,
                 gameInfo.Item1[GameInfoFields.game_title],
                 information.OriginalFilePath, gameInfo.Item1);
@@ -111,7 +112,7 @@ namespace Snowflake.Service
                        .OrderByDescending(result => result.Accuracy * scraper.ScraperAccuracy)?
                        .First();
             var gameInfo = scraper.GetGameDetails(bestResult);
-            var gameResult = new GameInfo(
+            IGameInfo gameResult = new GameInfo(
                 information.StonePlatformId,
                 gameInfo.Item1[GameInfoFields.game_title],
                 information.OriginalFilePath, gameInfo.Item1);

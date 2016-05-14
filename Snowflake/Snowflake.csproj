@@ -97,6 +97,7 @@
     <Compile Include="Ajax\JSMethod.cs" />
     <Compile Include="Ajax\JSRequest.cs" />
     <Compile Include="Ajax\JSResponse.cs" />
+    <Compile Include="Caching\KeyedImageCache.cs" />
     <Compile Include="Configuration\ConfigurationTypeMapper.cs" />
     <Compile Include="Configuration\DefaultConfigurationTypeMapper.cs" />
     <Compile Include="Configuration\IniConfigurationSerializer.cs" />
@@ -110,9 +111,7 @@
     <Compile Include="Emulator\EmulatorBridge.cs" />
     <Compile Include="Emulator\ProcessEmulatorInstance.cs" />
     <Compile Include="Game\GameMediaCache.cs" />
-    <Compile Include="Game\SqliteGameDatabase.cs" />
     <Compile Include="Game\GameScreenshotCache.cs" />
-    <Compile Include="Game\DictionaryStringStringTypeHandler.cs" />
     <Compile Include="Platform\PlatformControllerPorts.cs" />
     <Compile Include="Platform\PlatformPreferencesStore.cs" />
     <Compile Include="Extensibility\Plugin.cs" />
@@ -125,6 +124,13 @@
     <Compile Include="Controller\ControllerPortStore.cs" />
     <Compile Include="Controller\ControllerDefinition.cs" />
     <Compile Include="Extensibility\YamlConfiguration.cs" />
+    <Compile Include="Records\File\FileRecord.cs" />
+    <Compile Include="Records\File\SqliteFileLibrary.cs" />
+    <Compile Include="Records\Game\GameRecord.cs" />
+    <Compile Include="Records\Game\SqliteGameLibrary.cs" />
+    <Compile Include="Records\Metadata\MetadataCollection.cs" />
+    <Compile Include="Records\Metadata\RecordMetadata.cs" />
+    <Compile Include="Records\Metadata\SqliteMetadataLibrary.cs" />
     <Compile Include="Romfile\FileSignature.cs" />
     <Compile Include="Romfile\StructuredFilename.cs" />
     <Compile Include="Scraper\Scraper.cs" />
@@ -141,7 +147,6 @@
     <Compile Include="Extensions\HttpListenerContextExts.cs" />
     <Compile Include="Extensions\IDictionaryExtensions.cs" />
     <Compile Include="Extensions\IListExtensions.cs" />
-    <Compile Include="Extensions\MEFExtensions.cs" />
     <Compile Include="Controller\ControllerInput.cs" />
     <Compile Include="Game\GameLibrary.cs" />
     <Compile Include="Platform\PlatformDefaults.cs" />
@@ -159,6 +164,7 @@
       <SubType>Designer</SubType>
     </Content>
     <None Include="packages.config" />
+    <Compile Include="Records\Metadata\RecordMetadata.SqlConstructors.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Snowflake.API\Snowflake.API.csproj">
@@ -170,6 +176,7 @@
       <Name>Snowflake.Utility</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.99.0\build\net45\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.99.0\build\net45\System.Data.SQLite.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

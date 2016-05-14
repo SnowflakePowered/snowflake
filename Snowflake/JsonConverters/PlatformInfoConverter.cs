@@ -16,8 +16,10 @@ namespace Snowflake.JsonConverters
             string friendlyName = jObject.Value<string>("FriendlyName");
             IDictionary<string, string> metadata = jObject.Value<JToken>("Metadata").ToObject<IDictionary<string, string>>();
             int maximumInputs = jObject.Value<int>("MaximumInputs");
-            IEnumerable<string> fileExtensions = jObject.Value<JToken>("FileExtensions").ToObject<IEnumerable<string>>();
-            return new PlatformInfo(platformId, friendlyName, metadata, fileExtensions, maximumInputs);
+            IDictionary<string, string> fileTypes = jObject.Value<JToken>("FileTypes").ToObject<IDictionary<string, string>>();
+            IEnumerable<string> biosFiles = jObject.Value<JArray>("BiosFiles")?.Values<string>()
+                ?? new List<string>();
+            return new PlatformInfo(platformId, friendlyName, metadata, fileTypes, biosFiles, maximumInputs);
         }
     }
 }

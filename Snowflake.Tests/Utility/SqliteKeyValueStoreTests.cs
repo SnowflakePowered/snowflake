@@ -17,6 +17,7 @@ namespace Snowflake.Utility.Tests
             public int SomeInt { get; set; }
             public string SomeString { get; set; }
             public bool SomeBoolean { get; set; }
+            public Guid SomeGuid => Guid.Empty;
         }
 
         [Fact]
@@ -63,7 +64,7 @@ namespace Snowflake.Utility.Tests
             {
                 SomeInt = someInt,
                 SomeBoolean = someBool,
-                SomeString = someString
+                SomeString = someString,
             };
             var kvStore = new SqliteKeyValueStore(Path.GetTempFileName());
             kvStore.InsertObject("testKey", testObject);
@@ -165,7 +166,7 @@ namespace Snowflake.Utility.Tests
             Assert.Equal(testObject.SomeInt, retrievedObject.SomeInt);
             Assert.Equal(testObject.SomeBoolean, retrievedObject.SomeBoolean);
             Assert.Equal(testObject.SomeString, retrievedObject.SomeString);
-
+            Assert.Equal(testObject.SomeGuid, Guid.Empty);
         }
 
         [Fact]

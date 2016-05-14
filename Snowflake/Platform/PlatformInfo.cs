@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
-using Snowflake.Information;
 using Snowflake.JsonConverters;
 
 namespace Snowflake.Platform
@@ -9,11 +8,12 @@ namespace Snowflake.Platform
     public class PlatformInfo : IPlatformInfo
     {
         public PlatformInfo(string platformId, string name, IDictionary<string, string> metadata,
-            IEnumerable<string> fileExtensions, int maximumInputs)
+            IDictionary<string, string> fileTypes, IEnumerable<string> biosFiles, int maximumInputs)
         {
             this.PlatformID = platformId;
             this.Metadata = metadata;
-            this.FileExtensions = fileExtensions;
+            this.FileTypes = fileTypes;
+            this.BiosFiles = biosFiles;
             this.MaximumInputs = maximumInputs;
             this.FriendlyName = name;
         }
@@ -21,7 +21,8 @@ namespace Snowflake.Platform
         public string FriendlyName { get; }
         public string PlatformID { get; }
         public IDictionary<string, string> Metadata { get; set; }
-        public IEnumerable<string> FileExtensions { get; }
+        public IDictionary<string, string> FileTypes { get; }
+        public IEnumerable<string> BiosFiles { get; }
         public int MaximumInputs { get; }
     }
 }
