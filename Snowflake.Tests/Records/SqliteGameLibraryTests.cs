@@ -156,6 +156,23 @@ namespace Snowflake.Records.Tests
             Assert.NotEmpty(library.GetGamesByTitle("Test"));
         }
 
+        [Fact]
+        public void GetGamesByMetadata_Test()
+        {
+            var platformInfo = new Mock<IPlatformInfo>();
+            platformInfo.SetupGet(p => p.PlatformID).Returns("TEST_PLATFORM");
+            var library = new SqliteGameLibrary(new SqliteDatabase(Path.GetRandomFileName()));
+
+            var gameRecord = new GameRecord(platformInfo.Object, "Test Game");
+            var fileRecord = new FileRecord(@"C:\somefile\test.txt", "text/plain", gameRecord);
+            fileRecord.Metadata.Add("test_metadata", new RecordMetadata("test_metadata", "hello world", fileRecord));
+
+            gameRecord.Files.Add(fileRecord);
+            gameRecord.Metadata.Add("test_metadata", "game_test_value");
+            library.Set(gameRecord);
+            Assert.NotEmpty(library.GetByMetadata("test_metadata", "game_test_value"));
+        }
+
     }
     
 }

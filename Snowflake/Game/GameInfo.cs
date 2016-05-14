@@ -13,7 +13,7 @@ using Snowflake.Utility;
 namespace Snowflake.Game
 {
     [Obsolete("Will be replaced with Snowflake.Records.GameRecord")]
-    public partial class GameInfo : IGameInfo, IGameRecord
+    public partial class GameInfo : IGameInfo
     {
         private static readonly Guid ObsoleteGameInfoNamespace = new Guid("33f6e774-fbbc-4a7f-902a-446d1deba390");
         public string UUID => this.Metadata["obsolete_uuid"].Value;
@@ -34,19 +34,24 @@ namespace Snowflake.Game
             }
             set
             {
-                this.Metadata = value.ToDictionary(m => m.Key,
-                    m => new RecordMetadata(m.Key, m.Value, this.Guid) as IRecordMetadata);
+                this.Metadata = new MetadataCollection(this.Guid, value.ToDictionary(m => m.Key,
+                    m => new RecordMetadata(m.Key, m.Value, this.Guid) as IRecordMetadata));
             }
         }
-        public IDictionary<string, IRecordMetadata> Metadata { get; private set; }
+        public IMetadataCollection Metadata { get; private set; }
         public Guid Guid { get; }
+
+        internal GameInfo(IGameRecord record)
+        {
+            this.Guid = record.Guid;
+            this.Metadata = record.Metadata;
+        }
 
         public GameInfo(string uuid, string platformName, string fileName, string title, string crc32, IDictionary<string, string> metadata)
         {
             this.Guid = GuidUtility.Create(GameInfo.ObsoleteGameInfoNamespace, uuid);
-            this.Metadata = metadata.ToDictionary(m => m.Key,
-                    m => new RecordMetadata(m.Key, m.Value, this.Guid) as IRecordMetadata);
-            this.Metadata.Add("obsolete_uuid", new RecordMetadata("obsolete_uuid", this.UUID, this.Guid));
+            (this as IGameInfo).Metadata = metadata;
+            this.Metadata.Add("obsolete_uuid", new RecordMetadata("obsolete_uuid", uuid, this.Guid));
             this.Metadata.Add(GameMetadataKeys.Platform,
                 new RecordMetadata(GameMetadataKeys.Platform, platformName, this.Guid));
             this.Metadata.Add(GameMetadataKeys.Title,

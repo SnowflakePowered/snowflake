@@ -20,32 +20,33 @@ namespace Snowflake.Game
 
         public void AddGame(IGameInfo game)
         {
-            this.backingGameDatabase.Set(game as IGameRecord);
+            this.backingGameDatabase.Set(game);
         }
 
         public void RemoveGame(IGameInfo game)
         {
-            this.backingGameDatabase.Remove(game as IGameRecord);
+            this.backingGameDatabase.Remove(game);
         }
 
         public IGameInfo GetGameByUUID(string uuid)
         {
-            return this.backingGameDatabase.GetByMetadata("obsolete_uuid", uuid).FirstOrDefault() as GameInfo;
+            var gameInfo = this.backingGameDatabase.GetByMetadata("obsolete_uuid", uuid).FirstOrDefault();
+            return gameInfo == null ? null : new GameInfo(gameInfo);
         }
 
         public IEnumerable<IGameInfo> GetGamesByPlatform(string platformId)
         {
-            return this.backingGameDatabase.GetGamesByPlatform(platformId).Select(g => g as GameInfo);
+            return this.backingGameDatabase.GetGamesByPlatform(platformId).Select(g => new GameInfo(g));
         }
 
         public IEnumerable<IGameInfo> GetGamesByName(string nameSearch)
         {
-            return this.backingGameDatabase.GetGamesByTitle(nameSearch).Select(g => g as GameInfo);
+            return this.backingGameDatabase.GetGamesByTitle(nameSearch).Select(g => new GameInfo(g));
         }
         
         public IEnumerable<IGameInfo> GetAllGames()
         {
-            return this.backingGameDatabase.GetAllRecords().Select(g => g as GameInfo);
+            return this.backingGameDatabase.GetAllRecords().Select(g => new GameInfo(g));
         }
     }
 }
