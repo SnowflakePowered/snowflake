@@ -35,7 +35,15 @@ namespace Snowflake.Records.Metadata
         /// </summary>
         /// <param name="guid">The guid of the metadata</param>
         /// <returns>The requested metadata</returns>
-        IRecordMetadata this[Guid guid] { get; set; }
+        IRecordMetadata this[Guid guid] { get; }
+
+        /// <summary>
+        /// The value of this metadata.
+        /// If you want to get the raw records, enumerate <see cref="IDictionary{TKey, TValue}.Values"/>
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns>The value of the metadata</returns>
+        new string this[string key] { get; set; }
 
     }
 }

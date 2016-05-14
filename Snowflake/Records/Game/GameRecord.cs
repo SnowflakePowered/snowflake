@@ -13,8 +13,8 @@ namespace Snowflake.Records.Game
     {
         public IMetadataCollection Metadata { get; }
         public Guid Guid { get; }
-        public string PlatformId => this.Metadata[GameMetadataKeys.Platform].Value;
-        public string Title => this.Metadata[GameMetadataKeys.Title].Value;
+        public string PlatformId => this.Metadata[GameMetadataKeys.Platform];
+        public string Title => this.Metadata[GameMetadataKeys.Title];
         public IList<IFileRecord> Files { get; }
 
         internal GameRecord(Guid guid, IDictionary<string, IRecordMetadata> metadata, IList<IFileRecord> files)

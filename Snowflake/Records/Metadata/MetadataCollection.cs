@@ -8,16 +8,12 @@ namespace Snowflake.Records.Metadata
 {
     public class MetadataCollection : Dictionary<string, IRecordMetadata>, IMetadataCollection
     {
-        public IRecordMetadata this[Guid guid]
+        public IRecordMetadata this[Guid guid] => this.First(metadata => metadata.Value.Guid == guid).Value;
+
+        string IMetadataCollection.this[string key]
         {
-            get
-            {
-                return this.First(metadata => metadata.Value.Guid == guid).Value;
-            }
-            set
-            {
-                this[this[guid].Key] = value;
-            }
+            get { return this[key].Value; }
+            set { this[key] = new RecordMetadata(key, value, this.Record); }
         }
 
         public Guid Record { get; }
@@ -41,5 +37,6 @@ namespace Snowflake.Records.Metadata
         {
             this.Add(new RecordMetadata(key, value, this.Record));
         }
+        
     }
 }

@@ -16,12 +16,12 @@ namespace Snowflake.Game
     public partial class GameInfo : IGameInfo
     {
         private static readonly Guid ObsoleteGameInfoNamespace = new Guid("33f6e774-fbbc-4a7f-902a-446d1deba390");
-        public string UUID => this.Metadata["obsolete_uuid"].Value;
-        public string FileName => this.Metadata["obsolete_filename"].Value;
-        public string CRC32 => this.Metadata["obsolete_crc32"].Value;
+        public string UUID => this.Metadata["obsolete_uuid"];
+        public string FileName => this.Metadata["obsolete_filename"];
+        public string CRC32 => this.Metadata["obsolete_crc32"];
         public string PlatformID => this.PlatformId;
-        public string PlatformId => this.Metadata[GameMetadataKeys.Platform].Value;
-        public string Title => this.Metadata[GameMetadataKeys.Title].Value;
+        public string PlatformId => this.Metadata[GameMetadataKeys.Platform];
+        public string Title => this.Metadata[GameMetadataKeys.Title];
 
         public IList<IFileRecord> Files
             => new List<IFileRecord> {new FileRecord(this.FileName, "application/x-romfile-unknown", this)};
