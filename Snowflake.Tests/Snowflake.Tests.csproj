@@ -91,6 +91,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Caching\KeyedImageCacheTests.cs" />
     <Compile Include="Configuration\ExampleConfigurationSection.cs" />
     <Compile Include="Configuration\ExampleIterableConfigurationSection.cs" />
     <Compile Include="Configuration\IniConfigurationSerializerTests.cs" />
@@ -107,6 +108,7 @@
     <Compile Include="Game\GameMediaCacheTests.cs" />
     <Compile Include="Game\GameScreenshotCacheTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Records\MetadataCollectionTests.cs" />
     <Compile Include="Records\FileRecordTests.cs" />
     <Compile Include="Records\RecordMetadataTests.cs" />
     <Compile Include="Records\SqliteMetadataLibraryTests.cs" />

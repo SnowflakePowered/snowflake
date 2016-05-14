@@ -21,7 +21,7 @@ namespace Snowflake.Records.Tests
         {
             var platformInfo = new Mock<IPlatformInfo>();
             platformInfo.SetupGet(p => p.PlatformID).Returns("TEST_PLATFORM");
-            var library = new SqliteGameLibrary(new SqliteDatabase(Path.GetRandomFileName()));
+            var library = new SqliteGameLibrary(new SqliteDatabase(Path.GetTempFileName()));
 
             var gameRecord = new GameRecord(platformInfo.Object, "Test Game");
             var fileRecord = new FileRecord(@"C:\somefile\test.txt", "text/plain", gameRecord);
@@ -37,7 +37,7 @@ namespace Snowflake.Records.Tests
         {
             var platformInfo = new Mock<IPlatformInfo>();
             platformInfo.SetupGet(p => p.PlatformID).Returns("TEST_PLATFORM");
-            var library = new SqliteGameLibrary(new SqliteDatabase(Path.GetRandomFileName()));
+            var library = new SqliteGameLibrary(new SqliteDatabase(Path.GetTempFileName()));
 
             var gameRecord = new GameRecord(platformInfo.Object, "Test Game");
             var fileRecord = new FileRecord(@"C:\somefile\test.txt", "text/plain", gameRecord);
@@ -55,7 +55,7 @@ namespace Snowflake.Records.Tests
         {
             var platformInfo = new Mock<IPlatformInfo>();
             platformInfo.SetupGet(p => p.PlatformID).Returns("TEST_PLATFORM");
-            var library = new SqliteGameLibrary(new SqliteDatabase(Path.GetRandomFileName()));
+            var library = new SqliteGameLibrary(new SqliteDatabase(Path.GetTempFileName()));
 
             var gameRecord = new GameRecord(platformInfo.Object, "Test Game");
             var fileRecord = new FileRecord(@"C:\somefile\test.txt", "text/plain", gameRecord);
@@ -74,7 +74,7 @@ namespace Snowflake.Records.Tests
         {
             var platformInfo = new Mock<IPlatformInfo>();
             platformInfo.SetupGet(p => p.PlatformID).Returns("TEST_PLATFORM");
-            var library = new SqliteGameLibrary(new SqliteDatabase(Path.GetRandomFileName()));
+            var library = new SqliteGameLibrary(new SqliteDatabase(Path.GetTempFileName()));
 
             var gameRecord = new GameRecord(platformInfo.Object, "Test Game");
             var fileRecord = new FileRecord(@"C:\somefile\test.txt", "text/plain", gameRecord);
@@ -95,7 +95,7 @@ namespace Snowflake.Records.Tests
         {
             var platformInfo = new Mock<IPlatformInfo>();
             platformInfo.SetupGet(p => p.PlatformID).Returns("TEST_PLATFORM");
-            var library = new SqliteGameLibrary(new SqliteDatabase(Path.GetRandomFileName()));
+            var library = new SqliteGameLibrary(new SqliteDatabase(Path.GetTempFileName()));
 
             var gameRecord = new GameRecord(platformInfo.Object, "Test Game");
             var fileRecord = new FileRecord(@"C:\somefile\test.txt", "text/plain", gameRecord);
@@ -112,7 +112,7 @@ namespace Snowflake.Records.Tests
         {
             var platformInfo = new Mock<IPlatformInfo>();
             platformInfo.SetupGet(p => p.PlatformID).Returns("TEST_PLATFORM");
-            var library = new SqliteGameLibrary(new SqliteDatabase(Path.GetRandomFileName()));
+            var library = new SqliteGameLibrary(new SqliteDatabase(Path.GetTempFileName()));
 
             var gameRecord = new GameRecord(platformInfo.Object, "Test Game");
             var fileRecord = new FileRecord(@"C:\somefile\test.txt", "text/plain", gameRecord);
@@ -129,7 +129,7 @@ namespace Snowflake.Records.Tests
         {
             var platformInfo = new Mock<IPlatformInfo>();
             platformInfo.SetupGet(p => p.PlatformID).Returns("TEST_PLATFORM");
-            var library = new SqliteGameLibrary(new SqliteDatabase(Path.GetRandomFileName()));
+            var library = new SqliteGameLibrary(new SqliteDatabase(Path.GetTempFileName()));
 
             var gameRecord = new GameRecord(platformInfo.Object, "Test Game");
             var fileRecord = new FileRecord(@"C:\somefile\test.txt", "text/plain", gameRecord);
@@ -145,7 +145,7 @@ namespace Snowflake.Records.Tests
         {
             var platformInfo = new Mock<IPlatformInfo>();
             platformInfo.SetupGet(p => p.PlatformID).Returns("TEST_PLATFORM");
-            var library = new SqliteGameLibrary(new SqliteDatabase(Path.GetRandomFileName()));
+            var library = new SqliteGameLibrary(new SqliteDatabase(Path.GetTempFileName()));
 
             var gameRecord = new GameRecord(platformInfo.Object, "Test Game");
             var fileRecord = new FileRecord(@"C:\somefile\test.txt", "text/plain", gameRecord);
@@ -161,7 +161,7 @@ namespace Snowflake.Records.Tests
         {
             var platformInfo = new Mock<IPlatformInfo>();
             platformInfo.SetupGet(p => p.PlatformID).Returns("TEST_PLATFORM");
-            var library = new SqliteGameLibrary(new SqliteDatabase(Path.GetRandomFileName()));
+            var library = new SqliteGameLibrary(new SqliteDatabase(Path.GetTempFileName()));
 
             var gameRecord = new GameRecord(platformInfo.Object, "Test Game");
             var fileRecord = new FileRecord(@"C:\somefile\test.txt", "text/plain", gameRecord);
