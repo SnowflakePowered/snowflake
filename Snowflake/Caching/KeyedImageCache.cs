@@ -23,26 +23,34 @@ namespace Snowflake.Caching
                 Directory.CreateDirectory(Path.Combine(appDataPath, ".imgcache"));
             this.rootPath = Path.Combine(appDataPath, ".imgcache");
         }
-        public IEnumerable<IFileRecord> Add(Image image, Guid recordGuid, string imageType)
+        public IList<IFileRecord> Add(Image image, Guid recordGuid, string imageType)
         {
             Guid cacheId = Guid.NewGuid();
             string cachePath = Path.Combine(this.rootPath, cacheId.ToString());
             Directory.CreateDirectory(cachePath);
-            yield return KeyedImageCache.SaveImage(image, 100, cacheId, cachePath, imageType, recordGuid);
-            yield return KeyedImageCache.SaveImage(image, 75, cacheId, cachePath, imageType, recordGuid);
-            yield return KeyedImageCache.SaveImage(image, 25, cacheId, cachePath, imageType, recordGuid);
-            yield return KeyedImageCache.SaveImage(image, 10, cacheId, cachePath, imageType, recordGuid);
+            return new List<IFileRecord>
+            {
+                KeyedImageCache.SaveImage(image, 100, cacheId, cachePath, imageType, recordGuid),
+                KeyedImageCache.SaveImage(image, 75, cacheId, cachePath, imageType, recordGuid),
+                KeyedImageCache.SaveImage(image, 25, cacheId, cachePath, imageType, recordGuid),
+                KeyedImageCache.SaveImage(image, 10, cacheId, cachePath, imageType, recordGuid)
+
+            };
         }
 
-        public IEnumerable<IFileRecord> Add(Image image, Guid recordGuid, string imageType, DateTime dateTime)
+        public IList<IFileRecord> Add(Image image, Guid recordGuid, string imageType, DateTime dateTime)
         {
             Guid cacheId = Guid.NewGuid();
             string cachePath = Path.Combine(this.rootPath, cacheId.ToString());
             Directory.CreateDirectory(cachePath);
-            yield return KeyedImageCache.SaveImage(image, 100, cacheId, cachePath, imageType, recordGuid, dateTime);
-            yield return KeyedImageCache.SaveImage(image, 75, cacheId, cachePath, imageType, recordGuid, dateTime);
-            yield return KeyedImageCache.SaveImage(image, 25, cacheId, cachePath, imageType, recordGuid, dateTime);
-            yield return KeyedImageCache.SaveImage(image, 10, cacheId, cachePath, imageType, recordGuid, dateTime);
+            return new List<IFileRecord>
+            {
+                KeyedImageCache.SaveImage(image, 100, cacheId, cachePath, imageType, recordGuid, dateTime),
+                KeyedImageCache.SaveImage(image, 75, cacheId, cachePath, imageType, recordGuid, dateTime),
+                KeyedImageCache.SaveImage(image, 25, cacheId, cachePath, imageType, recordGuid, dateTime),
+                KeyedImageCache.SaveImage(image, 10, cacheId, cachePath, imageType, recordGuid, dateTime)
+
+            };
         }
 
         private static IFileRecord SaveImage(Image image, int percent, Guid cacheId, string cachePath, string imageType, Guid recordGuid)

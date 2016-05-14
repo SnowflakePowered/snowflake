@@ -21,7 +21,7 @@ namespace Snowflake.Caching
         /// <param name="recordGuid">A record to link to</param>
         /// <param name="imageType">The type of image See <see cref="ImageTypes"/> for recognized image types</param>
         /// <returns>The generated file records with appropriate metadata linking it to the cache folder</returns>
-        IEnumerable<IFileRecord> Add(Image image, Guid recordGuid, string imageType);
+        IList<IFileRecord> Add(Image image, Guid recordGuid, string imageType);
 
         /// <summary>
         /// Adds an image to the image cache, generating resized image/png versions of the files, and
@@ -32,6 +32,6 @@ namespace Snowflake.Caching
         /// <param name="imageType">The type of image See <see cref="ImageTypes"/> for recognized image types</param>
         /// <param name="dateTime">A date time to link it to.</param>
         /// <returns>The generated file records with appropriate metadata linking it to the cache folder</returns>
-        IEnumerable<IFileRecord> Add(Image image, Guid recordGuid, string imageType, DateTime dateTime);
+        IList<IFileRecord> Add(Image image, Guid recordGuid, string imageType, DateTime dateTime);
     }
 }
