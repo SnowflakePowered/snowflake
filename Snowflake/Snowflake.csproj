@@ -80,6 +80,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
@@ -118,6 +120,7 @@
     <Compile Include="Records\Metadata\SqliteMetadataLibrary.cs" />
     <Compile Include="Romfile\FileSignature.cs" />
     <Compile Include="Romfile\StructuredFilename.cs" />
+    <Compile Include="Scraper\ScrapeInstance.cs" />
     <Compile Include="Scraper\Scraper.cs" />
     <Compile Include="Scraper\GameImagesResult.cs" />
     <Compile Include="Scraper\GameScrapeResult.cs" />

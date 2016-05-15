@@ -32,13 +32,6 @@ namespace Snowflake.Romfile
         /// </summary>
         string SupportedPlatform{ get; }
         /// <summary>
-        /// Whether or not the filename's file extension is in IFileSignature.FileExtensions
-        /// </summary>
-        /// <param name="fileName">The filename of the ROM</param>
-        /// <param name="fileContents">The contents of the ROM</param>
-        /// <returns>Whether or not this filename's file extension is valid for this type of platform</returns>
-        bool FileTypeMatches(string fileName, Stream fileContents);
-        /// <summary>
         /// Whether or not the header signature of a file matches this platform's ROM type.
         /// To handle multiple types of ROMs, use a series of ifs or an switch.
         /// </summary>

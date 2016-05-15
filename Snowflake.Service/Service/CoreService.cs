@@ -6,7 +6,6 @@ using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
 using Snowflake.Ajax;
-using Snowflake.Controller;
 using Snowflake.Events;
 using Snowflake.Events.ServiceEvents;
 using Snowflake.Platform;
@@ -27,7 +26,6 @@ namespace Snowflake.Service
     {
         #region Loaded Objects
         public IDictionary<string, IPlatformInfo> Platforms { get; }
-        public IDictionary<string, IControllerDefinition> Controllers { get; }
         public string AppDataDirectory { get; }
         public dynamic InfoBlob { get; }
         private readonly IDictionary<Type, dynamic> serviceContainer;
@@ -49,20 +47,12 @@ namespace Snowflake.Service
             this.InfoBlob = JsonConvert.DeserializeObject(File.ReadAllText(Path.Combine(this.AppDataDirectory, "info.json")));
 
             this.RegisterService<IServerManager>(new ServerManager());
-            this.RegisterService<IGameLibrary>(new GameLibrary(Path.Combine(this.AppDataDirectory, "games.db")));
-            this.RegisterService<IGamepadAbstractionStore>(new GamepadAbstractionStore(Path.Combine(this.AppDataDirectory, "gamepads.db")));
-            this.RegisterService<IControllerPortStore>(new ControllerPortStore(Path.Combine(this.AppDataDirectory, "ports.db")));
-            this.RegisterService<IEmulatorAssembliesManager>(new EmulatorAssembliesManager(Path.Combine(this.AppDataDirectory, "emulators")));
-            this.RegisterService<IInputManager>(new InputManager.InputManager());
+         
             this.RegisterService<IPluginManager>(new PluginManager(this.AppDataDirectory, this));
             this.RegisterService<IAjaxManager>(new AjaxManager(this));
-            this.RegisterService<IPlatformPreferenceStore>(new PlatformPreferencesStore(Path.Combine(this.AppDataDirectory, "platformprefs.db"), this.Get<IPluginManager>()));
-            this.RegisterService<IScrapeEngine>(new ScrapeEngine(this));
-            this.RegisterService<IEmulatorInstanceManager>(new EmulatorInstanceManager(this));
             var serverManager = this.Get<IServerManager>();
             serverManager.RegisterServer("AjaxApiServer", new ApiServer(this));
             serverManager.RegisterServer("WebSocketApiServer", new JsonApiWebSocketServer(30003, this));
-            serverManager.RegisterServer("GameCacheServer", new GameCacheServer());
             
         }
 
