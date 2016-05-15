@@ -29,8 +29,6 @@ namespace Snowflake.Romfile
             return "";
         }
 
-        public abstract bool FileTypeMatches(string fileName, Stream fileContents);
-
         public abstract bool HeaderSignatureMatches(Stream fileContents);
 
         protected FileSignature(ICoreService coreInstance) : base(coreInstance) {

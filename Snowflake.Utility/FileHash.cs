@@ -10,7 +10,7 @@ namespace Snowflake.Utility
         {
             return Crc32.GetHash(File.OpenRead(fileName));
         }
-        public static string GetCRC32(FileStream fileStream)
+        public static string GetCRC32(Stream fileStream)
         {
             return Crc32.GetHash(fileStream);
         }
@@ -18,7 +18,7 @@ namespace Snowflake.Utility
         {
             return MD5.GetHash(File.OpenRead(fileName));
         }
-        public static string GetMD5(FileStream fileStream)
+        public static string GetMD5(Stream fileStream)
         {
             return MD5.GetHash(fileStream);
         }
@@ -26,7 +26,7 @@ namespace Snowflake.Utility
         {
             return SHA1.GetHash(File.OpenRead(fileName));
         }
-        public static string GetSHA1(FileStream fileStream)
+        public static string GetSHA1(Stream fileStream)
         {
             return SHA1.GetHash(fileStream);
         }
