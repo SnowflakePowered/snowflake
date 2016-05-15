@@ -1,13 +1,14 @@
-﻿using Snowflake.Game;
+﻿
+using Snowflake.Records.Game;
 using Snowflake.Service;
 
 namespace Snowflake.Events.CoreEvents.ModifyEvent
 {
     public class ModifyGameInfoEventArgs : SnowflakeEventArgs
     {
-        public IGameInfo PreviousGameInfo { get; private set; }
-        public IGameInfo ModifiedGameInfo { get; set; }
-        public ModifyGameInfoEventArgs(ICoreService eventCoreInstance, IGameInfo previousGameInfo, IGameInfo modifiedGameInfo)
+        public IGameRecord PreviousGameInfo { get; private set; }
+        public IGameRecord ModifiedGameInfo { get; set; }
+        public ModifyGameInfoEventArgs(ICoreService eventCoreInstance, IGameRecord previousGameInfo, IGameRecord modifiedGameInfo)
             : base(eventCoreInstance)
         {
             this.PreviousGameInfo = previousGameInfo;

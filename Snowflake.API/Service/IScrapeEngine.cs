@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using Snowflake.Game;
 using Snowflake.Platform;
+using Snowflake.Records.Game;
 using Snowflake.Romfile;
 using Snowflake.Scraper;
 
@@ -25,27 +25,27 @@ namespace Snowflake.Service
         /// <param name="information">The scrapable information representing a ROM file</param>
         /// <param name="acceptableAccuracy">An acceptable accuracy value from 0 to 1.0. It will return the match that reaches this accuracy value</param>
         /// <returns>A GameInfo object that can be added to the database</returns>
-        IGameInfo GetGameData(IScrapableInfo information, double acceptableAccuracy);
+        IGameRecord GetGameData(IScrapableInfo information, double acceptableAccuracy);
         /// <summary>
         /// Gets game data from a ScrapableInfo object with a default acceptableAccuracy of 1.0 (Max)
         /// </summary>
         /// <param name="information">The scrapable information representing a ROM file</param>
         /// <returns>A GameInfo object that can be added to the database</returns>
-        IGameInfo GetGameData(IScrapableInfo information);
+        IGameRecord GetGameData(IScrapableInfo information);
         /// <summary>
         /// Gets game data from a certain scraper
         /// </summary>
         /// <param name="information">The scrapable information representing a ROM file</param>
         /// <param name="scraper">The scraper to use</param>
         /// <returns>A GameInfo object that can be added to the database</returns>
-        IGameInfo GetGameData(IScrapableInfo information, IScraper scraper);
+        IGameRecord GetGameData(IScrapableInfo information, IScraper scraper);
         /// <summary>
         /// 
         /// </summary>
         /// <param name="information"></param>
         /// <param name="scrapeResult"></param>
         /// <returns></returns>
-        IGameInfo GetGameData(IScrapableInfo information, IGameScrapeResult scrapeResult);
+        IGameRecord GetGameData(IScrapableInfo information, IGameScrapeResult scrapeResult);
         /// <summary>
         /// 
         /// </summary>
@@ -53,7 +53,7 @@ namespace Snowflake.Service
         /// <param name="scrapeResult"></param>
         /// <param name="scraper"></param>
         /// <returns></returns>
-        IGameInfo GetGameData(IScrapableInfo information, IGameScrapeResult scrapeResult, IScraper scraper);
+        IGameRecord GetGameData(IScrapableInfo information, IGameScrapeResult scrapeResult, IScraper scraper);
 
         /// <summary>
         /// Gets filtered scrape results

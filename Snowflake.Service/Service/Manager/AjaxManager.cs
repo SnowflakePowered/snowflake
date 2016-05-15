@@ -72,7 +72,7 @@ namespace Snowflake.Service.Manager
         {
             foreach (var instance in pluginManager.Get<IAjaxNamespace>().Select(ajaxNamespace => ajaxNamespace.Value))
             {
-                this.RegisterNamespace(instance.PluginInfo["namespace"], instance);
+                this.RegisterNamespace(instance.PluginProperties["namespace"], instance);
             }
         }
 

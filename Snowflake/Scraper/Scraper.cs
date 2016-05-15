@@ -21,11 +21,12 @@ namespace Snowflake.Scraper
             using (var reader = new StreamReader(stream))
             {
                 string file = reader.ReadToEnd();
+                double accuracy = Convert.ToDouble(this.PluginProperties.Get("scraper_accuracy"));
                 var scraperMapValues = JsonConvert.DeserializeObject<IDictionary<string, string>>(file);
                 this.ScraperMap = scraperMapValues;
-                this.ScraperAccuracy = Convert.ToDouble(this.PluginInfo["scraper_accuracy"]) > 1.0
+                this.ScraperAccuracy = accuracy > 1.0
                     ? 1.0
-                    : Convert.ToDouble(this.PluginInfo["scraper_accuracy"]);
+                    : accuracy;
             }
         }
         public abstract IList<IGameScrapeResult> GetSearchResults(string searchQuery);

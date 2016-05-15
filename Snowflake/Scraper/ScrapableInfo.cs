@@ -57,6 +57,7 @@ namespace Snowflake.Scraper
             this.RomInternalName = romInternalName;
             this.StonePlatformId = stonePlatformId;
         }
+
         /// <summary>
         /// Initialize a ScrapableInfo with a vetted filesignature
         /// </summary>
@@ -66,8 +67,11 @@ namespace Snowflake.Scraper
         {
             this.StructuredFilename = new StructuredFilename(originalFilePath);
             this.OriginalFilePath = originalFilePath;
-            this.RomId = fileSignature?.GetGameId(originalFilePath);
-            this.RomInternalName = fileSignature?.GetInternalName(originalFilePath);
+            using (Stream fileStream = new FileStream(originalFilePath, FileMode.Open, FileAccess.Read))
+            {
+                this.RomId = fileSignature?.GetGameId(fileStream);
+                this.RomInternalName = fileSignature?.GetInternalName(fileStream);
+            }
             this.StonePlatformId = fileSignature?.SupportedPlatform;
             this.QueryableTitle = this.StructuredFilename.NamingConvention != StructuredFilenameConvention.Unknown
              ? this.StructuredFilename.Title
@@ -83,8 +87,11 @@ namespace Snowflake.Scraper
         {
             this.StructuredFilename = new StructuredFilename(originalFilePath);
             this.OriginalFilePath = originalFilePath;
-            this.RomId = fileSignature?.GetGameId(originalFilePath);
-            this.RomInternalName = fileSignature?.GetInternalName(originalFilePath);
+            using (Stream fileStream = new FileStream(originalFilePath, FileMode.Open, FileAccess.Read))
+            {
+                this.RomId = fileSignature?.GetGameId(fileStream);
+                this.RomInternalName = fileSignature?.GetInternalName(fileStream);
+            }
             this.StonePlatformId = stonePlatformId;
             this.QueryableTitle = this.StructuredFilename.NamingConvention != StructuredFilenameConvention.Unknown
              ? this.StructuredFilename.Title

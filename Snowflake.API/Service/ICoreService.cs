@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Snowflake.Controller;
 using Snowflake.Platform;
 
 namespace Snowflake.Service
@@ -15,11 +14,6 @@ namespace Snowflake.Service
         /// </summary>
         [Obsolete("Use StoneProvider instead. Will be removed in upcoming PR.")]
         IDictionary<string, IPlatformInfo> Platforms { get; }
-        /// <summary>
-        /// THe list of controllers loaded for this core service
-        /// </summary>
-        [Obsolete("Use StoneProvider instead. Will be removed in upcoming PR.")]
-        IDictionary<string, IControllerDefinition> Controllers { get; }
         /// <summary>
         /// The directory to store appdata in this core service
         /// </summary>

@@ -77,8 +77,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\CoreService.cs" />
     <Compile Include="Service\Manager\AjaxManager.cs" />
-    <Compile Include="Service\Manager\EmulatorAssembliesManager.cs" />
-    <Compile Include="Service\Manager\EmulatorInstanceManager.cs" />
     <Compile Include="Service\Manager\PluginManager.cs" />
     <Compile Include="Service\Manager\ServerManager.cs" />
     <Compile Include="Service\ScrapeEngine.cs" />

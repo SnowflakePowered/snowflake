@@ -14,29 +14,28 @@ namespace Snowflake.Romfile
     public abstract class FileSignature : Extensibility.Plugin, IFileSignature
     {
 
-        public IList<string> FileExtensions { get; }
+        public IList<string> FileTypes { get; }
         public string SupportedPlatform { get; }
+
 
         public abstract byte[] HeaderSignature { get; }
 
-        public virtual string GetGameId(string fileName)
+        public virtual string GetGameId(Stream fileContents)
         {
             return "";
         }
-        public virtual string GetInternalName(string fileName)
+        public virtual string GetInternalName(Stream fileContents)
         {
             return "";
         }
-        public abstract bool HeaderSignatureMatches(string fileName);
+
+        public abstract bool FileTypeMatches(string fileName, Stream fileContents);
+
+        public abstract bool HeaderSignatureMatches(Stream fileContents);
 
         protected FileSignature(ICoreService coreInstance) : base(coreInstance) {
-            this.FileExtensions = this.PluginInfo["file_extensions"].ToObject<IList<string>>();
+            this.FileTypes = this.PluginProperties.GetEnumerable("file_filetype").ToList();
             this.SupportedPlatform = this.SupportedPlatforms.First();
-        }
-
-        public virtual bool FileExtensionMatches(string fileName)
-        {
-            return this.FileExtensions.Contains(Path.GetExtension(fileName));
         }
 
     }

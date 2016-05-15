@@ -1,4 +1,5 @@
-﻿using Snowflake.Game;
+﻿
+using Snowflake.Records.Game;
 using Snowflake.Scraper;
 using Snowflake.Service;
 
@@ -8,7 +9,7 @@ namespace Snowflake.Events.CoreEvents.GameEvent
     {
         public IScraper GameScraper { get; private set; }
 
-        public GameInfoScrapedEventArgs(ICoreService eventCoreInstance, IGameInfo gameInfo, IScraper gameScraper)
+        public GameInfoScrapedEventArgs(ICoreService eventCoreInstance, IGameRecord gameInfo, IScraper gameScraper)
             : base(eventCoreInstance, gameInfo)
         {
             this.GameScraper = gameScraper;

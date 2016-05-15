@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,7 +21,7 @@ namespace Snowflake.Romfile
         /// <example>
         /// .iso, .cso, .wbfs for Wii games
         /// </example>
-        IList<string> FileExtensions { get; }
+        IList<string> FileTypes { get; }
         /// <summary>
         /// The byte array from byte position 0 containing the header or other identifier of the ROM.
         /// Usually the first 1024 bytes.
@@ -34,24 +35,26 @@ namespace Snowflake.Romfile
         /// Whether or not the filename's file extension is in IFileSignature.FileExtensions
         /// </summary>
         /// <param name="fileName">The filename of the ROM</param>
+        /// <param name="fileContents">The contents of the ROM</param>
         /// <returns>Whether or not this filename's file extension is valid for this type of platform</returns>
-        bool FileExtensionMatches(string fileName);
+        bool FileTypeMatches(string fileName, Stream fileContents);
         /// <summary>
         /// Whether or not the header signature of a file matches this platform's ROM type.
         /// To handle multiple types of ROMs, use a series of ifs or an switch.
         /// </summary>
-        /// <param name="fileName">The filename of the ROM</param>
+        /// <param name="fileContents">The contents of the ROM</param>
         /// <returns>If this ROM is executable data for this platform, it should return true.</returns>
-        bool HeaderSignatureMatches(string fileName);
+        bool HeaderSignatureMatches(Stream fileContents);
         /// <summary>
         /// Gets the game id from the file signature if possible
-        /// <param name="fileName">The filename of the ROM</param>
+        /// <param name="fileContents">The contents of the ROM</param>
         /// </summary>
-        string GetGameId(string fileName);
+        string GetGameId(Stream fileContents);
         ///<summary>
         /// Gets the internal name of the ROM if possible
+        /// <param name="fileContents">The contents of the ROM</param>
         /// </summary>
-        string GetInternalName(string fileName);
+        string GetInternalName(Stream fileContents);
   
     }
 }
