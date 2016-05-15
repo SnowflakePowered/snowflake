@@ -32,7 +32,7 @@ namespace Snowflake.Extensibility
         /// <summary>
         /// A dictionary containing the information within plugin.json
         /// </summary>
-        IDictionary<string, dynamic> PluginInfo { get; }
+        IPluginProperties PluginProperties { get; }
         /// <summary>
         /// A reference to the current running ICoreService instance. 
         /// This is import-injected upon composition in the plugin constructor.
