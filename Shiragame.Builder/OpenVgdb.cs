@@ -41,6 +41,8 @@ namespace Shiragame.Builder
                 where this.PlatformMap.ContainsKey((int)o.systemID)
                 let platform = this.stone.Platforms[this.PlatformMap[(int)o.systemID]]
                 let ext = Path.GetExtension(o.romFileName)
+                let crc = o.romHashCRC
+                where crc != null //only accept hashable files
                 select new DatInfo(platform.PlatformID,
                    o.romHashCRC,
                    o.romHashMD5,
