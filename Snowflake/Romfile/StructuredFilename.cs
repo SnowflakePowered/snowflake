@@ -125,7 +125,7 @@ namespace Snowflake.Romfile
         private static readonly IDictionary<string, string> goodToolsLookupTable = new Dictionary<string, string>()
         {
             {"a", "AU"},
-            {"as", "ZZ"},
+            {"as", "AS"},
             {"b", "BR"},
             {"c", "CA"},
             {"ch", "CN"},
@@ -173,7 +173,7 @@ namespace Snowflake.Romfile
             {"usa", "US"},
             {"uk", "GB"},
             {"world", "ZZ"},
-            {"asia", "ZZ"},
+            {"asia", "AS"},
             {"unknown", "ZZ"}
         };
     }
