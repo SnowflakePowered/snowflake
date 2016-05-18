@@ -11,7 +11,7 @@ using Microsoft.SqlServer.Server;
 
 namespace Snowflake.Romfile
 {
-    public class StructuredFilename : IStructuredFilename
+    public partial class StructuredFilename : IStructuredFilename
     {
         public StructuredFilenameConvention NamingConvention { get; private set; }
 
@@ -63,118 +63,37 @@ namespace Snowflake.Romfile
         {
             var tagData = Regex.Matches(this.OriginalFilename,
                @"(\()([^)]+)(\))");
-            foreach (string match in from Match tag in tagData select tag.Groups[2].Value.Trim().ToLowerInvariant())
+            var validMatch = (from Match tagMatch in tagData
+                             let match = tagMatch.Groups[2].Value
+                             from regionCode in (from regionCode in match.Split(',', '-') select regionCode.Trim())
+                             let isoRegion = StructuredFilename.ConvertToRegionCode(regionCode.ToLowerInvariant())
+                             where isoRegion.Item1 != null
+                             select isoRegion).ToList();
+            if (!validMatch.Any())
             {
-                if (StructuredFilename.goodToolsLookupTable.ContainsKey(match))
-                {
-                    this.NamingConvention = StructuredFilenameConvention.GoodTools; //Look up Goodtools code first
-                    return StructuredFilename.goodToolsLookupTable[match];
-                }
-                if (StructuredFilename.nointroLookupTable.ContainsKey(match))
-                {
-                    this.NamingConvention = StructuredFilenameConvention.NoIntro; //Look up no intro country names
-                    return StructuredFilename.nointroLookupTable[match];
-                }
-
-                if (match.Contains(",")) //If multiple no intro country names
-                {
-                    var countries = match.Split(',');
-                    this.NamingConvention = StructuredFilenameConvention.NoIntro;
-                    return String.Join("-", countries.Where(country => StructuredFilename.nointroLookupTable.ContainsKey(country.Trim())).Select(country => StructuredFilename.nointroLookupTable[country.Trim()]));
-                }
-
-                if (match.Length == 2) //Assume any 2 letter string in brackets is a region code
-                {
-                    try
-                    {
-                        var info = new RegionInfo(match); //validate code
-                        this.NamingConvention = StructuredFilenameConvention.TheOldSchoolEmulationCenter;
-                        return match;
-                    }
-                    catch (ArgumentException)
-                    {
-                        continue;
-                    }
-     
-                }
-                if (match.Contains("-")) //validate multi-region codes
-                {
-                    string[] countries = match.Split('-');
-                    var countryCode = new StringBuilder();
-                    foreach (string country in countries)
-                    {
-                        try
-                        {
-                            var info = new RegionInfo(country);
-                            this.NamingConvention = StructuredFilenameConvention.TheOldSchoolEmulationCenter;
-                            countryCode.Append($"-{country}");
-                        }
-                        catch (ArgumentException)
-                        {
-                            continue;
-                        }
-                    }
-                    string returnCountry = countryCode.ToString().Substring(1);
-                    return returnCountry.Length > 5 ? "ZZ" : returnCountry;
-                }
+                this.NamingConvention = StructuredFilenameConvention.Unknown;
+                return "ZZ";
             }
-            this.NamingConvention = StructuredFilenameConvention.Unknown;
-            return "ZZ";
+            this.NamingConvention = validMatch.First().Item2;
+            return String.Join("-", from regionCode in validMatch select regionCode.Item1);
         }
 
-        private static readonly IDictionary<string, string> goodToolsLookupTable = new Dictionary<string, string>()
+        private static Tuple<string, StructuredFilenameConvention> ConvertToRegionCode(string unknownRegion)
         {
-            {"a", "AU"},
-            {"as", "AS"},
-            {"b", "BR"},
-            {"c", "CA"},
-            {"ch", "CN"},
-            {"d", "NL"}, //D for Dutch (Netherlands)
-            {"e", "EU"},
-            {"f", "FR"},
-            {"g", "DE"},
-            {"gr", "GR"},
-            {"hk", "HK"},
-            {"i", "IT"},
-            {"j", "JP"},
-            {"k", "KR"},
-            {"nk", "NL"}, //Still Netherlands
-            {"no", "NO"},
-            {"r", "RU"},
-            {"s", "ES"},
-            {"sw", "SE"},
-            {"u", "US"},
-            {"uk", "GB"},
-            {"w", "ZZ"},
-            {"unl", "ZZ"},
-            {"pd", "ZZ"},
-            {"unk", "ZZ"}
-        };
+            if (StructuredFilename.goodToolsLookupTable.ContainsKey(unknownRegion))
+            {
+                return Tuple.Create(StructuredFilename.goodToolsLookupTable[unknownRegion], StructuredFilenameConvention.GoodTools);
+            }
+            if (StructuredFilename.nointroLookupTable.ContainsKey(unknownRegion))
+            {
+                return Tuple.Create(StructuredFilename.nointroLookupTable[unknownRegion], StructuredFilenameConvention.NoIntro);
+            }
+            if (StructuredFilename.tosecLookupTable.Contains(unknownRegion))
+            {
+                return Tuple.Create(unknownRegion, StructuredFilenameConvention.TheOldSchoolEmulationCenter);
+            }
+            return Tuple.Create<string, StructuredFilenameConvention>(null, StructuredFilenameConvention.Unknown);
+        }
 
-        private static readonly IDictionary<string, string> nointroLookupTable = new Dictionary<string, string>()
-        {
-            {"australia", "AU"},
-            {"brazil", "BR"},
-            {"canada", "CA"},
-            {"china", "CN"},
-            {"netherlands", "NL"},
-            {"europe", "EU"},
-            {"france", "FR"},
-            {"germany", "DE"},
-            {"greece", "GR"},
-            {"hong kong", "HK"},
-            {"italy", "IT"},
-            {"japan", "JP"},
-            {"korea", "KR"},
-            {"norway", "NO"},
-            {"russia", "RU"},
-            {"spain", "ES"},
-            {"sweden", "SE"},
-            {"usa", "US"},
-            {"uk", "GB"},
-            {"world", "ZZ"},
-            {"asia", "AS"},
-            {"unknown", "ZZ"}
-        };
     }
 }

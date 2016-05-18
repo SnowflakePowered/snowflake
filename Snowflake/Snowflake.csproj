@@ -144,6 +144,7 @@
     </Content>
     <None Include="packages.config" />
     <Compile Include="Records\Metadata\RecordMetadata.SqlConstructors.cs" />
+    <Compile Include="Romfile\StructuredFilename.LookupTables.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Snowflake.API\Snowflake.API.csproj">
