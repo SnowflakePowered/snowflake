@@ -55,8 +55,10 @@ namespace Snowflake.Romfile
             if (this.NamingConvention == StructuredFilenameConvention.NoIntro) return null;
             var tagData = Regex.Matches(this.OriginalFilename,
                 @"(\()([^)]+)(\))");
-
-            return tagData.Cast<Match>().Select(tag => tag.Groups[2].Value.Trim()).FirstOrDefault(value => value.Length == 4 && (value.StartsWith("19") || value.StartsWith("20")));
+            return (from Match tagMatch in tagData
+                let match = tagMatch.Groups[2].Value.Trim()
+                where match.Length == 4 && (match.StartsWith("19") || match.StartsWith("20"))
+                select match).FirstOrDefault();
         }
 
         private string ParseRegion()
@@ -66,7 +68,7 @@ namespace Snowflake.Romfile
             var validMatch = (from Match tagMatch in tagData
                              let match = tagMatch.Groups[2].Value
                              from regionCode in (from regionCode in match.Split(',', '-') select regionCode.Trim())
-                             let isoRegion = StructuredFilename.ConvertToRegionCode(regionCode.ToLowerInvariant())
+                             let isoRegion = StructuredFilename.ConvertToRegionCode(regionCode.ToUpperInvariant())
                              where isoRegion.Item1 != null
                              select isoRegion).ToList();
             if (!validMatch.Any())
