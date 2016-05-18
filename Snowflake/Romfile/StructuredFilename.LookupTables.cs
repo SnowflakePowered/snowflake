@@ -104,9 +104,6 @@ namespace Snowflake.Romfile
             {"U", "US"},
             {"UK", "GB"},
             {"W", "ZZ"},
-            {"UNL", "ZZ"},
-            {"PD", "ZZ"},
-            {"UNK", "ZZ"}
         };
 
         private static readonly IDictionary<string, string> nointroLookupTable = new Dictionary<string, string>()
