@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DatParser.cs" />
     <Compile Include="OpenVgdb.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -77,6 +78,10 @@
     <ProjectReference Include="..\Snowflake.Utility\Snowflake.Utility.csproj">
       <Project>{E683D4D7-759F-48C5-8DF4-C3350C6362D8}</Project>
       <Name>Snowflake.Utility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Snowflake\Snowflake.csproj">
+      <Project>{8F1D65ED-4A96-4A0A-8371-53655A60A2B3}</Project>
+      <Name>Snowflake</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

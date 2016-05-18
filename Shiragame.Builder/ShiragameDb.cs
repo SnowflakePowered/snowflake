@@ -10,8 +10,9 @@ namespace Shiragame.Builder
 {
     internal class ShiragameDb : SqliteMemoryDatabase
     {
-        internal ShiragameDb() 
+        internal ShiragameDb()
         {
+            this.LoadFrom(new SqliteDatabase("shiragame.db"));
             this.CreateDatabase();
         }
         private void CreateDatabase()
