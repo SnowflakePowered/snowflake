@@ -65,7 +65,7 @@ namespace Shiragame.Builder.Parser
             return from entry in cmpMatches
                    where entry.ContainsKey("serial")
                    let name = entry["name"]
-                   let serials = from s in entry["serial"].Split(',') select s.Trim()
+                   let serials = entry["serial"]
                    let region = RegionParser.ParseRegion(name)
                    select new SerialInfo(platformId, name, region, serials);
         }

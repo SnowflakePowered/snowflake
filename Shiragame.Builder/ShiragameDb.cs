@@ -25,6 +25,11 @@ namespace Shiragame.Builder
                 "mimetype TEXT",
                 "filename TEXT",
                 "region TEXT");
+            this.CreateTable("serial",
+                "platformId TEXT",
+                "serial TEXT",
+                "title TEXT",
+                "region TEXT");
             this.CreateTable("shiragame",
                 "shiragame TEXT PRIMARY KEY",
                 "stoneversion TEXT",
@@ -46,6 +51,13 @@ namespace Shiragame.Builder
         {
             this.Execute(@"INSERT OR IGNORE INTO dat(platformId, crc32, md5, sha1, mimetype, filename, region)
                           VALUES (@PlatformId, @CRC32, @MD5, @SHA1, @MimeType, @FileName, @Region)", datInfos);
+        }
+
+        internal void Commit(IEnumerable<SerialInfo> serialInfos)
+        {
+
+            this.Execute(@"INSERT OR IGNORE INTO serial(platformId, serial, title, region)
+                          VALUES (@PlatformId, @Serial, @Title, @Region)", serialInfos);
         }
     }
 }

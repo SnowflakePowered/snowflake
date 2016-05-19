@@ -18,7 +18,7 @@ namespace Shiragame
         /// <summary>
         /// The canonical game name 
         /// </summary>
-        public string GameName { get; }
+        public string Title { get; }
         /// <summary>
         /// The region code
         /// </summary>
@@ -26,14 +26,14 @@ namespace Shiragame
         /// <summary>
         /// The game serials
         /// </summary>
-        public IEnumerable<string> Serials { get; }
+        public string Serial { get; }
 
 
-        internal SerialInfo(string platformId, string gameName, string region, IEnumerable<string> serials)
+        internal SerialInfo(string platformId, string title, string region, string serial)
         {
             this.PlatformId = platformId;
-            this.GameName = gameName;
-            this.Serials = serials.ToList();
+            this.Title = title;
+            this.Serial = serial;
             this.Region = region;
         }
     }

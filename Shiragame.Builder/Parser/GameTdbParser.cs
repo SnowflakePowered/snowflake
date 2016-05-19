@@ -38,7 +38,7 @@ namespace Shiragame.Builder.Parser
             if(platformId.StartsWith("NINTENDO")) region = GameTdbParser.GetNintendoRegionCode(serial);
             if(platformId.StartsWith("SONY")) region = GameTdbParser.GetSonyRegionCode(serial);
             string name = line[1];
-            return new SerialInfo(platformId, name, region, new List<string> { serial });
+            return new SerialInfo(platformId, name, region, serial);
         }
 
         private static string GetSonyRegionCode(string serial)

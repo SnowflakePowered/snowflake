@@ -60,7 +60,7 @@ namespace Shiragame.Builder
                 from o in this.Query<dynamic>(sql, null)
                 where this.PlatformMap.ContainsKey((int)o.systemID)
                 let platform = this.stone.Platforms[this.PlatformMap[(int)o.systemID]]
-                let serials = Enumerable.ToList(o.romSerial.Replace(" ","").Split(','))
+                let serials = o.romSerial
                 select new SerialInfo(platform.PlatformID,
                    o.romExtensionlessFileName,
                    this.RegionMap[(int)o.regionID],
@@ -90,7 +90,7 @@ namespace Shiragame.Builder
             {20, "NINTENDO_GBA"},
             {21, "NINTENDO_GBC"},
             {22, "NINTENDO_GCN"},
-            {23, "NINTENDO_64"},
+            {23, "NINTENDO_N64"},
             {24, "NINTENDO_NDS"},
             {25, "NINTENDO_NES"},
             {26, "NINTENDO_SNES"},
