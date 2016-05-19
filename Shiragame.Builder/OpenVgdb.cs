@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -33,7 +34,7 @@ namespace Shiragame.Builder
                     o.romFileName));
         }
 
-        public IEnumerable<DatInfo> GetEverything()
+        public IEnumerable<DatInfo> GetDatInfos()
         {
             const string sql = "select regionID, systemID, romHashCRC, romHashMD5, romHashSHA1, romFileName from ROMs";
             return 
@@ -50,6 +51,20 @@ namespace Shiragame.Builder
                    this.RegionMap[(int)o.regionID],
                    platform.FileTypes[ext],
                    o.romFileName);
+        }
+
+        public IEnumerable<SerialInfo> GetSerialInfos()
+        {
+            const string sql = "select systemID, regionID, romExtensionlessFilename, romSerial from ROMs where romSerial notnull";
+            return
+                from o in this.Query<dynamic>(sql, null)
+                where this.PlatformMap.ContainsKey((int)o.systemID)
+                let platform = this.stone.Platforms[this.PlatformMap[(int)o.systemID]]
+                let serials = Enumerable.ToList(o.romSerial.Replace(" ","").Split(','))
+                select new SerialInfo(platform.PlatformID,
+                   o.romExtensionlessFileName,
+                   this.RegionMap[(int)o.regionID],
+                   serials);
         }
         private readonly IDictionary<int, string> PlatformMap = new Dictionary<int, string>
         {

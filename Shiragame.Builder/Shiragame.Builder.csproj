@@ -49,11 +49,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DatParser.cs" />
+    <Compile Include="Parser\GameTdbParser.cs" />
+    <Compile Include="Parser\CmpParser.cs" />
     <Compile Include="OpenVgdb.cs" />
+    <Compile Include="Parser\DatParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegionParser.cs" />
     <Compile Include="ShiragameDb.cs" />
+    <Compile Include="RegionParser.LookupTable.cs" />
+    <Compile Include="Parser\XmlParser.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
