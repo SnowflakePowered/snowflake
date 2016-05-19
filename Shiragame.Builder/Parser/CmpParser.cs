@@ -73,7 +73,7 @@ namespace Shiragame.Builder.Parser
         private static IEnumerable<DatInfo> GetEntries(MatchCollection cmpMatches, string platformId)
         {
             const string regex = @"(?:\s|)(.*?)(?:\sname|\scrc|\scrc32|\smd5|\ssha1|\sbaddump|\snodump|\ssize|$)";
-            return from Match romEntry in cmpMatches.AsParallel()
+            return from Match romEntry in cmpMatches
                    let match = romEntry.Value
                    let filename = Regex.Match(match, "name" + regex).Groups[1].Value.Trim('"')
                    let crc = Regex.Match(match, "crc" + regex).Groups[1].Value

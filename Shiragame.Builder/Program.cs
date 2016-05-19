@@ -18,30 +18,66 @@ namespace Shiragame.Builder
         static void Main(string[] args)
         {
             var memoryDb = new ShiragameDb();
+            var stone = new StoneProvider();
+            Console.WriteLine("Using Stone v" + stone.StoneVersion);
+
+            IEnumerable<DatInfo> datInfos = new List<DatInfo>();
+            IEnumerable<SerialInfo> serialInfos = new List<SerialInfo>();
             if (!Directory.Exists("PlatformDats"))
             {
                 Console.WriteLine("PlatformDats folder does not exist.. Creating Directory Structure");
                 Directory.CreateDirectory("PlatformDats");
-                var stone = new StoneProvider();
-                Console.WriteLine("Using Stone v" + stone.StoneVersion);
                 foreach (var platform in stone.Platforms)
                 {
                     Directory.CreateDirectory(Path.Combine("PlatformDats", platform.Key));
                 }
             }
-            if (File.Exists("PlatformDats\\openvgdb.sqlite"))
+            if (File.Exists(Path.Combine("PlatformDats", "openvgdb.sqlite")))
             {
                 Console.WriteLine("OpenVGDB Found. Parsing...");
                 var openvgdb = new OpenVgdb("openvgdb.sqlite");
-                var serials = openvgdb.GetSerialInfos().ToList();
-                var dats = openvgdb.GetDatInfos().ToList();
-                memoryDb.Commit(dats);
-                memoryDb.Commit(serials);
+                serialInfos = serialInfos.Concat(openvgdb.GetSerialInfos().ToList());
+                datInfos = datInfos.Concat(openvgdb.GetDatInfos().ToList());
+            }
+            foreach (string platformId in stone.Platforms.Select( p => p.Key))
+            {
+                if (!Directory.Exists(Path.Combine("PlatformDats", platformId))) continue;
+                foreach (string file in Directory.EnumerateFiles(Path.Combine("PlatformDats", platformId)))
+                {
+                    Console.Write(platformId + " found: " + Path.GetFileName(file));
+                    if (Path.GetExtension(file) == "idlist")
+                    {
+                        Console.WriteLine(" is type of ID List");
 
+                        serialInfos = serialInfos.Concat(IdlistParser.ParseSerials(file, platformId));
+                        continue;
+                    }
+                    switch (DatParser.GetParser(File.ReadLines(file).First()))
+                    {
+                        case ParserClass.Cmp:
+                            Console.WriteLine(" is type of ClrMamePro");
+                            serialInfos = serialInfos.Concat(CmpParser.ParseSerials(file, platformId));
+                            datInfos = datInfos.Concat(CmpParser.Parse(file, platformId));
+                            continue;
+                        case ParserClass.Tdb:
+                            Console.WriteLine(" is type of GameTDB");
+                            serialInfos = serialInfos.Concat(GameTdbParser.ParseSerials(file, platformId));
+                            continue;
+                        case ParserClass.Xml:
+                            Console.WriteLine(" is type of Logiqix XML");
+                            datInfos = datInfos.Concat(XmlParser.Parse(file, platformId));
+                            continue;
+                        default:
+                            Console.WriteLine(" is invalid.");
+                            continue;
+                    }
+                }
             }
 
             Console.WriteLine("Saving Database to shiragame.db ...");
             var diskDb = new SqliteDatabase("shiragame.db");
+            memoryDb.Commit(datInfos.ToList());
+            memoryDb.Commit(serialInfos.ToList());
             memoryDb.SaveTo(diskDb);
 
 

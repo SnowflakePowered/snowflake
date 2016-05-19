@@ -11,7 +11,7 @@ namespace Shiragame.Builder.Parser
     {
         protected static readonly IStoneProvider stoneProvider = new StoneProvider();
 
-        internal ParserClass GetParser(string firstLine)
+        internal static ParserClass GetParser(string firstLine)
         {
             if (firstLine.Contains("TITLES = http://www.gametdb.com")) return ParserClass.Tdb;
             if (firstLine.Contains("clrmamepro")) return ParserClass.Cmp;

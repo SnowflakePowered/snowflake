@@ -23,7 +23,7 @@ namespace Shiragame.Builder.Parser
         }
         private static IEnumerable<DatInfo> GetEntries(XDocument xmlDat, string platformId)
         {
-            return from game in xmlDat.Root.Elements("game").AsParallel()
+            return from game in xmlDat.Root.Elements("game")
                    from rom in game.Elements("rom")
                    where rom.Attribute("size").Value != "0"
                    let crc = rom.Attribute("crc").Value.ToUpperInvariant()
