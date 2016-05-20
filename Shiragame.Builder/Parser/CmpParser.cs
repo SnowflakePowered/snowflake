@@ -56,31 +56,38 @@ namespace Shiragame.Builder.Parser
                     yield return gameEntry;
                     continue;
                 }
+                if (String.IsNullOrWhiteSpace(line))
+                {
+                    continue;
+                }
+                
                 var lines = line.Trim().Split(new char[] {' '}, 2, StringSplitOptions.None);
+                if (lines[0].Equals("rom")) continue;
                 gameEntry.Add(lines[0], lines[1].Trim('"'));
             }
         }
         private static IEnumerable<SerialInfo> GetSerials(IEnumerable<IDictionary<string, string>> cmpMatches, string platformId)
         {
-            return from entry in cmpMatches
-                   where entry.ContainsKey("serial")
-                   let name = entry["name"]
-                   let serials = entry["serial"]
-                   let region = RegionParser.ParseRegion(name)
-                   select new SerialInfo(platformId, name, region, serials);
+            return from entry in cmpMatches.AsParallel()
+                where entry.ContainsKey("serial")
+                let name = entry["name"]
+                let serials = entry["serial"]
+                let region = RegionParser.ParseRegion(name)
+                select new SerialInfo(platformId, name, region, serials);
         }
 
         private static IEnumerable<DatInfo> GetEntries(MatchCollection cmpMatches, string platformId)
         {
             const string regex = @"(?:\s|)(.*?)(?:\sname|\scrc|\scrc32|\smd5|\ssha1|\sbaddump|\snodump|\ssize|$)";
-            return from Match romEntry in cmpMatches
+            return from Match romEntry in cmpMatches.AsParallel()
                    let match = romEntry.Value
                    let filename = Regex.Match(match, "name" + regex).Groups[1].Value.Trim('"')
                    let crc = Regex.Match(match, "crc" + regex).Groups[1].Value
                    let md5 = Regex.Match(match, "md5" + regex).Groups[1].Value
                    let sha1 = Regex.Match(match, "sha1" + regex).Groups[1].Value
                    let region = RegionParser.ParseRegion(filename)
-                   let mimetype = stoneProvider.Platforms[platformId].FileTypes[Path.GetExtension(filename)]
+                   let mimetype = DatParser.GetMimeType(filename, platformId)
+                   where mimetype != null
                    select new DatInfo(platformId, crc, md5, sha1, region, mimetype, filename);
         }
     }

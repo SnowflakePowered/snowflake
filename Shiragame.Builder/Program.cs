@@ -17,12 +17,12 @@ namespace Shiragame.Builder
     {
         static void Main(string[] args)
         {
-            var memoryDb = new ShiragameDb();
             var stone = new StoneProvider();
-            Console.WriteLine("Using Stone v" + stone.StoneVersion);
+            Console.WriteLine("Using Stone Platforms v" + stone.StoneVersion);
 
             IEnumerable<DatInfo> datInfos = new List<DatInfo>();
             IEnumerable<SerialInfo> serialInfos = new List<SerialInfo>();
+            IEnumerable<string> missingTypes = new List<string>();
             if (!Directory.Exists("PlatformDats"))
             {
                 Console.WriteLine("PlatformDats folder does not exist.. Creating Directory Structure");
@@ -45,7 +45,7 @@ namespace Shiragame.Builder
                 foreach (string file in Directory.EnumerateFiles(Path.Combine("PlatformDats", platformId)))
                 {
                     Console.Write(platformId + " found: " + Path.GetFileName(file));
-                    if (Path.GetExtension(file) == "idlist")
+                    if (Path.GetExtension(file) == ".idlist")
                     {
                         Console.WriteLine(" is type of ID List");
 
@@ -66,6 +66,7 @@ namespace Shiragame.Builder
                         case ParserClass.Xml:
                             Console.WriteLine(" is type of Logiqix XML");
                             datInfos = datInfos.Concat(XmlParser.Parse(file, platformId));
+                            missingTypes = missingTypes.Concat(XmlParser.Filetypes(file, platformId));
                             continue;
                         default:
                             Console.WriteLine(" is invalid.");
@@ -74,15 +75,16 @@ namespace Shiragame.Builder
                 }
             }
 
-            Console.WriteLine("Saving Database to shiragame.db ...");
+
+            Console.WriteLine("Generating shiragame.db ...");
+            var memoryDb = new ShiragameDb();
             var diskDb = new SqliteDatabase("shiragame.db");
             memoryDb.Commit(datInfos.ToList());
-            memoryDb.Commit(serialInfos.ToList());
+            memoryDb.Commit(serialInfos.DistinctBy(x => new { x.PlatformId, x.Serial}).ToList());
             memoryDb.SaveTo(diskDb);
 
 
-            var entries = GameTdbParser.ParseSerials("wiitdb.txt", "NINTENDO_WII").ToList();
-            //var entries = DatParser.ParseLogiqx("tosec.dat", "NINTENDO_N64").ToList();
         }
+
     }
 }

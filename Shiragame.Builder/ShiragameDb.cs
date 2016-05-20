@@ -12,7 +12,6 @@ namespace Shiragame.Builder
     {
         internal ShiragameDb()
         {
-            this.LoadFrom(new SqliteDatabase("shiragame.db"));
             this.CreateDatabase();
         }
         private void CreateDatabase()
@@ -33,13 +32,15 @@ namespace Shiragame.Builder
             this.CreateTable("shiragame",
                 "shiragame TEXT PRIMARY KEY",
                 "stoneversion TEXT",
-                "updated TEXT");
-            this.Execute(@"INSERT OR REPLACE INTO shiragame(shiragame, stoneversion, updated)" +
-                         "VALUES (@shiragame, @stoneversion, @updated)", new
+                "generated TEXT",
+                "uuid TEXT");
+            this.Execute(@"INSERT OR REPLACE INTO shiragame(shiragame, stoneversion, generated, uuid)" +
+                         "VALUES (@shiragame, @stoneversion, @generated, @uuid)", new
                          {
                              shiragame = "SHIRAGAME",
                              stoneversion = new StoneProvider().StoneVersion.ToString(),
-                             updated = ShiragameDb.UnixTimeNow().ToString()
+                             generated = ShiragameDb.UnixTimeNow().ToString(),
+                             uuid = Guid.NewGuid().ToString()
                          });
         }
         internal static long UnixTimeNow()

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,8 +16,14 @@ namespace Shiragame.Builder.Parser
         {
             if (firstLine.Contains("TITLES = http://www.gametdb.com")) return ParserClass.Tdb;
             if (firstLine.Contains("clrmamepro")) return ParserClass.Cmp;
-            if (firstLine.Contains("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")) return ParserClass.Xml;
+            if (firstLine.Contains("xml version=\"1.0\"")) return ParserClass.Xml;
             return ParserClass.None;
+        }
+
+        protected static string GetMimeType(string filename, string platformId)
+        {
+            filename = filename.ToLowerInvariant();
+            return DatParser.stoneProvider.Platforms[platformId].FileTypes.ContainsKey(Path.GetExtension(filename)) ? DatParser.stoneProvider.Platforms[platformId].FileTypes[Path.GetExtension(filename)] : null;
         }
     }
 

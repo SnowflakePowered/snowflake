@@ -21,19 +21,35 @@ namespace Shiragame.Builder.Parser
         {
             return XmlParser.GetEntries(XDocument.Load(File.OpenRead(datFile)), platformId);
         }
+
+        internal static IEnumerable<string> Filetypes(string datFile, string platformId)
+        {
+            return XmlParser.GetMissingFileTypes(XDocument.Load(File.OpenRead(datFile)), platformId);
+        }
         private static IEnumerable<DatInfo> GetEntries(XDocument xmlDat, string platformId)
         {
-            return from game in xmlDat.Root.Elements("game")
-                   from rom in game.Elements("rom")
+            return from game in xmlDat.Root.Elements("game").AsParallel()
+                   from rom in game.Elements("rom").AsParallel()
                    where rom.Attribute("size").Value != "0"
                    let crc = rom.Attribute("crc").Value.ToUpperInvariant()
                    let md5 = rom.Attribute("md5").Value.ToUpperInvariant()
                    let sha1 = rom.Attribute("sha1").Value.ToUpperInvariant()
                    let filename = rom.Attribute("name").Value
                    let region = RegionParser.ParseRegion(filename)
-                   let mimetype = stoneProvider.Platforms[platformId].FileTypes[Path.GetExtension(filename)]
+                   let mimetype = DatParser.GetMimeType(filename, platformId)
+                   where mimetype != null
                    select new DatInfo(platformId, crc, md5, sha1, region, mimetype, filename);
         }
-      
+        internal  static IEnumerable<string> GetMissingFileTypes(XDocument xmlDat, string platformId)
+        {
+            return from game in xmlDat.Root.Elements("game").AsParallel()
+                   from rom in game.Elements("rom").AsParallel()
+                   where rom.Attribute("size").Value != "0"
+                   let filename = rom.Attribute("name").Value
+                   let ext = Path.GetExtension(filename).ToLowerInvariant()
+                   where !stoneProvider.Platforms[platformId].FileTypes.ContainsKey(ext)
+                   select "Missing mimetype for " + ext + " at platform " + platformId;
+        }
+
     }
 }
