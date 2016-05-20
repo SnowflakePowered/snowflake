@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Service;
@@ -33,13 +34,15 @@ namespace Shiragame.Builder
                 "shiragame TEXT PRIMARY KEY",
                 "stoneversion TEXT",
                 "generated TEXT",
+                "version TEXT",
                 "uuid TEXT");
-            this.Execute(@"INSERT OR REPLACE INTO shiragame(shiragame, stoneversion, generated, uuid)" +
-                         "VALUES (@shiragame, @stoneversion, @generated, @uuid)", new
+            this.Execute(@"INSERT OR REPLACE INTO shiragame(shiragame, stoneversion, generated, version, uuid)" +
+                         "VALUES (@shiragame, @stoneversion, @generated, @version, @uuid)", new
                          {
                              shiragame = "SHIRAGAME",
                              stoneversion = new StoneProvider().StoneVersion.ToString(),
                              generated = ShiragameDb.UnixTimeNow().ToString(),
+                             version = Assembly.GetExecutingAssembly().GetName().Version.ToString(),
                              uuid = Guid.NewGuid().ToString()
                          });
         }

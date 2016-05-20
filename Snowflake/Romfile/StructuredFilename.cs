@@ -13,6 +13,7 @@ namespace Snowflake.Romfile
 {
     public partial class StructuredFilename : IStructuredFilename
     {
+        private static readonly TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
         public StructuredFilenameConvention NamingConvention { get; private set; }
 
         public string RegionCode { get; }
@@ -68,6 +69,7 @@ namespace Snowflake.Romfile
             var validMatch = (from Match tagMatch in tagData
                              let match = tagMatch.Groups[2].Value
                              from regionCode in (from regionCode in match.Split(',', '-') select regionCode.Trim())
+                             where regionCode.Length != 2 || StructuredFilename.textInfo.ToTitleCase(regionCode.ToLower()) != regionCode
                              let isoRegion = StructuredFilename.ConvertToRegionCode(regionCode.ToUpperInvariant())
                              where isoRegion.Item1 != null
                              select isoRegion).ToList();

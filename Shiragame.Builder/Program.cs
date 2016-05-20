@@ -35,7 +35,7 @@ namespace Shiragame.Builder
             if (File.Exists(Path.Combine("PlatformDats", "openvgdb.sqlite")))
             {
                 Console.WriteLine("OpenVGDB Found. Parsing...");
-                var openvgdb = new OpenVgdb("openvgdb.sqlite");
+                var openvgdb = new OpenVgdb(Path.Combine("PlatformDats", "openvgdb.sqlite"));
                 serialInfos = serialInfos.Concat(openvgdb.GetSerialInfos().ToList());
                 datInfos = datInfos.Concat(openvgdb.GetDatInfos().ToList());
             }
@@ -75,10 +75,10 @@ namespace Shiragame.Builder
                 }
             }
 
-
             Console.WriteLine("Generating shiragame.db ...");
             var memoryDb = new ShiragameDb();
-            var diskDb = new SqliteDatabase("shiragame.db");
+            if (!Directory.Exists("out")) Directory.CreateDirectory("out");
+            var diskDb = new SqliteDatabase("out\\shiragame.db");
             memoryDb.Commit(datInfos.ToList());
             memoryDb.Commit(serialInfos.DistinctBy(x => new { x.PlatformId, x.Serial}).ToList());
             memoryDb.SaveTo(diskDb);

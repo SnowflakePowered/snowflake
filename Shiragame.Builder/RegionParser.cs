@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -10,6 +11,8 @@ namespace Shiragame.Builder
 {
     internal partial class RegionParser
     {
+        private static readonly TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+
         internal static string ParseRegion(string name)
         {
             var tagData = Regex.Matches(name,
@@ -17,6 +20,8 @@ namespace Shiragame.Builder
             var validMatch = (from Match tagMatch in tagData
                               let match = tagMatch.Groups[2].Value
                               from regionCode in (from regionCode in match.Split(',', '-') select regionCode.Trim())
+                              where regionCode.Length != 2 || RegionParser.textInfo.ToTitleCase(regionCode.ToLower()) != regionCode
+                              //allow FR & France to be parsed, but not Fr inside En,Fr,De, etc..
                               let isoRegion = RegionParser.ConvertToRegionCode(regionCode.ToUpperInvariant())
                               where isoRegion != null
                               select isoRegion).ToList();
