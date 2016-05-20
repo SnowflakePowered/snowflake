@@ -71,7 +71,8 @@ namespace Shiragame.Builder.Parser
             return from entry in cmpMatches.AsParallel()
                 where entry.ContainsKey("serial")
                 let name = entry["name"]
-                let serials = entry["serial"]
+                let serials = platformId.StartsWith("NINTENDO") ? 
+                        Regex.Replace(entry["serial"], "[A-Z]*?-[A-Z]-", "") : entry["serial"] //sanitize nintendo serials
                 let region = RegionParser.ParseRegion(name)
                 select new SerialInfo(platformId, name, region, serials);
         }
