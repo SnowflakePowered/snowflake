@@ -5,7 +5,6 @@ using System.IO;
 using System.Text;
 using System.Linq;
 using System.Reflection;
-using Snowflake.Controller;
 using Snowflake.Events;
 using Snowflake.Events.ServiceEvents;
 using Snowflake.Platform;
@@ -41,12 +40,10 @@ namespace Snowflake.Shell.Windows
         {
 
             this.loadedCore = new CoreService(this.appDataDirectory);
-            this.loadedCore.Get<IEmulatorAssembliesManager>()?.LoadEmulatorAssemblies();
             this.loadedCore.Get<IPluginManager>()?.Initialize();
             this.loadedCore.Get<IAjaxManager>()?.Initialize(this.loadedCore.Get<IPluginManager>());
             foreach (IPlatformInfo platform in this.loadedCore.Platforms.Values)
             {
-                this.loadedCore.Get<IControllerPortStore>()?.AddPlatform(platform);
                 this.loadedCore.Get<IPlatformPreferenceStore>()?.AddPlatform(platform);
             }
             this.loadedCore.Get<IServerManager>().RegisterServer("ThemeServer", new ThemeServer(Path.Combine(this.loadedCore.AppDataDirectory, "themes")));

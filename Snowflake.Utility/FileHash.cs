@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using Snowflake.Utility.Hash;
-
 namespace Snowflake.Utility
 {
     public static class FileHash
@@ -8,11 +7,11 @@ namespace Snowflake.Utility
 
         public static string GetCRC32(string fileName)
         {
-            return Crc32.GetHash(File.OpenRead(fileName));
+            return Hash.Crc32.GetHash(File.OpenRead(fileName));
         }
         public static string GetCRC32(Stream fileStream)
         {
-            return Crc32.GetHash(fileStream);
+            return Hash.Crc32.GetHash(fileStream);
         }
         public static string GetMD5(string fileName)
         {

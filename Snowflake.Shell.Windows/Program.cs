@@ -4,10 +4,10 @@ using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 using Snowflake.Configuration;
-using Snowflake.Emulator;
 using Snowflake.Events;
 using Snowflake.Service;
 using Snowflake.Service.Manager;
+using Snowflake.Utility;
 using Squirrel;
 
 namespace Snowflake.Shell.Windows
@@ -35,8 +35,14 @@ namespace Snowflake.Shell.Windows
                 });
 
             }*/
-            var stone = new StoneProvider();
 
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            FileHash.GetCRC32(@"E:\ROMs\Playstation Portable\Hatsune Miku Project Diva.ISO");
+            sw.Stop();
+            var ts = sw.Elapsed;
+            string elapsedTime = $"{ts.Hours:00}:{ts.Minutes:00}:{ts.Seconds:00}.{ts.Milliseconds/10:00}";
+            Console.WriteLine(@"RunTime " + elapsedTime);
             var snowflakeIcon = new ShellIcon();
             SnowflakeEventManager.InitEventSource();
             var snowflakeShell = new SnowflakeShell();

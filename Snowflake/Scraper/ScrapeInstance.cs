@@ -29,106 +29,76 @@ namespace Snowflake.Scraper
             this.fileSignatures = fileSignatures;
         }
 
-        IEnumerable<IFileRecord> GetZipFileInformation(IEnumerable<string> zipfiles, string suggestedPlatform = null)
+        IFileRecord GetZipFileInformation(string romfile)
         {
-            foreach (string romfile in zipfiles)
+            using (Stream stream = File.Open(romfile, FileMode.Open, FileAccess.Read))
+            using (ZipArchive archive = new ZipArchive(stream))
             {
-
-                using (Stream stream = File.Open(romfile, FileMode.Open, FileAccess.Read))
-                using (ZipArchive archive = new ZipArchive(stream))
-                {
-                    var romContents = archive.Entries.FirstOrDefault();
-                    if (romContents == null) continue;
-                    var potentialMimetypes = (from platform in this.stoneProvider.Platforms.Values
-                                              from fileType in platform.FileTypes
-                                              let extension = Path.GetExtension(romContents.FullName)
-                                              where fileType.Key == extension
-                                              select new KeyValuePair<string, string>(fileType.Value, fileType.Key))
-                                              .ToDictionary(t => t.Key, t => t.Value);
-                    if (!potentialMimetypes.Any()) continue;
-                    using (Stream romStream = romContents.Open())
-                    {
-                        var fileSignature = (from fs in this.fileSignatures
-                            where fs.FileTypes.Intersect(potentialMimetypes.Keys).Any()
-                            where fs.HeaderSignatureMatches(romStream)
-                            select fs).FirstOrDefault();
-                        //todo compare with crc32 database
-
-                        IFileRecord record;
-                        if (fileSignature != null)
-                        {
-                            var platform = this.stoneProvider.Platforms[fileSignature.SupportedPlatform];
-                            string mimeType = platform.FileTypes[Path.GetExtension(romContents.FullName)];
-                            record = new FileRecord(romfile, $"{mimeType}+zip");
-                            record.Metadata.Add("rom_internalname", fileSignature.GetInternalName(romStream));
-                            record.Metadata.Add("rom_gameid", fileSignature.GetGameId(romStream));
-                        }
-                        else
-                        {
-                            var platform = this.stoneProvider.Platforms[suggestedPlatform] ??
-                                           (from p in this.stoneProvider.Platforms.Values
-                                               from fileType in p.FileTypes
-                                               let extension = Path.GetExtension(romContents.FullName)
-                                               where fileType.Key == extension
-                                               select p).FirstOrDefault();
-                            if (platform == null) continue;
-                            string mimeType = platform.FileTypes[Path.GetExtension(romContents.FullName)];
-                            record = new FileRecord(romfile, $"{mimeType}+zip");
-                            record.Metadata.Add("scrape_unsure_platform", platform.PlatformID);
-
-                        }
-                        record.Metadata.Add("file_crc32", Utility.FileHash.GetCRC32(romStream));
-                        yield return record;
-                    }
-                }
-            }
-        }
-        IEnumerable<IFileRecord> GetFileInformation(IEnumerable<string> filenames, string suggestedPlatform = null)
-        {
-
-            foreach (string romfile in filenames)
-            {
+                var romContents = archive.Entries.FirstOrDefault();
+                if (romContents == null) return null; ;
                 var potentialMimetypes = (from platform in this.stoneProvider.Platforms.Values
                                           from fileType in platform.FileTypes
-                                          let extension = Path.GetExtension(romfile)
+                                          let extension = Path.GetExtension(romContents.FullName)
                                           where fileType.Key == extension
                                           select new KeyValuePair<string, string>(fileType.Value, fileType.Key))
-                                               .ToDictionary(t => t.Key, t => t.Value);
-                if (!potentialMimetypes.Any()) continue;
-                using (Stream romStream = File.Open(romfile, FileMode.Open, FileAccess.Read))
+                                          .ToDictionary(t => t.Key, t => t.Value);
+                if (!potentialMimetypes.Any()) return null;
+                using (Stream romStream = romContents.Open())
                 {
                     var fileSignature = (from fs in this.fileSignatures
                                          where fs.FileTypes.Intersect(potentialMimetypes.Keys).Any()
                                          where fs.HeaderSignatureMatches(romStream)
                                          select fs).FirstOrDefault();
                     //todo compare with crc32 database
-                    IFileRecord record;
-                    if (fileSignature != null)
-                    {
-                        var platform = this.stoneProvider.Platforms[fileSignature.SupportedPlatform];
-                        string mimeType = platform.FileTypes[Path.GetExtension(romfile)];
-                        record = new FileRecord(romfile, $"{mimeType}+zip");
-                        record.Metadata.Add("rom_internalname", fileSignature.GetInternalName(romStream));
-                        record.Metadata.Add("rom_gameid", fileSignature.GetGameId(romStream));
-                    }
-                    else
-                    {
-                        var platform = this.stoneProvider.Platforms[suggestedPlatform] ??
-                                       (from p in this.stoneProvider.Platforms.Values
-                                        from fileType in p.FileTypes
-                                        let extension = Path.GetExtension(romfile)
-                                        where fileType.Key == extension
-                                        select p).FirstOrDefault();
-                        if (platform == null) continue;
-                        string mimeType = platform.FileTypes[Path.GetExtension(romfile)];
-                        record = new FileRecord(romfile, $"{mimeType}+zip");
-                        record.Metadata.Add("scrape_unsure_platform", platform.PlatformID);
-
-                    }
+                    //todo deal with mame
+                  
+                    if (fileSignature == null) return null;
+                    var platform = this.stoneProvider.Platforms[fileSignature.SupportedPlatform];
+                    string mimeType = platform.FileTypes[Path.GetExtension(romContents.FullName)];
+                    IFileRecord record = new FileRecord(romfile, $"{mimeType}+zip");
+                    record.Metadata.Add("rom_internalname", fileSignature.GetInternalName(romStream));
+                    record.Metadata.Add("rom_gameid", fileSignature.GetGameId(romStream));
                     record.Metadata.Add("file_crc32", Utility.FileHash.GetCRC32(romStream));
-                    yield return record;
+                    return record;
                 }
             }
+        }
+
+        IFileRecord GetFileInformation(string romfile)
+        {
+            var potentialMimetypes = (from platform in this.stoneProvider.Platforms.Values
+                                      from fileType in platform.FileTypes
+                                      let extension = Path.GetExtension(romfile)
+                                      where fileType.Key == extension
+                                      select new KeyValuePair<string, string>(fileType.Value, fileType.Key))
+                                              .ToDictionary(t => t.Key, t => t.Value);
+            if (!potentialMimetypes.Any()) return null; ;
+            using (Stream romStream = File.Open(romfile, FileMode.Open, FileAccess.Read))
+            {
+                var fileSignature = (from fs in this.fileSignatures
+                                     where fs.FileTypes.Intersect(potentialMimetypes.Keys).Any()
+                                     where fs.HeaderSignatureMatches(romStream)
+                                     select fs).FirstOrDefault();
+                //todo compare with crc32 database
+
+                if (fileSignature == null) return null;
+                var platform = this.stoneProvider.Platforms[fileSignature.SupportedPlatform];
+                string mimeType = platform.FileTypes[Path.GetExtension(romfile)];
+                IFileRecord record = new FileRecord(romfile, $"{mimeType}");
+                record.Metadata.Add("rom_internalname", fileSignature.GetInternalName(romStream));
+                record.Metadata.Add("rom_gameid", fileSignature.GetGameId(romStream));
+                record.Metadata.Add("file_crc32", Utility.FileHash.GetCRC32(romStream));
+                return record;
+            }
+        }
+        IEnumerable<IFileRecord> GetZipFileInformation(IEnumerable<string> zipfiles)
+        {
+            return zipfiles.AsParallel().Select(this.GetZipFileInformation).Where(f => f != null);
+        }
+        IEnumerable<IFileRecord> GetFileInformation(IEnumerable<string> filenames)
+        {
+
+            return filenames.AsParallel().Select(this.GetFileInformation).Where(f => f != null);
         }
     }
 }

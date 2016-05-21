@@ -133,6 +133,7 @@
     <Compile Include="Platform\PlatformInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scraper\ScrapableInfo.cs" />
+    <Compile Include="Scraper\ScraperFallbackDatabase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
