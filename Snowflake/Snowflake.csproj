@@ -133,7 +133,9 @@
     <Compile Include="Platform\PlatformInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scraper\ScrapableInfo.cs" />
-    <Compile Include="Scraper\ScraperFallbackDatabase.cs" />
+    <Compile Include="Scraper\Shiragame\DatInfo.cs" />
+    <Compile Include="Scraper\Shiragame\SerialInfo.cs" />
+    <Compile Include="Scraper\Shiragame\ShiragameProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -145,6 +147,7 @@
     </Content>
     <None Include="packages.config" />
     <Compile Include="Records\Metadata\RecordMetadata.SqlConstructors.cs" />
+    <Compile Include="Romfile\StructuredFilename.LookupTables.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Snowflake.API\Snowflake.API.csproj">

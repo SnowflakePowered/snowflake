@@ -114,6 +114,9 @@
     <Compile Include="Extensibility\Configuration\PluginOptionType.cs" />
     <Compile Include="Scraper\ImagesInfoFields.cs" />
     <Compile Include="Extensibility\PluginInfoFields.cs" />
+    <Compile Include="Scraper\Shiragame\IRomInfo.cs" />
+    <Compile Include="Scraper\Shiragame\IShiragameProvider.cs" />
+    <Compile Include="Scraper\Shiragame\ISerialInfo.cs" />
     <Compile Include="Service\IStoneProvider.cs" />
     <Compile Include="Service\IUserInterface.cs" />
     <Compile Include="Service\IScrapeEngine.cs" />

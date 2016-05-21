@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="GuidUtility.cs" />
     <Compile Include="JsonCreationConverter.cs" />
+    <Compile Include="SqliteMemoryDatabase.cs" />
     <Compile Include="SqliteDatabase.cs" />
     <Compile Include="FileHash.cs" />
     <Compile Include="Hash\Crc32.cs" />

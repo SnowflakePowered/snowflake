@@ -58,6 +58,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Utility", "Snowfl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.FileSignatures", "Snowflake.FileSignatures\Snowflake.FileSignatures.csproj", "{C66356E8-D95E-438A-8BA5-84A04B3D39A4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shiragame", "Shiragame", "{182F1747-F6E6-43BA-BB14-EFC1127DE3F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shiragame.Builder", "Shiragame.Builder\Shiragame.Builder.csproj", "{FE549E81-F09C-480D-ABD1-45054E81872B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -178,6 +182,14 @@ Global
 		{C66356E8-D95E-438A-8BA5-84A04B3D39A4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C66356E8-D95E-438A-8BA5-84A04B3D39A4}.Release|x86.ActiveCfg = Release|Any CPU
 		{C66356E8-D95E-438A-8BA5-84A04B3D39A4}.Release|x86.Build.0 = Release|Any CPU
+		{FE549E81-F09C-480D-ABD1-45054E81872B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE549E81-F09C-480D-ABD1-45054E81872B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE549E81-F09C-480D-ABD1-45054E81872B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FE549E81-F09C-480D-ABD1-45054E81872B}.Debug|x86.Build.0 = Debug|Any CPU
+		{FE549E81-F09C-480D-ABD1-45054E81872B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE549E81-F09C-480D-ABD1-45054E81872B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE549E81-F09C-480D-ABD1-45054E81872B}.Release|x86.ActiveCfg = Release|Any CPU
+		{FE549E81-F09C-480D-ABD1-45054E81872B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -186,5 +198,6 @@ Global
 		{E84493C8-0171-40A8-94C0-BEFA06C9138B} = {84DDAD8A-5C57-46EC-BE2C-EA7F1827AD76}
 		{E05BE9C3-3E1E-4100-8DAC-DFF598C11477} = {84DDAD8A-5C57-46EC-BE2C-EA7F1827AD76}
 		{B152A58A-7D3C-4C54-9BFC-77023180A4D7} = {84DDAD8A-5C57-46EC-BE2C-EA7F1827AD76}
+		{FE549E81-F09C-480D-ABD1-45054E81872B} = {182F1747-F6E6-43BA-BB14-EFC1127DE3F4}
 	EndGlobalSection
 EndGlobal
