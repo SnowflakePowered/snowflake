@@ -17,7 +17,7 @@ namespace Shiragame.Builder.Parser
         /// <param name="datFile">Path to dat file</param>
         /// <param name="platformId">Platform of dat file</param>
         /// <returns>The information records contained in the file</returns>
-        internal static IEnumerable<DatInfo> Parse(string datFile, string platformId)
+        internal static IEnumerable<RomInfo> Parse(string datFile, string platformId)
         {
             return XmlParser.GetEntries(XDocument.Load(File.OpenRead(datFile)), platformId);
         }
@@ -26,7 +26,7 @@ namespace Shiragame.Builder.Parser
         {
             return XmlParser.GetMissingFileTypes(XDocument.Load(File.OpenRead(datFile)), platformId);
         }
-        private static IEnumerable<DatInfo> GetEntries(XDocument xmlDat, string platformId)
+        private static IEnumerable<RomInfo> GetEntries(XDocument xmlDat, string platformId)
         {
             return from game in xmlDat.Root.Elements("game").AsParallel()
                    from rom in game.Elements("rom").AsParallel()
@@ -38,7 +38,7 @@ namespace Shiragame.Builder.Parser
                    let region = RegionParser.ParseRegion(filename)
                    let mimetype = DatParser.GetMimeType(filename, platformId)
                    where mimetype != null
-                   select new DatInfo(platformId, crc, md5, sha1, region, mimetype, filename);
+                   select new RomInfo(platformId, crc, md5, sha1, region, mimetype, filename);
         }
         internal  static IEnumerable<string> GetMissingFileTypes(XDocument xmlDat, string platformId)
         {

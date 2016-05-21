@@ -22,7 +22,7 @@ namespace Shiragame.Builder.Parser
         /// <param name="datFile">Path to dat file</param>
         /// <param name="platformId">Platform of dat file</param>
         /// <returns>The information records contained in the file</returns>
-        internal static IEnumerable<DatInfo> Parse(string datFile, string platformId)
+        internal static IEnumerable<RomInfo> Parse(string datFile, string platformId)
         {
             var regex = Regex.Matches(File.ReadAllText(datFile), @"(rom \()(.+)(\))");
             return CmpParser.GetEntries(regex, platformId);
@@ -77,7 +77,7 @@ namespace Shiragame.Builder.Parser
                 select new SerialInfo(platformId, name, region, serials);
         }
 
-        private static IEnumerable<DatInfo> GetEntries(MatchCollection cmpMatches, string platformId)
+        private static IEnumerable<RomInfo> GetEntries(MatchCollection cmpMatches, string platformId)
         {
             const string regex = @"(?:\s|)(.*?)(?:\sname|\scrc|\scrc32|\smd5|\ssha1|\sbaddump|\snodump|\ssize|$)";
             return from Match romEntry in cmpMatches.AsParallel()
@@ -89,7 +89,7 @@ namespace Shiragame.Builder.Parser
                    let region = RegionParser.ParseRegion(filename)
                    let mimetype = DatParser.GetMimeType(filename, platformId)
                    where mimetype != null
-                   select new DatInfo(platformId, crc, md5, sha1, region, mimetype, filename);
+                   select new RomInfo(platformId, crc, md5, sha1, region, mimetype, filename);
         }
     }
 }

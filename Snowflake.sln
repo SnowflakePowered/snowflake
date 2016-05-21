@@ -62,8 +62,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shiragame", "Shiragame", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shiragame.Builder", "Shiragame.Builder\Shiragame.Builder.csproj", "{FE549E81-F09C-480D-ABD1-45054E81872B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shiragame", "Shiragame\Shiragame.csproj", "{C9B8A098-561F-44D5-9550-0D6A0AB94004}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -192,14 +190,6 @@ Global
 		{FE549E81-F09C-480D-ABD1-45054E81872B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FE549E81-F09C-480D-ABD1-45054E81872B}.Release|x86.ActiveCfg = Release|Any CPU
 		{FE549E81-F09C-480D-ABD1-45054E81872B}.Release|x86.Build.0 = Release|Any CPU
-		{C9B8A098-561F-44D5-9550-0D6A0AB94004}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C9B8A098-561F-44D5-9550-0D6A0AB94004}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C9B8A098-561F-44D5-9550-0D6A0AB94004}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{C9B8A098-561F-44D5-9550-0D6A0AB94004}.Debug|x86.Build.0 = Debug|Any CPU
-		{C9B8A098-561F-44D5-9550-0D6A0AB94004}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C9B8A098-561F-44D5-9550-0D6A0AB94004}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C9B8A098-561F-44D5-9550-0D6A0AB94004}.Release|x86.ActiveCfg = Release|Any CPU
-		{C9B8A098-561F-44D5-9550-0D6A0AB94004}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -209,6 +199,5 @@ Global
 		{E05BE9C3-3E1E-4100-8DAC-DFF598C11477} = {84DDAD8A-5C57-46EC-BE2C-EA7F1827AD76}
 		{B152A58A-7D3C-4C54-9BFC-77023180A4D7} = {84DDAD8A-5C57-46EC-BE2C-EA7F1827AD76}
 		{FE549E81-F09C-480D-ABD1-45054E81872B} = {182F1747-F6E6-43BA-BB14-EFC1127DE3F4}
-		{C9B8A098-561F-44D5-9550-0D6A0AB94004} = {182F1747-F6E6-43BA-BB14-EFC1127DE3F4}
 	EndGlobalSection
 EndGlobal

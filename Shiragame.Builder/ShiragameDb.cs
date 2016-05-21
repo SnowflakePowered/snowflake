@@ -17,11 +17,11 @@ namespace Shiragame.Builder
         }
         private void CreateDatabase()
         {
-            this.CreateTable("dat",
+            this.CreateTable("rom",
                 "platformId TEXT",
-                "crc32 TEXT PRIMARY KEY",
+                "crc32 TEXT",
                 "md5 TEXT",
-                "sha1 TEXT",
+                "sha1 TEXT PRIMARY KEY",
                 "mimetype TEXT",
                 "filename TEXT",
                 "region TEXT");
@@ -51,9 +51,9 @@ namespace Shiragame.Builder
             var timeSpan = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0).ToUniversalTime());
             return (long)timeSpan.TotalSeconds;
         }
-        internal void Commit(IEnumerable<DatInfo> datInfos)
+        internal void Commit(IEnumerable<RomInfo> datInfos)
         {
-            this.Execute(@"INSERT OR IGNORE INTO dat(platformId, crc32, md5, sha1, mimetype, filename, region)
+            this.Execute(@"INSERT OR IGNORE INTO rom(platformId, crc32, md5, sha1, mimetype, filename, region)
                           VALUES (@PlatformId, @CRC32, @MD5, @SHA1, @MimeType, @FileName, @Region)", datInfos);
         }
 

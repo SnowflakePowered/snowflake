@@ -49,7 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DatInfo.cs" />
+    <Compile Include="RomInfo.cs" />
     <Compile Include="IEnumerableExtensions.cs" />
     <Compile Include="Parser\GameTdbParser.cs" />
     <Compile Include="Parser\CmpParser.cs" />

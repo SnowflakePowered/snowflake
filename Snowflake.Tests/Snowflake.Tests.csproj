@@ -104,6 +104,7 @@
     <Compile Include="Records\SqliteGameLibraryTests.cs" />
     <Compile Include="Records\SqliteFileLibraryTests.cs" />
     <Compile Include="Scraper\GameImagesResultTests.cs" />
+    <Compile Include="Scraper\ShiragameTests.cs" />
     <Compile Include="Service\HttpServer\BaseHttpServerTests.cs" />
     <Compile Include="Service\PluginManagerTests.cs" />
     <Compile Include="Service\StoneProviderTests.cs" />
@@ -115,6 +116,10 @@
     <Compile Include="Utility\SqliteKeyValueStoreTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\shiragame.db">
+      <Link>shiragame.db</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>

@@ -20,7 +20,7 @@ namespace Shiragame.Builder
             var stone = new StoneProvider();
             Console.WriteLine("Using Stone Platforms v" + stone.StoneVersion);
 
-            IEnumerable<DatInfo> datInfos = new List<DatInfo>();
+            IEnumerable<RomInfo> datInfos = new List<RomInfo>();
             IEnumerable<SerialInfo> serialInfos = new List<SerialInfo>();
             IEnumerable<string> missingTypes = new List<string>();
             if (!Directory.Exists("PlatformDats"))

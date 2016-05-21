@@ -18,13 +18,13 @@ namespace Shiragame.Builder
         {
         }
 
-        public IEnumerable<DatInfo> GetForPlatform(string stonePlatform)
+        public IEnumerable<RomInfo> GetForPlatform(string stonePlatform)
         {
             const string sql =
                 "select regionID, romHashCRC, romHashMD5, romHashSHA1, romFileName from ROMs where systemID = @platformId";
             int platformId = this.PlatformMap.First(p => p.Value == stonePlatform).Key;
             return this.Query<dynamic>(sql, new {platformId})
-                .Select(o => new DatInfo(stonePlatform,
+                .Select(o => new RomInfo(stonePlatform,
                     o.romHashCRC,
                     o.romHashMD5,
                     o.romHashSHA1,
@@ -34,7 +34,7 @@ namespace Shiragame.Builder
                     o.romFileName));
         }
 
-        public IEnumerable<DatInfo> GetDatInfos()
+        public IEnumerable<RomInfo> GetDatInfos()
         {
             const string sql = "select regionID, systemID, romHashCRC, romHashMD5, romHashSHA1, romFileName from ROMs";
             return 
@@ -44,7 +44,7 @@ namespace Shiragame.Builder
                 let ext = Path.GetExtension(o.romFileName)
                 let crc = o.romHashCRC
                 where crc != null //only accept hashable files
-                select new DatInfo(platform.PlatformID,
+                select new RomInfo(platform.PlatformID,
                    o.romHashCRC,
                    o.romHashMD5,
                    o.romHashSHA1,
