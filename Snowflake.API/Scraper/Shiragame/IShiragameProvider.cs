@@ -17,6 +17,12 @@ namespace Snowflake.Scraper.Shiragame
         /// </summary>
         Version DatabaseVersion { get; }
         /// <summary>
+        /// Checks if the file is a mame ROM
+        /// </summary>
+        /// <param name="mameRom">The name of the file, including .zip extension</param>
+        /// <returns>Whether the filename matches with a known mame dump</returns>
+        bool IsMameRom(string mameRom);
+        /// <summary>
         /// Get ROM information from the CRC32 string of a file.
         /// CRC32 has conflicts, use MD5 or SHA1 if possible.
         /// </summary>

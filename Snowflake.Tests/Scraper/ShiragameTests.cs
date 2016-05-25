@@ -45,5 +45,13 @@ namespace Snowflake.Scraper.Shiragame.Tests
             var game = shiragame.GetFromSerial(platformId, serial);
             Assert.Equal(title, game.Title);
         }
+
+        [Theory]
+        [InlineData("pacman.zip")]
+        public void IsMame_Test(string filename)
+        {
+            IShiragameProvider shiragame = new ShiragameProvider("shiragame.db");
+            Assert.True(shiragame.IsMameRom(filename));
+        }
     }
 }

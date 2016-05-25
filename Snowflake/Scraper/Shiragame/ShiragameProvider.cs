@@ -39,8 +39,14 @@ namespace Snowflake.Scraper.Shiragame
 
         public ISerialInfo GetFromSerial(string platformId, string serial)
         {
-            string sql = $@"SELECT * FROM serial WHERE serial LIKE @serial AND platformId = @platformId";
+            const string sql = @"SELECT * FROM serial WHERE serial LIKE @serial AND platformId = @platformId";
             return this.backingDatabase.QueryFirstOrDefault<SerialInfo>(sql, new { serial = $"%{serial}%", platformId});
+        }
+
+        public bool IsMameRom(string filename)
+        {
+            const string sql = @"SELECT filename FROM mame WHERE filename = @filename";
+            return this.backingDatabase.Query<string>(sql, new {filename}).Any();
         }
 
         private IRomInfo GetRomInfo(string column, string value)
@@ -48,5 +54,7 @@ namespace Snowflake.Scraper.Shiragame
             string sql = $@"SELECT * FROM rom WHERE {column} = @value";
             return this.backingDatabase.QueryFirstOrDefault<RomInfo>(sql, new {value});
         }
+
+      
     }
 }
