@@ -66,6 +66,12 @@ namespace Shiragame.Builder
                    this.RegionMap[(int)o.regionID],
                    serials);
         }
+
+        public IEnumerable<string> GetMameFiles()
+        {
+            const string sql = "select romFileName from ROMs where systemID = 2";
+            return this.Query<string>(sql, null);
+        }
         private readonly IDictionary<int, string> PlatformMap = new Dictionary<int, string>
         {
             {1, "PANASONIC_3DO"},

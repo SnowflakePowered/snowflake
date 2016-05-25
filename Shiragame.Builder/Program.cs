@@ -22,7 +22,7 @@ namespace Shiragame.Builder
 
             IEnumerable<RomInfo> datInfos = new List<RomInfo>();
             IEnumerable<SerialInfo> serialInfos = new List<SerialInfo>();
-            IEnumerable<string> missingTypes = new List<string>();
+            IEnumerable<string> mameFilenames = new List<string>();
             if (!Directory.Exists("PlatformDats"))
             {
                 Console.WriteLine("PlatformDats folder does not exist.. Creating Directory Structure");
@@ -38,6 +38,7 @@ namespace Shiragame.Builder
                 var openvgdb = new OpenVgdb(Path.Combine("PlatformDats", "openvgdb.sqlite"));
                 serialInfos = serialInfos.Concat(openvgdb.GetSerialInfos().ToList());
                 datInfos = datInfos.Concat(openvgdb.GetDatInfos().ToList());
+                mameFilenames = mameFilenames.Concat(openvgdb.GetMameFiles().ToList());
             }
             foreach (string platformId in stone.Platforms.Select( p => p.Key))
             {
@@ -66,7 +67,6 @@ namespace Shiragame.Builder
                         case ParserClass.Xml:
                             Console.WriteLine(" is type of Logiqix XML");
                             datInfos = datInfos.Concat(XmlParser.Parse(file, platformId));
-                            missingTypes = missingTypes.Concat(XmlParser.Filetypes(file, platformId));
                             continue;
                         default:
                             Console.WriteLine(" is invalid.");
@@ -81,6 +81,7 @@ namespace Shiragame.Builder
             var diskDb = new SqliteDatabase("out\\shiragame.db");
             memoryDb.Commit(datInfos.ToList());
             memoryDb.Commit(serialInfos.DistinctBy(x => new { x.PlatformId, x.Serial}).ToList());
+            memoryDb.Commit(mameFilenames.ToList());
             memoryDb.SaveTo(diskDb);
 
 

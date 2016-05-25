@@ -30,6 +30,8 @@ namespace Shiragame.Builder
                 "serial TEXT",
                 "title TEXT",
                 "region TEXT");
+            this.CreateTable("mame", 
+                "filename TEXT PRIMARY KEY");
             this.CreateTable("shiragame",
                 "shiragame TEXT PRIMARY KEY",
                 "stoneversion TEXT",
@@ -62,6 +64,12 @@ namespace Shiragame.Builder
 
             this.Execute(@"INSERT OR IGNORE INTO serial(platformId, serial, title, region)
                           VALUES (@PlatformId, @Serial, @Title, @Region)", serialInfos);
+        }
+
+        internal void Commit(IEnumerable<string> mameFilenames)
+        {
+            this.Execute(@"INSERT OR IGNORE INTO mame(filename) VALUES (@filename)",
+                mameFilenames.Select(filename => new {filename})); //not sure if there's a better way.
         }
     }
 }
