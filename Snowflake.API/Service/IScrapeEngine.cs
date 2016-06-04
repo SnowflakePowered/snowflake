@@ -54,7 +54,6 @@ namespace Snowflake.Service
         /// <param name="scraper"></param>
         /// <returns></returns>
         IGameRecord GetGameData(IScrapableInfo information, IGameScrapeResult scrapeResult, IScraper scraper);
-
         /// <summary>
         /// Gets filtered scrape results
         /// </summary>

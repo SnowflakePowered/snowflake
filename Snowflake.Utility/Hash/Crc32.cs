@@ -11,7 +11,7 @@ namespace Snowflake.Utility.Hash
         public static string GetHash(Stream file)
         {
             using (var crc32 = new Crc32Algorithm())
-                return BitConverter.ToString(crc32.ComputeHash(file)).Replace("-", string.Empty).ToLowerInvariant();
+                return BitConverter.ToString(crc32.ComputeHash(file)).Replace("-", string.Empty).ToUpperInvariant();
 
         }
     }

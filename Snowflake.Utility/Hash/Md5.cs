@@ -8,7 +8,7 @@ namespace Snowflake.Utility.Hash
         public static string GetHash(Stream file)
         {
             using (var md5 = System.Security.Cryptography.MD5.Create())
-                return BitConverter.ToString(md5.ComputeHash(file)).Replace("-", string.Empty).ToLowerInvariant();
+                return BitConverter.ToString(md5.ComputeHash(file)).Replace("-", string.Empty).ToUpperInvariant();
 
         }
     }

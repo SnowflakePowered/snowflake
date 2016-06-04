@@ -10,6 +10,14 @@ namespace Snowflake.Records.Metadata
     {
         public IRecordMetadata this[Guid guid] => this.First(metadata => metadata.Value.Guid == guid).Value;
 
+        public void Add(IDictionary<string, IRecordMetadata> existingMetadata)
+        {
+            foreach (var metadata in existingMetadata)
+            {
+                this.Add(metadata.Key, metadata.Value.Value);
+            }
+        }
+
         string IMetadataCollection.this[string key]
         {
             get { return this[key].Value; }

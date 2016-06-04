@@ -13,7 +13,7 @@ namespace Snowflake.Records.Metadata
     {
 
         /// <summary>
-        /// The record this metadata collection is set to.
+        /// The record guid this metadata collection is set to.
         /// </summary>
         Guid Record { get; }
 
@@ -36,6 +36,12 @@ namespace Snowflake.Records.Metadata
         /// <param name="guid">The guid of the metadata</param>
         /// <returns>The requested metadata</returns>
         IRecordMetadata this[Guid guid] { get; }
+
+        /// <summary>
+        /// Copy the metadata of one collection to another, changing the guid of the metadata.
+        /// </summary>
+        /// <param name="existingMetadata">The existing metadata</param>
+        void Add(IDictionary<string, IRecordMetadata> existingMetadata);
 
         /// <summary>
         /// The value of this metadata.
