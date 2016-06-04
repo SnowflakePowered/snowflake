@@ -92,6 +92,7 @@
     <Compile Include="Extensibility\ContainerLoadPriority.cs" />
     <Compile Include="Extensibility\IPluginProperties.cs" />
     <Compile Include="Extensibility\PluginAttribute.cs" />
+    <Compile Include="Records\File\FileMetadataKeys.cs" />
     <Compile Include="Records\File\IFileRecord.cs" />
     <Compile Include="Records\Game\GameMetadataKeys.cs" />
     <Compile Include="Records\Game\IGameRecord.cs" />
@@ -115,6 +116,11 @@
     <Compile Include="Extensibility\Configuration\PluginOptionType.cs" />
     <Compile Include="Scraper\ImagesInfoFields.cs" />
     <Compile Include="Extensibility\PluginInfoFields.cs" />
+    <Compile Include="Scraper\Providers\ReturnMetadataAttribute.cs" />
+    <Compile Include="Scraper\Providers\IMetadataProvider.cs" />
+    <Compile Include="Scraper\Providers\IScrapedMetadataCollection.cs" />
+    <Compile Include="Scraper\Providers\ProviderAttribute.cs" />
+    <Compile Include="Scraper\Providers\RequiredMetadataAttribute.cs" />
     <Compile Include="Scraper\Shiragame\IRomInfo.cs" />
     <Compile Include="Scraper\Shiragame\IShiragameProvider.cs" />
     <Compile Include="Scraper\Shiragame\ISerialInfo.cs" />

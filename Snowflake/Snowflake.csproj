@@ -124,7 +124,10 @@
     <Compile Include="Records\Metadata\SqliteMetadataLibrary.cs" />
     <Compile Include="Romfile\FileSignature.cs" />
     <Compile Include="Romfile\StructuredFilename.cs" />
-    <Compile Include="Scraper\ScrapeInstance.cs" />
+    <Compile Include="Scraper\Providers\MetadataProvider.cs" />
+    <Compile Include="Scraper\Providers\ProviderQueryFunction.cs" />
+    <Compile Include="Scraper\Providers\ScrapedMetadataCollection.cs" />
+    <Compile Include="Scraper\ScraperGenerator.cs" />
     <Compile Include="Scraper\Scraper.cs" />
     <Compile Include="Scraper\GameImagesResult.cs" />
     <Compile Include="Scraper\GameScrapeResult.cs" />

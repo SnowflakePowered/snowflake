@@ -37,6 +37,7 @@ namespace Snowflake.Scraper
             this.StructuredFilename = new StructuredFilename(originalFilePath);
             this.StonePlatformId = stonePlatformId;
         }
+
         /// <summary>
         /// Initialize a ScrapableInfo with parsable queryable title filename
         /// </summary>
@@ -69,7 +70,7 @@ namespace Snowflake.Scraper
             this.OriginalFilePath = originalFilePath;
             using (Stream fileStream = new FileStream(originalFilePath, FileMode.Open, FileAccess.Read))
             {
-                this.RomId = fileSignature?.GetGameId(fileStream);
+                this.RomId = fileSignature?.GetSerial(fileStream);
                 this.RomInternalName = fileSignature?.GetInternalName(fileStream);
             }
             this.StonePlatformId = fileSignature?.SupportedPlatform;
@@ -89,7 +90,7 @@ namespace Snowflake.Scraper
             this.OriginalFilePath = originalFilePath;
             using (Stream fileStream = new FileStream(originalFilePath, FileMode.Open, FileAccess.Read))
             {
-                this.RomId = fileSignature?.GetGameId(fileStream);
+                this.RomId = fileSignature?.GetSerial(fileStream);
                 this.RomInternalName = fileSignature?.GetInternalName(fileStream);
             }
             this.StonePlatformId = stonePlatformId;

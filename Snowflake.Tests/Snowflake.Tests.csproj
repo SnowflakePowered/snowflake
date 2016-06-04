@@ -105,6 +105,7 @@
     <Compile Include="Records\SqliteGameLibraryTests.cs" />
     <Compile Include="Records\SqliteFileLibraryTests.cs" />
     <Compile Include="Scraper\GameImagesResultTests.cs" />
+    <Compile Include="Scraper\MetadataProviderTests.cs" />
     <Compile Include="Scraper\ShiragameTests.cs" />
     <Compile Include="Service\HttpServer\BaseHttpServerTests.cs" />
     <Compile Include="Service\PluginManagerTests.cs" />
