@@ -37,7 +37,7 @@ namespace Snowflake.FileSignatures
             }
         }
 
-        public override string GetGameId(string fileName)
+        public override string GetSerial(string fileName)
         {
             try
             {

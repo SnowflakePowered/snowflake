@@ -20,7 +20,7 @@ namespace Snowflake.Romfile
 
         public abstract byte[] HeaderSignature { get; }
 
-        public virtual string GetGameId(Stream fileContents)
+        public virtual string GetSerial(Stream fileContents)
         {
             return "";
         }

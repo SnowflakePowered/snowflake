@@ -53,7 +53,7 @@ namespace Snowflake.FileSignatures
                 return false;
             }
         }
-        public override string GetGameId(string fileName)
+        public override string GetSerial(string fileName)
         {
             using (FileStream romStream = File.OpenRead(fileName))
             {

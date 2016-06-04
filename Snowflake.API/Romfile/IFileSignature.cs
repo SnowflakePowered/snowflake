@@ -39,10 +39,10 @@ namespace Snowflake.Romfile
         /// <returns>If this ROM is executable data for this platform, it should return true.</returns>
         bool HeaderSignatureMatches(Stream fileContents);
         /// <summary>
-        /// Gets the game id from the file signature if possible
+        /// Gets the game serial from the file signature if possible
         /// <param name="fileContents">The contents of the ROM</param>
         /// </summary>
-        string GetGameId(Stream fileContents);
+        string GetSerial(Stream fileContents);
         ///<summary>
         /// Gets the internal name of the ROM if possible
         /// <param name="fileContents">The contents of the ROM</param>
