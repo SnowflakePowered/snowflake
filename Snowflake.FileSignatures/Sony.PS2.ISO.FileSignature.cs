@@ -22,40 +22,24 @@ namespace Snowflake.FileSignatures
 
         public override byte[] HeaderSignature { get; }
 
-        public override bool HeaderSignatureMatches(string fileName)
+        public override bool HeaderSignatureMatches(Stream romStream)
         {
-            try
-            {
-                using (FileStream isoStream = File.OpenRead(fileName))
-                {
-                    var reader = new CDReader(isoStream, true);
-                    var system = reader.OpenFile("SYSTEM.CNF", FileMode.Open);
-                    return new StreamReader(system).ReadToEnd().Contains("BOOT2");
-                }
-            }
-            catch
-            {
-                return false;
-            }
-        }
-        
 
-        public override string GetSerial(string fileName)
+            var reader = new CDReader(romStream, true);
+            var system = reader.OpenFile("SYSTEM.CNF", FileMode.Open);
+            return new StreamReader(system).ReadToEnd().Contains("BOOT2");
+
+        }
+
+
+        public override string GetSerial(Stream romStream)
         {
-            try
-            {
-                using (FileStream isoStream = File.OpenRead(fileName))
-                {
-                    var reader = new CDReader(isoStream, true);
-                    var system = reader.OpenFile("SYSTEM.CNF", FileMode.Open);
-                    return Regex.Match(new StreamReader(system).ReadToEnd(), "[A-Z]+_[0-9][0-9][0-9].[0-9][0-9]",
-                                    RegexOptions.IgnoreCase).Value.Replace(".", "");
-                }
-            }
-            catch
-            {
-                return "";
-            }
+
+            var reader = new CDReader(romStream, true);
+            var system = reader.OpenFile("SYSTEM.CNF", FileMode.Open);
+            return Regex.Match(new StreamReader(system).ReadToEnd(), "[A-Z]+_[0-9][0-9][0-9].[0-9][0-9]",
+                            RegexOptions.IgnoreCase).Value.Replace(".", "");
+
         }
 
     }

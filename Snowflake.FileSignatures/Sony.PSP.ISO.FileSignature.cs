@@ -20,61 +20,29 @@ namespace Snowflake.FileSignatures
 
         public override byte[] HeaderSignature { get; }
 
-        public override bool HeaderSignatureMatches(string fileName)
+        public override bool HeaderSignatureMatches(Stream romStream)
         {
-            try
-            {
-                using (FileStream isoStream = File.Open(fileName,
-                        FileMode.Open))
-                {
-                    CDReader reader = new CDReader(isoStream, true);
-                    return reader.DirectoryExists(Encoding.UTF8.GetString(this.HeaderSignature));
-                }
-            }
-            catch
-            {
-                return false;
-            }
+
+            CDReader reader = new CDReader(romStream, true);
+            return reader.DirectoryExists(Encoding.UTF8.GetString(this.HeaderSignature));
         }
 
-        public override string GetSerial(string fileName)
+        public override string GetSerial(Stream romStream)
         {
-            try
-            {
-                using (
-                    FileStream isoStream = File.Open(fileName,
-                        FileMode.Open))
-                {
-                    CDReader reader = new CDReader(isoStream, true);
-                    var system = reader.OpenFile(@"PSP_GAME\PARAM.SFO", FileMode.Open);
-                    var sfo = new SFOReader(system);
-                    return sfo.KeyValues.ContainsKey("DISC_ID") ? sfo.KeyValues["DISC_ID"] : sfo.KeyValues["TITLE_ID"];
-                }
-            }
-            catch
-            {
-                return ""; 
-            }
+
+            CDReader reader = new CDReader(romStream, true);
+            var system = reader.OpenFile(@"PSP_GAME\PARAM.SFO", FileMode.Open);
+            var sfo = new SFOReader(system);
+            return sfo.KeyValues.ContainsKey("DISC_ID") ? sfo.KeyValues["DISC_ID"] : sfo.KeyValues["TITLE_ID"];
+
         }
 
-        public override string GetInternalName(string fileName)
+        public override string GetInternalName(Stream romStream)
         {
-            try
-            {
-                using (
-                    FileStream isoStream = File.Open(fileName,
-                        FileMode.Open))
-                {
-                    CDReader reader = new CDReader(isoStream, true);
-                    var system = reader.OpenFile(@"PSP_GAME\PARAM.SFO", FileMode.Open);
-                    var sfo = new SFOReader(system);
-                    return sfo.KeyValues["TITLE"];
-                }
-            }
-            catch
-            {
-                return "";
-            }
+            CDReader reader = new CDReader(romStream, true);
+            var system = reader.OpenFile(@"PSP_GAME\PARAM.SFO", FileMode.Open);
+            var sfo = new SFOReader(system);
+            return sfo.KeyValues["TITLE"];
         }
     }
 }

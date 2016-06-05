@@ -18,7 +18,7 @@ namespace Snowflake.FileSignatures
             this.HeaderSignature = new byte[15] { 0x53, 0x45, 0x47, 0x41, 0x20, 0x53, 0x45, 0x47, 0x41, 0x4B, 0x41, 0x54, 0x41, 0x4E, 0x41 };  // SEGA SEGAKATANA
 
         }
-        
+
         public override byte[] HeaderSignature { get; }
         //adapted from http://stackoverflow.com/posts/332667
         private List<int> IndexOfSequence(byte[] buffer, byte[] pattern, int startIndex)
@@ -55,61 +55,48 @@ namespace Snowflake.FileSignatures
             }
             return 0;
         }
-        public override bool HeaderSignatureMatches(string fileName)
+        public override bool HeaderSignatureMatches(Stream romStream)
         {
-            try
-            {
-                using (FileStream romStream = File.OpenRead(fileName))
-                {
-                    long headerPos = this.GetHeaderOffset(romStream);
-                    return headerPos != 0;
-                }
-            }
-            catch
-            {
-                return false;
-            }
+
+            long headerPos = this.GetHeaderOffset(romStream);
+            return headerPos != 0;
+
         }
-        public override string GetSerial(string fileName)
+        public override string GetSerial(Stream romStream)
         {
-            using (FileStream romStream = File.OpenRead(fileName))
-            {
 
-                long headerPos = this.GetHeaderOffset(romStream);
-                romStream.Seek(headerPos, SeekOrigin.Begin);
-                byte[] buffer = new byte[0x100];
-                byte[] data = new byte[0x9];
-                romStream.Read(buffer, 0, buffer.Length);
-                Array.Copy(buffer, 0x40, data, 0, data.Length);
-                /*
-                header = 0x0 SEGA SEGAKATANA for 0x10 bytes (0xF bytes without 0x20 space)
-                internal name = 0x80 for 0x80 bytes
-                serial number (id) = 0x40 for 9 bytes
-                */
+            long headerPos = this.GetHeaderOffset(romStream);
+            romStream.Seek(headerPos, SeekOrigin.Begin);
+            byte[] buffer = new byte[0x100];
+            byte[] data = new byte[0x9];
+            romStream.Read(buffer, 0, buffer.Length);
+            Array.Copy(buffer, 0x40, data, 0, data.Length);
+            /*
+            header = 0x0 SEGA SEGAKATANA for 0x10 bytes (0xF bytes without 0x20 space)
+            internal name = 0x80 for 0x80 bytes
+            serial number (id) = 0x40 for 9 bytes
+            */
 
-                return Encoding.UTF8.GetString(data);
-            }
+            return Encoding.UTF8.GetString(data);
+
         }
 
-        public override string GetInternalName(string fileName)
+        public override string GetInternalName(Stream romStream)
         {
-            using (FileStream romStream = File.OpenRead(fileName))
-            {
 
-                long headerPos = this.GetHeaderOffset(romStream);
-                romStream.Seek(headerPos, SeekOrigin.Begin);
-                byte[] buffer = new byte[0x100];
-                byte[] data = new byte[0x80];
-                romStream.Read(buffer, 0, buffer.Length);
-                Array.Copy(buffer, 0x80, data, 0, data.Length);
-                /*
-                header = 0x0 SEGA SEGAKATANA for 0x10 bytes (0xF bytes without 0x20 space)
-                internal name = 0x80 for 0x80 bytes
-                serial number (id) = 0x40 for 9 bytes
-                */
+            long headerPos = this.GetHeaderOffset(romStream);
+            romStream.Seek(headerPos, SeekOrigin.Begin);
+            byte[] buffer = new byte[0x100];
+            byte[] data = new byte[0x80];
+            romStream.Read(buffer, 0, buffer.Length);
+            Array.Copy(buffer, 0x80, data, 0, data.Length);
+            /*
+            header = 0x0 SEGA SEGAKATANA for 0x10 bytes (0xF bytes without 0x20 space)
+            internal name = 0x80 for 0x80 bytes
+            serial number (id) = 0x40 for 9 bytes
+            */
 
-                return Encoding.UTF8.GetString(data).Trim();
-            }
+            return Encoding.UTF8.GetString(data).Trim();
         }
     }
 }

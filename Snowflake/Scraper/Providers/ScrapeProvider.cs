@@ -21,7 +21,7 @@ namespace Snowflake.Scraper.Providers
 
         public abstract T QueryBestMatch(string searchQuery, string platformId);
 
-        public virtual T Query(IMetadataCollection metadata)
+        public T Query(IMetadataCollection metadata)
         {
             var result = (from p in this.cachedFunctions
                           where metadata.Keys.Intersect(p.RequiredMetadata).Count() == p.RequiredMetadata.Count()
@@ -29,7 +29,7 @@ namespace Snowflake.Scraper.Providers
             return result;
         }
 
-        public virtual T Query(IMetadataCollection metadata, params string[] wantedMetadata)
+        public T Query(IMetadataCollection metadata, params string[] wantedMetadata)
         {
             return (from p in this.cachedFunctions
                     where metadata.Keys.Intersect(p.RequiredMetadata).Count() == p.RequiredMetadata.Count()

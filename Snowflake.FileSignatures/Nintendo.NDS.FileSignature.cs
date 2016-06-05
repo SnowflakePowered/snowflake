@@ -19,53 +19,36 @@ namespace Snowflake.FileSignatures
 
         public override byte[] HeaderSignature { get; }
 
-        public override bool HeaderSignatureMatches(string fileName)
+        public override bool HeaderSignatureMatches(Stream romStream)
         {
-            try
-            {
-                using (FileStream romStream = File.OpenRead(fileName))
-                {
-                    byte[] buffer = new byte[8]; // read the 8 bytes
-                    romStream.Seek(0x156, SeekOrigin.Begin); //read from 342 to 350 (last bytes of nintendo logo and nintendo logo crc)
-                    romStream.Read(buffer, 0, buffer.Length);
-                    return buffer.SequenceEqual(this.HeaderSignature);
-                }
-            }
-            catch
-            {
-                return false;
-            }
-        }
-        
 
-        public override string GetSerial(string fileName)
-        {
-            try
-            {
-                using (FileStream romStream = File.OpenRead(fileName))
-                {
-                    byte[] buffer = new byte[4]; // read the first 16 bytes
-                    romStream.Seek(0x0C, SeekOrigin.Begin); //seek 12 bytes after the game name
-                    romStream.Read(buffer, 0, buffer.Length);
-                    string code = Encoding.UTF8.GetString(buffer);
-                    return code;
-                }
-            }
-            catch
-            {
-                return "";
-            }
+            byte[] buffer = new byte[8]; // read the 8 bytes
+            romStream.Seek(0x156, SeekOrigin.Begin); //read from 342 to 350 (last bytes of nintendo logo and nintendo logo crc)
+            romStream.Read(buffer, 0, buffer.Length);
+            return buffer.SequenceEqual(this.HeaderSignature);
+
+
         }
 
-        public override string GetInternalName(string fileName)
+
+        public override string GetSerial(Stream romStream)
         {
-            using (FileStream romStream = File.OpenRead(fileName))
-            {
-                byte[] buffer = new byte[12]; // read 12 bytes
-                romStream.Read(buffer, 0, buffer.Length);
-                string name = Encoding.UTF8.GetString(buffer).Trim('\0');
-                return name;
-            }
+
+            byte[] buffer = new byte[4]; // read the first 16 bytes
+            romStream.Seek(0x0C, SeekOrigin.Begin); //seek 12 bytes after the game name
+            romStream.Read(buffer, 0, buffer.Length);
+            string code = Encoding.UTF8.GetString(buffer);
+            return code;
+
+        }
+
+        public override string GetInternalName(Stream romStream)
+        {
+
+            byte[] buffer = new byte[12]; // read 12 bytes
+            romStream.Read(buffer, 0, buffer.Length);
+            string name = Encoding.UTF8.GetString(buffer).Trim('\0');
+            return name;
         }
     }
 }
