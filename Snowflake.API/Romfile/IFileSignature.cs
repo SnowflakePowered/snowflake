@@ -48,6 +48,17 @@ namespace Snowflake.Romfile
         /// <param name="fileContents">The contents of the ROM</param>
         /// </summary>
         string GetInternalName(Stream fileContents);
-  
+        /// <summary>
+        /// Gets the mime type of a certain ROM.
+        /// This mimetype should be based on the contents of the ROM.
+        /// If this is not possible, it should return based on the file name
+        /// For example, application/x-romfile-n64-indeterminate can return any of the n64 rom types
+        /// based on the file signature.
+        /// </summary>
+        /// <param name="fileName">The filename of the ROM</param>
+        /// <param name="fileContents">The contents of the ROM</param>
+        /// <returns>The stone mimetype in form application/x-romfile-*</returns>
+        string GetMimeType(string fileName, Stream fileContents);
+
     }
 }
