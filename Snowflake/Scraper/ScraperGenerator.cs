@@ -18,18 +18,18 @@ using Snowflake.Utility;
 
 namespace Snowflake.Scraper
 {
-    public interface IScrapeProvider
+    public interface IScrapeGenerator
     {
         IFileRecord GetFileInformation(string romfile);
 
     }
 
-    public class ScraperGenerator : IScrapeProvider
+    public class ScraperGenerator : IScrapeGenerator
     {
         private readonly IStoneProvider stoneProvider;
         private readonly IShiragameProvider shiragameProvider;
         private readonly IEnumerable<IFileSignature> fileSignatures;
-        private readonly IEnumerable<IMetadataProvider> providers;
+        private readonly IEnumerable<IScrapeProvider<IScrapedMetadataCollection>> providers;
         private readonly IDictionary<string, string> validMimetypes;
         private readonly IList<string> validFileExtensions;
     

@@ -116,8 +116,10 @@
     <Compile Include="Extensibility\Configuration\PluginOptionType.cs" />
     <Compile Include="Scraper\ImagesInfoFields.cs" />
     <Compile Include="Extensibility\PluginInfoFields.cs" />
-    <Compile Include="Scraper\Providers\ReturnMetadataAttribute.cs" />
     <Compile Include="Scraper\Providers\IMetadataProvider.cs" />
+    <Compile Include="Scraper\Providers\IMediaProvider.cs" />
+    <Compile Include="Scraper\Providers\IScrapeProvider.cs" />
+    <Compile Include="Scraper\Providers\ReturnMetadataAttribute.cs" />
     <Compile Include="Scraper\Providers\IScrapedMetadataCollection.cs" />
     <Compile Include="Scraper\Providers\ProviderAttribute.cs" />
     <Compile Include="Scraper\Providers\RequiredMetadataAttribute.cs" />

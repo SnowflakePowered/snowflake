@@ -9,10 +9,10 @@ namespace Snowflake.Scraper.Providers
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
     public class ReturnMetadataAttribute : Attribute
     {
-        public string Metadata { get; }
-        public ReturnMetadataAttribute(string metadata)
+        public string ReturnMetadata { get; }
+        public ReturnMetadataAttribute(string returnMetadata)
         {
-            this.Metadata = metadata;
+            this.ReturnMetadata = returnMetadata;
         }
     }
 }

@@ -18,10 +18,9 @@ namespace Snowflake.Scraper.Providers
         /// </summary>
         public IEnumerable<string> RequiredMetadata { get; }
         /// <summary>
-        /// The metadata that is guaranteed to return for this provider
+        /// The metadata or file type that is guaranteed to return for this provider
         /// </summary>
         public IEnumerable<string> ReturnMetadata { get; }
-
         /// <summary>
         /// The provider function itself
         /// </summary>
