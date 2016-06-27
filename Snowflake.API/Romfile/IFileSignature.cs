@@ -12,25 +12,13 @@ namespace Snowflake.Romfile
     /// <summary>
     /// Represents the ROM file signature
     /// </summary>
-    public interface IFileSignature : IPlugin
+    public interface IFileSignature
     {
-        /// <summary>
-        /// The file extensions for this file signature comparator
-        /// Usually the same if only one method is used.
-        /// </summary>
-        /// <example>
-        /// .iso, .cso, .wbfs for Wii games
-        /// </example>
-        IList<string> FileTypes { get; }
         /// <summary>
         /// The byte array from byte position 0 containing the header or other identifier of the ROM.
         /// Usually the first 1024 bytes.
         /// </summary>
         byte[] HeaderSignature { get; }
-        /// <summary>
-        /// The Stone Platform ID this file signature uses
-        /// </summary>
-        string SupportedPlatform{ get; }
         /// <summary>
         /// Whether or not the header signature of a file matches this platform's ROM type.
         /// To handle multiple types of ROMs, use a series of ifs or an switch.
@@ -48,17 +36,6 @@ namespace Snowflake.Romfile
         /// <param name="fileContents">The contents of the ROM</param>
         /// </summary>
         string GetInternalName(Stream fileContents);
-        /// <summary>
-        /// Gets the mime type of a certain ROM.
-        /// This mimetype should be based on the contents of the ROM.
-        /// If this is not possible, it should return based on the file name
-        /// For example, application/x-romfile-n64-indeterminate can return any of the n64 rom types
-        /// based on the file signature.
-        /// </summary>
-        /// <param name="fileName">The filename of the ROM</param>
-        /// <param name="fileContents">The contents of the ROM</param>
-        /// <returns>The stone mimetype in form application/x-romfile-*</returns>
-        string GetMimeType(string fileName, Stream fileContents);
-
+        
     }
 }

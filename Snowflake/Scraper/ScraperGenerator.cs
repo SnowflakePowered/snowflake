@@ -18,13 +18,13 @@ using Snowflake.Utility;
 
 namespace Snowflake.Scraper
 {
-    public interface IScrapeGenerator
+    public interface IScrapeEngine
     {
         IFileRecord GetFileInformation(string romfile);
 
     }
 
-    public class ScraperGenerator : IScrapeGenerator
+    public class ScraperGenerator : IScrapeEngine
     {
         private readonly IStoneProvider stoneProvider;
         private readonly IShiragameProvider shiragameProvider;
@@ -119,12 +119,11 @@ namespace Snowflake.Scraper
 
             if (!potentialMimetypes.Any()) return null;
 
-            var fileSignature = (from fs in this.fileSignatures
-                                 where fs.FileTypes.Intersect(potentialMimetypes).Any()
-                                 where fs.HeaderSignatureMatches(romStream)
-                                 select fs).FirstOrDefault();
+            var romInfo = new FileSignatureMatcher().GetInfo(romfile, romStream); //todo use coreinstance
 
-            return fileSignature == null ? this.GetFromHash(romfile, romStream) : this.GetFromSerial(romfile, romStream, fileSignature);
+            return romInfo?.Serial != null ? 
+                this.GetFromHash(romfile, romStream) 
+                : this.GetFromSerial(romfile, romInfo);
         }
 
         IFileRecord GetFromHash(string romfile, Stream romStream)
@@ -142,13 +141,15 @@ namespace Snowflake.Scraper
             return record;
         }
 
-        IFileRecord GetFromSerial(string romfile, Stream romStream, IFileSignature fileSignature)
+        IFileRecord GetFromSerial(string romfile, IRomFileInfo romInfo)
         {
-            var gamePlatform = this.stoneProvider.Platforms[fileSignature.SupportedPlatform];
-            string romSerial = fileSignature.GetSerial(romStream);
-            string mimeType = gamePlatform.FileTypes[Path.GetExtension(romfile)?.ToLowerInvariant()];
+            var gamePlatform =
+                this.stoneProvider.Platforms.First(p => p.Value.FileTypes.Values.Contains(romInfo.Mimetype)).Value;
+            string romSerial = romInfo.Serial;
+            string mimeType = romInfo.Mimetype;
             IFileRecord record = new FileRecord(romfile, $"{mimeType}");
-            record.Metadata.Add(FileMetadataKeys.RomInternalName, fileSignature.GetInternalName(romStream));
+            if(romInfo.InternalName != null)
+                record.Metadata.Add(FileMetadataKeys.RomInternalName, romInfo.InternalName);
             record.Metadata.Add(FileMetadataKeys.RomSerial, romSerial);
             record.Metadata.Add(FileMetadataKeys.RomTitleFromFilename, new StructuredFilename(romfile).Title);
             var serialInfo = this.shiragameProvider.GetFromSerial(gamePlatform.PlatformID, romSerial);

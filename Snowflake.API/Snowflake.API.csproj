@@ -106,6 +106,8 @@
     <Compile Include="Records\Metadata\IMetadatable.cs" />
     <Compile Include="Records\Metadata\IMetadataLibrary.cs" />
     <Compile Include="Romfile\IFileSignature.cs" />
+    <Compile Include="Romfile\IFileSignatureMatcher.cs" />
+    <Compile Include="Romfile\IRomFileInfo.cs" />
     <Compile Include="Romfile\IStructuredFilename.cs" />
     <Compile Include="Scraper\IScrapableInfo.cs" />
     <Compile Include="Platform\IPlatformControllerPorts.cs" />

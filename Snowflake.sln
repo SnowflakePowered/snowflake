@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.25302.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake", "Snowflake\Snowflake.csproj", "{8F1D65ED-4A96-4A0A-8371-53655A60A2B3}"
 EndProject
@@ -56,7 +56,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Publishing", "Pack
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Utility", "Snowflake.Utility\Snowflake.Utility.csproj", "{E683D4D7-759F-48C5-8DF4-C3350C6362D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.FileSignatures", "Snowflake.FileSignatures\Snowflake.FileSignatures.csproj", "{C66356E8-D95E-438A-8BA5-84A04B3D39A4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Romfile.FileSignatures", "Snowflake.FileSignatures\Snowflake.Romfile.FileSignatures.csproj", "{C66356E8-D95E-438A-8BA5-84A04B3D39A4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shiragame", "Shiragame", "{182F1747-F6E6-43BA-BB14-EFC1127DE3F4}"
 EndProject

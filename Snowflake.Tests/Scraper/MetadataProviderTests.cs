@@ -8,7 +8,7 @@ using Snowflake.Records.Metadata;
 using Snowflake.Scraper.Providers;
 using Xunit;
 
-namespace Snowflake.Tests.Scraper
+namespace Snowflake.Scraper.MetadataProvider.Tests
 {
     public class MetadataProviderTests
     {

@@ -122,7 +122,8 @@
     <Compile Include="Records\Metadata\MetadataCollection.cs" />
     <Compile Include="Records\Metadata\RecordMetadata.cs" />
     <Compile Include="Records\Metadata\SqliteMetadataLibrary.cs" />
-    <Compile Include="Romfile\FileSignature.cs" />
+    <Compile Include="Romfile\FileSignatureMatcher.cs" />
+    <Compile Include="Romfile\RomFileInfo.cs" />
     <Compile Include="Romfile\StructuredFilename.cs" />
     <Compile Include="Scraper\Providers\ProviderQueryFunction.cs" />
     <Compile Include="Scraper\Providers\ScrapedMetadataCollection.cs" />

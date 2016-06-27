@@ -64,25 +64,6 @@ namespace Snowflake.Scraper
         /// </summary>
         /// <param name="originalFilePath">Original Filename</param>
         /// <param name="fileSignature">A confirmed filesignature</param>
-        public ScrapableInfo(string originalFilePath, IFileSignature fileSignature)
-        {
-            this.StructuredFilename = new StructuredFilename(originalFilePath);
-            this.OriginalFilePath = originalFilePath;
-            using (Stream fileStream = new FileStream(originalFilePath, FileMode.Open, FileAccess.Read))
-            {
-                this.RomId = fileSignature?.GetSerial(fileStream);
-                this.RomInternalName = fileSignature?.GetInternalName(fileStream);
-            }
-            this.StonePlatformId = fileSignature?.SupportedPlatform;
-            this.QueryableTitle = this.StructuredFilename.NamingConvention != StructuredFilenameConvention.Unknown
-             ? this.StructuredFilename.Title
-             : this.RomInternalName;
-        }
-        /// <summary>
-        /// Initialize a ScrapableInfo with a vetted filesignature
-        /// </summary>
-        /// <param name="originalFilePath">Original Filename</param>
-        /// <param name="fileSignature">A confirmed filesignature</param>
         /// <param name="stonePlatformId">The Platform id. Should match the fileSignature</param>
         public ScrapableInfo(string originalFilePath, IFileSignature fileSignature, string stonePlatformId)
         {
