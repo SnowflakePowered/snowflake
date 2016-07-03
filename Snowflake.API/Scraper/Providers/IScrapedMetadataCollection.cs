@@ -5,12 +5,12 @@ namespace Snowflake.Scraper.Providers
     /// <summary>
     /// Represents a metadata collection from scraping
     /// </summary>
-    public interface IScrapedMetadataCollection : IMetadataCollection
+    public interface IScrapeResult 
     {
         /// <summary>
-        /// The scraper ID
+        /// The result sorce
         /// </summary>
-        string MetadataSource { get; }
+        string Source { get; }
         /// <summary>
         /// The accuracy
         /// </summary>

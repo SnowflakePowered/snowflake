@@ -40,7 +40,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LevensteinDistance.cs" />
     <Compile Include="TheGamesDbApi\ApiGame.cs" />
     <Compile Include="TheGamesDbApi\ApiGamesDB.cs" />
     <Compile Include="TheGamesDbApi\ApiGameSearchResult.cs" />
@@ -54,6 +53,10 @@
     <ProjectReference Include="..\..\..\Snowflake.API\Snowflake.API.csproj">
       <Project>{2841aeea-03d5-47b0-9d90-375dfa19559a}</Project>
       <Name>Snowflake.API</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Snowflake.Utility\Snowflake.Utility.csproj">
+      <Project>{e683d4d7-759f-48c5-8df4-c3350c6362d8}</Project>
+      <Name>Snowflake.Utility</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Snowflake\Snowflake.csproj">
       <Project>{8f1d65ed-4a96-4a0a-8371-53655a60a2b3}</Project>

@@ -10,14 +10,14 @@ using Snowflake.Scraper.Providers;
 
 namespace Snowflake.Scrapers.Metadata.OpenVgdb
 {
-    class OpenVgdbMetadataProvider : ScrapeProvider<IScrapedMetadataCollection>
+    class OpenVgdbMetadataProvider : ScrapeProvider<IScrapeResult>
     {
-        public override IEnumerable<IScrapedMetadataCollection> QueryAllResults(string searchQuery, string platformId)
+        public override IEnumerable<IScrapeResult> QueryAllResults(string searchQuery, string platformId)
         {
             throw new NotImplementedException();
         }
 
-        public override IScrapedMetadataCollection QueryBestMatch(string searchQuery, string platformId)
+        public override IScrapeResult QueryBestMatch(string searchQuery, string platformId)
         {
             throw new NotImplementedException();
         }
@@ -25,11 +25,11 @@ namespace Snowflake.Scrapers.Metadata.OpenVgdb
         [Provider]
         [RequiredMetadata(FileMetadataKeys.RomCanonicalTitle)]
         [ReturnMetadata("TestMetadataReturn")]
-        public IScrapedMetadataCollection Test(IMetadataCollection collection)
+        public IScrapeResult Test(IMetadataCollection collection)
         {
             IMetadataCollection retmetadata = new ScrapedMetadataCollection("Test", 1.0);
             retmetadata.Add("TestMetadataReturn", "lmao");
-            return (IScrapedMetadataCollection)retmetadata;
+            return (IScrapeResult)retmetadata;
         }
 
     }

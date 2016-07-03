@@ -44,7 +44,6 @@ namespace Snowflake.Romfile
 
         public IRomFileInfo GetInfo(string fileName, Stream fileContents)
         {
-          
             string fileExtension = Path.GetExtension(fileName).ToLowerInvariant();
             var mimetypes = this.GetPossibleMimetypes(fileExtension);
            
@@ -54,7 +53,7 @@ namespace Snowflake.Romfile
                                 from fs in fsl
                                 where fs.HeaderSignatureMatchesSafe(fileContents)
                                 select new { mimetype, fs }).FirstOrDefault();
-            return sig == null ? null 
+            return sig == null ? null
                 : new RomFileInfo(sig.mimetype, sig.fs.GetSerial(fileContents), sig.fs.GetInternalName(fileContents));
         }
     }

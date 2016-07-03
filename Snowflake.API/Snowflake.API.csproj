@@ -118,6 +118,7 @@
     <Compile Include="Extensibility\Configuration\PluginOptionType.cs" />
     <Compile Include="Scraper\ImagesInfoFields.cs" />
     <Compile Include="Extensibility\PluginInfoFields.cs" />
+    <Compile Include="Scraper\IScrapeEngine.cs" />
     <Compile Include="Scraper\Providers\IMetadataProvider.cs" />
     <Compile Include="Scraper\Providers\IMediaProvider.cs" />
     <Compile Include="Scraper\Providers\IScrapeProvider.cs" />

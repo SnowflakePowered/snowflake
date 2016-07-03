@@ -33,6 +33,7 @@ namespace Snowflake.Tests.ManualIntegrationTests
             var information = this.test.GetInformation(this.openFileDialog1.FileName);
             MessageBox.Show(
                 $"Mimetype: {information?.Mimetype}, Serial: {information?.Serial}, {Environment.NewLine} Name: {information?.InternalName}");
+
         }
 
         private void tgdbScrapeTest_Click(object sender, EventArgs e)

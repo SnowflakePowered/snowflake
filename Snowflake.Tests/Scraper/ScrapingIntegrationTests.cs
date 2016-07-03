@@ -20,34 +20,30 @@ namespace Snowflake.Tests.Scraper
     {
         private IStoneProvider stoneProvider;
         private readonly IFileSignatureMatcher fileSignatureMatcher;
-        private readonly IScrapeProvider<IScrapedMetadataCollection> scrapedProvider;
-        private readonly ScraperGenerator scrapeGen;
+        private readonly IScrapeProvider<IScrapeResult> scrapedProvider;
+        private readonly ScrapeEngine scrapeGen;
         public ScrapingIntegrationTests()
         {
             this.stoneProvider = new StoneProvider();
             this.scrapedProvider = new TheGamesDbMetadataProvider();
             this.fileSignatureMatcher = new FileSignatureMatcher(this.stoneProvider);
             new FileSignaturesContainer().RegisterFileSignatures(this.fileSignatureMatcher);
-            this.scrapeGen = new ScraperGenerator(this.stoneProvider, new ShiragameProvider("shiragame.db"),
-                new List<IScrapeProvider<IScrapedMetadataCollection>>() { this.scrapedProvider }, this.fileSignatureMatcher);
+            this.scrapeGen = new ScrapeEngine(this.stoneProvider, new ShiragameProvider("shiragame.db"),
+                new List<IScrapeProvider<IScrapeResult>>() { this.scrapedProvider }, this.fileSignatureMatcher);
         }
 
         public IRomFileInfo GetInformation(string fileName)
         {
-            try
+            using (FileStream fs = File.OpenRead(fileName))
             {
-                return this.fileSignatureMatcher.GetInfo(fileName, File.OpenRead(fileName));
-            }
-            catch
-            {
-                return null;
+                return this.fileSignatureMatcher.GetInfo(fileName, fs);
             }
         }
 
         public IGameRecord ScrapeTgdb(string fileName)
         {
             var fr = this.scrapeGen.GetFileInformation(fileName);
-            return this.scrapeGen.GetGameRecordFromFiles(fr);
+            return this.scrapeGen.GetGameRecordFromFile(fr);
         }
 
     }

@@ -7,19 +7,20 @@ using Snowflake.Records.Metadata;
 
 namespace Snowflake.Scraper.Providers
 {
-    public class ScrapedMetadataCollection : MetadataCollection, IScrapedMetadataCollection
+    public class ScrapedMetadataCollection : MetadataCollection, IScrapeResult
     {
         public ScrapedMetadataCollection(string metadataSource, double accuracy) : base(Guid.NewGuid())
         {
-            this.MetadataSource = metadataSource;
+            this.Source = metadataSource;
             this.Accuracy = accuracy;
         }
 
-        public string MetadataSource
+        public string Source
         {
             get { return this["metadata_source"].Value; }
             set { (this as IMetadataCollection)["metadata_source"] = value; }
         }
+
         public double Accuracy
         {
             get { return Double.Parse(this["information_accuracy"].Value); }

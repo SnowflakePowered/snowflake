@@ -12,12 +12,14 @@ namespace Snowflake.Romfile.FileSignatures.Sony
 
         public bool HeaderSignatureMatches(Stream romStream)
         {
+            romStream.Seek(0, SeekOrigin.Begin);
             CDReader reader = new CDReader(romStream, true);
             return reader.DirectoryExists(Encoding.UTF8.GetString(this.HeaderSignature));
         }
 
         public string GetSerial(Stream romStream)
         {
+            romStream.Seek(0, SeekOrigin.Begin);
             CDReader reader = new CDReader(romStream, true);
             var system = reader.OpenFile(@"PSP_GAME\PARAM.SFO", FileMode.Open);
             var sfo = new SFOReader(system);
@@ -26,6 +28,7 @@ namespace Snowflake.Romfile.FileSignatures.Sony
 
         public string GetInternalName(Stream romStream)
         {
+            romStream.Seek(0, SeekOrigin.Begin);
             CDReader reader = new CDReader(romStream, true);
             var system = reader.OpenFile(@"PSP_GAME\PARAM.SFO", FileMode.Open);
             var sfo = new SFOReader(system);

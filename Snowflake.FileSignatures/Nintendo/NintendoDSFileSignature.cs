@@ -34,6 +34,7 @@ namespace Snowflake.Romfile.FileSignatures.Nintendo
 
         public string GetInternalName(Stream romStream)
         {
+            romStream.Seek(0, SeekOrigin.Begin);
             byte[] buffer = new byte[12]; // read 12 bytes
             romStream.Read(buffer, 0, buffer.Length);
             string name = Encoding.UTF8.GetString(buffer).Trim('\0');

@@ -15,6 +15,7 @@ namespace Snowflake.Romfile.FileSignatures.Nintendo
 
         public bool HeaderSignatureMatches(Stream romStream)
         {
+            romStream.Seek(0, SeekOrigin.Begin);
             byte[] buffer = new byte[4];
             romStream.Read(buffer, 0, buffer.Length);
             return buffer.SequenceEqual(this.HeaderSignature);

@@ -12,6 +12,7 @@ namespace Snowflake.Romfile.FileSignatures.Sony
 
         public bool HeaderSignatureMatches(Stream romStream)
         {
+            romStream.Seek(0, SeekOrigin.Begin);
             byte[] buffer = new byte[1024 * 128]; // read the first 128 KiB
             romStream.Read(buffer, 0, buffer.Length);
             string code = Encoding.UTF8.GetString(buffer).Replace("\0", "");

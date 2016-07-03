@@ -8,7 +8,7 @@ using Snowflake.Records.Metadata;
 
 namespace Snowflake.Scraper.Providers
 {
-    public abstract class ScrapeProvider<T> : IScrapeProvider<T>
+    public abstract class ScrapeProvider<T> : IScrapeProvider<T> where T: IScrapeResult
     {
         private readonly IList<ProviderQueryFunction<T>> cachedFunctions;
 
@@ -23,10 +23,11 @@ namespace Snowflake.Scraper.Providers
 
         public T Query(IMetadataCollection metadata)
         {
-            var result = (from p in this.cachedFunctions
+            return (from p in this.cachedFunctions
                           where metadata.Keys.Intersect(p.RequiredMetadata).Count() == p.RequiredMetadata.Count()
-                          select p.Query(metadata)).FirstOrDefault();
-            return result;
+                          let result = p.Query(metadata)
+                          select result)
+                          .OrderByDescending(r => r.Accuracy).FirstOrDefault();
         }
 
         public T Query(IMetadataCollection metadata, params string[] wantedMetadata)
@@ -34,7 +35,9 @@ namespace Snowflake.Scraper.Providers
             return (from p in this.cachedFunctions
                     where metadata.Keys.Intersect(p.RequiredMetadata).Count() == p.RequiredMetadata.Count()
                     where p.ReturnMetadata.Intersect(wantedMetadata).Count() == wantedMetadata.Count()
-                    select p.Query(metadata)).FirstOrDefault();
+                    let result = p.Query(metadata)
+                    orderby result.Accuracy descending
+                    select result).FirstOrDefault();
         }
 
         private IList<ProviderQueryFunction<T>> CacheFunctions()

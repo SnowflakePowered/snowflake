@@ -18,25 +18,19 @@ using Snowflake.Utility;
 
 namespace Snowflake.Scraper
 {
-    public interface IScrapeEngine
-    {
-        IFileRecord GetFileInformation(string romfile);
-
-    }
-
-    public class ScraperGenerator : IScrapeEngine
+    public class ScrapeEngine : IScrapeEngine
     {
         private readonly IStoneProvider stoneProvider;
         private readonly IShiragameProvider shiragameProvider;
-        private readonly IList<IScrapeProvider<IScrapedMetadataCollection>> providers;
+        private readonly IList<IScrapeProvider<IScrapeResult>> providers;
         private readonly ILookup<string, string> validMimetypes;
         private readonly IList<string> validFileExtensions;
         private readonly IFileSignatureMatcher fileSignatures;
     
-        public ScraperGenerator 
+        public ScrapeEngine 
             (IStoneProvider stoneProvider,
             IShiragameProvider shiragameProvider,
-            IList<IScrapeProvider<IScrapedMetadataCollection>> providers,
+            IList<IScrapeProvider<IScrapeResult>> providers,
             IFileSignatureMatcher fileSignatures)
         {
             this.stoneProvider = stoneProvider;
@@ -52,7 +46,7 @@ namespace Snowflake.Scraper
                                         select ext).Distinct().ToList();
         }
 
-        public IGameRecord GetGameRecordFromFiles(IFileRecord fileRecord)
+        public IGameRecord GetGameRecordFromFile(IFileRecord fileRecord)
         {
             var gr = new GameRecord(this.stoneProvider.Platforms[fileRecord.Metadata[FileMetadataKeys.RomPlatform]], 
                 fileRecord.Metadata[FileMetadataKeys.RomCanonicalTitle]);
@@ -90,7 +84,7 @@ namespace Snowflake.Scraper
 
         }
 
-        IFileRecord GetMameInformation(string mameFile)
+        private IFileRecord GetMameInformation(string mameFile)
         {
             var record = new FileRecord(mameFile, "application/x-romfile-arcade+zip");
             record.Metadata.Add("rom_platform", "ARCADE_MAME");
@@ -98,7 +92,7 @@ namespace Snowflake.Scraper
             return record;
         }
 
-        IFileRecord GetZipStreamInformation(string zipFile)
+        private IFileRecord GetZipStreamInformation(string zipFile)
         {
             using (ZipArchive archive = new ZipArchive(File.OpenRead(zipFile), ZipArchiveMode.Read))
             {
@@ -123,7 +117,7 @@ namespace Snowflake.Scraper
 
         }
 
-        IFileRecord GetFileInformation(string romfile, Stream romStream)
+        private IFileRecord GetFileInformation(string romfile, Stream romStream)
         {
             string ext = Path.GetExtension(romfile)?.ToLowerInvariant();
             var potentialMimetypes = (from mimetype in this.validMimetypes
@@ -132,15 +126,16 @@ namespace Snowflake.Scraper
 
             if (!potentialMimetypes.Any()) return null;
 
-            var romInfo = this.fileSignatures.GetInfo(romfile, romStream);
-            var fileInfo =  romInfo?.Serial == null ? 
-                this.GetFromHash(romfile, romInfo, romStream) 
-                : this.GetFromSerial(romfile, romInfo, romStream);
+            var romFileInfo = this.fileSignatures.GetInfo(romfile, romStream);
+            if (romFileInfo == null) throw new InvalidDataException("Unable to ascertain ROM type with given signatures.");
+            var fileInfo =  romFileInfo?.Serial == null ? 
+                this.GetFromHash(romfile, romFileInfo, romStream) 
+                : this.GetFromSerial(romfile, romFileInfo, romStream);
             romStream.Close();
             return fileInfo;
         }
 
-        IFileRecord GuessFromFile(string romfile, IRomFileInfo romFileInfo)
+        private IFileRecord GuessFromFile(string romfile, IRomFileInfo romFileInfo)
         {
             var fileNameData = new StructuredFilename(romfile);
             IFileRecord record = new FileRecord(romfile, romFileInfo.Mimetype);
@@ -157,13 +152,13 @@ namespace Snowflake.Scraper
             return record;
         }
         
-        IFileRecord GetFromHash(string romfile, IRomFileInfo romFileInfo, Stream romStream)
+        private IFileRecord GetFromHash(string romfile, IRomFileInfo romFileInfo, Stream romStream)
         {
             string hash = FileHash.GetMD5(romStream);
             var romInfo = this.shiragameProvider.GetFromMd5(hash);
             if (romInfo == null) return this.GuessFromFile(romfile, romFileInfo); 
             IFileRecord record = new FileRecord(romfile, romInfo.MimeType);
-            if (romFileInfo.InternalName != null)
+            if (romFileInfo?.InternalName != null)
                 record.Metadata.Add(FileMetadataKeys.RomInternalName, romFileInfo.InternalName);
             record.Metadata.Add(FileMetadataKeys.RomRegion, romInfo.Region);
             record.Metadata.Add(FileMetadataKeys.FileHashMd5, romInfo.MD5);
@@ -174,7 +169,7 @@ namespace Snowflake.Scraper
             return record;
         }
 
-        IFileRecord GetFromSerial(string romfile, IRomFileInfo romInfo, Stream romStream)
+        private IFileRecord GetFromSerial(string romfile, IRomFileInfo romInfo, Stream romStream)
         {
             var gamePlatform =
                 this.stoneProvider.Platforms.First(p => p.Value.FileTypes.Values.Contains(romInfo.Mimetype)).Value;
@@ -187,7 +182,7 @@ namespace Snowflake.Scraper
             var serialInfo = this.shiragameProvider.GetFromSerial(gamePlatform.PlatformID, romSerial);
             if (serialInfo == null)
                 return this.GetFromHash(romfile, romInfo, romStream); //fallback to hash
-            record.Metadata.Add(FileMetadataKeys.RomCanonicalTitle, serialInfo.Title);
+            record.Metadata.Add(FileMetadataKeys.RomCanonicalTitle, new StructuredFilename(serialInfo.Title).Title);
             record.Metadata.Add(FileMetadataKeys.RomRegion, serialInfo.Region);
             record.Metadata.Add(FileMetadataKeys.RomPlatform, gamePlatform.PlatformID);
             return record;

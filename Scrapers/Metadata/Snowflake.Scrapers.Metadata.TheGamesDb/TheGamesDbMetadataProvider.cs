@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 using Snowflake.Records.File;
 using Snowflake.Records.Game;
 using Snowflake.Records.Metadata;
-using Snowflake.Scraper;
+using Snowflake.Utility;
 using Snowflake.Scraper.Providers;
 using Snowflake.Scrapers.Metadata.TheGamesDb.TheGamesDbApi;
 
 namespace Snowflake.Scrapers.Metadata.TheGamesDb
 {
-    public class TheGamesDbMetadataProvider : ScrapeProvider<IScrapedMetadataCollection>
+    public class TheGamesDbMetadataProvider : ScrapeProvider<IScrapeResult>
     {
         private static IDictionary<string, string> map = new Dictionary<string, string>
         {
@@ -42,13 +42,12 @@ namespace Snowflake.Scrapers.Metadata.TheGamesDb
             {"SEGA_GG", "Sega Game Gear"}
         };
 
-        public override IEnumerable<IScrapedMetadataCollection> QueryAllResults(string searchQuery, string platformId)
+        public override IEnumerable<IScrapeResult> QueryAllResults(string searchQuery, string platformId)
         {
             string tgdbPlatform = TheGamesDbMetadataProvider.map[platformId];
             return (from r in ApiGamesDb.GetGames(searchQuery, tgdbPlatform)
                 where r.Platform == tgdbPlatform
-                let distance = LevenshteinDistance.Compute(TheGamesDbMetadataProvider.StripString(r.Title),
-                    TheGamesDbMetadataProvider.StripString(searchQuery))
+                let distance = r.Title.CompareTitle(searchQuery)
                 orderby distance
                 let gameMetadata = ApiGamesDb.GetGame(r.ID)
                 let metadata = new ScrapedMetadataCollection("scraper_thegamesdb", (100 - distance) * 0.01)
@@ -62,18 +61,17 @@ namespace Snowflake.Scrapers.Metadata.TheGamesDb
                 select metadata);
         }
 
-        public override IScrapedMetadataCollection QueryBestMatch(string searchQuery, string platformId)
+        public override IScrapeResult QueryBestMatch(string searchQuery, string platformId)
         {
             string tgdbPlatform = TheGamesDbMetadataProvider.map[platformId];
             var result = (from r in ApiGamesDb.GetGames(searchQuery, tgdbPlatform)
                           where r.Platform == tgdbPlatform
-                          let distance = LevenshteinDistance.Compute(TheGamesDbMetadataProvider.StripString(r.Title), 
-                          TheGamesDbMetadataProvider.StripString(searchQuery))
+                          let distance = r.Title.CompareTitle(searchQuery)
                           orderby distance
                           select new { r, distance }).FirstOrDefault();
             if (result == null) return null;
             var gameMetadata = ApiGamesDb.GetGame(result.r);
-            IScrapedMetadataCollection metadata = new ScrapedMetadataCollection("scraper_thegamesdb", (100 - result.distance) * 0.01)
+            IScrapeResult metadata = new ScrapedMetadataCollection("scraper_thegamesdb", (100 - result.distance) * 0.01)
             {
                 {GameMetadataKeys.Title, gameMetadata.Title},
                 {GameMetadataKeys.Description, gameMetadata.Overview},
@@ -84,17 +82,6 @@ namespace Snowflake.Scrapers.Metadata.TheGamesDb
             return metadata;
         }
 
-
-        /// <summary>
-        /// Removes spaces and punctuation from a string for Levenshtein comparison
-        /// </summary>
-        /// <param name="input"></param>
-        /// <returns></returns>
-        private static string StripString(string input)
-        {
-            return Regex.Replace(input, @"[^a-zA-Z0-9]", "");
-        }
-
         [Provider]
         [RequiredMetadata(FileMetadataKeys.RomPlatform)]
         [RequiredMetadata(FileMetadataKeys.RomCanonicalTitle)]
@@ -103,9 +90,23 @@ namespace Snowflake.Scrapers.Metadata.TheGamesDb
         [ReturnMetadata(GameMetadataKeys.Platform)]
         [ReturnMetadata(GameMetadataKeys.ReleaseDate)]
         [ReturnMetadata("scraper_thegamesdb_id")]
-        public IScrapedMetadataCollection WithPlatformAndSnowballTitle(IMetadataCollection collection)
+        public IScrapeResult WithPlatformAndSnowballTitle(IMetadataCollection collection)
         {
             return this.QueryBestMatch(collection[FileMetadataKeys.RomCanonicalTitle],
+                collection[FileMetadataKeys.RomPlatform]);
+        }
+
+        [Provider]
+        [RequiredMetadata(FileMetadataKeys.RomPlatform)]
+        [RequiredMetadata(FileMetadataKeys.RomInternalName)]
+        [ReturnMetadata(GameMetadataKeys.Title)]
+        [ReturnMetadata(GameMetadataKeys.Description)]
+        [ReturnMetadata(GameMetadataKeys.Platform)]
+        [ReturnMetadata(GameMetadataKeys.ReleaseDate)]
+        [ReturnMetadata("scraper_thegamesdb_id")]
+        public IScrapeResult WithPlatformAndInternalName(IMetadataCollection collection)
+        {
+            return this.QueryBestMatch(collection[FileMetadataKeys.RomInternalName],
                 collection[FileMetadataKeys.RomPlatform]);
         }
 
