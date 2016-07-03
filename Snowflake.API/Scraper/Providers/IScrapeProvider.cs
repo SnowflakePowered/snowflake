@@ -9,7 +9,7 @@ namespace Snowflake.Scraper.Providers
 {
     public interface IScrapeProvider<T>
     {
-        IList<T> QueryAllResults(string searchQuery, string platformId);
+        IEnumerable<T> QueryAllResults(string searchQuery, string platformId);
         T QueryBestMatch(string searchQuery, string platformId);
         T Query(IMetadataCollection metadata);
         T Query(IMetadataCollection metadata, params string[] wantedMetadata);

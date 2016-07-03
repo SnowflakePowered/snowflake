@@ -1,22 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using Snowflake.Extensibility;
-using Snowflake.Romfile;
+﻿using Snowflake.Extensibility;
 using Snowflake.Romfile.FileSignatures.Nintendo;
+using Snowflake.Romfile.FileSignatures.Sony;
 using Snowflake.Service;
-using Snowflake.Service.Manager;
 
-namespace Snowflake.FileSignatures
+namespace Snowflake.Romfile.FileSignatures
 {
     public class FileSignaturesContainer : IPluginContainer
     {
-        public void Compose(ICoreService coreInstance)
+        public void RegisterFileSignatures(IFileSignatureMatcher fileSignatureEngine)
         {
-            var fileSignatureEngine = coreInstance.Get<FileSignatureMatcher>();
             fileSignatureEngine.RegisterFileSignature("application/x-romfile-gb", new GameboyFileSignature());
             fileSignatureEngine.RegisterFileSignature("application/x-romfile-gba", new GameboyAdvancedFileSignature());
             fileSignatureEngine.RegisterFileSignature("application/x-romfile-gbc", new GameboyColorFileSignature());
@@ -43,6 +35,21 @@ namespace Snowflake.FileSignatures
                 new SuperNintendoSmcHeaderFileSignature());
             fileSignatureEngine.RegisterFileSignature("application/x-romfile-wii-iso9660", new WiiIso9660FileSignature());
             fileSignatureEngine.RegisterFileSignature("application/x-romfile-wbfs", new WiiWbfsFileSignature());
+
+            fileSignatureEngine.RegisterFileSignature("application/x-romfile-ps2-iso9660",
+                new Playstation2Iso9660FileSignature());
+
+            fileSignatureEngine.RegisterFileSignature("application/x-romfile-psx-rawimage",
+                new PlaystationRawDiscFileSignature());
+
+            fileSignatureEngine.RegisterFileSignature("application/x-romfile-psp-iso9660",
+                new PlaystationPortableIso9660FileSignature());
+        }
+
+        public void Compose(ICoreService coreInstance)
+        {
+            var fileSignatureEngine = coreInstance.Get<IFileSignatureMatcher>();
+            this.RegisterFileSignatures(fileSignatureEngine);
             /*pluginManager.Register<IFileSignature>(new NintendoN64FileSignature(coreInstance));
             pluginManager.Register<IFileSignature>(new NintendoGBFileSignature(coreInstance));
             pluginManager.Register<IFileSignature>(new NintendoGBCFileSignature(coreInstance));

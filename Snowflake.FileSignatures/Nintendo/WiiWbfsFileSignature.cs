@@ -24,7 +24,7 @@ namespace Snowflake.Romfile.FileSignatures.Nintendo
         }
         public string GetSerial(Stream romStream)
         {
-            byte[] buffer = new byte[4];
+            byte[] buffer = new byte[6];
             byte[] wbfs = new byte[5];
             romStream.Position = 0;
             romStream.Read(wbfs, 0, wbfs.Length);
@@ -38,7 +38,7 @@ namespace Snowflake.Romfile.FileSignatures.Nintendo
 
         public string GetInternalName(Stream romStream)
         {
-            byte[] buffer = new byte[4];
+            byte[] buffer = new byte[64];
             byte[] wbfs = new byte[5];
             romStream.Position = 0;
             romStream.Read(wbfs, 0, wbfs.Length);

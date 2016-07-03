@@ -17,7 +17,7 @@ namespace Snowflake.Scraper.Providers
             this.cachedFunctions = this.CacheFunctions();
         }
 
-        public abstract IList<T> QueryAllResults(string searchQuery, string platformId);
+        public abstract IEnumerable<T> QueryAllResults(string searchQuery, string platformId);
 
         public abstract T QueryBestMatch(string searchQuery, string platformId);
 

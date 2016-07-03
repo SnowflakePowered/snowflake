@@ -44,10 +44,6 @@ namespace Snowflake.Records.File
         /// </summary>
         public const string RomCanonicalTitle = "rom_canonical_title";
         /// <summary>
-        /// The rom title from the filename
-        /// </summary>
-        public const string RomTitleFromFilename = "rom_title_from_filename";
-        /// <summary>
         /// The ROM was not determined for sure by a <see cref="Scraper.IScrapeInstance"/>
         /// </summary>
         public const string RomIsAmbiguousIdentification = "rom_is_ambiguous_identification";

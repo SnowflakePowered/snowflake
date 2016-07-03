@@ -60,8 +60,8 @@
       <HintPath>..\packages\System.Data.SQLite.Core.1.0.99.0\lib\net45\System.Data.SQLite.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Data.SQLite.Linq, Version=1.0.99.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.99.0\lib\net45\System.Data.SQLite.Linq.dll</HintPath>
+    <Reference Include="System.Data.SQLite.Linq, Version=1.0.102.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.102.0\lib\net451\System.Data.SQLite.Linq.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Drawing" />
@@ -106,6 +106,7 @@
     <Compile Include="Records\SqliteFileLibraryTests.cs" />
     <Compile Include="Scraper\GameImagesResultTests.cs" />
     <Compile Include="Scraper\MetadataProviderTests.cs" />
+    <Compile Include="Scraper\ScrapingIntegrationTests.cs" />
     <Compile Include="Scraper\ShiragameTests.cs" />
     <Compile Include="Service\HttpServer\BaseHttpServerTests.cs" />
     <Compile Include="Service\PluginManagerTests.cs" />
@@ -132,6 +133,10 @@
     <EmbeddedResource Include="TestResources\Mapping\KeyboardMapping.json" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Scrapers\Metadata\Snowflake.Scrapers.Metadata.TheGamesDb\Snowflake.Scrapers.Metadata.TheGamesDb.csproj">
+      <Project>{5147dcb0-0c60-4d44-a737-067c99bccd65}</Project>
+      <Name>Snowflake.Scrapers.Metadata.TheGamesDb</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Snowflake.API\Snowflake.API.csproj">
       <Project>{2841aeea-03d5-47b0-9d90-375dfa19559a}</Project>
       <Name>Snowflake.API</Name>
@@ -139,6 +144,10 @@
     <ProjectReference Include="..\Snowflake.Events\Snowflake.Events.csproj">
       <Project>{7ae8e842-e2a9-4f01-bec1-8a7a60cc16bb}</Project>
       <Name>Snowflake.Events</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Snowflake.FileSignatures\Snowflake.Romfile.FileSignatures.csproj">
+      <Project>{c66356e8-d95e-438a-8ba5-84a04b3d39a4}</Project>
+      <Name>Snowflake.Romfile.FileSignatures</Name>
     </ProjectReference>
     <ProjectReference Include="..\Snowflake.Service\Snowflake.Service.csproj">
       <Project>{f3a129d6-0c4c-41bc-b60b-5b7e7e6d1a77}</Project>

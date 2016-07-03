@@ -19,7 +19,7 @@ namespace Snowflake.Scraper.MetadataProvider.Tests
             var provider = new TestMetadataProvider();
             var collection = new MetadataCollection(Guid.NewGuid()) {{"TestMetadataKey", "Test"}};
             var result = provider.Query(collection);
-            Assert.Equal(result.ScraperId, "Test");
+            Assert.Equal(result.MetadataSource, "Test");
         }
 
         [Fact]
@@ -32,7 +32,7 @@ namespace Snowflake.Scraper.MetadataProvider.Tests
                 { "TestMetadataKeyTwo", "Test"}
             };
             var result = provider.Query(collection, "TestMetadataReturnTwo");
-            Assert.Equal(result.ScraperId, "TestTwo");
+            Assert.Equal(result.MetadataSource, "TestTwo");
         }
 
         [Fact]
@@ -47,7 +47,7 @@ namespace Snowflake.Scraper.MetadataProvider.Tests
 
     internal class TestMetadataProvider : ScrapeProvider<IScrapedMetadataCollection>
     {
-        public override IList<IScrapedMetadataCollection> QueryAllResults(string searchQuery, string platformId)
+        public override IEnumerable<IScrapedMetadataCollection> QueryAllResults(string searchQuery, string platformId)
         {
             throw new NotImplementedException();
         }

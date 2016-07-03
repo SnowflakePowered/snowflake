@@ -31,5 +31,9 @@ namespace Snowflake.Records.Game
         /// The game's publisher
         /// </summary>
         public const string Publisher = "game_publisher";
+        /// <summary>
+        /// The game's release date
+        /// </summary>
+        public const string ReleaseDate = "game_release_date";
     }
 }

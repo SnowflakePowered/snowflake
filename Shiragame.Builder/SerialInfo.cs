@@ -33,7 +33,7 @@ namespace Shiragame
         {
             this.PlatformId = platformId;
             this.Title = title;
-            this.Serial = serial;
+            this.Serial = serial.Replace("-", "").Replace("_", "").ToUpperInvariant(); //normalize serial
             this.Region = region;
         }
     }

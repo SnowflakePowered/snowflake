@@ -1,14 +1,11 @@
 ﻿using System.IO;
 using System.Text;
 using DiscUtils.Iso9660;
-using Snowflake.Extensibility;
 using Snowflake.FileSignatures.SFOSharp;
-using Snowflake.Romfile;
-using Snowflake.Service;
 
-namespace Snowflake.FileSignatures
+namespace Snowflake.Romfile.FileSignatures.Sony
 {
-    public sealed class SonyPSPISOFileSignature : IFileSignature
+    public sealed class PlaystationPortableIso9660FileSignature: IFileSignature
     {
      
         public byte[] HeaderSignature => Encoding.UTF8.GetBytes("PSP_GAME");

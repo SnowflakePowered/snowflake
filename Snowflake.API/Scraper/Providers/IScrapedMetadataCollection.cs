@@ -10,14 +10,10 @@ namespace Snowflake.Scraper.Providers
         /// <summary>
         /// The scraper ID
         /// </summary>
-        string ScraperId { get; }
+        string MetadataSource { get; }
         /// <summary>
         /// The accuracy
         /// </summary>
         double Accuracy { get; }
-        /// <summary>
-        /// The title
-        /// </summary>
-        string Title { get; set; }
     }
 }

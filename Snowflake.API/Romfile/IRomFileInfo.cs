@@ -1,4 +1,6 @@
-﻿namespace Snowflake.Romfile
+﻿using Snowflake.Records.Metadata;
+
+namespace Snowflake.Romfile
 {
     public interface IRomFileInfo
     {
