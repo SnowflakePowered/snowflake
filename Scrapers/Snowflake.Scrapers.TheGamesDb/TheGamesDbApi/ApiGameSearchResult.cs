@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Snowflake.Scrapers.Metadata.TheGamesDb.TheGamesDbApi
+namespace Snowflake.Scrapers.TheGamesDb.TheGamesDbApi
 {
     /// <summary>
     /// Represents a search result when searching for games.

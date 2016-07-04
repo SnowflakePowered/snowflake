@@ -7,7 +7,7 @@ using Snowflake.Records.Metadata;
 
 namespace Snowflake.Scraper.Providers
 {
-    public class ScrapedMetadataCollection : MetadataCollection, IScrapeResult
+    public class ScrapedMetadataCollection : MetadataCollection, IScrapedMetadataCollection
     {
         public ScrapedMetadataCollection(string metadataSource, double accuracy) : base(Guid.NewGuid())
         {

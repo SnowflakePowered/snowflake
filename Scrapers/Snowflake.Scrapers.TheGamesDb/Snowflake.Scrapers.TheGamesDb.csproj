@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6F1DB1AE-7604-44FE-8A6B-12C7045C7DC1}</ProjectGuid>
+    <ProjectGuid>{5147DCB0-0C60-4D44-A737-067C99BCCD65}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Snowflake.Scrapers.Metadata.OpenVgdb</RootNamespace>
-    <AssemblyName>Snowflake.Scrapers.Metadata.OpenVgdb</AssemblyName>
+    <RootNamespace>Snowflake.Scrapers.TheGamesDb</RootNamespace>
+    <AssemblyName>Snowflake.Scrapers.TheGamesDb</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,17 +40,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="OpenVgdbMetadataProvider.cs" />
+    <Compile Include="TheGamesDbApi\ApiGame.cs" />
+    <Compile Include="TheGamesDbApi\ApiGamesDB.cs" />
+    <Compile Include="TheGamesDbApi\ApiGameSearchResult.cs" />
+    <Compile Include="TheGamesDbApi\ApiPlatform.cs" />
+    <Compile Include="TheGamesDbApi\ApiPlatformSearchResult.cs" />
+    <Compile Include="TheGamesDbMediaProvider.cs" />
+    <Compile Include="TheGamesDbMetadataProvider.cs" />
     <Compile Include="ScraperContainer.cs" />
-    <Compile Include="OpenVgdbDatabase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Snowflake.API\Snowflake.API.csproj">
+    <ProjectReference Include="..\..\Snowflake.API\Snowflake.API.csproj">
       <Project>{2841aeea-03d5-47b0-9d90-375dfa19559a}</Project>
       <Name>Snowflake.API</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Snowflake\Snowflake.csproj">
+    <ProjectReference Include="..\..\Snowflake.Utility\Snowflake.Utility.csproj">
+      <Project>{e683d4d7-759f-48c5-8df4-c3350c6362d8}</Project>
+      <Name>Snowflake.Utility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Snowflake\Snowflake.csproj">
       <Project>{8f1d65ed-4a96-4a0a-8371-53655a60a2b3}</Project>
       <Name>Snowflake</Name>
     </ProjectReference>

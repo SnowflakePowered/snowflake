@@ -19,7 +19,7 @@ namespace Snowflake.Scraper.MetadataProvider.Tests
             var provider = new TestMetadataProvider();
             var collection = new MetadataCollection(Guid.NewGuid()) {{"TestMetadataKey", "Test"}};
             var result = provider.Query(collection);
-            Assert.Equal(result.Source, "Test");
+            Assert.Equal(result.First().Source, "Test");
         }
 
         [Fact]
@@ -32,7 +32,7 @@ namespace Snowflake.Scraper.MetadataProvider.Tests
                 { "TestMetadataKeyTwo", "Test"}
             };
             var result = provider.Query(collection, "TestMetadataReturnTwo");
-            Assert.Equal(result.Source, "TestTwo");
+            Assert.Equal(result.First().Source, "TestTwo");
         }
 
         [Fact]
@@ -41,18 +41,18 @@ namespace Snowflake.Scraper.MetadataProvider.Tests
             var provider = new TestMetadataProvider();
             var collection = new MetadataCollection(Guid.NewGuid()) { { "TestMetadataKey", "Test" } };
             var result = provider.Query(collection, "TestMetadataReturnTwo");
-            Assert.Null(result);
+            Assert.Empty(result);
         }
     }
 
-    internal class TestMetadataProvider : ScrapeProvider<IScrapeResult>
+    internal class TestMetadataProvider : ScrapeProvider<IScrapedMetadataCollection>
     {
-        public override IEnumerable<IScrapeResult> QueryAllResults(string searchQuery, string platformId)
+        public override IEnumerable<IScrapedMetadataCollection> Query(string searchQuery, string platformId)
         {
             throw new NotImplementedException();
         }
 
-        public override IScrapeResult QueryBestMatch(string searchQuery, string platformId)
+        public override IScrapedMetadataCollection QueryBestMatch(string searchQuery, string platformId)
         {
             throw new NotImplementedException();
         }
@@ -60,11 +60,11 @@ namespace Snowflake.Scraper.MetadataProvider.Tests
         [Provider]
         [RequiredMetadata("TestMetadataKey")]
         [ReturnMetadata("TestMetadataReturn")]
-        public IScrapeResult Test(IMetadataCollection collection)
+        public IScrapedMetadataCollection Test(IMetadataCollection collection)
         {
             IMetadataCollection retmetadata = new ScrapedMetadataCollection("Test", 1.0);
             retmetadata.Add("TestMetadataReturn", "lmao");
-            return (IScrapeResult) retmetadata;
+            return (IScrapedMetadataCollection) retmetadata;
         }
 
 
@@ -73,11 +73,11 @@ namespace Snowflake.Scraper.MetadataProvider.Tests
         [RequiredMetadata("TestMetadataKeyTwo")]
         [ReturnMetadata("TestMetadataReturn")]
         [ReturnMetadata("TestMetadataReturnTwo")]
-        public IScrapeResult TestTwo(IMetadataCollection collection)
+        public IScrapedMetadataCollection TestTwo(IMetadataCollection collection)
         {
             IMetadataCollection retmetadata = new ScrapedMetadataCollection("TestTwo", 1.0);
             retmetadata.Add("TestMetadataReturn", "lmao");
-            return (IScrapeResult)retmetadata;
+            return (IScrapedMetadataCollection)retmetadata;
         }
 
     }

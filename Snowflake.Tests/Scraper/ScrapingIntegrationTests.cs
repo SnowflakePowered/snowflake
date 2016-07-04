@@ -12,7 +12,7 @@ using Snowflake.Scraper;
 using Snowflake.Scraper.Providers;
 using Snowflake.Scraper.Shiragame;
 using Snowflake.Service;
-using Snowflake.Scrapers.Metadata.TheGamesDb;
+using Snowflake.Scrapers.TheGamesDb;
 using Xunit;
 namespace Snowflake.Tests.Scraper
 {
@@ -20,7 +20,7 @@ namespace Snowflake.Tests.Scraper
     {
         private IStoneProvider stoneProvider;
         private readonly IFileSignatureMatcher fileSignatureMatcher;
-        private readonly IScrapeProvider<IScrapeResult> scrapedProvider;
+        private readonly IScrapeProvider<IScrapedMetadataCollection> scrapedProvider;
         private readonly ScrapeEngine scrapeGen;
         public ScrapingIntegrationTests()
         {
@@ -29,7 +29,7 @@ namespace Snowflake.Tests.Scraper
             this.fileSignatureMatcher = new FileSignatureMatcher(this.stoneProvider);
             new FileSignaturesContainer().RegisterFileSignatures(this.fileSignatureMatcher);
             this.scrapeGen = new ScrapeEngine(this.stoneProvider, new ShiragameProvider("shiragame.db"),
-                new List<IScrapeProvider<IScrapeResult>>() { this.scrapedProvider }, this.fileSignatureMatcher);
+                new List<IScrapeProvider<IScrapedMetadataCollection>>() { this.scrapedProvider }, this.fileSignatureMatcher);
         }
 
         public IRomFileInfo GetInformation(string fileName)

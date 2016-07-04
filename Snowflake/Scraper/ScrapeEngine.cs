@@ -22,7 +22,7 @@ namespace Snowflake.Scraper
     {
         private readonly IStoneProvider stoneProvider;
         private readonly IShiragameProvider shiragameProvider;
-        private readonly IList<IScrapeProvider<IScrapeResult>> providers;
+        private readonly IList<IScrapeProvider<IScrapedMetadataCollection>> providers;
         private readonly ILookup<string, string> validMimetypes;
         private readonly IList<string> validFileExtensions;
         private readonly IFileSignatureMatcher fileSignatures;
@@ -30,7 +30,7 @@ namespace Snowflake.Scraper
         public ScrapeEngine 
             (IStoneProvider stoneProvider,
             IShiragameProvider shiragameProvider,
-            IList<IScrapeProvider<IScrapeResult>> providers,
+            IList<IScrapeProvider<IScrapedMetadataCollection>> providers,
             IFileSignatureMatcher fileSignatures)
         {
             this.stoneProvider = stoneProvider;
@@ -52,9 +52,10 @@ namespace Snowflake.Scraper
                 fileRecord.Metadata[FileMetadataKeys.RomCanonicalTitle]);
             gr.Files.Add(fileRecord);
             //merge scrape resu;ts
-            var matches = this.providers.Select(x => x.Query(fileRecord.Metadata));
-            var _matches = matches.OrderByDescending(result => result.Accuracy).Select(x => x as IMetadataCollection);
-            var bestMatch = _matches.First();
+            var bestMatch = (from provider in this.providers
+                             from result in provider.Query(fileRecord.Metadata)
+                             orderby result.Accuracy descending
+                             select result as IMetadataCollection).First();
             foreach (string key in bestMatch.Keys)
             {
                 gr.Metadata[key] = bestMatch[key]; //copy keys

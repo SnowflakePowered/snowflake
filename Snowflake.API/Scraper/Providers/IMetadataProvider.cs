@@ -8,7 +8,7 @@ using Snowflake.Records.Metadata;
 
 namespace Snowflake.Scraper.Providers
 {
-    public interface IMetadataProvider: IScrapeProvider<IScrapeResult>, IPlugin
+    public interface IMetadataProvider: IScrapeProvider<IScrapedMetadataCollection>, IPlugin
     { 
     }
 }

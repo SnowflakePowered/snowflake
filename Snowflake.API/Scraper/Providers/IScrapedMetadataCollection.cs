@@ -5,7 +5,7 @@ namespace Snowflake.Scraper.Providers
     /// <summary>
     /// Represents a metadata collection from scraping
     /// </summary>
-    public interface IScrapeResult 
+    public interface IScrapedMetadataCollection : IMetadataCollection
     {
         /// <summary>
         /// The result sorce

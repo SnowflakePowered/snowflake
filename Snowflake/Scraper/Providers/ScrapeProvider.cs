@@ -8,7 +8,7 @@ using Snowflake.Records.Metadata;
 
 namespace Snowflake.Scraper.Providers
 {
-    public abstract class ScrapeProvider<T> : IScrapeProvider<T> where T: IScrapeResult
+    public abstract class ScrapeProvider<T> : IScrapeProvider<T> 
     {
         private readonly IList<ProviderQueryFunction<T>> cachedFunctions;
 
@@ -17,27 +17,25 @@ namespace Snowflake.Scraper.Providers
             this.cachedFunctions = this.CacheFunctions();
         }
 
-        public abstract IEnumerable<T> QueryAllResults(string searchQuery, string platformId);
+        public abstract IEnumerable<T> Query(string searchQuery, string platformId);
 
         public abstract T QueryBestMatch(string searchQuery, string platformId);
 
-        public T Query(IMetadataCollection metadata)
+        public IEnumerable<T> Query(IMetadataCollection metadata)
         {
-            return (from p in this.cachedFunctions
-                          where metadata.Keys.Intersect(p.RequiredMetadata).Count() == p.RequiredMetadata.Count()
-                          let result = p.Query(metadata)
-                          select result)
-                          .OrderByDescending(r => r.Accuracy).FirstOrDefault();
+            return (from p in this.cachedFunctions.AsParallel()
+                    where metadata.Keys.Intersect(p.RequiredMetadata).Count() == p.RequiredMetadata.Count()
+                    let result = p.Query(metadata)
+                    select result);
         }
 
-        public T Query(IMetadataCollection metadata, params string[] wantedMetadata)
+        public IEnumerable<T> Query(IMetadataCollection metadata, params string[] wantedMetadata)
         {
             return (from p in this.cachedFunctions
                     where metadata.Keys.Intersect(p.RequiredMetadata).Count() == p.RequiredMetadata.Count()
                     where p.ReturnMetadata.Intersect(wantedMetadata).Count() == wantedMetadata.Count()
                     let result = p.Query(metadata)
-                    orderby result.Accuracy descending
-                    select result).FirstOrDefault();
+                    select result);
         }
 
         private IList<ProviderQueryFunction<T>> CacheFunctions()

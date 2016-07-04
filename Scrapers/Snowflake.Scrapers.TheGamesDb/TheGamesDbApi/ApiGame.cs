@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
 
-namespace Snowflake.Scrapers.Metadata.TheGamesDb.TheGamesDbApi
+namespace Snowflake.Scrapers.TheGamesDb.TheGamesDbApi
 {
     /// <summary>
     /// Contains the data for one game in the database.

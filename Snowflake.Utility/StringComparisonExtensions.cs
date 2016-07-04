@@ -16,20 +16,9 @@ namespace Snowflake.Utility
         /// </summary>
         private static string NormalizeTitle(this string input)
         {
-            StringBuilder sb = new StringBuilder();
-            var words = input.Trim().ToUpperInvariant().Split(' ', ':', '-')
-                .Where(w => !String.IsNullOrWhiteSpace(w));
-            foreach (string word in words)
-            {
-                string appendValue = word;
-                if (Regex.IsMatch(word, "^M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$")) //convert roman numerals
-                {
-                    appendValue = RomanNumerals.From(word).ToString();
-                }
-                sb.Append(appendValue + " ");
-            } //optimize this somehow?
-            string returnString = sb.ToString()
-                    .Replace("&", "AND")
+            var normalized = String.Join(" ", input.Trim().ToUpperInvariant().Split(' ', ':', '-')
+                .Where(w => !String.IsNullOrWhiteSpace(w)).ToArray())
+                 .Replace("&", "AND")
                     .Replace("!", "")
                     .Replace("\"", "")
                     .Replace("$", "")
@@ -39,9 +28,9 @@ namespace Snowflake.Utility
                     .Replace(",", "")
                     .Replace("?", "")
                     .Trim()
-                    .RemoveDiacritics();
-            Console.WriteLine(returnString);
-            return returnString;
+                    .RemoveDiacritics(); 
+
+            return normalized;
         }
 
         private static string RemoveDiacritics(this string str)

@@ -9,11 +9,11 @@ using Snowflake.Records.Game;
 using Snowflake.Records.Metadata;
 using Snowflake.Utility;
 using Snowflake.Scraper.Providers;
-using Snowflake.Scrapers.Metadata.TheGamesDb.TheGamesDbApi;
+using Snowflake.Scrapers.TheGamesDb.TheGamesDbApi;
 
-namespace Snowflake.Scrapers.Metadata.TheGamesDb
+namespace Snowflake.Scrapers.TheGamesDb
 {
-    public class TheGamesDbMetadataProvider : ScrapeProvider<IScrapeResult>
+    public class TheGamesDbMetadataProvider : ScrapeProvider<IScrapedMetadataCollection>
     {
         private static IDictionary<string, string> map = new Dictionary<string, string>
         {
@@ -42,7 +42,7 @@ namespace Snowflake.Scrapers.Metadata.TheGamesDb
             {"SEGA_GG", "Sega Game Gear"}
         };
 
-        public override IEnumerable<IScrapeResult> QueryAllResults(string searchQuery, string platformId)
+        public override IEnumerable<IScrapedMetadataCollection> Query(string searchQuery, string platformId)
         {
             string tgdbPlatform = TheGamesDbMetadataProvider.map[platformId];
             return (from r in ApiGamesDb.GetGames(searchQuery, tgdbPlatform)
@@ -61,7 +61,7 @@ namespace Snowflake.Scrapers.Metadata.TheGamesDb
                 select metadata);
         }
 
-        public override IScrapeResult QueryBestMatch(string searchQuery, string platformId)
+        public override IScrapedMetadataCollection QueryBestMatch(string searchQuery, string platformId)
         {
             string tgdbPlatform = TheGamesDbMetadataProvider.map[platformId];
             var result = (from r in ApiGamesDb.GetGames(searchQuery, tgdbPlatform)
@@ -71,7 +71,7 @@ namespace Snowflake.Scrapers.Metadata.TheGamesDb
                           select new { r, distance }).FirstOrDefault();
             if (result == null) return null;
             var gameMetadata = ApiGamesDb.GetGame(result.r);
-            IScrapeResult metadata = new ScrapedMetadataCollection("scraper_thegamesdb", (100 - result.distance) * 0.01)
+            IScrapedMetadataCollection metadata = new ScrapedMetadataCollection("scraper_thegamesdb", (100 - result.distance) * 0.01)
             {
                 {GameMetadataKeys.Title, gameMetadata.Title},
                 {GameMetadataKeys.Description, gameMetadata.Overview},
@@ -90,7 +90,7 @@ namespace Snowflake.Scrapers.Metadata.TheGamesDb
         [ReturnMetadata(GameMetadataKeys.Platform)]
         [ReturnMetadata(GameMetadataKeys.ReleaseDate)]
         [ReturnMetadata("scraper_thegamesdb_id")]
-        public IScrapeResult WithPlatformAndSnowballTitle(IMetadataCollection collection)
+        public IScrapedMetadataCollection WithPlatformAndSnowballTitle(IMetadataCollection collection)
         {
             return this.QueryBestMatch(collection[FileMetadataKeys.RomCanonicalTitle],
                 collection[FileMetadataKeys.RomPlatform]);
@@ -104,7 +104,7 @@ namespace Snowflake.Scrapers.Metadata.TheGamesDb
         [ReturnMetadata(GameMetadataKeys.Platform)]
         [ReturnMetadata(GameMetadataKeys.ReleaseDate)]
         [ReturnMetadata("scraper_thegamesdb_id")]
-        public IScrapeResult WithPlatformAndInternalName(IMetadataCollection collection)
+        public IScrapedMetadataCollection WithPlatformAndInternalName(IMetadataCollection collection)
         {
             return this.QueryBestMatch(collection[FileMetadataKeys.RomInternalName],
                 collection[FileMetadataKeys.RomPlatform]);
