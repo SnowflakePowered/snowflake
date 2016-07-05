@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Text;
 
-namespace Snowflake.FileSignatures.SFOSharp
+namespace Snowflake.FileSignatures.Formats.SFO
 {
     public class SFOHeader
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 
-namespace Snowflake.FileSignatures.SFOSharp
+namespace Snowflake.FileSignatures.Formats.SFO
 {
     public class SFOReader
     {

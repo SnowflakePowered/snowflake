@@ -52,6 +52,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ByteSwapStream.cs" />
+    <Compile Include="Formats\CDXA\CDXABlockStream.cs" />
+    <Compile Include="Formats\CDXA\CDXADisk.cs" />
+    <Compile Include="Formats\CDXA\CDXAFile.cs" />
+    <Compile Include="Formats\CDXA\CDXARecord.cs" />
+    <Compile Include="Formats\CDXA\PlaystationDisk.cs" />
     <Compile Include="Nintendo\GameboyFileSignature.cs" />
     <Compile Include="Nintendo\GameboyAdvancedFileSignature.cs" />
     <Compile Include="Nintendo\GameboyColorFileSignature.cs" />
@@ -74,12 +79,12 @@
     <Compile Include="Sega\SegaGenesisFileSignature.cs" />
     <Compile Include="Sega\SegaGameGear.cs" />
     <Compile Include="Sega\SegaSaturnFileSignature.cs" />
-    <Compile Include="SFOSharp\SFOHeader.cs" />
-    <Compile Include="SFOSharp\SFOIndexTableEntry.cs" />
-    <Compile Include="SFOSharp\SFOKeyTableEntry.cs" />
-    <Compile Include="SFOSharp\SFOReader.cs" />
-    <Compile Include="SFOSharp\SFOReaderUtilities.cs" />
-    <Compile Include="SFOSharp\SFOValueTableEntry.cs" />
+    <Compile Include="Formats\SFO\SFOHeader.cs" />
+    <Compile Include="Formats\SFO\SFOIndexTableEntry.cs" />
+    <Compile Include="Formats\SFO\SFOKeyTableEntry.cs" />
+    <Compile Include="Formats\SFO\SFOReader.cs" />
+    <Compile Include="Formats\SFO\SFOReaderUtilities.cs" />
+    <Compile Include="Formats\SFO\SFOValueTableEntry.cs" />
     <Compile Include="FileSignaturesContainer.cs" />
     <Compile Include="Sony\Playstation2Iso9660FileSignature.cs" />
     <Compile Include="Sony\PlaystationPortableIso9660FileSignature.cs" />

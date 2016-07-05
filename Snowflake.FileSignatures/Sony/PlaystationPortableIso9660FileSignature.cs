@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Text;
 using DiscUtils.Iso9660;
-using Snowflake.FileSignatures.SFOSharp;
+using Snowflake.FileSignatures.Formats.SFO;
 
 namespace Snowflake.Romfile.FileSignatures.Sony
 {
