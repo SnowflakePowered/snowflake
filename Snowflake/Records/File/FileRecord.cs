@@ -26,17 +26,26 @@ namespace Snowflake.Records.File
             this.Metadata = new MetadataCollection(this.Guid, metadata);
         }
 
+        internal FileRecord(IFileRecord record, IGameRecord game)
+        {
+            this.MimeType = record.MimeType;
+            this.FilePath = record.FilePath;
+            this.Guid = record.Guid;
+            this.Metadata = record.Metadata;
+            this.Metadata["file_linkedrecord"] = game.Guid.ToString();
+        }
+
+
         public FileRecord(string filePath, string mimeType, Guid record):
             this(Guid.NewGuid(), new Dictionary<string, IRecordMetadata>(), filePath, mimeType)
         {
-            this.Metadata.Add("file_linkedrecord", record.ToString());
+            this.Metadata["file_linkedrecord"] = record.ToString();
         }
 
 
         public FileRecord(string filePath, string mimeType, IGameRecord gameRecord) :
-            this(gameRecord.Guid, new Dictionary<string, IRecordMetadata>(), filePath, mimeType)
+            this(filePath, mimeType, gameRecord.Guid)
         {
-            this.Metadata.Add("file_linkedrecord", gameRecord.Guid.ToString());
         }
 
         public FileRecord(string filePath, string mimeType)

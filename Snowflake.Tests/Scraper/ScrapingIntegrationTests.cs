@@ -20,7 +20,7 @@ namespace Snowflake.Tests.Scraper
     {
         private IStoneProvider stoneProvider;
         private readonly IFileSignatureMatcher fileSignatureMatcher;
-        private readonly IScrapeProvider<IScrapedMetadataCollection> scrapedProvider;
+        private readonly IQueryProvider<IScrapedMetadataCollection> scrapedProvider;
         private readonly ScrapeEngine scrapeGen;
         public ScrapingIntegrationTests()
         {
@@ -28,8 +28,10 @@ namespace Snowflake.Tests.Scraper
             this.scrapedProvider = new TheGamesDbMetadataProvider();
             this.fileSignatureMatcher = new FileSignatureMatcher(this.stoneProvider);
             new FileSignaturesContainer().RegisterFileSignatures(this.fileSignatureMatcher);
+            var source = new QueryProviderSource();
+            source.Register(this.scrapedProvider);
             this.scrapeGen = new ScrapeEngine(this.stoneProvider, new ShiragameProvider("shiragame.db"),
-                new List<IScrapeProvider<IScrapedMetadataCollection>>() { this.scrapedProvider }, this.fileSignatureMatcher);
+                source, this.fileSignatureMatcher);
         }
 
         public IRomFileInfo GetInformation(string fileName)

@@ -22,15 +22,15 @@ namespace Snowflake.Scraper
     {
         private readonly IStoneProvider stoneProvider;
         private readonly IShiragameProvider shiragameProvider;
-        private readonly IList<IScrapeProvider<IScrapedMetadataCollection>> providers;
+        private readonly IQueryProviderSource providers;
         private readonly ILookup<string, string> validMimetypes;
         private readonly IList<string> validFileExtensions;
         private readonly IFileSignatureMatcher fileSignatures;
-    
+
         public ScrapeEngine 
             (IStoneProvider stoneProvider,
             IShiragameProvider shiragameProvider,
-            IList<IScrapeProvider<IScrapedMetadataCollection>> providers,
+            IQueryProviderSource providers,
             IFileSignatureMatcher fileSignatures)
         {
             this.stoneProvider = stoneProvider;
@@ -50,11 +50,11 @@ namespace Snowflake.Scraper
         {
             var gr = new GameRecord(this.stoneProvider.Platforms[fileRecord.Metadata[FileMetadataKeys.RomPlatform]], 
                 fileRecord.Metadata[FileMetadataKeys.RomCanonicalTitle]);
-            gr.Files.Add(fileRecord);
+            gr.Files.Add(new FileRecord(fileRecord, gr));
             //merge scrape resu;ts
-            var bestMatch = (from provider in this.providers
+            var bestMatch = (from provider in this.providers.MetadataProviders
                              from result in provider.Query(fileRecord.Metadata)
-                             orderby result.Accuracy descending
+                             orderby result?.Accuracy descending
                              select result as IMetadataCollection).First();
             foreach (string key in bestMatch.Keys)
             {
@@ -155,7 +155,7 @@ namespace Snowflake.Scraper
         
         private IFileRecord GetFromHash(string romfile, IRomFileInfo romFileInfo, Stream romStream)
         {
-            string hash = FileHash.GetMD5(romStream);
+            string hash = FileHash.GetMD5(romStream); //timeout for large files
             var romInfo = this.shiragameProvider.GetFromMd5(hash);
             if (romInfo == null) return this.GuessFromFile(romfile, romFileInfo); 
             IFileRecord record = new FileRecord(romfile, romInfo.MimeType);

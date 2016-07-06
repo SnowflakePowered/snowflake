@@ -8,11 +8,11 @@ using Snowflake.Records.Metadata;
 
 namespace Snowflake.Scraper.Providers
 {
-    public abstract class ScrapeProvider<T> : IScrapeProvider<T> 
+    public abstract class QueryProvider<T> : IQueryProvider<T> 
     {
         private readonly IList<ProviderQueryFunction<T>> cachedFunctions;
 
-        protected ScrapeProvider()
+        protected QueryProvider()
         {
             this.cachedFunctions = this.CacheFunctions();
         }
@@ -25,15 +25,6 @@ namespace Snowflake.Scraper.Providers
         {
             return (from p in this.cachedFunctions.AsParallel()
                     where metadata.Keys.Intersect(p.RequiredMetadata).Count() == p.RequiredMetadata.Count()
-                    let result = p.Query(metadata)
-                    select result);
-        }
-
-        public IEnumerable<T> Query(IMetadataCollection metadata, params string[] wantedMetadata)
-        {
-            return (from p in this.cachedFunctions
-                    where metadata.Keys.Intersect(p.RequiredMetadata).Count() == p.RequiredMetadata.Count()
-                    where p.ReturnMetadata.Intersect(wantedMetadata).Count() == wantedMetadata.Count()
                     let result = p.Query(metadata)
                     select result);
         }

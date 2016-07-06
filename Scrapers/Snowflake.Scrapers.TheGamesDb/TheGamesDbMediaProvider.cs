@@ -13,7 +13,7 @@ using Snowflake.Scrapers.TheGamesDb.TheGamesDbApi;
 using Snowflake.Caching;
 namespace Snowflake.Scrapers.TheGamesDb
 {
-    public class TheGamesDbMediaProvider : ScrapeProvider<IList<IFileRecord>>
+    public class TheGamesDbMediaProvider : QueryProvider<IList<IFileRecord>>
     {
         public override IEnumerable<IList<IFileRecord>> Query(string searchQuery, string platformId)
         {

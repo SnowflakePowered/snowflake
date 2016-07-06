@@ -126,8 +126,9 @@
     <Compile Include="Romfile\RomFileInfo.cs" />
     <Compile Include="Romfile\StructuredFilename.cs" />
     <Compile Include="Scraper\Providers\ProviderQueryFunction.cs" />
+    <Compile Include="Scraper\Providers\QueryProviderSource.cs" />
     <Compile Include="Scraper\Providers\ScrapedMetadataCollection.cs" />
-    <Compile Include="Scraper\Providers\ScrapeProvider.cs" />
+    <Compile Include="Scraper\Providers\QueryProvider.cs" />
     <Compile Include="Scraper\ScrapeEngine.cs" />
     <Compile Include="Scraper\Scraper.cs" />
     <Compile Include="Scraper\GameImagesResult.cs" />

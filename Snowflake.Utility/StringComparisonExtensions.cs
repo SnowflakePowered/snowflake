@@ -28,8 +28,7 @@ namespace Snowflake.Utility
                     .Replace(",", "")
                     .Replace("?", "")
                     .Trim()
-                    .RemoveDiacritics(); 
-
+                    .RemoveDiacritics();
             return normalized;
         }
 

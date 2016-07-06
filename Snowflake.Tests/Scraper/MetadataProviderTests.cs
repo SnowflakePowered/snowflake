@@ -21,31 +21,9 @@ namespace Snowflake.Scraper.MetadataProvider.Tests
             var result = provider.Query(collection);
             Assert.Equal(result.First().Source, "Test");
         }
-
-        [Fact]
-        public void TestQueryReturnMetadata()
-        {
-            var provider = new TestMetadataProvider();
-            var collection = new MetadataCollection(Guid.NewGuid())
-            {
-                { "TestMetadataKey", "Test" },
-                { "TestMetadataKeyTwo", "Test"}
-            };
-            var result = provider.Query(collection, "TestMetadataReturnTwo");
-            Assert.Equal(result.First().Source, "TestTwo");
-        }
-
-        [Fact]
-        public void TestQueryNoSuitable()
-        {
-            var provider = new TestMetadataProvider();
-            var collection = new MetadataCollection(Guid.NewGuid()) { { "TestMetadataKey", "Test" } };
-            var result = provider.Query(collection, "TestMetadataReturnTwo");
-            Assert.Empty(result);
-        }
     }
 
-    internal class TestMetadataProvider : ScrapeProvider<IScrapedMetadataCollection>
+    internal class TestMetadataProvider : QueryProvider<IScrapedMetadataCollection>
     {
         public override IEnumerable<IScrapedMetadataCollection> Query(string searchQuery, string platformId)
         {

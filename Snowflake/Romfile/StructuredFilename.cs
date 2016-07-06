@@ -28,7 +28,7 @@ namespace Snowflake.Romfile
         {
             this.OriginalFilename = Path.GetFileName(originalFilename);
             this.RegionCode = this.ParseRegion();
-            this.Title = this.ParseTitle();
+            this.Title = Path.GetFileNameWithoutExtension(this.ParseTitle());
             this.Year = this.ParseYear();
         }
 

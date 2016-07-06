@@ -23,6 +23,10 @@ namespace Snowflake.Romfile
         /// Whether or not the header signature of a file matches this platform's ROM type.
         /// To handle multiple types of ROMs, use a series of ifs or an switch.
         /// </summary>
+        /// <remarks>
+        /// Never close <paramref name="fileContents"/>. Exceptions can be thrown freely without being handled,
+        /// and will be treated as an invalid result (false).    
+        /// </remarks>
         /// <param name="fileContents">The contents of the ROM</param>
         /// <returns>If this ROM is executable data for this platform, it should return true.</returns>
         bool HeaderSignatureMatches(Stream fileContents);
@@ -30,11 +34,19 @@ namespace Snowflake.Romfile
         /// Gets the game serial from the file signature if possible
         /// <param name="fileContents">The contents of the ROM</param>
         /// </summary>
+        /// <remarks>
+        /// Never close <paramref name="fileContents"/>. Exceptions can be thrown freely without being handled,
+        /// and will be treated as an invalid result (null).    
+        /// </remarks>
         string GetSerial(Stream fileContents);
         ///<summary>
         /// Gets the internal name of the ROM if possible
         /// <param name="fileContents">The contents of the ROM</param>
         /// </summary>
+        /// <remarks>
+        /// Never close <paramref name="fileContents"/>. Exceptions can be thrown freely without being handled,
+        /// and will be treated as an invalid result (null).    
+        /// </remarks>
         string GetInternalName(Stream fileContents);
         
     }

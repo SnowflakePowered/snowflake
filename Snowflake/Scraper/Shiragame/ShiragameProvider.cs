@@ -40,7 +40,7 @@ namespace Snowflake.Scraper.Shiragame
         public ISerialInfo GetFromSerial(string platformId, string serial)
         {
             const string sql = @"SELECT * FROM serial WHERE serial LIKE @serial AND platformId = @platformId";
-            return this.backingDatabase.QueryFirstOrDefault<SerialInfo>(sql, new { serial = $"%{serial}%", platformId});
+            return this.backingDatabase.QueryFirstOrDefault<SerialInfo>(sql, new { serial = $"%{serial.Replace("-", "").Replace("_", "")}%", platformId});
         }
 
         public bool IsMameRom(string filename)

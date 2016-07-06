@@ -29,7 +29,5 @@ namespace Snowflake.Records.Game
         /// or application/romfile-*+zip if in zip format.
         /// </summary>
         IList<IFileRecord> Files { get; }
-        
-
     }
 }

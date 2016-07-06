@@ -13,7 +13,7 @@ using Snowflake.Scrapers.TheGamesDb.TheGamesDbApi;
 
 namespace Snowflake.Scrapers.TheGamesDb
 {
-    public class TheGamesDbMetadataProvider : ScrapeProvider<IScrapedMetadataCollection>
+    public class TheGamesDbMetadataProvider : QueryProvider<IScrapedMetadataCollection>
     {
         private static IDictionary<string, string> map = new Dictionary<string, string>
         {

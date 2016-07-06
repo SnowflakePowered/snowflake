@@ -119,9 +119,8 @@
     <Compile Include="Scraper\ImagesInfoFields.cs" />
     <Compile Include="Extensibility\PluginInfoFields.cs" />
     <Compile Include="Scraper\IScrapeEngine.cs" />
-    <Compile Include="Scraper\Providers\IMetadataProvider.cs" />
-    <Compile Include="Scraper\Providers\IMediaProvider.cs" />
-    <Compile Include="Scraper\Providers\IScrapeProvider.cs" />
+    <Compile Include="Scraper\Providers\IQueryProvider.cs" />
+    <Compile Include="Scraper\Providers\IQueryProviderSource.cs" />
     <Compile Include="Scraper\Providers\ReturnMetadataAttribute.cs" />
     <Compile Include="Scraper\Providers\IScrapedMetadataCollection.cs" />
     <Compile Include="Scraper\Providers\ProviderAttribute.cs" />
