@@ -30,7 +30,7 @@ namespace Snowflake.Caching
             return new List<IFileRecord>
             {
                 KeyedImageCache.SaveImage(image, 100, cacheId, cachePath, imageType, recordGuid),
-                KeyedImageCache.SaveImage(image, 75, cacheId, cachePath, imageType, recordGuid),
+                KeyedImageCache.SaveImage(image, 50, cacheId, cachePath, imageType, recordGuid),
                 KeyedImageCache.SaveImage(image, 25, cacheId, cachePath, imageType, recordGuid),
                 KeyedImageCache.SaveImage(image, 10, cacheId, cachePath, imageType, recordGuid)
 
@@ -45,7 +45,7 @@ namespace Snowflake.Caching
             return new List<IFileRecord>
             {
                 KeyedImageCache.SaveImage(image, 100, cacheId, cachePath, imageType, recordGuid, dateTime),
-                KeyedImageCache.SaveImage(image, 75, cacheId, cachePath, imageType, recordGuid, dateTime),
+                KeyedImageCache.SaveImage(image, 50, cacheId, cachePath, imageType, recordGuid, dateTime),
                 KeyedImageCache.SaveImage(image, 25, cacheId, cachePath, imageType, recordGuid, dateTime),
                 KeyedImageCache.SaveImage(image, 10, cacheId, cachePath, imageType, recordGuid, dateTime)
 
@@ -54,20 +54,20 @@ namespace Snowflake.Caching
 
         private static IFileRecord SaveImage(Image image, int percent, Guid cacheId, string cachePath, string imageType, Guid recordGuid)
         {
-            string path = Path.Combine(cachePath, $"@{percent}_{cacheId}.png");
+            string path = Path.Combine(cachePath, $"@{percent}_{cacheId}.jpg");
             if (percent == 100)
             {
-                image.Save(path, ImageFormat.Png);
+                image.Save(path, ImageFormat.Jpeg);
                 
             }
             else
             {
                 using (Image resizedImage = KeyedImageCache.ResizeImage(image, percent * 0.01))
                 {
-                    resizedImage.Save(path, ImageFormat.Png);
+                    resizedImage.Save(path, ImageFormat.Jpeg);
                 }
             }
-            var record = new FileRecord(path, "image/png", recordGuid);
+            var record = new FileRecord(path, "image/jpeg", recordGuid);
             var data = new List<IRecordMetadata>()
             {
                 {new RecordMetadata(ImageMetadataKeys.CacheId, cacheId.ToString(), record.Guid)},
