@@ -159,7 +159,6 @@ namespace Snowflake.Records.File
                         var files = query.Read().Select(file => new
                         {
                             Guid = new Guid(file.uuid),
-                            Game = new Guid(file.game),
                             Path = file.path,
                             MimeType = file.mimetype
                         });
@@ -167,7 +166,7 @@ namespace Snowflake.Records.File
                         return (from f in files
                                 let md = (from m in metadata where m.Record == f.Guid select m)
                                          .ToDictionary(md => md.Key, md => md as IRecordMetadata)
-                                select new FileRecord(f.Game, md, f.Path, f.MimeType)).ToList();
+                                select new FileRecord(f.Guid, md, f.Path, f.MimeType)).ToList();
                     }
                     catch (SQLiteException)
                     {

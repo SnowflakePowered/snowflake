@@ -18,7 +18,7 @@ namespace Snowflake.StandardAjax
             IDictionary<string, IDictionary<string, dynamic>> response = this.CoreInstance.Get<IPluginManager>().Get<IEmulatorBridge>().ToDictionary
                 (
                     emulatorBridge => emulatorBridge.Key,
-                    emulatorBridge => emulatorBridge.Value.PluginInfo
+                    emulatorBridge => emulatorBridge.Value.PluginProperties
                 );
             return new JSResponse(request, response);
         }
@@ -31,7 +31,7 @@ namespace Snowflake.StandardAjax
                 .Where(bridge => bridge.Value.SupportedPlatforms.Contains(request.GetParameter("platform"))).ToDictionary
                 (
                     emulatorBridge => emulatorBridge.Key,
-                    emulatorBridge => emulatorBridge.Value.PluginInfo
+                    emulatorBridge => emulatorBridge.Value.PluginProperties
                 );
             return new JSResponse(request, response);
         }
@@ -42,7 +42,7 @@ namespace Snowflake.StandardAjax
             IDictionary<string, IDictionary<string, dynamic>> response = this.CoreInstance.Get<IPluginManager>().Get<IScraper>().ToDictionary
                (
                    scrapers => scrapers.Key,
-                   scrapers => scrapers.Value.PluginInfo
+                   scrapers => scrapers.Value.PluginProperties
                );
             return new JSResponse(request, response);
         }
@@ -55,7 +55,7 @@ namespace Snowflake.StandardAjax
                 .Where(scraper => scraper.Value.SupportedPlatforms.Contains(request.GetParameter("platform"))).ToDictionary
                (
                    scraper => scraper.Key,
-                   scraper => scraper.Value.PluginInfo
+                   scraper => scraper.Value.PluginProperties
                );
             return new JSResponse(request, response);
         }

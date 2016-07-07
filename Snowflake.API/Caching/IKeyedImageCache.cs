@@ -14,7 +14,7 @@ namespace Snowflake.Caching
     public interface IKeyedImageCache
     {
         /// <summary>
-        /// Adds an image to the image cache, generating resized image/png versions of the files, and
+        /// Adds an image to the image cache, generating resized image/jpeg versions of the files, and
         /// returning a list of file records.
         /// </summary>
         /// <param name="image">The image to add</param>
@@ -24,7 +24,7 @@ namespace Snowflake.Caching
         IList<IFileRecord> Add(Image image, Guid recordGuid, string imageType);
 
         /// <summary>
-        /// Adds an image to the image cache, generating resized image/png versions of the files, and
+        /// Adds an image to the image cache, generating resized image/jpeg versions of the files, and
         /// returning a list of file records.
         /// </summary>
         /// <param name="image">The image to add</param>

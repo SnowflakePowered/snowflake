@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Snowflake</RootNamespace>
     <AssemblyName>Snowflake</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <NuGetPackageImportStamp>
@@ -52,12 +52,12 @@
     <Reference Include="Mono.Security">
       <HintPath>..\packages\Mono.Net.HttpListener.1.0.0.0\lib\net45\Mono.Security.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.4.2.3\lib\net45\NLog.dll</HintPath>
+      <HintPath>..\packages\NLog.4.3.5\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="SharpYaml, Version=1.5.3.20680, Culture=neutral, PublicKeyToken=1ced8108e942bc02, processorArchitecture=MSIL">
@@ -71,15 +71,21 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Linq" />
-    <Reference Include="System.Data.SQLite, Version=1.0.99.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Data.SQLite.Core.1.0.99.0\lib\net45\System.Data.SQLite.dll</HintPath>
+    <Reference Include="System.Data.SQLite, Version=1.0.102.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.102.0\lib\net451\System.Data.SQLite.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Data.SQLite.Linq, Version=1.0.99.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.99.0\lib\net45\System.Data.SQLite.Linq.dll</HintPath>
+    <Reference Include="System.Data.SQLite.Linq, Version=1.0.102.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.102.0\lib\net451\System.Data.SQLite.Linq.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression">
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.IO.Compression.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Compression.FileSystem">
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.IO.Compression.FileSystem.dll</HintPath>
+    </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
@@ -104,25 +110,10 @@
     <Compile Include="Configuration\ConfigurationSerializer.cs" />
     <Compile Include="Configuration\ConfigurationSection.cs" />
     <Compile Include="Configuration\IterableConfigurationSection.cs" />
-    <Compile Include="Controller\GamepadAbstraction.cs" />
-    <Compile Include="Controller\GamepadAbstractionStore.cs" />
-    <Compile Include="Emulator\Configuration\ConfigurationFlagSelectValue.cs" />
-    <Compile Include="Emulator\Configuration\ConfigurationFlagStore.cs" />
-    <Compile Include="Emulator\EmulatorBridge.cs" />
-    <Compile Include="Emulator\ProcessEmulatorInstance.cs" />
-    <Compile Include="Game\GameMediaCache.cs" />
-    <Compile Include="Game\GameScreenshotCache.cs" />
+    <Compile Include="Extensibility\PluginProperties.cs" />
     <Compile Include="Platform\PlatformControllerPorts.cs" />
-    <Compile Include="Platform\PlatformPreferencesStore.cs" />
     <Compile Include="Extensibility\Plugin.cs" />
-    <Compile Include="Emulator\Configuration\ConfigurationStore.cs" />
-    <Compile Include="Emulator\Configuration\ConfigurationFlag.cs" />
-    <Compile Include="Emulator\Input\ControllerMapping.cs" />
-    <Compile Include="Emulator\Input\ControllerTemplate.cs" />
-    <Compile Include="Emulator\Input\InputTemplate.cs" />
     <Compile Include="Extensions\JObjectExts.cs" />
-    <Compile Include="Controller\ControllerPortStore.cs" />
-    <Compile Include="Controller\ControllerDefinition.cs" />
     <Compile Include="Extensibility\YamlConfiguration.cs" />
     <Compile Include="Records\File\FileRecord.cs" />
     <Compile Include="Records\File\SqliteFileLibrary.cs" />
@@ -131,29 +122,25 @@
     <Compile Include="Records\Metadata\MetadataCollection.cs" />
     <Compile Include="Records\Metadata\RecordMetadata.cs" />
     <Compile Include="Records\Metadata\SqliteMetadataLibrary.cs" />
-    <Compile Include="Romfile\FileSignature.cs" />
+    <Compile Include="Romfile\FileSignatureMatcher.cs" />
+    <Compile Include="Romfile\RomFileInfo.cs" />
     <Compile Include="Romfile\StructuredFilename.cs" />
-    <Compile Include="Scraper\Scraper.cs" />
-    <Compile Include="Scraper\GameImagesResult.cs" />
-    <Compile Include="Scraper\GameScrapeResult.cs" />
-    <Compile Include="Emulator\Configuration\ConfigurationEntry.cs" />
-    <Compile Include="Emulator\Configuration\ConfigurationProfile.cs" />
-    <Compile Include="Emulator\Configuration\ConfigurationTemplate.cs" />
+    <Compile Include="Scraper\Providers\ProviderQueryFunction.cs" />
+    <Compile Include="Scraper\Providers\QueryProviderSource.cs" />
+    <Compile Include="Scraper\Providers\ScrapedMetadataCollection.cs" />
+    <Compile Include="Scraper\Providers\QueryProvider.cs" />
+    <Compile Include="Scraper\ScrapeEngine.cs" />
     <Compile Include="JsonConverters\PlatformInfoConverter.cs" />
     <Compile Include="Configuration\BooleanMapping.cs" />
-    <Compile Include="Emulator\Input\GamepadMapping.cs" />
-    <Compile Include="Emulator\Input\KeyboardMapping.cs" />
-    <Compile Include="Emulator\EmulatorAssembly.cs" />
     <Compile Include="Extensions\HttpListenerContextExts.cs" />
     <Compile Include="Extensions\IDictionaryExtensions.cs" />
     <Compile Include="Extensions\IListExtensions.cs" />
-    <Compile Include="Controller\ControllerInput.cs" />
-    <Compile Include="Game\GameLibrary.cs" />
     <Compile Include="Platform\PlatformDefaults.cs" />
-    <Compile Include="Game\GameInfo.cs" />
     <Compile Include="Platform\PlatformInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Scraper\ScrapableInfo.cs" />
+    <Compile Include="Scraper\Shiragame\DatInfo.cs" />
+    <Compile Include="Scraper\Shiragame\SerialInfo.cs" />
+    <Compile Include="Scraper\Shiragame\ShiragameProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -165,6 +152,7 @@
     </Content>
     <None Include="packages.config" />
     <Compile Include="Records\Metadata\RecordMetadata.SqlConstructors.cs" />
+    <Compile Include="Romfile\StructuredFilename.LookupTables.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Snowflake.API\Snowflake.API.csproj">
@@ -176,14 +164,13 @@
       <Name>Snowflake.Utility</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\System.Data.SQLite.Core.1.0.99.0\build\net45\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.99.0\build\net45\System.Data.SQLite.Core.targets')" />
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.102.0\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.102.0\build\net451\System.Data.SQLite.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.99.0\build\net45\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.99.0\build\net45\System.Data.SQLite.Core.targets'))" />
+    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.102.0\build\net451\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.102.0\build\net451\System.Data.SQLite.Core.targets'))" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

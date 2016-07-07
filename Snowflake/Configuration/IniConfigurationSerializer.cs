@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
 using Snowflake.Configuration.Attributes;
-using Snowflake.Emulator.Configuration;
 
 namespace Snowflake.Configuration
 {

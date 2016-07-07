@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Snowflake.Events</RootNamespace>
     <AssemblyName>Snowflake.Events</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -34,8 +35,8 @@
       <HintPath>..\packages\Fleck.0.13.0.57\lib\net40\Fleck.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -54,15 +55,7 @@
     <Compile Include="CoreEvents\Game\GamePreDeleteEventArgs.cs" />
     <Compile Include="CoreEvents\Game\GameDeleteEventArgs.cs" />
     <Compile Include="CoreEvents\Game\GameEventArgs.cs" />
-    <Compile Include="CoreEvents\Game\GameInfoScrapedEventArgs.cs" />
-    <Compile Include="CoreEvents\Game\GameProcessStartEventArgs.cs" />
-    <Compile Include="CoreEvents\Game\GameProcessQuitEventArgs.cs" />
     <Compile Include="CoreEvents\Game\GameAddEventArgs.cs" />
-    <Compile Include="CoreEvents\Game\GameQuitEventArgs.cs" />
-    <Compile Include="CoreEvents\Game\GameResultsScrapedEventArgs.cs" />
-    <Compile Include="CoreEvents\Game\GameStartEventArgs.cs" />
-    <Compile Include="CoreEvents\Modify\ModifyControllerProfileEventArgs.cs" />
-    <Compile Include="CoreEvents\Modify\ModifyConfigurationFlagEventArgs.cs" />
     <Compile Include="CoreEvents\Modify\ModifyGameInfoEventArgs.cs" />
     <Compile Include="CoreEvents\Modify\ModifyPlatformPreferenceEventArgs.cs" />
     <Compile Include="CoreEvents\Modify\ModifyPortInputDeviceEventArgs.cs" />
@@ -88,6 +81,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

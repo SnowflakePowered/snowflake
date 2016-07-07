@@ -16,47 +16,42 @@ namespace Snowflake.Records.File
         public Guid Guid { get; }
         public string MimeType { get; }
         public string FilePath { get; }
-        public Guid Record { get; }
+        public Guid Record => new Guid(this.Metadata["file_linkedrecord"]);
 
-        internal FileRecord(Guid record, IDictionary<string, IRecordMetadata> metadata, string filePath, string mimeType)
+        internal FileRecord(Guid guid, IDictionary<string, IRecordMetadata> metadata, string filePath, string mimeType)
         {
-            this.Record = record;
             this.MimeType = mimeType;
             this.FilePath = filePath;
-            this.Guid = GuidUtility.Create(this.Record, this.FilePath);
+            this.Guid = guid;
             this.Metadata = new MetadataCollection(this.Guid, metadata);
         }
 
-        public FileRecord(string filePath, string mimeType, Guid record):
-            this(record, new Dictionary<string, IRecordMetadata>(), filePath, mimeType)
+        internal FileRecord(IFileRecord record, IGameRecord game)
         {
-            
+            this.MimeType = record.MimeType;
+            this.FilePath = record.FilePath;
+            this.Guid = record.Guid;
+            this.Metadata = record.Metadata;
+            this.Metadata["file_linkedrecord"] = game.Guid.ToString();
+        }
+
+
+        public FileRecord(string filePath, string mimeType, Guid record):
+            this(Guid.NewGuid(), new Dictionary<string, IRecordMetadata>(), filePath, mimeType)
+        {
+            this.Metadata["file_linkedrecord"] = record.ToString();
         }
 
 
         public FileRecord(string filePath, string mimeType, IGameRecord gameRecord) :
-            this(gameRecord.Guid, new Dictionary<string, IRecordMetadata>(), filePath, mimeType)
+            this(filePath, mimeType, gameRecord.Guid)
+        {
+        }
+
+        public FileRecord(string filePath, string mimeType)
+            : this(Guid.NewGuid(), new Dictionary<string, IRecordMetadata>(), filePath, mimeType)
         {
 
         }
-
-        public bool Equals(IFileRecord file) => this.Guid == file.Guid;
-        public override int GetHashCode() => this.Guid.GetHashCode();
-
-        public override bool Equals(object file)
-        {
-            IFileRecord f = file as IFileRecord;
-
-            if (f == null)
-            {
-                return false;
-            }
-
-            // Return true if the fields match:
-            return f.Guid == this.Guid;
-        }
-
-        public static bool operator ==(FileRecord fileX, IFileRecord fileY) => fileX.Equals(fileY);
-        public static bool operator !=(FileRecord fileX, IFileRecord fileY) => !(fileX == fileY);
     }
 }

@@ -12,7 +12,6 @@ using System.Runtime.CompilerServices;
 using Newtonsoft.Json;
 using NLog;
 using Snowflake.Constants.Plugin;
-using Snowflake.Emulator;
 using Snowflake.Events;
 using Snowflake.Extensions;
 using Snowflake.Extensibility;

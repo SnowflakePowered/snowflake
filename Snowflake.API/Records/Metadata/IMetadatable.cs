@@ -16,7 +16,7 @@ namespace Snowflake.Records.Metadata
         /// Converts the class into a metadatable representation, keyed on the metadata name.
         /// </summary>
         /// <returns>An enumerable of metadata</returns>
-        IDictionary<string, IRecordMetadata> ToMetadata();
+        IMetadataCollection ToMetadata();
 
         /// <summary>
         /// Converts a collection of metadata to a class
