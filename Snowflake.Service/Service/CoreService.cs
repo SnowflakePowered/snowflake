@@ -6,8 +6,6 @@ using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
 using Snowflake.Ajax;
-using Snowflake.Events;
-using Snowflake.Events.ServiceEvents;
 using Snowflake.Platform;
 using Snowflake.Extensibility;
 using Snowflake.Romfile;

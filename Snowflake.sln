@@ -33,10 +33,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{A3EE47
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Service", "Snowflake.Service\Snowflake.Service.csproj", "{F3A129D6-0C4C-41BC-B60B-5B7E7E6D1A77}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Events", "Snowflake.Events\Snowflake.Events.csproj", "{7AE8E842-E2A9-4F01-BEC1-8A7A60CC16BB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.StandardAjax", "Snowflake.StandardAjax\Snowflake.StandardAjax.csproj", "{25E40ACB-3872-4BEB-8937-AE70104E7F3B}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Shell.Windows", "Snowflake.Shell.Windows\Snowflake.Shell.Windows.csproj", "{F7A99F10-7770-490C-BF02-92C8B58AD2F3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Shell.Windows.ElectronUserInterface", "Snowflake.Shell.Windows.ElectronUserInterface\Snowflake.Shell.Windows.ElectronUserInterface.csproj", "{A7191A2F-1478-4E46-A633-BF592230B38E}"
@@ -67,6 +63,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scrapers", "Scrapers", "{F1916D1A-9EDB-4E1A-86A3-E245FE72845E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Scrapers.TheGamesDb", "Scrapers\Snowflake.Scrapers.TheGamesDb\Snowflake.Scrapers.TheGamesDb.csproj", "{5147DCB0-0C60-4D44-A737-067C99BCCD65}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Events", "Snowflake.Events\Snowflake.Events.csproj", "{7AE8E842-E2A9-4F01-BEC1-8A7A60CC16BB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -116,22 +114,6 @@ Global
 		{F3A129D6-0C4C-41BC-B60B-5B7E7E6D1A77}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F3A129D6-0C4C-41BC-B60B-5B7E7E6D1A77}.Release|x86.ActiveCfg = Release|Any CPU
 		{F3A129D6-0C4C-41BC-B60B-5B7E7E6D1A77}.Release|x86.Build.0 = Release|Any CPU
-		{7AE8E842-E2A9-4F01-BEC1-8A7A60CC16BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7AE8E842-E2A9-4F01-BEC1-8A7A60CC16BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7AE8E842-E2A9-4F01-BEC1-8A7A60CC16BB}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{7AE8E842-E2A9-4F01-BEC1-8A7A60CC16BB}.Debug|x86.Build.0 = Debug|Any CPU
-		{7AE8E842-E2A9-4F01-BEC1-8A7A60CC16BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7AE8E842-E2A9-4F01-BEC1-8A7A60CC16BB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7AE8E842-E2A9-4F01-BEC1-8A7A60CC16BB}.Release|x86.ActiveCfg = Release|Any CPU
-		{7AE8E842-E2A9-4F01-BEC1-8A7A60CC16BB}.Release|x86.Build.0 = Release|Any CPU
-		{25E40ACB-3872-4BEB-8937-AE70104E7F3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{25E40ACB-3872-4BEB-8937-AE70104E7F3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{25E40ACB-3872-4BEB-8937-AE70104E7F3B}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{25E40ACB-3872-4BEB-8937-AE70104E7F3B}.Debug|x86.Build.0 = Debug|Any CPU
-		{25E40ACB-3872-4BEB-8937-AE70104E7F3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{25E40ACB-3872-4BEB-8937-AE70104E7F3B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{25E40ACB-3872-4BEB-8937-AE70104E7F3B}.Release|x86.ActiveCfg = Release|Any CPU
-		{25E40ACB-3872-4BEB-8937-AE70104E7F3B}.Release|x86.Build.0 = Release|Any CPU
 		{F7A99F10-7770-490C-BF02-92C8B58AD2F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F7A99F10-7770-490C-BF02-92C8B58AD2F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7A99F10-7770-490C-BF02-92C8B58AD2F3}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -212,6 +194,14 @@ Global
 		{5147DCB0-0C60-4D44-A737-067C99BCCD65}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5147DCB0-0C60-4D44-A737-067C99BCCD65}.Release|x86.ActiveCfg = Release|Any CPU
 		{5147DCB0-0C60-4D44-A737-067C99BCCD65}.Release|x86.Build.0 = Release|Any CPU
+		{7AE8E842-E2A9-4F01-BEC1-8A7A60CC16BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AE8E842-E2A9-4F01-BEC1-8A7A60CC16BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AE8E842-E2A9-4F01-BEC1-8A7A60CC16BB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7AE8E842-E2A9-4F01-BEC1-8A7A60CC16BB}.Debug|x86.Build.0 = Debug|Any CPU
+		{7AE8E842-E2A9-4F01-BEC1-8A7A60CC16BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AE8E842-E2A9-4F01-BEC1-8A7A60CC16BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AE8E842-E2A9-4F01-BEC1-8A7A60CC16BB}.Release|x86.ActiveCfg = Release|Any CPU
+		{7AE8E842-E2A9-4F01-BEC1-8A7A60CC16BB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

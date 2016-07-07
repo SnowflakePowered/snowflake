@@ -96,7 +96,6 @@
     <Compile Include="Configuration\ExampleConfigurationSection.cs" />
     <Compile Include="Configuration\ExampleIterableConfigurationSection.cs" />
     <Compile Include="Configuration\IniConfigurationSerializerTests.cs" />
-    <Compile Include="Events\SnowflakeEventManagerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Records\MetadataCollectionTests.cs" />
     <Compile Include="Records\FileRecordTests.cs" />
@@ -104,7 +103,6 @@
     <Compile Include="Records\SqliteMetadataLibraryTests.cs" />
     <Compile Include="Records\SqliteGameLibraryTests.cs" />
     <Compile Include="Records\SqliteFileLibraryTests.cs" />
-    <Compile Include="Scraper\GameImagesResultTests.cs" />
     <Compile Include="Scraper\MetadataProviderTests.cs" />
     <Compile Include="Scraper\ScrapingIntegrationTests.cs" />
     <Compile Include="Scraper\ShiragameTests.cs" />
@@ -140,10 +138,6 @@
     <ProjectReference Include="..\Snowflake.API\Snowflake.API.csproj">
       <Project>{2841aeea-03d5-47b0-9d90-375dfa19559a}</Project>
       <Name>Snowflake.API</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Snowflake.Events\Snowflake.Events.csproj">
-      <Project>{7ae8e842-e2a9-4f01-bec1-8a7a60cc16bb}</Project>
-      <Name>Snowflake.Events</Name>
     </ProjectReference>
     <ProjectReference Include="..\Snowflake.FileSignatures\Snowflake.Romfile.FileSignatures.csproj">
       <Project>{c66356e8-d95e-438a-8ba5-84a04b3d39a4}</Project>

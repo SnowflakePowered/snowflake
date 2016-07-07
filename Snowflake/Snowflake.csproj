@@ -130,9 +130,6 @@
     <Compile Include="Scraper\Providers\ScrapedMetadataCollection.cs" />
     <Compile Include="Scraper\Providers\QueryProvider.cs" />
     <Compile Include="Scraper\ScrapeEngine.cs" />
-    <Compile Include="Scraper\Scraper.cs" />
-    <Compile Include="Scraper\GameImagesResult.cs" />
-    <Compile Include="Scraper\GameScrapeResult.cs" />
     <Compile Include="JsonConverters\PlatformInfoConverter.cs" />
     <Compile Include="Configuration\BooleanMapping.cs" />
     <Compile Include="Extensions\HttpListenerContextExts.cs" />
@@ -141,7 +138,6 @@
     <Compile Include="Platform\PlatformDefaults.cs" />
     <Compile Include="Platform\PlatformInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Scraper\ScrapableInfo.cs" />
     <Compile Include="Scraper\Shiragame\DatInfo.cs" />
     <Compile Include="Scraper\Shiragame\SerialInfo.cs" />
     <Compile Include="Scraper\Shiragame\ShiragameProvider.cs" />

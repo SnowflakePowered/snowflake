@@ -55,9 +55,7 @@
     <Compile Include="CoreEvents\Game\GamePreDeleteEventArgs.cs" />
     <Compile Include="CoreEvents\Game\GameDeleteEventArgs.cs" />
     <Compile Include="CoreEvents\Game\GameEventArgs.cs" />
-    <Compile Include="CoreEvents\Game\GameInfoScrapedEventArgs.cs" />
     <Compile Include="CoreEvents\Game\GameAddEventArgs.cs" />
-    <Compile Include="CoreEvents\Game\GameResultsScrapedEventArgs.cs" />
     <Compile Include="CoreEvents\Modify\ModifyGameInfoEventArgs.cs" />
     <Compile Include="CoreEvents\Modify\ModifyPlatformPreferenceEventArgs.cs" />
     <Compile Include="CoreEvents\Modify\ModifyPortInputDeviceEventArgs.cs" />

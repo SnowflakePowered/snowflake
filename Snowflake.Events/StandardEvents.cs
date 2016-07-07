@@ -13,8 +13,6 @@ namespace Snowflake.Events
             eventManager.RegisterEvent(this.GameDelete);
             eventManager.RegisterEvent(this.GamePreAdd);
             eventManager.RegisterEvent(this.GamePreDelete);
-            eventManager.RegisterEvent(this.GameInfoScraped);
-            eventManager.RegisterEvent(this.GameResultsScraped);
 
             eventManager.RegisterEvent(this.AjaxRequestReceived);
             eventManager.RegisterEvent(this.AjaxResponseSending);
@@ -35,8 +33,7 @@ namespace Snowflake.Events
         public event EventHandler<GameDeleteEventArgs> GameDelete;
         public event EventHandler<GamePreAddEventArgs> GamePreAdd;
         public event EventHandler<GamePreDeleteEventArgs> GamePreDelete;
-        public event EventHandler<GameInfoScrapedEventArgs> GameInfoScraped;
-        public event EventHandler<GameResultsScrapedEventArgs> GameResultsScraped;
+
 
 
         public event EventHandler<AjaxRequestReceivedEventArgs> AjaxRequestReceived;
