@@ -1,13 +1,14 @@
-﻿using Snowflake.Game;
+﻿
+using Snowflake.Records.Game;
 using Snowflake.Service;
 
 namespace Snowflake.Events.CoreEvents.GameEvent
 {
     public abstract class GameEventArgs : SnowflakeEventArgs
     {
-        public IGameInfo GameInfo { get; set; }
+        public IGameRecord GameInfo { get; set; }
         
-        public GameEventArgs(ICoreService eventCoreInstance, IGameInfo gameInfo) : base(eventCoreInstance)
+        protected GameEventArgs(ICoreService eventCoreInstance, IGameRecord gameInfo) : base(eventCoreInstance)
         {
             this.GameInfo = gameInfo;
         }

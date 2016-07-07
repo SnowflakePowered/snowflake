@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
 using Snowflake.Extensibility;
-using Snowflake.Game;
 using Snowflake.Service;
 
 namespace Snowflake.Emulator

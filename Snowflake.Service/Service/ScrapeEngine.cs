@@ -10,34 +10,32 @@ using Snowflake.Scraper;
 using System.IO;
 using System.Security.Cryptography;
 using Snowflake.Constants;
-using Snowflake.Game;
 using Snowflake.Platform;
 using Snowflake.Utility;
 
 namespace Snowflake.Service
 {
-    internal class ScrapeEngine : IScrapeEngine
+    public class ScrapeEngine : IScrapeEngine
     {
       
-        private readonly IStoneProvider stoneProvider;
-        private readonly IPluginManager pluginManager;
+        private readonly ICoreService coreService;
         
-        public ScrapeEngine(IStoneProvider stoneProvider, IPluginManager pluginManager)
+        public ScrapeEngine(ICoreService coreService)
         {
-            this.stoneProvider = stoneProvider;
-            this.pluginManager = pluginManager;
+            this.coreService = coreService;
         }
 
         public IScrapableInfo GetScrapableInfo(string fileName, IPlatformInfo knownPlatform = null)
         {
-            var fileSignatures = this.pluginManager.Get<IFileSignature>();
+            //todo write to take advantage of mimetypes.
+            var fileSignatures = this.coreService.Get<IPluginManager>().Get<IFileSignature>();
             var vettedSignature = fileSignatures
                 .Where(signature => signature.Value.FileExtensionMatches(fileName)).FirstOrDefault(signature => signature.Value.HeaderSignatureMatches(fileName)).Value;
             var platformFromFileExtension =
-                this.stoneProvider.Platforms.FirstOrDefault(
-                    platform => platform.Value.FileExtensions.Contains(Path.GetExtension(fileName))).Value;
+                this.coreService.Platforms.FirstOrDefault(
+                    platform => platform.Value.FileTypes.Keys.Contains(Path.GetExtension(fileName))).Value;
             var romPlatform =
-                this.stoneProvider.Platforms[
+                this.coreService.Platforms[
                     vettedSignature?.SupportedPlatform ??
                     knownPlatform?.PlatformID ?? 
                     platformFromFileExtension.PlatformID
@@ -48,7 +46,7 @@ namespace Snowflake.Service
         public IList<IGameScrapeResult> GetScrapeResults(IScrapableInfo information)
         {
             var scrapers =
-               this.pluginManager
+               this.coreService.Get<IPluginManager>()
                    .Get<IScraper>()
                    .Where(scraper => scraper.Value.SupportedPlatforms.Contains(information.StonePlatformId)).Select(scraper => scraper.Value).OrderByDescending(scraper => scraper.ScraperAccuracy);
             return
@@ -62,7 +60,7 @@ namespace Snowflake.Service
         public IGameInfo GetGameData(IScrapableInfo information, double acceptableAccuracy)
         {
             var scrapers =
-                this.pluginManager
+                this.coreService.Get<IPluginManager>()
                     .Get<IScraper>()
                     .Where(scraper => scraper.Value.SupportedPlatforms.Contains(information.StonePlatformId))
                     .Select(scraper => scraper.Value)
@@ -85,13 +83,13 @@ namespace Snowflake.Service
 
         public IGameInfo GetGameData(IScrapableInfo information, IGameScrapeResult scrapeResult)
         {
-            var scraper = this.pluginManager.Get<IScraper>(scrapeResult.Scraper);
+            var scraper = this.coreService.Get<IPluginManager>().Get<IScraper>(scrapeResult.Scraper);
             return this.GetGameData(information, scrapeResult, scraper);
         }
         public IGameInfo GetGameData(IScrapableInfo information, IGameScrapeResult scrapeResult, IScraper scraper)
         {
             var gameInfo = scraper?.GetGameDetails(scrapeResult);
-            var gameResult = new GameInfo(
+            IGameInfo gameResult = new GameInfo(
                 information.StonePlatformId,
                 gameInfo.Item1[GameInfoFields.game_title],
                 information.OriginalFilePath, gameInfo.Item1);
@@ -113,7 +111,7 @@ namespace Snowflake.Service
                        .OrderByDescending(result => result.Accuracy * scraper.ScraperAccuracy)?
                        .First();
             var gameInfo = scraper.GetGameDetails(bestResult);
-            var gameResult = new GameInfo(
+            IGameInfo gameResult = new GameInfo(
                 information.StonePlatformId,
                 gameInfo.Item1[GameInfoFields.game_title],
                 information.OriginalFilePath, gameInfo.Item1);

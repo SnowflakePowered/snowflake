@@ -7,7 +7,7 @@ using Snowflake.Extensibility;
 using Snowflake.Service;
 using Snowflake.Service.Manager;
 using Xunit;
-namespace Snowflake.Tests.Service
+namespace Snowflake.Service.Tests
 {
 
     public interface ITestPlugin : IPlugin

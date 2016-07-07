@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
-using Snowflake.Game;
+using Snowflake.Records.Game;
 
 namespace Snowflake.Emulator
 {
@@ -37,7 +37,7 @@ namespace Snowflake.Emulator
         /// <summary>
         /// The emulated game associated with this instance
         /// </summary>
-        IGameInfo EmulatedGame { get; }
+        IGameRecord EmulatedGame { get; }
         /// <summary>
         /// The temporary working directory of this instance, whether all configuration files are to be cached,
         /// as well as the instance itself.

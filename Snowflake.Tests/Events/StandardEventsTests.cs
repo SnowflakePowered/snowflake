@@ -5,7 +5,6 @@ using Snowflake.Emulator;
 using Snowflake.Events.CoreEvents.GameEvent;
 using Snowflake.Events.CoreEvents.ModifyEvent;
 using Snowflake.Events.ServiceEvents;
-using Snowflake.Game;
 using Snowflake.Platform;
 using Snowflake.Scraper;
 using Snowflake.Service;
@@ -17,36 +16,7 @@ namespace Snowflake.Events.Tests
     public class SnowflakeEventSourceTests
     {
 
-        [Fact]
-        public void GameAddEvent_Test()
-        {
-            SnowflakeEventManager.InitEventSource();
-            new StandardEvents().RegisterSnowflakeEvents(SnowflakeEventManager.EventSource);
-            var fakeCoreService = new Mock<ICoreService>();
-            var fakeGameInfo = new Mock<IGameInfo>();
-            var fakeGameDatabase = new Mock<IGameLibrary>();
-            var args = new GameAddEventArgs(fakeCoreService.Object, fakeGameInfo.Object, fakeGameDatabase.Object);
-            SnowflakeEventManager.EventSource.Subscribe<GameAddEventArgs>("TestHandler", (s, e) =>
-            {
-                Assert.Equal(args, e);
-            });
-            SnowflakeEventManager.EventSource.RaiseEvent(args);
-        }
-        [Fact]
-        public void GameDeleteEvent_Test()
-        {
-            SnowflakeEventManager.InitEventSource();
-            new StandardEvents().RegisterSnowflakeEvents(SnowflakeEventManager.EventSource);
-            var fakeCoreService = new Mock<ICoreService>();
-            var fakeGameInfo = new Mock<IGameInfo>();
-            var fakeGameDatabase = new Mock<IGameLibrary>();
-            var args = new GameDeleteEventArgs(fakeCoreService.Object, fakeGameInfo.Object, fakeGameDatabase.Object);
-            SnowflakeEventManager.EventSource.Subscribe<GameDeleteEventArgs>("TestHandler", (s, e) =>
-            {
-                Assert.Equal(args, e);
-            });
-            SnowflakeEventManager.EventSource.RaiseEvent(args);
-        }
+       
       /*  [Fact]
         public void GameProcessQuitEventArgs_Test()
         {

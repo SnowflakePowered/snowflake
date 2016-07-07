@@ -9,11 +9,12 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Snowflake</RootNamespace>
     <AssemblyName>Snowflake.API</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,20 +45,20 @@
     <Reference Include="Mono.Security">
       <HintPath>..\packages\Mono.Net.HttpListener.1.0.0.0\lib\net45\Mono.Security.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.SQLite, Version=1.0.99.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Data.SQLite.Core.1.0.99.0\lib\net45\System.Data.SQLite.dll</HintPath>
+    <Reference Include="System.Data.SQLite, Version=1.0.102.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.102.0\lib\net451\System.Data.SQLite.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Data.SQLite.Linq, Version=1.0.99.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.99.0\lib\net45\System.Data.SQLite.Linq.dll</HintPath>
+    <Reference Include="System.Data.SQLite.Linq, Version=1.0.102.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.102.0\lib\net451\System.Data.SQLite.Linq.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Drawing" />
@@ -78,6 +79,9 @@
     <Compile Include="Ajax\IJSMethod.cs" />
     <Compile Include="Ajax\IJSRequest.cs" />
     <Compile Include="Ajax\IJSResponse.cs" />
+    <Compile Include="Caching\IKeyedImageCache.cs" />
+    <Compile Include="Caching\ImageTypes.cs" />
+    <Compile Include="Caching\ImageMetadataKeys.cs" />
     <Compile Include="Configuration\Attributes\ConfigurationOptionAttribute.cs" />
     <Compile Include="Configuration\Input\HotkeyOptionAttribute.cs" />
     <Compile Include="Configuration\Input\IInputMapping.cs" />
@@ -92,6 +96,8 @@
     <Compile Include="Configuration\IConfigurationSerializer.cs" />
     <Compile Include="Configuration\IConfigurationTypeMapper.cs" />
     <Compile Include="Configuration\Attributes\SelectionOptionAttribute.cs" />
+    <Compile Include="Emulator\EmulatorAssemblyType.cs" />
+    <Compile Include="Emulator\IEmulatorAssembly.cs" />
     <Compile Include="Emulator\IEmulatorInstance.cs" />
     <Compile Include="Extensibility\ContainerLoadPriorityAttribute.cs" />
     <Compile Include="Extensibility\ContainerLoadPriority.cs" />
@@ -100,6 +106,7 @@
     <Compile Include="Input\Controller\ControllerElementType.cs" />
     <Compile Include="Input\Controller\IControllerElementInfo.cs" />
     <Compile Include="Input\Controller\IControllerLayout.cs" />
+    <Compile Include="Extensibility\IPluginProperties.cs" />
     <Compile Include="Input\Controller\Mapped\IMappedControllerElement.cs" />
     <Compile Include="Input\Controller\Mapped\IMappedControllerElementCollection.cs" />
     <Compile Include="Input\Controller\KeyboardKey.cs" />
@@ -109,44 +116,53 @@
     <Compile Include="Input\Device\ILowLevelInputDevice.cs" />
     <Compile Include="Input\Device\IInputManager.cs" />
     <Compile Include="Extensibility\PluginAttribute.cs" />
-    <Compile Include="Game\IGameMediaCache.cs" />
-    <Compile Include="Game\IGameScreenshotCache.cs" />
+    <Compile Include="Records\File\FileMetadataKeys.cs" />
+    <Compile Include="Records\File\IFileRecord.cs" />
     <Compile Include="Input\Device\InputApi.cs" />
+    <Compile Include="Records\Game\GameMetadataKeys.cs" />
+    <Compile Include="Records\Game\IGameRecord.cs" />
+    <Compile Include="Records\File\IFileLibrary.cs" />
+    <Compile Include="Records\Game\IGameLibrary.cs" />
+    <Compile Include="Records\ILibrary.cs" />
+    <Compile Include="Records\IRecordLibrary.cs" />
+    <Compile Include="Records\Metadata\IMetadataCollection.cs" />
+    <Compile Include="Records\Metadata\IRecordMetadata.cs" />
+    <Compile Include="Records\IRecord.cs" />
+    <Compile Include="Records\Metadata\IMetadatable.cs" />
+    <Compile Include="Records\Metadata\IMetadataLibrary.cs" />
     <Compile Include="Romfile\IFileSignature.cs" />
+    <Compile Include="Romfile\IFileSignatureMatcher.cs" />
+    <Compile Include="Romfile\IRomFileInfo.cs" />
     <Compile Include="Romfile\IStructuredFilename.cs" />
-    <Compile Include="Scraper\IScrapableInfo.cs" />
     <Compile Include="Platform\IPlatformControllerPorts.cs" />
     <Compile Include="Extensibility\Configuration\IPluginConfigOption.cs" />
     <Compile Include="Extensibility\Configuration\IPluginSelectOption.cs" />
     <Compile Include="Extensibility\Configuration\PluginOptionType.cs" />
-    <Compile Include="Scraper\ImagesInfoFields.cs" />
-    <Compile Include="Game\GameInfoFields.cs" />
     <Compile Include="Extensibility\PluginInfoFields.cs" />
+    <Compile Include="Scraper\IScrapeEngine.cs" />
+    <Compile Include="Scraper\Providers\IQueryProvider.cs" />
+    <Compile Include="Scraper\Providers\IQueryProviderSource.cs" />
+    <Compile Include="Scraper\Providers\ReturnMetadataAttribute.cs" />
+    <Compile Include="Scraper\Providers\IScrapedMetadataCollection.cs" />
+    <Compile Include="Scraper\Providers\ProviderAttribute.cs" />
+    <Compile Include="Scraper\Providers\RequiredMetadataAttribute.cs" />
+    <Compile Include="Scraper\Shiragame\IRomInfo.cs" />
+    <Compile Include="Scraper\Shiragame\IShiragameProvider.cs" />
+    <Compile Include="Scraper\Shiragame\ISerialInfo.cs" />
     <Compile Include="Service\IStoneProvider.cs" />
     <Compile Include="Service\IUserInterface.cs" />
-    <Compile Include="Service\IScrapeEngine.cs" />
-    <Compile Include="Scraper\ScraperInfoFields.cs" />
     <Compile Include="Configuration\IBooleanMapping.cs" />
-    <Compile Include="Emulator\EmulatorAssemblyType.cs" />
-    <Compile Include="Emulator\IEmulatorAssembly.cs" />
-    <Compile Include="Game\IGameLibrary.cs" />
-    <Compile Include="Game\IGameInfo.cs" />
     <Compile Include="Platform\IPlatformDefaults.cs" />
     <Compile Include="Platform\IPlatformInfo.cs" />
     <Compile Include="Extensibility\Configuration\IPluginConfiguration.cs" />
     <Compile Include="Extensibility\IPlugin.cs" />
     <Compile Include="Extensibility\IPluginContainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Scraper\GameImagesType.cs" />
-    <Compile Include="Scraper\IGameImagesResult.cs" />
-    <Compile Include="Scraper\IGameScrapeResult.cs" />
-    <Compile Include="Scraper\IScraper.cs" />
     <Compile Include="Service\HttpServer\BaseHttpServer.cs" />
     <Compile Include="Service\ICoreService.cs" />
     <Compile Include="Service\JSWebSocketServer\IJSWebSocketServer.cs" />
     <Compile Include="Service\Manager\IAjaxManager.cs" />
     <Compile Include="Service\HttpServer\IBaseHttpServer.cs" />
-    <Compile Include="Service\Manager\IEmulatorAssembliesManager.cs" />
     <Compile Include="Service\Manager\IPluginManager.cs" />
     <Compile Include="Service\JSWebSocketServer\JSWebSocketServerEventArgs.cs" />
     <Compile Include="Service\Manager\IServerManager.cs" />
@@ -161,12 +177,12 @@
     <Folder Include="Events\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\System.Data.SQLite.Core.1.0.99.0\build\net45\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.99.0\build\net45\System.Data.SQLite.Core.targets')" />
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.102.0\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.102.0\build\net451\System.Data.SQLite.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.99.0\build\net45\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.99.0\build\net45\System.Data.SQLite.Core.targets'))" />
+    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.102.0\build\net451\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.102.0\build\net451\System.Data.SQLite.Core.targets'))" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

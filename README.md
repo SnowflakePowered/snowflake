@@ -5,7 +5,7 @@
 
 |<img src="https://cloud.githubusercontent.com/assets/1000503/13551021/797655f6-e2f9-11e5-8aea-a5caad2aeef8.png" width=25 alt="appveyor">|<img src="https://cloud.githubusercontent.com/assets/1000503/13550984/6042f432-e2f8-11e5-95cf-72fb4134c56d.png" width=25 alt="travis">|<img src="https://cloud.githubusercontent.com/assets/1000503/13551072/5f605ea8-e2fb-11e5-8641-d5efac977ead.png" width=25 alt="codecov">|<img src="https://cloud.githubusercontent.com/assets/1000503/14840198/d3013102-0bff-11e6-945b-98d0728fb0b3.png" width=25 alt="license">|
 |-----|-----|-----|-----|
-|[![Windows Build status](https://ci.appveyor.com/api/projects/status/mhei9fdtja5j04kk?svg=true)](https://ci.appveyor.com/project/RonnChyran/snowflake)|[![Travis](https://img.shields.io/travis/SnowflakePowered/snowflake.svg)](https://travis-ci.org/SnowflakePowered/snowflake)| [![Codecov](https://img.shields.io/codecov/c/github/SnowflakePowered/snowflake.svg)](https://codecov.io/github/SnowflakePowered/snowflake?ref=master)|[![License](https://img.shields.io/badge/license-mpl%202.0-blue.svg?style=flat)](https://github.com/SnowflakePowered/snowflake/blob/master/LICENSE)|
+|[![Windows Build status](https://ci.appveyor.com/api/projects/status/mhei9fdtja5j04kk?svg=true)](https://ci.appveyor.com/project/RonnChyran/snowflake)|[![Travis](https://img.shields.io/travis/SnowflakePowered/snowflake.svg)](https://travis-ci.org/SnowflakePowered/snowflake)| [![Codecov](https://img.shields.io/codecov/c/github/SnowflakePowered/snowflake.svg)](https://codecov.io/gh/SnowflakePowered/snowflake)|[![License](https://img.shields.io/badge/license-mpl%202.0-blue.svg?style=flat)](https://github.com/SnowflakePowered/snowflake/blob/master/LICENSE)|
 
 **Latest Version**
 

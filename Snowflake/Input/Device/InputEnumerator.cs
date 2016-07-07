@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Snowflake.Extensibility;
 using Snowflake.Input.Controller;
 using Snowflake.Service;
@@ -19,7 +20,8 @@ namespace Snowflake.Input.Device
 
         protected InputEnumerator(ICoreService coreInstance) : base(coreInstance)
         {
-            this.ControllerLayouts = (this.PluginInfo["controllerLayouts"]
+            //todo fix this+
+            this.ControllerLayouts = (JsonConvert.DeserializeObject<JObject>(this.PluginProperties.Get("controllerLayouts"))
                 .ToObject<IDictionary<string, ControllerLayout>>() as IDictionary<string, ControllerLayout>)?
                 .ToDictionary(kvp => kvp.Key, kvp => kvp.Value as IControllerLayout);
         }

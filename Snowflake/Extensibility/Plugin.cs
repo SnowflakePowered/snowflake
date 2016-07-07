@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using NLog;
 using Snowflake.Constants.Plugin;
 using Snowflake.Extensibility.Configuration;
@@ -13,7 +15,7 @@ namespace Snowflake.Extensibility
     public abstract class Plugin : IPlugin
     {
         public string PluginName { get; }
-        public IDictionary<string, dynamic> PluginInfo { get; }
+        public IPluginProperties PluginProperties { get; }
         public Assembly PluginAssembly { get; }
         public string PluginDataPath { get; }
         public virtual IPluginConfiguration PluginConfiguration { get; protected set; }
@@ -26,11 +28,13 @@ namespace Snowflake.Extensibility
             this.PluginName = this.GetPluginName();
             this.PluginAssembly = this.GetType().Assembly;
             this.CoreInstance = coreInstance;
-            string file = this.GetStringResource("plugin.json");
-            var pluginInfo = JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(file, new JsonSerializerSettings() {Culture = CultureInfo.InvariantCulture});
-            this.PluginInfo = pluginInfo;
+            this.PluginProperties = 
+                new JsonPluginProperties(JObject
+                .FromObject(JsonConvert
+                .DeserializeObject(this.GetStringResource("plugin.json"), 
+                                    new JsonSerializerSettings { Culture = CultureInfo.InvariantCulture })));
             this.Logger = LogManager.GetLogger(this.PluginName);
-            this.SupportedPlatforms = this.PluginInfo[PluginInfoFields.SupportedPlatforms].ToObject<IList<string>>();
+            this.SupportedPlatforms = this.PluginProperties.GetEnumerable(PluginInfoFields.SupportedPlatforms).ToList();
             this.PluginDataPath = Path.Combine(coreInstance.AppDataDirectory, "plugins", this.PluginName);
             if (!Directory.Exists(this.PluginDataPath)) Directory.CreateDirectory(this.PluginDataPath);
         }

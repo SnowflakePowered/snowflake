@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
-using Snowflake.Game;
 using Snowflake.Service.HttpServer;
 using Snowflake.Service.JSWebSocketServer;
 using Snowflake.Service.Manager;
@@ -36,15 +35,15 @@ namespace Snowflake.Service
             this.RegisterService<IStoneProvider>(new StoneProvider());
             this.AppDataDirectory = appDataDirectory;
             this.RegisterService<IServerManager>(new ServerManager());
-            this.RegisterService<IGameLibrary>(new GameLibrary(Path.Combine(this.AppDataDirectory, "games.db")));
-            this.RegisterService<IEmulatorAssembliesManager>(new EmulatorAssembliesManager(Path.Combine(this.AppDataDirectory, "emulators")));
+            //this.RegisterService<IGameLibrary>(new GameLibrary(Path.Combine(this.AppDataDirectory, "games.db")));
+            //this.RegisterService<IEmulatorAssembliesManager>(new EmulatorAssembliesManager(Path.Combine(this.AppDataDirectory, "emulators")));
             this.RegisterService<IPluginManager>(new PluginManager(this.AppDataDirectory, this)); 
             this.RegisterService<IAjaxManager>(new AjaxManager(this)); //todo deprecate with michi-based ipc
-            this.RegisterService<IScrapeEngine>(new ScrapeEngine(this.Get<IStoneProvider>(), this.Get<IPluginManager>()));
+           // this.RegisterService<IScrapeEngine>(new ScrapeEngine(this.Get<IStoneProvider>(), this.Get<IPluginManager>()));
             var serverManager = this.Get<IServerManager>();
             serverManager.RegisterServer("AjaxApiServer", new ApiServer(this)); //todo deprecate with michi-based ipc
             serverManager.RegisterServer("WebSocketApiServer", new JsonApiWebSocketServer(30003, this)); //todo deprecate with michi-based ipc
-            serverManager.RegisterServer("GameCacheServer", new GameCacheServer());
+          //  serverManager.RegisterServer("GameCacheServer", new GameCacheServer());
             
         }
 

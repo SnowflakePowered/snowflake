@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
-using Snowflake.Game;
+using Snowflake.Records.Game;
 
 namespace Snowflake.Emulator
 {
@@ -17,7 +17,7 @@ namespace Snowflake.Emulator
         public bool IsGenerated { get; }
         public bool IsDestroyed { get; }
         public IEmulatorAssembly EmulatorAssembly { get; }
-        public IGameInfo EmulatedGame { get; }
+        public IGameRecord EmulatedGame { get; }
         public string InstanceDirectory { get; }
         public IDictionary<IConfigurationSection, IConfigurationSerializer> ConfigurationSections { get; }
         public IConfigurationSection ConfigurationFlagSection { get; }
