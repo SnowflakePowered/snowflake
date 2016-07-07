@@ -37,6 +37,11 @@ namespace Snowflake.Caching
         public const string MediaPromotional = "media_promotional";
 
         /// <summary>
+        /// Game logoes
+        /// </summary>
+        public const string MediaLogo = "media_logo";
+
+        /// <summary>
         /// An arcade cabinet marquee
         /// </summary>
         public const string MediaMarquee = "media_marquee";

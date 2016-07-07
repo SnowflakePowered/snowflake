@@ -37,7 +37,6 @@ namespace Snowflake.Scraper.Providers
                                         select ((ReturnMetadataAttribute)attr).ReturnMetadata)
                     let requiredValues = (from attr in Attribute.GetCustomAttributes(m, typeof(RequiredMetadataAttribute))
                                           select ((RequiredMetadataAttribute)attr).Metadata)
-                    where returnValues.Any()
                     where requiredValues.Any()
                     let func = ProviderQueryFunction<T>.Make(this, m)
                     select new ProviderQueryFunction<T>(requiredValues, returnValues, func)).ToList();

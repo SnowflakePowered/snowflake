@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Snowflake.Caching;
 using Snowflake.Records.File;
 using Snowflake.Records.Game;
 using Snowflake.Romfile;
@@ -30,6 +31,9 @@ namespace Snowflake.Tests.Scraper
             new FileSignaturesContainer().RegisterFileSignatures(this.fileSignatureMatcher);
             var source = new QueryProviderSource();
             source.Register(this.scrapedProvider);
+            source.Register(
+                new TheGamesDbMediaProvider(
+                    new KeyedImageCache(Environment.CurrentDirectory)));
             this.scrapeGen = new ScrapeEngine(this.stoneProvider, new ShiragameProvider("shiragame.db"),
                 source, this.fileSignatureMatcher);
         }

@@ -52,13 +52,22 @@ namespace Snowflake.Scraper
                 fileRecord.Metadata[FileMetadataKeys.RomCanonicalTitle]);
             gr.Files.Add(new FileRecord(fileRecord, gr));
             //merge scrape resu;ts
-            var bestMatch = (from provider in this.providers.MetadataProviders
+            var bestMatch = (from provider in this.providers.MetadataProviders.AsParallel()
                              from result in provider.Query(fileRecord.Metadata)
                              orderby result?.Accuracy descending
                              select result as IMetadataCollection).First();
             foreach (string key in bestMatch.Keys)
             {
                 gr.Metadata[key] = bestMatch[key]; //copy keys
+            }
+            IEnumerable<IFileRecord> media = (from provider in this.providers.MediaProviders.AsParallel()
+                                              from results in provider.Query(gr.Metadata)
+                from result in results
+                select result);
+
+            foreach (var record in media)
+            {
+                gr.Files.Add(record);
             }
             //.. and so forth
             // ssomehow merge all provider data? I don't know...
