@@ -11,7 +11,7 @@ namespace Snowflake.Configuration
     /// One file can have one single serializer for every section, and one 
     /// filename for the configuration collection.
     /// </summary>
-    public interface IConfigurationCollection
+    public interface IConfigurationCollection : IEnumerable<IConfigurationSection>
     {
         /// <summary>
         /// The configuration serializer for this collection

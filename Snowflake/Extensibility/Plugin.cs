@@ -38,10 +38,12 @@ namespace Snowflake.Extensibility
             this.PluginDataPath = Path.Combine(coreInstance.AppDataDirectory, "plugins", this.PluginName);
             if (!Directory.Exists(this.PluginDataPath)) Directory.CreateDirectory(this.PluginDataPath);
         }
+
         public void LoadConfigurationOptions()
         {
             this.PluginConfigurationOptions = new List<IPluginConfigOption>();
         }
+
         public Stream GetResource(string resourceName)
         {
             var pluginName = this.PluginName.Replace('-', '_'); //the compiler replaces all dashes in resource names with underscores

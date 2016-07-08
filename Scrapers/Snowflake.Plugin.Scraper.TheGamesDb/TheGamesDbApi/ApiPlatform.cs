@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
 
-namespace Snowflake.Scrapers.TheGamesDb.TheGamesDbApi
+namespace Snowflake.Plugin.Scraper.TheGamesDb.TheGamesDbApi
 {
     /// <summary>
     /// Contains the data for one platform in the database.

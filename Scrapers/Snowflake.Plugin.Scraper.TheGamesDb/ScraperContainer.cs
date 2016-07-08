@@ -3,7 +3,7 @@ using Snowflake.Extensibility;
 using Snowflake.Scraper.Providers;
 using Snowflake.Service;
 
-namespace Snowflake.Scrapers.TheGamesDb
+namespace Snowflake.Plugin.Scraper.TheGamesDb
 {
     public class ScraperContainer : IPluginContainer
     {

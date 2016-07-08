@@ -9,51 +9,32 @@ using Snowflake.Records.Game;
 
 namespace Snowflake.Emulator
 {
-    public class EmulatorInstance : IEmulatorInstance
+    public abstract class EmulatorInstance : IEmulatorInstance
     {
+        protected EmulatorInstance()
+        {
+            this.InstanceGuid = Guid.NewGuid();
+            this.InstanceMetadata = new Dictionary<string, string>();
+            string roamingAppdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            this.InstancePath = Path.Combine(roamingAppdata, "snowflake-cache", this.InstanceGuid.ToString());
+            Directory.CreateDirectory(this.InstancePath);
+        }
+
         public Guid InstanceGuid { get; }
-        public bool IsActive { get; }
-        public bool IsRunning { get; }
-        public bool IsGenerated { get; }
-        public bool IsDestroyed { get; }
-        public IEmulatorAssembly EmulatorAssembly { get; }
-        public IGameRecord EmulatedGame { get; }
-        public string InstanceDirectory { get; }
-        public IDictionary<IConfigurationSection, IConfigurationSerializer> ConfigurationSections { get; }
-        public IConfigurationSection ConfigurationFlagSection { get; }
-
-        public void Create()
-        {
-           /*  var configs = (from config in this.ConfigurationSections
-             select Tuple.Create(config.Key.ConfigurationFileName, config.Value.Serialize(config.Key)));
-
-            foreach (var config in configs)
-            {
-                File.AppendAllText(config.Item1, config.Item2 + Environment.NewLine);
-            }*/
-        }
-
-        public void Start()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Pause()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Destroy()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Save()
-        {
-            throw new NotImplementedException();
-        }
-
-        public DateTime StartTime { get; }
-        public DateTime DestroyTime { get; }
+        public IDictionary<string, string> InstanceMetadata { get; }
+        public bool IsActive { get; protected set; }
+        public bool IsRunning { get; protected set; }
+        public bool IsGenerated { get; protected set; }
+        public bool IsDestroyed { get; protected set; }
+        public IGameRecord RunningGame { get; protected set; }
+        public string InstancePath { get; protected set; }
+        public abstract IDictionary<string, IConfigurationCollection> ConfigurationCollection { get; }
+        public abstract void Create();
+        public abstract void Start();
+        public abstract void Pause();
+        public abstract void Resume();
+        public abstract void Destroy();
+        public abstract DateTime StartTime { get; }
+        public abstract DateTime DestroyTime { get; }
     }
 }

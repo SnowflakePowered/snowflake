@@ -117,9 +117,8 @@
     <Compile Include="Configuration\Input\InputOption.cs" />
     <Compile Include="Configuration\Input\InputTemplate.cs" />
     <Compile Include="Configuration\KeyValuePairConfigurationSerializer.cs" />
-    <Compile Include="Emulator\EmulatorAssembly.cs" />
-    <Compile Include="Emulator\EmulatorInstance.cs" />
     <Compile Include="Emulator\EmulatorAdapter.cs" />
+    <Compile Include="Emulator\EmulatorInstance.cs" />
     <Compile Include="Extensibility\PluginProperties.cs" />
     <Compile Include="Input\Controller\ControllerElementCollection.cs" />
     <Compile Include="Input\Controller\ControllerElementInfo.cs" />
@@ -127,7 +126,6 @@
     <Compile Include="Input\Controller\Mapped\MappedControllerElementStore.cs" />
     <Compile Include="Input\Device\InputEnumerator.cs" />
     <Compile Include="Input\Controller\Mapped\MappedControllerElement.cs" />
-    <Compile Include="JsonConverters\EmulatorAssemblyConverter.cs" />
     <Compile Include="JsonConverters\InputMappingConverter.cs" />
     <Compile Include="JsonConverters\PlatformInfoConverter.cs" />
     <Compile Include="JsonConverters\ControllerLayoutConverter.cs" />

@@ -1,6 +1,9 @@
 ﻿using System;
+using System.CodeDom;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -29,6 +32,18 @@ namespace Snowflake.Configuration
                     select new Action(() => sectionInfo.SetValue(configurationSection, type))))
                 setter();
             return configurationSection;
+        }
+
+        public IEnumerator<IConfigurationSection> GetEnumerator()
+        {
+            return (from properties in this.GetType().GetProperties()
+                where typeof(IConfigurationSection).IsAssignableFrom(properties.PropertyType)
+                select properties.GetValue(this) as IConfigurationSection).GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
         }
 
         public IConfigurationSerializer Serializer { get; }

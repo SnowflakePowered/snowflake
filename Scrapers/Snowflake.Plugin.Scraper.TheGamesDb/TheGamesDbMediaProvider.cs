@@ -14,9 +14,9 @@ using Snowflake.Records.Game;
 using Snowflake.Records.Metadata;
 using Snowflake.Utility;
 using Snowflake.Scraper.Providers;
-using Snowflake.Scrapers.TheGamesDb.TheGamesDbApi;
+using Snowflake.Plugin.Scraper.TheGamesDb.TheGamesDbApi;
 using Snowflake.Caching;
-namespace Snowflake.Scrapers.TheGamesDb
+namespace Snowflake.Plugin.Scraper.TheGamesDb
 {
     public class TheGamesDbMediaProvider : QueryProvider<IList<IFileRecord>>
     {

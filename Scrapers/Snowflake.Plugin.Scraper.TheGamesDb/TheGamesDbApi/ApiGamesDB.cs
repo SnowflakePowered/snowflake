@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
 
-namespace Snowflake.Scrapers.TheGamesDb.TheGamesDbApi
+namespace Snowflake.Plugin.Scraper.TheGamesDb.TheGamesDbApi
 {
     /// <summary>
     /// Fetches information from TheGamesDB.

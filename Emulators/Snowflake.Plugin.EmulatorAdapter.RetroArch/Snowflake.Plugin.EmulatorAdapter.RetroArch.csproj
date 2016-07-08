@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adapters\RetroArchNestopiaAdapter.cs" />
     <Compile Include="Configuration\FramethrottleConfiguration.cs" />
     <Compile Include="Configuration\AudioConfiguration.cs" />
     <Compile Include="Configuration\Internal\BuiltinConfiguration.cs" />
@@ -59,6 +60,7 @@
     <Compile Include="Configuration\Internal\NetworkConfiguration.cs" />
     <Compile Include="Configuration\PauseConfiguration.cs" />
     <Compile Include="Configuration\Internal\RecordConfiguration.cs" />
+    <Compile Include="RetroArchInstance.cs" />
     <Compile Include="RetroPadTemplate.cs" />
     <Compile Include="RetroArchConfigurationCollection.cs" />
     <Compile Include="Configuration\Internal\RewindConfiguration.cs" />

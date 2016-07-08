@@ -15,6 +15,10 @@ namespace Snowflake.Emulator
         /// </summary>
         Guid InstanceGuid { get; }
         /// <summary>
+        /// Metadata related this emulator instance 
+        /// </summary>
+        IDictionary<string, string> InstanceMetadata { get; }
+        /// <summary>
         /// Whether or not this instance is active
         /// </summary>
         bool IsActive { get; }
@@ -31,26 +35,18 @@ namespace Snowflake.Emulator
         /// </summary>
         bool IsDestroyed { get; }
         /// <summary>
-        /// The emulator assembly associated with this instance
-        /// </summary>
-        IEmulatorAssembly EmulatorAssembly { get; }
-        /// <summary>
         /// The emulated game associated with this instance
         /// </summary>
-        IGameRecord EmulatedGame { get; }
+        IGameRecord RunningGame { get; }
         /// <summary>
         /// The temporary working directory of this instance, whether all configuration files are to be cached,
         /// as well as the instance itself.
         /// </summary>
-        string InstanceDirectory { get; }
+        string InstancePath { get; }
         /// <summary>
         /// The configuration sections associated with this instance
         /// </summary>
-        IDictionary<IConfigurationSection, IConfigurationSerializer> ConfigurationSections { get; }
-        /// <summary>
-        /// todo configuration flags
-        /// </summary>
-        IConfigurationSection ConfigurationFlagSection { get; }
+        IDictionary<string, IConfigurationCollection> ConfigurationCollection { get; }
         /// <summary>
         /// Creates the instance and serializes all configuration nescessary.
         /// </summary>
@@ -64,13 +60,13 @@ namespace Snowflake.Emulator
         /// </summary>
         void Pause();
         /// <summary>
+        /// Resumes the instance
+        /// </summary>
+        void Resume();
+        /// <summary>
         /// Stops and destroys the instance. After destruction the instance can no longer be recreated.
         /// </summary>
         void Destroy();
-        /// <summary>
-        /// Saves the instance. Could also save the game.
-        /// </summary>
-        void Save();
         /// <summary>
         /// The time this instance started
         /// </summary>

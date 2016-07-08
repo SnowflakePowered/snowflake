@@ -7,8 +7,8 @@
     <ProjectGuid>{5147DCB0-0C60-4D44-A737-067C99BCCD65}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Snowflake.Scrapers.TheGamesDb</RootNamespace>
-    <AssemblyName>Snowflake.Scrapers.TheGamesDb</AssemblyName>
+    <RootNamespace>Snowflake.Plugin.Scraper.TheGamesDb</RootNamespace>
+    <AssemblyName>Snowflake.Plugin.Scraper.TheGamesDb</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

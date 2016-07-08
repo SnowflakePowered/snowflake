@@ -9,9 +9,9 @@ using Snowflake.Records.Game;
 using Snowflake.Records.Metadata;
 using Snowflake.Utility;
 using Snowflake.Scraper.Providers;
-using Snowflake.Scrapers.TheGamesDb.TheGamesDbApi;
+using Snowflake.Plugin.Scraper.TheGamesDb.TheGamesDbApi;
 
-namespace Snowflake.Scrapers.TheGamesDb
+namespace Snowflake.Plugin.Scraper.TheGamesDb
 {
     public class TheGamesDbMetadataProvider : QueryProvider<IScrapedMetadataCollection>
     {

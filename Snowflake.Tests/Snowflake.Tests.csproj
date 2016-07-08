@@ -145,9 +145,9 @@
     <EmbeddedResource Include="TestResources\InputMappings\DirectInput.DEVICE_XINPUT.json" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Scrapers\Snowflake.Scrapers.TheGamesDb\Snowflake.Scrapers.TheGamesDb.csproj">
+    <ProjectReference Include="..\Scrapers\Snowflake.Plugin.Scraper.TheGamesDb\Snowflake.Plugin.Scraper.TheGamesDb.csproj">
       <Project>{5147dcb0-0c60-4d44-a737-067c99bccd65}</Project>
-      <Name>Snowflake.Scrapers.TheGamesDb</Name>
+      <Name>Snowflake.Plugin.Scraper.TheGamesDb</Name>
     </ProjectReference>
     <ProjectReference Include="..\Snowflake.API\Snowflake.API.csproj">
       <Project>{2841aeea-03d5-47b0-9d90-375dfa19559a}</Project>
