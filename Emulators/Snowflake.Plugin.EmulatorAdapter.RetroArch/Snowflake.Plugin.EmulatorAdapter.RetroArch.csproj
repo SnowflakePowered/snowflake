@@ -61,7 +61,8 @@
     <Compile Include="Configuration\PauseConfiguration.cs" />
     <Compile Include="Configuration\Internal\RecordConfiguration.cs" />
     <Compile Include="RetroArchInstance.cs" />
-    <Compile Include="RetroPadTemplate.cs" />
+    <Compile Include="RetroArchService.cs" />
+    <Compile Include="Input\RetroPadTemplate.cs" />
     <Compile Include="RetroArchConfigurationCollection.cs" />
     <Compile Include="Configuration\Internal\RewindConfiguration.cs" />
     <Compile Include="Configuration\SaveConfiguration.cs" />
@@ -86,7 +87,7 @@
     <Compile Include="Selections\VideoConfiguration\VideoRotation.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="RetroPadTemplate.InputOptions.cs" />
+    <Compile Include="Input\RetroPadTemplate.InputOptions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Snowflake.API\Snowflake.API.csproj">
@@ -99,7 +100,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HotkeyConfiguration.cs" />
+    <Compile Include="Input\HotkeyConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resource\RetroArch-Common\InputMappings\DirectInput.DEVICE_KEYBOARD.json" />

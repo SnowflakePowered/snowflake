@@ -8,7 +8,7 @@ using Snowflake.Input.Controller;
 using Snowflake.Input.Controller.Mapped;
 using Snowflake.Input.Device;
 
-namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
+namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Input
 {
     public partial class RetroPadTemplate
     {

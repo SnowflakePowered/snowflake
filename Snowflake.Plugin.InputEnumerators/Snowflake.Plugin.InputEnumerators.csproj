@@ -48,6 +48,9 @@
     <Compile Include="WiimoteEnumerator.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="resource\InputEnumerator-Wiimote\plugin.json" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Snowflake.API\Snowflake.API.csproj">
       <Project>{2841aeea-03d5-47b0-9d90-375dfa19559a}</Project>
       <Name>Snowflake.API</Name>
@@ -57,10 +60,6 @@
       <Name>Snowflake</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="resource\InputEnumerator-Wiimote\plugin.json" />
-  </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="resource\InputEnumerator-Xbox360\plugin.json" />
   </ItemGroup>

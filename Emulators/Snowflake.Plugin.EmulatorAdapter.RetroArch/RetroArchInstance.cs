@@ -14,14 +14,13 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
     {
         public RetroArchInstance(RetroArchConfiguration configSection)
         {
-            this.ConfigurationCollection = new Dictionary<string, IConfigurationCollection>() { {configSection.FileName, configSection}};
+            this.ConfigurationCollection = new Dictionary<string, IConfigurationCollection> { {configSection.FileName, configSection}};
         }
 
         public override IDictionary<string, IConfigurationCollection> ConfigurationCollection { get; }
 
         public override void Create()
         {
-
             var rcg = ConfigurationCollection["retroarch.cfg"] as RetroArchConfiguration;
             rcg.DirectoryConfiguration.SavefileDirectory = this.InstancePath;
            // rcg.DirectoryConfiguration.SystemDirectory set bios files directory

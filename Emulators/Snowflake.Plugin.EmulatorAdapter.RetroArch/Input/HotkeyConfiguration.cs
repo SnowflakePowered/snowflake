@@ -8,7 +8,7 @@ using Snowflake.Configuration.Input;
 using Snowflake.Input.Controller;
 using Snowflake.Input.Controller.Mapped;
 
-namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
+namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Input
 {
     public class HotkeyConfiguration 
     {

@@ -9,7 +9,7 @@ namespace Snowflake.Plugin.Scraper.TheGamesDb
     {
         public void Compose(ICoreService coreInstance)
         {
-            coreInstance.Get<IQueryProviderSource>().Register(new TheGamesDbMetadataProvider());
+            coreInstance.Get<IQueryProviderSource>().Register(new TheGamesDbMetadataProvider()); //todo use pluginManager?
             coreInstance.Get<IQueryProviderSource>()
                 .Register(new TheGamesDbMediaProvider(new KeyedImageCache(coreInstance.AppDataDirectory)));
         }

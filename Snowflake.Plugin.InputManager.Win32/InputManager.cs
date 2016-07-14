@@ -21,7 +21,8 @@ namespace Snowflake.Plugin.InputManager.Win32
             var directInputGamepads =
                 this.GetGenericGamepads(devices.Where(device => device.Usage == UsageId.GenericGamepad), directInput);
             var xinputGamepads = this.GetXInputGamepads();
-            var keyboards = directInput.GetDevices(DeviceClass.Keyboard, DeviceEnumerationFlags.AllDevices).Select(keyboard => new LowLevelInputDevice()
+            var keyboards = directInput.GetDevices(DeviceClass.Keyboard, DeviceEnumerationFlags.AllDevices)
+                .Select(keyboard => new LowLevelInputDevice()
             {
                 DI_InstanceGUID = keyboard.InstanceGuid,
                 DI_InstanceName = keyboard.InstanceName.Trim('\0'),
