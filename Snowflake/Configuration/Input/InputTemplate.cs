@@ -56,7 +56,7 @@ namespace Snowflake.Configuration.Input
 
                 //Find the correct input option for this target.
                 var inputOption = this.InputOptions
-                    .Where(option => option.TargetElement == element.TargetElement)
+                    .Where(option => option.TargetElement == element.LayoutElement)
                     .FirstOrDefault(
                         option => (option.InputOptionType == InputOptionType.Any)
                                   || (option.InputOptionType == InputOptionType.KeyboardKey && deviceIsKeyboard)

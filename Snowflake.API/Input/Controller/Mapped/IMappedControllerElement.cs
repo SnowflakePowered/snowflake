@@ -8,7 +8,7 @@
         /// <summary>
         /// The virtual element.
         /// </summary>
-        ControllerElement TargetElement { get; }
+        ControllerElement LayoutElement { get; }
 
         /// <summary>
         /// The real element.

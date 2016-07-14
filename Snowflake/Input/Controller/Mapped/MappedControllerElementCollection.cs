@@ -45,6 +45,7 @@ namespace Snowflake.Input.Controller.Mapped
                 {ControllerElement.AxisRightAnalogNegativeY, KeyboardKey.KeyK},
                 {ControllerElement.AxisRightAnalogPositiveX, KeyboardKey.KeyL}
             };
+
         public IEnumerator<IMappedControllerElement> GetEnumerator()
         {
             return this.controllerElements.GetEnumerator();
@@ -85,16 +86,17 @@ namespace Snowflake.Input.Controller.Mapped
                 : MappedControllerElementCollection.GetDefaultKeyboardMappings(realDevice, virtualDevice);
         }
 
-        private static IMappedControllerElementCollection GetDefaultKeyboardMappings(IControllerLayout realDevice, IControllerLayout virtualDevice)
+        private static IMappedControllerElementCollection GetDefaultKeyboardMappings(IControllerLayout realKeyboard, IControllerLayout virtualDevice)
         {
             var mappedElements = (from element in virtualDevice.Layout
-                                  where realDevice.Layout[element.Key] != null
+                                  //where realKeyboard.Layout[element.Key] != null
                                   select new MappedControllerElement(element.Key) { DeviceKeyboardKey = 
                                   (MappedControllerElementCollection.DefaultKeyboardMappings.ContainsKey(element.Key) 
                                   ? MappedControllerElementCollection.DefaultKeyboardMappings[element.Key] 
-                                  : KeyboardKey.KeyNone)}
+                                  : KeyboardKey.KeyNone),
+                                  DeviceElement = ControllerElement.Keyboard}
                            );
-            var elementCollection = new MappedControllerElementCollection(realDevice.LayoutID, virtualDevice.LayoutID);
+            var elementCollection = new MappedControllerElementCollection(realKeyboard.LayoutID, virtualDevice.LayoutID);
             foreach (var element in mappedElements)
             {
                 elementCollection.Add(element);

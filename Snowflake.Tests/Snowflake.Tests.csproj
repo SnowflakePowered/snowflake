@@ -105,6 +105,7 @@
     <Compile Include="Configuration\IniConfigurationSerializerTests.cs" />
     <Compile Include="Configuration\TestInputTemplate.cs" />
     <Compile Include="Events\StandardEventsTests.cs" />
+    <Compile Include="Input\InputMapperStoreTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Records\MetadataCollectionTests.cs" />
     <Compile Include="Records\FileRecordTests.cs" />
