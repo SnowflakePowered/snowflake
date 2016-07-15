@@ -165,10 +165,10 @@ namespace Snowflake.Input
                 );
 
             this.backingDatabase.CreateTable("ports", 
-                "PlatformId TEXT",
-                "PortNumber INTEGER",
-                "Layout TEXT",
-                "Device TEXT");
+                "PlatformId TEXT NOT NULL",
+                "PortNumber INTEGER NOT NULL",
+                "Layout TEXT NOT NULL",
+                "Device TEXT NOT NULL");
         }
     }
 }
