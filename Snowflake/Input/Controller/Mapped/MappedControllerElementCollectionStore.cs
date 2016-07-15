@@ -16,6 +16,12 @@ namespace Snowflake.Input
     {
         private readonly SqliteDatabase backingDatabase;
 
+        public MappedControllerElementCollectionStore()
+        {
+            this.backingDatabase = new SqliteDatabase("elements.db");
+            this.CreateDatabase();
+        }
+
         internal void AddPlatforms(IStoneProvider stoneProvider)
         {
             //loop through all platforms
@@ -35,21 +41,13 @@ namespace Snowflake.Input
             //LayoutPort0 - LayoutPort15, -> Fake Device 
             //DevicePort0 - DevicePort15 -> Real Device
         }
-        public IMappedControllerElementCollection GetControllerMappings(string layoutName, string deviceName)
+        public IMappedControllerElementCollection GetMappedElements(string layoutName, string deviceName)
         {
             throw new NotImplementedException();
         }
 
-        public void SetMapping(IMappedControllerElementCollection mappedCollection)
-        {
-            /*
-             * 
-                dbConnection.Execute(@"INSERT OR REPLACE INTO files(uuid, game, path, mimetype) 
-                                         VALUES (@Guid, @Record, @FilePath, @MimeType)", record);
-                dbConnection.Execute(@"INSERT OR REPLACE INTO metadata(uuid, record, key, value) 
-                                        VALUES (@Guid, @Record, @Key, @Value)", record.Metadata.Values);
-                                        */
-            
+        public void SetMappedElements(IMappedControllerElementCollection mappedCollection)
+        {          
             this.backingDatabase.Execute(dbConnection =>
             {
                 var query = MappedControllerElementCollectionStore.BuildQuery(mappedCollection);
@@ -72,15 +70,15 @@ namespace Snowflake.Input
             dynamic queryObject = new ExpandoObject();
             queryObject.ControllerId = mappedCollection.ControllerId;
             queryObject.DeviceId = mappedCollection.DeviceId;
-            var parameters = new StringBuilder("@ControllerId, @DeviceId, ");
+            var parameters = new StringBuilder("@ControllerId, @DeviceId");
             foreach(var element in mappedCollection)
             {
                 string layoutElementName = Enum.GetName(typeof(ControllerElement), element.LayoutElement);
                 string deviceElement = (element.DeviceElement == ControllerElement.Keyboard) ? 
                     Enum.GetName(typeof(KeyboardKey), element.DeviceKeyboardKey) : Enum.GetName(typeof(ControllerElement), element.DeviceElement);
+                parameters.Append(", @");
                 parameters.Append(layoutElementName);
-                parameters.Append(", ");
-                queryObject[layoutElementName] = deviceElement;
+                ((IDictionary <string, object>)queryObject)[layoutElementName] = deviceElement;
             }
             return new Tuple<string, string, dynamic>(parameters.ToString(), parameters.Replace("@", "").ToString(), queryObject);
 
@@ -89,8 +87,8 @@ namespace Snowflake.Input
         public void CreateDatabase()
         {
             this.backingDatabase.CreateTable("mappings",
-                "ControllerId TEXT",
-                "DeviceId TEXT",
+                "ControllerId TEXT NOT NULL",
+                "DeviceId TEXT NOT NULL",
                 "ButtonA TEXT",
                 "ButtonB TEXT",
                 "ButtonC TEXT",
@@ -162,7 +160,8 @@ namespace Snowflake.Input
                 "PointerAxisPositiveY TEXT",
                 "PointerAxisNegativeY TEXT",
                 "PointerAxisPositiveZ TEXT",
-                "PointerAxisNegativeZ TEXT"
+                "PointerAxisNegativeZ TEXT",
+                "PRIMARY KEY (ControllerId, DeviceId)"
                 );
 
             this.backingDatabase.CreateTable("ports", 

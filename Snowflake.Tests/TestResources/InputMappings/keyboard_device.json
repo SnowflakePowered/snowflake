@@ -1,0 +1,13 @@
+﻿{
+	"LayoutID": "DEVICE_KEYBOARD",
+	"FriendlyName": "Standard Keyboard",
+	"Platforms": [
+
+	],
+	"Layout": {
+		"Keyboard": {
+			"Label": "Keyboard",
+			"Type": "Keyboard"
+		}
+	}
+}
