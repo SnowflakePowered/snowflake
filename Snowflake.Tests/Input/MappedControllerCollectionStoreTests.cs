@@ -23,7 +23,12 @@ namespace Snowflake.Input.Tests
             var mapcol = MappedControllerElementCollection.GetDefaultMappings(realmapping, testmappings);
             var elementStore = new Input.MappedControllerElementCollectionStore();
             elementStore.SetMappedElements(mapcol);
-            Assert.NotNull(elementStore.GetMappedElements(mapcol.DeviceId, mapcol.ControllerId));
+            var retStore = elementStore.GetMappedElements(mapcol.ControllerId, mapcol.DeviceId);
+            foreach(var element in retStore)
+            {
+                Assert.Contains(element.LayoutElement, mapcol.Select(x => x.LayoutElement));
+                Assert.Equal(element.DeviceElement, mapcol.First(x => x.LayoutElement == element.LayoutElement).DeviceElement);
+            }
         }
 
         [Fact]
@@ -36,7 +41,12 @@ namespace Snowflake.Input.Tests
             var mapcol = MappedControllerElementCollection.GetDefaultMappings(realmapping, testmappings);
             var elementStore = new Input.MappedControllerElementCollectionStore();
             elementStore.SetMappedElements(mapcol);
-            Assert.NotNull(elementStore.GetMappedElements(mapcol.DeviceId, mapcol.ControllerId));
+            var retStore = elementStore.GetMappedElements(mapcol.ControllerId, mapcol.DeviceId);
+            foreach (var element in retStore)
+            {
+                Assert.Contains(element.LayoutElement, mapcol.Select(x => x.LayoutElement));
+                Assert.Equal(element.DeviceKeyboardKey, mapcol.First(x => x.LayoutElement == element.LayoutElement).DeviceKeyboardKey);
+            }
         }
     }
 }

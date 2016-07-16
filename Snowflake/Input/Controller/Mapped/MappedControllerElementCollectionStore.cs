@@ -43,7 +43,29 @@ namespace Snowflake.Input
         }
         public IMappedControllerElementCollection GetMappedElements(string layoutName, string deviceName)
         {
-            throw new NotImplementedException();
+            return this.backingDatabase.Query<IMappedControllerElementCollection>(dbConnection =>
+            {
+                dynamic result = dbConnection.QueryFirst<dynamic>(@"SELECT * FROM mappings WHERE ControllerId = @layoutName AND DeviceId = @deviceName", new { layoutName, deviceName });
+                var collection = new MappedControllerElementCollection(result.DeviceId, result.ControllerId);
+
+                foreach (KeyValuePair<string, object> element in (IDictionary<string, object>)result)
+                {
+                    if (element.Key == "DeviceId" || element.Key == "ControllerId" || element.Value == null) continue;
+                    string deviceElem = (string)element.Value;
+                    var controllerElement = new MappedControllerElement((ControllerElement)Enum.Parse(typeof(ControllerElement), element.Key));
+                    if (deviceElem.StartsWith("Key"))
+                    {
+                        controllerElement.DeviceElement = ControllerElement.Keyboard;
+                        controllerElement.DeviceKeyboardKey = (KeyboardKey)Enum.Parse(typeof(KeyboardKey), deviceElem);
+                    }
+                    else
+                    {
+                        controllerElement.DeviceElement = (ControllerElement)Enum.Parse(typeof(ControllerElement), deviceElem);
+                    }
+                    collection.Add(controllerElement);
+                }
+                return collection;
+            });
         }
 
         public void SetMappedElements(IMappedControllerElementCollection mappedCollection)
