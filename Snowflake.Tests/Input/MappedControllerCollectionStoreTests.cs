@@ -14,6 +14,20 @@ namespace Snowflake.Input.Tests
     public class MappedControllerElementCollectionStore
     {
         [Fact]
+        public void GetProfileNames_Test()
+        {
+            var stoneProvider = new StoneProvider();
+            var testmappings = stoneProvider.Controllers.First().Value;
+            var realmapping =
+                JsonConvert.DeserializeObject<ControllerLayout>(
+                    TestUtilities.GetStringResource("InputMappings.xinput_device.json"));
+            var mapcol = MappedControllerElementCollection.GetDefaultMappings(realmapping, testmappings);
+            var elementStore = new Input.MappedControllerElementCollectionStore();
+            elementStore.SetMappingProfile(mapcol);
+            var retStore = elementStore.GetMappingProfile(mapcol.ControllerId, mapcol.DeviceId);
+            Assert.Equal("default", elementStore.GetProfileNames(mapcol.ControllerId, mapcol.DeviceId).First());
+        }
+        [Fact]
         public void AddMappedInputCollectionGamepad_Test()
         {
             var stoneProvider = new StoneProvider();
@@ -24,8 +38,8 @@ namespace Snowflake.Input.Tests
                      TestUtilities.GetStringResource("InputMappings.xinput_device.json"));
                     var mapcol = MappedControllerElementCollection.GetDefaultMappings(realmapping, testmappings);
                     var elementStore = new Input.MappedControllerElementCollectionStore();
-                    elementStore.SetMappedElements(mapcol);
-                    var retStore = elementStore.GetMappedElements(mapcol.ControllerId, mapcol.DeviceId);
+                    elementStore.SetMappingProfile(mapcol);
+                    var retStore = elementStore.GetMappingProfile(mapcol.ControllerId, mapcol.DeviceId);
                     foreach (var element in retStore)
                     {
                         Assert.Contains(element.LayoutElement, mapcol.Select(x => x.LayoutElement));
@@ -45,8 +59,8 @@ namespace Snowflake.Input.Tests
                     TestUtilities.GetStringResource("InputMappings.keyboard_device.json"));
                 var mapcol = MappedControllerElementCollection.GetDefaultMappings(realmapping, testmappings);
                 var elementStore = new Input.MappedControllerElementCollectionStore();
-                elementStore.SetMappedElements(mapcol);
-                var retStore = elementStore.GetMappedElements(mapcol.ControllerId, mapcol.DeviceId);
+                elementStore.SetMappingProfile(mapcol);
+                var retStore = elementStore.GetMappingProfile(mapcol.ControllerId, mapcol.DeviceId);
                 foreach (var element in retStore)
                 {
                     Assert.Contains(element.LayoutElement, mapcol.Select(x => x.LayoutElement));

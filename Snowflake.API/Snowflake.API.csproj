@@ -110,6 +110,7 @@
     <Compile Include="Input\Controller\Mapped\IMappedControllerElement.cs" />
     <Compile Include="Input\Controller\Mapped\IMappedControllerElementCollection.cs" />
     <Compile Include="Input\Controller\KeyboardKey.cs" />
+    <Compile Include="Input\Controller\Mapped\IMappedControllerElementCollectionStore.cs" />
     <Compile Include="Input\Device\DeviceType.cs" />
     <Compile Include="Input\Device\IInputDevice.cs" />
     <Compile Include="Input\Device\IInputEnumerator.cs" />

@@ -12,7 +12,7 @@ using System.Dynamic;
 using Dapper;
 namespace Snowflake.Input
 {
-    public class MappedControllerElementCollectionStore
+    public class MappedControllerElementCollectionStore : IMappedControllerElementCollectionStore
     {
         private readonly SqliteDatabase backingDatabase;
 
@@ -22,32 +22,12 @@ namespace Snowflake.Input
             this.CreateDatabase();
         }
 
-        internal void AddPlatforms(IStoneProvider stoneProvider)
-        {
-            //loop through all platforms
-            //get valid controllers
-            //create tables
-            //create a new table for each controller?]
-
-            //controller layouts table
-            //map a layout to device keys. 
-            //same across platforms
-            //LAYOUT
-            //DEVICE
-            //for each ControllerElement key, map to deviceElementKey
-
-            //platform ports table
-            //PLATFORM Text
-            //LayoutPort0 - LayoutPort15, -> Fake Device 
-            //DevicePort0 - DevicePort15 -> Real Device
-        }
-
-        public IMappedControllerElementCollection GetMappedElements(string layoutName, string deviceName, string profileName = "default")
+        public IMappedControllerElementCollection GetMappingProfile(string controllerId, string deviceId, string profileName = "default")
         {
             return this.backingDatabase.Query<IMappedControllerElementCollection>(dbConnection =>
             {
-                dynamic result = dbConnection.Query<dynamic>(@"SELECT * FROM mappings WHERE ControllerId = @layoutName AND DeviceId = @deviceName AND ProfileName = @profileName", 
-                                new { layoutName, deviceName, profileName }).FirstOrDefault();
+                dynamic result = dbConnection.Query<dynamic>(@"SELECT * FROM mappings WHERE ControllerId = @controllerId AND DeviceId = @deviceId AND ProfileName = @profileName", 
+                                new { controllerId, deviceId, profileName }).FirstOrDefault();
                 if (result == null)
                     return null;
 
@@ -73,23 +53,26 @@ namespace Snowflake.Input
             });
         }
 
-        public void SetMappedElements(IMappedControllerElementCollection mappedCollection, string profileName = "default")
+        public IEnumerable<string> GetProfileNames(string controllerId, string deviceId)
+        {
+            var profileNames = this.backingDatabase.Query(dbConnection =>
+            {
+                var result = dbConnection.Query<string>(@"SELECT ProfileName FROM mappings WHERE ControllerId = @controllerId AND DeviceId = @deviceId",
+                                new { controllerId, deviceId });
+                if (result == null)
+                    return null;
+                return result;
+            });
+            return profileNames;
+        }
+
+        public void SetMappingProfile(IMappedControllerElementCollection mappedCollection, string profileName = "default")
         {          
             this.backingDatabase.Execute(dbConnection =>
             {
                 var query = MappedControllerElementCollectionStore.BuildQuery(mappedCollection, profileName);
                 SqlMapper.Execute(dbConnection, $@"INSERT OR REPLACE INTO mappings ({query.Item2}) VALUES ({query.Item1})", query.Item3); //will this work?
             });
-        }
-     
-        public void SetMapping(string layoutName, string deviceName, string layoutKey, string realDeviceKey)
-        {
-
-        }
-
-        public void SetPortDevice(string platfotmInfo, ControllerPort port, string layoutName, string deviceName)
-        {
-            
         }
 
         private static Tuple<string, string, dynamic> BuildQuery(IMappedControllerElementCollection mappedCollection, string profileName)
@@ -112,7 +95,7 @@ namespace Snowflake.Input
 
         }
 
-        public void CreateDatabase()
+        private void CreateDatabase()
         {
             this.backingDatabase.CreateTable("mappings",
                 "ControllerId TEXT NOT NULL",
@@ -194,13 +177,6 @@ namespace Snowflake.Input
                 "Keyboard TEXT",
                 "PRIMARY KEY (ControllerId, DeviceId, ProfileName)"
                 );
-
-            this.backingDatabase.CreateTable("ports", 
-                "PlatformId TEXT NOT NULL",
-                "PortNumber INTEGER NOT NULL",
-                "Layout TEXT NOT NULL",
-                "Device TEXT NOT NULL",
-                "PRIMARY KEY (PlatformId, PortNumber)");
         }
     }
 }
