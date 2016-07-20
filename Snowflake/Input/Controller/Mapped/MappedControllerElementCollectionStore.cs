@@ -41,16 +41,21 @@ namespace Snowflake.Input
             //LayoutPort0 - LayoutPort15, -> Fake Device 
             //DevicePort0 - DevicePort15 -> Real Device
         }
-        public IMappedControllerElementCollection GetMappedElements(string layoutName, string deviceName)
+
+        public IMappedControllerElementCollection GetMappedElements(string layoutName, string deviceName, string profileName = "default")
         {
             return this.backingDatabase.Query<IMappedControllerElementCollection>(dbConnection =>
             {
-                dynamic result = dbConnection.QueryFirst<dynamic>(@"SELECT * FROM mappings WHERE ControllerId = @layoutName AND DeviceId = @deviceName", new { layoutName, deviceName });
+                dynamic result = dbConnection.Query<dynamic>(@"SELECT * FROM mappings WHERE ControllerId = @layoutName AND DeviceId = @deviceName AND ProfileName = @profileName", 
+                                new { layoutName, deviceName, profileName }).FirstOrDefault();
+                if (result == null)
+                    return null;
+
                 var collection = new MappedControllerElementCollection(result.DeviceId, result.ControllerId);
 
                 foreach (KeyValuePair<string, object> element in (IDictionary<string, object>)result)
                 {
-                    if (element.Key == "DeviceId" || element.Key == "ControllerId" || element.Value == null) continue;
+                    if (element.Key == "DeviceId" || element.Key == "ControllerId" || element.Key == "ProfileName" || element.Value == null) continue;
                     string deviceElem = (string)element.Value;
                     var controllerElement = new MappedControllerElement((ControllerElement)Enum.Parse(typeof(ControllerElement), element.Key));
                     if (deviceElem.StartsWith("Key"))
@@ -68,11 +73,11 @@ namespace Snowflake.Input
             });
         }
 
-        public void SetMappedElements(IMappedControllerElementCollection mappedCollection)
+        public void SetMappedElements(IMappedControllerElementCollection mappedCollection, string profileName = "default")
         {          
             this.backingDatabase.Execute(dbConnection =>
             {
-                var query = MappedControllerElementCollectionStore.BuildQuery(mappedCollection);
+                var query = MappedControllerElementCollectionStore.BuildQuery(mappedCollection, profileName);
                 SqlMapper.Execute(dbConnection, $@"INSERT OR REPLACE INTO mappings ({query.Item2}) VALUES ({query.Item1})", query.Item3); //will this work?
             });
         }
@@ -87,12 +92,13 @@ namespace Snowflake.Input
             
         }
 
-        private static Tuple<string, string, dynamic> BuildQuery(IMappedControllerElementCollection mappedCollection)
+        private static Tuple<string, string, dynamic> BuildQuery(IMappedControllerElementCollection mappedCollection, string profileName)
         {
             dynamic queryObject = new ExpandoObject();
             queryObject.ControllerId = mappedCollection.ControllerId;
             queryObject.DeviceId = mappedCollection.DeviceId;
-            var parameters = new StringBuilder("@ControllerId, @DeviceId");
+            queryObject.ProfileName = profileName;
+            var parameters = new StringBuilder("@ControllerId, @DeviceId, @ProfileName");
             foreach(var element in mappedCollection)
             {
                 string layoutElementName = Enum.GetName(typeof(ControllerElement), element.LayoutElement);
@@ -111,6 +117,7 @@ namespace Snowflake.Input
             this.backingDatabase.CreateTable("mappings",
                 "ControllerId TEXT NOT NULL",
                 "DeviceId TEXT NOT NULL",
+                "ProfileName TEXT NOT NULL",
                 "ButtonA TEXT",
                 "ButtonB TEXT",
                 "ButtonC TEXT",
@@ -183,14 +190,17 @@ namespace Snowflake.Input
                 "PointerAxisNegativeY TEXT",
                 "PointerAxisPositiveZ TEXT",
                 "PointerAxisNegativeZ TEXT",
-                "PRIMARY KEY (ControllerId, DeviceId)"
+                "Touchscreen TEXT",
+                "Keyboard TEXT",
+                "PRIMARY KEY (ControllerId, DeviceId, ProfileName)"
                 );
 
             this.backingDatabase.CreateTable("ports", 
                 "PlatformId TEXT NOT NULL",
                 "PortNumber INTEGER NOT NULL",
                 "Layout TEXT NOT NULL",
-                "Device TEXT NOT NULL");
+                "Device TEXT NOT NULL",
+                "PRIMARY KEY (PlatformId, PortNumber)");
         }
     }
 }

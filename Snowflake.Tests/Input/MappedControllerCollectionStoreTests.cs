@@ -16,37 +16,44 @@ namespace Snowflake.Input.Tests
         [Fact]
         public void AddMappedInputCollectionGamepad_Test()
         {
-            var testmappings = new StoneProvider().Controllers.First().Value;
-            var realmapping =
-                JsonConvert.DeserializeObject<ControllerLayout>(
-                    TestUtilities.GetStringResource("InputMappings.xinput_device.json"));
-            var mapcol = MappedControllerElementCollection.GetDefaultMappings(realmapping, testmappings);
-            var elementStore = new Input.MappedControllerElementCollectionStore();
-            elementStore.SetMappedElements(mapcol);
-            var retStore = elementStore.GetMappedElements(mapcol.ControllerId, mapcol.DeviceId);
-            foreach(var element in retStore)
+            var stoneProvider = new StoneProvider();
+            foreach(var testmappings in stoneProvider.Controllers.Values)
             {
-                Assert.Contains(element.LayoutElement, mapcol.Select(x => x.LayoutElement));
-                Assert.Equal(element.DeviceElement, mapcol.First(x => x.LayoutElement == element.LayoutElement).DeviceElement);
-            }
+                var realmapping =
+                 JsonConvert.DeserializeObject<ControllerLayout>(
+                     TestUtilities.GetStringResource("InputMappings.xinput_device.json"));
+                    var mapcol = MappedControllerElementCollection.GetDefaultMappings(realmapping, testmappings);
+                    var elementStore = new Input.MappedControllerElementCollectionStore();
+                    elementStore.SetMappedElements(mapcol);
+                    var retStore = elementStore.GetMappedElements(mapcol.ControllerId, mapcol.DeviceId);
+                    foreach (var element in retStore)
+                    {
+                        Assert.Contains(element.LayoutElement, mapcol.Select(x => x.LayoutElement));
+                        Assert.Equal(element.DeviceElement, mapcol.First(x => x.LayoutElement == element.LayoutElement).DeviceElement);
+                    }
+            }         
         }
 
         [Fact]
         public void AddMappedInputCollectionKeyboard_Test()
         {
-            var testmappings = new StoneProvider().Controllers.First().Value;
-            var realmapping =
+            var stoneProvider = new StoneProvider();
+            foreach (var testmappings in stoneProvider.Controllers.Values)
+            {
+                var realmapping =
                 JsonConvert.DeserializeObject<ControllerLayout>(
                     TestUtilities.GetStringResource("InputMappings.keyboard_device.json"));
-            var mapcol = MappedControllerElementCollection.GetDefaultMappings(realmapping, testmappings);
-            var elementStore = new Input.MappedControllerElementCollectionStore();
-            elementStore.SetMappedElements(mapcol);
-            var retStore = elementStore.GetMappedElements(mapcol.ControllerId, mapcol.DeviceId);
-            foreach (var element in retStore)
-            {
-                Assert.Contains(element.LayoutElement, mapcol.Select(x => x.LayoutElement));
-                Assert.Equal(element.DeviceKeyboardKey, mapcol.First(x => x.LayoutElement == element.LayoutElement).DeviceKeyboardKey);
+                var mapcol = MappedControllerElementCollection.GetDefaultMappings(realmapping, testmappings);
+                var elementStore = new Input.MappedControllerElementCollectionStore();
+                elementStore.SetMappedElements(mapcol);
+                var retStore = elementStore.GetMappedElements(mapcol.ControllerId, mapcol.DeviceId);
+                foreach (var element in retStore)
+                {
+                    Assert.Contains(element.LayoutElement, mapcol.Select(x => x.LayoutElement));
+                    Assert.Equal(element.DeviceKeyboardKey, mapcol.First(x => x.LayoutElement == element.LayoutElement).DeviceKeyboardKey);
+                }
             }
+               
         }
     }
 }
