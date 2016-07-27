@@ -10,13 +10,13 @@ using Snowflake.Service;
 using Snowflake.Utility;
 using System.Dynamic;
 using Dapper;
-namespace Snowflake.Input
+namespace Snowflake.Input.Controller.Mapped
 {
-    public class MappedControllerElementCollectionStore : IMappedControllerElementCollectionStore
+    public class SqliteMappedControllerElementCollectionStore : IMappedControllerElementCollectionStore
     {
         private readonly SqliteDatabase backingDatabase;
 
-        public MappedControllerElementCollectionStore()
+        public SqliteMappedControllerElementCollectionStore()
         {
             this.backingDatabase = new SqliteDatabase("elements.db");
             this.CreateDatabase();
@@ -70,7 +70,7 @@ namespace Snowflake.Input
         {          
             this.backingDatabase.Execute(dbConnection =>
             {
-                var query = MappedControllerElementCollectionStore.BuildQuery(mappedCollection, profileName);
+                var query = SqliteMappedControllerElementCollectionStore.BuildQuery(mappedCollection, profileName);
                 SqlMapper.Execute(dbConnection, $@"INSERT OR REPLACE INTO mappings ({query.Item2}) VALUES ({query.Item1})", query.Item3); //will this work?
             });
         }

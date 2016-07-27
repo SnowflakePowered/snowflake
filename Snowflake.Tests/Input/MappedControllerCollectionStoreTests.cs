@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
+
 namespace Snowflake.Input.Tests
 {
     public class MappedControllerElementCollectionStore
@@ -22,7 +23,7 @@ namespace Snowflake.Input.Tests
                 JsonConvert.DeserializeObject<ControllerLayout>(
                     TestUtilities.GetStringResource("InputMappings.xinput_device.json"));
             var mapcol = MappedControllerElementCollection.GetDefaultMappings(realmapping, testmappings);
-            var elementStore = new Input.MappedControllerElementCollectionStore();
+            var elementStore = new SqliteMappedControllerElementCollectionStore();
             elementStore.SetMappingProfile(mapcol);
             var retStore = elementStore.GetMappingProfile(mapcol.ControllerId, mapcol.DeviceId);
             Assert.Equal("default", elementStore.GetProfileNames(mapcol.ControllerId, mapcol.DeviceId).First());
@@ -37,7 +38,7 @@ namespace Snowflake.Input.Tests
                  JsonConvert.DeserializeObject<ControllerLayout>(
                      TestUtilities.GetStringResource("InputMappings.xinput_device.json"));
                     var mapcol = MappedControllerElementCollection.GetDefaultMappings(realmapping, testmappings);
-                    var elementStore = new Input.MappedControllerElementCollectionStore();
+                    var elementStore = new SqliteMappedControllerElementCollectionStore();
                     elementStore.SetMappingProfile(mapcol);
                     var retStore = elementStore.GetMappingProfile(mapcol.ControllerId, mapcol.DeviceId);
                     foreach (var element in retStore)
@@ -58,7 +59,7 @@ namespace Snowflake.Input.Tests
                 JsonConvert.DeserializeObject<ControllerLayout>(
                     TestUtilities.GetStringResource("InputMappings.keyboard_device.json"));
                 var mapcol = MappedControllerElementCollection.GetDefaultMappings(realmapping, testmappings);
-                var elementStore = new Input.MappedControllerElementCollectionStore();
+                var elementStore = new SqliteMappedControllerElementCollectionStore();
                 elementStore.SetMappingProfile(mapcol);
                 var retStore = elementStore.GetMappingProfile(mapcol.ControllerId, mapcol.DeviceId);
                 foreach (var element in retStore)
