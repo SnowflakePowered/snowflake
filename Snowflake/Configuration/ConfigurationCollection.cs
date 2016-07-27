@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Snowflake.Utility;
 
 namespace Snowflake.Configuration
 {
@@ -22,13 +23,13 @@ namespace Snowflake.Configuration
         /// <returns>The configuration section with default values.</returns>
         public static T MakeDefault<T>() where T : IConfigurationCollection, new()
         {
-            var configurationSection = Activator.CreateInstance<T>();
+            var configurationSection = new T();
             foreach (var setter in 
                 (from sectionInfo in typeof (T).GetProperties()
                     let sectionType = sectionInfo.PropertyType
                     where typeof (IConfigurationSection).IsAssignableFrom(sectionType)
                     where sectionType.GetConstructor(Type.EmptyTypes) != null
-                    let type = Activator.CreateInstance(sectionInfo.PropertyType)
+                    let type = Instantiate.CreateInstance(sectionInfo.PropertyType)
                     select new Action(() => sectionInfo.SetValue(configurationSection, type))))
                 setter();
             return configurationSection;

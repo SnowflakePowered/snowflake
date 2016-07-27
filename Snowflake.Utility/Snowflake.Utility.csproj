@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="GuidUtility.cs" />
     <Compile Include="JsonCreationConverter.cs" />
+    <Compile Include="Instantiate.cs" />
     <Compile Include="StringComparisonExtensions.cs" />
     <Compile Include="SqliteMemoryDatabase.cs" />
     <Compile Include="SqliteDatabase.cs" />
