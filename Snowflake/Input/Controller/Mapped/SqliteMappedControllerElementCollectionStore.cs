@@ -16,9 +16,9 @@ namespace Snowflake.Input.Controller.Mapped
     {
         private readonly SqliteDatabase backingDatabase;
 
-        public SqliteMappedControllerElementCollectionStore()
+        public SqliteMappedControllerElementCollectionStore(SqliteDatabase backingDatabase)
         {
-            this.backingDatabase = new SqliteDatabase("elements.db");
+            this.backingDatabase = backingDatabase;
             this.CreateDatabase();
         }
 

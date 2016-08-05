@@ -15,10 +15,10 @@ using Newtonsoft.Json;
 
 namespace Snowflake.Configuration
 {
-    public class ConfigurationCollectionStore : IConfigurationCollectionStore
+    public class SqliteConfigurationCollectionStore : IConfigurationCollectionStore
     {
         private readonly SqliteDatabase backingDatabase;
-        public ConfigurationCollectionStore(SqliteDatabase sqliteDatabase)
+        public SqliteConfigurationCollectionStore(SqliteDatabase sqliteDatabase)
         {
             this.backingDatabase = sqliteDatabase;
             this.CreateDatabase();
