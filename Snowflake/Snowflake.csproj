@@ -107,7 +107,7 @@
     <Compile Include="Caching\KeyedImageCache.cs" />
     <Compile Include="Configuration\ConfigurationProperty.cs" />
     <Compile Include="Configuration\ConfigurationCollection.cs" />
-    <Compile Include="Configuration\ConfigurationCollectionStore.cs" />
+    <Compile Include="Configuration\SqliteConfigurationCollectionStore.cs" />
     <Compile Include="Configuration\ConfigurationTypeMapper.cs" />
     <Compile Include="Configuration\DefaultConfigurationTypeMapper.cs" />
     <Compile Include="Configuration\IniConfigurationSerializer.cs" />

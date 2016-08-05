@@ -63,7 +63,7 @@ namespace Snowflake.Configuration
         public T GetConfiguration<T>(Guid gameRecord) where T : IConfigurationCollection, new()
         {
             var values = this.GetValues(new T().FileName, gameRecord);
-            return this.BuildConfigurationCollection<T>(values);
+            return values.Any() ? this.BuildConfigurationCollection<T>(values) : ConfigurationCollection.MakeDefault<T>();
         }
 
         /// <summary>
@@ -111,7 +111,10 @@ namespace Snowflake.Configuration
                     let optionType = optionInfo.PropertyType
                     let optionAttr = (ConfigurationOptionAttribute)optionInfo.GetCustomAttribute(typeof(ConfigurationOptionAttribute))
                     where optionAttr != null
-                    let strValue = values[((IConfigurationSection)setter.section).SectionName][optionAttr.OptionName]
+                    let sectionName = ((IConfigurationSection)setter.section).SectionName
+                    where values.ContainsKey(sectionName)
+                    where values[sectionName].ContainsKey(optionAttr.OptionName)
+                    let strValue = values[sectionName][optionAttr.OptionName]
                     let value = optionType == typeof(String) ? strValue //return string value if string
                     : optionType.IsEnum ? Enum.Parse(optionType, strValue, true) //return parsed enum if enum
                     : TypeDescriptor.GetConverter(optionType).ConvertFromInvariantString(strValue)
