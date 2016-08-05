@@ -101,7 +101,6 @@
     <Compile Include="Emulator\IEmulatorInstance.cs" />
     <Compile Include="Extensibility\ContainerLoadPriorityAttribute.cs" />
     <Compile Include="Extensibility\ContainerLoadPriority.cs" />
-    <Compile Include="Input\ControllerPort.cs" />
     <Compile Include="Input\Controller\ControllerElement.cs" />
     <Compile Include="Input\Controller\IControllerElementCollection.cs" />
     <Compile Include="Input\Controller\ControllerElementType.cs" />
@@ -136,7 +135,6 @@
     <Compile Include="Romfile\IFileSignatureMatcher.cs" />
     <Compile Include="Romfile\IRomFileInfo.cs" />
     <Compile Include="Romfile\IStructuredFilename.cs" />
-    <Compile Include="Platform\IPlatformControllerPorts.cs" />
     <Compile Include="Extensibility\Configuration\IPluginConfigOption.cs" />
     <Compile Include="Extensibility\Configuration\IPluginSelectOption.cs" />
     <Compile Include="Extensibility\Configuration\PluginOptionType.cs" />
@@ -154,7 +152,6 @@
     <Compile Include="Service\IStoneProvider.cs" />
     <Compile Include="Service\IUserInterface.cs" />
     <Compile Include="Configuration\IBooleanMapping.cs" />
-    <Compile Include="Platform\IPlatformDefaults.cs" />
     <Compile Include="Platform\IPlatformInfo.cs" />
     <Compile Include="Extensibility\Configuration\IPluginConfiguration.cs" />
     <Compile Include="Extensibility\IPlugin.cs" />

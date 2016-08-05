@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Snowflake.Input.Controller
 {
+    /// <summary>
+    /// Represents a collection of controller elements in a layout
+    /// </summary>
     public interface IControllerElementCollection : IEnumerable<KeyValuePair<ControllerElement, IControllerElementInfo>>
     {
         /// <summary>
