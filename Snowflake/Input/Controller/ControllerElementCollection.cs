@@ -96,13 +96,16 @@ namespace Snowflake.Input.Controller
         public IControllerElementInfo RumbleSmall => this[ControllerElement.RumbleSmall];
 
         //mouse pointer support
-        public IControllerElementInfo PointerMouse => this[ControllerElement.PointerMouse];
+        public IControllerElementInfo Pointer2D => this[ControllerElement.Pointer2D];
+        public IControllerElementInfo Pointer3D => this[ControllerElement.Pointer3D];
 
         //pointer axes (wii remote and mouse)
         public IControllerElementInfo PointerAxisPositiveX => this[ControllerElement.PointerAxisPositiveX];
         public IControllerElementInfo PointerAxisNegativeX => this[ControllerElement.PointerAxisNegativeX];
         public IControllerElementInfo PointerAxisPositiveY => this[ControllerElement.PointerAxisPositiveY];
         public IControllerElementInfo PointerAxisNegativeY => this[ControllerElement.PointerAxisNegativeY];
+        public IControllerElementInfo PointerAxisPositiveZ => this[ControllerElement.PointerAxisPositiveZ];
+        public IControllerElementInfo PointerAxisNegativeZ => this[ControllerElement.PointerAxisNegativeZ];
 
         //keyboard layout
         public IControllerElementInfo Keyboard => this[ControllerElement.Keyboard];

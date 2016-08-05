@@ -74,11 +74,14 @@ namespace Snowflake.Input.Controller
         IControllerElementInfo AxisRightAnalogNegativeY { get; }
         IControllerElementInfo RumbleBig { get; }
         IControllerElementInfo RumbleSmall { get; }
-        IControllerElementInfo PointerMouse { get; }
+        IControllerElementInfo Pointer2D { get; }
+        IControllerElementInfo Pointer3D { get; }
         IControllerElementInfo PointerAxisPositiveX { get; }
         IControllerElementInfo PointerAxisNegativeX { get; }
         IControllerElementInfo PointerAxisPositiveY { get; }
         IControllerElementInfo PointerAxisNegativeY { get; }
+        IControllerElementInfo PointerAxisPositiveZ { get; }
+        IControllerElementInfo PointerAxisNegativeZ { get; }
         IControllerElementInfo Keyboard { get; }
         IControllerElementInfo this[ControllerElement controllerElement] { get; }
     }

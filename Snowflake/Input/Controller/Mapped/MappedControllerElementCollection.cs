@@ -88,13 +88,17 @@ namespace Snowflake.Input.Controller.Mapped
 
         private static IMappedControllerElementCollection GetDefaultKeyboardMappings(IControllerLayout realKeyboard, IControllerLayout virtualDevice)
         {
-            var mappedElements = (from element in virtualDevice.Layout
-                                  select new MappedControllerElement(element.Key) { DeviceKeyboardKey = 
-                                  (MappedControllerElementCollection.DefaultKeyboardMappings.ContainsKey(element.Key) 
-                                  ? MappedControllerElementCollection.DefaultKeyboardMappings[element.Key] 
-                                  : KeyboardKey.KeyNone),
-                                  DeviceElement = ControllerElement.Keyboard}
-                           );
+            var mappedElements = from element in virtualDevice.Layout
+                                 select new MappedControllerElement(element.Key)
+                                 {
+                                     DeviceKeyboardKey =
+                                   MappedControllerElementCollection.DefaultKeyboardMappings.ContainsKey(element.Key)
+                                 ? MappedControllerElementCollection.DefaultKeyboardMappings[element.Key]
+                                 : KeyboardKey.KeyNone,
+                                     DeviceElement =
+                                       element.Key != ControllerElement.Pointer2D ? ControllerElement.Keyboard
+                                       : ControllerElement.Pointer2D
+                                 };
             var elementCollection = new MappedControllerElementCollection(realKeyboard.LayoutID, virtualDevice.LayoutID);
             foreach (var element in mappedElements)
             {
@@ -120,6 +124,6 @@ namespace Snowflake.Input.Controller.Mapped
 
             return elementCollection;
         }
-        
+
     }
 }

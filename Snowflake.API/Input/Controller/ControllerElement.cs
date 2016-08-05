@@ -74,11 +74,14 @@ namespace Snowflake.Input.Controller
         AxisRightAnalogNegativeY,
         RumbleBig,
         RumbleSmall,
-        PointerMouse,
+        Pointer2D,
+        Pointer3D,
         PointerAxisPositiveX,
         PointerAxisNegativeX,
         PointerAxisPositiveY,
         PointerAxisNegativeY,
+        PointerAxisPositiveZ,
+        PointerAxisNegativeZ,
         Keyboard,
         Touchscreen
     }
