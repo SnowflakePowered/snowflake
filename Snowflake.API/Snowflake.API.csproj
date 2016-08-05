@@ -83,6 +83,7 @@
     <Compile Include="Caching\ImageTypes.cs" />
     <Compile Include="Caching\ImageMetadataKeys.cs" />
     <Compile Include="Configuration\Attributes\ConfigurationOptionAttribute.cs" />
+    <Compile Include="Configuration\IConfigurationCollectionStore.cs" />
     <Compile Include="Configuration\Input\HotkeyOptionAttribute.cs" />
     <Compile Include="Configuration\Input\IInputMapping.cs" />
     <Compile Include="Configuration\Input\IInputOption.cs" />
