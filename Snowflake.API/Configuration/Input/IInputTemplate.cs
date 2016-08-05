@@ -9,6 +9,9 @@ using Snowflake.Input.Device;
 
 namespace Snowflake.Configuration.Input
 {
+    /// <summary>
+    /// Represents a section of input configuration for a single player, for a single device.
+    /// </summary>
     public interface IInputTemplate
     {
         /// <summary>

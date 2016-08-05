@@ -10,7 +10,7 @@ namespace Snowflake.Configuration
     /// A configuration serializer serializes a ConfigurationSection into valid emulator configuration.
     /// If an emulator uses a different syle of configuration, re-implement ConfigurationSerializer for that emulator instead of
     /// manually using string templates.
-    /// <see cref="Snowflake.Configuration.ConfigurationSerializer"/>
+    /// <see cref="Snowflake.Configuration.IConfigurationSerializer"/>
     /// </summary>
     public interface IConfigurationSerializer
     {

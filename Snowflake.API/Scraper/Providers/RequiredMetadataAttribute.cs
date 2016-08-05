@@ -17,6 +17,10 @@ namespace Snowflake.Scraper.Providers
         /// The key of the metadata that is required
         /// </summary>
         public string Metadata { get; }
+        /// <summary>
+        /// Guarantees that only <see cref="IMetadataCollection"/> with such metadata will be passed to this function.
+        /// </summary>
+        /// <param name="metadata">The key of the metadata that is required</param>
         public RequiredMetadataAttribute(string metadata)
         {
             this.Metadata = metadata;

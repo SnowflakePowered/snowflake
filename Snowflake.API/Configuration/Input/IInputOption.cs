@@ -8,6 +8,10 @@ using Snowflake.Input.Controller.Mapped;
 
 namespace Snowflake.Configuration.Input
 {
+    /// <summary>
+    /// Represents a input configuration option in an emulator configuration,
+    /// holding a serializable <see cref="IMappedControllerElement"/>
+    /// </summary>
     public interface IInputOption
     {
         /// <summary>

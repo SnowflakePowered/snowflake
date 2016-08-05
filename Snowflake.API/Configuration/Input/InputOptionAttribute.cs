@@ -7,10 +7,16 @@ using Snowflake.Input.Controller;
 
 namespace Snowflake.Configuration.Input
 {
+    /// <summary>
+    /// Marks an attribute as an input option
+    /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
     public sealed class InputOptionAttribute : Attribute
     {
-     
+
+        /// <summary>
+        /// Marks an attribute as an input option
+        /// </summary>
         public InputOptionAttribute(string optionName, InputOptionType inputOptionType, ControllerElement targetElement)
         {
             this.OptionName = optionName;

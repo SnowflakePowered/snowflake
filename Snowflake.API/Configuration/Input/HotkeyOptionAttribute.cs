@@ -7,10 +7,20 @@ using Snowflake.Input.Controller;
 
 namespace Snowflake.Configuration.Input
 {
+    /// <summary>
+    /// Represents a hotkey option that relates a device input to a function within the emulator, but
+    /// outside of the scope of the controller layout and game.
+    /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
     public sealed class HotkeyOptionAttribute : Attribute
     {
 
+        /// <summary>
+        /// Represents a hotkey option that relates a device input to a function within the emulator, but
+        /// outside of the scope of the controller layout and game.
+        /// </summary>
+        /// <param name="optionName">The name of the option as it appears in configuration</param>
+        /// <param name="inputOptionType">The type of this input option</param>
         public HotkeyOptionAttribute(string optionName, InputOptionType inputOptionType)
         {
             this.OptionName = optionName;

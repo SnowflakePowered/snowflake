@@ -68,6 +68,15 @@ namespace Snowflake.Configuration.Attributes
         /// </summary>
         public string OptionName { get; }
 
+
+        /// <summary>
+        /// Represents one option in an emulator configuration inside a configuration section.
+        /// Typically configuration options must be a double, bool, integer or an enum value in order to be safe,
+        /// type information may be lost when serializing into a wire format.
+        /// </summary>
+        /// <param name="optionName">The name of the option as it appears inside the emulator configuration</param>
+        /// <see cref="Snowflake.Configuration.IConfigurationSection"></see>
+        /// <seealso cref="System.Attribute" />
         public ConfigurationOptionAttribute(string optionName)
         {
             this.OptionName = optionName;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Snowflake.Scraper;
 
 namespace Snowflake.Records.File
 {
@@ -44,7 +45,7 @@ namespace Snowflake.Records.File
         /// </summary>
         public const string RomCanonicalTitle = "rom_canonical_title";
         /// <summary>
-        /// The ROM was not determined for sure by a <see cref="Scraper.IScrapeInstance"/>
+        /// The ROM was not determined for sure by a <see cref="IScrapeEngine"/>
         /// </summary>
         public const string RomIsAmbiguousIdentification = "rom_is_ambiguous_identification";
         /// <summary>
