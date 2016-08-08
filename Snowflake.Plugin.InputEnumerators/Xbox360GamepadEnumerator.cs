@@ -21,9 +21,9 @@ namespace Snowflake.Plugin.InputEnumerators
     {
         private readonly IInputManager inputManager;
 
-        public Xbox360GamepadEnumerator(ICoreService coreService) : base(coreService)
+        public Xbox360GamepadEnumerator(IInputManager inputManager)
         {
-            this.inputManager = coreService.Get<IInputManager>();
+            this.inputManager = inputManager;
         }
 
         public override IEnumerable<IInputDevice> GetConnectedDevices()

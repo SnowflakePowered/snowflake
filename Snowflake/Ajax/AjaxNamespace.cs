@@ -14,7 +14,7 @@ namespace Snowflake.Ajax
         public IDictionary<string, IJSMethod> JavascriptMethods { get; }
 
         protected AjaxNamespace(ICoreService coreInstance)
-            : base(coreInstance)
+            : base(coreInstance.AppDataDirectory)
         {
             this.JavascriptMethods = new Dictionary<string, IJSMethod>();
             this.RegisterMethods();

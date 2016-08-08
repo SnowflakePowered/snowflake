@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -19,23 +20,33 @@ namespace Snowflake.Extensibility
         public string PluginDataPath { get; }
         public virtual IPluginConfiguration PluginConfiguration { get; protected set; }
         public virtual IList<IPluginConfigOption> PluginConfigurationOptions { get; protected set; }
-        public ICoreService CoreInstance { get; }
-        public IList<string> SupportedPlatforms { get; }
         protected ILogger Logger { get; private set; }
-        protected Plugin(ICoreService coreInstance)
+
+        protected Plugin(string appDataDirectory, IPluginProperties pluginProperties)
         {
             this.PluginName = this.GetPluginName();
             this.PluginAssembly = this.GetType().Assembly;
-            this.CoreInstance = coreInstance;
-            this.PluginProperties = 
-                new JsonPluginProperties(JObject
-                .FromObject(JsonConvert
-                .DeserializeObject(this.GetStringResource("plugin.json"), 
-                                    new JsonSerializerSettings { Culture = CultureInfo.InvariantCulture })));
             this.Logger = LogManager.GetLogger(this.PluginName);
-            this.SupportedPlatforms = this.PluginProperties.GetEnumerable(PluginInfoFields.SupportedPlatforms).ToList();
-            this.PluginDataPath = Path.Combine(coreInstance.AppDataDirectory, "plugins", this.PluginName);
-            if (!Directory.Exists(this.PluginDataPath)) Directory.CreateDirectory(this.PluginDataPath);
+            this.PluginProperties = pluginProperties;
+            this.PluginDataPath = Path.Combine(appDataDirectory, "plugins", this.PluginName);
+
+            if (!Directory.Exists(this.PluginDataPath))
+                Directory.CreateDirectory(this.PluginDataPath);
+        }
+
+        protected Plugin(string appDataDirectory)
+        {
+            this.PluginName = this.GetPluginName();
+            this.PluginAssembly = this.GetType().Assembly;
+            this.Logger = LogManager.GetLogger(this.PluginName);
+            this.PluginProperties = new JsonPluginProperties(JObject
+               .FromObject(JsonConvert
+               .DeserializeObject(this.GetStringResource("plugin.json"),
+                                   new JsonSerializerSettings { Culture = CultureInfo.InvariantCulture })));
+            this.PluginDataPath = Path.Combine(appDataDirectory, "plugins", this.PluginName);
+
+            if (!Directory.Exists(this.PluginDataPath))
+                Directory.CreateDirectory(this.PluginDataPath);
         }
 
         public void LoadConfigurationOptions()
@@ -43,21 +54,26 @@ namespace Snowflake.Extensibility
             this.PluginConfigurationOptions = new List<IPluginConfigOption>();
         }
 
-        public Stream GetResource(string resourceName)
+        public Stream GetResource(string resourceName) => this.GetSiblingResource(this.PluginName, resourceName);
+
+        public Stream GetSiblingResource(string siblingPluginName, string resourceName)
         {
-            var pluginName = this.PluginName.Replace('-', '_'); //the compiler replaces all dashes in resource names with underscores
+            var pluginName = siblingPluginName.Replace('-', '_'); //the compiler replaces all dashes in resource names with underscores
             resourceName = resourceName.Replace('-', '_');
             return this.PluginAssembly.GetManifestResourceStream($"{this.PluginAssembly.GetName().Name}.resource.{pluginName}.{resourceName}");
         }
-
+        
         public string GetPluginName()
         {
             return this.GetType().GetCustomAttribute<PluginAttribute>().PluginName;
         }
 
         public string GetStringResource(string resourceName)
+            => this.GetSiblingStringResource(this.PluginName, resourceName);
+
+        public string GetSiblingStringResource(string siblingPluginName, string resourceName)
         {
-            using (Stream stream = this.GetResource(resourceName))
+            using (Stream stream = this.GetSiblingResource(siblingPluginName, resourceName))
             using (var reader = new StreamReader(stream))
             {
                 string file = reader.ReadToEnd();

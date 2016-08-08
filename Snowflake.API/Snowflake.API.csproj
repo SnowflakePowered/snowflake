@@ -97,6 +97,7 @@
     <Compile Include="Configuration\IConfigurationSerializer.cs" />
     <Compile Include="Configuration\IConfigurationTypeMapper.cs" />
     <Compile Include="Configuration\Attributes\SelectionOptionAttribute.cs" />
+    <Compile Include="Emulator\IEmulatedPort.cs" />
     <Compile Include="Emulator\IEmulatorAdapter.cs" />
     <Compile Include="Emulator\IEmulatorInstance.cs" />
     <Compile Include="Extensibility\ContainerLoadPriorityAttribute.cs" />

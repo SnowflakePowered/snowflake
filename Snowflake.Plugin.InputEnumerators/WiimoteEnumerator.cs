@@ -21,9 +21,9 @@ namespace Snowflake.Plugin.InputEnumerators
     {
         private readonly IInputManager inputManager;
 
-        public WiimoteEnumerator(ICoreService coreService) : base(coreService)
+        public WiimoteEnumerator(IInputManager inputManager)
         {
-            this.inputManager = coreService.Get<IInputManager>();
+            this.inputManager = inputManager;
         }
 
         [DllImport("hid.dll", SetLastError = true)]

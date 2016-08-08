@@ -11,7 +11,7 @@ namespace Snowflake.Emulator
 {
     public class EmulatorAdapter : Plugin
     {
-        public EmulatorAdapter(ICoreService coreInstance) : base(coreInstance)
+        public EmulatorAdapter(ICoreService coreInstance) : base(coreInstance.AppDataDirectory)
         {
             //todo implement this.
         }

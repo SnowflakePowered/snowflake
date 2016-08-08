@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,7 +19,7 @@ namespace Snowflake.Input.Device
 
         public abstract IEnumerable<IInputDevice> GetConnectedDevices();
 
-        protected InputEnumerator(ICoreService coreInstance) : base(coreInstance)
+        protected InputEnumerator() : base(Path.GetTempPath())
         {
             //todo fix this?
             this.ControllerLayouts = (JsonConvert.DeserializeObject<JObject>(this.PluginProperties.Get("controllerLayouts"))
