@@ -20,7 +20,7 @@ namespace Snowflake.Input.Device
 
         protected InputEnumerator(ICoreService coreInstance) : base(coreInstance)
         {
-            //todo fix this+
+            //todo fix this?
             this.ControllerLayouts = (JsonConvert.DeserializeObject<JObject>(this.PluginProperties.Get("controllerLayouts"))
                 .ToObject<IDictionary<string, ControllerLayout>>() as IDictionary<string, ControllerLayout>)?
                 .ToDictionary(kvp => kvp.Key, kvp => kvp.Value as IControllerLayout);

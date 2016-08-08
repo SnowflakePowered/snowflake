@@ -5,11 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
+using Snowflake.Input;
+using Snowflake.Platform;
 using Snowflake.Records.Game;
 
 namespace Snowflake.Emulator
 {
-    public abstract class EmulatorInstance : IEmulatorInstance
+    public abstract class EmulatorInstance 
     {
         protected EmulatorInstance()
         {
@@ -21,14 +23,12 @@ namespace Snowflake.Emulator
         }
 
         public Guid InstanceGuid { get; }
+        public IList<IEmulatedPort> ControllerPorts { get; }
+        protected IConfigurationCollectionStore ConfigurationCollection { get; }
         public IDictionary<string, string> InstanceMetadata { get; }
-        public bool IsActive { get; protected set; }
-        public bool IsRunning { get; protected set; }
-        public bool IsGenerated { get; protected set; }
-        public bool IsDestroyed { get; protected set; }
-        public IGameRecord RunningGame { get; protected set; }
+        public IGameRecord Game { get; protected set; }
+        public IPlatformInfo Platform { get; }
         public string InstancePath { get; protected set; }
-        public abstract IDictionary<string, IConfigurationCollection> ConfigurationCollection { get; }
         public abstract void Create();
         public abstract void Start();
         public abstract void Pause();
@@ -36,5 +36,9 @@ namespace Snowflake.Emulator
         public abstract void Destroy();
         public abstract DateTime StartTime { get; }
         public abstract DateTime DestroyTime { get; }
+        public bool IsActive { get; protected set; }
+        public bool IsRunning { get; protected set; }
+        public bool IsGenerated { get; protected set; }
+        public bool IsDestroyed { get; protected set; }
     }
 }

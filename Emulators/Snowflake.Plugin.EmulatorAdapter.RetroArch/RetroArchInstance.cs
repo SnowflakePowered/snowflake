@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
 using Snowflake.Emulator;
+using Snowflake.Plugin.EmulatorAdapter.RetroArch.Input;
 using Snowflake.Records.Game;
 
 namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
@@ -14,27 +15,32 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
     {
         public RetroArchInstance(RetroArchConfiguration configSection)
         {
-            this.ConfigurationCollection = new Dictionary<string, IConfigurationCollection> { {configSection.FileName, configSection}};
         }
 
-        public override IDictionary<string, IConfigurationCollection> ConfigurationCollection { get; }
 
         public override void Create()
         {
-            var rcg = ConfigurationCollection["retroarch.cfg"] as RetroArchConfiguration;
-            rcg.DirectoryConfiguration.SavefileDirectory = this.InstancePath;
-           // rcg.DirectoryConfiguration.SystemDirectory set bios files directory
-           //biosmanager?
-            foreach (IConfigurationCollection configuration in this.ConfigurationCollection.Values)
-            {
-                var sectionBuilder = new StringBuilder();
+            var retroArchConfiguration = this.ConfigurationCollection.GetConfiguration<RetroArchConfiguration>(this.Game.Guid);
+            retroArchConfiguration.DirectoryConfiguration.SavefileDirectory = this.InstancePath;
+            // rcg.DirectoryConfiguration.SystemDirectory set bios files directory
+            //biosmanager?
 
-                foreach (var section in configuration)
-                {
-                    sectionBuilder.Append(configuration.Serializer.Serialize(section));
-                }
-                File.WriteAllText(Path.Combine(this.InstancePath, configuration.FileName),sectionBuilder.ToString());
+            var sectionBuilder = new StringBuilder();
+
+            foreach (var section in retroArchConfiguration)
+            {
+                sectionBuilder.Append(retroArchConfiguration.Serializer.Serialize(section));
             }
+
+            //handle input config
+            foreach (var port in this.ControllerPorts)
+            {
+                var inputTemplate = new RetroPadTemplate();
+                inputTemplate.SetInputValues(port.MappedElementCollection, port.PluggedDevice, port.EmulatedPortNumber);
+                var inputConfig = retroArchConfiguration.Serializer.Serialize(inputTemplate, null); //todo inputmappings manager..
+                sectionBuilder.Append(inputConfig);
+            }
+            File.WriteAllText(Path.Combine(this.InstancePath, retroArchConfiguration.FileName), sectionBuilder.ToString());
             //start retroarchexe here with instacnepath as working directory
         }
 
