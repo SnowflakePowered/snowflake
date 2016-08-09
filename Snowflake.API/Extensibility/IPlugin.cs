@@ -22,40 +22,9 @@ namespace Snowflake.Extensibility
         /// </summary>
         string PluginDataPath { get; }
         /// <summary>
-        /// The Assembly object representation of the compiled plugin
-        /// </summary>
-        Assembly PluginAssembly { get; }
-        /// <summary>
         /// A dictionary containing the information within plugin.json
         /// </summary>
         IPluginProperties PluginProperties { get; }
-        /// <summary>
-        /// Gets an embedded resource as a Stream from the plugin namespace.
-        /// Wraps GetManifestResourceStream so that specifiying the full namespace of the resource is not required
-        /// </summary>
-        /// <param name="resourceName">The name of the resource</param>
-        /// <returns>The resource as a stream</returns>
-        Stream GetResource(string resourceName);
-        /// <summary>
-        /// Gets an embedded resource as a Stream from the same assembly belonging to a sibling namespace
-        /// </summary>
-        /// <param name="resourceName">The name of the resource</param>
-        /// <param name="siblingPluginName">The name of the sibling resource</param>
-        /// <returns>The resource as a stream</returns>
-        Stream GetSiblingResource(string siblingPluginName, string resourceName);
-        /// <summary>
-        /// Gets an embedded resource as a String from the plugin Assembly
-        /// </summary>
-        /// <param name="resourceName">The name of the resource</param>
-        /// <returns>The resource as a string</returns>
-        string GetStringResource(string resourceName);
-        /// <summary>
-        /// Gets an embedded resource as a String from the same assembly belonging to a sibling namespace
-        /// </summary>
-        /// <param name="resourceName">The name of the resource</param>
-        /// <param name="siblingPluginName">The name of the sibling resource</param>
-        /// <returns>The resource as a stream</returns>
-        string GetSiblingStringResource(string siblingPluginName, string resourceName);
         /// <summary>
         /// The IPluginConfiguration configuration associated with this plugin.
         /// This is null unless it has been initialized by the plugin.

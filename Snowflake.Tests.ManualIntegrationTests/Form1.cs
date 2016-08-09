@@ -56,8 +56,8 @@ namespace Snowflake.Tests.ManualIntegrationTests
         private void retroarchcfgbtn_Click(object sender, EventArgs e)
         {
             var cfg = ConfigurationCollection.MakeDefault<RetroArchConfiguration>();
-            var inst = new RetroArchInstance(cfg);
-            inst.Create();
+            /*var inst = new RetroArchInstance(cfg);
+            inst.Create();*/
         }
     }
 }

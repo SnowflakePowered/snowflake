@@ -6,15 +6,20 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
 using Snowflake.Emulator;
+using Snowflake.Input.Device;
+using Snowflake.Plugin.EmulatorAdapter.RetroArch;
+using Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters;
 using Snowflake.Plugin.EmulatorAdapter.RetroArch.Input;
 using Snowflake.Records.Game;
 
 namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
 {
-    public class RetroArchInstance : EmulatorInstance
+    internal class RetroArchInstance : EmulatorInstance
     {
-        public RetroArchInstance(RetroArchConfiguration configSection)
+        private readonly RetroArchCommonAdapter adapter;
+        internal RetroArchInstance(RetroArchCommonAdapter adapter)
         {
+            this.adapter = adapter;
         }
 
 
@@ -37,7 +42,12 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
             {
                 var inputTemplate = new RetroPadTemplate();
                 inputTemplate.SetInputValues(port.MappedElementCollection, port.PluggedDevice, port.EmulatedPortNumber);
-                var inputConfig = retroArchConfiguration.Serializer.Serialize(inputTemplate, null); //todo inputmappings manager..
+                var mappings = (from inputMappings in adapter.InputMappings
+                    where inputMappings.InputApi == InputApi.DirectInput
+                    where inputMappings.DeviceLayouts.Contains(port.PluggedDevice.DeviceLayout.LayoutID)
+                    select inputMappings).FirstOrDefault();
+                if (mappings == null) throw new InvalidOperationException("Adapter does not support device layout");
+                var inputConfig = retroArchConfiguration.Serializer.Serialize(inputTemplate, mappings);
                 sectionBuilder.Append(inputConfig);
             }
             File.WriteAllText(Path.Combine(this.InstancePath, retroArchConfiguration.FileName), sectionBuilder.ToString());

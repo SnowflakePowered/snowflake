@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adapters\RetroArchCommonAdapter.cs" />
     <Compile Include="Adapters\RetroArchNestopiaAdapter.cs" />
     <Compile Include="Configuration\FramethrottleConfiguration.cs" />
     <Compile Include="Configuration\AudioConfiguration.cs" />
@@ -103,8 +104,8 @@
     <Compile Include="Input\HotkeyConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="resource\RetroArch-Common\InputMappings\DirectInput.DEVICE_KEYBOARD.json" />
-    <None Include="resource\RetroArch-Common\InputMappings\DirectInput.DEVICE_XINPUT.json" />
+    <None Include="resource\RetroArchCommon\InputMappings\DirectInput.DEVICE_KEYBOARD.json" />
+    <None Include="resource\RetroArchCommon\InputMappings\DirectInput.DEVICE_XINPUT.json" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
