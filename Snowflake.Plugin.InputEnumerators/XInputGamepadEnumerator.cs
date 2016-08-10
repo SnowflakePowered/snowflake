@@ -33,7 +33,7 @@ namespace Snowflake.Plugin.InputEnumerators
             return (from device in devices
                 where device.XI_IsXInput
                 where device.XI_IsConnected == true
-                select new InputDevice(InputApi.XInput, device, this.DefaultControllerLayout) { DeviceIndex = device.XI_GamepadIndex });
+                select new InputDevice(InputApi.XInput, device, this.ControllerLayout) { DeviceIndex = device.XI_GamepadIndex });
         }
     }
 }

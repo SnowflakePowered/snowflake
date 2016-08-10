@@ -23,13 +23,6 @@ namespace Snowflake.Input.Device
         /// The default controller layout associated with this input enumerator.
         /// Usually keyed to the "default" controller layout.
         /// </summary>
-        IControllerLayout DefaultControllerLayout { get; }
-
-        /// <summary>
-        /// All possible controller layouts with this input device.
-        /// The default layout should be in the key 'default'
-        /// </summary>
-        IDictionary<string, IControllerLayout> ControllerLayouts { get; }
-        
+        IControllerLayout ControllerLayout { get; }
     }
 }

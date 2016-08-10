@@ -143,8 +143,8 @@
     <EmbeddedResource Include="TestResources\GameCache\test.webm" />
     <EmbeddedResource Include="TestResources\Configurations\ExampleConfigurationSection.cfg" />
     <EmbeddedResource Include="TestResources\Configurations\ConfigCollection.ini" />
-    <EmbeddedResource Include="TestResources\InputMappings\DirectInput.DEVICE_KEYBOARD.json" />
-    <EmbeddedResource Include="TestResources\InputMappings\DirectInput.DEVICE_XINPUT.json" />
+    <EmbeddedResource Include="TestResources\InputMappings\DirectInput.KEYBOARD_DEVICE.json" />
+    <EmbeddedResource Include="TestResources\InputMappings\DirectInput.XINPUT_DEVICE.json" />
     <EmbeddedResource Include="TestResources\InputMappings\keyboard_device.json" />
   </ItemGroup>
   <ItemGroup>

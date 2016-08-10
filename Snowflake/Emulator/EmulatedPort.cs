@@ -23,8 +23,7 @@ namespace Snowflake.Emulator
             IEnumerable<IInputEnumerator> inputEnumerators, IMappedControllerElementCollectionStore store, IStoneProvider stoneProvider, string profileName = "default")
         {
             var inputEnumerator = (from enumerator in inputEnumerators
-                from physicalLayout in enumerator.ControllerLayouts.Values
-                where physicalLayout.LayoutID == pluggedDeviceLayout
+                where enumerator.ControllerLayout.LayoutID == pluggedDeviceLayout
                 select enumerator).FirstOrDefault();
             if (inputEnumerator == null) throw new InvalidOperationException("Input layout not found.");
 

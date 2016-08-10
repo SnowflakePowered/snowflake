@@ -66,6 +66,14 @@
   <ItemGroup>
     <EmbeddedResource Include="resource\InputEnumerator-XInput\plugin.json" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="resource\InputEnumerator-Keyboard\plugin.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resource\InputEnumerator-Keyboard\layout.json" />
+    <None Include="resource\InputEnumerator-Xbox360\layout.json" />
+    <None Include="resource\InputEnumerator-XInput\layout.json" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

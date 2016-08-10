@@ -4,6 +4,7 @@
 	"Platforms": [
 
 	],
+	"IsRealDevice": true,
 	"Layout": {
 		"ButtonA": {
 			"Label": "A",

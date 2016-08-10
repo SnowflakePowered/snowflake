@@ -14,17 +14,14 @@ namespace Snowflake.Input.Device
 {
     public abstract class InputEnumerator : Plugin, IInputEnumerator
     {
-        public IControllerLayout DefaultControllerLayout => this.ControllerLayouts["default"];
-        public IDictionary<string, IControllerLayout> ControllerLayouts { get; }
+        public IControllerLayout ControllerLayout { get; }
 
         public abstract IEnumerable<IInputDevice> GetConnectedDevices();
 
         protected InputEnumerator() : base(Path.GetTempPath())
-        {
-            //todo fix this?
-            this.ControllerLayouts = (JsonConvert.DeserializeObject<JObject>(this.PluginProperties.Get("controllerLayouts"))
-                .ToObject<IDictionary<string, ControllerLayout>>() as IDictionary<string, ControllerLayout>)?
-                .ToDictionary(kvp => kvp.Key, kvp => kvp.Value as IControllerLayout);
+        { 
+            this.ControllerLayout =
+                JsonConvert.DeserializeObject<ControllerLayout>(this.GetStringResource("layout.json"));
         }
     }
 }

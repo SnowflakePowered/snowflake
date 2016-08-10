@@ -104,8 +104,10 @@
     <Compile Include="Input\HotkeyConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="resource\RetroArchCommon\InputMappings\DirectInput.DEVICE_KEYBOARD.json" />
-    <None Include="resource\RetroArchCommon\InputMappings\DirectInput.DEVICE_XINPUT.json" />
+    <EmbeddedResource Include="resource\RetroArchCommon\InputMappings\DirectInput.KEYBOARD_DEVICE.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="resource\RetroArchCommon\InputMappings\DirectInput.XINPUT_DEVICE.json" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

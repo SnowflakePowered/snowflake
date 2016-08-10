@@ -1,7 +1,7 @@
 ﻿{
 	"InputApi": "DirectInput",
 	"DeviceLayouts": [
-		"DEVICE_KEYBOARD"
+		"KEYBOARD_DEVICE"
 	],
 	"NullMapping" :  "nul",
 	"Keyboard": {
