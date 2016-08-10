@@ -113,7 +113,10 @@ namespace Snowflake.Input.Controller
 
         private readonly IDictionary<ControllerElement, IControllerElementInfo> controllerElements;
 
-        public IControllerElementInfo this[ControllerElement element] => this.controllerElements.ContainsKey(element) ? this.controllerElements[element] : null;
+        public IControllerElementInfo this[ControllerElement element] => 
+            this.controllerElements.ContainsKey(element) || element == ControllerElement.NoElement
+            ? this.controllerElements[element] 
+            : null;
 
         public ControllerElementCollection()
         {

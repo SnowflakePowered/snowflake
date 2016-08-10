@@ -59,8 +59,6 @@ namespace Snowflake.Input.Controller.Mapped
             {
                 var result = dbConnection.Query<string>(@"SELECT ProfileName FROM mappings WHERE ControllerId = @controllerId AND DeviceId = @deviceId",
                                 new { controllerId, deviceId });
-                if (result == null)
-                    return null;
                 return result;
             });
             return profileNames;

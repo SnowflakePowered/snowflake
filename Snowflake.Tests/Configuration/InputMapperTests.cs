@@ -20,7 +20,7 @@ namespace Snowflake.Configuration.Tests
         [Fact]
         public void GamepadMapping_Test()
         {
-            string _mapping = TestUtilities.GetStringResource("InputMappings.DirectInput.DEVICE_XINPUT.json");
+            string _mapping = TestUtilities.GetStringResource("InputMappings.DirectInput.XINPUT_DEVICE.json");
             IInputMapping mapping = JsonConvert.DeserializeObject<InputMapping>(_mapping);
             Assert.Equal(mapping.InputApi, InputApi.XInput);
             Assert.Equal(mapping[ControllerElement.ButtonA], "0");
@@ -55,7 +55,7 @@ namespace Snowflake.Configuration.Tests
         [Fact]
         public void KeyboardMapping_Test()
         {
-            string _mapping = TestUtilities.GetStringResource("InputMappings.DirectInput.DEVICE_KEYBOARD.json");
+            string _mapping = TestUtilities.GetStringResource("InputMappings.DirectInput.KEYBOARD_DEVICE.json");
             IInputMapping mapping = JsonConvert.DeserializeObject<InputMapping>(_mapping);
             Assert.Equal(mapping.InputApi, InputApi.DirectInput);
             Assert.Equal(mapping[KeyboardKey.KeyNone], "nul");
@@ -163,7 +163,8 @@ namespace Snowflake.Configuration.Tests
                 JsonConvert.DeserializeObject<ControllerLayout>(
                     TestUtilities.GetStringResource("InputMappings.xinput_device.json"));
             var mapcol = MappedControllerElementCollection.GetDefaultMappings(realmapping, testmappings);
-            foreach (var controllerElem in (from elem in mapcol select elem.DeviceElement))
+            foreach (var controllerElem in (from elem in mapcol where elem.DeviceElement != ControllerElement.NoElement
+                                            select elem.DeviceElement))
             {
                 Assert.NotNull(realmapping.Layout[controllerElem]);
             }
@@ -172,7 +173,7 @@ namespace Snowflake.Configuration.Tests
         public void KvpSerialize_Test()
         {
             var serializer = new KeyValuePairConfigurationSerializer(new BooleanMapping("true", "false"), "nul", "=");
-            string _mapping = TestUtilities.GetStringResource("InputMappings.DirectInput.DEVICE_XINPUT.json");
+            string _mapping = TestUtilities.GetStringResource("InputMappings.DirectInput.XINPUT_DEVICE.json");
             var template = new TestInputTemplate();
             IInputMapping mapping = JsonConvert.DeserializeObject<InputMapping>(_mapping);
             var testmappings = new StoneProvider().Controllers.First().Value;
@@ -193,7 +194,7 @@ namespace Snowflake.Configuration.Tests
         public void InitSerialize_Test()
         {
             var serializer = new IniConfigurationSerializer(new BooleanMapping("true", "false"), "nul");
-            string _mapping = TestUtilities.GetStringResource("InputMappings.DirectInput.DEVICE_XINPUT.json");
+            string _mapping = TestUtilities.GetStringResource("InputMappings.DirectInput.XINPUT_DEVICE.json");
             var template = new TestInputTemplate();
             IInputMapping mapping = JsonConvert.DeserializeObject<InputMapping>(_mapping);
             var testmappings = new StoneProvider().Controllers.First().Value;
