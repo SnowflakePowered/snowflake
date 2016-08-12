@@ -20,12 +20,12 @@ namespace Snowflake.Extensibility
 
         public IEnumerable<string> GetEnumerable(string key)
         {
-            return this.propertyRoot.Value<JArray>(key).Values<string>();
+            return this.propertyRoot.Value<JArray>(key)?.Values<string>();
         }
 
         public IDictionary<string, string> GetDictionary(string key)
         {
-            return this.propertyRoot.Value<JToken>(key).ToObject<IDictionary<string, string>>();
+            return this.propertyRoot.Value<JToken>(key)?.ToObject<IDictionary<string, string>>();
         }
     }
 }

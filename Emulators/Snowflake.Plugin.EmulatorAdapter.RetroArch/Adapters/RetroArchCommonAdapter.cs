@@ -8,12 +8,11 @@ using Snowflake.Extensibility;
 
 namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters
 {
-    internal abstract class RetroArchCommonAdapter : Extensibility.Plugin
+    [Plugin("RetroArchCommon")]
+    public class RetroArchCommonAdapter : Emulator.EmulatorAdapter
     {
-        public IEnumerable<IInputMapping> InputMappings { get; }
-        protected RetroArchCommonAdapter(string appDataDirectory) : base(appDataDirectory)
+        public RetroArchCommonAdapter(string appDataDirectory) : base(appDataDirectory)
         {
-            this.GetAllSiblingResourceNames("RetroArchCommon");
         }
     }
 }

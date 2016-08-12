@@ -5,14 +5,17 @@ using System.IO;
 using System.Text;
 using System.Linq;
 using System.Reflection;
+using Snowflake.Emulator;
 using Snowflake.Events;
 using Snowflake.Events.ServiceEvents;
 using Snowflake.Input.Controller.Mapped;
 using Snowflake.Input.Device;
 using Snowflake.Platform;
+using Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters;
 using Snowflake.Scraper;
 using Snowflake.Service;
 using Snowflake.Service.Manager;
+using Snowflake.Utility;
 
 namespace Snowflake.Shell.Windows
 {
@@ -39,7 +42,16 @@ namespace Snowflake.Shell.Windows
                 SnowflakeEventManager.EventSource.RaiseEvent(serverStartEvent); //todo Move event registration to SnowflakeEVentManager
             }
 
-            var devices = this.loadedCore.Get<IPluginManager>()?.Get<IInputEnumerator>()["InputEnumerator-Keyboard"].GetConnectedDevices();
+            var store = new SqliteMappedControllerElementCollectionStore(new SqliteDatabase("controllermappings.db"));
+            var devices = this.loadedCore.Get<IPluginManager>()?.Get<IInputEnumerator>()["InputEnumerator-Keyboard"].GetConnectedDevices().First();
+            var contrl = this.loadedCore.Get<IStoneProvider>().Controllers["DUALSHOCK_CONTROLLER"];
+            var profile = MappedControllerElementCollection.GetDefaultMappings(devices.DeviceLayout, contrl);
+            var port = new EmulatedPort(0, contrl, devices,
+               profile);
+            var rac = this.loadedCore.Get<IPluginManager>()?.Get<RetroArchCommonAdapter>().First();
+            
+
+
         }
 
         public void StartShell() {

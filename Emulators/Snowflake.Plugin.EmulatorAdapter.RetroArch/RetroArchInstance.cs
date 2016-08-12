@@ -25,8 +25,9 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
 
         public override void Create()
         {
-            var retroArchConfiguration = this.ConfigurationCollection.GetConfiguration<RetroArchConfiguration>(this.Game.Guid);
-            retroArchConfiguration.DirectoryConfiguration.SavefileDirectory = this.InstancePath;
+
+            var retroArchConfiguration = this.ConfigurationCollections["retroarch.cfg"] as RetroArchConfiguration;
+            retroArchConfiguration.DirectoryConfiguration.SavefileDirectory = this.InstancePath; //iimplement savefile manager?
             // rcg.DirectoryConfiguration.SystemDirectory set bios files directory
             //biosmanager?
 

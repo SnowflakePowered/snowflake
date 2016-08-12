@@ -19,7 +19,18 @@ namespace Snowflake.Emulator
         public IControllerLayout EmulatedController { get; }
         public IMappedControllerElementCollection MappedElementCollection { get; }
 
-        public EmulatedPort(int emulatedPortNumber, string emulatedLayoutId, string pluggedDeviceLayout, int pluggedDeviceIndex, 
+        public EmulatedPort(int emulatedPort, IControllerLayout emulatedController, IInputDevice pluggedDevice,
+            IMappedControllerElementCollection mappedControllerElementCollection)
+        {
+            this.EmulatedPortNumber = emulatedPort;
+            this.PluggedDevice = pluggedDevice;
+            this.EmulatedController = emulatedController;
+            this.MappedElementCollection = mappedControllerElementCollection;
+
+        }
+
+        [Obsolete("Debug Purposes Only, Violates Least Privilege Principle")]
+        private EmulatedPort(int emulatedPortNumber, string emulatedLayoutId, string pluggedDeviceLayout, int pluggedDeviceIndex, 
             IEnumerable<IInputEnumerator> inputEnumerators, IMappedControllerElementCollectionStore store, IStoneProvider stoneProvider, string profileName = "default")
         {
             var inputEnumerator = (from enumerator in inputEnumerators

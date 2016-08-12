@@ -145,6 +145,8 @@
     <Compile Include="Romfile\FileSignatureMatcher.cs" />
     <Compile Include="Romfile\RomFileInfo.cs" />
     <Compile Include="Romfile\StructuredFilename.cs" />
+    <Compile Include="Savegames\SavegameRecord.cs" />
+    <Compile Include="Savegames\SavegameStore.cs" />
     <Compile Include="Scraper\Providers\ProviderQueryFunction.cs" />
     <Compile Include="Scraper\Providers\QueryProvider.cs" />
     <Compile Include="Scraper\Providers\QueryProviderSource.cs" />

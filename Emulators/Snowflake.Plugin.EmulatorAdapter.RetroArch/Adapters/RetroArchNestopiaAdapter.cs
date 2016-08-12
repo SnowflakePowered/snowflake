@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using Snowflake.Emulator;
 using Snowflake.Records.Game;
 using Snowflake.Configuration;
+using Snowflake.Service;
 
 namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters
 {
-    public class RetroArchNestopiaAdapter : IEmulatorAdapter
+    public class RetroArchNestopiaAdapter : Emulator.EmulatorAdapter
     {
         public string PluginName => "Nestopia (RetroArch)";
 
@@ -21,6 +22,10 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters
         public IEmulatorInstance Instantiate(IGameRecord record, IList<IConfigurationCollection> configuration)
         {
             throw new NotImplementedException();
+        }
+
+        public RetroArchNestopiaAdapter(ICoreService coreInstance) : base(coreInstance)
+        {
         }
     }
 }

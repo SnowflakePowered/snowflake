@@ -60,11 +60,14 @@ namespace Snowflake.Configuration
             });
         }
 
-        public T GetConfiguration<T>(Guid gameRecord) where T : IConfigurationCollection, new()
+        public T GetConfiguration<T>(string collectionFilename, Guid gameRecord) where T : IConfigurationCollection, new()
         {
-            var values = this.GetValues(new T().FileName, gameRecord);
+            var values = this.GetValues(collectionFilename, gameRecord);
             return values.Any() ? this.BuildConfigurationCollection<T>(values) : ConfigurationCollection.MakeDefault<T>();
         }
+
+        public T GetConfiguration<T>(Guid gameRecord) where T : IConfigurationCollection, new()
+            => this.GetConfiguration<T>(new T().FileName, gameRecord);
 
         /// <summary>
         /// Maps values keyed on configuration values keyed on option keys

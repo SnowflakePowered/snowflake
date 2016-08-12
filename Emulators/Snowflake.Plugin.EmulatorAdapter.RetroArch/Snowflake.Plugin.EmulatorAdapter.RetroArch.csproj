@@ -61,6 +61,7 @@
     <Compile Include="Configuration\Internal\NetworkConfiguration.cs" />
     <Compile Include="Configuration\PauseConfiguration.cs" />
     <Compile Include="Configuration\Internal\RecordConfiguration.cs" />
+    <Compile Include="RetroArchCommonContainer.cs" />
     <Compile Include="RetroArchInstance.cs" />
     <Compile Include="RetroArchService.cs" />
     <Compile Include="Input\RetroPadTemplate.cs" />
@@ -104,10 +105,13 @@
     <Compile Include="Input\HotkeyConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="resource\RetroArchCommon\InputMappings\DirectInput.KEYBOARD_DEVICE.json" />
+    <EmbeddedResource Include="resource\InputMappings\DirectInput.KEYBOARD_DEVICE.json" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="resource\RetroArchCommon\InputMappings\DirectInput.XINPUT_DEVICE.json" />
+    <EmbeddedResource Include="resource\InputMappings\DirectInput.XINPUT_DEVICE.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="resource\RetroArchCommon\plugin.json" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -24,7 +24,7 @@ namespace Snowflake.Emulator
 
         public Guid InstanceGuid { get; }
         public IList<IEmulatedPort> ControllerPorts { get; }
-        protected IConfigurationCollectionStore ConfigurationCollection { get; }
+        public IDictionary<string, IConfigurationCollection> ConfigurationCollections { get; }
         public IDictionary<string, string> InstanceMetadata { get; }
         public IGameRecord Game { get; protected set; }
         public IPlatformInfo Platform { get; }
