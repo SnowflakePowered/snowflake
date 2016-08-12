@@ -17,7 +17,7 @@ namespace Snowflake.Plugin.InputEnumerators
             var pm = coreInstance.Get<IPluginManager>();
             var im = coreInstance.Get<IInputManager>();
            // pm.Register<IInputEnumerator>(new WiimoteEnumerator(coreInstance));
-           pm.Register<IInputEnumerator>(new KeyboardEnumerator(im));
+            pm.Register<IInputEnumerator>(new KeyboardEnumerator(im));
             pm.Register<IInputEnumerator>(new Xbox360GamepadEnumerator(im));
             pm.Register<IInputEnumerator>(new XInputGamepadEnumerator(im));
         }

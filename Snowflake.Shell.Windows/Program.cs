@@ -25,26 +25,14 @@ namespace Snowflake.Shell.Windows
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            /*   using (var mgr = new UpdateManager(@"C:\squirrel\snowflake\rel"))
-               {
-                   SquirrelAwareApp.HandleEvents(
-                   onInitialInstall: v => mgr.CreateShortcutForThisExe(),
-                   onAppUpdate: v => mgr.CreateShortcutForThisExe(),
-                   onAppUninstall: v => mgr.RemoveShortcutForThisExe(),
-                   onFirstRun: () =>
-                   {
-                       Process.Start("snowball.exe install builtins.snowball -l"); //todo call snowball from dll
-                   });
-
-               }*/
-            var x = ConfigurationCollection.MakeDefault<RetroArchConfiguration>();
-            var xs = JsonConvert.SerializeObject(x);
 
             var snowflakeIcon = new ShellIcon();
             SnowflakeEventManager.InitEventSource();
             var snowflakeShell = new SnowflakeShell();
 
+            
             snowflakeShell.StartShell();
+
             snowflakeIcon.AddMenuItem("Quit Snowflake", Program.menuQuitHandler);
             snowflakeIcon.AddMenuItem("Shutdown Core", (s, e) =>
             {
