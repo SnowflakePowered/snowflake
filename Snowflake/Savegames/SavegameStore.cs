@@ -20,7 +20,11 @@ namespace Snowflake.Savegames
         public IFileRecord StoreSavegame(string savegamePath, string savegameType, IGameRecord gameRecord)
         {
             var savegameGuid = Guid.NewGuid();
-            if(!Directory.Exists(Path.Combine(this.SavegameDirectory, savegameType, gameRecord.Guid.ToString(), savegameGuid.ToString()))            return null;
+            if (
+                !Directory.Exists(Path.Combine(this.SavegameDirectory, savegameType, gameRecord.Guid.ToString(),
+                    savegameGuid.ToString()))) ;
+            ;            return null;
+            return null;
         }
     }
 }

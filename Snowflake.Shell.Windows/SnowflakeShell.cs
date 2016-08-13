@@ -48,7 +48,6 @@ namespace Snowflake.Shell.Windows
             var profile = MappedControllerElementCollection.GetDefaultMappings(devices.DeviceLayout, contrl);
             var port = new EmulatedPort(0, contrl, devices,
                profile);
-            var rac = this.loadedCore.Get<IPluginManager>()?.Get<RetroArchCommonAdapter>().First();
             
 
 

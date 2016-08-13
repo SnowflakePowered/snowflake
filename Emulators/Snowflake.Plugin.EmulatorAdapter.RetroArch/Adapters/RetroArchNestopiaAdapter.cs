@@ -10,7 +10,7 @@ using Snowflake.Service;
 
 namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters
 {
-    public class RetroArchNestopiaAdapter : Emulator.EmulatorAdapter
+    public class RetroArchNestopiaAdapter 
     {
         public string PluginName => "Nestopia (RetroArch)";
 
@@ -24,7 +24,7 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters
             throw new NotImplementedException();
         }
 
-        public RetroArchNestopiaAdapter(ICoreService coreInstance) : base(coreInstance)
+        public RetroArchNestopiaAdapter(ICoreService coreInstance) 
         {
         }
     }

@@ -14,7 +14,6 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
     {
         public void Compose(ICoreService coreInstance)
         {
-            coreInstance.Get<IPluginManager>().Register(new RetroArchCommonAdapter(coreInstance.AppDataDirectory));
         }
     }
 }

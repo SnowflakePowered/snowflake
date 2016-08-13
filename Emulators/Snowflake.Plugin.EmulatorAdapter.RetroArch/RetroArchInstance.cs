@@ -11,15 +11,16 @@ using Snowflake.Plugin.EmulatorAdapter.RetroArch;
 using Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters;
 using Snowflake.Plugin.EmulatorAdapter.RetroArch.Input;
 using Snowflake.Records.Game;
+using Snowflake.Emulator;
 
 namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
 {
     internal class RetroArchInstance : EmulatorInstance
     {
-        private readonly RetroArchCommonAdapter adapter;
+        private readonly Emulator.EmulatorAdapter adapter;
         internal RetroArchInstance(RetroArchCommonAdapter adapter)
         {
-            this.adapter = adapter;
+            this.adapter = null;
         }
 
 

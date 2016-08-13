@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Snowflake.Records.Metadata
 {
+    [Serializable]
     public class MetadataCollection : Dictionary<string, IRecordMetadata>, IMetadataCollection
     {
         public IRecordMetadata this[Guid guid] => this.First(metadata => metadata.Value.Guid == guid).Value;
