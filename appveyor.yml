@@ -26,7 +26,6 @@ environment:
       secure: 5cuY6qLcjz85TBpjs2Ba9B8QKKT5XuvQse3pnVmk8wo=
     CoverityNotificationEmail:
       secure: YObG6alHbjgc0M1b5aIThLfeiTS18PFiFnIjEcSNqa0=
-    DXROOT: c:\program Files (x86)\sandcastle
     PATH: C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
 cache:
   - packages -> **\packages.config
@@ -35,7 +34,7 @@ install:
     - nuget update -self
     - nuget install OpenCover -ExcludeVersion
     - nuget install xunit.runner.console -Version 2.1.0
-    - nuget install EWSoftware.Sandcastle -ExcludeVersion
+    - nuget install EWSoftware.SHFB -ExcludeVersion
     - nuget install EWSoftware.SHFB.NETFramework -ExcludeVersion
     - choco install -y doxygen.portable
     - git submodule update --init --recursive
