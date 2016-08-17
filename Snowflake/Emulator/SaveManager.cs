@@ -9,7 +9,8 @@ using Snowflake.Records.Game;
 
 namespace Snowflake.Emulator
 {
-    public class SaveManager
+
+    public class SaveManager : ISaveManager
     {
         private string SavegameDirectory { get; }
         public SaveManager(string appdataDirectory)
@@ -19,6 +20,7 @@ namespace Snowflake.Emulator
 
         public string GetSaveDirectory(string saveType, Guid gameGuid, int slot)
         {
+            if (slot < 0) return this.GetSharedSaveDirectory(saveType); //if the slot is less than 0, return the shared save directory
             string saveDirectory = Path.Combine(this.SavegameDirectory, saveType, gameGuid.ToString(), slot.ToString());
             if (!Directory.Exists(saveDirectory)) Directory.CreateDirectory(saveDirectory);
             File.WriteAllText(Path.Combine(saveDirectory,".modified"), DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString());
@@ -33,6 +35,13 @@ namespace Snowflake.Emulator
                 : DateTimeOffset.UtcNow;
         }
 
+        public string GetSharedSaveDirectory(string saveType)
+        {
+            string saveDirectory = Path.Combine(this.SavegameDirectory, saveType, "shared");
+            if (!Directory.Exists(saveDirectory)) Directory.CreateDirectory(saveDirectory);
+            return saveDirectory;
+        }
+
         public IEnumerable<int> GetUsedSlots(string saveType, Guid gameGuid)
         {
             string saveDirectory = Path.Combine(this.SavegameDirectory, saveType, gameGuid.ToString());
@@ -43,8 +52,6 @@ namespace Snowflake.Emulator
             {
                 yield return slot;
             }
-
-
         }
     }
 }
