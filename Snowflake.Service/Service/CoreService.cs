@@ -8,6 +8,11 @@ using Snowflake.Service.HttpServer;
 using Snowflake.Service.JSWebSocketServer;
 using Snowflake.Service.Manager;
 using NLog;
+using Snowflake.Configuration;
+using Snowflake.Input;
+using Snowflake.Input.Controller.Mapped;
+using Snowflake.Records.Game;
+using Snowflake.Utility;
 
 namespace Snowflake.Service
 {
@@ -35,7 +40,10 @@ namespace Snowflake.Service
             this.RegisterService<IStoneProvider>(new StoneProvider());
             this.AppDataDirectory = appDataDirectory;
             this.RegisterService<IServerManager>(new ServerManager());
-            //this.RegisterService<IGameLibrary>(new GameLibrary(Path.Combine(this.AppDataDirectory, "games.db")));
+            this.RegisterService<IGameLibrary>(new SqliteGameLibrary(new SqliteDatabase(Path.Combine(this.AppDataDirectory, "games.db"))));
+            this.RegisterService<IMappedControllerElementCollectionStore>
+                (new SqliteMappedControllerElementCollectionStore(new SqliteDatabase(Path.Combine(this.AppDataDirectory, "controllermappings.db"))));
+            this.RegisterService<IConfigurationCollectionStore>(new SqliteConfigurationCollectionStore(new SqliteDatabase(Path.Combine(this.AppDataDirectory, "configurations.db"))));
             //this.RegisterService<IEmulatorAssembliesManager>(new EmulatorAssembliesManager(Path.Combine(this.AppDataDirectory, "emulators")));
             this.RegisterService<IPluginManager>(new PluginManager(this.AppDataDirectory, this)); 
             this.RegisterService<IAjaxManager>(new AjaxManager(this)); //todo deprecate with michi-based ipc
@@ -43,7 +51,6 @@ namespace Snowflake.Service
             var serverManager = this.Get<IServerManager>();
             serverManager.RegisterServer("AjaxApiServer", new ApiServer(this)); //todo deprecate with michi-based ipc
             serverManager.RegisterServer("WebSocketApiServer", new JsonApiWebSocketServer(30003, this)); //todo deprecate with michi-based ipc
-          //  serverManager.RegisterServer("GameCacheServer", new GameCacheServer());
             
         }
 

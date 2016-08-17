@@ -120,6 +120,7 @@
     <Compile Include="Configuration\Input\InputOption.cs" />
     <Compile Include="Configuration\Input\InputTemplate.cs" />
     <Compile Include="Configuration\KeyValuePairConfigurationSerializer.cs" />
+    <Compile Include="Emulator\BiosManager.cs" />
     <Compile Include="Input\Controller\Mapped\SqliteMappedControllerElementCollectionStore.cs" />
     <Compile Include="Emulator\EmulatorAdapter.cs" />
     <Compile Include="Emulator\EmulatorInstance.cs" />

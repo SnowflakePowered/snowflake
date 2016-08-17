@@ -42,7 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Adapters\RetroArchCommonAdapter.cs" />
-    <Compile Include="Adapters\RetroArchNestopiaAdapter.cs" />
     <Compile Include="Configuration\FramethrottleConfiguration.cs" />
     <Compile Include="Configuration\AudioConfiguration.cs" />
     <Compile Include="Configuration\Internal\BuiltinConfiguration.cs" />

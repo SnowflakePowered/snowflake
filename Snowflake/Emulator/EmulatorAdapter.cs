@@ -19,8 +19,13 @@ namespace Snowflake.Emulator
         public IEnumerable<string> Capabilities { get; }
         public IEnumerable<string> Mimetypes { get; }
         protected IConfigurationCollectionStore CollectionStore { get; }
-
-        protected EmulatorAdapter(string appDataDirectory, IConfigurationCollectionStore collectionStore) : base(appDataDirectory)
+        public ISaveManager SaveManager { get; }
+        public IBiosManager BiosManager { get; }
+        public string SaveType { get; }
+        protected EmulatorAdapter(string appDataDirectory, 
+            IConfigurationCollectionStore collectionStore,
+            IBiosManager biosManager,
+            ISaveManager saveManager) : base(appDataDirectory)
         {
 
             this.InputMappings = 
@@ -30,9 +35,17 @@ namespace Snowflake.Emulator
             this.ConfigurationFilenames = this.PluginProperties.GetEnumerable("configfilenames")?.ToList();
             this.Capabilities = this.PluginProperties.GetEnumerable("capabilities")?.ToList();
             this.Mimetypes = this.PluginProperties.GetEnumerable("mimetypes")?.ToList();
+            this.SaveType = this.PluginProperties.Get("savetype");
             this.CollectionStore = collectionStore;
+            this.BiosManager = biosManager;
+            this.SaveManager = saveManager;
+
         }
 
-        public abstract IEmulatorInstance Instantiate(IGameRecord gameRecord);
+        public abstract IEmulatorInstance Instantiate(IGameRecord gameRecord, int saveSlot, IList<IEmulatedPort> ports);
+
+        [Obsolete("Debug Purposes Only(!!)")]
+        public abstract IEmulatorInstance Instantiate(IGameRecord gameRecord, ICoreService coreService);
+
     }
 }

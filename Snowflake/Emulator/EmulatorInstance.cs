@@ -11,19 +11,35 @@ using Snowflake.Records.Game;
 
 namespace Snowflake.Emulator
 {
-    public abstract class EmulatorInstance 
+ 
+    public abstract class EmulatorInstance : IEmulatorInstance
     {
-        protected EmulatorInstance()
+        protected EmulatorInstance(
+            IEmulatorAdapter emulatorAdapter,
+            IGameRecord game,
+            int saveSlot,
+            IPlatformInfo platform, 
+            IList<IEmulatedPort> controllerPorts,
+            IDictionary<string, IConfigurationCollection>  configurationCollections)
         {
+            this.EmulatorAdapter = emulatorAdapter;
             this.InstanceGuid = Guid.NewGuid();
+            this.Game = game;
             this.InstanceMetadata = new Dictionary<string, string>();
+            this.ControllerPorts = controllerPorts;
+            this.SaveSlot = saveSlot;
+            this.ConfigurationCollections = configurationCollections;
+            this.Platform = platform;
             string roamingAppdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             this.InstancePath = Path.Combine(roamingAppdata, "snowflake-cache", this.InstanceGuid.ToString());
             Directory.CreateDirectory(this.InstancePath);
         }
 
+        
         public Guid InstanceGuid { get; }
+        public IEmulatorAdapter EmulatorAdapter { get; }
         public IList<IEmulatedPort> ControllerPorts { get; }
+        public int SaveSlot { get; }
         public IDictionary<string, IConfigurationCollection> ConfigurationCollections { get; }
         public IDictionary<string, string> InstanceMetadata { get; }
         public IGameRecord Game { get; protected set; }

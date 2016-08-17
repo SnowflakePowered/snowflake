@@ -12,26 +12,34 @@ using Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters;
 using Snowflake.Plugin.EmulatorAdapter.RetroArch.Input;
 using Snowflake.Records.Game;
 using Snowflake.Emulator;
+using Snowflake.Platform;
 
 namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
 {
     internal class RetroArchInstance : EmulatorInstance
     {
-        private readonly Emulator.EmulatorAdapter adapter;
-        internal RetroArchInstance(RetroArchCommonAdapter adapter)
+        private RetroArchCommonAdapter adapter;
+        internal RetroArchInstance(IGameRecord game, RetroArchCommonAdapter adapter, int saveSlot,
+            IPlatformInfo platform,
+            IList<IEmulatedPort> controllerPorts,
+            IDictionary<string, IConfigurationCollection> configurationCollections)
+            : base(null, game, saveSlot, platform, controllerPorts, configurationCollections)
         {
-            this.adapter = null;
+            this.adapter = adapter;
         }
 
 
         public override void Create()
         {
+            //do configuration here
 
-            var retroArchConfiguration = this.ConfigurationCollections["retroarch.cfg"] as RetroArchConfiguration;
-            retroArchConfiguration.DirectoryConfiguration.SavefileDirectory = this.InstancePath; //iimplement savefile manager?
-            // rcg.DirectoryConfiguration.SystemDirectory set bios files directory
-            //biosmanager?
+            var retroArchConfiguration = (RetroArchConfiguration)this.ConfigurationCollections["retroarch.cfg"];
+            retroArchConfiguration.DirectoryConfiguration.SavefileDirectory =
+                this.adapter.SaveManager.GetSaveDirectory(this.adapter.SaveType, this.Game.Guid, this.SaveSlot);
+            retroArchConfiguration.DirectoryConfiguration.SystemDirectory =
+                this.adapter.BiosManager.GetBiosDirectory(this.Platform);
 
+            //build the configuration
             var sectionBuilder = new StringBuilder();
 
             foreach (var section in retroArchConfiguration)
@@ -53,6 +61,9 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
                 sectionBuilder.Append(inputConfig);
             }
             File.WriteAllText(Path.Combine(this.InstancePath, retroArchConfiguration.FileName), sectionBuilder.ToString());
+
+            //debug
+            Console.WriteLine(Path.Combine(this.InstancePath, retroArchConfiguration.FileName));
             //start retroarchexe here with instacnepath as working directory
         }
 

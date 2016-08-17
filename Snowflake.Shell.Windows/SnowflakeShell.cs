@@ -12,6 +12,7 @@ using Snowflake.Input.Controller.Mapped;
 using Snowflake.Input.Device;
 using Snowflake.Platform;
 using Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters;
+using Snowflake.Records.Game;
 using Snowflake.Scraper;
 using Snowflake.Service;
 using Snowflake.Service.Manager;
@@ -42,15 +43,10 @@ namespace Snowflake.Shell.Windows
                 SnowflakeEventManager.EventSource.RaiseEvent(serverStartEvent); //todo Move event registration to SnowflakeEVentManager
             }
 
-            var store = new SqliteMappedControllerElementCollectionStore(new SqliteDatabase("controllermappings.db"));
-            var devices = this.loadedCore.Get<IPluginManager>()?.Get<IInputEnumerator>()["InputEnumerator-Keyboard"].GetConnectedDevices().First();
-            var contrl = this.loadedCore.Get<IStoneProvider>().Controllers["DUALSHOCK_CONTROLLER"];
-            var profile = MappedControllerElementCollection.GetDefaultMappings(devices.DeviceLayout, contrl);
-            var port = new EmulatedPort(0, contrl, devices,
-               profile);
-            
-
-
+            var raadapter = this.loadedCore.Get<IPluginManager>().Get<RetroArchCommonAdapter>().First().Value;
+            var lmfao = raadapter.Instantiate(new GameRecord(this.loadedCore.Get<IStoneProvider>().Platforms["NINTENDO_NES"],"test"), this.loadedCore);
+            lmfao.Create();
+            var x = raadapter.BiosManager.GetMissingBios(this.loadedCore.Get<IStoneProvider>().Platforms["SONY_PS2"]);
         }
 
         public void StartShell() {
