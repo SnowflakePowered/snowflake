@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Snowflake.Configuration;
 using Snowflake.Configuration.Input;
 using Snowflake.Extensibility;
+using Snowflake.Records.File;
 using Snowflake.Records.Game;
 using Snowflake.Service;
 
@@ -44,7 +45,7 @@ namespace Snowflake.Emulator
 
         }
 
-        public abstract IEmulatorInstance Instantiate(IGameRecord gameRecord, int saveSlot, IList<IEmulatedPort> ports);
+        public abstract IEmulatorInstance Instantiate(IGameRecord gameRecord, IFileRecord romFile, int saveSlot, IList<IEmulatedPort> ports);
 
         [Obsolete("Debug Purposes Only(!!)")]
         public abstract IEmulatorInstance Instantiate(IGameRecord gameRecord, ICoreService coreService);
