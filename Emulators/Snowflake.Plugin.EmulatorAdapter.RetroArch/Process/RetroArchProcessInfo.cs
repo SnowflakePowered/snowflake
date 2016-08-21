@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
+namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Process
 {
-    internal class RetroArchProcess 
+    internal class RetroArchProcessInfo 
     {
 
         public string ConfigPath { private get; set; }
@@ -17,7 +17,7 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
         public string Subsystem { private get; set; }
         private readonly string retroArchDirectory;
         private readonly string romFile;
-        public RetroArchProcess(string retroArchDirectory, string romFile)
+        public RetroArchProcessInfo(string retroArchDirectory, string romFile)
         {
             this.retroArchDirectory = retroArchDirectory;
             this.romFile = romFile;

@@ -13,6 +13,7 @@ using Snowflake.Plugin.EmulatorAdapter.RetroArch.Input;
 using Snowflake.Records.Game;
 using Snowflake.Emulator;
 using Snowflake.Platform;
+using Snowflake.Plugin.EmulatorAdapter.RetroArch.Process;
 using Snowflake.Records.File;
 
 namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
@@ -20,13 +21,16 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
     internal class RetroArchInstance : EmulatorInstance
     {
         private RetroArchCommonAdapter adapter;
-        internal RetroArchInstance(IGameRecord game, IFileRecord file, RetroArchCommonAdapter adapter, int saveSlot,
+        private RetroArchProcessHandler processHandler;
+        internal RetroArchInstance(IGameRecord game, IFileRecord file, RetroArchCommonAdapter adapter, 
+            RetroArchProcessHandler processHandler, int saveSlot,
             IPlatformInfo platform,
             IList<IEmulatedPort> controllerPorts,
             IDictionary<string, IConfigurationCollection> configurationCollections)
             : base(null, game, file, saveSlot, platform, controllerPorts, configurationCollections)
         {
             this.adapter = adapter;
+            this.processHandler = processHandler;
         }
 
 
@@ -75,7 +79,8 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
 
         public override void Start()
         {
-            
+            var info = this.processHandler.GetProcessInfo(this.RomFile.FilePath);
+            //setup the instance hereee
         }
 
         public override void Pause()

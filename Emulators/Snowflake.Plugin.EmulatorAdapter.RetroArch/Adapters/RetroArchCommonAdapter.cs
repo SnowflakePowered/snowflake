@@ -41,7 +41,7 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters
             };
             var platform = this.StoneProvider.Platforms[gameRecord.PlatformId];
 
-            return new RetroArchInstance(gameRecord, file, this, saveSlot, platform, ports, configurations);
+            return new RetroArchInstance(gameRecord, file, this, null, saveSlot, platform, ports, configurations);
         }
 
         [Obsolete("DEBUG ONLY")]
