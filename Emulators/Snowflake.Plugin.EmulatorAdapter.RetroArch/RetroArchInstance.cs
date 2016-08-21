@@ -13,17 +13,18 @@ using Snowflake.Plugin.EmulatorAdapter.RetroArch.Input;
 using Snowflake.Records.Game;
 using Snowflake.Emulator;
 using Snowflake.Platform;
+using Snowflake.Records.File;
 
 namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
 {
     internal class RetroArchInstance : EmulatorInstance
     {
         private RetroArchCommonAdapter adapter;
-        internal RetroArchInstance(IGameRecord game, RetroArchCommonAdapter adapter, int saveSlot,
+        internal RetroArchInstance(IGameRecord game, IFileRecord file, RetroArchCommonAdapter adapter, int saveSlot,
             IPlatformInfo platform,
             IList<IEmulatedPort> controllerPorts,
             IDictionary<string, IConfigurationCollection> configurationCollections)
-            : base(null, game, saveSlot, platform, controllerPorts, configurationCollections)
+            : base(null, game, file, saveSlot, platform, controllerPorts, configurationCollections)
         {
             this.adapter = adapter;
         }
@@ -57,24 +58,29 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
                     where inputMappings.DeviceLayouts.Contains(port.PluggedDevice.DeviceLayout.LayoutID)
                     select inputMappings).FirstOrDefault();
                 if (mappings == null) throw new InvalidOperationException("Adapter does not support device layout");
+                //serialize the input template
                 var inputConfig = retroArchConfiguration.Serializer.Serialize(inputTemplate, mappings);
                 sectionBuilder.Append(inputConfig);
             }
+            //output to the filename
             File.WriteAllText(Path.Combine(this.InstancePath, retroArchConfiguration.FileName), sectionBuilder.ToString());
 
             //debug
             Console.WriteLine(Path.Combine(this.InstancePath, retroArchConfiguration.FileName));
-            //start retroarchexe here with instacnepath as working directory
+            
+            //complete.
+            this.CreateTime = DateTimeOffset.UtcNow;
+            this.IsCreated = true;
         }
 
         public override void Start()
         {
-            throw new NotImplementedException();
+            
         }
 
         public override void Pause()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException(); 
         }
 
         public override void Resume()
@@ -84,10 +90,17 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
 
         public override void Destroy()
         {
-            throw new NotImplementedException();
+            this.IsActive = false;
+            this.IsRunning = false;
+            this.IsCreated = false;
+            Directory.Delete(this.InstancePath, true);
+            this.DestroyTime = DateTimeOffset.UtcNow;
+            this.IsDestroyed = true;
+           
         }
 
-        public override DateTime StartTime { get; }
-        public override DateTime DestroyTime { get; }
+        public override DateTimeOffset CreateTime { get; protected set; }
+        public override DateTimeOffset StartTime { get; protected set; }
+        public override DateTimeOffset DestroyTime { get; protected set; }
     }
 }

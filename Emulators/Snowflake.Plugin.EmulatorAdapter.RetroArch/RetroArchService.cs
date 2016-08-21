@@ -16,7 +16,7 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
             //assume in retroarch folder
             return new ProcessStartInfo(Path.Combine("retroarch", "retroarch.exe"))
             {
-                Arguments = $"-L {core}",
+                Arguments = $"-L {core} {instance.RomFile.FilePath}",
                 WorkingDirectory = instance.InstancePath
             };
         }

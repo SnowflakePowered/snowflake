@@ -46,7 +46,6 @@ namespace Snowflake.Shell.Windows
             var raadapter = this.loadedCore.Get<IPluginManager>().Get<RetroArchCommonAdapter>().First().Value;
             var lmfao = raadapter.Instantiate(new GameRecord(this.loadedCore.Get<IStoneProvider>().Platforms["NINTENDO_NES"],"test"), this.loadedCore);
             lmfao.Create();
-            var x = raadapter.BiosManager.GetMissingBios(this.loadedCore.Get<IStoneProvider>().Platforms["SONY_PS2"]);
         }
 
         public void StartShell() {

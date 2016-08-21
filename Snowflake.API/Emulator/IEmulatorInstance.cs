@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
 using Snowflake.Platform;
+using Snowflake.Records.File;
 using Snowflake.Records.Game;
 
 namespace Snowflake.Emulator
@@ -18,13 +19,14 @@ namespace Snowflake.Emulator
         IDictionary<string, IConfigurationCollection> ConfigurationCollections { get; }
         IDictionary<string, string> InstanceMetadata { get; }
         IGameRecord Game { get; }
+        IFileRecord RomFile { get; }
         IPlatformInfo Platform { get; }
         string InstancePath { get; }
-        DateTime StartTime { get; }
-        DateTime DestroyTime { get; }
+        DateTimeOffset StartTime { get; }
+        DateTimeOffset DestroyTime { get; }
         bool IsActive { get; }
         bool IsRunning { get; }
-        bool IsGenerated { get; }
+        bool IsCreated { get; }
         bool IsDestroyed { get; }
         void Create();
         void Start();

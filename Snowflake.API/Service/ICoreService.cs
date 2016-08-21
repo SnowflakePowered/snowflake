@@ -26,10 +26,10 @@ namespace Snowflake.Service
         IEnumerable<string> AvailableServices();
         /// <summary>
         /// Get a service.
-        /// The StoneProvider service is guaranteed to be registered.
+        /// The <see cref="IStoneProvider"/> service will always be available.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
+        /// <typeparam name="T">The type of service.</typeparam>
+        /// <returns>The service instance</returns>
         T Get<T>();
     }
 }

@@ -18,7 +18,7 @@ namespace Snowflake.Configuration
         /// properties initialized.
         /// </summary>
         /// <typeparam name="T">The type of configuration collection</typeparam>
-        /// <param name="collectionFilename">The file name of the collection. Must match the type of colletion</param>
+        /// <param name="collectionFilename">The file name of the collection. Must match the type of collection</param>
         /// <param name="gameRecord">The guid of the game record</param>
         /// <returns></returns>
         T GetConfiguration<T>(string collectionFilename, Guid gameRecord) where T : IConfigurationCollection, new();

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Snowflake.Configuration;
 using Snowflake.Input;
 using Snowflake.Platform;
+using Snowflake.Records.File;
 using Snowflake.Records.Game;
 
 namespace Snowflake.Emulator
@@ -17,6 +18,7 @@ namespace Snowflake.Emulator
         protected EmulatorInstance(
             IEmulatorAdapter emulatorAdapter,
             IGameRecord game,
+            IFileRecord file,
             int saveSlot,
             IPlatformInfo platform, 
             IList<IEmulatedPort> controllerPorts,
@@ -25,6 +27,7 @@ namespace Snowflake.Emulator
             this.EmulatorAdapter = emulatorAdapter;
             this.InstanceGuid = Guid.NewGuid();
             this.Game = game;
+            this.RomFile = file;
             this.InstanceMetadata = new Dictionary<string, string>();
             this.ControllerPorts = controllerPorts;
             this.SaveSlot = saveSlot;
@@ -35,26 +38,27 @@ namespace Snowflake.Emulator
             Directory.CreateDirectory(this.InstancePath);
         }
 
-        
         public Guid InstanceGuid { get; }
         public IEmulatorAdapter EmulatorAdapter { get; }
         public IList<IEmulatedPort> ControllerPorts { get; }
         public int SaveSlot { get; }
         public IDictionary<string, IConfigurationCollection> ConfigurationCollections { get; }
         public IDictionary<string, string> InstanceMetadata { get; }
-        public IGameRecord Game { get; protected set; }
+        public IGameRecord Game { get; }
+        public IFileRecord RomFile { get; }
         public IPlatformInfo Platform { get; }
-        public string InstancePath { get; protected set; }
+        public string InstancePath { get; }
         public abstract void Create();
         public abstract void Start();
         public abstract void Pause();
         public abstract void Resume();
         public abstract void Destroy();
-        public abstract DateTime StartTime { get; }
-        public abstract DateTime DestroyTime { get; }
+        public abstract DateTimeOffset CreateTime { get; protected set; }
+        public abstract DateTimeOffset StartTime { get; protected set; }
+        public abstract DateTimeOffset DestroyTime { get; protected set; }
         public bool IsActive { get; protected set; }
         public bool IsRunning { get; protected set; }
-        public bool IsGenerated { get; protected set; }
+        public bool IsCreated { get; protected set; }
         public bool IsDestroyed { get; protected set; }
     }
 }

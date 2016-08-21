@@ -21,13 +21,15 @@ namespace Snowflake.Emulator
         protected IConfigurationCollectionStore CollectionStore { get; }
         public ISaveManager SaveManager { get; }
         public IBiosManager BiosManager { get; }
+        protected IStoneProvider StoneProvider { get; }
         public string SaveType { get; }
-        protected EmulatorAdapter(string appDataDirectory, 
+        protected EmulatorAdapter(string appDataDirectory,
+            IStoneProvider stoneProvider, 
             IConfigurationCollectionStore collectionStore,
             IBiosManager biosManager,
             ISaveManager saveManager) : base(appDataDirectory)
         {
-
+            this.StoneProvider = stoneProvider;
             this.InputMappings = 
                 this.GetAllSiblingResourceNames("InputMappings")
                 .Select(mappings => JsonConvert.DeserializeObject<InputMapping>
