@@ -41,6 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adapters\Nestopia\Configuration\NestopiaCoreConfiguration.cs" />
+    <Compile Include="Adapters\Nestopia\Configuration\NestopiaCoreConfigurationCollection.cs" />
+    <Compile Include="Adapters\Nestopia\NestopiaRetroArchAdapter.cs" />
+    <Compile Include="Adapters\Nestopia\Selections\NestopiaSystem.cs" />
+    <Compile Include="Adapters\Nestopia\Selections\PixelAspectRatio.cs" />
+    <Compile Include="Adapters\Nestopia\Selections\BlargFilter.cs" />
+    <Compile Include="Adapters\Nestopia\Selections\ColorPalette.cs" />
     <Compile Include="Adapters\RetroArchCommonAdapter.cs" />
     <Compile Include="Configuration\FramethrottleConfiguration.cs" />
     <Compile Include="Configuration\AudioConfiguration.cs" />
@@ -60,6 +67,8 @@
     <Compile Include="Configuration\Internal\NetworkConfiguration.cs" />
     <Compile Include="Configuration\PauseConfiguration.cs" />
     <Compile Include="Configuration\Internal\RecordConfiguration.cs" />
+    <Compile Include="Executable\RetroArchProcessHandler.cs" />
+    <Compile Include="Executable\RetroArchProcessInfo.cs" />
     <Compile Include="RetroArchCommonContainer.cs" />
     <Compile Include="RetroArchInstance.cs" />
     <Compile Include="Input\RetroPadTemplate.cs" />
@@ -73,8 +82,6 @@
     <Compile Include="Configuration\ConfigConfiguration.cs" />
     <Compile Include="Configuration\VideoConfiguration.cs" />
     <Compile Include="Configuration\Internal\XmbConfiguration.cs" />
-    <Compile Include="Process\RetroArchProcessInfo.cs" />
-    <Compile Include="Process\RetroArchProcessHandler.cs" />
     <Compile Include="Selections\AudioConfiguration\AspectRatioIndex.cs" />
     <Compile Include="Selections\AudioConfiguration\AudioDriver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -95,10 +102,12 @@
     <ProjectReference Include="..\..\Snowflake.API\Snowflake.API.csproj">
       <Project>{2841aeea-03d5-47b0-9d90-375dfa19559a}</Project>
       <Name>Snowflake.API</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\Snowflake\Snowflake.csproj">
       <Project>{8f1d65ed-4a96-4a0a-8371-53655a60a2b3}</Project>
       <Name>Snowflake</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -111,6 +120,12 @@
     <EmbeddedResource Include="resource\InputMappings\DirectInput.XINPUT_DEVICE.json" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="resource\RetroArchNestopia\plugin.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="resource\exe-retroarch-win64\plugin.json" />
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="resource\RetroArchCommon\plugin.json" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -121,7 +136,6 @@
     <Copy SourceFiles="@(RetroArch)" DestinationFolder="$(OutputPath)\exe-retroarch-win64\%(RecursiveDir)">
     </Copy>
   </Target>
-
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

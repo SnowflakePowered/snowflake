@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ using Snowflake.Input;
 using Snowflake.Input.Controller.Mapped;
 using Snowflake.Input.Device;
 using Snowflake.Platform;
+using Snowflake.Plugin.EmulatorAdapter.RetroArch.Executable;
 using Snowflake.Records.File;
 using Snowflake.Records.Game;
 using Snowflake.Service;
@@ -18,17 +20,21 @@ using Snowflake.Service.Manager;
 
 namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters
 {
-    [Plugin("RetroArchCommon")]
-    public class RetroArchCommonAdapter : Emulator.EmulatorAdapter
+    public abstract class RetroArchCommonAdapter : Emulator.EmulatorAdapter
     {
-        
+        protected readonly RetroArchProcessHandler processHandler;
+        public string CorePath { get; }
+
         public RetroArchCommonAdapter(string appDataDirectory, 
+            RetroArchProcessHandler processHandler,
             IStoneProvider stoneProvider,
             IConfigurationCollectionStore collectionStore,
             IBiosManager biosManager,
             ISaveManager saveManager) 
             : base(appDataDirectory, stoneProvider, collectionStore, biosManager, saveManager)
         {
+            this.processHandler = processHandler;
+            this.CorePath = Path.Combine(this.PluginDataPath, this.PluginProperties.Get("retroarch_core"));
         }
 
         public override IEmulatorInstance Instantiate(IGameRecord gameRecord, IFileRecord file, int saveSlot, IList<IEmulatedPort> ports)
@@ -41,7 +47,7 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters
             };
             var platform = this.StoneProvider.Platforms[gameRecord.PlatformId];
 
-            return new RetroArchInstance(gameRecord, file, this, null, saveSlot, platform, ports, configurations);
+            return new RetroArchInstance(gameRecord, file, this, this.processHandler, saveSlot, platform, ports, configurations);
         }
 
         [Obsolete("DEBUG ONLY")]

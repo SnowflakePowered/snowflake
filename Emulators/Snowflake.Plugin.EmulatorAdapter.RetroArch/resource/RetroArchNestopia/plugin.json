@@ -1,0 +1,12 @@
+﻿{
+    "name": "RetroArchNestopia",
+    "type": "plugin_emulator",
+    "version": "1.0.0.0",
+    "authors": [
+        "Snowflake"
+    ],
+  "description": "RetroArch Nestopia",
+  "savetype": "retroarch-sram",
+  "mimetypes": [ "application/x-romfile-nes-ines" ],
+  "retroarch_core":  "nestopia_libretro.dll" 
+}

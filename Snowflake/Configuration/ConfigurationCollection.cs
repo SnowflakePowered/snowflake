@@ -35,6 +35,17 @@ namespace Snowflake.Configuration
             return configurationSection;
         }
 
+        public override string ToString()
+        {
+            var sectionBuilder = new StringBuilder();
+
+            foreach (var section in this)
+            {
+                sectionBuilder.Append(this.Serializer.Serialize(section));
+            }
+            return sectionBuilder.ToString();
+        }
+
         public IEnumerator<IConfigurationSection> GetEnumerator()
         {
             return (from properties in this.GetType().GetProperties()

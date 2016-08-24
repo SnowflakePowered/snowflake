@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Snowflake.Extensibility;
+﻿using Snowflake.Extensibility;
 
-namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Process
+
+namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Executable
 {
     [Plugin("exe-retroarch-win64")]
     public class RetroArchProcessHandler : Extensibility.Plugin

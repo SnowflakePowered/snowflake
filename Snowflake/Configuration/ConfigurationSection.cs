@@ -36,7 +36,7 @@ namespace Snowflake.Configuration
                 .ToDictionary(option => option.KeyName, option => option);
         }
 
-      
+
         protected ConfigurationSection(string sectionName, string displayName)
             : this(sectionName, displayName, String.Empty)
         {

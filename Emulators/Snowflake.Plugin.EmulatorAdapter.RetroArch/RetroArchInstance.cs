@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
 using Snowflake.Emulator;
@@ -11,18 +12,18 @@ using Snowflake.Plugin.EmulatorAdapter.RetroArch;
 using Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters;
 using Snowflake.Plugin.EmulatorAdapter.RetroArch.Input;
 using Snowflake.Records.Game;
-using Snowflake.Emulator;
 using Snowflake.Platform;
-using Snowflake.Plugin.EmulatorAdapter.RetroArch.Process;
 using Snowflake.Records.File;
+using Snowflake.Plugin.EmulatorAdapter.RetroArch.Executable;
 
 namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
 {
     internal class RetroArchInstance : EmulatorInstance
     {
-        private RetroArchCommonAdapter adapter;
-        private RetroArchProcessHandler processHandler;
-        internal RetroArchInstance(IGameRecord game, IFileRecord file, RetroArchCommonAdapter adapter, 
+        private readonly RetroArchCommonAdapter adapter;
+        private readonly RetroArchProcessHandler processHandler;
+        internal RetroArchInstance(IGameRecord game, IFileRecord file, 
+            RetroArchCommonAdapter adapter, 
             RetroArchProcessHandler processHandler, int saveSlot,
             IPlatformInfo platform,
             IList<IEmulatedPort> controllerPorts,
@@ -33,6 +34,27 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
             this.processHandler = processHandler;
         }
 
+        private string BuildRetroarchCfg(RetroArchConfiguration retroArchConfiguration)
+        {
+            //build the configuration
+            var sectionBuilder = new StringBuilder(retroArchConfiguration.ToString());
+
+            //handle input config
+            foreach (var port in this.ControllerPorts)
+            {
+                var inputTemplate = new RetroPadTemplate();
+                inputTemplate.SetInputValues(port.MappedElementCollection, port.PluggedDevice, port.EmulatedPortNumber);
+                var mappings = (from inputMappings in this.adapter.InputMappings
+                                where inputMappings.InputApi == InputApi.DirectInput
+                                where inputMappings.DeviceLayouts.Contains(port.PluggedDevice.DeviceLayout.LayoutID)
+                                select inputMappings).FirstOrDefault();
+                if (mappings == null) throw new InvalidOperationException("Adapter does not support device layout");
+                //serialize the input template
+                var inputConfig = retroArchConfiguration.Serializer.Serialize(inputTemplate, mappings);
+                sectionBuilder.Append(inputConfig);
+            }
+            return sectionBuilder.ToString();
+        }
 
         public override void Create()
         {
@@ -43,31 +65,19 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
                 this.adapter.SaveManager.GetSaveDirectory(this.adapter.SaveType, this.Game.Guid, this.SaveSlot);
             retroArchConfiguration.DirectoryConfiguration.SystemDirectory =
                 this.adapter.BiosManager.GetBiosDirectory(this.Platform);
+            retroArchConfiguration.DirectoryConfiguration.CoreOptionsPath = Path.Combine(this.InstancePath,
+                "retroarch-core-options.cfg");
 
-            //build the configuration
-            var sectionBuilder = new StringBuilder();
-
-            foreach (var section in retroArchConfiguration)
-            {
-                sectionBuilder.Append(retroArchConfiguration.Serializer.Serialize(section));
-            }
-
-            //handle input config
-            foreach (var port in this.ControllerPorts)
-            {
-                var inputTemplate = new RetroPadTemplate();
-                inputTemplate.SetInputValues(port.MappedElementCollection, port.PluggedDevice, port.EmulatedPortNumber);
-                var mappings = (from inputMappings in adapter.InputMappings
-                    where inputMappings.InputApi == InputApi.DirectInput
-                    where inputMappings.DeviceLayouts.Contains(port.PluggedDevice.DeviceLayout.LayoutID)
-                    select inputMappings).FirstOrDefault();
-                if (mappings == null) throw new InvalidOperationException("Adapter does not support device layout");
-                //serialize the input template
-                var inputConfig = retroArchConfiguration.Serializer.Serialize(inputTemplate, mappings);
-                sectionBuilder.Append(inputConfig);
-            }
+            string retroarchCfg = this.BuildRetroarchCfg(retroArchConfiguration);
+            
             //output to the filename
-            File.WriteAllText(Path.Combine(this.InstancePath, retroArchConfiguration.FileName), sectionBuilder.ToString());
+            File.WriteAllText(Path.Combine(this.InstancePath, retroArchConfiguration.FileName), retroarchCfg);
+
+            if (this.ConfigurationCollections.ContainsKey("retroarch-core-options.cfg"))
+            {
+                var coreConfig = this.ConfigurationCollections["retroarch-core-options.cfg"];
+                File.WriteAllText(Path.Combine(this.InstancePath, "retroarch-core-options.cfg"), coreConfig.ToString());
+            }
 
             //debug
             Console.WriteLine(Path.Combine(this.InstancePath, retroArchConfiguration.FileName));
@@ -80,6 +90,9 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
         public override void Start()
         {
             var info = this.processHandler.GetProcessInfo(this.RomFile.FilePath);
+            info.CorePath = this.adapter.CorePath;
+            info.ConfigPath = Path.Combine(this.InstancePath, "retroarch.cfg");
+            Process.Start(info.GetStartInfo());
             //setup the instance hereee
         }
 

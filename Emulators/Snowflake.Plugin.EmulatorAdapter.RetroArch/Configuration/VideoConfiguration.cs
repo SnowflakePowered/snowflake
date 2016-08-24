@@ -105,7 +105,7 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Configuration
         public bool VideoThreaded { get; set; } = false;
 
         [ConfigurationOption("video_vsync", DisplayName = "VSync")]
-        public bool VideoVsync { get; set; } = true;
+        public bool VideoVsync { get; set; } = false;
 
         [ConfigurationOption("video_windowed_fullscreen", DisplayName = "Use Windowed Fullscreen")]
         public bool VideoWindowedFullscreen { get; set; } = true;
