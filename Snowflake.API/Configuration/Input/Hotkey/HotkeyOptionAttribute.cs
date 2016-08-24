@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Input.Controller;
 
-namespace Snowflake.Configuration.Input
+namespace Snowflake.Configuration.Input.Hotkey
 {
     /// <summary>
     /// Represents a hotkey option that relates a device input to a function within the emulator, but
