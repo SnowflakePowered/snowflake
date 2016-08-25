@@ -8,5 +8,5 @@
   "description": "RetroArch Nestopia",
   "savetype": "retroarch-sram",
   "mimetypes": [ "application/x-romfile-nes-ines" ],
-  "retroarch_core":  "nestopia_libretro.dll" 
+  "retroarch_core": "nestopia_libretro.dll" 
 }

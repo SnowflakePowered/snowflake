@@ -83,8 +83,14 @@
     <Compile Include="Caching\ImageTypes.cs" />
     <Compile Include="Caching\ImageMetadataKeys.cs" />
     <Compile Include="Configuration\Attributes\ConfigurationOptionAttribute.cs" />
+    <Compile Include="Configuration\Input\Hotkey\IHotkeyTemplateCollection.cs" />
+    <Compile Include="Configuration\Input\Hotkey\IHotkeyTemplateStore.cs" />
+    <Compile Include="Configuration\Input\Hotkey\HotkeyTemplateType.cs" />
+    <Compile Include="Configuration\Input\Hotkey\IHotkeyTrigger.cs" />
+    <Compile Include="Configuration\Input\Hotkey\IHotkeyOption.cs" />
     <Compile Include="Configuration\IConfigurationCollectionStore.cs" />
-    <Compile Include="Configuration\Input\HotkeyOptionAttribute.cs" />
+    <Compile Include="Configuration\Input\Hotkey\HotkeyOptionAttribute.cs" />
+    <Compile Include="Configuration\Input\Hotkey\IHotkeyTemplate.cs" />
     <Compile Include="Configuration\Input\IInputMapping.cs" />
     <Compile Include="Configuration\Input\IInputOption.cs" />
     <Compile Include="Configuration\Input\IInputTemplate.cs" />

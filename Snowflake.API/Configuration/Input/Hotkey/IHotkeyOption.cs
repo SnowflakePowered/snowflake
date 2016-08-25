@@ -14,18 +14,8 @@ namespace Snowflake.Configuration.Input.Hotkey
     {
         /// <summary>
         /// The display name for human readable purposes of this option
-        /// </summary>
+        /// </summary>  
         string DisplayName { get; }
-
-        /// <summary>
-        /// A description of this configuration option
-        /// </summary>
-        string Description { get; }
-
-        /// <summary>
-        /// Whether or not this option is a simple option (displayed in "Simple" configuration mode)
-        /// </summary>
-        bool Simple { get; }
 
         /// <summary>
         /// Whether or not this option is private (not ever displayed to the user)
@@ -50,6 +40,6 @@ namespace Snowflake.Configuration.Input.Hotkey
         /// <summary>
         /// The trigger for this hotkey
         /// </summary>
-        IHotkeyTrigger HotkeyTrigger { get; }
+        IHotkeyTrigger Value { get; set; }
     }
 }

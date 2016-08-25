@@ -25,7 +25,9 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
             pm.Register(new NestopiaRetroArchAdapter(coreInstance.AppDataDirectory,
                 processHandler,
                 coreInstance.Get<IStoneProvider>(),
-                coreInstance.Get<IConfigurationCollectionStore>(), new BiosManager(coreInstance.AppDataDirectory),
+                coreInstance.Get<IConfigurationCollectionStore>(), 
+                coreInstance.Get<IHotkeyTemplateStore>(),
+                new BiosManager(coreInstance.AppDataDirectory),
                 new SaveManager(coreInstance.AppDataDirectory)));
         }
     }

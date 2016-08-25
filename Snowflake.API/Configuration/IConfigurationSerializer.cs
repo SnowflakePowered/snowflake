@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using Snowflake.Configuration.Input;
+using Snowflake.Configuration.Input.Hotkey;
 using Snowflake.Input.Controller;
 using Snowflake.Emulator;
 using Snowflake.Input.Controller.Mapped;
+using Snowflake.Input.Device;
 
 namespace Snowflake.Configuration
 {
@@ -61,5 +63,13 @@ namespace Snowflake.Configuration
         /// <param name="inputMapping">The input mapping to serialize with</param>
         /// <returns>The entire input template serialized as a string</returns>
         string Serialize(IInputTemplate inputTemplate, IInputMapping inputMapping);
+
+        /// <summary>
+        /// Serializes the specified hotkey template
+        /// </summary>
+        /// <param name="hotkeyTemplate">The input template to serialize</param>
+        /// <param name="inputMapping">The input mapping to serialize with</param>
+        /// <returns>The entire input template serialized as a string</returns>
+        string Serialize(IHotkeyTemplate hotkeyTemplate, IInputMapping inputMapping);
     }
 }

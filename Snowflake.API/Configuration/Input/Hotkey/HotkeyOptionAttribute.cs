@@ -20,18 +20,18 @@ namespace Snowflake.Configuration.Input.Hotkey
         /// outside of the scope of the controller layout and game.
         /// </summary>
         /// <param name="optionName">The name of the option as it appears in configuration</param>
-        /// <param name="inputOptionType">The type of this input option</param>
-        public HotkeyOptionAttribute(string optionName, InputOptionType inputOptionType)
+        /// <param name="inputType">The type of this input option</param>
+        public HotkeyOptionAttribute(string optionName, InputOptionType inputType)
         {
             this.OptionName = optionName;
-            this.InputOptionType = inputOptionType;
+            this.InputType = inputType;
         }
 
         /// <summary>
         /// The type of this input option, whether it accepts
         /// keyboard only mappings, controller button mappings, or any type of mapping
         /// </summary>
-        public InputOptionType InputOptionType { get; }
+        public InputOptionType InputType { get; }
 
         /// <summary>
         /// The name of the option as it appears in configuration
@@ -42,5 +42,12 @@ namespace Snowflake.Configuration.Input.Hotkey
         /// The display name of this option
         /// </summary>
         public string DisplayName { get; set; }
+
+        /// <summary>
+        /// Whether or not this option is ever shown to the user.
+        /// Hotkey options should be displayed in 'simple' configuration mode
+        /// unless marked private.
+        /// </summary>
+        public bool Private { get; set; }
     }
 }

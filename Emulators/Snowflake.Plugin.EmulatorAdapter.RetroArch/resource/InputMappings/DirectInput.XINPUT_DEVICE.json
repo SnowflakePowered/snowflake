@@ -1,7 +1,8 @@
 ﻿{
 	"InputApi": "XInput",
 	"DeviceLayouts": [
-		"XINPUT_DEVICE"
+    "XINPUT_DEVICE",
+    "RETROPAD"
 	],
 	"NullMapping" :  "nul",
 	"Keyboard": {},

@@ -18,5 +18,6 @@ namespace Snowflake.Configuration.Input.Hotkey
         /// The keyboard key trigger
         /// </summary>
         KeyboardKey KeyboardTrigger { get; set; }
+        
     }
 }

@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Snowflake.Configuration.Hotkey
+namespace Snowflake.Configuration.Input.Hotkey
 {
-    public class HotkeyConfigurationSection
+    public enum HotkeyTemplateType
     {
+        KeyboardHotkeys,
+        ControllerHotkeys
     }
 }

@@ -19,13 +19,9 @@ namespace Snowflake.Configuration.Input.Hotkey
         /// </summary>
         string SectionName { get; }
         /// <summary>
-        /// The display name of the section for human-readable purposes
+        /// The filename of the configuration file the template belongs to
         /// </summary>
-        string DisplayName { get; }
-        /// <summary>
-        /// A description of what this section does
-        /// </summary>
-        string Description { get; }
+        string FileName { get; }
         /// <summary>
         /// The hotkey options of this configuration section, without key names.
         /// </summary>
@@ -34,5 +30,10 @@ namespace Snowflake.Configuration.Input.Hotkey
         /// The options of this configuration section, without key names.
         /// </summary>
         IEnumerable<IConfigurationOption> ConfigurationOptions { get; }
+        /// <summary>
+        /// The type of hotkey template
+        /// </summary>
+        HotkeyTemplateType TemplateType { get; }
+
     }
 }

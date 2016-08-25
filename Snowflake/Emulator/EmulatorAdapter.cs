@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Snowflake.Configuration;
 using Snowflake.Configuration.Input;
+using Snowflake.Configuration.Input.Hotkey;
 using Snowflake.Extensibility;
 using Snowflake.Records.File;
 using Snowflake.Records.Game;
@@ -16,7 +17,8 @@ namespace Snowflake.Emulator
     public abstract class EmulatorAdapter : Plugin
     {
         public IEnumerable<IInputMapping> InputMappings { get; }
-        public IEnumerable<string> ConfigurationFilenames { get; }
+        public abstract IEnumerable<IConfigurationCollection> DefaultConfigurations { get; }
+        public abstract IHotkeyTemplateCollection DefaultHotkeys { get; }
         public IEnumerable<string> Capabilities { get; }
         public IEnumerable<string> Mimetypes { get; }
         protected IConfigurationCollectionStore CollectionStore { get; }
@@ -35,7 +37,6 @@ namespace Snowflake.Emulator
                 this.GetAllSiblingResourceNames("InputMappings")
                 .Select(mappings => JsonConvert.DeserializeObject<InputMapping>
                 (this.GetSiblingStringResource("InputMappings", mappings))).Cast<IInputMapping>().ToList();
-            this.ConfigurationFilenames = this.PluginProperties.GetEnumerable("configfilenames")?.ToList();
             this.Capabilities = this.PluginProperties.GetEnumerable("capabilities")?.ToList();
             this.Mimetypes = this.PluginProperties.GetEnumerable("mimetypes")?.ToList();
             this.SaveType = this.PluginProperties.Get("savetype");

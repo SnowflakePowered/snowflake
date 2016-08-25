@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
+using Snowflake.Configuration.Hotkey;
 using Snowflake.Configuration.Input;
 using Snowflake.Emulator;
 using Snowflake.Extensibility;
@@ -13,6 +14,7 @@ using Snowflake.Input.Controller.Mapped;
 using Snowflake.Input.Device;
 using Snowflake.Platform;
 using Snowflake.Plugin.EmulatorAdapter.RetroArch.Executable;
+using Snowflake.Plugin.EmulatorAdapter.RetroArch.Input.Hotkeys;
 using Snowflake.Records.File;
 using Snowflake.Records.Game;
 using Snowflake.Service;
@@ -23,17 +25,20 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters
     public abstract class RetroArchCommonAdapter : Emulator.EmulatorAdapter
     {
         protected readonly RetroArchProcessHandler processHandler;
+        public readonly IHotkeyTemplateStore hotkeyStore;
         public string CorePath { get; }
 
         public RetroArchCommonAdapter(string appDataDirectory, 
             RetroArchProcessHandler processHandler,
             IStoneProvider stoneProvider,
             IConfigurationCollectionStore collectionStore,
+            IHotkeyTemplateStore hotkeyStore,
             IBiosManager biosManager,
             ISaveManager saveManager) 
             : base(appDataDirectory, stoneProvider, collectionStore, biosManager, saveManager)
         {
             this.processHandler = processHandler;
+            this.hotkeyStore = hotkeyStore;
             this.CorePath = Path.Combine(this.PluginDataPath, this.PluginProperties.Get("retroarch_core"));
         }
 
@@ -47,7 +52,8 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters
             };
             var platform = this.StoneProvider.Platforms[gameRecord.PlatformId];
 
-            return new RetroArchInstance(gameRecord, file, this, this.processHandler, saveSlot, platform, ports, configurations);
+            return new RetroArchInstance(gameRecord, file, this, this.processHandler, saveSlot, platform, ports, configurations, 
+                new HotkeyTemplateCollection(this.hotkeyStore.GetTemplate<KeyboardHotkeyTemplate>(), this.hotkeyStore.GetTemplate<ControllerHotkeyTemplate>()));
         }
 
         [Obsolete("DEBUG ONLY")]

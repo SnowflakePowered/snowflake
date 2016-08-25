@@ -13,6 +13,7 @@ using Snowflake.Input.Device;
 using Snowflake.Platform;
 using Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters;
 using Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters.Nestopia;
+using Snowflake.Plugin.EmulatorAdapter.RetroArch.Input.Hotkeys;
 using Snowflake.Records.File;
 using Snowflake.Records.Game;
 using Snowflake.Scraper;

@@ -69,6 +69,8 @@
     <Compile Include="Configuration\Internal\RecordConfiguration.cs" />
     <Compile Include="Executable\RetroArchProcessHandler.cs" />
     <Compile Include="Executable\RetroArchProcessInfo.cs" />
+    <Compile Include="Input\Hotkeys\ControllerHotkeyTemplate.cs" />
+    <Compile Include="Input\Hotkeys\KeyboardHotkeyTemplate.cs" />
     <Compile Include="RetroArchCommonContainer.cs" />
     <Compile Include="RetroArchInstance.cs" />
     <Compile Include="Input\RetroPadTemplate.cs" />
@@ -111,9 +113,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Input\HotkeyConfiguration.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="resource\InputMappings\DirectInput.KEYBOARD_DEVICE.json" />
   </ItemGroup>
   <ItemGroup>
@@ -128,6 +127,7 @@
   <ItemGroup>
     <EmbeddedResource Include="resource\RetroArchCommon\plugin.json" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterBuild">
     <ItemGroup>

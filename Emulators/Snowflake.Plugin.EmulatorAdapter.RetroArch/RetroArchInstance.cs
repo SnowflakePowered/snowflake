@@ -6,7 +6,9 @@ using System.Text;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
+using Snowflake.Configuration.Input.Hotkey;
 using Snowflake.Emulator;
+using Snowflake.Input.Controller;
 using Snowflake.Input.Device;
 using Snowflake.Plugin.EmulatorAdapter.RetroArch;
 using Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters;
@@ -15,6 +17,7 @@ using Snowflake.Records.Game;
 using Snowflake.Platform;
 using Snowflake.Records.File;
 using Snowflake.Plugin.EmulatorAdapter.RetroArch.Executable;
+using Snowflake.Plugin.EmulatorAdapter.RetroArch.Input.Hotkeys;
 
 namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
 {
@@ -22,16 +25,19 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
     {
         private readonly RetroArchCommonAdapter adapter;
         private readonly RetroArchProcessHandler processHandler;
+        private readonly IHotkeyTemplateCollection hotkeyTemplate;
         internal RetroArchInstance(IGameRecord game, IFileRecord file, 
             RetroArchCommonAdapter adapter, 
             RetroArchProcessHandler processHandler, int saveSlot,
             IPlatformInfo platform,
             IList<IEmulatedPort> controllerPorts,
-            IDictionary<string, IConfigurationCollection> configurationCollections)
+            IDictionary<string, IConfigurationCollection> configurationCollections,
+            IHotkeyTemplateCollection hotkeyTemplate)
             : base(null, game, file, saveSlot, platform, controllerPorts, configurationCollections)
         {
             this.adapter = adapter;
             this.processHandler = processHandler;
+            this.hotkeyTemplate = hotkeyTemplate;
         }
 
         private string BuildRetroarchCfg(RetroArchConfiguration retroArchConfiguration)
@@ -52,6 +58,11 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
                 //serialize the input template
                 var inputConfig = retroArchConfiguration.Serializer.Serialize(inputTemplate, mappings);
                 sectionBuilder.Append(inputConfig);
+
+                if (mappings.DeviceLayouts.Contains("KEYBOARD_DEVICE"))
+                {
+                    sectionBuilder.Append(retroArchConfiguration.Serializer.Serialize(this.hotkeyTemplate.KeyboardHotkeyTemplate, mappings));
+                }
             }
             return sectionBuilder.ToString();
         }
