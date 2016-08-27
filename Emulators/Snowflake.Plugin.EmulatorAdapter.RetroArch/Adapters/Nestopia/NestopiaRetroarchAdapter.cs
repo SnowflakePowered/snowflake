@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
 using Snowflake.Configuration.Hotkey;
-using Snowflake.Configuration.Input.Hotkey;
 using Snowflake.Emulator;
 using Snowflake.Extensibility;
 using Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters.Nestopia.Configuration;
@@ -34,7 +33,7 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters.Nestopia
                 new NestopiaCoreConfigurationCollection()
             };
 
-            this.DefaultHotkeys = new HotkeyTemplateCollection(new KeyboardHotkeyTemplate(), new ControllerHotkeyTemplate());
+            this.DefaultHotkeys = null;
         }
 
         public override IEnumerable<IConfigurationCollection> DefaultConfigurations { get; }
@@ -55,7 +54,7 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters.Nestopia
             var platform = this.StoneProvider.Platforms[gameRecord.PlatformId];
 
             return new RetroArchInstance(gameRecord, file, this, this.processHandler, saveSlot, platform, ports, configurations,
-                new HotkeyTemplateCollection(this.hotkeyStore.GetTemplate<KeyboardHotkeyTemplate>(), this.hotkeyStore.GetTemplate<ControllerHotkeyTemplate>()));
+              null);
         }
     }
 }

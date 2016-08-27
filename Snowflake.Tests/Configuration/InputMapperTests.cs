@@ -185,7 +185,7 @@ namespace Snowflake.Configuration.Tests
             device.SetupGet(x => x.DeviceApi).Returns(InputApi.XInput);
             device.SetupGet(x => x.DeviceLayout).Returns(realmapping);
             template.SetInputValues(mapcol, device.Object, 0);
-            string serializedValue = serializer.Serialize(template, mapping).Replace(Environment.NewLine, "");
+            string serializedValue = new InputSerializer(serializer).Serialize(template, mapping).Replace(Environment.NewLine, "");
             Assert.Equal(
                 TestUtilities.GetStringResource("Configurations.ExampleInput.cfg").Replace(Environment.NewLine, ""),
                 serializedValue);
@@ -206,7 +206,7 @@ namespace Snowflake.Configuration.Tests
             device.SetupGet(x => x.DeviceApi).Returns(InputApi.XInput);
             device.SetupGet(x => x.DeviceLayout).Returns(realmapping);
             template.SetInputValues(mapcol, device.Object, 0);
-            string serializedValue = serializer.Serialize(template, mapping).Replace(Environment.NewLine, "");
+            string serializedValue = new InputSerializer(serializer).Serialize(template, mapping).Replace(Environment.NewLine, "");
             Assert.Equal(
                 TestUtilities.GetStringResource("Configurations.ExampleInput.ini").Replace(Environment.NewLine, ""),
                 serializedValue);

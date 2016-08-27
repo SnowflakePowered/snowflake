@@ -5,7 +5,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Snowflake.Configuration.Input.Hotkey;
 using Snowflake.Utility;
 using Dapper;
 using Snowflake.Configuration.Attributes;
@@ -14,7 +13,7 @@ using Snowflake.Input.Controller;
 
 namespace Snowflake.Configuration.Hotkey
 {
-    public class SqliteHotkeyTemplateStore : IHotkeyTemplateStore
+    public class SqliteHotkeyTemplateStore 
     {
         private readonly SqliteDatabase backingDatabase;
 
@@ -46,7 +45,7 @@ namespace Snowflake.Configuration.Hotkey
         public T GetTemplate<T>() where T : IHotkeyTemplate, new()
         {
             T template = new T();
-            return this.GetTemplate<T>(template.FileName, template.TemplateType);
+            return this.GetTemplate<T>(template.FileName);
         }
 
         public void SetTemplate(IHotkeyTemplate template)

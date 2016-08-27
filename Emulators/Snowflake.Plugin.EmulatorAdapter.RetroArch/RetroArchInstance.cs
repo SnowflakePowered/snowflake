@@ -6,7 +6,8 @@ using System.Text;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
-using Snowflake.Configuration.Input.Hotkey;
+using Snowflake.Configuration.Hotkey;
+using Snowflake.Configuration.Input;
 using Snowflake.Emulator;
 using Snowflake.Input.Controller;
 using Snowflake.Input.Device;
@@ -44,7 +45,8 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
         {
             //build the configuration
             var sectionBuilder = new StringBuilder(retroArchConfiguration.ToString());
-
+            IInputSerializer inputSerializer = new InputSerializer(retroArchConfiguration.Serializer);
+            IHotkeySerializer hotkeySerializer = new HotkeySerializer(retroArchConfiguration.Serializer);
             //handle input config
             foreach (var port in this.ControllerPorts)
             {
@@ -56,13 +58,13 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
                                 select inputMappings).FirstOrDefault();
                 if (mappings == null) throw new InvalidOperationException("Adapter does not support device layout");
                 //serialize the input template
-                var inputConfig = retroArchConfiguration.Serializer.Serialize(inputTemplate, mappings);
+                var inputConfig = inputSerializer.Serialize(inputTemplate, mappings);
                 sectionBuilder.Append(inputConfig);
 
                 if (mappings.DeviceLayouts.Contains("KEYBOARD_DEVICE"))
                 {
-                    sectionBuilder.Append(retroArchConfiguration.Serializer.Serialize(this.hotkeyTemplate.KeyboardHotkeyTemplate, mappings));
-                }
+                    sectionBuilder.Append(hotkeySerializer.SerializeKeyboard(new RetroarchHotkeyTemplate(), mappings));
+                } //todo serialize controller hotkeys ONCE only.
             }
             return sectionBuilder.ToString();
         }

@@ -111,10 +111,10 @@
     <Compile Include="Configuration\ConfigurationProperty.cs" />
     <Compile Include="Configuration\ConfigurationCollection.cs" />
     <Compile Include="Configuration\Hotkey\HotkeyOption.cs" />
+    <Compile Include="Configuration\Hotkey\HotkeySerializer.cs" />
     <Compile Include="Configuration\Hotkey\HotkeyTemplate.cs" />
     <Compile Include="Configuration\Hotkey\HotkeyTemplateCollection.cs" />
-    <Compile Include="Configuration\Hotkey\HotkeyTrigger.cs" />
-    <Compile Include="Configuration\Hotkey\SqliteHotkeyTemplateStore.cs" />
+    <Compile Include="Configuration\Input\InputSerializer.cs" />
     <Compile Include="Configuration\SqliteConfigurationCollectionStore.cs" />
     <Compile Include="Configuration\ConfigurationTypeMapper.cs" />
     <Compile Include="Configuration\DefaultConfigurationTypeMapper.cs" />

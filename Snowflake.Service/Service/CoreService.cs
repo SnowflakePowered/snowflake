@@ -45,7 +45,7 @@ namespace Snowflake.Service
             this.RegisterService<IMappedControllerElementCollectionStore>
                 (new SqliteMappedControllerElementCollectionStore(new SqliteDatabase(Path.Combine(this.AppDataDirectory, "controllermappings.db"))));
             this.RegisterService<IConfigurationCollectionStore>(new SqliteConfigurationCollectionStore(new SqliteDatabase(Path.Combine(this.AppDataDirectory, "configurations.db"))));
-            this.RegisterService<IHotkeyTemplateStore>(new SqliteHotkeyTemplateStore(new SqliteDatabase(Path.Combine(this.AppDataDirectory, "hotkeys.db"))));
+            //this.RegisterService<IHotkeyTemplateStore>(new SqliteHotkeyTemplateStore(new SqliteDatabase(Path.Combine(this.AppDataDirectory, "hotkeys.db"))));
 
             //this.RegisterService<IEmulatorAssembliesManager>(new EmulatorAssembliesManager(Path.Combine(this.AppDataDirectory, "emulators")));
             this.RegisterService<IPluginManager>(new PluginManager(this.AppDataDirectory, this)); 

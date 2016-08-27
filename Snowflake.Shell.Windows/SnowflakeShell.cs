@@ -5,6 +5,8 @@ using System.IO;
 using System.Text;
 using System.Linq;
 using System.Reflection;
+using Snowflake.Configuration;
+using Snowflake.Configuration.Hotkey;
 using Snowflake.Emulator;
 using Snowflake.Events;
 using Snowflake.Events.ServiceEvents;
@@ -48,6 +50,7 @@ namespace Snowflake.Shell.Windows
             var gr = new GameRecord(this.loadedCore.Get<IStoneProvider>().Platforms["NINTENDO_NES"], "test");
             gr.Files.Add(new FileRecord(@"C:\\retroarch\\smb3.nes", "application/x-romfile-nes-ines", gr));
             var raadapter = this.loadedCore.Get<IPluginManager>().Get<NestopiaRetroArchAdapter>().First().Value;
+           
             var lmfao = raadapter.Instantiate(gr, this.loadedCore);
             lmfao.Create();
             lmfao.Start();

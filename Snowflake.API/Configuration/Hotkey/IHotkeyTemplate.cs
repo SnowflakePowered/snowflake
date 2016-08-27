@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Snowflake.Configuration.Hotkey;
 using Snowflake.Input.Controller;
 using Snowflake.Input.Controller.Mapped;
 using Snowflake.Input.Device;
 
-namespace Snowflake.Configuration.Input.Hotkey
+namespace Snowflake.Configuration.Hotkey
 {
     /// <summary>
     /// Represents a section of input configuration for a single player, for a single device.
@@ -31,9 +32,9 @@ namespace Snowflake.Configuration.Input.Hotkey
         /// </summary>
         IEnumerable<IConfigurationOption> ConfigurationOptions { get; }
         /// <summary>
-        /// The type of hotkey template
+        /// The modifier key of the template.
         /// </summary>
-        HotkeyTemplateType TemplateType { get; }
+        HotkeyTrigger ModifierTrigger { get; set; }
 
     }
 }

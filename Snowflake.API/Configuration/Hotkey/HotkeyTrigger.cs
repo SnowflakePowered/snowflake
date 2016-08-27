@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Snowflake.Configuration.Input.Hotkey;
 using Snowflake.Input.Controller;
 
 namespace Snowflake.Configuration.Hotkey
 {
-    public struct HotkeyTrigger : IHotkeyTrigger
+  
+    public struct HotkeyTrigger 
     {
-        public ControllerElement ControllerTrigger { get; set; }
-        public KeyboardKey KeyboardTrigger { get; set; }
+        public ControllerElement ControllerTrigger { get; }
+        public KeyboardKey KeyboardTrigger { get; }
 
         public HotkeyTrigger(ControllerElement controllerElement)
         {
@@ -24,5 +24,12 @@ namespace Snowflake.Configuration.Hotkey
             this.ControllerTrigger = ControllerElement.NoElement;
             this.KeyboardTrigger = keyboardKey;
         }
+
+        public HotkeyTrigger(KeyboardKey keyboardKey, ControllerElement controllerElement)
+        {
+            this.KeyboardTrigger = keyboardKey;
+            this.ControllerTrigger = controllerElement;
+        }
+
     }
 }

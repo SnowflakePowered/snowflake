@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Snowflake.Configuration.Input;
-using Snowflake.Configuration.Input.Hotkey;
 using Snowflake.Input.Controller;
 using Snowflake.Emulator;
 using Snowflake.Input.Controller.Mapped;
@@ -41,15 +40,6 @@ namespace Snowflake.Configuration
         string SerializeLine<T>(string key, T value);
 
         /// <summary>
-        /// Serializes a controller element line using the provided input mapper.
-        /// </summary>
-        /// <param name="key">The key of the option</param>
-        /// <param name="element">The controller element to serialize</param>
-        /// <param name="inputMapping">The input mapping to serialize with</param>
-        /// <returns></returns>
-        string SerializeInput(string key, IMappedControllerElement element, IInputMapping inputMapping);
-
-        /// <summary>
         /// Serializes the specified configuration section.
         /// </summary>
         /// <param name="configurationSection">The configuration section object to serialize</param>
@@ -57,19 +47,16 @@ namespace Snowflake.Configuration
         string Serialize(IConfigurationSection configurationSection);
 
         /// <summary>
-        /// Serializes the specified input template.
+        /// Serializes the header of the configuration section
         /// </summary>
-        /// <param name="inputTemplate">The input template to serialize</param>
-        /// <param name="inputMapping">The input mapping to serialize with</param>
-        /// <returns>The entire input template serialized as a string</returns>
-        string Serialize(IInputTemplate inputTemplate, IInputMapping inputMapping);
-
+        /// <param name="headerString">The string to serialize as a header.</param>
+        /// <returns>The serialized header line</returns>
+        string SerializeHeader(string headerString);
         /// <summary>
-        /// Serializes the specified hotkey template
+        /// Serializes the footer of the configuration section
         /// </summary>
-        /// <param name="hotkeyTemplate">The input template to serialize</param>
-        /// <param name="inputMapping">The input mapping to serialize with</param>
-        /// <returns>The entire input template serialized as a string</returns>
-        string Serialize(IHotkeyTemplate hotkeyTemplate, IInputMapping inputMapping);
+        /// <param name="footerString">The string to serialize as a footer</param>
+        /// <returns>The serializes footer string</returns>
+        string SerializeFooter(string footerString);
     }
 }

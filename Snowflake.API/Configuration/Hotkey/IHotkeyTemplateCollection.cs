@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Snowflake.Configuration.Input.Hotkey
+namespace Snowflake.Configuration.Hotkey
 {
     public interface IHotkeyTemplateCollection
     {

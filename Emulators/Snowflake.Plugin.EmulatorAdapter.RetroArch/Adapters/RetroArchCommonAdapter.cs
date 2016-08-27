@@ -52,8 +52,7 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters
             };
             var platform = this.StoneProvider.Platforms[gameRecord.PlatformId];
 
-            return new RetroArchInstance(gameRecord, file, this, this.processHandler, saveSlot, platform, ports, configurations, 
-                new HotkeyTemplateCollection(this.hotkeyStore.GetTemplate<KeyboardHotkeyTemplate>(), this.hotkeyStore.GetTemplate<ControllerHotkeyTemplate>()));
+            return new RetroArchInstance(gameRecord, file, this, this.processHandler, saveSlot, platform, ports, configurations, null);
         }
 
         [Obsolete("DEBUG ONLY")]

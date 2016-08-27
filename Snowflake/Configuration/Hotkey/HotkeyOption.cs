@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Snowflake.Configuration.Input;
-using Snowflake.Configuration.Input.Hotkey;
 using Snowflake.Input.Controller;
 
 namespace Snowflake.Configuration.Hotkey
@@ -14,34 +13,21 @@ namespace Snowflake.Configuration.Hotkey
     public class HotkeyOption : IHotkeyOption
     {
         public string DisplayName { get; }
-        public string OptionName { get; }
+        public string HotkeyName { get; }
         public string KeyName { get; }
         public bool Private { get; }
         public InputOptionType InputType { get; }
 
         [JsonIgnore]
-        public IHotkeyTrigger Value
+        public HotkeyTrigger Value
         {
-            get
-            {
-                var value = this.propertyInfo.GetValue(this.instance);
-                var type = this.propertyInfo.PropertyType;
-                if(type == typeof(KeyboardKey)) //todo pattern matching would be wonderful here
-                    return new HotkeyTrigger((KeyboardKey)value);
-                if(type == typeof(ControllerElement))
-                    return new HotkeyTrigger((ControllerElement)value);
-                return new HotkeyTrigger();               
-            }
-            set
-            {
-                var type = this.propertyInfo.PropertyType;
-                if (type == typeof(KeyboardKey)) //todo pattern matching would be wonderful here
-                    this.propertyInfo.SetValue(this.instance, value.KeyboardTrigger);
-                if (type == typeof(ControllerElement)) 
-                    this.propertyInfo.SetValue(this.instance, value.ControllerTrigger);
-            }
+            get { return (HotkeyTrigger)this.propertyInfo.GetValue(this.instance); }
+            set { this.propertyInfo.SetValue(this.instance, value); }
         }
 
+        public string KeyboardConfigurationKey { get; }
+        public string ControllerConfigurationKey { get; }
+        public string ControllerAxisConfigurationKey { get; }
 
         private readonly PropertyInfo propertyInfo;
         private readonly object instance;
@@ -50,11 +36,15 @@ namespace Snowflake.Configuration.Hotkey
             this.propertyInfo = propertyInfo;
             this.instance = instance;
             var attribute = propertyInfo.GetCustomAttribute<HotkeyOptionAttribute>();
-            this.OptionName = attribute.OptionName;
+            this.HotkeyName = attribute.HotkeyName;
             this.DisplayName = attribute.DisplayName;
             this.Private = attribute.Private;
             this.KeyName = this.propertyInfo.Name;
             this.InputType = attribute.InputType;
+            this.KeyboardConfigurationKey = attribute.KeyboardConfigurationKey ?? this.HotkeyName;
+            this.ControllerConfigurationKey = attribute.ControllerConfigurationKey ?? this.HotkeyName;
+            this.ControllerAxisConfigurationKey = attribute.AxisConfigurationKey ??
+                                                  this.ControllerConfigurationKey;
         }
     }
 }
