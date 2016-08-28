@@ -13,7 +13,7 @@ using Snowflake.Input.Controller;
 
 namespace Snowflake.Configuration.Hotkey
 {
-    public class SqliteHotkeyTemplateStore 
+    public class SqliteHotkeyTemplateStore : IHotkeyTemplateStore
     {
         private readonly SqliteDatabase backingDatabase;
 
@@ -27,44 +27,53 @@ namespace Snowflake.Configuration.Hotkey
         private void CreateDatabase()
         {
             this.backingDatabase.CreateTable("hotkeys",
-                               "TemplateFilename TEXT",
-                               "SectionName TEXT",
                                "TemplateType TEXT",
+                               "SectionName TEXT",
                                "OptionKey TEXT",
-                               "OptionValue TEXT",
-                               "PRIMARY KEY (TemplateFilename, SectionName, TemplateType, OptionKey)");
-        }
-
-        public T GetTemplate<T>(string templateFilename, HotkeyTemplateType templateType)
-            where T : IHotkeyTemplate, new()
-        {
-            var values = this.GetValues(templateFilename, templateType);
-            return values.Any() ? this.BuildHotkeyTemplate<T>(values) : new T();
+                               "KeyboardTrigger TEXT",
+                               "ControllerTrigger TEXT",
+                               "PRIMARY KEY (TemplateType, SectionName, OptionKey)");
         }
 
         public T GetTemplate<T>() where T : IHotkeyTemplate, new()
         {
-            T template = new T();
-            return this.GetTemplate<T>(template.FileName);
+            var values = this.GetValues<T>();
+            return values.Any() ? this.BuildHotkeyTemplate<T>(values) : new T();
         }
 
         public void SetTemplate(IHotkeyTemplate template)
         {
-            throw new NotImplementedException();
+            string templateType = template.GetType().Name;
+            var values = from option in template.HotkeyOptions
+                         select new
+                         {
+                             TemplateType = templateType,
+                             SectionName = template.SectionName,
+                             OptionKey = option.KeyName,
+                             KeyboardTrigger = option.Value.KeyboardTrigger.ToString(),
+                             ControllerTrigger = option.Value.ControllerTrigger.ToString()
+                         };
+            this.backingDatabase.Execute(dbConnection =>
+            {
+                dbConnection.Execute(
+                    @"INSERT OR REPLACE INTO hotkeys (TemplateType, SectionName, OptionKey, KeyboardTrigger, ControllerTrigger) VALUES 
+                    (@TemplateType, @SectionName, @OptionKey, @KeyboardTrigger, @ControllerTrigger)", values);
+            });
         }
 
-     
-        private IDictionary<string, string> GetValues(string templateFilename, HotkeyTemplateType templateType)
+
+        private IDictionary<string, HotkeyTrigger> GetValues<T>() where T : IHotkeyTemplate, new()
         {
-            return this.backingDatabase.Query<IDictionary<string, string>>(dbConnection =>
+            return this.backingDatabase.Query<IDictionary<string, HotkeyTrigger>>(dbConnection =>
             {
-                var retValues = new Dictionary<string, string>();
+                var retValues = new Dictionary<string, HotkeyTrigger>();
                 var values = dbConnection.Query<HotkeyTemplateRecord>
-                ("SELECT * FROM hotkeys WHERE TemplateFilename = @TemplateFilename AND TemplateType = @TemplateType",
-                    new { TemplateFilename = templateFilename, TemplateType = templateType.ToString() });
+                ("SELECT * FROM hotkeys WHERE TemplateType = @TemplateType",
+                    new { TemplateType = typeof(T).Name });
                 foreach (var options in values)
                 {
-                    retValues[options.OptionKey] = options.OptionValue;
+                    retValues[options.OptionKey] = new HotkeyTrigger((KeyboardKey)Enum.Parse(typeof(KeyboardKey), options.KeyboardTrigger), 
+                        (ControllerElement)Enum.Parse(typeof(ControllerElement), options.ControllerTrigger));
                 }
                 return retValues;
             });
@@ -76,41 +85,24 @@ namespace Snowflake.Configuration.Hotkey
         /// <typeparam name="T">The type to build</typeparam>
         /// <param name="values">The values</param>
         /// <returns>The configuration collection</returns>
-        private T BuildHotkeyTemplate<T>(IDictionary<string, string> values) where T : IHotkeyTemplate, new()
+        private T BuildHotkeyTemplate<T>(IDictionary<string, HotkeyTrigger> values) where T : IHotkeyTemplate, new()
         {
             var hotkeyTemplate = new T();
             foreach (var option in hotkeyTemplate.HotkeyOptions)
-            {   
+            {
                 if (values.ContainsKey(option.KeyName))
-                {
-                    switch (option.InputType)
-                    {
-                        case InputOptionType.KeyboardKey:
-                            option.Value =
-                                new HotkeyTrigger((KeyboardKey) Enum.Parse(typeof(KeyboardKey), values[option.KeyName]));
-                            break;
-                        case InputOptionType.ControllerElement:
-                        case InputOptionType.ControllerElementAxes:
-                             option.Value =
-                                new HotkeyTrigger((KeyboardKey)Enum.Parse(typeof(ControllerElement), values[option.KeyName]));
-                            break;
-                        default:
-                            option.Value = new HotkeyTrigger();
-                            break;
-                    }
-                }
+                    option.Value = values[option.KeyName];
             }
             return hotkeyTemplate;
         }
 
         private class HotkeyTemplateRecord
         {
-
-            internal string TemplateFilename { get; set; }
-            internal string SectionName { get; set; }
             internal string TemplateType { get; set; }
+            internal string SectionName { get; set; }
+            internal string KeyboardTrigger { get; set; }
+            internal string ControllerTrigger { get; set; }
             internal string OptionKey { get; set; }
-            internal string OptionValue { get; set; }
         }
     }
 }

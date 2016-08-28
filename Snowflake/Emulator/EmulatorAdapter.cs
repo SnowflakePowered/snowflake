@@ -17,8 +17,6 @@ namespace Snowflake.Emulator
     public abstract class EmulatorAdapter : Plugin
     {
         public IEnumerable<IInputMapping> InputMappings { get; }
-        public abstract IEnumerable<IConfigurationCollection> DefaultConfigurations { get; }
-        public abstract IHotkeyTemplateCollection DefaultHotkeys { get; }
         public IEnumerable<string> Capabilities { get; }
         public IEnumerable<string> Mimetypes { get; }
         protected IConfigurationCollectionStore CollectionStore { get; }
@@ -47,6 +45,8 @@ namespace Snowflake.Emulator
         }
 
         public abstract IEmulatorInstance Instantiate(IGameRecord gameRecord, IFileRecord romFile, int saveSlot, IList<IEmulatedPort> ports);
+
+        public abstract IDictionary<string, IConfigurationCollection> GetConfigurations(IGameRecord gameRecord);
 
         [Obsolete("Debug Purposes Only(!!)")]
         public abstract IEmulatorInstance Instantiate(IGameRecord gameRecord, ICoreService coreService);

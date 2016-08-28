@@ -20,15 +20,12 @@ namespace Snowflake.Configuration.Hotkey
         /// </summary>
         string SectionName { get; }
         /// <summary>
-        /// The filename of the configuration file the template belongs to
-        /// </summary>
-        string FileName { get; }
-        /// <summary>
-        /// The hotkey options of this configuration section, without key names.
+        /// The hotkey options of this hotkey template, without key names.
         /// </summary>
         IEnumerable<IHotkeyOption> HotkeyOptions { get; }
         /// <summary>
-        /// The options of this configuration section, without key names.
+        /// The hidden configuration options of this hotkey template, without key names.
+        /// These options will never be stored or shown to the user, and are for manipulation by the serializing instance.
         /// </summary>
         IEnumerable<IConfigurationOption> ConfigurationOptions { get; }
         /// <summary>

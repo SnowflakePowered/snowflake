@@ -101,9 +101,12 @@
     <Compile Include="Configuration\ConfigurationSectionTests.cs" />
     <Compile Include="Configuration\ExampleConfigurationCollection.cs" />
     <Compile Include="Configuration\ExampleConfigurationSection.cs" />
+    <Compile Include="Configuration\HotkeyTemplateStoreTests.cs" />
+    <Compile Include="Configuration\HotkeyTriggerTests.cs" />
     <Compile Include="Configuration\InputMapperTests.cs" />
     <Compile Include="Configuration\KeyValuePairConfigurationSerializerTests.cs" />
     <Compile Include="Configuration\IniConfigurationSerializerTests.cs" />
+    <Compile Include="Configuration\RetroarchHotkeyTemplate.cs" />
     <Compile Include="Configuration\TestInputTemplate.cs" />
     <Compile Include="Events\StandardEventsTests.cs" />
     <Compile Include="Input\MappedControllerCollectionStoreTests.cs" />

@@ -26,14 +26,14 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
     {
         private readonly RetroArchCommonAdapter adapter;
         private readonly RetroArchProcessHandler processHandler;
-        private readonly IHotkeyTemplateCollection hotkeyTemplate;
+        private readonly IHotkeyTemplate hotkeyTemplate;
         internal RetroArchInstance(IGameRecord game, IFileRecord file, 
             RetroArchCommonAdapter adapter, 
             RetroArchProcessHandler processHandler, int saveSlot,
             IPlatformInfo platform,
             IList<IEmulatedPort> controllerPorts,
             IDictionary<string, IConfigurationCollection> configurationCollections,
-            IHotkeyTemplateCollection hotkeyTemplate)
+            IHotkeyTemplate hotkeyTemplate)
             : base(null, game, file, saveSlot, platform, controllerPorts, configurationCollections)
         {
             this.adapter = adapter;

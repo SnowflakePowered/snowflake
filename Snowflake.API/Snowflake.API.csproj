@@ -85,7 +85,6 @@
     <Compile Include="Configuration\Attributes\ConfigurationOptionAttribute.cs" />
     <Compile Include="Configuration\Hotkey\HotkeyTrigger.cs" />
     <Compile Include="Configuration\Hotkey\IHotkeySerializer.cs" />
-    <Compile Include="Configuration\Hotkey\IHotkeyTemplateCollection.cs" />
     <Compile Include="Configuration\Hotkey\IHotkeyTemplateStore.cs" />
     <Compile Include="Configuration\Hotkey\IHotkeyOption.cs" />
     <Compile Include="Configuration\IConfigurationCollectionStore.cs" />

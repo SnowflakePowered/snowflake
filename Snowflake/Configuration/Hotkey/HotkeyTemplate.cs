@@ -11,18 +11,14 @@ namespace Snowflake.Configuration.Hotkey
     public abstract class HotkeyTemplate : IHotkeyTemplate
     {
         public string SectionName { get; }
-        public IReadOnlyDictionary<string, IConfigurationOption> Options { get; }
-        public string FileName { get; }
         public IEnumerable<IHotkeyOption> HotkeyOptions { get; }
         public IEnumerable<IConfigurationOption> ConfigurationOptions { get; }
 
         public HotkeyTrigger ModifierTrigger { get; set; }
 
-        protected HotkeyTemplate(string sectionName, string displayName, string description, string fileName)
+        protected HotkeyTemplate(string sectionName)
         {
             this.SectionName = sectionName;
-           
-            this.FileName = fileName; //todo better way than filename. perhaps include in section?
             //cache the configuration properties of this section
             this.ConfigurationOptions = this.GetConfigProperties();
             this.HotkeyOptions = this.GetHotkeyOptions();

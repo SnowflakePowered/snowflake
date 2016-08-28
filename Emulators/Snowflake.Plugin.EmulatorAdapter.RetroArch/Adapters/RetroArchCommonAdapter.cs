@@ -25,6 +25,7 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters
     public abstract class RetroArchCommonAdapter : Emulator.EmulatorAdapter
     {
         protected readonly RetroArchProcessHandler processHandler;
+        protected IConfigurationCollectionStore CollectionStore { get; }
         public readonly IHotkeyTemplateStore hotkeyStore;
         public string CorePath { get; }
 
@@ -39,20 +40,8 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters
         {
             this.processHandler = processHandler;
             this.hotkeyStore = hotkeyStore;
+            this.CollectionStore = collectionStore;
             this.CorePath = Path.Combine(this.PluginDataPath, this.PluginProperties.Get("retroarch_core"));
-        }
-
-        public override IEmulatorInstance Instantiate(IGameRecord gameRecord, IFileRecord file, int saveSlot, IList<IEmulatedPort> ports)
-        {
-            var retroarchConfig =
-                this.CollectionStore.GetConfiguration<RetroArchConfiguration>(gameRecord.Guid);
-            var configurations = new Dictionary<string, IConfigurationCollection>
-            {
-                {retroarchConfig.FileName, retroarchConfig}
-            };
-            var platform = this.StoneProvider.Platforms[gameRecord.PlatformId];
-
-            return new RetroArchInstance(gameRecord, file, this, this.processHandler, saveSlot, platform, ports, configurations, null);
         }
 
         [Obsolete("DEBUG ONLY")]
