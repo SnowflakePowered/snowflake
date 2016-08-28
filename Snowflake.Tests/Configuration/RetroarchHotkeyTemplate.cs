@@ -110,7 +110,7 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Input.Hotkeys
         [HotkeyOption("input_menu_toggle", ControllerConfigurationKey = "input_menu_toggle_btn", AxisConfigurationKey = "input_menu_toggle_axis", DisplayName = "Input Menu Toggle", Private = true)]
         public HotkeyTrigger InputMenuToggle { get; set; } = new HotkeyTrigger(KeyboardKey.KeyNone, ControllerElement.NoElement);
 
-        public RetroarchHotkeyTemplate() : base("input", "retroarch")
+        public RetroarchHotkeyTemplate() : base("input")
         {
         }
 
