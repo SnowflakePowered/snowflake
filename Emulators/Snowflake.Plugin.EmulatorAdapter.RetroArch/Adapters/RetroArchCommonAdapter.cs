@@ -24,25 +24,24 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters
 {
     public abstract class RetroArchCommonAdapter : Emulator.EmulatorAdapter
     {
-        protected readonly RetroArchProcessHandler processHandler;
-        protected IConfigurationCollectionStore CollectionStore { get; }
-        public readonly IHotkeyTemplateStore hotkeyStore;
+        protected RetroArchProcessHandler ProcessHandler { get; }
+        
         public string CorePath { get; }
 
-        public RetroArchCommonAdapter(string appDataDirectory, 
+        protected RetroArchCommonAdapter(string appDataDirectory, 
             RetroArchProcessHandler processHandler,
             IStoneProvider stoneProvider,
             IConfigurationCollectionStore collectionStore,
             IHotkeyTemplateStore hotkeyStore,
             IBiosManager biosManager,
             ISaveManager saveManager) 
-            : base(appDataDirectory, stoneProvider, collectionStore, biosManager, saveManager)
+            : base(appDataDirectory, stoneProvider, collectionStore, hotkeyStore, biosManager, saveManager)
         {
-            this.processHandler = processHandler;
-            this.hotkeyStore = hotkeyStore;
-            this.CollectionStore = collectionStore;
+            this.ProcessHandler = processHandler;
             this.CorePath = Path.Combine(this.PluginDataPath, this.PluginProperties.Get("retroarch_core"));
         }
+
+        public override IHotkeyTemplate GetHotkeyTemplate() => this.HotkeyTemplateStore.GetTemplate<RetroarchHotkeyTemplate>();
 
         [Obsolete("DEBUG ONLY")]
         public override IEmulatorInstance Instantiate(IGameRecord gameRecord, ICoreService service)

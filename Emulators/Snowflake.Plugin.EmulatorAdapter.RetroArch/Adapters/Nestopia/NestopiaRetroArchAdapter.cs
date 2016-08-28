@@ -38,8 +38,7 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters.Nestopia
             var configurations = this.GetConfigurations(gameRecord);
             var platform = this.StoneProvider.Platforms[gameRecord.PlatformId];
 
-            return new RetroArchInstance(gameRecord, file, this, this.processHandler, saveSlot, platform, ports, configurations,
-              this.hotkeyStore.GetTemplate<RetroarchHotkeyTemplate>());
+            return new RetroArchInstance(gameRecord, file, this, this.ProcessHandler, saveSlot, platform, ports);
         }
 
         public override IDictionary<string, IConfigurationCollection> GetConfigurations(IGameRecord gameRecord)
@@ -52,5 +51,7 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters.Nestopia
                 {"retroarch-core-options.cfg", nestopiaConfig } //convention requires core options to have this file name.
             };
        }
+
+       
     }
 }

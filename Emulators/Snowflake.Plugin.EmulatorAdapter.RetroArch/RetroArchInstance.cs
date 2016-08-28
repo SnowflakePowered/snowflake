@@ -24,21 +24,15 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
 {
     internal class RetroArchInstance : EmulatorInstance
     {
-        private readonly RetroArchCommonAdapter adapter;
         private readonly RetroArchProcessHandler processHandler;
-        private readonly IHotkeyTemplate hotkeyTemplate;
         internal RetroArchInstance(IGameRecord game, IFileRecord file, 
             RetroArchCommonAdapter adapter, 
             RetroArchProcessHandler processHandler, int saveSlot,
             IPlatformInfo platform,
-            IList<IEmulatedPort> controllerPorts,
-            IDictionary<string, IConfigurationCollection> configurationCollections,
-            IHotkeyTemplate hotkeyTemplate)
-            : base(null, game, file, saveSlot, platform, controllerPorts, configurationCollections)
+            IList<IEmulatedPort> controllerPorts)
+            : base(adapter, game, file, saveSlot, platform, controllerPorts)
         {
-            this.adapter = adapter;
             this.processHandler = processHandler;
-            this.hotkeyTemplate = hotkeyTemplate;
         }
 
         private string BuildRetroarchCfg(RetroArchConfiguration retroArchConfiguration)
@@ -52,7 +46,7 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
             {
                 var inputTemplate = new RetroPadTemplate();
                 inputTemplate.SetInputValues(port.MappedElementCollection, port.PluggedDevice, port.EmulatedPortNumber);
-                var mappings = (from inputMappings in this.adapter.InputMappings
+                var mappings = (from inputMappings in this.EmulatorAdapter.InputMappings
                                 where inputMappings.InputApi == InputApi.DirectInput
                                 where inputMappings.DeviceLayouts.Contains(port.PluggedDevice.DeviceLayout.LayoutID)
                                 select inputMappings).FirstOrDefault();
@@ -75,9 +69,9 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
 
             var retroArchConfiguration = (RetroArchConfiguration)this.ConfigurationCollections["retroarch.cfg"];
             retroArchConfiguration.DirectoryConfiguration.SavefileDirectory =
-                this.adapter.SaveManager.GetSaveDirectory(this.adapter.SaveType, this.Game.Guid, this.SaveSlot);
+                this.EmulatorAdapter.SaveManager.GetSaveDirectory(this.EmulatorAdapter.SaveType, this.Game.Guid, this.SaveSlot);
             retroArchConfiguration.DirectoryConfiguration.SystemDirectory =
-                this.adapter.BiosManager.GetBiosDirectory(this.Platform);
+                this.EmulatorAdapter.BiosManager.GetBiosDirectory(this.Platform);
             retroArchConfiguration.DirectoryConfiguration.CoreOptionsPath = Path.Combine(this.InstancePath,
                 "retroarch-core-options.cfg");
 
@@ -103,7 +97,7 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
         public override void Start()
         {
             var info = this.processHandler.GetProcessInfo(this.RomFile.FilePath);
-            info.CorePath = this.adapter.CorePath;
+            info.CorePath = ((RetroArchCommonAdapter)this.EmulatorAdapter).CorePath;
             info.ConfigPath = Path.Combine(this.InstancePath, "retroarch.cfg");
             Process.Start(info.GetStartInfo());
             //setup the instance hereee

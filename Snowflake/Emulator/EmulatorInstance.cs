@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
+using Snowflake.Configuration.Hotkey;
 using Snowflake.Input;
 using Snowflake.Platform;
 using Snowflake.Records.File;
@@ -21,8 +22,7 @@ namespace Snowflake.Emulator
             IFileRecord file,
             int saveSlot,
             IPlatformInfo platform, 
-            IList<IEmulatedPort> controllerPorts,
-            IDictionary<string, IConfigurationCollection>  configurationCollections)
+            IList<IEmulatedPort> controllerPorts)
         {
             this.EmulatorAdapter = emulatorAdapter;
             this.InstanceGuid = Guid.NewGuid();
@@ -31,7 +31,8 @@ namespace Snowflake.Emulator
             this.InstanceMetadata = new Dictionary<string, string>();
             this.ControllerPorts = controllerPorts;
             this.SaveSlot = saveSlot;
-            this.ConfigurationCollections = configurationCollections;
+            this.ConfigurationCollections = this.EmulatorAdapter.GetConfigurations(game);
+            this.HotkeyTemplate = this.EmulatorAdapter.GetHotkeyTemplate();
             this.Platform = platform;
             string roamingAppdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             this.InstancePath = Path.Combine(roamingAppdata, "snowflake-cache", this.InstanceGuid.ToString());
@@ -43,6 +44,7 @@ namespace Snowflake.Emulator
         public IList<IEmulatedPort> ControllerPorts { get; }
         public int SaveSlot { get; }
         public IDictionary<string, IConfigurationCollection> ConfigurationCollections { get; }
+        public IHotkeyTemplate HotkeyTemplate { get; }
         public IDictionary<string, string> InstanceMetadata { get; }
         public IGameRecord Game { get; }
         public IFileRecord RomFile { get; }

@@ -8,25 +8,30 @@ using Snowflake.Configuration;
 using Snowflake.Configuration.Hotkey;
 using Snowflake.Configuration.Input;
 using Snowflake.Extensibility;
+using Snowflake.Extensibility.Configuration;
 using Snowflake.Records.File;
 using Snowflake.Records.Game;
 using Snowflake.Service;
 
 namespace Snowflake.Emulator
 {
-    public abstract class EmulatorAdapter : Plugin
+   
+    public abstract class EmulatorAdapter : Plugin, IEmulatorAdapter
     {
         public IEnumerable<IInputMapping> InputMappings { get; }
         public IEnumerable<string> Capabilities { get; }
         public IEnumerable<string> Mimetypes { get; }
         protected IConfigurationCollectionStore CollectionStore { get; }
+        protected IHotkeyTemplateStore HotkeyTemplateStore { get; }
         public ISaveManager SaveManager { get; }
         public IBiosManager BiosManager { get; }
         protected IStoneProvider StoneProvider { get; }
         public string SaveType { get; }
+
         protected EmulatorAdapter(string appDataDirectory,
             IStoneProvider stoneProvider, 
             IConfigurationCollectionStore collectionStore,
+            IHotkeyTemplateStore hotkeyTemplateStore,
             IBiosManager biosManager,
             ISaveManager saveManager) : base(appDataDirectory)
         {
@@ -41,12 +46,14 @@ namespace Snowflake.Emulator
             this.CollectionStore = collectionStore;
             this.BiosManager = biosManager;
             this.SaveManager = saveManager;
-
+            this.HotkeyTemplateStore = hotkeyTemplateStore;
         }
 
         public abstract IEmulatorInstance Instantiate(IGameRecord gameRecord, IFileRecord romFile, int saveSlot, IList<IEmulatedPort> ports);
 
         public abstract IDictionary<string, IConfigurationCollection> GetConfigurations(IGameRecord gameRecord);
+
+        public abstract IHotkeyTemplate GetHotkeyTemplate();
 
         [Obsolete("Debug Purposes Only(!!)")]
         public abstract IEmulatorInstance Instantiate(IGameRecord gameRecord, ICoreService coreService);

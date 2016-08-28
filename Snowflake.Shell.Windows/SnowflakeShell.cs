@@ -48,7 +48,7 @@ namespace Snowflake.Shell.Windows
                 SnowflakeEventManager.EventSource.RaiseEvent(serverStartEvent); //todo Move event registration to SnowflakeEVentManager
             }
             var gr = new GameRecord(this.loadedCore.Get<IStoneProvider>().Platforms["NINTENDO_NES"], "test");
-            gr.Files.Add(new FileRecord(@"C:\\retroarch\\smb3.nes", "application/x-romfile-nes-ines", gr));
+            gr.Files.Add(new FileRecord(@"C:\\retroarch\\tloz.nes", "application/x-romfile-nes-ines", gr));
             var raadapter = this.loadedCore.Get<IPluginManager>().Get<NestopiaRetroArchAdapter>().First().Value;
            
             var lmfao = raadapter.Instantiate(gr, this.loadedCore);
