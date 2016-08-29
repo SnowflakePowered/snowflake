@@ -25,6 +25,7 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
     internal class RetroArchInstance : EmulatorInstance
     {
         private readonly RetroArchProcessHandler processHandler;
+        private Process runningProcess;
         internal RetroArchInstance(IGameRecord game, IFileRecord file, 
             RetroArchCommonAdapter adapter, 
             RetroArchProcessHandler processHandler, int saveSlot,
@@ -99,7 +100,8 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
             var info = this.processHandler.GetProcessInfo(this.RomFile.FilePath);
             info.CorePath = ((RetroArchCommonAdapter)this.EmulatorAdapter).CorePath;
             info.ConfigPath = Path.Combine(this.InstancePath, "retroarch.cfg");
-            Process.Start(info.GetStartInfo());
+            this.runningProcess = Process.Start(info.GetStartInfo());
+            runningProcess.Exited += (s, e) => this.Destroy();
             //setup the instance hereee
         }
 
@@ -118,6 +120,7 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
             this.IsActive = false;
             this.IsRunning = false;
             this.IsCreated = false;
+            if (!this.runningProcess.HasExited) this.runningProcess.Close();
             Directory.Delete(this.InstancePath, true);
             this.DestroyTime = DateTimeOffset.UtcNow;
             this.IsDestroyed = true;
