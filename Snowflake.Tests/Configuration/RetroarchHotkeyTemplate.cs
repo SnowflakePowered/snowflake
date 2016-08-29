@@ -84,7 +84,7 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Input.Hotkeys
         public HotkeyTrigger InputSlowmotion { get; set; } = new HotkeyTrigger(KeyboardKey.KeyNone, ControllerElement.NoElement);
 
         [HotkeyOption("input_enable_hotkey", ControllerConfigurationKey = "input_enable_hotkey_btn", AxisConfigurationKey = "input_enable_hotkey_axis", DisplayName = "Input Enable Hotkey", Private = true)]
-        public HotkeyTrigger InputEnableHotkey { get; set; } = new HotkeyTrigger(KeyboardKey.KeyNone, ControllerElement.NoElement);
+        public override HotkeyTrigger ModifierTrigger { get; set; } = new HotkeyTrigger(KeyboardKey.KeyNone, ControllerElement.NoElement);
 
         [HotkeyOption("input_volume_up", ControllerConfigurationKey = "input_volume_up_btn", AxisConfigurationKey = "input_volume_up_axis", DisplayName = "Input Volume Up", Private = true)]
         public HotkeyTrigger InputVolumeUp { get; set; } = new HotkeyTrigger(KeyboardKey.KeyNone, ControllerElement.NoElement);
