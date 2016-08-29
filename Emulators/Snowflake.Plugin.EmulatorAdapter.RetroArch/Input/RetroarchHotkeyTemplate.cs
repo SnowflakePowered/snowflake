@@ -14,6 +14,9 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Input.Hotkeys
     public class RetroarchHotkeyTemplate : HotkeyTemplate
     {
 
+        [HotkeyOption("input_enable_hotkey", ControllerConfigurationKey = "input_enable_hotkey_btn", AxisConfigurationKey = "input_enable_hotkey_axis", DisplayName = "Input Enable Hotkey", Private = true)]
+        public override HotkeyTrigger ModifierTrigger { get; set; } = new HotkeyTrigger(KeyboardKey.KeyNone, ControllerElement.NoElement);
+
         [HotkeyOption("input_toggle_fast_forward", ControllerConfigurationKey = "input_toggle_fast_forward_btn", AxisConfigurationKey = "input_toggle_fast_forward_axis", DisplayName = "Input Toggle Fast Forward", Private = true)]
         public HotkeyTrigger InputToggleFastForward { get; set; } = new HotkeyTrigger(KeyboardKey.KeyNone, ControllerElement.NoElement);
 
@@ -82,9 +85,6 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Input.Hotkeys
 
         [HotkeyOption("input_slowmotion", ControllerConfigurationKey = "input_slowmotion_btn", AxisConfigurationKey = "input_slowmotion_axis", DisplayName = "Input Slowmotion", Private = true)]
         public HotkeyTrigger InputSlowmotion { get; set; } = new HotkeyTrigger(KeyboardKey.KeyNone, ControllerElement.NoElement);
-
-        [HotkeyOption("input_enable_hotkey", ControllerConfigurationKey = "input_enable_hotkey_btn", AxisConfigurationKey = "input_enable_hotkey_axis", DisplayName = "Input Enable Hotkey", Private = true)]
-        public HotkeyTrigger InputEnableHotkey { get; set; } = new HotkeyTrigger(KeyboardKey.KeyNone, ControllerElement.NoElement);
 
         [HotkeyOption("input_volume_up", ControllerConfigurationKey = "input_volume_up_btn", AxisConfigurationKey = "input_volume_up_axis", DisplayName = "Input Volume Up", Private = true)]
         public HotkeyTrigger InputVolumeUp { get; set; } = new HotkeyTrigger(KeyboardKey.KeyNone, ControllerElement.NoElement);

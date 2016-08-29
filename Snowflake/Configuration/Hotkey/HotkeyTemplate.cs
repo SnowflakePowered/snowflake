@@ -14,7 +14,7 @@ namespace Snowflake.Configuration.Hotkey
         public IEnumerable<IHotkeyOption> HotkeyOptions { get; }
         public IEnumerable<IConfigurationOption> ConfigurationOptions { get; }
 
-        public HotkeyTrigger ModifierTrigger { get; set; }
+        public abstract HotkeyTrigger ModifierTrigger { get; set; }
 
         protected HotkeyTemplate(string sectionName)
         {

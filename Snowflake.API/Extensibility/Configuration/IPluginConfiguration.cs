@@ -4,7 +4,7 @@ namespace Snowflake.Extensibility.Configuration
 {
     /// <summary>
     /// Represents a configuration file a plugin can access.
-    /// The file must be serializable to IDictionary<string, dynamic>
+    /// The file must be serializable to <see cref="IDictionary{TKey,TValue}(string, dynamic)"/>
     /// The plugin must initialize this itself in it's constructor. 
     /// </summary>
     public interface IPluginConfiguration

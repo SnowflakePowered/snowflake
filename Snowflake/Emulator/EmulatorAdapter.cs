@@ -27,6 +27,8 @@ namespace Snowflake.Emulator
         public IBiosManager BiosManager { get; }
         protected IStoneProvider StoneProvider { get; }
         public string SaveType { get; }
+        public IEnumerable<string> RequiredBios { get; }
+        public IEnumerable<string> OptionalBios { get; }
 
         protected EmulatorAdapter(string appDataDirectory,
             IStoneProvider stoneProvider, 
@@ -40,12 +42,14 @@ namespace Snowflake.Emulator
                 this.GetAllSiblingResourceNames("InputMappings")
                 .Select(mappings => JsonConvert.DeserializeObject<InputMapping>
                 (this.GetSiblingStringResource("InputMappings", mappings))).Cast<IInputMapping>().ToList();
-            this.Capabilities = this.PluginProperties.GetEnumerable("capabilities")?.ToList();
-            this.Mimetypes = this.PluginProperties.GetEnumerable("mimetypes")?.ToList();
+            this.Capabilities = this.PluginProperties.GetEnumerable("capabilities")?.ToList() ?? Enumerable.Empty<string>();
+            this.Mimetypes = this.PluginProperties.GetEnumerable("mimetypes")?.ToList() ?? Enumerable.Empty<string>();
             this.SaveType = this.PluginProperties.Get("savetype");
             this.CollectionStore = collectionStore;
             this.BiosManager = biosManager;
             this.SaveManager = saveManager;
+            this.OptionalBios = this.PluginProperties.GetEnumerable("optionalbios")?.ToList() ?? Enumerable.Empty<string>();
+            this.RequiredBios = this.PluginProperties.GetEnumerable("requiredbios")?.ToList() ?? Enumerable.Empty<string>();
             this.HotkeyTemplateStore = hotkeyTemplateStore;
         }
 

@@ -21,7 +21,6 @@ namespace Snowflake.Configuration.Hotkey
         /// outside of the scope of the controller layout and game.
         /// </summary>
         /// <param name="hotkeyName">The name of the option as it appears in configuration</param>
-        /// <param name="inputType">The type of this input option</param>
         public HotkeyOptionAttribute(string hotkeyName)
         {
             this.HotkeyName = hotkeyName;
