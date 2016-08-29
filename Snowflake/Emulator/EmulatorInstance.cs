@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Snowflake.Configuration;
 using Snowflake.Configuration.Hotkey;
-using Snowflake.Input;
 using Snowflake.Platform;
 using Snowflake.Records.File;
 using Snowflake.Records.Game;
