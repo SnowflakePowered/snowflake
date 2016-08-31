@@ -39,6 +39,7 @@ namespace Snowflake.Configuration
             }
         }
 
+        public IDictionary<string, object> CustomMetadata { get; }
 
         private readonly PropertyInfo propertyInfo;
         private readonly object instance;
@@ -57,6 +58,8 @@ namespace Snowflake.Configuration
             this.Flag = configOption.Flag;
             this.Max = configOption.Max;
             this.Min = configOption.Min;
+            this.CustomMetadata =
+                this.propertyInfo.GetCustomAttributes<CustomMetadataAttribute>().ToDictionary(m => m.Key, m => m.Value);
             this.Increment = configOption.Increment;
             this.OptionName = configOption.OptionName;
             this.KeyName = this.propertyInfo.Name;

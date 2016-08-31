@@ -1,0 +1,12 @@
+﻿{
+    "name": "RetroArchBsnes",
+    "type": "plugin_emulator",
+    "version": "1.0.0.0",
+    "authors": [
+        "Snowflake"
+    ],
+  "description": "RetroArch bsnes",
+  "savetype": "retroarch-sram-snes",
+  "mimetypes": [ "application/x-romfile-snes-sfc" ],
+  "retroarch_core": "bsnes_performance_libretro.dll" 
+}

@@ -6,7 +6,8 @@
         "Snowflake"
     ],
   "description": "RetroArch Nestopia",
-  "savetype": "retroarch-sram",
+  "savetype": "retroarch-sram-nes",
   "mimetypes": [ "application/x-romfile-nes-ines" ],
-  "retroarch_core": "nestopia_libretro.dll" 
+  "retroarch_core": "nestopia_libretro.dll",
+  "requiredbios":  ["disksys.rom"] 
 }

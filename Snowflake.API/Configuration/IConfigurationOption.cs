@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Snowflake.Configuration
 {
@@ -68,7 +69,11 @@ namespace Snowflake.Configuration
         /// The type this configuration represents
         /// </summary>
         Type Type { get; }
-
+        
+        /// <summary>
+        /// Any custom metadata attached to this option
+        /// </summary>
+        IDictionary<string, object> CustomMetadata { get; }
         /// <summary>
         /// The value of this configuration option
         /// </summary>

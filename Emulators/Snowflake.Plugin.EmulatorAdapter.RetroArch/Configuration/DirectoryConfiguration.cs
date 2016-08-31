@@ -105,6 +105,7 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Configuration
 
         [ConfigurationOption("video_shader_dir", DisplayName = "Video Shader Dir", IsPath = true, Private = true)]
         public string VideoShaderDir { get; set; } = "default";
+
         [ConfigurationOption("savestate_directory", DisplayName = "Savestate Directory", IsPath = true, Private = true)]
         public string SavestateDirectory { get; set; } = "default";
 

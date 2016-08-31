@@ -83,6 +83,7 @@
     <Compile Include="Caching\ImageTypes.cs" />
     <Compile Include="Caching\ImageMetadataKeys.cs" />
     <Compile Include="Configuration\Attributes\ConfigurationOptionAttribute.cs" />
+    <Compile Include="Configuration\Attributes\CustomMetadataAttribute.cs" />
     <Compile Include="Configuration\Hotkey\HotkeyTrigger.cs" />
     <Compile Include="Configuration\Hotkey\IHotkeySerializer.cs" />
     <Compile Include="Configuration\Hotkey\IHotkeyTemplateStore.cs" />

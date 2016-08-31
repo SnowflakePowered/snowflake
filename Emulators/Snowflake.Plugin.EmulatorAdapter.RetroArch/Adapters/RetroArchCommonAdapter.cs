@@ -15,6 +15,7 @@ using Snowflake.Input.Device;
 using Snowflake.Platform;
 using Snowflake.Plugin.EmulatorAdapter.RetroArch.Executable;
 using Snowflake.Plugin.EmulatorAdapter.RetroArch.Input.Hotkeys;
+using Snowflake.Plugin.EmulatorAdapter.RetroArch.Shaders;
 using Snowflake.Records.File;
 using Snowflake.Records.Game;
 using Snowflake.Service;
@@ -25,7 +26,7 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters
     public abstract class RetroArchCommonAdapter : Emulator.EmulatorAdapter
     {
         protected RetroArchProcessHandler ProcessHandler { get; }
-        
+        protected ShaderManager ShaderManager { get; }
         public string CorePath { get; }
 
         protected RetroArchCommonAdapter(string appDataDirectory, 
@@ -34,11 +35,13 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters
             IConfigurationCollectionStore collectionStore,
             IHotkeyTemplateStore hotkeyStore,
             IBiosManager biosManager,
-            ISaveManager saveManager) 
+            ISaveManager saveManager, 
+            ShaderManager shaderManager) 
             : base(appDataDirectory, stoneProvider, collectionStore, hotkeyStore, biosManager, saveManager)
         {
             this.ProcessHandler = processHandler;
             this.CorePath = Path.Combine(this.PluginDataPath, this.PluginProperties.Get("retroarch_core"));
+            this.ShaderManager = shaderManager;
         }
 
         public override IHotkeyTemplate GetHotkeyTemplate() => this.HotkeyTemplateStore.GetTemplate<RetroarchHotkeyTemplate>();

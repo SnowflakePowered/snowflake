@@ -21,11 +21,14 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Executable
 
         public ProcessStartInfo GetStartInfo()
         {
-            return new ProcessStartInfo(Path.Combine(this.retroArchDirectory, this.Debug ? "retorarch_debug" : "retroarch"))
+            var info = new ProcessStartInfo(Path.Combine(this.retroArchDirectory, this.Debug ? "retroarch_debug" : "retroarch"))
             {
                 WorkingDirectory = this.retroArchDirectory, 
-                Arguments = $@"{(this.Debug ? "-v ": @"""")}{this.GetArgument(this.SavePath, "-s")}{this.GetArgument(this.ConfigPath, "-c")}{this.GetArgument(this.CorePath, "-L")}""{this.romFile}"" {this.GetArgument(this.Subsystem, "--subsystem")}",
+                Arguments = $@"{(this.Debug ? "-v --log-file retroarch.log ": "")}{this.GetArgument(this.SavePath, "-s")}{this.GetArgument(this.ConfigPath, "-c")}{this.GetArgument(this.CorePath, "-L")}""{this.romFile}"" {this.GetArgument(this.Subsystem, "--subsystem")}",
+               
             };
+            
+            return info;
         }
 
         internal string GetArgument(string value, string argumentName)

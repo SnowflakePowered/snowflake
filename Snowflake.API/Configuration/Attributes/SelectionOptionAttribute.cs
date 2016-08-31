@@ -25,6 +25,11 @@ namespace Snowflake.Configuration.Attributes
         public string DisplayName { get; set; }
 
         /// <summary>
+        /// Whether or not this option is displayed for the user
+        /// </summary>
+        public bool Private { get; set; }
+
+        /// <summary>
         /// Represents a selection inside an enum that represents valid values for a configuration option
         /// </summary>
         /// <param name="serializeAs">The value to serialize this enum as</param>

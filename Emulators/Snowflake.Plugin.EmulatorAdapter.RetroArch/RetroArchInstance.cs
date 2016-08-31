@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Diagnostics;
+using System.Reflection;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
 using Snowflake.Configuration.Hotkey;
@@ -16,9 +17,12 @@ using Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters;
 using Snowflake.Plugin.EmulatorAdapter.RetroArch.Input;
 using Snowflake.Records.Game;
 using Snowflake.Platform;
+using Snowflake.Plugin.EmulatorAdapter.RetroArch.Configuration;
 using Snowflake.Records.File;
 using Snowflake.Plugin.EmulatorAdapter.RetroArch.Executable;
 using Snowflake.Plugin.EmulatorAdapter.RetroArch.Input.Hotkeys;
+using Snowflake.Plugin.EmulatorAdapter.RetroArch.Selections.VideoConfiguration;
+using Snowflake.Plugin.EmulatorAdapter.RetroArch.Shaders;
 
 namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
 {
@@ -26,14 +30,18 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
     {
         private readonly RetroArchProcessHandler processHandler;
         private Process runningProcess;
+        public ShaderManager ShaderManager { get; set; }
+        protected string CorePath { get; set; }
         internal RetroArchInstance(IGameRecord game, IFileRecord file, 
             RetroArchCommonAdapter adapter, 
+            string corePath,
             RetroArchProcessHandler processHandler, int saveSlot,
             IPlatformInfo platform,
             IList<IEmulatedPort> controllerPorts)
             : base(adapter, game, file, saveSlot, platform, controllerPorts)
         {
             this.processHandler = processHandler;
+            this.CorePath = corePath;
         }
 
         private string BuildRetroarchCfg(RetroArchConfiguration retroArchConfiguration)
@@ -75,6 +83,25 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
                 this.EmulatorAdapter.BiosManager.GetBiosDirectory(this.Platform);
             retroArchConfiguration.DirectoryConfiguration.CoreOptionsPath = Path.Combine(this.InstancePath,
                 "retroarch-core-options.cfg");
+            if (retroArchConfiguration.VideoConfiguration.VideoShaderEnable)
+            {
+                var selectedShader = typeof(RetroArchShader)
+                .GetField(Enum.GetName(typeof(RetroArchShader), retroArchConfiguration.VideoConfiguration.VideoShader))
+                .GetCustomAttribute<ShaderAttribute>();
+                if (retroArchConfiguration.VideoConfiguration.VideoDriver == VideoDriver.Vulkan && selectedShader.SlangSupport) 
+                {
+                    retroArchConfiguration.VideoConfiguration.VideoShaderPath =
+                        this.ShaderManager?.GetShaderPath(selectedShader.ShaderName, ShaderType.Slang);
+                }
+                else
+                {
+                    retroArchConfiguration.VideoConfiguration.VideoShaderPath =
+                        this.ShaderManager?.GetShaderPath(selectedShader.ShaderName, selectedShader.CgSupport ? ShaderType.Cg :
+                        selectedShader.GlslSupport ? ShaderType.Glsl : ShaderType.Unknown);
+
+                }
+            }
+           
 
             string retroarchCfg = this.BuildRetroarchCfg(retroArchConfiguration);
             
@@ -98,10 +125,12 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
         public override void Start()
         {
             var info = this.processHandler.GetProcessInfo(this.RomFile.FilePath);
-            info.CorePath = ((RetroArchCommonAdapter)this.EmulatorAdapter).CorePath;
+            info.Debug = true;
+            info.CorePath = this.CorePath;
             info.ConfigPath = Path.Combine(this.InstancePath, "retroarch.cfg");
             this.runningProcess = Process.Start(info.GetStartInfo());
-            runningProcess.Exited += (s, e) => this.Destroy();
+            Task.Run(() => this.runningProcess.WaitForExit()).ContinueWith(x => this.Destroy());
+            
             //setup the instance hereee
         }
 

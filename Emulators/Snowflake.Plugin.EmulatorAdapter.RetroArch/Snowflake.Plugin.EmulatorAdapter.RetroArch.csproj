@@ -41,6 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adapters\bsnes\BsnesInstance.cs" />
+    <Compile Include="Adapters\bsnes\Configuration\BsnesConfiguration.cs" />
+    <Compile Include="Adapters\bsnes\Configuration\BsnesConfigurationCollection.cs" />
+    <Compile Include="Adapters\bsnes\BsnesRetroArchAdapter.cs" />
+    <Compile Include="Adapters\bsnes\Selections\PerformanceProfile.cs" />
     <Compile Include="Adapters\Nestopia\Configuration\NestopiaCoreConfiguration.cs" />
     <Compile Include="Adapters\Nestopia\Configuration\NestopiaCoreConfigurationCollection.cs" />
     <Compile Include="Adapters\Nestopia\NestopiaRetroArchAdapter.cs" />
@@ -95,7 +100,11 @@
     <Compile Include="Selections\RetroPadTemplate\LibretroDevice.cs" />
     <Compile Include="Selections\VideoConfiguration\VideoDriver.cs" />
     <Compile Include="Selections\VideoConfiguration\VideoRotation.cs" />
-    <Compile Include="Shaders\RetroarchShaders.cs" />
+    <Compile Include="Shaders\RetroArchShader.cs" />
+    <Compile Include="Shaders\ShaderAttribute.cs" />
+    <Compile Include="Shaders\ShaderPreset.cs" />
+    <Compile Include="Shaders\ShaderManager.cs" />
+    <Compile Include="Shaders\ShaderType.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Input\RetroPadTemplate.InputOptions.cs" />
@@ -129,6 +138,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="resource\RetroArchCommonConfiguration\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="resource\RetroArchBsnes\plugin.json" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterBuild">

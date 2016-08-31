@@ -14,8 +14,10 @@ using Snowflake.Input.Controller.Mapped;
 using Snowflake.Input.Device;
 using Snowflake.Platform;
 using Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters;
+using Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters.Bsnes;
 using Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters.Nestopia;
 using Snowflake.Plugin.EmulatorAdapter.RetroArch.Input.Hotkeys;
+using Snowflake.Plugin.EmulatorAdapter.RetroArch.Shaders;
 using Snowflake.Records.File;
 using Snowflake.Records.Game;
 using Snowflake.Scraper;
@@ -47,10 +49,10 @@ namespace Snowflake.Shell.Windows
                 var serverStartEvent = new ServerStartEventArgs(this.loadedCore, serverName);
                 SnowflakeEventManager.EventSource.RaiseEvent(serverStartEvent); //todo Move event registration to SnowflakeEVentManager
             }
-            var gr = new GameRecord(this.loadedCore.Get<IStoneProvider>().Platforms["NINTENDO_NES"], "test");
-            gr.Files.Add(new FileRecord(@"C:\\retroarch\\tloz.nes", "application/x-romfile-nes-ines", gr));
-            var raadapter = this.loadedCore.Get<IPluginManager>().Get<NestopiaRetroArchAdapter>().First().Value;
-           
+            var gr = new GameRecord(this.loadedCore.Get<IStoneProvider>().Platforms["NINTENDO_SNES"], "test");
+            gr.Files.Add(new FileRecord(@"C:\retroarch\smw.sfc", "application/x-romfile-snes-sfc", gr));
+            var raadapter = this.loadedCore.Get<IPluginManager>().Get<BsnesRetroArchAdapter>().First().Value;
+            
             var lmfao = raadapter.Instantiate(gr, this.loadedCore);
             lmfao.Create();
             lmfao.Start();
@@ -58,7 +60,7 @@ namespace Snowflake.Shell.Windows
 
         public void StartShell() {
             var electronUi = this.loadedCore.Get<IUserInterface>();
-            electronUi.StartUserInterface();
+            //electronUi.StartUserInterface();
         }
 
         public void RestartCore()
