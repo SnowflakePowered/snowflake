@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using FastMember;
 using Newtonsoft.Json;
 using Snowflake.Configuration.Attributes;
 using Snowflake.Configuration.Input;
@@ -29,27 +30,26 @@ namespace Snowflake.Configuration
         [JsonIgnore]
         public object Value
         {
-            get
-            {
-                return this.propertyInfo.GetValue(this.instance);
-            }
-            set
-            {
-                this.propertyInfo.SetValue(this.instance, value);
-            }
+            get { return this.accessor[this.instance, this.KeyName]; }
+            set { setter(value); }
         }
 
         public IDictionary<string, object> CustomMetadata { get; }
 
-        private readonly PropertyInfo propertyInfo;
         private readonly object instance;
-
+        private readonly TypeAccessor accessor;
+        private readonly Action<object> setter;
         internal ConfigurationOption(PropertyInfo propertyInfo, object instance) 
         {
-            this.instance = instance;
-            this.propertyInfo = propertyInfo;
-            this.Type = this.propertyInfo.PropertyType;
-            var configOption = this.propertyInfo.GetCustomAttribute<ConfigurationOptionAttribute>();
+             this.instance = instance;
+            this.setter = value =>
+            {
+                if (value != null) this.accessor[this.instance, this.KeyName] = value;
+                else propertyInfo.SetValue(this.instance, null); // setting a value to null will incur nre unless with reflection
+            };
+            this.Type = propertyInfo.PropertyType;
+            this.accessor = TypeAccessor.Create(instance.GetType());
+            var configOption = propertyInfo.GetCustomAttribute<ConfigurationOptionAttribute>();
             this.DisplayName = configOption.DisplayName;
             this.Description = configOption.Description;
             this.IsPath = configOption.IsPath;
@@ -59,10 +59,10 @@ namespace Snowflake.Configuration
             this.Max = configOption.Max;
             this.Min = configOption.Min;
             this.CustomMetadata =
-                this.propertyInfo.GetCustomAttributes<CustomMetadataAttribute>().ToDictionary(m => m.Key, m => m.Value);
+                propertyInfo.GetCustomAttributes<CustomMetadataAttribute>().ToDictionary(m => m.Key, m => m.Value);
             this.Increment = configOption.Increment;
             this.OptionName = configOption.OptionName;
-            this.KeyName = this.propertyInfo.Name;
+            this.KeyName = propertyInfo.Name;
         }
     }
 }

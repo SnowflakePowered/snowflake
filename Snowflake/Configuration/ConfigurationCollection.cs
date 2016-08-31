@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using FastMember;
 using Snowflake.Utility;
 
 namespace Snowflake.Configuration
@@ -24,13 +25,14 @@ namespace Snowflake.Configuration
         public static T MakeDefault<T>() where T : IConfigurationCollection, new()
         {
             var configurationSection = new T();
+            var accessor = TypeAccessor.Create(typeof(T));
             foreach (var setter in 
-                (from sectionInfo in typeof (T).GetProperties()
-                    let sectionType = sectionInfo.PropertyType
+                (from sectionInfo in accessor.GetMembers()
+                    let sectionType = sectionInfo.Type
                     where typeof (IConfigurationSection).IsAssignableFrom(sectionType)
                     where sectionType.GetConstructor(Type.EmptyTypes) != null
-                    let type = Instantiate.CreateInstance(sectionInfo.PropertyType)
-                    select new Action(() => sectionInfo.SetValue(configurationSection, type))))
+                    let type = Instantiate.CreateInstance(sectionInfo.Type)
+                    select new Action(() => accessor[configurationSection, sectionInfo.Name] = type)))
                 setter();
             return configurationSection;
         }
@@ -48,9 +50,10 @@ namespace Snowflake.Configuration
 
         public IEnumerator<IConfigurationSection> GetEnumerator()
         {
-            return (from properties in this.GetType().GetProperties()
-                where typeof(IConfigurationSection).IsAssignableFrom(properties.PropertyType)
-                select properties.GetValue(this) as IConfigurationSection).GetEnumerator();
+            var accessor = TypeAccessor.Create(this.GetType());
+            return (from properties in accessor.GetMembers()
+                where typeof(IConfigurationSection).IsAssignableFrom(properties.Type)
+                select accessor[this, properties.Name] as IConfigurationSection).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()

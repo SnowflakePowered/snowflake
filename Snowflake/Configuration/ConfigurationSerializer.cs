@@ -14,7 +14,6 @@ namespace Snowflake.Configuration
     public abstract class ConfigurationSerializer : IConfigurationSerializer
     {
         protected const string IteratorKey = "{N}";
-
         protected ConfigurationSerializer(IConfigurationTypeMapper typeMapper)
         {
             this.TypeMapper = typeMapper;
@@ -33,8 +32,7 @@ namespace Snowflake.Configuration
         {
             if (value == null) return this.TypeMapper.ConvertValue((object) null);
             Type valueType = value.GetType();
-            var converter = typeof(IConfigurationTypeMapper).GetMethod("ConvertValue");
-            return (string)converter.MakeGenericMethod(valueType).Invoke(this.TypeMapper, new[] { value });
+            return this.TypeMapper[valueType, value];
         }
 
         public virtual string SerializeHeader(string headerString) => String.Empty;

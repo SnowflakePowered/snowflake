@@ -11,6 +11,7 @@ using Snowflake.Configuration.Input;
 using Snowflake.Records.Game;
 using Snowflake.Utility;
 using Dapper;
+using FastMember;
 using Newtonsoft.Json;
 
 namespace Snowflake.Configuration
@@ -101,13 +102,15 @@ namespace Snowflake.Configuration
         private T BuildConfigurationCollection<T>(IDictionary<string, IDictionary<string, string>> values) where T : IConfigurationCollection, new()
         {
             var configurationCollection = new T();
+            var accessor = TypeAccessor.Create(typeof(T));
             foreach (var setter in
-                from sectionInfo in typeof(T).GetProperties()
-                    let sectionType = sectionInfo.PropertyType
+                from sectionInfo in accessor.GetMembers()
+                    let sectionType = sectionInfo.Type
                     where typeof(IConfigurationSection).IsAssignableFrom(sectionType)
                     where sectionType.GetConstructor(Type.EmptyTypes) != null
-                    let type = Instantiate.CreateInstance(sectionInfo.PropertyType)
-                    select new {setter =  new Action<object>(t => sectionInfo.SetValue(configurationCollection, t)), section = type})
+                    let type = Instantiate.CreateInstance(sectionInfo.Type)
+                    select new {setter =  new Action<object>(t => accessor[configurationCollection, sectionInfo.Name] = t),
+                        section = type})
             {
                 foreach (var optionSetter in 
                     from optionInfo in setter.section.GetType().GetProperties()
