@@ -7,7 +7,6 @@ using Newtonsoft.Json;
 using Snowflake.Configuration;
 using Snowflake.Emulator;
 using Snowflake.Events;
-using Snowflake.Plugin.EmulatorAdapter.RetroArch;
 using Snowflake.Service;
 using Snowflake.Service.Manager;
 using Squirrel;

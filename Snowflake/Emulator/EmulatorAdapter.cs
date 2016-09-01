@@ -57,10 +57,11 @@ namespace Snowflake.Emulator
 
         public abstract IDictionary<string, IConfigurationCollection> GetConfigurations(IGameRecord gameRecord);
 
+        public abstract IDictionary<string, IConfigurationCollection> GetDefaultConfigurations();
+
         public abstract IHotkeyTemplate GetHotkeyTemplate();
 
-        [Obsolete("Debug Purposes Only(!!)")]
-        public abstract IEmulatorInstance Instantiate(IGameRecord gameRecord, ICoreService coreService);
+        public abstract IHotkeyTemplate GetDefaultHotkeyTemplate();
 
     }
 }

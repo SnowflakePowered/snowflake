@@ -92,11 +92,22 @@ namespace Snowflake.Emulator
         /// <returns>A set of configuration collection keyed on the expected file names of the configuration files.</returns>
         IDictionary<string, IConfigurationCollection> GetConfigurations(IGameRecord gameRecord);
         /// <summary>
+        /// Gets the default valid set of configuration required to launch this emulator for a given game record.
+        /// </summary>
+        /// <returns>A set of configuration collection keyed on the expected file names of the configuration files.</returns>
+        IDictionary<string, IConfigurationCollection> GetDefaultConfigurations();
+        /// <summary>
         /// Gets the hotkey template associated with this emulator. Hotkeys should be global across all devices for
         /// an emulator, and should be represented only with a single class.
         /// </summary>
         /// <seealso cref="IHotkeyTemplateStore"/>
-        /// <returns></returns>
+        /// <returns>The hotkey template for this emulator</returns>
         IHotkeyTemplate GetHotkeyTemplate();
+        /// <summary>
+        /// Gets the default hotkey template associated with this emulator. Hotkeys should be global across all devices for
+        /// an emulator, and should be represented only with a single class.
+        /// </summary>
+        /// <returns>The default hotkey template for this emulator</returns>
+        IHotkeyTemplate GetDefaultHotkeyTemplate();
     }
 }

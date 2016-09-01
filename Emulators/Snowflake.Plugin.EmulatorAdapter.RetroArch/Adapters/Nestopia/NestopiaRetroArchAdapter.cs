@@ -57,6 +57,17 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters.Nestopia
             };
        }
 
-       
+        public override IDictionary<string, IConfigurationCollection> GetDefaultConfigurations()
+        {
+            var retroarchConfig = ConfigurationCollection.MakeDefault<RetroArchConfiguration>();
+            var nestopiaConfig = ConfigurationCollection.MakeDefault<NestopiaCoreConfigurationCollection>();
+            return new Dictionary<string, IConfigurationCollection>
+            {
+                {retroarchConfig.FileName, retroarchConfig},
+                 {"retroarch-core-options.cfg", nestopiaConfig }  //convention requires core options to have this file name.
+            };
+        }
+
+
     }
 }

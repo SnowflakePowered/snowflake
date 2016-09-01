@@ -59,6 +59,15 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters.Bsnes
             };
        }
 
-       
+        public override IDictionary<string, IConfigurationCollection> GetDefaultConfigurations()
+        {
+            var retroarchConfig = ConfigurationCollection.MakeDefault<RetroArchConfiguration>();
+            var bsnesConfig = ConfigurationCollection.MakeDefault<BsnesConfigurationCollection>();
+            return new Dictionary<string, IConfigurationCollection>
+            {
+                {retroarchConfig.FileName, retroarchConfig},
+                {"bsnes", bsnesConfig } //convention requires core options to have this file name.
+            };
+        }
     }
 }
