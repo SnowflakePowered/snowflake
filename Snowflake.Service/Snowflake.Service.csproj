@@ -82,11 +82,8 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\CoreService.cs" />
-    <Compile Include="Service\Manager\AjaxManager.cs" />
     <Compile Include="Service\Manager\PluginManager.cs" />
     <Compile Include="Service\Manager\ServerManager.cs" />
-    <Compile Include="Service\Server\JsonApiServer.cs" />
-    <Compile Include="Service\Server\JsonApiWebSocketServer.cs" />
     <Compile Include="Service\Server\MimeTypes.cs" />
     <Compile Include="Service\StoneProvider.cs" />
   </ItemGroup>

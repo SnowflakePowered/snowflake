@@ -6,7 +6,6 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Snowflake.Ajax;
 using Snowflake.Records.Metadata;
 
 namespace Snowflake.Scraper.Providers

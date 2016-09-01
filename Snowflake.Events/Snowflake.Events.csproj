@@ -58,8 +58,6 @@
     <Compile Include="CoreEvents\Game\GameAddEventArgs.cs" />
     <Compile Include="CoreEvents\Modify\ModifyGameInfoEventArgs.cs" />
     <Compile Include="ISnowflakeEventManager.cs" />
-    <Compile Include="ServiceEvents\AjaxResponseSendingEventArgs.cs" />
-    <Compile Include="ServiceEvents\AjaxRequestReceivedEventArgs.cs" />
     <Compile Include="ServiceEvents\PluginLoadedEventArgs.cs" />
     <Compile Include="ServiceEvents\CoreLoadedEventArgs.cs" />
     <Compile Include="ServiceEvents\CoreShutdownEventArgs.cs" />

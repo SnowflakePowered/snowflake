@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Moq;
-using Snowflake.Ajax;
 using Snowflake.Emulator;
 using Snowflake.Events.CoreEvents.GameEvent;
 using Snowflake.Events.CoreEvents.ModifyEvent;
