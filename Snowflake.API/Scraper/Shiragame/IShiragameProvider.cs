@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Snowflake.Scraper.Shiragame
 {
+    /// <summary>
+    /// Represents a Shiragame information database
+    /// </summary>
     public interface IShiragameProvider
     {
         /// <summary>

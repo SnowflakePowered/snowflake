@@ -13,7 +13,7 @@ using Snowflake.Scraper;
 using Snowflake.Scraper.Providers;
 using Snowflake.Scraper.Shiragame;
 using Snowflake.Service;
-using Snowflake.Scrapers.TheGamesDb;
+using Snowflake.Plugin.Scraper.TheGamesDb;
 using Xunit;
 namespace Snowflake.Tests.Scraper
 {

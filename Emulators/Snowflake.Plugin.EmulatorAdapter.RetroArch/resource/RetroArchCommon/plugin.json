@@ -1,0 +1,10 @@
+﻿{
+    "name": "RetroArchCommon",
+    "type": "plugin_debug_support_ra",
+    "version": "1.0.0.0",
+    "authors": [
+        "Snowflake"
+    ],
+  "description": "RetroArch Support",
+  "savetype":  "retroarch-sram" 
+}

@@ -13,9 +13,10 @@ namespace Snowflake.Shell.Windows.ElectronUserInterface
     public class ElectronRegistrar : Plugin
     {
         public ElectronRegistrar(ICoreService coreInstance)
-            : base(coreInstance)
+            : base(coreInstance.AppDataDirectory)
         {
-            this.CoreInstance.RegisterService<IUserInterface>(new ElectronInterface(coreInstance, this.PluginDataPath));
+            //Because we rely on plugin data path, we can't simply register this as a service.
+            coreInstance.RegisterService<IUserInterface>(new ElectronInterface(coreInstance, this.PluginDataPath));
         }
     }
 }

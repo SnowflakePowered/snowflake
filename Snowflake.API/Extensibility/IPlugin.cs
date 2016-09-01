@@ -22,35 +22,9 @@ namespace Snowflake.Extensibility
         /// </summary>
         string PluginDataPath { get; }
         /// <summary>
-        /// The list of platforms a plugin supports if applicable. If not, leave this empty
-        /// </summary>
-        IList<string> SupportedPlatforms { get; }
-        /// <summary>
-        /// The Assembly object representation of the compiled plugin
-        /// </summary>
-        Assembly PluginAssembly { get; }
-        /// <summary>
         /// A dictionary containing the information within plugin.json
         /// </summary>
         IPluginProperties PluginProperties { get; }
-        /// <summary>
-        /// A reference to the current running ICoreService instance. 
-        /// This is import-injected upon composition in the plugin constructor.
-        /// </summary>
-        ICoreService CoreInstance { get; }
-        /// <summary>
-        /// Gets an embedded resource as a Stream from the plugin Assembly.
-        /// Wraps GetManifestResourceStream so that specifiying the full namespace of the resource is not required
-        /// </summary>
-        /// <param name="resourceName">The name of the resource</param>
-        /// <returns>The resource as a stream</returns>
-        Stream GetResource(string resourceName);
-        /// <summary>
-        /// Gets an embedded resource as a String from the plugin Assembly
-        /// </summary>
-        /// <param name="resourceName">The name of the resource</param>
-        /// <returns>The resource as a string</returns>
-        string GetStringResource(string resourceName);
         /// <summary>
         /// The IPluginConfiguration configuration associated with this plugin.
         /// This is null unless it has been initialized by the plugin.

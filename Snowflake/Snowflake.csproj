@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Snowflake</RootNamespace>
     <AssemblyName>Snowflake</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <NuGetPackageImportStamp>
@@ -38,8 +38,12 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Dapper, Version=1.50.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dapper.1.50.0-beta8\lib\net45\Dapper.dll</HintPath>
+    <Reference Include="Dapper, Version=1.50.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.1.50.2\lib\net451\Dapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FastMember, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FastMember.1.1.0\lib\net40\FastMember.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fleck, Version=0.13.0.57, Culture=neutral, processorArchitecture=MSIL">
@@ -57,7 +61,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.4.3.5\lib\net45\NLog.dll</HintPath>
+      <HintPath>..\packages\NLog.4.3.7\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="SharpYaml, Version=1.5.3.20680, Culture=neutral, PublicKeyToken=1ced8108e942bc02, processorArchitecture=MSIL">
@@ -87,6 +91,9 @@
       <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.IO.Compression.FileSystem.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -103,15 +110,41 @@
     <Compile Include="Ajax\JSMethod.cs" />
     <Compile Include="Ajax\JSRequest.cs" />
     <Compile Include="Ajax\JSResponse.cs" />
+    <Compile Include="Configuration\ConfigurationOption.cs" />
     <Compile Include="Caching\KeyedImageCache.cs" />
+    <Compile Include="Configuration\ConfigurationProperty.cs" />
+    <Compile Include="Configuration\ConfigurationCollection.cs" />
+    <Compile Include="Configuration\Hotkey\HotkeyOption.cs" />
+    <Compile Include="Configuration\Hotkey\HotkeySerializer.cs" />
+    <Compile Include="Configuration\Hotkey\HotkeyTemplate.cs" />
+    <Compile Include="Configuration\Hotkey\SqliteHotkeyTemplateStore.cs" />
+    <Compile Include="Configuration\Input\InputSerializer.cs" />
+    <Compile Include="Configuration\SqliteConfigurationCollectionStore.cs" />
     <Compile Include="Configuration\ConfigurationTypeMapper.cs" />
     <Compile Include="Configuration\DefaultConfigurationTypeMapper.cs" />
     <Compile Include="Configuration\IniConfigurationSerializer.cs" />
     <Compile Include="Configuration\ConfigurationSerializer.cs" />
     <Compile Include="Configuration\ConfigurationSection.cs" />
-    <Compile Include="Configuration\IterableConfigurationSection.cs" />
+    <Compile Include="Configuration\Input\InputMapping.cs" />
+    <Compile Include="Configuration\Input\InputOption.cs" />
+    <Compile Include="Configuration\Input\InputTemplate.cs" />
+    <Compile Include="Configuration\KeyValuePairConfigurationSerializer.cs" />
+    <Compile Include="Emulator\BiosManager.cs" />
+    <Compile Include="Input\Controller\Mapped\SqliteMappedControllerElementCollectionStore.cs" />
+    <Compile Include="Emulator\EmulatorAdapter.cs" />
+    <Compile Include="Emulator\EmulatorInstance.cs" />
     <Compile Include="Extensibility\PluginProperties.cs" />
-    <Compile Include="Platform\PlatformControllerPorts.cs" />
+    <Compile Include="Input\Controller\ControllerElementCollection.cs" />
+    <Compile Include="Input\Controller\ControllerElementInfo.cs" />
+    <Compile Include="Input\Controller\Mapped\MappedControllerElementCollection.cs" />
+    <Compile Include="Input\Device\InputEnumerator.cs" />
+    <Compile Include="Input\Controller\Mapped\MappedControllerElement.cs" />
+    <Compile Include="Emulator\EmulatedPort.cs" />
+    <Compile Include="JsonConverters\InputMappingConverter.cs" />
+    <Compile Include="JsonConverters\PlatformInfoConverter.cs" />
+    <Compile Include="JsonConverters\ControllerLayoutConverter.cs" />
+    <Compile Include="Input\Controller\ControllerLayout.cs" />
+    <Compile Include="Input\Device\InputDevice.cs" />
     <Compile Include="Extensibility\Plugin.cs" />
     <Compile Include="Extensions\JObjectExts.cs" />
     <Compile Include="Extensibility\YamlConfiguration.cs" />
@@ -125,19 +158,18 @@
     <Compile Include="Romfile\FileSignatureMatcher.cs" />
     <Compile Include="Romfile\RomFileInfo.cs" />
     <Compile Include="Romfile\StructuredFilename.cs" />
+    <Compile Include="Emulator\SaveManager.cs" />
     <Compile Include="Scraper\Providers\ProviderQueryFunction.cs" />
+    <Compile Include="Scraper\Providers\QueryProvider.cs" />
     <Compile Include="Scraper\Providers\QueryProviderSource.cs" />
     <Compile Include="Scraper\Providers\ScrapedMetadataCollection.cs" />
-    <Compile Include="Scraper\Providers\QueryProvider.cs" />
-    <Compile Include="Scraper\ScrapeEngine.cs" />
-    <Compile Include="JsonConverters\PlatformInfoConverter.cs" />
     <Compile Include="Configuration\BooleanMapping.cs" />
     <Compile Include="Extensions\HttpListenerContextExts.cs" />
     <Compile Include="Extensions\IDictionaryExtensions.cs" />
     <Compile Include="Extensions\IListExtensions.cs" />
-    <Compile Include="Platform\PlatformDefaults.cs" />
     <Compile Include="Platform\PlatformInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scraper\ScrapeEngine.cs" />
     <Compile Include="Scraper\Shiragame\DatInfo.cs" />
     <Compile Include="Scraper\Shiragame\SerialInfo.cs" />
     <Compile Include="Scraper\Shiragame\ShiragameProvider.cs" />
@@ -164,6 +196,7 @@
       <Name>Snowflake.Utility</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.102.0\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.102.0\build\net451\System.Data.SQLite.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -25,8 +25,7 @@ namespace Snowflake.Tests
             using (Stream stream = TestUtilities.GetResource(resourceName))
             using (var reader = new StreamReader(stream))
             {
-                string file = reader.ReadToEnd();
-                return file;
+                return reader.ReadToEnd();
             }
         }
     }

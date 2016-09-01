@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Newtonsoft.Json;
+using Snowflake.Configuration;
+using Snowflake.Plugin.EmulatorAdapter.RetroArch;
 using Snowflake.Records.Game;
 using Snowflake.Tests.Scraper;
 
@@ -47,6 +51,13 @@ namespace Snowflake.Tests.ManualIntegrationTests
                 sb.AppendLine(key + ": " + information.Metadata[key]);
             }
             MessageBox.Show(sb.ToString());
+        }
+
+        private void retroarchcfgbtn_Click(object sender, EventArgs e)
+        {
+            var cfg = ConfigurationCollection.MakeDefault<RetroArchConfiguration>();
+            /*var inst = new RetroArchInstance(cfg);
+            inst.Create();*/
         }
     }
 }

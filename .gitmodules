@@ -4,3 +4,6 @@
 [submodule "stone"]
 	path = stone
 	url = https://github.com/SnowflakePowered/stone/
+[submodule "Emulators/Snowflake.Plugin.EmulatorAdapter.RetroArch/snowflake-retroarch-dist-win64"]
+	path = Emulators/Snowflake.Plugin.EmulatorAdapter.RetroArch/exe-retroarch-win64
+	url = https://github.com/SnowflakePowered/snowflake-retroarch-dist-win64

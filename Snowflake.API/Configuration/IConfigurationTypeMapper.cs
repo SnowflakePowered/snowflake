@@ -24,7 +24,14 @@ namespace Snowflake.Configuration
         /// </summary>
         /// <typeparam name="T">The type to convert</typeparam>
         /// <param name="value">The value to convert</param>
-        /// <returns></returns>
+        /// <returns>The converted value</returns>
         string ConvertValue<T>(T value);
+        /// <summary>
+        /// Converts a value to the format using a previously configured converter function
+        /// </summary>
+        /// <param name="t">The type to convert</param>
+        /// <param name="value">The value to convert</param>
+        /// <returns>The converted value</returns>
+        string this[Type t, object value] { get; }
     }
 }

@@ -25,8 +25,7 @@ namespace Snowflake.Events
             eventManager.RegisterEvent(this.ServerStop);
 
             eventManager.RegisterEvent(this.GameInfoModify);
-            eventManager.RegisterEvent(this.PlatformPreferenceModify);
-            eventManager.RegisterEvent(this.PortInputDeviceModify);
+
 
         }
         public event EventHandler<GameAddEventArgs> GameAdd;
@@ -46,8 +45,6 @@ namespace Snowflake.Events
         public event EventHandler<PluginLoadedEventArgs> PluginLoaded;
 
         public event EventHandler<ModifyGameInfoEventArgs> GameInfoModify;
-        public event EventHandler<ModifyPlatformPreferenceEventArgs> PlatformPreferenceModify;
-        public event EventHandler<ModifyPortInputDeviceEventArgs> PortInputDeviceModify;
 
     }
 }

@@ -10,11 +10,6 @@ namespace Snowflake.Service
     public interface ICoreService : IDisposable
     {
         /// <summary>
-        /// The list of platforms loaded for this core service
-        /// </summary>
-        [Obsolete("Use StoneProvider instead. Will be removed in upcoming PR.")]
-        IDictionary<string, IPlatformInfo> Platforms { get; }
-        /// <summary>
         /// The directory to store appdata in this core service
         /// </summary>
         string AppDataDirectory { get; }
@@ -31,15 +26,10 @@ namespace Snowflake.Service
         IEnumerable<string> AvailableServices();
         /// <summary>
         /// Get a service.
-        /// The StoneProvider service is guaranteed to be registered.
+        /// The <see cref="IStoneProvider"/> service will always be available.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
+        /// <typeparam name="T">The type of service.</typeparam>
+        /// <returns>The service instance</returns>
         T Get<T>();
-        /// <summary>
-        /// Dispose the core
-        /// </summary>
-        void Dispose();
-
     }
 }

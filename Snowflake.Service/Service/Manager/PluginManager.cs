@@ -11,7 +11,6 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using Newtonsoft.Json;
 using NLog;
-using Snowflake.Constants.Plugin;
 using Snowflake.Events;
 using Snowflake.Extensions;
 using Snowflake.Extensibility;
@@ -22,7 +21,7 @@ using Snowflake.Events.ServiceEvents;
 namespace Snowflake.Service.Manager
 {
 
-    public class PluginManager : IPluginManager
+    internal class PluginManager : IPluginManager
     {
         public string LoadablesLocation { get; }
         public bool IsInitialized { get; private set; }

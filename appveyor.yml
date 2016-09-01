@@ -26,9 +26,6 @@ environment:
       secure: 5cuY6qLcjz85TBpjs2Ba9B8QKKT5XuvQse3pnVmk8wo=
     CoverityNotificationEmail:
       secure: YObG6alHbjgc0M1b5aIThLfeiTS18PFiFnIjEcSNqa0=
-    DXROOT: c:\program Files (x86)\sandcastle
-    SHFBROOT: c:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder
-    LANGUAGE: "%SHFBROOT%\\SandcastleBuilderGUI.exe"
     PATH: C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
 cache:
   - packages -> **\packages.config
@@ -37,7 +34,8 @@ install:
     - nuget update -self
     - nuget install OpenCover -ExcludeVersion
     - nuget install xunit.runner.console -Version 2.1.0
-    - choco install -y sandcastle -version 2015.5.2.0
+    - nuget install EWSoftware.SHFB -ExcludeVersion
+    - nuget install EWSoftware.SHFB.NETFramework -ExcludeVersion
     - choco install -y doxygen.portable
     - git submodule update --init --recursive
     - nuget restore ./Snowflake.sln
@@ -71,7 +69,6 @@ after_test:
     - nuget pack Snowflake.API\Snowflake.API.csproj -IncludeReferencedProjects -Symbols
     - nuget pack Snowflake.Events\Snowflake.Events.csproj -IncludeReferencedProjects -Symbols
     - nuget pack Snowflake\Snowflake.csproj -IncludeReferencedProjects -Symbols
-    - nuget pack Snowflake.InputManager.DirectInput\Snowflake.InputManager.DirectInput.csproj -IncludeReferencedProjects -Symbols
     - nuget pack Snowflake.Tests\Snowflake.Tests.csproj -IncludeReferencedProjects -Symbols
     - nuget pack Snowflake.Service\Snowflake.Service.csproj -IncludeReferencedProjects -Symbols
 

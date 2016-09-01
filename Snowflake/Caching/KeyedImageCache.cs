@@ -22,6 +22,7 @@ namespace Snowflake.Caching
                 Directory.CreateDirectory(Path.Combine(appDataPath, ".imgcache"));
             this.rootPath = Path.Combine(appDataPath, ".imgcache");
         }
+
         public IList<IFileRecord> Add(Image image, Guid recordGuid, string imageType)
         {
             Guid cacheId = Guid.NewGuid();

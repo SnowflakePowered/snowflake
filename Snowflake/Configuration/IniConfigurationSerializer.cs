@@ -6,17 +6,25 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
 using Snowflake.Configuration.Attributes;
+using Snowflake.Configuration.Input;
+using Snowflake.Input.Controller;
+using Snowflake.Input.Controller.Mapped;
+using Snowflake.Input.Device;
 
 namespace Snowflake.Configuration
 {
+    /// <summary>
+    /// A configuration serializer that uses INI format
+    /// 
+    /// [Header]
+    /// Key = Value
+    /// </summary>
     public class IniConfigurationSerializer : ConfigurationSerializer
     {
-        public bool OutputHeader { get; set; }
        
-        public IniConfigurationSerializer(IBooleanMapping booleanMapping, string nullSerializer, bool outputHeader)
+        public IniConfigurationSerializer(IBooleanMapping booleanMapping, string nullSerializer)
             : base(booleanMapping, nullSerializer)
         {
-            this.OutputHeader = outputHeader;
         }
 
         public override string SerializeLine<T>(string key, T value)
@@ -24,48 +32,15 @@ namespace Snowflake.Configuration
             return $"{key} = {this.SerializeValue(value)}";
         }
 
-        public override string SerializeIterableLine<T>(string key, T value, int iteration)
-        {
-            return $"{key.Replace(ConfigurationSerializer.IteratorKey, iteration.ToString())} = {this.SerializeValue(value)}";
-        }
+        public override string SerializeHeader(string headerString) => $"[{headerString}]{Environment.NewLine}";
 
         public override string Serialize(IConfigurationSection configurationSection)
         {
             StringBuilder stringBuilder = new StringBuilder();
-
-            IEnumerable<PropertyInfo> properties = configurationSection.GetType()
-                .GetRuntimeProperties()
-                .Where(propertyInfo => propertyInfo.IsDefined(typeof (ConfigurationOptionAttribute), true));
-
-            if(this.OutputHeader) stringBuilder.AppendLine($"[{configurationSection.SectionName}]");
-
-            foreach (var prop in properties)
+            stringBuilder.AppendLine(this.SerializeHeader(configurationSection.SectionName));
+            foreach (var config in from option in configurationSection.Options.Values where !option.Flag select option)
             {
-                var data = prop.GetCustomAttribute<ConfigurationOptionAttribute>();
-                var value = prop.GetValue(configurationSection);
-                stringBuilder.AppendLine(this.SerializeLine(data.OptionName, value));
-            }
-            return stringBuilder.ToString();
-        }
-
-        public override string Serialize(IIterableConfigurationSection iterableConfigurationSection)
-        {
-            StringBuilder stringBuilder = new StringBuilder();
-
-            IEnumerable<PropertyInfo> properties = iterableConfigurationSection.GetType()
-                .GetRuntimeProperties()
-                .Where(propertyInfo => propertyInfo.IsDefined(typeof(ConfigurationOptionAttribute), true));
-
-            if (this.OutputHeader) stringBuilder.AppendLine($@"[{iterableConfigurationSection.SectionName
-                .Replace(ConfigurationSerializer.IteratorKey, iterableConfigurationSection.InterationNumber.ToString())}]");
-
-            foreach (var prop in properties)
-            {
-                var data = prop.GetCustomAttribute<ConfigurationOptionAttribute>();
-                var value = prop.GetValue(iterableConfigurationSection);
-                stringBuilder.AppendLine(data.IsIterable
-                    ? this.SerializeIterableLine(data.OptionName, value, iterableConfigurationSection.InterationNumber)
-                    : this.SerializeLine(data.OptionName, value));
+                stringBuilder.AppendLine(this.SerializeLine(config.OptionName, config.Value));
             }
             return stringBuilder.ToString();
         }

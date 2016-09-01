@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Snowflake</RootNamespace>
     <AssemblyName>Snowflake.API</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <NuGetPackageImportStamp>
@@ -83,17 +83,53 @@
     <Compile Include="Caching\ImageTypes.cs" />
     <Compile Include="Caching\ImageMetadataKeys.cs" />
     <Compile Include="Configuration\Attributes\ConfigurationOptionAttribute.cs" />
-    <Compile Include="Configuration\IIterableConfigurationSection.cs" />
+    <Compile Include="Configuration\Attributes\CustomMetadataAttribute.cs" />
+    <Compile Include="Configuration\Hotkey\HotkeyTrigger.cs" />
+    <Compile Include="Configuration\Hotkey\IHotkeySerializer.cs" />
+    <Compile Include="Configuration\Hotkey\IHotkeyTemplateStore.cs" />
+    <Compile Include="Configuration\Hotkey\IHotkeyOption.cs" />
+    <Compile Include="Configuration\IConfigurationCollectionStore.cs" />
+    <Compile Include="Configuration\Hotkey\HotkeyOptionAttribute.cs" />
+    <Compile Include="Configuration\Hotkey\IHotkeyTemplate.cs" />
+    <Compile Include="Configuration\Input\IInputMapping.cs" />
+    <Compile Include="Configuration\Input\IInputOption.cs" />
+    <Compile Include="Configuration\Input\IInputSerializer.cs" />
+    <Compile Include="Configuration\Input\IInputTemplate.cs" />
+    <Compile Include="Configuration\Input\InputOptionType.cs" />
+    <Compile Include="Configuration\Input\InputOptionAttribute.cs" />
+    <Compile Include="Configuration\IConfigurationCollection.cs" />
+    <Compile Include="Configuration\IConfigurationOption.cs" />
+    <Compile Include="Configuration\IConfigurationProperty.cs" />
     <Compile Include="Configuration\IConfigurationSection.cs" />
     <Compile Include="Configuration\IConfigurationSerializer.cs" />
     <Compile Include="Configuration\IConfigurationTypeMapper.cs" />
     <Compile Include="Configuration\Attributes\SelectionOptionAttribute.cs" />
+    <Compile Include="Emulator\IBiosManager.cs" />
+    <Compile Include="Emulator\IEmulatedPort.cs" />
+    <Compile Include="Emulator\IEmulatorAdapter.cs" />
+    <Compile Include="Emulator\IEmulatorInstance.cs" />
+    <Compile Include="Emulator\ISaveManager.cs" />
     <Compile Include="Extensibility\ContainerLoadPriorityAttribute.cs" />
     <Compile Include="Extensibility\ContainerLoadPriority.cs" />
+    <Compile Include="Input\Controller\ControllerElement.cs" />
+    <Compile Include="Input\Controller\IControllerElementCollection.cs" />
+    <Compile Include="Input\Controller\ControllerElementType.cs" />
+    <Compile Include="Input\Controller\IControllerElementInfo.cs" />
+    <Compile Include="Input\Controller\IControllerLayout.cs" />
     <Compile Include="Extensibility\IPluginProperties.cs" />
+    <Compile Include="Input\Controller\Mapped\IMappedControllerElement.cs" />
+    <Compile Include="Input\Controller\Mapped\IMappedControllerElementCollection.cs" />
+    <Compile Include="Input\Controller\KeyboardKey.cs" />
+    <Compile Include="Input\Controller\Mapped\IMappedControllerElementCollectionStore.cs" />
+    <Compile Include="Input\Device\DeviceType.cs" />
+    <Compile Include="Input\Device\IInputDevice.cs" />
+    <Compile Include="Input\Device\IInputEnumerator.cs" />
+    <Compile Include="Input\Device\ILowLevelInputDevice.cs" />
+    <Compile Include="Input\Device\IInputManager.cs" />
     <Compile Include="Extensibility\PluginAttribute.cs" />
     <Compile Include="Records\File\FileMetadataKeys.cs" />
     <Compile Include="Records\File\IFileRecord.cs" />
+    <Compile Include="Input\Device\InputApi.cs" />
     <Compile Include="Records\Game\GameMetadataKeys.cs" />
     <Compile Include="Records\Game\IGameRecord.cs" />
     <Compile Include="Records\File\IFileLibrary.cs" />
@@ -109,9 +145,6 @@
     <Compile Include="Romfile\IFileSignatureMatcher.cs" />
     <Compile Include="Romfile\IRomFileInfo.cs" />
     <Compile Include="Romfile\IStructuredFilename.cs" />
-    <Compile Include="Platform\IPlatformControllerPorts.cs" />
-    <Compile Include="Platform\IPlatformPreferenceStore.cs" />
-    <Compile Include="Platform\StonePlatforms.cs" />
     <Compile Include="Extensibility\Configuration\IPluginConfigOption.cs" />
     <Compile Include="Extensibility\Configuration\IPluginSelectOption.cs" />
     <Compile Include="Extensibility\Configuration\PluginOptionType.cs" />
@@ -129,7 +162,6 @@
     <Compile Include="Service\IStoneProvider.cs" />
     <Compile Include="Service\IUserInterface.cs" />
     <Compile Include="Configuration\IBooleanMapping.cs" />
-    <Compile Include="Platform\IPlatformDefaults.cs" />
     <Compile Include="Platform\IPlatformInfo.cs" />
     <Compile Include="Extensibility\Configuration\IPluginConfiguration.cs" />
     <Compile Include="Extensibility\IPlugin.cs" />
@@ -151,7 +183,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Events\" />
+    <Folder Include="Extensibility\Events\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.102.0\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.102.0\build\net451\System.Data.SQLite.Core.targets')" />

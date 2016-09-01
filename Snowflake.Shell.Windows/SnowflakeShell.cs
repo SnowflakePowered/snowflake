@@ -5,12 +5,20 @@ using System.IO;
 using System.Text;
 using System.Linq;
 using System.Reflection;
+using Snowflake.Configuration;
+using Snowflake.Configuration.Hotkey;
+using Snowflake.Emulator;
 using Snowflake.Events;
 using Snowflake.Events.ServiceEvents;
+using Snowflake.Input.Controller.Mapped;
+using Snowflake.Input.Device;
 using Snowflake.Platform;
+using Snowflake.Records.File;
+using Snowflake.Records.Game;
 using Snowflake.Scraper;
 using Snowflake.Service;
 using Snowflake.Service.Manager;
+using Snowflake.Utility;
 
 namespace Snowflake.Shell.Windows
 {
@@ -20,32 +28,15 @@ namespace Snowflake.Shell.Windows
         private readonly string appDataDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Snowflake");
         internal SnowflakeShell()
         {
-            this.WriteInfoJson();
             this.StartCore();
         }
-        private void WriteInfoJson()
-        {
-            if (!File.Exists(Path.Combine(this.appDataDirectory, "info.json")))
-            {
-                var currentAssembly = Assembly.GetExecutingAssembly();
-                var infoJsonStream = currentAssembly.GetManifestResourceStream($"{currentAssembly.GetName().Name}.Resources.info.json");
-                using (Stream file = File.Create(Path.Combine(this.appDataDirectory, "info.json")))
-                {
-                    file.Seek(0, SeekOrigin.Begin);
-                    infoJsonStream.CopyTo(file);
-                }
-            }
-        }
+       
         public void StartCore()
         {
 
             this.loadedCore = new CoreService(this.appDataDirectory);
+           // this.loadedCore.Get<IEmulatorAssembliesManager>()?.LoadEmulatorAssemblies();
             this.loadedCore.Get<IPluginManager>()?.Initialize();
-            this.loadedCore.Get<IAjaxManager>()?.Initialize(this.loadedCore.Get<IPluginManager>());
-            foreach (IPlatformInfo platform in this.loadedCore.Platforms.Values)
-            {
-                this.loadedCore.Get<IPlatformPreferenceStore>()?.AddPlatform(platform);
-            }
             this.loadedCore.Get<IServerManager>().RegisterServer("ThemeServer", new ThemeServer(Path.Combine(this.loadedCore.AppDataDirectory, "themes")));
             foreach (string serverName in this.loadedCore.Get<IServerManager>().RegisteredServers)
             {
@@ -53,12 +44,19 @@ namespace Snowflake.Shell.Windows
                 var serverStartEvent = new ServerStartEventArgs(this.loadedCore, serverName);
                 SnowflakeEventManager.EventSource.RaiseEvent(serverStartEvent); //todo Move event registration to SnowflakeEVentManager
             }
-           
+
+            /*var gr = new GameRecord(this.loadedCore.Get<IStoneProvider>().Platforms["NINTENDO_SNES"], "test");
+            gr.Files.Add(new FileRecord(@"C:\retroarch\smw.sfc", "application/x-romfile-snes-sfc", gr));
+            var raadapter = this.loadedCore.Get<IPluginManager>().Get<BsnesRetroArchAdapter>().First().Value;
+            
+            var lmfao = raadapter.Instantiate(gr, this.loadedCore);
+            lmfao.Create();
+            lmfao.Start();*/
         }
 
         public void StartShell() {
             var electronUi = this.loadedCore.Get<IUserInterface>();
-            electronUi.StartUserInterface();
+            //electronUi.StartUserInterface();
         }
 
         public void RestartCore()

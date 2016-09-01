@@ -4,16 +4,16 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
-using Newtonsoft.Json;
-using Snowflake.Ajax;
-using Snowflake.Platform;
-using Snowflake.Extensibility;
-using Snowflake.Romfile;
-using Snowflake.Scraper;
 using Snowflake.Service.HttpServer;
 using Snowflake.Service.JSWebSocketServer;
 using Snowflake.Service.Manager;
 using NLog;
+using Snowflake.Configuration;
+using Snowflake.Configuration.Hotkey;
+using Snowflake.Input;
+using Snowflake.Input.Controller.Mapped;
+using Snowflake.Records.Game;
+using Snowflake.Utility;
 
 namespace Snowflake.Service
 {
@@ -23,10 +23,8 @@ namespace Snowflake.Service
     public class CoreService : ICoreService
     {
         #region Loaded Objects
-        public IDictionary<string, IPlatformInfo> Platforms { get; }
         public string AppDataDirectory { get; }
-        public dynamic InfoBlob { get; }
-        private readonly IDictionary<Type, dynamic> serviceContainer;
+        private readonly IDictionary<Type, object> serviceContainer;
         private ILogger logger;
 
         #endregion
@@ -42,15 +40,19 @@ namespace Snowflake.Service
             this.serviceContainer = new ConcurrentDictionary<Type, object>();
             this.RegisterService<IStoneProvider>(new StoneProvider());
             this.AppDataDirectory = appDataDirectory;
-            this.InfoBlob = JsonConvert.DeserializeObject(File.ReadAllText(Path.Combine(this.AppDataDirectory, "info.json")));
-
             this.RegisterService<IServerManager>(new ServerManager());
-         
-            this.RegisterService<IPluginManager>(new PluginManager(this.AppDataDirectory, this));
-            this.RegisterService<IAjaxManager>(new AjaxManager(this));
+            this.RegisterService<IGameLibrary>(new SqliteGameLibrary(new SqliteDatabase(Path.Combine(this.AppDataDirectory, "games.db"))));
+            this.RegisterService<IMappedControllerElementCollectionStore>
+                (new SqliteMappedControllerElementCollectionStore(new SqliteDatabase(Path.Combine(this.AppDataDirectory, "controllermappings.db"))));
+            this.RegisterService<IConfigurationCollectionStore>(new SqliteConfigurationCollectionStore(new SqliteDatabase(Path.Combine(this.AppDataDirectory, "configurations.db"))));
+            this.RegisterService<IHotkeyTemplateStore>(new SqliteHotkeyTemplateStore(new SqliteDatabase(Path.Combine(this.AppDataDirectory, "hotkeys.db"))));
+            //this.RegisterService<IEmulatorAssembliesManager>(new EmulatorAssembliesManager(Path.Combine(this.AppDataDirectory, "emulators")));
+            this.RegisterService<IPluginManager>(new PluginManager(this.AppDataDirectory, this)); 
+            this.RegisterService<IAjaxManager>(new AjaxManager(this)); //todo deprecate with michi-based ipc
+           // this.RegisterService<IScrapeEngine>(new ScrapeEngine(this.Get<IStoneProvider>(), this.Get<IPluginManager>()));
             var serverManager = this.Get<IServerManager>();
-            serverManager.RegisterServer("AjaxApiServer", new ApiServer(this));
-            serverManager.RegisterServer("WebSocketApiServer", new JsonApiWebSocketServer(30003, this));
+            serverManager.RegisterServer("AjaxApiServer", new ApiServer(this)); //todo deprecate with michi-based ipc
+            serverManager.RegisterServer("WebSocketApiServer", new JsonApiWebSocketServer(30003, this)); //todo deprecate with michi-based ipc
             
         }
 
@@ -67,9 +69,10 @@ namespace Snowflake.Service
 
         public T Get<T>()
         {
-            return this.serviceContainer.ContainsKey(typeof (T)) ? this.serviceContainer[typeof (T)] : default(T);
+            return this.serviceContainer.ContainsKey(typeof (T)) ? (T)this.serviceContainer[typeof (T)] : default(T);
         }
 
+        
         public void Dispose()
         {
             this.Dispose(true);

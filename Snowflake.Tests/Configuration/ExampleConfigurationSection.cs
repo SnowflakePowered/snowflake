@@ -40,17 +40,12 @@ namespace Snowflake.Configuration
         [ConfigurationOption("RenderWindowHeight")]
         public int RenderWindowHeight { get; set; } = 480;
 
-        [ConfigurationOption("ISOPath0")]
+        [ConfigurationOption("ISOPath0", IsPath = true)]
         public string ISOPath0 { get; set; } = @"C:\Dumps\Wii\RMGE01.wbfs";
 
-        [ConfigurationOption("NullSetting")]
-        public string NullSetting { get; set; } = null;
-
-        public ExampleConfigurationSection()
+        public ExampleConfigurationSection() :base("Display", "Display Options", "Dolphin.ini")
         {
-            this.SectionName = "Display";
-            this.ConfigurationFileName = "Dolphin.ini";
-            this.DisplayName = "Display Options";
+         
         }
     }
 
