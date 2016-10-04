@@ -17,14 +17,17 @@ namespace Snowflake.Configuration
     /// </summary>
     public abstract class ConfigurationCollection : IConfigurationCollection
     {
+        public static readonly Guid ConfigurationSectionGuid = new Guid("1768a7f5-a179-4c03-b4cb-6527ff008559");
         /// <summary>
         /// Initializes a configuration collection with default values for all sections.
+        /// Gives configuration sections a section GUID based on the namespace
+        /// 1768a7f5-a179-4c03-b4cb-6527ff008559
         /// </summary>
         /// <typeparam name="T">The configuration collection to initialize</typeparam>
         /// <returns>The configuration section with default values.</returns>
         public static T MakeDefault<T>() where T : IConfigurationCollection, new()
         {
-            var configurationSection = new T();
+            var configurationCollection = new T();
             var accessor = TypeAccessor.Create(typeof(T));
             foreach (var setter in 
                 (from sectionInfo in accessor.GetMembers()
@@ -32,9 +35,13 @@ namespace Snowflake.Configuration
                     where typeof (IConfigurationSection).IsAssignableFrom(sectionType)
                     where sectionType.GetConstructor(Type.EmptyTypes) != null
                     let type = Instantiate.CreateInstance(sectionInfo.Type)
-                    select new Action(() => accessor[configurationSection, sectionInfo.Name] = type)))
+                    select new Action(() =>
+                    {
+                        ((ConfigurationSection) type).ConfigFilename = configurationCollection.FileName;
+                        accessor[configurationCollection, sectionInfo.Name] = type;
+                    })))
                 setter();
-            return configurationSection;
+            return configurationCollection;
         }
 
         public override string ToString()

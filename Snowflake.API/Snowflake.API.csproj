@@ -77,11 +77,12 @@
     <Compile Include="Caching\ImageMetadataKeys.cs" />
     <Compile Include="Configuration\Attributes\ConfigurationOptionAttribute.cs" />
     <Compile Include="Configuration\Attributes\CustomMetadataAttribute.cs" />
+    <Compile Include="Configuration\Records\IConfigurationValue.cs" />
     <Compile Include="Configuration\Hotkey\HotkeyTrigger.cs" />
     <Compile Include="Configuration\Hotkey\IHotkeySerializer.cs" />
     <Compile Include="Configuration\Hotkey\IHotkeyTemplateStore.cs" />
     <Compile Include="Configuration\Hotkey\IHotkeyOption.cs" />
-    <Compile Include="Configuration\IConfigurationCollectionStore.cs" />
+    <Compile Include="Configuration\Records\IConfigurationCollectionStore.cs" />
     <Compile Include="Configuration\Hotkey\HotkeyOptionAttribute.cs" />
     <Compile Include="Configuration\Hotkey\IHotkeyTemplate.cs" />
     <Compile Include="Configuration\Input\IInputMapping.cs" />

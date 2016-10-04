@@ -38,6 +38,8 @@ namespace Snowflake.Shell.Windows
            // this.loadedCore.Get<IEmulatorAssembliesManager>()?.LoadEmulatorAssemblies();
             this.loadedCore.Get<IPluginManager>()?.Initialize();
             this.loadedCore.Get<IServerManager>().RegisterServer("ThemeServer", new ThemeServer(Path.Combine(this.loadedCore.AppDataDirectory, "themes")));
+            this.loadedCore.Get<IServerManager>().RegisterServer("api", new ApiDebugServer(""));
+
             foreach (string serverName in this.loadedCore.Get<IServerManager>().RegisteredServers)
             {
                 this.loadedCore.Get<IServerManager>()?.StartServer(serverName);

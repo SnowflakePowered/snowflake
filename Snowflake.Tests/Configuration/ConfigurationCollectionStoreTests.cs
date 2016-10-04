@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Snowflake.Configuration.Records;
 using Snowflake.Utility;
 using Xunit;
 namespace Snowflake.Configuration.Tests
@@ -29,7 +30,7 @@ namespace Snowflake.Configuration.Tests
             
             store.SetConfiguration(configCollection, Guid.Empty);
 
-            var retrievedConfig = store.GetConfiguration<ExampleConfigurationCollection>(Guid.Empty);
+            var retrievedConfig = store.Get<ExampleConfigurationCollection>(Guid.Empty);
             Assert.NotNull(retrievedConfig);
             Assert.Equal(configCollection.ExampleConfiguration.ISOPath0, retrievedConfig.ExampleConfiguration.ISOPath0);
             Assert.Equal(configCollection.ExampleConfiguration.FullscreenResolution, retrievedConfig.ExampleConfiguration.FullscreenResolution);
@@ -43,7 +44,7 @@ namespace Snowflake.Configuration.Tests
             IConfigurationCollectionStore store = new SqliteConfigurationCollectionStore(new SqliteDatabase(Path.GetTempFileName()));
             var configCollection = ConfigurationCollection.MakeDefault<ExampleConfigurationCollection>();
           
-            var retrievedConfig = store.GetConfiguration<ExampleConfigurationCollection>(Guid.Empty);
+            var retrievedConfig = store.Get<ExampleConfigurationCollection>(Guid.Empty);
             Assert.NotNull(retrievedConfig);
             Assert.Equal(configCollection.ExampleConfiguration.ISOPath0, retrievedConfig.ExampleConfiguration.ISOPath0);
             Assert.Equal(configCollection.ExampleConfiguration.FullscreenResolution, retrievedConfig.ExampleConfiguration.FullscreenResolution);

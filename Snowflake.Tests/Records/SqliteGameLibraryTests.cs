@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Moq;
+using Newtonsoft.Json;
 using Snowflake.Platform;
 using Snowflake.Records.File;
 using Snowflake.Records.Game;
@@ -104,6 +106,7 @@ namespace Snowflake.Records.Tests
             gameRecord.Files.Add(fileRecord);
             library.Set(gameRecord);
             Assert.NotNull(library.Get(gameRecord.Guid));
+            Debug.Write(JsonConvert.SerializeObject(gameRecord));
 
         }
 

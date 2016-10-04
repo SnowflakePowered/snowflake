@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Snowflake.Configuration;
 using Snowflake.Configuration.Hotkey;
 using Snowflake.Configuration.Input;
+using Snowflake.Configuration.Records;
 using Snowflake.Extensibility;
 using Snowflake.Extensibility.Configuration;
 using Snowflake.Records.File;

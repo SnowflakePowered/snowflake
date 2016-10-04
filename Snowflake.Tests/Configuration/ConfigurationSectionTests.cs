@@ -17,7 +17,7 @@ namespace Snowflake.Configuration.Tests
             var config = new ExampleConfigurationSection();
             foreach (var option in config.Options)
             {
-                Assert.Equal(config.GetType().GetProperty(option.Key).GetValue(config), option.Value.Value);
+                Assert.Equal(config.GetType().GetProperty(option.Key).GetValue(config), option.Value.GetValue(Guid.Empty).Value);
             }
         }
 
@@ -27,8 +27,8 @@ namespace Snowflake.Configuration.Tests
             var config = new ExampleConfigurationSection();
             foreach (var option in config.Options)
             {
-                var objType = option.Value.Value?.GetType();
-                option.Value.Value = null;
+                var objType = option.Value.GetValue(Guid.Empty)?.Value.GetType();
+                option.Value.GetValue(Guid.Empty).Value = null;
                 Assert.Equal(config.GetType().GetProperty(option.Key).GetValue(config), 
                     objType.IsValueType || objType.IsEnum
                     ? Activator.CreateInstance(objType) : null);

@@ -10,6 +10,7 @@ using Snowflake.Service.Manager;
 using NLog;
 using Snowflake.Configuration;
 using Snowflake.Configuration.Hotkey;
+using Snowflake.Configuration.Records;
 using Snowflake.Input;
 using Snowflake.Input.Controller.Mapped;
 using Snowflake.Records.Game;

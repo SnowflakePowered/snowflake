@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
 using Snowflake.Configuration.Hotkey;
+using Snowflake.Configuration.Records;
 using Snowflake.Emulator;
 using Snowflake.Extensibility;
 using Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters;

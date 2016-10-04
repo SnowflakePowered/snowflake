@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
 using Snowflake.Configuration.Hotkey;
+using Snowflake.Configuration.Records;
 using Snowflake.Emulator;
 using Snowflake.Extensibility;
 using Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters.Nestopia.Configuration;
@@ -48,8 +49,8 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters.Nestopia
 
         public override IDictionary<string, IConfigurationCollection> GetConfigurations(IGameRecord gameRecord)
         {
-            var retroarchConfig = this.CollectionStore.GetConfiguration<RetroArchConfiguration>(gameRecord.Guid);
-            var nestopiaConfig = this.CollectionStore.GetConfiguration<NestopiaCoreConfigurationCollection>(gameRecord.Guid);
+            var retroarchConfig = this.CollectionStore.Get<RetroArchConfiguration>(gameRecord.Guid);
+            var nestopiaConfig = this.CollectionStore.Get<NestopiaCoreConfigurationCollection>(gameRecord.Guid);
             return new Dictionary<string, IConfigurationCollection>
             {
                 {retroarchConfig.FileName, retroarchConfig},
