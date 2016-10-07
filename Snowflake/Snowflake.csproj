@@ -105,11 +105,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Ajax\AjaxNamespace.cs" />
-    <Compile Include="Ajax\JSException.cs" />
-    <Compile Include="Ajax\JSMethod.cs" />
-    <Compile Include="Ajax\JSRequest.cs" />
-    <Compile Include="Ajax\JSResponse.cs" />
+    <Compile Include="Configuration\Records\ConfigurationValue.cs" />
     <Compile Include="Configuration\ConfigurationOption.cs" />
     <Compile Include="Caching\KeyedImageCache.cs" />
     <Compile Include="Configuration\ConfigurationProperty.cs" />
@@ -119,7 +115,7 @@
     <Compile Include="Configuration\Hotkey\HotkeyTemplate.cs" />
     <Compile Include="Configuration\Hotkey\SqliteHotkeyTemplateStore.cs" />
     <Compile Include="Configuration\Input\InputSerializer.cs" />
-    <Compile Include="Configuration\SqliteConfigurationCollectionStore.cs" />
+    <Compile Include="Configuration\Records\SqliteConfigurationCollectionStore.cs" />
     <Compile Include="Configuration\ConfigurationTypeMapper.cs" />
     <Compile Include="Configuration\DefaultConfigurationTypeMapper.cs" />
     <Compile Include="Configuration\IniConfigurationSerializer.cs" />

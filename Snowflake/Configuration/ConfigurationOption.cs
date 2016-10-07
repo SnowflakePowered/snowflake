@@ -8,6 +8,7 @@ using FastMember;
 using Newtonsoft.Json;
 using Snowflake.Configuration.Attributes;
 using Snowflake.Configuration.Input;
+using Snowflake.Configuration.Records;
 
 namespace Snowflake.Configuration
 {
@@ -27,29 +28,21 @@ namespace Snowflake.Configuration
         public string KeyName { get; }
         public Type Type { get; }
 
-        [JsonIgnore]
-        public object Value
-        {
-            get { return this.accessor[this.instance, this.KeyName]; }
-            set { setter(value); }
-        }
+        public IConfigurationValue GetValue(Guid withRecord)
+            => new ConfigurationValue(propertyInfo, instance, sectionGuid, withRecord);
 
         public IDictionary<string, object> CustomMetadata { get; }
 
+        private readonly PropertyInfo propertyInfo;
         private readonly object instance;
-        private readonly TypeAccessor accessor;
-        private readonly Action<object> setter;
-        internal ConfigurationOption(PropertyInfo propertyInfo, object instance) 
+        private readonly Guid sectionGuid;
+        internal ConfigurationOption(PropertyInfo propertyInfo, object instance, Guid sectionGuid)
         {
-             this.instance = instance;
-            this.setter = value =>
-            {
-                if (value != null) this.accessor[this.instance, this.KeyName] = value;
-                else propertyInfo.SetValue(this.instance, null); // setting a value to null will incur nre unless with reflection
-            };
-            this.Type = propertyInfo.PropertyType;
-            this.accessor = TypeAccessor.Create(instance.GetType());
+            this.propertyInfo = propertyInfo;
+            this.instance = instance;
+            this.sectionGuid = sectionGuid;
             var configOption = propertyInfo.GetCustomAttribute<ConfigurationOptionAttribute>();
+            this.Type = propertyInfo.PropertyType;
             this.DisplayName = configOption.DisplayName;
             this.Description = configOption.Description;
             this.IsPath = configOption.IsPath;

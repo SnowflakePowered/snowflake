@@ -28,7 +28,7 @@ namespace Snowflake.Configuration
             StringBuilder stringBuilder = new StringBuilder();
             foreach (var config in from option in configurationSection.Options.Values where !option.Flag select option)
             {
-                stringBuilder.AppendLine(this.SerializeLine(config.OptionName, config.Value));
+                stringBuilder.AppendLine(this.SerializeLine(config.OptionName, config.GetValue(Guid.Empty).Value));
             }
             return stringBuilder.ToString();
         }

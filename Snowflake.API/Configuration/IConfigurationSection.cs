@@ -28,6 +28,12 @@ namespace Snowflake.Configuration
         /// </summary>
         string Description { get; }
         /// <summary>
+        /// The GUID of this section, a name-based GUID calculated with the namespace
+        /// 1768a7f5-a179-4c03-b4cb-6527ff008559 on the format {ConfigurationFileName}::{SectionName},
+        /// with an empty string for configuration filename if there is no configuration filename set.
+        /// </summary>
+        Guid SectionGuid { get; }
+        /// <summary>
         /// The options of this configuration section, keyed on the key name.
         /// </summary>
         IReadOnlyDictionary<string, IConfigurationOption> Options { get; }

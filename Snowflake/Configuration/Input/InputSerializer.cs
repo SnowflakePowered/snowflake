@@ -22,7 +22,7 @@ namespace Snowflake.Configuration.Input
 
             foreach (var config in inputTemplate.ConfigurationOptions)
             {
-                stringBuilder.AppendLine(this.ConfigurationSerializer.SerializeLine(config.OptionName.Replace("{N}", inputTemplate.PlayerIndex.ToString()), config.Value));
+                stringBuilder.AppendLine(this.ConfigurationSerializer.SerializeLine(config.OptionName.Replace("{N}", inputTemplate.PlayerIndex.ToString()), config.GetValue(Guid.Empty).Value));
             }
 
             foreach (var input in inputTemplate.InputOptions)

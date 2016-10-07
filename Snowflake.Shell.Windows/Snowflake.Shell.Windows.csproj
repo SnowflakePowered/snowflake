@@ -94,8 +94,8 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="Unosquare.Labs.EmbedIO, Version=1.0.17.26479, Culture=neutral, PublicKeyToken=871377f68111dbd2, processorArchitecture=MSIL">
-      <HintPath>..\packages\EmbedIO.1.0.22\lib\Unosquare.Labs.EmbedIO.dll</HintPath>
+    <Reference Include="Unosquare.Labs.EmbedIO, Version=1.0.17.18451, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\EmbedIO.1.1.0\lib\net452\Unosquare.Labs.EmbedIO.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
@@ -104,6 +104,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShellIcon.cs" />
     <Compile Include="SnowflakeShell.cs" />
+    <Compile Include="ApiDebugServer.cs" />
     <Compile Include="ThemeServer.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

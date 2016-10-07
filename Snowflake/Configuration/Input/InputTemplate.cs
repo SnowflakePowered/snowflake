@@ -38,7 +38,7 @@ namespace Snowflake.Configuration.Input
         {
             return (from propertyInfo in this.GetType().GetRuntimeProperties()
                     where propertyInfo.IsDefined(typeof(ConfigurationOptionAttribute), true)
-                    select new ConfigurationOption(propertyInfo, this) as IConfigurationOption).ToList();
+                    select new ConfigurationOption(propertyInfo, this, Guid.Empty) as IConfigurationOption).ToList();
         }
     
         public virtual void SetInputValues(IMappedControllerElementCollection mappedElements, IInputDevice inputDevice,

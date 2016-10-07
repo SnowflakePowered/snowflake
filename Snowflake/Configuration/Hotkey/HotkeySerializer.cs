@@ -21,7 +21,7 @@ namespace Snowflake.Configuration.Hotkey
             sb.Append(this.ConfigurationSerializer.SerializeHeader(template.SectionName.Replace("{N}", playerIndex.ToString())));
             foreach (var config in template.ConfigurationOptions)
             {
-                sb.AppendLine(this.ConfigurationSerializer.SerializeLine(config.OptionName.Replace("{N}", playerIndex.ToString()), config.Value));
+                sb.AppendLine(this.ConfigurationSerializer.SerializeLine(config.OptionName.Replace("{N}", playerIndex.ToString()), config.GetValue(Guid.Empty)));
             }
             foreach (var option in template.HotkeyOptions)
             {
@@ -40,7 +40,7 @@ namespace Snowflake.Configuration.Hotkey
             sb.Append(this.ConfigurationSerializer.SerializeHeader(template.SectionName.Replace("{N}", playerIndex.ToString())));
             foreach (var config in template.ConfigurationOptions)
             {
-                sb.AppendLine(this.ConfigurationSerializer.SerializeLine(config.OptionName.Replace("{N}", playerIndex.ToString()), config.Value));
+                sb.AppendLine(this.ConfigurationSerializer.SerializeLine(config.OptionName.Replace("{N}", playerIndex.ToString()), config.GetValue(Guid.Empty)));
             }
             foreach (var option in template.HotkeyOptions)
             {

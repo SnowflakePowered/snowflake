@@ -29,7 +29,7 @@ namespace Snowflake.Configuration.Hotkey
         {
             return (from propertyInfo in this.GetType().GetRuntimeProperties()
                     where propertyInfo.IsDefined(typeof(ConfigurationOptionAttribute), true)
-                    select new ConfigurationOption(propertyInfo, this) as IConfigurationOption).ToList();
+                    select new ConfigurationOption(propertyInfo, this, Guid.Empty) as IConfigurationOption).ToList();
         }
 
 

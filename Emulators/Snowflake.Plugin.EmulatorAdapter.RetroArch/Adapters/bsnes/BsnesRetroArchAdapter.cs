@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
 using Snowflake.Configuration.Hotkey;
+using Snowflake.Configuration.Records;
 using Snowflake.Emulator;
 using Snowflake.Extensibility;
 using Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters.bsnes;
@@ -50,8 +51,8 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters.Bsnes
 
         public override IDictionary<string, IConfigurationCollection> GetConfigurations(IGameRecord gameRecord)
         {
-            var retroarchConfig = this.CollectionStore.GetConfiguration<RetroArchConfiguration>(gameRecord.Guid);
-            var bsnesConfig = this.CollectionStore.GetConfiguration<BsnesConfigurationCollection>(gameRecord.Guid);
+            var retroarchConfig = this.CollectionStore.Get<RetroArchConfiguration>(gameRecord.Guid);
+            var bsnesConfig = this.CollectionStore.Get<BsnesConfigurationCollection>(gameRecord.Guid);
             return new Dictionary<string, IConfigurationCollection>
             {
                 {retroarchConfig.FileName, retroarchConfig},

@@ -35,6 +35,7 @@ namespace Snowflake.Shell.Windows
             this.themeWebServer.Module<StaticFilesModule>().AddHandler("/themedata/", HttpVerbs.Post, (server, context) => this.EchoThemes(context, server));
             this.themeWebServer.RunAsync();
         }
+
         private bool EchoThemes(HttpListenerContext context, WebServer server, bool sendBuffer = true)
         {
             HashSet<object> themesDirectory = new HashSet<object>();

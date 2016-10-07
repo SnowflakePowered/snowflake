@@ -72,23 +72,17 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Ajax\AjaxMethodAttribute.cs" />
-    <Compile Include="Ajax\AjaxMethodParameterAttribute.cs" />
-    <Compile Include="Ajax\IAjaxNamespace.cs" />
-    <Compile Include="Ajax\IJSException.cs" />
-    <Compile Include="Ajax\IJSMethod.cs" />
-    <Compile Include="Ajax\IJSRequest.cs" />
-    <Compile Include="Ajax\IJSResponse.cs" />
     <Compile Include="Caching\IKeyedImageCache.cs" />
     <Compile Include="Caching\ImageTypes.cs" />
     <Compile Include="Caching\ImageMetadataKeys.cs" />
     <Compile Include="Configuration\Attributes\ConfigurationOptionAttribute.cs" />
     <Compile Include="Configuration\Attributes\CustomMetadataAttribute.cs" />
+    <Compile Include="Configuration\Records\IConfigurationValue.cs" />
     <Compile Include="Configuration\Hotkey\HotkeyTrigger.cs" />
     <Compile Include="Configuration\Hotkey\IHotkeySerializer.cs" />
     <Compile Include="Configuration\Hotkey\IHotkeyTemplateStore.cs" />
     <Compile Include="Configuration\Hotkey\IHotkeyOption.cs" />
-    <Compile Include="Configuration\IConfigurationCollectionStore.cs" />
+    <Compile Include="Configuration\Records\IConfigurationCollectionStore.cs" />
     <Compile Include="Configuration\Hotkey\HotkeyOptionAttribute.cs" />
     <Compile Include="Configuration\Hotkey\IHotkeyTemplate.cs" />
     <Compile Include="Configuration\Input\IInputMapping.cs" />
@@ -170,7 +164,6 @@
     <Compile Include="Service\HttpServer\BaseHttpServer.cs" />
     <Compile Include="Service\ICoreService.cs" />
     <Compile Include="Service\JSWebSocketServer\IJSWebSocketServer.cs" />
-    <Compile Include="Service\Manager\IAjaxManager.cs" />
     <Compile Include="Service\HttpServer\IBaseHttpServer.cs" />
     <Compile Include="Service\Manager\IPluginManager.cs" />
     <Compile Include="Service\JSWebSocketServer\JSWebSocketServerEventArgs.cs" />
