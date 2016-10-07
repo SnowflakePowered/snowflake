@@ -8,7 +8,9 @@ namespace Snowflake.Configuration.Records
     /// collection representing a single emulator configuration file, associated with a game record
     /// </summary>
     /// <remarks>
-    /// To "delete" a configuration, just overwrite the existing values with a default instance
+    /// Because configuration values simply represent an unassociated value, retrieving a value without
+    /// an object reference is not supported. Thus, while <see cref="IConfigurationCollectionStore"/> implements
+    /// <see cref="ILibrary{T}"/>, individual Get methods are not supported. 
     /// </remarks>
     public interface IConfigurationCollectionStore : ILibrary<IConfigurationValue>
     {
@@ -20,7 +22,7 @@ namespace Snowflake.Configuration.Records
         /// </summary>
         /// <typeparam name="T">The type of configuration collection</typeparam>
         /// <param name="gameRecord">The guid of the game record</param>
-        /// <returns></returns>
+        /// <returns>The configuration collection associated with this game record.</returns>
         T Get<T>(Guid gameRecord) where T : IConfigurationCollection, new();
 
         /// <summary>
@@ -28,6 +30,8 @@ namespace Snowflake.Configuration.Records
         /// </summary>
         /// <param name="collection">The collection to save</param>
         /// <param name="gameRecord">The guid of the game record associated with this configuration collection</param>
-        void SetConfiguration(IConfigurationCollection collection, Guid gameRecord);
+        void Set(IConfigurationCollection collection, Guid gameRecord);
+
+
     }
 }

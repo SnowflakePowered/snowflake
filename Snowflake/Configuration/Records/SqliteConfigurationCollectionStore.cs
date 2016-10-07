@@ -15,7 +15,7 @@ using FastMember;
 using Newtonsoft.Json;
 using Snowflake.Configuration.Records;
 
-namespace Snowflake.Configuration
+namespace Snowflake.Configuration.Records
 {
     public class SqliteConfigurationCollectionStore : IConfigurationCollectionStore
     {
@@ -41,14 +41,11 @@ namespace Snowflake.Configuration
                     "value TEXT");
         }
 
-        public void SetConfiguration(IConfigurationCollection collection, Guid gameRecord)
+        public void Set(IConfigurationCollection collection, Guid gameRecord)
         {
-            foreach (IConfigurationValue value in from section in collection
-                                                  from option in section.Options.Values
-                                                  select option.GetValue(gameRecord))
-            {
-                this.Set(value); //todo implement enumerated
-            }
+            this.Set(from section in collection
+                from option in section.Options.Values
+                select option.GetValue(gameRecord));
         }
 
         private class ConfigurationCollectionStoreRecord
@@ -131,48 +128,73 @@ namespace Snowflake.Configuration
             return configurationCollection;
         }
 
-        public IConfigurationValue Get(Guid guid)
-        {
-            const string sql =
-               @"SELECT * FROM configuration WHERE path = @filePath;
-                SELECT * FROM metadata WHERE record IN (SELECT uuid FROM files WHERE path = @filePath)";
-
-            throw new NotImplementedException();
-        }
-
         public void Set(IEnumerable<IConfigurationValue> records)
         {
-            throw new NotImplementedException();
+            this.backingDatabase.Execute(dbConnection =>
+            {
+                dbConnection.Execute(@"INSERT OR REPLACE INTO configuration(uuid, game, section, value) 
+                                         VALUES (@uuid, @game, @section, @value)", 
+                                         records.Select(record => new
+                {
+                    uuid = record.Guid,
+                    game = record.Record,
+                    section = record.Section,
+                    value = record.Value.ToString()
+                }));
+            });
         }
 
-        public void Remove(IConfigurationValue record)
-        {
-            throw new NotImplementedException();
-        }
+        public void Remove(IConfigurationValue record) => this.Remove(record.Guid);
 
-        public void Remove(IEnumerable<IConfigurationValue> records)
-        {
-            throw new NotImplementedException();
-        }
+        public void Remove(IEnumerable<IConfigurationValue> records) => this.Remove(records.Select(r => r.Guid));
 
         public void Remove(Guid guid)
         {
-            throw new NotImplementedException();
+            this.backingDatabase.Execute(dbConnection =>
+            {
+                dbConnection.Execute(@"DELETE FROM configuration WHERE uuid = @guid", new {guid});
+            });
         }
 
         public void Remove(IEnumerable<Guid> guids)
         {
-            throw new NotImplementedException();
+            this.backingDatabase.Execute(dbConnection =>
+            {
+                dbConnection.Execute(@"DELETE FROM configuration WHERE uuid IN @guids", new { guids });
+            });
         }
 
+        /// <summary>
+        /// Getting an individual configuration value does not make sense, so this method is not supported.
+        /// </summary>
+        /// <param name="guid">/param>
+        /// <returns></returns>
+        [Obsolete("Not Supported")]
+        public IConfigurationValue Get(Guid guid)
+        {
+            throw new NotSupportedException("Getting individual configuration values without associated section are meaningless.");
+        }
+
+        /// <summary>
+        /// Getting an individual configuration value does not make sense, so this method is not implemented.
+        /// </summary>
+        /// <param name="guid">/param>
+        /// <returns></returns>
+        [Obsolete("Not Supported")]
         public IEnumerable<IConfigurationValue> Get(IEnumerable<Guid> guids)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException("Getting individual configuration values without associated section are meaningless.");
         }
 
+        /// <summary>
+        /// Getting an individual configuration value does not make sense, so this method is not implemented.
+        /// </summary>
+        /// <param name="guid">/param>
+        /// <returns></returns>
+        [Obsolete("Not Supported")]
         public IEnumerable<IConfigurationValue> GetAllRecords()
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException("Getting individual configuration values without associated section are meaningless.");
         }
     }
 }
