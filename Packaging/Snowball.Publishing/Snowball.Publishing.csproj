@@ -43,8 +43,8 @@
       <HintPath>..\..\packages\NuGet.Core.2.13.0-rc1-final\lib\net40-Client\NuGet.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Octokit, Version=0.21.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Octokit.0.21.1\lib\net45\Octokit.dll</HintPath>
+    <Reference Include="Octokit, Version=0.23.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Octokit.0.23.0\lib\net45\Octokit.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="semver.tools, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
