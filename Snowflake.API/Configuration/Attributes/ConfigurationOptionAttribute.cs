@@ -68,6 +68,9 @@ namespace Snowflake.Configuration.Attributes
         /// </summary>
         public string OptionName { get; }
 
+        public object Default { get; }
+
+        internal Type Type { get; }
 
         /// <summary>
         /// Represents one option in an emulator configuration inside a configuration section.
@@ -80,6 +83,30 @@ namespace Snowflake.Configuration.Attributes
         public ConfigurationOptionAttribute(string optionName)
         {
             this.OptionName = optionName;
+        }
+
+        public ConfigurationOptionAttribute(string optionName, int value) : this(optionName, value, typeof(int))
+        {
+        }
+        public ConfigurationOptionAttribute(string optionName, bool value) : this(optionName, value, typeof(bool))
+        {
+        }
+        public ConfigurationOptionAttribute(string optionName, double value) : this(optionName, value, typeof(double))
+        {
+        }
+        public ConfigurationOptionAttribute(string optionName, object @default) : this(optionName, @default, @default.GetType())
+        {
+            if (!this.Type.IsEnum) throw new ArgumentException("Configuration options can not be complex objects.");
+        }
+        public ConfigurationOptionAttribute(string optionName, string value) : this(optionName, value, typeof(string))
+        {
+        }
+        internal ConfigurationOptionAttribute(string optionName, object @default, Type valueType)
+        {
+            
+            this.OptionName = optionName;
+            this.Default = @default;
+            this.Type = valueType;
         }
 
     }

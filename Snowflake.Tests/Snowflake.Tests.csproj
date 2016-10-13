@@ -108,6 +108,10 @@
     <Compile Include="Configuration\IniConfigurationSerializerTests.cs" />
     <Compile Include="Configuration\RetroarchHotkeyTemplate.cs" />
     <Compile Include="Configuration\TestInputTemplate.cs" />
+    <Compile Include="DynamicConig\DynamicProxyTests.cs" />
+    <Compile Include="DynamicConig\ICustomConfiguration.cs" />
+    <Compile Include="DynamicConig\VideoDriver.cs" />
+    <Compile Include="DynamicConig\VideoRotation.cs" />
     <Compile Include="Events\StandardEventsTests.cs" />
     <Compile Include="Input\MappedControllerCollectionStoreTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
