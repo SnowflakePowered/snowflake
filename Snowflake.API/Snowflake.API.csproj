@@ -104,7 +104,12 @@
     <Compile Include="Configuration\IConfigurationSerializer.cs" />
     <Compile Include="Configuration\IConfigurationTypeMapper.cs" />
     <Compile Include="Configuration\Attributes\SelectionOptionAttribute.cs" />
-    <Compile Include="DynamicConfiguration\IConfiguration.cs" />
+    <Compile Include="DynamicConfiguration\Attributes\ConfigurationFileAttribute.cs" />
+    <Compile Include="DynamicConfiguration\Attributes\ConfigurationSectionAttribute.cs" />
+    <Compile Include="DynamicConfiguration\IConfigurationCollection.cs" />
+    <Compile Include="DynamicConfiguration\IConfigurationOption.cs" />
+    <Compile Include="DynamicConfiguration\IConfigurationSection.cs" />
+    <Compile Include="DynamicConfiguration\IConfigurationValue.cs" />
     <Compile Include="Emulator\IBiosManager.cs" />
     <Compile Include="Emulator\IEmulatedPort.cs" />
     <Compile Include="Emulator\IEmulatorAdapter.cs" />

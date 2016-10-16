@@ -11,7 +11,8 @@ using Snowflake.Configuration.Input;
 
 namespace Snowflake.DynamicConfiguration
 {
-    public class ConfigurationOption 
+   
+    public class ConfigurationOption : IConfigurationOption
     {
 
         public string DisplayName { get; }

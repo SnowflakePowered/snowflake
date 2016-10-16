@@ -40,5 +40,12 @@ namespace Snowflake.Utility
             return instanceCreator();
         }
 
+        public static object CreateInstance(Type createType, Type[] constructorParams, params Expression[] args)
+        {
+            Func<object> instanceCreator = Expression.Lambda<Func<object>>(
+                Expression.New(createType.GetConstructor(constructorParams), args)
+                ).Compile();
+            return instanceCreator();
+        }
     }
 }

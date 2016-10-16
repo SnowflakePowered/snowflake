@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration.Attributes;
 
-namespace Snowflake.Tests.DynamicConig
+namespace Snowflake.Tests.DynamicConfig
 {
     public enum VideoRotation
     {
