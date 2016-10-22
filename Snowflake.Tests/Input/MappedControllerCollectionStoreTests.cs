@@ -67,7 +67,7 @@ namespace Snowflake.Input.Tests
                 foreach (var element in retStore)
                 {
                     Assert.Contains(element.LayoutElement, mapcol.Select(x => x.LayoutElement));
-                    Assert.Equal(element.DeviceKeyboardKey, mapcol.First(x => x.LayoutElement == element.LayoutElement).DeviceKeyboardKey);
+                    Assert.Equal(element.DeviceElement, mapcol.First(x => x.LayoutElement == element.LayoutElement).DeviceElement);
                 }
             }
                

@@ -16,7 +16,7 @@ namespace Snowflake.Configuration.Hotkey
     public class SqliteHotkeyTemplateStore : IHotkeyTemplateStore
     {
         private readonly SqliteDatabase backingDatabase;
-
+        [Obsolete]
         public SqliteHotkeyTemplateStore(SqliteDatabase sqliteDatabase)
         {
             this.backingDatabase = sqliteDatabase;

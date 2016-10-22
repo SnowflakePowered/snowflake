@@ -13,7 +13,7 @@ namespace Snowflake.Tests.DynamicConfig
         [Fact]
         public void Test()
         {
-            var x = new DynamicConfiguration<IVideoConfiguration>("", "", "", "");
+            var x = new ConfigurationSection<IVideoConfiguration>("", "", "", "");
             x.Configuration.VideoDriver = VideoDriver.SDL2;
             Assert.Equal(x.Configuration.VideoDriver, VideoDriver.SDL2);
             Assert.Equal(x.Configuration, x.Configuration.Configuration);

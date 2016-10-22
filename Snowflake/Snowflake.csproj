@@ -122,10 +122,11 @@
     <Compile Include="Caching\KeyedImageCache.cs" />
     <Compile Include="Configuration\ConfigurationProperty.cs" />
     <Compile Include="Configuration\ConfigurationCollection.cs" />
+    <Compile Include="DynamicConfiguration\ConfigurationCircularInterceptor.cs" />
     <Compile Include="DynamicConfiguration\ConfigurationCollection.cs" />
     <Compile Include="DynamicConfiguration\ConfigurationOption.cs" />
     <Compile Include="DynamicConfiguration\ConfigurationValue.cs" />
-    <Compile Include="DynamicConfiguration\DynamicConfiguration.cs" />
+    <Compile Include="DynamicConfiguration\ConfigurationSection.cs" />
     <Compile Include="Configuration\Hotkey\HotkeyOption.cs" />
     <Compile Include="Configuration\Hotkey\HotkeySerializer.cs" />
     <Compile Include="Configuration\Hotkey\HotkeyTemplate.cs" />
@@ -141,6 +142,8 @@
     <Compile Include="Configuration\Input\InputOption.cs" />
     <Compile Include="Configuration\Input\InputTemplate.cs" />
     <Compile Include="Configuration\KeyValuePairConfigurationSerializer.cs" />
+    <Compile Include="DynamicConfiguration\Input\InputOption.cs" />
+    <Compile Include="DynamicConfiguration\Input\InputTemplate.cs" />
     <Compile Include="Emulator\BiosManager.cs" />
     <Compile Include="Input\Controller\Mapped\SqliteMappedControllerElementCollectionStore.cs" />
     <Compile Include="Emulator\EmulatorAdapter.cs" />

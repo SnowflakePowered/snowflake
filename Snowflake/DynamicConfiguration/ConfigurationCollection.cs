@@ -88,7 +88,7 @@ namespace Snowflake.DynamicConfiguration
                                     where sectionAttr !=null
                                     select new {sectionAttr, type = props.PropertyType, name = props.Name})
             {
-                var sectionType = typeof(DynamicConfiguration<>).MakeGenericType(section.type);
+                var sectionType = typeof(ConfigurationSection<>).MakeGenericType(section.type);
                 this.Values.Add(section.name, Instantiate.CreateInstance(sectionType, new Type[] {typeof(string), typeof(string) , typeof(string) , typeof(string) },
                     Expression.Constant(section.sectionAttr.Destination), 
                     Expression.Constant(section.sectionAttr.SectionName),

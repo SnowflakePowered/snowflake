@@ -39,9 +39,7 @@ namespace Snowflake.Configuration.Input
 
             return
                 element == null ? this.ConfigurationSerializer.SerializeLine(key, this.ConfigurationSerializer.TypeMapper.ConvertValue((object)null))
-                : this.ConfigurationSerializer.SerializeLine(key, element.DeviceElement == ControllerElement.Keyboard
-                    ? inputMapping[element.DeviceKeyboardKey]
-                    : inputMapping[element.DeviceElement]);
+                : this.ConfigurationSerializer.SerializeLine(key, element.DeviceElement);
         }
     }
 }

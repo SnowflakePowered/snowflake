@@ -80,6 +80,7 @@ namespace Snowflake.Configuration.Attributes
         /// <param name="optionName">The name of the option as it appears inside the emulator configuration</param>
         /// <see cref="Snowflake.Configuration.IConfigurationSection"></see>
         /// <seealso cref="System.Attribute" />
+        [Obsolete]
         public ConfigurationOptionAttribute(string optionName)
         {
             this.OptionName = optionName;
@@ -101,7 +102,7 @@ namespace Snowflake.Configuration.Attributes
         public ConfigurationOptionAttribute(string optionName, string value) : this(optionName, value, typeof(string))
         {
         }
-        internal ConfigurationOptionAttribute(string optionName, object @default, Type valueType)
+        private ConfigurationOptionAttribute(string optionName, object @default, Type valueType)
         {
             
             this.OptionName = optionName;

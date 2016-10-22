@@ -374,6 +374,7 @@ namespace Snowflake.Input.Controller
         /// <summary>
         /// Indexer accessor for the elements in this collection.
         /// If not present, should return null.
+        /// If attemped to access for a keyboard key, should return the keyboard info element.
         /// </summary>
         /// <param name="controllerElement">The controller element to lookup</param>
         /// <returns>The element info for this layout</returns>

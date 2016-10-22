@@ -11,6 +11,7 @@ using Snowflake.Input.Device;
 
 namespace Snowflake.Configuration.Input
 {
+    [Obsolete]
     public abstract class InputTemplate : IInputTemplate
     {
         public int PlayerIndex { get; set; }
@@ -19,7 +20,7 @@ namespace Snowflake.Configuration.Input
         public IEnumerable<IConfigurationOption> ConfigurationOptions => this.configurationOptions;
         private readonly IList<IInputOption> inputOptions;
         private readonly IList<IConfigurationOption> configurationOptions;
-
+            
         protected InputTemplate(string sectionName)
         {
             this.SectionName = sectionName;
@@ -58,10 +59,10 @@ namespace Snowflake.Configuration.Input
                 var inputOption = this.InputOptions
                     .Where(option => option.TargetElement == element.LayoutElement)
                     .FirstOrDefault(
-                        option => (option.InputOptionType == InputOptionType.Any)
-                                  || (option.InputOptionType == InputOptionType.KeyboardKey && deviceIsKeyboard)
-                                  || (option.InputOptionType == InputOptionType.ControllerElementAxes && elementIsAxis)
-                                  || (option.InputOptionType == InputOptionType.ControllerElement && !deviceIsKeyboard));
+                        option => (option.InputOptionType == (InputOptionType.Controller | InputOptionType.Keyboard))
+                                  || (option.InputOptionType == InputOptionType.Keyboard && deviceIsKeyboard)
+                                  || (option.InputOptionType == InputOptionType.ControllerAxes && elementIsAxis)
+                                  || (option.InputOptionType == InputOptionType.Controller && !deviceIsKeyboard));
                 if (inputOption != null) inputOption.Value = element;
                 //good lord.
             }

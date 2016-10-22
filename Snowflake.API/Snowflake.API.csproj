@@ -105,6 +105,7 @@
     <Compile Include="Configuration\IConfigurationTypeMapper.cs" />
     <Compile Include="Configuration\Attributes\SelectionOptionAttribute.cs" />
     <Compile Include="DynamicConfiguration\Attributes\ConfigurationFileAttribute.cs" />
+    <Compile Include="DynamicConfiguration\Attributes\InputTemplateAttribute.cs" />
     <Compile Include="DynamicConfiguration\Attributes\ConfigurationSectionAttribute.cs" />
     <Compile Include="DynamicConfiguration\IConfigurationCollection.cs" />
     <Compile Include="DynamicConfiguration\IConfigurationOption.cs" />
@@ -123,9 +124,9 @@
     <Compile Include="Input\Controller\IControllerElementInfo.cs" />
     <Compile Include="Input\Controller\IControllerLayout.cs" />
     <Compile Include="Extensibility\IPluginProperties.cs" />
+    <Compile Include="Input\Controller\KeyboardKey.cs" />
     <Compile Include="Input\Controller\Mapped\IMappedControllerElement.cs" />
     <Compile Include="Input\Controller\Mapped\IMappedControllerElementCollection.cs" />
-    <Compile Include="Input\Controller\KeyboardKey.cs" />
     <Compile Include="Input\Controller\Mapped\IMappedControllerElementCollectionStore.cs" />
     <Compile Include="Input\Device\DeviceType.cs" />
     <Compile Include="Input\Device\IInputDevice.cs" />

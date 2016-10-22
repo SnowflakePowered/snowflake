@@ -38,15 +38,7 @@ namespace Snowflake.Input.Controller.Mapped
                     if (element.Key == "DeviceId" || element.Key == "ControllerId" || element.Key == "ProfileName" || element.Value == null) continue;
                     string deviceElem = (string)element.Value;
                     var controllerElement = new MappedControllerElement((ControllerElement)Enum.Parse(typeof(ControllerElement), element.Key));
-                    if (deviceElem.StartsWith("Key"))
-                    {
-                        controllerElement.DeviceElement = ControllerElement.Keyboard;
-                        controllerElement.DeviceKeyboardKey = (KeyboardKey)Enum.Parse(typeof(KeyboardKey), deviceElem);
-                    }
-                    else
-                    {
-                        controllerElement.DeviceElement = (ControllerElement)Enum.Parse(typeof(ControllerElement), deviceElem);
-                    }
+                    controllerElement.DeviceElement = (ControllerElement)Enum.Parse(typeof(ControllerElement), deviceElem);
                     collection.Add(controllerElement);
                 }
                 return collection;
@@ -83,8 +75,7 @@ namespace Snowflake.Input.Controller.Mapped
             foreach(var element in mappedCollection)
             {
                 string layoutElementName = Enum.GetName(typeof(ControllerElement), element.LayoutElement);
-                string deviceElement = (element.DeviceElement == ControllerElement.Keyboard) ? 
-                    Enum.GetName(typeof(KeyboardKey), element.DeviceKeyboardKey) : Enum.GetName(typeof(ControllerElement), element.DeviceElement);
+                string deviceElement = Enum.GetName(typeof(ControllerElement), element.DeviceElement);
                 parameters.Append(", @");
                 parameters.Append(layoutElementName);
                 ((IDictionary <string, object>)queryObject)[layoutElementName] = deviceElement;

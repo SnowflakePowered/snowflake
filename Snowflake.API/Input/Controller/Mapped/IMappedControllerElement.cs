@@ -15,9 +15,5 @@
         /// </summary>
         ControllerElement DeviceElement { get; set; }
 
-        /// <summary>
-        /// The real device key if deviceelement is keyboard
-        /// </summary>
-        KeyboardKey DeviceKeyboardKey { get; set; }
     }
 }
