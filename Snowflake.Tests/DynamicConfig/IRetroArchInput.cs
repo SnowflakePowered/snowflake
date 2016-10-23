@@ -7,13 +7,14 @@ using Snowflake.Configuration.Attributes;
 using Snowflake.Configuration.Input;
 using Snowflake.DynamicConfiguration;
 using Snowflake.DynamicConfiguration.Attributes;
+using Snowflake.DynamicConfiguration.Input;
 using Snowflake.Input.Controller;
 using Snowflake.Input.Controller.Mapped;
 
 namespace Snowflake.Tests.DynamicConfig
 {
     [InputTemplate("input")]
-    public interface IRetroArchInput : IConfigurationSection<IRetroArchInput>
+    public interface IRetroArchInput : IInputTemplate<IRetroArchInput>
     {
         [ConfigurationOption("input_device_p{N}", 0)]
         int InputDevice { get; set; }

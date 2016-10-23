@@ -11,7 +11,7 @@ using Snowflake.Input.Controller.Mapped;
 
 namespace Snowflake.DynamicConfiguration.Input
 {
-    public class InputOption 
+    public class InputOption : IInputOption
     {
 
         public InputOptionType InputOptionType { get; }

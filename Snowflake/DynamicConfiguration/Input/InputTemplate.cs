@@ -7,25 +7,27 @@ using System.Text;
 using System.Threading.Tasks;
 using Castle.Core.Internal;
 using Castle.DynamicProxy;
+using Snowflake.Configuration.Attributes;
 using Snowflake.Configuration.Input;
 using Snowflake.DynamicConfiguration.Attributes;
+using Snowflake.DynamicConfiguration.Interceptors;
 using Snowflake.Input.Controller;
 using Snowflake.Input.Controller.Mapped;
 using Snowflake.Input.Device;
 
 namespace Snowflake.DynamicConfiguration.Input
 {
-    public class InputTemplate<T> : IConfigurationSection<T> where T : class, IConfigurationSection<T>
+    public class InputTemplate<T> : IInputTemplate<T> where T : class, IInputTemplate<T>
     {
         private IConfigurationSection<T> Configuration { get; }
         public int PlayerIndex { get; }
         public T Template { get; }
 
         public IDictionary<string, ControllerElement> Values
-            => ImmutableDictionary.CreateRange(this.inputTemplateInterceptor.Values);
+            => ImmutableDictionary.CreateRange(this.inputTemplateInterceptor.InputValues);
         private IDictionary<string, InputOption> Options { get; }
         private readonly InputTemplateInterceptor<T> inputTemplateInterceptor;
-
+        private readonly IList<IConfigurationOption> configurationOptions;
         public ControllerElement this[ControllerElement virtualElement]
         {
             set
@@ -36,13 +38,13 @@ namespace Snowflake.DynamicConfiguration.Input
                                     where option.Value.InputOptionType.HasFlag(InputOptionType.ControllerAxes) == value.IsAxis()
                                     select option.Key).FirstOrDefault();
                 if (optionKey == null) throw new KeyNotFoundException("This template does not support the target element or element type.");
-                this.inputTemplateInterceptor.Values[optionKey] = value;
+                this.inputTemplateInterceptor.InputValues[optionKey] = value;
             }
         }
-        public InputTemplate(IMappedControllerElementCollection mappedElements)
+        public InputTemplate(IMappedControllerElementCollection mappedElements, int playerIndex = 0)
         {
+            this.PlayerIndex = playerIndex;
             ProxyGenerator generator = new ProxyGenerator();
-            var attr = typeof(T).GetCustomAttribute<InputTemplateAttribute>();
            
             this.Options = (from prop in typeof(T).GetProperties()
                 where prop.HasAttribute<InputOptionAttribute>()
@@ -61,13 +63,28 @@ namespace Snowflake.DynamicConfiguration.Input
             var map = from key in this.Options.Keys
                 let value = overrides.ContainsKey(key) ? overrides[key] : ControllerElement.NoElement
                 select new KeyValuePair<string, ControllerElement>(key, value);
-            this.inputTemplateInterceptor = new InputTemplateInterceptor<T>(map.ToDictionary(m => m.Key, m => m.Value));
-            this.Configuration = new ConfigurationSection<T>(this.inputTemplateInterceptor, attr.Destination, attr.SectionName, attr.DisplayName);
-            this.Template = generator.CreateInterfaceProxyWithoutTarget<T>(new ConfigurationCircularInterceptor<T>(this), this.inputTemplateInterceptor);
+            this.configurationOptions = (from prop in typeof(T).GetProperties()
+                          where prop.HasAttribute<ConfigurationOptionAttribute>()
+                          let configAttribute = prop.GetCustomAttribute<ConfigurationOptionAttribute>()
+                          let name = prop.Name
+                          let metadata = prop.GetCustomAttributes<CustomMetadataAttribute>()
+                          select new ConfigurationOption(configAttribute, metadata, name) as IConfigurationOption).ToList();
+
+            var configOptionValues = new Dictionary<string, IConfigurationValue>();
+            foreach (var custom in this.configurationOptions)
+            {
+                configOptionValues[custom.KeyName] = new ConfigurationValue(custom, custom.Default);
+            }
+            var attr = typeof(T).GetCustomAttribute<InputTemplateAttribute>();
+
+            this.inputTemplateInterceptor = new InputTemplateInterceptor<T>(map.ToDictionary(m => m.Key, m => m.Value), configOptionValues);
+            var circular = new InputTemplateCircularInterceptor<T>(this);
+            this.Configuration = new InputConfigurationSection<T>(circular, this.inputTemplateInterceptor, attr.Destination, attr.SectionName, attr.DisplayName);
+            this.Template = generator.CreateInterfaceProxyWithoutTarget<T>(circular, this.inputTemplateInterceptor);
 
         }
 
-        IList<IConfigurationOption> IConfigurationSection.Options => this.Configuration.Options;
+        IList<IConfigurationOption> IConfigurationSection.Options => this.configurationOptions;
 
         string IConfigurationSection.Destination => this.Configuration.Destination;
 
@@ -88,28 +105,4 @@ namespace Snowflake.DynamicConfiguration.Input
         T IConfigurationSection<T>.Configuration => this.Configuration.Configuration;
     }
 
-    internal class InputTemplateInterceptor<T> : IInterceptor
-    {
-        internal InputTemplateInterceptor(IDictionary<string, ControllerElement> values)
-        {
-            this.Values = values;
-        }
-
-        internal IDictionary<string, ControllerElement> Values;
-        public void Intercept(IInvocation invocation)
-        {
-            var propertyName = invocation.Method.Name.Substring(4); // remove get_ or set_
-            if (!this.Values.ContainsKey(propertyName))
-            {
-                invocation.Proceed();
-            }
-            else
-            {
-                if (invocation.Method.Name.StartsWith("get_"))
-                {
-                    invocation.ReturnValue = Values[propertyName]; //type is IConfigurationSection<T>
-                }
-            }
-        }
-    }
 }

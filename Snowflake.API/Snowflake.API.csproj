@@ -111,6 +111,8 @@
     <Compile Include="DynamicConfiguration\IConfigurationOption.cs" />
     <Compile Include="DynamicConfiguration\IConfigurationSection.cs" />
     <Compile Include="DynamicConfiguration\IConfigurationValue.cs" />
+    <Compile Include="DynamicConfiguration\Input\IInputOption.cs" />
+    <Compile Include="DynamicConfiguration\Input\IInputTemplate.cs" />
     <Compile Include="Emulator\IBiosManager.cs" />
     <Compile Include="Emulator\IEmulatedPort.cs" />
     <Compile Include="Emulator\IEmulatorAdapter.cs" />
