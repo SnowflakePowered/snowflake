@@ -74,7 +74,6 @@
     <Compile Include="Configuration\Internal\RecordConfiguration.cs" />
     <Compile Include="Executable\RetroArchProcessHandler.cs" />
     <Compile Include="Executable\RetroArchProcessInfo.cs" />
-    <Compile Include="Input\RetroarchHotkeyTemplate.cs" />
     <Compile Include="RetroArchCommonContainer.cs" />
     <Compile Include="RetroArchInstance.cs" />
     <Compile Include="Input\RetroPadTemplate.cs" />

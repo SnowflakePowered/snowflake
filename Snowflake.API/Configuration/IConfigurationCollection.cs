@@ -1,26 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Snowflake.Configuration
 {
-    /// <summary>
-    /// A configuration collection represents a single file of configuration.
-    /// One file can have one single serializer for every section, and one 
-    /// filename for the configuration collection.
-    /// </summary>
-    public interface IConfigurationCollection : IEnumerable<IConfigurationSection>
+    public interface IConfigurationCollection<out T> : IConfigurationCollection where T : class, IConfigurationCollection<T>
     {
-        /// <summary>
-        /// The configuration serializer for this collection
-        /// </summary>
-        IConfigurationSerializer Serializer { get; }
+        T Configuration { get; }
+    }
 
-        /// <summary>
-        /// The filename for this collection.
-        /// </summary>
-        string FileName { get; }
+    public interface IConfigurationCollection : IEnumerable<IConfigurationSection> 
+    {
+        IDictionary<string, IConfigurationSection> Sections { get; }
+        IDictionary<string, string> Outputs { get; }
+        IConfigurationSection this[string sectionName] { get; }
+
     }
 }

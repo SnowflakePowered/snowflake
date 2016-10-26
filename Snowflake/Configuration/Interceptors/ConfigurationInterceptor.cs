@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Castle.DynamicProxy;
+using Snowflake.Configuration;
 
 namespace Snowflake.DynamicConfiguration.Interceptors
 {

@@ -11,6 +11,7 @@ using Snowflake.Configuration.Input;
 
 namespace Snowflake.Configuration
 {
+   
     public class ConfigurationOption : IConfigurationOption
     {
 
@@ -25,31 +26,14 @@ namespace Snowflake.Configuration
         public bool IsPath { get; }
         public string OptionName { get; }
         public string KeyName { get; }
+        public object Default { get; }
         public Type Type { get; }
-
-        [JsonIgnore]
-        public object Value
-        {
-            get { return this.accessor[this.instance, this.KeyName]; }
-            set { setter(value); }
-        }
-
         public IDictionary<string, object> CustomMetadata { get; }
 
-        private readonly object instance;
-        private readonly TypeAccessor accessor;
-        private readonly Action<object> setter;
-        internal ConfigurationOption(PropertyInfo propertyInfo, object instance) 
+        internal ConfigurationOption(ConfigurationOptionAttribute configOption, IEnumerable<CustomMetadataAttribute> customMetadata, string keyName)
         {
-             this.instance = instance;
-            this.setter = value =>
-            {
-                if (value != null) this.accessor[this.instance, this.KeyName] = value;
-                else propertyInfo.SetValue(this.instance, null); // setting a value to null will incur nre unless with reflection
-            };
-            this.Type = propertyInfo.PropertyType;
-            this.accessor = TypeAccessor.Create(instance.GetType());
-            var configOption = propertyInfo.GetCustomAttribute<ConfigurationOptionAttribute>();
+            this.Default = configOption.Default;
+            this.Type = configOption.Default.GetType();
             this.DisplayName = configOption.DisplayName;
             this.Description = configOption.Description;
             this.IsPath = configOption.IsPath;
@@ -58,11 +42,10 @@ namespace Snowflake.Configuration
             this.Flag = configOption.Flag;
             this.Max = configOption.Max;
             this.Min = configOption.Min;
-            this.CustomMetadata =
-                propertyInfo.GetCustomAttributes<CustomMetadataAttribute>().ToDictionary(m => m.Key, m => m.Value);
+            this.CustomMetadata = customMetadata.ToDictionary(m => m.Key, m => m.Value);
             this.Increment = configOption.Increment;
             this.OptionName = configOption.OptionName;
-            this.KeyName = propertyInfo.Name;
+            this.KeyName = keyName;
         }
     }
 }

@@ -7,11 +7,11 @@ using Snowflake.Configuration.Attributes;
 
 namespace Snowflake.Configuration.Tests
 {
-    public sealed class ExampleConfigurationCollection: ConfigurationCollection
+    [ConfigurationFile("#example", "example")]
+    public interface ExampleConfigurationCollection: IConfigurationCollection<ExampleConfigurationCollection>
     {
-        public ExampleConfigurationSection ExampleConfiguration { get; set; }
-        public ExampleConfigurationCollection() : base(new IniConfigurationSerializer(new BooleanMapping("true", "false"), "null"), "test")
-        {
-        }
+        [ConfigurationSection("example", "Example", "#example")]
+       ExampleConfigurationSection ExampleConfiguration { get; set; }
+      
     }
 }

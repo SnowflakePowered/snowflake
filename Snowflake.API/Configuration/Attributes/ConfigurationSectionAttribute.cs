@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Snowflake.DynamicConfiguration.Attributes
+namespace Snowflake.Configuration.Attributes
 {
     [AttributeUsage(AttributeTargets.Property)]
     public class ConfigurationSectionAttribute : Attribute

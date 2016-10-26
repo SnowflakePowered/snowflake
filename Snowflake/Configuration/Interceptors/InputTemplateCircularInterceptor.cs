@@ -1,5 +1,6 @@
 ﻿using Castle.DynamicProxy;
-using Snowflake.DynamicConfiguration.Input;
+using Snowflake.Configuration;
+using Snowflake.Configuration.Input;
 using Snowflake.Input.Controller;
 
 namespace Snowflake.DynamicConfiguration.Interceptors

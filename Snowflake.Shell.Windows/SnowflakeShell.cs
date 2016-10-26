@@ -6,7 +6,6 @@ using System.Text;
 using System.Linq;
 using System.Reflection;
 using Snowflake.Configuration;
-using Snowflake.Configuration.Hotkey;
 using Snowflake.Emulator;
 using Snowflake.Events;
 using Snowflake.Events.ServiceEvents;

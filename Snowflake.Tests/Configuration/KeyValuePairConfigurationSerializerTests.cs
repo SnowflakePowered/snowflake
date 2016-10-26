@@ -11,7 +11,7 @@ namespace Snowflake.Configuration.Tests
 {
     public class KeyValuePairConfigurationSerializerTests
     {
-       [Fact]
+        /*[Fact]
         public void KeyValuePairConfigurationSerializer_SerializeTest()
         {
             var serializer = new KeyValuePairConfigurationSerializer(new BooleanMapping("true", "false"), "null", "=");
@@ -19,6 +19,6 @@ namespace Snowflake.Configuration.Tests
             Assert.Equal(TestUtilities.GetStringResource("Configurations.ExampleConfigurationSection.cfg")
                 .Replace(Environment.NewLine, ""),
                 serializedValue.Replace(Environment.NewLine, ""));
-        }
+        }*/
     }
 }

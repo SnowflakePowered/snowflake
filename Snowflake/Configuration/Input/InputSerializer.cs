@@ -20,26 +20,27 @@ namespace Snowflake.Configuration.Input
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.Append(this.ConfigurationSerializer.SerializeHeader(inputTemplate.SectionName.Replace("{N}", inputTemplate.PlayerIndex.ToString())));
 
-            foreach (var config in inputTemplate.ConfigurationOptions)
+            IConfigurationSection inputOptions = inputTemplate;
+            foreach (var config in inputOptions.Options)
             {
-                stringBuilder.AppendLine(this.ConfigurationSerializer.SerializeLine(config.OptionName.Replace("{N}", inputTemplate.PlayerIndex.ToString()), config.Value));
+                stringBuilder.AppendLine(this.ConfigurationSerializer.SerializeLine(config.OptionName.Replace("{N}", inputTemplate.PlayerIndex.ToString()), inputOptions.Values[config.KeyName]));
             }
 
-            foreach (var input in inputTemplate.InputOptions)
+            foreach (var input in inputTemplate.Options)
             {
-                stringBuilder.AppendLine(this.SerializeInput(input.OptionName.Replace("{N}", inputTemplate.PlayerIndex.ToString()), input.Value, inputMapping));
+                stringBuilder.AppendLine(this.SerializeInput(input.OptionName.Replace("{N}", inputTemplate.PlayerIndex.ToString()), inputTemplate.Values[input.KeyName], inputMapping));
             }
             stringBuilder.Append(this.ConfigurationSerializer.SerializeFooter(inputTemplate.SectionName.Replace("{N}", inputTemplate.PlayerIndex.ToString())));
 
             return stringBuilder.ToString();
         }
 
-        public virtual string SerializeInput(string key, IMappedControllerElement element, IInputMapping inputMapping)
+        public virtual string SerializeInput(string key, ControllerElement element, IInputMapping inputMapping)
         {
 
             return
-                element == null ? this.ConfigurationSerializer.SerializeLine(key, this.ConfigurationSerializer.TypeMapper.ConvertValue((object)null))
-                : this.ConfigurationSerializer.SerializeLine(key, element.DeviceElement);
+                element == ControllerElement.NoElement ? this.ConfigurationSerializer.SerializeLine(key, this.ConfigurationSerializer.TypeMapper.ConvertValue((object)null))
+                : this.ConfigurationSerializer.SerializeLine(key, element);
         }
     }
 }

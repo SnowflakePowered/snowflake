@@ -1,73 +1,110 @@
 ﻿using System;
-using System.CodeDom;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
+using System.Linq.Expressions;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using FastMember;
+using Castle.Core.Internal;
+using Castle.DynamicProxy;
+using Snowflake.Configuration;
+using Snowflake.Configuration.Attributes;
 using Snowflake.Utility;
 
 namespace Snowflake.Configuration
 {
-    /// <summary>
-    /// Provides an abstract implementation for configuration collection.
-    /// Implementations must have a zero-parameter constructor.
-    /// </summary>
-    public abstract class ConfigurationCollection : IConfigurationCollection
+    public class ConfigurationCollection<T> : IConfigurationCollection<T> where T: class, IConfigurationCollection<T>
     {
-        /// <summary>
-        /// Initializes a configuration collection with default values for all sections.
-        /// </summary>
-        /// <typeparam name="T">The configuration collection to initialize</typeparam>
-        /// <returns>The configuration section with default values.</returns>
-        public static T MakeDefault<T>() where T : IConfigurationCollection, new()
+        public T Configuration { get; }
+
+        public IDictionary<string, IConfigurationSection> Sections
+            => this.collectionInterceptor.Values.ToDictionary(p => p.Key, p => p.Value as IConfigurationSection);
+        private readonly CollectionInterceptor<T> collectionInterceptor;
+        public ConfigurationCollection()
         {
-            var configurationSection = new T();
-            var accessor = TypeAccessor.Create(typeof(T));
-            foreach (var setter in 
-                (from sectionInfo in accessor.GetMembers()
-                    let sectionType = sectionInfo.Type
-                    where typeof (IConfigurationSection).IsAssignableFrom(sectionType)
-                    where sectionType.GetConstructor(Type.EmptyTypes) != null
-                    let type = Instantiate.CreateInstance(sectionInfo.Type)
-                    select new Action(() => accessor[configurationSection, sectionInfo.Name] = type)))
-                setter();
-            return configurationSection;
+            ProxyGenerator generator = new ProxyGenerator();
+            this.Outputs = typeof(T).GetCustomAttributes<ConfigurationFileAttribute>()
+                .ToDictionary(f => f.Key, f => f.FileName);
+            this.collectionInterceptor = new CollectionInterceptor<T>();
+            this.Configuration = generator.CreateInterfaceProxyWithoutTarget<T>(new CollectionCircularInterceptor<T>(this), this.collectionInterceptor);
         }
 
-        public override string ToString()
-        {
-            var sectionBuilder = new StringBuilder();
+        public IEnumerator<IConfigurationSection> GetEnumerator() => this.collectionInterceptor.Values.Values.Select(c => c as IConfigurationSection).GetEnumerator();
 
-            foreach (var section in this)
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        public IDictionary<string, string> Outputs { get; }
+
+        public IConfigurationSection this[string sectionName] => this.collectionInterceptor.Values[sectionName];
+    }
+
+    class CollectionCircularInterceptor<T> : IInterceptor where T : class, IConfigurationCollection<T>
+    {
+        private readonly IConfigurationCollection<T> @this;
+        public CollectionCircularInterceptor(IConfigurationCollection<T> @this)
+        {
+            this.@this = @this;
+        }
+        public void Intercept(IInvocation invocation)
+        {
+            if (invocation.Method.Name == nameof(@this.GetEnumerator))
             {
-                sectionBuilder.Append(this.Serializer.Serialize(section));
+                invocation.ReturnValue = @this.GetEnumerator(); //inherit enumerator.
             }
-            return sectionBuilder.ToString();
+            else
+            {
+                switch (invocation.Method.Name.Substring(4))
+                {
+                    case nameof(@this.Configuration):
+                        invocation.ReturnValue = @this.Configuration;
+                        break;
+                    case nameof(@this.Outputs):
+                        invocation.ReturnValue = @this.Outputs;
+                        break;
+                    case nameof(@this.Sections):
+                        invocation.ReturnValue = @this.Sections;
+                        break;
+                    case "Item": //circular indexer
+                        invocation.ReturnValue = @this[(string) invocation.Arguments[0]];
+                        break;
+                    default:
+                        invocation.Proceed();
+                        break;
+                }
+            }
+        }
+    }
+
+    class CollectionInterceptor<T> : IInterceptor
+    {
+        internal readonly IDictionary<string, dynamic> Values;
+        internal CollectionInterceptor()
+        {
+            this.Values = new Dictionary<string, dynamic>();
+            foreach (var section in from props in typeof(T).GetProperties()
+                                    let sectionAttr = props.GetAttributes<ConfigurationSectionAttribute>().First()
+                                    where sectionAttr !=null
+                                    select new {sectionAttr, type = props.PropertyType, name = props.Name})
+            {
+                var sectionType = typeof(ConfigurationSection<>).MakeGenericType(section.type);
+                this.Values.Add(section.name, Instantiate.CreateInstance(sectionType, new Type[] {typeof(string), typeof(string) , typeof(string) , typeof(string) },
+                    Expression.Constant(section.sectionAttr.Destination), 
+                    Expression.Constant(section.sectionAttr.SectionName),
+                    Expression.Constant(section.sectionAttr.DisplayName),
+                    Expression.Constant(section.sectionAttr.Description)));
+            }
         }
 
-        public IEnumerator<IConfigurationSection> GetEnumerator()
-        {
-            var accessor = TypeAccessor.Create(this.GetType());
-            return (from properties in accessor.GetMembers()
-                where typeof(IConfigurationSection).IsAssignableFrom(properties.Type)
-                select accessor[this, properties.Name] as IConfigurationSection).GetEnumerator();
-        }
 
-        IEnumerator IEnumerable.GetEnumerator()
+        public void Intercept(IInvocation invocation)
         {
-            return this.GetEnumerator();
-        }
-
-        public IConfigurationSerializer Serializer { get; }
-        public string FileName { get; }
-
-        protected ConfigurationCollection(IConfigurationSerializer serializer, string fileName)
-        {
-            this.Serializer = serializer;
-            this.FileName = fileName;
+            var propertyName = invocation.Method.Name.Substring(4); // remove get_ or set_
+            if (!this.Values.ContainsKey(propertyName)) return;
+            if (invocation.Method.Name.StartsWith("get_"))
+            {
+                invocation.ReturnValue = Values[propertyName].Configuration; //type is IConfigurationSection<T>
+            }
         }
     }
 }

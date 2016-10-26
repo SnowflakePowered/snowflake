@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Snowflake.DynamicConfiguration
+namespace Snowflake.Configuration
 {
     public interface IConfigurationValue
     {

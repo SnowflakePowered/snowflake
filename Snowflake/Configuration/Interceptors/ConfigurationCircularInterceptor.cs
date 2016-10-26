@@ -1,4 +1,5 @@
 ﻿using Castle.DynamicProxy;
+using Snowflake.Configuration;
 
 namespace Snowflake.DynamicConfiguration.Interceptors
 {

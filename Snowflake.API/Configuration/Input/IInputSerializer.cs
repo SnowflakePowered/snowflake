@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Snowflake.Input.Controller;
 using Snowflake.Input.Controller.Mapped;
 
 namespace Snowflake.Configuration.Input
@@ -27,6 +28,6 @@ namespace Snowflake.Configuration.Input
         /// <param name="element">The controller element to serialize</param>
         /// <param name="inputMapping">The input mapping to serialize with</param>
         /// <returns></returns>
-        string SerializeInput(string key, IMappedControllerElement element, IInputMapping inputMapping);
+        string SerializeInput(string key, ControllerElement element, IInputMapping inputMapping);
     }
 }

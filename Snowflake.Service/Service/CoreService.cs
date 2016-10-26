@@ -9,7 +9,6 @@ using Snowflake.Service.JSWebSocketServer;
 using Snowflake.Service.Manager;
 using NLog;
 using Snowflake.Configuration;
-using Snowflake.Configuration.Hotkey;
 using Snowflake.Input;
 using Snowflake.Input.Controller.Mapped;
 using Snowflake.Records.Game;
@@ -44,8 +43,8 @@ namespace Snowflake.Service
             this.RegisterService<IGameLibrary>(new SqliteGameLibrary(new SqliteDatabase(Path.Combine(this.AppDataDirectory, "games.db"))));
             this.RegisterService<IMappedControllerElementCollectionStore>
                 (new SqliteMappedControllerElementCollectionStore(new SqliteDatabase(Path.Combine(this.AppDataDirectory, "controllermappings.db"))));
-            this.RegisterService<IConfigurationCollectionStore>(new SqliteConfigurationCollectionStore(new SqliteDatabase(Path.Combine(this.AppDataDirectory, "configurations.db"))));
-            this.RegisterService<IHotkeyTemplateStore>(new SqliteHotkeyTemplateStore(new SqliteDatabase(Path.Combine(this.AppDataDirectory, "hotkeys.db"))));
+            //this.RegisterService<IConfigurationCollectionStore>(new SqliteConfigurationCollectionStore(new SqliteDatabase(Path.Combine(this.AppDataDirectory, "configurations.db"))));
+            //this.RegisterService<IHotkeyTemplateStore>(new SqliteHotkeyTemplateStore(new SqliteDatabase(Path.Combine(this.AppDataDirectory, "hotkeys.db"))));
             //this.RegisterService<IEmulatorAssembliesManager>(new EmulatorAssembliesManager(Path.Combine(this.AppDataDirectory, "emulators")));
             this.RegisterService<IPluginManager>(new PluginManager(this.AppDataDirectory, this)); 
             this.RegisterService<IAjaxManager>(new AjaxManager(this)); //todo deprecate with michi-based ipc

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
-using Snowflake.Configuration.Hotkey;
 using Snowflake.Configuration.Input;
 using Snowflake.Extensibility;
 using Snowflake.Extensibility.Configuration;
@@ -96,18 +95,5 @@ namespace Snowflake.Emulator
         /// </summary>
         /// <returns>A set of configuration collection keyed on the expected file names of the configuration files.</returns>
         IDictionary<string, IConfigurationCollection> GetDefaultConfigurations();
-        /// <summary>
-        /// Gets the hotkey template associated with this emulator. Hotkeys should be global across all devices for
-        /// an emulator, and should be represented only with a single class.
-        /// </summary>
-        /// <seealso cref="IHotkeyTemplateStore"/>
-        /// <returns>The hotkey template for this emulator</returns>
-        IHotkeyTemplate GetHotkeyTemplate();
-        /// <summary>
-        /// Gets the default hotkey template associated with this emulator. Hotkeys should be global across all devices for
-        /// an emulator, and should be represented only with a single class.
-        /// </summary>
-        /// <returns>The default hotkey template for this emulator</returns>
-        IHotkeyTemplate GetDefaultHotkeyTemplate();
     }
 }

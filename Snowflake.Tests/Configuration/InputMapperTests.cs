@@ -169,7 +169,7 @@ namespace Snowflake.Configuration.Tests
                 Assert.NotNull(realmapping.Layout[controllerElem]);
             }
         }
-        [Fact]
+  /*      [Fact]
         public void KvpSerialize_Test()
         {
             var serializer = new KeyValuePairConfigurationSerializer(new BooleanMapping("true", "false"), "nul", "=");
@@ -189,8 +189,8 @@ namespace Snowflake.Configuration.Tests
             Assert.Equal(
                 TestUtilities.GetStringResource("Configurations.ExampleInput.cfg").Replace(Environment.NewLine, ""),
                 serializedValue);
-        }
-        [Fact]
+        }*/
+      /*  [Fact]
         public void InitSerialize_Test()
         {
             var serializer = new IniConfigurationSerializer(new BooleanMapping("true", "false"), "nul");
@@ -210,6 +210,6 @@ namespace Snowflake.Configuration.Tests
             Assert.Equal(
                 TestUtilities.GetStringResource("Configurations.ExampleInput.ini").Replace(Environment.NewLine, ""),
                 serializedValue);
-        }
+        }*/
     }
 }
