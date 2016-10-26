@@ -9,7 +9,7 @@ namespace Snowflake.Configuration
 
     public interface IConfigurationSection
     {
-        IList<IConfigurationOption> Options { get; }
+        IEnumerable<IConfigurationOption> Options { get; }
         string Destination { get; }
         string Description { get; }
         string DisplayName { get; }

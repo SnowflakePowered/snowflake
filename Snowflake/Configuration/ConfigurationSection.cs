@@ -21,7 +21,7 @@ namespace Snowflake.Configuration
         public string Description { get; }
         public string DisplayName { get; }
         public string SectionName { get; }
-        public IList<IConfigurationOption> Options { get; }
+        public IEnumerable<IConfigurationOption> Options { get; }
 
         public IDictionary<string, IConfigurationValue> Values
             => ImmutableDictionary.CreateRange(this.configurationInterceptor.Values);
@@ -56,7 +56,7 @@ namespace Snowflake.Configuration
                 let metadata = prop.GetCustomAttributes<CustomMetadataAttribute>()
                 select new ConfigurationOption(attr, metadata, name) as IConfigurationOption;
 
-            this.Options = options.ToList();
+            this.Options = ImmutableList.CreateRange(options);
             this.configurationInterceptor =
                 new ConfigurationInterceptor(this.Options.ToDictionary(p => p, p => p.Default));
             foreach (var custom in values)

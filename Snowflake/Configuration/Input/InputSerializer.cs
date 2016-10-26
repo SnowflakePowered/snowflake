@@ -23,7 +23,7 @@ namespace Snowflake.Configuration.Input
             IConfigurationSection inputOptions = inputTemplate;
             foreach (var config in inputOptions.Options)
             {
-                stringBuilder.AppendLine(this.ConfigurationSerializer.SerializeLine(config.OptionName.Replace("{N}", inputTemplate.PlayerIndex.ToString()), inputOptions.Values[config.KeyName]));
+                stringBuilder.AppendLine(this.ConfigurationSerializer.SerializeLine(config.OptionName.Replace("{N}", inputTemplate.PlayerIndex.ToString()), inputOptions.Values[config.KeyName].Value));
             }
 
             foreach (var input in inputTemplate.Options)
@@ -40,7 +40,7 @@ namespace Snowflake.Configuration.Input
 
             return
                 element == ControllerElement.NoElement ? this.ConfigurationSerializer.SerializeLine(key, this.ConfigurationSerializer.TypeMapper.ConvertValue((object)null))
-                : this.ConfigurationSerializer.SerializeLine(key, element);
+                : this.ConfigurationSerializer.SerializeLine(key, inputMapping[element]);
         }
     }
 }

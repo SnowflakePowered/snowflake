@@ -169,47 +169,39 @@ namespace Snowflake.Configuration.Tests
                 Assert.NotNull(realmapping.Layout[controllerElem]);
             }
         }
-  /*      [Fact]
+        [Fact]
         public void KvpSerialize_Test()
         {
             var serializer = new KeyValuePairConfigurationSerializer(new BooleanMapping("true", "false"), "nul", "=");
             string _mapping = TestUtilities.GetStringResource("InputMappings.DirectInput.XINPUT_DEVICE.json");
-            var template = new TestInputTemplate();
             IInputMapping mapping = JsonConvert.DeserializeObject<InputMapping>(_mapping);
             var testmappings = new StoneProvider().Controllers.First().Value;
             var realmapping =
                 JsonConvert.DeserializeObject<ControllerLayout>(
                     TestUtilities.GetStringResource("InputMappings.xinput_device.json"));
             var mapcol = MappedControllerElementCollection.GetDefaultMappings(realmapping, testmappings);
-            var device = new Moq.Mock<IInputDevice>();
-            device.SetupGet(x => x.DeviceApi).Returns(InputApi.XInput);
-            device.SetupGet(x => x.DeviceLayout).Returns(realmapping);
-            template.SetInputValues(mapcol, device.Object, 0);
+            var template = new InputTemplate<IRetroArchInput>(mapcol, 0);
             string serializedValue = new InputSerializer(serializer).Serialize(template, mapping).Replace(Environment.NewLine, "");
             Assert.Equal(
                 TestUtilities.GetStringResource("Configurations.ExampleInput.cfg").Replace(Environment.NewLine, ""),
                 serializedValue);
-        }*/
-      /*  [Fact]
-        public void InitSerialize_Test()
+        }
+        [Fact]
+        public void IniSerialize_Test()
         {
             var serializer = new IniConfigurationSerializer(new BooleanMapping("true", "false"), "nul");
             string _mapping = TestUtilities.GetStringResource("InputMappings.DirectInput.XINPUT_DEVICE.json");
-            var template = new TestInputTemplate();
             IInputMapping mapping = JsonConvert.DeserializeObject<InputMapping>(_mapping);
             var testmappings = new StoneProvider().Controllers.First().Value;
             var realmapping =
                 JsonConvert.DeserializeObject<ControllerLayout>(
                     TestUtilities.GetStringResource("InputMappings.xinput_device.json"));
             var mapcol = MappedControllerElementCollection.GetDefaultMappings(realmapping, testmappings);
-            var device = new Moq.Mock<IInputDevice>();
-            device.SetupGet(x => x.DeviceApi).Returns(InputApi.XInput);
-            device.SetupGet(x => x.DeviceLayout).Returns(realmapping);
-            template.SetInputValues(mapcol, device.Object, 0);
+            var template = new InputTemplate<IRetroArchInput>(mapcol, 0);
             string serializedValue = new InputSerializer(serializer).Serialize(template, mapping).Replace(Environment.NewLine, "");
             Assert.Equal(
                 TestUtilities.GetStringResource("Configurations.ExampleInput.ini").Replace(Environment.NewLine, ""),
                 serializedValue);
-        }*/
+        }
     }
 }

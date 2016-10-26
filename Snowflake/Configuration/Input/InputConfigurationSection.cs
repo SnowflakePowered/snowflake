@@ -19,7 +19,7 @@ namespace Snowflake.Configuration.Input
         public string Description { get; }
         public string DisplayName { get; }
         public string SectionName { get; }
-        public IList<IConfigurationOption> Options { get; }
+        public IEnumerable<IConfigurationOption> Options { get; }
 
         public IDictionary<string, IConfigurationValue> Values
             => ImmutableDictionary.CreateRange(this.configurationInterceptor.Values);

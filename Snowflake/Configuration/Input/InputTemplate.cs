@@ -24,14 +24,17 @@ namespace Snowflake.Configuration.Input
 
         public IDictionary<string, ControllerElement> Values
             => ImmutableDictionary.CreateRange(this.inputTemplateInterceptor.InputValues);
-        private IDictionary<string, InputOption> Options { get; }
+
+        IEnumerable<IInputOption> IInputTemplate.Options => ImmutableList.CreateRange(this._Options.Select(p => p.Value));
+
+        private IDictionary<string, IInputOption> _Options { get; }
         private readonly InputTemplateInterceptor<T> inputTemplateInterceptor;
         private readonly IList<IConfigurationOption> configurationOptions;
         public ControllerElement this[ControllerElement virtualElement]
         {
             set
             {
-                string optionKey = (from option in this.Options
+                string optionKey = (from option in this._Options
                                     where option.Value.TargetElement == virtualElement
                                     where option.Value.InputOptionType.HasFlag(InputOptionType.Keyboard) == value.IsKeyboardKey()
                                     where option.Value.InputOptionType.HasFlag(InputOptionType.ControllerAxes) == value.IsAxis()
@@ -45,21 +48,21 @@ namespace Snowflake.Configuration.Input
             this.PlayerIndex = playerIndex;
             ProxyGenerator generator = new ProxyGenerator();
            
-            this.Options = (from prop in typeof(T).GetProperties()
+            this._Options = (from prop in typeof(T).GetProperties()
                 where prop.HasAttribute<InputOptionAttribute>()
                 let name = prop.Name
                 let inputOptionAttribute = prop.GetCustomAttribute<InputOptionAttribute>()
-                select new KeyValuePair<string, InputOption>(name, new InputOption(inputOptionAttribute))).ToDictionary(o => o.Key,
+                select new KeyValuePair<string, IInputOption>(name, new InputOption(inputOptionAttribute, name))).ToDictionary(o => o.Key,
                     o => o.Value);
             var overrides = (from element in mappedElements
-                from key in this.Options.Keys
-                let option = this.Options[key]
+                from key in this._Options.Keys
+                let option = this._Options[key]
                 let target = option.TargetElement
                 where element.LayoutElement == target
                 where option.InputOptionType.HasFlag(InputOptionType.Keyboard) == element.DeviceElement.IsKeyboardKey()
                 where option.InputOptionType.HasFlag(InputOptionType.ControllerAxes) == element.DeviceElement.IsAxis()
                 select new {key, element.DeviceElement}).ToDictionary(d => d.key, d => d.DeviceElement);
-            var map = from key in this.Options.Keys
+            var map = from key in this._Options.Keys
                 let value = overrides.ContainsKey(key) ? overrides[key] : ControllerElement.NoElement
                 select new KeyValuePair<string, ControllerElement>(key, value);
             this.configurationOptions = (from prop in typeof(T).GetProperties()
@@ -83,7 +86,7 @@ namespace Snowflake.Configuration.Input
 
         }
 
-        IList<IConfigurationOption> IConfigurationSection.Options => this.configurationOptions;
+        IEnumerable<IConfigurationOption> IConfigurationSection.Options => this.configurationOptions;
 
         string IConfigurationSection.Destination => this.Configuration.Destination;
 

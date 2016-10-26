@@ -97,6 +97,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Configuration\InputMapperTests.cs" />
+    <Compile Include="Configuration\IRetroArchInput.cs" />
     <Compile Include="Configuration\KeyValuePairConfigurationSerializerTests.cs" />
     <Compile Include="DynamicConfig\DynamicProxyInput.cs" />
     <Compile Include="DynamicConfig\DynamicProxyTests.cs" />

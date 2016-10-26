@@ -7,5 +7,6 @@ namespace Snowflake.Configuration.Input
         InputOptionType InputOptionType { get; }
         ControllerElement TargetElement { get; }
         string OptionName { get; }
+        string KeyName { get; }
     }
 }

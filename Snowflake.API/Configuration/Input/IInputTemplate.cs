@@ -12,6 +12,7 @@ namespace Snowflake.Configuration.Input
     {
         int PlayerIndex { get; }
         new IDictionary<string, ControllerElement> Values { get; }
+        new IEnumerable<IInputOption> Options { get; }
         ControllerElement this[ControllerElement virtualElement] { set; }
     }
 }
