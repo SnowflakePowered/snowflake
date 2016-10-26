@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using Snowflake.Configuration;
-using Snowflake.Plugin.EmulatorAdapter.RetroArch;
 using Snowflake.Records.Game;
 using Snowflake.Tests.Scraper;
 
