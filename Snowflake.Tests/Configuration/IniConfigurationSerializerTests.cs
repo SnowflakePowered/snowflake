@@ -9,15 +9,15 @@ using Snowflake.Tests;
 using Xunit;
 namespace Snowflake.Configuration.Tests
 {
-    public class KeyValuePairConfigurationSerializerTests
+    public class IniConfigurationSerializerTests
     {
         [Fact]
-        public void KeyValuePairConfigurationSerializer_SerializeTest()
+        public void IniConfigurationSerializer_SerializeTest()
         {
-            var serializer = new KeyValuePairConfigurationSerializer(new BooleanMapping("true", "false"), "null", "=");
+            var serializer = new IniConfigurationSerializer(new BooleanMapping("true", "false"), "null");
             var config = new ConfigurationCollection<ExampleConfigurationCollection>();
             string serializedValue = serializer.Serialize(config.Configuration.ExampleConfiguration);
-            Assert.Equal(TestUtilities.GetStringResource("Configurations.ExampleConfigurationSection.cfg")
+            Assert.Equal(TestUtilities.GetStringResource("Configurations.ExampleConfigurationSection.ini")
                 .Replace(Environment.NewLine, ""),
                 serializedValue.Replace(Environment.NewLine, ""));
         }

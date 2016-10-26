@@ -7,11 +7,11 @@ using Snowflake.Configuration.Attributes;
 
 namespace Snowflake.Configuration.Tests
 {
-    [ConfigurationFile("#example", "example")]
+    [ConfigurationFile("#dolphin", "Dolphin.ini")]
     public interface ExampleConfigurationCollection: IConfigurationCollection<ExampleConfigurationCollection>
     {
-        [ConfigurationSection("example", "Example", "#example")]
-       ExampleConfigurationSection ExampleConfiguration { get; set; }
+        [ConfigurationSection("Display", "Display Options", "#dolphin")]
+        ExampleConfigurationSection ExampleConfiguration { get; set; }
       
     }
 }

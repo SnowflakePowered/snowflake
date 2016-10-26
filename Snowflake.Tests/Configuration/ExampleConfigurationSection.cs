@@ -23,30 +23,25 @@ namespace Snowflake.Configuration
        ISOPath0 = C:\Dumps\Wii\RMGE01.wbfs
     */
 
-    public sealed class ExampleConfigurationSection : ConfigurationSection
+    public interface ExampleConfigurationSection : IConfigurationSection<ExampleConfigurationSection>
     {
-        [ConfigurationOption("FullscreenResolution")]
-        public FullscreenResolution FullscreenResolution { get; set; } = FullscreenResolution.Auto;
+        [ConfigurationOption("FullscreenResolution", FullscreenResolution.Auto)]
+        FullscreenResolution FullscreenResolution { get; set; }
 
-        [ConfigurationOption("Fullscreen")]
-        public bool Fullscreen { get; set; } = true;
+        [ConfigurationOption("Fullscreen", true)]
+        bool Fullscreen { get; set; } 
 
-        [ConfigurationOption("RenderToMain")]
-        public bool RenderToMain { get; set; } = true;
+        [ConfigurationOption("RenderToMain", true)]
+        bool RenderToMain { get; set; } 
 
-        [ConfigurationOption("RenderWindowWidth")]
-        public int RenderWindowWidth { get; set; } = 640;
+        [ConfigurationOption("RenderWindowWidth", 640)]
+        int RenderWindowWidth { get; set; }
 
-        [ConfigurationOption("RenderWindowHeight")]
-        public int RenderWindowHeight { get; set; } = 480;
+        [ConfigurationOption("RenderWindowHeight", 480)]
+        int RenderWindowHeight { get; set; }
 
-        [ConfigurationOption("ISOPath0", IsPath = true)]
-        public string ISOPath0 { get; set; } = @"C:\Dumps\Wii\RMGE01.wbfs";
-
-        public ExampleConfigurationSection() :base("Display", "Display Options", "Dolphin.ini")
-        {
-         
-        }
+        [ConfigurationOption("ISOPath0", @"C:\Dumps\Wii\RMGE01.wbfs", IsPath = true)]
+        string ISOPath0 { get; set; }
     }
 
     public enum FullscreenResolution
