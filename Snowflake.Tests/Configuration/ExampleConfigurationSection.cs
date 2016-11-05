@@ -23,6 +23,7 @@ namespace Snowflake.Configuration
        ISOPath0 = C:\Dumps\Wii\RMGE01.wbfs
     */
 
+    [ConfigurationSection("Display", "Display")]
     public interface ExampleConfigurationSection : IConfigurationSection<ExampleConfigurationSection>
     {
         [ConfigurationOption("FullscreenResolution", FullscreenResolution.Auto)]

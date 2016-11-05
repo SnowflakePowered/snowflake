@@ -7,12 +7,12 @@ using Snowflake.Configuration;
 using Snowflake.Configuration.Attributes;
 using Snowflake.DynamicConfiguration;
 
-namespace Snowflake.Tests.DynamicConfig
+namespace Snowflake.Configuration.Tests
 {
     [ConfigurationFile("#retroarch", "retroarch.cfg")]
     public interface IRetroArchConfig : IConfigurationCollection<IRetroArchConfig>
     {
-        [ConfigurationSection("video", "Video Options", "#retroarch")]
+        [SerializableSection("#retroarch")]
         IVideoConfiguration VideoConfiguration { get; set; }
     }
 }

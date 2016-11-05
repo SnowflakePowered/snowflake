@@ -22,6 +22,7 @@ namespace Snowflake.Configuration.Input
         public int PlayerIndex { get; }
         public T Template { get; }
 
+
         public IDictionary<string, ControllerElement> Values
             => ImmutableDictionary.CreateRange(this.inputTemplateInterceptor.InputValues);
 
@@ -75,28 +76,19 @@ namespace Snowflake.Configuration.Input
             var configOptionValues = new Dictionary<string, IConfigurationValue>();
             foreach (var custom in this.configurationOptions)
             {
-                configOptionValues[custom.KeyName] = new ConfigurationValue(custom, custom.Default);
+                configOptionValues[custom.KeyName] = new ConfigurationValue(custom.Default);
             }
             var attr = typeof(T).GetCustomAttribute<InputTemplateAttribute>();
 
             this.inputTemplateInterceptor = new InputTemplateInterceptor<T>(map.ToDictionary(m => m.Key, m => m.Value), configOptionValues);
             var circular = new InputTemplateCircularInterceptor<T>(this);
-            this.Configuration = new InputConfigurationSection<T>(circular, this.inputTemplateInterceptor, attr.Destination, attr.SectionName, attr.DisplayName);
+            this.Configuration = new InputConfigurationSection<T>(circular, this.inputTemplateInterceptor);
             this.Template = generator.CreateInterfaceProxyWithoutTarget<T>(circular, this.inputTemplateInterceptor);
 
         }
 
-        IEnumerable<IConfigurationOption> IConfigurationSection.Options => this.configurationOptions;
-
-        string IConfigurationSection.Destination => this.Configuration.Destination;
-
-        string IConfigurationSection.Description => this.Configuration.Description;
-
-        string IConfigurationSection.DisplayName => this.Configuration.DisplayName;
-
-        string IConfigurationSection.SectionName => this.Configuration.SectionName;
-
         IDictionary<string, IConfigurationValue> IConfigurationSection.Values => this.Configuration.Values;
+        IConfigurationSectionDescriptor IConfigurationSection.Descriptor => this.Configuration.Descriptor;
 
         object IConfigurationSection.this[string key]
         {

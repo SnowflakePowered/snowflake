@@ -5,15 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
 using Snowflake.DynamicConfiguration;
+using Snowflake.Configuration.Tests;
 using Xunit;
-namespace Snowflake.Tests.DynamicConfig
+namespace Snowflake.Configuration.Tests
 {
     public class DynamicProxyTests
     {
         [Fact]
         public void Test()
         {
-            var x = new ConfigurationSection<IVideoConfiguration>("", "", "", "");
+            var x = new ConfigurationSection<IVideoConfiguration>();
             x.Configuration.VideoDriver = VideoDriver.SDL2;
             Assert.Equal(x.Configuration.VideoDriver, VideoDriver.SDL2);
             Assert.Equal(x.Configuration, x.Configuration.Configuration);

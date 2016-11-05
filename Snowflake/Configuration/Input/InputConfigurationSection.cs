@@ -15,11 +15,9 @@ namespace Snowflake.Configuration.Input
     public class InputConfigurationSection<T> : IConfigurationSection<T> where T : class, IInputTemplate<T>
     {
         public T Configuration { get; }
-        public string Destination { get; }
-        public string Description { get; }
-        public string DisplayName { get; }
-        public string SectionName { get; }
         public IEnumerable<IConfigurationOption> Options { get; }
+
+        public IConfigurationSectionDescriptor Descriptor { get; }
 
         public IDictionary<string, IConfigurationValue> Values
             => ImmutableDictionary.CreateRange(this.configurationInterceptor.Values);
@@ -32,11 +30,9 @@ namespace Snowflake.Configuration.Input
 
         private readonly ConfigurationInterceptor configurationInterceptor;
 
-        internal InputConfigurationSection(InputTemplateCircularInterceptor<T> interceptor, InputTemplateInterceptor<T> inputTemplate, string destinationFile, string sectionName, string displayName)
+        internal InputConfigurationSection(InputTemplateCircularInterceptor<T> interceptor, InputTemplateInterceptor<T> inputTemplate)
         {
-            this.Destination = destinationFile;
-            this.SectionName = sectionName;
-            this.DisplayName = displayName;
+            this.Descriptor = new ConfigurationSectionDescriptor<T>();
             ProxyGenerator generator = new ProxyGenerator();
             var options = from prop in typeof(T).GetProperties()
                           where prop.HasAttribute<ConfigurationOptionAttribute>()
@@ -46,8 +42,7 @@ namespace Snowflake.Configuration.Input
                           select new ConfigurationOption(attr, metadata, name) as IConfigurationOption;
 
             this.Options = options.ToList();
-            this.configurationInterceptor =
-                new ConfigurationInterceptor(this.Options.ToDictionary(p => p, p => p.Default));
+            this.configurationInterceptor = new ConfigurationInterceptor(this.Descriptor);
             this.Configuration =
                 generator.CreateInterfaceProxyWithoutTarget<T>(interceptor,
                     configurationInterceptor, inputTemplate);

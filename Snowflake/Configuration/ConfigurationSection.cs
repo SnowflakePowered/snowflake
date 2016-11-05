@@ -17,11 +17,7 @@ namespace Snowflake.Configuration
     public class ConfigurationSection<T> : IConfigurationSection<T> where T : class, IConfigurationSection<T>
     {
         public T Configuration { get; }
-        public string Destination { get; }
-        public string Description { get; }
-        public string DisplayName { get; }
-        public string SectionName { get; }
-        public IEnumerable<IConfigurationOption> Options { get; }
+        public IConfigurationSectionDescriptor Descriptor { get; }
 
         public IDictionary<string, IConfigurationValue> Values
             => ImmutableDictionary.CreateRange(this.configurationInterceptor.Values);
@@ -34,35 +30,16 @@ namespace Snowflake.Configuration
 
         private readonly ConfigurationInterceptor configurationInterceptor;
 
-        public ConfigurationSection(string destinationFile, string sectionName, string displayName,
-            string description = "")
-            : this(destinationFile, sectionName, displayName, new Dictionary<string, IConfigurationValue>(), description
-                )
+        public ConfigurationSection(): this(new Dictionary<string, IConfigurationValue>())
         {
         }
 
-        public ConfigurationSection(string destinationFile, string sectionName, string displayName,
-            IDictionary<string, IConfigurationValue> values, string description = "")
+        public ConfigurationSection(IDictionary<string, IConfigurationValue> values)
         {
-            this.Destination = destinationFile;
-            this.SectionName = sectionName;
-            this.DisplayName = displayName;
-            this.Description = description;
             ProxyGenerator generator = new ProxyGenerator();
-            var options = from prop in typeof(T).GetProperties()
-                where prop.HasAttribute<ConfigurationOptionAttribute>()
-                let attr = prop.GetCustomAttribute<ConfigurationOptionAttribute>()
-                let name = prop.Name
-                let metadata = prop.GetCustomAttributes<CustomMetadataAttribute>()
-                select new ConfigurationOption(attr, metadata, name) as IConfigurationOption;
-
-            this.Options = ImmutableList.CreateRange(options);
-            this.configurationInterceptor =
-                new ConfigurationInterceptor(this.Options.ToDictionary(p => p, p => p.Default));
-            foreach (var custom in values)
-            {
-                this.configurationInterceptor.Values[custom.Key] = custom.Value;
-            }
+            this.Descriptor = new ConfigurationSectionDescriptor<T>();
+            this.configurationInterceptor = new ConfigurationInterceptor(this.Descriptor, values);
+          
             this.Configuration =
                 generator.CreateInterfaceProxyWithoutTarget<T>(new ConfigurationCircularInterceptor<T>(this),
                     configurationInterceptor);

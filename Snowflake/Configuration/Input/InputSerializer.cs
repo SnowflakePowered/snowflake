@@ -18,10 +18,10 @@ namespace Snowflake.Configuration.Input
         public virtual string Serialize(IInputTemplate inputTemplate, IInputMapping inputMapping)
         {
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.Append(this.ConfigurationSerializer.SerializeHeader(inputTemplate.SectionName.Replace("{N}", inputTemplate.PlayerIndex.ToString())));
+            stringBuilder.Append(this.ConfigurationSerializer.SerializeHeader(inputTemplate.Descriptor.SectionName.Replace("{N}", inputTemplate.PlayerIndex.ToString())));
 
             IConfigurationSection inputOptions = inputTemplate;
-            foreach (var config in inputOptions.Options)
+            foreach (var config in inputOptions.Descriptor.Options.Values)
             {
                 stringBuilder.AppendLine(this.ConfigurationSerializer.SerializeLine(config.OptionName.Replace("{N}", inputTemplate.PlayerIndex.ToString()), inputOptions.Values[config.KeyName].Value));
             }
@@ -30,7 +30,7 @@ namespace Snowflake.Configuration.Input
             {
                 stringBuilder.AppendLine(this.SerializeInput(input.OptionName.Replace("{N}", inputTemplate.PlayerIndex.ToString()), inputTemplate.Values[input.KeyName], inputMapping));
             }
-            stringBuilder.Append(this.ConfigurationSerializer.SerializeFooter(inputTemplate.SectionName.Replace("{N}", inputTemplate.PlayerIndex.ToString())));
+            stringBuilder.Append(this.ConfigurationSerializer.SerializeFooter(inputTemplate.Descriptor.SectionName.Replace("{N}", inputTemplate.PlayerIndex.ToString())));
 
             return stringBuilder.ToString();
         }

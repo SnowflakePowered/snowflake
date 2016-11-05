@@ -84,7 +84,9 @@
     <Compile Include="Caching\ImageMetadataKeys.cs" />
     <Compile Include="Configuration\Attributes\ConfigurationOptionAttribute.cs" />
     <Compile Include="Configuration\Attributes\CustomMetadataAttribute.cs" />
+    <Compile Include="Configuration\Attributes\SerializableSectionAttribute.cs" />
     <Compile Include="Configuration\IConfigurationCollectionStore.cs" />
+    <Compile Include="Configuration\IConfigurationSectionDescriptor.cs" />
     <Compile Include="Configuration\Input\IInputMapping.cs" />
     <Compile Include="Configuration\Input\IInputSerializer.cs" />
     <Compile Include="Configuration\Input\InputOptionType.cs" />
@@ -109,6 +111,7 @@
     <Compile Include="Emulator\ISaveManager.cs" />
     <Compile Include="Extensibility\ContainerLoadPriorityAttribute.cs" />
     <Compile Include="Extensibility\ContainerLoadPriority.cs" />
+    <Compile Include="Configuration\IConfigurationCollectionDescriptor.cs" />
     <Compile Include="Input\Controller\ControllerElement.cs" />
     <Compile Include="Input\Controller\IControllerElementCollection.cs" />
     <Compile Include="Input\Controller\ControllerElementType.cs" />

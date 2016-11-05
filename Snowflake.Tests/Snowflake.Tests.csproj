@@ -96,6 +96,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Configuration\ConfigurationCollectionTests.cs" />
     <Compile Include="Configuration\ExampleConfigurationCollection.cs" />
     <Compile Include="Configuration\ExampleConfigurationSection.cs" />
     <Compile Include="Configuration\IniConfigurationSerializerTests.cs" />
@@ -106,7 +107,6 @@
     <Compile Include="DynamicConfig\DynamicProxyTests.cs" />
     <Compile Include="DynamicConfig\IVideoConfiguration.cs" />
     <Compile Include="DynamicConfig\IRetroArchConfig.cs" />
-    <Compile Include="DynamicConfig\IRetroArchInput.cs" />
     <Compile Include="DynamicConfig\VideoDriver.cs" />
     <Compile Include="DynamicConfig\VideoRotation.cs" />
     <Compile Include="Events\StandardEventsTests.cs" />

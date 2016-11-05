@@ -17,16 +17,20 @@ namespace Snowflake.Configuration
     public class ConfigurationCollection<T> : IConfigurationCollection<T> where T: class, IConfigurationCollection<T>
     {
         public T Configuration { get; }
-
+        public IConfigurationCollectionDescriptor Descriptor { get; }
         public IDictionary<string, IConfigurationSection> Sections
             => this.collectionInterceptor.Values.ToDictionary(p => p.Key, p => p.Value as IConfigurationSection);
         private readonly CollectionInterceptor<T> collectionInterceptor;
-        public ConfigurationCollection()
+
+        public ConfigurationCollection() : this(new Dictionary<string, IDictionary<string, IConfigurationValue>>())
+        {
+        }
+
+        public ConfigurationCollection(IDictionary<string, IDictionary<string, IConfigurationValue>> defaults)
         {
             ProxyGenerator generator = new ProxyGenerator();
-            this.Outputs = typeof(T).GetCustomAttributes<ConfigurationFileAttribute>()
-                .ToDictionary(f => f.Key, f => f.FileName);
-            this.collectionInterceptor = new CollectionInterceptor<T>();
+            this.Descriptor = new ConfigurationCollectionDescriptor<T>();
+            this.collectionInterceptor = new CollectionInterceptor<T>(defaults);
             this.Configuration = generator.CreateInterfaceProxyWithoutTarget<T>(new CollectionCircularInterceptor<T>(this), this.collectionInterceptor);
         }
 
@@ -79,20 +83,20 @@ namespace Snowflake.Configuration
     class CollectionInterceptor<T> : IInterceptor
     {
         internal readonly IDictionary<string, dynamic> Values;
-        internal CollectionInterceptor()
+
+        
+        internal CollectionInterceptor(IDictionary<string, IDictionary<string, IConfigurationValue>> defaults)
         {
             this.Values = new Dictionary<string, dynamic>();
+            //public ConfigurationSection(IDictionary<string, IConfigurationValue> values)
             foreach (var section in from props in typeof(T).GetProperties()
-                                    let sectionAttr = props.GetAttributes<ConfigurationSectionAttribute>().First()
+                                    let sectionAttr = props.GetAttributes<SerializableSectionAttribute>().First()
                                     where sectionAttr !=null
                                     select new {sectionAttr, type = props.PropertyType, name = props.Name})
             {
                 var sectionType = typeof(ConfigurationSection<>).MakeGenericType(section.type);
-                this.Values.Add(section.name, Instantiate.CreateInstance(sectionType, new Type[] {typeof(string), typeof(string) , typeof(string) , typeof(string) },
-                    Expression.Constant(section.sectionAttr.Destination), 
-                    Expression.Constant(section.sectionAttr.SectionName),
-                    Expression.Constant(section.sectionAttr.DisplayName),
-                    Expression.Constant(section.sectionAttr.Description)));
+                this.Values.Add(section.name, Instantiate.CreateInstance(sectionType, new Type[] {typeof(IDictionary<string, IConfigurationValue>) },
+                    Expression.Constant(defaults.ContainsKey(section.name)? defaults[section.name] : new Dictionary<string, IConfigurationValue>())));
             }
         }
 

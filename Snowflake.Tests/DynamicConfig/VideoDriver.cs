@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration.Attributes;
 
-namespace Snowflake.Tests.DynamicConfig
+namespace Snowflake.Configuration.Tests
 {
     public enum VideoDriver
     {

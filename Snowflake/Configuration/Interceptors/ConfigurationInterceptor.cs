@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Castle.DynamicProxy;
 using Snowflake.Configuration;
@@ -9,15 +10,15 @@ namespace Snowflake.DynamicConfiguration.Interceptors
     {
         internal readonly IDictionary<string, IConfigurationValue> Values;
 
-        public ConfigurationInterceptor(IDictionary<IConfigurationOption, object> options)
+        public ConfigurationInterceptor(IConfigurationSectionDescriptor descriptor)
         {
-            this.Values = options.ToDictionary(p => p.Key.KeyName, p => new ConfigurationValue(p.Key, p.Value) as IConfigurationValue);
+            this.Values = descriptor.Options.Values.ToDictionary(p => p.KeyName, p => new ConfigurationValue(p.Default) as IConfigurationValue);
         }
 
-        public ConfigurationInterceptor(IDictionary<string, object> values, IList<IConfigurationOption> options)
+        public ConfigurationInterceptor(IConfigurationSectionDescriptor descriptor, IDictionary<string, IConfigurationValue> values)
         {
-            this.Values = options.ToDictionary(p => p.KeyName, p
-                => new ConfigurationValue(p, values.ContainsKey(p.KeyName) ? values[p.KeyName] : p.Default) as IConfigurationValue);
+            this.Values = descriptor.Options.Values.ToDictionary(p => p.KeyName,
+                p => values.ContainsKey(p.KeyName) ? values[p.KeyName] : new ConfigurationValue(p.Default));
         }
         public void Intercept(IInvocation invocation)
         {
