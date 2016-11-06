@@ -103,6 +103,7 @@
     <Compile Include="Configuration\InputMapperTests.cs" />
     <Compile Include="Configuration\IRetroArchInput.cs" />
     <Compile Include="Configuration\KeyValuePairConfigurationSerializerTests.cs" />
+    <Compile Include="Configuration\OrderSensitiveConfigurationCollection.cs" />
     <Compile Include="DynamicConfig\DynamicProxyInput.cs" />
     <Compile Include="DynamicConfig\DynamicProxyTests.cs" />
     <Compile Include="DynamicConfig\IVideoConfiguration.cs" />

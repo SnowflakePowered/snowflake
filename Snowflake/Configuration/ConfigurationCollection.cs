@@ -18,8 +18,7 @@ namespace Snowflake.Configuration
     {
         public T Configuration { get; }
         public IConfigurationCollectionDescriptor Descriptor { get; }
-        public IDictionary<string, IConfigurationSection> Sections
-            => this.collectionInterceptor.Values.ToDictionary(p => p.Key, p => p.Value as IConfigurationSection);
+
         private readonly CollectionInterceptor<T> collectionInterceptor;
 
         public ConfigurationCollection() : this(new Dictionary<string, IDictionary<string, IConfigurationValue>>())
@@ -34,7 +33,11 @@ namespace Snowflake.Configuration
             this.Configuration = generator.CreateInterfaceProxyWithoutTarget<T>(new CollectionCircularInterceptor<T>(this), this.collectionInterceptor);
         }
 
-        public IEnumerator<IConfigurationSection> GetEnumerator() => this.collectionInterceptor.Values.Values.Select(c => c as IConfigurationSection).GetEnumerator();
+        public IEnumerator<IConfigurationSection> GetEnumerator()
+        {
+            return this.Descriptor.SectionKeys.Select(k => this.collectionInterceptor.Values[k] as IConfigurationSection)
+                .GetEnumerator(); //ensure order
+        }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -65,9 +68,6 @@ namespace Snowflake.Configuration
                         break;
                     case nameof(@this.Outputs):
                         invocation.ReturnValue = @this.Outputs;
-                        break;
-                    case nameof(@this.Sections):
-                        invocation.ReturnValue = @this.Sections;
                         break;
                     case "Item": //circular indexer
                         invocation.ReturnValue = @this[(string) invocation.Arguments[0]];

@@ -12,12 +12,12 @@ namespace Snowflake.DynamicConfiguration.Interceptors
 
         public ConfigurationInterceptor(IConfigurationSectionDescriptor descriptor)
         {
-            this.Values = descriptor.Options.Values.ToDictionary(p => p.KeyName, p => new ConfigurationValue(p.Default) as IConfigurationValue);
+            this.Values = descriptor.Options.ToDictionary(p => p.KeyName, p => new ConfigurationValue(p.Default) as IConfigurationValue);
         }
 
         public ConfigurationInterceptor(IConfigurationSectionDescriptor descriptor, IDictionary<string, IConfigurationValue> values)
         {
-            this.Values = descriptor.Options.Values.ToDictionary(p => p.KeyName,
+            this.Values = descriptor.Options.ToDictionary(p => p.KeyName,
                 p => values.ContainsKey(p.KeyName) ? values[p.KeyName] : new ConfigurationValue(p.Default));
         }
         public void Intercept(IInvocation invocation)

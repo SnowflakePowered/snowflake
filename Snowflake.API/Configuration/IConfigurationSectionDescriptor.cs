@@ -8,6 +8,7 @@ namespace Snowflake.Configuration
         string Description { get; }
         string DisplayName { get; }
         string SectionName { get; }
-        IDictionary<string, IConfigurationOption> Options { get; }
+        IEnumerable<IConfigurationOption> Options { get; }
+        IConfigurationOption this[string optionKey] { get; }
     }
 }

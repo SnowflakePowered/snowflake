@@ -32,7 +32,7 @@ namespace Snowflake.Configuration.Tests
         public void DefaultsTests()
         {
             var configuration = new ConfigurationCollection<ExampleConfigurationCollection>();
-            Assert.Equal(configuration.Configuration.ExampleConfiguration.Descriptor.Options["FullscreenResolution"].Default, 
+            Assert.Equal(configuration.Configuration.ExampleConfiguration.Descriptor["FullscreenResolution"].Default, 
                 configuration.Configuration.ExampleConfiguration.FullscreenResolution);
         }
 
@@ -47,9 +47,19 @@ namespace Snowflake.Configuration.Tests
         public void NestedTest()
         {
             var configuration = new ConfigurationCollection<ExampleConfigurationCollection>();
-            Assert.Equal(configuration.Configuration.ExampleConfiguration.Descriptor.Options["FullscreenResolution"].Default,
+            Assert.Equal(configuration.Configuration.ExampleConfiguration.Descriptor["FullscreenResolution"].Default,
                 configuration.Configuration.ExampleConfiguration.Configuration.Configuration.FullscreenResolution);
         }
 
+        [Fact]
+        public void OrderTest()
+        {
+            var configuration = new ConfigurationCollection<OrderSensitiveConfigurationCollection>();
+            var enumerator = configuration.GetEnumerator();
+            enumerator.MoveNext();
+            Assert.Equal("Display", enumerator.Current.Descriptor.SectionName);
+            enumerator.MoveNext();
+            Assert.Equal("video", enumerator.Current.Descriptor.SectionName);
+        }
     }
 }

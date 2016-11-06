@@ -21,7 +21,7 @@ namespace Snowflake.Configuration.Input
             stringBuilder.Append(this.ConfigurationSerializer.SerializeHeader(inputTemplate.Descriptor.SectionName.Replace("{N}", inputTemplate.PlayerIndex.ToString())));
 
             IConfigurationSection inputOptions = inputTemplate;
-            foreach (var config in inputOptions.Descriptor.Options.Values)
+            foreach (var config in inputOptions.Descriptor.Options)
             {
                 stringBuilder.AppendLine(this.ConfigurationSerializer.SerializeLine(config.OptionName.Replace("{N}", inputTemplate.PlayerIndex.ToString()), inputOptions.Values[config.KeyName].Value));
             }
