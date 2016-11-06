@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.ComponentModel;
@@ -71,7 +72,18 @@ namespace Snowflake.Configuration
             Type t = this.Descriptor[tuple.Key].Type;
             return new ConfigurationValue(FromString(tuple.Value.Item1, t), tuple.Value.Item2);
         }
-    
+
+        public IEnumerator<KeyValuePair<IConfigurationOption, IConfigurationValue>> GetEnumerator()
+        {
+            return this.Descriptor.Options
+                .Select(o => new KeyValuePair<IConfigurationOption, IConfigurationValue>(o, this.Values[o.KeyName]))
+                .GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
     }
 
 

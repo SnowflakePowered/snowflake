@@ -16,7 +16,7 @@ namespace Snowflake.Configuration
     public interface IConfigurationCollection<out T> : IConfigurationCollection where T : class, IConfigurationCollection<T>
     {
         /// <summary>
-        /// The configuration instance which holds the configurtion sections.
+        /// The configuration instance which holds the configuration sections.
         /// </summary>
         T Configuration { get; }
     }
