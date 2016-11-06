@@ -15,12 +15,10 @@ namespace Snowflake.Configuration
     {
         public IDictionary<string, string> Outputs { get; }
         public IList<string> SectionKeys { get; }
-        public IDictionary<string, IConfigurationSectionDescriptor> SectionDescriptors { get; }
         private IDictionary<string, string> DestinationMappings { get; }
 
-        internal ConfigurationCollectionDescriptor(IDictionary<string, IConfigurationSectionDescriptor> childDescriptors)
+        internal ConfigurationCollectionDescriptor()
         {
-            this.SectionDescriptors = childDescriptors;
             this.Outputs = ImmutableDictionary.CreateRange(typeof(T).GetCustomAttributes<ConfigurationFileAttribute>()
                 .ToDictionary(f => f.Key, f => f.FileName));
             var sections =

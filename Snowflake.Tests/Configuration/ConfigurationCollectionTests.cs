@@ -82,9 +82,9 @@ namespace Snowflake.Configuration.Tests
             var configuration = new ConfigurationCollection<OrderSensitiveConfigurationCollection>();
             var enumerator = configuration.GetEnumerator();
             enumerator.MoveNext();
-            Assert.Equal("Display", enumerator.Current.Descriptor.SectionName);
+            Assert.Equal("Display", enumerator.Current.Value.Descriptor.SectionName);
             enumerator.MoveNext();
-            Assert.Equal("video", enumerator.Current.Descriptor.SectionName);
+            Assert.Equal("video", enumerator.Current.Value.Descriptor.SectionName);
         }
     }
 }

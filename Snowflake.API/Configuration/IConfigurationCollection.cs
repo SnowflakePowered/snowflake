@@ -7,7 +7,7 @@ namespace Snowflake.Configuration
         T Configuration { get; }
     }
 
-    public interface IConfigurationCollection : IEnumerable<IConfigurationSection> 
+    public interface IConfigurationCollection : IEnumerable<KeyValuePair<string, IConfigurationSection>>
     {
         IConfigurationCollectionDescriptor Descriptor { get; }
         IConfigurationSection this[string sectionName] { get; }

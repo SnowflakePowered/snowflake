@@ -68,16 +68,14 @@ namespace Snowflake.Configuration
             where T: class, IConfigurationCollection<T>
         {
             var values = from section in configuration
-                from value in section.Values
+                from value in section.Value.Values
                 select new
                 {
                     uuid = value.Value.Guid,
                     game = gameRecord,
                     value = value.Value.Value.ToString(), //so i put a value in your value so you can value values
                     option = value.Key,
-                    section = (from descript in configuration.Descriptor.SectionDescriptors
-                              where descript.Value == section.Descriptor
-                              select descript.Key).First(), //todo this feels really gross.
+                    section = section.Key, //todo this feels really gross.
                     emulator,
                     profile
                 };

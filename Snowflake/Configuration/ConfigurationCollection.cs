@@ -18,7 +18,7 @@ namespace Snowflake.Configuration
     public class ConfigurationCollection<T> : IConfigurationCollection<T> where T: class, IConfigurationCollection<T>
     {
         public T Configuration { get; }
-        public IConfigurationCollectionDescriptor Descriptor => this.collectionInterceptor.Descriptor;
+        public IConfigurationCollectionDescriptor Descriptor { get; }
 
         private readonly CollectionInterceptor<T> collectionInterceptor;
 
@@ -29,6 +29,7 @@ namespace Snowflake.Configuration
         public ConfigurationCollection(IDictionary<string, IDictionary<string, IConfigurationValue>> defaults)
         {
             ProxyGenerator generator = new ProxyGenerator();
+            this.Descriptor = new ConfigurationCollectionDescriptor<T>();
             this.collectionInterceptor = new CollectionInterceptor<T>(defaults);
             this.Configuration = generator.CreateInterfaceProxyWithoutTarget<T>(new CollectionCircularInterceptor<T>(this), this.collectionInterceptor);
         }
@@ -39,12 +40,14 @@ namespace Snowflake.Configuration
         internal ConfigurationCollection(IDictionary<string, IDictionary<string, ValueTuple<string, Guid>>> defaults)
         {
             ProxyGenerator generator = new ProxyGenerator();
+            this.Descriptor = new ConfigurationCollectionDescriptor<T>();
             this.collectionInterceptor = new CollectionInterceptor<T>(defaults);
             this.Configuration = generator.CreateInterfaceProxyWithoutTarget<T>(new CollectionCircularInterceptor<T>(this), this.collectionInterceptor);
         }
-        public IEnumerator<IConfigurationSection> GetEnumerator()
+        public IEnumerator<KeyValuePair<string, IConfigurationSection>> GetEnumerator()
         {
-            return this.Descriptor.SectionKeys.Select(k => this.collectionInterceptor.Values[k] as IConfigurationSection)
+            return this.Descriptor.SectionKeys.Select(k => new KeyValuePair<string, IConfigurationSection>
+            (k, this.collectionInterceptor.Values[k] as IConfigurationSection))
                 .GetEnumerator(); //ensure order
         }
 
@@ -87,14 +90,13 @@ namespace Snowflake.Configuration
         }
     }
 
-    class CollectionInterceptor<T> : IInterceptor where T: class, IConfigurationCollection<T>
+    class CollectionInterceptor<T> : IInterceptor
     {
         internal readonly IDictionary<string, dynamic> Values;
-        internal readonly ConfigurationCollectionDescriptor<T> Descriptor;
+
         internal CollectionInterceptor(IDictionary<string, IDictionary<string, ValueTuple<string, Guid>>> defaults)
         {
             this.Values = new Dictionary<string, dynamic>();
-            var sectionDescriptors = new Dictionary<string, IConfigurationSectionDescriptor>();
             foreach (var section in from props in typeof(T).GetProperties()
                                     let sectionAttr = props.GetAttributes<SerializableSectionAttribute>().First()
                                     where sectionAttr != null
@@ -104,15 +106,12 @@ namespace Snowflake.Configuration
                 this.Values.Add(section.name, Instantiate.CreateInstance(sectionType, new[] { typeof(IDictionary<string, ValueTuple<string, Guid>>) },
                     Expression.Constant(defaults.ContainsKey(section.name) ? defaults[section.name] 
                     : new Dictionary<string, ValueTuple<string, Guid>>())));
-                sectionDescriptors.Add(section.name, this.Values[section.name].Descriptor);
             }
-            this.Descriptor = new ConfigurationCollectionDescriptor<T>(sectionDescriptors);
         }
 
         internal CollectionInterceptor(IDictionary<string, IDictionary<string, IConfigurationValue>> defaults)
         {
             this.Values = new Dictionary<string, dynamic>();
-            var sectionDescriptors = new Dictionary<string, IConfigurationSectionDescriptor>();
             //public ConfigurationSection(IDictionary<string, IConfigurationValue> values)
             foreach (var section in from props in typeof(T).GetProperties()
                                     let sectionAttr = props.GetAttributes<SerializableSectionAttribute>().First()
@@ -122,9 +121,7 @@ namespace Snowflake.Configuration
                 var sectionType = typeof(ConfigurationSection<>).MakeGenericType(section.type);
                 this.Values.Add(section.name, Instantiate.CreateInstance(sectionType, new Type[] {typeof(IDictionary<string, IConfigurationValue>) },
                     Expression.Constant(defaults.ContainsKey(section.name)? defaults[section.name] : new Dictionary<string, IConfigurationValue>())));
-                sectionDescriptors.Add(section.name, this.Values[section.name].Descriptor);
             }
-            this.Descriptor = new ConfigurationCollectionDescriptor<T>(sectionDescriptors);
         }
 
 
