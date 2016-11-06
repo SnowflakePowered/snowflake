@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
@@ -46,6 +47,16 @@ namespace Snowflake.Configuration.Input
             this.Configuration =
                 generator.CreateInterfaceProxyWithoutTarget<T>(interceptor,
                     configurationInterceptor, inputTemplate);
+        }
+
+        public IEnumerator<KeyValuePair<IConfigurationOption, IConfigurationValue>> GetEnumerator()
+        {
+            return this.Configuration.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }
