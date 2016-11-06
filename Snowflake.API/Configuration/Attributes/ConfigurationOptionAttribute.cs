@@ -68,38 +68,64 @@ namespace Snowflake.Configuration.Attributes
         /// </summary>
         public string OptionName { get; }
 
+        /// <summary>
+        /// The default value of this option.
+        /// </summary>
         public object Default { get; }
 
+        /// <summary>
+        /// The CLR type of this option.
+        /// </summary>
         internal Type Type { get; }
+
 
         /// <summary>
         /// Represents one option in an emulator configuration inside a configuration section.
         /// Typically configuration options must be a double, bool, integer or an enum value in order to be safe,
         /// type information may be lost when serializing into a wire format.
         /// </summary>
-        /// <param name="optionName">The name of the option as it appears inside the emulator configuration</param>
-        /// <see cref="Snowflake.Configuration.IConfigurationSection"></see>
-        /// <seealso cref="System.Attribute" />
-        [Obsolete]
-        public ConfigurationOptionAttribute(string optionName)
+        public ConfigurationOptionAttribute(string optionName, int @default) : this(optionName, @default, typeof(int))
         {
-            this.OptionName = optionName;
+        }
+        /// <summary>
+        /// Represents one option in an emulator configuration inside a configuration section.
+        /// Typically configuration options must be a double, bool, integer or an enum value in order to be safe,
+        /// type information may be lost when serializing into a wire format.
+        /// </summary>
+        public ConfigurationOptionAttribute(string optionName, bool @default) : this(optionName, @default, typeof(bool))
+        {
         }
 
-        public ConfigurationOptionAttribute(string optionName, int value) : this(optionName, value, typeof(int))
+        /// <summary>
+        /// Represents one option in an emulator configuration inside a configuration section.
+        /// Typically configuration options must be a double, bool, integer or an enum value in order to be safe,
+        /// type information may be lost when serializing into a wire format.
+        /// </summary>
+        /// <param name="optionName">The name of the option</param>
+        /// <param name="default">The default value of the option. Note that only strings, enums and primitive types are supported.</param>
+        public ConfigurationOptionAttribute(string optionName, double @default) : this(optionName, @default, typeof(double))
         {
         }
-        public ConfigurationOptionAttribute(string optionName, bool value) : this(optionName, value, typeof(bool))
-        {
-        }
-        public ConfigurationOptionAttribute(string optionName, double value) : this(optionName, value, typeof(double))
-        {
-        }
+
+        /// <summary>
+        /// Represents one option in an emulator configuration inside a configuration section.
+        /// Typically configuration options must be a double, bool, integer or an enum value in order to be safe,
+        /// type information may be lost when serializing into a wire format.
+        /// </summary>
+        /// <param name="optionName">The name of the option</param>
+        /// <param name="default">The default value of the option. Note that only strings, enums and primitive types are supported.</param>
         public ConfigurationOptionAttribute(string optionName, object @default) : this(optionName, @default, @default.GetType())
         {
             if (!this.Type.IsEnum) throw new ArgumentException("Configuration options can not be complex objects.");
         }
-        public ConfigurationOptionAttribute(string optionName, string value) : this(optionName, value, typeof(string))
+        /// <summary>
+        /// Represents one option in an emulator configuration inside a configuration section.
+        /// Typically configuration options must be a double, bool, integer or an enum value in order to be safe,
+        /// type information may be lost when serializing into a wire format.
+        /// </summary>
+        /// <param name="optionName">The name of the option</param>
+        /// <param name="default">The default value of the option. Note that only strings, enums and primitive types are supported.</param>
+        public ConfigurationOptionAttribute(string optionName, string @default) : this(optionName, @default, typeof(string))
         {
         }
         private ConfigurationOptionAttribute(string optionName, object @default, Type valueType)

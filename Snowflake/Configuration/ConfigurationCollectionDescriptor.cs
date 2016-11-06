@@ -14,7 +14,7 @@ namespace Snowflake.Configuration
     public class ConfigurationCollectionDescriptor<T> : IConfigurationCollectionDescriptor where T: class, IConfigurationCollection
     {
         public IDictionary<string, string> Outputs { get; }
-        public IList<string> SectionKeys { get; }
+        public IEnumerable<string> SectionKeys { get; }
         private IDictionary<string, string> DestinationMappings { get; }
 
         internal ConfigurationCollectionDescriptor()

@@ -85,7 +85,6 @@
     <Compile Include="Configuration\Attributes\ConfigurationOptionAttribute.cs" />
     <Compile Include="Configuration\Attributes\CustomMetadataAttribute.cs" />
     <Compile Include="Configuration\Attributes\SerializableSectionAttribute.cs" />
-    <Compile Include="Configuration\IConfigurationCollectionStore.cs" />
     <Compile Include="Configuration\IConfigurationSectionDescriptor.cs" />
     <Compile Include="Configuration\Input\IInputMapping.cs" />
     <Compile Include="Configuration\Input\IInputSerializer.cs" />
@@ -104,6 +103,7 @@
     <Compile Include="Configuration\IConfigurationValue.cs" />
     <Compile Include="Configuration\Input\IInputOption.cs" />
     <Compile Include="Configuration\Input\IInputTemplate.cs" />
+    <Compile Include="Configuration\IConfigurationCollectionStore.cs" />
     <Compile Include="Emulator\IBiosManager.cs" />
     <Compile Include="Emulator\IEmulatedPort.cs" />
     <Compile Include="Emulator\IEmulatorAdapter.cs" />

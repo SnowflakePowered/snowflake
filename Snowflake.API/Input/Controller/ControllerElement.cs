@@ -932,6 +932,9 @@ namespace Snowflake.Input.Controller
 
     }
 
+    /// <summary>
+    /// Controller element extensions.
+    /// </summary>
     public static class ControllerElementExtensions
     {
         /// <summary>

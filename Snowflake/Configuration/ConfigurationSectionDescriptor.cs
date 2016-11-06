@@ -19,7 +19,7 @@ namespace Snowflake.Configuration
 
         public IConfigurationOption this[string optionKey] => this.Options.First(o => o.KeyName == optionKey);
 
-        public ConfigurationSectionDescriptor()
+        internal ConfigurationSectionDescriptor()
         {
             //todo cache descriptors
             this.Options = (from prop in typeof(T).GetProperties()

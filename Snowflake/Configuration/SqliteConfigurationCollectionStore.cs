@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data.SQLite;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -16,7 +17,7 @@ using Newtonsoft.Json;
 
 namespace Snowflake.Configuration
 {
-    public class SqliteConfigurationCollectionStore
+    public class SqliteConfigurationCollectionStore : IConfigurationCollectionStore
     {
         private readonly SqliteDatabase backingDatabase;
 
@@ -34,13 +35,14 @@ namespace Snowflake.Configuration
         private void CreateDatabase()
         {
             this.backingDatabase.CreateTable("configuration",
-                "uuid UUID PRIMARY KEY",
+                "uuid UUID",
                 "game UUID",
                 "value TEXT",
                 "option TEXT",
                 "section TEXT",
                 "emulator TEXT",
-                "profile TEXT");
+                "profile TEXT",
+                "PRIMARY KEY (game, option, section, emulator, profile)");
         }
 
         public IConfigurationCollection<T> Get<T>(Guid gameRecord, string emulator, string profile) where T: class, IConfigurationCollection<T>
@@ -87,7 +89,25 @@ namespace Snowflake.Configuration
             });
         }
 
-  
+        public void Set(IConfigurationValue value)
+        {
+            try
+            {
+                this.backingDatabase.Execute(dbConnection =>
+                {
+                    dbConnection.Execute(
+                        @"UPDATE configuration SET value = @Value WHERE uuid == @Guid", new
+                        {
+                            value.Value,
+                            value.Guid
+                        });
+                });
+            }
+            catch (SQLiteException)
+            {
+                throw new KeyNotFoundException("Value GUID was not found in store.");
+            }
+        }
 
     }
 
