@@ -29,6 +29,31 @@ namespace Snowflake.Configuration.Tests
         }
 
         [Fact]
+        public void ValueTupleInitializationTests()
+        {
+            var values = new Dictionary<string, IDictionary<string, ValueTuple<string, Guid>>>()
+            {
+                {
+                    "ExampleConfiguration", new Dictionary<string, ValueTuple<string, Guid>>()
+                    {
+                        {
+                            "ISOPath0", new ValueTuple<string, Guid>("Test", Guid.Empty)
+                        },
+                        {
+                            "FullscreenResolution", new ValueTuple<string, Guid>(FullscreenResolution.Resolution1024X600.ToString(), Guid.Empty)
+                        }
+                    }
+                }
+            };
+            var configuration = new ConfigurationCollection<ExampleConfigurationCollection>(values);
+            Assert.Equal("Test", configuration.Configuration.ExampleConfiguration.ISOPath0);
+            Assert.Equal(FullscreenResolution.Resolution1024X600, configuration.Configuration.ExampleConfiguration.FullscreenResolution);
+            Assert.Equal(Guid.Empty, configuration.Configuration.ExampleConfiguration.Values["ISOPath0"].Guid);
+            Assert.Equal(Guid.Empty, configuration.Configuration.ExampleConfiguration.Values["FullscreenResolution"].Guid);
+
+        }
+
+        [Fact]
         public void DefaultsTests()
         {
             var configuration = new ConfigurationCollection<ExampleConfigurationCollection>();

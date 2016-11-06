@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -34,6 +35,18 @@ namespace Snowflake.Configuration
         {
         }
 
+        internal ConfigurationSection(IDictionary<string, ValueTuple<string, Guid>> values)
+        {
+            ProxyGenerator generator = new ProxyGenerator();
+            this.Descriptor = new ConfigurationSectionDescriptor<T>();
+            this.configurationInterceptor = new ConfigurationInterceptor(this.Descriptor,
+                values.ToDictionary(p => p.Key, FromValueTuple));
+
+            this.Configuration =
+                generator.CreateInterfaceProxyWithoutTarget<T>(new ConfigurationCircularInterceptor<T>(this),
+                    configurationInterceptor);
+        }
+
         public ConfigurationSection(IDictionary<string, IConfigurationValue> values)
         {
             ProxyGenerator generator = new ProxyGenerator();
@@ -45,6 +58,19 @@ namespace Snowflake.Configuration
                     configurationInterceptor);
         }
 
+        private static object FromString(string strValue, Type optionType)
+        {
+            return optionType == typeof(string)
+                ? strValue //return string value if string
+                : optionType.IsEnum
+                    ? Enum.Parse(optionType, strValue, true) //return parsed enum if enum
+                    : TypeDescriptor.GetConverter(optionType).ConvertFromInvariantString(strValue);
+        }
+        private IConfigurationValue FromValueTuple(KeyValuePair<string, ValueTuple<string, Guid>> tuple)
+        {
+            Type t = this.Descriptor[tuple.Key].Type;
+            return new ConfigurationValue(FromString(tuple.Value.Item1, t), tuple.Value.Item2);
+        }
     
     }
 

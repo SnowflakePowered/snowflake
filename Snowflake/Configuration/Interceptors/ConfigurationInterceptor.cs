@@ -20,6 +20,8 @@ namespace Snowflake.DynamicConfiguration.Interceptors
             this.Values = descriptor.Options.ToDictionary(p => p.KeyName,
                 p => values.ContainsKey(p.KeyName) ? values[p.KeyName] : new ConfigurationValue(p.Default));
         }
+
+
         public void Intercept(IInvocation invocation)
         {
             var propertyName = invocation.Method.Name.Substring(4); // remove get_ or set_

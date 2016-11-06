@@ -48,24 +48,55 @@ namespace Snowflake.Configuration
             var records = this.backingDatabase.Query(dbConnection =>
             {
                 return dbConnection.Query<ConfigurationRecord>(
-                    "SELECT * FROM configuration WHERE game == @gameRecord AND emulator == @emulator AND profile == @profile");
+                    "SELECT * FROM configuration WHERE game == @gameRecord AND emulator == @emulator AND profile == @profile", new
+                    {
+                        gameRecord,
+                        emulator,
+                        profile
+                    });
             });
+            
             var defs = records.GroupBy(p => p.section)
                 .ToDictionary(p => p.Key, p => p
-                .ToDictionary(o => o.option, o => new ConfigurationValue(o.value, o.uuid) as IConfigurationValue) as IDictionary<string, IConfigurationValue>); //how to restore without guid?
-
-                //IDictionary<string, IDictionary<string, IConfigurationOption>>
-            var template = new ConfigurationCollection<T>(defs);
-            return null;
+                .ToDictionary(o => o.option, o => 
+                new ValueTuple<string, Guid>(o.value, new Guid(o.uuid))) 
+                as IDictionary<string, ValueTuple<string, Guid>>);
+            return new ConfigurationCollection<T>(defs);
         }
-        
+
+        public void Set<T>(IConfigurationCollection<T> configuration, Guid gameRecord, string emulator, string profile) 
+            where T: class, IConfigurationCollection<T>
+        {
+            var values = from section in configuration
+                from value in section.Values
+                select new
+                {
+                    uuid = value.Value.Guid,
+                    game = gameRecord,
+                    value = value.Value.Value.ToString(), //so i put a value in your value so you can value values
+                    option = value.Key,
+                    section = (from descript in configuration.Descriptor.SectionDescriptors
+                              where descript.Value == section.Descriptor
+                              select descript.Key).First(), //todo this feels really gross.
+                    emulator,
+                    profile
+                };
+            this.backingDatabase.Execute(dbConnection =>
+            {
+                dbConnection.Execute(
+                    @"INSERT OR REPLACE INTO configuration (uuid, game, value, option, section, emulator, profile) VALUES
+                      (@uuid, @game, @value, @option, @section, @emulator, @profile)", values);
+            });
+        }
+
+  
 
     }
 
     class ConfigurationRecord
     {
-        public Guid uuid;
-        public Guid game;
+        public byte[] uuid;
+        public byte[] game;
         public string value;
         public string option;
         public string section;

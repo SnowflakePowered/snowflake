@@ -7,15 +7,10 @@ namespace Snowflake.Configuration
         T Configuration { get; }
     }
 
-    /// <summary>
-    /// Represents a configuration collection
-    /// 
-    /// The sections of this collection are enumerated in order of declaration
-    /// //todo more notes about configuration
-    /// </summary>
     public interface IConfigurationCollection : IEnumerable<IConfigurationSection> 
     {
-        IDictionary<string, string> Outputs { get; }
+        IConfigurationCollectionDescriptor Descriptor { get; }
         IConfigurationSection this[string sectionName] { get; }
+
     }
 }
