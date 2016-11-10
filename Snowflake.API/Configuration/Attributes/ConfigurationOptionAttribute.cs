@@ -19,12 +19,12 @@ namespace Snowflake.Configuration.Attributes
         /// <summary>
         /// The display name for human readable purposes of this option
         /// </summary>
-        public string DisplayName { get; set; }
+        public string DisplayName { get; set; } = String.Empty;
 
         /// <summary>
         /// A description of this configuration option
         /// </summary>
-        public string Description { get; set; }
+        public string Description { get; set; } = String.Empty;
 
         /// <summary>
         /// Whether or not this option is a simple option (displayed in "Simple" configuration mode)

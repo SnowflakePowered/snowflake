@@ -155,6 +155,7 @@
     <Compile Include="Input\Device\InputEnumerator.cs" />
     <Compile Include="Input\Controller\Mapped\MappedControllerElement.cs" />
     <Compile Include="Emulator\EmulatedPort.cs" />
+    <Compile Include="JsonConverters\ConfigurationCollectionSerializer.cs" />
     <Compile Include="JsonConverters\InputMappingConverter.cs" />
     <Compile Include="JsonConverters\PlatformInfoConverter.cs" />
     <Compile Include="JsonConverters\ControllerLayoutConverter.cs" />

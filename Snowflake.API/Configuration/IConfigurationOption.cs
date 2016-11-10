@@ -12,7 +12,7 @@ namespace Snowflake.Configuration
         /// <summary>
         /// The display name for human readable purposes of this option
         /// </summary>
-        string DisplayName { get; }
+        string DisplayName { get; } 
 
         /// <summary>
         /// A description of this configuration option

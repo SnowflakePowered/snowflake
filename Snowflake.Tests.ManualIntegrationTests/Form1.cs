@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using Snowflake.Configuration;
+using Snowflake.Configuration.Tests;
 using Snowflake.Records.Game;
 using Snowflake.Tests.Scraper;
 
@@ -56,6 +57,14 @@ namespace Snowflake.Tests.ManualIntegrationTests
         {
             /*var inst = new RetroArchInstance(cfg);
             inst.Create();*/
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            IConfigurationCollection configuration = new ConfigurationCollection<ExampleConfigurationCollection>();
+            var str = JsonConvert.SerializeObject(configuration);
+            MessageBox.Show(str);
+            Console.WriteLine(str);
         }
     }
 }

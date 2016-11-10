@@ -9,12 +9,15 @@ using System.Text;
 using System.Threading.Tasks;
 using Castle.Core.Internal;
 using Castle.DynamicProxy;
+using Newtonsoft.Json;
 using Snowflake.Configuration;
 using Snowflake.Configuration.Attributes;
+using Snowflake.JsonConverters;
 using Snowflake.Utility;
 
 namespace Snowflake.Configuration
 {
+    [JsonConverter(typeof(ConfigurationCollectionSerializer))]
     public class ConfigurationCollection<T> : IConfigurationCollection<T> where T: class, IConfigurationCollection<T>
     {
         public T Configuration { get; }
