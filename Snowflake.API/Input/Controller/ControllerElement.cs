@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EnumsNET;
 
 namespace Snowflake.Input.Controller
 {
@@ -949,7 +950,7 @@ namespace Snowflake.Input.Controller
 
         public static bool IsAxis(this ControllerElement element)
         {
-            return Enum.GetName(typeof(ControllerElement), element).Contains("Axis");
+            return element.GetEnumMember().Name.Contains("Axis");
         }
     }
 }

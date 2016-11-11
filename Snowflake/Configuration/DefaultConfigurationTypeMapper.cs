@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using EnumsNET.NonGeneric;
 using Snowflake.Configuration.Attributes;
 
 namespace Snowflake.Configuration
@@ -20,11 +21,8 @@ namespace Snowflake.Configuration
 
         private string EnumConverter(Enum enumValue)
         {
-            Type enumType = enumValue.GetType();
-            SelectionOptionAttribute selectionObject =
-                enumType.GetField(Enum.GetName(enumType, enumValue))
-                .GetCustomAttribute<SelectionOptionAttribute>();
-            return selectionObject.SerializeAs;
+            return NonGenericEnums.GetEnumMember(enumValue.GetType(), enumValue)
+                .GetAttribute<SelectionOptionAttribute>().SerializeAs;
         }
     }
 }

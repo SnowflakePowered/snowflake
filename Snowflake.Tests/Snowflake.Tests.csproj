@@ -100,6 +100,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Configuration\ConfigurationCollectionSerializerTests.cs" />
     <Compile Include="Configuration\ConfigurationCollectionTests.cs" />
     <Compile Include="Configuration\ExampleConfigurationCollection.cs" />
     <Compile Include="Configuration\ExampleConfigurationSection.cs" />

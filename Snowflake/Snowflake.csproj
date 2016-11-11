@@ -46,6 +46,10 @@
       <HintPath>..\packages\Dapper.1.50.2\lib\net451\Dapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Enums.NET, Version=1.0.0.0, Culture=neutral, PublicKeyToken=7ea1c1650d506225, processorArchitecture=MSIL">
+      <HintPath>..\packages\Enums.NET.1.0.0\lib\net45\Enums.NET.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="FastMember, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FastMember.1.1.0\lib\net40\FastMember.dll</HintPath>
       <Private>True</Private>
@@ -125,6 +129,7 @@
     <Compile Include="Caching\KeyedImageCache.cs" />
     <Compile Include="Configuration\ConfigurationCollectionDescriptor.cs" />
     <Compile Include="Configuration\ConfigurationSectionDescriptor.cs" />
+    <Compile Include="Configuration\ConfigurationDescriptorCache.cs" />
     <Compile Include="Configuration\Interceptors\ConfigurationCircularInterceptor.cs" />
     <Compile Include="Configuration\ConfigurationCollection.cs" />
     <Compile Include="Configuration\Interceptors\ConfigurationInterceptor.cs" />

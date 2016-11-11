@@ -12,6 +12,7 @@ using Snowflake.Configuration.Input;
 using Snowflake.Records.Game;
 using Snowflake.Utility;
 using Dapper;
+using EnumsNET.NonGeneric;
 using FastMember;
 using Newtonsoft.Json;
 
@@ -75,9 +76,11 @@ namespace Snowflake.Configuration
                 {
                     uuid = value.Value.Guid,
                     game = gameRecord,
-                    value = value.Value.Value.ToString(), //so i put a value in your value so you can value values
+                    value = value.Value.Value.GetType().IsEnum ? 
+                            NonGenericEnums.GetName(value.Value.Value.GetType(), value.Value.Value) : //optimized path for enums
+                            Convert.ToString(value.Value.Value), //so i put a value in your value so you can value values
                     option = value.Key,
-                    section = section.Key, //todo this feels really gross.
+                    section = section.Key, 
                     emulator,
                     profile
                 };

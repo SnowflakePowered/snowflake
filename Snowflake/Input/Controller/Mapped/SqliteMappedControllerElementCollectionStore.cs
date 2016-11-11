@@ -10,6 +10,8 @@ using Snowflake.Service;
 using Snowflake.Utility;
 using System.Dynamic;
 using Dapper;
+using EnumsNET;
+
 namespace Snowflake.Input.Controller.Mapped
 {
     public class SqliteMappedControllerElementCollectionStore : IMappedControllerElementCollectionStore
@@ -37,8 +39,10 @@ namespace Snowflake.Input.Controller.Mapped
                 {
                     if (element.Key == "DeviceId" || element.Key == "ControllerId" || element.Key == "ProfileName" || element.Value == null) continue;
                     string deviceElem = (string)element.Value;
-                    var controllerElement = new MappedControllerElement((ControllerElement)Enum.Parse(typeof(ControllerElement), element.Key));
-                    controllerElement.DeviceElement = (ControllerElement)Enum.Parse(typeof(ControllerElement), deviceElem);
+                    var controllerElement = new MappedControllerElement(Enums.Parse<ControllerElement>(element.Key))
+                    {
+                        DeviceElement = Enums.Parse<ControllerElement>(deviceElem)
+                    };
                     collection.Add(controllerElement);
                 }
                 return collection;
@@ -74,8 +78,8 @@ namespace Snowflake.Input.Controller.Mapped
             var parameters = new StringBuilder("@ControllerId, @DeviceId, @ProfileName");
             foreach(var element in mappedCollection)
             {
-                string layoutElementName = Enum.GetName(typeof(ControllerElement), element.LayoutElement);
-                string deviceElement = Enum.GetName(typeof(ControllerElement), element.DeviceElement);
+                string layoutElementName = element.LayoutElement.GetEnumMember().Name;
+                string deviceElement = element.DeviceElement.GetEnumMember().Name;
                 parameters.Append(", @");
                 parameters.Append(layoutElementName);
                 ((IDictionary <string, object>)queryObject)[layoutElementName] = deviceElement;

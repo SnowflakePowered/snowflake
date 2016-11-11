@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Castle.Core.Internal;
 using Castle.DynamicProxy;
+using EnumsNET.NonGeneric;
 using NLog.LayoutRenderers.Wrappers;
 using Snowflake.Configuration.Attributes;
 using Snowflake.DynamicConfiguration.Interceptors;
@@ -39,7 +40,7 @@ namespace Snowflake.Configuration
         internal ConfigurationSection(IDictionary<string, ValueTuple<string, Guid>> values)
         {
             ProxyGenerator generator = new ProxyGenerator();
-            this.Descriptor = new ConfigurationSectionDescriptor<T>();
+            this.Descriptor = ConfigurationDescriptorCache.GetSectionDescriptor<T>();
             this.configurationInterceptor = new ConfigurationInterceptor(this.Descriptor,
                 values.ToDictionary(p => p.Key, FromValueTuple));
 
@@ -64,7 +65,7 @@ namespace Snowflake.Configuration
             return optionType == typeof(string)
                 ? strValue //return string value if string
                 : optionType.IsEnum
-                    ? Enum.Parse(optionType, strValue, true) //return parsed enum if enum
+                    ? NonGenericEnums.Parse(optionType, strValue)//return parsed enum if enum
                     : TypeDescriptor.GetConverter(optionType).ConvertFromInvariantString(strValue);
         }
         private IConfigurationValue FromValueTuple(KeyValuePair<string, ValueTuple<string, Guid>> tuple)
