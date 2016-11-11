@@ -7,7 +7,6 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
-using Snowflake.Configuration.Hotkey;
 using Snowflake.Configuration.Input;
 using Snowflake.Emulator;
 using Snowflake.Input.Controller;
@@ -20,7 +19,6 @@ using Snowflake.Platform;
 using Snowflake.Plugin.EmulatorAdapter.RetroArch.Configuration;
 using Snowflake.Records.File;
 using Snowflake.Plugin.EmulatorAdapter.RetroArch.Executable;
-using Snowflake.Plugin.EmulatorAdapter.RetroArch.Input.Hotkeys;
 using Snowflake.Plugin.EmulatorAdapter.RetroArch.Selections.VideoConfiguration;
 using Snowflake.Plugin.EmulatorAdapter.RetroArch.Shaders;
 
@@ -46,7 +44,7 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
 
         private string BuildRetroarchCfg(RetroArchConfiguration retroArchConfiguration)
         {
-            //build the configuration
+          /*  //build the configuration
             var sectionBuilder = new StringBuilder(retroArchConfiguration.ToString());
             IInputSerializer inputSerializer = new InputSerializer(retroArchConfiguration.Serializer);
             IHotkeySerializer hotkeySerializer = new HotkeySerializer(retroArchConfiguration.Serializer);
@@ -69,13 +67,14 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
                     sectionBuilder.Append(hotkeySerializer.SerializeKeyboard(new RetroarchHotkeyTemplate(), mappings));
                 } //todo serialize controller hotkeys ONCE only.
             }
-            return sectionBuilder.ToString();
+            return sectionBuilder.ToString();*/
+            throw new NotImplementedException();
         }
 
         public override void Create()
         {
             //do configuration here
-
+            throw new NotImplementedException();
             var retroArchConfiguration = (RetroArchConfiguration)this.ConfigurationCollections["retroarch.cfg"];
             retroArchConfiguration.DirectoryConfiguration.SavefileDirectory =
                 this.EmulatorAdapter.SaveManager.GetSaveDirectory(this.EmulatorAdapter.SaveType, this.Game.Guid, this.SaveSlot);
@@ -106,7 +105,7 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
             string retroarchCfg = this.BuildRetroarchCfg(retroArchConfiguration);
             
             //output to the filename
-            File.WriteAllText(Path.Combine(this.InstancePath, retroArchConfiguration.FileName), retroarchCfg);
+          /*  File.WriteAllText(Path.Combine(this.InstancePath, retroArchConfiguration.FileName), retroarchCfg);
 
             if (this.ConfigurationCollections.ContainsKey("retroarch-core-options.cfg"))
             {
@@ -119,7 +118,7 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
             
             //complete.
             this.CreateTime = DateTimeOffset.UtcNow;
-            this.IsCreated = true;
+            this.IsCreated = true;*/
         }
 
         public override void Start()

@@ -11,7 +11,7 @@ namespace Snowflake.Configuration.Tests
     public interface ExampleConfigurationCollection: IConfigurationCollection<ExampleConfigurationCollection>
     {
         [SerializableSection("#dolphin")]
-        ExampleConfigurationSection ExampleConfiguration { get; set; }
+        ExampleConfigurationSection ExampleConfiguration { get; }
       
     }
 }

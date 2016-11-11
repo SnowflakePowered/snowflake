@@ -5,12 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
-using Snowflake.Configuration.Hotkey;
 using Snowflake.Emulator;
 using Snowflake.Extensibility;
 using Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters;
-using Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters.Bsnes;
-using Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters.Nestopia;
+
 using Snowflake.Plugin.EmulatorAdapter.RetroArch.Executable;
 using Snowflake.Plugin.EmulatorAdapter.RetroArch.Shaders;
 using Snowflake.Service;
@@ -27,7 +25,7 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
             var shaderManager = new ShaderManager(Path.Combine(processHandler.PluginDataPath, "shaders"));
             pm.Register(processHandler);
 
-            pm.Register(new NestopiaRetroArchAdapter(coreInstance.AppDataDirectory,
+       /*     pm.Register(new NestopiaRetroArchAdapter(coreInstance.AppDataDirectory,
                 processHandler,
                 coreInstance.Get<IStoneProvider>(),
                 coreInstance.Get<IConfigurationCollectionStore>(), 
@@ -41,7 +39,7 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
                coreInstance.Get<IConfigurationCollectionStore>(),
                coreInstance.Get<IHotkeyTemplateStore>(),
                new BiosManager(coreInstance.AppDataDirectory),
-               new SaveManager(coreInstance.AppDataDirectory), shaderManager));
+               new SaveManager(coreInstance.AppDataDirectory), shaderManager));*/
         }
     }
 }

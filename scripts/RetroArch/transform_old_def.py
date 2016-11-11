@@ -12,8 +12,8 @@ def main(filename):
 	with (open(filename)) as f:
 		content = f.read()
 		print(filename)
-		sname, dname = re.search(r'(?:\s.+base\()("[A-Za-z]+")(?:, )("[A-Za-z\s]+")', content).groups()
-		content = re.sub(r'\s+public [A-Za-z]+\(\) : base\("[A-Za-z]+", "[\sA-Za-z]+"\)$\s+\{$\s+}', "", content, flags=re.MULTILINE)
+		sname, dname = re.search(r'(?:\s.+base\s?\()("[A-Za-z]+")(?:, )("[A-Za-z\s]+")', content).groups()
+		content = re.sub(r'\s+public [A-Za-z]+\(\) : base\s?\("[A-Za-z]+", "[\sA-Za-z]+"\)$\s+\{$\s+}', "", content, flags=re.MULTILINE)
 		content = re.sub(r'(?:\spublic class )([A-Za-z]+) : (ConfigurationSection)', r'[ConfigurationSection('+sname+r', '+dname+r')]\r\npublic interface \1 : IConfigurationSection<\1>', content)
 		m = re.findall(r'(\[ConfigurationOption.+\]\n.+;)', content)
 		for x in m:

@@ -41,18 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Adapters\bsnes\BsnesInstance.cs" />
-    <Compile Include="Adapters\bsnes\Configuration\BsnesConfiguration.cs" />
-    <Compile Include="Adapters\bsnes\Configuration\BsnesConfigurationCollection.cs" />
-    <Compile Include="Adapters\bsnes\BsnesRetroArchAdapter.cs" />
-    <Compile Include="Adapters\bsnes\Selections\PerformanceProfile.cs" />
-    <Compile Include="Adapters\Nestopia\Configuration\NestopiaCoreConfiguration.cs" />
-    <Compile Include="Adapters\Nestopia\Configuration\NestopiaCoreConfigurationCollection.cs" />
-    <Compile Include="Adapters\Nestopia\NestopiaRetroArchAdapter.cs" />
-    <Compile Include="Adapters\Nestopia\Selections\NestopiaSystem.cs" />
-    <Compile Include="Adapters\Nestopia\Selections\PixelAspectRatio.cs" />
-    <Compile Include="Adapters\Nestopia\Selections\BlargFilter.cs" />
-    <Compile Include="Adapters\Nestopia\Selections\ColorPalette.cs" />
     <Compile Include="Adapters\RetroArchCommonAdapter.cs" />
     <Compile Include="Configuration\FramethrottleConfiguration.cs" />
     <Compile Include="Configuration\AudioConfiguration.cs" />
@@ -74,9 +62,9 @@
     <Compile Include="Configuration\Internal\RecordConfiguration.cs" />
     <Compile Include="Executable\RetroArchProcessHandler.cs" />
     <Compile Include="Executable\RetroArchProcessInfo.cs" />
+    <Compile Include="Input\RetroPadTemplate.cs" />
     <Compile Include="RetroArchCommonContainer.cs" />
     <Compile Include="RetroArchInstance.cs" />
-    <Compile Include="Input\RetroPadTemplate.cs" />
     <Compile Include="RetroArchConfigurationCollection.cs" />
     <Compile Include="Configuration\Internal\RewindConfiguration.cs" />
     <Compile Include="Configuration\SaveConfiguration.cs" />
@@ -104,9 +92,6 @@
     <Compile Include="Shaders\ShaderPreset.cs" />
     <Compile Include="Shaders\ShaderManager.cs" />
     <Compile Include="Shaders\ShaderType.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Input\RetroPadTemplate.InputOptions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Snowflake.API\Snowflake.API.csproj">
