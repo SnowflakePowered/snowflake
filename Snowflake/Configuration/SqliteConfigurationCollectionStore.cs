@@ -13,7 +13,6 @@ using Snowflake.Records.Game;
 using Snowflake.Utility;
 using Dapper;
 using EnumsNET.NonGeneric;
-using FastMember;
 using Newtonsoft.Json;
 
 namespace Snowflake.Configuration
