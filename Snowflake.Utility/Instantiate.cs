@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,10 +20,10 @@ namespace Snowflake.Utility
             return Instantiate.CreateInstance<T>(new[] {type});
         }
 
-        public static T CreateInstance<T>(Type[] types)
+        public static T CreateInstance<T>(Type[] constructorParams)
         {
             Func<T> instanceCreator = Expression.Lambda<Func<T>>(
-                Expression.New(typeof(T).GetConstructor(types))
+                Expression.New(typeof(T).GetConstructor(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance, null, constructorParams, null))
               ).Compile();
             return instanceCreator();
         }
@@ -35,10 +36,19 @@ namespace Snowflake.Utility
         public static object CreateInstance(Type createType, Type[] constructorParams)
         {
             Func<object> instanceCreator = Expression.Lambda<Func<object>>(
-                Expression.New(createType.GetConstructor(constructorParams))
+                Expression.New(createType.GetConstructor(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance,
+                null, constructorParams, null))
                 ).Compile();
             return instanceCreator();
         }
 
+        public static object CreateInstance(Type createType, Type[] constructorParams, params Expression[] args)
+        {
+            Func<object> instanceCreator = Expression.Lambda<Func<object>>(
+                Expression.New(createType.GetConstructor(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance, 
+                null, constructorParams, null), args)
+                ).Compile();
+            return instanceCreator();
+        }
     }
 }

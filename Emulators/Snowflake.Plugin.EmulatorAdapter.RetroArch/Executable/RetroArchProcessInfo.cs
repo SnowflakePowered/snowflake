@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.IO;
 
-namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Executable
+namespace Snowflake.Plugin.Emulators.RetroArch.Executable
 {
     internal class RetroArchProcessInfo 
     {
@@ -33,7 +33,7 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Executable
 
         internal string GetArgument(string value, string argumentName)
         {
-            return value != null ? $@"{argumentName} ""{value} """ : "";
+            return value != null ? $@"{argumentName} ""{value}"" " : "";
         }
     }
 }

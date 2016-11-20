@@ -5,18 +5,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
-using Snowflake.Configuration.Hotkey;
 using Snowflake.Emulator;
 using Snowflake.Extensibility;
-using Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters;
-using Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters.Bsnes;
-using Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters.Nestopia;
-using Snowflake.Plugin.EmulatorAdapter.RetroArch.Executable;
-using Snowflake.Plugin.EmulatorAdapter.RetroArch.Shaders;
+using Snowflake.Plugin.Emulators.RetroArch.Adapters;
+
+using Snowflake.Plugin.Emulators.RetroArch.Executable;
+using Snowflake.Plugin.Emulators.RetroArch.Shaders;
 using Snowflake.Service;
 using Snowflake.Service.Manager;
+using Snowflake.Plugin.Emulators.RetroArch.Adapters.Nestopia;
+using Snowflake.Plugin.Emulators.RetroArch.Adapters.Bsnes;
 
-namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
+namespace Snowflake.Plugin.Emulators.RetroArch
 {
     public class RetroArchCommonContainer : IPluginContainer
     {
@@ -31,7 +31,6 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
                 processHandler,
                 coreInstance.Get<IStoneProvider>(),
                 coreInstance.Get<IConfigurationCollectionStore>(), 
-                coreInstance.Get<IHotkeyTemplateStore>(),
                 new BiosManager(coreInstance.AppDataDirectory),
                 new SaveManager(coreInstance.AppDataDirectory), shaderManager));
 
@@ -39,7 +38,6 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
                processHandler,
                coreInstance.Get<IStoneProvider>(),
                coreInstance.Get<IConfigurationCollectionStore>(),
-               coreInstance.Get<IHotkeyTemplateStore>(),
                new BiosManager(coreInstance.AppDataDirectory),
                new SaveManager(coreInstance.AppDataDirectory), shaderManager));
         }

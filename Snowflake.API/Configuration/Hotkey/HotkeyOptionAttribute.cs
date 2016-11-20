@@ -30,7 +30,7 @@ namespace Snowflake.Configuration.Hotkey
         /// The type of this input option, whether it accepts
         /// keyboard only mappings, controller button mappings, or any type of mapping
         /// </summary>
-        public InputOptionType InputType { get; }  = InputOptionType.Any;
+        public InputOptionType InputType { get; }  = InputOptionType.Controller | InputOptionType.Keyboard;
 
         /// <summary>
         /// The default name of the option as it appears in configuration

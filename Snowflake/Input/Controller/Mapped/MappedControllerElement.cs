@@ -10,7 +10,6 @@ namespace Snowflake.Input.Controller.Mapped
     {
         public ControllerElement LayoutElement { get; }
         public ControllerElement DeviceElement { get; set; }
-        public KeyboardKey DeviceKeyboardKey { get; set; }
 
         public MappedControllerElement(ControllerElement virtualElement)
         {

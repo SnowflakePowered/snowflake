@@ -38,16 +38,20 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Dapper, Version=1.50.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dapper.1.50.2\lib\net451\Dapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="FastMember, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\FastMember.1.1.0\lib\net40\FastMember.dll</HintPath>
+    <Reference Include="Enums.NET, Version=1.0.0.0, Culture=neutral, PublicKeyToken=7ea1c1650d506225, processorArchitecture=MSIL">
+      <HintPath>..\packages\Enums.NET.1.0.0\lib\net45\Enums.NET.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fleck, Version=0.13.0.57, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fleck.0.13.0.57\lib\net40\Fleck.dll</HintPath>
+    <Reference Include="Fleck, Version=0.14.0.59, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fleck.0.14.0.59\lib\net40\Fleck.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Mono.Net.HttpListener">
@@ -61,26 +65,30 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.4.3.7\lib\net45\NLog.dll</HintPath>
+      <HintPath>..\packages\NLog.4.3.11\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="SharpYaml, Version=1.5.3.20680, Culture=neutral, PublicKeyToken=1ced8108e942bc02, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpYaml.1.5.3\lib\SharpYaml.dll</HintPath>
+    <Reference Include="SharpYaml, Version=1.5.4.13160, Culture=neutral, PublicKeyToken=1ced8108e942bc02, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpYaml.1.5.4\lib\SharpYaml.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Collections.Immutable, Version=1.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Collections.Immutable.1.2.0\lib\portable-net45+win8+wp8+wpa81\System.Collections.Immutable.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.Composition.Registration" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Linq" />
-    <Reference Include="System.Data.SQLite, Version=1.0.102.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Data.SQLite.Core.1.0.102.0\lib\net451\System.Data.SQLite.dll</HintPath>
+    <Reference Include="System.Data.SQLite, Version=1.0.103.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.103\lib\net46\System.Data.SQLite.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Data.SQLite.Linq, Version=1.0.102.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.102.0\lib\net451\System.Data.SQLite.Linq.dll</HintPath>
+    <Reference Include="System.Data.SQLite.Linq, Version=1.0.103.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.103\lib\net46\System.Data.SQLite.Linq.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Drawing" />
@@ -94,6 +102,10 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Transactions" />
+    <Reference Include="System.ValueTuple, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.3.0-preview1-24530-04\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -110,25 +122,30 @@
     <Compile Include="Ajax\JSMethod.cs" />
     <Compile Include="Ajax\JSRequest.cs" />
     <Compile Include="Ajax\JSResponse.cs" />
-    <Compile Include="Configuration\ConfigurationOption.cs" />
     <Compile Include="Caching\KeyedImageCache.cs" />
-    <Compile Include="Configuration\ConfigurationProperty.cs" />
+    <Compile Include="Configuration\ConfigurationCollectionDescriptor.cs" />
+    <Compile Include="Configuration\ConfigurationFile.cs" />
+    <Compile Include="Configuration\ConfigurationSectionDescriptor.cs" />
+    <Compile Include="Configuration\ConfigurationDescriptorCache.cs" />
+    <Compile Include="Configuration\Interceptors\ConfigurationCircularInterceptor.cs" />
     <Compile Include="Configuration\ConfigurationCollection.cs" />
-    <Compile Include="Configuration\Hotkey\HotkeyOption.cs" />
-    <Compile Include="Configuration\Hotkey\HotkeySerializer.cs" />
-    <Compile Include="Configuration\Hotkey\HotkeyTemplate.cs" />
-    <Compile Include="Configuration\Hotkey\SqliteHotkeyTemplateStore.cs" />
+    <Compile Include="Configuration\Interceptors\ConfigurationInterceptor.cs" />
+    <Compile Include="Configuration\ConfigurationOption.cs" />
+    <Compile Include="Configuration\ConfigurationValue.cs" />
+    <Compile Include="Configuration\ConfigurationSection.cs" />
     <Compile Include="Configuration\Input\InputSerializer.cs" />
     <Compile Include="Configuration\SqliteConfigurationCollectionStore.cs" />
     <Compile Include="Configuration\ConfigurationTypeMapper.cs" />
     <Compile Include="Configuration\DefaultConfigurationTypeMapper.cs" />
     <Compile Include="Configuration\IniConfigurationSerializer.cs" />
     <Compile Include="Configuration\ConfigurationSerializer.cs" />
-    <Compile Include="Configuration\ConfigurationSection.cs" />
     <Compile Include="Configuration\Input\InputMapping.cs" />
+    <Compile Include="Configuration\KeyValuePairConfigurationSerializer.cs" />
+    <Compile Include="Configuration\Interceptors\InputTemplateCircularInterceptor.cs" />
+    <Compile Include="Configuration\Input\InputConfigurationSection.cs" />
     <Compile Include="Configuration\Input\InputOption.cs" />
     <Compile Include="Configuration\Input\InputTemplate.cs" />
-    <Compile Include="Configuration\KeyValuePairConfigurationSerializer.cs" />
+    <Compile Include="Configuration\Interceptors\InputTemplateInterceptor.cs" />
     <Compile Include="Emulator\BiosManager.cs" />
     <Compile Include="Input\Controller\Mapped\SqliteMappedControllerElementCollectionStore.cs" />
     <Compile Include="Emulator\EmulatorAdapter.cs" />
@@ -140,6 +157,7 @@
     <Compile Include="Input\Device\InputEnumerator.cs" />
     <Compile Include="Input\Controller\Mapped\MappedControllerElement.cs" />
     <Compile Include="Emulator\EmulatedPort.cs" />
+    <Compile Include="JsonConverters\ConfigurationCollectionSerializer.cs" />
     <Compile Include="JsonConverters\InputMappingConverter.cs" />
     <Compile Include="JsonConverters\PlatformInfoConverter.cs" />
     <Compile Include="JsonConverters\ControllerLayoutConverter.cs" />
@@ -198,12 +216,12 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\System.Data.SQLite.Core.1.0.102.0\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.102.0\build\net451\System.Data.SQLite.Core.targets')" />
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.103\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.103\build\net46\System.Data.SQLite.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.102.0\build\net451\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.102.0\build\net451\System.Data.SQLite.Core.targets'))" />
+    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.103\build\net46\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.103\build\net46\System.Data.SQLite.Core.targets'))" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -42,8 +42,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.SQLite, Version=1.0.102.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Data.SQLite.Core.1.0.102.0\lib\net451\System.Data.SQLite.dll</HintPath>
+    <Reference Include="System.Data.SQLite, Version=1.0.103.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.103\lib\net46\System.Data.SQLite.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml.Linq" />
@@ -92,9 +92,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Emulators\Snowflake.Plugin.EmulatorAdapter.RetroArch\Snowflake.Plugin.EmulatorAdapter.RetroArch.csproj">
+    <ProjectReference Include="..\Emulators\Snowflake.Plugin.EmulatorAdapter.RetroArch\Snowflake.Plugin.Emulators.RetroArch.csproj">
       <Project>{287a6da9-32de-4488-9c6a-fd14571295ce}</Project>
-      <Name>Snowflake.Plugin.EmulatorAdapter.RetroArch</Name>
+      <Name>Snowflake.Plugin.Emulators.RetroArch</Name>
     </ProjectReference>
     <ProjectReference Include="..\Scrapers\Snowflake.Plugin.Scraper.TheGamesDb\Snowflake.Plugin.Scraper.TheGamesDb.csproj">
       <Project>{5147dcb0-0c60-4d44-a737-067c99bccd65}</Project>
@@ -103,6 +103,10 @@
     <ProjectReference Include="..\Snowflake.API\Snowflake.API.csproj">
       <Project>{2841aeea-03d5-47b0-9d90-375dfa19559a}</Project>
       <Name>Snowflake.API</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Snowflake.Service\Snowflake.Service.csproj">
+      <Project>{F3A129D6-0C4C-41BC-B60B-5B7E7E6D1A77}</Project>
+      <Name>Snowflake.Service</Name>
     </ProjectReference>
     <ProjectReference Include="..\Snowflake.Tests\Snowflake.Tests.csproj">
       <Project>{f89d6c58-ec34-4b89-8e55-663a9087c9a4}</Project>
@@ -114,12 +118,12 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\System.Data.SQLite.Core.1.0.102.0\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.102.0\build\net451\System.Data.SQLite.Core.targets')" />
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.103\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.103\build\net46\System.Data.SQLite.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.102.0\build\net451\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.102.0\build\net451\System.Data.SQLite.Core.targets'))" />
+    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.103\build\net46\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.103\build\net46\System.Data.SQLite.Core.targets'))" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

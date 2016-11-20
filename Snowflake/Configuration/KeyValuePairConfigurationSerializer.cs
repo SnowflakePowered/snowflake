@@ -26,9 +26,9 @@ namespace Snowflake.Configuration
         public override string Serialize(IConfigurationSection configurationSection)
         {
             StringBuilder stringBuilder = new StringBuilder();
-            foreach (var config in from option in configurationSection.Options.Values where !option.Flag select option)
+            foreach (var config in from option in configurationSection.Descriptor.Options where !option.Flag select option)
             {
-                stringBuilder.AppendLine(this.SerializeLine(config.OptionName, config.Value));
+                stringBuilder.AppendLine(this.SerializeLine(config.OptionName, configurationSection.Values[config.KeyName].Value));
             }
             return stringBuilder.ToString();
         }

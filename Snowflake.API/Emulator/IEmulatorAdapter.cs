@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
-using Snowflake.Configuration.Hotkey;
 using Snowflake.Configuration.Input;
 using Snowflake.Extensibility;
 using Snowflake.Extensibility.Configuration;
@@ -89,25 +88,13 @@ namespace Snowflake.Emulator
         /// </summary>
         /// <seealso cref="IConfigurationCollectionStore"/>
         /// <param name="gameRecord">The game that is associated with this set of configuration collections</param>
+        /// <param name="profileName">The profile name to get configuration for. By default, the profile name must be 'default'/param>
         /// <returns>A set of configuration collection keyed on the expected file names of the configuration files.</returns>
-        IDictionary<string, IConfigurationCollection> GetConfigurations(IGameRecord gameRecord);
+        IConfigurationCollection GetConfiguration(IGameRecord gameRecord, string profileName = "default");
         /// <summary>
         /// Gets the default valid set of configuration required to launch this emulator for a given game record.
         /// </summary>
         /// <returns>A set of configuration collection keyed on the expected file names of the configuration files.</returns>
-        IDictionary<string, IConfigurationCollection> GetDefaultConfigurations();
-        /// <summary>
-        /// Gets the hotkey template associated with this emulator. Hotkeys should be global across all devices for
-        /// an emulator, and should be represented only with a single class.
-        /// </summary>
-        /// <seealso cref="IHotkeyTemplateStore"/>
-        /// <returns>The hotkey template for this emulator</returns>
-        IHotkeyTemplate GetHotkeyTemplate();
-        /// <summary>
-        /// Gets the default hotkey template associated with this emulator. Hotkeys should be global across all devices for
-        /// an emulator, and should be represented only with a single class.
-        /// </summary>
-        /// <returns>The default hotkey template for this emulator</returns>
-        IHotkeyTemplate GetDefaultHotkeyTemplate();
+        IConfigurationCollection GetConfiguration();
     }
 }

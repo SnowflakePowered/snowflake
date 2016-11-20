@@ -1,7 +1,7 @@
 ﻿using Snowflake.Extensibility;
 
 
-namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Executable
+namespace Snowflake.Plugin.Emulators.RetroArch.Executable
 {
     [Plugin("exe-retroarch-win64")]
     public class RetroArchProcessHandler : Extensibility.Plugin

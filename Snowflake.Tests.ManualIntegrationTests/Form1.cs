@@ -10,9 +10,13 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using Snowflake.Configuration;
-using Snowflake.Plugin.EmulatorAdapter.RetroArch;
+using Snowflake.Configuration.Tests;
 using Snowflake.Records.Game;
 using Snowflake.Tests.Scraper;
+using Snowflake.Plugin.Emulators.RetroArch.Adapters.Nestopia.Configuration;
+using Snowflake.Configuration.Input;
+using Snowflake.Plugin.Emulators.RetroArch;
+using Snowflake.Service;
 
 namespace Snowflake.Tests.ManualIntegrationTests
 {
@@ -55,9 +59,47 @@ namespace Snowflake.Tests.ManualIntegrationTests
 
         private void retroarchcfgbtn_Click(object sender, EventArgs e)
         {
-            var cfg = ConfigurationCollection.MakeDefault<RetroArchConfiguration>();
-            /*var inst = new RetroArchInstance(cfg);
-            inst.Create();*/
+            var x = this.BuildConfiguration(new ConfigurationCollection<NestopiaConfiguration>());
+            foreach(var config in x)
+            {
+                Console.WriteLine(config.Key);
+                Console.WriteLine(config.Value);
+            }
+        }
+        protected IDictionary<string, string> BuildConfiguration(IConfigurationCollection<RetroArchConfiguration> retroArchConfiguration)
+        {
+            //build the configuration
+            IDictionary<string, string> configurations = new Dictionary<string, string>();
+            foreach (var output in retroArchConfiguration.Descriptor.Outputs.Values)
+            {
+                var sectionBuilder = new StringBuilder();
+                var serializer = new KeyValuePairConfigurationSerializer(output.BooleanMapping, "nul", "=");
+                foreach (var section in retroArchConfiguration.Where(c => retroArchConfiguration.Descriptor.GetDestination(c.Key) == output.Key))
+                {
+                    sectionBuilder.Append(serializer.Serialize(section.Value));
+                    sectionBuilder.AppendLine();
+                }
+                configurations[output.Key] = sectionBuilder.ToString();
+            }
+
+            return configurations;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            IConfigurationCollection<NestopiaConfiguration> configuration = new ConfigurationCollection<NestopiaConfiguration>();
+            var str = JsonConvert.SerializeObject(configuration);
+            MessageBox.Show(str);
+            Console.WriteLine(str);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var stone = new StoneProvider();
+
+            //IGameRecord r = new GameRecord(stone.Platforms["NINTENDO_SNES"], "christmascraze", "christmascraze.smc", "application/x-romfile-snes-magiccard");
+            //var x = new 
+
         }
     }
 }

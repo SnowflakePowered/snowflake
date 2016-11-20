@@ -35,8 +35,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Fleck, Version=0.13.0.57, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fleck.0.13.0.57\lib\net40\Fleck.dll</HintPath>
+    <Reference Include="Enums.NET">
+      <HintPath>..\packages\Enums.NET.1.0.0\lib\net45\Enums.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="Fleck, Version=0.14.0.59, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fleck.0.14.0.59\lib\net40\Fleck.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Mono.Net.HttpListener">
@@ -53,12 +56,12 @@
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.SQLite, Version=1.0.102.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Data.SQLite.Core.1.0.102.0\lib\net451\System.Data.SQLite.dll</HintPath>
+    <Reference Include="System.Data.SQLite, Version=1.0.103.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.103\lib\net46\System.Data.SQLite.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Data.SQLite.Linq, Version=1.0.102.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.102.0\lib\net451\System.Data.SQLite.Linq.dll</HintPath>
+    <Reference Include="System.Data.SQLite.Linq, Version=1.0.103.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.103\lib\net46\System.Data.SQLite.Linq.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Drawing" />
@@ -84,26 +87,27 @@
     <Compile Include="Caching\ImageMetadataKeys.cs" />
     <Compile Include="Configuration\Attributes\ConfigurationOptionAttribute.cs" />
     <Compile Include="Configuration\Attributes\CustomMetadataAttribute.cs" />
-    <Compile Include="Configuration\Hotkey\HotkeyTrigger.cs" />
-    <Compile Include="Configuration\Hotkey\IHotkeySerializer.cs" />
-    <Compile Include="Configuration\Hotkey\IHotkeyTemplateStore.cs" />
-    <Compile Include="Configuration\Hotkey\IHotkeyOption.cs" />
-    <Compile Include="Configuration\IConfigurationCollectionStore.cs" />
-    <Compile Include="Configuration\Hotkey\HotkeyOptionAttribute.cs" />
-    <Compile Include="Configuration\Hotkey\IHotkeyTemplate.cs" />
+    <Compile Include="Configuration\Attributes\SerializableSectionAttribute.cs" />
+    <Compile Include="Configuration\IConfigurationFile.cs" />
+    <Compile Include="Configuration\IConfigurationSectionDescriptor.cs" />
     <Compile Include="Configuration\Input\IInputMapping.cs" />
-    <Compile Include="Configuration\Input\IInputOption.cs" />
     <Compile Include="Configuration\Input\IInputSerializer.cs" />
-    <Compile Include="Configuration\Input\IInputTemplate.cs" />
     <Compile Include="Configuration\Input\InputOptionType.cs" />
     <Compile Include="Configuration\Input\InputOptionAttribute.cs" />
-    <Compile Include="Configuration\IConfigurationCollection.cs" />
-    <Compile Include="Configuration\IConfigurationOption.cs" />
     <Compile Include="Configuration\IConfigurationProperty.cs" />
-    <Compile Include="Configuration\IConfigurationSection.cs" />
     <Compile Include="Configuration\IConfigurationSerializer.cs" />
     <Compile Include="Configuration\IConfigurationTypeMapper.cs" />
     <Compile Include="Configuration\Attributes\SelectionOptionAttribute.cs" />
+    <Compile Include="Configuration\Attributes\ConfigurationFileAttribute.cs" />
+    <Compile Include="Configuration\Attributes\InputTemplateAttribute.cs" />
+    <Compile Include="Configuration\Attributes\ConfigurationSectionAttribute.cs" />
+    <Compile Include="Configuration\IConfigurationCollection.cs" />
+    <Compile Include="Configuration\IConfigurationOption.cs" />
+    <Compile Include="Configuration\IConfigurationSection.cs" />
+    <Compile Include="Configuration\IConfigurationValue.cs" />
+    <Compile Include="Configuration\Input\IInputOption.cs" />
+    <Compile Include="Configuration\Input\IInputTemplate.cs" />
+    <Compile Include="Configuration\IConfigurationCollectionStore.cs" />
     <Compile Include="Emulator\IBiosManager.cs" />
     <Compile Include="Emulator\IEmulatedPort.cs" />
     <Compile Include="Emulator\IEmulatorAdapter.cs" />
@@ -111,6 +115,7 @@
     <Compile Include="Emulator\ISaveManager.cs" />
     <Compile Include="Extensibility\ContainerLoadPriorityAttribute.cs" />
     <Compile Include="Extensibility\ContainerLoadPriority.cs" />
+    <Compile Include="Configuration\IConfigurationCollectionDescriptor.cs" />
     <Compile Include="Input\Controller\ControllerElement.cs" />
     <Compile Include="Input\Controller\IControllerElementCollection.cs" />
     <Compile Include="Input\Controller\ControllerElementType.cs" />
@@ -119,7 +124,6 @@
     <Compile Include="Extensibility\IPluginProperties.cs" />
     <Compile Include="Input\Controller\Mapped\IMappedControllerElement.cs" />
     <Compile Include="Input\Controller\Mapped\IMappedControllerElementCollection.cs" />
-    <Compile Include="Input\Controller\KeyboardKey.cs" />
     <Compile Include="Input\Controller\Mapped\IMappedControllerElementCollectionStore.cs" />
     <Compile Include="Input\Device\DeviceType.cs" />
     <Compile Include="Input\Device\IInputDevice.cs" />
@@ -186,12 +190,12 @@
     <Folder Include="Extensibility\Events\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\System.Data.SQLite.Core.1.0.102.0\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.102.0\build\net451\System.Data.SQLite.Core.targets')" />
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.103\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.103\build\net46\System.Data.SQLite.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.102.0\build\net451\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.102.0\build\net451\System.Data.SQLite.Core.targets'))" />
+    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.103\build\net46\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.103\build\net46\System.Data.SQLite.Core.targets'))" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using Snowflake.Configuration;
-using Snowflake.Configuration.Hotkey;
 using Snowflake.Platform;
 using Snowflake.Records.File;
 using Snowflake.Records.Game;
@@ -27,8 +26,7 @@ namespace Snowflake.Emulator
             this.InstanceMetadata = new Dictionary<string, string>();
             this.ControllerPorts = controllerPorts;
             this.SaveSlot = saveSlot;
-            this.ConfigurationCollections = this.EmulatorAdapter.GetConfigurations(game);
-            this.HotkeyTemplate = this.EmulatorAdapter.GetHotkeyTemplate();
+            this.Configuration = this.EmulatorAdapter.GetConfiguration(game);
             this.Platform = platform;
             string roamingAppdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             this.InstancePath = Path.Combine(roamingAppdata, "snowflake-cache", this.InstanceGuid.ToString());
@@ -39,8 +37,7 @@ namespace Snowflake.Emulator
         public IEmulatorAdapter EmulatorAdapter { get; }
         public IList<IEmulatedPort> ControllerPorts { get; }
         public int SaveSlot { get; }
-        public IDictionary<string, IConfigurationCollection> ConfigurationCollections { get; }
-        public IHotkeyTemplate HotkeyTemplate { get; }
+        public IConfigurationCollection Configuration { get; }
         public IDictionary<string, string> InstanceMetadata { get; }
         public IGameRecord Game { get; }
         public IFileRecord RomFile { get; }

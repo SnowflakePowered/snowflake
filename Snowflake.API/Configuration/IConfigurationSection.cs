@@ -1,36 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using Snowflake.Configuration.Attributes;
+﻿using System.Collections.Generic;
 
 namespace Snowflake.Configuration
 {
     /// <summary>
-    /// Represents one section in an emulator configuration. 
-    /// Inherit from this class and add your own properties, which will be serialized to a configuration file.
+    /// Represents a serializable section in a configuration 
     /// </summary>
-    //todo extend this doc
-    public interface IConfigurationSection 
+    /// <typeparam name="T">The type of configuration</typeparam>
+    public interface IConfigurationSection<out T> : IConfigurationSection where T: class, IConfigurationSection<T>
     {
         /// <summary>
-        /// The name of the section as it appears in the emulator configuration file
+        /// The typed section instance which holds the configuration values
         /// </summary>
-        string SectionName { get; }
+        T Configuration { get; }
+    }
+
+    /// <summary>
+    /// Represents a serializable section in a configuration 
+    /// </summary>
+    public interface IConfigurationSection : IEnumerable<KeyValuePair<IConfigurationOption, IConfigurationValue>>
+    {
         /// <summary>
-        /// The display name of the section for human-readable purposes
+        /// The descriptor that describes the configuration section.
         /// </summary>
-        string DisplayName { get; }
+        IConfigurationSectionDescriptor Descriptor { get; }
         /// <summary>
-        /// A description of what this section does
+        /// The read only mapping of property names to configuration values
+        /// Enumerating over the values key is not guaranteed to be in the same
+        /// order as the order the properties were defined.
+        /// 
+        /// The implementation is responsible for ensuring this mapping synced with the
+        /// values stored in the object and ensuring this mapping is immutable.
         /// </summary>
-        string Description { get; }
+        IDictionary<string, IConfigurationValue> Values { get; }
         /// <summary>
-        /// The options of this configuration section, keyed on the key name.
+        /// Gets or sets the option value with the specified property name in the configuration section
+        /// in an untyped and unsafe manner.
         /// </summary>
-        IReadOnlyDictionary<string, IConfigurationOption> Options { get; }
-        
+        /// <remarks>Only use this if you know what you are doing. The safe manner to access configuration values is
+        /// through the <see cref="IConfigurationSection{T}.Configuration"/> property.</remarks>
+        /// <param name="key">The property name of the configuration option</param>
+        /// <returns>The untyped value of the configuration value</returns>
+        object this[string key] { get; set; }
     }
 }

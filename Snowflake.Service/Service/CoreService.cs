@@ -9,7 +9,6 @@ using Snowflake.Service.JSWebSocketServer;
 using Snowflake.Service.Manager;
 using NLog;
 using Snowflake.Configuration;
-using Snowflake.Configuration.Hotkey;
 using Snowflake.Input;
 using Snowflake.Input.Controller.Mapped;
 using Snowflake.Records.Game;
@@ -45,11 +44,11 @@ namespace Snowflake.Service
             this.RegisterService<IMappedControllerElementCollectionStore>
                 (new SqliteMappedControllerElementCollectionStore(new SqliteDatabase(Path.Combine(this.AppDataDirectory, "controllermappings.db"))));
             this.RegisterService<IConfigurationCollectionStore>(new SqliteConfigurationCollectionStore(new SqliteDatabase(Path.Combine(this.AppDataDirectory, "configurations.db"))));
-            this.RegisterService<IHotkeyTemplateStore>(new SqliteHotkeyTemplateStore(new SqliteDatabase(Path.Combine(this.AppDataDirectory, "hotkeys.db"))));
+            //this.RegisterService<IHotkeyTemplateStore>(new SqliteHotkeyTemplateStore(new SqliteDatabase(Path.Combine(this.AppDataDirectory, "hotkeys.db"))));
             //this.RegisterService<IEmulatorAssembliesManager>(new EmulatorAssembliesManager(Path.Combine(this.AppDataDirectory, "emulators")));
             this.RegisterService<IPluginManager>(new PluginManager(this.AppDataDirectory, this)); 
             this.RegisterService<IAjaxManager>(new AjaxManager(this)); //todo deprecate with michi-based ipc
-           // this.RegisterService<IScrapeEngine>(new ScrapeEngine(this.Get<IStoneProvider>(), this.Get<IPluginManager>()));
+            //this.RegisterService<IScrapeEngine>(new ScrapeEngine(this.Get<IStoneProvider>(), this.Get<IPluginManager>()));
             var serverManager = this.Get<IServerManager>();
             serverManager.RegisterServer("AjaxApiServer", new ApiServer(this)); //todo deprecate with michi-based ipc
             serverManager.RegisterServer("WebSocketApiServer", new JsonApiWebSocketServer(30003, this)); //todo deprecate with michi-based ipc
@@ -69,6 +68,7 @@ namespace Snowflake.Service
 
         public T Get<T>()
         {
+            //todo throw?
             return this.serviceContainer.ContainsKey(typeof (T)) ? (T)this.serviceContainer[typeof (T)] : default(T);
         }
 

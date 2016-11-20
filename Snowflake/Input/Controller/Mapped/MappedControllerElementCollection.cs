@@ -10,40 +10,40 @@ namespace Snowflake.Input.Controller.Mapped
 {
     public class MappedControllerElementCollection : IMappedControllerElementCollection
     {
-        private static readonly IDictionary<ControllerElement, KeyboardKey> DefaultKeyboardMappings =
-            new Dictionary<ControllerElement, KeyboardKey>()
+        private static readonly IDictionary<ControllerElement, ControllerElement> DefaultKeyboardMappings =
+            new Dictionary<ControllerElement, ControllerElement>()
             {
-                {ControllerElement.Button0, KeyboardKey.Key0},
-                {ControllerElement.Button1, KeyboardKey.Key1},
-                {ControllerElement.Button2, KeyboardKey.Key2},
-                {ControllerElement.Button3, KeyboardKey.Key3},
-                {ControllerElement.Button4, KeyboardKey.Key4},
-                {ControllerElement.Button5, KeyboardKey.Key5},
-                {ControllerElement.Button6, KeyboardKey.Key6},
-                {ControllerElement.Button7, KeyboardKey.Key7},
-                {ControllerElement.Button8, KeyboardKey.Key8},
-                {ControllerElement.Button9, KeyboardKey.Key9},
-                {ControllerElement.ButtonStart, KeyboardKey.KeySpacebar},
-                {ControllerElement.ButtonSelect, KeyboardKey.KeyEnter},
-                {ControllerElement.ButtonA, KeyboardKey.KeyZ},
-                {ControllerElement.ButtonB, KeyboardKey.KeyX},
-                {ControllerElement.ButtonX, KeyboardKey.KeyC},
-                {ControllerElement.ButtonY, KeyboardKey.KeyV},
-                {ControllerElement.ButtonC, KeyboardKey.KeyC},
-                {ControllerElement.ButtonL, KeyboardKey.KeyQ},
-                {ControllerElement.ButtonR, KeyboardKey.KeyE},
-                {ControllerElement.DirectionalN, KeyboardKey.KeyUp},
-                {ControllerElement.DirectionalE, KeyboardKey.KeyRight},
-                {ControllerElement.DirectionalS, KeyboardKey.KeyDown},
-                {ControllerElement.DirectionalW, KeyboardKey.KeyLeft},
-                {ControllerElement.AxisLeftAnalogPositiveY, KeyboardKey.KeyW},
-                {ControllerElement.AxisLeftAnalogNegativeX, KeyboardKey.KeyA},
-                {ControllerElement.AxisLeftAnalogNegativeY, KeyboardKey.KeyS},
-                {ControllerElement.AxisLeftAnalogPositiveX, KeyboardKey.KeyD},
-                {ControllerElement.AxisRightAnalogPositiveY, KeyboardKey.KeyI},
-                {ControllerElement.AxisRightAnalogNegativeX, KeyboardKey.KeyJ},
-                {ControllerElement.AxisRightAnalogNegativeY, KeyboardKey.KeyK},
-                {ControllerElement.AxisRightAnalogPositiveX, KeyboardKey.KeyL}
+                {ControllerElement.Button0, ControllerElement.Key0},
+                {ControllerElement.Button1, ControllerElement.Key1},
+                {ControllerElement.Button2, ControllerElement.Key2},
+                {ControllerElement.Button3, ControllerElement.Key3},
+                {ControllerElement.Button4, ControllerElement.Key4},
+                {ControllerElement.Button5, ControllerElement.Key5},
+                {ControllerElement.Button6, ControllerElement.Key6},
+                {ControllerElement.Button7, ControllerElement.Key7},
+                {ControllerElement.Button8, ControllerElement.Key8},
+                {ControllerElement.Button9, ControllerElement.Key9},
+                {ControllerElement.ButtonStart, ControllerElement.KeySpacebar},
+                {ControllerElement.ButtonSelect, ControllerElement.KeyEnter},
+                {ControllerElement.ButtonA, ControllerElement.KeyZ},
+                {ControllerElement.ButtonB, ControllerElement.KeyX},
+                {ControllerElement.ButtonX, ControllerElement.KeyC},
+                {ControllerElement.ButtonY, ControllerElement.KeyV},
+                {ControllerElement.ButtonC, ControllerElement.KeyC},
+                {ControllerElement.ButtonL, ControllerElement.KeyQ},
+                {ControllerElement.ButtonR, ControllerElement.KeyE},
+                {ControllerElement.DirectionalN, ControllerElement.KeyUp},
+                {ControllerElement.DirectionalE, ControllerElement.KeyRight},
+                {ControllerElement.DirectionalS, ControllerElement.KeyDown},
+                {ControllerElement.DirectionalW, ControllerElement.KeyLeft},
+                {ControllerElement.AxisLeftAnalogPositiveY, ControllerElement.KeyW},
+                {ControllerElement.AxisLeftAnalogNegativeX, ControllerElement.KeyA},
+                {ControllerElement.AxisLeftAnalogNegativeY, ControllerElement.KeyS},
+                {ControllerElement.AxisLeftAnalogPositiveX, ControllerElement.KeyD},
+                {ControllerElement.AxisRightAnalogPositiveY, ControllerElement.KeyI},
+                {ControllerElement.AxisRightAnalogNegativeX, ControllerElement.KeyJ},
+                {ControllerElement.AxisRightAnalogNegativeY, ControllerElement.KeyK},
+                {ControllerElement.AxisRightAnalogPositiveX, ControllerElement.KeyL}
             };
 
         public IEnumerator<IMappedControllerElement> GetEnumerator()
@@ -91,13 +91,9 @@ namespace Snowflake.Input.Controller.Mapped
             var mappedElements = from element in virtualDevice.Layout
                                  select new MappedControllerElement(element.Key)
                                  {
-                                     DeviceKeyboardKey =
-                                   MappedControllerElementCollection.DefaultKeyboardMappings.ContainsKey(element.Key)
-                                 ? MappedControllerElementCollection.DefaultKeyboardMappings[element.Key]
-                                 : KeyboardKey.KeyNone,
-                                     DeviceElement =
-                                       element.Key != ControllerElement.Pointer2D ? ControllerElement.Keyboard
-                                       : ControllerElement.Pointer2D
+                                     DeviceElement = MappedControllerElementCollection.DefaultKeyboardMappings.ContainsKey(element.Key) 
+                                     ? MappedControllerElementCollection.DefaultKeyboardMappings[element.Key]
+                                 : ControllerElement.KeyNone
                                  };
             var elementCollection = new MappedControllerElementCollection(realKeyboard.LayoutID, virtualDevice.LayoutID);
             foreach (var element in mappedElements)

@@ -7,24 +7,22 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
-using Snowflake.Configuration.Hotkey;
 using Snowflake.Configuration.Input;
 using Snowflake.Emulator;
 using Snowflake.Input.Controller;
 using Snowflake.Input.Device;
-using Snowflake.Plugin.EmulatorAdapter.RetroArch;
-using Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters;
-using Snowflake.Plugin.EmulatorAdapter.RetroArch.Input;
+using Snowflake.Plugin.Emulators.RetroArch;
+using Snowflake.Plugin.Emulators.RetroArch.Adapters;
+using Snowflake.Plugin.Emulators.RetroArch.Input;
 using Snowflake.Records.Game;
 using Snowflake.Platform;
-using Snowflake.Plugin.EmulatorAdapter.RetroArch.Configuration;
+using Snowflake.Plugin.Emulators.RetroArch.Configuration;
 using Snowflake.Records.File;
-using Snowflake.Plugin.EmulatorAdapter.RetroArch.Executable;
-using Snowflake.Plugin.EmulatorAdapter.RetroArch.Input.Hotkeys;
-using Snowflake.Plugin.EmulatorAdapter.RetroArch.Selections.VideoConfiguration;
-using Snowflake.Plugin.EmulatorAdapter.RetroArch.Shaders;
+using Snowflake.Plugin.Emulators.RetroArch.Executable;
+using Snowflake.Plugin.Emulators.RetroArch.Selections.VideoConfiguration;
+using Snowflake.Plugin.Emulators.RetroArch.Shaders;
 
-namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
+namespace Snowflake.Plugin.Emulators.RetroArch
 {
     internal class RetroArchInstance : EmulatorInstance
     {
@@ -44,17 +42,26 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
             this.CorePath = corePath;
         }
 
-        private string BuildRetroarchCfg(RetroArchConfiguration retroArchConfiguration)
+        protected IDictionary<string, string> BuildConfiguration(IConfigurationCollection<RetroArchConfiguration> retroArchConfiguration)
         {
             //build the configuration
-            var sectionBuilder = new StringBuilder(retroArchConfiguration.ToString());
-            IInputSerializer inputSerializer = new InputSerializer(retroArchConfiguration.Serializer);
-            IHotkeySerializer hotkeySerializer = new HotkeySerializer(retroArchConfiguration.Serializer);
+            IDictionary<string, string> configurations = new Dictionary<string, string>();
+            foreach(var output in retroArchConfiguration.Descriptor.Outputs.Values)
+            {
+                var sectionBuilder = new StringBuilder();
+                var serializer = new KeyValuePairConfigurationSerializer(output.BooleanMapping, "nul", "=");
+                foreach(var section in retroArchConfiguration.Where(c => retroArchConfiguration.Descriptor.GetDestination(c.Key) == output.Key))
+                {
+                    sectionBuilder.Append(serializer.Serialize(section.Value));
+                }
+                configurations[output.Key] = sectionBuilder.ToString();
+            }
+            var retroarchSerializer = new KeyValuePairConfigurationSerializer(retroArchConfiguration.Descriptor.Outputs["#retroarch"].BooleanMapping, "nul", "=");
+            IInputSerializer inputSerializer = new InputSerializer(retroarchSerializer);
             //handle input config
             foreach (var port in this.ControllerPorts)
             {
-                var inputTemplate = new RetroPadTemplate();
-                inputTemplate.SetInputValues(port.MappedElementCollection, port.PluggedDevice, port.EmulatedPortNumber);
+                var inputTemplate = new InputTemplate<RetroPadTemplate>(port.MappedElementCollection, port.EmulatedPortNumber);
                 var mappings = (from inputMappings in this.EmulatorAdapter.InputMappings
                                 where inputMappings.InputApi == InputApi.DirectInput
                                 where inputMappings.DeviceLayouts.Contains(port.PluggedDevice.DeviceLayout.LayoutID)
@@ -62,64 +69,61 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
                 if (mappings == null) throw new InvalidOperationException("Adapter does not support device layout");
                 //serialize the input template
                 var inputConfig = inputSerializer.Serialize(inputTemplate, mappings);
-                sectionBuilder.Append(inputConfig);
-
-                if (mappings.DeviceLayouts.Contains("KEYBOARD_DEVICE"))
-                {
-                    sectionBuilder.Append(hotkeySerializer.SerializeKeyboard(new RetroarchHotkeyTemplate(), mappings));
-                } //todo serialize controller hotkeys ONCE only.
+                configurations["#retroarch"] += inputConfig;
             }
-            return sectionBuilder.ToString();
+            return configurations;
         }
 
         public override void Create()
         {
             //do configuration here
-
-            var retroArchConfiguration = (RetroArchConfiguration)this.ConfigurationCollections["retroarch.cfg"];
-            retroArchConfiguration.DirectoryConfiguration.SavefileDirectory =
+            IConfigurationCollection<RetroArchConfiguration> retroArchConfiguration = this.Configuration as IConfigurationCollection<RetroArchConfiguration>;
+            retroArchConfiguration.Configuration.DirectoryConfiguration.SavefileDirectory =
                 this.EmulatorAdapter.SaveManager.GetSaveDirectory(this.EmulatorAdapter.SaveType, this.Game.Guid, this.SaveSlot);
-            retroArchConfiguration.DirectoryConfiguration.SystemDirectory =
+            retroArchConfiguration.Configuration.DirectoryConfiguration.SystemDirectory =
                 this.EmulatorAdapter.BiosManager.GetBiosDirectory(this.Platform);
-            retroArchConfiguration.DirectoryConfiguration.CoreOptionsPath = Path.Combine(this.InstancePath,
+            retroArchConfiguration.Configuration.DirectoryConfiguration.CoreOptionsPath = Path.Combine(this.InstancePath,
                 "retroarch-core-options.cfg");
-            if (retroArchConfiguration.VideoConfiguration.VideoShaderEnable)
+            if (retroArchConfiguration.Configuration.VideoConfiguration.VideoShaderEnable)
             {
                 var selectedShader = typeof(RetroArchShader)
-                .GetField(Enum.GetName(typeof(RetroArchShader), retroArchConfiguration.VideoConfiguration.VideoShader))
+                .GetField(Enum.GetName(typeof(RetroArchShader), retroArchConfiguration.Configuration.VideoConfiguration.VideoShader))
                 .GetCustomAttribute<ShaderAttribute>();
-                if (retroArchConfiguration.VideoConfiguration.VideoDriver == VideoDriver.Vulkan && selectedShader.SlangSupport) 
+                if (retroArchConfiguration.Configuration.VideoConfiguration.VideoDriver == VideoDriver.Vulkan && selectedShader.SlangSupport) 
                 {
-                    retroArchConfiguration.VideoConfiguration.VideoShaderPath =
+                    retroArchConfiguration.Configuration.VideoConfiguration.VideoShaderPath =
                         this.ShaderManager?.GetShaderPath(selectedShader.ShaderName, ShaderType.Slang);
                 }
                 else
                 {
-                    retroArchConfiguration.VideoConfiguration.VideoShaderPath =
+                    retroArchConfiguration.Configuration.VideoConfiguration.VideoShaderPath =
                         this.ShaderManager?.GetShaderPath(selectedShader.ShaderName, selectedShader.CgSupport ? ShaderType.Cg :
                         selectedShader.GlslSupport ? ShaderType.Glsl : ShaderType.Unknown);
 
                 }
             }
            
-
-            string retroarchCfg = this.BuildRetroarchCfg(retroArchConfiguration);
-            
-            //output to the filename
-            File.WriteAllText(Path.Combine(this.InstancePath, retroArchConfiguration.FileName), retroarchCfg);
-
-            if (this.ConfigurationCollections.ContainsKey("retroarch-core-options.cfg"))
+            foreach(var cfg in this.BuildConfiguration(retroArchConfiguration))
             {
-                var coreConfig = this.ConfigurationCollections["retroarch-core-options.cfg"];
-                File.WriteAllText(Path.Combine(this.InstancePath, "retroarch-core-options.cfg"), coreConfig.ToString());
-            }
+                File.WriteAllText(Path.Combine(this.InstancePath, this.Configuration.Descriptor.Outputs[cfg.Key].Destination), cfg.Value);
 
-            //debug
-            Console.WriteLine(Path.Combine(this.InstancePath, retroArchConfiguration.FileName));
-            
-            //complete.
-            this.CreateTime = DateTimeOffset.UtcNow;
-            this.IsCreated = true;
+            }
+            //    string retroarchCfg = this.BuildRCon(retroArchConfiguration);
+
+            //output to the filename
+            /*  File.WriteAllText(Path.Combine(this.InstancePath, retroArchConfiguration.FileName), retroarchCfg);
+
+              if (this.ConfigurationCollections.ContainsKey("retroarch-core-options.cfg"))
+              {
+                  var coreConfig = this.ConfigurationCollections["retroarch-core-options.cfg"];
+              }
+
+              //debug*/
+              Console.WriteLine(Path.Combine(this.InstancePath));
+
+             //complete.
+              this.CreateTime = DateTimeOffset.UtcNow;
+              this.IsCreated = true;
         }
 
         public override void Start()
@@ -128,6 +132,7 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
             info.Debug = true;
             info.CorePath = this.CorePath;
             info.ConfigPath = Path.Combine(this.InstancePath, "retroarch.cfg");
+            Console.WriteLine(info.GetStartInfo().FileName + " " + info.GetStartInfo().Arguments);
             this.runningProcess = Process.Start(info.GetStartInfo());
             Task.Run(() => this.runningProcess.WaitForExit()).ContinueWith(x => this.Destroy());
             

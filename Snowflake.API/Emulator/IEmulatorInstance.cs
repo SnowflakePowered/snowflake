@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
-using Snowflake.Configuration.Hotkey;
 using Snowflake.Platform;
 using Snowflake.Records.File;
 using Snowflake.Records.Game;
@@ -39,7 +38,7 @@ namespace Snowflake.Emulator
         /// <summary>
         /// The set of configuration collections for this instance
         /// </summary>
-        IDictionary<string, IConfigurationCollection> ConfigurationCollections { get; }
+        IConfigurationCollection Configuration { get; }
         /// <summary>
         /// Various metadata about this instance
         /// </summary>
@@ -56,10 +55,6 @@ namespace Snowflake.Emulator
         /// The platform being emulated.
         /// </summary>
         IPlatformInfo Platform { get; }
-        /// <summary>
-        /// The hotkey template associated with this instance
-        /// </summary>
-        IHotkeyTemplate HotkeyTemplate { get; }
         /// <summary>
         /// The directory to store temporary instance files, such as generate configuration.
         /// </summary>

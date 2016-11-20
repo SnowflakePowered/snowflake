@@ -5,18 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
-using Snowflake.Configuration.Hotkey;
 using Snowflake.Emulator;
 using Snowflake.Extensibility;
-using Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters.Nestopia.Configuration;
-using Snowflake.Plugin.EmulatorAdapter.RetroArch.Executable;
-using Snowflake.Plugin.EmulatorAdapter.RetroArch.Input.Hotkeys;
-using Snowflake.Plugin.EmulatorAdapter.RetroArch.Shaders;
+using Snowflake.Plugin.Emulators.RetroArch.Adapters.Nestopia.Configuration;
+using Snowflake.Plugin.Emulators.RetroArch.Executable;
+using Snowflake.Plugin.Emulators.RetroArch.Shaders;
 using Snowflake.Records.File;
 using Snowflake.Records.Game;
 using Snowflake.Service;
 
-namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters.Nestopia
+namespace Snowflake.Plugin.Emulators.RetroArch.Adapters.Nestopia
 {
     [Plugin("RetroArchNestopia")]
     public class NestopiaRetroArchAdapter : RetroArchCommonAdapter
@@ -24,11 +22,10 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters.Nestopia
         public NestopiaRetroArchAdapter(string appDataDirectory,
             RetroArchProcessHandler processHandler, IStoneProvider stoneProvider,
             IConfigurationCollectionStore collectionStore,
-            IHotkeyTemplateStore hotkeyStore,
             IBiosManager biosManager, ISaveManager saveManager,
             ShaderManager shaderManager)
             : base(
-                appDataDirectory, processHandler, stoneProvider, collectionStore, hotkeyStore, biosManager, saveManager, shaderManager)
+                appDataDirectory, processHandler, stoneProvider, collectionStore, biosManager, saveManager, shaderManager)
         {
            
         }
@@ -37,7 +34,7 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters.Nestopia
             IList<IEmulatedPort> ports)
         {
 
-            var configurations = this.GetConfigurations(gameRecord);
+            var configurations = this.GetConfiguration(gameRecord);
             var platform = this.StoneProvider.Platforms[gameRecord.PlatformId];
 
             return new RetroArchInstance(gameRecord, file, this, this.CorePath, this.ProcessHandler, saveSlot, platform, ports)
@@ -46,26 +43,14 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters.Nestopia
             };
         }
 
-        public override IDictionary<string, IConfigurationCollection> GetConfigurations(IGameRecord gameRecord)
+        public override IConfigurationCollection GetConfiguration(IGameRecord gameRecord, string profileName = "default")
         {
-            var retroarchConfig = this.CollectionStore.GetConfiguration<RetroArchConfiguration>(gameRecord.Guid);
-            var nestopiaConfig = this.CollectionStore.GetConfiguration<NestopiaCoreConfigurationCollection>(gameRecord.Guid);
-            return new Dictionary<string, IConfigurationCollection>
-            {
-                {retroarchConfig.FileName, retroarchConfig},
-                {"retroarch-core-options.cfg", nestopiaConfig } //convention requires core options to have this file name.
-            };
-       }
+            return this.CollectionStore.Get<NestopiaConfiguration>(gameRecord.Guid, this.PluginName, profileName);
+        }
 
-        public override IDictionary<string, IConfigurationCollection> GetDefaultConfigurations()
+        public override IConfigurationCollection GetConfiguration()
         {
-            var retroarchConfig = ConfigurationCollection.MakeDefault<RetroArchConfiguration>();
-            var nestopiaConfig = ConfigurationCollection.MakeDefault<NestopiaCoreConfigurationCollection>();
-            return new Dictionary<string, IConfigurationCollection>
-            {
-                {retroarchConfig.FileName, retroarchConfig},
-                 {"retroarch-core-options.cfg", nestopiaConfig }  //convention requires core options to have this file name.
-            };
+            return new ConfigurationCollection<NestopiaConfiguration>();
         }
 
 

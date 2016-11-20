@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration.Attributes;
 
-namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters.Nestopia.Selections
+namespace Snowflake.Plugin.Emulators.RetroArch.Adapters.Nestopia.Selections
 {
     public enum ColorPalette
     {

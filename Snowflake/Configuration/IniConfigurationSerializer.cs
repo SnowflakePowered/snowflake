@@ -37,10 +37,10 @@ namespace Snowflake.Configuration
         public override string Serialize(IConfigurationSection configurationSection)
         {
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.AppendLine(this.SerializeHeader(configurationSection.SectionName));
-            foreach (var config in from option in configurationSection.Options.Values where !option.Flag select option)
+            stringBuilder.AppendLine(this.SerializeHeader(configurationSection.Descriptor.SectionName));
+            foreach (var config in from option in configurationSection where !option.Key.Flag select option)
             {
-                stringBuilder.AppendLine(this.SerializeLine(config.OptionName, config.Value));
+                stringBuilder.AppendLine(this.SerializeLine(config.Key.OptionName, config.Value.Value));
             }
             return stringBuilder.ToString();
         }

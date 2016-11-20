@@ -11,11 +11,12 @@ namespace Snowflake.Configuration.Tests
 {
     public class KeyValuePairConfigurationSerializerTests
     {
-       [Fact]
+        [Fact]
         public void KeyValuePairConfigurationSerializer_SerializeTest()
         {
             var serializer = new KeyValuePairConfigurationSerializer(new BooleanMapping("true", "false"), "null", "=");
-            string serializedValue = serializer.Serialize(new ExampleConfigurationSection());
+            var config = new ConfigurationCollection<ExampleConfigurationCollection>();
+            string serializedValue = serializer.Serialize(config.Configuration.ExampleConfiguration);
             Assert.Equal(TestUtilities.GetStringResource("Configurations.ExampleConfigurationSection.cfg")
                 .Replace(Environment.NewLine, ""),
                 serializedValue.Replace(Environment.NewLine, ""));

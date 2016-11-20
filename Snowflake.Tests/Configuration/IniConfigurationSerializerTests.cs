@@ -11,11 +11,12 @@ namespace Snowflake.Configuration.Tests
 {
     public class IniConfigurationSerializerTests
     {
-       [Fact]
+        [Fact]
         public void IniConfigurationSerializer_SerializeTest()
         {
             var serializer = new IniConfigurationSerializer(new BooleanMapping("true", "false"), "null");
-            string serializedValue = serializer.Serialize(new ExampleConfigurationSection());
+            var config = new ConfigurationCollection<ExampleConfigurationCollection>();
+            string serializedValue = serializer.Serialize(config.Configuration.ExampleConfiguration);
             Assert.Equal(TestUtilities.GetStringResource("Configurations.ExampleConfigurationSection.ini")
                 .Replace(Environment.NewLine, ""),
                 serializedValue.Replace(Environment.NewLine, ""));

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration.Attributes;
 
-namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Selections.InputConfiguration
+namespace Snowflake.Plugin.Emulators.RetroArch.Selections.InputConfiguration
 {
     public enum InputJoypadDriver
     {

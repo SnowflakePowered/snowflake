@@ -1,23 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Snowflake.Configuration;
+﻿using Snowflake.Configuration;
 using Snowflake.Configuration.Attributes;
 
-namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Configuration
+namespace Snowflake.Plugin.Emulators.RetroArch.Configuration
 {
-    public class FramethrottleConfiguration : ConfigurationSection
+    [ConfigurationSection("framethottle", "Framethrottle")]
+    public interface FramethrottleConfiguration : IConfigurationSection<FramethrottleConfiguration>
     {
-        [ConfigurationOption("fastforward_ratio", DisplayName = "Maximum Run Speed")]
-        public double FastforwardRatio { get; set; } = 0.000000;
+        [ConfigurationOption("fastforward_ratio", 0.000000, DisplayName = "Maximum Run Speed")]
+        double FastforwardRatio { get; set; }
 
-        [ConfigurationOption("slowmotion_ratio", DisplayName = "Slowmotion Ratio")]
-        public double SlowmotionRatio { get; set; } = 3.000000;
-
-        public FramethrottleConfiguration() : base("framethottle", "Framethrottle")
-        {
-        }
+        [ConfigurationOption("slowmotion_ratio", 3.000000, DisplayName = "Slowmotion Ratio")]
+        double SlowmotionRatio { get; set; }
     }
 }

@@ -22,12 +22,6 @@ namespace Snowflake.Configuration.Input
         /// </summary>
         IEnumerable<string> DeviceLayouts { get; }
         /// <summary>
-        /// Gets the mapping for this keyboard key
-        /// </summary>
-        /// <param name="key">The keyboard key for this mapping</param>
-        /// <returns>The mapped string for this</returns>
-        string this[KeyboardKey key] { get; }
-        /// <summary>
         /// Gets the mapping for this controller element, or the null value if not present
         /// </summary>
         /// <param name="element">The mapping for this controller element</param>

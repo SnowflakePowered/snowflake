@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.25914.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake", "Snowflake\Snowflake.csproj", "{8F1D65ED-4A96-4A0A-8371-53655A60A2B3}"
 EndProject
@@ -45,8 +45,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Tests.ManualInteg
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scrapers", "Scrapers", "{F1916D1A-9EDB-4E1A-86A3-E245FE72845E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Plugin.EmulatorAdapter.RetroArch", "Emulators\Snowflake.Plugin.EmulatorAdapter.RetroArch\Snowflake.Plugin.EmulatorAdapter.RetroArch.csproj", "{287A6DA9-32DE-4488-9C6A-FD14571295CE}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Plugin.Scraper.TheGamesDb", "Scrapers\Snowflake.Plugin.Scraper.TheGamesDb\Snowflake.Plugin.Scraper.TheGamesDb.csproj", "{5147DCB0-0C60-4D44-A737-067C99BCCD65}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Events", "Snowflake.Events\Snowflake.Events.csproj", "{7AE8E842-E2A9-4F01-BEC1-8A7A60CC16BB}"
@@ -58,6 +56,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Plugin.InputEnumerators", "Snowflake.Plugin.InputEnumerators\Snowflake.Plugin.InputEnumerators.csproj", "{D4F012C1-CF84-487F-B1B2-48243F43EE1F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Plugin.InputManager.Win32", "Snowflake.Plugin.InputManager.Win32\Snowflake.Plugin.InputManager.Win32.csproj", "{F359B3F3-D477-423A-B485-EA8D7C046836}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Plugin.Emulators.RetroArch", "Emulators\Snowflake.Plugin.EmulatorAdapter.RetroArch\Snowflake.Plugin.Emulators.RetroArch.csproj", "{287A6DA9-32DE-4488-9C6A-FD14571295CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -163,14 +163,6 @@ Global
 		{99A0D90C-C147-458A-9EFE-E8DC6CCD95A3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{99A0D90C-C147-458A-9EFE-E8DC6CCD95A3}.Release|x86.ActiveCfg = Release|Any CPU
 		{99A0D90C-C147-458A-9EFE-E8DC6CCD95A3}.Release|x86.Build.0 = Release|Any CPU
-		{287A6DA9-32DE-4488-9C6A-FD14571295CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{287A6DA9-32DE-4488-9C6A-FD14571295CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{287A6DA9-32DE-4488-9C6A-FD14571295CE}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{287A6DA9-32DE-4488-9C6A-FD14571295CE}.Debug|x86.Build.0 = Debug|Any CPU
-		{287A6DA9-32DE-4488-9C6A-FD14571295CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{287A6DA9-32DE-4488-9C6A-FD14571295CE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{287A6DA9-32DE-4488-9C6A-FD14571295CE}.Release|x86.ActiveCfg = Release|Any CPU
-		{287A6DA9-32DE-4488-9C6A-FD14571295CE}.Release|x86.Build.0 = Release|Any CPU
 		{5147DCB0-0C60-4D44-A737-067C99BCCD65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5147DCB0-0C60-4D44-A737-067C99BCCD65}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5147DCB0-0C60-4D44-A737-067C99BCCD65}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -211,6 +203,14 @@ Global
 		{F359B3F3-D477-423A-B485-EA8D7C046836}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F359B3F3-D477-423A-B485-EA8D7C046836}.Release|x86.ActiveCfg = Release|Any CPU
 		{F359B3F3-D477-423A-B485-EA8D7C046836}.Release|x86.Build.0 = Release|Any CPU
+		{287A6DA9-32DE-4488-9C6A-FD14571295CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{287A6DA9-32DE-4488-9C6A-FD14571295CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{287A6DA9-32DE-4488-9C6A-FD14571295CE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{287A6DA9-32DE-4488-9C6A-FD14571295CE}.Debug|x86.Build.0 = Debug|Any CPU
+		{287A6DA9-32DE-4488-9C6A-FD14571295CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{287A6DA9-32DE-4488-9C6A-FD14571295CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{287A6DA9-32DE-4488-9C6A-FD14571295CE}.Release|x86.ActiveCfg = Release|Any CPU
+		{287A6DA9-32DE-4488-9C6A-FD14571295CE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -220,7 +220,7 @@ Global
 		{E05BE9C3-3E1E-4100-8DAC-DFF598C11477} = {84DDAD8A-5C57-46EC-BE2C-EA7F1827AD76}
 		{B152A58A-7D3C-4C54-9BFC-77023180A4D7} = {84DDAD8A-5C57-46EC-BE2C-EA7F1827AD76}
 		{FE549E81-F09C-480D-ABD1-45054E81872B} = {182F1747-F6E6-43BA-BB14-EFC1127DE3F4}
-		{287A6DA9-32DE-4488-9C6A-FD14571295CE} = {6D5D6313-05E3-436F-A33A-9AC96CFF1199}
 		{5147DCB0-0C60-4D44-A737-067C99BCCD65} = {F1916D1A-9EDB-4E1A-86A3-E245FE72845E}
+		{287A6DA9-32DE-4488-9C6A-FD14571295CE} = {6D5D6313-05E3-436F-A33A-9AC96CFF1199}
 	EndGlobalSection
 EndGlobal

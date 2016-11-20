@@ -1,45 +1,92 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Configuration;
+using System.Collections.Immutable;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
+using Castle.Core.Internal;
+using Castle.DynamicProxy;
+using EnumsNET.NonGeneric;
+using NLog.LayoutRenderers.Wrappers;
 using Snowflake.Configuration.Attributes;
+using Snowflake.DynamicConfiguration.Interceptors;
 
 namespace Snowflake.Configuration
 {
-    public abstract class ConfigurationSection : IConfigurationSection
+    public class ConfigurationSection<T> : IConfigurationSection<T> where T : class, IConfigurationSection<T>
     {
-        public string SectionName { get; }
-        public string DisplayName { get; }
-        public string Description { get; }
-        public IReadOnlyDictionary<string, IConfigurationOption> Options { get; }
+        public T Configuration { get; }
+        public IConfigurationSectionDescriptor Descriptor { get; }
 
-        protected ConfigurationSection(string sectionName, string displayName, string description)
+        public IDictionary<string, IConfigurationValue> Values
+            => ImmutableDictionary.CreateRange(this.configurationInterceptor.Values);
+
+        public object this[string key]
         {
-            this.SectionName = sectionName;
-            this.DisplayName = displayName;
-            this.Description = description;
-            //cache the configuration properties of this section
-            this.Options = this.GetConfigurationProperties();
+            get { return configurationInterceptor.Values[key]; }
+            set { this.configurationInterceptor.Values[key].Value = value; }
         }
 
-        private IReadOnlyDictionary<string, IConfigurationOption> GetConfigurationProperties()
+        private readonly ConfigurationInterceptor configurationInterceptor;
+
+        public ConfigurationSection(): this(new Dictionary<string, IConfigurationValue>())
         {
-            return (from propertyInfo in this.GetType().GetRuntimeProperties()
-                where propertyInfo.IsDefined(typeof (ConfigurationOptionAttribute), true)
-                let option = new ConfigurationOption(propertyInfo, this) as IConfigurationOption
-                select option)
-                .ToDictionary(option => option.KeyName, option => option);
         }
 
-
-        protected ConfigurationSection(string sectionName, string displayName)
-            : this(sectionName, displayName, String.Empty)
+        internal ConfigurationSection(IDictionary<string, ValueTuple<string, Guid>> values)
         {
+            ProxyGenerator generator = new ProxyGenerator();
+            this.Descriptor = ConfigurationDescriptorCache.GetSectionDescriptor<T>();
+            this.configurationInterceptor = new ConfigurationInterceptor(this.Descriptor,
+                values.ToDictionary(p => p.Key, FromValueTuple));
+
+            this.Configuration =
+                generator.CreateInterfaceProxyWithoutTarget<T>(new ConfigurationCircularInterceptor<T>(this),
+                    configurationInterceptor);
+        }
+
+        public ConfigurationSection(IDictionary<string, IConfigurationValue> values)
+        {
+            ProxyGenerator generator = new ProxyGenerator();
+            this.Descriptor = new ConfigurationSectionDescriptor<T>();
+            this.configurationInterceptor = new ConfigurationInterceptor(this.Descriptor, values);
+          
+            this.Configuration =
+                generator.CreateInterfaceProxyWithoutTarget<T>(new ConfigurationCircularInterceptor<T>(this),
+                    configurationInterceptor);
+        }
+
+        private static object FromString(string strValue, Type optionType)
+        {
+            return optionType == typeof(string)
+                ? strValue //return string value if string
+                : optionType.IsEnum
+                    ? NonGenericEnums.Parse(optionType, strValue)//return parsed enum if enum
+                    : TypeDescriptor.GetConverter(optionType).ConvertFromInvariantString(strValue);
+        }
+        private IConfigurationValue FromValueTuple(KeyValuePair<string, ValueTuple<string, Guid>> tuple)
+        {
+            Type t = this.Descriptor[tuple.Key].Type;
+            return new ConfigurationValue(FromString(tuple.Value.Item1, t), tuple.Value.Item2);
+        }
+
+        public IEnumerator<KeyValuePair<IConfigurationOption, IConfigurationValue>> GetEnumerator()
+        {
+            return this.Descriptor.Options
+                .Select(o => new KeyValuePair<IConfigurationOption, IConfigurationValue>(o, this.Values[o.KeyName]))
+                .GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
+
+
+
 }

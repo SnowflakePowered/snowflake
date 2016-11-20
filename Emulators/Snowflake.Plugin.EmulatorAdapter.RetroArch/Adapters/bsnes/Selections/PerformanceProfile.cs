@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters.bsnes.Selections
+namespace Snowflake.Plugin.Emulators.RetroArch.Adapters.bsnes.Selections
 {
     public enum PerformanceProfile
     {

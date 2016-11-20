@@ -43,7 +43,7 @@ namespace Snowflake.Configuration.Hotkey
             this.KeyboardConfigurationKey = attribute.KeyboardConfigurationKey ?? this.HotkeyName;
             this.ControllerConfigurationKey = attribute.ControllerConfigurationKey ?? this.HotkeyName;
             this.ControllerAxisConfigurationKey = attribute.AxisConfigurationKey ??
-                                                  this.ControllerConfigurationKey;
+            this.ControllerConfigurationKey;
         }
     }
 }

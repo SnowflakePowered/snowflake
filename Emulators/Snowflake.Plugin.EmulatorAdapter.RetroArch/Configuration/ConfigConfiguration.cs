@@ -1,19 +1,16 @@
 ﻿using Snowflake.Configuration;
 using Snowflake.Configuration.Attributes;
 
-namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Configuration
+namespace Snowflake.Plugin.Emulators.RetroArch.Configuration
 {
-    public class ConfigConfiguration : ConfigurationSection
+    [ConfigurationSection("config", "Configuration Options")]
+    public interface ConfigConfiguration : IConfigurationSection<ConfigConfiguration>
     {
-        [ConfigurationOption("config_save_on_exit", DisplayName = "Save Config on exit", Private = true)]
-        public bool ConfigSaveOnExit { get; set; } = false;
+        [ConfigurationOption("config_save_on_exit", false, DisplayName = "Save Config on exit", Private = true)]
+        bool ConfigSaveOnExit { get; set; }
 
-        [ConfigurationOption("auto_overrides_enable", DisplayName = "Automatically load config overrides", Private = true)]
-        public bool AutoOverridesEnable { get; set; } = false;
-
-
-        public ConfigConfiguration() : base("config", "Configuration Options")
-        {
-        }
+        [ConfigurationOption("auto_overrides_enable", false, DisplayName = "Automatically load config overrides",
+            Private = true)]
+        bool AutoOverridesEnable { get; set; }
     }
 }
