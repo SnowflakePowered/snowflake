@@ -46,7 +46,7 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Adapters.Nestopia
         public override IConfigurationCollection GetConfiguration(IGameRecord gameRecord, string profileName = "default")
         {
             return this.CollectionStore.Get<NestopiaConfiguration>(gameRecord.Guid, this.PluginName, profileName);
-       }
+        }
 
         public override IConfigurationCollection GetConfiguration()
         {

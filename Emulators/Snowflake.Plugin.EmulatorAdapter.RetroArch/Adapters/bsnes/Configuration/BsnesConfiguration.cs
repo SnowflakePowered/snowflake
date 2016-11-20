@@ -5,18 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
 using Snowflake.Configuration.Attributes;
-using Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters.bsnes.Selections;
 
-namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters.bsnes.Configuration
+namespace Snowflake.Plugin.Emulators.RetroArch.Adapters.bsnes.Configuration
 {
-    public class BsnesConfiguration : ConfigurationSection
+    [ConfigurationFile("#coreoptions", "retroarch-core-options.cfg", "enabled", "disabled")]
+    public interface BsnesConfiguration : RetroArchConfiguration, IConfigurationCollection<BsnesConfiguration>
     {
-        [ConfigurationOption("flag#performanceprofile", DisplayName = "Performance Profile", Flag = true)]
-        public PerformanceProfile PerformanceProfile { get; set; } = PerformanceProfile.Performance;
-
-    
-        public BsnesConfiguration() : base("bsnes", "bsnes Settings", "bsnes Core Options")
-        {
-        }
+        [SerializableSection("#coreoptions")]
+        BsnesCoreConfiguration BsnesCoreConfig { get; set; }
     }
 }

@@ -13,6 +13,8 @@ using Snowflake.Plugin.Emulators.RetroArch.Executable;
 using Snowflake.Plugin.Emulators.RetroArch.Shaders;
 using Snowflake.Service;
 using Snowflake.Service.Manager;
+using Snowflake.Plugin.Emulators.RetroArch.Adapters.Nestopia;
+using Snowflake.Plugin.Emulators.RetroArch.Adapters.Bsnes;
 
 namespace Snowflake.Plugin.Emulators.RetroArch
 {
@@ -25,11 +27,10 @@ namespace Snowflake.Plugin.Emulators.RetroArch
             var shaderManager = new ShaderManager(Path.Combine(processHandler.PluginDataPath, "shaders"));
             pm.Register(processHandler);
 
-       /*     pm.Register(new NestopiaRetroArchAdapter(coreInstance.AppDataDirectory,
+            pm.Register(new NestopiaRetroArchAdapter(coreInstance.AppDataDirectory,
                 processHandler,
                 coreInstance.Get<IStoneProvider>(),
                 coreInstance.Get<IConfigurationCollectionStore>(), 
-                coreInstance.Get<IHotkeyTemplateStore>(),
                 new BiosManager(coreInstance.AppDataDirectory),
                 new SaveManager(coreInstance.AppDataDirectory), shaderManager));
 
@@ -37,9 +38,8 @@ namespace Snowflake.Plugin.Emulators.RetroArch
                processHandler,
                coreInstance.Get<IStoneProvider>(),
                coreInstance.Get<IConfigurationCollectionStore>(),
-               coreInstance.Get<IHotkeyTemplateStore>(),
                new BiosManager(coreInstance.AppDataDirectory),
-               new SaveManager(coreInstance.AppDataDirectory), shaderManager));*/
+               new SaveManager(coreInstance.AppDataDirectory), shaderManager));
         }
     }
 }

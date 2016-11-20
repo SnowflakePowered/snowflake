@@ -104,6 +104,10 @@
       <Project>{2841aeea-03d5-47b0-9d90-375dfa19559a}</Project>
       <Name>Snowflake.API</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Snowflake.Service\Snowflake.Service.csproj">
+      <Project>{F3A129D6-0C4C-41BC-B60B-5B7E7E6D1A77}</Project>
+      <Name>Snowflake.Service</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Snowflake.Tests\Snowflake.Tests.csproj">
       <Project>{f89d6c58-ec34-4b89-8e55-663a9087c9a4}</Project>
       <Name>Snowflake.Tests</Name>

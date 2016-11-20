@@ -40,5 +40,10 @@ namespace Snowflake.Records.Game
             };
             this.Files = new List<IFileRecord>();
         }
+
+        public GameRecord(IPlatformInfo platformInfo, string title, string filename, string mimetype) : this(platformInfo, title)
+        {
+            this.Files.Add(new FileRecord(filename, mimetype, this.Guid));
+        }
     }
 }

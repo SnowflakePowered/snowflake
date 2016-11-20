@@ -118,12 +118,12 @@ namespace Snowflake.Plugin.Emulators.RetroArch
                   var coreConfig = this.ConfigurationCollections["retroarch-core-options.cfg"];
               }
 
-              //debug
-              Console.WriteLine(Path.Combine(this.InstancePath, retroArchConfiguration.FileName));
+              //debug*/
+              Console.WriteLine(Path.Combine(this.InstancePath));
 
-              //complete.
+             //complete.
               this.CreateTime = DateTimeOffset.UtcNow;
-              this.IsCreated = true;*/
+              this.IsCreated = true;
         }
 
         public override void Start()
@@ -132,6 +132,7 @@ namespace Snowflake.Plugin.Emulators.RetroArch
             info.Debug = true;
             info.CorePath = this.CorePath;
             info.ConfigPath = Path.Combine(this.InstancePath, "retroarch.cfg");
+            Console.WriteLine(info.GetStartInfo().FileName + " " + info.GetStartInfo().Arguments);
             this.runningProcess = Process.Start(info.GetStartInfo());
             Task.Run(() => this.runningProcess.WaitForExit()).ContinueWith(x => this.Destroy());
             

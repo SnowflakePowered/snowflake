@@ -20,6 +20,7 @@ namespace Snowflake.Plugin.InputEnumerators
             pm.Register<IInputEnumerator>(new KeyboardEnumerator(im));
             pm.Register<IInputEnumerator>(new Xbox360GamepadEnumerator(im));
             pm.Register<IInputEnumerator>(new XInputGamepadEnumerator(im));
+            
         }
     }
 }

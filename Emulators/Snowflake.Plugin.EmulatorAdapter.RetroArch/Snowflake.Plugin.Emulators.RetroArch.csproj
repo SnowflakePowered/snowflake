@@ -41,6 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adapters\bsnes\BsnesInstance.cs" />
+    <Compile Include="Adapters\bsnes\BsnesRetroArchAdapter.cs" />
+    <Compile Include="Adapters\bsnes\Configuration\BsnesCoreConfiguration.cs" />
+    <Compile Include="Adapters\bsnes\Configuration\BsnesConfiguration.cs" />
+    <Compile Include="Adapters\bsnes\Selections\PerformanceProfile.cs" />
     <Compile Include="Adapters\Nestopia\Configuration\NestopiaCoreConfiguration.cs" />
     <Compile Include="Adapters\Nestopia\Configuration\NestopiaConfiguration.cs" />
     <Compile Include="Adapters\Nestopia\NestopiaRetroArchAdapter.cs" />

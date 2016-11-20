@@ -33,7 +33,7 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Executable
 
         internal string GetArgument(string value, string argumentName)
         {
-            return value != null ? $@"{argumentName} ""{value} """ : "";
+            return value != null ? $@"{argumentName} ""{value}"" " : "";
         }
     }
 }

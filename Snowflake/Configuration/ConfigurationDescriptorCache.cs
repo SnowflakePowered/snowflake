@@ -33,7 +33,7 @@ namespace Snowflake.Configuration
             _sectionDescriptors = _sectionDescriptors.Add(typeof(T), new ConfigurationSectionDescriptor<T>());
             return _sectionDescriptors[typeof(T)];
         }
-
+        
         /// <summary>
         /// Gets a new or existing collection descriptor
         /// </summary>

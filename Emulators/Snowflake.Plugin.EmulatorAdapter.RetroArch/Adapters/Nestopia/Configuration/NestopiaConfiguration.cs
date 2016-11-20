@@ -8,10 +8,10 @@ using Snowflake.Configuration.Attributes;
 
 namespace Snowflake.Plugin.Emulators.RetroArch.Adapters.Nestopia.Configuration
 {
-    [ConfigurationFile("#nestopia", "nestopia-core-options.cfg", "enabled", "disabled")]
+    [ConfigurationFile("#coreoptions", "retroarch-core-options.cfg", "enabled", "disabled")]
     public interface NestopiaConfiguration : RetroArchConfiguration, IConfigurationCollection<NestopiaConfiguration>
     {
-        [SerializableSection("#nestopia")]
+        [SerializableSection("#coreoptions")]
         NestopiaCoreConfiguration NestopiaCoreConfig { get; set; }
     }
 }

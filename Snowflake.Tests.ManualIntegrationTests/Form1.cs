@@ -16,6 +16,7 @@ using Snowflake.Tests.Scraper;
 using Snowflake.Plugin.Emulators.RetroArch.Adapters.Nestopia.Configuration;
 using Snowflake.Configuration.Input;
 using Snowflake.Plugin.Emulators.RetroArch;
+using Snowflake.Service;
 
 namespace Snowflake.Tests.ManualIntegrationTests
 {
@@ -90,6 +91,15 @@ namespace Snowflake.Tests.ManualIntegrationTests
             var str = JsonConvert.SerializeObject(configuration);
             MessageBox.Show(str);
             Console.WriteLine(str);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var stone = new StoneProvider();
+
+            //IGameRecord r = new GameRecord(stone.Platforms["NINTENDO_SNES"], "christmascraze", "christmascraze.smc", "application/x-romfile-snes-magiccard");
+            //var x = new 
+
         }
     }
 }

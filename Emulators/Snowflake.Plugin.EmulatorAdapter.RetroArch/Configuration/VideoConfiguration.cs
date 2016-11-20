@@ -102,7 +102,7 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Configuration
         bool VideoSharedContext { get; set; }
 
         [CustomMetadata("onlyShowIf", "VideoShaderEnable:true")]
-        [ConfigurationOption("flag#video_shader", RetroArchShader.Ntsc, Flag = true, Simple = true)]
+        [ConfigurationOption("flag#video_shader", RetroArchShader.None, Flag = true, Simple = true)]
         RetroArchShader VideoShader { get; set; }
 
         [ConfigurationOption("video_smooth", true, DisplayName = "Smooth Video", Simple = true)]

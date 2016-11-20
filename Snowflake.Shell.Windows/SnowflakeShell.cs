@@ -18,6 +18,7 @@ using Snowflake.Scraper;
 using Snowflake.Service;
 using Snowflake.Service.Manager;
 using Snowflake.Utility;
+using Snowflake.Plugin.Emulators.RetroArch.Adapters.Bsnes;
 
 namespace Snowflake.Shell.Windows
 {
@@ -34,7 +35,7 @@ namespace Snowflake.Shell.Windows
         {
 
             this.loadedCore = new CoreService(this.appDataDirectory);
-           // this.loadedCore.Get<IEmulatorAssembliesManager>()?.LoadEmulatorAssemblies();
+            //this.loadedCore.Get<IEmulatorAssembliesManager>()?.LoadEmulatorAssemblies();
             this.loadedCore.Get<IPluginManager>()?.Initialize();
             this.loadedCore.Get<IServerManager>().RegisterServer("ThemeServer", new ThemeServer(Path.Combine(this.loadedCore.AppDataDirectory, "themes")));
             foreach (string serverName in this.loadedCore.Get<IServerManager>().RegisteredServers)
@@ -43,14 +44,16 @@ namespace Snowflake.Shell.Windows
                 var serverStartEvent = new ServerStartEventArgs(this.loadedCore, serverName);
                 SnowflakeEventManager.EventSource.RaiseEvent(serverStartEvent); //todo Move event registration to SnowflakeEVentManager
             }
-
-            /*var gr = new GameRecord(this.loadedCore.Get<IStoneProvider>().Platforms["NINTENDO_SNES"], "test");
-            gr.Files.Add(new FileRecord(@"C:\retroarch\smw.sfc", "application/x-romfile-snes-sfc", gr));
+            var im = this.loadedCore.Get<IPluginManager>().Get<IInputEnumerator>()["InputEnumerator-Keyboard"];
+            var ep = new EmulatedPort(0, im.ControllerLayout,
+                im.GetConnectedDevices().First(), MappedControllerElementCollection.GetDefaultMappings(im.ControllerLayout, this.loadedCore.Get<IStoneProvider>().Controllers["NES_CONTROLLER"]));
+            var gr = new GameRecord(this.loadedCore.Get<IStoneProvider>().Platforms["NINTENDO_SNES"], "test",
+                @"E:\Super Mario World (USA).sfc", "application/x-romfile-snes-sfc");
             var raadapter = this.loadedCore.Get<IPluginManager>().Get<BsnesRetroArchAdapter>().First().Value;
             
-            var lmfao = raadapter.Instantiate(gr, this.loadedCore);
+            var lmfao = raadapter.Instantiate(gr, gr.Files[0], 0, new List<IEmulatedPort> { ep});
             lmfao.Create();
-            lmfao.Start();*/
+            lmfao.Start();
         }
 
         public void StartShell() {
