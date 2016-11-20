@@ -14,16 +14,16 @@ using Snowflake.Input;
 using Snowflake.Input.Controller.Mapped;
 using Snowflake.Input.Device;
 using Snowflake.Platform;
-using Snowflake.Plugin.EmulatorAdapter.RetroArch.Executable;
-using Snowflake.Plugin.EmulatorAdapter.RetroArch.Shaders;
+using Snowflake.Plugin.Emulators.RetroArch.Executable;
+using Snowflake.Plugin.Emulators.RetroArch.Shaders;
 using Snowflake.Records.File;
 using Snowflake.Records.Game;
 using Snowflake.Service;
 using Snowflake.Service.Manager;
 
-namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters
+namespace Snowflake.Plugin.Emulators.RetroArch.Adapters
 {
-    public abstract class RetroArchCommonAdapter : Emulator.EmulatorAdapter
+    public abstract class RetroArchCommonAdapter : EmulatorAdapter
     {
         protected RetroArchProcessHandler ProcessHandler { get; }
         protected ShaderManager ShaderManager { get; }

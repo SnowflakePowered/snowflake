@@ -7,8 +7,8 @@
     <ProjectGuid>{287A6DA9-32DE-4488-9C6A-FD14571295CE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Snowflake.Plugin.EmulatorAdapter.RetroArch</RootNamespace>
-    <AssemblyName>Snowflake.Plugin.EmulatorAdapter.RetroArch</AssemblyName>
+    <RootNamespace>Snowflake.Plugin.Emulators.RetroArch</RootNamespace>
+    <AssemblyName>Snowflake.Plugin.Emulators.RetroArch</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -41,6 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adapters\Nestopia\Configuration\NestopiaCoreConfiguration.cs" />
+    <Compile Include="Adapters\Nestopia\Configuration\NestopiaConfiguration.cs" />
+    <Compile Include="Adapters\Nestopia\NestopiaRetroArchAdapter.cs" />
+    <Compile Include="Adapters\Nestopia\Selections\BlargFilter.cs" />
+    <Compile Include="Adapters\Nestopia\Selections\ColorPalette.cs" />
+    <Compile Include="Adapters\Nestopia\Selections\NestopiaSystem.cs" />
+    <Compile Include="Adapters\Nestopia\Selections\PixelAspectRatio.cs" />
     <Compile Include="Adapters\RetroArchCommonAdapter.cs" />
     <Compile Include="Configuration\FramethrottleConfiguration.cs" />
     <Compile Include="Configuration\AudioConfiguration.cs" />
@@ -65,7 +72,7 @@
     <Compile Include="Input\RetroPadTemplate.cs" />
     <Compile Include="RetroArchCommonContainer.cs" />
     <Compile Include="RetroArchInstance.cs" />
-    <Compile Include="RetroArchConfigurationCollection.cs" />
+    <Compile Include="RetroArchConfiguration.cs" />
     <Compile Include="Configuration\Internal\RewindConfiguration.cs" />
     <Compile Include="Configuration\SaveConfiguration.cs" />
     <Compile Include="Configuration\Internal\StdinConfiguration.cs" />

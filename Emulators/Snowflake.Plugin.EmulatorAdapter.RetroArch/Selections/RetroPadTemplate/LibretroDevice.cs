@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration.Attributes;
 
-namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Selections.RetroPadTemplate
+namespace Snowflake.Plugin.Emulators.RetroArch.Selections.RetroPadTemplate
 {
     public enum LibretroDevice
     {

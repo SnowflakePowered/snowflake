@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration.Attributes;
 
-namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Selections.VideoConfiguration
+namespace Snowflake.Plugin.Emulators.RetroArch.Selections.VideoConfiguration
 {
     public enum VideoRotation
     {

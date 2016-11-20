@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.IO;
 
-namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Executable
+namespace Snowflake.Plugin.Emulators.RetroArch.Executable
 {
     internal class RetroArchProcessInfo 
     {

@@ -1,11 +1,11 @@
 using Snowflake.Configuration;
 using Snowflake.Configuration.Attributes;
-using Snowflake.Plugin.EmulatorAdapter.RetroArch.Configuration;
-using Snowflake.Plugin.EmulatorAdapter.RetroArch.Configuration.Internal;
+using Snowflake.Plugin.Emulators.RetroArch.Configuration;
+using Snowflake.Plugin.Emulators.RetroArch.Configuration.Internal;
 
-namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
+namespace Snowflake.Plugin.Emulators.RetroArch
 {
-    [ConfigurationFile("#retroarch", "retroarch.cfg")]
+    [ConfigurationFile("#retroarch", "retroarch.cfg", "true", "false")]
     public interface RetroArchConfiguration : IConfigurationCollection<RetroArchConfiguration>
     {
         [SerializableSection("#retroarch")]
@@ -83,9 +83,5 @@ namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
         [SerializableSection("#retroarch")]
         ConfigConfiguration ConfigConfiguration { get; }
 
-        /*RetroArchConfiguration() : base(new KeyValuePairConfigurationSerializer(BooleanMapping.LowercaseBooleanMapping, "nul", "="), "retroarch.cfg")
-        {
-
-        }*/
     }
 }

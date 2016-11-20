@@ -58,7 +58,7 @@ namespace Snowflake.Tests.ManualIntegrationTests
 
         private void retroarchcfgbtn_Click(object sender, EventArgs e)
         {
-            var x = this.BuildConfiguration(new ConfigurationCollection<NestopiaConfigurationCollection>());
+            var x = this.BuildConfiguration(new ConfigurationCollection<NestopiaConfiguration>());
             foreach(var config in x)
             {
                 Console.WriteLine(config.Key);
@@ -86,7 +86,7 @@ namespace Snowflake.Tests.ManualIntegrationTests
 
         private void button1_Click(object sender, EventArgs e)
         {
-            IConfigurationCollection<NestopiaConfigurationCollection> configuration = new ConfigurationCollection<NestopiaConfigurationCollection>();
+            IConfigurationCollection<NestopiaConfiguration> configuration = new ConfigurationCollection<NestopiaConfiguration>();
             var str = JsonConvert.SerializeObject(configuration);
             MessageBox.Show(str);
             Console.WriteLine(str);

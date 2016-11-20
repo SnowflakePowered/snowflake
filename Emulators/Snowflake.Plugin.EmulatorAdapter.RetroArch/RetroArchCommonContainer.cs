@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 using Snowflake.Configuration;
 using Snowflake.Emulator;
 using Snowflake.Extensibility;
-using Snowflake.Plugin.EmulatorAdapter.RetroArch.Adapters;
+using Snowflake.Plugin.Emulators.RetroArch.Adapters;
 
-using Snowflake.Plugin.EmulatorAdapter.RetroArch.Executable;
-using Snowflake.Plugin.EmulatorAdapter.RetroArch.Shaders;
+using Snowflake.Plugin.Emulators.RetroArch.Executable;
+using Snowflake.Plugin.Emulators.RetroArch.Shaders;
 using Snowflake.Service;
 using Snowflake.Service.Manager;
 
-namespace Snowflake.Plugin.EmulatorAdapter.RetroArch
+namespace Snowflake.Plugin.Emulators.RetroArch
 {
     public class RetroArchCommonContainer : IPluginContainer
     {

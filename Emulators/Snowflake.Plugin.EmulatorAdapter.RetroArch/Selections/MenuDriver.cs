@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration.Attributes;
 
-namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Selections
+namespace Snowflake.Plugin.Emulators.RetroArch.Selections
 {
     public enum MenuDriver
     {

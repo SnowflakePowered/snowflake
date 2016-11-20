@@ -1,7 +1,7 @@
 ﻿using Snowflake.Configuration;
 using Snowflake.Configuration.Attributes;
 
-namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Configuration
+namespace Snowflake.Plugin.Emulators.RetroArch.Configuration
 {
     [ConfigurationSection("config", "Configuration Options")]
     public interface ConfigConfiguration : IConfigurationSection<ConfigConfiguration>

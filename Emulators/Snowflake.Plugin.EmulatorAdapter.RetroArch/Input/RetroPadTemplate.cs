@@ -1,9 +1,9 @@
 ﻿using Snowflake.Configuration.Attributes;
 using Snowflake.Configuration.Input;
 using Snowflake.Input.Controller;
-using Snowflake.Plugin.EmulatorAdapter.RetroArch.Selections.RetroPadTemplate;
+using Snowflake.Plugin.Emulators.RetroArch.Selections.RetroPadTemplate;
 
-namespace Snowflake.Plugin.EmulatorAdapter.RetroArch.Input
+namespace Snowflake.Plugin.Emulators.RetroArch.Input
 {
     [InputTemplate("input")]
     public interface RetroPadTemplate : IInputTemplate<RetroPadTemplate>
