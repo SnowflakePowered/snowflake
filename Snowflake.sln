@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.25914.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake", "Snowflake\Snowflake.csproj", "{8F1D65ED-4A96-4A0A-8371-53655A60A2B3}"
 EndProject
@@ -57,7 +57,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Plugin.InputEnume
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Plugin.InputManager.Win32", "Snowflake.Plugin.InputManager.Win32\Snowflake.Plugin.InputManager.Win32.csproj", "{F359B3F3-D477-423A-B485-EA8D7C046836}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Plugin.EmulatorAdapter.RetroArch", "Emulators\Snowflake.Plugin.EmulatorAdapter.RetroArch\Snowflake.Plugin.EmulatorAdapter.RetroArch.csproj", "{287A6DA9-32DE-4488-9C6A-FD14571295CE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Plugin.Emulators.RetroArch", "Emulators\Snowflake.Plugin.EmulatorAdapter.RetroArch\Snowflake.Plugin.Emulators.RetroArch.csproj", "{287A6DA9-32DE-4488-9C6A-FD14571295CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

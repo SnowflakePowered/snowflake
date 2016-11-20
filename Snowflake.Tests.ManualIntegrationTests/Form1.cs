@@ -13,6 +13,9 @@ using Snowflake.Configuration;
 using Snowflake.Configuration.Tests;
 using Snowflake.Records.Game;
 using Snowflake.Tests.Scraper;
+using Snowflake.Plugin.Emulators.RetroArch.Adapters.Nestopia.Configuration;
+using Snowflake.Configuration.Input;
+using Snowflake.Plugin.Emulators.RetroArch;
 
 namespace Snowflake.Tests.ManualIntegrationTests
 {
@@ -55,13 +58,35 @@ namespace Snowflake.Tests.ManualIntegrationTests
 
         private void retroarchcfgbtn_Click(object sender, EventArgs e)
         {
-            /*var inst = new RetroArchInstance(cfg);
-            inst.Create();*/
+            var x = this.BuildConfiguration(new ConfigurationCollection<NestopiaConfigurationCollection>());
+            foreach(var config in x)
+            {
+                Console.WriteLine(config.Key);
+                Console.WriteLine(config.Value);
+            }
+        }
+        protected IDictionary<string, string> BuildConfiguration(IConfigurationCollection<RetroArchConfiguration> retroArchConfiguration)
+        {
+            //build the configuration
+            IDictionary<string, string> configurations = new Dictionary<string, string>();
+            foreach (var output in retroArchConfiguration.Descriptor.Outputs.Values)
+            {
+                var sectionBuilder = new StringBuilder();
+                var serializer = new KeyValuePairConfigurationSerializer(output.BooleanMapping, "nul", "=");
+                foreach (var section in retroArchConfiguration.Where(c => retroArchConfiguration.Descriptor.GetDestination(c.Key) == output.Key))
+                {
+                    sectionBuilder.Append(serializer.Serialize(section.Value));
+                    sectionBuilder.AppendLine();
+                }
+                configurations[output.Key] = sectionBuilder.ToString();
+            }
+
+            return configurations;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            IConfigurationCollection configuration = new ConfigurationCollection<ExampleConfigurationCollection>();
+            IConfigurationCollection<NestopiaConfigurationCollection> configuration = new ConfigurationCollection<NestopiaConfigurationCollection>();
             var str = JsonConvert.SerializeObject(configuration);
             MessageBox.Show(str);
             Console.WriteLine(str);

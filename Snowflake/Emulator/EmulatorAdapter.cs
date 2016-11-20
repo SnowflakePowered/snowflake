@@ -51,9 +51,9 @@ namespace Snowflake.Emulator
 
         public abstract IEmulatorInstance Instantiate(IGameRecord gameRecord, IFileRecord romFile, int saveSlot, IList<IEmulatedPort> ports);
 
-        public abstract IDictionary<string, IConfigurationCollection> GetConfigurations(IGameRecord gameRecord);
+        public abstract IConfigurationCollection GetConfiguration(IGameRecord gameRecord, string profileName = "default");
 
-        public abstract IDictionary<string, IConfigurationCollection> GetDefaultConfigurations();
+        public abstract IConfigurationCollection GetConfiguration();
 
     }
 }

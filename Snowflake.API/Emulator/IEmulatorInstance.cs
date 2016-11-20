@@ -38,7 +38,7 @@ namespace Snowflake.Emulator
         /// <summary>
         /// The set of configuration collections for this instance
         /// </summary>
-        IDictionary<string, IConfigurationCollection> ConfigurationCollections { get; }
+        IConfigurationCollection Configuration { get; }
         /// <summary>
         /// Various metadata about this instance
         /// </summary>

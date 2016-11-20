@@ -12,9 +12,10 @@ namespace Snowflake.Configuration
         /// <summary>
         /// The file outputs keyed on the file reference key to the file name
         /// The implementation should ensure this is immutable.
-        /// <see cref="ConfigurationFileAttribute"/>
+        /// <seealso cref="ConfigurationFileAttribute"/>
+        /// <seealso cref="IConfigurationFile"/>
         /// </summary>
-        IDictionary<string, string> Outputs { get; }
+        IDictionary<string, IConfigurationFile> Outputs { get; }
         /// <summary>
         /// The list of names of property section names.
         /// The implementation should ensure this is immutable and enumerate in the same order

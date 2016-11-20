@@ -124,6 +124,7 @@
     <Compile Include="Ajax\JSResponse.cs" />
     <Compile Include="Caching\KeyedImageCache.cs" />
     <Compile Include="Configuration\ConfigurationCollectionDescriptor.cs" />
+    <Compile Include="Configuration\ConfigurationFile.cs" />
     <Compile Include="Configuration\ConfigurationSectionDescriptor.cs" />
     <Compile Include="Configuration\ConfigurationDescriptorCache.cs" />
     <Compile Include="Configuration\Interceptors\ConfigurationCircularInterceptor.cs" />

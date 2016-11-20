@@ -102,8 +102,8 @@ namespace Snowflake.Configuration
         internal CollectionInterceptor(IDictionary<string, IDictionary<string, ValueTuple<string, Guid>>> defaults)
         {
             this.Values = new Dictionary<string, dynamic>();
-            foreach (var section in from props in typeof(T).GetProperties()
-                                    let sectionAttr = props.GetAttributes<SerializableSectionAttribute>().First()
+            foreach (var section in from props in typeof(T).GetPublicProperties()
+                                    let sectionAttr = props.GetAttributes<SerializableSectionAttribute>().FirstOrDefault()
                                     where sectionAttr != null
                                     select new { sectionAttr, type = props.PropertyType, name = props.Name })
             {
@@ -118,8 +118,8 @@ namespace Snowflake.Configuration
         {
             this.Values = new Dictionary<string, dynamic>();
             //public ConfigurationSection(IDictionary<string, IConfigurationValue> values)
-            foreach (var section in from props in typeof(T).GetProperties()
-                                    let sectionAttr = props.GetAttributes<SerializableSectionAttribute>().First()
+            foreach (var section in from props in typeof(T).GetPublicProperties()
+                                    let sectionAttr = props.GetAttributes<SerializableSectionAttribute>().FirstOrDefault()
                                     where sectionAttr !=null
                                     select new {sectionAttr, type = props.PropertyType, name = props.Name})
             {

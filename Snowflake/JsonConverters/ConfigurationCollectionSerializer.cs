@@ -29,9 +29,14 @@ namespace Snowflake.JsonConverters
                 sectionRoot.Add("Options", new JObject(section.Value.Descriptor.Options
                     .Where(o => !o.Private)
                     .Select(o => new JProperty(o.KeyName, ConfigurationCollectionSerializer.SerializeOption(o)))));
-                sectionRoot.Add("Selections", new JObject(section.Value
-                    .Where(o => o.Key.Type.IsEnum)
-                    .Select(o => ConfigurationCollectionSerializer.SerializeEnumValues(o.Key.Type))));
+                var selectionRoot = new JObject();
+                var props = section.Value.Where(o => o.Key.Type.IsEnum).Select(o => new { o.Key.KeyName, Values = ConfigurationCollectionSerializer.SerializeEnumValues(o.Key.Type) });
+                foreach(var prop in props)
+                {
+                    selectionRoot.Add(prop.KeyName, new JObject(prop.Values));
+                }
+
+                sectionRoot.Add("Selections", selectionRoot);
                 root.Add(section.Key, sectionRoot);
             }
            
