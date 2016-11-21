@@ -15,6 +15,24 @@ namespace Snowflake.Utility
             return new T();
         }
 
+        private static ConstructorInfo GetConstructor<T>(BindingFlags flags, Type[] constructorParams)
+        {
+            return Instantiate.GetConstructor(flags, typeof(T), constructorParams);
+       /*  from constructor in typeof(T).GetConstructors()
+            where !constructor.GetParameters().Select(p => p.GetType()).Except(constructorParams).Any()
+            select constructor).FirstOrDefault() */
+        }
+
+        private static ConstructorInfo GetConstructor(BindingFlags flags, Type type, Type[] constructorParams)
+        {
+            var constructors = from constructor in type.GetConstructors(flags)
+                let parameters = constructor.GetParameters().Select(p => p.ParameterType)
+                where !parameters.Except(constructorParams).Any()
+                where parameters.Count() == constructorParams.Count()
+                select constructor;
+            return constructors.First();
+            
+        }
         public static T CreateInstance<T>(Type type)
         {
             return Instantiate.CreateInstance<T>(new[] {type});
@@ -23,9 +41,9 @@ namespace Snowflake.Utility
         public static T CreateInstance<T>(Type[] constructorParams)
         {
             Func<T> instanceCreator = Expression.Lambda<Func<T>>(
-                Expression.New((from constructor in typeof(T).GetConstructors(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance)
-                                where !constructor.GetParameters().Select(p => p.GetType()).Except(constructorParams).Any()
-                                select constructor).FirstOrDefault())).Compile();
+                Expression.New(Instantiate.GetConstructor<T>
+                (BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance, constructorParams)))
+                .Compile();
             return instanceCreator();
         }
 
@@ -37,18 +55,15 @@ namespace Snowflake.Utility
         public static object CreateInstance(Type createType, Type[] constructorParams)
         {
             Func<object> instanceCreator = Expression.Lambda<Func<object>>(
-                Expression.New((from constructor in createType.GetConstructors(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance)
-                                where !constructor.GetParameters().Select(p => p.GetType()).Except(constructorParams).Any()
-                                select constructor).FirstOrDefault())).Compile();
+                 Expression.New(Instantiate.GetConstructor(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance, createType, constructorParams)))
+                .Compile();
             return instanceCreator();
         }
 
         public static object CreateInstance(Type createType, Type[] constructorParams, params Expression[] args)
         {
             Func<object> instanceCreator = Expression.Lambda<Func<object>>(
-               Expression.New((from constructor in createType.GetConstructors(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance)
-                               where !constructor.GetParameters().Select(p => p.GetType()).Except(constructorParams).Any()
-                               select constructor).FirstOrDefault(), args)).Compile();
+               Expression.New(Instantiate.GetConstructor(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance, createType, constructorParams), args)).Compile();
             return instanceCreator();
         }
     }

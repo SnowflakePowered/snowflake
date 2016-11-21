@@ -36,6 +36,12 @@
     <EmbeddedResource Include="TestResources\InputMappings\xinput_device.json" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\shiragame.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Link>shiragame.db</Link>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.App">
       <Version>1.0.1</Version>
     </PackageReference>
@@ -65,5 +71,6 @@
     <ProjectReference Include="..\Snowflake.Framework.Utility\Snowflake.Framework.Utility.csproj" />
     <ProjectReference Include="..\Snowflake.Framework\Snowflake.Framework.csproj" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

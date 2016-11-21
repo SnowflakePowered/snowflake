@@ -18,12 +18,25 @@ namespace Snowflake.Utility
         public SqliteDatabase(string fileName)
         {
             this.FileName = fileName;
-            this.dbConnectionString = $"Data Source={this.FileName};Version=3;PRAGMA journal_mode=WAL;";
+            //
+            this.dbConnectionString = $"Data Source={this.FileName};";
         }
 
         public SqliteConnection GetConnection()
         {
-            return new SqliteConnection(this.dbConnectionString);
+            var connection = new SqliteConnection(this.dbConnectionString);
+            connection.Open();
+            using (var walCommand = connection.CreateCommand())
+            {
+                walCommand.CommandText = "PRAGMA journal_mode = WAL;" +
+                                         "PRAGMA foreign_keys = ON;" +
+                                         "PRAGMA recursive_triggers = ON;" + 
+                                         "PRAGMA synchronous = NORMAL;";
+                walCommand.ExecuteNonQuery();
+            }
+            connection.Close();
+            return connection;
+
         }
 
         /// <summary>

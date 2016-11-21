@@ -17,7 +17,7 @@ namespace Snowflake.Utility
         public SqliteMemoryDatabase()
         {
            
-            this.dbConnection = new SqliteConnection("Data Source=:memory:;Version=3;PRAGMA journal_mode=WAL;");
+            this.dbConnection = new SqliteConnection("Data Source=:memory:;");
             this.dbConnection.Open();
         }
 
