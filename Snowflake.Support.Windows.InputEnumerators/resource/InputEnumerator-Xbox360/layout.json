@@ -1,0 +1,118 @@
+﻿{
+	"LayoutID": "XINPUT_DEVICE",
+	"FriendlyName": "XInput Device",
+	"Platforms": [
+
+	],
+	"IsRealDevice": true,
+	"Layout": {
+		"ButtonA": {
+			"Label": "A",
+			"Type": "Button"
+		},
+		"ButtonB": {
+			"Label": "B",
+			"Type": "Button"
+		},
+		"ButtonX": {
+			"Label": "X",
+			"Type": "Button"
+		},
+		"ButtonY": {
+			"Label": "Y",
+			"Type": "Button"
+		},
+		"ButtonStart": {
+			"Label": "Start",
+			"Type": "Button"
+		},
+		"ButtonSelect": {
+			"Label": "Select",
+			"Type": "Button"
+		},
+		"ButtonL": {
+			"Label": "L1",
+			"Type": "Button"
+		},
+		"ButtonR": {
+			"Label": "R1",
+			"Type": "Button"
+		},
+		"ButtonClickL": {
+			"Label": "L3",
+			"Type": "Button"
+		},
+		"ButtonClickR": {
+			"Label": "R3",
+			"Type": "Button"
+		},
+		"ButtonGuide": {
+			"Label": "Guide",
+			"Type": "Button"
+		},
+		"DirectionalN": {
+			"Label": "D-Pad Up",
+			"Type": "Directional"
+		},
+		"DirectionalE": {
+			"Label": "D-Pad Right",
+			"Type": "Directional"
+		},
+		"DirectionalS": {
+			"Label": "D-Pad Down",
+			"Type": "Directional"
+		},
+		"DirectionalW": {
+			"Label": "D-Pad Left",
+			"Type": "Directional"
+		},
+		"TriggerLeft": {
+			"Label": "L2",
+			"Type": "Trigger"
+		},
+		"TriggerRight": {
+			"Label": "R2",
+			"Type": "Trigger"
+		},
+		"AxisLeftAnalogPositiveX": {
+			"Label": "Left Analog Right",
+			"Type": "AxisPositive"
+		},
+		"AxisLeftAnalogNegativeX": {
+			"Label": "Left Analog Left",
+			"Type": "AxisNegative"
+		},
+		"AxisLeftAnalogPositiveY": {
+			"Label": "Left Analog Up",
+			"Type": "AxisPositive"
+		},
+		"AxisLeftAnalogNegativeY": {
+			"Label": "Left Analog Down",
+			"Type": "AxisNegative"
+		},
+		"AxisRightAnalogPositiveX": {
+			"Label": "Right Analog Right",
+			"Type": "AxisPositive"
+		},
+		"AxisRightAnalogNegativeX": {
+			"Label": "Right Analog Left",
+			"Type": "AxisNegative"
+		},
+		"AxisRightAnalogPositiveY": {
+			"Label": "Right Analog Up",
+			"Type": "AxisPositive"
+		},
+		"AxisRightAnalogNegativeY": {
+			"Label": "Right Analog Down",
+			"Type": "AxisNegative"
+		},
+		"RumbleBig": {
+			"Label": "Strong Rumble",
+			"Type": "Rumble"
+		},
+		"RumbleSmall": {
+			"Label": "Weak Rumble",
+			"Type": "Rumble"
+		}
+	}
+}

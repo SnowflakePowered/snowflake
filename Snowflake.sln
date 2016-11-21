@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.25914.0
+VisualStudioVersion = 15.0.25920.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake", "Snowflake\Snowflake.csproj", "{8F1D65ED-4A96-4A0A-8371-53655A60A2B3}"
 EndProject
@@ -61,15 +61,21 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Plugin.Emulators.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Framework", "Framework", "{49B7A61F-B3BE-485E-84D0-B78C08656412}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Framework.Primitives", "Snowflake.Framework.Primitives\Snowflake.Framework.Primitives.csproj", "{D51AAF5A-7429-4A04-BDC7-255DEF9FE366}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Framework.Primitives", "Snowflake.Framework.Primitives\Snowflake.Framework.Primitives.csproj", "{D51AAF5A-7429-4A04-BDC7-255DEF9FE366}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Framework", "Snowflake.Framework\Snowflake.Framework.csproj", "{352E860C-8B14-477B-AAA4-DA73A82DD461}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Framework", "Snowflake.Framework\Snowflake.Framework.csproj", "{352E860C-8B14-477B-AAA4-DA73A82DD461}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Framework.Utility", "Snowflake.Framework.Utility\Snowflake.Framework.Utility.csproj", "{989ED450-934A-4B3A-990F-20112EE71353}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Framework.Utility", "Snowflake.Framework.Utility\Snowflake.Framework.Utility.csproj", "{989ED450-934A-4B3A-990F-20112EE71353}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Framework.Services", "Snowflake.Framework.Services\Snowflake.Framework.Services.csproj", "{25067838-7895-43C2-A1E5-BFBD7F398912}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Framework.Services", "Snowflake.Framework.Services\Snowflake.Framework.Services.csproj", "{25067838-7895-43C2-A1E5-BFBD7F398912}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Framework.Tests", "Snowflake.Framework.Tests\Snowflake.Framework.Tests.csproj", "{F5E85A61-6D11-4A53-9332-E5B4A3E5C541}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Framework.Tests", "Snowflake.Framework.Tests\Snowflake.Framework.Tests.csproj", "{F5E85A61-6D11-4A53-9332-E5B4A3E5C541}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Support", "Support", "{FBD15674-246A-4C57-B865-07214D8BB9A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Support.Windows.InputEnumerators", "Snowflake.Support.Windows.InputEnumerators\Snowflake.Support.Windows.InputEnumerators.csproj", "{D0D9DFCC-BC5A-4C84-8E58-DF12AA01D565}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Support.Windows.InputManager", "Snowflake.Support.Windows.InputManager\Snowflake.Support.Windows.InputManager.csproj", "{E1C7E53F-8C82-4B1A-800D-4A5A542DE5B6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -263,6 +269,22 @@ Global
 		{F5E85A61-6D11-4A53-9332-E5B4A3E5C541}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F5E85A61-6D11-4A53-9332-E5B4A3E5C541}.Release|x86.ActiveCfg = Release|Any CPU
 		{F5E85A61-6D11-4A53-9332-E5B4A3E5C541}.Release|x86.Build.0 = Release|Any CPU
+		{D0D9DFCC-BC5A-4C84-8E58-DF12AA01D565}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0D9DFCC-BC5A-4C84-8E58-DF12AA01D565}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0D9DFCC-BC5A-4C84-8E58-DF12AA01D565}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D0D9DFCC-BC5A-4C84-8E58-DF12AA01D565}.Debug|x86.Build.0 = Debug|Any CPU
+		{D0D9DFCC-BC5A-4C84-8E58-DF12AA01D565}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0D9DFCC-BC5A-4C84-8E58-DF12AA01D565}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0D9DFCC-BC5A-4C84-8E58-DF12AA01D565}.Release|x86.ActiveCfg = Release|Any CPU
+		{D0D9DFCC-BC5A-4C84-8E58-DF12AA01D565}.Release|x86.Build.0 = Release|Any CPU
+		{E1C7E53F-8C82-4B1A-800D-4A5A542DE5B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1C7E53F-8C82-4B1A-800D-4A5A542DE5B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1C7E53F-8C82-4B1A-800D-4A5A542DE5B6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E1C7E53F-8C82-4B1A-800D-4A5A542DE5B6}.Debug|x86.Build.0 = Debug|Any CPU
+		{E1C7E53F-8C82-4B1A-800D-4A5A542DE5B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1C7E53F-8C82-4B1A-800D-4A5A542DE5B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1C7E53F-8C82-4B1A-800D-4A5A542DE5B6}.Release|x86.ActiveCfg = Release|Any CPU
+		{E1C7E53F-8C82-4B1A-800D-4A5A542DE5B6}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -279,5 +301,7 @@ Global
 		{989ED450-934A-4B3A-990F-20112EE71353} = {49B7A61F-B3BE-485E-84D0-B78C08656412}
 		{25067838-7895-43C2-A1E5-BFBD7F398912} = {49B7A61F-B3BE-485E-84D0-B78C08656412}
 		{F5E85A61-6D11-4A53-9332-E5B4A3E5C541} = {49B7A61F-B3BE-485E-84D0-B78C08656412}
+		{D0D9DFCC-BC5A-4C84-8E58-DF12AA01D565} = {FBD15674-246A-4C57-B865-07214D8BB9A1}
+		{E1C7E53F-8C82-4B1A-800D-4A5A542DE5B6} = {FBD15674-246A-4C57-B865-07214D8BB9A1}
 	EndGlobalSection
 EndGlobal
