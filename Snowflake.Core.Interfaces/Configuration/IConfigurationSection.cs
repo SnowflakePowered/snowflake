@@ -1,0 +1,45 @@
+﻿using System.Collections.Generic;
+
+namespace Snowflake.Configuration
+{
+    /// <summary>
+    /// Represents a serializable section in a configuration 
+    /// </summary>
+    /// <typeparam name="T">The type of configuration</typeparam>
+    public interface IConfigurationSection<out T> : IConfigurationSection where T: class, IConfigurationSection<T>
+    {
+        /// <summary>
+        /// The typed section instance which holds the configuration values
+        /// </summary>
+        T Configuration { get; }
+    }
+
+    /// <summary>
+    /// Represents a serializable section in a configuration 
+    /// </summary>
+    public interface IConfigurationSection : IEnumerable<KeyValuePair<IConfigurationOption, IConfigurationValue>>
+    {
+        /// <summary>
+        /// The descriptor that describes the configuration section.
+        /// </summary>
+        IConfigurationSectionDescriptor Descriptor { get; }
+        /// <summary>
+        /// The read only mapping of property names to configuration values
+        /// Enumerating over the values key is not guaranteed to be in the same
+        /// order as the order the properties were defined.
+        /// 
+        /// The implementation is responsible for ensuring this mapping synced with the
+        /// values stored in the object and ensuring this mapping is immutable.
+        /// </summary>
+        IDictionary<string, IConfigurationValue> Values { get; }
+        /// <summary>
+        /// Gets or sets the option value with the specified property name in the configuration section
+        /// in an untyped and unsafe manner.
+        /// </summary>
+        /// <remarks>Only use this if you know what you are doing. The safe manner to access configuration values is
+        /// through the <see cref="IConfigurationSection{T}.Configuration"/> property.</remarks>
+        /// <param name="key">The property name of the configuration option</param>
+        /// <returns>The untyped value of the configuration value</returns>
+        object this[string key] { get; set; }
+    }
+}

@@ -13,7 +13,7 @@ using Castle.DynamicProxy;
 using EnumsNET.NonGeneric;
 using NLog.LayoutRenderers.Wrappers;
 using Snowflake.Configuration.Attributes;
-using Snowflake.DynamicConfiguration.Interceptors;
+using Snowflake.Configuration.Interceptors;
 
 namespace Snowflake.Configuration
 {

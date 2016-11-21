@@ -10,7 +10,7 @@ using Castle.Core.Internal;
 using Castle.DynamicProxy;
 using Snowflake.Configuration.Attributes;
 using Snowflake.Configuration.Input;
-using Snowflake.DynamicConfiguration.Interceptors;
+using Snowflake.Configuration.Interceptors;
 using Snowflake.Input.Controller;
 using Snowflake.Input.Controller.Mapped;
 using Snowflake.Input.Device;

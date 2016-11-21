@@ -10,7 +10,6 @@ using Snowflake.Configuration.Input;
 using Snowflake.Emulator;
 using Snowflake.Extensibility;
 using Snowflake.Input;
-using Snowflake.Input;
 using Snowflake.Input.Controller.Mapped;
 using Snowflake.Input.Device;
 using Snowflake.Platform;

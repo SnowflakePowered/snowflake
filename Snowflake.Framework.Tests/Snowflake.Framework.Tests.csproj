@@ -1,0 +1,69 @@
+﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" />
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp1.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="**\*.cs" />
+    <EmbeddedResource Include="**\*.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Service\HttpServer\**" />
+    <Compile Remove="Service\WebSocketServer\**" />
+    <EmbeddedResource Remove="Service\HttpServer\**" />
+    <EmbeddedResource Remove="Service\WebSocketServer\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Scraper\ScrapingIntegrationTests.cs" />
+    <Compile Remove="Service\PluginManagerTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TestResources\Configurations\ConfigCollection.ini" />
+    <EmbeddedResource Include="TestResources\Configurations\ExampleConfigurationSection.cfg" />
+    <EmbeddedResource Include="TestResources\Configurations\ExampleConfigurationSection.ini" />
+    <EmbeddedResource Include="TestResources\Configurations\ExampleInput.cfg" />
+    <EmbeddedResource Include="TestResources\Configurations\ExampleInput.ini" />
+    <EmbeddedResource Include="TestResources\Configurations\ExampleIterableConfigurationSection.ini" />
+    <EmbeddedResource Include="TestResources\GameCache\600x600.gif" />
+    <EmbeddedResource Include="TestResources\GameCache\dmmy.mp3" />
+    <EmbeddedResource Include="TestResources\GameCache\dmmy.ogg" />
+    <EmbeddedResource Include="TestResources\GameCache\test.mp4" />
+    <EmbeddedResource Include="TestResources\GameCache\test.webm" />
+    <EmbeddedResource Include="TestResources\InputMappings\DirectInput.KEYBOARD_DEVICE.json" />
+    <EmbeddedResource Include="TestResources\InputMappings\DirectInput.XINPUT_DEVICE.json" />
+    <EmbeddedResource Include="TestResources\InputMappings\keyboard_device.json" />
+    <EmbeddedResource Include="TestResources\InputMappings\xinput_device.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETCore.App">
+      <Version>1.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.NET.Sdk">
+      <Version>1.0.0-alpha-20161104-2</Version>
+      <PrivateAssets>All</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.NET.Test.Sdk">
+      <Version>15.0.0-preview-20161024-02</Version>
+    </PackageReference>
+    <PackageReference Include="Moq">
+      <Version>4.6.38-alpha</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>9.0.2-beta1</Version>
+    </PackageReference>
+    <PackageReference Include="xunit">
+      <Version>2.2.0-beta3-build3402</Version>
+    </PackageReference>
+    <PackageReference Include="xunit.runner.visualstudio">
+      <Version>2.2.0-beta4-build1188</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Snowflake.Framework.Primitives\Snowflake.Framework.Primitives.csproj" />
+    <ProjectReference Include="..\Snowflake.Framework.Services\Snowflake.Framework.Services.csproj" />
+    <ProjectReference Include="..\Snowflake.Framework.Utility\Snowflake.Framework.Utility.csproj" />
+    <ProjectReference Include="..\Snowflake.Framework\Snowflake.Framework.csproj" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

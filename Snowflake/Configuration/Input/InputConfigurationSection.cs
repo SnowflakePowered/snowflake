@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Castle.Core.Internal;
 using Castle.DynamicProxy;
 using Snowflake.Configuration.Attributes;
-using Snowflake.DynamicConfiguration.Interceptors;
+using Snowflake.Configuration.Interceptors;
 
 namespace Snowflake.Configuration.Input
 {
