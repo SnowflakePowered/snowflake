@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using Snowflake.Service;
+using Snowflake.Services;
 
 namespace Snowflake.Extensibility
 {

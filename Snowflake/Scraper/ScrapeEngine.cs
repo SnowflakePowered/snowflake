@@ -13,7 +13,7 @@ using Snowflake.Records.File;
 using Snowflake.Records.Metadata;
 using Snowflake.Scraper.Providers;
 using Snowflake.Scraper.Shiragame;
-using Snowflake.Service;
+using Snowflake.Services;
 using Snowflake.Utility;
 
 namespace Snowflake.Scraper

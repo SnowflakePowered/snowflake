@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.Composition;
 using System.Reflection;
-using Snowflake.Service;
-using Snowflake.Service.Manager;
+using Snowflake.Services;
+using Snowflake.Services.Manager;
 
 namespace Snowflake.Extensibility
 {

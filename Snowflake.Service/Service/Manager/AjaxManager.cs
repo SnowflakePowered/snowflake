@@ -11,7 +11,7 @@ using Snowflake.Events;
 using Snowflake.Events.ServiceEvents;
 using Snowflake.Extensions;
 
-namespace Snowflake.Service.Manager
+namespace Snowflake.Services.Manager
 {
     public class AjaxManager : IAjaxManager
     {

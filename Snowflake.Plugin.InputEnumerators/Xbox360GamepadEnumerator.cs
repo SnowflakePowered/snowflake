@@ -12,7 +12,7 @@ using Microsoft.Win32.SafeHandles;
 using Snowflake.Extensibility;
 using Snowflake.Input;
 using Snowflake.Input.Device;
-using Snowflake.Service;
+using Snowflake.Services;
 
 namespace Snowflake.Plugin.InputEnumerators
 {

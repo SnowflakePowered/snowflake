@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using Newtonsoft.Json;
-using Snowflake.Service.HttpServer;
+using Snowflake.Services.HttpServer;
 using Unosquare.Labs.EmbedIO;
 using Unosquare.Labs.EmbedIO.Modules;
 

@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using Fleck;
 using Newtonsoft.Json;
 using Snowflake.Ajax;
-using Snowflake.Service.HttpServer;
-using Snowflake.Service.Manager;
+using Snowflake.Services.HttpServer;
+using Snowflake.Services.Manager;
 
-namespace Snowflake.Service.JSWebSocketServer
+namespace Snowflake.Services.JSWebSocketServer
 {
     public class JsonApiWebSocketServer : IJSWebSocketServer
     {

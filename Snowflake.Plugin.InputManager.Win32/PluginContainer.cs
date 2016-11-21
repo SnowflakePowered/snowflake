@@ -1,6 +1,6 @@
 ﻿using Snowflake.Extensibility;
 using Snowflake.Input.Device;
-using Snowflake.Service;
+using Snowflake.Services;
 
 namespace Snowflake.Plugin.InputManager.Win32
 {

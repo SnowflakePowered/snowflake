@@ -8,9 +8,9 @@ using Mono.Net;
 using Newtonsoft.Json;
 using Snowflake.Ajax;
 using Snowflake.Extensions;
-using Snowflake.Service.Manager;
+using Snowflake.Services.Manager;
 
-namespace Snowflake.Service.HttpServer
+namespace Snowflake.Services.HttpServer
 {
     public class ApiServer : BaseHttpServer
     {

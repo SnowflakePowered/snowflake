@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Snowflake.Service.HttpServer;
+using Snowflake.Services.HttpServer;
 
-namespace Snowflake.Service.Manager
+namespace Snowflake.Services.Manager
 {
     public interface IServerManager: IDisposable
     {

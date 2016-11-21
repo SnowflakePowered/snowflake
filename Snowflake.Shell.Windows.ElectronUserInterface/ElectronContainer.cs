@@ -5,8 +5,8 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Extensibility;
-using Snowflake.Service;
-using Snowflake.Service.Manager;
+using Snowflake.Services;
+using Snowflake.Services.Manager;
 
 namespace Snowflake.Shell.Windows.ElectronUserInterface
 {

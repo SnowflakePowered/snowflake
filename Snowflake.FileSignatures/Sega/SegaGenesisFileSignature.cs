@@ -2,7 +2,7 @@
 using System.Text;
 using Snowflake.Extensibility;
 using Snowflake.Romfile;
-using Snowflake.Service;
+using Snowflake.Services;
 
 namespace Snowflake.FileSignatures
 {

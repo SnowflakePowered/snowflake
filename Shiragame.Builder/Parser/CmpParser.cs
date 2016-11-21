@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 using Snowflake.Romfile;
-using Snowflake.Service;
+using Snowflake.Services;
 
 namespace Shiragame.Builder.Parser
 {

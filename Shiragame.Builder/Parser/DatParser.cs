@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Snowflake.Service;
+using Snowflake.Services;
 
 namespace Shiragame.Builder.Parser
 {

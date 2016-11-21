@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Snowflake.Service.HttpServer;
+using Snowflake.Services.HttpServer;
 
-namespace Snowflake.Service.Manager
+namespace Snowflake.Services.Manager
 {
     internal class ServerManager : IServerManager
     {

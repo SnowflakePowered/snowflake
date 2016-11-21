@@ -1,7 +1,7 @@
 ﻿using Snowflake.Caching;
 using Snowflake.Extensibility;
 using Snowflake.Scraper.Providers;
-using Snowflake.Service;
+using Snowflake.Services;
 
 namespace Snowflake.Plugin.Scraper.TheGamesDb
 {

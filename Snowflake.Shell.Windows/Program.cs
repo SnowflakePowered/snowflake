@@ -7,8 +7,8 @@ using Newtonsoft.Json;
 using Snowflake.Configuration;
 using Snowflake.Emulator;
 using Snowflake.Events;
-using Snowflake.Service;
-using Snowflake.Service.Manager;
+using Snowflake.Services;
+using Snowflake.Services.Manager;
 using Squirrel;
 
 namespace Snowflake.Shell.Windows

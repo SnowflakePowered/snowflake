@@ -1,5 +1,5 @@
 ﻿using Snowflake.Extensibility;
-using Snowflake.Service;
+using Snowflake.Services;
 
 namespace Snowflake.Events.ServiceEvents
 {

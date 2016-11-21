@@ -16,7 +16,7 @@ using Snowflake.Tests.Scraper;
 using Snowflake.Plugin.Emulators.RetroArch.Adapters.Nestopia.Configuration;
 using Snowflake.Configuration.Input;
 using Snowflake.Plugin.Emulators.RetroArch;
-using Snowflake.Service;
+using Snowflake.Services;
 
 namespace Snowflake.Tests.ManualIntegrationTests
 {

@@ -1,7 +1,7 @@
 ﻿using System;
-using Snowflake.Service.HttpServer;
+using Snowflake.Services.HttpServer;
 
-namespace Snowflake.Service.JSWebSocketServer
+namespace Snowflake.Services.JSWebSocketServer
 {
     /// <summary>
     /// Represents a web socket server for 2 way duplex communication

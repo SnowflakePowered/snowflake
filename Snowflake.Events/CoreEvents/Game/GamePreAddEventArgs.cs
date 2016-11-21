@@ -1,6 +1,6 @@
 ﻿
 using Snowflake.Records.Game;
-using Snowflake.Service;
+using Snowflake.Services;
 
 namespace Snowflake.Events.CoreEvents.GameEvent
 {

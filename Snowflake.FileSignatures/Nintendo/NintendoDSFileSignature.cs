@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text;
 using Snowflake.Extensibility;
-using Snowflake.Service;
+using Snowflake.Services;
 
 namespace Snowflake.Romfile.FileSignatures.Nintendo
 {

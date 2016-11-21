@@ -1,4 +1,4 @@
-﻿namespace Snowflake.Service.HttpServer
+﻿namespace Snowflake.Services.HttpServer
 {
     /// <summary>
     /// Represents an HttpServer that can be used to serve content.

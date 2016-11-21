@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
-using Snowflake.Services.HttpServer;
-using Snowflake.Services.JSWebSocketServer;
-using Snowflake.Services.Manager;
 using NLog;
 using Snowflake.Configuration;
 using Snowflake.Input;
@@ -16,9 +12,7 @@ using Snowflake.Utility;
 
 namespace Snowflake.Services
 {
-   
-    [Export(typeof(ICoreService))]
-    [PartCreationPolicy(CreationPolicy.Shared)]
+  
     public class CoreService : ICoreService
     {
         #region Loaded Objects
@@ -39,19 +33,13 @@ namespace Snowflake.Services
             this.serviceContainer = new ConcurrentDictionary<Type, object>();
             this.RegisterService<IStoneProvider>(new StoneProvider());
             this.AppDataDirectory = appDataDirectory;
-            this.RegisterService<IServerManager>(new ServerManager());
             this.RegisterService<IGameLibrary>(new SqliteGameLibrary(new SqliteDatabase(Path.Combine(this.AppDataDirectory, "games.db"))));
             this.RegisterService<IMappedControllerElementCollectionStore>
                 (new SqliteMappedControllerElementCollectionStore(new SqliteDatabase(Path.Combine(this.AppDataDirectory, "controllermappings.db"))));
             this.RegisterService<IConfigurationCollectionStore>(new SqliteConfigurationCollectionStore(new SqliteDatabase(Path.Combine(this.AppDataDirectory, "configurations.db"))));
-            //this.RegisterService<IHotkeyTemplateStore>(new SqliteHotkeyTemplateStore(new SqliteDatabase(Path.Combine(this.AppDataDirectory, "hotkeys.db"))));
-            //this.RegisterService<IEmulatorAssembliesManager>(new EmulatorAssembliesManager(Path.Combine(this.AppDataDirectory, "emulators")));
+          
             this.RegisterService<IPluginManager>(new PluginManager(this.AppDataDirectory, this)); 
-            this.RegisterService<IAjaxManager>(new AjaxManager(this)); //todo deprecate with michi-based ipc
-            //this.RegisterService<IScrapeEngine>(new ScrapeEngine(this.Get<IStoneProvider>(), this.Get<IPluginManager>()));
-            var serverManager = this.Get<IServerManager>();
-            serverManager.RegisterServer("AjaxApiServer", new ApiServer(this)); //todo deprecate with michi-based ipc
-            serverManager.RegisterServer("WebSocketApiServer", new JsonApiWebSocketServer(30003, this)); //todo deprecate with michi-based ipc
+           
             
         }
 
@@ -87,7 +75,6 @@ namespace Snowflake.Services
             if (disposing)
             {
               this.Get<IPluginManager>().Dispose();
-              this.Get<IServerManager>().Dispose();
               GC.Collect();
 
             }

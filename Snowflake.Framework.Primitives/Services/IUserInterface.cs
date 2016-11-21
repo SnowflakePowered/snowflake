@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Snowflake.Service
+namespace Snowflake.Services
 {
     /// <summary>
     /// Represents a user interface that is started by the Snowflake shell.

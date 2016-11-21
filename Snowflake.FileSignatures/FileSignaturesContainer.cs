@@ -1,7 +1,7 @@
 ﻿using Snowflake.Extensibility;
 using Snowflake.Romfile.FileSignatures.Nintendo;
 using Snowflake.Romfile.FileSignatures.Sony;
-using Snowflake.Service;
+using Snowflake.Services;
 
 namespace Snowflake.Romfile.FileSignatures
 {

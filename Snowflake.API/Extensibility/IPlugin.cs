@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using Snowflake.Extensibility.Configuration;
-using Snowflake.Service;
+using Snowflake.Services;
 
 namespace Snowflake.Extensibility
 {

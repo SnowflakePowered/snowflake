@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Snowflake.Input.Controller;
 using Snowflake.Platform;
 
-namespace Snowflake.Service
+namespace Snowflake.Services
 {
     /// <summary>
     /// Provides Stone platform and controller layout data

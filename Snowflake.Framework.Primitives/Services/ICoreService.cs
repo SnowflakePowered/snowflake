@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Snowflake.Platform;
 
-namespace Snowflake.Service
+namespace Snowflake.Services
 {
     /// <summary>
     /// The core frontend service that handles all the functions of the frontend core.

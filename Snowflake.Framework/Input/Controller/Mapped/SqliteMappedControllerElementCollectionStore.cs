@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Snowflake.Input.Controller;
 using Snowflake.Input.Controller.Mapped;
 using Snowflake.Platform;
-using Snowflake.Service;
+using Snowflake.Services;
 using Snowflake.Utility;
 using System.Dynamic;
 using Dapper;

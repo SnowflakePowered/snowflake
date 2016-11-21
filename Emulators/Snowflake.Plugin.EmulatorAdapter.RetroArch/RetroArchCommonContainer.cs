@@ -11,8 +11,8 @@ using Snowflake.Plugin.Emulators.RetroArch.Adapters;
 
 using Snowflake.Plugin.Emulators.RetroArch.Executable;
 using Snowflake.Plugin.Emulators.RetroArch.Shaders;
-using Snowflake.Service;
-using Snowflake.Service.Manager;
+using Snowflake.Services;
+using Snowflake.Services.Manager;
 using Snowflake.Plugin.Emulators.RetroArch.Adapters.Nestopia;
 using Snowflake.Plugin.Emulators.RetroArch.Adapters.Bsnes;
 

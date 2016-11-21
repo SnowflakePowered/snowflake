@@ -9,7 +9,7 @@ using Snowflake.Extensibility;
 using Snowflake.Extensibility.Configuration;
 using Snowflake.Records.File;
 using Snowflake.Records.Game;
-using Snowflake.Service;
+using Snowflake.Services;
 
 namespace Snowflake.Emulator
 {

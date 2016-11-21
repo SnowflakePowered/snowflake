@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NLog;
 using Snowflake.Extensibility.Configuration;
-using Snowflake.Service;
+using Snowflake.Services;
 
 namespace Snowflake.Extensibility
 {

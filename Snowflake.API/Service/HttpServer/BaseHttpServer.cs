@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Mono.Net;
 
-namespace Snowflake.Service.HttpServer
+namespace Snowflake.Services.HttpServer
 {
     public abstract class BaseHttpServer : IBaseHttpServer
     {
@@ -49,7 +49,7 @@ namespace Snowflake.Service.HttpServer
         /// </summary>
         /// <param name="context">The HTTP context of the server listener</param>
         /// <returns>A Task that is called asynchronously that outputs a stream of text to be written as the HttpResponse</returns>
-        /// <see cref="Snowflake.Service.Server"/> for example implementations
+        /// <see cref="Snowflake.Services.Server"/> for example implementations
         protected abstract Task Process(HttpListenerContext context);
     }
 }

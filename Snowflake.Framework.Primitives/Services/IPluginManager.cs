@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Snowflake.Extensibility;
 
 
-namespace Snowflake.Service
+namespace Snowflake.Services
 {
     /// <summary>
     /// The IPluginManager manages all plugins except for Ajax plugins

@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Snowflake.Service;
+using Snowflake.Services;
 using Snowflake.Events;
 using Snowflake.Events.ServiceEvents;
 namespace Snowflake.Shell.Windows.ElectronUserInterface

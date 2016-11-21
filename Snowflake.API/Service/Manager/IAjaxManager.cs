@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Snowflake.Ajax;
 
-namespace Snowflake.Service.Manager
+namespace Snowflake.Services.Manager
 {
     /// <summary>
     /// The Ajax Manager manages Ajax loadables

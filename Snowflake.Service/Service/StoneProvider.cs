@@ -10,7 +10,7 @@ using Newtonsoft.Json.Linq;
 using Snowflake.Input.Controller;
 using Snowflake.Platform;
 
-namespace Snowflake.Service
+namespace Snowflake.Services
 {
     public class StoneProvider : IStoneProvider
     {

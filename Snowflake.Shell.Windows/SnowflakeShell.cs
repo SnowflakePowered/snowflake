@@ -15,8 +15,8 @@ using Snowflake.Platform;
 using Snowflake.Records.File;
 using Snowflake.Records.Game;
 using Snowflake.Scraper;
-using Snowflake.Service;
-using Snowflake.Service.Manager;
+using Snowflake.Services;
+using Snowflake.Services.Manager;
 using Snowflake.Utility;
 using Snowflake.Plugin.Emulators.RetroArch.Adapters.Bsnes;
 

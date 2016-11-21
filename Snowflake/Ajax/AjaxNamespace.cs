@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using Snowflake.Extensibility;
-using Snowflake.Service;
+using Snowflake.Services;
 
 namespace Snowflake.Ajax
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using Fleck;
 
-namespace Snowflake.Service.JSWebSocketServer
+namespace Snowflake.Services.JSWebSocketServer
 {
     /// <summary>
     /// When the socket has received a message
