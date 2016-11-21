@@ -46,7 +46,7 @@ namespace Snowflake.Records.Tests
         }
 
         [Fact]
-        public void RenoveMultiple_Test()
+        public void RemoveMultiple_Test()
         {
             var metadata = new List<IRecordMetadata>
             {

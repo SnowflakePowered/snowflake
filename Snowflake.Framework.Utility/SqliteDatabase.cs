@@ -83,7 +83,7 @@ namespace Snowflake.Utility
         /// <returns>The requested data.</returns>
         public IEnumerable<T> Query<T>(string query, object param = null)
         {
-            return this.Query(dbConnection => dbConnection.Query<T>(query, param));
+           return this.Query(dbConnection => dbConnection.Query<T>(query, param));
         }
 
         /// <summary>

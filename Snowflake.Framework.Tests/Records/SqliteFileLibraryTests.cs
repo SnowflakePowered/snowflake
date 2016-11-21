@@ -47,7 +47,7 @@ namespace Snowflake.Records.Tests
         }
 
         [Fact]
-        public void RenoveMultiple_Test()
+        public void RemoveMultiple_Test()
         {
             var fileRecord = new FileRecord(@"C:\somefile\test.txt", "text/plain", Guid.Empty);
             var fileRecord2 = new FileRecord(@"C:\somefile\moretest.txt", "text/plain", Guid.Empty);

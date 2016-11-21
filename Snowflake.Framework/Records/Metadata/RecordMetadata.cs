@@ -22,6 +22,14 @@ namespace Snowflake.Records.Metadata
         {
         }
 
+        internal RecordMetadata(Guid uuid, Guid record, string key, string value)
+        {
+            this.Key = key;
+            this.Value = value;
+            this.Record = record;
+            this.Guid = uuid;
+        }
+
         public bool Equals(IRecordMetadata metadata) => this.Guid == metadata.Guid;
         public override int GetHashCode() => this.Guid.GetHashCode();
 

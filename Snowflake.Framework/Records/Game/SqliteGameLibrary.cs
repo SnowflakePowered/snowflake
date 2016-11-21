@@ -190,16 +190,24 @@ namespace Snowflake.Records.Game
                             MimeType = file.mimetype
                         });
 
-                        var metadata = query.Read<RecordMetadata>();
+                        var metadatas = query.Read().Select(metadata => new
+                        {
+                            Guid = new Guid(metadata.uuid),
+                            Record = new Guid(metadata.record),
+                            Key = metadata.key,
+                            Value = metadata.value
+                        }).Select(m => new RecordMetadata(m.Guid, m.Record, m.Key, m.Value) 
+                        as IRecordMetadata);
+
                         var fileRecords = (from f in files
-                                           let md = (from m in metadata where m.Record == f.Guid select m)
-                                               .ToDictionary(md => md.Key, md => md as IRecordMetadata)
+                                           let md = (from m in metadatas where m.Record == f.Guid select m)
+                                               .ToDictionary(md => md.Key, md => md)
                                            select new FileRecord(f.Game, md, f.Path, f.MimeType)).ToList();
                         return (from game in games
                                 let gameFiles =
                                     (from f in fileRecords where f.Record == game select f as IFileRecord).ToList()
-                                let md = (from m in metadata where m.Record == game select m)
-                                    .ToDictionary(md => md.Key, md => md as IRecordMetadata)
+                                let md = (from m in metadatas where m.Record == game select m)
+                                    .ToDictionary(md => md.Key, md => md)
                                 select new GameRecord(game, md, gameFiles)).ToList();
                     }
                     catch (SqliteException)
@@ -239,13 +247,22 @@ namespace Snowflake.Records.Game
                             MimeType = f.mimetype
                         });
 
-                        var metadata = query.Read<RecordMetadata>();
+
+                        var metadatas = query.Read().Select(metadata => new
+                        {
+                            Guid = new Guid(metadata.uuid),
+                            Record = new Guid(metadata.record),
+                            Key = metadata.key,
+                            Value = metadata.value
+                        }).Select(m => new RecordMetadata(m.Guid, m.Record, m.Key, m.Value)
+                        as IRecordMetadata);
                         var fileRecords = (from f in files
-                                           let md = (from m in metadata where m.Record == f.Guid select m)
-                                               .ToDictionary(md => md.Key, md => md as IRecordMetadata)
+                                           let md = (from m in metadatas where m.Record == f.Guid select m)
+                                               .ToDictionary(md => md.Key, md => md)
                                            select new FileRecord(f.Game, md, f.Path, f.MimeType) as IFileRecord).ToList();
                         var gameMetadata =
-                            (from m in metadata where m.Guid == gameGuid select m).ToDictionary(m => m.Key, m => m as IRecordMetadata);
+                            (from m in metadatas where m.Guid == gameGuid select m)
+                            .ToDictionary(m => m.Key, m => m);
                         return new GameRecord(gameGuid, gameMetadata, fileRecords);
                     }
                     catch (SqliteException)
