@@ -1,9 +1,9 @@
 language: csharp
-sudo: false
+sudo: required
 solution: Snowflake.sln
 mono: none
 dotnet: 1.0.0-preview2-003121
-
+dist: trusty 
 install:
   - nuget restore ./Snowflake.sln
   
