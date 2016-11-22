@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
 using Snowflake.Configuration.Attributes;
-using Snowflake.Configuration;
 
 namespace Snowflake.Configuration.Tests
 {
