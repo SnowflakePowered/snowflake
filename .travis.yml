@@ -8,7 +8,8 @@ install:
   - nuget restore ./Snowflake.sln
   
 script:
-  -  dotnet build ./Snowflake.sln
+  - dotnet build ./Snowflake.sln
+  - dotnet test Snowflake.Framework.Tests/Snowflake.Framework.Tests.csproj
   
 notifications:
   irc:
