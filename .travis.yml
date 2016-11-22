@@ -1,13 +1,14 @@
 language: csharp
 sudo: false
 solution: Snowflake.sln
-mono:
-  - 4.4.2
+mono: none
+dotnet: 1.0.0-preview2-003121
+
 install:
   - nuget restore ./Snowflake.sln
   
 script:
-  -  xbuild /p:Configuration=Debug Snowflake.sln /p:TargetFrameworkVersion="v4.6"
+  -  dotnet build ./Snowflake.sln
   
 notifications:
   irc:

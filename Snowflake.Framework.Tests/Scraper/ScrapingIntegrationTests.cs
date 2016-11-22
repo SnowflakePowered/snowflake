@@ -13,8 +13,10 @@ using Snowflake.Scraper;
 using Snowflake.Scraper.Providers;
 using Snowflake.Scraper.Shiragame;
 using Snowflake.Service;
-using Snowflake.Plugin.Scraper.TheGamesDb;
+using Snowflake.Plugin.Scrapers.TheGamesDb;
 using Xunit;
+using Snowflake.Services;
+
 namespace Snowflake.Tests.Scraper
 {
     public class ScrapingIntegrationTests
@@ -33,7 +35,7 @@ namespace Snowflake.Tests.Scraper
             source.Register(this.scrapedProvider);
             source.Register(
                 new TheGamesDbMediaProvider(
-                    new KeyedImageCache(Environment.CurrentDirectory)));
+                    new KeyedImageCache(Path.GetTempPath())));
             this.scrapeGen = new ScrapeEngine(this.stoneProvider, new ShiragameProvider("shiragame.db"),
                 source, this.fileSignatureMatcher);
         }

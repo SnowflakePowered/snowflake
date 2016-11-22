@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Extensibility;
-using Snowflake.Service;
-using Snowflake.Service.Manager;
 using Xunit;
+using Snowflake.Services;
+
 namespace Snowflake.Service.Tests
 {
 
