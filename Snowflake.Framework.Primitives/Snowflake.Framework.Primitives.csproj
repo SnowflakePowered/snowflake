@@ -3,7 +3,6 @@
   <PropertyGroup Label="Configuration">
     <AssemblyName>Snowflake.Framework.Primitives</AssemblyName>
     <RootNamespace>Snowflake</RootNamespace>
-    <OutputPath>bin\Debug\</OutputPath>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFramework>netstandard1.6</TargetFramework>
