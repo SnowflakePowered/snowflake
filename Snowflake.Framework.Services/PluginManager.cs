@@ -72,18 +72,32 @@ namespace Snowflake.Services
      
         private IEnumerable<IPluginContainer> GetExports(string loadableLocation)
         {
+            
             foreach (string fileName in Directory.EnumerateFiles(loadableLocation)
                 .Where(f => Path.GetExtension(f) == ".dll"))
             {
-                var assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(fileName);
-                var containerTypes = assembly.ExportedTypes
+                Assembly assembly;
+                IEnumerable<IPluginContainer> containerTypes;
+                try
+                {
+                    assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(fileName); //todo check for dupes
+                    containerTypes = assembly.ExportedTypes
                     .Where(t => t.GetInterfaces().Contains(typeof(IPluginContainer)))
                     .Where(t => t.GetConstructor(Type.EmptyTypes) != null)
                     .Select(t => Instantiate.CreateInstance(t) as IPluginContainer);
-                foreach (var container in containerTypes)
-                {
-                    yield return container; //todo make into single linq
                 }
+                catch
+                {
+                    Console.WriteLine("Unable to load assembly " + fileName);
+                    continue;
+                }
+
+                    foreach (var container in containerTypes)
+                    {
+                        yield return container; //todo make into single linq
+                    }
+                
+               
             }
         }
         private void ComposeImports() 

@@ -1,9 +1,0 @@
-﻿{
-	"name": "InputEnumerator-XInput",
-	"type": "plugin_inputenumerator",
-	"version": "1.0.0.0",
-	"authors": [
-		"Snowflake"
-	],
-	"description": "XInput Device Enumerator"
-}

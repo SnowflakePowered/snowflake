@@ -19,7 +19,8 @@ namespace Snowflake.Plugin.InputManager.Win32
             
 
             var directInputGamepads =
-                this.GetGenericGamepads(devices.Where(device => device.Usage == UsageId.GenericGamepad), directInput);
+                this.GetGenericGamepads(devices.Where(device => device.Type == SharpDX.DirectInput.DeviceType.Gamepad 
+                || device.Type == SharpDX.DirectInput.DeviceType.Joystick), directInput);
             var xinputGamepads = this.GetXInputGamepads();
             var keyboards = directInput.GetDevices(DeviceClass.Keyboard, DeviceEnumerationFlags.AllDevices)
                 .Select(keyboard => new LowLevelInputDevice()
@@ -32,7 +33,8 @@ namespace Snowflake.Plugin.InputManager.Win32
                 
             });
 
-            var mice = directInput.GetDevices(DeviceClass.Pointer, DeviceEnumerationFlags.AllDevices).Select(mouse => new LowLevelInputDevice()
+            var mice = directInput.GetDevices(DeviceClass.Pointer, 
+                DeviceEnumerationFlags.AllDevices).Select(mouse => new LowLevelInputDevice()
             {
                 DI_InstanceGUID = mouse.InstanceGuid,
                 DI_InstanceName = mouse.InstanceName.Trim('\0'),

@@ -8,15 +8,6 @@
     <EmbeddedResource Include="**\*.resx" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="resource\InputEnumerator-Keyboard\layout.json" />
-    <EmbeddedResource Include="resource\InputEnumerator-Keyboard\plugin.json" />
-    <EmbeddedResource Include="resource\InputEnumerator-Wiimote\plugin.json" />
-    <EmbeddedResource Include="resource\InputEnumerator-Xbox360\layout.json" />
-    <EmbeddedResource Include="resource\InputEnumerator-Xbox360\plugin.json" />
-    <EmbeddedResource Include="resource\InputEnumerator-XInput\layout.json" />
-    <EmbeddedResource Include="resource\InputEnumerator-XInput\plugin.json" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="NETStandard.Library">
       <Version>1.6.1</Version>
     </PackageReference>
@@ -24,6 +15,12 @@
       <Version>1.0.0-alpha-20161104-2</Version>
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="Quamotion.DiscUtils">
+      <Version>1.0.3</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="resource\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Snowflake.Framework.Primitives\Snowflake.Framework.Primitives.csproj" />
