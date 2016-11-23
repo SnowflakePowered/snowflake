@@ -55,7 +55,7 @@ build_script:
 test_script:
     - rem Running Tests...
     - dotnet test src/Snowflake.Framework.Tests
-#    - OpenCover\tools\OpenCover.Console.exe -register:user -filter:"+[Snowflake*]*" -target:"xunit.runner.console.2.1.0\tools\xunit.console.exe" -targetargs:"Snowflake.Framework.Tests\bin\%CONFIGURATION%\Snowflake.Framework.Tests.dll -noshadow -appveyor" -output:coverage.xml
+    - OpenCover\tools\OpenCover.Console.exe -target:"dotnet.exe" -targetargs:"test src/Snowflake.Framework.Tests" -register:user -filter:"+[Snowflake*]* -[xunit*]*" -output:coverage.xml -oldStyle
 
 after_test:
 #    - rem Generating Sandcastle Documentation...
@@ -64,10 +64,10 @@ after_test:
 #    - doxygen.exe "C:\projects\snowflake\snowflake.doxygen" > nul 2>&1
 #    - rem Uploading Code Coverage Report to Coveralls
 #    - packages\coveralls.io.1.3.4\tools\coveralls.net.exe --opencover coverage.xml
-#    - rem Uploading Code Coverage Report to Codecov...
-#    - "SET PATH=C:\\Python34;C:\\Python34\\Scripts;%PATH%"
-#    - pip install codecov
-#    - codecov -f "coverage.xml"
+    - rem Uploading Code Coverage Report to Codecov...
+    - "SET PATH=C:\\Python34;C:\\Python34\\Scripts;%PATH%"
+    - pip install codecov
+    - codecov -f "coverage.xml"
 #    - rem Packing NuGet packages...
 #    - nuget pack Snowflake.API\Snowflake.API.csproj -IncludeReferencedProjects -Symbols
 #    - nuget pack Snowflake.Events\Snowflake.Events.csproj -IncludeReferencedProjects -Symbols

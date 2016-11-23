@@ -198,3 +198,4 @@ Releases/
 theme!theme-paper-snowflake-0.1.0.snowball
 scripts/*/*.cs
 project.lock.json
+OpenCover/
