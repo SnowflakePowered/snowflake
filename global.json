@@ -10,6 +10,7 @@
 	"Snowflake.Framework.Service",
 	"Snowflake.Framework.Tests",
 	"Snowflake.Support.FileSignatures",
-	"Plugins/Scrapers/Snowflake.Plugin.Scrapers.TheGamesDb"
+	"Snowflake.Plugin.Scrapers.TheGamesDb",
+    "Snowflake.Plugin.Emulators.RetroArch"
   ]
 }
