@@ -18,7 +18,7 @@ namespace Snowflake.Utility
         public SqliteDatabase(string fileName)
         {
             this.FileName = fileName;
-            //
+            if(!File.Exists(this.FileName)) File.Create(this.FileName).Dispose();
             this.dbConnectionString = $"Data Source={this.FileName};";
         }
 

@@ -17,12 +17,12 @@ namespace Snowflake.Utility.Tests
             }
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                Assert.Equal(Path.Combine(Environment.ExpandEnvironmentVariables("$HOME"), "Library", "Application Support"),
+                Assert.Equal(Path.Combine(Environment.ExpandEnvironmentVariables("%HOME%"), "Library", "Application Support"),
                  PathUtility.GetApplicationDataPath());
             }
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                 Assert.Equal(Path.Combine(Environment.ExpandEnvironmentVariables("$HOME"), ".snowflake"),
+                 Assert.Equal(Path.Combine(Environment.ExpandEnvironmentVariables("%HOME%"), ".snowflake"),
                  PathUtility.GetApplicationDataPath());
             }
         }

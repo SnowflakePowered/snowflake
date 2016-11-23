@@ -15,11 +15,11 @@ namespace Snowflake.Utility
             }
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                return Path.Combine(Environment.ExpandEnvironmentVariables("$HOME"), "Library", "Application Support");
+                return Path.Combine(Environment.ExpandEnvironmentVariables("%HOME%"), "Library", "Application Support");
             }
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                return Path.Combine(Environment.ExpandEnvironmentVariables("$HOME"), ".snowflake");
+                return Path.Combine(Environment.ExpandEnvironmentVariables("%HOME%"), ".snowflake");
             }
             return Path.Combine(typeof(PathUtility).GetTypeInfo().Assembly.Location);
         }
