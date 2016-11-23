@@ -8,8 +8,8 @@ install:
   - dotnet restore
   
 script:
-  - dotnet build Snowflake.Framework.Tests
-  - dotnet test Snowflake.Framework.Tests
+  - dotnet build src/Snowflake.Framework.Tests
+  - dotnet test src/Snowflake.Framework.Tests
   
 notifications:
   irc:
