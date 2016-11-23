@@ -16,6 +16,9 @@
 	"Snowflake.Support.FileSignatures": "*",
 	"Snowflake.Plugin.Scrapers.TheGamesDb" : "*"
   },
+  "runtimes": {
+    "ubuntu.14.04-x64": {}
+  },
   "frameworks": {
     "netcoreapp1.0": {
       "dependencies": {
