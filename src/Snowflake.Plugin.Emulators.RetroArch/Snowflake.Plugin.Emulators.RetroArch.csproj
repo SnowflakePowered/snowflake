@@ -1,4 +1,4 @@
-﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" />
   <PropertyGroup>
     <TargetFramework>netstandard1.6</TargetFramework>
@@ -8,12 +8,11 @@
     <EmbeddedResource Include="**\*.resx" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="resource\exe-retroarch-win64\plugin.json" />
-    <EmbeddedResource Include="resource\InputMappings\DirectInput.KEYBOARD_DEVICE.json" />
-    <EmbeddedResource Include="resource\InputMappings\DirectInput.XINPUT_DEVICE.json" />
-    <EmbeddedResource Include="resource\RetroArchBsnes\plugin.json" />
-    <EmbeddedResource Include="resource\RetroArchCommon\plugin.json" />
-    <EmbeddedResource Include="resource\RetroArchNestopia\plugin.json" />
+    <Compile Remove="resource\RetroArchCommonConfiguration\**" />
+    <EmbeddedResource Remove="resource\RetroArchCommonConfiguration\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="resource\**" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="NETStandard.Library">
@@ -28,12 +27,9 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="resource\RetroArchCommonConfiguration\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Snowflake.Framework.Primitives\Snowflake.Framework.Primitives.csproj" />
-    <ProjectReference Include="..\..\..\Snowflake.Framework.Utility\Snowflake.Framework.Utility.csproj" />
-    <ProjectReference Include="..\..\..\Snowflake.Framework\Snowflake.Framework.csproj" />
+    <ProjectReference Include="..\Snowflake.Framework.Primitives\Snowflake.Framework.Primitives.csproj" />
+    <ProjectReference Include="..\Snowflake.Framework.Utility\Snowflake.Framework.Utility.csproj" />
+    <ProjectReference Include="..\Snowflake.Framework\Snowflake.Framework.csproj" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
