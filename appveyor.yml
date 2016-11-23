@@ -51,7 +51,7 @@ install:
 #          PublishCoverity\tools\PublishCoverity.exe publish -t "$env:CoverityProjectToken" -e "$env:CoverityNotificationEmail" -r "$env:APPVEYOR_REPO_NAME" -z coverity.zip -d "AppVeyor $env:APPVEYOR_BUILD_VERSION" --codeVersion "$env:APPVEYOR_REPO_COMMIT"
 #        }
 build_script:
-    - dotnet build src/**/project.json
+    - dotnet build src/Snowflake.Framework.Tests
 test_script:
     - rem Running Tests...
     - dotnet test src/Snowflake.Framework.Tests
