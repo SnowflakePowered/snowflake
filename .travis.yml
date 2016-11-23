@@ -2,10 +2,10 @@ language: csharp
 sudo: required
 solution: Snowflake.sln
 mono: none
-dotnet: 1.0.0-preview2-1-003177
+dotnet: 1.0.0-preview2-003121
 dist: trusty 
 install:
-  - dotnet restore 
+  - dotnet restore
   
 script:
   - dotnet build Snowflake.Framework.Tests
