@@ -38,7 +38,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{4D86
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Emulators", "Emulators", "{C81398F8-AD50-4179-A0EC-2566EF978F1E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Plugin.Emulators.RetroArch", "Plugins\Emulators\Snowflake.Plugin.Emulators.RetroArch\Snowflake.Plugin.Emulators.RetroArch.csproj", "{5E4D1FD5-A232-48AD-AF4B-49522F767600}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Plugin.Emulators.RetroArch", "Snowflake.Plugin.Emulators.RetroArch\Snowflake.Plugin.Emulators.RetroArch.csproj", "{5E4D1FD5-A232-48AD-AF4B-49522F767600}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scrapers", "Scrapers", "{2BB64AD6-F01B-4BBC-8CC4-D4FC1E1EE830}"
 EndProject
@@ -46,7 +46,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bootstrap", "Bootstrap", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Bootstrap.Windows", "Snowflake.Bootstrap.Windows\Snowflake.Bootstrap.Windows.csproj", "{6D8576F4-6694-4704-9439-EBFE9652A140}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Plugin.Scrapers.TheGamesDb", "Plugins\Scrapers\Snowflake.Plugin.Scrapers.TheGamesDb\Snowflake.Plugin.Scrapers.TheGamesDb.csproj", "{C6AFA8DF-2D5F-4B5E-9C70-DD3CA5E5044B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Plugin.Scrapers.TheGamesDb", "Snowflake.Plugin.Scrapers.TheGamesDb\Snowflake.Plugin.Scrapers.TheGamesDb.csproj", "{C6AFA8DF-2D5F-4B5E-9C70-DD3CA5E5044B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Framework.Tests", "Snowflake.Framework.Tests\Snowflake.Framework.Tests.csproj", "{5881A6EB-E702-4A4E-9F0A-6B4B91FE34B6}"
 EndProject

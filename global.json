@@ -1,0 +1,15 @@
+{
+  "sdk":
+  {
+    "version": "1.0.0-preview2-1-003177"
+  },
+  "projects": [
+	"Snowflake.Framework.Primitives",
+	"Snowflake.Framework.Utility",
+	"Snowflake.Framework",
+	"Snowflake.Framework.Service",
+	"Snowflake.Framework.Tests",
+	"Snowflake.Support.FileSignatures",
+	"Plugins/Scrapers/Snowflake.Plugin.Scrapers.TheGamesDb"
+  ]
+}
