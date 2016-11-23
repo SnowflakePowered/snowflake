@@ -14,7 +14,7 @@ configuration: Debug
 init:
   - git config --global core.autocrlf true
 build:
-  project: ./src/Snowflake.sln
+  project: src/Snowflake.sln
   parallel: true
   publish_nuget: true
   publish_nuget_symbols: true
@@ -38,7 +38,7 @@ install:
  #   - nuget install EWSoftware.SHFB.NETFramework -ExcludeVersion
  #   - choco install -y doxygen.portable
     - git submodule update --init --recursive
-    - dotnet restore ./src/Snowflake.sln
+    - dotnet restore src/Snowflake.sln
 
 #after_build:
 #    - ps: |
@@ -53,7 +53,7 @@ install:
 
 test_script:
     - rem Running Tests...
-    - dotnet test ./src/Snowflake.Framework.Tests/Snowflake.Framework.Tests.csproj
+    - dotnet test src/Snowflake.Framework.Tests/Snowflake.Framework.Tests.csproj
 #    - OpenCover\tools\OpenCover.Console.exe -register:user -filter:"+[Snowflake*]*" -target:"xunit.runner.console.2.1.0\tools\xunit.console.exe" -targetargs:"Snowflake.Framework.Tests\bin\%CONFIGURATION%\Snowflake.Framework.Tests.dll -noshadow -appveyor" -output:coverage.xml
 
 after_test:
