@@ -32,14 +32,13 @@ cache:
   
 install:
     - nuget update -self
-    - dotnet --version
     - nuget install OpenCover -ExcludeVersion
  #   - nuget install xunit.runner.console -Version 2.1.0
  #   - nuget install EWSoftware.SHFB -ExcludeVersion
  #   - nuget install EWSoftware.SHFB.NETFramework -ExcludeVersion
  #   - choco install -y doxygen.portable
     - git submodule update --init --recursive
-    - dotnet restore src/Snowflake.sln
+    - dotnet restore
 
 #after_build:
 #    - ps: |
@@ -54,7 +53,7 @@ install:
 
 test_script:
     - rem Running Tests...
-    - dotnet test src/Snowflake.Framework.Tests/Snowflake.Framework.Tests.csproj
+    - dotnet test src/Snowflake.Framework.Tests
 #    - OpenCover\tools\OpenCover.Console.exe -register:user -filter:"+[Snowflake*]*" -target:"xunit.runner.console.2.1.0\tools\xunit.console.exe" -targetargs:"Snowflake.Framework.Tests\bin\%CONFIGURATION%\Snowflake.Framework.Tests.dll -noshadow -appveyor" -output:coverage.xml
 
 after_test:
