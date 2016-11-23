@@ -5,7 +5,7 @@ using Snowflake.Configuration;
 using Snowflake.Platform;
 using Snowflake.Records.File;
 using Snowflake.Records.Game;
-
+using Snowflake.Utility;
 namespace Snowflake.Emulator
 {
  
@@ -28,9 +28,7 @@ namespace Snowflake.Emulator
             this.SaveSlot = saveSlot;
             this.Configuration = this.EmulatorAdapter.GetConfiguration(game);
             this.Platform = platform;
-            
-            string roamingAppdata = Environment.ExpandEnvironmentVariables("%appdata%"); //todo for other os
-            this.InstancePath = Path.Combine(roamingAppdata, "snowflake-cache", this.InstanceGuid.ToString());
+            this.InstancePath = PathUtility.GetSnowflakeDataPath("snowflake-cache", this.InstanceGuid.ToString());
             Directory.CreateDirectory(this.InstancePath);
         }
 

@@ -23,7 +23,7 @@ namespace Snowflake.Shell.Windows
     internal class SnowflakeShell
     {
         private ICoreService loadedCore;
-        private readonly string appDataDirectory = Path.Combine(Environment.ExpandEnvironmentVariables("%appdata%"), "Snowflake");
+        private readonly string appDataDirectory = PathUtility.GetSnowflakeDataPath();
         internal SnowflakeShell()
         {
             this.StartCore();
