@@ -32,6 +32,7 @@ cache:
   
 install:
     - nuget update -self
+    - dotnet --version
     - nuget install OpenCover -ExcludeVersion
  #   - nuget install xunit.runner.console -Version 2.1.0
  #   - nuget install EWSoftware.SHFB -ExcludeVersion
