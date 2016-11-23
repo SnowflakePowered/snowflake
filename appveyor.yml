@@ -8,13 +8,13 @@ skip_tags: true
 clone_depth: 50
 test:
   assemblies:
-    - Snowflake.Test.dll
+    - Snowflake.Framework.Tests.dll
 configuration: Debug
 # Fix line endings on Windows
 init:
   - git config --global core.autocrlf true
 build:
-  project: Snowflake.sln
+  project: ./src/Snowflake.sln
   parallel: true
   publish_nuget: true
   publish_nuget_symbols: true
@@ -33,12 +33,12 @@ cache:
 install:
     - nuget update -self
     - nuget install OpenCover -ExcludeVersion
-    - nuget install xunit.runner.console -Version 2.1.0
-    - nuget install EWSoftware.SHFB -ExcludeVersion
-    - nuget install EWSoftware.SHFB.NETFramework -ExcludeVersion
-    - choco install -y doxygen.portable
+ #   - nuget install xunit.runner.console -Version 2.1.0
+ #   - nuget install EWSoftware.SHFB -ExcludeVersion
+ #   - nuget install EWSoftware.SHFB.NETFramework -ExcludeVersion
+ #   - choco install -y doxygen.portable
     - git submodule update --init --recursive
-    - nuget restore ./Snowflake.sln
+    - dotnet restore ./src/Snowflake.sln
 
 #after_build:
 #    - ps: |
@@ -53,67 +53,69 @@ install:
 
 test_script:
     - rem Running Tests...
-    - OpenCover\tools\OpenCover.Console.exe -register:user -filter:"+[Snowflake*]*" -target:"xunit.runner.console.2.1.0\tools\xunit.console.exe" -targetargs:"Snowflake.Tests\bin\%CONFIGURATION%\Snowflake.Tests.dll -noshadow -appveyor" -output:coverage.xml
-after_test:
-    - rem Generating Sandcastle Documentation...
-    - msbuild "C:\projects\snowflake\Snowflake.Documentation.shfbproj" /verbosity:quiet /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" > nul 2>&1
-    - rem Generating Doxygen Documentation...
-    - doxygen.exe "C:\projects\snowflake\snowflake.doxygen" > nul 2>&1
-    - rem Uploading Code Coverage Report to Coveralls
-    - packages\coveralls.io.1.3.4\tools\coveralls.net.exe --opencover coverage.xml
-    - rem Uploading Code Coverage Report to Codecov...
-    - "SET PATH=C:\\Python34;C:\\Python34\\Scripts;%PATH%"
-    - pip install codecov
-    - codecov -f "coverage.xml"
-    - rem Packing NuGet packages...
-    - nuget pack Snowflake.API\Snowflake.API.csproj -IncludeReferencedProjects -Symbols
-    - nuget pack Snowflake.Events\Snowflake.Events.csproj -IncludeReferencedProjects -Symbols
-    - nuget pack Snowflake\Snowflake.csproj -IncludeReferencedProjects -Symbols
-    - nuget pack Snowflake.Tests\Snowflake.Tests.csproj -IncludeReferencedProjects -Symbols
-    - nuget pack Snowflake.Service\Snowflake.Service.csproj -IncludeReferencedProjects -Symbols
+    - dotnet test ./src/Snowflake.Framework.Tests/Snowflake.Framework.Tests.csproj
+#    - OpenCover\tools\OpenCover.Console.exe -register:user -filter:"+[Snowflake*]*" -target:"xunit.runner.console.2.1.0\tools\xunit.console.exe" -targetargs:"Snowflake.Framework.Tests\bin\%CONFIGURATION%\Snowflake.Framework.Tests.dll -noshadow -appveyor" -output:coverage.xml
 
-artifacts:
-    - path: Snowflake\bin\$(configuration)
-      name: Snowflake Base Libraries
-      type: zip
-    - path: Help
-      name: Snowflake.Documentation
-      type: zip
-    - path: doc
-      name: Snowflake.Documentation.Doxygen (Verbose Documentation)
-      type: zip
-    - path: 'Snowflake\Snowflake.{version}-pre-alpha-nightly.nupkg'
-      name: Snowflake NuGet Packages
-    - path: 'Snowflake.API\Snowflake.API.{version}-pre-alpha-nightly.nupkg'
-      name: Snowflake.API NuGet Packages
-    - path: 'Snowflake.Events\Snowflake.Events.{version}-pre-alpha-nightly.nupkg'
-      name: Snowflake.Events NuGet Packages
-    - path: 'Snowflake.InputManager.DirectInput\Snowflake.InputManager.DirectInput.{version}-pre-alpha-nightly.nupkg'
-      name: Snowflake.InputManager.DirectInput NuGet Packages
-    - path: 'Snowflake.Tests\Snowflake.Tests.{version}-pre-alpha-nightly.nupkg'
-      name: Snowflake.Tests NuGet Packages
-    - path: 'Snowflake\Snowflake.{version}-pre-alpha-nightly.symbols.nupkg'
-      name: Snowflake NuGet Packages
-    - path: 'Snowflake.API\Snowflake.API.{version}-pre-alpha-nightly.symbols.nupkg'
-      name: Snowflake.API NuGet Packages
-    - path: 'Snowflake.Events\Snowflake.Events.{version}-pre-alpha-nightly.symbols.nupkg'
-      name: Snowflake.Events NuGet Packages
-    - path: 'Snowflake.InputManager.DirectInput\Snowflake.InputManager.DirectInput.{version}-pre-alpha-nightly.symbols.nupkg'
-      name: Snowflake.InputManager.DirectInput NuGet Packages
-    - path: 'Snowflake.Tests\Snowflake.Tests.{version}-pre-alpha-nightly.symbols.nupkg'
-      name: Snowflake.Tests NuGet Packages
-    - path: 'Snowflake.Service\Snowflake.Service.{version}-pre-alpha-nightly.symbols.nupkg'
-      name: Snowflake.Sevice NuGet Packages
-assembly_info:
-    patch: true
-    file: SharedAssemblyInfo.cs
-    assembly_version: '{version}'
-    assembly_file_version: '{version}'
-    assembly_informational_version: '{version}-pre-alpha-nightly'
-deploy:
-    - provider: NuGet
-      server: https://www.myget.org/F/snowflake-nightly/api/v2/package
-      api_key:
-        secure: c0TSni4oM3D75P31isNFRu0z4whPsrvTAcu67iLlFmtvvrzopEI8Xj5qWk1pwMkj
-      symbol_server: https://nuget.symbolsource.org/MyGet/snowflake-nightly
-      skip_symbols: false
+after_test:
+#    - rem Generating Sandcastle Documentation...
+#    - msbuild "C:\projects\snowflake\Snowflake.Documentation.shfbproj" /verbosity:quiet /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" > nul 2>&1
+#    - rem Generating Doxygen Documentation...
+#    - doxygen.exe "C:\projects\snowflake\snowflake.doxygen" > nul 2>&1
+#    - rem Uploading Code Coverage Report to Coveralls
+#    - packages\coveralls.io.1.3.4\tools\coveralls.net.exe --opencover coverage.xml
+#    - rem Uploading Code Coverage Report to Codecov...
+#    - "SET PATH=C:\\Python34;C:\\Python34\\Scripts;%PATH%"
+#    - pip install codecov
+#    - codecov -f "coverage.xml"
+#    - rem Packing NuGet packages...
+#    - nuget pack Snowflake.API\Snowflake.API.csproj -IncludeReferencedProjects -Symbols
+#    - nuget pack Snowflake.Events\Snowflake.Events.csproj -IncludeReferencedProjects -Symbols
+#    - nuget pack Snowflake\Snowflake.csproj -IncludeReferencedProjects -Symbols
+#    - nuget pack Snowflake.Tests\Snowflake.Tests.csproj -IncludeReferencedProjects -Symbols
+#    - nuget pack Snowflake.Service\Snowflake.Service.csproj -IncludeReferencedProjects -Symbols
+
+#artifacts:
+#    - path: Snowflake\bin\$(configuration)
+#      name: Snowflake Base Libraries
+#      type: zip
+#    - path: Help
+#      name: Snowflake.Documentation
+#      type: zip
+#    - path: doc
+#      name: Snowflake.Documentation.Doxygen (Verbose Documentation)
+#      type: zip
+#    - path: 'Snowflake\Snowflake.{version}-pre-alpha-nightly.nupkg'
+#      name: Snowflake NuGet Packages
+#    - path: 'Snowflake.API\Snowflake.API.{version}-pre-alpha-nightly.nupkg'
+#      name: Snowflake.API NuGet Packages
+#    - path: 'Snowflake.Events\Snowflake.Events.{version}-pre-alpha-nightly.nupkg'
+#      name: Snowflake.Events NuGet Packages
+#    - path: 'Snowflake.InputManager.DirectInput\Snowflake.InputManager.DirectInput.{version}-pre-alpha-nightly.nupkg'
+#      name: Snowflake.InputManager.DirectInput NuGet Packages
+#    - path: 'Snowflake.Tests\Snowflake.Tests.{version}-pre-alpha-nightly.nupkg'
+#      name: Snowflake.Tests NuGet Packages
+#    - path: 'Snowflake\Snowflake.{version}-pre-alpha-nightly.symbols.nupkg'
+#      name: Snowflake NuGet Packages
+#    - path: 'Snowflake.API\Snowflake.API.{version}-pre-alpha-nightly.symbols.nupkg'
+#      name: Snowflake.API NuGet Packages
+#    - path: 'Snowflake.Events\Snowflake.Events.{version}-pre-alpha-nightly.symbols.nupkg'
+#      name: Snowflake.Events NuGet Packages
+#    - path: 'Snowflake.InputManager.DirectInput\Snowflake.InputManager.DirectInput.{version}-pre-alpha-nightly.symbols.nupkg'
+#      name: Snowflake.InputManager.DirectInput NuGet Packages
+#    - path: 'Snowflake.Tests\Snowflake.Tests.{version}-pre-alpha-nightly.symbols.nupkg'
+#      name: Snowflake.Tests NuGet Packages
+#    - path: 'Snowflake.Service\Snowflake.Service.{version}-pre-alpha-nightly.symbols.nupkg'
+#      name: Snowflake.Sevice NuGet Packages
+#assembly_info:
+#    patch: true
+#    file: SharedAssemblyInfo.cs
+#    assembly_version: '{version}'
+#    assembly_file_version: '{version}'
+#    assembly_informational_version: '{version}-pre-alpha-nightly'
+#deploy:
+#    - provider: NuGet
+#      server: https://www.myget.org/F/snowflake-nightly/api/v2/package
+#      api_key:
+#        secure: c0TSni4oM3D75P31isNFRu0z4whPsrvTAcu67iLlFmtvvrzopEI8Xj5qWk1pwMkj
+#     symbol_server: https://nuget.symbolsource.org/MyGet/snowflake-nightly
+#      skip_symbols: false
