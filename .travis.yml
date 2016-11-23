@@ -8,7 +8,7 @@ install:
   - dotnet restore
   
 script:
-  - dotnet build src/Snowflake.Framework.Tests
+  - dotnet build src/**/project.json
   - dotnet test src/Snowflake.Framework.Tests
   
 notifications:

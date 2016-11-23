@@ -13,12 +13,12 @@ configuration: Debug
 # Fix line endings on Windows
 init:
   - git config --global core.autocrlf true
-build:
-  project: src/Snowflake.sln
-  parallel: true
-  publish_nuget: true
-  publish_nuget_symbols: true
-  verbosity: minimal
+#build:
+#  project: src/Snowflake.sln
+#  parallel: true
+#  publish_nuget: true
+#  publish_nuget_symbols: true
+#  verbosity: minimal
 environment:
     COVERALLS_REPO_TOKEN:
       secure: nBi3LwnqgslaH8hbsvjnWTqpe/UbKn705TJujxqJwtcL5OLGfcydM8AnVyld6Ngu
@@ -50,7 +50,8 @@ install:
 #          PublishCoverity\tools\PublishCoverity.exe compress -o coverity.zip -i cov-int
 #          PublishCoverity\tools\PublishCoverity.exe publish -t "$env:CoverityProjectToken" -e "$env:CoverityNotificationEmail" -r "$env:APPVEYOR_REPO_NAME" -z coverity.zip -d "AppVeyor $env:APPVEYOR_BUILD_VERSION" --codeVersion "$env:APPVEYOR_REPO_COMMIT"
 #        }
-
+build_script:
+    - dotnet build src/**/project.json
 test_script:
     - rem Running Tests...
     - dotnet test src/Snowflake.Framework.Tests
