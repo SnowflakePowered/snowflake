@@ -9,7 +9,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <EmbeddedResource Include="..\stone\dist\stone.dist.json">
+    <EmbeddedResource Include="..\..\stone\dist\stone.dist.json">
       <Link>stone.dist.json</Link>
     </EmbeddedResource>
   </ItemGroup>

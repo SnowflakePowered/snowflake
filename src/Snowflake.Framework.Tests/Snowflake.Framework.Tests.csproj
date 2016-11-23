@@ -33,24 +33,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="TestResources\Configurations\ConfigCollection.ini" />
-    <EmbeddedResource Include="TestResources\Configurations\ExampleConfigurationSection.cfg" />
-    <EmbeddedResource Include="TestResources\Configurations\ExampleConfigurationSection.ini" />
-    <EmbeddedResource Include="TestResources\Configurations\ExampleInput.cfg" />
-    <EmbeddedResource Include="TestResources\Configurations\ExampleInput.ini" />
-    <EmbeddedResource Include="TestResources\Configurations\ExampleIterableConfigurationSection.ini" />
-    <EmbeddedResource Include="TestResources\GameCache\600x600.gif" />
-    <EmbeddedResource Include="TestResources\GameCache\dmmy.mp3" />
-    <EmbeddedResource Include="TestResources\GameCache\dmmy.ogg" />
-    <EmbeddedResource Include="TestResources\GameCache\test.mp4" />
-    <EmbeddedResource Include="TestResources\GameCache\test.webm" />
-    <EmbeddedResource Include="TestResources\InputMappings\DirectInput.KEYBOARD_DEVICE.json" />
-    <EmbeddedResource Include="TestResources\InputMappings\DirectInput.XINPUT_DEVICE.json" />
-    <EmbeddedResource Include="TestResources\InputMappings\keyboard_device.json" />
-    <EmbeddedResource Include="TestResources\InputMappings\xinput_device.json" />
+    <EmbeddedResource Include="TestResources\**" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\shiragame.db">
+    <None Include="..\..\shiragame.db">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Link>shiragame.db</Link>
     </None>

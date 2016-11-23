@@ -4,7 +4,7 @@
     "debugType": "portable",
 	"compile": "*.cs",
 	"embed": "TestResources/**",
-	"copyToOutput": "../shiragame.db",
+	"copyToOutput": "../../shiragame.db",
 	"emitEntryPoint": true
   },
   "testRunner": "xunit",
