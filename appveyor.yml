@@ -88,7 +88,7 @@ artifacts:
       type: zip
 deploy:
     - provider: NuGet
-      server: https://www.myget.org/F/snowflake-nightly/api/v3/index.json
+      server: https://www.myget.org/F/snowflake-nightly/api/v2/package
       api_key:
         secure: c0TSni4oM3D75P31isNFRu0z4whPsrvTAcu67iLlFmtvvrzopEI8Xj5qWk1pwMkj
       symbol_server: https://nuget.symbolsource.org/MyGet/snowflake-nightly
