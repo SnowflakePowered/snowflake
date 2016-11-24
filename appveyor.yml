@@ -33,13 +33,13 @@ cache:
   - packages -> **\packages.config
   
 install:
-    - nuget update -self
-    - nuget install OpenCover -ExcludeVersion
+    - nuget update -self > nul 2>&1
+    - nuget install OpenCover -ExcludeVersion > nul 2>&1
  #   - nuget install xunit.runner.console -Version 2.1.0
  #   - nuget install EWSoftware.SHFB -ExcludeVersion
  #   - nuget install EWSoftware.SHFB.NETFramework -ExcludeVersion
-    - choco install -y doxygen.portable
-    - git submodule update --init --recursive
+    - choco install -y doxygen.portable > nul 2>&1
+    - git submodule update --init --recursive > nul 2>&1
     - dotnet restore
 
 #after_build:
@@ -63,10 +63,10 @@ after_test:
 #    - msbuild "C:\projects\snowflake\Snowflake.Documentation.shfbproj" /verbosity:quiet /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" > nul 2>&1
     - rem Generating Doxygen Documentation...
     - echo "PROJECT_NUMBER = %APPVEYOR_BUILD_VERSION%+git.%APPVEYOR_REPO_COMMIT%" >> snowflake.doxygen
-    - doxygen snowflake.doxygen
+    - doxygen snowflake.doxygen > nul 2>&1
     - rem Uploading Code Coverage Report to Codecov...
     - "SET PATH=C:\\Python34;C:\\Python34\\Scripts;%PATH%"
-    - pip install codecov
+    - pip install codecov > nul 2>&1
     - codecov -f "coverage.xml"
     - rem Packing NuGet packages...
     - dotnet pack src\Snowflake.Framework.Primitives --version-suffix pre-alpha.%APPVEYOR_BUILD_NUMBER% -o nupkg
@@ -96,6 +96,6 @@ deploy:
 after_deploy:
     - rem Uploading Build Documentation
     - git init doc/html
-    - git -C doc/html add --all
-    - git -C doc/html commit -m "Upload documentation for build SnowflakePowered/snowflake@%APPVEYOR_REPO_COMMIT%"
+    - git -C doc/html add --all > nul 2>&1
+    - git -C doc/html commit -m "Upload documentation for build SnowflakePowered/snowflake@%APPVEYOR_REPO_COMMIT%" > nul 2>&1
     - git -C doc/html push --force -q https://snowflake-build-bot:%GITHUB_BUILDBOT_TOKEN%@github.com/SnowflakePowered-Support/snowflake-doc-doxygen.git master  
