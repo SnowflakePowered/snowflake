@@ -2,10 +2,11 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" />
   <PropertyGroup>
     <OutputType>Exe</OutputType>
+	<DebugType>Full</DebugType>
     <TargetFramework>netcoreapp1.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="**\*.cs" />
+    <Compile Include="**\*.cs" Exclude="Program.cs"/>
     <EmbeddedResource Include="**\*.resx" />
   </ItemGroup>
   <ItemGroup>
