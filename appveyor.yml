@@ -27,6 +27,8 @@ environment:
     CoverityNotificationEmail:
       secure: YObG6alHbjgc0M1b5aIThLfeiTS18PFiFnIjEcSNqa0=
     PATH: C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
+    GITHUB_BUILDBOT_TOKEN:
+      secure: LZO5KXv/W++ny6vI/qhQ/NhscaTqhFAe+h3t0/sTMj44LlGeJi3n7nIR9b8KXXHr
 cache:
   - packages -> **\packages.config
   
@@ -60,7 +62,7 @@ after_test:
 #    - rem Generating Sandcastle Documentation...
 #    - msbuild "C:\projects\snowflake\Snowflake.Documentation.shfbproj" /verbosity:quiet /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" > nul 2>&1
     - rem Generating Doxygen Documentation...
-    - echo "PROJECT_NUMBER = %APPVEYOR_BUILD_VERSION%+%APPVEYOR_REPO_COMMIT%" >> snowflake.doxygen
+    - echo "PROJECT_NUMBER = %APPVEYOR_BUILD_VERSION%+git.%APPVEYOR_REPO_COMMIT%" >> snowflake.doxygen
     - doxygen snowflake.doxygen
     - rem Uploading Code Coverage Report to Codecov...
     - "SET PATH=C:\\Python34;C:\\Python34\\Scripts;%PATH%"
@@ -91,3 +93,9 @@ deploy:
         secure: c0TSni4oM3D75P31isNFRu0z4whPsrvTAcu67iLlFmtvvrzopEI8Xj5qWk1pwMkj
       symbol_server: https://nuget.symbolsource.org/MyGet/snowflake-nightly
       skip_symbols: false
+after_deploy:
+    - rem Uploading Build Documentation
+    - git init doc/html
+    - git -C doc/html add --all
+    - git -C doc/html commit -m "Upload documentation for build SnowflakePowered/snowflake@%APPVEYOR_REPO_COMMIT%"
+    - git -C doc/html push --force -q https://snowflake-build-bot:%GITHUB_BUILDBOT_TOKEN%@github.com/SnowflakePowered-Support/snowflake-doc-doxygen.git master  
