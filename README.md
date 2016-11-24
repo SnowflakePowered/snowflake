@@ -40,7 +40,7 @@ Snowflake provides a comprehensive C# API and Javascript bindings to handle all 
   * Electron-based desktop user interface.
   * Arbitrary binding support for additional bindings to any environment.
   * Fully documented C# API.
-  * *Planned CoreCLR support for Linux and OSX*
+  * Full Linux support through .NET Core and .NET Standard.
 
 
 
