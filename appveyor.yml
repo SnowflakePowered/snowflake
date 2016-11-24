@@ -96,6 +96,7 @@ deploy:
 after_deploy:
     - rem Uploading Build Documentation
     - git init doc/html
+    - echo "docs.snowflakepowe.red" > doc/html/CNAME
     - git -C doc/html add --all > nul 2>&1
     - git -C doc/html commit -m "Upload documentation for build SnowflakePowered/snowflake@%APPVEYOR_REPO_COMMIT%" > nul 2>&1
     - git -C doc/html push --force -q https://snowflake-build-bot:%GITHUB_BUILDBOT_TOKEN%@github.com/SnowflakePowered-Support/snowflake-doc-doxygen.git master  
