@@ -1,0 +1,36 @@
+{
+  "version": "1.0.0-*",
+  "buildOptions": {
+    "debugType": "portable",
+	"compile": "*.cs",
+	"embed": [
+		"../../stone/dist/stone.dist.json"
+	]
+  },
+  "configurations": {
+		"Cover": {
+			"buildOptions": {
+				"debugType": "full"
+			}
+		}
+  },
+  "dependencies": {
+	"Snowflake.Framework.Primitives": "*",
+	"Snowflake.Framework.Utility": "*",
+	"Snowflake.Framework": "*"
+  },
+  "frameworks": {
+    "netstandard1.6": {
+      "dependencies": {
+		"Microsoft.CSharp": "4.3.0",
+		"NETStandard.Library": "1.6.1",
+		"Microsoft.NET.Sdk": {
+			"type" : "platform",
+			"version" : "1.0.0-alpha-20161104-2"
+		},
+		"System.Runtime.Loader": "4.3.0",
+		"Newtonsoft.Json": "9.0.2-beta1"
+      }
+    }
+  }
+}

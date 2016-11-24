@@ -1,0 +1,40 @@
+{
+	"version": "1.0.0-*",
+	"buildOptions": {
+		"debugType": "portable",
+		"compile": "*.cs"
+	},
+	"dependencies": {
+		"Snowflake.Framework.Primitives": "*"
+	},
+	"configurations": {
+		"Cover": {
+			"buildOptions": {
+				"debugType": "full"
+			}
+		}
+	},
+	"frameworks": {
+		"netstandard1.6": {
+			"dependencies": {
+				"Microsoft.CSharp": "4.3.0",
+				"NETStandard.Library": "1.6.1",
+				"Microsoft.NET.Sdk": {
+					"type": "platform",
+					"version": "1.0.0-alpha-20161104-2"
+				},
+				"Newtonsoft.Json": "9.0.2-beta1",
+				"System.Dynamic.Runtime": "4.3.0",
+				"CoreCompat.System.Drawing": "1.0.0-beta006",
+				"Crc32.NET": "1.0.1",
+				"Dapper": "1.50.3-beta1",
+				"Enums.NET": "1.0.0",
+				"Microsoft.Data.Sqlite": "1.1.0",
+				"System.Globalization": "4.3.0",
+				"System.Globalization.Extensions": "4.3.0",
+				"System.Net.Http": "4.3.0",
+				"System.Runtime.Extensions": "4.3.0"
+			}
+		}
+	}
+}
