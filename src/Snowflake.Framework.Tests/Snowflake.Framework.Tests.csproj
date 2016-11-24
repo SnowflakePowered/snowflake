@@ -2,8 +2,11 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" />
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-	<DebugType>Full</DebugType>
+	<DebugType>portable</DebugType>
     <TargetFramework>netcoreapp1.0</TargetFramework>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Cover' ">
+	<DebugType>Full</DebugType>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="**\*.cs" Exclude="Program.cs"/>
@@ -42,6 +45,7 @@
       <Link>shiragame.db</Link>
     </None>
   </ItemGroup>
+  
   <ItemGroup>
     <ProjectReference Include="..\Snowflake.Plugin.Scrapers.TheGamesDb\Snowflake.Plugin.Scrapers.TheGamesDb.csproj" />
     <ProjectReference Include="..\Snowflake.Framework.Primitives\Snowflake.Framework.Primitives.csproj" />

@@ -7,6 +7,13 @@
 	"dependencies": {
 		"Snowflake.Framework.Primitives": "*"
 	},
+	"configurations": {
+		"Cover": {
+			"buildOptions": {
+				"debugType": "full"
+			}
+		}
+	},
 	"frameworks": {
 		"netstandard1.6": {
 			"dependencies": {

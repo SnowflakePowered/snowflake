@@ -7,6 +7,13 @@
 		"../../stone/dist/stone.dist.json"
 	]
   },
+  "configurations": {
+		"Cover": {
+			"buildOptions": {
+				"debugType": "full"
+			}
+		}
+  },
   "dependencies": {
 	"Snowflake.Framework.Primitives": "*",
 	"Snowflake.Framework.Utility": "*",

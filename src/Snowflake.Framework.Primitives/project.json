@@ -1,23 +1,30 @@
 {
-  "version": "1.0.0-*",
-  "buildOptions": {
-    "debugType": "portable",
-	"compile": "*.cs"
-  },
-  "dependencies": {},
-  "frameworks": {
-    "netstandard1.6": {
-      "dependencies": {
-        "CoreCompat.System.Drawing": "1.0.0-beta006",
-		"Microsoft.CSharp": "4.3.0",
-		"NETStandard.Library": "1.6.1",
-		"Microsoft.NET.Sdk": {
-			"type" : "platform",
-			"version" : "1.0.0-alpha-20161104-2"
-		},
-		"Newtonsoft.Json": "9.0.2-beta1",
-		"System.Dynamic.Runtime": "4.3.0"
-      }
-    }
-  }
+	"version": "1.0.0-*",
+	"buildOptions": {
+		"debugType": "portable",
+		"compile": "*.cs"
+	},
+	"configurations": {
+		"Cover": {
+			"buildOptions": {
+				"debugType": "full"
+			}
+		}
+	},
+	"dependencies": {},
+	"frameworks": {
+		"netstandard1.6": {
+			"dependencies": {
+				"CoreCompat.System.Drawing": "1.0.0-beta006",
+				"Microsoft.CSharp": "4.3.0",
+				"NETStandard.Library": "1.6.1",
+				"Microsoft.NET.Sdk": {
+					"type": "platform",
+					"version": "1.0.0-alpha-20161104-2"
+				},
+				"Newtonsoft.Json": "9.0.2-beta1",
+				"System.Dynamic.Runtime": "4.3.0"
+			}
+		}
+	}
 }

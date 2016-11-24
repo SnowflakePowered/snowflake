@@ -1,7 +1,7 @@
 {
   "version": "1.0.0-*",
   "buildOptions": {
-    "debugType": "full",
+    "debugType": "portable",
     "compile": "*.cs",
     "embed": "TestResources/**",
     "copyToOutput": "../../shiragame.db",
@@ -15,6 +15,13 @@
     "Snowflake.Framework.Services": "*",
     "Snowflake.Support.FileSignatures": "*",
     "Snowflake.Plugin.Scrapers.TheGamesDb": "*"
+  },
+  "configurations" : {
+	"Cover" : {
+		"buildOptions": {
+			"debugType": "full"
+		}
+	}
   },
   "runtimes": {
     "ubuntu.14.04-x64": {},
