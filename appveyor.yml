@@ -1,4 +1,4 @@
-version: 0.1.{build}
+version: 0.2.{build}
 os: Visual Studio 2015
 branches:
   # whitelist
@@ -67,55 +67,25 @@ after_test:
     - "SET PATH=C:\\Python34;C:\\Python34\\Scripts;%PATH%"
     - pip install codecov
     - codecov -f "coverage.xml"
-#    - rem Packing NuGet packages...
-#    - nuget pack Snowflake.API\Snowflake.API.csproj -IncludeReferencedProjects -Symbols
-#    - nuget pack Snowflake.Events\Snowflake.Events.csproj -IncludeReferencedProjects -Symbols
-#    - nuget pack Snowflake\Snowflake.csproj -IncludeReferencedProjects -Symbols
-#    - nuget pack Snowflake.Tests\Snowflake.Tests.csproj -IncludeReferencedProjects -Symbols
-#    - nuget pack Snowflake.Service\Snowflake.Service.csproj -IncludeReferencedProjects -Symbols
+    - rem Packing NuGet packages...
+    - dotnet pack src\Snowflake.Framework.Primitives --version-suffix pre-alpha.{build} -o nupkg
+    - dotnet pack src\Snowflake.Framework.Utility --version-suffix pre-alpha.{build} -o nupkg
+    - dotnet pack src\Snowflake.Framework --version-suffix pre-alpha.{build} -o nupkg
+    - dotnet pack src\Snowflake.Framework.Services --version-suffix pre-alpha.{build} -o nupkg
 
-#artifacts:
-#    - path: Snowflake\bin\$(configuration)
-#      name: Snowflake Base Libraries
-#      type: zip
-#    - path: Help
-#      name: Snowflake.Documentation
-#      type: zip
-#    - path: doc
-#      name: Snowflake.Documentation.Doxygen (Verbose Documentation)
-#      type: zip
-#    - path: 'Snowflake\Snowflake.{version}-pre-alpha-nightly.nupkg'
-#      name: Snowflake NuGet Packages
-#    - path: 'Snowflake.API\Snowflake.API.{version}-pre-alpha-nightly.nupkg'
-#      name: Snowflake.API NuGet Packages
-#    - path: 'Snowflake.Events\Snowflake.Events.{version}-pre-alpha-nightly.nupkg'
-#      name: Snowflake.Events NuGet Packages
-#    - path: 'Snowflake.InputManager.DirectInput\Snowflake.InputManager.DirectInput.{version}-pre-alpha-nightly.nupkg'
-#      name: Snowflake.InputManager.DirectInput NuGet Packages
-#    - path: 'Snowflake.Tests\Snowflake.Tests.{version}-pre-alpha-nightly.nupkg'
-#      name: Snowflake.Tests NuGet Packages
-#    - path: 'Snowflake\Snowflake.{version}-pre-alpha-nightly.symbols.nupkg'
-#      name: Snowflake NuGet Packages
-#    - path: 'Snowflake.API\Snowflake.API.{version}-pre-alpha-nightly.symbols.nupkg'
-#      name: Snowflake.API NuGet Packages
-#    - path: 'Snowflake.Events\Snowflake.Events.{version}-pre-alpha-nightly.symbols.nupkg'
-#      name: Snowflake.Events NuGet Packages
-#    - path: 'Snowflake.InputManager.DirectInput\Snowflake.InputManager.DirectInput.{version}-pre-alpha-nightly.symbols.nupkg'
-#      name: Snowflake.InputManager.DirectInput NuGet Packages
-#    - path: 'Snowflake.Tests\Snowflake.Tests.{version}-pre-alpha-nightly.symbols.nupkg'
-#      name: Snowflake.Tests NuGet Packages
-#    - path: 'Snowflake.Service\Snowflake.Service.{version}-pre-alpha-nightly.symbols.nupkg'
-#      name: Snowflake.Sevice NuGet Packages
-#assembly_info:
-#    patch: true
-#    file: SharedAssemblyInfo.cs
-#    assembly_version: '{version}'
-#    assembly_file_version: '{version}'
-#    assembly_informational_version: '{version}-pre-alpha-nightly'
-#deploy:
-#    - provider: NuGet
-#      server: https://www.myget.org/F/snowflake-nightly/api/v2/package
-#      api_key:
-#        secure: c0TSni4oM3D75P31isNFRu0z4whPsrvTAcu67iLlFmtvvrzopEI8Xj5qWk1pwMkj
-#     symbol_server: https://nuget.symbolsource.org/MyGet/snowflake-nightly
-#      skip_symbols: false
+artifacts:
+    - path: 'nupkg\Snowflake.Framework.Primitives.0.2.0-pre-alpha.{build}.nupkg'
+      name: Snowflake Framework Primitives
+    - path: 'nupkg\Snowflake.Framework.Utility.0.2.0-pre-alpha.{build}.nupkg'
+      name: Snowflake Framework Utility
+    - path: 'nupkg\Snowflake.Framework.0.2.0-pre-alpha.{build}.nupkg'
+      name: Snowflake Framework Implementation
+    - path: 'nupkg\Snowflake.Framework.Services.0.2.0-pre-alpha.{build}.nupkg'
+      name: Snowflake Framework Services
+deploy:
+    - provider: NuGet
+      server: https://www.myget.org/F/snowflake-nightly/api/v3/index.json
+      api_key:
+        secure: c0TSni4oM3D75P31isNFRu0z4whPsrvTAcu67iLlFmtvvrzopEI8Xj5qWk1pwMkj
+     symbol_server: https://nuget.symbolsource.org/MyGet/snowflake-nightly
+      skip_symbols: false
