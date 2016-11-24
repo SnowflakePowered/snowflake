@@ -3,6 +3,7 @@
 .ntvs_analysis.dat
 ConsoleApplication1/
 MEFTest/
+doc/
 emulator_*/
 *.nes
 bower_components/
