@@ -10,8 +10,6 @@ using Newtonsoft.Json;
 using NLog;
 using Snowflake.Extensions;
 using Snowflake.Extensibility;
-using Snowflake.Extensibility.Configuration;
-using Snowflake.Scraper;
 using System.Runtime.Loader;
 using Snowflake.Utility;
 
@@ -35,7 +33,7 @@ namespace Snowflake.Services
             this.registry = new Dictionary<string, Type>();
         }
 
-    
+
         public void Initialize()
         {
             if (this.IsInitialized) return;
@@ -47,7 +45,7 @@ namespace Snowflake.Services
         {
             try
             {
-                return this.loadedPlugins[typeof (T)].ToDictionary(plugin => plugin.Key, plugin => (T) plugin.Value);
+                return this.loadedPlugins[typeof(T)].ToDictionary(plugin => plugin.Key, plugin => (T)plugin.Value);
             }
             catch (KeyNotFoundException)
             {
@@ -57,69 +55,62 @@ namespace Snowflake.Services
 
         public T Get<T>(string pluginName) where T : IPlugin
         {
-            return (T) this.loadedPlugins[typeof (T)][pluginName];
+            return (T)this.loadedPlugins[typeof(T)][pluginName];
         }
 
         public void Register<T>(T plugin) where T : IPlugin
         {
-            if (!this.loadedPlugins.ContainsKey(typeof (T)))
-                this.loadedPlugins.Add(typeof (T), new Dictionary<string, IPlugin>());
-            this.loadedPlugins[typeof (T)].Add(plugin.PluginName, plugin);
+            if (!this.loadedPlugins.ContainsKey(typeof(T)))
+                this.loadedPlugins.Add(typeof(T), new Dictionary<string, IPlugin>());
+            this.loadedPlugins[typeof(T)].Add(plugin.PluginName, plugin);
             this.registry.Add(plugin.PluginName, typeof(T));
-         //   SnowflakeEventManager.EventSource?.RaiseEvent(new PluginLoadedEventArgs(this.CoreInstance, plugin));
         }
 
-     
-        private IEnumerable<IPluginContainer> GetExports(string loadableLocation)
+        private IEnumerable<Assembly> GetAssemblies()
         {
-            
-            foreach (string fileName in Directory.EnumerateFiles(loadableLocation)
-                .Where(f => Path.GetExtension(f) == ".dll"))
+            string loadablesLocation = Path.Combine(this.LoadablesLocation, "plugins");
+            foreach(string file in Directory.GetFiles(loadablesLocation, "*.dll", SearchOption.TopDirectoryOnly))
             {
-                Assembly assembly;
-                IEnumerable<IPluginContainer> containerTypes;
+                Assembly toYield = null;
                 try
                 {
-                    assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(fileName); //todo check for dupes
-                    containerTypes = assembly.ExportedTypes
-                    .Where(t => t.GetInterfaces().Contains(typeof(IPluginContainer)))
-                    .Where(t => t.GetConstructor(Type.EmptyTypes) != null)
-                    .Select(t => Instantiate.CreateInstance(t) as IPluginContainer);
+                    toYield = AssemblyLoadContext.Default.LoadFromAssemblyPath(file);
+                    
                 }
-                catch
+                catch (FileLoadException)
                 {
-                    Console.WriteLine("Unable to load assembly " + fileName);
-                    continue;
+                    toYield = Assembly.Load(AssemblyLoadContext.GetAssemblyName(file));
                 }
-
-                    foreach (var container in containerTypes)
-                    {
-                        yield return container; //todo make into single linq
-                    }
-                
-               
+                if (toYield != null) yield return toYield;
             }
         }
-        private void ComposeImports() 
-        {
-            if (!Directory.Exists(Path.Combine(this.LoadablesLocation, "plugins"))) Directory.CreateDirectory(Path.Combine(this.LoadablesLocation, "plugins"));
-            var exports = this.GetExports(Path.Combine(this.LoadablesLocation, "plugins")); //Only initialize exports of type T
-           
 
-            foreach (var pluginContainer 
-                in from pluginContainer in exports
-                   let loadPriority = pluginContainer
+
+        private void ComposeImports()
+        {
+            string loadablesLocation = Path.Combine(this.LoadablesLocation, "plugins");
+
+            if (!Directory.Exists(loadablesLocation)) Directory.CreateDirectory(loadablesLocation);
+            var assemblies = this.GetAssemblies().ToList();
+            var exports =  assemblies.SelectMany(asm => asm.ExportedTypes)
+                .Where(t => t.GetInterfaces().Contains(typeof(IPluginContainer)))
+                    .Where(t => t.GetConstructor(Type.EmptyTypes) != null)
+                    .Select(t => Instantiate.CreateInstance(t) as IPluginContainer);
+
+            foreach (var pluginContainer
+                in from pluginContainers in exports
+                   let loadPriority = pluginContainers
                         .GetType()
                         .GetTypeInfo()
                         .GetCustomAttribute<ContainerLoadPriorityAttribute>(true)?
                         .LoadPriority ?? ContainerLoadPriority.Default
                    orderby loadPriority ascending
-                   select pluginContainer)
+                   select pluginContainers)
             {
                 try
                 {
                     pluginContainer.Compose(this.CoreInstance);
-                    
+
                 }
                 catch (Exception ex)
                 {
