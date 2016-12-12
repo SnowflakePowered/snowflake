@@ -4,11 +4,5 @@ using System.Text;
 
 namespace Snowflake.Support.Remoting.Framework
 {
-    public class EndpointResponse
-    {
-        public EndpointResponse(object result)
-        {
-
-        }
-    }
+   
 }
