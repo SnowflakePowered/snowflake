@@ -37,20 +37,20 @@ namespace Snowflake.Support.Remoting.Framework
             this.Expressions.Add(endpointPath, endpoint);
         }
 
-        private (dynamic, Func<dynamic, object>) FindParameters(string requestName)
+        private ValueTuple<dynamic, Func<dynamic, object>> FindParameters(string requestName)
         {
             var expressionEntry = from endpoint in this.Expressions.Where(p => p.Key.Count(k => k == ':') == requestName.Count(k => k == ':'))
                                   let endpointParam = EndpointCollection.MatchNamespace(endpoint.Key, requestName)
                                   where endpointParam != null
-                                  select (endpointParam, endpoint.Value);
-            if (!expressionEntry.Any()) return (null, (p) => new UnknownEndpointError(requestName));
+                                  select new ValueTuple<dynamic, Func<dynamic, object>>(endpointParam, endpoint.Value);
+            if (!expressionEntry.Any()) return new ValueTuple<dynamic, Func<dynamic, object>>(null, (p) => new UnknownEndpointError(requestName));
             var res = expressionEntry.FirstOrDefault();
             dynamic result = new ExpandoObject();
             foreach (var kvp in res.Item1)
             {
                 ((IDictionary<String, Object>)result)[kvp.Key] = kvp.Value; //url parameters are all string
             }
-            return (result, res.Item2);
+            return new ValueTuple<dynamic, Func<dynamic, object>>(result, res.Item2);
         }
 
         public static IDictionary<string, string> MatchNamespace(string endpoint, string request)

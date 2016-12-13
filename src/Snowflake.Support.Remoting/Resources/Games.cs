@@ -4,6 +4,7 @@ using Snowflake.Support.Remoting.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Snowflake.Support.Remoting.Framework.Exceptions;
 
 namespace Snowflake.Support.Remoting.Resources
 {
@@ -21,6 +22,19 @@ namespace Snowflake.Support.Remoting.Resources
         public IEnumerable<IGameRecord> ListGames()
         {
             return this.Library.GetAllRecords();
+        }
+
+        [Endpoint(RemotingVerbs.Read, "~:games:{guid}")]
+        public IGameRecord GetGame(Guid game) 
+        {
+            try 
+            {
+            return this.Library.Get(game);
+            }
+            catch(Exception)
+            {
+                throw new GameNotFoundException(game);
+            } 
         }
     }
 }
