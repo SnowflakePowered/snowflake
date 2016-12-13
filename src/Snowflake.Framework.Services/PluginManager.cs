@@ -110,7 +110,7 @@ namespace Snowflake.Services
                 try
                 {
                     pluginContainer.Compose(this.CoreInstance);
-
+                    Console.WriteLine($"Loaded container : {pluginContainer?.GetType().Name}");
                 }
                 catch (Exception ex)
                 {
