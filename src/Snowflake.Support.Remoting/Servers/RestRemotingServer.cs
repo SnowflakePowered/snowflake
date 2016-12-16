@@ -17,7 +17,7 @@ namespace Snowflake.Support.Remoting.Servers
     public class RestRemotingServer : WebModuleBase
     {
         public override string Name => "Snowflake REST Remoting";
-        public Dictionary<string, Func<dynamic, object>> Expressions { get; }
+        public Dictionary<string, Func<EndpointParameters, object>> Expressions { get; }
 
         public RestRemotingServer(EndpointCollection endpoints)
         {
@@ -36,7 +36,7 @@ namespace Snowflake.Support.Remoting.Servers
                 var split = context.RequestPath().Split('/');
                 var str = new StringBuilder();
                 str.Append($"Verb: {verb}, Path: {ToEndpointName(context.Request.RawUrl)} \n");
-                str.Append(JsonConvert.SerializeObject(endpoints.Invoke(ToEndpointName(context.Request.RawUrl))));
+                str.Append(JsonConvert.SerializeObject(endpoints.Invoke(ToEndpointName(context.Request.RawUrl), context.RequestBody())));
                 var buffer = Encoding.UTF8.GetBytes(str.ToString());
                 context.Response.OutputStream.Write(buffer, 0, buffer.Length);
                 return true;
