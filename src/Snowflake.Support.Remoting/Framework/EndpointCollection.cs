@@ -10,47 +10,41 @@ namespace Snowflake.Support.Remoting.Framework
 {
     public class EndpointCollection
     {
-        private Dictionary<string, Func<dynamic, object>> Expressions { get; }
+        private Dictionary<string, Func<EndpointParameters, object>> Expressions { get; }
 
 
         public EndpointCollection()
         {
-            this.Expressions = new Dictionary<string, Func<dynamic, object>>();
+            this.Expressions = new Dictionary<string, Func<EndpointParameters, object>>();
         }
 
 
-        public RequestResponse Invoke(string endpointName)
+        public RequestResponse Invoke(string endpointName, string postdata)
         {
             var param = this.FindParameters(endpointName);
             try
             {
-               var response = param.Item2.Invoke(param.Item1);
-               if(response is RequestError ) return new RequestResponse(null, response);
-                return new RequestResponse(response, null);
+               var response = param.Item2.Invoke(new EndpointParameters(param.Item1, JsonConvert.DeserializeObject(postdata)));
+               if(response is RequestError error) return new RequestResponse(null, error);
+               return new RequestResponse(response, null);
             }catch(Exception e){
                 return new RequestResponse(null, new RequestError(e));
             }
         }
 
-        public void Add(string endpointPath, Func<dynamic, object> endpoint)
+        public void Add(string endpointPath, Func<EndpointParameters, object> endpoint)
         {
             this.Expressions.Add(endpointPath, endpoint);
         }
 
-        private ValueTuple<dynamic, Func<dynamic, object>> FindParameters(string requestName)
+        private ValueTuple<IDictionary<string, string>, Func<EndpointParameters, object>> FindParameters(string requestName)
         {
             var expressionEntry = from endpoint in this.Expressions.Where(p => p.Key.Count(k => k == ':') == requestName.Count(k => k == ':'))
                                   let endpointParam = EndpointCollection.MatchNamespace(endpoint.Key, requestName)
                                   where endpointParam != null
-                                  select new ValueTuple<dynamic, Func<dynamic, object>>(endpointParam, endpoint.Value);
-            if (!expressionEntry.Any()) return new ValueTuple<dynamic, Func<dynamic, object>>(null, (p) => new UnknownEndpointError(requestName));
-            var res = expressionEntry.FirstOrDefault();
-            dynamic result = new ExpandoObject();
-            foreach (var kvp in res.Item1)
-            {
-                ((IDictionary<String, Object>)result)[kvp.Key] = kvp.Value; //url parameters are all string
-            }
-            return new ValueTuple<dynamic, Func<dynamic, object>>(result, res.Item2);
+                                  select new ValueTuple<IDictionary<string, string>, Func<EndpointParameters, object>>(endpointParam, endpoint.Value);
+            if (!expressionEntry.Any()) return new ValueTuple<IDictionary<string, string>, Func<EndpointParameters, object>>(null, (p) => new UnknownEndpointError(requestName));
+            return expressionEntry.FirstOrDefault();
         }
 
         public static IDictionary<string, string> MatchNamespace(string endpoint, string request)
