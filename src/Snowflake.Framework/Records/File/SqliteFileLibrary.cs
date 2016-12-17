@@ -76,12 +76,12 @@ namespace Snowflake.Records.File
         public void Remove(Guid guid)
         {
 
-            this.backingDatabase.Execute(@"DELETE FROM files WHERE uuid = @guid");
+            this.backingDatabase.Execute(@"DELETE FROM files WHERE uuid = @guid", new { guid });
         }
 
         public void Remove(IEnumerable<Guid> guids)
         {
-            this.backingDatabase.Execute(@"DELETE FROM files WHERE uuid IN @guids");
+            this.backingDatabase.Execute(@"DELETE FROM files WHERE uuid IN @guids", new { guids });
         }
 
         public IEnumerable<IFileRecord> SearchByMetadata(string key, string likeValue)

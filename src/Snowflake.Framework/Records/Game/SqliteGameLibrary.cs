@@ -76,7 +76,7 @@ namespace Snowflake.Records.Game
 
         public void Remove(IEnumerable<Guid> games)
         {
-            this.backingDatabase.Execute(@"DELETE FROM games WHERE uuid IN @games");
+            this.backingDatabase.Execute(@"DELETE FROM games WHERE uuid IN @games", new { games });
         }
 
         public IGameRecord Get(Guid game)
