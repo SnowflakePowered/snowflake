@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Snowflake.Support.Remoting.Framework.Errors;
+using Snowflake.Support.Remoting.Framework.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
@@ -10,40 +11,46 @@ namespace Snowflake.Support.Remoting.Framework
 {
     public class EndpointCollection
     {
-        private Dictionary<string, Func<EndpointParameters, object>> Expressions { get; }
+        private Dictionary<(RequestVerb verb, string path), Func<EndpointParameters, object>> Expressions { get; }
 
 
         public EndpointCollection()
         {
-            this.Expressions = new Dictionary<string, Func<EndpointParameters, object>>();
+            this.Expressions = new Dictionary<(RequestVerb, string), Func<EndpointParameters, object>>();
         }
 
 
-        public RequestResponse Invoke(string endpointName, string postdata)
+        public RequestResponse Invoke(RequestVerb endpointVerb, string endpointName, string postdata)
         {
-            var param = this.FindParameters(endpointName);
+            var param = this.FindParameters(endpointVerb, endpointName);
             try
             {
-               var response = param.Item2.Invoke(new EndpointParameters(param.Item1, JsonConvert.DeserializeObject(postdata)));
-               if(response is RequestError error) return new RequestResponse(null, error);
-               return new RequestResponse(response, null);
-            }catch(Exception e){
+                var response = param.Item2.Invoke(new EndpointParameters(param.Item1, JsonConvert.DeserializeObject(postdata ?? "")));
+                if (response is RequestError error) return new RequestResponse(null, error);
+                return new RequestResponse(response, null);
+            } catch (RequestException e) {
+                return new RequestResponse(null, e.ToError());
+            } catch(Exception e) {
                 return new RequestResponse(null, new RequestError(e));
             }
         }
 
-        public void Add(string endpointPath, Func<EndpointParameters, object> endpoint)
+        internal void Add(RequestVerb verb, string endpointPath, Func<EndpointParameters, object> endpoint)
         {
-            this.Expressions.Add(endpointPath, endpoint);
+            this.Expressions.Add((verb, endpointPath), endpoint);
         }
 
-        private ValueTuple<IDictionary<string, string>, Func<EndpointParameters, object>> FindParameters(string requestName)
+        private (IDictionary<string, string> getParams, Func<EndpointParameters, object> function) 
+                FindParameters(RequestVerb requestVerb, string requestName)
         {
-            var expressionEntry = from endpoint in this.Expressions.Where(p => p.Key.Count(k => k == ':') == requestName.Count(k => k == ':'))
-                                  let endpointParam = EndpointCollection.MatchNamespace(endpoint.Key, requestName)
+            var expressionEntry = from endpoint in this.Expressions.Where(p => p.Key.path.Count(k => k == ':') == 
+                                                    requestName.Count(k => k == ':'))
+                                  where endpoint.Key.verb == requestVerb
+                                  let endpointParam = EndpointCollection.MatchNamespace(endpoint.Key.path, requestName)
                                   where endpointParam != null
                                   select new ValueTuple<IDictionary<string, string>, Func<EndpointParameters, object>>(endpointParam, endpoint.Value);
-            if (!expressionEntry.Any()) return new ValueTuple<IDictionary<string, string>, Func<EndpointParameters, object>>(null, (p) => new UnknownEndpointError(requestName));
+            if (!expressionEntry.Any()) return new ValueTuple<IDictionary<string, string>, Func<EndpointParameters, object>>
+                    (null, (p) => new UnknownEndpointError(requestVerb, requestName));
             return expressionEntry.FirstOrDefault();
         }
 

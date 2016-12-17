@@ -18,19 +18,19 @@ namespace Snowflake.Support.Remoting.Resources
         }
 
         
-        [Endpoint(RemotingVerbs.Read, "~:plugins")]
+        [Endpoint(RequestVerb.Read, "~:plugins")]
         public IEnumerable<string> ListPlugins()
         {
             return this.PluginManager.Registry.Select(p => p.Key);
         }
 
-        [Endpoint(RemotingVerbs.Read, "~:plugins:{echo}")]
+        [Endpoint(RequestVerb.Read, "~:plugins:{echo}")]
         public string Echo(string echo)
         {
             return echo;
         }
 
-        [Endpoint(RemotingVerbs.Read, "~:plugins:{echo}:{concat}")]
+        [Endpoint(RequestVerb.Read, "~:plugins:{echo}:{concat}")]
         public string EchoConcat(string echo, string concat)
         {
             return echo;
