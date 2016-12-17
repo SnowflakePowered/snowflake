@@ -51,9 +51,9 @@ namespace Snowflake.Shell.Windows
                  var lmfao = raadapter.Instantiate(gr, gr.Files[0], 0, new List<IEmulatedPort> { ep});
                  lmfao.Create();
                  lmfao.Start();*/
-            var gr = new GameRecord(this.loadedCore.Get<IStoneProvider>().Platforms["NINTENDO_SNES"], "test",
+        /*    var gr = new GameRecord(this.loadedCore.Get<IStoneProvider>().Platforms["NINTENDO_SNES"], "test",
                 @"E:\Super Mario World (USA).sfc", "application/x-romfile-snes-sfc");
-            this.loadedCore.Get<IGameLibrary>().Set(gr);
+            this.loadedCore.Get<IGameLibrary>().Set(gr);*/
         }
 
         public void StartShell() {

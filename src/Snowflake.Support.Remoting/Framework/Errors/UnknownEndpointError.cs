@@ -6,7 +6,8 @@ namespace Snowflake.Support.Remoting.Framework.Errors
 {
     internal class UnknownEndpointError : RequestError
     {
-        public UnknownEndpointError(string unknownEndpoint) : base($"Could not find endoint {unknownEndpoint}", 404)
+        public UnknownEndpointError(RequestVerb verb, string unknownEndpoint) 
+            : base($"Could not find endpoint {verb}::{unknownEndpoint}", 404)
         {
 
         }

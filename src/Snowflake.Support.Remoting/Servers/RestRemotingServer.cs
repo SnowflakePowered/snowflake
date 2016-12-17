@@ -11,14 +11,19 @@ using Snowflake.Support.Remoting.Resources;
 using System.Dynamic;
 using Snowflake.Support.Remoting.Framework;
 using Newtonsoft.Json.Converters;
+using System.IO.Compression;
+using System.IO;
+using Unosquare.Net;
 
 namespace Snowflake.Support.Remoting.Servers
 {
     public class RestRemotingServer : WebModuleBase
     {
         public override string Name => "Snowflake REST Remoting";
-        public Dictionary<string, Func<EndpointParameters, object>> Expressions { get; }
-
+        /// <summary>
+        /// The chuck size for sending files
+        /// </summary>
+        private const int chunkSize = 8 * 1024;
         public RestRemotingServer(EndpointCollection endpoints)
         {
             JsonConvert.DefaultSettings = (() =>
@@ -35,12 +40,36 @@ namespace Snowflake.Support.Remoting.Servers
                 context.Response.ContentType = "application/json";
                 var split = context.RequestPath().Split('/');
                 var str = new StringBuilder();
-                str.Append($"Verb: {verb}, Path: {ToEndpointName(context.Request.RawUrl)} \n");
-                str.Append(JsonConvert.SerializeObject(endpoints.Invoke(ToEndpointName(context.Request.RawUrl), context.RequestBody())));
-                var buffer = Encoding.UTF8.GetBytes(str.ToString());
-                context.Response.OutputStream.Write(buffer, 0, buffer.Length);
+                var response = endpoints.Invoke(verb.ToCrud(), ToEndpointName(context.Request.RawUrl), context.RequestBody());
+                context.Response.StatusCode = response.Error?.Code ?? 200;
+                str.Append(JsonConvert.SerializeObject(response));
+                var buffer = new MemoryStream(Encoding.UTF8.GetBytes(str.ToString())).Compress();
+                context.Response.AddHeader("Content-Encoding", "gzip");
+                RestRemotingServer.WriteToOutputStream(context, buffer.Length, buffer, 0);
                 return true;
             });
+        }
+
+        //ripped from EmbedIO StaticFilesModule
+        private static void WriteToOutputStream(HttpListenerContext context, long byteLength, Stream buffer,
+        int lowerByteIndex)
+        {
+            var streamBuffer = new byte[chunkSize];
+            var sendData = 0;
+            var readBufferSize = chunkSize;
+
+            while (true)
+            {
+                if (sendData + chunkSize > byteLength) readBufferSize = (int)(byteLength - sendData);
+
+                buffer.Seek(lowerByteIndex + sendData, SeekOrigin.Begin);
+                var read = buffer.Read(streamBuffer, 0, readBufferSize);
+
+                if (read == 0) break;
+
+                sendData += read;
+                context.Response.OutputStream.Write(streamBuffer, 0, readBufferSize);
+            }
         }
 
         private static string ToEndpointName(string path)

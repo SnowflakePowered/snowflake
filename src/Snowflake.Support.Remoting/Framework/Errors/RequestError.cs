@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Snowflake.Support.Remoting.Framework.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -15,6 +16,13 @@ namespace Snowflake.Support.Remoting.Framework.Errors
             this.Message = message;
             this.Type = this.GetType().Name;
             this.Code = code;
+        }
+
+        public RequestError(RequestException e)
+        {
+            this.Message = e.Message;
+            this.Type = e.GetType().Name.Replace("Exception", "Error");
+            this.Code = e.ErrorCode;
         }
 
         public RequestError(Exception e, int code = 503)

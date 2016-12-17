@@ -7,9 +7,9 @@ using System.Text;
 
 namespace Snowflake.Support.Remoting.Framework.Exceptions
 {
-    public class GameNotFoundException : Exception
+    public class MetadataNotFoundException : RequestException
     {
-        public GameNotFoundException(Guid uid) : base ($"Could not find game {uid}") {}
+        public MetadataNotFoundException(Guid uid, string metadata) : base ($"Could not find metadata {metadata} for record {uid}", 404) {}
 
     }
 }

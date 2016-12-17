@@ -17,25 +17,25 @@ namespace Snowflake.Support.Remoting.Resources
             this.StoneProvider = provider;
         }
 
-        [Endpoint(RemotingVerbs.Read, "~:stone:platforms")]
+        [Endpoint(RequestVerb.Read, "~:stone:platforms")]
         public IEnumerable<IPlatformInfo> ListPlatforms()
         {
             return this.StoneProvider.Platforms.Select(p => p.Value);
         }
 
-        [Endpoint(RemotingVerbs.Read, "~:stone:platforms:{platformId}")]
+        [Endpoint(RequestVerb.Read, "~:stone:platforms:{platformId}")]
         public IPlatformInfo GetPlatform(string platformId)
         {
             return this.StoneProvider.Platforms[platformId];
         }
 
-        [EndpointAttribute(RemotingVerbs.Read, "~:stone:controllers")]
+        [EndpointAttribute(RequestVerb.Read, "~:stone:controllers")]
         public IEnumerable<IControllerLayout> ListControllers()
         {
             return this.StoneProvider.Controllers.Select(c => c.Value);
         }
 
-        [Endpoint(RemotingVerbs.Read, "~:stone:controllers:{controllerId}")]
+        [Endpoint(RequestVerb.Read, "~:stone:controllers:{controllerId}")]
         public IControllerLayout GetController(string controllerId)
         {
             return this.StoneProvider.Controllers[controllerId];

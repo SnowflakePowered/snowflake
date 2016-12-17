@@ -1,18 +1,19 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Snowflake.Support.Remoting.Framework
 {
-    public class EndpointParameters
+    internal class EndpointParameters
     {
-        public IDictionary<string, string> GetParameters { get; }
-        public dynamic PostJsonParameters { get; }
+        public IDictionary<string, string> Get { get; }
+        public JObject Post { get; }
 
         public EndpointParameters(IDictionary<string, string> getParams, dynamic postParams)
         {
-            this.GetParameters = getParams;
-            this.PostJsonParameters = postParams;
+            this.Get = getParams;
+            this.Post = postParams;
         }
     }
 }
