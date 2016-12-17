@@ -76,8 +76,7 @@ namespace Snowflake.Records.Game
 
         public void Remove(IEnumerable<Guid> games)
         {
-            this.backingDatabase.Execute(@"DELETE FROM games WHERE uuid IN @games;
-                                           DELETE FROM metadata WHERE record IN @games", new { games });
+            this.backingDatabase.Execute(@"DELETE FROM games WHERE uuid IN @games");
         }
 
         public IGameRecord Get(Guid game)
@@ -103,8 +102,7 @@ namespace Snowflake.Records.Game
 
         public void Remove(Guid game)
         {
-            this.backingDatabase.Execute(@"DELETE FROM games WHERE uuid = @game;
-                                           DELETE FROM metadata WHERE record = @game", new { game });
+            this.backingDatabase.Execute(@"DELETE FROM games WHERE uuid = @game", new { game });
             //because file record guids are derived from game library, they can be safely left alone
         }
 
@@ -202,7 +200,7 @@ namespace Snowflake.Records.Game
                         var fileRecords = (from f in files
                                            let md = (from m in metadatas where m.Record == f.Guid select m)
                                                .ToDictionary(md => md.Key, md => md)
-                                           select new FileRecord(f.Game, md, f.Path, f.MimeType)).ToList();
+                                           select new FileRecord(f.Guid, md, f.Path, f.MimeType)).ToList();
                         return (from game in games
                                 let gameFiles =
                                     (from f in fileRecords where f.Record == game select f as IFileRecord).ToList()
@@ -259,7 +257,7 @@ namespace Snowflake.Records.Game
                         var fileRecords = (from f in files
                                            let md = (from m in metadatas where m.Record == f.Guid select m)
                                                .ToDictionary(md => md.Key, md => md)
-                                           select new FileRecord(f.Game, md, f.Path, f.MimeType) as IFileRecord).ToList();
+                                           select new FileRecord(f.Guid, md, f.Path, f.MimeType) as IFileRecord).ToList();
                         var gameMetadata =
                             (from m in metadatas where m.Record == gameGuid select m)
                             .ToDictionary(m => m.Key, m => m);
