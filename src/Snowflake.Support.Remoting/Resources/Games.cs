@@ -7,6 +7,7 @@ using System.Text;
 using Snowflake.Support.Remoting.Framework.Exceptions;
 using Snowflake.Records.Metadata;
 using Snowflake.Records.File;
+using Snowflake.Scraper;
 
 namespace Snowflake.Support.Remoting.Resources
 {
@@ -95,6 +96,12 @@ namespace Snowflake.Support.Remoting.Resources
         {
             this.Library.FileLibrary.Remove(fileGuid);
             return this.Library.Get(gameGuid);
+        }
+
+        public IGameRecord Scrape(string filePath)
+        {
+            vr scrapeGen = new ScrapeEngine(this.Stone, new ShiragameProvider("shiragame.db"),
+               source, this.fileSignatureMatcher);
         }
 
         public IGameRecord DeleteFileMetadata(Guid gameGuid, Guid fileGuid, string metadataKey)

@@ -9,6 +9,8 @@ using Snowflake.Input;
 using Snowflake.Input.Controller.Mapped;
 using Snowflake.Records.Game;
 using Snowflake.Utility;
+using Snowflake.Romfile;
+using Snowflake.Scraper.Shiragame;
 
 namespace Snowflake.Services
 {
@@ -37,7 +39,8 @@ namespace Snowflake.Services
             this.RegisterService<IMappedControllerElementCollectionStore>
                 (new SqliteMappedControllerElementCollectionStore(new SqliteDatabase(Path.Combine(this.AppDataDirectory, "controllermappings.db"))));
             this.RegisterService<IConfigurationCollectionStore>(new SqliteConfigurationCollectionStore(new SqliteDatabase(Path.Combine(this.AppDataDirectory, "configurations.db"))));
-          
+            this.RegisterService<IFileSignatureMatcher>(new FileSignatureMatcher(this.Get<IStoneProvider>()));
+            this.RegisterService<IShiragameProvider>(new ShiragameProvider("shiragame.db"));
             this.RegisterService<IPluginManager>(new PluginManager(this.AppDataDirectory, this)); 
            
             
