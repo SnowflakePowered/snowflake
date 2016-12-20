@@ -4,7 +4,7 @@ import { Hello } from "./components/Hello"
 export default class App extends React.Component<any, any> {
     render() {
         return (
-            <Hello compiler="Typescript" framework="React"/>
+            <Hello compiler="Typescript" framework="React" />
         );
     }
 }
