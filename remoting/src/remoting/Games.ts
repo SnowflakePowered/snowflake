@@ -1,6 +1,6 @@
 import * as Immutable from "seamless-immutable"
+import { request, Response } from "./Remoting"
 import { Platform } from "./Stone"
-import { Response, request } from "./Remoting"
 
 export interface Game {
     Files: File[]
@@ -39,7 +39,7 @@ export const getGame = async (uuid: string): Promise<Game> => {
 export const createGame = async (title: string, platform: Platform): Promise<Game> => {
     let game = await request<Game>("http://localhost:9696/games", {
         title,
-        platform: platform.PlatformID
+        platform: platform.PlatformID,
     }, "Create")
     if (game.Error) { throw game.Error }
     return Immutable.from(game.Response)
@@ -50,4 +50,3 @@ export const createFile = async (game: Game, path: string, mimetype: string) => 
     if (newGame.Error) { throw newGame.Error }
     return Immutable.from(newGame.Response)
 }
-
