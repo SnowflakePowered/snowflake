@@ -2,9 +2,9 @@ import * as React from "react"
 import * as Games from "../remoting/Games"
 import * as Stone from "../remoting/Stone"
 
-export interface HelloProps { 
+export interface HelloProps {
     compiler: string
-    framework: string 
+    framework: string
 }
 
 // 'HelloProps' describes the shape of props.

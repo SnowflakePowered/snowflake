@@ -11,7 +11,7 @@ export interface Error {
 
 export type Verb = "Create" | "Read" | "Delete" | "Update"
 
-export const request = async <T>(url: string, payload: any = "", verb: Verb = "Read"): Promise<Response<T>> {
+export const request = async <T>(url: string, payload: any = "", verb: Verb = "Read"): Promise<Response<T>> => {
     if (typeof payload !== "string") { payload = JSON.stringify(payload) }
     if (verb === "Read" || verb === "Delete") { payload = undefined }
     let result = await fetch(url, {
@@ -26,7 +26,7 @@ export const request = async <T>(url: string, payload: any = "", verb: Verb = "R
     return { Response: null, Error: { Message: "Unable to resolve promise." } }
 }
 
-const toHttpVerb = (verb: Verb): string =>{
+const toHttpVerb = (verb: Verb): string => {
     switch (verb) {
         case "Create":
             return "POST"
