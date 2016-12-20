@@ -6,17 +6,24 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "MPL2",
+  "author": "Snowflake Authors",
+  "license": "MPL-2.0",
   "dependencies": {
     "@types/isomorphic-fetch": "^0.0.31",
     "@types/react": "^0.14.55",
     "@types/react-dom": "^0.14.19",
     "@types/react-hot-loader": "^3.0.0",
+    "@types/redux": "^3.6.0",
+    "@types/redux-thunk": "^2.1.0",
+    "@types/seamless-immutable": "^6.1.2",
     "es6-promise": "^4.0.5",
     "isomorphic-fetch": "^2.2.1",
     "react": "^15.4.1",
-    "react-dom": "^15.4.1"
+    "react-dom": "^15.4.1",
+    "react-redux": "^5.0.1",
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.1.0",
+    "seamless-immutable": "^7.0.1"
   },
   "devDependencies": {
     "awesome-typescript-loader": "^3.0.0-beta.17",
