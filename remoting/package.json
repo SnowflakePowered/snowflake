@@ -7,16 +7,23 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MPL2",
   "dependencies": {
+    "@types/isomorphic-fetch": "^0.0.31",
     "@types/react": "^0.14.55",
     "@types/react-dom": "^0.14.19",
+    "@types/react-hot-loader": "^3.0.0",
+    "es6-promise": "^4.0.5",
+    "isomorphic-fetch": "^2.2.1",
     "react": "^15.4.1",
     "react-dom": "^15.4.1"
   },
   "devDependencies": {
     "awesome-typescript-loader": "^3.0.0-beta.17",
+    "react-hot-loader": "3.0.0-beta.1",
     "source-map-loader": "^0.1.5",
-    "typescript": "^2.1.4"
+    "typescript": "^2.1.4",
+    "webpack": "2.2.0-rc.0",
+    "webpack-dev-server": "2.2.0-rc.0"
   }
 }
