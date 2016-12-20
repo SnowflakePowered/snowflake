@@ -100,8 +100,7 @@ namespace Snowflake.Support.Remoting.Resources
 
         public IGameRecord Scrape(string filePath)
         {
-            vr scrapeGen = new ScrapeEngine(this.Stone, new ShiragameProvider("shiragame.db"),
-               source, this.fileSignatureMatcher);
+            return null;
         }
 
         public IGameRecord DeleteFileMetadata(Guid gameGuid, Guid fileGuid, string metadataKey)

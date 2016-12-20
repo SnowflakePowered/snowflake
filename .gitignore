@@ -201,3 +201,4 @@ scripts/*/*.cs
 project.lock.json
 OpenCover/
 coverage.xml
+remoting/dist/
