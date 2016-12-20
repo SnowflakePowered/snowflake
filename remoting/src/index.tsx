@@ -5,10 +5,10 @@ import App from "./App";
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(
-    <AppContainer>
-        <App />
-    </AppContainer>,
-    rootElement
+  <AppContainer>
+    <App />
+  </AppContainer>,
+  rootElement
 );
 
 declare var module: any;
@@ -19,9 +19,8 @@ if (module.hot) {
     const NextApp = require("./App").default;
     ReactDOM.render(
       <AppContainer>
-        <NextApp/>
-      </AppContainer>
-      ,
+        <NextApp />
+      </AppContainer>,
       rootElement
     );
   });
