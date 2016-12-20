@@ -10,7 +10,11 @@
     /*
      * Any rules specified here will override those from the base config we are extending.
      */
-    "curly": true
+    "curly": true,
+    "only-arrow-functions": [true],
+    "semicolon": [true, "never"],
+    "interface-name": [true, "never-prefix"],
+    "no-angle-bracket-type-assertion": true
   },
   "jsRules": {
     /*

@@ -8,8 +8,8 @@ ReactDOM.render(
   <AppContainer>
     <App />
   </AppContainer>,
-  rootElement
-);
+  rootElement,
+)
 
 declare var module: any;
 declare var require: any;
@@ -21,7 +21,7 @@ if (module.hot) {
       <AppContainer>
         <NextApp />
       </AppContainer>,
-      rootElement
-    );
-  });
+      rootElement,
+    )
+  })
 }

@@ -11,13 +11,13 @@ export interface Error {
 
 export type Verb = "Create" | "Read" | "Delete" | "Update"
 
-export async function request<T>(url: string, payload: any = "", verb: Verb = "Read"): Promise<Response<T>> {
-    if (typeof payload != "string") payload = JSON.stringify(payload)
-    if (verb == "Read" || verb == "Delete") payload = undefined
+export const request = async <T>(url: string, payload: any = "", verb: Verb = "Read"): Promise<Response<T>> {
+    if (typeof payload !== "string") { payload = JSON.stringify(payload) }
+    if (verb === "Read" || verb === "Delete") { payload = undefined }
     let result = await fetch(url, {
-        method: toHttpVerb(verb),
         body: payload,
-        mode: "cors"
+        method: toHttpVerb(verb),
+        mode: "cors",
     })
     if (result.ok) {
         let json = await result.json()
@@ -26,7 +26,7 @@ export async function request<T>(url: string, payload: any = "", verb: Verb = "R
     return { Response: null, Error: { Message: "Unable to resolve promise." } }
 }
 
-function toHttpVerb(verb: Verb): string {
+const toHttpVerb = (verb: Verb): string =>{
     switch (verb) {
         case "Create":
             return "POST"
@@ -36,5 +36,7 @@ function toHttpVerb(verb: Verb): string {
             return "DELETE"
         case "Update":
             return "PUT"
+        default:
+            return "GET"
     }
 }

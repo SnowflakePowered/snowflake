@@ -1,6 +1,7 @@
-import { Response, request } from "./Remoting"
-import { Platform } from "./Stone"
 import * as Immutable from "seamless-immutable"
+import { Platform } from "./Stone"
+import { Response, request } from "./Remoting"
+
 export interface Game {
     Files: File[]
     Guid: string
@@ -23,27 +24,30 @@ export interface Metadata {
     Value: string
 }
 
-export async function getGames(): Promise<Iterable<Game>> {
+export const getGames = async (): Promise<Iterable<Game>> => {
     let games = await request<Game[]>("http://localhost:9696/games")
-    if (games.Error) throw games.Error
+    if (games.Error) { throw games.Error }
     return Immutable.from(games.Response)
 }
 
-export async function getGame(uuid: string): Promise<Game> {
+export const getGame = async (uuid: string): Promise<Game> => {
     let game = await request<Game>(`http://localhost:9696/games/${uuid}`)
-    if (game.Error) throw game.Error
+    if (game.Error) { throw game.Error }
     return Immutable.from(game.Response)
 }
 
-export async function createGame(title: string, platform: Platform): Promise<Game> {
-    let game = await request<Game>("http://localhost:9696/games", { title: title, platform: platform.PlatformID }, "Create")
-    if (game.Error) throw game.Error
+export const createGame = async (title: string, platform: Platform): Promise<Game> => {
+    let game = await request<Game>("http://localhost:9696/games", {
+        title,
+        platform: platform.PlatformID
+    }, "Create")
+    if (game.Error) { throw game.Error }
     return Immutable.from(game.Response)
 }
 
-export async function createFile(game: Game, path: string, mimetype: string) {
-    let newGame = await request<Game>(`http://localhost:9696/games/${game.Guid}/files`, { path: path, mimetype: mimetype }, "Create")
-    if (newGame.Error) throw newGame.Error
+export const createFile = async (game: Game, path: string, mimetype: string) => {
+    let newGame = await request<Game>(`http://localhost:9696/games/${game.Guid}/files`, { path, mimetype }, "Create")
+    if (newGame.Error) { throw newGame.Error }
     return Immutable.from(newGame.Response)
 }
 
