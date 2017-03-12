@@ -2,7 +2,7 @@ language: csharp
 sudo: required
 solution: Snowflake.sln
 mono: none
-dotnet: 1.0.0-preview2-003121
+dotnet: 1.1.1
 dist: trusty 
 install:
   - dotnet restore

@@ -201,3 +201,5 @@ scripts/*/*.cs
 project.lock.json
 OpenCover/
 coverage.xml
+remoting/src/actions/Actions.ts
+remoting/src/actions/Store.ts
