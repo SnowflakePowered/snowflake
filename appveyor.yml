@@ -1,5 +1,5 @@
 version: 0.2.{build}
-os: Visual Studio 2015
+os: Visual Studio 2017
 branches:
   # whitelist
   only:
@@ -38,9 +38,9 @@ install:
  #   - nuget install xunit.runner.console -Version 2.1.0
  #   - nuget install EWSoftware.SHFB -ExcludeVersion
  #   - nuget install EWSoftware.SHFB.NETFramework -ExcludeVersion
-    - choco install -y doxygen.portable > nul 2>&1
+ #   - choco install -y doxygen.portable > nul 2>&1
     - git submodule update --init --recursive > nul 2>&1
-    - dotnet restore
+    - dotnet restore src/Snowflake.sln
 
 #after_build:
 #    - ps: |
@@ -63,7 +63,7 @@ after_test:
 #    - msbuild "C:\projects\snowflake\Snowflake.Documentation.shfbproj" /verbosity:quiet /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" > nul 2>&1
     - rem Generating Doxygen Documentation...
     - echo "PROJECT_NUMBER = %APPVEYOR_BUILD_VERSION%+git.%APPVEYOR_REPO_COMMIT%" >> snowflake.doxygen
-    - doxygen snowflake.doxygen > nul 2>&1
+#    - doxygen snowflake.doxygen > nul 2>&1
     - rem Uploading Code Coverage Report to Codecov...
     - "SET PATH=C:\\Python34;C:\\Python34\\Scripts;%PATH%"
     - pip install codecov > nul 2>&1
@@ -83,9 +83,9 @@ artifacts:
       name: Snowflake Framework Implementation
     - path: 'nupkg\Snowflake.Framework.Services.0.2.0-pre-alpha.%APPVEYOR_BUILD_NUMBER%.nupkg'
       name: Snowflake Framework Services
-    - path: doc
-      name: Snowflake Generated Documentation (Doxygen)
-      type: zip
+#    - path: doc
+#      name: Snowflake Generated Documentation (Doxygen)
+#      type: zip
 deploy:
     - provider: NuGet
       server: https://www.myget.org/F/snowflake-nightly/api/v2/package
@@ -96,8 +96,8 @@ deploy:
 after_deploy:
     - rem Uploading Build Documentation
     - git init doc/html
-    - echo docs.snowflakepowe.red > doc/html/CNAME
-    - echo > doc/html/.nojekyll
-    - git -C doc/html add --all > nul 2>&1
-    - git -C doc/html commit -m "Upload documentation for build SnowflakePowered/snowflake@%APPVEYOR_REPO_COMMIT%" > nul 2>&1
-    - git -C doc/html push --force -q https://snowflake-build-bot:%GITHUB_BUILDBOT_TOKEN%@github.com/SnowflakePowered-Support/snowflake-doc-doxygen.git master  
+#    - echo docs.snowflakepowe.red > doc/html/CNAME
+ #   - echo > doc/html/.nojekyll
+ #   - git -C doc/html add --all > nul 2>&1
+ #   - git -C doc/html commit -m "Upload documentation for build SnowflakePowered/snowflake@%APPVEYOR_REPO_COMMIT%" > nul 2>&1
+ #   - git -C doc/html push --force -q https://snowflake-build-bot:%GITHUB_BUILDBOT_TOKEN%@github.com/SnowflakePowered-Support/snowflake-doc-doxygen.git master  
