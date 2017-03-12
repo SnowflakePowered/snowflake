@@ -1,5 +1,5 @@
 version: 0.2.{build}
-os: Visual Studio 2015
+os: Visual Studio 2017
 branches:
   # whitelist
   only:
@@ -40,7 +40,7 @@ install:
  #   - nuget install EWSoftware.SHFB.NETFramework -ExcludeVersion
  #   - choco install -y doxygen.portable > nul 2>&1
     - git submodule update --init --recursive > nul 2>&1
-    - dotnet restore
+    - dotnet restore src/Snowflake.sln
 
 #after_build:
 #    - ps: |
