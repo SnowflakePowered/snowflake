@@ -36,7 +36,7 @@ namespace Snowflake.Services
         private string GetStoneData()
         {
             var assembly = typeof(StoneProvider).GetTypeInfo().Assembly;
-            using (Stream stream = assembly.GetManifestResourceStream($"{assembly.GetName().Name}.stone.dist.json"))
+            using (Stream stream = assembly.GetManifestResourceStream($"Snowflake.stone.dist.json"))
             using (var reader = new StreamReader(stream))
             {
                 return reader.ReadToEnd();
