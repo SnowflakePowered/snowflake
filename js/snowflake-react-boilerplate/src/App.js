@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import Test from './components/test';
+import React, { Component } from 'react'
+import logo from './logo.svg'
+import './App.css'
+import Test from './components/test'
 
 class App extends Component {
-  componentDidMount() {
+  componentDidMount () {
 
   }
-  
-  render() {
+
+  render () {
     return (
       <div className="App">
         <div className="App-header">
@@ -20,8 +20,8 @@ class App extends Component {
           <Test/>
         </div>
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App
