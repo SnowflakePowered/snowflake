@@ -1,12 +1,12 @@
-import { UPDATE_GAMES } from "./actions"
+import { UPDATE_GAMES } from './actions'
 export const updateGames = (games) => {
-    return {
-        type: UPDATE_GAMES,
-        games
-    }
+  return {
+    type: UPDATE_GAMES,
+    games
+  }
 }
 
-export const beginUpdateGames = () => {  
+export const beginUpdateGames = () => {
   return async (dispatch, getState, snowflake) => {
     console.log(getState())
     const games = await snowflake.games.getGames()
