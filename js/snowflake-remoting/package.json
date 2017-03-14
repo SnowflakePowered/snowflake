@@ -2,7 +2,7 @@
   "name": "snowflake-remoting",
   "version": "1.0.0",
   "description": "Snowflake Remoting Bindings",
-  "main": "./dist/snowflake.min.js",
+  "main": "dist/snowflake.min.js",
   "scripts": {
     "test": "karma start"
   },

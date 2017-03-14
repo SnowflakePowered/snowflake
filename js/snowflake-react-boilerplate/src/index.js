@@ -6,7 +6,10 @@ import { Provider } from 'react-redux'
 import Store from './store'
 
 require('map.prototype.tojson')
-const StoreInstance = Store()
+const StoreInstance = Store({
+  platforms: new Map(),
+  games: []
+})
 
 ReactDOM.render(
  <Provider store={StoreInstance}>
