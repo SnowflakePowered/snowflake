@@ -4686,8 +4686,8 @@ sax@^1.2.1, sax@~1.2.1:
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.2.tgz#fd8631a23bc7826bef5d871bdb87378c95647828"
 
 seamless-immutable@^7.0.1:
-  version "7.1.0"
-  resolved "https://registry.yarnpkg.com/seamless-immutable/-/seamless-immutable-7.1.0.tgz#5cdfce7375ff5b7576a7dbbb113bf17e44069db3"
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/seamless-immutable/-/seamless-immutable-7.1.1.tgz#9bc9dac26f990e38c59e3b2a1c9f2346bfbd2c01"
 
 "semver@2 || 3 || 4 || 5", semver@5.3.0, semver@^5.1.0, semver@^5.3.0, semver@~5.3.0:
   version "5.3.0"

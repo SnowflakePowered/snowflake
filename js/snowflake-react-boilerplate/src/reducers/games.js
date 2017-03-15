@@ -1,7 +1,7 @@
-export default (state = {}, payload) => {
-  switch (payload.type) {
+export default (state = {}, action) => {
+  switch (action.type) {
     case 'UPDATE_GAMES':
-      return payload.games
+      return action.payload
     default:
       return state
   }
