@@ -69,69 +69,6 @@ module.exports =
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_whatwg_fetch__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_whatwg_fetch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_whatwg_fetch__);
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments)).next());
-    });
-};
-
-class Service {
-    constructor(rootUrl, serviceName) {
-        this.getServiceUrl = (...path) => {
-            return [this.rootUrl, this.serviceName, ...path].join("/");
-        };
-        this.rootUrl = rootUrl;
-        this.serviceName = serviceName;
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Service;
-
-const request = (url, payload = "", verb = "Read") => __awaiter(this, void 0, void 0, function* () {
-    if (typeof payload !== "string") {
-        payload = JSON.stringify(payload);
-    }
-    if (verb === "Read" || verb === "Delete") {
-        payload = undefined;
-    }
-    const result = yield fetch(url, {
-        body: payload,
-        method: toHttpVerb(verb),
-        mode: "cors",
-    });
-    if (result.ok) {
-        let json = yield result.json();
-        return { Response: json.Response, Error: json.Error };
-    }
-    return { Response: null, Error: { Message: "Unable to resolve promise." } };
-});
-/* harmony export (immutable) */ __webpack_exports__["b"] = request;
-
-const toHttpVerb = (verb) => {
-    switch (verb) {
-        case "Create":
-            return "POST";
-        case "Read":
-            return "GET";
-        case "Delete":
-            return "DELETE";
-        case "Update":
-            return "PUT";
-        default:
-            return "GET";
-    }
-};
-
-
-/***/ }),
-/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;(function() {
@@ -872,6 +809,69 @@ function immutableInit(config) {
 
 
 /***/ }),
+/* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_whatwg_fetch__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_whatwg_fetch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_whatwg_fetch__);
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments)).next());
+    });
+};
+
+class Service {
+    constructor(rootUrl, serviceName) {
+        this.getServiceUrl = (...path) => {
+            return [this.rootUrl, this.serviceName, ...path].join("/");
+        };
+        this.rootUrl = rootUrl;
+        this.serviceName = serviceName;
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Service;
+
+const request = (url, payload = "", verb = "Read") => __awaiter(this, void 0, void 0, function* () {
+    if (typeof payload !== "string") {
+        payload = JSON.stringify(payload);
+    }
+    if (verb === "Read" || verb === "Delete") {
+        payload = undefined;
+    }
+    const result = yield fetch(url, {
+        body: payload,
+        method: toHttpVerb(verb),
+        mode: "cors",
+    });
+    if (result.ok) {
+        let json = yield result.json();
+        return { Response: json.Response, Error: json.Error };
+    }
+    return { Response: null, Error: { Message: "Unable to resolve promise." } };
+});
+/* harmony export (immutable) */ __webpack_exports__["b"] = request;
+
+const toHttpVerb = (verb) => {
+    switch (verb) {
+        case "Create":
+            return "POST";
+        case "Read":
+            return "GET";
+        case "Delete":
+            return "DELETE";
+        case "Update":
+            return "PUT";
+        default:
+            return "GET";
+    }
+};
+
+
+/***/ }),
 /* 2 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -902,9 +902,9 @@ class Snowflake {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_seamless_immutable__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_seamless_immutable__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_seamless_immutable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_seamless_immutable__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Remoting__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Remoting__ = __webpack_require__(1);
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -960,9 +960,9 @@ class Games extends __WEBPACK_IMPORTED_MODULE_1__Remoting__["a" /* Service */] {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_seamless_immutable__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_seamless_immutable__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_seamless_immutable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_seamless_immutable__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Remoting__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Remoting__ = __webpack_require__(1);
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -1466,4 +1466,4 @@ module.exports = __webpack_require__(2);
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=snowflake.min.js.map
+//# sourceMappingURL=snowflake.js.map

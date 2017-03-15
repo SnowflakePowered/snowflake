@@ -1,10 +1,6 @@
-import { UPDATE_GAMES } from './actions'
-export const updateGames = (games) => {
-  return {
-    type: UPDATE_GAMES,
-    games
-  }
-}
+import { UPDATE_GAMES, createAction } from './actions'
+
+export const updateGames = (games) => createAction(UPDATE_GAMES)(games)
 
 export const beginUpdateGames = () => {
   return async (dispatch, getState, snowflake) => {

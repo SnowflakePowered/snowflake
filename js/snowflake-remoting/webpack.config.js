@@ -1,5 +1,20 @@
-const webpack = require("webpack");
-const path = require("path");
+const webpack = require("webpack")
+const path = require("path")
+
+function DtsBundlePlugin(){}
+DtsBundlePlugin.prototype.apply = function (compiler) {
+  compiler.plugin('done', function(){
+    let dts = require('dts-bundle');
+
+    dts.bundle({
+      name: "snowflake",
+      main: 'dist/types/index.d.ts',
+      out: '../snowflake.d.ts',
+      removeSource: true,
+      outputAsModuleFolder: true // to use npm in-package typings,
+    });
+  });
+};
 
 module.exports = {
     entry: [
@@ -8,7 +23,7 @@ module.exports = {
 
     output: {
         path: path.join(__dirname, "dist"),
-        filename: "snowflake.min.js",
+        filename: "snowflake.js",
         publicPath: "/static/",
         library: "snowflake",
         libraryTarget: "commonjs-module"
@@ -28,6 +43,7 @@ module.exports = {
                 "NODE_ENV": JSON.stringify("production")
             }
         }),
+        new DtsBundlePlugin(),
     ],
     module: {
         rules: [{
@@ -35,7 +51,7 @@ module.exports = {
             exclude: path.resolve(__dirname, "node_modules"),
             include: path.resolve(__dirname, "src"),
             use: [{
-                loader: "awesome-typescript-loader",
+                loader: "ts-loader",
             }],
         }],
     },

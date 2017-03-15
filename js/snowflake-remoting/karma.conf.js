@@ -29,7 +29,7 @@ module.exports = function (config) {
               },
             },
             {
-              loader: "awesome-typescript-loader",
+              loader: "ts-loader",
             }],
         }],
       },
