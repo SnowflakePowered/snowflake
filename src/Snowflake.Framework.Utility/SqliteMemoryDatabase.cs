@@ -14,6 +14,7 @@ namespace Snowflake.Utility
     {
 
         private readonly SqliteConnection dbConnection;
+
         public SqliteMemoryDatabase()
         {
            

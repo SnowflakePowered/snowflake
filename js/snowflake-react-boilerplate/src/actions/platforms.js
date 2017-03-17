@@ -1,11 +1,11 @@
-import { UPDATE_PLATFORMS, createAction } from './actions'
+import { SNOWFLAKE_REFRESH_PLATFORMS, createAction } from './actions'
 
-export const updatePlatforms = (platforms) => createAction(UPDATE_PLATFORMS)(platforms)
+export const refreshPlatforms = (platforms) => createAction(SNOWFLAKE_REFRESH_PLATFORMS)(platforms)
 
-export const beginUpdatePlatforms = () => {
+export const beginRefreshPlatforms = () => {
   return async (dispatch, getState, snowflake) => {
     const platforms = await snowflake.stone.getPlatforms()
-    dispatch(updatePlatforms(platforms))
+    dispatch(refreshPlatforms(platforms))
   }
 }
 

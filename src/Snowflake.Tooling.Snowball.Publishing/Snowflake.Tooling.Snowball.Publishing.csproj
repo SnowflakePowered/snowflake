@@ -13,6 +13,7 @@
     <PackageReference Include="NuGet.Packaging.Core.Types" Version="4.0.0" />
     <PackageReference Include="NuGet.Repositories" Version="4.0.0" />
     <PackageReference Include="Octokit" Version="0.24.1-alpha0001" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.0.0" />
     <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="4.3.0" />
   </ItemGroup>
   <ItemGroup>

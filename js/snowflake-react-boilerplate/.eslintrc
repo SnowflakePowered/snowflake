@@ -1,8 +1,12 @@
 {
   "extends": "standard",
+  "parser": "babel-eslint",
   "parserOptions": {
     "ecmaFeatures": {
-      "jsx": true
+      "jsx": true,
+      "classes": true,
+      "impliedStrict": true,
+      "blockBindings": true
     }
   },
   "settings": {

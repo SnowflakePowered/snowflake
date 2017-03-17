@@ -1,48 +1,40 @@
 import React, { Component } from 'react'
-import UIFrame from "./components/uiframe"
+import UIFrame from './components/uiframe'
 import './App.css'
 import Test from './components/test'
+import withSnowflake from './snowflake/Snowflake'
+import SnowflakeProvider from './snowflake/SnowflakeProvider'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import injectTapEventPlugin from 'react-tap-event-plugin'
+injectTapEventPlugin()
+
 import {
   BrowserRouter as Router,
   Route
 } from 'react-router-dom'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import * as platformActions from './actions/platforms'
-import * as gameActions from './actions/games'
 
 class App extends Component {
-  componentDidMount () {
-    this.props.dispatch(this.props.actions.platforms.beginUpdatePlatforms)
-    this.props.dispatch(this.props.actions.games.beginUpdateGames)
+  constructor () {
+    super()
+    this.PlatformUI = withSnowflake(Test)
+    this.UIFrame = withSnowflake(UIFrame)
   }
 
   render () {
-    const platforms = () => <Test platforms={this.props.platforms} games={this.props.games}/>
+    // const platforms = () => <this.PlatformUI games={this.props.games}/>
+// <this.UIFrame/>
     return (
-      <Router >
-        <UIFrame>
-          <Route path="/platforms" component={platforms}/>
-        </UIFrame>
-      </Router>
+      <MuiThemeProvider>
+        <Router>
+          <Route component={({location}) =>
+            <SnowflakeProvider location={location}>
+              <this.UIFrame/>
+            </SnowflakeProvider>
+          } />
+        </Router>
+      </MuiThemeProvider>
     )
   }
 }
 
-function mapStateToProps (state, props) {
-  return {
-    platforms: state.platforms,
-    games: state.games
-  }
-}
-
-function mapDispatchToProps (dispatch) {
-  return {
-    actions: {
-      platforms: bindActionCreators(platformActions, dispatch),
-      games: bindActionCreators(gameActions, dispatch)
-    },
-    dispatch
-  }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default App
