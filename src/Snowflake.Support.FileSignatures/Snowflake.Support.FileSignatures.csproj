@@ -6,7 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Quamotion.DiscUtils" Version="1.0.3"/>
+    <PackageReference Include="Quamotion.DiscUtils" Version="1.0.3" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.0.0" />
   </ItemGroup>
   
   <ItemGroup>

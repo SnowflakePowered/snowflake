@@ -31,7 +31,6 @@ namespace Snowflake.Shell.Windows
        
         public void StartCore()
         {
-
             this.loadedCore = new CoreService(this.appDataDirectory);
             //this.loadedCore.Get<IEmulatorAssembliesManager>()?.LoadEmulatorAssemblies();
             this.loadedCore.Get<IPluginManager>()?.Initialize();

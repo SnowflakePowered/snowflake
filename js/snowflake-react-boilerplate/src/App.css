@@ -22,3 +22,7 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+:global body {
+  user-select: none;
+}

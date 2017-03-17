@@ -50,6 +50,7 @@ namespace Snowflake.Configuration.Interceptors
                         }
                         break;
                     }
+
                     if (invocation.Method.DeclaringType == typeof(IInputTemplate<T>))
                     {
                         if (invocation.Method.Name.StartsWith("set_"))

@@ -25,7 +25,7 @@ namespace Snowflake.Utility
 
         public static bool IsAxis(this ControllerElement element)
         {
-            return element.GetEnumMember().Name.Contains("Axis");
+            return element.GetMember().Name.Contains("Axis");
         }
     }
 }

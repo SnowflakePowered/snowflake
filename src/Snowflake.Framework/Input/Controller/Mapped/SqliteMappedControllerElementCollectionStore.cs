@@ -78,8 +78,8 @@ namespace Snowflake.Input.Controller.Mapped
             var parameters = new StringBuilder("@ControllerId, @DeviceId, @ProfileName");
             foreach(var element in mappedCollection)
             {
-                string layoutElementName = element.LayoutElement.GetEnumMember().Name;
-                string deviceElement = element.DeviceElement.GetEnumMember().Name;
+                string layoutElementName = element.LayoutElement.GetMember().Name;
+                string deviceElement = element.DeviceElement.GetMember().Name;
                 parameters.Append(", @");
                 parameters.Append(layoutElementName);
                 ((IDictionary <string, object>)queryObject)[layoutElementName] = deviceElement;
