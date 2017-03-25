@@ -1,23 +1,24 @@
 import React, { Component } from 'react'
 import UIFrame from './components/uiframe'
-import './App.css'
 import Test from './components/test'
 import withSnowflake from './snowflake/Snowflake'
 import SnowflakeProvider from './snowflake/SnowflakeProvider'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import injectTapEventPlugin from 'react-tap-event-plugin'
+import './App.css'
+
 injectTapEventPlugin()
 
 import {
   BrowserRouter as Router,
-  Route
+  Route,
+  Redirect
 } from 'react-router-dom'
 
 class App extends Component {
   constructor () {
     super()
     this.PlatformUI = withSnowflake(Test)
-    this.UIFrame = withSnowflake(UIFrame)
   }
 
   render () {
@@ -28,7 +29,7 @@ class App extends Component {
         <Router>
           <Route component={({location}) =>
             <SnowflakeProvider location={location}>
-              <this.UIFrame/>
+              <UIFrame className="ui-frame"/>
             </SnowflakeProvider>
           } />
         </Router>

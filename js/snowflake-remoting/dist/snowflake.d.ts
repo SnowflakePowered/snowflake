@@ -2,7 +2,7 @@
 // Dependencies for this module:
 //   ../../seamless-immutable
 
-import * as Immutable from "seamless-immutable";
+import * as Immutable from 'seamless-immutable';
 
 export default class Snowflake {
     constructor(rootUrl?: string);
@@ -58,7 +58,7 @@ export class Stone extends Service {
     getPlatforms: () => Promise<Map<string, Platform>>;
 }
 
-import "whatwg-fetch";
+import 'whatwg-fetch';
 export interface Response<T> {
     Response: T;
     Error: Error;
@@ -72,6 +72,6 @@ export class Service {
     protected constructor(rootUrl: string, serviceName: string);
     protected getServiceUrl: (...path: string[]) => string;
 }
-export type Verb = "Create" | "Read" | "Delete" | "Update";
+export type Verb = 'Create' | 'Read' | 'Delete' | 'Update';
 export const request: <T>(url: string, payload?: any, verb?: Verb) => Promise<Response<T>>;
 

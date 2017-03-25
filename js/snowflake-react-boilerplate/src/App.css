@@ -26,3 +26,8 @@
 :global body {
   user-select: none;
 }
+
+.ui-frame {
+  height: 100vh;
+}
+

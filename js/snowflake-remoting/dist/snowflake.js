@@ -827,7 +827,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 class Service {
     constructor(rootUrl, serviceName) {
         this.getServiceUrl = (...path) => {
-            return [this.rootUrl, this.serviceName, ...path].join("/");
+            return [this.rootUrl, this.serviceName, ...path].join('/');
         };
         this.rootUrl = rootUrl;
         this.serviceName = serviceName;
@@ -835,40 +835,40 @@ class Service {
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Service;
 
-const request = (url, payload = "", verb = "Read") => __awaiter(this, void 0, void 0, function* () {
-    if (typeof payload !== "string") {
+const toHttpVerb = (verb) => {
+    switch (verb) {
+        case 'Create':
+            return 'POST';
+        case 'Read':
+            return 'GET';
+        case 'Delete':
+            return 'DELETE';
+        case 'Update':
+            return 'PUT';
+        default:
+            return 'GET';
+    }
+};
+const request = (url, payload = '', verb = 'Read') => __awaiter(this, void 0, void 0, function* () {
+    if (typeof payload !== 'string') {
         payload = JSON.stringify(payload);
     }
-    if (verb === "Read" || verb === "Delete") {
+    if (verb === 'Read' || verb === 'Delete') {
         payload = undefined;
     }
     const result = yield fetch(url, {
         body: payload,
         method: toHttpVerb(verb),
-        mode: "cors",
+        mode: 'cors'
     });
     if (result.ok) {
         let json = yield result.json();
         return { Response: json.Response, Error: json.Error };
     }
-    return { Response: null, Error: { Message: "Unable to resolve promise." } };
+    return { Response: null, Error: { Message: 'Unable to resolve promise.' } };
 });
 /* harmony export (immutable) */ __webpack_exports__["b"] = request;
 
-const toHttpVerb = (verb) => {
-    switch (verb) {
-        case "Create":
-            return "POST";
-        case "Read":
-            return "GET";
-        case "Delete":
-            return "DELETE";
-        case "Update":
-            return "PUT";
-        default:
-            return "GET";
-    }
-};
 
 
 /***/ }),
@@ -882,7 +882,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 class Snowflake {
-    constructor(rootUrl = "http://localhost:9696") {
+    constructor(rootUrl = 'http://localhost:9696') {
         this._games = new __WEBPACK_IMPORTED_MODULE_0__remoting_Games__["a" /* Games */](rootUrl);
         this._stone = new __WEBPACK_IMPORTED_MODULE_1__remoting_Stone__["a" /* Stone */](rootUrl);
     }
@@ -917,7 +917,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 
 class Games extends __WEBPACK_IMPORTED_MODULE_1__Remoting__["a" /* Service */] {
     constructor(rootUrl) {
-        super(rootUrl, "games");
+        super(rootUrl, 'games');
         this.getGames = () => __awaiter(this, void 0, void 0, function* () {
             const games = yield __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__Remoting__["b" /* request */])(this.getServiceUrl());
             if (games.Error) {
@@ -935,15 +935,15 @@ class Games extends __WEBPACK_IMPORTED_MODULE_1__Remoting__["a" /* Service */] {
         this.createGame = (title, platform) => __awaiter(this, void 0, void 0, function* () {
             const game = yield __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__Remoting__["b" /* request */])(this.getServiceUrl(), {
                 title,
-                platform: platform.PlatformID,
-            }, "Create");
+                platform: platform.PlatformID
+            }, 'Create');
             if (game.Error) {
                 throw game.Error;
             }
             return __WEBPACK_IMPORTED_MODULE_0_seamless_immutable__["from"](game.Response);
         });
         this.createFile = (game, path, mimetype) => __awaiter(this, void 0, void 0, function* () {
-            const newGame = yield __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__Remoting__["b" /* request */])(this.getServiceUrl(game.Guid, "files"), { path, mimetype }, "Create");
+            const newGame = yield __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__Remoting__["b" /* request */])(this.getServiceUrl(game.Guid, 'files'), { path, mimetype }, 'Create');
             if (newGame.Error) {
                 throw newGame.Error;
             }
@@ -975,9 +975,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 
 class Stone extends __WEBPACK_IMPORTED_MODULE_1__Remoting__["a" /* Service */] {
     constructor(rootUrl) {
-        super(rootUrl, "stone");
+        super(rootUrl, 'stone');
         this.getPlatforms = () => __awaiter(this, void 0, void 0, function* () {
-            const platforms = yield __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__Remoting__["b" /* request */])(this.getServiceUrl("platforms"));
+            const platforms = yield __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__Remoting__["b" /* request */])(this.getServiceUrl('platforms'));
             if (platforms.Error) {
                 throw platforms.Error;
             }
