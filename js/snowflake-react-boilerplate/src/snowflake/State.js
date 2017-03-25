@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as platformActions from '../actions/platforms'
 import * as gameActions from '../actions/games'
-import * as uiActions from '../actions/ui'
 import getDisplayName from 'recompose/getDisplayName'
 
 const State = AppComponent => {
@@ -21,8 +20,7 @@ const State = AppComponent => {
     return {
       actions: {
         platforms: bindActionCreators(platformActions, dispatch),
-        games: bindActionCreators(gameActions, dispatch),
-        ui: bindActionCreators(uiActions, dispatch)
+        games: bindActionCreators(gameActions, dispatch)
       },
       dispatch
     }

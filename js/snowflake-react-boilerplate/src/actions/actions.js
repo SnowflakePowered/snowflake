@@ -1,6 +1,5 @@
 export const SNOWFLAKE_REFRESH_GAMES = 'SNOWFLAKE_REFRESH_GAMES'
 export const SNOWFLAKE_REFRESH_PLATFORMS = 'SNOWFLAKE_REFRESH_PLATFORMS'
-export const UI_SET_ACTIVE_PLATFORM = 'UI_SET_ACTIVE_PLATFORM'
 
 export const createAction = (type) => {
   return (payload) => {

@@ -9,7 +9,7 @@ const PlatformDisplay = ({platform}) => {
 const PlatformDisplayInfo = ({platform}) => {
   return (
     <div className="platformInfo">
-      <div>{platform.FriendlyName}</div>
+      <div>{platform.FriendlyName || ''}</div>
       <div>{platform.Metadata.platform_company || ''}</div>
       <div>{platform.Metadata.platform_releasedate || ''}</div>
     </div>
