@@ -1,6 +1,6 @@
 import { SNOWFLAKE_REFRESH_GAMES, createAction } from './actions'
 
-export const refreshGames = (games) => createAction(SNOWFLAKE_REFRESH_GAMES)(games)
+export const refreshGames = games => createAction(SNOWFLAKE_REFRESH_GAMES)(games)
 
 export const beginRefreshGames = () => {
   return async (dispatch, getState, snowflake) => {
@@ -8,4 +8,3 @@ export const beginRefreshGames = () => {
     dispatch(refreshGames(games))
   }
 }
-

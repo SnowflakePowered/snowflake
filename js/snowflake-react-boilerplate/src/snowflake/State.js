@@ -5,7 +5,7 @@ import * as platformActions from '../actions/platforms'
 import * as gameActions from '../actions/games'
 import getDisplayName from 'recompose/getDisplayName'
 
-const State = AppComponent => {
+const State = (AppComponent) => {
   function mapStateToProps (state, props) {
     return {
       stone: {

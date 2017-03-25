@@ -1,7 +1,7 @@
 import React from 'react'
 import State from './State'
 
-class SnowflakeContext extends React.Component {
+class SnowflakeProvider extends React.Component {
   static childContextTypes = {
     snowflake: React.PropTypes.object
   }
@@ -25,4 +25,4 @@ class SnowflakeContext extends React.Component {
   }
 }
 
-export default State(SnowflakeContext)
+export default State(SnowflakeProvider)
