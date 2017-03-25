@@ -10,7 +10,7 @@ export const createAction = (type) => {
   }
 }
 
-const timeout = (ms) => new Promise(resolve => setTimeout(resolve, ms))
+const timeout = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 export const beginCreateAction = (type, delay = 0) => {
   return (payload) => {
