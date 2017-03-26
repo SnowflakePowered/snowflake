@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import AppBar from 'material-ui/AppBar'
-import './appheader.css'
+import './index.css'
 
 class AppHeader extends Component {
   render () {

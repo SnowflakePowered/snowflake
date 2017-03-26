@@ -1,15 +1,16 @@
 import React from 'react'
-import PlatformDisplay from './platformdisplay'
+import PlatformDisplay from '../platformdisplay'
 import { List, ListItem } from 'material-ui/List'
 import { Link } from 'react-router-dom'
-import './platformselector.css'
+import './index.css'
 
+import withPlatforms from '../../snowflake/withPlatforms'
 
-const PlatformSelector = ({ snowflake }) => {
+const PlatformSelector = ({ platforms }) => {
   return (
     <List className="list">
       {
-        [...snowflake.stone.platforms.values()].map((p) => {
+        [...platforms.values()].map((p) => {
           return (
             <Link key={p.PlatformID} to={{
               pathname: `/games/${p.PlatformID}`,
@@ -28,4 +29,4 @@ const PlatformSelector = ({ snowflake }) => {
   )
 }
 
-export default PlatformSelector
+export default withPlatforms(PlatformSelector)

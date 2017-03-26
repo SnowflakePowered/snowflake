@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import UIFrame from './components/uiframe'
+import UIFrame from './components/uiframe/'
 import './App.css'
-import withSnowflake from './snowflake/Snowflake'
-import SnowflakeProvider from './snowflake/SnowflakeProvider'
+import withSnowflake from './snowflake/withSnowflake/'
+import SnowflakeProvider from './snowflake/SnowflakeProvider/'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 injectTapEventPlugin()
@@ -12,22 +12,20 @@ import {
   Route
 } from 'react-router-dom'
 
-class App extends Component {
-  constructor () {
-    super()
-    this.UIFrame = withSnowflake(UIFrame)
-  }
+import { ConnectedRouter, routerReducer, routerMiddleware, push } from 'react-router-redux'
 
+
+class App extends Component {
   render () {
     return (
       <MuiThemeProvider>
-        <Router>
+        <ConnectedRouter history={this.props.history}>
           <Route component={(({location}) =>
             <SnowflakeProvider location={location}>
-              <this.UIFrame/>
+              <UIFrame/>
             </SnowflakeProvider>
           )} />
-        </Router>
+        </ConnectedRouter>
       </MuiThemeProvider>
     )
   }

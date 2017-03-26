@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import * as platformActions from '../actions/platforms'
-import * as gameActions from '../actions/games'
+import * as platformActions from '../../actions/platforms'
+import * as gameActions from '../../actions/games'
 import getDisplayName from 'recompose/getDisplayName'
 
 const State = (AppComponent) => {
