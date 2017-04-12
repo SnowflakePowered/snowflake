@@ -1,5 +1,5 @@
 import React from 'react'
-import State from '../State/'
+import State from './State'
 
 class SnowflakeProvider extends React.Component {
   static childContextTypes = {
