@@ -5,7 +5,10 @@
   "dependencies": {
     "lodash": "^4.17.4",
     "react": "^15.4.2",
+    "react-addons-css-transition-group": "^15.5.2",
+    "react-addons-transition-group": "^15.5.2",
     "react-dom": "^15.4.2",
+    "react-md": "^1.0.11",
     "react-redux": "^5.0.3",
     "react-router-dom": "^4.0.0",
     "react-router-redux": "next",
