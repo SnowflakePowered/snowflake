@@ -1,4 +1,4 @@
-import { SNOWFLAKE_REFRESH_PLATFORMS } from '../../actions/actions'
+import { SNOWFLAKE_REFRESH_PLATFORMS } from '../actions/'
 
 export default (state = {}, action) => {
   switch (action.type) {
