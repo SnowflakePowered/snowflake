@@ -10,7 +10,7 @@ injectTapEventPlugin();
 
 //Snowflake Start
 import SnowflakeProvider from './snowflake/SnowflakeProvider'
-import GameCard from './components/GameCard'
+import GameCard from './components/presentation/GameCard'
 
 const styles = {
 }

@@ -1,4 +1,4 @@
-import { SNOWFLAKE_REFRESH_PLATFORMS, createAction } from './actions'
+import { SNOWFLAKE_REFRESH_PLATFORMS, createAction } from './'
 
 export const refreshPlatforms = platforms => createAction(SNOWFLAKE_REFRESH_PLATFORMS)(platforms)
 

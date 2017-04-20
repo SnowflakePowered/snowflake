@@ -1,4 +1,4 @@
-import { SNOWFLAKE_REFRESH_GAMES, createAction } from './actions'
+import { SNOWFLAKE_REFRESH_GAMES, createAction } from './'
 
 export const refreshGames = games => createAction(SNOWFLAKE_REFRESH_GAMES)(games)
 

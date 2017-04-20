@@ -18,4 +18,6 @@ const GameCardStory = injectSheet({
     </div>
 ));
 
+export const Single =  () => <GameCard image="http://vignette2.wikia.nocookie.net/mario/images/6/60/SMBBoxart.png/revision/latest?cb=20120609143443" 
+                                         title="Super Mario Bros." publisher="Nintendo"/>
 export default GameCardStory;
