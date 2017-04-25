@@ -12,6 +12,7 @@ import {GameBlack, GameWhiteWithBackground} from './GameDisplay.story'
 //import { GameDetailsStory } from './GameDetails.story'
 import { BooleanConfigurationStory } from './Configuration.story'
 
+import ImageCard from 'components/presentation/ImageCard'
 const muiTheme = mui({blue, pink})
 
 storiesOf('Game Card', module)
@@ -42,6 +43,18 @@ storiesOf('Configuration', module)
   .addDecorator(centered)
   .addDecorator(muiTheme)
   .add('boolean widget', () => <BooleanConfigurationStory/>)
+
+storiesOf('Image Card', module)
+  .addDecorator(centered)
+  .addDecorator(muiTheme)
+  .add('portrait', () => 
+  <ImageCard
+    image="http://vignette2.wikia.nocookie.net/mario/images/6/60/SMBBoxart.png/revision/latest?cb=20120609143443"
+  />)
+  .add('landscape', () => 
+  <ImageCard
+    image="https://upload.wikimedia.org/wikipedia/en/3/32/Super_Mario_World_Coverart.png"
+  />)
 
 /*
 storiesOf('Game Details', module)

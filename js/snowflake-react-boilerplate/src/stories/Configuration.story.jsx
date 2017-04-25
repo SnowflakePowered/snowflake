@@ -1,8 +1,8 @@
 import React from 'react'
-import muiInjectSheet from 'utils/muiInjectSheet'
+import injectSheet from 'mui-jss-inject'
 import BooleanWidget from 'components/configuration/BooleanWidget'
 
-export const BooleanConfigurationStory = muiInjectSheet({
+export const BooleanConfigurationStory = injectSheet({
   container: {
     display: 'block',
     width: "100%"

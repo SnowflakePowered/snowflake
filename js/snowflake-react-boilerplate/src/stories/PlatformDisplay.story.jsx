@@ -1,5 +1,5 @@
 import React from 'react'
-import muiInjectSheet from 'utils/muiInjectSheet'
+import injectSheet from 'mui-jss-inject'
 import PlatformDisplay from 'components/presentation/info/PlatformDisplay'
 
 import { red } from 'material-ui/styles/colors'
@@ -12,7 +12,7 @@ export const Black = () => (
     year="1990" />
 )
 
-export const WhiteWithBackground = muiInjectSheet({
+export const WhiteWithBackground = injectSheet({
   container: {
     color: 'white',
     backgroundColor: red[400],

@@ -1,5 +1,5 @@
 import React from 'react'
-import muiInjectSheet from 'utils/muiInjectSheet'
+import injectSheet from 'mui-jss-inject'
 
 import GameDisplay from 'components/presentation/info/GameDisplay'
 
@@ -14,7 +14,7 @@ export const GameBlack = () => (
     year="1990" />
 )
 
-export const GameWhiteWithBackground = muiInjectSheet({
+export const GameWhiteWithBackground = injectSheet({
   container: {
     color: 'white',
     backgroundColor: red[400],
