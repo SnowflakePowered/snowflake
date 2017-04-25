@@ -1,8 +1,8 @@
-import React from 'react';
+import React from 'react'
 import injectSheet from 'react-jss' 
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
-import styleable from '../../utils/styleable'
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card'
+import FlatButton from 'material-ui/FlatButton'
+import styleable from 'utils/styleable'
 
 const styles = {
   cardContainer: {

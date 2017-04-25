@@ -5,9 +5,8 @@
   "dependencies": {
     "lodash": "^4.17.4",
     "material-ui": "^0.17.4",
+    "normalize-jss": "^3.1.0",
     "react": "^15.5.4",
-    "react-addons-css-transition-group": "^15.5.2",
-    "react-addons-transition-group": "^15.5.2",
     "react-dom": "^15.5.4",
     "react-jss": "^6.1.1",
     "react-redux": "^5.0.3",
@@ -21,6 +20,7 @@
   "devDependencies": {
     "@kadira/react-storybook-decorator-centered": "^1.1.2",
     "@kadira/storybook": "^2.21.0",
+    "babel-plugin-root-import": "^5.1.0",
     "eslint-config-standard": "^7.0.1",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-node": "^4.2.0",
@@ -33,11 +33,10 @@
     "storybook-addon-material-ui": "^0.7.7"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "storybook": "start-storybook -p 9009 -s public",
-    "build-storybook": "build-storybook -s public"
+    "start": "set NODE_PATH=./src&&react-scripts start",
+    "build": "set NODE_PATH=./src&&react-scripts build",
+    "test": "set NODE_PATH=./src&&react-scripts test --env=jsdom",
+    "storybook": "set NODE_PATH=./src&&start-storybook -p 9009 -s public",
+    "build-storybook": "set NODE_PATH=./src&&build-storybook -s public"
   }
 }
