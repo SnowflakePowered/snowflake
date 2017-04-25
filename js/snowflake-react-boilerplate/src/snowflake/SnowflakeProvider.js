@@ -1,9 +1,10 @@
 import React from 'react'
 import State from './State'
+import PropTypes from 'prop-types'
 
 class SnowflakeProvider extends React.Component {
   static childContextTypes = {
-    snowflake: React.PropTypes.object
+    snowflake: PropTypes.object
   }
 
   getChildContext () {
