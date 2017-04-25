@@ -1,8 +1,12 @@
 import React from 'react'
 import injectSheet from 'react-jss' 
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card'
-import FlatButton from 'material-ui/FlatButton'
+import { Card, CardContent, CardMedia } from 'material-ui/Card'
+
+import Text from 'material-ui/Text'
+
 import styleable from 'utils/styleable'
+import muiInjectSheet from 'utils/muiInjectSheet'
+
 
 const styles = {
   cardContainer: {
@@ -20,23 +24,31 @@ const styles = {
     overflow: 'hidden',
     margin: 0,
     position: 'relative'
+  },
+  cardSubtitle: {
+    fontSize: "0.75em",
+    color: "grey"
   }
-  
 }
 
 //todo: z-depth on hover
 //todo: button on hover
-const GameCard = ({sheets, classes, image, title, publisher}) => (
-  <div className={classes.cardContainer}>
+
+const GameCard = ({classes, image, title, publisher}) => {
+  return (
+  <div>
       <Card>
         <CardMedia>
           <div className={classes.cardImageContainer}>
               <img className={classes.cardImage} src={image} />
           </div>
         </CardMedia>
-        <CardTitle title={title} subtitle={publisher} />
+         <CardContent>
+            <Text type="headline" component="h2">{title}</Text>
+            <Text component="h3" className={classes.cardSubtitle}>{publisher}</Text>
+        </CardContent>
       </Card>
-  </div>
-);
+  </div>)
+}
 
-export default injectSheet(styles)(styleable(GameCard));
+export default muiInjectSheet(styles)(styleable(GameCard))
