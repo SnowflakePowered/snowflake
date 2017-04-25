@@ -4095,6 +4095,12 @@ marked@^0.3.6:
   version "0.3.6"
   resolved "https://registry.yarnpkg.com/marked/-/marked-0.3.6.tgz#b2c6c618fccece4ef86c4fc6cb8a7cbf5aeda8d7"
 
+material-ui-icons@next:
+  version "1.0.0-alpha.2"
+  resolved "https://registry.yarnpkg.com/material-ui-icons/-/material-ui-icons-1.0.0-alpha.2.tgz#97b32c719088f09b44d19c43638f111325eb940d"
+  dependencies:
+    recompose "^0.22.0"
+
 material-ui@next:
   version "1.0.0-alpha.11"
   resolved "https://registry.yarnpkg.com/material-ui/-/material-ui-1.0.0-alpha.11.tgz#c157b44bdffbea2ee342490b3cf4ee472acebd29"

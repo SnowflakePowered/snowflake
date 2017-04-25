@@ -1,8 +1,8 @@
 import React from 'react'
-import injectSheet from 'react-jss'
+import muiInjectSheet from 'utils/muiInjectSheet'
 import PlatformDisplay from 'components/presentation/info/PlatformDisplay'
 
-import { red500 } from 'material-ui/styles/colors'
+import { red } from 'material-ui/styles/colors'
 
 export const Black = () => (
   <PlatformDisplay
@@ -12,10 +12,10 @@ export const Black = () => (
     year="1990" />
 )
 
-export const WhiteWithBackground = injectSheet({
+export const WhiteWithBackground = muiInjectSheet({
   container: {
     color: 'white',
-    backgroundColor: red500,
+    backgroundColor: red[400],
     height: '100%'
   },
   infoDisplay: {

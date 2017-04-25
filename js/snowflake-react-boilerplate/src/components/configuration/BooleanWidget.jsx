@@ -1,10 +1,11 @@
 import React from 'react'
-import Toggle from 'material-ui/Toggle';
+import Switch from 'material-ui/Switch';
 
 import ConfigurationWidgetTemplate from './ConfigurationWidgetTemplate'
-const BooleanWidget = ({name, description, value, onValueChange}) => (
+
+const BooleanWidget = ({classes, name, description, value, onValueChange}) => (
   <ConfigurationWidgetTemplate name={name} description={description}>
-    <Toggle toggled={value}/>
+    <Switch/>
   </ConfigurationWidgetTemplate>
 )
 

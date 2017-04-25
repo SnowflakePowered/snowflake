@@ -1,10 +1,11 @@
 import React from 'react'
-import injectSheet from 'react-jss'
+import muiInjectSheet from 'utils/muiInjectSheet'
+
 import { action } from '@kadira/storybook'
-import { red400 } from 'material-ui/styles/colors'
+import { red } from 'material-ui/styles/colors'
 import SearchBar from 'components/presentation/SearchBar'
 
-export const SearchBarStory = injectSheet({
+export const SearchBarStory = muiInjectSheet({
   container: {
     width: '90%',
   }
@@ -14,14 +15,14 @@ export const SearchBarStory = injectSheet({
   </div>
 ));
 
-export const SearchBarStoryWithBackground = injectSheet({
+export const SearchBarStoryWithBackground = muiInjectSheet({
   container: {
     width: '90%',
   },
   background: {
     width: '100%',
     height: '100%',
-    backgroundColor: red400,
+    backgroundColor: red[400],
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center'
