@@ -1,6 +1,7 @@
 import React from 'react'
 import injectSheet from 'react-jss' 
 import { Card, CardContent, CardMedia } from 'material-ui/Card'
+import { grey } from 'material-ui/styles/colors'
 
 import Text from 'material-ui/Text'
 
@@ -27,7 +28,7 @@ const styles = {
   },
   cardSubtitle: {
     fontSize: "0.75em",
-    color: "grey"
+    color: grey[400]
   }
 }
 

@@ -22,6 +22,7 @@ const sheet = {
     fontSize: '0.75em'
   }
 }
+//todo: use layout
 const ConfigurationWidgetTemplate = ({classes, name, description, children}) => (
   <div className={classes.container}>
     <div className={classes.description}>

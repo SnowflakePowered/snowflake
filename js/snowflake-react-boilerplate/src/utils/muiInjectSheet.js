@@ -24,8 +24,8 @@ const muiInjectSheet = (styles) => (WrappedComponent) => {
     }
 
     render () {
+      if (this.context.styleManager === undefined) return (<div>You didn't supply the Material-UI Theme Context</div>);
       const classes = this.context.styleManager.render(this.styleSheet)
-      console.log(this.context.styleManager)
       return (
          <WrappedComponent classes={classes} {...this.props}/>
       )
