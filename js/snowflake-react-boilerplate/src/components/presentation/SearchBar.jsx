@@ -1,5 +1,5 @@
 import React from 'react'
-import muiInjectSheet from 'utils/muiInjectSheet'
+import muiInjectSheet from 'mui-jss-inject'
 
 import Paper from 'material-ui/Paper'
 import FormControl from 'material-ui/Form/FormControl'
@@ -10,7 +10,7 @@ import { grey, red } from 'material-ui/styles/colors'
 
 import styleable from 'utils/styleable'
 
-const styles = {
+const styles = theme => ({
   barContainer: {
     width: '100%',
     display: 'grid',
@@ -27,10 +27,10 @@ const styles = {
   },
   textFieldUnderline: {
     '&:after': {
-      backgroundColor: red[400]
+      backgroundColor: theme.palette.background[500]
     }
   }
-}
+})
 
 const SearchBar = ({classes, tagline, onChange}) => (
   <Paper className={classes.barContainer}>

@@ -5,13 +5,13 @@
   "dependencies": {
     "lodash": "^4.17.4",
     "material-ui": "next",
-    "material-ui-icons": "next",
+    "material-ui-icons": "^1.0.0-alpha.3",
+    "mui-jss-inject": "^0.0.2",
     "normalize-jss": "^3.1.0",
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-jss": "^6.1.1",
-    "react-polymer": "^3.0.0",
     "react-redux": "^5.0.3",
     "react-router-dom": "^4.0.0",
     "react-router-redux": "next",
@@ -32,8 +32,7 @@
     "eslint-plugin-standard": "^2.1.1",
     "map.prototype.tojson": "^0.1.3",
     "react-scripts": "^0.9.5",
-    "redux-devtools-extension": "^2.13.0",
-    "storybook-addon-material-ui": "^0.7.7"
+    "redux-devtools-extension": "^2.13.0"
   },
   "scripts": {
     "start": "set NODE_PATH=./src&&react-scripts start",

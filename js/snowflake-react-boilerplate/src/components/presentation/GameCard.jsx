@@ -1,12 +1,11 @@
 import React from 'react'
-import injectSheet from 'react-jss' 
 import { Card, CardContent, CardMedia } from 'material-ui/Card'
 import { grey } from 'material-ui/styles/colors'
 
 import Text from 'material-ui/Text'
 
 import styleable from 'utils/styleable'
-import muiInjectSheet from 'utils/muiInjectSheet'
+import injectSheet from 'mui-jss-inject'
 
 
 const styles = {
@@ -52,4 +51,4 @@ const GameCard = ({classes, image, title, publisher}) => {
   </div>)
 }
 
-export default muiInjectSheet(styles)(styleable(GameCard))
+export default injectSheet(styles)(styleable(GameCard))
