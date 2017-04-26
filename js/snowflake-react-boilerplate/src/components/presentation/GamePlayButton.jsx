@@ -4,7 +4,7 @@ import IconButton from 'material-ui/IconButton'
 import { CircularProgress } from 'material-ui/Progress';
 
 import injectSheet from 'mui-jss-inject'
-import { white, grey, green } from 'material-ui/styles/colors'
+import { white, grey } from 'material-ui/styles/colors'
 
 const styles = {
   button: {
@@ -51,15 +51,14 @@ const styles = {
     top: 0,
     left: 0,
     zIndex: 10
-
-  },
+  }
 }
 
 const GamePlayButton = ({classes, onClick, loading}) => (
   <div className={classes.buttonContainer}>
     <div className={classes.pulse}/>
-    {loading ? <CircularProgress size={40} className={classes.progress} /> : ""}
-    <IconButton fab mini className={classes.button} onClick={onClick}>
+    {loading ? <CircularProgress size={40} className={classes.progress} /> : ''}
+    <IconButton className={classes.button} onClick={onClick}>
       <PlayArrow className={classes.arrow}/>
     </IconButton>
   </div>

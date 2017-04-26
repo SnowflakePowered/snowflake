@@ -6,9 +6,8 @@ import FormControl from 'material-ui/Form/FormControl'
 import Input from 'material-ui/Input/Input'
 import SearchIcon from 'material-ui-icons/Search'
 
-import { grey, red } from 'material-ui/styles/colors'
+import { grey } from 'material-ui/styles/colors'
 
-import styleable from 'utils/styleable'
 
 const styles = theme => ({
   barContainer: {
@@ -17,10 +16,10 @@ const styles = theme => ({
     gridTemplateColumns: '48px auto 10px',
     alignItems: 'center',
     opacity: 1,
+    fontFamily: 'Roboto, sans-serif',
     '&:hover, &:focus': {
       opacity: 1
-    },
-    fontFamily: 'Roboto, sans-serif'
+    }
   },
   searchIcon: {
     justifySelf: 'center'
@@ -32,17 +31,17 @@ const styles = theme => ({
   }
 })
 
-const SearchBar = ({classes, tagline, onChange}) => (
+const SearchBar = ({ classes, tagline, onChange }) => (
   <Paper className={classes.barContainer}>
-    <SearchIcon color={grey[400]} className={classes.searchIcon}/>
+    <SearchIcon color={grey[400]} className={classes.searchIcon} />
     <FormControl className={classes.input}>
-          <Input
-            placeholder={"Search " + (tagline || "")}
-            className={classes.textFieldUnderline}
-            onChange={onChange}
-          />
-        </FormControl>
+      <Input
+          placeholder={'Search ' + (tagline || '')}
+          className={classes.textFieldUnderline}
+          onChange={onChange}
+      />
+    </FormControl>
   </Paper>
 )
 
-export default muiInjectSheet(styles)(SearchBar);
+export default muiInjectSheet(styles)(SearchBar)

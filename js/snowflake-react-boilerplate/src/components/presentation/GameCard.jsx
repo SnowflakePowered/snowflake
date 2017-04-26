@@ -28,7 +28,7 @@ const styles = {
     position: 'relative'
   },
   cardSubtitle: {
-    fontSize: "0.75em",
+    fontSize: '0.75em',
     color: grey[400]
   },
   playButton: {
@@ -48,27 +48,27 @@ const styles = {
   }
 }
 
-//todo: z-depth on hover
-//todo: button on hover
+// todo: z-depth on hover
+// todo: button on hover
 
-const GameCard = ({classes, image, title, publisher}) => {
+const GameCard = ({ classes, image, title, publisher }) => {
   return (
-  <div className={classes.cardContainer}>
+    <div className={classes.cardContainer}>
       <Card>
         <CardMedia>
           <div className={classes.playButton}>
-            <GamePlayButton/>
-        </div>
+            <GamePlayButton />
+          </div>
           <div className={classes.cardImageContainer}>
-              <img className={classes.cardImage} src={image} />
+            <img className={classes.cardImage} src={image} />
           </div>
         </CardMedia>
-         <CardContent>
-            <Text type="headline" component="h2">{title}</Text>
-            <Text component="h3" className={classes.cardSubtitle}>{publisher}</Text>
+        <CardContent>
+          <Text type="headline" component="h2">{title}</Text>
+          <Text component="h3" className={classes.cardSubtitle}>{publisher}</Text>
         </CardContent>
       </Card>
-  </div>)
+    </div>)
 }
 
 export default injectSheet(styles)(styleable(GameCard))

@@ -1,14 +1,21 @@
-import React from 'react';
-import injectSheet from 'react-jss' 
-import styleable from '../../../utils/styleable'
+import React from 'react'
+import injectSheet from 'react-jss'
+import PropTypes from 'prop-types'
+
+import styleable from 'utils/styleable'
 import InfoDisplay from './InfoDisplay'
+
 const styles = {
-  
 }
 
-const GameDisplay = ({gameTitle, year, publisher, region}) => (
-  <InfoDisplay title={gameTitle} subtitle={publisher} metadata={[year, region]}/>
+const GameDisplay = ({title, year, publisher, region}) => (
+  <InfoDisplay title={title} subtitle={publisher} metadata={[year, region]}/>
 )
 
-
-export default injectSheet(styles)(styleable(GameDisplay))
+GameDisplay.propTypes = {
+  title: PropTypes.string.isRequired,
+  year: PropTypes.number,
+  publisher: PropTypes.string,
+  region: PropTypes.string
+}
+export default injectSheet(styles)(GameDisplay)
