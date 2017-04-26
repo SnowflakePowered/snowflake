@@ -9,14 +9,13 @@ const styles = {
     src: "url('https://fonts.googleapis.com/css?family=Roboto')",
   },
   container: {
-    fontFamily: 'Roboto, sans-serif',
+    fontFamily: 'Roboto, Noto Sans, sans-serif',
     display: 'grid',
-    gridTemplateRows: '50% 50%',
-    height: '100%',
-    width: '100%'
+    gridTemplateRows: '50% 50%'
   },
   title: {
-    fontSize: '1.5em'
+    fontSize: '1.5em',
+    wordBreak: 'break-all'
   },
   subTitle: {
     fontSize: '1em'
