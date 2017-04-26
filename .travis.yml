@@ -9,7 +9,7 @@ install:
   
 script:
   - dotnet build src/Snowflake.Framework.Tests
-  - dotnet test src/Snowflake.Framework.Tests
+  - dotnet test src/Snowflake.Framework.Tests/Snowflake.Framework.Tests.csproj
   
 notifications:
   irc:
