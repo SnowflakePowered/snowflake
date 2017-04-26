@@ -17,7 +17,8 @@ const styles = {
   cardImage: {
     objectFit: 'cover',
     minWidth: '100%',
-    objectPosition: 'center'
+    objectPosition: 'center',
+    userDrag: 'none'
   },
   cardImageContainer: {
     maxHeight: 250,
@@ -35,7 +36,15 @@ const styles = {
     bottom: 0,
     right: 0,
     marginRight: 10,
-    marginBottom: 10
+    marginBottom: 10,
+    opacity: 0,
+    userSelect: 'none',
+    transition: 'opacity 0.2s ease',
+    zIndex: 1,
+    '$cardContainer:hover &': {
+      opacity: 1,
+      userSelect: 'auto'
+    }
   }
 }
 
