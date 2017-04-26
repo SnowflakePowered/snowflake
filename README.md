@@ -50,7 +50,6 @@ Star our repository and bookmark our [website at http://snowflakepowe.red](http:
 
 Legal
 -----
-Snowflake is licensed under the Mozilla Public License 2.0 since Pull Request #231. Since May 1, 2016, this license is retroactively applied to all prior copies of Snowflake's source code. Any fork of the [codebase prior to the relicensing to Apache 2](https://github.com/snowflake-frontend/snowflake/commit/b0286553ec0887ce406420827a2ba0c20aa78117#diff-d41d8cd98f00b204e9800998ecf8427e) must be distributed under the GNU GPL v3. Any copy of the codebase that remains unmerged with the main repository prior to the relincensing on May 1, 2016, can be distributed under both the terms of the Apache Public License 2.0, or the Mozilla Public License, where legally possible. This means that, any copy of the code prior to the merging of Pull Request #226 can be distributed under the Apache Public License 2.0. However, any copy of the code after and including Pull Request #226 must only be distributed under the Mozilla Public License 2.0. 
-
+Snowflake is licensed under the Mozilla Public License 2.0 since Pull Request #231. Since May 1, 2016, this license is retroactively applied to all prior copies of Snowflake's source code. 
 
 Snowflake does not in any way facilitate the download of illegal ROM images or warez of any kind. 
