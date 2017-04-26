@@ -18,7 +18,7 @@
   "rules": {
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error",
-    "react/no-set-state": "error",
+    "react/no-set-state": "warn",
     "react/prefer-es6-class": "error",
     "react/require-render-return": "error",
     "require-await": "error",
