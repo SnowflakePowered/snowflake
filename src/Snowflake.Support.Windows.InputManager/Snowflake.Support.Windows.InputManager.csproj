@@ -1,14 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   
   <PropertyGroup>
-    <TargetFramework>netstandard1.6</TargetFramework>
+    <TargetFramework>net461</TargetFramework>
     <RootNamespace>Snowflake</RootNamespace>
   </PropertyGroup>
   
   <ItemGroup>
-    <PackageReference Include="SharpDX" Version="4.0.0-ci141" />
-    <PackageReference Include="SharpDX.DirectInput" Version="4.0.0-ci141" />
-    <PackageReference Include="SharpDX.XInput" Version="4.0.0-ci141" />
+    <PackageReference Include="SharpDX" Version="3.1.1" />
+    <PackageReference Include="SharpDX.DirectInput" Version="3.1.1" />
+    <PackageReference Include="SharpDX.XInput" Version="3.1.1" />
   </ItemGroup>
   
   <ItemGroup>

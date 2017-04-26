@@ -1,9 +1,9 @@
-import React from 'react';
-import injectSheet from 'react-jss' 
-import styleable from '../../../utils/styleable'
+import React from 'react'
+import injectSheet from 'react-jss'
+import styleable from 'utils/styleable'
 import InfoDisplay from './InfoDisplay'
+
 const styles = {
-  
 }
 
 const PlatformDisplay = ({platformName, platformAltName, publisher, year, gameCount, emulatorNames}) => (
@@ -11,4 +11,4 @@ const PlatformDisplay = ({platformName, platformAltName, publisher, year, gameCo
 )
 
 
-export default injectSheet(styles)(styleable(PlatformDisplay))
+export default injectSheet(styles)(PlatformDisplay)
