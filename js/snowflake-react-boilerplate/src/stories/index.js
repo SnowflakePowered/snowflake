@@ -13,6 +13,7 @@ import {GameBlack, GameWhiteWithBackground} from './GameDisplay.story'
 import { BooleanConfigurationStory } from './Configuration.story'
 
 import ImageCard from 'components/presentation/ImageCard'
+import GamePlayButton from 'components/presentation/GamePlayButton'
 const muiTheme = mui({blue, pink})
 
 storiesOf('Game Card', module)
@@ -54,6 +55,19 @@ storiesOf('Image Card', module)
   .add('landscape', () => 
   <ImageCard
     image="https://upload.wikimedia.org/wikipedia/en/3/32/Super_Mario_World_Coverart.png"
+  />)
+
+storiesOf('Game Play Button', module)
+  .addDecorator(centered)
+  .addDecorator(muiTheme)
+  .add('static', () => 
+  <GamePlayButton
+    onClick={action('button-clicked')}
+  />)
+  .add('loading', () => 
+  <GamePlayButton
+    onClick={action('button-clicked')}
+    loading={true}
   />)
 
 /*
