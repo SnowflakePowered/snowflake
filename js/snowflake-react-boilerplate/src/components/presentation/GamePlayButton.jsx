@@ -28,6 +28,7 @@ const styles = {
     width: 40,
     display: 'block',
     position: 'relative',
+    zIndex: 100
   },
   pulse: {
     '$buttonContainer:hover &': {

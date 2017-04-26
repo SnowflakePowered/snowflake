@@ -1,17 +1,18 @@
 import React from 'react'
+import injectSheet from 'mui-jss-inject'
+
+import Text from 'material-ui/Text'
 import { Card, CardContent, CardMedia } from 'material-ui/Card'
 import { grey } from 'material-ui/styles/colors'
 
-import Text from 'material-ui/Text'
-
+import GamePlayButton from './GamePlayButton'
 import styleable from 'utils/styleable'
-import injectSheet from 'mui-jss-inject'
 
 
 const styles = {
   cardContainer: {
-    maxWidth: 300,
-    maxHeight: 500
+    maxWidth: 250,
+    maxHeight: 250
   },
   cardImage: {
     objectFit: 'cover',
@@ -28,6 +29,13 @@ const styles = {
   cardSubtitle: {
     fontSize: "0.75em",
     color: grey[400]
+  },
+  playButton: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    marginRight: 10,
+    marginBottom: 10
   }
 }
 
@@ -36,9 +44,12 @@ const styles = {
 
 const GameCard = ({classes, image, title, publisher}) => {
   return (
-  <div>
+  <div className={classes.cardContainer}>
       <Card>
         <CardMedia>
+          <div className={classes.playButton}>
+            <GamePlayButton/>
+        </div>
           <div className={classes.cardImageContainer}>
               <img className={classes.cardImage} src={image} />
           </div>
