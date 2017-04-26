@@ -15,20 +15,20 @@ export const SearchBarStory = injectSheet({
   </div>
 ));
 
-export const SearchBarStoryWithBackground = injectSheet({
+export const SearchBarStoryWithBackground = injectSheet(theme => ({
   container: {
     width: '90%',
   },
   background: {
     width: '100%',
     height: '100%',
-    backgroundColor: red[400],
+    backgroundColor: theme.palette.primary[500],
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center'
   }
 
-})(({ classes }) => (
+}))(({ classes }) => (
   <div className={classes.background}>
     <div className={classes.container}>
       <SearchBar tagline="Nintendo Entertainment System" onChange={action('text-changed')} />
