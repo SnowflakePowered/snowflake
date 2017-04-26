@@ -26,7 +26,7 @@
     "prefer-arrow-callback": "error",
     "prefer-const": "error",
     "react/jsx-pascal-case": "error",
-    "react/jsx-indent-props": "error",
+    "react/jsx-indent-props": ["error", 2],
     "react/jsx-indent": ["error", 2]
   },
   "plugins": [
