@@ -37,10 +37,10 @@
     "redux-devtools-extension": "^2.13.0"
   },
   "scripts": {
-    "start": "set NODE_PATH=./src&&react-scripts start",
-    "build": "set NODE_PATH=./src&&react-scripts build",
-    "test": "set NODE_PATH=./src&&react-scripts test --env=jsdom",
-    "storybook": "set NODE_PATH=./src&&start-storybook -p 9009 -s public",
-    "build-storybook": "set NODE_PATH=./src&&build-storybook -s public"
+    "start": "NODE_PATH=./src react-scripts start",
+    "build": "NODE_PATH=./src react-scripts build",
+    "test": "NODE_PATH=./src react-scripts test --env=jsdom",
+    "storybook": "NODE_PATH=./src start-storybook -p 9009 -s public",
+    "build-storybook": "NODE_PATH=./src build-storybook -s public"
   }
 }
