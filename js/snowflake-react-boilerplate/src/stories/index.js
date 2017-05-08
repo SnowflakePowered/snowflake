@@ -56,9 +56,11 @@ storiesOf('Image Card', module)
       image="http://vignette2.wikia.nocookie.net/mario/images/6/60/SMBBoxart.png/revision/latest?cb=20120609143443"
     />)
   .add('landscape', () =>
+    <div>
     <ImageCard
       image="https://upload.wikimedia.org/wikipedia/en/3/32/Super_Mario_World_Coverart.png"
-    />)
+    />
+    </div>)
 
 storiesOf('Game Play Button', module)
   .addDecorator(centered)
