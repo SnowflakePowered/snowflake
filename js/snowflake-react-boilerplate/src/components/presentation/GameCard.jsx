@@ -16,10 +16,12 @@ const styles = {
   },
   cardImage: {
     objectFit: 'cover',
-    minWidth: '100%',
     objectPosition: 'center',
-    userDrag: 'none'
+    userDrag: 'none',
+    maxHeight: 'inherit',
+    minWidth: '100%'
   },
+
   cardImageContainer: {
     maxHeight: 250,
     maxWidth: 300,

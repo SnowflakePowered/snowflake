@@ -9,13 +9,18 @@ const styles = {
     display: 'grid',
     gridTemplateColumns: '100%',
     gridTemplateRows: '100%',
-    borderRadius: 'inherit'
+    borderRadius: 'inherit',
+    maxHeight: 'inherit',
+    minWidth: '100%'
+
   },
   image: {
     objectFit: 'cover',
     borderRadius: 'inherit',
     userDrag: 'none',
-    userSelect: 'none'
+    userSelect: 'none',
+    maxHeight: 'inherit',
+    minWidth: '100%'
   },
   paperContainer: {
     display: 'block'
