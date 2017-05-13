@@ -9,5 +9,6 @@
         "src/**/*.css": true,
         "src/old/": true,
         "spdx-license-ids/":true
-    }
+    },
+    "javascript.implicitProjectConfig.checkJs": true
 }
