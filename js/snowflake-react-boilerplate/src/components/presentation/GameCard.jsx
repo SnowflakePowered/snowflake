@@ -7,31 +7,88 @@ import { grey } from 'material-ui/styles/colors'
 
 import GamePlayButton from './GamePlayButton'
 import styleable from 'utils/styleable'
+import classNames from 'classnames'
 
+
+const dimensions = {
+  portrait: {
+    width: 225,
+    height: 300,
+  },
+  landscape: {
+    width: 275,
+    height: 200
+  },
+  square: {
+    width: 275,
+    height: 250
+  }
+}
 
 const styles = {
   cardContainer: {
-    maxWidth: 250,
-    maxHeight: 250
+    display: 'inline-block'
   },
+
+  cardContainerPortrait: {
+    width: dimensions.portrait.width,
+  },
+  cardContainerLandscape: {
+    width: dimensions.landscape.width,
+  },
+  cardContainerSquare: {
+    width: dimensions.square.width,
+  },
+
+
   cardImage: {
     objectFit: 'cover',
     objectPosition: 'center',
     userDrag: 'none',
     maxHeight: 'inherit',
-    minWidth: '100%'
-  },
+    height: '100%',
+    width: '100%'
+   },
 
   cardImageContainer: {
-    maxHeight: 250,
-    maxWidth: 300,
     overflow: 'hidden',
     margin: 0,
-    position: 'relative'
+    position: 'relative',
+    display: 'flex',
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+
+  sizerPortrait: {
+    height: dimensions.portrait.height,
+  },
+  sizerLandscape: {
+    height: dimensions.landscape.height,
+  },
+  sizerSquare: {
+    height: dimensions.square.height,
+  },
+  sizer: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: grey[300]
   },
   cardSubtitle: {
     fontSize: '0.75em',
-    color: grey[400]
+    color: grey[400],
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
+  },
+  cardTitle: {
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
+    fontSize: '1.2em'
   },
   playButton: {
     position: 'absolute',
@@ -53,24 +110,38 @@ const styles = {
 // todo: z-depth on hover
 // todo: button on hover
 
-const GameCard = ({ classes, image, title, publisher }) => {
+const GameCard = ({ classes, image, title, publisher, portrait, landscape, square }) => {
   return (
-    <div className={classes.cardContainer}>
+    <div className={classNames({
+            [classes.cardContainer]: true,
+            [classes.cardContainerSquare]: square,
+            [classes.cardContainerLandscape]: landscape,
+            [classes.cardContainerPortrait]: portrait,
+            [classes.cardContainerPortrait]: !(portrait && landscape && square)
+            })}>
       <Card>
         <CardMedia>
           <div className={classes.playButton}>
             <GamePlayButton />
           </div>
-          <div className={classes.cardImageContainer}>
-            <img className={classes.cardImage} src={image} />
+          <div className={classNames({
+            [classes.sizer]: true,
+            [classes.sizerSquare]: square,
+            [classes.sizerLandscape]: landscape,
+            [classes.sizerPortrait]: portrait,
+            [classes.sizerPortrait]: !(portrait && landscape && square)
+            })}>
+            <div className={classes.cardImageContainer}>
+              <img className={classes.cardImage} src={image} />
+            </div>
           </div>
         </CardMedia>
         <CardContent>
-          <Text type="headline" component="h2">{title}</Text>
+          <Text type="headline" component="h2" className={classes.cardTitle}>{title}</Text>
           <Text component="h3" className={classes.cardSubtitle}>{publisher}</Text>
         </CardContent>
       </Card>
     </div>)
 }
 
-export default injectSheet(styles)(styleable(GameCard))
+export default injectSheet(styles)(GameCard)
