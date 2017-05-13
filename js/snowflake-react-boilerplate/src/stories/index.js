@@ -13,7 +13,7 @@ import { GameBlack, GameWhiteWithBackground } from './components/GameDisplay.sto
 import { BooleanConfigurationStory } from './components/Configuration.story'
 import GameDetailsHeaderViewStory from './views/GameDetailsHeaderView.story'
 import { SidebarStory } from './components/Sidebar.story'
-import { GameGridViewStory } from './views/GameGridView.story'
+import { LandscapeGameGridViewStory, PortraitGameGridViewStory, SquareGameGridViewStory } from './views/GameGridView.story'
 
 import ImageCard from 'components/presentation/ImageCard'
 import GamePlayButton from 'components/presentation/GamePlayButton'
@@ -90,8 +90,12 @@ storiesOf('Sidebar', module)
 storiesOf('Game Grid', module)
   .addDecorator(full)
   .addDecorator(muiTheme)
-  .add('default', () =>
-    <GameGridViewStory/>
+  .add('landscape', () =>
+    <LandscapeGameGridViewStory/>
+  ).add('portrait', () =>
+    <PortraitGameGridViewStory/>
+  ).add('square', () =>
+    <SquareGameGridViewStory/>
   )
 /*
 storiesOf('Game Details', module)

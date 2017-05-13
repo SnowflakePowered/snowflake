@@ -10,19 +10,20 @@ import styleable from 'utils/styleable'
 import classNames from 'classnames'
 
 
-const dimensions = {
+export const dimensions = {
   portrait: {
     width: 225,
     height: 300,
   },
   landscape: {
-    width: 275,
+    width: 275, 
     height: 200
   },
   square: {
     width: 275,
     height: 250
-  }
+  },
+  contentHeight: 84
 }
 
 const styles = {
@@ -104,7 +105,10 @@ const styles = {
       opacity: 1,
       userSelect: 'auto'
     }
-  }
+  },
+  cardText: {
+      height: dimensions.contentHeight
+    }
 }
 
 // todo: z-depth on hover
@@ -136,10 +140,12 @@ const GameCard = ({ classes, image, title, publisher, portrait, landscape, squar
             </div>
           </div>
         </CardMedia>
-        <CardContent>
-          <Text type="headline" component="h2" className={classes.cardTitle}>{title}</Text>
-          <Text component="h3" className={classes.cardSubtitle}>{publisher}</Text>
-        </CardContent>
+        <div className={classes.cardText}>
+          <CardContent>
+            <Text type="headline" component="h2" className={classes.cardTitle}>{title}</Text>
+            <Text component="h3" className={classes.cardSubtitle}>{publisher}</Text>
+          </CardContent>
+        </div>
       </Card>
     </div>)
 }
