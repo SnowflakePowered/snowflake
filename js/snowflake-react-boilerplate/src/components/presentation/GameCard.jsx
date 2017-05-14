@@ -12,16 +12,16 @@ import classNames from 'classnames'
 
 export const dimensions = {
   portrait: {
-    width: 225,
-    height: 300,
+    width: 170,
+    height: 200,
   },
   landscape: {
-    width: 275, 
-    height: 200
+    width: 185, 
+    height: 135
   },
   square: {
-    width: 275,
-    height: 250
+    width: 175,
+    height: 165
   },
   contentHeight: 84
 }
@@ -89,7 +89,7 @@ const styles = {
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
     overflow: 'hidden',
-    fontSize: '1.2em'
+    fontSize: '0.9em'
   },
   playButton: {
     position: 'absolute',
