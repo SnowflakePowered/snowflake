@@ -61,55 +61,60 @@ class GameGridView extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      scrollTop: 0
+      scrollElement: null
     }
   }
 
-  /**
-   * @param {Number} scrollTop 
-   */
-  updatePosition(scrollTop) {
-    requestAnimationFrame(() => this.setState({ scrollTop: scrollTop }))
+  updateScrollElement(target, containerClass) {
+    if(target.classList.contains(containerClass) && this.state.scrollElement === null) {
+      this.setState({ scrollElement: target })
+    }
   }
 
   render() {
     const { BOX_HEIGHT, BOX_WIDTH } = getDimensions(this.props.portrait, this.props.landscape, this.props.square)
     return (
-      <div className={this.props.classes.container} onScroll={(e) => this.updatePosition(e.target.scrollTop)}>
+      <div className={this.props.classes.container}
+        onScroll={(e) => this.updateScrollElement(e.target, this.props.classes.container)} //hackity hack
+      >
         <div className={this.props.classes.autoSizerContainer}>
-          <AutoSizer>
-            {({ height, width }) => {
-              const numberOfColumns = Math.floor(width / BOX_WIDTH)
-              const CENTERED_BOX_WIDTH = BOX_WIDTH + (BOX_WIDTH / numberOfColumns / 2)
-              const numberOfRows = Math.ceil(this.props.children.length / numberOfColumns)
-              return (
-                <ColumnSizer
-                  columnMaxWidth={CENTERED_BOX_WIDTH}
-                  columnMinWidth={BOX_WIDTH}
-                  columnCount={numberOfColumns}
-                  width={width}>
-                  {({ adjustedWidth, getColumnWidth, registerChild }) => (
-                    <div className={this.props.classes.gridContainer} style={{ width: width || 0 }}>
-                      <Grid
-                        style={{ outline: 'none', userSelect: 'none' }}
-                        ref={registerChild}
-                        cellRenderer={cellRenderer({ classes: this.props.classes, children: this.props.children, numberOfRows, numberOfColumns })}
-                        columnCount={numberOfColumns}
-                        rowCount={numberOfRows}
-                        columnWidth={getColumnWidth}
-                        rowHeight={BOX_HEIGHT}
-                        overscanRowCount={5}
-                        height={height}
-                        width={adjustedWidth}
-                        autoContainerWidth
-                        autoContainerHeight
-                        autoHeight
-                        scrollTop={this.state.scrollTop}
-                      />
+          <WindowScroller
+            scrollElement={this.state.scrollElement}
+          >
+            {({ height, scrollTop, isScrolling }) => (
+              <AutoSizer disableHeight>
+                {({ width }) => {
+                  const numberOfColumns = Math.floor(width / BOX_WIDTH)
+                  const CENTERED_BOX_WIDTH = BOX_WIDTH + (BOX_WIDTH / numberOfColumns / 2)
+                  const numberOfRows = Math.ceil(this.props.children.length / numberOfColumns)
+                  return (
+                    <ColumnSizer
+                      columnMaxWidth={CENTERED_BOX_WIDTH}
+                      columnMinWidth={BOX_WIDTH}
+                      columnCount={numberOfColumns}
+                      width={width}>
+                      {({ adjustedWidth, getColumnWidth, registerChild }) => (
+                        <div className={this.props.classes.gridContainer} style={{ width: width || 0 }}>
+                          <Grid
+                            style={{ outline: 'none', userSelect: 'none' }}
+                            ref={registerChild}
+                            cellRenderer={cellRenderer({ classes: this.props.classes, children: this.props.children, numberOfRows, numberOfColumns })}
+                            columnCount={numberOfColumns}
+                            rowCount={numberOfRows}
+                            columnWidth={getColumnWidth}
+                            rowHeight={BOX_HEIGHT}
+                            height={height}
+                            isScrolling={isScrolling}
+                            width={adjustedWidth}
+                            autoContainerWidth
+                            autoHeight
+                            scrollTop={scrollTop}
+                          />
                     </div>)}
-                </ColumnSizer>)
-            }}
-          </AutoSizer>
+                    </ColumnSizer>)
+                }}
+              </AutoSizer>)}
+          </WindowScroller>
         </div>
       </div>
     )

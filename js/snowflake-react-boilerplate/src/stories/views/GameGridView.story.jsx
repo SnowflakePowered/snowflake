@@ -24,7 +24,7 @@ const _LandscapeGameGridViewStory = ({ classes }) => {
   return (
     <div className={classes.container}>
       <GameGridView landscape>
-        {[...Array(250)].map((x, i) =>
+        {[...Array(2500)].map((x, i) =>
           card(i + 1)
         )}
       </GameGridView>
