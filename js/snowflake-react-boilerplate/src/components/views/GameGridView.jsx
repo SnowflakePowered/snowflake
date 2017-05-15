@@ -10,6 +10,7 @@ const styles = {
     height: '100%',
     flexDirection: 'column',
     overflowY: 'scroll',
+    overflowX: 'hidden',
     '-webkit-select': 'none'
   },
   card: {
