@@ -23,11 +23,11 @@ const _LandscapeGameGridViewStory = ({ classes }) => {
     title={int} publisher="Nintendo" landscape/>
   return (
     <div className={classes.container}>
-      <GameGridView landscape>
+      <GameGrid landscape>
         {[...Array(2500)].map((x, i) =>
           card(i + 1)
         )}
-      </GameGridView>
+      </GameGrid>
     </div>)
 }
 
@@ -38,11 +38,11 @@ const _PortraitGameGridViewStory = ({ classes }) => {
     title={int} publisher="Nintendo" portrait/>
   return (
     <div className={classes.container}>
-      <GameGridView portrait>
+      <GameGrid portrait>
         {[...Array(1000)].map((x, i) =>
           card(i + 1)
         )}
-      </GameGridView>
+      </GameGrid>
     </div>)
 }
 
@@ -53,11 +53,11 @@ const _SquareGameGridViewStory = ({ classes }) => {
     title={int} publisher="Nintendo" square/>
   return (
     <div className={classes.container}>
-      <GameGridView square>
+      <GameGrid square>
         {[...Array(100)].map((x, i) =>
           card(i + 1)
         )}
-      </GameGridView>
+      </GameGrid>
     </div>)
 }
 

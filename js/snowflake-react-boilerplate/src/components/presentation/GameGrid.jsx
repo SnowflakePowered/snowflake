@@ -1,7 +1,8 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import injectSheet from 'mui-jss-inject'
 import { AutoSizer, Grid, ColumnSizer, WindowScroller } from 'react-virtualized'
-import { dimensions } from 'components/presentation/GameCard'
+import GameCard, { dimensions } from 'components/presentation/GameCard'
 
 const styles = {
   container: {
@@ -58,7 +59,8 @@ const getDimensions = (portrait, landscape, square) => {
   return { BOX_HEIGHT: dimensionObject.height + dimensions.contentHeight + padding, BOX_WIDTH: dimensionObject.width + padding }
 }
 
-class GameGridView extends React.Component {
+class GameGrid extends React.Component {
+
   constructor(props) {
     super(props)
     this.state = {
@@ -122,4 +124,17 @@ class GameGridView extends React.Component {
   }
 }
 
-export default injectSheet(styles)(GameGridView)
+GameGrid.propTypes = {
+  children: function (props, propName, componentName) {
+    const prop = props[propName]
+    let error = null
+    React.Children.forEach(prop, function (child) {
+      if (child.type !== GameCard) {
+        error = new Error('`' + componentName + '` children should be of type `GameCard`.');
+      }
+    })
+    return error
+  }
+}
+
+export default injectSheet(styles)(GameGrid)
