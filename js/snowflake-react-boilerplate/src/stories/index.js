@@ -13,7 +13,7 @@ import { GameBlack, GameWhiteWithBackground } from './components/GameDisplay.sto
 import { BooleanConfigurationStory } from './components/Configuration.story'
 import GameDetailsHeaderViewStory from './views/GameDetailsHeaderView.story'
 import { SidebarStory } from './components/Sidebar.story'
-import { LandscapeGameGridViewStory, PortraitGameGridViewStory, SquareGameGridViewStory } from './views/GameGridView.story'
+import { LandscapeGameGridViewStory, PortraitGameGridViewStory, SquareGameGridViewStory } from './components/GameGrid.story'
 
 import ImageCard from 'components/presentation/ImageCard'
 import GamePlayButton from 'components/presentation/GamePlayButton'
