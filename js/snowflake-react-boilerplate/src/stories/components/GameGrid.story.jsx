@@ -1,7 +1,6 @@
 import React from 'react'
 import injectSheet from 'mui-jss-inject'
 
-import { action } from '@kadira/storybook'
 import GameGrid from 'components/presentation/GameGrid'
 import GameCard from 'components/presentation/GameCard'
 

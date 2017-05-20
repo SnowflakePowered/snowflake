@@ -1,8 +1,8 @@
 import React from 'react'
 import injectSheet from 'mui-jss-inject'
 
-import Text from 'material-ui/Text'
-import { Card, CardContent, CardMedia } from 'material-ui/Card'
+import Typography from 'material-ui/Typography'
+import Card, { CardContent, CardMedia } from 'material-ui/Card'
 import { grey } from 'material-ui/styles/colors'
 
 import GamePlayButton from './GamePlayButton'
@@ -114,40 +114,38 @@ const styles = {
 // todo: z-depth on hover
 // todo: button on hover
 
-const GameCard = ({ classes, image, title, publisher, portrait, landscape, square }) => {
-  return (
-    <div className={classNames({
-      [classes.cardContainer]: true,
-      [classes.cardContainerSquare]: square,
-      [classes.cardContainerLandscape]: landscape,
-      [classes.cardContainerPortrait]: portrait,
-      [classes.cardContainerPortrait]: !(portrait && landscape && square)
-    })}>
-      <Card>
-        <CardMedia>
-          <div className={classes.playButton}>
-            <GamePlayButton />
-          </div>
-          <div className={classNames({
-            [classes.sizer]: true,
-            [classes.sizerSquare]: square,
-            [classes.sizerLandscape]: landscape,
-            [classes.sizerPortrait]: portrait,
-            [classes.sizerPortrait]: !(portrait && landscape && square)
-          })}>
-            <div className={classes.cardImageContainer}>
-              <img className={classes.cardImage} src={image} />
-            </div>
-          </div>
-        </CardMedia>
-        <div className={classes.cardText}>
-          <CardContent>
-            <Text type="headline" component="h2" className={classes.cardTitle}>{title}</Text>
-            <Text component="h3" className={classes.cardSubtitle}>{publisher}</Text>
-          </CardContent>
+const GameCard = ({ classes, image, title, publisher, portrait, landscape, square }) => (
+  <div className={classNames({
+    [classes.cardContainer]: true,
+    [classes.cardContainerSquare]: square,
+    [classes.cardContainerLandscape]: landscape,
+    [classes.cardContainerPortrait]: portrait,
+    [classes.cardContainerPortrait]: !(portrait && landscape && square)
+  })}>
+    <Card>
+      <CardMedia>
+        <div className={classes.playButton}>
+          <GamePlayButton />
         </div>
-      </Card>
-    </div>)
-}
+        <div className={classNames({
+          [classes.sizer]: true,
+          [classes.sizerSquare]: square,
+          [classes.sizerLandscape]: landscape,
+          [classes.sizerPortrait]: portrait,
+          [classes.sizerPortrait]: !(portrait && landscape && square)
+        })}>
+          <div className={classes.cardImageContainer}>
+            <img className={classes.cardImage} src={image} />
+          </div>
+        </div>
+      </CardMedia>
+      <div className={classes.cardText}>
+        <CardContent>
+          <Typography type="headline" component="h2" className={classes.cardTitle}>{title}</Typography>
+          <Typography component="h3" className={classes.cardSubtitle}>{publisher}</Typography>
+        </CardContent>
+      </div>
+    </Card>
+  </div>)
 
 export default injectSheet(styles)(GameCard)

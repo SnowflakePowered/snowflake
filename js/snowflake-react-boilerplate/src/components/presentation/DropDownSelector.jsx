@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { List, ListItem, ListItemText } from 'material-ui/List'
-import { Menu, MenuItem } from 'material-ui/Menu'
+import List, { ListItem, ListItemText } from 'material-ui/List'
+import Menu, { MenuItem } from 'material-ui/Menu'
 import injectSheet from 'mui-jss-inject'
 
 const styleSheet = theme => ({

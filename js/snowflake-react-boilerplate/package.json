@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@kadira/react-storybook-decorator-centered": "^1.1.2",
     "classnames": "^2.2.5",
+    "cross-env": "^5.0.0",
     "lodash": "^4.17.4",
     "material-ui": "next",
     "material-ui-icons": "^1.0.0-alpha.3",
@@ -23,8 +25,7 @@
     "snowflake-remoting": "file:../snowflake-remoting"
   },
   "devDependencies": {
-    "@kadira/react-storybook-decorator-centered": "^1.1.2",
-    "@kadira/storybook": "^2.21.0",
+    "@storybook/react": "^3.0.0-alpha.1",
     "babel-eslint": "^7.2.3",
     "babel-plugin-root-import": "^5.1.0",
     "eslint": "^3.19.0",
@@ -41,8 +42,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "NODE_PATH=./src react-scripts test --env=jsdom",
-    "storybook": "NODE_PATH=./src start-storybook -p 9009 -s public",
-    "build-storybook": "NODE_PATH=./src build-storybook -s public"
+    "test": "cross-env NODE_PATH=src react-scripts test --env=jsdom",
+    "storybook": "cross-env NODE_PATH=src start-storybook -p 9009 -s public",
+    "build-storybook": "cross-env NODE_PATH=src build-storybook -s public"
   }
 }

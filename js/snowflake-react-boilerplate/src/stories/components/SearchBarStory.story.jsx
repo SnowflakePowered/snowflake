@@ -1,7 +1,7 @@
 import React from 'react'
 import injectSheet from 'mui-jss-inject'
 
-import { action } from '@kadira/storybook'
+import { action } from '@storybook/react'
 import SearchBar from 'components/presentation/SearchBar'
 
 export const SearchBarStory = injectSheet({

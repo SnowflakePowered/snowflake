@@ -1,5 +1,5 @@
 import React from 'react'
-import { storiesOf, action } from '@kadira/storybook'
+import { storiesOf, action } from '@storybook/react'
 import centered from '@kadira/react-storybook-decorator-centered'
 import full from './utils/full'
 import { MultiCard, SingleCard } from './components/GameCard.story'
