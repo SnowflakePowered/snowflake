@@ -1,7 +1,7 @@
 import React from 'react'
 import injectSheet from 'mui-jss-inject'
 
-import { action } from '@kadira/storybook'
+import { action } from '@storybook/react'
 import Sidebar from 'components/presentation/Sidebar'
 
 import { grey } from 'material-ui/styles/colors'

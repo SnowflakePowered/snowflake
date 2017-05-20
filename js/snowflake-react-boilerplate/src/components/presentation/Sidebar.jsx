@@ -1,8 +1,7 @@
 import React from 'react'
 import injectSheet from 'mui-jss-inject'
 
-import {
-  List, 
+import List, {
   ListItem,
   ListItemIcon,
   ListItemText

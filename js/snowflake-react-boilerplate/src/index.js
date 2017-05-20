@@ -5,6 +5,9 @@ import { Provider } from 'react-redux'
 import Store from './store'
 import createHistory from 'history/createBrowserHistory'
 
+import MuiStyleManager from './MuiStyleManager'
+import { MuiThemeProvider } from 'material-ui/styles'
+import { blue, pink } from 'material-ui/styles/colors'
 
 require('map.prototype.tojson')
 const history = createHistory()
@@ -14,8 +17,10 @@ const StoreInstance = Store({
 }, history)
 
 ReactDOM.render(
-  <Provider store={StoreInstance}>
-    <App history={history}/>
-  </Provider>,
+  <MuiThemeProvider>
+    <Provider store={StoreInstance}>
+      <App history={history}/>
+    </Provider>
+  </MuiThemeProvider>,
  document.getElementById('root')
 )
