@@ -2,9 +2,7 @@ import React from 'react'
 import injectSheet from 'mui-jss-inject'
 
 import List, {
-  ListItem,
-  ListItemIcon,
-  ListItemText
+  ListItem
 } from 'material-ui/List'
 
 import MenuIcon from 'material-ui-icons/Menu'
@@ -24,14 +22,14 @@ const styles = {
   }
 }
 
-const Sidebar = ({classes}) => (
+const Sidebar = ({ classes }) => (
   <div className={classes.container}>
     <List>
       <ListItem button>
-         <MenuIcon className={classes.icon}/>
+        <MenuIcon className={classes.icon} />
       </ListItem>
       <ListItem button>
-        <GamepadIcon className={classes.icon}/>
+        <GamepadIcon className={classes.icon} />
       </ListItem>
     </List>
   </div>
