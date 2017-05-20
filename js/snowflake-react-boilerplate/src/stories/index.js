@@ -12,11 +12,13 @@ import { GameBlack, GameWhiteWithBackground } from './components/GameDisplay.sto
 // import { GameDetailsStory } from './GameDetails.story'
 import { BooleanConfigurationStory } from './components/Configuration.story'
 import GameDetailsHeaderViewStory from './views/GameDetailsHeaderView.story'
-import { SidebarStory } from './components/Sidebar.story'
+import { SidebarStory } from './views/Sidebar.story'
 import { LandscapeGameGridViewStory, PortraitGameGridViewStory, SquareGameGridViewStory } from './components/GameGrid.story'
 
 import ImageCard from 'components/presentation/ImageCard'
 import GamePlayButton from 'components/presentation/GamePlayButton'
+
+import GameListView from './views/GameListView.story'
 
 const muiTheme = mui({ blue, pink })
 
@@ -58,9 +60,9 @@ storiesOf('Image Card', module)
     />)
   .add('landscape', () =>
     <div>
-    <ImageCard
-      image="https://upload.wikimedia.org/wikipedia/en/3/32/Super_Mario_World_Coverart.png"
-    />
+      <ImageCard
+        image="https://upload.wikimedia.org/wikipedia/en/3/32/Super_Mario_World_Coverart.png"
+      />
     </div>)
 
 storiesOf('Game Play Button', module)
@@ -80,24 +82,28 @@ storiesOf('Game Details Header', module)
   .addDecorator(full)
   .addDecorator(muiTheme)
   .add('default', () =>
-    <GameDetailsHeaderViewStory/>
+    <GameDetailsHeaderViewStory />
   )
 storiesOf('Sidebar', module)
   .addDecorator(full)
   .addDecorator(muiTheme)
   .add('default', () =>
-    <SidebarStory/>
+    <SidebarStory />
   )
 storiesOf('Game Grid', module)
   .addDecorator(full)
   .addDecorator(muiTheme)
   .add('landscape', () =>
-    <LandscapeGameGridViewStory/>
+    <LandscapeGameGridViewStory />
   ).add('portrait', () =>
-    <PortraitGameGridViewStory/>
+    <PortraitGameGridViewStory />
   ).add('square', () =>
-    <SquareGameGridViewStory/>
+    <SquareGameGridViewStory />
   )
+storiesOf('Game List View', module)
+  .addDecorator(muiTheme)
+  .addDecorator(full)
+  .add('default', () => <GameListView />)
 /*
 storiesOf('Game Details', module)
   .addDecorator(centered)
