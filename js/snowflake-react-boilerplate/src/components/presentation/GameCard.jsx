@@ -16,7 +16,7 @@ export const dimensions = {
     height: 200,
   },
   landscape: {
-    width: 185, 
+    width: 185,
     height: 135
   },
   square: {
@@ -49,7 +49,7 @@ const styles = {
     maxHeight: 'inherit',
     height: '100%',
     width: '100%'
-   },
+  },
 
   cardImageContainer: {
     overflow: 'hidden',
@@ -63,13 +63,13 @@ const styles = {
   },
 
   sizerPortrait: {
-    height: dimensions.portrait.height,
+    height: dimensions.portrait.height
   },
   sizerLandscape: {
-    height: dimensions.landscape.height,
+    height: dimensions.landscape.height
   },
   sizerSquare: {
-    height: dimensions.square.height,
+    height: dimensions.square.height
   },
   sizer: {
     width: '100%',
@@ -107,8 +107,8 @@ const styles = {
     }
   },
   cardText: {
-      height: dimensions.contentHeight
-    }
+    height: dimensions.contentHeight
+  }
 }
 
 // todo: z-depth on hover
@@ -117,12 +117,12 @@ const styles = {
 const GameCard = ({ classes, image, title, publisher, portrait, landscape, square }) => {
   return (
     <div className={classNames({
-            [classes.cardContainer]: true,
-            [classes.cardContainerSquare]: square,
-            [classes.cardContainerLandscape]: landscape,
-            [classes.cardContainerPortrait]: portrait,
-            [classes.cardContainerPortrait]: !(portrait && landscape && square)
-            })}>
+      [classes.cardContainer]: true,
+      [classes.cardContainerSquare]: square,
+      [classes.cardContainerLandscape]: landscape,
+      [classes.cardContainerPortrait]: portrait,
+      [classes.cardContainerPortrait]: !(portrait && landscape && square)
+    })}>
       <Card>
         <CardMedia>
           <div className={classes.playButton}>
@@ -134,7 +134,7 @@ const GameCard = ({ classes, image, title, publisher, portrait, landscape, squar
             [classes.sizerLandscape]: landscape,
             [classes.sizerPortrait]: portrait,
             [classes.sizerPortrait]: !(portrait && landscape && square)
-            })}>
+          })}>
             <div className={classes.cardImageContainer}>
               <img className={classes.cardImage} src={image} />
             </div>

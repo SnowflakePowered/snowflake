@@ -17,6 +17,7 @@ import { LandscapeGameGridViewStory, PortraitGameGridViewStory, SquareGameGridVi
 
 import ImageCard from 'components/presentation/ImageCard'
 import GamePlayButton from 'components/presentation/GamePlayButton'
+
 const muiTheme = mui({ blue, pink })
 
 storiesOf('Game Card', module)

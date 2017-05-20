@@ -10,5 +10,6 @@
         "src/old/": true,
         "spdx-license-ids/":true
     },
-    "javascript.implicitProjectConfig.checkJs": true
+    "javascript.implicitProjectConfig.checkJs": true,
+    "editor.snippetSuggestions": "top"
 }
