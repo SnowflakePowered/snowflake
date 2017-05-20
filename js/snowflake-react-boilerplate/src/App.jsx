@@ -1,33 +1,29 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
 import { ConnectedRouter } from 'react-router-redux'
-import injectSheet from 'react-jss'
+import injectSheet from 'mui-jss-inject'
 
-// Material-UI Start
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import injectTapEventPlugin from 'react-tap-event-plugin'
+import MuiStyleManager from './MuiStyleManager'
+import { blue, pink } from 'material-ui/styles/colors'
 
-// Snowflake Start
-import SnowflakeProvider from './snowflake/SnowflakeProvider'
-import GameCard from './components/presentation/GameCard'
+import GameCard from 'components/presentation/GameCard'
+import SnowflakeProvider from 'snowflake/SnowflakeProvider'
 
-injectTapEventPlugin()
-
-const styles = {
-}
+const muiStyle = MuiStyleManager({ blue, pink })
 
 const App = ({ history, classes }) => {
   return (
-    <ConnectedRouter history={history}>
-      <Route component={(({ location }) =>
-        <SnowflakeProvider location={location}>
-          <MuiThemeProvider>
-            <div className={classes.Test}><GameCard /></div>
-          </MuiThemeProvider>
-        </SnowflakeProvider>
-      )} />
-    </ConnectedRouter>
+    <muiStyle>
+      <ConnectedRouter history={history}>
+        <Route component={(({ location }) =>
+          <SnowflakeProvider location={location}>
+              <GameCard image="https://upload.wikimedia.org/wikipedia/en/d/db/NewSuperMarioBrothers.jpg"
+        title="Square New Super Mario Bros. Chou Nagai Monji Gaiden NEW" publisher="Nintendo" square/>
+          </SnowflakeProvider>
+        )} />
+      </ConnectedRouter>
+    </muiStyle>
   )
 }
 
-export default injectSheet(styles)(App)
+export default App

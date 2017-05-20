@@ -21,7 +21,7 @@ export const MultiCard = injectSheet({
       <GameCard image="http://vignette2.wikia.nocookie.net/mario/images/6/60/SMBBoxart.png/revision/latest?cb=20120609143443"
         title="Super Mario Bros. Chou Nagai Monji Gaiden NEW" publisher="Nintendo" />
     </div>
-        <div className={classes.card}>
+    <div className={classes.card}>
       <GameCard image="https://upload.wikimedia.org/wikipedia/en/d/db/NewSuperMarioBrothers.jpg"
         title="Square New Super Mario Bros. Chou Nagai Monji Gaiden NEW" publisher="Nintendo" square/>
     </div>
