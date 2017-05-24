@@ -5,7 +5,9 @@ import Sidebar from 'components/views/Sidebar'
 
 import GameGrid from 'components/presentation/GameGrid'
 
-import GameCardContainer from 'components/container/GameCardContainer'
+import GameCardAdapter from 'components/adapter/GameCardAdapter'
+import GameCard from 'components/presentation/GameCard'
+import SearchBar from 'components/presentation/SearchBar'
 
 const styles = {
   container: {
@@ -13,16 +15,44 @@ const styles = {
     height: '100%',
     display: 'grid',
     gridTemplateColumns: '[sidebar] 64px [main] auto',
-    gridTemplateRows: ''
+    gridTemplateRows: '',
   },
   sidebarContainer: {
     gridColumnArea: 'sidebar'
   },
   mainContainer: {
     background: 'grey',
-    gridColumnArea: 'main'
+    gridColumnStart: 'main',
+    height: '100vh'
+  },
+  mainHeader: {
+    height: 64,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'sticky',
+    zIndex: 100,
+    top: 0
+  },
+  searchBar: {
+    width: 500
   }
 }
+
+const _Header = ({classes}) => (
+   <div className={classes.mainHeader}>
+     <div className={classes.searchBar}>
+       <SearchBar/>
+      </div>
+   </div>
+)
+
+const Header = injectSheet(styles)(_Header)
+const card = () => <GameCard
+    image="https://upload.wikimedia.org/wikipedia/en/3/32/Super_Mario_World_Coverart.png"
+    title="SUper Mario" publisher="Nintendo" landscape/>
 
 const GameListView = ({ classes, games, platform }) => (
   <div className={classes.container}>
@@ -30,11 +60,11 @@ const GameListView = ({ classes, games, platform }) => (
       <Sidebar />
     </div>
     <div className={classes.mainContainer}>
-      <GameGrid>
-        {
-          games.map(g => <)
-        }
-      </GameGrid>
+        <GameGrid header={<Header/>}>
+        {[...Array(2500)].map((x, i) =>
+                  card(i + 1)
+                )}
+        </GameGrid>
     </div>
   </div>
 )
