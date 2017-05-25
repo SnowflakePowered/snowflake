@@ -16,7 +16,7 @@ import { SidebarStory } from './views/Sidebar.story'
 import { LandscapeGameGridViewStory, PortraitGameGridViewStory, SquareGameGridViewStory } from './components/GameGrid.story'
 
 import ImageCard from 'components/presentation/ImageCard'
-import GamePlayButton from 'components/presentation/GamePlayButton'
+import GamePlayButton from 'components/presentation/game/GamePlayButton'
 
 import GameListView from './views/GameListView.story'
 

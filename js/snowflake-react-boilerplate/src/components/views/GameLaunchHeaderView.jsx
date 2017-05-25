@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import injectSheet from 'mui-jss-inject'
 
 import GameDisplay from 'components/presentation/info/GameDisplay'
-import GamePlayButton from 'components/presentation/GamePlayButton'
+import GamePlayButton from 'components/presentation/game/GamePlayButton'
 import DropDownSelector from 'components/presentation/DropDownSelector'
 
 const styles = {

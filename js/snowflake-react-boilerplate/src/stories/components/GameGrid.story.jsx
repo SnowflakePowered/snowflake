@@ -1,12 +1,10 @@
 import React from 'react'
 import injectSheet from 'mui-jss-inject'
 
-import GameGrid from 'components/presentation/GameGrid'
-import GameCard from 'components/presentation/GameCard'
+import GameGrid from 'components/presentation/game/GameGrid'
+import GameCard from 'components/presentation/game/GameCard'
 
 import { grey } from 'material-ui/styles/colors'
-
-
 
 const styles = {
   container: {
@@ -16,46 +14,51 @@ const styles = {
   }
 }
 
+
 const _LandscapeGameGridViewStory = ({ classes }) => {
-  const card = int => <GameCard
-    image="https://upload.wikimedia.org/wikipedia/en/3/32/Super_Mario_World_Coverart.png"
-    title={int} publisher="Nintendo" landscape/>
+  const card = int => (<GameCard 
+        image="https://upload.wikimedia.org/wikipedia/en/3/32/Super_Mario_World_Coverart.png" 
+        title={int} publisher="Nintendo" landscape/>)
+  const gameList = [...Array(2500)].map((x, i) => card(i + 1))
+
   return (
     <div className={classes.container}>
       <GameGrid landscape>
-        {[...Array(2500)].map((x, i) =>
-          card(i + 1)
-        )}
+        {
+          gameList
+        }
       </GameGrid>
     </div>)
 }
 
 
 const _PortraitGameGridViewStory = ({ classes }) => {
-  const card = int => <GameCard
+  const card = int => (<GameCard
     image="http://vignette2.wikia.nocookie.net/mario/images/6/60/SMBBoxart.png/revision/latest?cb=20120609143443"
-    title={int} publisher="Nintendo" portrait/>
+    title={int} publisher="Nintendo" portrait/>)
+  const gameList = [...Array(1000)].map((x, i) => card(i + 1))
   return (
     <div className={classes.container}>
       <GameGrid portrait>
-        {[...Array(1000)].map((x, i) =>
-          card(i + 1)
-        )}
+        {
+          gameList
+        }
       </GameGrid>
     </div>)
 }
 
 
 const _SquareGameGridViewStory = ({ classes }) => {
-  const card = int => <GameCard
+  const card = int => (<GameCard
     image="https://upload.wikimedia.org/wikipedia/en/d/db/NewSuperMarioBrothers.jpg"
-    title={int} publisher="Nintendo" square/>
+    title={int} publisher="Nintendo" square/>)
+  const gameList = [...Array(100)].map((x, i) => card(i + 1))
   return (
     <div className={classes.container}>
       <GameGrid square>
-        {[...Array(100)].map((x, i) =>
-          card(i + 1)
-        )}
+        {
+          gameList
+        }
       </GameGrid>
     </div>)
 }

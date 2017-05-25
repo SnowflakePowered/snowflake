@@ -2,7 +2,7 @@ import React from 'react'
 import { Route } from 'react-router-dom'
 import { ConnectedRouter } from 'react-router-redux'
 import injectSheet from 'mui-jss-inject'
-import GameListView from 'components/views/GameListView'
+import GameListViewAdapter from 'components/adapter/GameListViewAdapter'
 
 import SnowflakeProvider from 'snowflake/SnowflakeProvider'
 
@@ -15,7 +15,7 @@ const App = ({ history, classes }) => {
     <ConnectedRouter history={history}>
       <Route render={() =>
           <SnowflakeProvider>
-            <GameListView/>
+            <GameListViewAdapter/>
           </SnowflakeProvider>
       } />
     </ConnectedRouter>

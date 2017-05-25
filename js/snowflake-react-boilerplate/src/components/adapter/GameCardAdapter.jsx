@@ -1,5 +1,5 @@
 import React from 'react'
-import GameCard from 'components/presentation/GameCard'
+import GameCard from 'components/presentation/game/GameCard'
 
 import aspectRatio from 'snowflake/platformsupport/aspectratio'
 
