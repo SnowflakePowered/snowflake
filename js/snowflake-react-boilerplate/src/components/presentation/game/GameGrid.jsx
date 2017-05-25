@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import injectSheet from 'mui-jss-inject'
 import { AutoSizer, Grid, ColumnSizer, WindowScroller } from 'react-virtualized'
-import GameCard, { dimensions } from 'components/presentation/GameCard'
+import GameCard, { dimensions } from './GameCard'
 import GameCardAdapter from 'components/adapter/GameCardAdapter'
 
 const styles = {
@@ -11,7 +11,7 @@ const styles = {
     width: '100%',
     height: '100%',
     flexDirection: 'column',
-    overflowY: 'scroll',
+    overflowY: 'auto',
     overflowX: 'hidden',
     '-webkit-select': 'none'
   },
@@ -60,7 +60,7 @@ const getDimensions = (portrait, landscape, square) => {
   return { BOX_HEIGHT: dimensionObject.height + dimensions.contentHeight + padding, BOX_WIDTH: dimensionObject.width + padding }
 }
 
-class GameGrid extends React.Component {
+class GameGrid extends React.PureComponent {
 
   constructor(props) {
     super(props)
@@ -70,21 +70,21 @@ class GameGrid extends React.Component {
   }
 
   updateScrollElement(target, containerClass) {
-    if (target.classList.contains(containerClass) && this.state.scrollElement === null) {
+    if (this.state.scrollElement === null && target.classList.contains(containerClass)) {
       this.setState({ scrollElement: target })
     }
   }
+ 
+  handleScroll = (e) => this.updateScrollElement(e.target, this.props.classes.container)
 
   render() {
     const { BOX_HEIGHT, BOX_WIDTH } = getDimensions(this.props.portrait, this.props.landscape, this.props.square)
     const children = React.Children.toArray(this.props.children)
     return (
       <div className={this.props.classes.container}
-        onScroll={(e) => this.updateScrollElement(e.target, this.props.classes.container)} //hackity hack
+        onScroll={this.handleScroll} //hackity hack
       >
-
         <div className={this.props.classes.autoSizerContainer}>
-
           <WindowScroller
             scrollElement={this.state.scrollElement}
           >
@@ -98,6 +98,7 @@ class GameGrid extends React.Component {
                     const numberOfColumns = Math.floor(width / BOX_WIDTH)
                     const CENTERED_BOX_WIDTH = BOX_WIDTH + (BOX_WIDTH / numberOfColumns / 2)
                     const numberOfRows = Math.ceil(children.length / numberOfColumns)
+                    const cells = cellRenderer({ classes: this.props.classes, children: children, numberOfRows, numberOfColumns })
                     return (
                       <ColumnSizer
                         columnMaxWidth={CENTERED_BOX_WIDTH}
@@ -109,7 +110,7 @@ class GameGrid extends React.Component {
                             <Grid
                               style={{ outline: 'none', userSelect: 'none' }}
                               ref={registerChild}
-                              cellRenderer={cellRenderer({ classes: this.props.classes, children: children, numberOfRows, numberOfColumns })}
+                              cellRenderer={cells}
                               columnCount={numberOfColumns}
                               rowCount={numberOfRows}
                               columnWidth={getColumnWidth}
@@ -119,7 +120,7 @@ class GameGrid extends React.Component {
                               width={adjustedWidth}
                               autoContainerWidth
                               autoHeight
-                              overscanRowCount={12}
+                              overscanRowCount={2}
                               scrollTop={scrollTop}
                             />
                           </div>)}
@@ -131,19 +132,6 @@ class GameGrid extends React.Component {
         </div>
       </div>
     )
-  }
-}
-
-GameGrid.propTypes = {
-  children: function (props, propName, componentName) {
-    const prop = props[propName]
-    let error = null
-    React.Children.forEach(prop, function (child) {
-      if (child.type !== GameCard && child.type !== GameCardAdapter) {
-        error = new Error('`' + componentName + '` children should be of type `GameCard` or `GameCardAdapter`.');
-      }
-    })
-    return error
   }
 }
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import injectSheet from 'react-jss'
-import GameDetails from 'components/presentation/GameDetails'
+import GameDetails from 'components/presentation/game/GameDetails'
 
 export const GameDetailsStory = injectSheet({
   container: {

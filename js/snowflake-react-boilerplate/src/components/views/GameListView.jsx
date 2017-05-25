@@ -3,17 +3,15 @@ import injectSheet from 'mui-jss-inject'
 
 import Sidebar from 'components/views/Sidebar'
 
-import GameGrid from 'components/presentation/GameGrid'
+import GameGrid from 'components/presentation/game/GameGrid'
 
 import GameCardAdapter from 'components/adapter/GameCardAdapter'
-import GameCard from 'components/presentation/GameCard'
 
 import SearchBar from 'components/presentation/SearchBar'
+
 import PlatformDisplayAdapter from 'components/adapter/PlatformDisplayAdapter'
 
 import { grey, red } from 'material-ui/styles/colors'
-
-import withGames from 'snowflake/compose/withGames'
 
 const styles = {
   container: {
@@ -108,4 +106,4 @@ const GameListView = ({ classes, games, platform }) => (
   </div>
 )
 
-export default withGames(injectSheet(styles)(GameListView))
+export default injectSheet(styles)(GameListView)
