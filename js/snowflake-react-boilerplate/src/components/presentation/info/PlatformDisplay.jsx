@@ -6,7 +6,7 @@ const styles = {
 }
 
 const PlatformDisplay = ({platformName, platformAltName, publisher, year, gameCount, emulatorNames}) => (
-  <InfoDisplay title="Snowflake" subtitle={platformName} tagline={platformAltName} metadata={[publisher, year]} stats={[gameCount || 0 + " games", emulatorNames]}/>
+  <InfoDisplay subtitle={platformName} tagline={platformAltName} metadata={[publisher, year]} stats={[gameCount || 0 + " games", emulatorNames]}/>
 )
 
 

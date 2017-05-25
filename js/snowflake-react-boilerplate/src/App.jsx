@@ -2,7 +2,7 @@ import React from 'react'
 import { Route } from 'react-router-dom'
 import { ConnectedRouter } from 'react-router-redux'
 import injectSheet from 'mui-jss-inject'
-import GameCard from 'components/presentation/GameCard'
+import GameListView from 'components/views/GameListView'
 
 import SnowflakeProvider from 'snowflake/SnowflakeProvider'
 
@@ -15,8 +15,7 @@ const App = ({ history, classes }) => {
     <ConnectedRouter history={history}>
       <Route render={() =>
           <SnowflakeProvider>
-            <GameCard image="https://upload.wikimedia.org/wikipedia/en/d/db/NewSuperMarioBrothers.jpg"
-                title="Square New Super Mario Bros. Chou Nagai Monji Gaiden NEW" publisher="Nintendo" square />
+            <GameListView/>
           </SnowflakeProvider>
       } />
     </ConnectedRouter>

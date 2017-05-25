@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import injectSheet from 'mui-jss-inject'
 import { AutoSizer, Grid, ColumnSizer, WindowScroller } from 'react-virtualized'
 import GameCard, { dimensions } from 'components/presentation/GameCard'
+import GameCardAdapter from 'components/adapter/GameCardAdapter'
 
 const styles = {
   container: {
@@ -118,6 +119,7 @@ class GameGrid extends React.Component {
                               width={adjustedWidth}
                               autoContainerWidth
                               autoHeight
+                              overscanRowCount={12}
                               scrollTop={scrollTop}
                             />
                           </div>)}
@@ -137,8 +139,8 @@ GameGrid.propTypes = {
     const prop = props[propName]
     let error = null
     React.Children.forEach(prop, function (child) {
-      if (child.type !== GameCard) {
-        error = new Error('`' + componentName + '` children should be of type `GameCard`.');
+      if (child.type !== GameCard && child.type !== GameCardAdapter) {
+        error = new Error('`' + componentName + '` children should be of type `GameCard` or `GameCardAdapter`.');
       }
     })
     return error
