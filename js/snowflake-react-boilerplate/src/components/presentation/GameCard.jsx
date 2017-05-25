@@ -3,12 +3,13 @@ import injectSheet from 'mui-jss-inject'
 
 import Typography from 'material-ui/Typography'
 import Card, { CardContent, CardMedia } from 'material-ui/Card'
-import { grey } from 'material-ui/styles/colors'
+import { grey, white } from 'material-ui/styles/colors'
 
 import GamePlayButton from './GamePlayButton'
 import styleable from 'utils/styleable'
 import classNames from 'classnames'
 
+import PhotoIcon from 'material-ui-icons/Photo'
 
 export const dimensions = {
   portrait: {
@@ -59,7 +60,8 @@ const styles = {
     width: '100%',
     height: '100%',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: grey[100]
   },
 
   sizerPortrait: {
@@ -135,7 +137,7 @@ const GameCard = ({ classes, image, title, publisher, portrait, landscape, squar
           [classes.sizerPortrait]: !(portrait && landscape && square)
         })}>
           <div className={classes.cardImageContainer}>
-            <img className={classes.cardImage} src={image} />
+            {image ? <img className={classes.cardImage} src={image} /> : <PhotoIcon/>}
           </div>
         </div>
       </CardMedia>

@@ -5,8 +5,7 @@ import injectSheet from 'react-jss'
 
 const styles = {
   '@font-face': {
-    fontFamily: 'Roboto',
-    src: "url('https://fonts.googleapis.com/css?family=Roboto')",
+    fontFamily: 'Roboto'
   },
   container: {
     fontFamily: 'Roboto, Noto Sans, sans-serif',
