@@ -1,34 +1,19 @@
 import React from 'react'
 import injectSheet from 'mui-jss-inject'
 
-import Sidebar from 'components/views/Sidebar'
-
+import SidebarVisibleView from 'components/views/SidebarVisibleView'
 import GameGrid from 'components/presentation/game/GameGrid'
-import GameCard from 'components/presentation/game/GameCard'
-
 import GameCardAdapter from 'components/adapter/GameCardAdapter'
 
 import SearchBar from 'components/presentation/SearchBar'
-
 import PlatformDisplayAdapter from 'components/adapter/PlatformDisplayAdapter'
 
 import { grey, red } from 'material-ui/styles/colors'
 
 const styles = {
-  container: {
-    width: '100%',
-    height: '100%',
-    display: 'grid',
-    gridTemplateColumns: '[sidebar] 64px [main] auto',
-    gridTemplateRows: '',
-  },
-  sidebarContainer: {
-    gridColumnArea: 'sidebar'
-  },
-  mainContainer: {
+  gridContainer: {
     background: grey[200],
-    gridColumnStart: 'main',
-    height: '100vh'
+    height: '100%'
   }
 }
 
@@ -56,24 +41,29 @@ const titleHeaderStyles = {
     fontWeight: '100'
   }
 }
-const _TitleHeader = ({classes}) => (
-   <div className={classes.mainHeader}>
+
+const _TitleHeader = ({ classes }) => (
+  <div className={classes.mainHeader}>
     <div className={classes.title}>
-         Snowflake
+      Snowflake
     </div>
-     <div className={classes.searchBar}>
-       <SearchBar/>
-      </div>
-   </div>
+    <div className={classes.searchBar}>
+      <SearchBar />
+    </div>
+  </div>
 )
 
 const TitleHeader = injectSheet(titleHeaderStyles)(_TitleHeader)
+
+/*
+
+import GameCard from 'components/presentation/game/GameCard'
 const card = () => (<GameCard
-    image="https://upload.wikimedia.org/wikipedia/en/3/32/Super_Mario_World_Coverart.png"
-    title="SUper Mario" publisher="Nintendo" landscape/>)
+  image="https://upload.wikimedia.org/wikipedia/en/3/32/Super_Mario_World_Coverart.png"
+  title="SUper Mario" publisher="Nintendo" landscape />)
 
 const gameList = [...Array(2500)].map(() => card())
-
+*/
 
 const detailsHeaderStyles = {
   detailsHeader: {
@@ -86,28 +76,24 @@ const detailsHeaderStyles = {
   }
 }
 
-const _DetailsHeader = ({classes, platform}) => (
+const _DetailsHeader = ({ classes, platform }) => (
   <div className={classes.detailsHeader}>
-    <PlatformDisplayAdapter platform={platform}/>
+    <PlatformDisplayAdapter platform={platform} />
   </div>
 )
 
 const DetailsHeader = injectSheet(detailsHeaderStyles)(_DetailsHeader)
 
 const GameListView = ({ classes, games, platform }) => (
-  <div className={classes.container}>
-    <div className={classes.sidebarContainer}>
-      <Sidebar />
-    </div>
-    <div className={classes.mainContainer}>
-        <GameGrid header={[<TitleHeader/>, <DetailsHeader platform={platform}/>]}>
+  <SidebarVisibleView>
+    <div className={classes.gridContainer}>
+      <GameGrid header={[<TitleHeader />, <DetailsHeader platform={platform} />]}>
         {
-          games.map(g => <GameCardAdapter game={g}/>)
-          //gameList
+          games.map(g => <GameCardAdapter game={g} />)
         }
-        </GameGrid>
+      </GameGrid>
     </div>
-  </div>
+  </SidebarVisibleView>
 )
 
 export default injectSheet(styles)(GameListView)
