@@ -1,5 +1,5 @@
 import React from 'react'
-import State from './State'
+import ReduxState from './ReduxState'
 import PropTypes from 'prop-types'
 
 class SnowflakeProvider extends React.Component {
@@ -10,9 +10,9 @@ class SnowflakeProvider extends React.Component {
   getChildContext () {
     return {
       snowflake: {
-        stone: this.props.stone,
+        platforms: this.props.platforms,
         games: this.props.games,
-        ui: this.props.ui,
+        state: this.props.state,
         store: {
           actions: this.props.actions,
           dispatch: this.props.dispatch
@@ -26,4 +26,4 @@ class SnowflakeProvider extends React.Component {
   }
 }
 
-export default State(SnowflakeProvider)
+export default ReduxState(SnowflakeProvider)
