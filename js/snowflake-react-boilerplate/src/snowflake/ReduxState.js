@@ -1,18 +1,19 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+
 import * as platformActions from 'actions/platforms'
 import * as gameActions from 'actions/games'
+import * as stateActions from 'actions/state'
+
 import getDisplayName from 'recompose/getDisplayName'
 
-const State = (AppComponent) => {
+const ReduxState = (AppComponent) => {
   function mapStateToProps (state, props) {
     return {
-      stone: {
-        platforms: state.platforms
-      },
+      platforms: state.platforms,
       games: state.games,
-      ui: state.ui
+      state: state.state
     }
   }
 
@@ -20,7 +21,8 @@ const State = (AppComponent) => {
     return {
       actions: {
         platforms: bindActionCreators(platformActions, dispatch),
-        games: bindActionCreators(gameActions, dispatch)
+        games: bindActionCreators(gameActions, dispatch),
+        state: bindActionCreators(stateActions, dispatch)
       },
       dispatch
     }
@@ -29,8 +31,8 @@ const State = (AppComponent) => {
   return connect(mapStateToProps, mapDispatchToProps)(class extends Component {
     static displayName = `State(${getDisplayName(AppComponent)})`
     componentWillMount () {
-      this.props.actions.platforms.beginRefreshPlatforms()
-      this.props.actions.games.beginRefreshGames()
+      //this.props.actions.platforms.beginRefreshPlatforms()
+      //this.props.actions.games.beginRefreshGames()
     }
 
     render () {
@@ -41,4 +43,4 @@ const State = (AppComponent) => {
   })
 }
 
-export default State
+export default ReduxState

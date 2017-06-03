@@ -4,6 +4,7 @@ import centered from '@kadira/react-storybook-decorator-centered'
 import full from './utils/full'
 import { MultiCard, SingleCard } from './components/GameCard.story'
 import mui from './utils/mui'
+import redux from './utils/redux'
 import { blue, pink } from 'material-ui/styles/colors'
 
 import { SearchBarStory, SearchBarStoryWithBackground } from './components/SearchBarStory.story'
@@ -109,6 +110,7 @@ storiesOf('Game List View', module)
 storiesOf('Platform List View', module)
   .addDecorator(muiTheme)
   .addDecorator(full)
+  .addDecorator(redux())
   .add('default', () => <PlatformListView />)
 /*
 storiesOf('Game Details', module)

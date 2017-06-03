@@ -1,10 +1,10 @@
 import React from 'react'
-import PlatformListView from 'components/views/PlatformListView'
+import PlatformListViewAdapter from 'components/adapter/PlatformListViewAdapter'
 import state from 'stories/state'
 import { action } from '@storybook/react'
 
 const PlatformListViewStory = () => (
-  <PlatformListView platforms={state.platforms} onPlatformChanged={action('Platform')}/>
+  <PlatformListViewAdapter/>
 )
-
+// platforms={state.platforms} onPlatformChanged={action('Platform')}
 export default PlatformListViewStory

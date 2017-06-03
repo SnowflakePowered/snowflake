@@ -5,6 +5,7 @@ import SidebarVisibleView from 'components/views/SidebarVisibleView'
 import List, { ListItem } from 'material-ui/List'
 import Typography from 'material-ui/Typography'
 
+import PlatformDisplayAdapter from 'adapter/PlatformDisplayAdapter'
 
 const styles = {
   platformSelector: {
@@ -37,6 +38,9 @@ const PlatformListView = ({ classes, platforms, currentPlatform, onPlatformChang
                 <Typography>{p.FriendlyName}</Typography>
               </ListItem>)}
           </List>
+        </div>
+        <div>
+          <PlatformDisplayAdapter platform={platforms[currentPlatform] || {}}/>
         </div>
       </div>
     </SidebarVisibleView>
