@@ -17,6 +17,7 @@ const styles = {
 
 const _LandscapeGameGridViewStory = ({ classes }) => {
   const card = int => (<GameCard 
+        key={int}
         image="https://upload.wikimedia.org/wikipedia/en/3/32/Super_Mario_World_Coverart.png" 
         title={int} publisher="Nintendo" landscape/>)
   const gameList = [...Array(2500)].map((x, i) => card(i + 1))
@@ -34,6 +35,7 @@ const _LandscapeGameGridViewStory = ({ classes }) => {
 
 const _PortraitGameGridViewStory = ({ classes }) => {
   const card = int => (<GameCard
+    key={int}
     image="http://vignette2.wikia.nocookie.net/mario/images/6/60/SMBBoxart.png/revision/latest?cb=20120609143443"
     title={int} publisher="Nintendo" portrait/>)
   const gameList = [...Array(1000)].map((x, i) => card(i + 1))
@@ -50,6 +52,7 @@ const _PortraitGameGridViewStory = ({ classes }) => {
 
 const _SquareGameGridViewStory = ({ classes }) => {
   const card = int => (<GameCard
+    key={int}
     image="https://upload.wikimedia.org/wikipedia/en/d/db/NewSuperMarioBrothers.jpg"
     title={int} publisher="Nintendo" square/>)
   const gameList = [...Array(100)].map((x, i) => card(i + 1))

@@ -4,6 +4,7 @@ import injectSheet from 'mui-jss-inject'
 import Sidebar from 'components/views/Sidebar'
 
 import GameGrid from 'components/presentation/game/GameGrid'
+import GameCard from 'components/presentation/game/GameCard'
 
 import GameCardAdapter from 'components/adapter/GameCardAdapter'
 
@@ -67,9 +68,11 @@ const _TitleHeader = ({classes}) => (
 )
 
 const TitleHeader = injectSheet(titleHeaderStyles)(_TitleHeader)
-const card = () => <GameCard
+const card = () => (<GameCard
     image="https://upload.wikimedia.org/wikipedia/en/3/32/Super_Mario_World_Coverart.png"
-    title="SUper Mario" publisher="Nintendo" landscape/>
+    title="SUper Mario" publisher="Nintendo" landscape/>)
+
+const gameList = [...Array(2500)].map(() => card())
 
 
 const detailsHeaderStyles = {
@@ -100,6 +103,7 @@ const GameListView = ({ classes, games, platform }) => (
         <GameGrid header={[<TitleHeader/>, <DetailsHeader platform={platform}/>]}>
         {
           games.map(g => <GameCardAdapter game={g}/>)
+          //gameList
         }
         </GameGrid>
     </div>

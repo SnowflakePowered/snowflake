@@ -20,7 +20,7 @@ const styles = {
     display: 'inline-block'
   },
   autoSizerContainer: {
-    height: '100%'
+    height: '100%',
   },
   cellWrapper: {
     display: 'flex',
@@ -29,15 +29,16 @@ const styles = {
   },
   gridContainer: {
     display: 'flex',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    margin: [10, 10]
   }
 }
 
-const cellRenderer = ({ classes, children, numberOfRows, numberOfColumns }) => ({ columnIndex, key, rowIndex, style }) => {
+const cellRenderer = ({ className, children, numberOfRows, numberOfColumns }) => ({ columnIndex, key, rowIndex, style }) => {
   return (
     <div key={key}
       style={style}
-      className={classes.cellWrapper}
+      className={className}
     >
       {children[rowIndex * numberOfColumns + columnIndex]}
     </div>
@@ -98,7 +99,9 @@ class GameGrid extends React.PureComponent {
                     const numberOfColumns = Math.floor(width / BOX_WIDTH)
                     const CENTERED_BOX_WIDTH = BOX_WIDTH + (BOX_WIDTH / numberOfColumns / 2)
                     const numberOfRows = Math.ceil(children.length / numberOfColumns)
-                    const cells = cellRenderer({ classes: this.props.classes, children: children, numberOfRows, numberOfColumns })
+                    const cells = cellRenderer({ classes: this.props.classes.cellWrapper,
+                                                 children: children,
+                                                 numberOfRows, numberOfColumns })
                     return (
                       <ColumnSizer
                         columnMaxWidth={CENTERED_BOX_WIDTH}
