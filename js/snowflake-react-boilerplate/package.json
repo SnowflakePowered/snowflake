@@ -22,7 +22,8 @@
     "recompose": "^0.22.0",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
-    "snowflake-remoting": "file:../snowflake-remoting"
+    "snowflake-remoting": "file:../snowflake-remoting",
+    "stone-definitions": "7.0.0-alpha.10"
   },
   "devDependencies": {
     "@storybook/react": "^3.0.0-alpha.1",
