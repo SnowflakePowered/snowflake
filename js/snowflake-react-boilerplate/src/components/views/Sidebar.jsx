@@ -11,7 +11,7 @@ import { white, grey } from 'material-ui/styles/colors'
 
 const styles = {
   container: {
-    height: "100%",
+    height: '100%',
     width: 64,
     backgroundColor: white
   },
