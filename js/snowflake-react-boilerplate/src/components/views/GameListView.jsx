@@ -17,7 +17,6 @@ const styles = {
   }
 }
 
-
 const titleHeaderStyles = {
   mainHeader: {
     height: 64,
@@ -31,7 +30,7 @@ const titleHeaderStyles = {
     zIndex: 100,
     top: 0,
     fontFamily: 'Roboto',
-    color: 'white',
+    color: 'white'
   },
   searchBar: {
     width: '50%'
@@ -85,15 +84,13 @@ const _DetailsHeader = ({ classes, platform }) => (
 const DetailsHeader = injectSheet(detailsHeaderStyles)(_DetailsHeader)
 
 const GameListView = ({ classes, games, platform }) => (
-  <SidebarVisibleView>
-    <div className={classes.gridContainer}>
-      <GameGrid header={[<TitleHeader />, <DetailsHeader platform={platform} />]}>
-        {
-          games.map(g => <GameCardAdapter game={g} />)
-        }
-      </GameGrid>
-    </div>
-  </SidebarVisibleView>
+  <div className={classes.gridContainer}>
+    <GameGrid header={[<TitleHeader />, <DetailsHeader platform={platform} />]}>
+      {
+        games.map(g => <GameCardAdapter game={g} />)
+      }
+    </GameGrid>
+  </div>
 )
 
 export default injectSheet(styles)(GameListView)

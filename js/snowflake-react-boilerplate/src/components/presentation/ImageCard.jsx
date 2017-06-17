@@ -6,37 +6,53 @@ import injectSheet from 'mui-jss-inject'
 
 const styles = {
   imageContainer: {
-    display: 'grid',
-    gridTemplateColumns: '100%',
-    gridTemplateRows: '100%',
     borderRadius: 'inherit',
+    maxWidth: 'inherit',
     maxHeight: 'inherit',
-    minWidth: '100%'
-
+    display: 'grid'
   },
   image: {
-    objectFit: 'cover',
+    objectFit: 'contain',
     borderRadius: 'inherit',
     userDrag: 'none',
     userSelect: 'none',
     maxHeight: 'inherit',
-    minWidth: '100%'
+    maxWidth: 'inherit'
   },
   paperContainer: {
-    display: 'block'
+    display: 'block',
+    maxWidth: 'fit-content',
+    maxHeight: '-webkit-fill-available'
   },
   paper: {
-    display: 'inline-block'
+    display: 'inline-block',
+    maxWidth: 'inherit',
+    maxHeight: 'inherit'
+  },
+  container: {
+    width: 'inherit',
+    height: 'inherit',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  padding: {
+    width: 'inherit',
+    height: 'inherit'
   }
 }
 
 const ImageCard = ({ classes, image, elevation }) => (
-  <div className={classes.paperContainer}>
-    <Paper elevation={elevation} className={classes.paper}>
-      <div className={classes.imageContainer}>
-        <img className={classes.image} src={image} />
+  <div className={classes.padding}>
+    <div className={classes.container}>
+      <div className={classes.paperContainer}>
+        <Paper elevation={elevation} className={classes.paper}>
+          <div className={classes.imageContainer}>
+            <img className={classes.image} src={image} />
+          </div>
+        </Paper>
       </div>
-    </Paper>
+    </div>
   </div>
 )
 
