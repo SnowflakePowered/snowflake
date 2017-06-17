@@ -51,7 +51,7 @@ const GameLaunchHeaderView = ({ classes, gameTitle, gamePublisher, onPlayButtonC
       </div>
       <div className={classes.bottomControls}>
         <div className={classes.emulatorSelector}>
-          <DropDownSelector />
+          
         </div>
       </div>
     </div>

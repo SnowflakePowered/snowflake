@@ -44,39 +44,37 @@ const styles = {
 }
 
 const PlatformListView = ({ classes, platforms, currentPlatform, onPlatformChanged }) => {
- // todo refactor out to presentation and action launcher
+  // todo refactor out to presentation and action launcher
   const handlePlatformChanged = (p) => {
     if (onPlatformChanged) onPlatformChanged(p)
   }
 
   return (
-    <SidebarVisibleView>
-      <div className={classes.container}>
-        <div className={classes.platformSelector}>
-          <List>
-            {Object.values(platforms).map(p =>
-              <ListItem key={p.PlatformID} button onClick={() => handlePlatformChanged(p)}>
-                <Typography>{p.FriendlyName}</Typography>
-              </ListItem>)}
-          </List>
-        </div>
-        <div className={classes.platformDisplay}>
-          <div className={classes.platformImage}>
-            <Typography>Placeholder</Typography>
-          </div>
-          <BottomSheet className={classes.platformInformation}>
-            <div className={classes.platformInformationInner}>
-              <div className={classes.platformInfoDisplay}>
-                <PlatformDisplayAdapter platform={platforms[currentPlatform]}/>
-              </div>
-              <div className={classes.menu}>
-                {/* todo: refactor out this ugliness */}
-              </div>
-            </div>
-          </BottomSheet>
-        </div>
+    <div className={classes.container}>
+      <div className={classes.platformSelector}>
+        <List>
+          {Object.values(platforms).map(p =>
+            <ListItem key={p.PlatformID} button onClick={() => handlePlatformChanged(p)}>
+              <Typography>{p.FriendlyName}</Typography>
+            </ListItem>)}
+        </List>
       </div>
-    </SidebarVisibleView>
+      <div className={classes.platformDisplay}>
+        <div className={classes.platformImage}>
+          <Typography>Placeholder</Typography>
+        </div>
+        <BottomSheet className={classes.platformInformation}>
+          <div className={classes.platformInformationInner}>
+            <div className={classes.platformInfoDisplay}>
+              <PlatformDisplayAdapter platform={platforms[currentPlatform]} />
+            </div>
+            <div className={classes.menu}>
+              {/* todo: refactor out this ugliness */}
+            </div>
+          </div>
+        </BottomSheet>
+      </div>
+    </div>
   )
 }
 

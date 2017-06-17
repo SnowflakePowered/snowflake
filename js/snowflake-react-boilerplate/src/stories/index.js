@@ -21,6 +21,7 @@ import GamePlayButton from 'components/presentation/game/GamePlayButton'
 
 import GameListView from './views/GameListView.story'
 import PlatformListView from './views/PlatformListView.story'
+import GameDisplayView from './views/GameDisplayView.story'
 
 const muiTheme = mui({ blue, pink })
 
@@ -112,7 +113,11 @@ storiesOf('Platform List View', module)
   .addDecorator(full)
   .addDecorator(redux())
   .add('default', () => <PlatformListView />)
-/*
+
+storiesOf('Game Display View', module)
+  .addDecorator(muiTheme)
+  .add('default', () => <GameDisplayView/>)
+  /*
 storiesOf('Game Details', module)
   .addDecorator(centered)
   .add('on White', () => <GameDetailsStory/>)

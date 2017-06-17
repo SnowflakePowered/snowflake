@@ -9,14 +9,17 @@ const styles = {
     margin: 10
   },
   paper: {
-    width: '100%'
+    width: '110%',
+    zIndex: -1
   }
 }
 
 const BottomSheet = ({children, classes}) => (
-  <div className={classes.container}>
-    {children}
-  </div>
+  <Paper className={classes.paper}>
+    <div className={classes.container}>
+      {children}
+    </div>
+  </Paper>
 )
 
 export default injectSheet(styles)(BottomSheet)
