@@ -38,14 +38,15 @@ namespace Snowflake.Services
                 (new SqliteMappedControllerElementCollectionStore(new SqliteDatabase(Path.Combine(this.AppDataDirectory, "controllermappings.db"))));
             this.RegisterService<IConfigurationCollectionStore>(new SqliteConfigurationCollectionStore(new SqliteDatabase(Path.Combine(this.AppDataDirectory, "configurations.db"))));
           
-            this.RegisterService<IPluginManager>(new PluginManager(this.AppDataDirectory, this)); 
+            //this.RegisterService<IPluginManager>(new PluginManager(this.AppDataDirectory, this)); 
            
             
         }
 
         public void RegisterService<T>(T serviceObject)
         {
-            if (this.serviceContainer.ContainsKey(typeof (T))) return;
+            //todo: check for same name
+            if (this.serviceContainer.ContainsKey(typeof (T))) return; //todo throw exception
             this.serviceContainer.Add(typeof(T), serviceObject);
         }
 

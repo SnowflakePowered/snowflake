@@ -5,6 +5,10 @@
     <RootNamespace>Snowflake</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup>
+      <RuntimeIdentifiers>win10-x64;win7-x64</RuntimeIdentifiers>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Quamotion.DiscUtils" Version="1.0.3"/>
   </ItemGroup>

@@ -31,7 +31,7 @@ namespace Snowflake.Utility
 
         public static string GetSnowflakeDataPath()
         {
-            return PathUtility.GetApplicationDataPath(".snowflake");
+            return PathUtility.GetApplicationDataPath("snowflake");
         }
 
         public static string GetSnowflakeDataPath(params string[] dataPath)

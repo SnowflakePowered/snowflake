@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.4
+VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{A3EE479D-FA11-4938-85B3-B6C647B23100}"
 	ProjectSection(SolutionItems) = preProject
@@ -49,6 +49,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Plugin.Scrapers.TheGamesDb", "Snowflake.Plugin.Scrapers.TheGamesDb\Snowflake.Plugin.Scrapers.TheGamesDb.csproj", "{C6AFA8DF-2D5F-4B5E-9C70-DD3CA5E5044B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Framework.Tests", "Snowflake.Framework.Tests\Snowflake.Framework.Tests.csproj", "{5881A6EB-E702-4A4E-9F0A-6B4B91FE34B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Framework.Loader", "Snowflake.Framework.Loader\Snowflake.Framework.Loader.csproj", "{AD23DC59-4245-4339-B36A-D667A185BA62}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -228,6 +230,18 @@ Global
 		{5881A6EB-E702-4A4E-9F0A-6B4B91FE34B6}.Release|x64.Build.0 = Release|Any CPU
 		{5881A6EB-E702-4A4E-9F0A-6B4B91FE34B6}.Release|x86.ActiveCfg = Release|Any CPU
 		{5881A6EB-E702-4A4E-9F0A-6B4B91FE34B6}.Release|x86.Build.0 = Release|Any CPU
+		{AD23DC59-4245-4339-B36A-D667A185BA62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD23DC59-4245-4339-B36A-D667A185BA62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD23DC59-4245-4339-B36A-D667A185BA62}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{AD23DC59-4245-4339-B36A-D667A185BA62}.Debug|x64.Build.0 = Debug|Any CPU
+		{AD23DC59-4245-4339-B36A-D667A185BA62}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{AD23DC59-4245-4339-B36A-D667A185BA62}.Debug|x86.Build.0 = Debug|Any CPU
+		{AD23DC59-4245-4339-B36A-D667A185BA62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD23DC59-4245-4339-B36A-D667A185BA62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD23DC59-4245-4339-B36A-D667A185BA62}.Release|x64.ActiveCfg = Release|Any CPU
+		{AD23DC59-4245-4339-B36A-D667A185BA62}.Release|x64.Build.0 = Release|Any CPU
+		{AD23DC59-4245-4339-B36A-D667A185BA62}.Release|x86.ActiveCfg = Release|Any CPU
+		{AD23DC59-4245-4339-B36A-D667A185BA62}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -249,5 +263,6 @@ Global
 		{6D8576F4-6694-4704-9439-EBFE9652A140} = {4EAF5E91-8489-43BE-8B06-4E1F09DF8B2B}
 		{C6AFA8DF-2D5F-4B5E-9C70-DD3CA5E5044B} = {2BB64AD6-F01B-4BBC-8CC4-D4FC1E1EE830}
 		{5881A6EB-E702-4A4E-9F0A-6B4B91FE34B6} = {49B7A61F-B3BE-485E-84D0-B78C08656412}
+		{AD23DC59-4245-4339-B36A-D667A185BA62} = {49B7A61F-B3BE-485E-84D0-B78C08656412}
 	EndGlobalSection
 EndGlobal

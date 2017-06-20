@@ -17,6 +17,8 @@ using Snowflake.Scraper;
 using Snowflake.Services;
 using Snowflake.Utility;
 using Snowflake.Plugin.Emulators.RetroArch.Adapters.Bsnes;
+using Snowflake.Framework.Loader;
+using Snowflake.Romfile;
 
 namespace Snowflake.Shell.Windows
 {
@@ -33,8 +35,20 @@ namespace Snowflake.Shell.Windows
         {
 
             this.loadedCore = new CoreService(this.appDataDirectory);
+            this.loadedCore.RegisterService(new AssemblyModuleLoader(this.appDataDirectory));
+            this.loadedCore.RegisterService<IFileSignatureMatcher>(new FileSignatureMatcher(this.loadedCore.Get<IStoneProvider>()));
+            var loader = this.loadedCore.Get<AssemblyModuleLoader>();
+            foreach (var module in loader.Modules)
+            {
+             //   Console.WriteLine($"Found module: {module.Name} with entrypoint {module.Entry}");
+                var containers = loader.InitializePluginModule(module).ToList();
+               foreach(var container in containers)
+                {
+                    container.Compose(this.loadedCore);
+                }
+            }
             //this.loadedCore.Get<IEmulatorAssembliesManager>()?.LoadEmulatorAssemblies();
-            this.loadedCore.Get<IPluginManager>()?.Initialize();
+            //this.loadedCore.Get<IPluginManager>()?.Initialize();
            /* this.loadedCore.Get<IServerManager>().RegisterServer("ThemeServer", new ThemeServer(Path.Combine(this.loadedCore.AppDataDirectory, "themes")));
             foreach (string serverName in this.loadedCore.Get<IServerManager>().RegisteredServers)
             {
@@ -42,7 +56,7 @@ namespace Snowflake.Shell.Windows
                 var serverStartEvent = new ServerStartEventArgs(this.loadedCore, serverName);
                 SnowflakeEventManager.EventSource.RaiseEvent(serverStartEvent); //todo Move event registration to SnowflakeEVentManager
             }*/
-            var im = this.loadedCore.Get<IPluginManager>().Get<IInputEnumerator>()["InputEnumerator-Keyboard"];
+            /*var im = this.loadedCore.Get<IPluginManager>().Get<IInputEnumerator>()["InputEnumerator-Keyboard"];
             var ep = new EmulatedPort(1, im.ControllerLayout,
                 im.GetConnectedDevices().First(), MappedControllerElementCollection.GetDefaultMappings(im.ControllerLayout, this.loadedCore.Get<IStoneProvider>().Controllers["NES_CONTROLLER"]));
             var gr = new GameRecord(this.loadedCore.Get<IStoneProvider>().Platforms["NINTENDO_SNES"], "test",
@@ -51,7 +65,7 @@ namespace Snowflake.Shell.Windows
             
             var lmfao = raadapter.Instantiate(gr, gr.Files[0], 0, new List<IEmulatedPort> { ep});
             lmfao.Create();
-            lmfao.Start();
+            lmfao.Start();*/
         }
 
         public void StartShell() {
