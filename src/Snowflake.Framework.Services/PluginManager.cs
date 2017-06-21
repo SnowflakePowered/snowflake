@@ -116,7 +116,7 @@ namespace Snowflake.Services
                    orderby loadPriority ascending
                    select pluginContainer)
             {
-                try
+               /* try
                 {
                     pluginContainer.Compose(this.CoreInstance);
                     
@@ -125,7 +125,7 @@ namespace Snowflake.Services
                 {
                     Console.WriteLine($"Unable to load plugin container: {pluginContainer?.GetType().AssemblyQualifiedName}");
                     Console.WriteLine(ex.ToString());
-                }
+                }*/
             }
 
         }

@@ -8,41 +8,24 @@ using System.Runtime;
 using System.Runtime.Loader;
 using Snowflake.Extensibility;
 using Snowflake.Utility;
+using Newtonsoft.Json;
 
-namespace Snowflake.Framework.Loader
+namespace Snowflake.Framework.Loader.ExtensibilityLoader
 {
-    public class AssemblyModuleLoader
+    internal class AssemblyModuleLoader : IModuleLoader<IPluginContainer>
     {
-        private DirectoryInfo ModuleDirectory { get; }
-        public IEnumerable<Module> Modules { get; set; }
-        public AssemblyModuleLoader(string appDataDirectory)
-        {
-            this.ModuleDirectory = new DirectoryInfo(Path.Combine(appDataDirectory, "modules"));
-            this.Modules = this.EnumerateModules().ToList();
-        }
-
-        private IEnumerable<Module> EnumerateModules()
-        {
-            return (from directory in this.ModuleDirectory.EnumerateDirectories()
-                    where File.Exists(Path.Combine(directory.FullName, "entry"))
-                    select new Module {
-                        Name = directory.Name,
-                        Entry = File.ReadAllText(Path.Combine(directory.FullName, "entry")),
-                        ModuleDirectory = directory
-                    });
-        }
-
-        public IEnumerable<IPluginContainer> InitializePluginModule(Module module)
+        public IEnumerable<IPluginContainer> LoadModule(Module module)
         {
             Console.WriteLine($"Loading module {module.Entry}");
             try
             {
                 var deps = module.ModuleDirectory.EnumerateDirectories().First(d => d.Name == "contents");
-            }catch(InvalidOperationException ex)
+            }
+            catch (InvalidOperationException ex)
             {
                 throw new DirectoryNotFoundException($"Unable to find module contents for {module.Entry}", ex);
-            } 
-            var loadContext = new ModuleLoadContext(module);
+            }
+            var loadContext = new AssemblyModuleLoadContext(module);
             //todo: check for semver!!
             var entryPath = Path.Combine(module.ModuleDirectory.FullName, "contents", module.Entry);
 

@@ -52,7 +52,7 @@ namespace Snowflake.Services
 
         public IEnumerable<string> AvailableServices()
         {
-            return this.serviceContainer.Keys.Select(service => service.Name);
+            return this.serviceContainer.Keys.Select(service => service.FullName);
         } 
 
         public T Get<T>()

@@ -29,7 +29,7 @@ namespace Snowflake.Services
                 });
             this.Platforms = stone.Platforms.ToDictionary(kvp => kvp.Key, kvp => kvp.Value as IPlatformInfo);
             this.Controllers = stone.Controllers.ToDictionary(kvp => kvp.Key, kvp => kvp.Value as IControllerLayout);
-            this.StoneVersion = Version.Parse(stone.version); //todo: introduce semver
+            this.StoneVersion = Version.Parse(stone.version.Split('-')[0]); //todo: introduce semver
 
         }
 

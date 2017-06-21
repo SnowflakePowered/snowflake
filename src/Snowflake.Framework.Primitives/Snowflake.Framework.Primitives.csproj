@@ -7,6 +7,12 @@
   <PropertyGroup Condition=" '$(Configuration)' == 'Cover' ">
 	  <DebugType>Full</DebugType>
   </PropertyGroup>
+  
+  <ItemGroup>
+    <Compile Remove="Extensibility\Events\**" />
+    <EmbeddedResource Remove="Extensibility\Events\**" />
+    <None Remove="Extensibility\Events\**" />
+  </ItemGroup>
  
   <ItemGroup>
     <PackageReference Include="CoreCompat.System.Drawing" Version="1.0.0-beta006" />
@@ -14,6 +20,6 @@
     <PackageReference Include="System.Dynamic.Runtime" Version="4.3.0" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Extensibility\Events\" />
+    <Folder Include="Loader\" />
   </ItemGroup>
 </Project>

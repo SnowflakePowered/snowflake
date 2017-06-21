@@ -19,7 +19,7 @@ namespace Snowflake.Plugin.Emulators.RetroArch
 {
     public class RetroArchCommonContainer : IPluginContainer
     {
-        public void Compose(ICoreService coreInstance)
+        public void Compose(IServiceContainer coreInstance)
         {
             var pm = coreInstance.Get<IPluginManager>();
             var processHandler = new RetroArchProcessHandler(coreInstance.AppDataDirectory);

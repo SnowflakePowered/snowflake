@@ -46,10 +46,12 @@ namespace Snowflake.Romfile.FileSignatures
                 new PlaystationPortableIso9660FileSignature());
         }
 
-        public void Compose(ICoreService coreInstance)
+        [ImportService(typeof(IFileSignatureMatcher))]
+        public void Compose(IServiceContainer coreInstance)
         {
             var fileSignatureEngine = coreInstance.Get<IFileSignatureMatcher>();
             this.RegisterFileSignatures(fileSignatureEngine);
+
             /*pluginManager.Register<IFileSignature>(new NintendoN64FileSignature(coreInstance));
             pluginManager.Register<IFileSignature>(new NintendoGBFileSignature(coreInstance));
             pluginManager.Register<IFileSignature>(new NintendoGBCFileSignature(coreInstance));

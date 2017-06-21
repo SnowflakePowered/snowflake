@@ -19,6 +19,7 @@ using Snowflake.Utility;
 using Snowflake.Plugin.Emulators.RetroArch.Adapters.Bsnes;
 using Snowflake.Framework.Loader;
 using Snowflake.Romfile;
+using Snowflake.Framework.Loader.ExtensibilityLoader;
 
 namespace Snowflake.Shell.Windows
 {
@@ -35,18 +36,11 @@ namespace Snowflake.Shell.Windows
         {
 
             this.loadedCore = new CoreService(this.appDataDirectory);
-            this.loadedCore.RegisterService(new AssemblyModuleLoader(this.appDataDirectory));
+            this.loadedCore.RegisterService(new ModuleEnumerator(this.appDataDirectory));
             this.loadedCore.RegisterService<IFileSignatureMatcher>(new FileSignatureMatcher(this.loadedCore.Get<IStoneProvider>()));
-            var loader = this.loadedCore.Get<AssemblyModuleLoader>();
-            foreach (var module in loader.Modules)
-            {
-             //   Console.WriteLine($"Found module: {module.Name} with entrypoint {module.Entry}");
-                var containers = loader.InitializePluginModule(module).ToList();
-               foreach(var container in containers)
-                {
-                    container.Compose(this.loadedCore);
-                }
-            }
+            var loader = this.loadedCore.Get<ModuleEnumerator>();
+            var composer = new PluginContainerComposer(this.loadedCore, loader);
+            composer.Compose();
             //this.loadedCore.Get<IEmulatorAssembliesManager>()?.LoadEmulatorAssemblies();
             //this.loadedCore.Get<IPluginManager>()?.Initialize();
            /* this.loadedCore.Get<IServerManager>().RegisterServer("ThemeServer", new ThemeServer(Path.Combine(this.loadedCore.AppDataDirectory, "themes")));

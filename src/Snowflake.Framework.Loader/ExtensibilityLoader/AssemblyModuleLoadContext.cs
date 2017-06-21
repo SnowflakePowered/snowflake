@@ -6,17 +6,17 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
 
-namespace Snowflake.Framework.Loader
+namespace Snowflake.Framework.Loader.ExtensibilityLoader
 {
-    internal class ModuleLoadContext : AssemblyLoadContext
+    internal class AssemblyModuleLoadContext : AssemblyLoadContext
     {
         private string folderPath;
-        private ModuleLoadContext(string folderPath)
+        private AssemblyModuleLoadContext(string folderPath)
         {
             this.folderPath = folderPath;
         }
 
-        public ModuleLoadContext(Module module) : this(Path.Combine(module.ModuleDirectory.FullName, "contents"))
+        public AssemblyModuleLoadContext(Module module) : this(Path.Combine(module.ModuleDirectory.FullName, "contents"))
         {
         
         }
@@ -46,8 +46,6 @@ namespace Snowflake.Framework.Loader
                 return Assembly.Load(assemblyName);
             }
 
-           
-
             if (resources.Count > 0)
             {
                 return Assembly.Load(new AssemblyName(resources.First().Name));
@@ -58,7 +56,7 @@ namespace Snowflake.Framework.Loader
                 var dependencyFileInfo = new FileInfo($"{Path.Combine(this.folderPath, assemblyName.Name)}.dll");
                 if (File.Exists(dependencyFileInfo.FullName))
                 {
-                    var dependencyLoadContext = new ModuleLoadContext(dependencyFileInfo.DirectoryName);
+                    var dependencyLoadContext = new AssemblyModuleLoadContext(dependencyFileInfo.DirectoryName);
                     Console.WriteLine($"Loading {assemblyName.Name} from module dependencies");
                     return dependencyLoadContext.LoadFromAssemblyPath(dependencyFileInfo.FullName);
                 } else
