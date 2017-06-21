@@ -9,7 +9,7 @@ using Snowflake.Services;
 
 namespace Snowflake.Emulator
 {
-    public class BiosManager :IBiosManager
+    public class BiosManager : IBiosManager
     {
         private string BiosDirectory { get; }
         public BiosManager(string appdataDirectory)
@@ -33,8 +33,8 @@ namespace Snowflake.Emulator
         public IEnumerable<string> GetMissingBios(IPlatformInfo platformInfo)
         {
             string biosDirectory = Path.Combine(this.BiosDirectory, platformInfo.PlatformID);
-            if (!Directory.Exists(biosDirectory)) return platformInfo.BiosFiles;
-            return platformInfo.BiosFiles.Except(Directory.GetFiles(biosDirectory)
+            if (!Directory.Exists(biosDirectory)) return platformInfo.BiosFiles.Select(p => p.Key);
+            return platformInfo.BiosFiles.Select(p=>p.Key).Except(Directory.GetFiles(biosDirectory)
                            .Select(Path.GetFileName), StringComparer.OrdinalIgnoreCase);
         }
 
