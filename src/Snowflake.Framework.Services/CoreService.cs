@@ -9,6 +9,7 @@ using Snowflake.Input;
 using Snowflake.Input.Controller.Mapped;
 using Snowflake.Records.Game;
 using Snowflake.Utility;
+using Snowflake.Loader;
 
 namespace Snowflake.Services
 {
@@ -34,6 +35,7 @@ namespace Snowflake.Services
             this.serviceContainer = new ConcurrentDictionary<Type, object>();
             this.RegisterService<IServiceRegistrationProvider>(new ServiceRegistrationProvider(this));
             this.RegisterService<IContentDirectoryProvider>(new ContentDirectoryProvider(this.AppDataDirectory));
+            this.RegisterService<IModuleEnumerator>(new ModuleEnumerator(appDataDirectory));
 
             this.RegisterService<IGameLibrary>(new SqliteGameLibrary(new SqliteDatabase(Path.Combine(this.AppDataDirectory, "games.db"))));
             this.RegisterService<IMappedControllerElementCollectionStore>

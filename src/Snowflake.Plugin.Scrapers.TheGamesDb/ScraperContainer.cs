@@ -6,7 +6,7 @@ using Snowflake.Services;
 
 namespace Snowflake.Plugin.Scrapers.TheGamesDb
 {
-    public class ScraperContainer : IComposer
+    public class ScraperContainer : IComposable
     {
         [ImportService(typeof(IQueryProviderSource))]
         [ImportService(typeof(IContentDirectoryProvider))]

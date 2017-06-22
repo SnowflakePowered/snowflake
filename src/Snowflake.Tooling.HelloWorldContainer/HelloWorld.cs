@@ -6,7 +6,7 @@ using System;
 
 namespace Snowflake.Tooling.HelloWorldContainer
 {
-    public class HelloWorld : IComposer
+    public class HelloWorld : IComposable
     {
         [ImportService(typeof(IStoneProvider))]
         public void Compose(IServiceContainer serviceContainer)

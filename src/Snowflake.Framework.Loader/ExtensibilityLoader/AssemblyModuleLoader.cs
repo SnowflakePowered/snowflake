@@ -12,9 +12,9 @@ using Newtonsoft.Json;
 
 namespace Snowflake.Loader.ExtensibilityLoader
 {
-    internal class AssemblyModuleLoader : IModuleLoader<IComposer>
+    internal class AssemblyModuleLoader : IModuleLoader<IComposable>
     {
-        public IEnumerable<IComposer> LoadModule(IModule module)
+        public IEnumerable<IComposable> LoadModule(IModule module)
         {
             Console.WriteLine($"Loading module {module.Entry}");
             try
@@ -37,12 +37,12 @@ namespace Snowflake.Loader.ExtensibilityLoader
             var assembly = loadContext.LoadFromAssemblyPath(entryPath);
 
             var types = assembly.ExportedTypes
-                    .Where(t => t.GetInterfaces().Contains(typeof(IComposer)))
+                    .Where(t => t.GetInterfaces().Contains(typeof(IComposable)))
                     .Where(t => t.GetConstructor(Type.EmptyTypes) != null);
 
             foreach (var type in types)
             {
-                var container = Instantiate.CreateInstance(type) as IComposer;
+                var container = Instantiate.CreateInstance(type) as IComposable;
                 Console.WriteLine($"Found Container {container.GetType().Name}");
                 yield return container;
             }

@@ -6,6 +6,6 @@ namespace Snowflake.Services
 {
     public interface IServiceRegistrationProvider
     {
-        void RegisterService<T>(T serviceObject);
+        void RegisterService<T>(T serviceObject) where T : class;
     }
 }

@@ -14,6 +14,7 @@
   </ItemGroup>
   
   <ItemGroup>
+    <ProjectReference Include="..\Snowflake.Framework.Loader\Snowflake.Framework.Loader.csproj" />
     <ProjectReference Include="..\Snowflake.Framework.Primitives\Snowflake.Framework.Primitives.csproj" />
     <ProjectReference Include="..\Snowflake.Framework.Utility\Snowflake.Framework.Utility.csproj" />
     <ProjectReference Include="..\Snowflake.Framework\Snowflake.Framework.csproj" />

@@ -44,7 +44,7 @@ namespace Snowflake.Loader
             this.LoaderOptions = loaderOptions;
         }
 
-        public Module ToModule(DirectoryInfo moduleDirectory) => new Module(this.Name, 
+        public IModule ToModule(DirectoryInfo moduleDirectory) => new Module(this.Name, 
             this.Entry, 
             this.Loader, 
             this.Author,

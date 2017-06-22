@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Snowflake.Services
 {
-    public class StoneProviderComposer : IComposer
+    public class StoneProviderComposer : IComposable
     {
         [ImportService(typeof(IServiceRegistrationProvider))]
         public void Compose(IServiceContainer serviceContainer)

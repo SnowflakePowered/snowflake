@@ -10,7 +10,7 @@ namespace Snowflake.Loader
     /// Compose method.
     /// </summary>
    //todo [InheritedExport(typeof(IPluginContainer))]
-    public interface IComposer
+    public interface IComposable
     {
         /// <summary>
         /// This method is called upon initialization of your plugin assembly. 

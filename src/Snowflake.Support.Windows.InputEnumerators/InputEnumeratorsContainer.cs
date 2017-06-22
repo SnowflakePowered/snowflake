@@ -6,12 +6,15 @@ using System.Threading.Tasks;
 using Snowflake.Extensibility;
 using Snowflake.Input.Device;
 using Snowflake.Services;
+using Snowflake.Loader;
 
 namespace Snowflake.Plugin.InputEnumerators
 {
-    public class InputEnumeratorsContainer : IPluginContainer
+    public class InputEnumeratorsContainer : IComposable
     {
-        public void Compose(ICoreService coreInstance)
+        [ImportService(typeof(IPluginManager))]
+        [ImportService(typeof(IInputManager))]
+        public void Compose(IServiceContainer coreInstance)
         {
             var pm = coreInstance.Get<IPluginManager>();
             var im = coreInstance.Get<IInputManager>();

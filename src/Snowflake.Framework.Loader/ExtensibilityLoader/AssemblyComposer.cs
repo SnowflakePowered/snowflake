@@ -10,32 +10,32 @@ using System.Reflection;
 
 namespace Snowflake.Loader.ExtensibilityLoader
 {
-    public class ComposableContainerComposer
+    public class AssemblyComposableComposer
     {
-        private IList<Module> pluginModules;
-        private IList<IComposer> pluginContainers;
+        private IList<IModule> pluginModules;
+        private IList<IComposable> pluginComposables;
         private ICoreService coreService;
 
-        public ComposableContainerComposer(ICoreService coreService, ModuleEnumerator modules)
+        public AssemblyComposableComposer(ICoreService coreService, IModuleEnumerator modules)
         {
             this.coreService = coreService;
             var assemblyLoader = new AssemblyModuleLoader();
             this.pluginModules = modules.Modules.Where(module => module.Loader == "assembly").ToList(); 
-            this.pluginContainers = (from module in this.pluginModules
+            this.pluginComposables = (from module in this.pluginModules
                                      from pluginContainer in assemblyLoader.LoadModule(module)
                                      select pluginContainer).ToList();
         }
 
-        private IList<string> GetImportedServices(IComposer container)
+        private IList<string> GetImportedServices(IComposable container)
         {
-            var attributes = container.GetType().GetMethod(nameof(IComposer.Compose))
+            var attributes = container.GetType().GetMethod(nameof(IComposable.Compose))
                 .GetCustomAttributes<ImportServiceAttribute>();
             return attributes.Select(a => a.Service.FullName).ToList();
         }
 
         public void Compose()
         {
-            var toCompose = this.pluginContainers.Select(p => (plugin: p, services: this.GetImportedServices(p))).ToList();
+            var toCompose = this.pluginComposables.Select(p => (plugin: p, services: this.GetImportedServices(p))).ToList();
             int count = toCompose.Count();
             while (count > 0)
             {
@@ -54,7 +54,7 @@ namespace Snowflake.Loader.ExtensibilityLoader
             }
         }
 
-        private void ComposeContainer(IComposer pluginContainer, IList<string> services)
+        private void ComposeContainer(IComposable pluginContainer, IList<string> services)
         {
             Console.WriteLine($"Composing {pluginContainer.GetType().Name}");
             IServiceContainer container = new ServiceContainer(this.coreService, services);

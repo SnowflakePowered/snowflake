@@ -6,7 +6,7 @@ using Snowflake.Services;
 
 namespace Snowflake.Romfile.FileSignatures.Composers
 {
-    public class FileSignaturesComposer : IComposer
+    public class FileSignaturesComposer : IComposable
     {
         public void RegisterFileSignatures(IFileSignatureMatcher fileSignatureEngine)
         {

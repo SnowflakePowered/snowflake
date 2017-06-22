@@ -16,6 +16,7 @@ using Snowflake.Service;
 using Snowflake.Plugin.Scrapers.TheGamesDb;
 using Xunit;
 using Snowflake.Services;
+using Snowflake.Romfile.FileSignatures.Composers;
 
 namespace Snowflake.Tests.Scraper
 {

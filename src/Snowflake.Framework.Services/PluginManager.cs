@@ -70,21 +70,21 @@ namespace Snowflake.Services
         }
 
      
-        private IEnumerable<IComposer> GetExports(string loadableLocation)
+        private IEnumerable<IComposable> GetExports(string loadableLocation)
         {
             
             foreach (string fileName in Directory.EnumerateFiles(loadableLocation)
                 .Where(f => Path.GetExtension(f) == ".dll"))
             {
                 Assembly assembly;
-                IEnumerable<IComposer> containerTypes;
+                IEnumerable<IComposable> containerTypes;
                 try
                 {
                     assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(fileName); //todo check for dupes
                     containerTypes = assembly.ExportedTypes
-                    .Where(t => t.GetInterfaces().Contains(typeof(IComposer)))
+                    .Where(t => t.GetInterfaces().Contains(typeof(IComposable)))
                     .Where(t => t.GetConstructor(Type.EmptyTypes) != null)
-                    .Select(t => Instantiate.CreateInstance(t) as IComposer);
+                    .Select(t => Instantiate.CreateInstance(t) as IComposable);
                 }
                 catch
                 {

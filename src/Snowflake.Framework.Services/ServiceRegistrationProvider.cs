@@ -12,6 +12,6 @@ namespace Snowflake.Services
             this.coreService = coreService;
         }
 
-        public void RegisterService<T>(T serviceObject) => this.coreService.RegisterService<T>(serviceObject);
+        public void RegisterService<T>(T serviceObject) where T : class => this.coreService.RegisterService<T>(serviceObject);
     }
 }

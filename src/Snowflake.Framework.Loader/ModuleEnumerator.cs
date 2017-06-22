@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
@@ -12,17 +11,17 @@ using Newtonsoft.Json;
 
 namespace Snowflake.Loader
 {
-    public class ModuleEnumerator
+    internal class ModuleEnumerator : IModuleEnumerator
     {
         private DirectoryInfo ModuleDirectory { get; }
-        public IEnumerable<Module> Modules { get; set; }
+        public IEnumerable<IModule> Modules { get; }
         public ModuleEnumerator(string appDataDirectory)
         {
             this.ModuleDirectory = new DirectoryInfo(Path.Combine(appDataDirectory, "modules"));
             this.Modules = this.EnumerateModules().ToList();
         }
 
-        private IEnumerable<Module> EnumerateModules()
+        private IEnumerable<IModule> EnumerateModules()
         {
             return (from directory in this.ModuleDirectory.EnumerateDirectories()
                     where File.Exists(Path.Combine(directory.FullName, "module.json"))

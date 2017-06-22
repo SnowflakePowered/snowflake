@@ -36,9 +36,8 @@ namespace Snowflake.Shell.Windows
         {
 
             this.loadedCore = new CoreService(this.appDataDirectory);
-            this.loadedCore.RegisterService(new ModuleEnumerator(this.appDataDirectory));
-            var loader = this.loadedCore.Get<ModuleEnumerator>();
-            var composer = new ComposableContainerComposer(this.loadedCore, loader);
+            var loader = this.loadedCore.Get<IModuleEnumerator>();
+            var composer = new AssemblyComposableComposer(this.loadedCore, loader);
             composer.Compose();
             //this.loadedCore.Get<IEmulatorAssembliesManager>()?.LoadEmulatorAssemblies();
             //this.loadedCore.Get<IPluginManager>()?.Initialize();

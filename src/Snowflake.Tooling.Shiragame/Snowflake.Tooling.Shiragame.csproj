@@ -20,5 +20,6 @@
     <ProjectReference Include="..\Snowflake.Framework.Services\Snowflake.Framework.Services.csproj" />
     <ProjectReference Include="..\Snowflake.Framework.Utility\Snowflake.Framework.Utility.csproj" />
     <ProjectReference Include="..\Snowflake.Framework\Snowflake.Framework.csproj" />
+    <ProjectReference Include="..\Snowflake.Support.StoneProvider\Snowflake.Support.StoneProvider.csproj" />
   </ItemGroup>
 </Project>

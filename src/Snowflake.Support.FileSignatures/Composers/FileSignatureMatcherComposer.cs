@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Snowflake.Romfile.FileSignatures.Composers
 {
-    public class FileSignatureMatcherComposer : IComposer
+    public class FileSignatureMatcherComposer : IComposable
     {
         [ImportService(typeof(IStoneProvider))]
         [ImportService(typeof(IServiceRegistrationProvider))]

@@ -17,7 +17,7 @@ using Snowflake.Loader;
 
 namespace Snowflake.Plugin.Emulators.RetroArch
 {
-    public class RetroArchCommonContainer : IComposer
+    public class RetroArchCommonContainer : IComposable
     {
         [ImportService(typeof(IPluginManager))]
         [ImportService(typeof(IContentDirectoryProvider))]
