@@ -14,6 +14,7 @@ using Snowflake.Extensibility.Configuration;
 using Snowflake.Scraper;
 using System.Runtime.Loader;
 using Snowflake.Utility;
+using Snowflake.Loader;
 
 namespace Snowflake.Services
 {
@@ -39,7 +40,6 @@ namespace Snowflake.Services
         public void Initialize()
         {
             if (this.IsInitialized) return;
-            this.ComposeImports();
             this.IsInitialized = true;
         }
 
@@ -70,21 +70,21 @@ namespace Snowflake.Services
         }
 
      
-        private IEnumerable<IPluginContainer> GetExports(string loadableLocation)
+        private IEnumerable<IComposer> GetExports(string loadableLocation)
         {
             
             foreach (string fileName in Directory.EnumerateFiles(loadableLocation)
                 .Where(f => Path.GetExtension(f) == ".dll"))
             {
                 Assembly assembly;
-                IEnumerable<IPluginContainer> containerTypes;
+                IEnumerable<IComposer> containerTypes;
                 try
                 {
                     assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(fileName); //todo check for dupes
                     containerTypes = assembly.ExportedTypes
-                    .Where(t => t.GetInterfaces().Contains(typeof(IPluginContainer)))
+                    .Where(t => t.GetInterfaces().Contains(typeof(IComposer)))
                     .Where(t => t.GetConstructor(Type.EmptyTypes) != null)
-                    .Select(t => Instantiate.CreateInstance(t) as IPluginContainer);
+                    .Select(t => Instantiate.CreateInstance(t) as IComposer);
                 }
                 catch
                 {
@@ -100,35 +100,7 @@ namespace Snowflake.Services
                
             }
         }
-        private void ComposeImports() 
-        {
-            if (!Directory.Exists(Path.Combine(this.LoadablesLocation, "plugins"))) Directory.CreateDirectory(Path.Combine(this.LoadablesLocation, "plugins"));
-            var exports = this.GetExports(Path.Combine(this.LoadablesLocation, "plugins")); //Only initialize exports of type T
-           
-
-            foreach (var pluginContainer 
-                in from pluginContainer in exports
-                   let loadPriority = pluginContainer
-                        .GetType()
-                        .GetTypeInfo()
-                        .GetCustomAttribute<ContainerLoadPriorityAttribute>(true)?
-                        .LoadPriority ?? ContainerLoadPriority.Default
-                   orderby loadPriority ascending
-                   select pluginContainer)
-            {
-               /* try
-                {
-                    pluginContainer.Compose(this.CoreInstance);
-                    
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Unable to load plugin container: {pluginContainer?.GetType().AssemblyQualifiedName}");
-                    Console.WriteLine(ex.ToString());
-                }*/
-            }
-
-        }
+       
 
         bool disposed;
         public void Dispose()

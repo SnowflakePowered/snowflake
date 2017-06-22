@@ -10,11 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Quamotion.DiscUtils" Version="1.0.3" />
+    <Compile Remove="resource\**" />
+    <EmbeddedResource Remove="resource\**" />
+    <None Remove="resource\**" />
   </ItemGroup>
-  
+
   <ItemGroup>
-    <Folder Include="resource\" />
+    <PackageReference Include="Quamotion.DiscUtils" Version="1.0.3" />
   </ItemGroup>
   
   <ItemGroup>

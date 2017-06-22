@@ -6,7 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
 
-namespace Snowflake.Framework.Loader.ExtensibilityLoader
+namespace Snowflake.Loader.ExtensibilityLoader
 {
     internal class AssemblyModuleLoadContext : AssemblyLoadContext
     {
@@ -16,7 +16,7 @@ namespace Snowflake.Framework.Loader.ExtensibilityLoader
             this.folderPath = folderPath;
         }
 
-        public AssemblyModuleLoadContext(Module module) : this(Path.Combine(module.ModuleDirectory.FullName, "contents"))
+        public AssemblyModuleLoadContext(IModule module) : this(Path.Combine(module.ModuleDirectory.FullName, "contents"))
         {
         
         }

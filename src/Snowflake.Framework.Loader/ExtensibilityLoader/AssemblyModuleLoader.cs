@@ -10,11 +10,11 @@ using Snowflake.Extensibility;
 using Snowflake.Utility;
 using Newtonsoft.Json;
 
-namespace Snowflake.Framework.Loader.ExtensibilityLoader
+namespace Snowflake.Loader.ExtensibilityLoader
 {
-    internal class AssemblyModuleLoader : IModuleLoader<IPluginContainer>
+    internal class AssemblyModuleLoader : IModuleLoader<IComposer>
     {
-        public IEnumerable<IPluginContainer> LoadModule(Module module)
+        public IEnumerable<IComposer> LoadModule(IModule module)
         {
             Console.WriteLine($"Loading module {module.Entry}");
             try
@@ -37,13 +37,13 @@ namespace Snowflake.Framework.Loader.ExtensibilityLoader
             var assembly = loadContext.LoadFromAssemblyPath(entryPath);
 
             var types = assembly.ExportedTypes
-                    .Where(t => t.GetInterfaces().Contains(typeof(IPluginContainer)))
+                    .Where(t => t.GetInterfaces().Contains(typeof(IComposer)))
                     .Where(t => t.GetConstructor(Type.EmptyTypes) != null);
 
             foreach (var type in types)
             {
-                var container = Instantiate.CreateInstance(type) as IPluginContainer;
-                Console.WriteLine($"Found Plugin Container {container.GetType().Name}");
+                var container = Instantiate.CreateInstance(type) as IComposer;
+                Console.WriteLine($"Found Container {container.GetType().Name}");
                 yield return container;
             }
         }

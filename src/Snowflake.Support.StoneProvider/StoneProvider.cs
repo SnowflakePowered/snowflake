@@ -12,11 +12,12 @@ using Snowflake.Platform;
 
 namespace Snowflake.Services
 {
-    public class StoneProvider : IStoneProvider
+    internal class StoneProvider : IStoneProvider
     {
         public IDictionary<string, IPlatformInfo> Platforms { get; }
         public IDictionary<string, IControllerLayout> Controllers { get; }
         public Version StoneVersion { get; }
+
         public StoneProvider()
         {
             string stoneData = this.GetStoneData();

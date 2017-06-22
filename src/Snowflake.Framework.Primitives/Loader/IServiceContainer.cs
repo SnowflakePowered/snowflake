@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Snowflake.Extensibility
+namespace Snowflake.Loader
 {
     public interface IServiceContainer
     {
         T Get<T>();
         IEnumerable<string> Services { get; }
-        string AppDataDirectory { get; }
     }
 }

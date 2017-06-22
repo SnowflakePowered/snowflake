@@ -17,9 +17,9 @@ using Snowflake.Scraper;
 using Snowflake.Services;
 using Snowflake.Utility;
 using Snowflake.Plugin.Emulators.RetroArch.Adapters.Bsnes;
-using Snowflake.Framework.Loader;
 using Snowflake.Romfile;
-using Snowflake.Framework.Loader.ExtensibilityLoader;
+using Snowflake.Loader.ExtensibilityLoader;
+using Snowflake.Loader;
 
 namespace Snowflake.Shell.Windows
 {
@@ -37,9 +37,8 @@ namespace Snowflake.Shell.Windows
 
             this.loadedCore = new CoreService(this.appDataDirectory);
             this.loadedCore.RegisterService(new ModuleEnumerator(this.appDataDirectory));
-            this.loadedCore.RegisterService<IFileSignatureMatcher>(new FileSignatureMatcher(this.loadedCore.Get<IStoneProvider>()));
             var loader = this.loadedCore.Get<ModuleEnumerator>();
-            var composer = new PluginContainerComposer(this.loadedCore, loader);
+            var composer = new ComposableContainerComposer(this.loadedCore, loader);
             composer.Compose();
             //this.loadedCore.Get<IEmulatorAssembliesManager>()?.LoadEmulatorAssemblies();
             //this.loadedCore.Get<IPluginManager>()?.Initialize();

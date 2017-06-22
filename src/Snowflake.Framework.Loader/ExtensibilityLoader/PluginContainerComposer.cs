@@ -8,28 +8,27 @@ using System.Collections.Concurrent;
 using Snowflake.Utility;
 using System.Reflection;
 
-namespace Snowflake.Framework.Loader.ExtensibilityLoader
+namespace Snowflake.Loader.ExtensibilityLoader
 {
-    public class PluginContainerComposer
+    public class ComposableContainerComposer
     {
         private IList<Module> pluginModules;
-        private IList<IPluginContainer> pluginContainers;
+        private IList<IComposer> pluginContainers;
         private ICoreService coreService;
 
-        public PluginContainerComposer(ICoreService coreService, ModuleEnumerator modules)
+        public ComposableContainerComposer(ICoreService coreService, ModuleEnumerator modules)
         {
             this.coreService = coreService;
             var assemblyLoader = new AssemblyModuleLoader();
-            this.pluginModules = modules.Modules.Where(module => module.Loader == "assembly")
-                .Where(module => module.LoaderOptions.composer == "plugincontainer").ToList();
+            this.pluginModules = modules.Modules.Where(module => module.Loader == "assembly").ToList(); 
             this.pluginContainers = (from module in this.pluginModules
                                      from pluginContainer in assemblyLoader.LoadModule(module)
                                      select pluginContainer).ToList();
         }
 
-        private IList<string> GetImportedServices(IPluginContainer container)
+        private IList<string> GetImportedServices(IComposer container)
         {
-            var attributes = container.GetType().GetMethod(nameof(IPluginContainer.Compose))
+            var attributes = container.GetType().GetMethod(nameof(IComposer.Compose))
                 .GetCustomAttributes<ImportServiceAttribute>();
             return attributes.Select(a => a.Service.FullName).ToList();
         }
@@ -55,7 +54,7 @@ namespace Snowflake.Framework.Loader.ExtensibilityLoader
             }
         }
 
-        private void ComposeContainer(IPluginContainer pluginContainer, IList<string> services)
+        private void ComposeContainer(IComposer pluginContainer, IList<string> services)
         {
             Console.WriteLine($"Composing {pluginContainer.GetType().Name}");
             IServiceContainer container = new ServiceContainer(this.coreService, services);

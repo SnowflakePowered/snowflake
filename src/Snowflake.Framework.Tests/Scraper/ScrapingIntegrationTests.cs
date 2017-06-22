@@ -30,7 +30,7 @@ namespace Snowflake.Tests.Scraper
             this.stoneProvider = new StoneProvider();
             this.scrapedProvider = new TheGamesDbMetadataProvider();
             this.fileSignatureMatcher = new FileSignatureMatcher(this.stoneProvider);
-            new FileSignaturesContainer().RegisterFileSignatures(this.fileSignatureMatcher);
+            new FileSignaturesComposer().RegisterFileSignatures(this.fileSignatureMatcher);
             var source = new QueryProviderSource();
             source.Register(this.scrapedProvider);
             source.Register(

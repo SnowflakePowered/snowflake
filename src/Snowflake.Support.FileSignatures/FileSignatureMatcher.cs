@@ -6,8 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Platform;
 using Snowflake.Services;
+using Snowflake.Romfile;
 
-namespace Snowflake.Romfile
+namespace Snowflake.Romfile.FileSignatures
 {
     public class FileSignatureMatcher : IFileSignatureMatcher
     {

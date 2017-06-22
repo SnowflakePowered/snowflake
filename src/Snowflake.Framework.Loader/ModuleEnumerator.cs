@@ -10,7 +10,7 @@ using Snowflake.Extensibility;
 using Snowflake.Utility;
 using Newtonsoft.Json;
 
-namespace Snowflake.Framework.Loader
+namespace Snowflake.Loader
 {
     public class ModuleEnumerator
     {

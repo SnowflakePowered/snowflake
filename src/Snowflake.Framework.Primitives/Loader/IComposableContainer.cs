@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using Snowflake.Services;
 
-namespace Snowflake.Extensibility
+namespace Snowflake.Loader
 {
 
     /// <summary>
@@ -10,8 +10,7 @@ namespace Snowflake.Extensibility
     /// Compose method.
     /// </summary>
    //todo [InheritedExport(typeof(IPluginContainer))]
-    [ContainerLoadPriority(ContainerLoadPriority.Default)]
-    public interface IPluginContainer
+    public interface IComposer
     {
         /// <summary>
         /// This method is called upon initialization of your plugin assembly. 

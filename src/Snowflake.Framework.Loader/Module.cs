@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace Snowflake.Framework.Loader
+namespace Snowflake.Loader
 {
-    public class Module
+    public class Module : IModule
     {
         public string Name { get; }
         public string Entry { get; }
         public string Loader { get; }
-        public dynamic LoaderOptions { get; }
+        public string Author { get; }
         public DirectoryInfo ModuleDirectory { get; }
-        public Module(string name, string entry, string loader, dynamic loaderOptions, DirectoryInfo moduleDirectory) {
+        public Module(string name, string entry, string loader, string author, DirectoryInfo moduleDirectory) {
             this.Name = name;
             this.Entry = entry;
             this.Loader = loader;
-            this.LoaderOptions = loaderOptions;
+            this.Author = author;
             this.ModuleDirectory = moduleDirectory;
         }
     }
@@ -44,6 +44,10 @@ namespace Snowflake.Framework.Loader
             this.LoaderOptions = loaderOptions;
         }
 
-        public Module ToModule(DirectoryInfo moduleDirectory) => new Module(this.Name, this.Entry, this.Loader, this.LoaderOptions, moduleDirectory);
+        public Module ToModule(DirectoryInfo moduleDirectory) => new Module(this.Name, 
+            this.Entry, 
+            this.Loader, 
+            this.Author,
+            moduleDirectory);
     }
 }

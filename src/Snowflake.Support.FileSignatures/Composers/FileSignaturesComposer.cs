@@ -1,11 +1,12 @@
 ﻿using Snowflake.Extensibility;
+using Snowflake.Loader;
 using Snowflake.Romfile.FileSignatures.Nintendo;
 using Snowflake.Romfile.FileSignatures.Sony;
 using Snowflake.Services;
 
-namespace Snowflake.Romfile.FileSignatures
+namespace Snowflake.Romfile.FileSignatures.Composers
 {
-    public class FileSignaturesContainer : IPluginContainer
+    public class FileSignaturesComposer : IComposer
     {
         public void RegisterFileSignatures(IFileSignatureMatcher fileSignatureEngine)
         {

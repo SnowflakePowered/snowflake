@@ -30,17 +30,17 @@ namespace Snowflake.Services
         public CoreService(string appDataDirectory)
         {
             this.logger = LogManager.GetLogger("~CORESERVICE");
-            this.serviceContainer = new ConcurrentDictionary<Type, object>();
-            this.RegisterService<IStoneProvider>(new StoneProvider());
             this.AppDataDirectory = appDataDirectory;
+            this.serviceContainer = new ConcurrentDictionary<Type, object>();
+            this.RegisterService<IServiceRegistrationProvider>(new ServiceRegistrationProvider(this));
+            this.RegisterService<IContentDirectoryProvider>(new ContentDirectoryProvider(this.AppDataDirectory));
+
             this.RegisterService<IGameLibrary>(new SqliteGameLibrary(new SqliteDatabase(Path.Combine(this.AppDataDirectory, "games.db"))));
             this.RegisterService<IMappedControllerElementCollectionStore>
                 (new SqliteMappedControllerElementCollectionStore(new SqliteDatabase(Path.Combine(this.AppDataDirectory, "controllermappings.db"))));
             this.RegisterService<IConfigurationCollectionStore>(new SqliteConfigurationCollectionStore(new SqliteDatabase(Path.Combine(this.AppDataDirectory, "configurations.db"))));
           
             //this.RegisterService<IPluginManager>(new PluginManager(this.AppDataDirectory, this)); 
-           
-            
         }
 
         public void RegisterService<T>(T serviceObject)

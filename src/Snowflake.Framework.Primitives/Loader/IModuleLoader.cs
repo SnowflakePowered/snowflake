@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Snowflake.Framework.Loader
+namespace Snowflake.Loader
 {
     public interface IModuleLoader<out T> 
     {
-        IEnumerable<T> LoadModule(Module module);
+        IEnumerable<T> LoadModule(IModule module);
     }
 }

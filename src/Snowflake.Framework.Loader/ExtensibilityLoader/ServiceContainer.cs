@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Snowflake.Framework.Loader.ExtensibilityLoader
+namespace Snowflake.Loader.ExtensibilityLoader
 {
     internal class ServiceContainer : IServiceContainer
     {
