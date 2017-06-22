@@ -36,11 +36,6 @@ namespace Snowflake.Services
             this.RegisterService<IServiceRegistrationProvider>(new ServiceRegistrationProvider(this));
             this.RegisterService<IContentDirectoryProvider>(new ContentDirectoryProvider(this.AppDataDirectory));
             this.RegisterService<IModuleEnumerator>(new ModuleEnumerator(appDataDirectory));
-
-            this.RegisterService<IGameLibrary>(new SqliteGameLibrary(new SqliteDatabase(Path.Combine(this.AppDataDirectory, "games.db"))));
-            this.RegisterService<IMappedControllerElementCollectionStore>
-                (new SqliteMappedControllerElementCollectionStore(new SqliteDatabase(Path.Combine(this.AppDataDirectory, "controllermappings.db"))));
-            this.RegisterService<IConfigurationCollectionStore>(new SqliteConfigurationCollectionStore(new SqliteDatabase(Path.Combine(this.AppDataDirectory, "configurations.db"))));
           
             //this.RegisterService<IPluginManager>(new PluginManager(this.AppDataDirectory, this)); 
         }

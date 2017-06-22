@@ -56,6 +56,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Tooling.HelloWorl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Support.StoneProvider", "Snowflake.Support.StoneProvider\Snowflake.Support.StoneProvider.csproj", "{AD3E7BA2-4B2F-47FD-BA0C-DB4EF83BB05D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Support.StoreProviders", "Snowflake.Support.StoreProviders\Snowflake.Support.StoreProviders.csproj", "{01DDE186-5378-4C77-9CA1-3BC161F2B9E5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -270,6 +272,18 @@ Global
 		{AD3E7BA2-4B2F-47FD-BA0C-DB4EF83BB05D}.Release|x64.Build.0 = Release|Any CPU
 		{AD3E7BA2-4B2F-47FD-BA0C-DB4EF83BB05D}.Release|x86.ActiveCfg = Release|Any CPU
 		{AD3E7BA2-4B2F-47FD-BA0C-DB4EF83BB05D}.Release|x86.Build.0 = Release|Any CPU
+		{01DDE186-5378-4C77-9CA1-3BC161F2B9E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01DDE186-5378-4C77-9CA1-3BC161F2B9E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01DDE186-5378-4C77-9CA1-3BC161F2B9E5}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{01DDE186-5378-4C77-9CA1-3BC161F2B9E5}.Debug|x64.Build.0 = Debug|Any CPU
+		{01DDE186-5378-4C77-9CA1-3BC161F2B9E5}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{01DDE186-5378-4C77-9CA1-3BC161F2B9E5}.Debug|x86.Build.0 = Debug|Any CPU
+		{01DDE186-5378-4C77-9CA1-3BC161F2B9E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01DDE186-5378-4C77-9CA1-3BC161F2B9E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01DDE186-5378-4C77-9CA1-3BC161F2B9E5}.Release|x64.ActiveCfg = Release|Any CPU
+		{01DDE186-5378-4C77-9CA1-3BC161F2B9E5}.Release|x64.Build.0 = Release|Any CPU
+		{01DDE186-5378-4C77-9CA1-3BC161F2B9E5}.Release|x86.ActiveCfg = Release|Any CPU
+		{01DDE186-5378-4C77-9CA1-3BC161F2B9E5}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -294,5 +308,6 @@ Global
 		{AD23DC59-4245-4339-B36A-D667A185BA62} = {49B7A61F-B3BE-485E-84D0-B78C08656412}
 		{292B1A29-4ADE-49CB-BDE3-20759AB20E37} = {8E178A6E-EAA5-413A-9EBE-36557DFF288E}
 		{AD3E7BA2-4B2F-47FD-BA0C-DB4EF83BB05D} = {FBD15674-246A-4C57-B865-07214D8BB9A1}
+		{01DDE186-5378-4C77-9CA1-3BC161F2B9E5} = {FBD15674-246A-4C57-B865-07214D8BB9A1}
 	EndGlobalSection
 EndGlobal

@@ -18,11 +18,11 @@ using Microsoft.Data.Sqlite;
 
 namespace Snowflake.Configuration
 {
-    public class SqliteConfigurationCollectionStore : IConfigurationCollectionStore
+    internal class SqliteConfigurationCollectionStore : IConfigurationCollectionStore
     {
         private readonly SqliteDatabase backingDatabase;
 
-        public SqliteConfigurationCollectionStore(SqliteDatabase sqliteDatabase)
+        internal SqliteConfigurationCollectionStore(SqliteDatabase sqliteDatabase)
         {
             this.backingDatabase = sqliteDatabase;
             this.CreateDatabase();
