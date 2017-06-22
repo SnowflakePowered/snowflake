@@ -3,7 +3,6 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using NLog;
 using Snowflake.Configuration;
 using Snowflake.Input;
 using Snowflake.Input.Controller.Mapped;
@@ -19,8 +18,6 @@ namespace Snowflake.Services
         #region Loaded Objects
         public string AppDataDirectory { get; }
         private readonly IDictionary<Type, object> serviceContainer;
-        private ILogger logger;
-
         #endregion
 
         // Flag: Has Dispose already been called? 
@@ -30,11 +27,11 @@ namespace Snowflake.Services
     
         public CoreService(string appDataDirectory)
         {
-            this.logger = LogManager.GetLogger("~CORESERVICE");
             this.AppDataDirectory = appDataDirectory;
             this.serviceContainer = new ConcurrentDictionary<Type, object>();
-            this.RegisterService<IServiceRegistrationProvider>(new ServiceRegistrationProvider(this));
+            this.RegisterService<ILogProvider>(new LogProvider());
             this.RegisterService<IContentDirectoryProvider>(new ContentDirectoryProvider(this.AppDataDirectory));
+            this.RegisterService<IServiceRegistrationProvider>(new ServiceRegistrationProvider(this));
             this.RegisterService<IModuleEnumerator>(new ModuleEnumerator(appDataDirectory));
           
             //this.RegisterService<IPluginManager>(new PluginManager(this.AppDataDirectory, this)); 

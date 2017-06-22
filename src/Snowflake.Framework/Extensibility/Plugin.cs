@@ -6,7 +6,6 @@ using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using NLog;
 using Snowflake.Extensibility.Configuration;
 using Snowflake.Services;
 
@@ -24,16 +23,17 @@ namespace Snowflake.Extensibility
         /// The logger provided for this plugin
         /// </summary>
         protected ILogger Logger { get; private set; }
+
         /// <summary>
         /// The Assembly object representation of the compiled plugin
         /// </summary>
         protected Assembly PluginAssembly { get; }
 
-        protected Plugin(string appDataDirectory, IPluginProperties pluginProperties)
+        protected Plugin(string appDataDirectory, ILogger logger, IPluginProperties pluginProperties)
         {
             this.PluginName = this.GetPluginName();
             this.PluginAssembly = this.GetType().GetTypeInfo().Assembly;
-            this.Logger = LogManager.GetLogger(this.PluginName);
+            this.Logger = logger;
             this.PluginProperties = pluginProperties;
             this.PluginDataPath = Path.Combine(appDataDirectory, "plugins", this.PluginName);
 
@@ -45,7 +45,7 @@ namespace Snowflake.Extensibility
         {
             this.PluginName = this.GetPluginName();
             this.PluginAssembly = this.GetType().GetTypeInfo().Assembly;
-            this.Logger = LogManager.GetLogger(this.PluginName);
+            this.Logger = new NlogLogger(this.PluginName);
             this.PluginProperties = new JsonPluginProperties(JObject
                .FromObject(JsonConvert
                .DeserializeObject(this.GetStringResource("plugin.json"),

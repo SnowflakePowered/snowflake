@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyCulture("")]
 [assembly: InternalsVisibleTo("Snowflake.Support.StoreProviders")]
+[assembly: InternalsVisibleTo("Snowflake.Framework.Services")]
 [assembly: InternalsVisibleTo("Snowflake.Framework.Tests")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 

@@ -22,10 +22,12 @@ namespace Snowflake.Plugin.Emulators.RetroArch
         [ImportService(typeof(IPluginManager))]
         [ImportService(typeof(IContentDirectoryProvider))]
         [ImportService(typeof(IStoneProvider))]
+        [ImportService(typeof(ILogProvider))]
         public void Compose(IServiceContainer coreInstance)
         {
             var pm = coreInstance.Get<IPluginManager>();
             var appdata = coreInstance.Get<IContentDirectoryProvider>();
+            var log = coreInstance.Get<ILogProvider>().GetLogger("RetroArch");
             string appDataDirectory = appdata.ApplicationData.FullName;
             var processHandler = new RetroArchProcessHandler(appDataDirectory);
             var shaderManager = new ShaderManager(Path.Combine(processHandler.PluginDataPath, "shaders"));

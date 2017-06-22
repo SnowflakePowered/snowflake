@@ -33,7 +33,7 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Adapters
             IBiosManager biosManager,
             ISaveManager saveManager, 
             ShaderManager shaderManager) 
-            : base(appDataDirectory, stoneProvider, collectionStore,biosManager, saveManager)
+            : base(appDataDirectory, stoneProvider, collectionStore, biosManager, saveManager)
         {
             this.ProcessHandler = processHandler;
             this.CorePath = Path.Combine(this.PluginDataPath, this.PluginProperties.Get("retroarch_core"));

@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Castle.Core.Internal;
 using Castle.DynamicProxy;
 using EnumsNET.NonGeneric;
-using NLog.LayoutRenderers.Wrappers;
 using Snowflake.Configuration.Attributes;
 using Snowflake.Configuration.Interceptors;
 
