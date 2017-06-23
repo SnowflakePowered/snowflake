@@ -26,6 +26,21 @@ namespace Snowflake.Extensibility
         string Name { get; }
 
         /// <summary>
+        /// The author of the plugin.
+        /// </summary>
+        string Author { get; }
+
+        /// <summary>
+        /// A short description of the plugin
+        /// </summary>
+        string Description { get; }
+
+        /// <summary>
+        /// The version of the plugin
+        /// </summary>
+        Version Version { get; }
+
+        /// <summary>
         /// This plugin's content directory
         /// </summary>
         DirectoryInfo ContentDirectory { get; }

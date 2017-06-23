@@ -9,8 +9,9 @@ using System.Runtime.Loader;
 using Snowflake.Extensibility;
 using Snowflake.Utility;
 using Newtonsoft.Json;
+using Snowflake.Loader;
 
-namespace Snowflake.Loader.ExtensibilityLoader
+namespace Snowflake.Services.AssemblyLoader
 {
     internal class AssemblyModuleLoader : IModuleLoader<IComposable>
     {

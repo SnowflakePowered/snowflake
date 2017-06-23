@@ -15,10 +15,18 @@ namespace Snowflake.Extensibility
         /// <summary>
         /// The name of the plugin
         /// </summary>
-        string PluginName { get; }
+        string Name { get; }
         /// <summary>
-        /// The plugin provision from the active plugin manager for this instance
+        /// The author of the plugin.
         /// </summary>
-        IPluginProvision Provision { get; }
+        string Author { get; }
+        /// <summary>
+        /// A short description of the plugin
+        /// </summary>
+        string Description { get; }
+        /// <summary>
+        /// The version of the plugin
+        /// </summary>
+        Version Version { get; }
     }
 }

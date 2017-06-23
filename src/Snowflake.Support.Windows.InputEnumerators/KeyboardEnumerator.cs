@@ -21,7 +21,7 @@ namespace Snowflake.Plugin.InputEnumerators
     {
         private readonly IInputManager inputManager;
 
-        public KeyboardEnumerator(IInputManager inputManager)
+        public KeyboardEnumerator(IPluginProvision p, IInputManager inputManager) : base(p)
         {
             this.inputManager = inputManager;
         }

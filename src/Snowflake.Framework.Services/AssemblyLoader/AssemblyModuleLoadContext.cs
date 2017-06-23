@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyModel;
+using Snowflake.Loader;
 using Snowflake.Services;
 using System;
 using System.IO;
@@ -6,7 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
 
-namespace Snowflake.Loader.ExtensibilityLoader
+namespace Snowflake.Services.AssemblyLoader
 {
     internal class AssemblyModuleLoadContext : AssemblyLoadContext
     {

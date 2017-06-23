@@ -7,8 +7,9 @@ using Snowflake.Services;
 using System.Collections.Concurrent;
 using Snowflake.Utility;
 using System.Reflection;
+using Snowflake.Loader;
 
-namespace Snowflake.Loader.ExtensibilityLoader
+namespace Snowflake.Services.AssemblyLoader
 {
     public class AssemblyComposer
     {

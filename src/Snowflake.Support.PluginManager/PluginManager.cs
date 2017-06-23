@@ -11,6 +11,8 @@ using System.Text;
 using System.Reflection;
 using Snowflake.Utility;
 using System.IO;
+using Snowflake.Extensions;
+using System.Collections.Immutable;
 
 namespace Snowflake.Support.PluginManager
 {
@@ -18,29 +20,60 @@ namespace Snowflake.Support.PluginManager
     {
         private readonly ILogProvider logProvider;
         private readonly IContentDirectoryProvider contentDirectory;
+        private readonly IDictionary<Type, IImmutableList<IPlugin>> loadedPlugins;
+
         public PluginManager(ILogProvider logProvider, IContentDirectoryProvider contentDirectory)
         {
             this.logProvider = logProvider;
             this.contentDirectory = contentDirectory;
+            this.loadedPlugins = new Dictionary<Type, IImmutableList<IPlugin>>();
         }
 
         public IPluginProvision GetProvision<T>(IModule composableModule) where T : IPlugin
         {
             var resourceDirectory = composableModule.ModuleDirectory.CreateSubdirectory("resource"); //todo: check for missing directory!!
-            var pluginName = typeof(T).GetTypeInfo().GetCustomAttribute<PluginAttribute>().PluginName;
-            if (pluginName == "common") throw new UnauthorizedAccessException("Plugin name can not be 'common'.");
-            var pluginResourceDirectory = resourceDirectory.CreateSubdirectory(pluginName);
+            var pluginAttr = typeof(T).GetTypeInfo().GetCustomAttribute<PluginAttribute>();
+            if (pluginAttr.PluginName == "common") throw new UnauthorizedAccessException("Plugin name can not be 'common'.");
+            var pluginResourceDirectory = resourceDirectory.CreateSubdirectory(pluginAttr.PluginName);
             var pluginCommonResourceDirectory = resourceDirectory.CreateSubdirectory("common");
             IPluginProperties properties = new JsonPluginProperties(JObject
                .FromObject(JsonConvert
                .DeserializeObject(File.ReadAllText(pluginResourceDirectory.GetFiles().Where(f => f.Name == "plugin.json")
                .First().FullName)), new JsonSerializer { Culture = CultureInfo.InvariantCulture }));
             var pluginDataDirectory = this.contentDirectory.ApplicationData.CreateSubdirectory("plugincontents")
-                    .CreateSubdirectory(pluginName);
-            return new PluginProvision(this.logProvider.GetLogger($"Plugin:{pluginName}"), 
-                properties, pluginName, pluginDataDirectory, pluginCommonResourceDirectory, pluginResourceDirectory);
+                    .CreateSubdirectory(pluginAttr.PluginName);
+            return new PluginProvision(this.logProvider.GetLogger($"Plugin:{pluginAttr.PluginName}"),
+                properties, pluginAttr.PluginName, 
+                properties.Get(PluginInfoFields.Author) ?? pluginAttr.Author,
+                properties.Get(PluginInfoFields.Description) ?? pluginAttr.Description,
+                pluginAttr.Version, pluginDataDirectory, pluginCommonResourceDirectory, pluginResourceDirectory);
         }
 
+        public IEnumerable<T> Get<T>() where T : IPlugin
+        {
+            if(this.loadedPlugins.ContainsKey(typeof(T)))
+            {
+                return this.loadedPlugins[typeof(T)].Cast<T>().ToImmutableList();
+            }
+            return ImmutableList<T>.Empty;
+        }
+
+        public T Get<T>(string pluginName) where T : IPlugin
+        {
+            return (T)this.loadedPlugins[typeof(T)].FirstOrDefault(p => p.Name == pluginName);
+        }
+
+        public void Register<T>(T plugin) where T : IPlugin
+        {
+            if (!this.loadedPlugins.ContainsKey(typeof(T)))
+                this.loadedPlugins.Add(typeof(T), ImmutableList<IPlugin>.Empty);
+            this.loadedPlugins[typeof(T)] = this.loadedPlugins[typeof(T)].Add(plugin);
+        }
+
+        public bool IsRegistered<T>(string pluginName) where T : IPlugin
+        {
+            return this.Get<T>(pluginName) != null;
+        }
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
 
@@ -73,11 +106,6 @@ namespace Snowflake.Support.PluginManager
             Dispose(true);
             // TODO: uncomment the following line if the finalizer is overridden above.
             // GC.SuppressFinalize(this);
-        }
-
-        public void Register<T>(T plugin) where T : IPlugin
-        {
-            throw new NotImplementedException();
         }
         #endregion
 

@@ -21,7 +21,7 @@ namespace Snowflake.Plugin.InputEnumerators
     {
         private readonly IInputManager inputManager;
 
-        public XInputGamepadEnumerator(IInputManager inputManager)
+        public XInputGamepadEnumerator(IPluginProvision p, IInputManager inputManager) : base(p)
         {
             this.inputManager = inputManager;
         }

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Snowflake.Loader.ExtensibilityLoader
+namespace Snowflake.Loader
 {
     internal class ServiceContainer : IServiceContainer
     {
@@ -18,8 +18,6 @@ namespace Snowflake.Loader.ExtensibilityLoader
         }
 
         public IEnumerable<string> Services => this.services.AsEnumerable();
-
-        public string AppDataDirectory => throw new NotImplementedException();
 
         public T Get<T>()
         {

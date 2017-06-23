@@ -47,7 +47,7 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Adapters.Bsnes
 
         public override IConfigurationCollection GetConfiguration(IGameRecord gameRecord, string profileName = "default")
         {
-            return this.CollectionStore.Get<BsnesConfiguration>(gameRecord.Guid, this.PluginName, profileName);
+            return this.CollectionStore.Get<BsnesConfiguration>(gameRecord.Guid, this.Name, profileName);
         }
 
         public override IConfigurationCollection GetConfiguration()

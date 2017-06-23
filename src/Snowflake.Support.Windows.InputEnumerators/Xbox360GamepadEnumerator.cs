@@ -21,7 +21,7 @@ namespace Snowflake.Plugin.InputEnumerators
     {
         private readonly IInputManager inputManager;
 
-        public Xbox360GamepadEnumerator(IInputManager inputManager)
+        public Xbox360GamepadEnumerator(IPluginProvision p, IInputManager inputManager) : base(p)
         {
             this.inputManager = inputManager;
         }

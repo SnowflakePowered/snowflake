@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Snowflake.Extensibility;
 using Xunit;
 using Snowflake.Services;
+using Snowflake.Support.PluginManager;
 
 namespace Snowflake.Service.Tests
 {
@@ -22,7 +23,7 @@ namespace Snowflake.Service.Tests
         {
             var coreInstance = new Moq.Mock<ICoreService>();
             var testPlugin = new Moq.Mock<ITestPlugin>();
-            testPlugin.SetupGet(plugin => plugin.PluginName).Returns("Test");
+            testPlugin.SetupGet(plugin => plugin.Name).Returns("Test");
             IPluginManager pluginManager = new PluginManager("", coreInstance.Object);
             pluginManager.Register(testPlugin.Object);
         }
@@ -32,7 +33,7 @@ namespace Snowflake.Service.Tests
         {
             var coreInstance = new Moq.Mock<ICoreService>();
             var testPlugin = new Moq.Mock<ITestPlugin>();
-            testPlugin.SetupGet(plugin => plugin.PluginName).Returns("Test");
+            testPlugin.SetupGet(plugin => plugin.Name).Returns("Test");
             testPlugin.Setup(plugin => plugin.Test()).Returns(true);
             IPluginManager pluginManager = new PluginManager("", coreInstance.Object);
             pluginManager.Register(testPlugin.Object);
@@ -44,7 +45,7 @@ namespace Snowflake.Service.Tests
         {
             var coreInstance = new Moq.Mock<ICoreService>();
             var testPlugin = new Moq.Mock<ITestPlugin>();
-            testPlugin.SetupGet(plugin => plugin.PluginName).Returns("Test");
+            testPlugin.SetupGet(plugin => plugin.Name).Returns("Test");
             testPlugin.Setup(plugin => plugin.Test()).Returns(true);
             IPluginManager pluginManager = new PluginManager("", coreInstance.Object);
             pluginManager.Register(testPlugin.Object);

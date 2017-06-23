@@ -21,7 +21,7 @@ namespace Snowflake.Plugin.InputEnumerators
     {
         private readonly IInputManager inputManager;
 
-        public WiimoteEnumerator(IInputManager inputManager)
+        public WiimoteEnumerator(IPluginProvision p, IInputManager inputManager) : base(p)
         {
             this.inputManager = inputManager;
         }

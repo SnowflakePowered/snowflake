@@ -12,7 +12,7 @@ using Snowflake.Services;
 
 namespace Snowflake.Input.Device
 {
-    public abstract class InputEnumerator : Plugin, IInputEnumerator
+    public abstract class InputEnumerator : ProvisionedPlugin, IInputEnumerator
     {
         public IControllerLayout ControllerLayout { get; }
 

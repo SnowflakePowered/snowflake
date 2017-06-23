@@ -11,19 +11,20 @@ using Snowflake.Services;
 
 namespace Snowflake.Extensibility
 {
-    public abstract class Plugin : IPlugin
+    public abstract class ProvisionedPlugin : IProvisionedPlugin
     {
-        public string PluginName { get; }
         public IPluginProvision Provision { get; }
 
-        /// <summary>
-        /// The logger provided for this plugin
-        /// </summary>
-        protected ILogger Logger { get; private set; }
+        public string Name => this.Provision.Name;
 
-        protected Plugin(IPluginProvision provision)
+        public string Author => this.Provision.Author;
+
+        public string Description => this.Provision.Description;
+
+        public Version Version => this.Provision.Version;
+
+        protected ProvisionedPlugin(IPluginProvision provision)
         {
-            this.PluginName = provision.Name;
             this.Provision = provision;
         }
         

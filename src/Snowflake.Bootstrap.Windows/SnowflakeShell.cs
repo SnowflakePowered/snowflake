@@ -18,8 +18,8 @@ using Snowflake.Services;
 using Snowflake.Utility;
 using Snowflake.Plugin.Emulators.RetroArch.Adapters.Bsnes;
 using Snowflake.Romfile;
-using Snowflake.Loader.ExtensibilityLoader;
 using Snowflake.Loader;
+using Snowflake.Services.AssemblyLoader;
 
 namespace Snowflake.Shell.Windows
 {

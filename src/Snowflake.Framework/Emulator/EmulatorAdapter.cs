@@ -16,7 +16,7 @@ using System.IO;
 namespace Snowflake.Emulator
 {
    
-    public abstract class EmulatorAdapter : Plugin, IEmulatorAdapter
+    public abstract class EmulatorAdapter : ProvisionedPlugin, IEmulatorAdapter
     {
         public IEnumerable<IInputMapping> InputMappings { get; }
         public IEnumerable<string> Capabilities { get; }
