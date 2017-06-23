@@ -12,5 +12,6 @@ namespace Snowflake.Services
             this.ApplicationData = new DirectoryInfo(appDataDirectory);
         }
         public DirectoryInfo ApplicationData { get; }
+        
     }
 }

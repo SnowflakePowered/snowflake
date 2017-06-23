@@ -11,7 +11,7 @@ namespace Snowflake.Support.StoreProviders
     {
         [ImportService(typeof(IServiceRegistrationProvider))]
         [ImportService(typeof(IContentDirectoryProvider))]
-        public void Compose(IServiceContainer serviceContainer)
+        public void Compose(IModule composableModule, IServiceContainer serviceContainer)
         {
             var register = serviceContainer.Get<IServiceRegistrationProvider>();
             var appdata = serviceContainer.Get<IContentDirectoryProvider>();

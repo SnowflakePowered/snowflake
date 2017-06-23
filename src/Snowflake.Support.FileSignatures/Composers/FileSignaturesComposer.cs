@@ -48,7 +48,7 @@ namespace Snowflake.Romfile.FileSignatures.Composers
         }
 
         [ImportService(typeof(IFileSignatureMatcher))]
-        public void Compose(IServiceContainer coreInstance)
+        public void Compose(IModule module, IServiceContainer coreInstance)
         {
             var fileSignatureEngine = coreInstance.Get<IFileSignatureMatcher>();
             this.RegisterFileSignatures(fileSignatureEngine);

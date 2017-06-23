@@ -8,7 +8,7 @@ namespace Snowflake.Plugin.InputManager.Win32
     public class InputManagerContainer : IComposable
     {
         [ImportService(typeof(IServiceRegistrationProvider))]
-        public void Compose(IServiceContainer coreInstance)
+        public void Compose(IModule module, IServiceContainer coreInstance)
         {
             coreInstance.Get<IServiceRegistrationProvider>()
                 .RegisterService<IInputManager>(new InputManager());

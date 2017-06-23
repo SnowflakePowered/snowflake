@@ -29,11 +29,11 @@ namespace Snowflake.Services
         {
             this.AppDataDirectory = appDataDirectory;
             this.serviceContainer = new ConcurrentDictionary<Type, object>();
-            this.RegisterService<ILogProvider>(new LogProvider());
+            this.RegisterService<IModuleEnumerator>(new ModuleEnumerator(appDataDirectory));
             this.RegisterService<IContentDirectoryProvider>(new ContentDirectoryProvider(this.AppDataDirectory));
             this.RegisterService<IServiceRegistrationProvider>(new ServiceRegistrationProvider(this));
-            this.RegisterService<IModuleEnumerator>(new ModuleEnumerator(appDataDirectory));
-          
+            this.RegisterService<ILogProvider>(new LogProvider());
+
             //this.RegisterService<IPluginManager>(new PluginManager(this.AppDataDirectory, this)); 
         }
 

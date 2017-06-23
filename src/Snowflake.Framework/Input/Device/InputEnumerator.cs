@@ -18,10 +18,11 @@ namespace Snowflake.Input.Device
 
         public abstract IEnumerable<IInputDevice> GetConnectedDevices();
 
-        protected InputEnumerator() : base(Path.GetTempPath())
+        protected InputEnumerator(IPluginProvision p) : base(p)
         { 
             this.ControllerLayout =
-                JsonConvert.DeserializeObject<ControllerLayout>(this.GetStringResource("layout.json"));
+                JsonConvert.DeserializeObject<ControllerLayout>(File.ReadAllText(p.ContentDirectory.GetFiles()
+                            .First(f => f.Name == "layout.json").FullName));
         }
     }
 }

@@ -12,6 +12,7 @@ namespace Snowflake.Loader
         public string Loader { get; }
         public string Author { get; }
         public DirectoryInfo ModuleDirectory { get; }
+
         public Module(string name, string entry, string loader, string author, DirectoryInfo moduleDirectory) {
             this.Name = name;
             this.Entry = entry;

@@ -18,6 +18,6 @@ namespace Snowflake.Loader
         /// </summary>
         /// <param name="coreInstance">The core instance that is injected by the plugin manager</param>
         /// <see cref="IPluginManager.Register{T}(T)"/>
-        void Compose(IServiceContainer serviceContainer);
+        void Compose(IModule composableModule, IServiceContainer serviceContainer);
     }
 }

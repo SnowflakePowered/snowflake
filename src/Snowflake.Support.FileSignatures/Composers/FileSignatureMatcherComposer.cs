@@ -10,7 +10,7 @@ namespace Snowflake.Romfile.FileSignatures.Composers
     {
         [ImportService(typeof(IStoneProvider))]
         [ImportService(typeof(IServiceRegistrationProvider))]
-        public void Compose(IServiceContainer serviceContainer)
+        public void Compose(IModule module, IServiceContainer serviceContainer)
         {
             var stoneProvider = serviceContainer.Get<IStoneProvider>();
             serviceContainer.Get<IServiceRegistrationProvider>().

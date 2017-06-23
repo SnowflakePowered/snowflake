@@ -21,13 +21,13 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Adapters.Bsnes
     [Plugin("RetroArchBsnes")]
     public class BsnesRetroArchAdapter : RetroArchCommonAdapter
     {
-        public BsnesRetroArchAdapter(string appDataDirectory,
+        public BsnesRetroArchAdapter(IPluginProvision provision,
             RetroArchProcessHandler processHandler, IStoneProvider stoneProvider,
             IConfigurationCollectionStore collectionStore,
             IBiosManager biosManager, 
             ISaveManager saveManager,
             ShaderManager shaderManager)
-            : base(appDataDirectory, processHandler, stoneProvider, collectionStore, biosManager, saveManager, shaderManager)
+            : base(provision, processHandler, stoneProvider, collectionStore, biosManager, saveManager, shaderManager)
         {
            
         }
@@ -38,7 +38,7 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Adapters.Bsnes
 
             var platform = this.StoneProvider.Platforms[gameRecord.PlatformId];
         
-            return new BsnesInstance(gameRecord, file, this, this.CorePath, this.ProcessHandler, saveSlot, platform, ports)
+            return new BsnesInstance(gameRecord, file, this, this.CorePath.FullName, this.ProcessHandler, saveSlot, platform, ports)
             {
                 ShaderManager =  this.ShaderManager 
             };

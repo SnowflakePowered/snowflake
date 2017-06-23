@@ -23,27 +23,29 @@ namespace Snowflake.Plugin.Emulators.RetroArch
         [ImportService(typeof(IContentDirectoryProvider))]
         [ImportService(typeof(IStoneProvider))]
         [ImportService(typeof(ILogProvider))]
-        public void Compose(IServiceContainer coreInstance)
+        public void Compose(IModule composableModule, IServiceContainer serviceContainer)
         {
-            var pm = coreInstance.Get<IPluginManager>();
-            var appdata = coreInstance.Get<IContentDirectoryProvider>();
-            var log = coreInstance.Get<ILogProvider>().GetLogger("RetroArch");
+            var pm = serviceContainer.Get<IPluginManager>();
+            var appdata = serviceContainer.Get<IContentDirectoryProvider>();
+            var log = serviceContainer.Get<ILogProvider>().GetLogger("RetroArch");
             string appDataDirectory = appdata.ApplicationData.FullName;
-            var processHandler = new RetroArchProcessHandler(appDataDirectory);
-            var shaderManager = new ShaderManager(Path.Combine(processHandler.PluginDataPath, "shaders"));
+
+            var processHandlerProvision = pm.GetProvision<RetroArchProcessHandler>(composableModule);
+            var processHandler = new RetroArchProcessHandler(processHandlerProvision); //todo register as service
+            var shaderManager = new ShaderManager(processHandler.Provision.ContentDirectory.CreateSubdirectory("shaders").FullName);
             pm.Register(processHandler);
 
-            pm.Register(new NestopiaRetroArchAdapter(appDataDirectory,
+            pm.Register(new NestopiaRetroArchAdapter(pm.GetProvision<NestopiaRetroArchAdapter>(composableModule),
                 processHandler,
-                coreInstance.Get<IStoneProvider>(),
-                coreInstance.Get<IConfigurationCollectionStore>(), 
+                serviceContainer.Get<IStoneProvider>(),
+                serviceContainer.Get<IConfigurationCollectionStore>(), 
                 new BiosManager(appDataDirectory),
                 new SaveManager(appDataDirectory), shaderManager));
 
-            pm.Register(new BsnesRetroArchAdapter(appDataDirectory,
+            pm.Register(new BsnesRetroArchAdapter(pm.GetProvision<BsnesRetroArchAdapter>(composableModule),
                processHandler,
-               coreInstance.Get<IStoneProvider>(),
-               coreInstance.Get<IConfigurationCollectionStore>(),
+               serviceContainer.Get<IStoneProvider>(),
+               serviceContainer.Get<IConfigurationCollectionStore>(),
                new BiosManager(appDataDirectory),
                new SaveManager(appDataDirectory), shaderManager));
         }
