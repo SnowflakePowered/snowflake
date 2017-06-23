@@ -36,11 +36,17 @@ namespace Snowflake.Services.AssemblyLoader
             }
 
             var assembly = loadContext.LoadFromAssemblyPath(entryPath);
+            IEnumerable<Type> types;
+            try
+            {
+                types = assembly.ExportedTypes
+                        .Where(t => t.GetInterfaces().Contains(typeof(IComposable)))
+                        .Where(t => t.GetConstructor(Type.EmptyTypes) != null);
 
-            var types = assembly.ExportedTypes
-                    .Where(t => t.GetInterfaces().Contains(typeof(IComposable)))
-                    .Where(t => t.GetConstructor(Type.EmptyTypes) != null);
-
+            }catch(TypeLoadException ex)
+            {
+                throw new TypeLoadException($"Unable to load {module.Entry}, are you sure it is compatible with this version of Snowflake?", ex);
+            }
             foreach (var type in types)
             {
                 var container = Instantiate.CreateInstance(type) as IComposable;
