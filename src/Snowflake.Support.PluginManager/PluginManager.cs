@@ -63,10 +63,19 @@ namespace Snowflake.Support.PluginManager
             return (T)this.loadedPlugins[typeof(T)].FirstOrDefault(p => p.Name == pluginName);
         }
 
+        public IPlugin Get(string pluginName)
+        {
+            return this.loadedPlugins.SelectMany(p => p.Value).FirstOrDefault(p => p.Name == pluginName);
+        }
+
         public void Register<T>(T plugin) where T : IPlugin
         {
             if (!this.loadedPlugins.ContainsKey(typeof(T)))
                 this.loadedPlugins.Add(typeof(T), ImmutableList<IPlugin>.Empty);
+            if (this.IsRegistered(plugin.Name))
+            {
+                throw new InvalidOperationException($"Plugin {plugin.Name} is already registered.");
+            }
             this.loadedPlugins[typeof(T)] = this.loadedPlugins[typeof(T)].Add(plugin);
         }
 
@@ -74,6 +83,12 @@ namespace Snowflake.Support.PluginManager
         {
             return this.Get<T>(pluginName) != null;
         }
+
+        public bool IsRegistered(string pluginName)
+        {
+            return this.loadedPlugins.SelectMany(p => p.Value).Any(p => p.Name == pluginName);
+        }
+
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
 

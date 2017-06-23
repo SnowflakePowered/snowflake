@@ -40,7 +40,7 @@ namespace Snowflake.Services
         IEnumerable<T> Get<T>() where T : IPlugin;
 
         /// <summary>
-        /// Gets a specific plugin registered under a given type categor
+        /// Gets a specific plugin registered under a given type category
         /// </summary>
         /// <typeparam name="T">
         /// The plugin type category to register under.
@@ -49,6 +49,14 @@ namespace Snowflake.Services
         /// <param name="pluginName">The name of the plugin.</param>
         /// <returns>The given plugin if it exists, null if it does not.</returns>
         T Get<T>(string pluginName) where T : IPlugin;
+
+
+        /// <summary>
+        /// Gets a specific plugin
+        /// </summary>
+        /// <param name="pluginName">The name of the plugin.</param>
+        /// <returns>The given plugin if it exists, null if it does not.</returns>
+        IPlugin Get(string pluginName);
 
         /// <summary>
         /// Checks if a given plugin under a type category has been loaded into the plugin manager.
@@ -60,5 +68,12 @@ namespace Snowflake.Services
         /// <param name="pluginName">The name of the plugin.</param>
         /// <returns>True if the plugin has been registered.</returns>
         bool IsRegistered<T>(string pluginName) where T : IPlugin;
+
+        /// <summary>
+        /// Checks if a given plugin has been loaded into the plugin manager.
+        /// </summary>
+        /// <param name="pluginName">The name of the plugin.</param>
+        /// <returns>True if the plugin has been registered.</returns>
+        bool IsRegistered(string pluginName);
     }
 }

@@ -16,6 +16,7 @@ namespace Snowflake.Services.AssemblyLoader
         private readonly IList<IModule> module;
         private readonly IList<(IModule Module, IComposable Composable)> moduleComposables;
         private readonly ICoreService coreService;
+        private readonly ILogger logger;
 
         public AssemblyComposer(ICoreService coreService, IModuleEnumerator modules)
         {
@@ -25,6 +26,7 @@ namespace Snowflake.Services.AssemblyLoader
             this.moduleComposables = (from module in this.module
                                      from pluginContainer in assemblyLoader.LoadModule(module)
                                      select (module, pluginContainer)).ToList();
+            this.logger = new LogProvider().GetLogger("AssemblyComposer"); //Unknown if logging service is available.
         }
 
         private IList<string> GetImportedServices(IComposable container)
@@ -37,7 +39,7 @@ namespace Snowflake.Services.AssemblyLoader
         public void Compose()
         {
             var toCompose = this.moduleComposables.Select(p => (module: p.Module, 
-                plugin: p.Composable, 
+                composable: p.Composable, 
                 services: this.GetImportedServices(p.Composable))).ToList();
             int count = toCompose.Count();
             while (count > 0)
@@ -47,9 +49,21 @@ namespace Snowflake.Services.AssemblyLoader
                 {
                     if (this.coreService.AvailableServices().ContainsAll(uncomposed.services))
                     {
-                        Console.WriteLine($"Composing {uncomposed.plugin.GetType().Name} with services {String.Join(" ", uncomposed.services)}");
-                        this.ComposeContainer(uncomposed.module, uncomposed.plugin, uncomposed.services);
-                        toCompose.Remove(uncomposed);
+                        try
+                        {
+                            this.logger.Info($"Composing {uncomposed.composable.GetType().Name} with services {String.Join(" ", uncomposed.services)}");
+                            this.ComposeContainer(uncomposed.module, uncomposed.composable, uncomposed.services);
+                            this.logger.Info($"Finished composing {uncomposed.composable.GetType().Name}");
+                        }
+                        catch (Exception ex)
+                        {
+                            this.logger.Error($"Exception {ex.GetType()}: {ex.Message} occured when composing {uncomposed.composable.GetType().Name}.");
+                            this.logger.Error($"Stack Trace:{Environment.NewLine + ex.StackTrace}");
+                        }
+                        finally
+                        {
+                            toCompose.Remove(uncomposed);
+                        }
                     }
                 }
                 count = toCompose.Count();
@@ -59,10 +73,8 @@ namespace Snowflake.Services.AssemblyLoader
 
         private void ComposeContainer(IModule module, IComposable moduleComposable, IList<string> services)
         {
-            Console.WriteLine($"Composing {moduleComposable.GetType().Name}");
             IServiceContainer container = new ServiceContainer(this.coreService, services);
             moduleComposable.Compose(module, container);
-            Console.WriteLine($"Finished composing {moduleComposable.GetType().Name}");
         }
     }
 }
