@@ -13,7 +13,7 @@ namespace Snowflake.Services.AssemblyLoader
 {
     public class AssemblyComposer
     {
-        private readonly IList<IModule> module;
+        private readonly IList<IModule> modules;
         private readonly IList<(IModule Module, IComposable Composable)> moduleComposables;
         private readonly ICoreService coreService;
         private readonly ILogger logger;
@@ -21,12 +21,26 @@ namespace Snowflake.Services.AssemblyLoader
         public AssemblyComposer(ICoreService coreService, IModuleEnumerator modules)
         {
             this.coreService = coreService;
-            var assemblyLoader = new AssemblyModuleLoader();
-            this.module = modules.Modules.Where(module => module.Loader == "assembly").ToList(); 
-            this.moduleComposables = (from module in this.module
-                                     from pluginContainer in assemblyLoader.LoadModule(module)
-                                     select (module, pluginContainer)).ToList();
             this.logger = new LogProvider().GetLogger("AssemblyComposer"); //Unknown if logging service is available.
+            this.modules = modules.Modules.Where(module => module.Loader == "assembly").ToList();
+            var assemblyLoader = new AssemblyModuleLoader();
+            this.moduleComposables = (from module in this.modules
+                                     from pluginContainer in this.LoadComposables(assemblyLoader, module)
+                                     select (module, pluginContainer)).ToList();
+        }
+
+        private IEnumerable<IComposable> LoadComposables(AssemblyModuleLoader loader, IModule module)
+        {
+            try
+            {
+                var modules =  loader.LoadModule(module).ToList();
+                return modules;
+            }
+            catch (Exception ex)
+            {
+                this.logger.Error($"Could not load module {module} due to {ex.GetType().Name} : {ex.Message}");
+                return Enumerable.Empty<IComposable>();
+            }
         }
 
         private IList<string> GetImportedServices(IComposable container)

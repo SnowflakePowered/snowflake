@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using Snowflake.Extensibility;
 using NLog;
+using NLog.Config;
 
 namespace Snowflake.Services
 {

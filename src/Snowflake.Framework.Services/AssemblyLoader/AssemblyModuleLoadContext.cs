@@ -6,14 +6,17 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
+using Snowflake.Extensibility;
 
 namespace Snowflake.Services.AssemblyLoader
 {
     internal class AssemblyModuleLoadContext : AssemblyLoadContext
     {
         private string folderPath;
+        private readonly ILogger logger;
         private AssemblyModuleLoadContext(string folderPath)
         {
+            this.logger = new LogProvider().GetLogger("AssemblyComposer"); //Unknown if logging service is available.
             this.folderPath = folderPath;
         }
 
@@ -24,7 +27,7 @@ namespace Snowflake.Services.AssemblyLoader
 
         protected override Assembly Load(AssemblyName assemblyName)
         {
-            Console.WriteLine($"Attempting to load {assemblyName.Name}");
+            logger.Info($"Attempting to load {assemblyName.Name}");
             var deps = DependencyContext.Default;
             var resources = deps.CompileLibraries.Where(d => d.Name.Contains(assemblyName.Name)).ToList();
 
@@ -43,7 +46,7 @@ namespace Snowflake.Services.AssemblyLoader
             var compileLibs = deps.CompileLibraries.Select(lib => new { lib.Name, lib.Version }).ToList();
             if (compileLibs.Select(l => l.Name).Contains(assemblyName.Name.ToLower()))
             {
-                Console.WriteLine($"Loading {assemblyName.Name} from Runtime Librairies");
+                logger.Info($"Loading {assemblyName.Name} from Runtime Librairies");
                 return Assembly.Load(assemblyName);
             }
 
@@ -58,11 +61,11 @@ namespace Snowflake.Services.AssemblyLoader
                 if (File.Exists(dependencyFileInfo.FullName))
                 {
                     var dependencyLoadContext = new AssemblyModuleLoadContext(dependencyFileInfo.DirectoryName);
-                    Console.WriteLine($"Loading {assemblyName.Name} from module dependencies");
+                    logger.Info($"Loading {assemblyName.Name} from module dependencies");
                     return dependencyLoadContext.LoadFromAssemblyPath(dependencyFileInfo.FullName);
                 } else
                 {
-                    Console.WriteLine($"Loading {assemblyName.Name} from GAC!");
+                    logger.Info($"Loading {assemblyName.Name} from GAC!");
                     return Assembly.Load(assemblyName);
                 }
             }

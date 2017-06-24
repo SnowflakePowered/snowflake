@@ -1,4 +1,8 @@
 ﻿using NLog;
+using NLog.Config;
+using NLog.Layouts;
+using NLog.Targets;
+using NLog.Targets.Wrappers;
 using System;
 
 namespace Snowflake.Extensibility
@@ -7,6 +11,20 @@ namespace Snowflake.Extensibility
     {
         private readonly NLog.ILogger baseLogger;
 
+        private static bool isSetup = false;
+        private static void Setup()
+        {
+            if (NlogLogger.isSetup) return;
+            var configuration = new LoggingConfiguration();
+            var consoleTarget = new ColoredConsoleTarget("Console");
+            var asyncConsoleTarget = new AsyncTargetWrapper("Console", consoleTarget);
+            consoleTarget.Layout = new NLog.Layouts.SimpleLayout("[${level:uppercase=true}] ${message}");
+            configuration.AddRule(NLog.LogLevel.Trace, NLog.LogLevel.Fatal, asyncConsoleTarget);
+            configuration.AddTarget(asyncConsoleTarget);
+            LogManager.Configuration = configuration;
+            NlogLogger.isSetup = true;
+        }
+
         internal NlogLogger(NLog.ILogger baseLogger)
         {
             this.baseLogger = baseLogger;
@@ -14,6 +32,7 @@ namespace Snowflake.Extensibility
 
         public NlogLogger(string loggerName)
         {
+            NlogLogger.Setup();
             this.baseLogger = LogManager.GetLogger(loggerName);
         }
 

@@ -43,10 +43,12 @@ namespace Snowflake.Services.AssemblyLoader
                         .Where(t => t.GetInterfaces().Contains(typeof(IComposable)))
                         .Where(t => t.GetConstructor(Type.EmptyTypes) != null);
 
-            }catch(TypeLoadException ex)
+            }
+            catch (TypeLoadException ex)
             {
                 throw new TypeLoadException($"Unable to load {module.Entry}, are you sure it is compatible with this version of Snowflake?", ex);
             }
+
             foreach (var type in types)
             {
                 var container = Instantiate.CreateInstance(type) as IComposable;
