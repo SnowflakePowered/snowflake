@@ -6,13 +6,13 @@
   </PropertyGroup>
   
   <PropertyGroup Condition=" '$(Configuration)' == 'Cover' ">
-	<DebugType>Full</DebugType>
+	  <DebugType>Full</DebugType>
   </PropertyGroup>
   
   <ItemGroup>
     <PackageReference Include="Castle.Core" Version="4.0.0" />
     <PackageReference Include="Dapper" Version="1.50.3-beta1" />
-    <PackageReference Include="Enums.NET" Version="2.0.0" />
+    <PackageReference Include="Enums.NET" Version="2.2.0" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="1.1.0" />
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
     <PackageReference Include="NLog" Version="5.0.0-beta08" />

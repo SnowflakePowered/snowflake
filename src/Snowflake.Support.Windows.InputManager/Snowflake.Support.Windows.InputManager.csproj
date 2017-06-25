@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard1.6</TargetFramework>
     <RootNamespace>Snowflake</RootNamespace>
+    <AssemblyName>Snowflake.Support.Windows.InputManager</AssemblyName>
   </PropertyGroup>
   
   <ItemGroup>

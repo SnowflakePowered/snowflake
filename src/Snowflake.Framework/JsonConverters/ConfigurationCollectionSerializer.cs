@@ -20,10 +20,13 @@ namespace Snowflake.JsonConverters
             
             foreach(var section in collection)
             {
-                JObject sectionRoot = new JObject();
-                sectionRoot.Add("Values", new JObject(section.Value.Values.Select(v => new JProperty(v.Key,JToken.FromObject(v.Value)))));
-                sectionRoot.Add("Options", new JObject(section.Value.Descriptor.Options
-                    .Select(o => new JProperty(o.KeyName, ConfigurationCollectionSerializer.SerializeOption(o)))));
+                JObject sectionRoot = new JObject
+                {
+                    { "Values", new JObject(section.Value.Values.Select(v => new JProperty(v.Key, JToken.FromObject(v.Value)))) },
+                    { "Options", new JObject(section.Value.Descriptor.Options
+                        .Select(o => new JProperty(o.KeyName, ConfigurationCollectionSerializer.SerializeOption(o))))
+                    }
+                };
                 var selectionRoot = new JObject();
                 var props = section.Value.Where(o => o.Key.Type.GetTypeInfo().IsEnum).Select(o => new { o.Key.KeyName, Values = ConfigurationCollectionSerializer.SerializeEnumValues(o.Key.Type) });
                 foreach(var prop in props)
@@ -40,7 +43,7 @@ namespace Snowflake.JsonConverters
 
         private static IEnumerable<JProperty> SerializeEnumValues(Type selectionEnum)
         {
-            return from enumOption in NonGenericEnums.GetEnumMembers(selectionEnum)
+            return from enumOption in NonGenericEnums.GetMembers(selectionEnum)
                 where enumOption.HasAttribute<SelectionOptionAttribute>()
                 let attribute = enumOption.GetAttribute<SelectionOptionAttribute>()
                 select new JProperty(enumOption.Name, new JObject()

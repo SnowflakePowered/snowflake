@@ -3,10 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard1.6</TargetFramework>
     <RootNamespace>Snowflake</RootNamespace>
-  </PropertyGroup>
-
-  <PropertyGroup>
-      <RuntimeIdentifiers>win10-x64;win7-x64</RuntimeIdentifiers>
+    <AssemblyName>Snowflake.Support.FileSignatures</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
@@ -31,4 +28,7 @@
     </None>
   </ItemGroup>
   
+  <ItemGroup>
+    <DotNetCliToolReference Include="dotnet-pack-snowflake" Version="1.0.1" />
+  </ItemGroup>
 </Project>
