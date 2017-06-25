@@ -6,7 +6,7 @@ using Snowflake.Extensibility;
 using NLog;
 using NLog.Config;
 
-namespace Snowflake.Services
+namespace Snowflake.Services.Logging
 {
     internal class LogProvider : ILogProvider
     {

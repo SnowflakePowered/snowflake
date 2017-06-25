@@ -5,6 +5,7 @@ using System.Linq;
 using Snowflake.Utility;
 using System.Reflection;
 using Snowflake.Loader;
+using Snowflake.Services.Logging;
 
 namespace Snowflake.Services.AssemblyLoader
 {

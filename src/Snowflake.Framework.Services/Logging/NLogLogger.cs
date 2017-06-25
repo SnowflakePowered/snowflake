@@ -5,7 +5,7 @@ using NLog.Targets;
 using NLog.Targets.Wrappers;
 using System;
 
-namespace Snowflake.Extensibility
+namespace Snowflake.Services.Logging
 {
     internal class NlogLogger : Snowflake.Extensibility.ILogger
     {

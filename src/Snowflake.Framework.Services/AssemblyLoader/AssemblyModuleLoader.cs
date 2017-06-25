@@ -3,12 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
-using System.Reflection;
-using System.Runtime;
-using System.Runtime.Loader;
-using Snowflake.Extensibility;
 using Snowflake.Utility;
-using Newtonsoft.Json;
 using Snowflake.Loader;
 
 namespace Snowflake.Services.AssemblyLoader

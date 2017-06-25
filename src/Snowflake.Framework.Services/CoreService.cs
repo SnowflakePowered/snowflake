@@ -9,6 +9,7 @@ using Snowflake.Input.Controller.Mapped;
 using Snowflake.Records.Game;
 using Snowflake.Utility;
 using Snowflake.Loader;
+using Snowflake.Services.Logging;
 
 namespace Snowflake.Services
 {
