@@ -18,6 +18,7 @@ namespace Snowflake.Loader
         public ModuleEnumerator(string appDataDirectory)
         {
             this.ModuleDirectory = new DirectoryInfo(Path.Combine(appDataDirectory, "modules"));
+            this.ModuleDirectory.Create();
             this.Modules = this.EnumerateModules().ToList();
         }
 

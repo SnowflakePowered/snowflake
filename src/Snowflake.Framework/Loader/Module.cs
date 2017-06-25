@@ -12,6 +12,7 @@ namespace Snowflake.Loader
         public string Loader { get; }
         public string Author { get; }
         public DirectoryInfo ModuleDirectory { get; }
+        public DirectoryInfo ContentsDirectory { get; }
 
         public Module(string name, string entry, string loader, string author, DirectoryInfo moduleDirectory) {
             this.Name = name;
@@ -19,6 +20,7 @@ namespace Snowflake.Loader
             this.Loader = loader;
             this.Author = author;
             this.ModuleDirectory = moduleDirectory;
+            this.ContentsDirectory = moduleDirectory.CreateSubdirectory("contents");
         }
     }
 
@@ -30,7 +32,6 @@ namespace Snowflake.Loader
         private string FrameworkVersion { get; }
         private string Version { get; }
         private string Author { get; }
-        private dynamic LoaderOptions { get; }
         public ModuleDefinition(string name,
             string entry, 
             string loader, 
@@ -42,7 +43,9 @@ namespace Snowflake.Loader
             this.Name = name;
             this.Entry = entry;
             this.Loader = loader;
-            this.LoaderOptions = loaderOptions;
+            this.Version = version;
+            this.Author = author;
+            this.FrameworkVersion = frameworkVersion;
         }
 
         public IModule ToModule(DirectoryInfo moduleDirectory) => new Module(this.Name, 

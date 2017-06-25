@@ -33,12 +33,12 @@ namespace Snowflake.Services.AssemblyLoader
         {
             try
             {
-                var modules =  loader.LoadModule(module).ToList();
+                var modules = loader.LoadModule(module).ToList();
                 return modules;
             }
             catch (Exception ex)
             {
-                this.logger.Error($"Could not load module {module} due to {ex.GetType().Name} : {ex.Message}");
+                this.logger.Error($"Could not load module {module.Entry} due to {ex.GetType().Name} : {ex.Message}");
                 return Enumerable.Empty<IComposable>();
             }
         }
@@ -55,7 +55,7 @@ namespace Snowflake.Services.AssemblyLoader
             var toCompose = this.moduleComposables.Select(p => (module: p.Module, 
                 composable: p.Composable, 
                 services: this.GetImportedServices(p.Composable))).ToList();
-            int count = toCompose.Count();
+            int count = toCompose.Count;
             while (count > 0)
             {
                 int prevCount = count;
@@ -80,7 +80,7 @@ namespace Snowflake.Services.AssemblyLoader
                         }
                     }
                 }
-                count = toCompose.Count();
+                count = toCompose.Count;
                 if (prevCount == count) break; //no change
             }
         }

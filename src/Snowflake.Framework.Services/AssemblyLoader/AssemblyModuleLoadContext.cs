@@ -20,7 +20,7 @@ namespace Snowflake.Services.AssemblyLoader
             this.folderPath = folderPath;
         }
 
-        public AssemblyModuleLoadContext(IModule module) : this(Path.Combine(module.ModuleDirectory.FullName, "contents"))
+        public AssemblyModuleLoadContext(IModule module) : this(module.ContentsDirectory.FullName)
         {
         
         }
@@ -46,8 +46,23 @@ namespace Snowflake.Services.AssemblyLoader
             var compileLibs = deps.CompileLibraries.Select(lib => new { lib.Name, lib.Version }).ToList();
             if (compileLibs.Select(l => l.Name).Contains(assemblyName.Name.ToLower()))
             {
-                logger.Info($"Loading {assemblyName.Name} from Runtime Librairies");
-                return Assembly.Load(assemblyName);
+                logger.Info($"Trying to load {assemblyName.Name} from runtime...");
+                try
+                {
+                    return Assembly.Load(assemblyName);
+                }
+                catch
+                {
+                    logger.Warn($"Unable to find the proper version of {assemblyName.Name} loaded in runtime.");
+                    var prepAssembly = Assembly.Load(new AssemblyName(assemblyName.Name)); 
+                    if (assemblyName.Version.Major == prepAssembly.GetName().Version.Major)
+                    {
+                        logger.Warn($"Resolving {assemblyName.Name} version {assemblyName.Version} with mismatched minor version {prepAssembly.GetName().Version} from runtime.");
+                        logger.Info($"If this behaviour causes side effects, build against {prepAssembly.GetName().Version}.");
+                        return prepAssembly;
+                    }
+                    
+                }
             }
 
             if (resources.Count > 0)

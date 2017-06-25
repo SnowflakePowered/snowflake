@@ -8,6 +8,7 @@ namespace Snowflake.Loader
         string Entry { get; }
         string Loader { get; }
         DirectoryInfo ModuleDirectory { get; }
+        DirectoryInfo ContentsDirectory { get; }
         string Name { get; }
     }
 }

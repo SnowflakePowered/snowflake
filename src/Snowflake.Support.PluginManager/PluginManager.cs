@@ -31,7 +31,8 @@ namespace Snowflake.Support.PluginManager
 
         public IPluginProvision GetProvision<T>(IModule composableModule) where T : IPlugin
         {
-            var resourceDirectory = composableModule.ModuleDirectory.CreateSubdirectory("resource"); //todo: check for missing directory!!
+            var resourceDirectory = composableModule.ContentsDirectory
+                                    .CreateSubdirectory("resource"); //todo: check for missing directory!!
             var pluginAttr = typeof(T).GetTypeInfo().GetCustomAttribute<PluginAttribute>();
             if (pluginAttr.PluginName == "common") throw new UnauthorizedAccessException("Plugin name can not be 'common'.");
             var pluginResourceDirectory = resourceDirectory.CreateSubdirectory(pluginAttr.PluginName);
