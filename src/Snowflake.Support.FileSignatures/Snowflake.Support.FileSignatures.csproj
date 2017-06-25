@@ -27,8 +27,8 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  
+
   <ItemGroup>
-    <DotNetCliToolReference Include="dotnet-pack-snowflake" Version="1.0.1" />
+    <DotNetCliToolReference Include="dotnet-pack-snowflake" Version="1.1.0" />
   </ItemGroup>
 </Project>
