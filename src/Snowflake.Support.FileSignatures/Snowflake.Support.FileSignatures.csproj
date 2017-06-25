@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   
   <PropertyGroup>
-    <TargetFramework>netstandard1.6</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Snowflake</RootNamespace>
     <AssemblyName>Snowflake.Support.FileSignatures</AssemblyName>
   </PropertyGroup>
@@ -10,10 +10,6 @@
     <Compile Remove="resource\**" />
     <EmbeddedResource Remove="resource\**" />
     <None Remove="resource\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Quamotion.DiscUtils" Version="1.0.3" />
   </ItemGroup>
   
   <ItemGroup>
@@ -30,5 +26,10 @@
 
   <ItemGroup>
     <DotNetCliToolReference Include="dotnet-pack-snowflake" Version="1.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DiscUtils.Core" Version="0.12.2-alpha" />
+    <PackageReference Include="DiscUtils.Iso9660" Version="0.12.2-alpha" />
   </ItemGroup>
 </Project>

@@ -64,8 +64,8 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb
         {
             var url = new Uri($@"{ApiGamesDb.BaseImgURL}{image.Path}");
             return Image.FromStream(WebClient.DownloadData(url));
-          
         }
+
         public static IEnumerable<T> Concatenate<T>(params IEnumerable<T>[] lists)
         {
             return lists.SelectMany(x => x);

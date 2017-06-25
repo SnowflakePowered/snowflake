@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyModel;
 using Snowflake.Loader;
-using Snowflake.Services;
 using System;
 using System.IO;
 using System.Linq;
@@ -22,7 +21,6 @@ namespace Snowflake.Services.AssemblyLoader
 
         public AssemblyModuleLoadContext(IModule module) : this(module.ContentsDirectory.FullName)
         {
-        
         }
 
         protected override Assembly Load(AssemblyName assemblyName)

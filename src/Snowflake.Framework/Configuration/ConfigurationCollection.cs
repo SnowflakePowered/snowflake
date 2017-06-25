@@ -41,7 +41,7 @@ namespace Snowflake.Configuration
         /// Used for the sqlite configuration collection store
         /// </summary>
         /// <param name="defaults"></param>
-        internal ConfigurationCollection(IDictionary<string, IDictionary<string, ValueTuple<string, Guid>>> defaults)
+        internal ConfigurationCollection(IDictionary<string, IDictionary<string, (string, Guid)>> defaults)
         {
             ProxyGenerator generator = new ProxyGenerator();
             this.Descriptor =
@@ -99,7 +99,7 @@ namespace Snowflake.Configuration
     {
         internal readonly IDictionary<string, dynamic> Values;
 
-        internal CollectionInterceptor(IDictionary<string, IDictionary<string, ValueTuple<string, Guid>>> defaults)
+        internal CollectionInterceptor(IDictionary<string, IDictionary<string, (string, Guid)>> defaults)
         {
             this.Values = new Dictionary<string, dynamic>();
             foreach (var section in from props in typeof(T).GetPublicProperties()
@@ -108,9 +108,9 @@ namespace Snowflake.Configuration
                                     select new { sectionAttr, type = props.PropertyType, name = props.Name })
             {
                 var sectionType = typeof(ConfigurationSection<>).MakeGenericType(section.type);
-                this.Values.Add(section.name, Instantiate.CreateInstance(sectionType, new[] { typeof(IDictionary<string, ValueTuple<string, Guid>>) },
+                this.Values.Add(section.name, Instantiate.CreateInstance(sectionType, new[] { typeof(IDictionary<string, (string, Guid)>) },
                     Expression.Constant(defaults.ContainsKey(section.name) ? defaults[section.name] 
-                    : new Dictionary<string, ValueTuple<string, Guid>>())));
+                    : new Dictionary<string, (string, Guid)>())));
             }
         }
 
