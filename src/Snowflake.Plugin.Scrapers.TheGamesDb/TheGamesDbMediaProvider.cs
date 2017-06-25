@@ -7,7 +7,6 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Net;
 using Snowflake.Records.File;
 using Snowflake.Records.Game;
 using Snowflake.Records.Metadata;
@@ -63,7 +62,7 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb
         public static Stream DownloadStream(this ApiGame.ApiGameImages.ApiGameImage image)
         {
             var url = new Uri($@"{ApiGamesDb.BaseImgURL}{image.Path}");
-            return WebClient.DownloadData(url);
+            return Utility.WebClient.DownloadData(url);
         }
 
         public static IEnumerable<T> Concatenate<T>(params IEnumerable<T>[] lists)

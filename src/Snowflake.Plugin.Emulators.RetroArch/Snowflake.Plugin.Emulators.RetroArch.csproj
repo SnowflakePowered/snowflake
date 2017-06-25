@@ -20,6 +20,10 @@
     <EmbeddedResource Remove="resource\%2540common\**" />
     <None Remove="resource\%2540common\**" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="System.Diagnostics.Process" Version="4.3.0" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Snowflake.Framework.Primitives\Snowflake.Framework.Primitives.csproj" />

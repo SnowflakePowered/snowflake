@@ -27,7 +27,7 @@ namespace Snowflake.Services.AssemblyLoader
         {
             logger.Info($"Attempting to load {assemblyName.Name}");
             var deps = DependencyContext.Default;
-            var resources = deps.CompileLibraries.Where(d => d.Name.Contains(assemblyName.Name)).ToList();
+            var resources = deps.RuntimeLibraries.Where(d => d.Name.Contains(assemblyName.Name)).ToList();
 
             if (assemblyName.Name == "Snowflake.Framework.Primitives")
             {
@@ -41,10 +41,10 @@ namespace Snowflake.Services.AssemblyLoader
             }
 
             //todo: use .netstandard 2.0 AssemblyLoadContext.GetLoadedAssemblies()
-            var compileLibs = deps.CompileLibraries.Select(lib => new { lib.Name, lib.Version }).ToList();
-            if (compileLibs.Select(l => l.Name).Contains(assemblyName.Name.ToLower()))
+            var runtimeLibs = deps.RuntimeLibraries.Select(lib => new { lib.Name, lib.Version }).ToList();
+            if (runtimeLibs.Select(l => l.Name.ToLower()).Contains(assemblyName.Name.ToLower()))
             {
-                logger.Info($"Trying to load {assemblyName.Name} from runtime...");
+                logger.Info($"Attempting to resolve {assemblyName.Name} from runtime...");
                 try
                 {
                     return Assembly.Load(assemblyName);
@@ -76,7 +76,8 @@ namespace Snowflake.Services.AssemblyLoader
                     var dependencyLoadContext = new AssemblyModuleLoadContext(dependencyFileInfo.DirectoryName);
                     logger.Info($"Loading {assemblyName.Name} from module dependencies");
                     return dependencyLoadContext.LoadFromAssemblyPath(dependencyFileInfo.FullName);
-                } else
+                }
+                else
                 {
                     logger.Info($"Loading {assemblyName.Name} from GAC!");
                     return Assembly.Load(assemblyName);
