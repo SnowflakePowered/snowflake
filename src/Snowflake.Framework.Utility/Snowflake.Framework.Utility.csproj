@@ -10,15 +10,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Crc32.NET" Version="1.0.2" />
-    <PackageReference Include="Dapper" Version="1.50.3-beta1" />
     <PackageReference Include="Enums.NET" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Data.Sqlite" Version="1.1.1" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="System.Globalization.Extensions" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Snowflake.Framework.Primitives\Snowflake.Framework.Primitives.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Hash\Crc32.NET\" />
   </ItemGroup>
 </Project>

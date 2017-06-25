@@ -4,15 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Utility;
+using Snowflake.Persistence;
 
 namespace Snowflake.Scraper.Shiragame
 {
     public class ShiragameProvider : IShiragameProvider
     {
-        private readonly SqliteDatabase backingDatabase;
-        public ShiragameProvider(string shiragamePath)
+        private readonly ISqlDatabase backingDatabase;
+        [Obsolete("Refactor out into service!")]
+        public ShiragameProvider(string databasePath)
         {
-            this.backingDatabase = new SqliteDatabase(shiragamePath);
+            throw new NotImplementedException("Refactor out into service!!!");
+            this.backingDatabase = backingDatabase;
             string shiragameVer = this.backingDatabase.Query<string>("SELECT version FROM shiragame").First();
             string stoneVer = this.backingDatabase.Query<string>("SELECT version FROM shiragame").First();
             this.StoneVersion = Version.Parse(stoneVer);

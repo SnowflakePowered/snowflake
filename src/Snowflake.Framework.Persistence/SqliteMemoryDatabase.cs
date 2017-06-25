@@ -8,7 +8,7 @@ using System.Text;
 using Dapper;
 using Microsoft.Data.Sqlite;
 
-namespace Snowflake.Utility
+namespace Snowflake.Persistence
 {
     public class SqliteMemoryDatabase
     {

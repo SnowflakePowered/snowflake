@@ -10,7 +10,8 @@ using Dapper;
 using Snowflake.Records.Game;
 using Snowflake.Records.Metadata;
 using Snowflake.Utility;
-using Microsoft.Data.Sqlite;
+using Snowflake.Persistence;
+using System.Data.Common;
 
 namespace Snowflake.Records.File
 {
@@ -18,15 +19,15 @@ namespace Snowflake.Records.File
     {
         public IMetadataLibrary MetadataLibrary { get; }
 
-        private readonly SqliteDatabase backingDatabase;
-        public SqliteFileLibrary(SqliteDatabase database, IMetadataLibrary metadataLibrary)
+        private readonly ISqlDatabase backingDatabase;
+        public SqliteFileLibrary(ISqlDatabase database, IMetadataLibrary metadataLibrary)
         {
             this.backingDatabase = database;
             this.MetadataLibrary = metadataLibrary;
             this.CreateDatabase();
         }
 
-        public SqliteFileLibrary(SqliteDatabase database) : this(database, new SqliteMetadataLibrary(database))
+        public SqliteFileLibrary(ISqlDatabase database) : this(database, new SqliteMetadataLibrary(database))
         {
             
         }
@@ -175,7 +176,7 @@ namespace Snowflake.Records.File
                                          .ToDictionary(md => md.Key, md => md)
                                 select new FileRecord(f.Guid, md, f.Path, f.MimeType)).ToList();
                     }
-                    catch (SqliteException)
+                    catch (DbException)
                     {
                         return new List<IFileRecord>();
                     }
@@ -217,7 +218,7 @@ namespace Snowflake.Records.File
                         .ToDictionary(m => m.Key, m => m as IRecordMetadata); 
                         return new FileRecord(file.Game, metadatas, file.Path, file.MimeType);
                     }
-                    catch (SqliteException)
+                    catch (DbException)
                     {
                         return null;
                     }

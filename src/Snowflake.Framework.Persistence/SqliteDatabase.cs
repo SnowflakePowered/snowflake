@@ -7,10 +7,11 @@ using System.Linq;
 using System.Text;
 using Microsoft.Data.Sqlite;
 using Dapper;
+using Snowflake.Persistence;
 
-namespace Snowflake.Utility
+namespace Snowflake.Persistence
 {
-    public class SqliteDatabase
+    public class SqliteDatabase : ISqlDatabase
     {
         public string FileName { get; }
         private readonly string dbConnectionString;
@@ -22,7 +23,7 @@ namespace Snowflake.Utility
             this.dbConnectionString = $"Data Source={this.FileName};";
         }
 
-        public SqliteConnection GetConnection()
+        public IDbConnection GetConnection()
         {
             var connection = new SqliteConnection(this.dbConnectionString);
             connection.Open();
@@ -46,10 +47,10 @@ namespace Snowflake.Utility
         /// <typeparam name="T">The type the query will return</typeparam>
         /// <param name="queryFunction">A function to query the database using the opened connection</param>
         /// <returns>The requested data.</returns>
-        public T Query<T>(Func<DbConnection, T> queryFunction)
+        public T Query<T>(Func<IDbConnection, T> queryFunction)
         {
             T record;
-            using (SqliteConnection dbConnection = this.GetConnection())
+            using (var dbConnection = this.GetConnection())
             {
                 dbConnection.Open();
                 record = queryFunction(dbConnection);
@@ -63,9 +64,9 @@ namespace Snowflake.Utility
         /// The connection will be safely closed after the operation.
         /// </summary>
         /// <param name="queryFunction">A function to query the database using the opened connection</param>
-        public void Execute(Action<DbConnection> queryFunction)
+        public void Execute(Action<IDbConnection> queryFunction)
         {
-            using (SqliteConnection dbConnection = this.GetConnection())
+            using (var dbConnection = this.GetConnection())
             {
                 dbConnection.Open();
                 queryFunction(dbConnection);

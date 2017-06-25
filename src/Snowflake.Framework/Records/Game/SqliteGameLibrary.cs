@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using Dapper;
 using Snowflake.Records.File;
 using Snowflake.Records.Metadata;
-using Snowflake.Utility;
-using Microsoft.Data.Sqlite;
+using Snowflake.Persistence;
+using System.Data.Common;
 
 namespace Snowflake.Records.Game
 {
@@ -16,8 +16,8 @@ namespace Snowflake.Records.Game
         public IMetadataLibrary MetadataLibrary { get; }
         public IFileLibrary FileLibrary { get; }
 
-        private readonly SqliteDatabase backingDatabase;
-        public SqliteGameLibrary(SqliteDatabase database, SqliteMetadataLibrary metadataLibrary)
+        private readonly ISqlDatabase backingDatabase;
+        public SqliteGameLibrary(ISqlDatabase database, SqliteMetadataLibrary metadataLibrary)
         {
             this.backingDatabase = database;
             this.MetadataLibrary = metadataLibrary;
@@ -25,7 +25,7 @@ namespace Snowflake.Records.Game
             this.CreateDatabase();
         }
 
-        public SqliteGameLibrary(SqliteDatabase database) : this(database, new SqliteMetadataLibrary(database))
+        public SqliteGameLibrary(ISqlDatabase database) : this(database, new SqliteMetadataLibrary(database))
         {
 
         }
@@ -210,7 +210,7 @@ namespace Snowflake.Records.Game
                                     .ToDictionary(md => md.Key, md => md)
                                 select new GameRecord(game, md, gameFiles)).ToList();
                     }
-                    catch (SqliteException)
+                    catch (DbException)
                     {
                         return new List<IGameRecord>();
                     }
@@ -265,7 +265,7 @@ namespace Snowflake.Records.Game
                             .ToDictionary(m => m.Key, m => m);
                         return new GameRecord(gameGuid, gameMetadata, fileRecords);
                     }
-                    catch (SqliteException)
+                    catch (DbException)
                     {
                         return null;
                     }

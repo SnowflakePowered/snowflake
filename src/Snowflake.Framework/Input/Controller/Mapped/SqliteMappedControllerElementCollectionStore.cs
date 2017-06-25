@@ -11,14 +11,15 @@ using Snowflake.Utility;
 using System.Dynamic;
 using Dapper;
 using EnumsNET;
+using Snowflake.Persistence;
 
 namespace Snowflake.Input.Controller.Mapped
 {
     public class SqliteMappedControllerElementCollectionStore : IMappedControllerElementCollectionStore
     {
-        private readonly SqliteDatabase backingDatabase;
+        private readonly ISqlDatabase backingDatabase;
 
-        internal SqliteMappedControllerElementCollectionStore(SqliteDatabase backingDatabase)
+        internal SqliteMappedControllerElementCollectionStore(ISqlDatabase backingDatabase)
         {
             this.backingDatabase = backingDatabase;
             this.CreateDatabase();

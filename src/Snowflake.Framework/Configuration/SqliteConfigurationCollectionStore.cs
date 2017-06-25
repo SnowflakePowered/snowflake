@@ -1,28 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using Snowflake.Configuration.Attributes;
-using Snowflake.Configuration.Input;
-using Snowflake.Records.Game;
-using Snowflake.Utility;
 using Dapper;
 using EnumsNET.NonGeneric;
-using Newtonsoft.Json;
-using System.Data.SqlClient;
-using Microsoft.Data.Sqlite;
+using Snowflake.Persistence;
+using System.Data.Common;
 
 namespace Snowflake.Configuration
 {
     internal class SqliteConfigurationCollectionStore : IConfigurationCollectionStore
     {
-        private readonly SqliteDatabase backingDatabase;
+        private readonly ISqlDatabase backingDatabase;
 
-        internal SqliteConfigurationCollectionStore(SqliteDatabase sqliteDatabase)
+        internal SqliteConfigurationCollectionStore(ISqlDatabase sqliteDatabase)
         {
             this.backingDatabase = sqliteDatabase;
             this.CreateDatabase();
@@ -106,7 +97,7 @@ namespace Snowflake.Configuration
                         });
                 });
             }
-            catch (SqliteException)
+            catch (DbException)
             {
                 throw new KeyNotFoundException("Value GUID was not found in store.");
             }

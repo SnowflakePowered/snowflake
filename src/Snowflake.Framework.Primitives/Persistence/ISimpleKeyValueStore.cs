@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Snowflake.Utility
+namespace Snowflake.Persistence
 {
     public interface ISimpleKeyValueStore
     {

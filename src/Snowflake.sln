@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.14
+VisualStudioVersion = 15.0.26608.5
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Framework", "Framework", "{49B7A61F-B3BE-485E-84D0-B78C08656412}"
 EndProject
@@ -51,7 +51,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Support.PluginMan
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Tooling.AssemblyModulePacker", "Snowflake.Tooling.AssemblyModulePacker\Snowflake.Tooling.AssemblyModulePacker.csproj", "{985AEA89-B646-415A-828F-65F2B0C02F4E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Support.Caching.KeyedImageCache", "Snowflake.Support.Caching.KeyedImageCache\Snowflake.Support.Caching.KeyedImageCache.csproj", "{05EEFD56-F33D-4FD2-A856-AE2EE650C616}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Support.Caching.KeyedImageCache", "Snowflake.Support.Caching.KeyedImageCache\Snowflake.Support.Caching.KeyedImageCache.csproj", "{05EEFD56-F33D-4FD2-A856-AE2EE650C616}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Framework.Persistence", "Snowflake.Framework.Persistence\Snowflake.Framework.Persistence.csproj", "{254C0A6F-9355-476A-AFDB-6E20688E4432}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -279,6 +281,18 @@ Global
 		{05EEFD56-F33D-4FD2-A856-AE2EE650C616}.Release|x64.Build.0 = Release|Any CPU
 		{05EEFD56-F33D-4FD2-A856-AE2EE650C616}.Release|x86.ActiveCfg = Release|Any CPU
 		{05EEFD56-F33D-4FD2-A856-AE2EE650C616}.Release|x86.Build.0 = Release|Any CPU
+		{254C0A6F-9355-476A-AFDB-6E20688E4432}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{254C0A6F-9355-476A-AFDB-6E20688E4432}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{254C0A6F-9355-476A-AFDB-6E20688E4432}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{254C0A6F-9355-476A-AFDB-6E20688E4432}.Debug|x64.Build.0 = Debug|Any CPU
+		{254C0A6F-9355-476A-AFDB-6E20688E4432}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{254C0A6F-9355-476A-AFDB-6E20688E4432}.Debug|x86.Build.0 = Debug|Any CPU
+		{254C0A6F-9355-476A-AFDB-6E20688E4432}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{254C0A6F-9355-476A-AFDB-6E20688E4432}.Release|Any CPU.Build.0 = Release|Any CPU
+		{254C0A6F-9355-476A-AFDB-6E20688E4432}.Release|x64.ActiveCfg = Release|Any CPU
+		{254C0A6F-9355-476A-AFDB-6E20688E4432}.Release|x64.Build.0 = Release|Any CPU
+		{254C0A6F-9355-476A-AFDB-6E20688E4432}.Release|x86.ActiveCfg = Release|Any CPU
+		{254C0A6F-9355-476A-AFDB-6E20688E4432}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -304,5 +318,6 @@ Global
 		{4CE3F6B7-4F87-454F-B590-85037D5BE085} = {FBD15674-246A-4C57-B865-07214D8BB9A1}
 		{985AEA89-B646-415A-828F-65F2B0C02F4E} = {8E178A6E-EAA5-413A-9EBE-36557DFF288E}
 		{05EEFD56-F33D-4FD2-A856-AE2EE650C616} = {FBD15674-246A-4C57-B865-07214D8BB9A1}
+		{254C0A6F-9355-476A-AFDB-6E20688E4432} = {49B7A61F-B3BE-485E-84D0-B78C08656412}
 	EndGlobalSection
 EndGlobal
