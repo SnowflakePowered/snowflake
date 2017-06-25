@@ -2,7 +2,8 @@
 
   <PropertyGroup>
     <OutputType>exe</OutputType>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFrameworks>netcoreapp2.0;netstandard2.0;netcoreapp1.1;netcoreapp1.0</TargetFrameworks>
     <RootNamespace>Snowflake.Tooling.AssemblyModulePacker</RootNamespace>
     <AssemblyName>dotnet-pack-snowflake</AssemblyName>
     <ApplicationIcon />
@@ -20,6 +21,8 @@
   
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="System.ValueTuple" Version="4.3.1" />
+    <PackageReference Update="Microsoft.NETCore.App" Version="2.0.0-preview1-002111-00" />
   </ItemGroup>
 
   <ItemGroup>
