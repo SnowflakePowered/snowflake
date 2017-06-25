@@ -2,17 +2,23 @@
 
   <PropertyGroup>
     <OutputType>exe</OutputType>
-    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <TargetFrameworks>netcoreapp1.0;netcoreapp1.1</TargetFrameworks>
     <RootNamespace>Snowflake.Tooling.AssemblyModulePacker</RootNamespace>
-    <RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>
     <AssemblyName>dotnet-pack-snowflake</AssemblyName>
     <ApplicationIcon />
     <OutputTypeEx>exe</OutputTypeEx>
     <StartupObject />
+    <Version>1.1.0</Version>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <Authors>Snowflake Developers</Authors>
+    <Title>Snowflake .NET Module Packer Tooling</Title>
+    <PackageType>DotNetCliTool</PackageType>
+  </PropertyGroup>
+  
   <ItemGroup>
-    <PackageReference Include="CliWrap" Version="1.2.3" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="System.ValueTuple" Version="4.3.1" />
   </ItemGroup>

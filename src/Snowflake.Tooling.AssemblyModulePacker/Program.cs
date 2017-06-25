@@ -55,14 +55,9 @@ namespace Snowflake.Tooling.AssemblyModulePacker
             string assemblyName = (from groups in XDocument.Parse(File.ReadAllText(projectFile.FullName)).Root.Descendants()
                                    from element in groups.Descendants()
                                    where element.Name.LocalName == "AssemblyName"
-                                   select element.Value).FirstOrDefault();
+                                   select element.Value).FirstOrDefault() ?? Path.GetFileNameWithoutExtension(projectFile.Name);
 
-            if (assemblyName == null)
-            {
-                await stateMachine.ExitWithState("Project file is missing AssemblyName.", 1);
-                return;
-            }
-
+         
             if(assemblyName != Path.GetFileNameWithoutExtension(module.Entry))
             {
                 await stateMachine.ExitWithState($"Entry point {module.Entry} is not consistent with output assembly name {assemblyName}!", 1);
@@ -77,7 +72,7 @@ namespace Snowflake.Tooling.AssemblyModulePacker
                    {
                        return buildResult = await builder.Build();
                    }
-                   catch (IOException ex)
+                   catch (Exception ex)
                    {
                        await stateMachine.ExitWithState(ex.Message, 1);
                        return null;

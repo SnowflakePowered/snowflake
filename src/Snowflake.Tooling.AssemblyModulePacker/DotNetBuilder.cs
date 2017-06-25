@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using CliWrap;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,13 +10,17 @@ namespace Snowflake.Tooling.AssemblyModulePacker
 {
     internal class DotNetBuilder
     {
-        private readonly Cli dotnetProcess;
+        private readonly ProcessStartInfo dotnetProcess;
         private readonly FileInfo projectFile;
         private readonly ModuleDefinition moduleDefinition;
         private readonly IEnumerable<string> args;
         public DotNetBuilder(ModuleDefinition moduleDefinition, FileInfo projectFile, IEnumerable<string> args)
         {
-            this.dotnetProcess = new Cli("dotnet", projectFile.DirectoryName);
+            this.dotnetProcess = new ProcessStartInfo()
+            {
+                FileName = "dotnet",
+                WorkingDirectory = projectFile.DirectoryName
+            };
             this.projectFile = projectFile;
             this.moduleDefinition = moduleDefinition;
             this.args = args;
@@ -50,8 +54,15 @@ namespace Snowflake.Tooling.AssemblyModulePacker
                 .Prepend("-o")
                 .Prepend(projectFile.FullName)
                 .Prepend("publish");
-            var output = await this.dotnetProcess.ExecuteAsync(String.Join(" ", dotnetArgs));
-            Console.WriteLine(output.StandardOutput);
+            this.dotnetProcess.Arguments = String.Join(" ", dotnetArgs);
+            this.dotnetProcess.RedirectStandardOutput = true;
+            var output = Process.Start(this.dotnetProcess);
+            await Task.Run(() => {
+                output.OutputDataReceived += (s, e) => Console.WriteLine(e.Data);
+                output.BeginOutputReadLine();
+                output.WaitForExit();
+            });
+            if (output.ExitCode != 0) throw new InvalidOperationException("Unable to build module; MSBuild was unable to build your assembly.");
             return this.CopyModuleFile(moduleContents).Directory;
         }
 
