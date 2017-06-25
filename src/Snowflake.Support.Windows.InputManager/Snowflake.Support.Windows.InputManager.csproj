@@ -7,9 +7,9 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <PackageReference Include="SharpDX" Version="4.0.0-ci141" />
-    <PackageReference Include="SharpDX.DirectInput" Version="4.0.0-ci141" />
-    <PackageReference Include="SharpDX.XInput" Version="4.0.0-ci141" />
+    <PackageReference Include="SharpDX" Version="4.0.1" />
+    <PackageReference Include="SharpDX.DirectInput" Version="4.0.1" />
+    <PackageReference Include="SharpDX.XInput" Version="4.0.1" />
   </ItemGroup>
   
   <ItemGroup>

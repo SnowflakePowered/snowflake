@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <OutputType>exe</OutputType>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
     <TargetFrameworks>netcoreapp1.0;netcoreapp1.1</TargetFrameworks>
     <RootNamespace>Snowflake.Tooling.AssemblyModulePacker</RootNamespace>
     <AssemblyName>dotnet-pack-snowflake</AssemblyName>
