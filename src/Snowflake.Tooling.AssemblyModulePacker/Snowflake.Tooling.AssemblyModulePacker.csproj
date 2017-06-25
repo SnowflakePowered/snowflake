@@ -11,6 +11,7 @@
     <StartupObject />
     <Version>1.1.0</Version>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <RuntimeIdentifiers>win10-x64;linux-x64;macos-x64</RuntimeIdentifiers>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -21,14 +22,8 @@
   
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
-    <PackageReference Include="System.ValueTuple" Version="4.3.1" />
+    <PackageReference Include="System.ValueTuple" Version="4.4.0-preview1-25305-02" />
     <PackageReference Update="Microsoft.NETCore.App" Version="2.0.0-preview1-002111-00" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="module.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>

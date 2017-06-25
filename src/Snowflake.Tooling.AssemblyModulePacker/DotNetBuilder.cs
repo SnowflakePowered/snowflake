@@ -50,7 +50,8 @@ namespace Snowflake.Tooling.AssemblyModulePacker
         public async Task<DirectoryInfo> Build()
         {
             var moduleContents = this.Clean();
-            var dotnetArgs = this.args.Prepend(moduleContents.FullName)
+            var dotnetArgs = this.args
+                .Prepend(moduleContents.FullName)
                 .Prepend("-o")
                 .Prepend(projectFile.FullName)
                 .Prepend("publish");

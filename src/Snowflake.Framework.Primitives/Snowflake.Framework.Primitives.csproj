@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
     <RootNamespace>Snowflake</RootNamespace>
   </PropertyGroup>
   

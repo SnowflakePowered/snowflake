@@ -23,13 +23,13 @@ namespace Snowflake.Tooling.AssemblyModulePacker
             var cwd = DirectoryProvider.WorkingDirectory;
             if (!DirectoryProvider.IsProjectDirectory(cwd))
             {
-                await stateMachine.ExitWithState("No valid project file found.", 1);
+                await stateMachine.ExitWithState("Error! No valid project file found.", 1);
                 return;
             }
 
             if (!DirectoryProvider.IsModuleDirectory(cwd))
             {
-                await stateMachine.ExitWithState("No valid module.json found. Check for JSON errors or missing file.", 1);
+                await stateMachine.ExitWithState("Error! No valid module.json found. Check for JSON errors or missing file.", 1);
                 return;
             }
             //todo: migrate to use states!
@@ -42,25 +42,36 @@ namespace Snowflake.Tooling.AssemblyModulePacker
             }
             catch
             {
-                await stateMachine.ExitWithState("No valid module.json found. Check for JSON errors or missing file.", 1);
+                await stateMachine.ExitWithState("Error! No valid module.json found. Check for JSON errors or missing file.", 1);
                 return;
             }
 
             if (!module.Entry.EndsWith(".dll") || module.Loader != "assembly")
             {
-                await stateMachine.ExitWithState("Module is not a proper assembly module, can not pack non-assembly modules!", 1);
+                await stateMachine.ExitWithState("Error! Module is not a proper assembly module, can not pack non-assembly modules!", 1);
                 return;
             }
 
-            string assemblyName = (from groups in XDocument.Parse(File.ReadAllText(projectFile.FullName)).Root.Descendants()
+            var projectXml = XDocument.Parse(File.ReadAllText(projectFile.FullName)).Root.Descendants();
+            string assemblyName = (from groups in projectXml
                                    from element in groups.Descendants()
                                    where element.Name.LocalName == "AssemblyName"
                                    select element.Value).FirstOrDefault() ?? Path.GetFileNameWithoutExtension(projectFile.Name);
 
-         
-            if(assemblyName != Path.GetFileNameWithoutExtension(module.Entry))
+            if (assemblyName != Path.GetFileNameWithoutExtension(module.Entry))
             {
-                await stateMachine.ExitWithState($"Entry point {module.Entry} is not consistent with output assembly name {assemblyName}!", 1);
+                await stateMachine.ExitWithState($"Error! Entry point {module.Entry} is not consistent with output assembly name {assemblyName}!", 1);
+                return;
+            }
+
+            string targetFramework = (from groups in projectXml
+                                      from element in groups.Descendants()
+                                      where element.Name.LocalName == "TargetFramework"
+                                      select element.Value).FirstOrDefault();
+            
+            if (targetFramework != "netcoreapp2.0")
+            {
+                await stateMachine.ExitWithState($"Error! Assembly modules must target framework netcoreapp2.0", 1);
                 return;
             }
 
