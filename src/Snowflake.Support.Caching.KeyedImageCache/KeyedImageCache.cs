@@ -4,30 +4,26 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Snowflake.Records.File;
 using Snowflake.Records.Metadata;
+using Snowflake.Caching;
 
-namespace Snowflake.Caching
+namespace Snowflake.Support.Caching.KeyedImageCache
 {
     public class KeyedImageCache : IKeyedImageCache
     {
-        private readonly string rootPath;
+        private readonly DirectoryInfo rootPath;
 
-        public KeyedImageCache(string appDataPath)
+        public KeyedImageCache(DirectoryInfo appDataPath)
         {
-            if (!Directory.Exists(Path.Combine(appDataPath, ".imgcache")))
-                Directory.CreateDirectory(Path.Combine(appDataPath, ".imgcache"));
-            this.rootPath = Path.Combine(appDataPath, ".imgcache");
+            this.rootPath = appDataPath.CreateSubdirectory(".imgcache");
         }
 
-        public IList<IFileRecord> Add(Image image, Guid recordGuid, string imageType)
+        public IList<IFileRecord> Add(Stream imageStream, Guid recordGuid, string imageType)
         {
             Guid cacheId = Guid.NewGuid();
-            string cachePath = Path.Combine(this.rootPath, cacheId.ToString());
-            Directory.CreateDirectory(cachePath);
+            DirectoryInfo cachePath = this.rootPath.CreateSubdirectory(cacheId.ToString());
+            var image = Image.FromStream(imageStream);
             return new List<IFileRecord>
             {
                 KeyedImageCache.SaveImage(image, 100, cacheId, cachePath, imageType, recordGuid),
@@ -38,11 +34,11 @@ namespace Snowflake.Caching
             };
         }
 
-        public IList<IFileRecord> Add(Image image, Guid recordGuid, string imageType, DateTime dateTime)
+        public IList<IFileRecord> Add(Stream imageStream, Guid recordGuid, string imageType, DateTime dateTime)
         {
             Guid cacheId = Guid.NewGuid();
-            string cachePath = Path.Combine(this.rootPath, cacheId.ToString());
-            Directory.CreateDirectory(cachePath);
+            DirectoryInfo cachePath = this.rootPath.CreateSubdirectory(cacheId.ToString());
+            var image = Image.FromStream(imageStream);
             return new List<IFileRecord>
             {
                 KeyedImageCache.SaveImage(image, 100, cacheId, cachePath, imageType, recordGuid, dateTime),
@@ -53,9 +49,9 @@ namespace Snowflake.Caching
             };
         }
 
-        private static IFileRecord SaveImage(Image image, int percent, Guid cacheId, string cachePath, string imageType, Guid recordGuid)
+        private static IFileRecord SaveImage(Image image, int percent, Guid cacheId, DirectoryInfo cachePath, string imageType, Guid recordGuid)
         {
-            string path = Path.Combine(cachePath, $"@{percent}_{cacheId}.jpg");
+            string path = Path.Combine(cachePath.FullName, $"@{percent}_{cacheId}.jpg");
             if (percent == 100)
             {
                 image.Save(path, ImageFormat.Jpeg);
@@ -83,7 +79,7 @@ namespace Snowflake.Caching
 
             return record;
         }
-        private static IFileRecord SaveImage(Image image, int percent, Guid cacheId, string cachePath, string imageType, Guid recordGuid, DateTime dateTime)
+        private static IFileRecord SaveImage(Image image, int percent, Guid cacheId, DirectoryInfo cachePath, string imageType, Guid recordGuid, DateTime dateTime)
         {
             var record = KeyedImageCache.SaveImage(image, percent, cacheId, cachePath, imageType, recordGuid);
             record.Metadata.Add(ImageMetadataKeys.Date,

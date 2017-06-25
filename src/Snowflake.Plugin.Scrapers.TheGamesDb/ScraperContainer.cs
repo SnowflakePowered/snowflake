@@ -10,13 +10,14 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb
     {
         [ImportService(typeof(IQueryProviderSource))]
         [ImportService(typeof(IContentDirectoryProvider))]
+        [ImportService(typeof(IKeyedImageCache))]
         public void Compose(IModule composableModule, IServiceContainer serviceContainer)
         {
             var appdata = serviceContainer.Get<IContentDirectoryProvider>();
             serviceContainer.Get<IQueryProviderSource>()
                 .Register(new TheGamesDbMetadataProvider()); //todo use pluginManager with encapsulated interdfaces?
             serviceContainer.Get<IQueryProviderSource>()
-                .Register(new TheGamesDbMediaProvider(new KeyedImageCache(appdata.ApplicationData.FullName)));
+                .Register(new TheGamesDbMediaProvider(serviceContainer.Get<IKeyedImageCache>()));
         }
     }
 }
