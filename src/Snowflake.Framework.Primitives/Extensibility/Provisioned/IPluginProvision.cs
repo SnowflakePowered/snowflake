@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Snowflake.Configuration;
+using Snowflake.Extensibility.Configuration;
 
 namespace Snowflake.Extensibility.Provisioned
 {
@@ -20,6 +21,11 @@ namespace Snowflake.Extensibility.Provisioned
         /// The plugin's properties
         /// </summary>
         IPluginProperties Properties { get; }
+
+        /// <summary>
+        /// The plugin's configuration store
+        /// </summary>
+        IPluginConfigurationStore ConfigurationStore { get; }
 
         /// <summary>
         /// The plugin's name

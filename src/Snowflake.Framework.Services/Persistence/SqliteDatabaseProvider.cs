@@ -18,5 +18,10 @@ namespace Snowflake.Services.Persistence
         {
             return new SqliteDatabase(Path.Combine(databaseRoot.FullName, $"{databaseName}.db"));
         }
+
+        public ISqlDatabase CreateDatabase(string universe, string databaseName)
+        {
+            return new SqliteDatabase(Path.Combine(databaseRoot.CreateSubdirectory(universe).FullName, $"{databaseName}.db"));
+        }
     }
 }

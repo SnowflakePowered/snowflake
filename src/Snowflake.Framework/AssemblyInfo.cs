@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyCulture("")]
 [assembly: InternalsVisibleTo("Snowflake.Support.StoreProviders")]
+[assembly: InternalsVisibleTo("Snowflake.Support.PluginManager")]
 [assembly: InternalsVisibleTo("Snowflake.Framework.Services")]
 [assembly: InternalsVisibleTo("Snowflake.Framework.Tests")]
 

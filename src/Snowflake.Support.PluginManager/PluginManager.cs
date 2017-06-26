@@ -14,6 +14,7 @@ using System.IO;
 using Snowflake.Extensions;
 using System.Collections.Immutable;
 using Snowflake.Extensibility.Provisioned;
+using Snowflake.Extensibility.Configuration;
 
 namespace Snowflake.Support.PluginManager
 {
@@ -22,12 +23,15 @@ namespace Snowflake.Support.PluginManager
         private readonly ILogProvider logProvider;
         private readonly IContentDirectoryProvider contentDirectory;
         private readonly IDictionary<Type, IImmutableList<IPlugin>> loadedPlugins;
-
-        public PluginManager(ILogProvider logProvider, IContentDirectoryProvider contentDirectory)
+        private readonly ISqliteDatabaseProvider databaseProvider;
+        public PluginManager(ILogProvider logProvider,
+            IContentDirectoryProvider contentDirectory,
+            ISqliteDatabaseProvider databaseProvider)
         {
             this.logProvider = logProvider;
             this.contentDirectory = contentDirectory;
             this.loadedPlugins = new Dictionary<Type, IImmutableList<IPlugin>>();
+            this.databaseProvider = databaseProvider;
         }
 
         public IPluginProvision GetProvision<T>(IModule composableModule) where T : IPlugin
@@ -44,8 +48,12 @@ namespace Snowflake.Support.PluginManager
                .First().FullName)), new JsonSerializer { Culture = CultureInfo.InvariantCulture }));
             var pluginDataDirectory = this.contentDirectory.ApplicationData.CreateSubdirectory("plugincontents")
                     .CreateSubdirectory(pluginAttr.PluginName);
+            var pluginConfigDb = this.databaseProvider.CreateDatabase("pluginconfiguration", $"{pluginAttr.PluginName}.Configuration");
+            var pluginStore = new SqlitePluginConfigurationStore(pluginConfigDb);
             return new PluginProvision(this.logProvider.GetLogger($"Plugin:{pluginAttr.PluginName}"),
-                properties, pluginAttr.PluginName, 
+                properties,
+                pluginStore,
+                pluginAttr.PluginName, 
                 properties.Get(PluginInfoFields.Author) ?? pluginAttr.Author,
                 properties.Get(PluginInfoFields.Description) ?? pluginAttr.Description,
                 pluginAttr.Version, pluginDataDirectory, pluginCommonResourceDirectory, pluginResourceDirectory);

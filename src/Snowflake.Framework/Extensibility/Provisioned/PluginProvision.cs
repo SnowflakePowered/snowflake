@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Snowflake.Extensibility.Configuration;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -9,6 +10,7 @@ namespace Snowflake.Extensibility.Provisioned
     {
         public PluginProvision(ILogger logger,
             IPluginProperties pluginProperties, 
+            IPluginConfigurationStore configurationStore,
             string name, 
             string author,
             string description, 
@@ -21,6 +23,7 @@ namespace Snowflake.Extensibility.Provisioned
             this.Author = author;
             this.Description = description;
             this.Version = version;
+            this.ConfigurationStore = configurationStore;
             this.ContentDirectory = contentDirectory;
             this.ResourceDirectory = resourceDirectory;
             this.CommonResourceDirectory = commonResourceDirectory;
@@ -44,5 +47,6 @@ namespace Snowflake.Extensibility.Provisioned
         
         public DirectoryInfo CommonResourceDirectory { get; }
 
+        public IPluginConfigurationStore ConfigurationStore { get; }
     }
 }
