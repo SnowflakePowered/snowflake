@@ -12,7 +12,7 @@ namespace Snowflake.Support.PluginManager
         [ImportService(typeof(IContentDirectoryProvider))]
         [ImportService(typeof(IServiceRegistrationProvider))]
         [ImportService(typeof(ISqliteDatabaseProvider))]
-        public void Compose(IModule composableModule, IServiceContainer serviceContainer)
+        public void Compose(IModule composableModule, Loader.IServiceProvider serviceContainer)
         {
             var logProvider = serviceContainer.Get<ILogProvider>();
             var appdataProvider = serviceContainer.Get<IContentDirectoryProvider>();

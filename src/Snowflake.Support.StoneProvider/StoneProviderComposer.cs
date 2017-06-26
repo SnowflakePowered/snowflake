@@ -8,7 +8,7 @@ namespace Snowflake.Services
     public class StoneProviderComposer : IComposable
     {
         [ImportService(typeof(IServiceRegistrationProvider))]
-        public void Compose(IModule module, IServiceContainer serviceContainer)
+        public void Compose(IModule module, Loader.IServiceProvider serviceContainer)
         {
             serviceContainer.Get<IServiceRegistrationProvider>().RegisterService<IStoneProvider>(new StoneProvider());
         }

@@ -13,14 +13,14 @@ namespace Snowflake.Persistence
 {
     public class SqliteDatabase : ISqlDatabase
     {
-        public string FileName { get; }
+        public string DatabaseName { get; }
         private readonly string dbConnectionString;
 
         public SqliteDatabase(string fileName)
         {
-            this.FileName = fileName;
-            if(!File.Exists(this.FileName)) File.Create(this.FileName).Dispose();
-            this.dbConnectionString = $"Data Source={this.FileName};";
+            this.DatabaseName = fileName;
+            if(!File.Exists(this.DatabaseName)) File.Create(this.DatabaseName).Dispose();
+            this.dbConnectionString = $"Data Source={this.DatabaseName};";
         }
 
         public IDbConnection GetConnection()

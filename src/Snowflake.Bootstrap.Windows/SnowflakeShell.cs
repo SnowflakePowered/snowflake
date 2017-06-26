@@ -25,7 +25,7 @@ namespace Snowflake.Shell.Windows
 {
     internal class SnowflakeShell
     {
-        private ICoreService loadedCore;
+        private IServiceContainer loadedCore;
         private readonly string appDataDirectory = PathUtility.GetSnowflakeDataPath();
         internal SnowflakeShell()
         {
@@ -35,7 +35,7 @@ namespace Snowflake.Shell.Windows
         public void StartCore()
         {
 
-            this.loadedCore = new CoreService(this.appDataDirectory);
+            this.loadedCore = new ServiceContainer(this.appDataDirectory);
             var loader = this.loadedCore.Get<IModuleEnumerator>();
             var composer = new AssemblyComposer(this.loadedCore, loader);
             composer.Compose();

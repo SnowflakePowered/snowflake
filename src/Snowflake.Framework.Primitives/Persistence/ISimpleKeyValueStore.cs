@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Snowflake.Persistence
 {
+    /// <summary>
+    /// A simple key value object store
+    /// </summary>
     public interface ISimpleKeyValueStore
     {
         /// <summary>

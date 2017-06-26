@@ -7,7 +7,7 @@ namespace Snowflake.Services
     /// <summary>
     /// The core frontend service that handles all the functions of the frontend core.
     /// </summary>
-    public interface ICoreService : IDisposable
+    public interface IServiceContainer : IDisposable
     {
         /// <summary>
         /// The directory to store appdata in this core service
@@ -17,8 +17,8 @@ namespace Snowflake.Services
         /// Register a service with this coreservice
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="serviceObject"></param>
-        void RegisterService<T>(T serviceObject);
+        /// <param name="serviceInstance"></param>
+        void RegisterService<T>(T serviceInstance);
         /// <summary>
         /// Get a list of registered services
         /// </summary>

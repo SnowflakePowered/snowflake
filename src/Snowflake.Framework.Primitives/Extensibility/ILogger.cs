@@ -46,6 +46,12 @@ namespace Snowflake.Extensibility
         /// <param name="messsage">The message to log</param>
         void Error(string message);
         /// <summary>
+        /// Logs an exception.
+        /// </summary>
+        /// <param name="message">The error message.</param>
+        /// <param name="ex">The exception to log.</param>
+        void Error(Exception ex, string message);
+        /// <summary>
         /// Log a message at the <see cref="LogLevel.Fatal"/> log level
         /// </summary>
         /// <param name="messsage">The message to log</param>

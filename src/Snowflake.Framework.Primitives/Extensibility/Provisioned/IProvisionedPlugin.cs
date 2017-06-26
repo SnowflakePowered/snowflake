@@ -5,6 +5,10 @@ using Snowflake.Configuration;
 
 namespace Snowflake.Extensibility.Provisioned
 {
+    /// <summary>
+    /// Represents a plugin initialized with a provision
+    /// A provisioned plugin has access to a logger, configuration options, and a content directory.
+    /// </summary>
     public interface IProvisionedPlugin : IPlugin
     {
         /// <summary>

@@ -10,7 +10,7 @@ namespace Snowflake.Support.ShiragameProvider
     public class ShiragameProviderComposable : IComposable
     {
         [ImportService(typeof(IServiceRegistrationProvider))]
-        public void Compose(IModule composableModule, IServiceContainer serviceContainer)
+        public void Compose(IModule composableModule, Loader.IServiceProvider serviceContainer)
         {
             var register = serviceContainer.Get<IServiceRegistrationProvider>();
             var shiragameDb = new SqliteDatabase(Path.Combine(composableModule.ContentsDirectory.FullName, "shiragame.db"));

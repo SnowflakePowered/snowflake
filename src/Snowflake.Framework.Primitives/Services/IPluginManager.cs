@@ -53,11 +53,11 @@ namespace Snowflake.Services
 
 
         /// <summary>
-        /// Gets a specific plugin
+        /// Gets a specific provisioned plugin
         /// </summary>
         /// <param name="pluginName">The name of the plugin.</param>
         /// <returns>The given plugin if it exists, null if it does not.</returns>
-        IPlugin Get(string pluginName);
+        IProvisionedPlugin Get(string pluginName);
 
         /// <summary>
         /// Checks if a given plugin under a type category has been loaded into the plugin manager.

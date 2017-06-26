@@ -42,6 +42,11 @@ namespace Snowflake.Services.Logging
 
         public void Error(string message) => this.baseLogger.Error(message);
 
+        public void Error(Exception ex, string message)
+        {
+            this.baseLogger.Error(ex, message);
+        }
+
         public void Fatal(string message) => this.baseLogger.Fatal(message);
 
         public void Info(string message) => this.baseLogger.Info(message);
@@ -74,7 +79,5 @@ namespace Snowflake.Services.Logging
                     break;
             }
         }
-
-       
     }
 }

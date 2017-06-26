@@ -11,7 +11,7 @@ namespace Snowflake.Support.Caching.KeyedImageCache
     {
         [ImportService(typeof(IContentDirectoryProvider))]
         [ImportService(typeof(IServiceRegistrationProvider))]
-        public void Compose(IModule composableModule, IServiceContainer serviceContainer)
+        public void Compose(IModule composableModule, Loader.IServiceProvider serviceContainer)
         {
             var appdata = serviceContainer.Get<IContentDirectoryProvider>();
             var register = serviceContainer.Get<IServiceRegistrationProvider>();

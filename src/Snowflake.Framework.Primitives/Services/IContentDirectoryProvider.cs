@@ -5,8 +5,14 @@ using System.Text;
 
 namespace Snowflake.Services
 {
+    /// <summary>
+    /// Provides the application content directory.
+    /// </summary>
     public interface IContentDirectoryProvider
     {
+        /// <summary>
+        /// The application content directory.
+        /// </summary>
         DirectoryInfo ApplicationData { get; }
     }
 }

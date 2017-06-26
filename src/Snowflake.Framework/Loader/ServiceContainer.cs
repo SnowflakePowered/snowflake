@@ -7,11 +7,11 @@ using System.Text;
 
 namespace Snowflake.Loader
 {
-    internal class ServiceContainer : IServiceContainer
+    internal class ServiceContainer : IServiceProvider
     {
-        private ICoreService coreService;
+        private IServiceContainer coreService;
         private IList<string> services;
-        internal ServiceContainer(ICoreService coreService, IEnumerable<string> serviceList)
+        internal ServiceContainer(IServiceContainer coreService, IEnumerable<string> serviceList)
         {
             this.coreService = coreService;
             this.services = serviceList.ToList();
@@ -19,7 +19,7 @@ namespace Snowflake.Loader
 
         public IEnumerable<string> Services => this.services.AsEnumerable();
 
-        public T Get<T>()
+        public T Get<T>() where T : class
         {
             if (services.Contains(typeof(T).FullName)) return this.coreService.Get<T>();
             throw new InvalidOperationException($"Service container is not authorized to provide service {typeof(T).FullName} or service does not exist.");

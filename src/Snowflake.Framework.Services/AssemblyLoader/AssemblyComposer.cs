@@ -13,10 +13,10 @@ namespace Snowflake.Services.AssemblyLoader
     {
         private readonly IList<IModule> modules;
         private readonly IList<(IModule Module, IComposable Composable)> moduleComposables;
-        private readonly ICoreService coreService;
+        private readonly IServiceContainer coreService;
         private readonly ILogger logger;
 
-        public AssemblyComposer(ICoreService coreService, IModuleEnumerator modules)
+        public AssemblyComposer(IServiceContainer coreService, IModuleEnumerator modules)
         {
             this.coreService = coreService;
             this.logger = new LogProvider().GetLogger("AssemblyComposer"); //Unknown if logging service is available.
@@ -85,7 +85,7 @@ namespace Snowflake.Services.AssemblyLoader
 
         private void ComposeContainer(IModule module, IComposable moduleComposable, IList<string> services)
         {
-            IServiceContainer container = new ServiceContainer(this.coreService, services);
+            Loader.IServiceProvider container = new Loader.ServiceContainer(this.coreService, services);
             moduleComposable.Compose(module, container);
         }
     }

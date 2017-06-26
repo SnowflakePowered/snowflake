@@ -73,9 +73,12 @@ namespace Snowflake.Support.PluginManager
             return (T)this.loadedPlugins[typeof(T)].FirstOrDefault(p => p.Name == pluginName);
         }
 
-        public IPlugin Get(string pluginName)
+        public IProvisionedPlugin Get(string pluginName)
         {
-            return this.loadedPlugins.SelectMany(p => p.Value).FirstOrDefault(p => p.Name == pluginName);
+            return this.loadedPlugins.SelectMany(p => p.Value)
+                .Where(p => p is IProvisionedPlugin)
+                .Cast<IProvisionedPlugin>()
+                .FirstOrDefault(p => p.Name == pluginName);
         }
 
         public void Register<T>(T plugin) where T : IPlugin
@@ -108,7 +111,10 @@ namespace Snowflake.Support.PluginManager
             {
                 if (disposing)
                 {
-                    // TODO: dispose managed state (managed objects).
+                    foreach (IPlugin plugin in this.loadedPlugins.Values)
+                    {
+                        plugin.Dispose();
+                    }
                 }
 
                 // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
@@ -117,12 +123,6 @@ namespace Snowflake.Support.PluginManager
                 disposedValue = true;
             }
         }
-
-        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
-        // ~PluginManager() {
-        //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-        //   Dispose(false);
-        // }
 
         // This code added to correctly implement the disposable pattern.
         public void Dispose()

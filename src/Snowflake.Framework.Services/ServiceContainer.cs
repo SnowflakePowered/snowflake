@@ -15,7 +15,7 @@ using Snowflake.Services.Persistence;
 namespace Snowflake.Services
 {
   
-    public class CoreService : ICoreService
+    public class ServiceContainer : IServiceContainer
     {
         #region Loaded Objects
         public string AppDataDirectory { get; }
@@ -27,7 +27,7 @@ namespace Snowflake.Services
 
         // Instantiate a SafeHandle instance.
     
-        public CoreService(string appDataDirectory)
+        public ServiceContainer(string appDataDirectory)
         {
             this.AppDataDirectory = appDataDirectory;
             var directoryProvider = new ContentDirectoryProvider(this.AppDataDirectory);

@@ -32,7 +32,7 @@ namespace Snowflake.Services.AssemblyLoader
 
             if (assemblyName.Name == "Snowflake.Framework.Primitives")
             {
-                Version supportedVersion = typeof(ICoreService).GetTypeInfo().Assembly.GetName().Version;
+                Version supportedVersion = typeof(IServiceContainer).GetTypeInfo().Assembly.GetName().Version;
                 Console.WriteLine($"Found Snowflake Framework Version {assemblyName.Version}");
                 if(assemblyName.Version.Major != supportedVersion.Major)
                 {

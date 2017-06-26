@@ -6,8 +6,8 @@ namespace Snowflake.Services
 {
     internal class ServiceRegistrationProvider : IServiceRegistrationProvider
     {
-        private readonly ICoreService coreService;
-        public ServiceRegistrationProvider(ICoreService coreService)
+        private readonly IServiceContainer coreService;
+        public ServiceRegistrationProvider(IServiceContainer coreService)
         {
             this.coreService = coreService;
         }

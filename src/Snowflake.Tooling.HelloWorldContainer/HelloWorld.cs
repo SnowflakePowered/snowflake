@@ -9,7 +9,7 @@ namespace Snowflake.Tooling.HelloWorldContainer
     public class HelloWorld : IComposable
     {
         [ImportService(typeof(IStoneProvider))]
-        public void Compose(IModule composableModule, IServiceContainer serviceContainer)
+        public void Compose(IModule composableModule, Loader.IServiceProvider serviceContainer)
         {
             foreach (IPlatformInfo platform in serviceContainer.Get<IStoneProvider>().Platforms.Values)
             {
