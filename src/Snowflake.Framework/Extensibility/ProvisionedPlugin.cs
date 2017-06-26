@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Snowflake.Configuration;
 using Snowflake.Extensibility.Configuration;
 using Snowflake.Services;
 
@@ -36,6 +37,11 @@ namespace Snowflake.Extensibility
         public virtual void Dispose()
         {
 
+        }
+
+        public virtual IConfigurationSection GetConfiguration()
+        {
+            return EmptyPluginConfiguration.EmptyConfiguration;
         }
     }
 }

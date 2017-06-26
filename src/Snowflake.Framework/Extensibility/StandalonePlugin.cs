@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
+using Snowflake.Configuration;
 
 namespace Snowflake.Extensibility
 {
@@ -24,6 +25,12 @@ namespace Snowflake.Extensibility
             this.Description = attribute.Description;
             this.Version = attribute.Version;
         }
+
+        public IConfigurationSection GetConfiguration()
+        {
+            return EmptyPluginConfiguration.EmptyConfiguration;
+        }
+
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
 

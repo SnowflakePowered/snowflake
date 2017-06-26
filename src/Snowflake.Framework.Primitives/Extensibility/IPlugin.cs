@@ -4,6 +4,7 @@ using System.IO;
 using System.Reflection;
 using Snowflake.Extensibility.Configuration;
 using Snowflake.Services;
+using Snowflake.Configuration;
 
 namespace Snowflake.Extensibility
 {
@@ -28,5 +29,10 @@ namespace Snowflake.Extensibility
         /// The version of the plugin
         /// </summary>
         Version Version { get; }
+        /// <summary>
+        /// Gets the plugin configuration
+        /// </summary>
+        /// <returns>The plugin configuration</returns>
+        IConfigurationSection GetConfiguration();
     }
 }
