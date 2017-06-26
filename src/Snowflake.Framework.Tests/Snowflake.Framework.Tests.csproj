@@ -29,6 +29,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Snowflake.Framework.Persistence\Snowflake.Framework.Persistence.csproj" />
+    <ProjectReference Include="..\Snowflake.Framework.Tests.DummyComposableInterface\Snowflake.Framework.Tests.DummyComposableInterface.csproj" />
+    <ProjectReference Include="..\Snowflake.Framework.Tests.InvalidComposable\Snowflake.Framework.Tests.InvalidComposable.csproj" />
     <ProjectReference Include="..\Snowflake.Plugin.Scrapers.TheGamesDb\Snowflake.Plugin.Scrapers.TheGamesDb.csproj" />
     <ProjectReference Include="..\Snowflake.Framework.Primitives\Snowflake.Framework.Primitives.csproj" />
     <ProjectReference Include="..\Snowflake.Framework.Services\Snowflake.Framework.Services.csproj" />
@@ -43,6 +45,12 @@
 
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="TestResources\Loader\testModule.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

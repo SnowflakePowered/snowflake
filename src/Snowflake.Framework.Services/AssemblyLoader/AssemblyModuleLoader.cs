@@ -46,9 +46,10 @@ namespace Snowflake.Services.AssemblyLoader
 
             foreach (var type in types)
             {
-                var container = Instantiate.CreateInstance(type) as IComposable;
+                var container = Instantiate.CreateInstance(type);
+                var castedContainer = (IComposable)container;
                 Console.WriteLine($"Found Container {container.GetType().Name}");
-                yield return container;
+                yield return castedContainer;
             }
         }
     }

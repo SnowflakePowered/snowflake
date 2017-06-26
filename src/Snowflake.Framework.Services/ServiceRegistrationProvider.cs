@@ -12,6 +12,11 @@ namespace Snowflake.Services
             this.coreService = coreService;
         }
 
-        public void RegisterService<T>(T serviceObject) where T : class => this.coreService.RegisterService<T>(serviceObject);
+        public void RegisterService<T>(T serviceObject) where T : class
+        {
+            if (typeof(T).Assembly == serviceObject.GetType().Assembly)
+                throw new InvalidOperationException("Can not register a service that implements an interface within the same assembly!");
+            this.coreService.RegisterService(serviceObject);
+        }
     }
 }

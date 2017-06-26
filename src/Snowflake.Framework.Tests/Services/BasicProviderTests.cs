@@ -10,7 +10,7 @@ using System.Text;
 using Xunit;
 using Moq;
 
-namespace Snowflake.Service.Tests
+namespace Snowflake.Services.Tests
 {
     public class BasicProviderTests
     {
@@ -47,7 +47,7 @@ namespace Snowflake.Service.Tests
         public void SqliteDatabaseProvider_Test()
         {
             DirectoryInfo dbRoot = new DirectoryInfo(Path.GetTempPath());
-            string fileName = BasicProviderTests.RandomString(10);
+            string fileName = Guid.NewGuid().ToString();
             ISqliteDatabaseProvider dbProvider = new SqliteDatabaseProvider(dbRoot);
             dbProvider.CreateDatabase(fileName);
             Assert.True(File.Exists(Path.Combine(dbRoot.FullName, $"{fileName}.db")));
@@ -57,7 +57,7 @@ namespace Snowflake.Service.Tests
         public void SqliteDatabaseProviderUniverse_Test()
         {
             DirectoryInfo dbRoot = new DirectoryInfo(Path.GetTempPath());
-            string fileName = BasicProviderTests.RandomString(10);
+            string fileName = Guid.NewGuid().ToString();
             ISqliteDatabaseProvider dbProvider = new SqliteDatabaseProvider(dbRoot);
             dbProvider.CreateDatabase("test", fileName);
             Assert.True(File.Exists(Path.Combine(dbRoot.CreateSubdirectory("test").FullName, $"{fileName}.db")));
@@ -77,14 +77,6 @@ namespace Snowflake.Service.Tests
             provider.RegisterService<IDummyService>(dummyService);
             Assert.Contains(typeof(IDummyService), serviceContainer.Keys);
             Assert.Equal(dummyService, serviceContainer[typeof(IDummyService)]);
-        }
-
-        private static Random random = new Random();
-        private static string RandomString(int length)
-        {
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            return new string(Enumerable.Repeat(chars, length)
-              .Select(s => s[random.Next(s.Length)]).ToArray());
         }
     }
 }

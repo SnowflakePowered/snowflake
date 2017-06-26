@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Snowflake.Service
+namespace Snowflake.Services
 {
     interface IDummyService
     {

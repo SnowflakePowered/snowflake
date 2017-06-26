@@ -11,7 +11,7 @@ using Xunit;
 using Moq;
 using Snowflake.Loader;
 
-namespace Snowflake.Service.Tests
+namespace Snowflake.Services.Tests
 {
     public class ServiceProviderTests
     {

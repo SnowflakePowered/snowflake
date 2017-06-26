@@ -6,6 +6,11 @@ namespace Snowflake.Services
 {
     /// <summary>
     /// Provides facilities to register a service.
+    /// <para>
+    /// When registering a service, your service must implement an interface in an assembly
+    /// outside of the plugin composable. 
+    /// Otherwise, your service will never be accessible by any consumer.
+    /// </para>
     /// </summary>
     public interface IServiceRegistrationProvider
     {
