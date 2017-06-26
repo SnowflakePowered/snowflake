@@ -26,7 +26,7 @@ namespace Snowflake.Configuration.Tests
             var mapcol = MappedControllerElementCollection.GetDefaultMappings(realmapping, testmappings);
             var x = new InputTemplate<IRetroArchInput>(mapcol);
             x[ControllerElement.ButtonA] = ControllerElement.DirectionalS;
-            Assert.Equal(x.Template.InputPlayerABtn, ControllerElement.DirectionalS);
+            Assert.Equal(ControllerElement.DirectionalS, x.Template.InputPlayerABtn);
             Assert.Equal(x.Template.Configuration.InputPlayerA, x.Template.InputPlayerA);
         }
 
@@ -41,7 +41,7 @@ namespace Snowflake.Configuration.Tests
             var mapcol = MappedControllerElementCollection.GetDefaultMappings(realmapping, testmappings);
             var x = new InputTemplate<IRetroArchInput>(mapcol);
             x[ControllerElement.ButtonA] = ControllerElement.DirectionalS;
-            Assert.Equal(x.Template.InputPlayerABtn, ControllerElement.DirectionalS);
+            Assert.Equal(ControllerElement.DirectionalS, x.Template.InputPlayerABtn);
         }
 
         [Fact]
@@ -55,7 +55,7 @@ namespace Snowflake.Configuration.Tests
             var mapcol = MappedControllerElementCollection.GetDefaultMappings(realmapping, testmappings);
             var x = new InputTemplate<IRetroArchInput>(mapcol);
             x[ControllerElement.ButtonA] = ControllerElement.DirectionalS;
-            Assert.Equal(x.Template.Configuration.InputPlayerABtn, ControllerElement.DirectionalS);
+            Assert.Equal(ControllerElement.DirectionalS, x.Template.Configuration.InputPlayerABtn);
         }
 
         [Fact]
@@ -72,8 +72,8 @@ namespace Snowflake.Configuration.Tests
             var y = (x as IConfigurationSection<IRetroArchInput>).Configuration["InputDevice"] = 1;
             var z = x.Template.Configuration.Values;
             var c = (x as IConfigurationSection<IRetroArchInput>).Values;
-            Assert.Equal(x.Template.Template.Configuration.InputPlayerABtn, ControllerElement.DirectionalS);
-            Assert.Equal((x as IConfigurationSection<IRetroArchInput>).Configuration.InputDevice, 1);
+            Assert.Equal(ControllerElement.DirectionalS, x.Template.Template.Configuration.InputPlayerABtn);
+            Assert.Equal(1, (x as IConfigurationSection<IRetroArchInput>).Configuration.InputDevice);
         }
 
     }
