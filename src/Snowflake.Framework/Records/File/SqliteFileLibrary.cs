@@ -158,19 +158,17 @@ namespace Snowflake.Records.File
                 {
                     try
                     {
-                        var files = query.Read().Select(file => new
-                        {
-                            Guid = new Guid(file.uuid),
-                            Path = file.path,
-                            MimeType = file.mimetype
-                        });
-                        var metadatas = query.Read().Select(metadata => new
-                        {
-                            Guid = new Guid(metadata.uuid),
-                            Record = new Guid(metadata.record),
-                            Key = metadata.key,
-                            Value = metadata.value
-                        }).Select(m => new RecordMetadata(m.Guid, m.Record, m.Key, m.Value) as IRecordMetadata);
+                        var files = query.Read().Select(file => (
+                            Guid: new Guid(file.uuid),
+                            Path: file.path,
+                            MimeType: file.mimetype
+                        ));
+                        var metadatas = query.Read().Select(metadata => (
+                            Guid: new Guid(metadata.uuid),
+                            Record: new Guid(metadata.record),
+                            Key: metadata.key,
+                            Value: metadata.value
+                        )).Select(m => new RecordMetadata(m.Guid, m.Record, m.Key, m.Value) as IRecordMetadata);
                         return (from f in files
                                 let md = (from m in metadatas where m.Record == f.Guid select m)
                                          .ToDictionary(md => md.Key, md => md)
@@ -201,20 +199,18 @@ namespace Snowflake.Records.File
                     {
                         dynamic _file = query.ReadFirstOrDefault();
                         if (_file == null) return null;
-                        var file = new
-                        {
-                            Guid = new Guid(_file.uuid),
-                            Game = new Guid(_file.game),
-                            Path = _file.path,
-                            MimeType = _file.mimetype
-                        };
-                        var metadatas = query.Read().Select(metadata => new
-                        {
-                            Guid = new Guid(metadata.uuid),
-                            Record = new Guid(metadata.record),
-                            Key = metadata.key,
-                            Value = metadata.value
-                        }).Select(m => new RecordMetadata(m.Guid, m.Record, m.Key, m.Value) as IRecordMetadata)?
+                        var file = (
+                            Guid: new Guid(_file.uuid),
+                            Game: new Guid(_file.game),
+                            Path: _file.path,
+                            MimeType: _file.mimetype
+                        );
+                        var metadatas = query.Read().Select(metadata => (
+                            Guid: new Guid(metadata.uuid),
+                            Record: new Guid(metadata.record),
+                            Key: metadata.key,
+                            Value: metadata.value
+                        )).Select(m => new RecordMetadata(m.Guid, m.Record, m.Key, m.Value) as IRecordMetadata)?
                         .ToDictionary(m => m.Key, m => m as IRecordMetadata); 
                         return new FileRecord(file.Game, metadatas, file.Path, file.MimeType);
                     }
