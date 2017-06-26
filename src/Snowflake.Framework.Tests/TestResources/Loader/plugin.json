@@ -1,0 +1,21 @@
+﻿{
+    "name": "NameNotFromAttribute",
+    "type": "plugin_test",
+  "version": "1.0.0.0",
+  "author":  "Snowflake",
+    "authors": [
+        "Snowflake"
+    ],
+  "description": "Test",
+  "someString": "TestString",
+  "someArray": [ "One", "Two" ],
+  "someDictionary": {
+    "one": "1",
+    "two": "2"
+  },
+  "someObject": {
+    "one": {
+      "two": "three"
+    }
+  }
+}

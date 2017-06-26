@@ -16,7 +16,7 @@ namespace Snowflake.Extensibility.Provisioned
         }
 
         public IEnumerable<string> PropertyKeys => (this.propertyRoot as IDictionary<string, JToken>).Keys;
-        public string Get(string key) => this.propertyRoot[key].Value<string>();
+        public string Get(string key) => this.propertyRoot[key]?.Value<string>();
 
         public IEnumerable<string> GetEnumerable(string key)
         {
