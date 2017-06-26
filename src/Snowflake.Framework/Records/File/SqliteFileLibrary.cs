@@ -166,9 +166,10 @@ namespace Snowflake.Records.File
                         var metadatas = query.Read().Select(metadata => (
                             Guid: new Guid(metadata.uuid),
                             Record: new Guid(metadata.record),
-                            Key: metadata.key,
-                            Value: metadata.value
-                        )).Select(m => new RecordMetadata(m.Guid, m.Record, m.Key, m.Value) as IRecordMetadata);
+                            Key: (string)metadata.key,
+                            Value: (string)metadata.value
+                        )).Select(m => new RecordMetadata(m.Guid, m.Record, m.Key, m.Value))?
+                        .Cast<IRecordMetadata>();
                         return (from f in files
                                 let md = (from m in metadatas where m.Record == f.Guid select m)
                                          .ToDictionary(md => md.Key, md => md)
@@ -202,16 +203,17 @@ namespace Snowflake.Records.File
                         var file = (
                             Guid: new Guid(_file.uuid),
                             Game: new Guid(_file.game),
-                            Path: _file.path,
-                            MimeType: _file.mimetype
+                            Path: (string)_file.path,
+                            MimeType: (string)_file.mimetype
                         );
                         var metadatas = query.Read().Select(metadata => (
                             Guid: new Guid(metadata.uuid),
                             Record: new Guid(metadata.record),
-                            Key: metadata.key,
-                            Value: metadata.value
-                        )).Select(m => new RecordMetadata(m.Guid, m.Record, m.Key, m.Value) as IRecordMetadata)?
-                        .ToDictionary(m => m.Key, m => m as IRecordMetadata); 
+                            Key: (string)metadata.key,
+                            Value: (string)metadata.value
+                        )).Select(m => new RecordMetadata(m.Guid, m.Record, m.Key, m.Value))?
+                        .Cast<IRecordMetadata>()?
+                        .ToDictionary(m => m.Key, m => m); 
                         return new FileRecord(file.Game, metadatas, file.Path, file.MimeType);
                     }
                     catch (DbException)

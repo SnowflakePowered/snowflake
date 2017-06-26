@@ -185,25 +185,26 @@ namespace Snowflake.Records.Game
                         var files = query.Read().Select(file => (
                             Guid: new Guid(file.uuid),
                             Game: new Guid(file.game),
-                            Path: file.path,
-                            MimeType: file.mimetype
+                            Path: (string)file.path,
+                            MimeType: (string)file.mimetype
                         ));
 
                         var metadatas = query.Read().Select(metadata => (
                             Guid: new Guid(metadata.uuid),
                             Record: new Guid(metadata.record),
-                            Key: metadata.key,
-                            Value: metadata.value
-                        )).Select(m => new RecordMetadata(m.Guid, m.Record, m.Key, m.Value) 
-                        as IRecordMetadata);
+                            Key: (string)metadata.key,
+                            Value: (string)metadata.value
+                        )).Select(m => new RecordMetadata(m.Guid, m.Record, m.Key, m.Value))?
+                        .Cast<IRecordMetadata>();
 
                         var fileRecords = (from f in files
                                            let md = (from m in metadatas where m.Record == f.Guid select m)
                                                .ToDictionary(md => md.Key, md => md)
                                            select new FileRecord(f.Game, md, f.Path, f.MimeType)).ToList();
+
                         return (from game in games
                                 let gameFiles =
-                                    (from f in fileRecords where f.Record == game select f as IFileRecord).ToList()
+                                    (from f in fileRecords where f.Record == game select f).Cast<IFileRecord>().ToList()
                                 let md = (from m in metadatas where m.Record == game select m)
                                     .ToDictionary(md => md.Key, md => md)
                                 select new GameRecord(game, md, gameFiles)).ToList();
@@ -241,23 +242,24 @@ namespace Snowflake.Records.Game
                         
                             Guid: new Guid(f.uuid),
                             Game: new Guid(f.game),
-                            Path: f.path,
-                            MimeType: f.mimetype
+                            Path: (string)f.path,
+                            MimeType: (string)f.mimetype
                        ));
 
-                        var metadatas = query.Read().Select(metadata => 
+                        var metadatas = query.Read().Select(metadata =>
                         (
                             Guid: new Guid(metadata.uuid),
                             Record: new Guid(metadata.record),
-                            Key: metadata.key,
-                            Value: metadata.value
-                        )).Select(m => new RecordMetadata(m.Guid, m.Record, m.Key, m.Value)
-                        as IRecordMetadata);
+                            Key: (string)metadata.key,
+                            Value: (string)metadata.value
+                        )).Select(m => new RecordMetadata(m.Guid, m.Record, m.Key, m.Value))
+                        .Cast<IRecordMetadata>();
 
                         var fileRecords = (from f in files
                                            let md = (from m in metadatas where m.Record == f.Guid select m)
                                                .ToDictionary(md => md.Key, md => md)
-                                           select new FileRecord(f.Game, md, f.Path, f.MimeType) as IFileRecord).ToList();
+                                           select new FileRecord(f.Game, md, f.Path, f.MimeType))
+                                           .Cast<IFileRecord>().ToList();
                         var gameMetadata =
                             (from m in metadatas where m.Guid == gameGuid select m)
                             .ToDictionary(m => m.Key, m => m);
