@@ -11,6 +11,7 @@ using Snowflake.Utility;
 
 namespace Snowflake.Romfile
 {
+    //todo: verify filename convention better
     public partial class StructuredFilename : IStructuredFilename
     {
         private static readonly TextInfo textInfo = new CultureInfo("en-US").TextInfo;
@@ -71,32 +72,32 @@ namespace Snowflake.Romfile
                              from regionCode in (from regionCode in match.Split(',', '-') select regionCode.Trim())
                              where regionCode.Length != 2 || regionCode.ToLower().ToTitleCase() != regionCode
                              let isoRegion = StructuredFilename.ConvertToRegionCode(regionCode.ToUpperInvariant())
-                             where isoRegion.Item1 != null
+                             where isoRegion.regionCode != null
                              select isoRegion).ToList();
             if (!validMatch.Any())
             {
                 this.NamingConvention = StructuredFilenameConvention.Unknown;
                 return "ZZ";
             }
-            this.NamingConvention = validMatch.First().Item2;
-            return String.Join("-", from regionCode in validMatch select regionCode.Item1);
+            this.NamingConvention = validMatch.First().convention;
+            return String.Join("-", from regionCode in validMatch select regionCode.regionCode);
         }
 
-        private static Tuple<string, StructuredFilenameConvention> ConvertToRegionCode(string unknownRegion)
+        private static (string regionCode, StructuredFilenameConvention convention) ConvertToRegionCode(string unknownRegion)
         {
             if (StructuredFilename.goodToolsLookupTable.ContainsKey(unknownRegion))
             {
-                return Tuple.Create(StructuredFilename.goodToolsLookupTable[unknownRegion], StructuredFilenameConvention.GoodTools);
+                return (StructuredFilename.goodToolsLookupTable[unknownRegion], StructuredFilenameConvention.GoodTools);
             }
             if (StructuredFilename.nointroLookupTable.ContainsKey(unknownRegion))
             {
-                return Tuple.Create(StructuredFilename.nointroLookupTable[unknownRegion], StructuredFilenameConvention.NoIntro);
+                return (StructuredFilename.nointroLookupTable[unknownRegion], StructuredFilenameConvention.NoIntro);
             }
             if (StructuredFilename.tosecLookupTable.Contains(unknownRegion))
             {
-                return Tuple.Create(unknownRegion, StructuredFilenameConvention.TheOldSchoolEmulationCenter);
+                return (unknownRegion, StructuredFilenameConvention.TheOldSchoolEmulationCenter);
             }
-            return Tuple.Create<string, StructuredFilenameConvention>(null, StructuredFilenameConvention.Unknown);
+            return (null, StructuredFilenameConvention.Unknown);
         }
 
     }
