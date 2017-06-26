@@ -1,4 +1,5 @@
 ﻿using Snowflake.Loader;
+using Snowflake.Tests.Composable;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -35,10 +36,10 @@ namespace Snowflake.Services.Tests
             var appDataDirectory = new DirectoryInfo(Path.GetTempPath())
                 .CreateSubdirectory(Guid.NewGuid().ToString());
             var container = new ServiceContainer(appDataDirectory.FullName);
-            IDummyService dummy = new DummyService();
+            IDummyComposable dummy = new DummyService();
             container.RegisterService(dummy);
-            Assert.Equal(dummy, container.Get<IDummyService>());
-            Assert.Contains(typeof(IDummyService).FullName, container.AvailableServices());
+            Assert.Equal(dummy, container.Get<IDummyComposable>());
+            Assert.Contains(typeof(IDummyComposable).FullName, container.AvailableServices());
         }
     }
 }

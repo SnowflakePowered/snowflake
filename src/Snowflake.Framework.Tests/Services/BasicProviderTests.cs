@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using Xunit;
 using Moq;
+using Snowflake.Tests.Composable;
 
 namespace Snowflake.Services.Tests
 {
@@ -68,15 +69,15 @@ namespace Snowflake.Services.Tests
         {
             var coreService = new Mock<IServiceContainer>();
             IDictionary<Type, object> serviceContainer = new Dictionary<Type, object>();
-            coreService.Setup(c => c.RegisterService(It.IsAny<IDummyService>())).Callback<IDummyService>(d => serviceContainer
-                        .Add(typeof(IDummyService), d));
+            coreService.Setup(c => c.RegisterService(It.IsAny<IDummyComposable>())).Callback<IDummyComposable>(d => serviceContainer
+                        .Add(typeof(IDummyComposable), d));
             coreService.Setup(c => c.AvailableServices()).Returns(() => serviceContainer.Keys.Select(service => service.FullName));
 
             var dummyService = new DummyService();
             var provider = new ServiceRegistrationProvider(coreService.Object);
-            provider.RegisterService<IDummyService>(dummyService);
-            Assert.Contains(typeof(IDummyService), serviceContainer.Keys);
-            Assert.Equal(dummyService, serviceContainer[typeof(IDummyService)]);
+            provider.RegisterService<IDummyComposable>(dummyService);
+            Assert.Contains(typeof(IDummyComposable), serviceContainer.Keys);
+            Assert.Equal(dummyService, serviceContainer[typeof(IDummyComposable)]);
         }
     }
 }

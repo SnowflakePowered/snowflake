@@ -10,6 +10,7 @@ using System.Text;
 using Xunit;
 using Moq;
 using Snowflake.Loader;
+using Snowflake.Tests.Composable;
 
 namespace Snowflake.Services.Tests
 {
@@ -21,19 +22,19 @@ namespace Snowflake.Services.Tests
         {
             var coreService = new Mock<IServiceContainer>();
             IDictionary<Type, object> serviceContainer = new Dictionary<Type, object>();
-            coreService.Setup(c => c.RegisterService(It.IsAny<IDummyService>())).Callback<IDummyService>(d => serviceContainer
-                        .Add(typeof(IDummyService), d));
+            coreService.Setup(c => c.RegisterService(It.IsAny<IDummyComposable>())).Callback<IDummyComposable>(d => serviceContainer
+                        .Add(typeof(IDummyComposable), d));
             coreService.Setup(c => c.AvailableServices()).Returns(() => serviceContainer.Keys.Select(service => service.FullName));
-            coreService.Setup(c => c.Get<IDummyService>()).Returns(() => (IDummyService)serviceContainer[typeof(IDummyService)]);
+            coreService.Setup(c => c.Get<IDummyComposable>()).Returns(() => (IDummyComposable)serviceContainer[typeof(IDummyComposable)]);
             var dummyService = new DummyService();
             var provider = new ServiceRegistrationProvider(coreService.Object);
-            provider.RegisterService<IDummyService>(dummyService);
-            Assert.Contains(typeof(IDummyService), serviceContainer.Keys);
-            Assert.Equal(dummyService, serviceContainer[typeof(IDummyService)]);
+            provider.RegisterService<IDummyComposable>(dummyService);
+            Assert.Contains(typeof(IDummyComposable), serviceContainer.Keys);
+            Assert.Equal(dummyService, serviceContainer[typeof(IDummyComposable)]);
 
             var serviceProvider = new ServiceProvider(coreService.Object, 
-                new List<string>() { typeof(IDummyService).FullName });
-            Assert.Equal(dummyService, serviceProvider.Get<IDummyService>());
+                new List<string>() { typeof(IDummyComposable).FullName });
+            Assert.Equal(dummyService, serviceProvider.Get<IDummyComposable>());
         }
 
         [Fact]
@@ -41,19 +42,19 @@ namespace Snowflake.Services.Tests
         {
             var coreService = new Mock<IServiceContainer>();
             IDictionary<Type, object> serviceContainer = new Dictionary<Type, object>();
-            coreService.Setup(c => c.RegisterService(It.IsAny<IDummyService>())).Callback<IDummyService>(d => serviceContainer
-                        .Add(typeof(IDummyService), d));
+            coreService.Setup(c => c.RegisterService(It.IsAny<IDummyComposable>())).Callback<IDummyComposable>(d => serviceContainer
+                        .Add(typeof(IDummyComposable), d));
             coreService.Setup(c => c.AvailableServices()).Returns(() => serviceContainer.Keys.Select(service => service.FullName));
-            coreService.Setup(c => c.Get<IDummyService>()).Returns(() => (IDummyService)serviceContainer[typeof(IDummyService)]);
+            coreService.Setup(c => c.Get<IDummyComposable>()).Returns(() => (IDummyComposable)serviceContainer[typeof(IDummyComposable)]);
             var dummyService = new DummyService();
             var provider = new ServiceRegistrationProvider(coreService.Object);
-            provider.RegisterService<IDummyService>(dummyService);
-            Assert.Contains(typeof(IDummyService), serviceContainer.Keys);
-            Assert.Equal(dummyService, serviceContainer[typeof(IDummyService)]);
+            provider.RegisterService<IDummyComposable>(dummyService);
+            Assert.Contains(typeof(IDummyComposable), serviceContainer.Keys);
+            Assert.Equal(dummyService, serviceContainer[typeof(IDummyComposable)]);
 
             var serviceProvider = new ServiceProvider(coreService.Object,
                 new List<string>() { });
-            Assert.Throws<InvalidOperationException>(() => serviceProvider.Get<IDummyService>());
+            Assert.Throws<InvalidOperationException>(() => serviceProvider.Get<IDummyComposable>());
         }
     }
 }

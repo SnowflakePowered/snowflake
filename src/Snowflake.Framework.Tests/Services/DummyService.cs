@@ -1,15 +1,11 @@
-﻿using System;
+﻿using Snowflake.Tests.Composable;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Snowflake.Services
 {
-    interface IDummyService
-    {
-        string Test { get; }
-    }
-    
-    class DummyService : IDummyService
+    class DummyService : IDummyComposable
     {
         public string Test => "Test";
     }
