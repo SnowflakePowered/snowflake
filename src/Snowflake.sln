@@ -55,6 +55,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Support.Caching.K
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Framework.Persistence", "Snowflake.Framework.Persistence\Snowflake.Framework.Persistence.csproj", "{254C0A6F-9355-476A-AFDB-6E20688E4432}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Support.ShiragameProvider", "Snowflake.Support.ShiragameProvider\Snowflake.Support.ShiragameProvider.csproj", "{77C85584-ABF2-4750-BB85-8CE49EDC65FF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -293,6 +295,18 @@ Global
 		{254C0A6F-9355-476A-AFDB-6E20688E4432}.Release|x64.Build.0 = Release|Any CPU
 		{254C0A6F-9355-476A-AFDB-6E20688E4432}.Release|x86.ActiveCfg = Release|Any CPU
 		{254C0A6F-9355-476A-AFDB-6E20688E4432}.Release|x86.Build.0 = Release|Any CPU
+		{77C85584-ABF2-4750-BB85-8CE49EDC65FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77C85584-ABF2-4750-BB85-8CE49EDC65FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77C85584-ABF2-4750-BB85-8CE49EDC65FF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{77C85584-ABF2-4750-BB85-8CE49EDC65FF}.Debug|x64.Build.0 = Debug|Any CPU
+		{77C85584-ABF2-4750-BB85-8CE49EDC65FF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{77C85584-ABF2-4750-BB85-8CE49EDC65FF}.Debug|x86.Build.0 = Debug|Any CPU
+		{77C85584-ABF2-4750-BB85-8CE49EDC65FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77C85584-ABF2-4750-BB85-8CE49EDC65FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77C85584-ABF2-4750-BB85-8CE49EDC65FF}.Release|x64.ActiveCfg = Release|Any CPU
+		{77C85584-ABF2-4750-BB85-8CE49EDC65FF}.Release|x64.Build.0 = Release|Any CPU
+		{77C85584-ABF2-4750-BB85-8CE49EDC65FF}.Release|x86.ActiveCfg = Release|Any CPU
+		{77C85584-ABF2-4750-BB85-8CE49EDC65FF}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -319,5 +333,6 @@ Global
 		{985AEA89-B646-415A-828F-65F2B0C02F4E} = {8E178A6E-EAA5-413A-9EBE-36557DFF288E}
 		{05EEFD56-F33D-4FD2-A856-AE2EE650C616} = {FBD15674-246A-4C57-B865-07214D8BB9A1}
 		{254C0A6F-9355-476A-AFDB-6E20688E4432} = {49B7A61F-B3BE-485E-84D0-B78C08656412}
+		{77C85584-ABF2-4750-BB85-8CE49EDC65FF} = {FBD15674-246A-4C57-B865-07214D8BB9A1}
 	EndGlobalSection
 EndGlobal

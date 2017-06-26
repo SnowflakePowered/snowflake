@@ -10,6 +10,7 @@ using Snowflake.Records.Game;
 using Snowflake.Utility;
 using Snowflake.Loader;
 using Snowflake.Services.Logging;
+using Snowflake.Services.Persistence;
 
 namespace Snowflake.Services
 {
@@ -29,12 +30,14 @@ namespace Snowflake.Services
         public CoreService(string appDataDirectory)
         {
             this.AppDataDirectory = appDataDirectory;
+            var directoryProvider = new ContentDirectoryProvider(this.AppDataDirectory);
             this.serviceContainer = new ConcurrentDictionary<Type, object>();
             this.RegisterService<ILogProvider>(new LogProvider());
             this.RegisterService<IModuleEnumerator>(new ModuleEnumerator(appDataDirectory));
-            this.RegisterService<IContentDirectoryProvider>(new ContentDirectoryProvider(this.AppDataDirectory));
+            this.RegisterService<IContentDirectoryProvider>(directoryProvider);
             this.RegisterService<IServiceRegistrationProvider>(new ServiceRegistrationProvider(this));
-
+            this.RegisterService<ISqliteDatabaseProvider>(new SqliteDatabaseProvider(directoryProvider.ApplicationData.CreateSubdirectory("libraries")));
+            
             //this.RegisterService<IPluginManager>(new PluginManager(this.AppDataDirectory, this)); 
         }
 

@@ -1,11 +1,17 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <AssemblyName>Snowflake.Support.StoreProviders</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="..\..\shiragame.db" Link="shiragame.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Snowflake.Framework.Persistence\Snowflake.Framework.Persistence.csproj" />
     <ProjectReference Include="..\Snowflake.Framework.Primitives\Snowflake.Framework.Primitives.csproj" />
     <ProjectReference Include="..\Snowflake.Framework.Utility\Snowflake.Framework.Utility.csproj" />
     <ProjectReference Include="..\Snowflake.Framework\Snowflake.Framework.csproj" />
@@ -16,8 +22,5 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  
-  <ItemGroup>
-    <DotNetCliToolReference Include="dotnet-pack-snowflake" Version="1.2.0" />
-  </ItemGroup>
+
 </Project>

@@ -5,10 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
-    <PackageReference Include="xunit" Version="2.2.0" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
-    <PackageReference Include="Moq" Version="4.7.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0-preview-20170618-03" />
+    <PackageReference Include="xunit" Version="2.3.0-beta3-build3705" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.0-beta3-build3705" />
+    <PackageReference Include="Moq" Version="4.7.63" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
 
@@ -33,6 +33,7 @@
     <ProjectReference Include="..\Snowflake.Support.Caching.KeyedImageCache\Snowflake.Support.Caching.KeyedImageCache.csproj" />
     <ProjectReference Include="..\Snowflake.Support.FileSignatures\Snowflake.Support.FileSignatures.csproj" />
     <ProjectReference Include="..\Snowflake.Support.PluginManager\Snowflake.Support.PluginManager.csproj" />
+    <ProjectReference Include="..\Snowflake.Support.ShiragameProvider\Snowflake.Support.ShiragameProvider.csproj" />
     <ProjectReference Include="..\Snowflake.Support.StoneProvider\Snowflake.Support.StoneProvider.csproj" />
   </ItemGroup>
 

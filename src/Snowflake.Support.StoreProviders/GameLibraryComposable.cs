@@ -10,12 +10,12 @@ namespace Snowflake.Support.StoreProviders
     public class GameLibraryComposable : IComposable
     {
         [ImportService(typeof(IServiceRegistrationProvider))]
-        [ImportService(typeof(IContentDirectoryProvider))]
+        [ImportService(typeof(ISqliteDatabaseProvider))]
         public void Compose(IModule composableModule, IServiceContainer serviceContainer)
         {
             var register = serviceContainer.Get<IServiceRegistrationProvider>();
-            var appdata = serviceContainer.Get<IContentDirectoryProvider>();
-            register.RegisterService<IGameLibrary>(new SqliteGameLibrary(new SqliteDatabase(Path.Combine(appdata.ApplicationData.FullName, "games.db"))));
+            var sqlDb = serviceContainer.Get<ISqliteDatabaseProvider>();
+            register.RegisterService<IGameLibrary>(new SqliteGameLibrary(sqlDb.CreateDatabase("games")));
 
         }
     }
