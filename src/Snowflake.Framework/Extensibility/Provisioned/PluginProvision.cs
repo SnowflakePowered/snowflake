@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace Snowflake.Extensibility
+namespace Snowflake.Extensibility.Provisioned
 {
     public class PluginProvision : IPluginProvision
     {

@@ -13,6 +13,7 @@ using Snowflake.Plugin.Emulators.RetroArch.Shaders;
 using Snowflake.Records.File;
 using Snowflake.Records.Game;
 using Snowflake.Services;
+using Snowflake.Extensibility.Provisioned;
 
 namespace Snowflake.Plugin.Emulators.RetroArch.Adapters.Nestopia
 {

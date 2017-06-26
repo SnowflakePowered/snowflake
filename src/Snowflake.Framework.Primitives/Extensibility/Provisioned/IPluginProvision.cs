@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Snowflake.Configuration;
 
-namespace Snowflake.Extensibility
+namespace Snowflake.Extensibility.Provisioned
 {
     /// <summary>
     /// The plugin provisions provided by the plugin manager

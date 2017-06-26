@@ -13,6 +13,7 @@ using Snowflake.Utility;
 using System.IO;
 using Snowflake.Extensions;
 using System.Collections.Immutable;
+using Snowflake.Extensibility.Provisioned;
 
 namespace Snowflake.Support.PluginManager
 {

@@ -26,11 +26,6 @@ namespace Snowflake.Extensibility
             this.Version = attribute.Version;
         }
 
-        public IConfigurationSection GetConfiguration()
-        {
-            return EmptyPluginConfiguration.EmptyConfiguration;
-        }
-
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
 

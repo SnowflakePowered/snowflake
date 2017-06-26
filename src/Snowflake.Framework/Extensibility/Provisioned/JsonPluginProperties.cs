@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
-namespace Snowflake.Extensibility
+namespace Snowflake.Extensibility.Provisioned
 {
-    internal class JsonPluginProperties : IPluginProperties
+    public class JsonPluginProperties : IPluginProperties
     {
         private readonly JObject propertyRoot;
         public JsonPluginProperties(JObject propertyRoot)

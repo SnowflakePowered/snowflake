@@ -12,6 +12,7 @@ using Snowflake.Records.File;
 using Snowflake.Records.Game;
 using Snowflake.Services;
 using System.IO;
+using Snowflake.Extensibility.Provisioned;
 
 namespace Snowflake.Emulator
 {

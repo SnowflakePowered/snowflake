@@ -29,10 +29,5 @@ namespace Snowflake.Extensibility
         /// The version of the plugin
         /// </summary>
         Version Version { get; }
-        /// <summary>
-        /// Gets the plugin configuration
-        /// </summary>
-        /// <returns>The plugin configuration</returns>
-        IConfigurationSection GetConfiguration();
     }
 }

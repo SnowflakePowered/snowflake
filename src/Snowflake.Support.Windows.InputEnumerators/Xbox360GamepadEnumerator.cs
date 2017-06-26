@@ -13,6 +13,7 @@ using Snowflake.Extensibility;
 using Snowflake.Input;
 using Snowflake.Input.Device;
 using Snowflake.Services;
+using Snowflake.Extensibility.Provisioned;
 
 namespace Snowflake.Plugin.InputEnumerators
 {

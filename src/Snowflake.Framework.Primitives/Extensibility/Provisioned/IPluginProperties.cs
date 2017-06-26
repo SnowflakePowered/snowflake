@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Snowflake.Extensibility
+namespace Snowflake.Extensibility.Provisioned
 {
     /// <summary>
     /// Represents the properties defined inside a plugin.json

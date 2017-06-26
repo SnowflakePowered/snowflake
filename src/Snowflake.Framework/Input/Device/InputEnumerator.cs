@@ -9,6 +9,7 @@ using Newtonsoft.Json.Linq;
 using Snowflake.Extensibility;
 using Snowflake.Input.Controller;
 using Snowflake.Services;
+using Snowflake.Extensibility.Provisioned;
 
 namespace Snowflake.Input.Device
 {

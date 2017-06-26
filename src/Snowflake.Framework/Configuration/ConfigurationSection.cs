@@ -36,7 +36,7 @@ namespace Snowflake.Configuration
         {
         }
 
-        internal ConfigurationSection(IDictionary<string,(string, Guid)> values)
+        internal ConfigurationSection(IDictionary<string,(string stringValue, Guid guid)> values)
         {
             ProxyGenerator generator = new ProxyGenerator();
             this.Descriptor = ConfigurationDescriptorCache.GetSectionDescriptor<T>();

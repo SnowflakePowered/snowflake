@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Snowflake.Extensibility;
 using Snowflake.Loader;
 using Snowflake.Emulator;
+using Snowflake.Extensibility.Provisioned;
 
 namespace Snowflake.Services
 {

@@ -11,7 +11,7 @@ namespace Snowflake.Extensibility
     {
     }
 
-    public static class EmptyPluginConfiguration
+    internal static class EmptyPluginConfiguration
     {
         /// <summary>
         /// The empty plugin configuration.

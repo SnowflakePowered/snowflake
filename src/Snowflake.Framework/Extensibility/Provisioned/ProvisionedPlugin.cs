@@ -10,7 +10,7 @@ using Snowflake.Configuration;
 using Snowflake.Extensibility.Configuration;
 using Snowflake.Services;
 
-namespace Snowflake.Extensibility
+namespace Snowflake.Extensibility.Provisioned
 {
     public abstract class ProvisionedPlugin : IProvisionedPlugin
     {
@@ -28,7 +28,12 @@ namespace Snowflake.Extensibility
         {
             this.Provision = provision;
         }
-        
+
+        public virtual IConfigurationSection GetPluginConfiguration()
+        {
+            return EmptyPluginConfiguration.EmptyConfiguration;
+        }
+
         private string GetPluginName()
         {
             return this.GetType().GetTypeInfo().GetCustomAttribute<PluginAttribute>().PluginName;
@@ -37,11 +42,6 @@ namespace Snowflake.Extensibility
         public virtual void Dispose()
         {
 
-        }
-
-        public virtual IConfigurationSection GetConfiguration()
-        {
-            return EmptyPluginConfiguration.EmptyConfiguration;
         }
     }
 }
