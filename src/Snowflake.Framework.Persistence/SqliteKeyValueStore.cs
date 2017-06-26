@@ -6,9 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Snowflake.Persistence;
 
-namespace Snowflake.Utility
+namespace Snowflake.Persistence
 {
     //todo use simple execute api
 

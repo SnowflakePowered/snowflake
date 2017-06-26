@@ -17,6 +17,7 @@ using Snowflake.Plugin.Scrapers.TheGamesDb;
 using Xunit;
 using Snowflake.Services;
 using Snowflake.Romfile.FileSignatures.Composers;
+using Snowflake.Support.Caching.KeyedImageCache;
 
 namespace Snowflake.Tests.Scraper
 {
@@ -36,7 +37,7 @@ namespace Snowflake.Tests.Scraper
             source.Register(this.scrapedProvider);
             source.Register(
                 new TheGamesDbMediaProvider(
-                    new KeyedImageCache(Path.GetTempPath())));
+                    new KeyedImageCache(new DirectoryInfo(Path.GetTempPath()))));
             this.scrapeGen = new ScrapeEngine(this.stoneProvider, new ShiragameProvider("shiragame.db"),
                 source, this.fileSignatureMatcher);
         }

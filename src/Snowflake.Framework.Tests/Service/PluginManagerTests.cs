@@ -18,39 +18,6 @@ namespace Snowflake.Service.Tests
 
     public class PluginManagerTests
     {
-        [Fact]
-        public void PluginManager_RegisterTest()
-        {
-            var coreInstance = new Moq.Mock<ICoreService>();
-            var testPlugin = new Moq.Mock<ITestPlugin>();
-            testPlugin.SetupGet(plugin => plugin.Name).Returns("Test");
-            IPluginManager pluginManager = new PluginManager("", coreInstance.Object);
-            pluginManager.Register(testPlugin.Object);
-        }
-
-        [Fact]
-        public void PluginManager_GetTest()
-        {
-            var coreInstance = new Moq.Mock<ICoreService>();
-            var testPlugin = new Moq.Mock<ITestPlugin>();
-            testPlugin.SetupGet(plugin => plugin.Name).Returns("Test");
-            testPlugin.Setup(plugin => plugin.Test()).Returns(true);
-            IPluginManager pluginManager = new PluginManager("", coreInstance.Object);
-            pluginManager.Register(testPlugin.Object);
-            Assert.True(pluginManager.Get<ITestPlugin>("Test").Test());
-        }
-
-        [Fact]
-        public void PluginManager_GetMultipleTest()
-        {
-            var coreInstance = new Moq.Mock<ICoreService>();
-            var testPlugin = new Moq.Mock<ITestPlugin>();
-            testPlugin.SetupGet(plugin => plugin.Name).Returns("Test");
-            testPlugin.Setup(plugin => plugin.Test()).Returns(true);
-            IPluginManager pluginManager = new PluginManager("", coreInstance.Object);
-            pluginManager.Register(testPlugin.Object);
-            Assert.True(pluginManager.Get<ITestPlugin>().First().Value.Test());
-        }
-
+        
     }
 }
