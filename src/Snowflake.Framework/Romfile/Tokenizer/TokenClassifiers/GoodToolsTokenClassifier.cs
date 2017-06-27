@@ -65,11 +65,6 @@ namespace Snowflake.Romfile.Tokenizer
                             FieldType.Country,
                             NamingConvention.GoodTools);
                         continue;
-                    case "B":
-                        yield return new StructuredFilenameToken("ZZ",
-                          FieldType.Country,
-                          NamingConvention.GoodTools);
-                        continue;
                     case "PD":
                     case "Unl":
                         yield return new StructuredFilenameToken(tokenValue,

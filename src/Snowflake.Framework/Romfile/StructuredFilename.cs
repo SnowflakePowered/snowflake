@@ -13,9 +13,8 @@ using Snowflake.Romfile.Tokenizer;
 namespace Snowflake.Romfile
 {
     //todo: verify filename convention better
-    public partial class StructuredFilename : IStructuredFilename
+    public sealed class StructuredFilename : IStructuredFilename
     {
-        private static readonly TextInfo textInfo = new CultureInfo("en-US").TextInfo;
         public NamingConvention NamingConvention { get; private set; }
 
         public string RegionCode { get; }
