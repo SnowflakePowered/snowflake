@@ -21,7 +21,7 @@ namespace Snowflake.Romfile
         /// GoodTools uses it's own 1 or 2 letter format
         /// No-Intro uses full-country names that seem to follow their own conventions. 
         /// </remarks>
-        StructuredFilenameConvention NamingConvention { get; }
+        NamingConvention NamingConvention { get; }
         /// <summary>
         /// The title of the game according to the filename.
         /// May or may not differ from the final queryable filename.
@@ -60,7 +60,7 @@ namespace Snowflake.Romfile
     /// <summary>
     /// Types of filename conventions
     /// </summary>
-    public enum StructuredFilenameConvention
+    public enum NamingConvention
     {
         /// <summary>
         /// No-Intro Naming Convention

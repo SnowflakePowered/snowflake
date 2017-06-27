@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.SqlServer.Server;
 using Snowflake.Utility;
+using Snowflake.Romfile.Tokenizer;
 
 namespace Snowflake.Romfile
 {
@@ -15,7 +16,7 @@ namespace Snowflake.Romfile
     public partial class StructuredFilename : IStructuredFilename
     {
         private static readonly TextInfo textInfo = new CultureInfo("en-US").TextInfo;
-        public StructuredFilenameConvention NamingConvention { get; private set; }
+        public NamingConvention NamingConvention { get; private set; }
 
         public string RegionCode { get; }
 
@@ -28,77 +29,75 @@ namespace Snowflake.Romfile
         public StructuredFilename(string originalFilename)
         {
             this.OriginalFilename = Path.GetFileName(originalFilename);
-            this.RegionCode = this.ParseRegion();
-            this.Title = Path.GetFileNameWithoutExtension(this.ParseTitle());
-            this.Year = this.ParseYear();
+            //todo: move this into goodtools
+            (NamingConvention namingConvention, IEnumerable<StructuredFilenameToken> tokens) = GetBestMatch();
+            this.Title = Path.GetFileNameWithoutExtension(StructuredFilename.ParseTitle(tokens.FirstOrDefault(t => t.Type == 
+                FieldType.Title)?.Value ?? "Unknown??!?"));
+            this.NamingConvention = namingConvention;
+            this.RegionCode = String.Join('-', tokens.Where(t => t.Type == FieldType.Country).Select(t => t.Value));
+            if (String.IsNullOrEmpty(this.RegionCode)) this.RegionCode = "ZZ";
+
+            this.Year = tokens.FirstOrDefault(t => t.Type == FieldType.Date)?.Value.Split("-")[0] ?? "XXXX";
         }
 
-        private string ParseTitle()
+        private (NamingConvention namingConvention, IEnumerable<StructuredFilenameToken> tokens) GetBestMatch()
         {
-            string rawTitle = Regex.Match(this.OriginalFilename, @"(\([^]]*\))*(\[[^]]*\])*([\w\+\~\@\!\#\$\%\^\&\*\;\,\'\""\?\-\.\-\s]+)").Groups[3].Value.Trim();
-            //Invert ending articles
-            if (!rawTitle.EndsWith(", The", StringComparison.OrdinalIgnoreCase) &&
-                !rawTitle.EndsWith(", A", StringComparison.OrdinalIgnoreCase) &&
-                !rawTitle.EndsWith(", Die", StringComparison.OrdinalIgnoreCase) &&
-                !rawTitle.EndsWith(", De", StringComparison.OrdinalIgnoreCase) &&
-                !rawTitle.EndsWith(", La", StringComparison.OrdinalIgnoreCase) &&
-                !rawTitle.EndsWith(", Le", StringComparison.OrdinalIgnoreCase) &&
-                !rawTitle.EndsWith(", Les", StringComparison.OrdinalIgnoreCase))
-                return rawTitle;
+            var tokens = new StructuredFilenameTokenizer(this.OriginalFilename);
+            var brackets = tokens.GetBracketTokens().ToList();
+            var parens = tokens.GetParensTokens().ToList();
+            var title = tokens.GetTitle();
 
-            string[] splitString = rawTitle.Split(',');
-            string endingArticle = splitString.Last().Trim();
-            string withoutArticle = String.Join(",", splitString.Reverse().Skip(1).Reverse());
-            return $"{endingArticle} {withoutArticle}";
+            var goodTools = new GoodToolsTokenClassifier();
+            var goodToolsTokens = goodTools.ClassifyBracketsTokens(brackets)
+                .Concat(goodTools.ClassifyParensTokens(parens))
+                .Concat(goodTools.ExtractTitleTokens(title)).ToList();
+
+            var noIntro = new NoIntroTokenClassifier();
+            var noIntroTokens = noIntro.ClassifyBracketsTokens(brackets)
+              .Concat(noIntro.ClassifyParensTokens(parens))
+              .Concat(noIntro.ExtractTitleTokens(title)).ToList();
+
+            var tosec = new TosecTokenClassifier();
+            var tosecTokens = tosec.ClassifyBracketsTokens(brackets)
+              .Concat(tosec.ClassifyParensTokens(parens))
+              .Concat(tosec.ExtractTitleTokens(title)).ToList();
+
+            var aggregate = new List<(IEnumerable<StructuredFilenameToken> tokens, int uniqueDatatypes)>()
+            {
+                { (goodToolsTokens, StructuredFilename.GetUniqueDatatypeCount(goodToolsTokens)) },
+                { (noIntroTokens, StructuredFilename.GetUniqueDatatypeCount(noIntroTokens)) },
+                { (tosecTokens, StructuredFilename.GetUniqueDatatypeCount(tosecTokens)) }
+            };
+
+            var bestMatch = aggregate.OrderByDescending(p => p.uniqueDatatypes).First().tokens;
+            return (bestMatch.First().NamingConvention, bestMatch);
         }
 
-        private string ParseYear()
+        private static int GetUniqueDatatypeCount(IEnumerable<StructuredFilenameToken> tokens)
         {
-            if (this.NamingConvention == StructuredFilenameConvention.NoIntro) return null;
-            var tagData = Regex.Matches(this.OriginalFilename,
-                @"(\()([^)]+)(\))");
-            return (from Match tagMatch in tagData
-                let match = tagMatch.Groups[2].Value.Trim()
-                where match.Length == 4 && (match.StartsWith("19") || match.StartsWith("20"))
-                select match).FirstOrDefault();
+            return tokens.Select(t => t.Type).Distinct().Count();
         }
 
-        private string ParseRegion()
+        private static string ParseTitle(string rawTitle)
         {
-            var tagData = Regex.Matches(this.OriginalFilename,
-               @"(\()([^)]+)(\))");
-            var validMatch = (from Match tagMatch in tagData
-                             let match = tagMatch.Groups[2].Value
-                             from regionCode in (from regionCode in match.Split(',', '-') select regionCode.Trim())
-                             where regionCode.Length != 2 || regionCode.ToLower().ToTitleCase() != regionCode
-                             let isoRegion = StructuredFilename.ConvertToRegionCode(regionCode.ToUpperInvariant())
-                             where isoRegion.regionCode != null
-                             select isoRegion).ToList();
-            if (!validMatch.Any())
-            {
-                this.NamingConvention = StructuredFilenameConvention.Unknown;
-                return "ZZ";
-            }
-            this.NamingConvention = validMatch.First().convention;
-            return String.Join("-", from regionCode in validMatch select regionCode.regionCode);
+            return rawTitle.WithoutLastArticle("The")
+                .WithoutLastArticle("A")
+                .WithoutLastArticle("Die")
+                .WithoutLastArticle("De")
+                .WithoutLastArticle("La")
+                .WithoutLastArticle("Le")
+                .WithoutLastArticle("Les");
+                
         }
+    }
 
-        private static (string regionCode, StructuredFilenameConvention convention) ConvertToRegionCode(string unknownRegion)
+    static class StringExtensions
+    {
+        public static string WithoutLastArticle(this string title, string article)
         {
-            if (StructuredFilename.goodToolsLookupTable.ContainsKey(unknownRegion))
-            {
-                return (StructuredFilename.goodToolsLookupTable[unknownRegion], StructuredFilenameConvention.GoodTools);
-            }
-            if (StructuredFilename.nointroLookupTable.ContainsKey(unknownRegion))
-            {
-                return (StructuredFilename.nointroLookupTable[unknownRegion], StructuredFilenameConvention.NoIntro);
-            }
-            if (StructuredFilename.tosecLookupTable.Contains(unknownRegion))
-            {
-                return (unknownRegion, StructuredFilenameConvention.TheOldSchoolEmulationCenter);
-            }
-            return (null, StructuredFilenameConvention.Unknown);
+            if (!title.Contains($", {article}")) return title;
+            string[] titleWithoutArticle = title.Split($", {article}");
+            return String.Join("", titleWithoutArticle.Prepend(article + " "));
         }
-
     }
 }

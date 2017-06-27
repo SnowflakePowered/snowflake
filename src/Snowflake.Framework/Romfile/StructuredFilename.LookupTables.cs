@@ -9,7 +9,7 @@ namespace Snowflake.Romfile
     public partial class StructuredFilename
     {
 	
-        private static readonly IList<string> tosecLookupTable = new List<string>
+        internal static readonly IList<string> tosecLookupTable = new List<string>
         {
             {"AE"}, 
             {"AL"},
@@ -80,7 +80,7 @@ namespace Snowflake.Romfile
             {"YU"},
             {"ZA"}
         };
-        private static readonly IDictionary<string, string> goodToolsLookupTable = new Dictionary<string, string>()
+        internal static readonly IDictionary<string, string> goodToolsLookupTable = new Dictionary<string, string>()
         {
             {"A", "AU"},
             {"AS", "AS"},
@@ -106,7 +106,7 @@ namespace Snowflake.Romfile
             {"W", "ZZ"},
         };
 
-        private static readonly IDictionary<string, string> nointroLookupTable = new Dictionary<string, string>()
+        internal static readonly IDictionary<string, string> nointroLookupTable = new Dictionary<string, string>()
         {
             {"AUSTRALIA", "AU"},
             {"BRAZIL", "BR"},
