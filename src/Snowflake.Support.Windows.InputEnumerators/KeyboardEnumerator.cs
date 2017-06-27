@@ -13,6 +13,7 @@ using Snowflake.Extensibility;
 using Snowflake.Input;
 using Snowflake.Input.Device;
 using Snowflake.Services;
+using Snowflake.Extensibility.Provisioned;
 
 namespace Snowflake.Plugin.InputEnumerators
 {
@@ -21,7 +22,7 @@ namespace Snowflake.Plugin.InputEnumerators
     {
         private readonly IInputManager inputManager;
 
-        public KeyboardEnumerator(IInputManager inputManager)
+        public KeyboardEnumerator(IPluginProvision p, IInputManager inputManager) : base(p)
         {
             this.inputManager = inputManager;
         }

@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Moq;
-using Snowflake.Utility;
+using Snowflake.Persistence;
 using Xunit;
 
 namespace Snowflake.Utility.Tests

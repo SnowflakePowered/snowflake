@@ -29,7 +29,7 @@ namespace Snowflake.Emulator
         /// </para>
         /// <para>
         /// The general convention for these files are
-        /// InputApi.DEVICE_NAME
+        /// common/InputMapping/DEVICE_NAME
         /// </para>
         /// </summary>
         IEnumerable<IInputMapping> InputMappings { get; }

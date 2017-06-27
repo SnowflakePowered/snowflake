@@ -7,7 +7,6 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Net;
 using Snowflake.Records.File;
 using Snowflake.Records.Game;
 using Snowflake.Records.Metadata;
@@ -41,16 +40,16 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb
         {
             var game = ApiGamesDb.GetGame(Int32.Parse(collection["scraper_thegamesdb_id"]));
             var images = game.Images;
-            var boxartFront = this.imageCache.Add(images.BoxartFront.DownloadImage(), collection.Record, ImageTypes.MediaBoxartFront);
-            var boxartBack = this.imageCache.Add(images.BoxartBack.DownloadImage(), collection.Record,
+            var boxartFront = this.imageCache.Add(images.BoxartFront.DownloadStream(), collection.Record, ImageTypes.MediaBoxartFront);
+            var boxartBack = this.imageCache.Add(images.BoxartBack.DownloadStream(), collection.Record,
                 ImageTypes.MediaBoxartBack);
             var banners =
                 game.Images.Banners.AsParallel().SelectMany(
-                    i => this.imageCache.Add(i.DownloadImage(), collection.Record, ImageTypes.MediaLogo));
+                    i => this.imageCache.Add(i.DownloadStream(), collection.Record, ImageTypes.MediaLogo));
             var fanarts = game.Images.Fanart.AsParallel().SelectMany(
-                    i => this.imageCache.Add(i.DownloadImage(), collection.Record, ImageTypes.MediaPromotional));
+                    i => this.imageCache.Add(i.DownloadStream(), collection.Record, ImageTypes.MediaPromotional));
             var screens = game.Images.Screenshots.AsParallel().SelectMany(
-                    i => this.imageCache.Add(i.DownloadImage(), collection.Record, ImageTypes.MediaPromotional));
+                    i => this.imageCache.Add(i.DownloadStream(), collection.Record, ImageTypes.MediaPromotional));
 
             return Extensions.Concatenate(boxartFront, boxartBack, banners, fanarts, screens).ToList();
         }
@@ -60,12 +59,12 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb
     {
 
         //todo make this batch
-        public static Image DownloadImage(this ApiGame.ApiGameImages.ApiGameImage image)
+        public static Stream DownloadStream(this ApiGame.ApiGameImages.ApiGameImage image)
         {
             var url = new Uri($@"{ApiGamesDb.BaseImgURL}{image.Path}");
-            return Image.FromStream(WebClient.DownloadData(url));
-          
+            return Utility.WebClient.DownloadData(url);
         }
+
         public static IEnumerable<T> Concatenate<T>(params IEnumerable<T>[] lists)
         {
             return lists.SelectMany(x => x);

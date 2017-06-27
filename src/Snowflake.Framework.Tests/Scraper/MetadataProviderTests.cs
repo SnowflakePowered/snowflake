@@ -19,7 +19,7 @@ namespace Snowflake.Scraper.MetadataProvider.Tests
             var provider = new TestMetadataProvider();
             var collection = new MetadataCollection(Guid.NewGuid()) {{"TestMetadataKey", "Test"}};
             var result = provider.Query(collection);
-            Assert.Equal(result.First().Source, "Test");
+            Assert.Equal("Test", result.First().Source);
         }
     }
 

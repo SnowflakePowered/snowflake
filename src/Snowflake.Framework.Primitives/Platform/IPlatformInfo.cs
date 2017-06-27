@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Snowflake.Platform
 {
@@ -27,7 +28,7 @@ namespace Snowflake.Platform
         /// <summary>
         /// The list of bios files for this platform
         /// </summary>
-        IEnumerable<string> BiosFiles { get; }
+        ILookup<string, string> BiosFiles { get; }
         /// <summary>
         /// The maximum amount of inputs that are physically possible for this platform to have.
         /// </summary>

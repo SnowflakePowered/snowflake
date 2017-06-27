@@ -12,10 +12,13 @@ using Snowflake.Romfile.FileSignatures;
 using Snowflake.Scraper;
 using Snowflake.Scraper.Providers;
 using Snowflake.Scraper.Shiragame;
-using Snowflake.Service;
 using Snowflake.Plugin.Scrapers.TheGamesDb;
 using Xunit;
 using Snowflake.Services;
+using Snowflake.Romfile.FileSignatures.Composers;
+using Snowflake.Support.Caching.KeyedImageCache;
+using Snowflake.Support.ShiragameProvider;
+using Snowflake.Persistence;
 
 namespace Snowflake.Tests.Scraper
 {
@@ -24,19 +27,20 @@ namespace Snowflake.Tests.Scraper
         private IStoneProvider stoneProvider;
         private readonly IFileSignatureMatcher fileSignatureMatcher;
         private readonly IQueryProvider<IScrapedMetadataCollection> scrapedProvider;
-        private readonly ScrapeEngine scrapeGen;
+        private readonly IScrapeEngine scrapeGen;
         public ScrapingIntegrationTests()
         {
             this.stoneProvider = new StoneProvider();
             this.scrapedProvider = new TheGamesDbMetadataProvider();
             this.fileSignatureMatcher = new FileSignatureMatcher(this.stoneProvider);
-            new FileSignaturesContainer().RegisterFileSignatures(this.fileSignatureMatcher);
+            IShiragameProvider shiragame = new ShiragameProvider(new SqliteDatabase("shiragame.db"));
+            new FileSignaturesComposer().RegisterFileSignatures(this.fileSignatureMatcher);
             var source = new QueryProviderSource();
             source.Register(this.scrapedProvider);
             source.Register(
                 new TheGamesDbMediaProvider(
-                    new KeyedImageCache(Path.GetTempPath())));
-            this.scrapeGen = new ScrapeEngine(this.stoneProvider, new ShiragameProvider("shiragame.db"),
+                    new KeyedImageCache(new DirectoryInfo(Path.GetTempPath()))));
+            this.scrapeGen = new ScrapeEngine(this.stoneProvider, shiragame,
                 source, this.fileSignatureMatcher);
         }
 

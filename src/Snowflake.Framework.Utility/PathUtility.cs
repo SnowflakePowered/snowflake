@@ -24,16 +24,19 @@ namespace Snowflake.Utility
             return Path.Combine(typeof(PathUtility).GetTypeInfo().Assembly.Location);
         }
 
+        [Obsolete]
         public static string GetApplicationDataPath(params string[] dataPath)
         {
             return Path.Combine(dataPath.Prepend(PathUtility.GetApplicationDataPath()).ToArray());
         }
 
+        [Obsolete]
         public static string GetSnowflakeDataPath()
         {
-            return PathUtility.GetApplicationDataPath(".snowflake");
+            return PathUtility.GetApplicationDataPath("snowflake");
         }
 
+        [Obsolete]
         public static string GetSnowflakeDataPath(params string[] dataPath)
         {
             return Path.Combine(dataPath.Prepend(PathUtility.GetSnowflakeDataPath()).ToArray());

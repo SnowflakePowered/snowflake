@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Snowflake.Extensibility;
-
+using Snowflake.Loader;
+using Snowflake.Emulator;
+using Snowflake.Extensibility.Provisioned;
 
 namespace Snowflake.Services
 {
@@ -11,39 +13,68 @@ namespace Snowflake.Services
     public interface IPluginManager : IDisposable
     {
         /// <summary>
-        /// The location from which plugins are loaded
+        /// Provisions a <see cref="IProvisionedPlugin"/> relative to the given module for initialization.
         /// </summary>
-        string LoadablesLocation { get; }
+        /// <typeparam name="T">The Type of the plugin</typeparam>
+        /// <param name="module">The module the plugin is loaded from</param>
+        /// <returns>A provision used to initialize an <see cref="IProvisionedPlugin"/></returns>
+        IPluginProvision GetProvision<T>(IModule module) where T: IPlugin;
+
         /// <summary>
-        /// A list of loaded plugins by plugin name
+        /// Registers a plugin with the plugin manager.
         /// </summary>
-        IReadOnlyDictionary<string, Type> Registry { get; }
-        /// <summary>
-        /// Initialize the plugin manager by loading all plugins
-        /// </summary>
-        void Initialize();
-        /// <summary>
-        /// Get a dictionary of plugins by IPlugin type
-        /// </summary>
-        /// <typeparam name="T">Type to get</typeparam>
-        /// <returns></returns>
-        IDictionary<string, T> Get<T>() where T : IPlugin;
-        /// <summary>
-        /// Get a plugin by plugin name and expected type
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="pluginName"></param>
-        /// <returns>The plugin</returns>
-        T Get<T>(string pluginName) where T : IPlugin;
-        /// <summary>
-        /// Registers an object as a plugin
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="plugin"></param>
+        /// <typeparam name="T">
+        /// The plugin type category to register under.
+        /// Examples include <see cref="IEmulatorAdapter"/> 
+        /// </typeparam>
+        /// <param name="plugin">The plugin instance</param>
         void Register<T>(T plugin) where T : IPlugin;
+
         /// <summary>
-        /// Whether or not the plugin manager has been initialized
+        /// Gets all plugins registered under the type category
         /// </summary>
-        bool IsInitialized { get; }
+        /// <typeparam name="T">
+        /// The plugin type category to register under.
+        /// Examples include <see cref="IEmulatorAdapter"/> 
+        /// </typeparam>
+        /// <returns>All plugins registered under a specific category.</returns>
+        IEnumerable<T> Get<T>() where T : IPlugin;
+
+        /// <summary>
+        /// Gets a specific plugin registered under a given type category
+        /// </summary>
+        /// <typeparam name="T">
+        /// The plugin type category to register under.
+        /// Examples include <see cref="IEmulatorAdapter"/> 
+        /// </typeparam>
+        /// <param name="pluginName">The name of the plugin.</param>
+        /// <returns>The given plugin if it exists, null if it does not.</returns>
+        T Get<T>(string pluginName) where T : IPlugin;
+
+
+        /// <summary>
+        /// Gets a specific provisioned plugin
+        /// </summary>
+        /// <param name="pluginName">The name of the plugin.</param>
+        /// <returns>The given plugin if it exists, null if it does not.</returns>
+        IProvisionedPlugin Get(string pluginName);
+
+        /// <summary>
+        /// Checks if a given plugin under a type category has been loaded into the plugin manager.
+        /// </summary>
+        /// <typeparam name="T">
+        /// The plugin type category to register under.
+        /// Examples include <see cref="IEmulatorAdapter"/> 
+        /// </typeparam>
+        /// <param name="pluginName">The name of the plugin.</param>
+        /// <returns>True if the plugin has been registered.</returns>
+        bool IsRegistered<T>(string pluginName) where T : IPlugin;
+
+        /// <summary>
+        /// Checks if a given plugin has been loaded into the plugin manager.
+        /// </summary>
+        /// <param name="pluginName">The name of the plugin.</param>
+        /// <returns>True if the plugin has been registered.</returns>
+        bool IsRegistered(string pluginName);
     }
 }

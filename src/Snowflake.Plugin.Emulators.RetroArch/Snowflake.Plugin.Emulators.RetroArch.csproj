@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.6</TargetFramework>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
     <RootNamespace>Snowflake</RootNamespace>
   </PropertyGroup>
 
@@ -10,19 +10,28 @@
   </PropertyGroup>
   
   <ItemGroup>
+    <Compile Remove="resource\%2540common\**" />
     <Compile Remove="resource\RetroArchCommonConfiguration\**" />
     <EmbeddedResource Remove="resource\RetroArchCommonConfiguration\**" />
     <EmbeddedResource Include="resource\**" />
   </ItemGroup>
-
+  
   <ItemGroup>
-    <PackageReference Include="System.Diagnostics.Process" Version="4.3.0"/>
+    <EmbeddedResource Remove="resource\%2540common\**" />
+    <None Remove="resource\%2540common\**" />
   </ItemGroup>
   
+  <ItemGroup>
+    <PackageReference Include="System.Diagnostics.Process" Version="4.3.0" />
+  </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\Snowflake.Framework.Primitives\Snowflake.Framework.Primitives.csproj" />
     <ProjectReference Include="..\Snowflake.Framework.Utility\Snowflake.Framework.Utility.csproj" />
     <ProjectReference Include="..\Snowflake.Framework\Snowflake.Framework.csproj" />
   </ItemGroup>
   
+  <ItemGroup>
+    <DotNetCliToolReference Include="dotnet-pack-snowflake" Version="1.2.0" />
+  </ItemGroup>
 </Project>
