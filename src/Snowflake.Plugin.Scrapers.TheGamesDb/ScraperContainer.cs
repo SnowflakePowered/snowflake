@@ -1,17 +1,23 @@
 ﻿using Snowflake.Caching;
 using Snowflake.Extensibility;
+using Snowflake.Loader;
 using Snowflake.Scraper.Providers;
 using Snowflake.Services;
 
 namespace Snowflake.Plugin.Scrapers.TheGamesDb
 {
-    public class ScraperContainer : IPluginContainer
+    public class ScraperContainer : IComposable
     {
-        public void Compose(ICoreService coreInstance)
+        [ImportService(typeof(IQueryProviderSource))]
+        [ImportService(typeof(IContentDirectoryProvider))]
+        [ImportService(typeof(IKeyedImageCache))]
+        public void Compose(IModule composableModule, IServiceProvider serviceContainer)
         {
-            coreInstance.Get<IQueryProviderSource>().Register(new TheGamesDbMetadataProvider()); //todo use pluginManager with encapsulated interdfaces?
-            coreInstance.Get<IQueryProviderSource>()
-                .Register(new TheGamesDbMediaProvider(new KeyedImageCache(coreInstance.AppDataDirectory)));
+            var appdata = serviceContainer.Get<IContentDirectoryProvider>();
+            serviceContainer.Get<IQueryProviderSource>()
+                .Register(new TheGamesDbMetadataProvider()); //todo use pluginManager with encapsulated interdfaces?
+            serviceContainer.Get<IQueryProviderSource>()
+                .Register(new TheGamesDbMediaProvider(serviceContainer.Get<IKeyedImageCache>()));
         }
     }
 }

@@ -15,9 +15,9 @@ namespace Snowflake.Extensibility
         /// </summary>
         public static string Description = "description";
         /// <summary>
-        /// The type of the plugin
+        /// The author of the plugin
         /// </summary>
-        public static string Type = "type";
+        public static string Author = "author";
         /// <summary>
         /// The plugins supported platforms
         /// </summary>

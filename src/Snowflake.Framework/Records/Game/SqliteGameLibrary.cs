@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using Dapper;
 using Snowflake.Records.File;
 using Snowflake.Records.Metadata;
-using Snowflake.Utility;
-using Microsoft.Data.Sqlite;
+using Snowflake.Persistence;
+using System.Data.Common;
 
 namespace Snowflake.Records.Game
 {
@@ -16,8 +16,8 @@ namespace Snowflake.Records.Game
         public IMetadataLibrary MetadataLibrary { get; }
         public IFileLibrary FileLibrary { get; }
 
-        private readonly SqliteDatabase backingDatabase;
-        public SqliteGameLibrary(SqliteDatabase database, SqliteMetadataLibrary metadataLibrary)
+        private readonly ISqlDatabase backingDatabase;
+        public SqliteGameLibrary(ISqlDatabase database, SqliteMetadataLibrary metadataLibrary)
         {
             this.backingDatabase = database;
             this.MetadataLibrary = metadataLibrary;
@@ -25,7 +25,7 @@ namespace Snowflake.Records.Game
             this.CreateDatabase();
         }
 
-        public SqliteGameLibrary(SqliteDatabase database) : this(database, new SqliteMetadataLibrary(database))
+        public SqliteGameLibrary(ISqlDatabase database) : this(database, new SqliteMetadataLibrary(database))
         {
 
         }
@@ -180,35 +180,38 @@ namespace Snowflake.Records.Game
                     {
                         var games = query.Read().Select(game => new Guid(game.uuid));
 
-                        var files = query.Read().Select(file => new
-                        {
-                            Guid = new Guid(file.uuid),
-                            Game = new Guid(file.game),
-                            Path = file.path,
-                            MimeType = file.mimetype
-                        });
+                        var files = query.Read().Select(file => (
+                            Guid: new Guid(file.uuid),
+                            Game: new Guid(file.game),
+                            Path: (string)file.path,
+                            MimeType: (string)file.mimetype
+                        ));
 
-                        var metadatas = query.Read().Select(metadata => new
-                        {
-                            Guid = new Guid(metadata.uuid),
-                            Record = new Guid(metadata.record),
-                            Key = metadata.key,
-                            Value = metadata.value
-                        }).Select(m => new RecordMetadata(m.Guid, m.Record, m.Key, m.Value) 
-                        as IRecordMetadata);
+                        var metadatas = query.Read().Select(metadata => (
+                            Guid: new Guid(metadata.uuid),
+                            Record: new Guid(metadata.record),
+                            Key: (string)metadata.key,
+                            Value: (string)metadata.value
+                        )).Select(m => new RecordMetadata(m.Guid, m.Record, m.Key, m.Value))?
+                        .Cast<IRecordMetadata>();
 
                         var fileRecords = (from f in files
                                            let md = (from m in metadatas where m.Record == f.Guid select m)
                                                .ToDictionary(md => md.Key, md => md)
+<<<<<<< HEAD
                                            select new FileRecord(f.Guid, md, f.Path, f.MimeType)).ToList();
+=======
+                                           select new FileRecord(f.Game, md, f.Path, f.MimeType)).ToList();
+
+>>>>>>> cd39263... Modules: Robust loader and plugin system (#249)
                         return (from game in games
                                 let gameFiles =
-                                    (from f in fileRecords where f.Record == game select f as IFileRecord).ToList()
+                                    (from f in fileRecords where f.Record == game select f).Cast<IFileRecord>().ToList()
                                 let md = (from m in metadatas where m.Record == game select m)
                                     .ToDictionary(md => md.Key, md => md)
                                 select new GameRecord(game, md, gameFiles)).ToList();
                     }
-                    catch (SqliteException)
+                    catch (DbException)
                     {
                         return new List<IGameRecord>();
                     }
@@ -237,33 +240,38 @@ namespace Snowflake.Records.Game
                         dynamic _game = query.ReadFirstOrDefault();
                         if (_game == null) return null;
                         Guid gameGuid = new Guid(_game.uuid);
-                        var files = query.Read().Select(f => new
-                        {
-                            Guid = new Guid(f.uuid),
-                            Game = new Guid(f.game),
-                            Path = f.path,
-                            MimeType = f.mimetype
-                        });
+                        var files = query.Read().Select(f => (
+                        
+                            Guid: new Guid(f.uuid),
+                            Game: new Guid(f.game),
+                            Path: (string)f.path,
+                            MimeType: (string)f.mimetype
+                       ));
 
+                        var metadatas = query.Read().Select(metadata =>
+                        (
+                            Guid: new Guid(metadata.uuid),
+                            Record: new Guid(metadata.record),
+                            Key: (string)metadata.key,
+                            Value: (string)metadata.value
+                        )).Select(m => new RecordMetadata(m.Guid, m.Record, m.Key, m.Value))
+                        .Cast<IRecordMetadata>();
 
-                        var metadatas = query.Read().Select(metadata => new
-                        {
-                            Guid = new Guid(metadata.uuid),
-                            Record = new Guid(metadata.record),
-                            Key = metadata.key,
-                            Value = metadata.value
-                        }).Select(m => new RecordMetadata(m.Guid, m.Record, m.Key, m.Value)
-                        as IRecordMetadata);
                         var fileRecords = (from f in files
                                            let md = (from m in metadatas where m.Record == f.Guid select m)
                                                .ToDictionary(md => md.Key, md => md)
+<<<<<<< HEAD
                                            select new FileRecord(f.Guid, md, f.Path, f.MimeType) as IFileRecord).ToList();
+=======
+                                           select new FileRecord(f.Game, md, f.Path, f.MimeType))
+                                           .Cast<IFileRecord>().ToList();
+>>>>>>> cd39263... Modules: Robust loader and plugin system (#249)
                         var gameMetadata =
                             (from m in metadatas where m.Record == gameGuid select m)
                             .ToDictionary(m => m.Key, m => m);
                         return new GameRecord(gameGuid, gameMetadata, fileRecords);
                     }
-                    catch (SqliteException)
+                    catch (DbException)
                     {
                         return null;
                     }

@@ -15,19 +15,20 @@ using Snowflake.Plugin.Emulators.RetroArch.Shaders;
 using Snowflake.Records.File;
 using Snowflake.Records.Game;
 using Snowflake.Services;
+using Snowflake.Extensibility.Provisioned;
 
 namespace Snowflake.Plugin.Emulators.RetroArch.Adapters.Bsnes
 {
     [Plugin("RetroArchBsnes")]
     public class BsnesRetroArchAdapter : RetroArchCommonAdapter
     {
-        public BsnesRetroArchAdapter(string appDataDirectory,
+        public BsnesRetroArchAdapter(IPluginProvision provision,
             RetroArchProcessHandler processHandler, IStoneProvider stoneProvider,
             IConfigurationCollectionStore collectionStore,
             IBiosManager biosManager, 
             ISaveManager saveManager,
             ShaderManager shaderManager)
-            : base(appDataDirectory, processHandler, stoneProvider, collectionStore, biosManager, saveManager, shaderManager)
+            : base(provision, processHandler, stoneProvider, collectionStore, biosManager, saveManager, shaderManager)
         {
            
         }
@@ -38,7 +39,7 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Adapters.Bsnes
 
             var platform = this.StoneProvider.Platforms[gameRecord.PlatformId];
         
-            return new BsnesInstance(gameRecord, file, this, this.CorePath, this.ProcessHandler, saveSlot, platform, ports)
+            return new BsnesInstance(gameRecord, file, this, this.CorePath.FullName, this.ProcessHandler, saveSlot, platform, ports)
             {
                 ShaderManager =  this.ShaderManager 
             };
@@ -47,7 +48,7 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Adapters.Bsnes
 
         public override IConfigurationCollection GetConfiguration(IGameRecord gameRecord, string profileName = "default")
         {
-            return this.CollectionStore.Get<BsnesConfiguration>(gameRecord.Guid, this.PluginName, profileName);
+            return this.CollectionStore.Get<BsnesConfiguration>(gameRecord.Guid, this.Name, profileName);
         }
 
         public override IConfigurationCollection GetConfiguration()

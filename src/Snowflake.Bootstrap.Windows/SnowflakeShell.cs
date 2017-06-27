@@ -17,12 +17,15 @@ using Snowflake.Scraper;
 using Snowflake.Services;
 using Snowflake.Utility;
 using Snowflake.Plugin.Emulators.RetroArch.Adapters.Bsnes;
+using Snowflake.Romfile;
+using Snowflake.Loader;
+using Snowflake.Services.AssemblyLoader;
 
 namespace Snowflake.Shell.Windows
 {
     internal class SnowflakeShell
     {
-        private ICoreService loadedCore;
+        private IServiceContainer loadedCore;
         private readonly string appDataDirectory = PathUtility.GetSnowflakeDataPath();
         internal SnowflakeShell()
         {
@@ -31,6 +34,7 @@ namespace Snowflake.Shell.Windows
        
         public void StartCore()
         {
+<<<<<<< HEAD
             this.loadedCore = new CoreService(this.appDataDirectory);
             //this.loadedCore.Get<IEmulatorAssembliesManager>()?.LoadEmulatorAssemblies();
             this.loadedCore.Get<IPluginManager>()?.Initialize();
@@ -53,6 +57,32 @@ namespace Snowflake.Shell.Windows
         /*    var gr = new GameRecord(this.loadedCore.Get<IStoneProvider>().Platforms["NINTENDO_SNES"], "test",
                 @"E:\Super Mario World (USA).sfc", "application/x-romfile-snes-sfc");
             this.loadedCore.Get<IGameLibrary>().Set(gr);*/
+=======
+
+            this.loadedCore = new ServiceContainer(this.appDataDirectory);
+            var loader = this.loadedCore.Get<IModuleEnumerator>();
+            var composer = new AssemblyComposer(this.loadedCore, loader);
+            composer.Compose();
+            //this.loadedCore.Get<IEmulatorAssembliesManager>()?.LoadEmulatorAssemblies();
+            //this.loadedCore.Get<IPluginManager>()?.Initialize();
+           /* this.loadedCore.Get<IServerManager>().RegisterServer("ThemeServer", new ThemeServer(Path.Combine(this.loadedCore.AppDataDirectory, "themes")));
+            foreach (string serverName in this.loadedCore.Get<IServerManager>().RegisteredServers)
+            {
+                this.loadedCore.Get<IServerManager>()?.StartServer(serverName);
+                var serverStartEvent = new ServerStartEventArgs(this.loadedCore, serverName);
+                SnowflakeEventManager.EventSource.RaiseEvent(serverStartEvent); //todo Move event registration to SnowflakeEVentManager
+            }*/
+            /*var im = this.loadedCore.Get<IPluginManager>().Get<IInputEnumerator>()["InputEnumerator-Keyboard"];
+            var ep = new EmulatedPort(1, im.ControllerLayout,
+                im.GetConnectedDevices().First(), MappedControllerElementCollection.GetDefaultMappings(im.ControllerLayout, this.loadedCore.Get<IStoneProvider>().Controllers["NES_CONTROLLER"]));
+            var gr = new GameRecord(this.loadedCore.Get<IStoneProvider>().Platforms["NINTENDO_SNES"], "test",
+                @"E:\Super Mario World (USA).sfc", "application/x-romfile-snes-sfc");
+            var raadapter = this.loadedCore.Get<IPluginManager>().Get<BsnesRetroArchAdapter>().First().Value;
+            
+            var lmfao = raadapter.Instantiate(gr, gr.Files[0], 0, new List<IEmulatedPort> { ep});
+            lmfao.Create();
+            lmfao.Start();*/
+>>>>>>> cd39263... Modules: Robust loader and plugin system (#249)
         }
 
         public void StartShell() {

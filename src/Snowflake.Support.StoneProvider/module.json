@@ -1,0 +1,8 @@
+﻿{
+  "entry": "Snowflake.Support.StoneProvider.dll",
+  "loader": "assembly",
+  "frameworkVersion": "1.0.0",
+  "version": "7.0.0",
+  "author": "Snowflake",
+  "name": "Snowflake Stone Definitions Provider"
+}

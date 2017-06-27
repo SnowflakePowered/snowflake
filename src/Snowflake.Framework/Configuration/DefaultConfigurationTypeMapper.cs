@@ -21,8 +21,13 @@ namespace Snowflake.Configuration
 
         private string EnumConverter(Enum enumValue)
         {
+<<<<<<< HEAD
             return NonGenericEnums.GetMember(enumValue.GetType(), enumValue)
                 .Attributes.Get<SelectionOptionAttribute>().SerializeAs;
+=======
+            return NonGenericEnums.GetAttributes(enumValue.GetType(), enumValue)
+                .Get<SelectionOptionAttribute>().SerializeAs;
+>>>>>>> cd39263... Modules: Robust loader and plugin system (#249)
         }
     }
 }

@@ -1,17 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   
   <PropertyGroup>
-    <TargetFramework>netstandard1.6</TargetFramework>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
     <RootNamespace>Snowflake</RootNamespace>
   </PropertyGroup>
   
   <PropertyGroup Condition=" '$(Configuration)' == 'Cover' ">
-	<DebugType>Full</DebugType>
+	  <DebugType>Full</DebugType>
   </PropertyGroup>
   
   <ItemGroup>
-    <PackageReference Include="Castle.Core" Version="4.0.0" />
+    <PackageReference Include="Castle.Core" Version="4.1.0" />
     <PackageReference Include="Dapper" Version="1.50.3-beta1" />
+<<<<<<< HEAD
     <PackageReference Include="Enums.NET" Version="2.0.0" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="1.1.0" />
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
@@ -26,10 +27,13 @@
     <PackageReference Include="System.IO.FileSystem" Version="4.3.0" />
     <PackageReference Include="System.IO.FileSystem.Primitives" Version="4.3.0" />
     <PackageReference Include="System.Linq" Version="4.3.0" />
+=======
+    <PackageReference Include="Enums.NET" Version="2.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="System.Collections.Immutable" Version="1.4.0-preview1-25305-02" />
+    <PackageReference Include="System.Dynamic.Runtime" Version="4.3.0" />
+>>>>>>> cd39263... Modules: Robust loader and plugin system (#249)
     <PackageReference Include="System.Linq.Parallel" Version="4.3.0" />
-    <PackageReference Include="System.Linq.Queryable" Version="4.3.0" />
-    <PackageReference Include="System.Runtime.Extensions" Version="4.3.0" />
-    <PackageReference Include="System.ValueTuple" Version="4.3.0" />
   </ItemGroup>
   
   <ItemGroup>

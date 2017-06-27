@@ -1,0 +1,37 @@
+<<<<<<< HEAD
+<Project Sdk="Microsoft.NET.Sdk">
+
+=======
+﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" />
+>>>>>>> a9ababf... Remoting: Begin working on a Michi-based framework for remoting.
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+  </PropertyGroup>
+<<<<<<< HEAD
+
+=======
+  <ItemGroup>
+    <Compile Include="**\*.cs" />
+    <EmbeddedResource Include="**\*.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETCore.App">
+      <Version>1.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.NET.Sdk">
+      <Version>1.0.0-alpha-20161104-2</Version>
+      <PrivateAssets>All</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+>>>>>>> a9ababf... Remoting: Begin working on a Michi-based framework for remoting.
+  <ItemGroup>
+    <ProjectReference Include="..\Snowflake.Plugin.Emulators.RetroArch\Snowflake.Plugin.Emulators.RetroArch.csproj" />
+    <ProjectReference Include="..\Snowflake.Framework.Primitives\Snowflake.Framework.Primitives.csproj" />
+    <ProjectReference Include="..\Snowflake.Framework.Services\Snowflake.Framework.Services.csproj" />
+    <ProjectReference Include="..\Snowflake.Framework.Utility\Snowflake.Framework.Utility.csproj" />
+    <ProjectReference Include="..\Snowflake.Framework\Snowflake.Framework.csproj" />
+  </ItemGroup>
+  
+</Project>

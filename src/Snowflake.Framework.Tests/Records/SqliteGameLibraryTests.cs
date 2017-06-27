@@ -11,6 +11,7 @@ using Snowflake.Records.Game;
 using Snowflake.Records.Metadata;
 using Snowflake.Utility;
 using Xunit;
+using Snowflake.Persistence;
 
 namespace Snowflake.Records.Tests
 {

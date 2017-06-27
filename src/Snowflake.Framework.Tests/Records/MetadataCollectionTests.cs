@@ -34,7 +34,7 @@ namespace Snowflake.Records.Tests
         {
             IMetadataCollection collection = new MetadataCollection(Guid.Empty);
             collection["TestKey"] = "TestValue";
-            Assert.Equal(collection["TestKey"], "TestValue");
+            Assert.Equal("TestValue", collection["TestKey"]);
         }
     }
     
