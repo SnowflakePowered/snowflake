@@ -12,10 +12,5 @@
   "someDictionary": {
     "one": "1",
     "two": "2"
-  },
-  "someObject": {
-    "one": {
-      "two": "three"
-    }
   }
 }
