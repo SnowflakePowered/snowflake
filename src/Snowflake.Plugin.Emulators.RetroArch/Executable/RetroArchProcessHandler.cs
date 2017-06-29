@@ -1,19 +1,17 @@
 ﻿using Snowflake.Extensibility;
-
+using Snowflake.Extensibility.Provisioned;
 
 namespace Snowflake.Plugin.Emulators.RetroArch.Executable
 {
     [Plugin("exe-retroarch-win64")]
-    public class RetroArchProcessHandler : Extensibility.Plugin
+    public class RetroArchProcessHandler : ProvisionedPlugin
     {
-        public RetroArchProcessHandler(string appDataDirectory, IPluginProperties pluginProperties) : base(appDataDirectory, pluginProperties)
+        public RetroArchProcessHandler(IPluginProvision provision) :
+            base(provision)
         {
         }
 
-        public RetroArchProcessHandler(string appDataDirectory) : base(appDataDirectory)
-        {
-        }
-
-        internal RetroArchProcessInfo GetProcessInfo(string romFilePath) => new RetroArchProcessInfo(this.PluginDataPath, romFilePath);
+        internal RetroArchProcessInfo GetProcessInfo(string romFilePath) => 
+            new RetroArchProcessInfo(this.Provision.ResourceDirectory.FullName, romFilePath);
     }
 }

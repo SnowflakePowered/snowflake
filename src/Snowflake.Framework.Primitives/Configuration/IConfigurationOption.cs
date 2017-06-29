@@ -18,20 +18,24 @@ namespace Snowflake.Configuration
         /// A description of this configuration option
         /// </summary>
         string Description { get; }
+
         /// <summary>
         /// Whether or not this option is a simple option (displayed in "Simple" configuration mode)
         /// </summary>
         bool Simple { get; }
+
         /// <summary>
         /// Whether or not this option is private (not ever displayed to the user)
         /// </summary>
         bool Private { get; }
+
         /// <summary>
         /// A 'flag' property is never serialized into the configuration option, and is instead used to cause
         /// side effects to the configuration during emulator instance creation by the emulator handler.
         /// If a flag affects the configuration, it should be placed in the same section it modifies.
         /// </summary>
         bool Flag { get; }
+
         /// <summary>
         /// The maximum value allowable for a number value
         /// </summary>

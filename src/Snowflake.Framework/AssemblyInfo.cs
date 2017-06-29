@@ -6,10 +6,10 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyCulture("")]
-[assembly: InternalsVisibleTo("Snowflake.Service")]
-[assembly: InternalsVisibleTo("Snowflake.Tests")]
-[assembly: InternalsVisibleTo("Snowflake.Framework.Tests")]
+[assembly: InternalsVisibleTo("Snowflake.Support.StoreProviders")]
+[assembly: InternalsVisibleTo("Snowflake.Support.PluginManager")]
 [assembly: InternalsVisibleTo("Snowflake.Framework.Services")]
+[assembly: InternalsVisibleTo("Snowflake.Framework.Tests")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 

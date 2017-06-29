@@ -13,7 +13,8 @@ namespace Snowflake.Tests
         internal static Stream GetResource(string resourceName)
         {
             var assembly = typeof(TestUtilities).GetTypeInfo().Assembly;
-            return assembly.GetManifestResourceStream($"{assembly.GetName().Name}.TestResources.{resourceName}");
+            var typeNamespace = typeof(TestUtilities).Namespace.Split(".")[0];
+            return assembly.GetManifestResourceStream($"{typeNamespace}.TestResources.{resourceName}");
         }
 
         /// <summary>

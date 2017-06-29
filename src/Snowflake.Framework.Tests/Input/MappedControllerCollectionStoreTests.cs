@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Utility;
 using Xunit;
+using Snowflake.Persistence;
 
 namespace Snowflake.Input.Tests
 {

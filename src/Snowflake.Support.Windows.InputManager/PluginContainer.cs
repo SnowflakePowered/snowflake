@@ -1,15 +1,17 @@
 ﻿using Snowflake.Extensibility;
 using Snowflake.Input.Device;
+using Snowflake.Loader;
 using Snowflake.Services;
 
 namespace Snowflake.Plugin.InputManager.Win32
 {
-    [ContainerLoadPriority(ContainerLoadPriority.Service)]
-    public class InputManagerContainer : IPluginContainer
+    public class InputManagerContainer : IComposable
     {
-        public void Compose(ICoreService coreInstance)
+        [ImportService(typeof(IServiceRegistrationProvider))]
+        public void Compose(IModule module, IServiceProvider coreInstance)
         {
-            coreInstance.RegisterService<IInputManager>(new InputManager());
+            coreInstance.Get<IServiceRegistrationProvider>()
+                .RegisterService<IInputManager>(new InputManager());
         }
     }
 }
