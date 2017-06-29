@@ -17,10 +17,10 @@ namespace Snowflake.Support.Remoting.Resources
         private IGameLibrary Library { get; }
         private IStoneProvider Stone { get; }
         private List<string> ForbiddenDeleteKeys = new List<string> { "game_title", "game_platform", "file_linkedrecord" };
-        public Games(ICoreService core)
+        public Games(IStoneProvider stone, IGameLibrary library)
         {
-            this.Library = core.Get<IGameLibrary>();
-            this.Stone = core.Get<IStoneProvider>();
+            this.Library = library;
+            this.Stone = stone;
         }
 
         

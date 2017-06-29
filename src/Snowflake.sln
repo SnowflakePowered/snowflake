@@ -74,6 +74,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Framework.Tests.InvalidComposable", "Snowflake.Framework.Tests.InvalidComposable\Snowflake.Framework.Tests.InvalidComposable.csproj", "{89242BED-0913-4B7A-8C3A-8333B01EE9E9}"
 >>>>>>> cd39263... Modules: Robust loader and plugin system (#249)
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Support.Remoting", "Snowflake.Support.Remoting\Snowflake.Support.Remoting.csproj", "{60FDD3F9-ACDA-4424-BEC6-09AA7CF7847C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -380,7 +382,18 @@ Global
 		{89242BED-0913-4B7A-8C3A-8333B01EE9E9}.Release|x64.Build.0 = Release|Any CPU
 		{89242BED-0913-4B7A-8C3A-8333B01EE9E9}.Release|x86.ActiveCfg = Release|Any CPU
 		{89242BED-0913-4B7A-8C3A-8333B01EE9E9}.Release|x86.Build.0 = Release|Any CPU
->>>>>>> cd39263... Modules: Robust loader and plugin system (#249)
+		{60FDD3F9-ACDA-4424-BEC6-09AA7CF7847C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60FDD3F9-ACDA-4424-BEC6-09AA7CF7847C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60FDD3F9-ACDA-4424-BEC6-09AA7CF7847C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{60FDD3F9-ACDA-4424-BEC6-09AA7CF7847C}.Debug|x64.Build.0 = Debug|Any CPU
+		{60FDD3F9-ACDA-4424-BEC6-09AA7CF7847C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{60FDD3F9-ACDA-4424-BEC6-09AA7CF7847C}.Debug|x86.Build.0 = Debug|Any CPU
+		{60FDD3F9-ACDA-4424-BEC6-09AA7CF7847C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60FDD3F9-ACDA-4424-BEC6-09AA7CF7847C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60FDD3F9-ACDA-4424-BEC6-09AA7CF7847C}.Release|x64.ActiveCfg = Release|Any CPU
+		{60FDD3F9-ACDA-4424-BEC6-09AA7CF7847C}.Release|x64.Build.0 = Release|Any CPU
+		{60FDD3F9-ACDA-4424-BEC6-09AA7CF7847C}.Release|x86.ActiveCfg = Release|Any CPU
+		{60FDD3F9-ACDA-4424-BEC6-09AA7CF7847C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -415,6 +428,6 @@ Global
 		{28E6E924-BC59-4124-9EB1-F02A57C7A7E3} = {16BB0B43-6224-42C2-9A33-A039348CF965}
 		{1F42B6A4-FAB1-4E49-B984-6FEA213C6D92} = {16BB0B43-6224-42C2-9A33-A039348CF965}
 		{89242BED-0913-4B7A-8C3A-8333B01EE9E9} = {16BB0B43-6224-42C2-9A33-A039348CF965}
->>>>>>> cd39263... Modules: Robust loader and plugin system (#249)
+		{60FDD3F9-ACDA-4424-BEC6-09AA7CF7847C} = {FBD15674-246A-4C57-B865-07214D8BB9A1}
 	EndGlobalSection
 EndGlobal

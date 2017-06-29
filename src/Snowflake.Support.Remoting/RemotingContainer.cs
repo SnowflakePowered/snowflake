@@ -5,19 +5,33 @@ using Unosquare.Labs.EmbedIO;
 using Snowflake.Support.Remoting.Servers;
 using Snowflake.Support.Remoting.Resources;
 using Snowflake.Support.Remoting.Framework;
+using Snowflake.Loader;
+using Snowflake.Records.Game;
 
 namespace Snowflake.Support.Remoting
 {
-    public class RemotingContainer : IPluginContainer
+
+    public class RemotingContainer : IComposable
     {
-        public void Compose(ICoreService coreInstance)
+        [ImportService(typeof(IStoneProvider))]
+        [ImportService(typeof(IGameLibrary))]
+        [ImportService(typeof(IServiceRegistrationProvider))]
+        public void Compose(IModule module, Loader.IServiceProvider coreInstance)
         {
-            var pluginEndpoint = new Plugins(coreInstance);
-            var stoneEndpoint = new Stone(coreInstance.Get<IStoneProvider>());
-            var gameEndpoint = new Games(coreInstance);
+            var stone = coreInstance.Get<IStoneProvider>();
+            var gameLib = coreInstance.Get<IGameLibrary>();
+            var register = coreInstance.Get<IServiceRegistrationProvider>();
+            //var plugMan = coreInstance.Get<IPluginManager>();
+
+            //var pluginEndpoint = new Plugins(plugMan);
+            var stoneEndpoint = new Stone(stone);
+            var gameEndpoint = new Games(stone, gameLib);
+
             var endpointCollection = new EndpointCollection();
-            endpointCollection.Add(RequestVerb.Read, "~:plugins", p => pluginEndpoint.ListPlugins());
+            /* endpointCollection.Add(RequestVerb.Read, "~:plugins", p => pluginEndpoint.ListPlugins());
             endpointCollection.Add(RequestVerb.Read, "~:plugins:{echo}", p => pluginEndpoint.Echo(p.Url["echo"]));
+            */
+
             endpointCollection.Add(RequestVerb.Read, "~:stone:platforms", p => stoneEndpoint.ListPlatforms());
             endpointCollection.Add(RequestVerb.Read, "~:stone:platforms:{platformId}", p => stoneEndpoint.GetPlatform(p.Url["platformId"]));
             endpointCollection.Add(RequestVerb.Read, "~:stone:controllers", p => stoneEndpoint.ListControllers());
@@ -46,9 +60,11 @@ namespace Snowflake.Support.Remoting
                p => gameEndpoint.SetFileMetadata(Guid.Parse(p.Url["guid"]), Guid.Parse(p.Url["fileid"]), p.Url["metadata_key"], 
                (string)p.Body["value"]));
             endpointCollection.Add(RequestVerb.Create, "~:scrape:file", p => gameEndpoint.Scrape((string)p.Body["path"]));
+
+
             var webServer = new WebServer("http://localhost:9696/");
             webServer.RegisterModule(new RestRemotingServer(endpointCollection));
-            coreInstance.RegisterService(webServer);
+            register.RegisterService(webServer); //todo should be plugin.
             webServer.RunAsync();
         }
     }
