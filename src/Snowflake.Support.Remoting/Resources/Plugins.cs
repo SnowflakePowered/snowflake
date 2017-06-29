@@ -12,16 +12,17 @@ namespace Snowflake.Support.Remoting.Resources
     {
 
         private IPluginManager PluginManager{ get; }
-        public Plugins(ICoreService core)
+        public Plugins(IPluginManager pluginManager)
         {
-            this.PluginManager = core.Get<IPluginManager>();
+            this.PluginManager = pluginManager; 
         }
 
         
         [Endpoint(RequestVerb.Read, "~:plugins")]
         public IEnumerable<string> ListPlugins()
         {
-            return this.PluginManager.Registry.Select(p => p.Key);
+            //todo: doesn't make sense without type.
+            yield break;
         }
 
         [Endpoint(RequestVerb.Read, "~:plugins:{echo}")]
