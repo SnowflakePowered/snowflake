@@ -45,7 +45,10 @@ const GameLaunchHeaderView = ({ classes, gameTitle, gamePublisher, onPlayButtonC
     <div className={classes.controlContainer}>
       <div className={classes.topControls}>
         <div className={classes.gameDisplay}>
-          <GameDisplay title={gameTitle} publisher={gamePublisher} />
+          <GameDisplay
+            title={gameTitle}
+            publisher={gamePublisher}
+          />
         </div>
         <GamePlayButton onClicked={onPlayButtonClicked}/>
       </div>

@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@kadira/react-storybook-decorator-centered": "^1.1.2",
+    "babel-polyfill": "^6.23.0",
     "classnames": "^2.2.5",
     "cross-env": "^5.0.0",
     "lodash": "^4.17.4",
@@ -26,7 +27,7 @@
     "stone-definitions": "7.0.0-alpha.10"
   },
   "devDependencies": {
-    "@storybook/react": "^3.0.0-alpha.1",
+    "@storybook/react": "^3.1.7",
     "babel-eslint": "^7.2.3",
     "babel-plugin-root-import": "^5.1.0",
     "eslint": "^3.19.0",

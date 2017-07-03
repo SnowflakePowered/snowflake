@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
 import injectSheet from 'mui-jss-inject'
-
+import SidebarVisibleView from 'components/views/SidebarVisibleView'
 import SnowflakeProvider from 'snowflake/SnowflakeProvider'
 
 import Switchboard from './Switchboard'

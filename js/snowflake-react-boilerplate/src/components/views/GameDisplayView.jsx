@@ -66,7 +66,6 @@ const GameDisplayView = ({ classes }) => (
           <GameLaunchHeaderView
             gameTitle="TITLE"
             gamePublisher="PUBLISHER"
-            gameDescription="DESCRIPTION"
           />
         </div>
       </div>
