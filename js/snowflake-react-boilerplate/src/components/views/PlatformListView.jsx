@@ -6,6 +6,8 @@ import List, { ListItem } from 'material-ui/List'
 import Typography from 'material-ui/Typography'
 import BottomSheet from 'components/BottomSheet'
 
+import Button from 'material-ui/Button'
+
 import PlatformDisplayAdapter from 'components/adapter/PlatformDisplayAdapter'
 
 import { grey } from 'material-ui/styles/colors'
@@ -14,7 +16,8 @@ const styles = {
   platformSelector: {
     overflowY: 'auto',
     overflowX: 'hidden',
-    gridColumn: 'platformSelector'
+    gridColumn: 'platformSelector',
+    zIndex: 2
   },
   container: {
     display: 'grid',
@@ -33,13 +36,19 @@ const styles = {
   },
   platformInformationInner: {
     display: 'grid',
-    gridTemplateColumns: '[platformInfo] 80% [platformMenu] 20%'
+    gridTemplateRows: '[platformInfo] 80% [platformMenu] 20%',
+    height: '100%',
+    width: '100%'
   },
   menu: {
-    gridColumn: 'platformMenu'
+    gridRow: 'platformMenu',
+    display: 'flex',
+    alignItems: 'baseline',
+    justifyContent: 'flex-end'
+
   },
   platformInfoDisplay: {
-    gridColumn: 'platformInfo'
+    gridRow: 'platformInfo'
   }
 }
 
@@ -70,6 +79,8 @@ const PlatformListView = ({ classes, platforms, currentPlatform, onPlatformChang
             </div>
             <div className={classes.menu}>
               {/* todo: refactor out this ugliness */}
+              <Button>Games</Button>
+              <Button>Controllers</Button>
             </div>
           </div>
         </BottomSheet>

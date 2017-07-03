@@ -2,7 +2,6 @@ import React from 'react'
 import injectSheet from 'react-jss'
 import PropTypes from 'prop-types'
 
-import styleable from 'utils/styleable'
 import InfoDisplay from './InfoDisplay'
 
 const styles = {
