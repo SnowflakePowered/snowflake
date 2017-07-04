@@ -7,6 +7,7 @@ using Snowflake.Support.Remoting.Resources;
 using Snowflake.Support.Remoting.Framework;
 using Snowflake.Loader;
 using Snowflake.Records.Game;
+using Snowflake.Servers;
 
 namespace Snowflake.Support.Remoting
 {
@@ -62,10 +63,10 @@ namespace Snowflake.Support.Remoting
             endpointCollection.Add(RequestVerb.Create, "~:scrape:file", p => gameEndpoint.Scrape((string)p.Body["path"]));
 
 
-            var webServer = new WebServer("http://localhost:9696/");
-            webServer.RegisterModule(new RestRemotingServer(endpointCollection));
-            register.RegisterService(webServer); //todo should be plugin.
-            webServer.RunAsync();
+            var webServer = new WebServerWrapper(new RestRemotingServer(endpointCollection));
+            webServer.Start();
+            //register.RegisterService<ILocalWebService>(webServer); //todo should be plugin.
+
         }
     }
 }

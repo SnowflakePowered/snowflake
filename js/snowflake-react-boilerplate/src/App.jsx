@@ -1,10 +1,10 @@
 import React from 'react'
-import { Route } from 'react-router-dom'
-import { ConnectedRouter } from 'react-router-redux'
+import { BrowserRouter } from 'react-router-dom'
 import injectSheet from 'mui-jss-inject'
-import GameListViewAdapter from 'components/adapter/GameListViewAdapter'
 
 import SnowflakeProvider from 'snowflake/SnowflakeProvider'
+
+import Switchboard from './Switchboard'
 
 const styles = {
 
@@ -12,13 +12,11 @@ const styles = {
 
 const App = ({ history, classes }) => {
   return (
-    <ConnectedRouter history={history}>
-      <Route render={() =>
-          <SnowflakeProvider>
-            <GameListViewAdapter/>
-          </SnowflakeProvider>
-      } />
-    </ConnectedRouter>
+    <BrowserRouter>
+      <SnowflakeProvider>
+        <Switchboard/>
+      </SnowflakeProvider>
+    </BrowserRouter>
   )
 }
 

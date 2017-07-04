@@ -3,6 +3,7 @@ import PlatformDisplay from 'components/presentation/info/PlatformDisplay'
 
 import Typography from 'material-ui/Typography'
 const PlatformDisplayAdapter = ({ platform }) => {
+  console.log(platform)
   if (!platform) {
     return (
       <div>

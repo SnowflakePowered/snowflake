@@ -8,16 +8,10 @@ import withActions from 'snowflake/compose/withActions'
 
 import compose from 'recompose/compose'
 
-
-const PlatformListViewAdapter = ({platforms, state, actions}) => {
-
-  const handlePlatformChanged = p => {
-    actions.state.setActivePlatform(p.PlatformID)
-  }
-
+const PlatformListViewAdapter = ({platforms, matchPlatform, actions}) => {
   return (
-    <PlatformListView platforms={platforms} currentPlatform={state.currentPlatform} onPlatformChanged={handlePlatformChanged}/>
+    <PlatformListView platforms={platforms} currentPlatform={matchPlatform} />
   )
 }
 
-export default compose(withPlatforms, withState, withActions)(PlatformListViewAdapter)
+export default compose(withPlatforms, withActions)(PlatformListViewAdapter)
