@@ -1,7 +1,6 @@
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
 import injectSheet from 'mui-jss-inject'
-
 import SnowflakeProvider from 'snowflake/SnowflakeProvider'
 
 import Switchboard from './Switchboard'
