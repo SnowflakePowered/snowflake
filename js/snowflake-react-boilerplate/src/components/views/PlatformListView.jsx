@@ -10,6 +10,8 @@ import PlatformDisplayAdapter from 'components/adapter/PlatformDisplayAdapter'
 
 import { grey } from 'material-ui/styles/colors'
 
+import Link from 'components/Link'
+
 const styles = {
   platformSelector: {
     overflowY: 'auto',
@@ -43,20 +45,19 @@ const styles = {
   }
 }
 
-const PlatformListView = ({ classes, platforms, currentPlatform, onPlatformChanged }) => {
-  // todo refactor out to presentation and action launcher
-  const handlePlatformChanged = (p) => {
-    if (onPlatformChanged) onPlatformChanged(p)
-  }
-
+const PlatformListView = ({ classes, platforms, currentPlatform }) => {
+  console.log(Array.from(platforms))
+  console.log(Object.values(platforms.entries()))
   return (
     <div className={classes.container}>
       <div className={classes.platformSelector}>
         <List>
-          {Object.values(platforms).map(p =>
-            <ListItem key={p.PlatformID} button onClick={() => handlePlatformChanged(p)}>
-              <Typography>{p.FriendlyName}</Typography>
-            </ListItem>)}
+          {Array.from(platforms).map(([k, p]) =>
+            <Link to={`/platforms/${p.PlatformID}`}>
+              <ListItem key={p.PlatformID} button>
+                <Typography>{p.FriendlyName}</Typography>
+              </ListItem>
+            </Link>)}
         </List>
       </div>
       <div className={classes.platformDisplay}>
@@ -66,7 +67,7 @@ const PlatformListView = ({ classes, platforms, currentPlatform, onPlatformChang
         <BottomSheet className={classes.platformInformation}>
           <div className={classes.platformInformationInner}>
             <div className={classes.platformInfoDisplay}>
-              <PlatformDisplayAdapter platform={platforms[currentPlatform]} />
+              <PlatformDisplayAdapter platform={currentPlatform} />
             </div>
             <div className={classes.menu}>
               {/* todo: refactor out this ugliness */}

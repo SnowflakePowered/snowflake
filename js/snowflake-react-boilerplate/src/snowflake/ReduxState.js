@@ -28,7 +28,7 @@ const ReduxState = (AppComponent) => {
     }
   }
 
-  return connect(mapStateToProps, mapDispatchToProps)(class extends Component {
+  return connect(mapStateToProps, mapDispatchToProps, null, { pure: false })(class extends Component {
     static displayName = `State(${getDisplayName(AppComponent)})`
     componentWillMount () {
       //this.props.actions.platforms.beginRefreshPlatforms()

@@ -8,6 +8,7 @@ import List, {
 import MenuIcon from 'material-ui-icons/Menu'
 import GamepadIcon from 'material-ui-icons/VideogameAsset'
 import { white, grey } from 'material-ui/styles/colors'
+import Link from 'components/Link'
 
 const styles = {
   container: {
@@ -28,9 +29,11 @@ const Sidebar = ({ classes }) => (
       <ListItem button>
         <MenuIcon className={classes.icon} />
       </ListItem>
-      <ListItem button>
-        <GamepadIcon className={classes.icon} />
-      </ListItem>
+      <Link to="/platforms">
+        <ListItem button>
+          <GamepadIcon className={classes.icon} />
+        </ListItem>
+      </Link>
     </List>
   </div>
 )
