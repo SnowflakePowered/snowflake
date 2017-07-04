@@ -12,7 +12,6 @@ using Snowflake.Romfile.Tokenizer;
 
 namespace Snowflake.Romfile
 {
-    //todo: verify filename convention better
     public sealed class StructuredFilename : IStructuredFilename
     {
         public NamingConvention NamingConvention { get; private set; }
@@ -28,7 +27,7 @@ namespace Snowflake.Romfile
         public StructuredFilename(string originalFilename)
         {
             this.OriginalFilename = Path.GetFileName(originalFilename);
-            //todo: move this into goodtools
+            //todo: expose tokens to api
             (NamingConvention namingConvention, IEnumerable<StructuredFilenameToken> tokens) = GetBestMatch();
             this.Title = Path.GetFileNameWithoutExtension(StructuredFilename.ParseTitle(tokens.FirstOrDefault(t => t.Type == 
                 FieldType.Title)?.Value ?? "Unknown??!?"));

@@ -103,7 +103,7 @@ namespace Snowflake.Records.File
         {
             const string sql = @"SELECT * FROM files WHERE uuid IN @guids;
                                  SELECT * FROM metadata WHERE record IN (SELECT uuid FROM files WHERE uuid IN @guids)";
-            return this.GetMultipleByQuery(sql, new { guids }); //todo test no idea if this works
+            return this.GetMultipleByQuery(sql, new { guids }); 
         }
 
         public IEnumerable<IFileRecord> GetAllRecords()
