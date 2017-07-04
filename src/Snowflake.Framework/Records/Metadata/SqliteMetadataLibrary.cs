@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
-using Snowflake.Utility;
+using Snowflake.Persistence;
 
 namespace Snowflake.Records.Metadata
 {
     internal class SqliteMetadataLibrary : IMetadataLibrary
     {
-        private readonly SqliteDatabase backingDatabase;
-        public SqliteMetadataLibrary(SqliteDatabase database)
+        private readonly ISqlDatabase backingDatabase;
+        public SqliteMetadataLibrary(ISqlDatabase database)
         {
             this.backingDatabase = database;
             this.CreateDatabase();

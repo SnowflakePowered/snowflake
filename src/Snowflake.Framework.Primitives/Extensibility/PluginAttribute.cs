@@ -19,15 +19,27 @@ namespace Snowflake.Extensibility
         /// Initializes a new instance of the <see cref="PluginAttribute"/> class.
         /// </summary>
         /// <param name="pluginName">The name of the plugin. Must be the same as in plugin.json</param>
-        public PluginAttribute(string pluginName)
+        public PluginAttribute(string pluginName, string version = "0.0.0.0")
         {
             this.PluginName = pluginName;
+            this.Version = new Version(version);
         }
 
         /// <summary>
         /// The name of the plugin. Must be the same as in plugin.json
         /// </summary>
         public string PluginName { get; }
-
+        /// <summary>
+        /// The name of the plugin author
+        /// </summary>
+        public string Author { get; set; } = "Generic Author";
+        /// <summary>
+        /// A short description of the plugin
+        /// </summary>
+        public string Description { get; set; } = "No Description Set";
+        /// <summary>
+        /// The version of the plugin
+        /// </summary>
+        public Version Version { get; set; }
     }
 }

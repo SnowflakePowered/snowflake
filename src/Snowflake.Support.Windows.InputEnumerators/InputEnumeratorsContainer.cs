@@ -6,19 +6,22 @@ using System.Threading.Tasks;
 using Snowflake.Extensibility;
 using Snowflake.Input.Device;
 using Snowflake.Services;
+using Snowflake.Loader;
 
 namespace Snowflake.Plugin.InputEnumerators
 {
-    public class InputEnumeratorsContainer : IPluginContainer
+    public class InputEnumeratorsContainer : IComposable
     {
-        public void Compose(ICoreService coreInstance)
+        [ImportService(typeof(IPluginManager))]
+        [ImportService(typeof(IInputManager))]
+        public void Compose(IModule module, Loader.IServiceProvider coreInstance)
         {
             var pm = coreInstance.Get<IPluginManager>();
             var im = coreInstance.Get<IInputManager>();
            // pm.Register<IInputEnumerator>(new WiimoteEnumerator(coreInstance));
-            pm.Register<IInputEnumerator>(new KeyboardEnumerator(im));
-            pm.Register<IInputEnumerator>(new Xbox360GamepadEnumerator(im));
-            pm.Register<IInputEnumerator>(new XInputGamepadEnumerator(im));
+            pm.Register<IInputEnumerator>(new KeyboardEnumerator(pm.GetProvision<KeyboardEnumerator>(module), im));
+            pm.Register<IInputEnumerator>(new Xbox360GamepadEnumerator(pm.GetProvision<Xbox360GamepadEnumerator>(module),im));
+            pm.Register<IInputEnumerator>(new XInputGamepadEnumerator(pm.GetProvision<XInputGamepadEnumerator>(module), im));
             
         }
     }

@@ -15,7 +15,7 @@ namespace Snowflake.Configuration.Tests
         {
             var x = new ConfigurationSection<IVideoConfiguration>();
             x.Configuration.VideoDriver = VideoDriver.SDL2;
-            Assert.Equal(x.Configuration.VideoDriver, VideoDriver.SDL2);
+            Assert.Equal(VideoDriver.SDL2, x.Configuration.VideoDriver);
             Assert.Equal(x.Configuration, x.Configuration.Configuration);
         }
 
@@ -25,7 +25,7 @@ namespace Snowflake.Configuration.Tests
             var x = new ConfigurationCollection<IRetroArchConfig>();
             x.Configuration.VideoConfiguration.VideoDriver = VideoDriver.SDL2;
             Console.Write(x.GetEnumerator());
-            Assert.Equal(x.Configuration.VideoConfiguration.VideoDriver, VideoDriver.SDL2);
+            Assert.Equal(VideoDriver.SDL2, x.Configuration.VideoConfiguration.VideoDriver);
         }
     }
 }

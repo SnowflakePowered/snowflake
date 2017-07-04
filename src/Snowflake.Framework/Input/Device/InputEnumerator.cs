@@ -9,19 +9,21 @@ using Newtonsoft.Json.Linq;
 using Snowflake.Extensibility;
 using Snowflake.Input.Controller;
 using Snowflake.Services;
+using Snowflake.Extensibility.Provisioned;
 
 namespace Snowflake.Input.Device
 {
-    public abstract class InputEnumerator : Plugin, IInputEnumerator
+    public abstract class InputEnumerator : ProvisionedPlugin, IInputEnumerator
     {
         public IControllerLayout ControllerLayout { get; }
 
         public abstract IEnumerable<IInputDevice> GetConnectedDevices();
 
-        protected InputEnumerator() : base(Path.GetTempPath())
+        protected InputEnumerator(IPluginProvision p) : base(p)
         { 
             this.ControllerLayout =
-                JsonConvert.DeserializeObject<ControllerLayout>(this.GetStringResource("layout.json"));
+                JsonConvert.DeserializeObject<ControllerLayout>(File.ReadAllText(p.ContentDirectory.GetFiles()
+                            .First(f => f.Name == "layout.json").FullName));
         }
     }
 }

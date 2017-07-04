@@ -13,19 +13,20 @@ using Snowflake.Plugin.Emulators.RetroArch.Shaders;
 using Snowflake.Records.File;
 using Snowflake.Records.Game;
 using Snowflake.Services;
+using Snowflake.Extensibility.Provisioned;
 
 namespace Snowflake.Plugin.Emulators.RetroArch.Adapters.Nestopia
 {
     [Plugin("RetroArchNestopia")]
     public class NestopiaRetroArchAdapter : RetroArchCommonAdapter
     {
-        public NestopiaRetroArchAdapter(string appDataDirectory,
+        public NestopiaRetroArchAdapter(IPluginProvision provision,
             RetroArchProcessHandler processHandler, IStoneProvider stoneProvider,
             IConfigurationCollectionStore collectionStore,
             IBiosManager biosManager, ISaveManager saveManager,
             ShaderManager shaderManager)
             : base(
-                appDataDirectory, processHandler, stoneProvider, collectionStore, biosManager, saveManager, shaderManager)
+                provision, processHandler, stoneProvider, collectionStore, biosManager, saveManager, shaderManager)
         {
            
         }
@@ -37,7 +38,7 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Adapters.Nestopia
             var configurations = this.GetConfiguration(gameRecord);
             var platform = this.StoneProvider.Platforms[gameRecord.PlatformId];
 
-            return new RetroArchInstance(gameRecord, file, this, this.CorePath, this.ProcessHandler, saveSlot, platform, ports)
+            return new RetroArchInstance(gameRecord, file, this, this.CorePath.FullName, this.ProcessHandler, saveSlot, platform, ports)
             {
                 ShaderManager =  this.ShaderManager
             };
@@ -45,7 +46,7 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Adapters.Nestopia
 
         public override IConfigurationCollection GetConfiguration(IGameRecord gameRecord, string profileName = "default")
         {
-            return this.CollectionStore.Get<NestopiaConfiguration>(gameRecord.Guid, this.PluginName, profileName);
+            return this.CollectionStore.Get<NestopiaConfiguration>(gameRecord.Guid, this.Name, profileName);
         }
 
         public override IConfigurationCollection GetConfiguration()

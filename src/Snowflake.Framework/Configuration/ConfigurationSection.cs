@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Castle.Core.Internal;
 using Castle.DynamicProxy;
 using EnumsNET.NonGeneric;
-using NLog.LayoutRenderers.Wrappers;
 using Snowflake.Configuration.Attributes;
 using Snowflake.Configuration.Interceptors;
 
@@ -37,7 +36,7 @@ namespace Snowflake.Configuration
         {
         }
 
-        internal ConfigurationSection(IDictionary<string, ValueTuple<string, Guid>> values)
+        internal ConfigurationSection(IDictionary<string,(string stringValue, Guid guid)> values)
         {
             ProxyGenerator generator = new ProxyGenerator();
             this.Descriptor = ConfigurationDescriptorCache.GetSectionDescriptor<T>();
@@ -68,10 +67,10 @@ namespace Snowflake.Configuration
                     ? NonGenericEnums.Parse(optionType, strValue)//return parsed enum if enum
                     : TypeDescriptor.GetConverter(optionType).ConvertFromInvariantString(strValue);
         }
-        private IConfigurationValue FromValueTuple(KeyValuePair<string, ValueTuple<string, Guid>> tuple)
+        private IConfigurationValue FromValueTuple(KeyValuePair<string,(string stringValue, Guid guid)> tuple)
         {
             Type t = this.Descriptor[tuple.Key].Type;
-            return new ConfigurationValue(FromString(tuple.Value.Item1, t), tuple.Value.Item2);
+            return new ConfigurationValue(FromString(tuple.Value.stringValue, t), tuple.Value.guid);
         }
 
         public IEnumerator<KeyValuePair<IConfigurationOption, IConfigurationValue>> GetEnumerator()

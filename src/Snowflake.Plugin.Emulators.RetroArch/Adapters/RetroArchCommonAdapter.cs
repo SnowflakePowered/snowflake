@@ -17,6 +17,7 @@ using Snowflake.Plugin.Emulators.RetroArch.Shaders;
 using Snowflake.Records.File;
 using Snowflake.Records.Game;
 using Snowflake.Services;
+using Snowflake.Extensibility.Provisioned;
 
 namespace Snowflake.Plugin.Emulators.RetroArch.Adapters
 {
@@ -24,19 +25,19 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Adapters
     {
         protected RetroArchProcessHandler ProcessHandler { get; }
         protected ShaderManager ShaderManager { get; }
-        public string CorePath { get; }
+        public DirectoryInfo CorePath { get; }
 
-        protected RetroArchCommonAdapter(string appDataDirectory, 
+        protected RetroArchCommonAdapter(IPluginProvision provision, 
             RetroArchProcessHandler processHandler,
             IStoneProvider stoneProvider,
             IConfigurationCollectionStore collectionStore,
             IBiosManager biosManager,
             ISaveManager saveManager, 
             ShaderManager shaderManager) 
-            : base(appDataDirectory, stoneProvider, collectionStore,biosManager, saveManager)
+            : base(provision, stoneProvider, collectionStore, biosManager, saveManager)
         {
             this.ProcessHandler = processHandler;
-            this.CorePath = Path.Combine(this.PluginDataPath, this.PluginProperties.Get("retroarch_core"));
+            this.CorePath = this.Provision.ResourceDirectory.CreateSubdirectory(this.Provision.Properties.Get("retroarch_core"));
             this.ShaderManager = shaderManager;
         }
 

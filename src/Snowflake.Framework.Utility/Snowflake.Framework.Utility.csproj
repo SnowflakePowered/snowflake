@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.6</TargetFramework>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
     <RootNamespace>Snowflake</RootNamespace>
   </PropertyGroup>
 
@@ -10,18 +10,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Crc32.NET" Version="1.0.2" />
-    <PackageReference Include="Dapper" Version="1.50.3-beta1" />
-    <PackageReference Include="Enums.NET" Version="2.0.0" />
-    <PackageReference Include="Microsoft.Data.Sqlite" Version="1.1.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.0.0" />
-    <PackageReference Include="System.Globalization" Version="4.3.0" />
+    <PackageReference Include="Enums.NET" Version="2.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="System.Globalization.Extensions" Version="4.3.0" />
-    <PackageReference Include="System.Net.Http" Version="4.3.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Snowflake.Framework.Primitives\Snowflake.Framework.Primitives.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Hash\Crc32.NET\" />
   </ItemGroup>
 </Project>

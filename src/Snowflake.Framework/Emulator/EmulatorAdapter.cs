@@ -11,11 +11,13 @@ using Snowflake.Extensibility.Configuration;
 using Snowflake.Records.File;
 using Snowflake.Records.Game;
 using Snowflake.Services;
+using System.IO;
+using Snowflake.Extensibility.Provisioned;
 
 namespace Snowflake.Emulator
 {
    
-    public abstract class EmulatorAdapter : Plugin, IEmulatorAdapter
+    public abstract class EmulatorAdapter : ProvisionedPlugin, IEmulatorAdapter
     {
         public IEnumerable<IInputMapping> InputMappings { get; }
         public IEnumerable<string> Capabilities { get; }
@@ -28,25 +30,25 @@ namespace Snowflake.Emulator
         public IEnumerable<string> RequiredBios { get; }
         public IEnumerable<string> OptionalBios { get; }
 
-        protected EmulatorAdapter(string appDataDirectory,
+        protected EmulatorAdapter(IPluginProvision provision,
             IStoneProvider stoneProvider, 
             IConfigurationCollectionStore collectionStore,
             IBiosManager biosManager,
-            ISaveManager saveManager) : base(appDataDirectory)
+            ISaveManager saveManager) : base(provision)
         {
             this.StoneProvider = stoneProvider;
             this.InputMappings = 
-                this.GetAllSiblingResourceNames("InputMappings")
-                .Select(mappings => JsonConvert.DeserializeObject<InputMapping>
-                (this.GetSiblingStringResource("InputMappings", mappings))).Cast<IInputMapping>().ToList();
-            this.Capabilities = this.PluginProperties.GetEnumerable("capabilities")?.ToList() ?? Enumerable.Empty<string>();
-            this.Mimetypes = this.PluginProperties.GetEnumerable("mimetypes")?.ToList() ?? Enumerable.Empty<string>();
-            this.SaveType = this.PluginProperties.Get("savetype");
+                this.Provision.CommonResourceDirectory.CreateSubdirectory("InputMappings").EnumerateFiles()
+                .Select(mapping => JsonConvert.DeserializeObject<InputMapping>(File.ReadAllText(mapping.FullName)))
+                .Cast<IInputMapping>().ToList();
+            this.Capabilities = this.Provision.Properties.GetEnumerable("capabilities").ToList();
+            this.Mimetypes = this.Provision.Properties.GetEnumerable("mimetypes").ToList();
+            this.SaveType = this.Provision.Properties.Get("savetype");
             this.CollectionStore = collectionStore;
             this.BiosManager = biosManager;
             this.SaveManager = saveManager;
-            this.OptionalBios = this.PluginProperties.GetEnumerable("optionalbios")?.ToList() ?? Enumerable.Empty<string>();
-            this.RequiredBios = this.PluginProperties.GetEnumerable("requiredbios")?.ToList() ?? Enumerable.Empty<string>();
+            this.OptionalBios = this.Provision.Properties.GetEnumerable("optionalbios").ToList();
+            this.RequiredBios = this.Provision.Properties.GetEnumerable("requiredbios").ToList();
         }
 
         public abstract IEmulatorInstance Instantiate(IGameRecord gameRecord, IFileRecord romFile, int saveSlot, IList<IEmulatedPort> ports);

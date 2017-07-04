@@ -9,7 +9,7 @@ namespace Snowflake.Emulator
 {
     /// <summary>
     /// Manages BIOS files for multiple platforms.
-    /// 
+    /// todo: Validate MD5?
     /// </summary>
     public interface IBiosManager
     {

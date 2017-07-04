@@ -23,13 +23,13 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Adapters.bsnes
             switch (((this.Configuration) as IConfigurationCollection<BsnesConfiguration>).Configuration.BsnesCoreConfig.PerformanceProfile)
             {
                 case PerformanceProfile.Performance:
-                    this.CorePath = Path.Combine(adapter.PluginDataPath, "bsnes_performance_libretro.dll");
+                    this.CorePath = Path.Combine(adapter.Provision.ContentDirectory.FullName, "bsnes_performance_libretro.dll");
                     break;
                 case PerformanceProfile.Accuracy:
-                    this.CorePath = Path.Combine(adapter.PluginDataPath, "bsnes_accuracy_libretro.dll");
+                    this.CorePath = Path.Combine(adapter.Provision.ContentDirectory.FullName, "bsnes_accuracy_libretro.dll");
                     break;
                 case PerformanceProfile.Balanced:
-                    this.CorePath = Path.Combine(adapter.PluginDataPath, "bsnes_balanced_libretro.dll");
+                    this.CorePath = Path.Combine(adapter.Provision.ContentDirectory.FullName, "bsnes_balanced_libretro.dll");
                     break;
             }
         }

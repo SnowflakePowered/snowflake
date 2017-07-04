@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Utility;
 using Xunit;
+using Snowflake.Persistence;
+
 namespace Snowflake.Configuration.Tests
 {
     public class ConfigurationCollectionStoreTests
@@ -30,6 +32,7 @@ namespace Snowflake.Configuration.Tests
 
             store.Set(configCollection, Guid.Empty, "test", "test");
 
+            
             var retrievedConfig = store.Get<ExampleConfigurationCollection>(Guid.Empty, "test", "test");
             Assert.NotNull(retrievedConfig);
             Assert.Equal(configCollection.Configuration.ExampleConfiguration.ISOPath0, retrievedConfig.Configuration.ExampleConfiguration.ISOPath0);
