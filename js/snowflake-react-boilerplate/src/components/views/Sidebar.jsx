@@ -1,5 +1,7 @@
 import React from 'react'
 import injectSheet from 'mui-jss-inject'
+import compose from 'recompose/compose'
+import withQueryState from 'snowflake/compose/withQueryState'
 
 import List, {
   ListItem
@@ -23,13 +25,13 @@ const styles = {
   }
 }
 
-const Sidebar = ({ classes }) => (
+const Sidebar = ({ classes, queryParams }) => (
   <div className={classes.container}>
     <List>
       <ListItem button>
         <MenuIcon className={classes.icon} />
       </ListItem>
-      <Link to="/platforms">
+      <Link to={`/platforms?platform=${queryParams.platform}`}>
         <ListItem button>
           <GamepadIcon className={classes.icon} />
         </ListItem>
@@ -38,4 +40,4 @@ const Sidebar = ({ classes }) => (
   </div>
 )
 
-export default injectSheet(styles)(Sidebar)
+export default compose(withQueryState, injectSheet(styles))(Sidebar)

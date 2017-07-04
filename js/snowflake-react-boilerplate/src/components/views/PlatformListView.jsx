@@ -1,5 +1,6 @@
 import React from 'react'
 import injectSheet from 'mui-jss-inject'
+import _ from 'lodash'
 
 import SidebarVisibleView from 'components/views/SidebarVisibleView'
 import List, { ListItem } from 'material-ui/List'
@@ -45,7 +46,7 @@ const styles = {
   menu: {
     gridRow: 'platformMenu',
     display: 'flex',
-    alignItems: 'baseline',
+    alignItems: 'center',
     justifyContent: 'flex-end'
 
   },
@@ -54,7 +55,7 @@ const styles = {
   }
 }
 
-const PlatformListView = ({ classes, platforms, currentPlatform }) => {
+const PlatformListView = ({ classes, platforms, platform }) => {
   console.log(Array.from(platforms))
   console.log(Object.values(platforms.entries()))
   return (
@@ -62,7 +63,7 @@ const PlatformListView = ({ classes, platforms, currentPlatform }) => {
       <div className={classes.platformSelector}>
         <List>
           {Array.from(platforms).map(([k, p]) =>
-            <Link to={`/platforms/${p.PlatformID}`}>
+            <Link to={`?platform=${p.PlatformID}`}>
               <ListItem key={p.PlatformID} button>
                 <Typography>{p.FriendlyName}</Typography>
               </ListItem>
@@ -76,11 +77,13 @@ const PlatformListView = ({ classes, platforms, currentPlatform }) => {
         <BottomSheet className={classes.platformInformation}>
           <div className={classes.platformInformationInner}>
             <div className={classes.platformInfoDisplay}>
-              <PlatformDisplayAdapter platform={currentPlatform} />
+              <PlatformDisplayAdapter platform={platform} />
             </div>
             <div className={classes.menu}>
               {/* todo: refactor out this ugliness */}
-              <Button>Games</Button>
+              <Link to={`/games?platform=${_.get(platform, 'PlatformID', '')}`}>
+                <Button>Games</Button>
+              </Link>
               <Button>Controllers</Button>
             </div>
           </div>

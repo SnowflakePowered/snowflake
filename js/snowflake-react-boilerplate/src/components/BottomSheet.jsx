@@ -6,7 +6,8 @@ import injectSheet from 'mui-jss-inject'
 const styles = {
   container: {
     height: '100%',
-    margin: 10
+    padding: 10,
+    boxSizing: 'border-box'
   }
 }
 
