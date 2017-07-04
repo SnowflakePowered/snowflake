@@ -13,6 +13,7 @@
     "mui-jss-inject": "^0.0.2",
     "normalize-jss": "^3.1.0",
     "prop-types": "^15.5.8",
+    "query-string": "^4.3.4",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-jss": "^6.1.1",

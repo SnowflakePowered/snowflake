@@ -8,12 +8,14 @@ const styles = {
   container: {
     width: '100%',
     height: '100%',
+    maxHeight: '100%',
+    maxWidth: '100%',
     display: 'grid',
     gridTemplateColumns: '[sidebar] 64px [main] auto',
     gridTemplateRows: ''
   },
   sidebarContainer: {
-    gridColumnArea: 'sidebar'
+    gridColumn: 'sidebar'
   },
   mainContainer: {
     gridColumnStart: 'main',

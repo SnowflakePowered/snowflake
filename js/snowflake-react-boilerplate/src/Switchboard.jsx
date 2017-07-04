@@ -1,5 +1,4 @@
 import React from 'react'
-import { withRouter } from 'react-router'
 import { Route, Link } from 'react-router-dom'
 import withSnowflake from 'snowflake/compose/withSnowflake'
 import withPlatforms from 'snowflake/compose/withPlatforms'
@@ -7,22 +6,17 @@ import compose from 'recompose/compose'
 import _ from 'lodash'
 import SidebarVisibleView from 'components/views/SidebarVisibleView'
 import PlatformListView from 'components/views/PlatformListView'
+import withQueryState from 'snowflake/compose/withQueryState'
+import withGames from 'snowflake/compose/withGames'
+import GameDisplayView from 'components/views/GameDisplayView'
+import GameListView from 'components/views/GameListView'
 
+const PlatformRendererTest = compose(withPlatforms, withQueryState)(({platforms, queryState}) => (
+  <PlatformListView platforms={platforms} platform={queryState.platform}/>
+))
 
-const getMatchPlatform = (match, platforms) => platforms.get(match.params.platformId)
-
-const withMatchPlatform = (WrappedComponent) => {
-  return withPlatforms(class extends React.Component {
-    render () {
-      console.log(this.props.match)
-      const matchPlatform = getMatchPlatform(this.props.match, this.props.platforms)
-      return <WrappedComponent {...this.props} matchPlatform={matchPlatform}/>
-    }
-  })
-}
-
-const PlatformRendererTest = withMatchPlatform(({platforms, matchPlatform}) => (
-  <PlatformListView platforms={platforms} currentPlatform={matchPlatform}/>
+const GameRendererTest = compose(withGames, withQueryState)(({games, queryState}) => (
+  <GameListView games={games} platform={queryState.platform}/>
 ))
 
 class Switchboard extends React.Component {
@@ -35,8 +29,8 @@ class Switchboard extends React.Component {
     return (
       <div>
         <SidebarVisibleView>
-          <Route path="/platforms/:platformId" component={PlatformRendererTest}/>
           <Route path="/platforms/" component={PlatformRendererTest}/>
+          <Route path="/games/" component={GameRendererTest}/>
         </SidebarVisibleView>
       </div>
     )
