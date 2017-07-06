@@ -4,8 +4,8 @@ import IconButton from 'material-ui/IconButton'
 import { CircularProgress } from 'material-ui/Progress';
 
 import injectSheet from 'mui-jss-inject'
-import { white, grey } from 'material-ui/styles/colors'
-
+import grey from 'material-ui/colors/grey'
+import { white } from 'material-ui/colors/common'
 const styles = {
   button: {
     backgroundColor: white,

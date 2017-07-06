@@ -4,7 +4,7 @@ import injectSheet from 'mui-jss-inject'
 import GameGrid from 'components/presentation/game/GameGrid'
 import GameCard from 'components/presentation/game/GameCard'
 
-import { grey } from 'material-ui/styles/colors'
+import grey from 'material-ui/colors/grey'
 
 const styles = {
   container: {

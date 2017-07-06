@@ -9,7 +9,8 @@ import List, {
 
 import MenuIcon from 'material-ui-icons/Menu'
 import GamepadIcon from 'material-ui-icons/VideogameAsset'
-import { white, grey } from 'material-ui/styles/colors'
+import grey from 'material-ui/colors/grey'
+import { white } from 'material-ui/colors/common'
 import Link from 'components/Link'
 
 const styles = {
