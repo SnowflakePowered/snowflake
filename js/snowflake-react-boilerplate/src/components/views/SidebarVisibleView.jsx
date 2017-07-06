@@ -2,8 +2,7 @@ import React from 'react'
 import injectSheet from 'mui-jss-inject'
 
 import Sidebar from 'components/views/Sidebar'
-import { grey } from 'material-ui/styles/colors'
-
+import grey from 'material-ui/colors/grey'
 const styles = {
   container: {
     width: '100%',

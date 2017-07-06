@@ -8,8 +8,8 @@ import GameCardAdapter from 'components/adapter/GameCardAdapter'
 import SearchBar from 'components/presentation/SearchBar'
 import PlatformDisplayAdapter from 'components/adapter/PlatformDisplayAdapter'
 
-import { grey, red } from 'material-ui/styles/colors'
-
+import grey from 'material-ui/colors/grey'
+import red from 'material-ui/colors/red'
 const styles = {
   gridContainer: {
     background: grey[200],

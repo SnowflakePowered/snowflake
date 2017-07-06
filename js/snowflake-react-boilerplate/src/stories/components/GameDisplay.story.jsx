@@ -3,7 +3,7 @@ import injectSheet from 'mui-jss-inject'
 
 import GameDisplay from 'components/presentation/info/GameDisplay'
 
-import { red } from 'material-ui/styles/colors'
+import red from 'material-ui/colors/red'
 
 export const GameBlack = () => (
   <div>

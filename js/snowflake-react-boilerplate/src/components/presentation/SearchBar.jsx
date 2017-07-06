@@ -6,8 +6,7 @@ import FormControl from 'material-ui/Form/FormControl'
 import Input from 'material-ui/Input/Input'
 import SearchIcon from 'material-ui-icons/Search'
 
-import { grey } from 'material-ui/styles/colors'
-
+import grey from 'material-ui/colors/grey'
 
 const styles = theme => ({
   barContainer: {

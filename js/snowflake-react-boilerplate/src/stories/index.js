@@ -5,7 +5,7 @@ import full from './utils/full'
 import { MultiCard, SingleCard } from './components/GameCard.story'
 import mui from './utils/mui'
 import redux from './utils/redux'
-import { blue, pink } from 'material-ui/styles/colors'
+import { blue, pink } from 'material-ui/colors'
 
 import { SearchBarStory, SearchBarStoryWithBackground } from './components/SearchBarStory.story'
 import { Black, WhiteWithBackground } from './components/PlatformDisplay.story'

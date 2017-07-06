@@ -4,7 +4,7 @@ import injectSheet from 'mui-jss-inject'
 import { action } from '@storybook/react'
 import Sidebar from 'components/views/Sidebar'
 
-import { grey } from 'material-ui/styles/colors'
+import grey from 'material-ui/colors/grey'
 
 export const SidebarStory = injectSheet({
   container: {

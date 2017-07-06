@@ -11,8 +11,7 @@ import Button from 'material-ui/Button'
 
 import PlatformDisplayAdapter from 'components/adapter/PlatformDisplayAdapter'
 
-import { grey } from 'material-ui/styles/colors'
-
+import grey from 'material-ui/colors/grey'
 import Link from 'components/Link'
 
 const styles = {

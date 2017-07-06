@@ -3,7 +3,8 @@ import injectSheet from 'mui-jss-inject'
 
 import Typography from 'material-ui/Typography'
 import Card, { CardContent, CardMedia } from 'material-ui/Card'
-import { grey, white } from 'material-ui/styles/colors'
+import grey from 'material-ui/colors/grey'
+import { white } from 'material-ui/colors/common'
 
 import GamePlayButton from './GamePlayButton'
 import styleable from 'utils/styleable'

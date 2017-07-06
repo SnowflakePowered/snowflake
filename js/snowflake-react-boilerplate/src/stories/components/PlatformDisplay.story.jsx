@@ -2,7 +2,7 @@ import React from 'react'
 import injectSheet from 'mui-jss-inject'
 import PlatformDisplay from 'components/presentation/info/PlatformDisplay'
 
-import { red } from 'material-ui/styles/colors'
+import red from 'material-ui/colors/red'
 
 export const Black = () => (
   <PlatformDisplay

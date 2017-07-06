@@ -7,8 +7,8 @@ import createHistory from 'history/createBrowserHistory'
 
 import MuiStyleManager from './MuiStyleManager'
 import { MuiThemeProvider } from 'material-ui/styles'
-import { blue, pink } from 'material-ui/styles/colors'
-
+import blue from 'material-ui/colors/blue'
+import pink from 'material-ui/colors/pink'
 require('map.prototype.tojson')
 const history = createHistory()
 const StoreInstance = Store({
