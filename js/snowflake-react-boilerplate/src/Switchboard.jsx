@@ -16,7 +16,11 @@ const PlatformRendererTest = compose(withPlatforms, withQueryState)(({platforms,
 ))
 
 const GameRendererTest = compose(withGames, withQueryState)(({games, queryState}) => (
-  <GameListView games={games} platform={queryState.platform}/>
+  <GameListView games={games.filter(
+  (g) => {
+    if (queryState.platform === undefined) return false
+    return g.PlatformId === queryState.platform.PlatformID
+  })} platform={queryState.platform}/>
 ))
 
 class Switchboard extends React.Component {
