@@ -204,7 +204,8 @@ namespace Snowflake.Records.Game
 
                         return (from game in games
                                 let gameFiles =
-                                    (from f in fileRecords where f.Record == game select f).Cast<IFileRecord>().ToList()
+                                    (from f in fileRecords where f.Record == game select f)
+                                    .Cast<IFileRecord>().ToList()
                                 let md = (from m in metadatas where m.Record == game select m)
                                     .ToDictionary(md => md.Key, md => md)
                                 select new GameRecord(game, md, gameFiles)).ToList();
@@ -261,7 +262,7 @@ namespace Snowflake.Records.Game
                                            select new FileRecord(f.Game, md, f.Path, f.MimeType))
                                            .Cast<IFileRecord>().ToList();
                         var gameMetadata =
-                            (from m in metadatas where m.Guid == gameGuid select m)
+                            (from m in metadatas where m.Record == gameGuid select m)
                             .ToDictionary(m => m.Key, m => m);
                         return new GameRecord(gameGuid, gameMetadata, fileRecords);
                     }
