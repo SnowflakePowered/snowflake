@@ -206,7 +206,8 @@ namespace Snowflake.Records.Game
 >>>>>>> cd39263... Modules: Robust loader and plugin system (#249)
                         return (from game in games
                                 let gameFiles =
-                                    (from f in fileRecords where f.Record == game select f).Cast<IFileRecord>().ToList()
+                                    (from f in fileRecords where f.Record == game select f)
+                                    .Cast<IFileRecord>().ToList()
                                 let md = (from m in metadatas where m.Record == game select m)
                                     .ToDictionary(md => md.Key, md => md)
                                 select new GameRecord(game, md, gameFiles)).ToList();
