@@ -1,14 +1,13 @@
 import React from 'react'
 import PlayArrow from 'material-ui-icons/PlayArrow'
 import IconButton from 'material-ui/IconButton'
-import { CircularProgress } from 'material-ui/Progress';
+import { CircularProgress } from 'material-ui/Progress'
 
 import injectSheet from 'mui-jss-inject'
 import grey from 'material-ui/colors/grey'
-import { white } from 'material-ui/colors/common'
+import common from 'material-ui/colors/common'
 const styles = {
   button: {
-    backgroundColor: white,
     borderRadius: '50%',
     width: '100%',
     height: '100%',
@@ -16,7 +15,8 @@ const styles = {
     display: 'inline-flex',
     justifyContent: 'center',
     boxSizing: 'border-box',
-    overflow: 'hidden'
+    overflow: 'hidden',
+    backgroundColor: common.white
   },
   arrow: {
     color: grey[800],
