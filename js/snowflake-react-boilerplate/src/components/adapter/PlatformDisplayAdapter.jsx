@@ -2,7 +2,7 @@ import React from 'react'
 import PlatformDisplay from 'components/presentation/info/PlatformDisplay'
 
 import Typography from 'material-ui/Typography'
-const PlatformDisplayAdapter = ({ platform }) => {
+const PlatformDisplayAdapter = ({ platform, games }) => {
   console.log(platform)
   if (!platform) {
     return (
@@ -17,6 +17,7 @@ const PlatformDisplayAdapter = ({ platform }) => {
         platformName={platform.FriendlyName}
         publisher={platform.Metadata.platform_company}
         year={date.getFullYear()}
+        gameCount = { games ? games.length : 0 }
       />
     )
   }
