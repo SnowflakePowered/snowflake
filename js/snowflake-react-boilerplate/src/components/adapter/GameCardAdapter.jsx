@@ -5,7 +5,7 @@ import aspectRatio from 'snowflake/platformsupport/aspectratio'
 
 const GameCardAdapter = ({ game }) => {
   return (
-    <GameCard title={game.Title} {...aspectRatio[game.PlatformId]} publisher={game.Metadata.game_publisher}/>
+    <GameCard title={game.Title} {...aspectRatio[game.PlatformID]} publisher={game.Metadata.game_publisher} guid={game.Guid}/>
   )
 }
 

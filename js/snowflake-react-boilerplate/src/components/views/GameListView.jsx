@@ -77,7 +77,7 @@ const detailsHeaderStyles = {
 
 const _DetailsHeader = ({ classes, platform, games }) => (
   <div className={classes.detailsHeader}>
-    <PlatformDisplayAdapter platform={platform} games={games}/>
+    <PlatformDisplayAdapter platform={platform} gameCount={games.length}/>
   </div>
 )
 

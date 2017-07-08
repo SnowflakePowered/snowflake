@@ -4,13 +4,13 @@ import injectSheet from 'mui-jss-inject'
 import Typography from 'material-ui/Typography'
 import Card, { CardContent, CardMedia } from 'material-ui/Card'
 import grey from 'material-ui/colors/grey'
-import { white } from 'material-ui/colors/common'
 
 import GamePlayButton from './GamePlayButton'
-import styleable from 'utils/styleable'
 import classNames from 'classnames'
 
 import PhotoIcon from 'material-ui-icons/Photo'
+
+import Link from 'components/Link'
 
 export const dimensions = {
   portrait: {
@@ -34,15 +34,14 @@ const styles = {
   },
 
   cardContainerPortrait: {
-    width: dimensions.portrait.width,
+    width: dimensions.portrait.width
   },
   cardContainerLandscape: {
-    width: dimensions.landscape.width,
+    width: dimensions.landscape.width
   },
   cardContainerSquare: {
-    width: dimensions.square.width,
+    width: dimensions.square.width
   },
-
 
   cardImage: {
     objectFit: 'cover',
@@ -117,7 +116,7 @@ const styles = {
 // todo: z-depth on hover
 // todo: button on hover
 
-const GameCard = ({ classes, image, title, publisher, portrait, landscape, square }) => (
+const GameCard = ({ classes, image, title, publisher, portrait, landscape, square, guid }) => (
   <div className={classNames({
     [classes.cardContainer]: true,
     [classes.cardContainerSquare]: square,
@@ -128,7 +127,9 @@ const GameCard = ({ classes, image, title, publisher, portrait, landscape, squar
     <Card>
       <CardMedia>
         <div className={classes.playButton}>
-          <GamePlayButton />
+          <Link to={`/gamedetail?game=${guid}`}>
+            <GamePlayButton />
+          </Link>
         </div>
         <div className={classNames({
           [classes.sizer]: true,
