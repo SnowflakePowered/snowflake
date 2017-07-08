@@ -77,7 +77,7 @@ const PlatformListView = ({ classes, platforms, platform, games }) => {
           <div className={classes.platformInformationInner}>
             <div className={classes.platformInfoDisplay}>
               <PlatformDisplayAdapter platform={platform}
-                games={games.filter(g => platform ? g.PlatformId === platform.PlatformID : false)}/>
+                games={games.filter(g => platform ? g.PlatformID === platform.PlatformID : false)}/>
             </div>
             <div className={classes.menu}>
               {/* todo: refactor out this ugliness */}

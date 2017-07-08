@@ -6,7 +6,7 @@ export interface Game {
   Files: File[]
   Guid: string
   Metadata: { [key: string]: Metadata }
-  PlatformId: string
+  PlatformID: string
   Title: string
 }
 export interface File {

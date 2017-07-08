@@ -19,7 +19,7 @@ const GameRendererTest = compose(withGames, withQueryState)(({games, queryState}
   <GameListView games={games.filter(
   (g) => {
     if (queryState.platform === undefined) return false
-    return g.PlatformId === queryState.platform.PlatformID
+    return g.PlatformID === queryState.platform.PlatformID
   })} platform={queryState.platform}/>
 ))
 
