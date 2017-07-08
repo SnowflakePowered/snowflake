@@ -11,8 +11,8 @@ import withGames from 'snowflake/compose/withGames'
 import GameDisplayView from 'components/views/GameDisplayView'
 import GameListView from 'components/views/GameListView'
 
-const PlatformRendererTest = compose(withPlatforms, withQueryState)(({platforms, queryState}) => (
-  <PlatformListView platforms={platforms} platform={queryState.platform}/>
+const PlatformRendererTest = compose(withPlatforms, withGames, withQueryState)(({platforms, games, queryState}) => (
+  <PlatformListView platforms={platforms} platform={queryState.platform} games={games}/>
 ))
 
 const GameRendererTest = compose(withGames, withQueryState)(({games, queryState}) => (

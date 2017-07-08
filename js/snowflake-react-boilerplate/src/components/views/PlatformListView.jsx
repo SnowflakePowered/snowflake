@@ -54,7 +54,7 @@ const styles = {
   }
 }
 
-const PlatformListView = ({ classes, platforms, platform }) => {
+const PlatformListView = ({ classes, platforms, platform, games }) => {
   console.log(Array.from(platforms))
   console.log(Object.values(platforms.entries()))
   return (
@@ -76,7 +76,8 @@ const PlatformListView = ({ classes, platforms, platform }) => {
         <BottomSheet className={classes.platformInformation}>
           <div className={classes.platformInformationInner}>
             <div className={classes.platformInfoDisplay}>
-              <PlatformDisplayAdapter platform={platform} />
+              <PlatformDisplayAdapter platform={platform}
+                games={games.filter(g => platform ? g.PlatformId === platform.PlatformID : false)}/>
             </div>
             <div className={classes.menu}>
               {/* todo: refactor out this ugliness */}

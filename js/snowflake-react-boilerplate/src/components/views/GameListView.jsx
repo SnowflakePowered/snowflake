@@ -75,9 +75,9 @@ const detailsHeaderStyles = {
   }
 }
 
-const _DetailsHeader = ({ classes, platform }) => (
+const _DetailsHeader = ({ classes, platform, games }) => (
   <div className={classes.detailsHeader}>
-    <PlatformDisplayAdapter platform={platform} />
+    <PlatformDisplayAdapter platform={platform} games={games}/>
   </div>
 )
 
@@ -85,7 +85,7 @@ const DetailsHeader = injectSheet(detailsHeaderStyles)(_DetailsHeader)
 
 const GameListView = ({ classes, games, platform }) => (
   <div className={classes.gridContainer}>
-    <GameGrid header={[<TitleHeader />, <DetailsHeader platform={platform} />]}>
+    <GameGrid header={[<TitleHeader />, <DetailsHeader platform={platform} games={games}/>]}>
       {
         games.map(g => <GameCardAdapter game={g} />)
       }

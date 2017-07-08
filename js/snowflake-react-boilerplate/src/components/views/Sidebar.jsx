@@ -8,6 +8,7 @@ import List, {
 } from 'material-ui/List'
 
 import MenuIcon from 'material-ui-icons/Menu'
+import ArrowBackIcon from 'material-ui-icons/ArrowBack'
 import GamepadIcon from 'material-ui-icons/VideogameAsset'
 import grey from 'material-ui/colors/grey'
 import { white } from 'material-ui/colors/common'
@@ -29,9 +30,11 @@ const styles = {
 const Sidebar = ({ classes, queryParams }) => (
   <div className={classes.container}>
     <List>
-      <ListItem button>
-        <MenuIcon className={classes.icon} />
-      </ListItem>
+      <Link to={`/games?platform=${queryParams.platform}`}>
+        <ListItem button>
+          <MenuIcon className={classes.icon} />
+        </ListItem>
+      </Link>
       <Link to={`/platforms?platform=${queryParams.platform}`}>
         <ListItem button>
           <GamepadIcon className={classes.icon} />

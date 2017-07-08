@@ -22,4 +22,3 @@ const GameDetailsHeaderViewStory = ({classes}) => (
 )
 
 export default injectSheet(styles)(GameDetailsHeaderViewStory)
-
