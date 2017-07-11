@@ -4,6 +4,12 @@ solution: Snowflake.sln
 mono: none
 dotnet: 2.0.0-preview2-006497
 dist: trusty 
+os:
+  - linux
+  - osx
+matrix:
+  allow_failures:
+    - os: osx
 install:
   - dotnet restore src/Snowflake.sln
   
