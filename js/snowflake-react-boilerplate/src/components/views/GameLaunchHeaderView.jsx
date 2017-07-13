@@ -40,7 +40,7 @@ const styles = {
   }
 }
 
-const GameLaunchHeaderView = ({ classes, gameTitle, gamePublisher, onPlayButtonClicked }) => (
+const GameLaunchHeaderView = ({ classes, gameTitle, gamePublisher, gameDescription, onPlayButtonClicked }) => (
   <div className={classes.detailContainer}>
     <div className={classes.controlContainer}>
       <div className={classes.topControls}>
@@ -48,6 +48,7 @@ const GameLaunchHeaderView = ({ classes, gameTitle, gamePublisher, onPlayButtonC
           <GameDisplay
             title={gameTitle}
             publisher={gamePublisher}
+            description={gameDescription}
           />
         </div>
         <GamePlayButton onClicked={onPlayButtonClicked}/>
