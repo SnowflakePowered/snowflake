@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Snowflake.Tooling.RestClient.Commands.Game
 {
-    [Verb("game")]
+    [Verb("add-game")]
     public class CreateGameCommandOptions
     {
         [Option('t',"title", HelpText = "The Game Title", Required = true)]
