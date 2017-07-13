@@ -116,7 +116,7 @@ const styles = {
 // todo: z-depth on hover
 // todo: button on hover
 
-const GameCard = ({ classes, image, title, publisher, portrait, landscape, square, guid }) => (
+const GameCard = ({ classes, image, title, publisher, portrait, landscape, square, guid, platformID }) => (
   <div className={classNames({
     [classes.cardContainer]: true,
     [classes.cardContainerSquare]: square,
@@ -127,7 +127,7 @@ const GameCard = ({ classes, image, title, publisher, portrait, landscape, squar
     <Card>
       <CardMedia>
         <div className={classes.playButton}>
-          <Link to={`/gamedetail?game=${guid}`}>
+          <Link to={`/gamedetail?platform=${platformID}&game=${guid}`}>
             <GamePlayButton />
           </Link>
         </div>
