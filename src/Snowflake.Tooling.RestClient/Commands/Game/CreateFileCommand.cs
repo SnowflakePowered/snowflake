@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Snowflake.Tooling.RestClient.Commands.Game
 {
-    [Verb("file")]
+    [Verb("add-file")]
     public class CreateFileCommandOptions
     {
         [Option('g',"game", HelpText = "The Game Title", Required = true)]

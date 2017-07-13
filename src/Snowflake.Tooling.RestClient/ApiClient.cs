@@ -47,5 +47,48 @@ namespace Snowflake.Tooling.RestClient
             }
             return JsonConvert.DeserializeObject<dynamic>(contentStr);
         }
+
+        public async Task<dynamic> PutRequest(string serviceUrl, object data)
+        {
+            var content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await client.PutAsync(serviceUrl, content);
+            var responseStream = await response.Content.ReadAsStreamAsync();
+            responseStream.Position = 0;
+            string contentStr;
+            try
+            {
+                var compressedStream = new GZipStream(responseStream, CompressionMode.Decompress);
+                var decompressedStream = new MemoryStream();
+                await compressedStream.CopyToAsync(decompressedStream);
+                decompressedStream.Position = 0;
+                contentStr = await new StreamReader(decompressedStream).ReadToEndAsync();
+            }catch(InvalidDataException)
+            {
+                responseStream.Position = 0;
+                contentStr = await new StreamReader(responseStream).ReadToEndAsync();
+            }
+            return JsonConvert.DeserializeObject<dynamic>(contentStr);
+        }
+
+         public async Task<dynamic> GetRequest(string serviceUrl)
+        {
+            HttpResponseMessage response = await client.GetAsync(serviceUrl);
+            var responseStream = await response.Content.ReadAsStreamAsync();
+            responseStream.Position = 0;
+            string contentStr;
+            try
+            {
+                var compressedStream = new GZipStream(responseStream, CompressionMode.Decompress);
+                var decompressedStream = new MemoryStream();
+                await compressedStream.CopyToAsync(decompressedStream);
+                decompressedStream.Position = 0;
+                contentStr = await new StreamReader(decompressedStream).ReadToEndAsync();
+            }catch(InvalidDataException)
+            {
+                responseStream.Position = 0;
+                contentStr = await new StreamReader(responseStream).ReadToEndAsync();
+            }
+            return JsonConvert.DeserializeObject<dynamic>(contentStr);
+        }
     }
 }
