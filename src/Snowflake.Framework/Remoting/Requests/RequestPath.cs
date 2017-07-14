@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Text;
 
-namespace Snowflake.Framework.Remoting.Requests
+namespace Snowflake.Remoting.Requests
 {
-    public class RequestPath
+    public class RequestPath : IRequestPath
     {
         public IImmutableList<string> PathNodes => this.path;
         private readonly IImmutableList<string> path;

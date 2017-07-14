@@ -1,6 +1,6 @@
-﻿using Snowflake.Framework.Remoting.Marshalling;
-using Snowflake.Framework.Remoting.Requests;
-using Snowflake.Framework.Remoting.Resources.Attributes;
+﻿using Snowflake.Remoting.Marshalling;
+using Snowflake.Remoting.Requests;
+using Snowflake.Remoting.Resources.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -9,12 +9,12 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 
-namespace Snowflake.Framework.Remoting.Resources
+namespace Snowflake.Remoting.Resources
 {
-    public abstract class Resource
+    public abstract class Resource : IResource
     {
-        public ResourcePath Path { get; }
-        public IEnumerable<MethodEndpoint> Endpoints { get; }
+        public IResourcePath Path { get; }
+        public IEnumerable<IMethodEndpoint> Endpoints { get; }
         protected Resource()
         {
             var path = this.GetType().GetCustomAttributes<ResourceAttribute>()
@@ -27,8 +27,8 @@ namespace Snowflake.Framework.Remoting.Resources
         }
 
         
-        public MethodEndpoint MatchEndpoint(EndpointVerb verb,
-           IEnumerable<EndpointArgument> requestArguments)
+        public IMethodEndpoint MatchEndpoint(EndpointVerb verb,
+           IEnumerable<IEndpointArgument> requestArguments)
         {
             var reqArgKeys = requestArguments.Select(k => k.Key);
 
@@ -39,8 +39,8 @@ namespace Snowflake.Framework.Remoting.Resources
                     select e).FirstOrDefault();
         }
 
-        public object Execute(MethodEndpoint endpoint,
-           IEnumerable<TypedArgument> typedArgs)
+        public object Execute(IMethodEndpoint endpoint,
+           IEnumerable<ITypedArgument> typedArgs)
         {
             var methodParams = endpoint.EndpointMethodInfo.GetParameters();
             var typedArgsLookup = typedArgs.ToDictionary(a => a.Key, a => a); // faster lookup
@@ -74,7 +74,7 @@ namespace Snowflake.Framework.Remoting.Resources
             return result.Invoke();
         }
 
-        private IEnumerable<MethodEndpoint> GetMethods()
+        private IEnumerable<IMethodEndpoint> GetMethods()
         {
             var endpoints =  (from m in this.GetType().GetRuntimeMethods()
                     let endpointAttr = m.GetCustomAttribute<EndpointAttribute>()
