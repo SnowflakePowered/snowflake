@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Snowflake.Framework.Remoting.Marshalling
+namespace Snowflake.Remoting.Marshalling
 {
-    public class TypedArgument
+    public class TypedArgument : ITypedArgument
     {
         public string Key { get; }
         public object Value { get; }

@@ -1,27 +1,27 @@
-﻿using Snowflake.Framework.Remoting.Marshalling;
+﻿using Snowflake.Remoting.Marshalling;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace Snowflake.Framework.Remoting.Resources
+namespace Snowflake.Remoting.Resources
 {
-    public class MethodEndpoint
+    public class MethodEndpoint : IMethodEndpoint
     {
         public MethodInfo EndpointMethodInfo { get; }
         public EndpointVerb Verb { get; }
-        public IEnumerable<Parameter> EndpointParameters { get; }
+        public IEnumerable<IParameter> EndpointParameters { get; }
 
         internal MethodEndpoint(MethodInfo interfaceMethod, EndpointVerb verb, 
-            IEnumerable<Parameter> endpointParams)
+            IEnumerable<IParameter> endpointParams)
         {
             this.EndpointMethodInfo = interfaceMethod;
             this.Verb = verb;
             this.EndpointParameters = endpointParams;
         }
 
-        public IEnumerable<SerializedArgument> MatchArguments(IEnumerable<EndpointArgument> args)
+        public IEnumerable<ISerializedArgument> MatchArguments(IEnumerable<IEndpointArgument> args)
         {
             return (from p in this.EndpointParameters
              from a in args

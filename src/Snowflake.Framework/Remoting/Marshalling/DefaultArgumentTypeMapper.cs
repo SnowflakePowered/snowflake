@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Snowflake.Framework.Remoting.Marshalling
+namespace Snowflake.Remoting.Marshalling
 {
     internal class DefaultArgumentTypeMapper : ArgumentTypeMapper
     {

@@ -1,12 +1,12 @@
-﻿using Snowflake.Framework.Remoting.Requests;
+﻿using Snowflake.Remoting.Requests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Snowflake.Framework.Remoting.Marshalling
+namespace Snowflake.Remoting.Marshalling
 {
-    public abstract class ArgumentTypeMapper
+    public abstract class ArgumentTypeMapper : IArgumentTypeMapper
     {
         public static ArgumentTypeMapper Default { get; }
 
@@ -36,15 +36,15 @@ namespace Snowflake.Framework.Remoting.Marshalling
                 null;
         }
 
-        public IEnumerable<TypedArgument> CastArguments(IEnumerable<SerializedArgument> pathArgs,
-           IEnumerable<SerializedArgument> endpointArgs)
+        public IEnumerable<ITypedArgument> CastArguments(IEnumerable<ISerializedArgument> pathArgs,
+           IEnumerable<ISerializedArgument> endpointArgs)
         {
             //ensures that endpointArgs never override path args.
             var endpointArgsWithoutPathArgs = endpointArgs.Where(e => !pathArgs.Any(p => p.Key == e.Key));
             return this.CastArguments(pathArgs.Concat(endpointArgsWithoutPathArgs));
         }
 
-        private IEnumerable<TypedArgument> CastArguments(IEnumerable<SerializedArgument> arguments)
+        private IEnumerable<ITypedArgument> CastArguments(IEnumerable<ISerializedArgument> arguments)
         {
             return (from arg in arguments
                     let castedValue = this.ConvertValue(arg.Type, arg.StringValue)
