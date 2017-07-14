@@ -1,6 +1,6 @@
-﻿using Snowflake.Framework.Remoting.Marshalling;
-using Snowflake.Framework.Remoting.Requests;
-using Snowflake.Framework.Remoting.Resources;
+﻿using Snowflake.Remoting.Marshalling;
+using Snowflake.Remoting.Requests;
+using Snowflake.Remoting.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;

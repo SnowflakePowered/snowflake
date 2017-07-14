@@ -1,5 +1,5 @@
-﻿using Snowflake.Framework.Remoting.Resources;
-using Snowflake.Framework.Remoting.Resources.Attributes;
+﻿using Snowflake.Remoting.Resources;
+using Snowflake.Remoting.Resources.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Text;

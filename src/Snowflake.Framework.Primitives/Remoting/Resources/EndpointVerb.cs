@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Snowflake.Framework.Remoting.Resources
+namespace Snowflake.Remoting.Resources
 {
     public enum EndpointVerb
     {

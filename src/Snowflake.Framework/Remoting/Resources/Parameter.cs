@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Snowflake.Framework.Remoting.Resources
+namespace Snowflake.Remoting.Resources
 {
-    public class Parameter
+    public class Parameter : IParameter
     {
         public string Key { get; }
         public Type Type { get; }
