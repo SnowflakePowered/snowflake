@@ -12,10 +12,15 @@ namespace Snowflake.Remoting.Requests
     {
         public IEnumerable<IResource> Resources => this.resources;
         private ImmutableList<IResource> resources;
-
-        public ResourceContainer()
+        private readonly IArgumentTypeMapper typeMappper;
+        public ResourceContainer(IArgumentTypeMapper typeMapper)
         {
             this.resources = ImmutableList.Create<IResource>();
+            this.typeMappper = typeMapper;
+
+        }
+        public ResourceContainer() : this(ArgumentTypeMapper.Default)
+        {
         }
 
         public void Add(IResource resource)
@@ -40,7 +45,7 @@ namespace Snowflake.Remoting.Requests
             }
             try
             {
-                var result = resource.Execute(matched, ArgumentTypeMapper.Default
+                var result = resource.Execute(matched, this.typeMappper
                     .CastArguments(pathArgs, endArgs));
                 return new RequestResponse(result);
             }
