@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Snowflake.Remoting.Requests;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
