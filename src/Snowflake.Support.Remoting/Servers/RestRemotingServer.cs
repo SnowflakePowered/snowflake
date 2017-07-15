@@ -45,7 +45,8 @@ namespace Snowflake.Support.Remoting.Servers
                 var endpointVerb = verb.ToCrud();
                 var endpointArguments = context.RequestBody() != null ? 
                     JsonConvert.DeserializeObject<Dictionary<string, string>>(context.RequestBody())
-                    .Select(v => new EndpointArgument(v.Key, v.Value)).Cast<IEndpointArgument>() : Enumerable.Empty<IEndpointArgument>();
+                    .Select(v => new EndpointArgument(v.Key, v.Value)).Cast<IEndpointArgument>() 
+                    : Enumerable.Empty<IEndpointArgument>();
 
                 var response = endpoints.ExecuteRequest(new Request(requestPath, endpointVerb, endpointArguments));
 

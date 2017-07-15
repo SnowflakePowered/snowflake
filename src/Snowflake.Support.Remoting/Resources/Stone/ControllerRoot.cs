@@ -9,6 +9,7 @@ using System.Text;
 namespace Snowflake.Resources.Stone
 {
     [Resource("stone", "controllers", ":controllerId")]
+    [Parameter(typeof(string), "controllerId")]
     public class ControllerRoot : Resource
     {
         private IStoneProvider StoneProvider { get; }
@@ -18,7 +19,6 @@ namespace Snowflake.Resources.Stone
         }
 
         [Endpoint(EndpointVerb.Read)]
-        [Parameter(typeof(string), "controllerId")]
         public IControllerLayout GetController(string controllerId)
         {
             return this.StoneProvider.Controllers[controllerId];
