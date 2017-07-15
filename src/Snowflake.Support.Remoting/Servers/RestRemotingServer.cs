@@ -14,6 +14,8 @@ using Newtonsoft.Json.Converters;
 using System.IO.Compression;
 using System.IO;
 using Unosquare.Net;
+using Snowflake.Remoting.Requests;
+using Snowflake.Remoting.Marshalling;
 
 namespace Snowflake.Support.Remoting.Servers
 {
@@ -24,7 +26,7 @@ namespace Snowflake.Support.Remoting.Servers
         /// The chuck size for sending files
         /// </summary>
         private const int chunkSize = 8 * 1024;
-        public RestRemotingServer(EndpointCollection endpoints)
+        public RestRemotingServer(IResourceContainer endpoints)
         {
             JsonConvert.DefaultSettings = (() =>
             {
@@ -39,9 +41,16 @@ namespace Snowflake.Support.Remoting.Servers
                 context.NoCache();
                 context.Response.ContentType = "application/json";
                 var split = context.RequestPath().Split('/');
+                var requestPath = RestRemotingServer.ToRequestPath(context.RequestPath());
+                var endpointVerb = verb.ToCrud();
+                var endpointArguments = context.RequestBody() != null ? 
+                    JsonConvert.DeserializeObject<Dictionary<string, string>>(context.RequestBody())
+                    .Select(v => new EndpointArgument(v.Key, v.Value)).Cast<IEndpointArgument>() : Enumerable.Empty<IEndpointArgument>();
+
+                var response = endpoints.ExecuteRequest(new Request(requestPath, endpointVerb, endpointArguments));
+
+                context.Response.StatusCode = response.Status?.Code ?? 200; 
                 var str = new StringBuilder();
-                var response = endpoints.Invoke(verb.ToCrud(), ToEndpointName(context.Request.RawUrl), context.RequestBody());
-                context.Response.StatusCode = response.Error?.Code ?? 200;
                 str.Append(JsonConvert.SerializeObject(response));
                 var buffer = new MemoryStream(Encoding.UTF8.GetBytes(str.ToString())).Compress();
                 context.Response.AddHeader("Content-Encoding", "gzip");
@@ -73,9 +82,9 @@ namespace Snowflake.Support.Remoting.Servers
             }
         }
 
-        private static string ToEndpointName(string path)
+        private static RequestPath ToRequestPath(string path)
         {
-            return $"~:{string.Join(":", path.Split('/').Where(s => s.Length > 0))}";
+            return new RequestPath(path.Split('/').Where(s => s.Length > 0).ToArray());
         }
 
 

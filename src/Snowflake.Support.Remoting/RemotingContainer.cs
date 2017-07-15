@@ -8,6 +8,9 @@ using Snowflake.Support.Remoting.Framework;
 using Snowflake.Loader;
 using Snowflake.Records.Game;
 using Snowflake.Servers;
+using Snowflake.Remoting.Requests;
+using Snowflake.Resources.Games;
+using Snowflake.Resources.Stone;
 
 namespace Snowflake.Support.Remoting
 {
@@ -22,6 +25,24 @@ namespace Snowflake.Support.Remoting
             var stone = coreInstance.Get<IStoneProvider>();
             var gameLib = coreInstance.Get<IGameLibrary>();
             var register = coreInstance.Get<IServiceRegistrationProvider>();
+            IResourceContainer container = new ResourceContainer()
+            {
+                { new GameLibraryRoot(stone, gameLib) },
+                { new GameRoot(gameLib) },
+                { new GamesFilesRoot(gameLib) },
+                { new GameFilesLibraryRoot(gameLib) },
+                { new GameMetadataRoot(gameLib) },
+                { new GameFilesMetadataRoot(gameLib) },
+                { new ControllerRoot(stone) },
+                { new ControllersRoot(stone) },
+                { new PlatformRoot(stone) },
+                { new PlatformsRoot(stone) }
+            };
+            
+
+
+
+
             //var plugMan = coreInstance.Get<IPluginManager>();
 
             //var pluginEndpoint = new Plugins(plugMan);
@@ -77,7 +98,7 @@ namespace Snowflake.Support.Remoting
             //  endpointCollection.Add(RequestVerb.Create, "~:scrape:file", p => gameEndpoint.Scrape((string)p.Body["path"]));
 
 
-            var webServer = new WebServerWrapper(new RestRemotingServer(endpointCollection));
+            var webServer = new WebServerWrapper(new RestRemotingServer(container));
             webServer.Start();
             //register.RegisterService<ILocalWebService>(webServer); //todo should be plugin.
 

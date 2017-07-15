@@ -5,14 +5,16 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
+using System.Collections;
 
 namespace Snowflake.Remoting.Requests
 {
-    public class ResourceContainer : IResourceContainer
+    public class ResourceContainer : IResourceContainer, IEnumerable<IResource>
     {
         public IEnumerable<IResource> Resources => this.resources;
         private ImmutableList<IResource> resources;
         private readonly IArgumentTypeMapper typeMappper;
+        //todo pluggable mappers!!!
         public ResourceContainer(IArgumentTypeMapper typeMapper)
         {
             this.resources = ImmutableList.Create<IResource>();
@@ -27,7 +29,7 @@ namespace Snowflake.Remoting.Requests
         {
             this.resources = this.resources.Add(resource);
         }
-        
+
         public IResource MatchResource(IRequestPath requestPath)
         {
             return this.resources.Where(r => r.Path.Match(requestPath)).FirstOrDefault();
@@ -58,6 +60,16 @@ namespace Snowflake.Remoting.Requests
                 //todo: properly report this.
                 return new RequestResponse(null, ResponseStatus.UnhandledErrorStatus(request.Verb, request.RequestPath, e));
             }
+        }
+
+        public IEnumerator<IResource> GetEnumerator()
+        {
+            return this.Resources.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
         }
     }
 }

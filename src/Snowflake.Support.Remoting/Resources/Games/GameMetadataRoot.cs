@@ -13,7 +13,7 @@ namespace Snowflake.Resources.Games
     [Resource("games", ":guid", "metadata", ":metadata_key")]
     [Parameter(typeof(Guid), "guid")]
     [Parameter(typeof(string), "metadata_key")]
-    public class GameMetadataRoot
+    public class GameMetadataRoot : Resource
     {
         private List<string> ForbiddenDeleteKeys = new List<string> { "game_title", "game_platform", "file_linkedrecord" };
         private IGameLibrary Library { get; }
