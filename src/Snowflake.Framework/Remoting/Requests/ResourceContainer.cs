@@ -41,18 +41,22 @@ namespace Snowflake.Remoting.Requests
             var endArgs = matched.MatchArguments(request.EndpointArguments);
             if (matched == null)
             {
-                return RequestResponse.NoEndpointFoundResponse;
+                return new RequestResponse(null, ResponseStatus.NotFoundStatus(request.Verb, request.RequestPath));
             }
             try
             {
                 var result = resource.Execute(matched, this.typeMappper
                     .CastArguments(pathArgs, endArgs));
-                return new RequestResponse(result);
+                return new RequestResponse(result, ResponseStatus.OkStatus(request.Verb, request.RequestPath));
+            }
+            catch (RequestException e)
+            {
+                return new RequestResponse(null, ResponseStatus.UnhandledErrorStatus(request.Verb, request.RequestPath, e, e.ErrorCode));
             }
             catch (Exception e)
             {
                 //todo: properly report this.
-                return RequestResponse.NoEndpointFoundResponse;
+                return new RequestResponse(null, ResponseStatus.UnhandledErrorStatus(request.Verb, request.RequestPath, e));
             }
         }
     }
