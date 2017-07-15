@@ -41,7 +41,7 @@ namespace Snowflake.Support.Remoting.Servers
                 context.NoCache();
                 context.Response.ContentType = "application/json";
                 var split = context.RequestPath().Split('/');
-                var requestPath = RestRemotingServer.ToRequestPath(context.RequestPath());
+                var requestPath = RestRemotingServer.ToRequestPath(context.RequestPathCaseSensitive());
                 var endpointVerb = verb.ToCrud();
                 var endpointArguments = context.RequestBody() != null ? 
                     JsonConvert.DeserializeObject<Dictionary<string, string>>(context.RequestBody())
