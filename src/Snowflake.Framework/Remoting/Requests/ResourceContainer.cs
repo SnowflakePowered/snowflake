@@ -40,7 +40,7 @@ namespace Snowflake.Remoting.Requests
             var resource = this.MatchResource(request.RequestPath);
             var pathArgs = resource?.Path.MatchArguments(request.RequestPath);
             var matched = resource?.MatchEndpoint(request.Verb, request.EndpointArguments);
-            var endArgs = matched.MatchArguments(request.EndpointArguments);
+            var endArgs = matched?.MatchArguments(request.EndpointArguments);
             if (matched == null)
             {
                 return new RequestResponse(null, ResponseStatus.NotFoundStatus(request.Verb, request.RequestPath));
