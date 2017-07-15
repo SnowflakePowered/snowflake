@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Snowflake.Remoting.Requests
 {
-    public class ResponseStatus : IResponseStatus
+    public sealed class ResponseStatus : IResponseStatus
     {
         public string Message { get; }
         public string Type { get; }
@@ -33,7 +33,7 @@ namespace Snowflake.Remoting.Requests
         public ResponseStatus(string message, int code, string errorType = "OK")
         {
             this.Message = message;
-            this.Type = this.GetType().Name;
+            this.Type = errorType;
             this.Code = code;
         }
     }
