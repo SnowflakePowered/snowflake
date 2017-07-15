@@ -53,7 +53,7 @@ namespace Snowflake.Remoting.Requests
             }
             catch (RequestException e)
             {
-                return new RequestResponse(null, ResponseStatus.UnhandledErrorStatus(request.Verb, request.RequestPath, e, e.ErrorCode));
+                    return new RequestResponse(null, ResponseStatus.UnhandledErrorStatus(request.Verb, request.RequestPath, e, e.ErrorCode));
             }
             catch (Exception e)
             {
