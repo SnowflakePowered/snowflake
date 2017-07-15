@@ -11,7 +11,7 @@ using System.Text;
 namespace Snowflake.Resources.Stone
 {
     [Resource("stone", "controllers")]
-    public class ControllersRoot
+    public class ControllersRoot : Resource
     {
         private IStoneProvider StoneProvider { get; }
         public ControllersRoot(IStoneProvider provider)

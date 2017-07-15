@@ -10,7 +10,7 @@ namespace Snowflake.Resources.Stone
 {
     [Resource("stone", "platforms", ":platformId")]
     [Parameter(typeof(string), "platformId")]
-    public class PlatformRoot
+    public class PlatformRoot : Resource
     {
         private IStoneProvider StoneProvider { get; }
         public PlatformRoot(IStoneProvider provider)

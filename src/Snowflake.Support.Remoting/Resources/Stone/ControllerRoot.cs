@@ -9,7 +9,7 @@ using System.Text;
 namespace Snowflake.Resources.Stone
 {
     [Resource("stone", "controllers", ":controllerId")]
-    public class ControllerRoot
+    public class ControllerRoot : Resource
     {
         private IStoneProvider StoneProvider { get; }
         public ControllerRoot(IStoneProvider provider)

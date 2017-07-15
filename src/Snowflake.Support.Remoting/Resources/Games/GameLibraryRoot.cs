@@ -14,7 +14,7 @@ using Snowflake.Remoting.Resources;
 namespace Snowflake.Support.Remoting.Resources
 {
     [Resource("games")]
-    public class GameLibraryRoot
+    public class GameLibraryRoot : Resource
     {
         private IGameLibrary Library { get; }
         private IStoneProvider Stone { get; }
