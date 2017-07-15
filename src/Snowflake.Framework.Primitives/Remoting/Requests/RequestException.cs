@@ -1,9 +1,8 @@
-﻿using Snowflake.Support.Remoting.Framework.Errors;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Snowflake.Support.Remoting.Framework.Exceptions
+namespace Snowflake.Remoting.Requests
 {
     public class RequestException : Exception
     {
@@ -11,11 +10,6 @@ namespace Snowflake.Support.Remoting.Framework.Exceptions
         public RequestException(string message, int error) : base (message)
         {
             this.ErrorCode = error;
-        }
-
-        public RequestError ToError()
-        {
-            return new RequestError(this);
         }
     }
 }

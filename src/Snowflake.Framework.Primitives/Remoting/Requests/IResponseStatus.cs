@@ -4,7 +4,10 @@ using System.Text;
 
 namespace Snowflake.Remoting.Requests
 {
-    class RequestError
+    public interface IResponseStatus
     {
+        string Message { get; }
+        string Type { get; }
+        int Code { get; }
     }
 }

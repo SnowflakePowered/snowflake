@@ -1,4 +1,5 @@
 using Snowflake.Records.Game;
+using Snowflake.Remoting.Requests;
 using Snowflake.Services;
 using Snowflake.Support.Remoting.Framework;
 using System;
