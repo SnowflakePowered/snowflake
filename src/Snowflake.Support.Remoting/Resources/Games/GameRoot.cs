@@ -11,7 +11,7 @@ namespace Snowflake.Resources.Games
 {
     [Resource("games", ":guid")]
     [Parameter(typeof(Guid), "guid")]
-    public class GameRoot
+    public class GameRoot : Resource
     {
         private IGameLibrary Library { get; }
         public GameRoot(IGameLibrary library)

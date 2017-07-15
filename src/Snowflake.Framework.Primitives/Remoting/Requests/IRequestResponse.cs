@@ -7,5 +7,6 @@ namespace Snowflake.Remoting.Requests
     public interface IRequestResponse
     {
         object Response { get; }
+        IResponseStatus Status { get; }
     }
 }

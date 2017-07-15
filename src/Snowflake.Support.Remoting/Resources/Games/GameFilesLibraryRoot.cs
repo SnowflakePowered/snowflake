@@ -12,7 +12,7 @@ namespace Snowflake.Resources.Games
     //"~:games:{guid}:files",
     [Resource("game", ":gameGuid", "files")]
     [Parameter(typeof(Guid), "guid")]
-    public class GameFilesLibraryRoot
+    public class GameFilesLibraryRoot : Resource
     {
         private IGameLibrary Library { get; }
 

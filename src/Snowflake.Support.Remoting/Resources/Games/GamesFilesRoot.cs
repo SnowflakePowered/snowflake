@@ -10,7 +10,7 @@ namespace Snowflake.Resources.Games
     [Resource("game", ":gameGuid", "files", ":fileGuid")]
     [Parameter(typeof(Guid), "gameGuid")]
     [Parameter(typeof(Guid), "fileGuid")]
-    public class GamesFilesRoot
+    public class GamesFilesRoot : Resource
     {
         private IGameLibrary Library { get; }
         public GamesFilesRoot(IGameLibrary library)

@@ -10,7 +10,7 @@ using System.Text;
 namespace Snowflake.Resources.Stone
 {
     [Resource("stone", "platforms")]
-    public class PlatformsRoot
+    public class PlatformsRoot : Resource
     {
         private IStoneProvider StoneProvider { get; }
         public PlatformsRoot(IStoneProvider provider)

@@ -13,7 +13,7 @@ namespace Snowflake.Remoting.Requests
         public EndpointVerb Verb { get; }
 
         public Request(IRequestPath path, EndpointVerb verb,
-            IEnumerable<EndpointArgument> arguments)
+            IEnumerable<IEndpointArgument> arguments)
         {
             this.Verb = verb;
             this.RequestPath = path;
