@@ -14,6 +14,7 @@ namespace Snowflake.Persistence
     {
 
         private readonly SqliteConnection dbConnection;
+
         public SqliteMemoryDatabase()
         {
            

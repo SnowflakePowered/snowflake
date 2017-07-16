@@ -1,0 +1,5 @@
+{
+  "baseUrl" : "src/",
+  "javascript.implicitProjectConfig.checkJs": true,
+  "checkJs": true
+}

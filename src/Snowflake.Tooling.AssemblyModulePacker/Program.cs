@@ -32,7 +32,6 @@ namespace Snowflake.Tooling.AssemblyModulePacker
                 await stateMachine.ExitWithState("Error! No valid module.json found. Check for JSON errors or missing file.", 1);
                 return;
             }
-            //todo: migrate to use states!
             (var projectFile, var moduleFile) = DirectoryProvider.GetProjectFiles(cwd);
             ModuleDefinition module;
 

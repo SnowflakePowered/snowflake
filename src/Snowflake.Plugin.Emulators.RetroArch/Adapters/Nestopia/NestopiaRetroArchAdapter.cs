@@ -36,7 +36,7 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Adapters.Nestopia
         {
 
             var configurations = this.GetConfiguration(gameRecord);
-            var platform = this.StoneProvider.Platforms[gameRecord.PlatformId];
+            var platform = this.StoneProvider.Platforms[gameRecord.PlatformID];
 
             return new RetroArchInstance(gameRecord, file, this, this.CorePath.FullName, this.ProcessHandler, saveSlot, platform, ports)
             {

@@ -9,7 +9,6 @@ namespace Snowflake.Loader
     /// All composable objects must implement this interface, and register their plugins inside the
     /// Compose method.
     /// </summary>
-   //todo [InheritedExport(typeof(IPluginContainer))]
     public interface IComposable
     {
         /// <summary>

@@ -1,0 +1,35 @@
+{
+  "extends": ["standard"],
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true,
+      "classes": true,
+      "impliedStrict": true,
+      "blockBindings": true
+    }
+  },
+  "settings": {
+    "react": {
+      "createClass": "createClass", // Regex for Component Factory to use, default to "createClass"
+      "pragma": "React" // Pragma to use, default to "React"
+    }
+  },
+  "rules": {
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error",
+    "react/no-set-state": "warn",
+    "react/prefer-es6-class": "error",
+    "react/require-render-return": "error",
+    "require-await": "error",
+    "arrow-parens": ["error", "as-needed", { "requireForBlockBody": true }],
+    "prefer-arrow-callback": "error",
+    "prefer-const": "error",
+    "react/jsx-pascal-case": "error",
+    "react/jsx-indent-props": ["error", 2],
+    "react/jsx-indent": ["error", 2]
+  },
+  "plugins": [
+    "react"
+  ]
+}

@@ -55,7 +55,6 @@ namespace Snowflake.Records.Metadata
             this.backingDatabase.Execute("DELETE FROM metadata WHERE uuid = @metadataId", new { metadataId });
         }
 
-        //todo test
         public void Remove(IEnumerable<Guid> guids)
         {
             this.backingDatabase.Execute("DELETE FROM metadata WHERE uuid = @metadataId",

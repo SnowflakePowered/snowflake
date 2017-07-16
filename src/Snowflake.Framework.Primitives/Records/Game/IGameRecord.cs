@@ -16,7 +16,7 @@ namespace Snowflake.Records.Game
         /// <summary>
         /// The Stone platform ID of this record
         /// </summary>
-        string PlatformId { get; }
+        string PlatformID { get; }
 
         /// <summary>
         /// The title of the game

@@ -1,0 +1,21 @@
+{
+  "extends": "tslint-config-standard",
+  "rules": {
+    "curly": true,
+    "only-arrow-functions": [true],
+    "semicolon": [true, "never"],
+    "interface-name": [true, "never-prefix"],
+    "no-angle-bracket-type-assertion": true,
+    "no-namespace": [true, "allow-declarations"],
+    "max-line-length": [true, 150],
+    "arrow-parens": false,
+    "indent": [true, "spaces"],
+    "no-unexpected-multiline": true,
+    "no-sparse-arrays": true
+  },
+  "jsRules": {
+    "curly": true
+  },
+  "rulesDirectory": [
+  ]
+}
