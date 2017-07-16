@@ -199,6 +199,7 @@ namespace Snowflake.Records.Game
                                            let md = (from m in metadatas where m.Record == f.Guid select m)
                                                .ToDictionary(md => md.Key, md => md)
                                            select new FileRecord(f.Game, md, f.Path, f.MimeType)).ToList();
+
                         return (from game in games
                                 let gameFiles =
                                     (from f in fileRecords where f.Record == game select f)
