@@ -7,18 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-<<<<<<< HEAD
-    <PackageReference Include="Quamotion.DiscUtils" Version="1.0.3" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.0.0" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Folder Include="resource\" />
-=======
     <Compile Remove="resource\**" />
     <EmbeddedResource Remove="resource\**" />
     <None Remove="resource\**" />
->>>>>>> cd39263... Modules: Robust loader and plugin system (#249)
   </ItemGroup>
   
   <ItemGroup>

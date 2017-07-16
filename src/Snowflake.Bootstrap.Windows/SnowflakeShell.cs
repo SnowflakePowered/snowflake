@@ -34,10 +34,6 @@ namespace Snowflake.Shell.Windows
        
         public void StartCore()
         {
-<<<<<<< HEAD
-            this.loadedCore = new CoreService(this.appDataDirectory);
-            //this.loadedCore.Get<IEmulatorAssembliesManager>()?.LoadEmulatorAssemblies();
-            this.loadedCore.Get<IPluginManager>()?.Initialize();
             /* this.loadedCore.Get<IServerManager>().RegisterServer("ThemeServer", new ThemeServer(Path.Combine(this.loadedCore.AppDataDirectory, "themes")));
              foreach (string serverName in this.loadedCore.Get<IServerManager>().RegisteredServers)
              {
@@ -57,7 +53,6 @@ namespace Snowflake.Shell.Windows
         /*    var gr = new GameRecord(this.loadedCore.Get<IStoneProvider>().Platforms["NINTENDO_SNES"], "test",
                 @"E:\Super Mario World (USA).sfc", "application/x-romfile-snes-sfc");
             this.loadedCore.Get<IGameLibrary>().Set(gr);*/
-=======
 
             this.loadedCore = new ServiceContainer(this.appDataDirectory);
             var loader = this.loadedCore.Get<IModuleEnumerator>();
@@ -82,7 +77,6 @@ namespace Snowflake.Shell.Windows
             var lmfao = raadapter.Instantiate(gr, gr.Files[0], 0, new List<IEmulatedPort> { ep});
             lmfao.Create();
             lmfao.Start();*/
->>>>>>> cd39263... Modules: Robust loader and plugin system (#249)
         }
 
         public void StartShell() {

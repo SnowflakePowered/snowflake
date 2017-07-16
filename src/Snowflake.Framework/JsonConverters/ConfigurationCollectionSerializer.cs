@@ -43,11 +43,6 @@ namespace Snowflake.JsonConverters
 
         private static IEnumerable<JProperty> SerializeEnumValues(Type selectionEnum)
         {
-<<<<<<< HEAD
-=======
-
-
->>>>>>> cd39263... Modules: Robust loader and plugin system (#249)
             return from enumOption in NonGenericEnums.GetMembers(selectionEnum)
                 where enumOption.Attributes.Has<SelectionOptionAttribute>()
                 let attribute = enumOption.Attributes.Get<SelectionOptionAttribute>()

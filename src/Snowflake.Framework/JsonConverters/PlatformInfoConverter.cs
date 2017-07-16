@@ -20,7 +20,7 @@ namespace Snowflake.JsonConverters
             IDictionary<string, string> fileTypes = jObject.Value<JToken>("FileTypes").ToObject<IDictionary<string, string>>();
 
             var biosProps = jObject.Value<JToken>("BiosFiles")?.Values<JProperty>()?.Select(p => p.Value<JProperty>());
-            var biosFiles = (jObject.Value<JToken>("BiosFiles") != null 
+            var biosFiles = (jObject.Value<JToken>("BiosFiles") != null
                 ? (from property in biosProps
                    from hash in property?.Values<JToken>().Values<string>().DefaultIfEmpty("")
                    select new { FileName = property?.Name, Hash = hash })?.ToLookup(p => p.FileName, p => p.Hash)

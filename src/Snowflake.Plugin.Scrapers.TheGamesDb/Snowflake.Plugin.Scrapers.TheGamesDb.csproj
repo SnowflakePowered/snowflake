@@ -6,11 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-<<<<<<< HEAD
-    <PackageReference Include="CoreCompat.System.Drawing" Version="1.0.0-beta006" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.0.0" />
-=======
->>>>>>> cd39263... Modules: Robust loader and plugin system (#249)
     <PackageReference Include="System.Linq.Parallel" Version="4.3.0" />
     <PackageReference Include="CoreCompat.System.Drawing" Version="1.0.0-beta006" />
   </ItemGroup>

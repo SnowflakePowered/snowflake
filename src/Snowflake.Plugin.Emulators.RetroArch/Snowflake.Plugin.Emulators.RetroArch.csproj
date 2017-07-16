@@ -17,13 +17,7 @@
   </ItemGroup>
   
   <ItemGroup>
-<<<<<<< HEAD
-    <PackageReference Include="StyleCop.Analyzers" Version="1.0.0" />
-    <PackageReference Include="System.Diagnostics.Process" Version="4.3.0" />
-=======
-    <EmbeddedResource Remove="resource\%2540common\**" />
     <None Remove="resource\%2540common\**" />
->>>>>>> cd39263... Modules: Robust loader and plugin system (#249)
   </ItemGroup>
   
   <ItemGroup>

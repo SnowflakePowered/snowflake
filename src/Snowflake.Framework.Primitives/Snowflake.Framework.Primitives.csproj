@@ -7,20 +7,7 @@
   <PropertyGroup Condition=" '$(Configuration)' == 'Cover' ">
 	  <DebugType>Full</DebugType>
   </PropertyGroup>
-  
-  <ItemGroup>
-<<<<<<< HEAD
-    <PackageReference Include="CoreCompat.System.Drawing" Version="1.0.0-beta006" />
-    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.0.0" />
-    <PackageReference Include="System.Dynamic.Runtime" Version="4.3.0" />
-=======
-    <Compile Remove="Extensibility\Events\**" />
-    <EmbeddedResource Remove="Extensibility\Events\**" />
-    <None Remove="Extensibility\Events\**" />
->>>>>>> cd39263... Modules: Robust loader and plugin system (#249)
-  </ItemGroup>
- 
+
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>

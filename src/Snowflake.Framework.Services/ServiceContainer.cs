@@ -8,14 +8,9 @@ using Snowflake.Input;
 using Snowflake.Input.Controller.Mapped;
 using Snowflake.Records.Game;
 using Snowflake.Utility;
-<<<<<<< HEAD:src/Snowflake.Framework.Services/CoreService.cs
-using Snowflake.Romfile;
-using Snowflake.Scraper.Shiragame;
-=======
 using Snowflake.Loader;
 using Snowflake.Services.Logging;
 using Snowflake.Services.Persistence;
->>>>>>> cd39263... Modules: Robust loader and plugin system (#249):src/Snowflake.Framework.Services/ServiceContainer.cs
 
 namespace Snowflake.Services
 {
@@ -35,25 +30,13 @@ namespace Snowflake.Services
         public ServiceContainer(string appDataDirectory)
         {
             this.AppDataDirectory = appDataDirectory;
-<<<<<<< HEAD:src/Snowflake.Framework.Services/CoreService.cs
-            this.RegisterService<IGameLibrary>(new SqliteGameLibrary(new SqliteDatabase(Path.Combine(this.AppDataDirectory, "games.db"))));
-            this.RegisterService<IMappedControllerElementCollectionStore>
-                (new SqliteMappedControllerElementCollectionStore(new SqliteDatabase(Path.Combine(this.AppDataDirectory, "controllermappings.db"))));
-            this.RegisterService<IConfigurationCollectionStore>(new SqliteConfigurationCollectionStore(new SqliteDatabase(Path.Combine(this.AppDataDirectory, "configurations.db"))));
-            this.RegisterService<IFileSignatureMatcher>(new FileSignatureMatcher(this.Get<IStoneProvider>()));
-            this.RegisterService<IShiragameProvider>(new ShiragameProvider("shiragame.db"));
-            this.RegisterService<IPluginManager>(new PluginManager(this.AppDataDirectory, this)); 
-           
-=======
             var directoryProvider = new ContentDirectoryProvider(this.AppDataDirectory);
             this.serviceContainer = new ConcurrentDictionary<Type, object>();
             this.RegisterService<ILogProvider>(new LogProvider());
             this.RegisterService<IModuleEnumerator>(new ModuleEnumerator(appDataDirectory));
             this.RegisterService<IContentDirectoryProvider>(directoryProvider);
             this.RegisterService<IServiceRegistrationProvider>(new ServiceRegistrationProvider(this));
-            this.RegisterService<ISqliteDatabaseProvider>(new SqliteDatabaseProvider(directoryProvider.ApplicationData.CreateSubdirectory("libraries")));
->>>>>>> cd39263... Modules: Robust loader and plugin system (#249):src/Snowflake.Framework.Services/ServiceContainer.cs
-            
+            this.RegisterService<ISqliteDatabaseProvider>(new SqliteDatabaseProvider(directoryProvider.ApplicationData.CreateSubdirectory("libraries")));            
             //this.RegisterService<IPluginManager>(new PluginManager(this.AppDataDirectory, this)); 
         }
 

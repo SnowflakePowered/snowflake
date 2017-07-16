@@ -52,37 +52,6 @@ namespace Snowflake.Romfile.FileSignatures.Composers
         {
             var fileSignatureEngine = coreInstance.Get<IFileSignatureMatcher>();
             this.RegisterFileSignatures(fileSignatureEngine);
-<<<<<<< HEAD:src/Snowflake.Support.FileSignatures/FileSignaturesContainer.cs
-=======
-
-            /*pluginManager.Register<IFileSignature>(new NintendoN64FileSignature(coreInstance));
-            pluginManager.Register<IFileSignature>(new NintendoGBFileSignature(coreInstance));
-            pluginManager.Register<IFileSignature>(new NintendoGBCFileSignature(coreInstance));
-            pluginManager.Register<IFileSignature>(new NintendoGBAFileSignature(coreInstance));
-            pluginManager.Register<IFileSignature>(new NintendoGCNISOFileSignature(coreInstance));
-
-        
-            pluginManager.Register<IFileSignature>(new NintendoNDSFileSignature(coreInstance));
-            pluginManager.Register<IFileSignature>(new NintendoNESFileSignature(coreInstance));
-            pluginManager.Register<IFileSignature>(new NintendoSNESFileSignature(coreInstance));
-            pluginManager.Register<IFileSignature>(new NintendoWiiFileSignature(coreInstance));
-
-            pluginManager.Register<IFileSignature>(new Sega32XFileSignature(coreInstance));
-            pluginManager.Register<IFileSignature>(new SegaCDFileSignature(coreInstance));
-            pluginManager.Register<IFileSignature>(new SegaDCFileSignature(coreInstance));
-            pluginManager.Register<IFileSignature>(new SegaGENFileSignature(coreInstance));
-            pluginManager.Register<IFileSignature>(new SegaGGFileSignature(coreInstance));
-            pluginManager.Register<IFileSignature>(new SegaSATFileSignature(coreInstance));
-
-            pluginManager.Register<IFileSignature>(new SonyPS2ISOFileSignature(coreInstance));
-            pluginManager.Register<IFileSignature>(new SonyPSPISOFileSignature(coreInstance));
-            pluginManager.Register<IFileSignature>(new SonyPSXISOFileSignature(coreInstance));*/
-
-
-
-
-
->>>>>>> cd39263... Modules: Robust loader and plugin system (#249):src/Snowflake.Support.FileSignatures/Composers/FileSignaturesComposer.cs
         }
     }
 }
