@@ -24,7 +24,7 @@ namespace Snowflake.Tests.Scraper
 {
     public class ScrapingIntegrationTests
     {
-        private IStoneProvider stoneProvider;
+        private readonly IStoneProvider stoneProvider;
         private readonly IFileSignatureMatcher fileSignatureMatcher;
         private readonly IQueryProvider<IScrapedMetadataCollection> scrapedProvider;
         private readonly IScrapeEngine scrapeGen;

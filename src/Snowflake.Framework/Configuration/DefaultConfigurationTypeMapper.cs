@@ -21,8 +21,8 @@ namespace Snowflake.Configuration
 
         private string EnumConverter(Enum enumValue)
         {
-            return NonGenericEnums.GetAttributes(enumValue.GetType(), enumValue)
-                .Get<SelectionOptionAttribute>().SerializeAs;
+            return NonGenericEnums.GetMember(enumValue.GetType(), enumValue)
+                .Attributes.Get<SelectionOptionAttribute>().SerializeAs;
         }
     }
 }

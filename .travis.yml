@@ -2,7 +2,7 @@ language: csharp
 sudo: required
 solution: Snowflake.sln
 mono: none
-dotnet: 2.0.0-preview1-005977
+dotnet: 2.0.0-preview2-006497
 dist: trusty 
 osx_image: xcode8.3
 os:
@@ -17,13 +17,3 @@ install:
 script:
   - dotnet build src/Snowflake.Framework.Tests
   - dotnet test src/Snowflake.Framework.Tests/Snowflake.Framework.Tests.csproj
-  
-notifications:
-  irc:
-    channels:
-      - "irc.stormbit.net#snowflake"
-    on_success: always
-    on_failure: always
-    use_notice: false
-    skip_join: true
-  webhooks: http://fure-kun.herokuapp.com/hubot/travis?room=%23snowflake

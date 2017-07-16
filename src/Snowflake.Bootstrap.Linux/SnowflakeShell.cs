@@ -32,10 +32,8 @@ namespace Snowflake.Shell.Linux
        
         public void StartCore()
         {
-
             this.loadedCore = new CoreService(this.appDataDirectory);
             this.loadedCore.Get<IPluginManager>()?.Initialize();
-          
         }
 
         public void StartShell() {

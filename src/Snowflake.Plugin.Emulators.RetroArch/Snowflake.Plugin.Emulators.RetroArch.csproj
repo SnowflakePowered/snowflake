@@ -17,7 +17,6 @@
   </ItemGroup>
   
   <ItemGroup>
-    <EmbeddedResource Remove="resource\%2540common\**" />
     <None Remove="resource\%2540common\**" />
   </ItemGroup>
   

@@ -1,14 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
-  
-  <ItemGroup>
-    <PackageReference Update="Microsoft.NETCore.App" Version="2.0.0-preview1-002111-00" />
-  </ItemGroup>
-
 
   <ItemGroup>
     <ProjectReference Include="..\Snowflake.Framework\Snowflake.Framework.csproj" />

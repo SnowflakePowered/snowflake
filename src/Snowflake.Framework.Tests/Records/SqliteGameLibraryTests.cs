@@ -122,7 +122,7 @@ namespace Snowflake.Records.Tests
             gameRecord.Files.Add(fileRecord);
             library.Set(gameRecord);
             Assert.NotEmpty(library.GetGamesByPlatform("TEST_PLATFORM"));
-            Assert.Contains("TEST_PLATFORM", library.GetGamesByPlatform("TEST_PLATFORM").Select(g => g.PlatformId));
+            Assert.Contains("TEST_PLATFORM", library.GetGamesByPlatform("TEST_PLATFORM").Select(g => g.PlatformID));
         }
 
         [Fact]

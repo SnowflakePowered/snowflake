@@ -13,7 +13,7 @@ namespace Snowflake.Records.Game
     {
         public IMetadataCollection Metadata { get; }
         public Guid Guid { get; }
-        public string PlatformId => this.Metadata[GameMetadataKeys.Platform];
+        public string PlatformID => this.Metadata[GameMetadataKeys.Platform];
         public string Title => this.Metadata[GameMetadataKeys.Title];
         public IList<IFileRecord> Files { get; }
 

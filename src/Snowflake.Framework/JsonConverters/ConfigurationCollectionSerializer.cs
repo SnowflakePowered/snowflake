@@ -43,8 +43,6 @@ namespace Snowflake.JsonConverters
 
         private static IEnumerable<JProperty> SerializeEnumValues(Type selectionEnum)
         {
-
-
             return from enumOption in NonGenericEnums.GetMembers(selectionEnum)
                 where enumOption.Attributes.Has<SelectionOptionAttribute>()
                 let attribute = enumOption.Attributes.Get<SelectionOptionAttribute>()

@@ -7,13 +7,7 @@
   <PropertyGroup Condition=" '$(Configuration)' == 'Cover' ">
 	  <DebugType>Full</DebugType>
   </PropertyGroup>
-  
-  <ItemGroup>
-    <Compile Remove="Extensibility\Events\**" />
-    <EmbeddedResource Remove="Extensibility\Events\**" />
-    <None Remove="Extensibility\Events\**" />
-  </ItemGroup>
- 
+
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>

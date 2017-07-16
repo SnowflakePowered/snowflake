@@ -1,0 +1,8 @@
+.container {
+  bottom: 0;
+  width: 100%;
+}
+
+.platform-selector {
+  overflow-y: auto;
+}

@@ -14,6 +14,10 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.0.0" />
+  </ItemGroup>
   
   <ItemGroup>
     <ProjectReference Include="..\Snowflake.Framework.Persistence\Snowflake.Framework.Persistence.csproj" />

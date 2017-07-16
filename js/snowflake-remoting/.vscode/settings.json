@@ -1,0 +1,9 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+    "typescript.tsdk": "./node_modules/typescript/lib",
+    "vsicons.presets.angular": false,
+    "tslint.nodePath": "./node_modules",
+    "tslint.enable": true,
+    "tslint.jsEnable": true,
+    "editor.tabSize": 2
+}

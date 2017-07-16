@@ -37,7 +37,7 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Adapters.Bsnes
             IList<IEmulatedPort> ports)
         {
 
-            var platform = this.StoneProvider.Platforms[gameRecord.PlatformId];
+            var platform = this.StoneProvider.Platforms[gameRecord.PlatformID];
         
             return new BsnesInstance(gameRecord, file, this, this.CorePath.FullName, this.ProcessHandler, saveSlot, platform, ports)
             {

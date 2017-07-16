@@ -1,0 +1,15 @@
+{
+    "editor.tabSize": 2,
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/.DS_Store": true,
+        "node_modules/": true,
+        "src/**/*.css": true,
+        "src/old/": true,
+        "spdx-license-ids/":true
+    },
+    "javascript.implicitProjectConfig.checkJs": true,
+    "editor.snippetSuggestions": "top"
+}
