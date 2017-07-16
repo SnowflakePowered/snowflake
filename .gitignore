@@ -205,3 +205,4 @@ coverage.xml
 remoting/src/actions/Actions.ts
 remoting/src/actions/Store.ts
 js/snowflake-react-boilerplate/yarn.lock
+storybook-static/
