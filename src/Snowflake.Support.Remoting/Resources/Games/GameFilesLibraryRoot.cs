@@ -10,8 +10,8 @@ using System.Text;
 namespace Snowflake.Resources.Games
 {
     //"~:games:{guid}:files",
-    [Resource("game", ":gameGuid", "files")]
-    [Parameter(typeof(Guid), "guid")]
+    [Resource("games", ":gameGuid", "files")]
+    [Parameter(typeof(Guid), "gameGuid")]
     public class GameFilesLibraryRoot : Resource
     {
         private IGameLibrary Library { get; }
