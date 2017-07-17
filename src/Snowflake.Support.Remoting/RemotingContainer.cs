@@ -11,20 +11,27 @@ using Snowflake.Servers;
 using Snowflake.Remoting.Requests;
 using Snowflake.Resources.Games;
 using Snowflake.Resources.Stone;
+using Snowflake.Resources.Emulators;
+using Snowflake.Emulator;
+using Snowflake.Mappers;
 
 namespace Snowflake.Support.Remoting
 {
 
     public class RemotingContainer : IComposable
     {
+        [ImportService(typeof(IPluginManager))]
         [ImportService(typeof(IStoneProvider))]
         [ImportService(typeof(IGameLibrary))]
         [ImportService(typeof(IServiceRegistrationProvider))]
         public void Compose(IModule module, Loader.IServiceRepository coreInstance)
         {
+            var manager = coreInstance.Get<IPluginManager>();
             var stone = coreInstance.Get<IStoneProvider>();
             var gameLib = coreInstance.Get<IGameLibrary>();
             var register = coreInstance.Get<IServiceRegistrationProvider>();
+            var gameRecordMapping = new GameRecordMapping(gameLib);
+
             IResourceContainer container = new ResourceContainer()
             {
                 { new GameLibraryRoot(stone, gameLib) },
@@ -36,12 +43,12 @@ namespace Snowflake.Support.Remoting
                 { new ControllerRoot(stone) },
                 { new ControllersRoot(stone) },
                 { new PlatformRoot(stone) },
-                { new PlatformsRoot(stone) }
+                { new PlatformsRoot(stone) },
+                { new EmulatorsRoot(manager.Get<IEmulatorAdapter>()) },
+                { new EmulatorsGameConfigRoot(manager.Get<IEmulatorAdapter>()) }
             };
-            
 
-
-
+            container.AddTypeMapping(gameRecordMapping);
 
             //var plugMan = coreInstance.Get<IPluginManager>();
 
