@@ -43,9 +43,10 @@ namespace Snowflake.Support.Remoting.Servers
                 var split = context.RequestPath().Split('/');
                 var requestPath = RestRemotingServer.ToRequestPath(context.RequestPathCaseSensitive());
                 var endpointVerb = verb.ToCrud();
-                var endpointArguments = context.RequestBody() != null ? 
-                    JsonConvert.DeserializeObject<Dictionary<string, string>>(context.RequestBody())
-                    .Select(v => new EndpointArgument(v.Key, v.Value)).Cast<IEndpointArgument>() 
+                var requestBody = context.RequestBody();
+                var endpointArguments = requestBody != null ?
+                   JsonConvert.DeserializeObject<IDictionary<string, string>>(requestBody)
+                  .Select(v => new EndpointArgument(v.Key, v.Value)).Cast<IEndpointArgument>() 
                     : Enumerable.Empty<IEndpointArgument>();
 
                 var response = endpoints.ExecuteRequest(new Request(requestPath, endpointVerb, endpointArguments));

@@ -38,12 +38,16 @@ namespace Snowflake.Remoting.Requests
         public IRequestResponse ExecuteRequest(IRequest request)
         {
             var resource = this.MatchResource(request.RequestPath);
-            var pathArgs = resource?.Path.MatchArguments(request.RequestPath);
-            var matched = resource?.MatchEndpoint(request.Verb, request.EndpointArguments);
-            var endArgs = matched?.MatchArguments(request.EndpointArguments);
-            if (matched == null)
+            var pathArgs = resource?.Path.SerializePathArguments(request.RequestPath);
+            var matched = resource?.MatchEndpointWithParams(request.Verb, request.EndpointArguments);
+            var endArgs = matched?.SerializeEndpointArguments(request.EndpointArguments);
+            if (resource == null)
             {
                 return new RequestResponse(null, ResponseStatus.NotFoundStatus(request.Verb, request.RequestPath));
+            }
+            if (resource != null && matched == null)
+            {
+                return new RequestResponse(null, ResponseStatus.MissingParameterStatus(request.Verb, request.RequestPath));
             }
             try
             {
@@ -70,6 +74,11 @@ namespace Snowflake.Remoting.Requests
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
+        }
+
+        public void AddTypeMapping<T>(ITypeMapping<T> typeMapping)
+        {
+            this.typeMappper.Add(str => typeMapping.ConvertValue(str));
         }
     }
 }

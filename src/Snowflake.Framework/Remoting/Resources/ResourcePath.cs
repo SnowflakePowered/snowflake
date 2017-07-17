@@ -34,7 +34,7 @@ namespace Snowflake.Remoting.Resources
             return true;
         }
 
-        public IEnumerable<ISerializedArgument> MatchArguments(IRequestPath requestPath)
+        public IEnumerable<ISerializedArgument> SerializePathArguments(IRequestPath requestPath)
         {
             if (!this.Match(requestPath)) yield break;
             for (int i = 0; i < requestPath.PathNodes.Count; i++)

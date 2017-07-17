@@ -27,7 +27,7 @@ namespace Snowflake.Remoting.Resources
         }
 
         
-        public IMethodEndpoint MatchEndpoint(EndpointVerb verb,
+        public IMethodEndpoint MatchEndpointWithParams(EndpointVerb verb,
            IEnumerable<IEndpointArgument> requestArguments)
         {
             var reqArgKeys = requestArguments.Select(k => k.Key);
@@ -47,20 +47,18 @@ namespace Snowflake.Remoting.Resources
             var paramExpressions = new Expression[methodParams.Length];
 
             // populate the expressions.
-            for (int i = 0; i < paramExpressions.Length; i++)
-            {
-                var currentParam = methodParams[i];
-                if (typedArgsLookup.ContainsKey(currentParam.Name)
-                    && typedArgsLookup[currentParam.Name].Type == currentParam.ParameterType)
-                {
-                    paramExpressions[i] = Expression.Convert(
-                        Expression.Constant(typedArgsLookup[currentParam.Name].Value),
-                                            currentParam.ParameterType
-                    );
-                    continue;
-                }
-                paramExpressions[i] = Expression.Default(currentParam.ParameterType);
-            }
+             for (int i = 0; i < paramExpressions.Length; i++)
+             {
+                 var currentParam = methodParams[i];
+                 if (typedArgsLookup.ContainsKey(currentParam.Name) 
+                     && typedArgsLookup[currentParam.Name].Type == currentParam.ParameterType)
+                 {
+                    paramExpressions[i] = Expression.Constant(typedArgsLookup[currentParam.Name].Value,
+                        currentParam.ParameterType);
+                     continue;
+                 }
+                 paramExpressions[i] = Expression.Default(currentParam.ParameterType);
+             }
 
             Func<object> result = Expression.Lambda<Func<object>>(
               Expression.Convert(

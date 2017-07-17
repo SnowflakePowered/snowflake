@@ -32,8 +32,8 @@ namespace Snowflake.Support.Remoting.Resources
         }
 
         [Endpoint(EndpointVerb.Create)]
-        [Parameter(typeof(string), "title")]
         [Parameter(typeof(string), "platform")]
+        [Parameter(typeof(string), "title")]
         public IGameRecord CreateGame(string title, string platform)
         {
             try

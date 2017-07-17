@@ -21,7 +21,7 @@ namespace Snowflake.Remoting.Resources
             this.EndpointParameters = endpointParams;
         }
 
-        public IEnumerable<ISerializedArgument> MatchArguments(IEnumerable<IEndpointArgument> args)
+        public IEnumerable<ISerializedArgument> SerializeEndpointArguments(IEnumerable<IEndpointArgument> args)
         {
             return (from p in this.EndpointParameters
              from a in args

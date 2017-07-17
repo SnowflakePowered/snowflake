@@ -10,6 +10,6 @@ namespace Snowflake.Remoting.Resources
         IEnumerable<IParameter> EndpointParameters { get; }
         EndpointVerb Verb { get; }
 
-        IEnumerable<ISerializedArgument> MatchArguments(IEnumerable<IEndpointArgument> args);
+        IEnumerable<ISerializedArgument> SerializeEndpointArguments(IEnumerable<IEndpointArgument> args);
     }
 }

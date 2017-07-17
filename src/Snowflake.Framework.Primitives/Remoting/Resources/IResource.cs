@@ -9,6 +9,6 @@ namespace Snowflake.Remoting.Resources
         IResourcePath Path { get; }
 
         object Execute(IMethodEndpoint endpoint, IEnumerable<ITypedArgument> typedArgs);
-        IMethodEndpoint MatchEndpoint(EndpointVerb verb, IEnumerable<IEndpointArgument> requestArguments);
+        IMethodEndpoint MatchEndpointWithParams(EndpointVerb verb, IEnumerable<IEndpointArgument> requestArguments);
     }
 }
