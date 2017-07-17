@@ -1,0 +1,13 @@
+﻿{
+    "name": "TestEmulator",
+    "type": "plugin_emulator",
+    "version": "1.0.0.0",
+    "authors": [
+        "Snowflake"
+    ],
+  "description": "Test Emulator Logger",
+  "savetype": "test-savetypes",
+  "mimetypes": [
+    "application/vnd.stone-romfile.nintendo.nes-ines"
+  ]
+}
