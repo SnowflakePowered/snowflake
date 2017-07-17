@@ -8,7 +8,7 @@ namespace Snowflake.Support.StoreProviders
     {
         [ImportService(typeof(ISqliteDatabaseProvider))]
         [ImportService(typeof(IServiceRegistrationProvider))]
-        public void Compose(IModule composableModule, IServiceProvider serviceContainer)
+        public void Compose(IModule composableModule, IServiceRepository serviceContainer)
         {
             var register = serviceContainer.Get<IServiceRegistrationProvider>();
             var sqlDb = serviceContainer.Get<ISqliteDatabaseProvider>();

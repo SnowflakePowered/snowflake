@@ -39,7 +39,9 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Adapters.Bsnes
 
             var platform = this.StoneProvider.Platforms[gameRecord.PlatformID];
         
-            return new BsnesInstance(gameRecord, file, this, this.CorePath.FullName, this.ProcessHandler, saveSlot, platform, ports)
+            return new BsnesInstance(gameRecord, file, this,
+                this.CorePath.FullName, this.ProcessHandler,
+                saveSlot, platform, ports)
             {
                 ShaderManager =  this.ShaderManager 
             };

@@ -7,7 +7,7 @@ namespace Snowflake.Loader
     /// <summary>
     /// Provides access to imported services.
     /// </summary>
-    public interface IServiceProvider
+    public interface IServiceRepository
     {
         /// <summary>
         /// Gets the given service

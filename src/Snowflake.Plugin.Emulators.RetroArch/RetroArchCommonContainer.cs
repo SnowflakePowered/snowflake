@@ -24,7 +24,7 @@ namespace Snowflake.Plugin.Emulators.RetroArch
         [ImportService(typeof(IContentDirectoryProvider))]
         [ImportService(typeof(IStoneProvider))]
         [ImportService(typeof(ILogProvider))]
-        public void Compose(IModule composableModule, Loader.IServiceProvider serviceContainer)
+        public void Compose(IModule composableModule, Loader.IServiceRepository serviceContainer)
         {
             var pm = serviceContainer.Get<IPluginManager>();
             var appdata = serviceContainer.Get<IContentDirectoryProvider>();

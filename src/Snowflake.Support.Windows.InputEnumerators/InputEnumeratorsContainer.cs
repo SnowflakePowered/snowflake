@@ -14,7 +14,7 @@ namespace Snowflake.Plugin.InputEnumerators
     {
         [ImportService(typeof(IPluginManager))]
         [ImportService(typeof(IInputManager))]
-        public void Compose(IModule module, Loader.IServiceProvider coreInstance)
+        public void Compose(IModule module, Loader.IServiceRepository coreInstance)
         {
             var pm = coreInstance.Get<IPluginManager>();
             var im = coreInstance.Get<IInputManager>();

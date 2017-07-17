@@ -20,7 +20,7 @@ namespace Snowflake.Support.Remoting
         [ImportService(typeof(IStoneProvider))]
         [ImportService(typeof(IGameLibrary))]
         [ImportService(typeof(IServiceRegistrationProvider))]
-        public void Compose(IModule module, Loader.IServiceProvider coreInstance)
+        public void Compose(IModule module, Loader.IServiceRepository coreInstance)
         {
             var stone = coreInstance.Get<IStoneProvider>();
             var gameLib = coreInstance.Get<IGameLibrary>();
