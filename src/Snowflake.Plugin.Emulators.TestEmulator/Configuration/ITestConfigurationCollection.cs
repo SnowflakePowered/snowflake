@@ -7,7 +7,7 @@ using System.Text;
 namespace Snowflake.Plugin.Emulators.TestEmulator.Configuration
 {
     [ConfigurationFile("#test", "test.cfg", "true", "false")]
-    interface ITestConfigurationCollection : IConfigurationCollection<ITestConfigurationCollection>
+    public interface ITestConfigurationCollection : IConfigurationCollection<ITestConfigurationCollection>
     {
         [SerializableSection("#test")]
         ITestConfiguration TestConfiguration { get; }
