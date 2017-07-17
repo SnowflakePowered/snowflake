@@ -77,12 +77,13 @@ namespace Snowflake.Remoting
             var req = new RequestPath(_req.Split("/"));
             var param = new[]
             {
+                new EndpointArgument("echo", "0"),
                 new EndpointArgument("echoText", "Some Echo"),
                 new EndpointArgument("someOther", "helloWorld")
             };
 
             var matched = res.MatchEndpointWithParams(EndpointVerb.Create, param);
-            Assert.Equal(mInfo, matched.EndpointMethodInfo);
+            Assert.Null(matched);
         }
 
         [Fact]
@@ -143,6 +144,24 @@ namespace Snowflake.Remoting
             var pathArgs = res.Path.SerializePathArguments(req);
             var endsArgs = matched.SerializeEndpointArguments(param);
             var casted = ArgumentTypeMapper.Default.CastArguments(pathArgs, endsArgs);
+            var result = res.Execute(matched, casted);
+            Assert.Equal("foobarSome EchohelloWorld", (string)result);
+        }
+
+        [Fact]
+        public void MatchWithMisMatchedResourceTypeParams_Test()
+        {
+            var res = new DummyResource();
+            var _req = "game/foobar";
+            var req = new RequestPath(_req.Split("/"));
+            var param = new[]
+            {
+                new EndpointArgument("echoTextMisMatched", "Some Echo"),
+                new EndpointArgument("someOther", "helloWorld")
+            };
+
+            var matched = res.MatchEndpointWithParams(EndpointVerb.Create, param);
+            Assert.Null(matched);
         }
     }
 }

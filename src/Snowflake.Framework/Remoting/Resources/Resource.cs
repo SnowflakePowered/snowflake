@@ -23,7 +23,7 @@ namespace Snowflake.Remoting.Resources
                 this.GetType().GetCustomAttributes<ParameterAttribute>()
                 .Select(p => new Parameter(p.Type, p.Key));
             this.Path = new ResourcePath(pathParams, path);
-            this.Endpoints = this.GetMethods().ToImmutableList();
+            this.Endpoints = this.GetMethods(this.Path.ResourceParameters).ToImmutableList();
         }
 
         
@@ -44,41 +44,42 @@ namespace Snowflake.Remoting.Resources
         {
             var methodParams = endpoint.EndpointMethodInfo.GetParameters();
             var typedArgsLookup = typedArgs.ToDictionary(a => a.Key, a => a); // faster lookup
-            var paramExpressions = new Expression[methodParams.Length];
 
-            // populate the expressions.
-             for (int i = 0; i < paramExpressions.Length; i++)
-             {
-                 var currentParam = methodParams[i];
-                 if (typedArgsLookup.ContainsKey(currentParam.Name) 
-                     && typedArgsLookup[currentParam.Name].Type == currentParam.ParameterType)
-                 {
-                    paramExpressions[i] = Expression.Constant(typedArgsLookup[currentParam.Name].Value,
-                        currentParam.ParameterType);
-                     continue;
-                 }
-                 paramExpressions[i] = Expression.Default(currentParam.ParameterType);
-             }
+            var parameterExpressions = (from argument in typedArgs
+                                        from parameter in methodParams
+                                        where argument.Key == parameter.Name
+                                        orderby parameter.Position
+                                        select Expression.Assign(
+                                            Expression.Parameter(parameter.ParameterType, parameter.Name),
+                                            Expression.Constant(argument.Value, argument.Type)
+                                        )).Select(parameter => parameter.Right);
 
             Func<object> result = Expression.Lambda<Func<object>>(
               Expression.Convert(
                   Expression.Call(
                       Expression.Constant(this),
                       endpoint.EndpointMethodInfo,
-                      paramExpressions
+                      parameterExpressions
                   ), typeof(object)
                )
             ).Compile();
             return result.Invoke();
         }
 
-        private IEnumerable<IMethodEndpoint> GetMethods()
+        private IEnumerable<IMethodEndpoint> GetMethods(IEnumerable<IParameter> pathParams)
         {
             var endpoints =  (from m in this.GetType().GetRuntimeMethods()
                     let endpointAttr = m.GetCustomAttribute<EndpointAttribute>()
                     where endpointAttr != null
                     let endpointParamsAttrs = m.GetCustomAttributes<ParameterAttribute>()
-                    let endpointParams = (from p in endpointParamsAttrs select new Parameter(p.Type, p.Key))
+                    let methodParameters = m.GetParameters()
+                    let endpointParams = (
+                        from p in endpointParamsAttrs
+                        select new Parameter(p.Type, p.Key)
+                    )
+                    where methodParameters.All(m => pathParams
+                    .Concat(endpointParams)
+                    .Any(p => m.Name == p.Key && m.ParameterType == p.Type))
                     select new MethodEndpoint(m, endpointAttr.Verb, endpointParams));
 
             var resourceParamKeys = this.Path.ResourceParameters;

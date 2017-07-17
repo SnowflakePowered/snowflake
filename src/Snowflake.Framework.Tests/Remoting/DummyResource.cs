@@ -27,6 +27,7 @@ namespace Snowflake.Remoting
         [Parameter(typeof(int), "echo")]
         [Parameter(typeof(string), "echoText")]
         [Parameter(typeof(string), "someOther")]
+        // this will never be picked up by the resource parser as 'echo: int' conflicts with 'echo: string'
         public string Echo(int echo, string echoText, string someOther)
         {
             return echo + echoText + someOther;
@@ -40,6 +41,12 @@ namespace Snowflake.Remoting
             return echo + echoText + someOther;
         }
 
-       
+        [Endpoint(EndpointVerb.Create)]
+        [Parameter(typeof(string), "echoTextMisMatched")]
+        [Parameter(typeof(string), "someOther")]
+        public string EchoMisMatched(int echo, string echoTextMisMatched, string someOther)
+        {
+            return echo + echoTextMisMatched + someOther;
+        }
     }
 }
