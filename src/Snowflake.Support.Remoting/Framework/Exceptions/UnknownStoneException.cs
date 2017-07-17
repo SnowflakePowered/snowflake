@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Snowflake.Support.Remoting.Framework.Exceptions
 {
-    public class UnknownPlatformException : RequestException
+    public class UnknownStoneException : RequestException
     {
-        public UnknownPlatformException(string platformId) : base($"Unknown platform id {platformId}", 422)
+        public UnknownStoneException(string stoneId) : base($"Unknown Stone Element {stoneId}", 422)
         {
         }
     }

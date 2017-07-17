@@ -10,6 +10,7 @@ using Snowflake.Records.File;
 using Snowflake.Scraper;
 using Snowflake.Remoting.Resources.Attributes;
 using Snowflake.Remoting.Resources;
+using Snowflake.Platform;
 
 namespace Snowflake.Support.Remoting.Resources
 {
@@ -17,12 +18,10 @@ namespace Snowflake.Support.Remoting.Resources
     public class GameLibraryRoot : Resource
     {
         private IGameLibrary Library { get; }
-        private IStoneProvider Stone { get; }
 
-        public GameLibraryRoot(IStoneProvider stone, IGameLibrary library)
+        public GameLibraryRoot(IGameLibrary library)
         {
             this.Library = library;
-            this.Stone = stone;
         }
 
         [Endpoint(EndpointVerb.Read)]
@@ -32,21 +31,13 @@ namespace Snowflake.Support.Remoting.Resources
         }
 
         [Endpoint(EndpointVerb.Create)]
-        [Parameter(typeof(string), "platform")]
+        [Parameter(typeof(IPlatformInfo), "platform")]
         [Parameter(typeof(string), "title")]
-        public IGameRecord CreateGame(string title, string platform)
+        public IGameRecord CreateGame(string title, IPlatformInfo platform)
         {
-            try
-            {
-                var platformInfo = this.Stone.Platforms[platform];
-                var record = new GameRecord(platformInfo, title);
-                this.Library.Set(record);
-                return this.Library.Get(record.Guid);
-            }
-            catch (KeyNotFoundException)
-            {
-                throw new UnknownPlatformException(platform);
-            }
+            var record = new GameRecord(platform, title);
+            this.Library.Set(record);
+            return this.Library.Get(record.Guid);
         }
     }
 }

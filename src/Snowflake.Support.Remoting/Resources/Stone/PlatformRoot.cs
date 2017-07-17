@@ -8,20 +8,14 @@ using System.Text;
 
 namespace Snowflake.Resources.Stone
 {
-    [Resource("stone", "platforms", ":platformId")]
-    [Parameter(typeof(string), "platformId")]
+    [Resource("stone", "platforms", ":platform")]
+    [Parameter(typeof(IPlatformInfo), "platform")]
     public class PlatformRoot : Resource
     {
-        private IStoneProvider StoneProvider { get; }
-        public PlatformRoot(IStoneProvider provider)
-        {
-            this.StoneProvider = provider;
-        }
-
         [Endpoint(EndpointVerb.Read)]
-        public IPlatformInfo GetPlatform(string platformId)
+        public IPlatformInfo GetPlatform(IPlatformInfo platform)
         {
-            return this.StoneProvider.Platforms[platformId];
+            return platform;
         }
 
     }
