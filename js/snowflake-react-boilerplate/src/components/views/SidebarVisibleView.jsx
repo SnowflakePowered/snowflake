@@ -2,7 +2,6 @@ import React from 'react'
 import injectSheet from 'mui-jss-inject'
 
 import Sidebar from 'components/views/Sidebar'
-import grey from 'material-ui/colors/grey'
 const styles = {
   container: {
     width: '100%',
@@ -10,14 +9,17 @@ const styles = {
     maxHeight: '100%',
     maxWidth: '100%',
     display: 'grid',
-    gridTemplateColumns: '[sidebar] 64px [main] auto',
-    gridTemplateRows: ''
+    gridTemplateColumns: '64px auto',
+    gridTemplateRows: '',
+    gridTemplateAreas: [
+      '"sidebar main"'
+    ]
   },
   sidebarContainer: {
-    gridColumn: 'sidebar'
+    gridArea: 'sidebar'
   },
   mainContainer: {
-    gridColumnStart: 'main',
+    gridArea: 'main',
     height: '100vh'
   }
 }

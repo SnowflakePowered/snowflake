@@ -1,8 +1,6 @@
 import React from 'react'
 import injectSheet from 'mui-jss-inject'
 import _ from 'lodash'
-
-import SidebarVisibleView from 'components/views/SidebarVisibleView'
 import List, { ListItem } from 'material-ui/List'
 import Typography from 'material-ui/Typography'
 import BottomSheet from 'components/BottomSheet'
@@ -18,39 +16,45 @@ const styles = {
   platformSelector: {
     overflowY: 'auto',
     overflowX: 'hidden',
-    gridColumn: 'platformSelector',
+    gridArea: 'selector',
     zIndex: 2
   },
   container: {
     display: 'grid',
-    gridTemplateColumns: '[platformSelector] 30% [info] auto',
+    gridTemplateColumns: '30% auto',
+    gridTemplateAreas: [
+      '"selector info"'
+    ],
     height: '100%'
   },
   platformDisplay: {
     display: 'grid',
-    gridTemplateRows: '[platformImage] 60% [platformInfo] auto'
+    gridTemplateRows: '60% auto',
+    gridTemplateAreas: '"image" "info"'
   },
   platformImage: {
-    backgroundColor: grey[200]
+    backgroundColor: grey[200],
+    gridArea: 'image'
   },
   platformInformation: {
-    gridRow: 'platformInfo'
+    gridArea: 'info'
   },
   platformInformationInner: {
     display: 'grid',
-    gridTemplateRows: '[platformInfo] 80% [platformMenu] 20%',
+    gridTemplateRows: '80% 20%',
+    gridTemplateAreas: '"info" "menu"',
     height: '100%',
     width: '100%'
   },
   menu: {
-    gridRow: 'platformMenu',
+    gridArea: 'menu',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-end'
 
   },
   platformInfoDisplay: {
-    gridRow: 'platformInfo'
+    gridArea: 'info'
   }
 }
 
