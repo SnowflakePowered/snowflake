@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Snowflake.Plugin.Emulators.TestEmulator.Configuration
 {
-    [ConfigurationSection("audio", "Audio Options")]
+    [ConfigurationSection("test", "Test Options")]
     public interface ITestConfiguration : IConfigurationSection<ITestConfiguration>
     {
         [ConfigurationOption("integer_option", 99)]
