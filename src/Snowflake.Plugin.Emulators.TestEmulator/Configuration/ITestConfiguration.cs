@@ -9,15 +9,15 @@ namespace Snowflake.Plugin.Emulators.TestEmulator.Configuration
     [ConfigurationSection("audio", "Audio Options")]
     public interface ITestConfiguration : IConfigurationSection<ITestConfiguration>
     {
-        [ConfigurationOption("integer_option", 0)]
+        [ConfigurationOption("integer_option", 99)]
         int IntegerOption { get; }
-        [ConfigurationOption("double_option", 0d)]
+        [ConfigurationOption("double_option", 15d)]
         double DoubleOption { get; }
-        [ConfigurationOption("boolean_option", false)]
+        [ConfigurationOption("boolean_option", true)]
         bool BooleanOption { get; }
         [ConfigurationOption("string_option", "Hello World!")]
         string StringOption { get; }
-        [ConfigurationOption("enum_option", TestConfigurationEnum.TestOne)]
+        [ConfigurationOption("enum_option", TestConfigurationEnum.TestTwo)]
         TestConfigurationEnum EnumOption { get; }
         
     }

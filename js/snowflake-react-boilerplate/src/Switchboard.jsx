@@ -8,6 +8,8 @@ import PlatformListView from 'components/views/PlatformListView'
 import withQueryState from 'snowflake/compose/withQueryState'
 import GameListView from 'components/views/GameListView'
 import GameDisplayView from 'components/views/GameDisplayView'
+import ConfigurationView from 'components/presentation/configuration/ConfigurationView'
+import Config from 'components/presentation/configuration/Config'
 
 const PlatformRendererTest = compose(withQueryState)(({platforms, queryState}) => (
   <PlatformListView platforms={ platforms }
@@ -21,11 +23,11 @@ const GameRendererTest = compose(withQueryState)(({games, queryState}) => (
 ))
 
 const GameViewRenderTest = withQueryState(({queryState}) => (
-   <GameDisplayView game={queryState.game} 
-            platform={queryState.platform}
-            gameTitle={queryState.game ? queryState.game.Title : "Unknown"}
-            gamePublisher={_.get(queryState.game, "Metadata.game_publisher.Value", "Unknown Publisher")}
-            gameDescription={_.get(queryState.game, "Metadata.game_description.Value", "No Description Found")}/>
+  <GameDisplayView game={queryState.game}
+    platform={queryState.platform}
+    gameTitle={queryState.game ? queryState.game.Title : 'Unknown'}
+    gamePublisher={_.get(queryState.game, 'Metadata.game_publisher.Value', 'Unknown Publisher')}
+    gameDescription={_.get(queryState.game, 'Metadata.game_description.Value', 'No Description Found')}/>
 ))
 
 class Switchboard extends React.Component {
@@ -41,6 +43,7 @@ class Switchboard extends React.Component {
           <Route path="/platforms/" component={PlatformRendererTest}/>
           <Route path="/games/" component={GameRendererTest}/>
           <Route path="/gamedetail/" component={GameViewRenderTest}/>
+          <Route path="/config/" render={() => <ConfigurationView config={Config}/>}/>
         </SidebarVisibleView>
       </div>
     )
