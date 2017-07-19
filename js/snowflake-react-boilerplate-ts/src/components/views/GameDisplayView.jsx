@@ -21,7 +21,7 @@ const style = {
     paddingBottom: 10
   },
   gameLaunchHeader: {
-    //background: 'white',
+    // background: 'white',
     display: 'flex',
     alignItems: 'center',
     margin: [10, 10]
@@ -139,11 +139,11 @@ class GameDisplayViewMenu extends React.Component {
   }
 
   handleChange = (event, index) => {
-    this.setState({ index });
+    this.setState({ index })
   };
 
-  render() {
-    const classes = this.props.classes;
+  render () {
+    const classes = this.props.classes
 
     return (
       <Tabs
@@ -157,7 +157,7 @@ class GameDisplayViewMenu extends React.Component {
         <Tab label="Item Two" />
         <Tab label="Item Three" />
       </Tabs>
-    );
+    )
   }
 }
 

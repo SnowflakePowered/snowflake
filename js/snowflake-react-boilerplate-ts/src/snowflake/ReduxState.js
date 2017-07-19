@@ -31,9 +31,6 @@ const ReduxState = (AppComponent) => {
   return connect(mapStateToProps, mapDispatchToProps, null, { pure: false })(class extends Component {
     static displayName = `State(${getDisplayName(AppComponent)})`
     componentWillMount () {
-      // todo: find better place for state initialization
-      //this.props.actions.platforms.beginRefreshPlatforms()
-      //this.props.actions.games.beginRefreshGames()
     }
 
     render () {

@@ -35,9 +35,9 @@ const SearchBar = ({ classes, tagline, onChange }) => (
     <SearchIcon color={grey[400]} className={classes.searchIcon} />
     <FormControl className={classes.input}>
       <Input
-          placeholder={'Search ' + (tagline || '')}
-          className={classes.textFieldUnderline}
-          onChange={onChange}
+        placeholder={'Search ' + (tagline || '')}
+        className={classes.textFieldUnderline}
+        onChange={onChange}
       />
     </FormControl>
   </Paper>

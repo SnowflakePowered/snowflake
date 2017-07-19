@@ -15,7 +15,7 @@ import Link from 'components/Link'
 export const dimensions = {
   portrait: {
     width: 170,
-    height: 200,
+    height: 200
   },
   landscape: {
     width: 185,
@@ -85,7 +85,7 @@ const styles = {
     color: grey[400],
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
-    overflow: 'hidden',
+    overflow: 'hidden'
   },
   cardTitle: {
     whiteSpace: 'nowrap',

@@ -55,7 +55,6 @@ const GameLaunchHeaderView = ({ classes, gameTitle, gamePublisher, gameDescripti
       </div>
       <div className={classes.bottomControls}>
         <div className={classes.emulatorSelector}>
-          
         </div>
       </div>
     </div>

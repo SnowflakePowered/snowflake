@@ -8,4 +8,3 @@ export const beginRefreshPlatforms = () => {
     dispatch(refreshPlatforms(platforms))
   }
 }
-

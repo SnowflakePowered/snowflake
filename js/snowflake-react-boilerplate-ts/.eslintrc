@@ -16,6 +16,7 @@
     }
   },
   "rules": {
+    "no-unused-vars": "warn",
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error",
     "react/no-set-state": "warn",
@@ -28,7 +29,7 @@
     "react/jsx-pascal-case": "error",
     "react/jsx-indent-props": ["error", 2],
     "react/jsx-indent": ["error", 2]
-  },
+	},
   "plugins": [
     "react"
   ]

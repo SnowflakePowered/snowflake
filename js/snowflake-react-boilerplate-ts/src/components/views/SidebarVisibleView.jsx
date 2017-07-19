@@ -30,7 +30,7 @@ const SidebarVisibleView = ({ classes, children }) => (
       <Sidebar />
     </div>
     <div className={classes.mainContainer}>
-        { children }
+      { children }
     </div>
   </div>
 )

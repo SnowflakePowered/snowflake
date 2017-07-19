@@ -11,7 +11,7 @@ const withPlatforms = (WrappedComponent) => {
     static displayName = wrapDisplayName(WrappedComponent, 'Platforms')
 
     render () {
-      return <WrappedComponent {...this.props} 
+      return <WrappedComponent {...this.props}
         platforms={this.context.snowflake.platforms}/>
     }
   }

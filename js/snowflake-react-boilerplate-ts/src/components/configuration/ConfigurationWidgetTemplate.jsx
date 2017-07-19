@@ -4,25 +4,25 @@ import injectSheet from 'react-jss'
 const sheet = {
   container: {
     fontFamily: 'Roboto, sans-serif',
-    display: "grid",
-    width: "100%",
-    gridTemplateColumns: "80% 20%"
+    display: 'grid',
+    width: '100%',
+    gridTemplateColumns: '80% 20%'
   },
   description: {
 
   },
   control: {
-    justifySelf: "end"
+    justifySelf: 'end'
   },
   configTitle: {
-    
+
   },
   configDescription: {
     color: 'grey',
     fontSize: '0.75em'
   }
 }
-//todo: use layout
+// todo: use layout
 const ConfigurationWidgetTemplate = ({classes, name, description, children}) => (
   <div className={classes.container}>
     <div className={classes.description}>

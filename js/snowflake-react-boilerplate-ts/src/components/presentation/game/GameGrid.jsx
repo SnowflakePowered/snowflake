@@ -20,7 +20,7 @@ const styles = {
     display: 'inline-block'
   },
   autoSizerContainer: {
-    height: '100%',
+    height: '100%'
   },
   cellWrapper: {
     display: 'flex',
@@ -47,7 +47,7 @@ const cellRenderer = ({ className, children, numberOfRows, numberOfColumns }) =>
 
 const padding = 24
 const getDimensions = (portrait, landscape, square) => {
-  let dimensionObject;
+  let dimensionObject
   if (portrait) {
     dimensionObject = dimensions.portrait
   } else if (landscape) {
@@ -62,28 +62,27 @@ const getDimensions = (portrait, landscape, square) => {
 }
 
 class GameGrid extends React.PureComponent {
-
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       scrollElement: null
     }
   }
 
-  updateScrollElement(target, containerClass) {
+  updateScrollElement (target, containerClass) {
     if (this.state.scrollElement === null && target.classList.contains(containerClass)) {
       this.setState({ scrollElement: target })
     }
   }
- 
-  handleScroll = (e) => this.updateScrollElement(e.target, this.props.classes.container)
 
-  render() {
+  handleScroll = e => this.updateScrollElement(e.target, this.props.classes.container)
+
+  render () {
     const { BOX_HEIGHT, BOX_WIDTH } = getDimensions(this.props.portrait, this.props.landscape, this.props.square)
     const children = React.Children.toArray(this.props.children)
     return (
       <div className={this.props.classes.container}
-        onScroll={this.handleScroll} //hackity hack
+        onScroll={this.handleScroll} // hackity hack
       >
         <div className={this.props.classes.autoSizerContainer}>
           <WindowScroller
@@ -100,8 +99,9 @@ class GameGrid extends React.PureComponent {
                     const CENTERED_BOX_WIDTH = BOX_WIDTH + (BOX_WIDTH / numberOfColumns / 2)
                     const numberOfRows = Math.ceil(children.length / numberOfColumns)
                     const cells = cellRenderer({ classes: this.props.classes.cellWrapper,
-                                                 children: children,
-                                                 numberOfRows, numberOfColumns })
+                      children: children,
+                      numberOfRows,
+                      numberOfColumns })
                     return (
                       <ColumnSizer
                         columnMaxWidth={CENTERED_BOX_WIDTH}
