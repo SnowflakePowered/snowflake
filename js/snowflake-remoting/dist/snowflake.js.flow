@@ -1,0 +1,69 @@
+declare export default class Snowflake {
+    constructor(rootUrl?: string): this;
+    games: Games;
+    stone: Stone
+}
+declare export interface Game {
+    Files: File[],
+        Guid: string,
+        Metadata: {
+            [key: string]: Metadata
+        },
+        PlatformID: string,
+        Title: string
+}
+declare export interface File {
+    FilePath: string,
+        Guid: string,
+        Metadata: {
+            [key: string]: Metadata
+        },
+        MimeType: string,
+        Record: string
+}
+declare export interface Metadata {
+    Guid: string,
+        Key: string,
+        Record: string,
+        Value: string
+}
+declare export class Games mixins Service {
+    constructor(rootUrl: string): this;
+    getGames: () => Promise<Iterable<Game >> ;
+    getGame: (uuid: string) => Promise<Game>;
+    createGame: (title: string, platform: Platform) => Promise<Game>;
+    createFile: (
+        game: Game,
+        path: string,
+        mimetype: string) => Promise<Game & Immutable.ImmutableObject<Game >>
+}
+declare export interface Platform {
+    PlatformID: string,
+        Metadata: {
+            [key: string]: string
+        },
+        MaximumInputs: number,
+        FriendlyName: string,
+        FileTypes: {
+            [key: string]: string
+        }
+}
+declare export class Stone mixins Service {
+    constructor(rootUrl: string): this;
+    getPlatforms: () => Promise<Map<string, Platform >>
+}
+declare export interface Response<T>{
+    Response: T,
+    Error: Error
+}
+declare export interface Error {
+    Message?: string
+}
+declare export class Service {
+    rootUrl: string;
+    serviceName: string;
+    constructor(rootUrl: string, serviceName: string): this;
+    getServiceUrl: (...path: string[]) => string
+}
+declare export type Verb = Create | Read | Delete | Update;
+declare export var request:<T>(url: string, payload?: any, verb?: Verb) => Promise<Response<T >> ;
