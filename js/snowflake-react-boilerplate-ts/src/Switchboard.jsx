@@ -9,6 +9,7 @@ import withQueryState from 'snowflake/compose/withQueryState'
 import GameListView from 'components/views/GameListView'
 import GameDisplayView from 'components/views/GameDisplayView'
 import ConfigurationView from 'components/presentation/configuration/ConfigurationView'
+import Config from 'components/presentation/configuration/Config'
 
 const PlatformRendererTest = compose(withQueryState)(({platforms, queryState}) => (
   <PlatformListView platforms={ platforms }
@@ -42,7 +43,7 @@ class Switchboard extends React.Component {
           <Route path="/platforms/" component={PlatformRendererTest}/>
           <Route path="/games/" component={GameRendererTest}/>
           <Route path="/gamedetail/" component={GameViewRenderTest}/>
-          <Route path="/config/" render={() => <ConfigurationView/>}/>
+          <Route path="/config/" render={() => <ConfigurationView config={Config}/>}/>
         </SidebarVisibleView>
       </div>
     )

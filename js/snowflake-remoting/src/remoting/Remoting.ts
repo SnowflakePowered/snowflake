@@ -1,5 +1,3 @@
-import 'whatwg-fetch'
-
 export interface Response<T> {
   Response: T
   Error: Error
