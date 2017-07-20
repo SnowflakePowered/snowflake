@@ -1,15 +1,17 @@
 import { Platform, Game } from 'snowflake-remoting'
 
-interface RootState {
+interface State {
   Games: Game[]
   Platforms: Map<string, Platform>,
-  CurrentPlatform?: Platform
+  ActivePlatform: string,
+  ActiveGame: string
 }
 
-export const InitialState: RootState = {
+export const InitialState: State = {
   Games: [],
   Platforms: new Map<string, Platform>(),
-  CurrentPlatform: undefined
+  ActivePlatform: '',
+  ActiveGame: ''
 }
 
-export default RootState
+export default State

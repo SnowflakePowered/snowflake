@@ -1,10 +1,19 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import { wrapDisplayName } from 'recompose'
-import { SnowflakeContext } from 'decorators/SnowflakeProvider'
+import { SnowflakeData } from 'state/SnowflakeProvider'
 
 export type SnowflakeProps = {
-  snowflake: SnowflakeContext;
+  snowflake: SnowflakeData;
+}
+
+type SnowflakeContext = {
+  Snowflake: SnowflakeData
+}
+
+const objectWithoutKey = (object: any, key: string) => {
+  const {[key]: deletedKey, ...otherKeys} = object
+  return otherKeys
 }
 
 const withSnowflake = <TOriginalProps extends {}>(
@@ -22,9 +31,7 @@ const withSnowflake = <TOriginalProps extends {}>(
       return (
         <WrappedComponent
           {...this.props}
-          snowflake={{
-            Snowflake: this.context.Snowflake
-          }}
+          snowflake={ objectWithoutKey(this.context.Snowflake, 'children') }
         />
       )
     }

@@ -1,10 +1,10 @@
 import * as React from 'react'
 import './App.css'
-import SnowflakeProvider from 'decorators/SnowflakeProvider'
+import SnowflakeProvider from 'state/SnowflakeProvider'
 import { MuiThemeProvider } from 'material-ui/styles'
 // import GameCard from 'components/GameCard/GameCard'
-import { BrowserRouter, Route } from 'react-router-dom'
-import CurrentPlatformRouter from 'routing/CurrentPlatformRouter'
+import { BrowserRouter } from 'react-router-dom'
+import MapRouteToState from 'routing/MapRouteToState'
 
 class App extends React.Component<any, any> {
   render () {
@@ -12,7 +12,7 @@ class App extends React.Component<any, any> {
       <MuiThemeProvider>
         <BrowserRouter>
           <SnowflakeProvider>
-            <Route path='*' component={CurrentPlatformRouter}/>
+            <MapRouteToState/>
             <div>
               Hello World
             </div>

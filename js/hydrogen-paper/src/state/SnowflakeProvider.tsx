@@ -1,17 +1,22 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import { connect, Dispatch } from 'react-redux'
-import RootState from 'state/RootState'
+import State from 'state/State'
 import { Platform, Game } from 'snowflake-remoting'
 import { Action } from 'redux'
 import * as Actions from 'state/Actions'
+import * as Selectors from 'state/Selectors'
 
-export type SnowflakeContext = {
-  Snowflake: {
-    Platforms: Map<string, Platform>,
-    Games: Game[],
-    Dispatch: Dispatch<Action>
-  }
+type SnowflakeContext = {
+  Snowflake: SnowflakeData
+}
+
+export type SnowflakeData = {
+  Platforms: Map<string, Platform>,
+  Games: Game[],
+  ActivePlatform: Platform,
+  ActiveGame: Game,
+  Dispatch?: Dispatch<Action>
 }
 
 function mapDispatchToProps<A extends Action> (dispatch: Dispatch<A>) {
@@ -20,14 +25,16 @@ function mapDispatchToProps<A extends Action> (dispatch: Dispatch<A>) {
   }
 }
 
-function mapStateToProps (state: RootState): RootState {
+function mapStateToProps (state: State): SnowflakeData {
   return {
-    Platforms: state.Platforms,
-    Games: state.Games
+    Platforms: Selectors.platformsSelector(state),
+    Games: Selectors.gamesSelector(state),
+    ActivePlatform: Selectors.activePlatformSelector(state)!,
+    ActiveGame: Selectors.activeGameSelector(state)
   }
 }
 
-class SnowflakeProvider extends React.Component<RootState & { Dispatch: Dispatch<Action> }> {
+class SnowflakeProvider extends React.Component<SnowflakeData & { Dispatch: Dispatch<Action> }> {
   static childContextTypes = {
     Snowflake: PropTypes.object
   }
@@ -39,11 +46,7 @@ class SnowflakeProvider extends React.Component<RootState & { Dispatch: Dispatch
 
   getChildContext (): SnowflakeContext {
     return {
-      Snowflake: {
-        Platforms: this.props.Platforms,
-        Games: this.props.Games,
-        Dispatch: this.props.Dispatch
-      }
+      Snowflake: this.props
     }
   }
 

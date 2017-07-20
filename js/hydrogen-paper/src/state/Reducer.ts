@@ -1,8 +1,8 @@
 import { reducerWithInitialState } from 'typescript-fsa-reducers'
-import RootState, { InitialState } from './RootState'
-import * as Actions from './Actions'
+import State, { InitialState } from 'state/State'
+import * as Actions from 'state/Actions'
 
-const reducer = reducerWithInitialState<RootState>(InitialState)
+const reducer = reducerWithInitialState<State>(InitialState)
   .case(Actions.refreshPlatforms.done, (action, payload) => {
     return {
       ...action,
@@ -15,10 +15,16 @@ const reducer = reducerWithInitialState<RootState>(InitialState)
       Games: payload.result
     }
   })
-  .case(Actions.setCurrentPlatform, (action, payload) => {
+  .case(Actions.setActivePlatform, (action, payload) => {
     return {
       ...action,
-      CurrentPlatform: payload
+      ActivePlatform: payload
+    }
+  })
+  .case(Actions.setActiveGame, (action, payload) => {
+    return {
+      ...action,
+      ActiveGame: payload
     }
   })
   .build()
