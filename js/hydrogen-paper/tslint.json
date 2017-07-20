@@ -7,7 +7,7 @@
         "jsx-no-multiline-js": [false],
         "jsx-alignment": [false],
         "jsx-curly-spacing": [true, 1],
-        "no-any": true,
-        "no-unsafe-any": true
+        "no-unsafe-any": true,
+        "jsx-boolean-value": [false, "always"]
     }
 }

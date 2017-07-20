@@ -16,7 +16,7 @@ const styles = {
     transform: 'rotate(0deg)'
   },
   expandOpen: {
-    transform: 'rotate(180deg)',
+    transform: 'rotate(180deg)'
   },
   container: {
     display: 'grid',
@@ -26,7 +26,6 @@ const styles = {
     gridColumn: 'textSection'
   },
   toolbar: {
-   
     gridColumn: 'toolbar'
   },
   collapse: {
@@ -49,18 +48,15 @@ class CollapsingParagaph extends React.Component {
     isCollapsing: false
   }
   
-
   handleExpandClick = () => {
     this.setState({ open: !this.state.open, isCollapsing: true });
   }
-
-
 
   handleCollapsing = () => {
     this.setState({...this.state, isCollapsing: false})
   }
 
-  render() {
+  render () {
     const classes = this.props.classes
     const text = this.props.children
     // todo: calculate text size.

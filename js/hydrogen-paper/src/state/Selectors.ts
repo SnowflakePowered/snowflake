@@ -18,3 +18,9 @@ export const activeGameSelector = createSelector(
   activeGameUuidSelector,
   (games, gameUuid) => games.filter(game => game.Guid === gameUuid)[0]
 )
+
+export const activePlatformGamesSelector = createSelector(
+  gamesSelector,
+  activePlatformSelector,
+  (games, platform) => games.filter(g => platform ? g.PlatformID === platform.PlatformID : 0)
+)

@@ -8,7 +8,6 @@ import List, {
 } from 'material-ui/List'
 
 import MenuIcon from 'material-ui-icons/Menu'
-import ArrowBackIcon from 'material-ui-icons/ArrowBack'
 import GamepadIcon from 'material-ui-icons/VideogameAsset'
 import grey from 'material-ui/colors/grey'
 import { white } from 'material-ui/colors/common'

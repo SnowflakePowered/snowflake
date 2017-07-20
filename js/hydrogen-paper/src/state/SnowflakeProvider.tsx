@@ -16,6 +16,7 @@ export type SnowflakeData = {
   Games: Game[],
   ActivePlatform: Platform,
   ActiveGame: Game,
+  ActivePlatformGames: Game[],
   Dispatch?: Dispatch<Action>
 }
 
@@ -30,7 +31,8 @@ function mapStateToProps (state: State): SnowflakeData {
     Platforms: Selectors.platformsSelector(state),
     Games: Selectors.gamesSelector(state),
     ActivePlatform: Selectors.activePlatformSelector(state)!,
-    ActiveGame: Selectors.activeGameSelector(state)
+    ActiveGame: Selectors.activeGameSelector(state),
+    ActivePlatformGames: Selectors.activePlatformGamesSelector(state)
   }
 }
 

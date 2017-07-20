@@ -20,8 +20,8 @@ const withSnowflake = <TOriginalProps extends {}>(
   WrappedComponent:
     | React.ComponentClass<TOriginalProps & SnowflakeProps>
     | React.StatelessComponent<TOriginalProps & SnowflakeProps>
-): React.ComponentClass<{} & SnowflakeProps> => {
-  return class extends React.Component<{} & SnowflakeProps, {}> {
+): React.ComponentClass<any & SnowflakeProps> => {
+  return class extends React.Component<any & SnowflakeProps, {}> {
     static contextTypes = {
       Snowflake: PropTypes.object
     }

@@ -11,7 +11,7 @@ type GamePlayButtonProps = {
   onClick?: (event: Event) => void,
   loading?: boolean
 }
-const GamePlayButton = ({classes, onClick, loading}: GamePlayButtonProps) => (
+const GamePlayButton: React.SFC<GamePlayButtonProps> = ({classes, onClick, loading}) => (
   <div className={classes.buttonContainer}>
     <div className={classes.pulse}/>
     {loading ? <CircularProgress size={40} className={classes.progress} /> : ''}

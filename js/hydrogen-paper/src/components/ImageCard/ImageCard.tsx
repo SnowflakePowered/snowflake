@@ -49,7 +49,7 @@ type ImageCardProps = {
   elevation: number
 }
 
-const ImageCard: React.SFC<ImageCardProps> = ({ classes, image, elevation }: ImageCardProps) => (
+const ImageCard: React.SFC<ImageCardProps> = ({ classes, image, elevation }) => (
   <div className={classes.padding}>
     <div className={classes.container}>
       <div className={classes.paperContainer}>

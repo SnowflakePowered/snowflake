@@ -27,7 +27,7 @@ type GameCardProps = {
   platformID: string
 }
 
-const GameCard = ({ classes, image, title, publisher, portrait, landscape, square, guid, platformID }: GameCardProps) => (
+const GameCard: React.SFC<GameCardProps> = ({ classes, image, title, publisher, portrait, landscape, square, guid, platformID }) => (
   <div className={classNames({
     [classes.cardContainer]: true,
     [classes.cardContainerSquare]: square,

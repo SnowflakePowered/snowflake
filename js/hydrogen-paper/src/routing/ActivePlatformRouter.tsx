@@ -5,6 +5,10 @@ import withSnowflake, { SnowflakeProps } from 'decorators/withSnowflake'
 import { setActivePlatform } from 'state/Actions'
 
 class CurrentPlatformRouter extends React.Component<SnowflakeProps & RouteComponentProps<{}>> {
+  shouldComponentUpdate () {
+    return true
+  }
+
   render () {
     let { platform }: { platform: string} = queryString.parse(this.props.location.search)
     this.props.snowflake.Dispatch!(setActivePlatform(platform))
@@ -13,4 +17,4 @@ class CurrentPlatformRouter extends React.Component<SnowflakeProps & RouteCompon
   }
 }
 
-export default withSnowflake(withRouter(CurrentPlatformRouter))
+export default withRouter(withSnowflake(CurrentPlatformRouter))

@@ -27,6 +27,12 @@ const reducer = reducerWithInitialState<State>(InitialState)
       ActiveGame: payload
     }
   })
+  .case(Actions.locationChange, (action, payload) => {
+    return {
+      ...action,
+      location: payload
+    }
+  })
   .build()
 
 export default reducer
