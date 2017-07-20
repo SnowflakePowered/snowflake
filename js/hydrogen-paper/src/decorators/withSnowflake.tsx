@@ -11,17 +11,17 @@ type SnowflakeContext = {
   Snowflake: SnowflakeData
 }
 
-const objectWithoutKey = (object: any, key: string) => {
-  const {[key]: deletedKey, ...otherKeys} = object
-  return otherKeys
+function objectWithoutKey<T extends object> (object: T, key: string): T {
+  const {[key]: deletedKey, ...otherKeys}: object = object
+  return otherKeys as T
 }
 
 const withSnowflake = <TOriginalProps extends {}>(
   WrappedComponent:
     | React.ComponentClass<TOriginalProps & SnowflakeProps>
     | React.StatelessComponent<TOriginalProps & SnowflakeProps>
-): React.ComponentClass<any & SnowflakeProps> => {
-  return class extends React.Component<any & SnowflakeProps, {}> {
+): React.ComponentClass<{} & SnowflakeProps> => {
+  return class extends React.Component<{} & SnowflakeProps, {}> {
     static contextTypes = {
       Snowflake: PropTypes.object
     }

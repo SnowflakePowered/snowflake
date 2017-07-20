@@ -4,7 +4,7 @@ import * as queryString from 'query-string'
 import withSnowflake, { SnowflakeProps } from 'decorators/withSnowflake'
 import { setActiveGame } from 'state/Actions'
 
-class CurrentGameRouter extends React.Component<SnowflakeProps & RouteComponentProps<any>> {
+class CurrentGameRouter extends React.Component<SnowflakeProps & RouteComponentProps<{}>> {
   render () {
     let { game }: { game: string} = queryString.parse(this.props.location.search)
     this.props.snowflake.Dispatch!(setActiveGame(game))

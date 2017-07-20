@@ -1,7 +1,7 @@
 import * as React from 'react'
-import { Link as ReactRouterLink } from 'react-router-dom'
+import { Link as ReactRouterLink, LinkProps } from 'react-router-dom'
 
-const Link = (props) => {
+const Link: React.SFC<LinkProps> = (props: LinkProps) => {
   return (
     <ReactRouterLink {...props} style={{
       textDecoration: 'none',

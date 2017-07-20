@@ -10,7 +10,7 @@ type FailedPayload<P, S> = {
   payload: Failure<P, S>
 }
 
-export const successDispatch = <P, S>(action: AsyncActionCreators<P, S, any>,
+export const successDispatch = <P, S>(action: AsyncActionCreators<P, S, {}>,
                                       payload: S, params?: P): SuccessPayload<P | void, S> => {
   return {
     type: action.done.type,
@@ -21,7 +21,7 @@ export const successDispatch = <P, S>(action: AsyncActionCreators<P, S, any>,
   }
 }
 
-export const failedDispatch = <P, S extends Error>(action: AsyncActionCreators<P, S, any>,
+export const failedDispatch = <P, S extends Error>(action: AsyncActionCreators<P, S, {}>,
                               error: S, params?: P): FailedPayload<P | void, S> => {
   return {
     type: action.failed.type,

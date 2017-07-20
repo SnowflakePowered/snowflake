@@ -4,7 +4,7 @@ import * as queryString from 'query-string'
 import withSnowflake, { SnowflakeProps } from 'decorators/withSnowflake'
 import { setActivePlatform } from 'state/Actions'
 
-class CurrentPlatformRouter extends React.Component<SnowflakeProps & RouteComponentProps<any>> {
+class CurrentPlatformRouter extends React.Component<SnowflakeProps & RouteComponentProps<{}>> {
   render () {
     let { platform }: { platform: string} = queryString.parse(this.props.location.search)
     this.props.snowflake.Dispatch!(setActivePlatform(platform))

@@ -5,8 +5,9 @@ import { MuiThemeProvider } from 'material-ui/styles'
 // import GameCard from 'components/GameCard/GameCard'
 import { BrowserRouter } from 'react-router-dom'
 import MapRouteToState from 'routing/MapRouteToState'
+import ImageCard from 'components/ImageCard/ImageCard'
 
-class App extends React.Component<any, any> {
+class App extends React.Component<{}, {}> {
   render () {
     return (
       <MuiThemeProvider>
@@ -14,7 +15,7 @@ class App extends React.Component<any, any> {
           <SnowflakeProvider>
             <MapRouteToState/>
             <div>
-              Hello World
+              <ImageCard image='hello' elevation={1}/>
             </div>
           </SnowflakeProvider>
         </BrowserRouter>

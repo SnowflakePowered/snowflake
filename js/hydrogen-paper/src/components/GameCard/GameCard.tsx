@@ -15,7 +15,8 @@ import { styles } from './GameCard.style'
 // todo: z-depth on hover
 // todo: button on hover
 type GameCardProps = {
-  classes: any,
+  // tslint:disable-next-line:no-any
+  classes?: any,
   image: string,
   title: string,
   publisher: string,
@@ -62,4 +63,4 @@ const GameCard = ({ classes, image, title, publisher, portrait, landscape, squar
     </Card>
   </div>)
 
-export default injectSheet(styles)(GameCard)
+export default injectSheet<GameCardProps>(styles)(GameCard)

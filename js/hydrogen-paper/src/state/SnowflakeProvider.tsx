@@ -50,7 +50,7 @@ class SnowflakeProvider extends React.Component<SnowflakeData & { Dispatch: Disp
     }
   }
 
-  render (): any {
+  render (): JSX.Element {
     return (
       <div>
         { this.props.children }

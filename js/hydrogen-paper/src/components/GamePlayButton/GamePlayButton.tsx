@@ -6,7 +6,12 @@ import { CircularProgress } from 'material-ui/Progress'
 import injectSheet from 'mui-jss-inject'
 import { styles } from './GamePlayButton.style'
 
-const GamePlayButton = ({classes, onClick, loading}) => (
+type GamePlayButtonProps = {
+  classes?: any,
+  onClick?: (event: Event) => void,
+  loading?: boolean
+}
+const GamePlayButton = ({classes, onClick, loading}: GamePlayButtonProps) => (
   <div className={classes.buttonContainer}>
     <div className={classes.pulse}/>
     {loading ? <CircularProgress size={40} className={classes.progress} /> : ''}
@@ -16,4 +21,4 @@ const GamePlayButton = ({classes, onClick, loading}) => (
   </div>
 )
 
-export default injectSheet(styles)(GamePlayButton)
+export default injectSheet<GamePlayButtonProps>(styles)(GamePlayButton)

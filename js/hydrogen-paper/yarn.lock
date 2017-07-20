@@ -3401,9 +3401,9 @@ ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
 
-mui-jss-inject@^0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/mui-jss-inject/-/mui-jss-inject-0.0.3.tgz#5c981c52c56a8818a17f08fb542b43ad07e53d81"
+mui-jss-inject@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/mui-jss-inject/-/mui-jss-inject-0.0.4.tgz#3b6e7ad7d39564ecb8b85434b0d648f3c4ce3853"
   dependencies:
     jss-theme-reactor "^0.11.1"
     material-ui next
