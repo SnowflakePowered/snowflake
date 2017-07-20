@@ -1,16 +1,16 @@
-import React from 'react'
+import * as React from 'react'
 import injectSheet from 'mui-jss-inject'
 
 import Typography from 'material-ui/Typography'
 import Card, { CardContent, CardMedia } from 'material-ui/Card'
 import grey from 'material-ui/colors/grey'
 
-import GamePlayButton from './GamePlayButton'
-import classNames from 'classnames'
+import GamePlayButton from 'components/GamePlayButton/GamePlayButton'
 
 import PhotoIcon from 'material-ui-icons/Photo'
 
-import Link from 'components/Link'
+import Link from 'components/Link/Link'
+import * as classNames from 'classnames'
 
 export const dimensions = {
   portrait: {
@@ -85,7 +85,7 @@ const styles = {
     color: grey[400],
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
-    overflow: 'hidden',
+    overflow: 'hidden'
   },
   cardTitle: {
     whiteSpace: 'nowrap',
@@ -115,8 +115,19 @@ const styles = {
 
 // todo: z-depth on hover
 // todo: button on hover
+type GameCardProps = {
+  classes: any,
+  image: string,
+  title: string,
+  publisher: string,
+  portrait?: boolean,
+  landscape?: boolean,
+  square?: boolean,
+  guid: string,
+  platformID: string
+}
 
-const GameCard = ({ classes, image, title, publisher, portrait, landscape, square, guid, platformID }) => (
+const GameCard = ({ classes, image, title, publisher, portrait, landscape, square, guid, platformID }: GameCardProps) => (
   <div className={classNames({
     [classes.cardContainer]: true,
     [classes.cardContainerSquare]: square,
@@ -145,8 +156,8 @@ const GameCard = ({ classes, image, title, publisher, portrait, landscape, squar
       </CardMedia>
       <div className={classes.cardText}>
         <CardContent>
-          <Typography type="headline" component="h2" className={classes.cardTitle}>{title}</Typography>
-          <Typography component="h3" className={classes.cardSubtitle}>{publisher}</Typography>
+          <Typography type='headline' component='h2' className={classes.cardTitle}>{title}</Typography>
+          <Typography component='h3' className={classes.cardSubtitle}>{publisher}</Typography>
         </CardContent>
       </div>
     </Card>
