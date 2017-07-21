@@ -46,14 +46,14 @@ type ImageCardProps = {
   // tslint:disable-next-line:no-any
   classes?: any
   image: string,
-  elevation: number
+  elevation?: number
 }
 
 const ImageCard: React.SFC<ImageCardProps> = ({ classes, image, elevation }) => (
   <div className={classes.padding}>
     <div className={classes.container}>
       <div className={classes.paperContainer}>
-        <Paper elevation={elevation} className={classes.paper}>
+        <Paper elevation={elevation || 1} className={classes.paper}>
           <div className={classes.imageContainer}>
             <img className={classes.image} src={image} />
           </div>

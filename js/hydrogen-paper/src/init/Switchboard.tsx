@@ -4,6 +4,9 @@ import withSnowflake from 'decorators/withSnowflake'
 import PlatformList from 'components/PlatformList/PlatformList'
 import SidebarFrame from 'components/SidebarFrame/SidebarFrame'
 import GameList from 'components/GameList/GameList'
+import GameDetails from 'components/GameDetails/GameDetails'
+import ConfigurationView from 'components/ConfigurationView/ConfigurationView'
+import { get } from 'lodash'
 
 const PlatformRendererTest = withSnowflake(({ snowflake }) =>
   (
@@ -22,6 +25,14 @@ const GameRendererTest = withSnowflake(({ snowflake }) =>
     )
   )
 
+const GameViewRenderTest = withSnowflake(({snowflake}) => (
+  <GameDetails game={snowflake!.ActiveGame}
+    platform={snowflake!.ActivePlatform}
+    gameTitle={snowflake!.ActiveGame ? snowflake!.ActiveGame.Title : 'Unknown'}
+    gamePublisher={get(snowflake!.ActiveGame, 'Metadata.game_publisher.Value', 'Unknown Publisher')}
+    gameDescription={get(snowflake!.ActiveGame, 'Metadata.game_description.Value', 'No Description Found')}/>
+))
+
 class Switchboard extends React.Component {
   render () {
     return (
@@ -29,6 +40,8 @@ class Switchboard extends React.Component {
         <SidebarFrame>
           <Route path='/platforms/' component={PlatformRendererTest} />
           <Route path='/games/' component={GameRendererTest} />
+          <Route path='/gamedetail/' component={GameViewRenderTest}/>
+          <Route path='/config/' render={() => <ConfigurationView/>}/>s
         </SidebarFrame>
       </div>
     )

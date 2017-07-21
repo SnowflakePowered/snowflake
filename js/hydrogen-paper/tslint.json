@@ -8,6 +8,7 @@
         "jsx-alignment": [false],
         "jsx-curly-spacing": [true, 1],
         "no-unsafe-any": true,
-        "jsx-boolean-value": [false, "always"]
+        "jsx-boolean-value": [false, "always"],
+        "jsx-no-lambda": false
     }
 }
