@@ -5,21 +5,21 @@ import { RouterState } from 'react-router-redux'
 import { connect } from 'react-redux'
 
 export type QueryProps = {
-  query: { [key: string]: string | string[] }
+  query?: { [key: string]: string | string[] }
 }
 
-function mapStateToProps (state: RouterState): QueryProps {
+function mapStateToProps <OwnProps> (state: RouterState, ownProps: OwnProps): QueryProps {
   return {
     query: queryParamsSelector(state)
   }
 }
 
-const withQuery = <TOriginalProps extends {}>(
+const withQuery = <OwnProps extends {}>(
   WrappedComponent:
-    | React.ComponentClass<TOriginalProps & QueryProps>
-    | React.StatelessComponent<TOriginalProps & QueryProps>
-): React.ComponentClass<any & QueryProps> => {
-  return connect(mapStateToProps)(class extends React.Component<any & QueryProps, {}> {
+    | React.ComponentClass<OwnProps & QueryProps>
+    | React.StatelessComponent<OwnProps & QueryProps>
+): React.ComponentClass<OwnProps & QueryProps> => {
+  return connect(mapStateToProps)(class extends React.Component<OwnProps & QueryProps, {}> {
     static displayName = wrapDisplayName(WrappedComponent, 'WithQuery')
     render (): JSX.Element {
       return (

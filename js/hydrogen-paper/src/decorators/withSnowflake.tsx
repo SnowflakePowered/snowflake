@@ -4,7 +4,7 @@ import { wrapDisplayName } from 'recompose'
 import { SnowflakeData } from 'state/SnowflakeProvider'
 
 export type SnowflakeProps = {
-  snowflake: SnowflakeData;
+  snowflake?: SnowflakeData;
 }
 
 type SnowflakeContext = {
@@ -20,8 +20,8 @@ const withSnowflake = <TOriginalProps extends {}>(
   WrappedComponent:
     | React.ComponentClass<TOriginalProps & SnowflakeProps>
     | React.StatelessComponent<TOriginalProps & SnowflakeProps>
-): React.ComponentClass<any & SnowflakeProps> => {
-  return class extends React.Component<any & SnowflakeProps, {}> {
+): React.ComponentClass<TOriginalProps & SnowflakeProps> => {
+  return class extends React.Component<TOriginalProps & SnowflakeProps, {}> {
     static contextTypes = {
       Snowflake: PropTypes.object
     }

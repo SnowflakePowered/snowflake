@@ -42,10 +42,14 @@ type GameCardGridProps = {
 }
 
 type GameCardGridState = {
-  scrollElement?: HTMLElement
+  scrollElement?: HTMLElement | null
 }
 
 class GameCardGrid extends React.PureComponent<GameCardGridProps, GameCardGridState> {
+
+  state = {
+    scrollElement: null
+  }
 
   constructor (props) {
     super(props)
@@ -68,7 +72,7 @@ class GameCardGrid extends React.PureComponent<GameCardGridProps, GameCardGridSt
       >
         <div className={this.props.classes.autoSizerContainer}>
           <WindowScroller
-            scrollElement={this.state.scrollElement}
+            scrollElement={this.state.scrollElement!}
           >
             {({ height, scrollTop, isScrolling }) => (
               <div>
