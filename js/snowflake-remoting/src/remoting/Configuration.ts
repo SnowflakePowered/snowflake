@@ -1,14 +1,14 @@
 import * as Immutable from 'seamless-immutable'
 import { request, Response, Service } from './Remoting'
 
-export type ConfigurationOptionType = "integer" | "boolean" | "decimal" | "selection"
+export type ConfigurationOptionType = 'integer' | 'boolean' | 'decimal' | 'selection'
 
-export interface ConfigurationValue { 
+export interface ConfigurationValue {
   Value: number | boolean | string,
   Guid: string
 }
 
-export interface ConfigurationDescriptor { 
+export interface ConfigurationDescriptor {
   Default: number | boolean | string,
   Description: string,
   DisplayName: string,
@@ -37,10 +37,10 @@ export interface ConfigurationSectionDescriptor {
 }
 
 export interface ConfigurationSection {
-  Configuration: { [OptionName: string] : ConfigurationOption }
+  Configuration: { [OptionName: string]: ConfigurationOption }
   Descriptor: ConfigurationSectionDescriptor
 }
 
-export interface ConfigurationCollector {
+export interface ConfigurationCollection {
   [SectionName: string]: ConfigurationSection
 }

@@ -1,16 +1,16 @@
 import { AsyncActionCreators, ActionCreator, Success, Failure } from 'typescript-fsa'
 
-type SuccessPayload<P, S> = {
+export type SuccessPayload<P, S> = {
   type: string,
   payload: Success<P, S>
 }
 
-type FailedPayload<P, S> = {
+export type FailedPayload<P, S> = {
   type: string,
   payload: Failure<P, S>
 }
 
-type SyncPayload<S> = {
+export type SyncPayload<S> = {
   type: string,
   payload: S
 }

@@ -4,7 +4,7 @@ import injectSheet from 'mui-jss-inject'
 import Sidebar from 'components/Sidebar/Sidebar'
 import { styles } from './SidebarFrame.style'
 
-const SidebarVisibleView: React.SFC<{classes?: any}> = ({ classes, children }) => (
+const SidebarFrame: React.SFC<{classes?: any}> = ({ classes, children }) => (
   <div className={classes.container}>
     <div className={classes.sidebarContainer}>
       <Sidebar />
@@ -15,4 +15,4 @@ const SidebarVisibleView: React.SFC<{classes?: any}> = ({ classes, children }) =
   </div>
 )
 
-export default injectSheet(styles)(SidebarVisibleView)
+export default injectSheet(styles)(SidebarFrame)

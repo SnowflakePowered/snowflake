@@ -16,7 +16,7 @@ export class Stone extends Service {
 
   public getPlatforms = async (): Promise<Map<string, Platform>> => {
     const platforms = await request<Platform[]>(this.getServiceUrl('platforms'))
-    if (platforms.Error) { throw platforms.Error }
+    if (platforms.Status.Code >= 400 ) { throw new Error(platforms.Status.Message) }
     const array = platforms.Response.map(platform => [platform.PlatformID, Immutable.from(platform)] as [string, Platform])
     return new Map(array)
   }

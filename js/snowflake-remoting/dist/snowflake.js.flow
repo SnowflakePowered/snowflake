@@ -1,7 +1,8 @@
 declare export default class Snowflake {
     constructor(rootUrl?: string): this;
     games: Games;
-    stone: Stone
+    stone: Stone;
+    emulators: Emulators
 }
 declare export interface Game {
     Files: File[],
@@ -52,12 +53,32 @@ declare export class Stone mixins Service {
     constructor(rootUrl: string): this;
     getPlatforms: () => Promise<Map<string, Platform >>
 }
+declare export class Emulators mixins Service {
+    constructor(rootUrl: string): this;
+    getConfiguration: (emulatorName: string, gameUuid: string) => Promise<ConfigurationCollection >
+}
+declare export type ErrorCode = 400 |
+    401 |
+    403 |
+    404 |
+    405 |
+    415 |
+    500 |
+    501 |
+    502 |
+    503;
+declare export type OKCode = 200 |
+    201 |
+    202 |
+    204 |
+    205;
 declare export interface Response<T>{
     Response: T,
-    Error: Error
-}
-declare export interface Error {
-    Message?: string
+    Status: {
+        Message: string,
+        Type: string,
+        Code: OKCode | ErrorCode
+    }
 }
 declare export class Service {
     rootUrl: string;
@@ -67,3 +88,41 @@ declare export class Service {
 }
 declare export type Verb = Create | Read | Delete | Update;
 declare export var request:<T>(url: string, payload?: any, verb?: Verb) => Promise<Response<T >> ;
+declare export type ConfigurationOptionType = integer | boolean | decimal | selection;
+declare export interface ConfigurationValue {
+    Value: number | boolean | string,
+        Guid: string
+}
+declare export interface ConfigurationDescriptor {
+    Default: number | boolean | string,
+        Description: string,
+        DisplayName: string,
+        Simple: boolean,
+        Type: ConfigurationOptionType,
+        Min?: number,
+        Max?: number,
+        Increment?: number
+}
+declare export interface ConfigurationSelection {
+    DisplayName: string,
+        Private: boolean
+}
+declare export interface ConfigurationOption {
+    Value: ConfigurationValue,
+        Descriptor: ConfigurationDescriptor,
+        Selection?: ConfigurationSelection
+}
+declare export interface ConfigurationSectionDescriptor {
+    Description: string,
+        DisplayName: string,
+        SectionName: string
+}
+declare export interface ConfigurationSection {
+    Configuration: {
+            [OptionName: string]: ConfigurationOption
+        },
+        Descriptor: ConfigurationSectionDescriptor
+}
+declare export interface ConfigurationCollection {
+    [SectionName: string]: ConfigurationSection
+}

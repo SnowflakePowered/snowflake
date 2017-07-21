@@ -1,5 +1,5 @@
 import actionCreatorFactory from 'typescript-fsa'
-import { Platform, Game } from 'snowflake-remoting/dist/snowflake'
+import { Platform, Game, ConfigurationCollection } from 'snowflake-remoting'
 
 const actionCreator = actionCreatorFactory()
 
@@ -15,6 +15,10 @@ const STATE_SET_ACTIVE_PLATFORM: STATE_SET_ACTIVE_PLATFORM = 'STATE_SET_ACTIVE_P
 type STATE_SET_ACTIVE_GAME = 'STATE_SET_ACTIVE_GAME'
 const STATE_SET_ACTIVE_GAME: STATE_SET_ACTIVE_GAME = 'STATE_SET_ACTIVE_GAME'
 
+type SNOWFLAKE_REFRESH_ACTIVE_GAME_CONFIGURATION = 'SNOWFLAKE_REFRESH_ACTIVE_GAME_CONFIGURATION'
+const SNOWFLAKE_REFRESH_ACTIVE_GAME_CONFIGURATION: SNOWFLAKE_REFRESH_ACTIVE_GAME_CONFIGURATION = 'SNOWFLAKE_REFRESH_ACTIVE_GAME_CONFIGURATION'
+
+type LOCATION_CHANGE = '@@router/LOCATION_CHANGE'
 const LOCATION_CHANGE = '@@router/LOCATION_CHANGE'
 
 export const refreshPlatforms = actionCreator
@@ -22,6 +26,9 @@ export const refreshPlatforms = actionCreator
 
 export const refreshGames = actionCreator
        .async<void, Game[]>(SNOWFLAKE_REFRESH_GAMES)
+
+export const refreshActiveGameConfiguration = actionCreator
+       .async<{emulatorName: string, gameUuid: string}, ConfigurationCollection>(SNOWFLAKE_REFRESH_ACTIVE_GAME_CONFIGURATION)
 
 export const setActivePlatform = actionCreator<string>(STATE_SET_ACTIVE_PLATFORM)
 

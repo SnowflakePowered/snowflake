@@ -1,7 +1,8 @@
 import * as React from 'react'
+import withSnowflake, { SnowflakeProps } from 'decorators/withSnowflake'
 // import BooleanWidget from 'components/BooleanWidget/BooleanWidget'
 
-class ConfigurationView extends React.Component {
+class ConfigurationView extends React.Component<SnowflakeProps> {
   render () {
     return (
       <div>
@@ -11,4 +12,4 @@ class ConfigurationView extends React.Component {
   }
 }
 
-export default ConfigurationView
+export default withSnowflake(ConfigurationView)

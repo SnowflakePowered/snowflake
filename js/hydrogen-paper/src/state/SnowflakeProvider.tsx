@@ -2,7 +2,10 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import { connect, Dispatch } from 'react-redux'
 import State from 'state/State'
-import { Platform, Game } from 'snowflake-remoting'
+import Snowflake, {
+  Platform,
+  Game
+} from 'snowflake-remoting'
 import { Action } from 'redux'
 import * as Actions from 'state/Actions'
 import * as Selectors from 'state/Selectors'
@@ -11,14 +14,41 @@ type SnowflakeContext = {
   Snowflake: SnowflakeData
 }
 
+/**
+ * Represents the current store of data from the running Snowflake instance
+ */
 export type SnowflakeData = {
+  /**
+   * A map of Stone platforms from ID to Platform
+   */
   Platforms: Map<string, Platform>,
+  /**
+   * The array of all games in the game library
+   */
   Games: Game[],
+  /**
+   * The currently active platform
+   */
   ActivePlatform: Platform,
+  /**
+   * The currently active Game
+   */
   ActiveGame: Game,
+  /**
+   * The games for the currently active platform
+   */
   ActivePlatformGames: Game[],
-  Dispatch?: Dispatch<Action>
+  /**
+   * The main action dispatcher
+   */
+  Dispatch?: Dispatch<Action>,
+  /**
+   * Access to the main Snowflake API
+   */
+  Api: Snowflake
 }
+
+const snowflake = new Snowflake()
 
 function mapDispatchToProps<A extends Action> (dispatch: Dispatch<A>) {
   return {
@@ -32,7 +62,8 @@ function mapStateToProps (state: State): SnowflakeData {
     Games: Selectors.gamesSelector(state),
     ActivePlatform: Selectors.activePlatformSelector(state)!,
     ActiveGame: Selectors.activeGameSelector(state),
-    ActivePlatformGames: Selectors.activePlatformGamesSelector(state)
+    ActivePlatformGames: Selectors.activePlatformGamesSelector(state),
+    Api: snowflake
   }
 }
 

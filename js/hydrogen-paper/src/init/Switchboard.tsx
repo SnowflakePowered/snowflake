@@ -41,7 +41,7 @@ class Switchboard extends React.Component {
           <Route path='/platforms/' component={PlatformRendererTest} />
           <Route path='/games/' component={GameRendererTest} />
           <Route path='/gamedetail/' component={GameViewRenderTest}/>
-          <Route path='/config/' render={() => <ConfigurationView/>}/>s
+          <Route path='/config/' render={() => <ConfigurationView/>}/>
         </SidebarFrame>
       </div>
     )

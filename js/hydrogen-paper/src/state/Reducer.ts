@@ -33,6 +33,12 @@ const reducer = reducerWithInitialState<State>(InitialState)
       location: payload
     }
   })
+  .case(Actions.refreshActiveGameConfiguration.done, (action, payload) => {
+    return {
+      ...action,
+      ActiveGameConfiguration: payload.result
+    }
+  })
   .build()
 
 export default reducer

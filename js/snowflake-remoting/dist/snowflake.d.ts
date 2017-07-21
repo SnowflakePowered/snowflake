@@ -8,6 +8,7 @@ export default class Snowflake {
     constructor(rootUrl?: string);
     readonly games: Games;
     readonly stone: Stone;
+    readonly emulators: Emulators;
 }
 
 export interface Game {
@@ -58,12 +59,20 @@ export class Stone extends Service {
     getPlatforms: () => Promise<Map<string, Platform>>;
 }
 
+export class Emulators extends Service {
+    constructor(rootUrl: string);
+    getConfiguration: (emulatorName: string, gameUuid: string) => Promise<ConfigurationCollection>;
+}
+
+export type ErrorCode = 400 | 401 | 403 | 404 | 405 | 415 | 500 | 501 | 502 | 503;
+export type OKCode = 200 | 201 | 202 | 204 | 205;
 export interface Response<T> {
     Response: T;
-    Error: Error;
-}
-export interface Error {
-    Message?: string;
+    Status: {
+        Message: string;
+        Type: string;
+        Code: OKCode | ErrorCode;
+    };
 }
 export class Service {
     protected rootUrl: string;
@@ -73,4 +82,43 @@ export class Service {
 }
 export type Verb = 'Create' | 'Read' | 'Delete' | 'Update';
 export const request: <T>(url: string, payload?: any, verb?: Verb) => Promise<Response<T>>;
+
+export type ConfigurationOptionType = 'integer' | 'boolean' | 'decimal' | 'selection';
+export interface ConfigurationValue {
+    Value: number | boolean | string;
+    Guid: string;
+}
+export interface ConfigurationDescriptor {
+    Default: number | boolean | string;
+    Description: string;
+    DisplayName: string;
+    Simple: boolean;
+    Type: ConfigurationOptionType;
+    Min?: number;
+    Max?: number;
+    Increment?: number;
+}
+export interface ConfigurationSelection {
+    DisplayName: string;
+    Private: boolean;
+}
+export interface ConfigurationOption {
+    Value: ConfigurationValue;
+    Descriptor: ConfigurationDescriptor;
+    Selection?: ConfigurationSelection;
+}
+export interface ConfigurationSectionDescriptor {
+    Description: string;
+    DisplayName: string;
+    SectionName: string;
+}
+export interface ConfigurationSection {
+    Configuration: {
+        [OptionName: string]: ConfigurationOption;
+    };
+    Descriptor: ConfigurationSectionDescriptor;
+}
+export interface ConfigurationCollection {
+    [SectionName: string]: ConfigurationSection;
+}
 

@@ -1,8 +1,19 @@
 import { SagaIterator } from 'redux-saga'
 import { takeEvery, call, put, select } from 'redux-saga/effects'
-import Snowflake, { Platform, Game } from 'snowflake-remoting'
+import Snowflake, {
+  Platform,
+  Game,
+  ConfigurationCollection
+} from 'snowflake-remoting'
+
 import * as Actions from './Actions'
-import { successDispatch, failedDispatch, syncDispatch } from './ResultDispatches'
+import {
+  successDispatch,
+  failedDispatch,
+  syncDispatch,
+  SyncPayload
+} from './ResultDispatches'
+
 import * as Selectors from './Selectors'
 
 function* refreshPlatformsWorker (snowflake: Snowflake): SagaIterator {
@@ -27,12 +38,23 @@ function* refreshActiveState (): SagaIterator {
   const query: { [key: string]: string } = yield select(Selectors.queryParamsSelector)
   yield put(syncDispatch(Actions.setActivePlatform, query['platform']))
   yield put(syncDispatch(Actions.setActiveGame, query['game']))
+  yield put(syncDispatch(Actions.refreshActiveGameConfiguration.started, { emulatorName: 'TestEmulator', gameUuid: query['game'] }))
+}
+
+function* refreshActiveGameConfiguration (snowflake: Snowflake, action: SyncPayload<{emulatorName: string, gameUuid: string}> ): SagaIterator {
+  try {
+    const config: ConfigurationCollection = yield call(snowflake.emulators.getConfiguration, action.payload.emulatorName, action.payload.gameUuid)
+    yield put(successDispatch(Actions.refreshActiveGameConfiguration, config))
+  } catch (e) {
+    yield put(failedDispatch(Actions.refreshActiveGameConfiguration, e))
+  }
 }
 
 function* rootSaga (snowflake: Snowflake): SagaIterator {
   yield takeEvery(Actions.refreshPlatforms.type, refreshPlatformsWorker, snowflake)
   yield takeEvery(Actions.refreshGames.type, refreshGamesWorker, snowflake)
   yield takeEvery(Actions.locationChange, refreshActiveState)
+  yield takeEvery(Actions.refreshActiveGameConfiguration.started, refreshActiveGameConfiguration, snowflake)
 }
 
 export default rootSaga
