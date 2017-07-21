@@ -16,7 +16,8 @@
     "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
     "noUnusedLocals": true,
-    "baseUrl": "src/"
+    "baseUrl": "src/",
+    "experimentalDecorators": true
   },
   "exclude": [
     "node_modules",

@@ -3,7 +3,6 @@ import { Route } from 'react-router'
 import withSnowflake from 'decorators/withSnowflake'
 import PlatformList from 'components/PlatformList/PlatformList'
 import SidebarFrame from 'components/SidebarFrame/SidebarFrame'
-import MapRouteToState from 'routing/MapRouteToState'
 
 const PlatformRendererTest = withSnowflake(({ snowflake }) =>
   (
@@ -20,7 +19,6 @@ class Switchboard extends React.Component {
     return (
       <div>
         <SidebarFrame>
-          <Route path='*' render={MapRouteToState}/>
           <Route path='/platforms/' component={PlatformRendererTest} />
         </SidebarFrame>
       </div>

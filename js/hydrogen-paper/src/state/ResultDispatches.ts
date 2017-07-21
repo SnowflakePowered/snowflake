@@ -1,4 +1,4 @@
-import { AsyncActionCreators, Success, Failure } from 'typescript-fsa'
+import { AsyncActionCreators, ActionCreator, Success, Failure } from 'typescript-fsa'
 
 type SuccessPayload<P, S> = {
   type: string,
@@ -10,8 +10,20 @@ type FailedPayload<P, S> = {
   payload: Failure<P, S>
 }
 
+type SyncPayload<S> = {
+  type: string,
+  payload: S
+}
+
+export const syncDispatch = <S>(action: ActionCreator<S>, payload: S): SyncPayload<S> => {
+  return {
+    type: action.type,
+    payload: payload
+  }
+}
+
 export const successDispatch = <P, S>(action: AsyncActionCreators<P, S, {}>,
-                                      payload: S, params?: P): SuccessPayload<P | void, S> => {
+                                payload: S, params?: P): SuccessPayload<P | void, S> => {
   return {
     type: action.done.type,
     payload: {
