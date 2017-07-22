@@ -37,7 +37,9 @@ export interface Metadata {
 }
 export class Games extends Service {
     constructor(rootUrl: string);
-    getGames: () => Promise<Iterable<Game>>;
+    getGames: () => Promise<{
+        [gameGuid: string]: Game;
+    }>;
     getGame: (uuid: string) => Promise<Game>;
     createGame: (title: string, platform: Platform) => Promise<Game>;
     createFile: (game: Game, path: string, mimetype: string) => Promise<Game & Immutable.ImmutableObject<Game>>;
@@ -56,7 +58,9 @@ export interface Platform {
 }
 export class Stone extends Service {
     constructor(rootUrl: string);
-    getPlatforms: () => Promise<Map<string, Platform>>;
+    getPlatforms: () => Promise<{
+        [platformID: string]: Platform;
+    }>;
 }
 
 export class Emulators extends Service {

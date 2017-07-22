@@ -14,18 +14,16 @@ import { Platform } from 'snowflake-remoting'
 
 type PlatformListProps = {
   classes?: any,
-  platforms: Map<string, Platform>,
+  platforms: { [platformId: string]: Platform },
   platform: Platform,
   gameCount: number
 }
 const PlatformList: React.SFC<PlatformListProps> = ({ classes, platforms, platform, gameCount }) => {
-  console.log(Array.from(platforms))
-  console.log(Object.values(platforms.entries()))
   return (
     <div className={classes.container}>
       <div className={classes.platformSelector}>
         <List>
-          {Array.from(platforms).map(([k, p]) =>
+          {Object.entries(platforms).map(([k, p]) =>
             <Link to={`?platform=${p.PlatformID}`}>
               <ListItem key={p.PlatformID} button>
                 <Typography>{p.FriendlyName}</Typography>

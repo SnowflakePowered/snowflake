@@ -22,10 +22,10 @@ type LOCATION_CHANGE = '@@router/LOCATION_CHANGE'
 const LOCATION_CHANGE = '@@router/LOCATION_CHANGE'
 
 export const refreshPlatforms = actionCreator
-      .async<void, Map<string, Platform>>(SNOWFLAKE_REFRESH_PLATFORMS)
+      .async<void, { [platformId: string]: Platform }>(SNOWFLAKE_REFRESH_PLATFORMS)
 
 export const refreshGames = actionCreator
-       .async<void, Game[]>(SNOWFLAKE_REFRESH_GAMES)
+       .async<void, { [gameGuid: string]: Game }>(SNOWFLAKE_REFRESH_GAMES)
 
 export const refreshActiveGameConfiguration = actionCreator
        .async<{emulatorName: string, gameUuid: string}, ConfigurationCollection>(SNOWFLAKE_REFRESH_ACTIVE_GAME_CONFIGURATION)

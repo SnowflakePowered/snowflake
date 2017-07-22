@@ -21,11 +21,8 @@ export type SnowflakeData = {
   /**
    * A map of Stone platforms from ID to Platform
    */
-  Platforms: Map<string, Platform>,
-  /**
-   * The array of all games in the game library
-   */
-  Games: Game[],
+  Games: { [gameGuid: string]: Game }
+  Platforms: { [platformId: string]: Platform }
   /**
    * The currently active platform
    */

@@ -18,17 +18,17 @@ export const queryParamsSelector = createSelector(
 export const activePlatformSelector = createSelector(
   platformsSelector,
   activePlatformIdSelector,
-  (platforms, activePlatform) => platforms.get(activePlatform)
+  (platforms, activePlatform) => platforms[activePlatform]
 )
 
 export const activeGameSelector = createSelector(
   gamesSelector,
   activeGameUuidSelector,
-  (games, gameUuid) => games.filter(game => game.Guid === gameUuid)[0]
+  (games, gameUuid) => games[gameUuid]
 )
 
 export const activePlatformGamesSelector = createSelector(
   gamesSelector,
   activePlatformSelector,
-  (games, platform) => games.filter(g => platform ? g.PlatformID === platform.PlatformID : 0)
+  (games, platform) => Object.values(games).filter(g => platform ? g.PlatformID === platform.PlatformID : 0)
 )

@@ -18,7 +18,7 @@ import * as Selectors from './Selectors'
 
 function* refreshPlatformsWorker (snowflake: Snowflake): SagaIterator {
   try {
-    const platforms: Map<string, Platform> = yield call(snowflake.stone.getPlatforms)
+    const platforms: { [platformId: string]: Platform } = yield call(snowflake.stone.getPlatforms)
     yield put(successDispatch(Actions.refreshPlatforms, platforms))
   } catch (e) {
     yield put(failedDispatch(Actions.refreshPlatforms, e))
@@ -27,7 +27,7 @@ function* refreshPlatformsWorker (snowflake: Snowflake): SagaIterator {
 
 function* refreshGamesWorker (snowflake: Snowflake): SagaIterator {
   try {
-    const games: Game[] = yield call(snowflake.games.getGames)
+    const games: { [gameGuid: string]: Game } = yield call(snowflake.games.getGames)
     yield put(successDispatch(Actions.refreshGames, games))
   } catch (e) {
     yield put(failedDispatch(Actions.refreshGames, e))

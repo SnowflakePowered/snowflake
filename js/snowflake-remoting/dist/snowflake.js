@@ -69,66 +69,6 @@ module.exports =
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-class Service {
-    constructor(rootUrl, serviceName) {
-        this.getServiceUrl = (...path) => {
-            return [this.rootUrl, this.serviceName, ...path].join('/');
-        };
-        this.rootUrl = rootUrl;
-        this.serviceName = serviceName;
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Service;
-
-const toHttpVerb = (verb) => {
-    switch (verb) {
-        case 'Create':
-            return 'POST';
-        case 'Read':
-            return 'GET';
-        case 'Delete':
-            return 'DELETE';
-        case 'Update':
-            return 'PUT';
-        default:
-            return 'GET';
-    }
-};
-const request = (url, payload = '', verb = 'Read') => __awaiter(this, void 0, void 0, function* () {
-    if (typeof payload !== 'string') {
-        payload = JSON.stringify(payload);
-    }
-    if (verb === 'Read' || verb === 'Delete') {
-        payload = undefined;
-    }
-    const result = yield fetch(url, {
-        body: payload,
-        method: toHttpVerb(verb),
-        mode: 'cors'
-    });
-    if (result.ok) {
-        let json = yield result.json();
-        return { Response: json.Response, Status: json.Status };
-    }
-    return { Response: null, Status: { Message: 'Unable to resolve promise.', Type: 'ErrorRequest', Code: 400 } };
-});
-/* harmony export (immutable) */ __webpack_exports__["b"] = request;
-
-
-
-/***/ }),
-/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;(function() {
@@ -887,6 +827,58 @@ function immutableInit(config) {
 
 
 /***/ }),
+/* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+class Service {
+    constructor(rootUrl, serviceName) {
+        this.getServiceUrl = (...path) => {
+            return [this.rootUrl, this.serviceName, ...path].join('/');
+        };
+        this.rootUrl = rootUrl;
+        this.serviceName = serviceName;
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Service;
+
+const toHttpVerb = (verb) => {
+    switch (verb) {
+        case 'Create':
+            return 'POST';
+        case 'Read':
+            return 'GET';
+        case 'Delete':
+            return 'DELETE';
+        case 'Update':
+            return 'PUT';
+        default:
+            return 'GET';
+    }
+};
+const request = async (url, payload = '', verb = 'Read') => {
+    if (typeof payload !== 'string') {
+        payload = JSON.stringify(payload);
+    }
+    if (verb === 'Read' || verb === 'Delete') {
+        payload = undefined;
+    }
+    const result = await fetch(url, {
+        body: payload,
+        method: toHttpVerb(verb),
+        mode: 'cors'
+    });
+    if (result.ok) {
+        let json = await result.json();
+        return { Response: json.Response, Status: json.Status };
+    }
+    return { Response: null, Status: { Message: 'Unable to resolve promise.', Type: 'ErrorRequest', Code: 400 } };
+};
+/* harmony export (immutable) */ __webpack_exports__["b"] = request;
+
+
+
+/***/ }),
 /* 2 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -923,26 +915,21 @@ class Snowflake {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Remoting__ = __webpack_require__(0);
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Remoting__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_seamless_immutable__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_seamless_immutable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_seamless_immutable__);
+
 
 class Emulators extends __WEBPACK_IMPORTED_MODULE_0__Remoting__["a" /* Service */] {
     constructor(rootUrl) {
         super(rootUrl, 'emulators');
-        this.getConfiguration = (emulatorName, gameUuid) => __awaiter(this, void 0, void 0, function* () {
-            const configuration = yield __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__Remoting__["b" /* request */])(this.getServiceUrl(emulatorName, 'config', gameUuid));
+        this.getConfiguration = async (emulatorName, gameUuid) => {
+            const configuration = await __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__Remoting__["b" /* request */])(this.getServiceUrl(emulatorName, 'config', gameUuid));
             if (configuration.Status.Code >= 400) {
                 throw new Error(configuration.Status.Message);
             }
-            return configuration.Response;
-        });
+            return __WEBPACK_IMPORTED_MODULE_1_seamless_immutable__["from"](configuration.Response);
+        };
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Emulators;
@@ -954,38 +941,31 @@ class Emulators extends __WEBPACK_IMPORTED_MODULE_0__Remoting__["a" /* Service *
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_seamless_immutable__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_seamless_immutable__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_seamless_immutable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_seamless_immutable__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Remoting__ = __webpack_require__(0);
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Remoting__ = __webpack_require__(1);
 
 
 class Games extends __WEBPACK_IMPORTED_MODULE_1__Remoting__["a" /* Service */] {
     constructor(rootUrl) {
         super(rootUrl, 'games');
-        this.getGames = () => __awaiter(this, void 0, void 0, function* () {
-            const games = yield __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__Remoting__["b" /* request */])(this.getServiceUrl());
+        this.getGames = async () => {
+            const games = await __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__Remoting__["b" /* request */])(this.getServiceUrl());
             if (games.Status.Code >= 400) {
                 throw new Error(games.Status.Message);
             }
-            return __WEBPACK_IMPORTED_MODULE_0_seamless_immutable__["from"](games.Response);
-        });
-        this.getGame = (uuid) => __awaiter(this, void 0, void 0, function* () {
-            const game = yield __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__Remoting__["b" /* request */])(this.getServiceUrl(uuid));
+            const array = games.Response.map(game => ({ [game.Guid]: __WEBPACK_IMPORTED_MODULE_0_seamless_immutable__["from"](game) }));
+            return __WEBPACK_IMPORTED_MODULE_0_seamless_immutable__["from"](Object.assign({}, ...array));
+        };
+        this.getGame = async (uuid) => {
+            const game = await __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__Remoting__["b" /* request */])(this.getServiceUrl(uuid));
             if (game.Status.Code >= 400) {
                 throw new Error(game.Status.Message);
             }
             return __WEBPACK_IMPORTED_MODULE_0_seamless_immutable__["from"](game.Response);
-        });
-        this.createGame = (title, platform) => __awaiter(this, void 0, void 0, function* () {
-            const game = yield __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__Remoting__["b" /* request */])(this.getServiceUrl(), {
+        };
+        this.createGame = async (title, platform) => {
+            const game = await __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__Remoting__["b" /* request */])(this.getServiceUrl(), {
                 title,
                 platform: platform.PlatformID
             }, 'Create');
@@ -993,14 +973,14 @@ class Games extends __WEBPACK_IMPORTED_MODULE_1__Remoting__["a" /* Service */] {
                 throw new Error(game.Status.Message);
             }
             return __WEBPACK_IMPORTED_MODULE_0_seamless_immutable__["from"](game.Response);
-        });
-        this.createFile = (game, path, mimetype) => __awaiter(this, void 0, void 0, function* () {
-            const newGame = yield __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__Remoting__["b" /* request */])(this.getServiceUrl(game.Guid, 'files'), { path, mimetype }, 'Create');
+        };
+        this.createFile = async (game, path, mimetype) => {
+            const newGame = await __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__Remoting__["b" /* request */])(this.getServiceUrl(game.Guid, 'files'), { path, mimetype }, 'Create');
             if (newGame.Status.Code >= 400) {
                 throw new Error(newGame.Status.Message);
             }
             return __WEBPACK_IMPORTED_MODULE_0_seamless_immutable__["from"](newGame.Response);
-        });
+        };
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Games;
@@ -1012,30 +992,23 @@ class Games extends __WEBPACK_IMPORTED_MODULE_1__Remoting__["a" /* Service */] {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_seamless_immutable__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_seamless_immutable__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_seamless_immutable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_seamless_immutable__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Remoting__ = __webpack_require__(0);
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Remoting__ = __webpack_require__(1);
 
 
 class Stone extends __WEBPACK_IMPORTED_MODULE_1__Remoting__["a" /* Service */] {
     constructor(rootUrl) {
         super(rootUrl, 'stone');
-        this.getPlatforms = () => __awaiter(this, void 0, void 0, function* () {
-            const platforms = yield __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__Remoting__["b" /* request */])(this.getServiceUrl('platforms'));
+        this.getPlatforms = async () => {
+            const platforms = await __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__Remoting__["b" /* request */])(this.getServiceUrl('platforms'));
             if (platforms.Status.Code >= 400) {
                 throw new Error(platforms.Status.Message);
             }
-            const array = platforms.Response.map(platform => [platform.PlatformID, __WEBPACK_IMPORTED_MODULE_0_seamless_immutable__["from"](platform)]);
-            return new Map(array);
-        });
+            const array = platforms.Response
+                .map(platform => ({ [platform.PlatformID]: __WEBPACK_IMPORTED_MODULE_0_seamless_immutable__["from"](platform) }));
+            return __WEBPACK_IMPORTED_MODULE_0_seamless_immutable__["from"](Object.assign({}, ...array));
+        };
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Stone;

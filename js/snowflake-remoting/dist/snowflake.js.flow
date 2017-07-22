@@ -30,7 +30,9 @@ declare export interface Metadata {
 }
 declare export class Games mixins Service {
     constructor(rootUrl: string): this;
-    getGames: () => Promise<Iterable<Game >> ;
+    getGames: () => Promise<{
+        [gameGuid: string]: Game
+    }>;
     getGame: (uuid: string) => Promise<Game>;
     createGame: (title: string, platform: Platform) => Promise<Game>;
     createFile: (
@@ -51,7 +53,9 @@ declare export interface Platform {
 }
 declare export class Stone mixins Service {
     constructor(rootUrl: string): this;
-    getPlatforms: () => Promise<Map<string, Platform >>
+    getPlatforms: () => Promise<{
+        [platformID: string]: Platform
+    } >
 }
 declare export class Emulators mixins Service {
     constructor(rootUrl: string): this;

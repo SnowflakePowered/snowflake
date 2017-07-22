@@ -30,10 +30,11 @@ export class Games extends Service {
     super(rootUrl, 'games')
   }
 
-  public getGames = async (): Promise<Iterable<Game>> => {
+  public getGames = async (): Promise<{[gameGuid: string]: Game}> => {
     const games = await request<Game[]>(this.getServiceUrl())
     if (games.Status.Code >= 400 ) { throw new Error(games.Status.Message) }
-    return Immutable.from(games.Response)
+    const array = games.Response.map(game => ({ [game.Guid]: Immutable.from(game) }))
+    return Immutable.from(Object.assign({}, ...array))
   }
 
   public getGame = async (uuid: string): Promise<Game> => {

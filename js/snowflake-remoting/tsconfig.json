@@ -4,7 +4,7 @@
         "sourceMap": true,
         "noImplicitAny": true,
         "module": "es2015",
-        "target": "es2015",
+        "target": "es2017",
         "jsx": "react",
         "lib": ["es2017", "dom"],
         "declaration": true,
