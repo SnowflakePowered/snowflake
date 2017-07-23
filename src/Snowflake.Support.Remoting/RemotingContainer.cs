@@ -44,7 +44,8 @@ namespace Snowflake.Support.Remoting
                 { new PlatformRoot() },
                 { new PlatformsRoot(stone) },
                 { new EmulatorsRoot(manager.Get<IEmulatorAdapter>()) },
-                { new EmulatorsGameConfigRoot(manager.Get<IEmulatorAdapter>()) }
+                { new EmulatorsGameConfigRoot(manager.Get<IEmulatorAdapter>()) },
+                { new GameConfigurationCollectionsRoot(manager.Get<IEmulatorAdapter>())}
             };
 
             container.AddTypeMapping(new GameRecordMapping(gameLib));
