@@ -9,7 +9,7 @@ import Snowflake, {
 import { Action } from 'redux'
 import * as Actions from 'state/Actions'
 import * as Selectors from 'state/Selectors'
-
+import { get } from 'lodash'
 type SnowflakeContext = {
   Snowflake: SnowflakeData
 }
@@ -81,6 +81,8 @@ class SnowflakeProvider extends React.Component<SnowflakeData & { Dispatch: Disp
   }
 
   render (): JSX.Element {
+    const guid = get(this.props.ActiveGame, 'Guid', '')
+    this.props.Dispatch(Actions.retrieveGameConfiguration.started({gameGuid: guid, profileName: 'default'}))
     return (
       <div>
         { this.props.children }

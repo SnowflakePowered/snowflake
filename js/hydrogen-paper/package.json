@@ -23,6 +23,7 @@
     "@types/reselect": "^2.2.0",
     "classnames": "^2.2.5",
     "history": "^4.6.3",
+    "immutable": "^3.8.1",
     "lodash": "^4.17.4",
     "map.prototype.tojson": "^0.1.3",
     "material-ui": "v1.0.0-alpha.22",

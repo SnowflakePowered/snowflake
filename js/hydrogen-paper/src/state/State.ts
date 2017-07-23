@@ -1,12 +1,14 @@
 import { Platform, Game, ConfigurationCollection } from 'snowflake-remoting'
 import { RouterState } from 'react-router-redux'
+import * as Immutable from 'immutable'
+import { ConfigurationKey } from 'support/ConfigurationKey'
 
 interface State extends RouterState {
   Games: { [gameGuid: string]: Game }
   Platforms: { [platformId: string]: Platform }
   ActivePlatform: string,
   ActiveGame: string,
-  ActiveGameConfiguration?: ConfigurationCollection
+  GameConfigurations: Immutable.Map<ConfigurationKey, ConfigurationCollection>
 }
 
 export const InitialState: State = {
@@ -14,7 +16,8 @@ export const InitialState: State = {
   Platforms: {},
   ActivePlatform: '',
   ActiveGame: '',
-  location: null
+  location: null,
+  GameConfigurations: Immutable.Map()
 }
 
 export default State
