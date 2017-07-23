@@ -55,7 +55,12 @@ namespace Snowflake.Configuration
                 .ToDictionary(o => o.option, o => 
                 new ValueTuple<string, Guid>(o.value, new Guid(o.uuid))) 
                 as IDictionary<string, ValueTuple<string, Guid>>);
-            return new ConfigurationCollection<T>(defs);
+            var config =  new ConfigurationCollection<T>(defs);
+
+            // We have to cache the value to preserve purity across multiple accesses
+            // Otherwise a new configuration with differing GUIDs will be generated every time
+            this.Set<T>(config, gameRecord, emulator, profile);
+            return config;
         }
 
         public void Set<T>(IConfigurationCollection<T> configuration, Guid gameRecord, string emulator, string profile) 

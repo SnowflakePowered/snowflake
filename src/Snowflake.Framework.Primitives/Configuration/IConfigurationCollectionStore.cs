@@ -16,6 +16,13 @@ namespace Snowflake.Configuration
         /// This method is guaranteed to return a usable instance of the configuration collection. 
         /// If a prior configuration has not been set, it should return a default instance with all
         /// properties initialized.
+        /// 
+        /// <para>
+        /// This function should return the same configuration values with identical GUIDs for the same
+        /// database instance. This may imply that the function is impure; the default implementation
+        /// will save every retrieved database using <see cref="Set{T}(IConfigurationCollection{T}, Guid, string, string)"/>.
+        /// internally. In other words, retrieval of a configuration may imply the persistence of the same configuration.
+        /// </para>
         /// </summary>
         /// <typeparam name="T">The type of configuration collection</typeparam>
         /// <param name="gameRecord">The guid of the game record</param>
