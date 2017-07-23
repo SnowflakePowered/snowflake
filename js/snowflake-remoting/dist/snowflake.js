@@ -974,12 +974,20 @@ class Games extends __WEBPACK_IMPORTED_MODULE_1__Remoting__["a" /* Service */] {
             }
             return __WEBPACK_IMPORTED_MODULE_0_seamless_immutable__["from"](game.Response);
         };
-        this.createFile = async (game, path, mimetype) => {
-            const newGame = await __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__Remoting__["b" /* request */])(this.getServiceUrl(game.Guid, 'files'), { path, mimetype }, 'Create');
+        this.createFile = async (gameGuid, path, mimetype) => {
+            const newGame = await __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__Remoting__["b" /* request */])(this.getServiceUrl(gameGuid, 'files'), { path, mimetype }, 'Create');
             if (newGame.Status.Code >= 400) {
                 throw new Error(newGame.Status.Message);
             }
             return __WEBPACK_IMPORTED_MODULE_0_seamless_immutable__["from"](newGame.Response);
+        };
+        this.getConfigurations = async (gameGuid, profileName) => {
+            profileName = profileName || 'default';
+            const configurations = await __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__Remoting__["b" /* request */])(this.getServiceUrl(gameGuid, 'configs', profileName));
+            if (configurations.Status.Code >= 400) {
+                throw new Error(configurations.Status.Message);
+            }
+            return __WEBPACK_IMPORTED_MODULE_0_seamless_immutable__["from"](configurations.Response);
         };
     }
 }

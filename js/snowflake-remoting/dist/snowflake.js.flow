@@ -36,9 +36,16 @@ declare export class Games mixins Service {
     getGame: (uuid: string) => Promise<Game>;
     createGame: (title: string, platform: Platform) => Promise<Game>;
     createFile: (
-        game: Game,
+        gameGuid: string,
         path: string,
-        mimetype: string) => Promise<Game & Immutable.ImmutableObject<Game >>
+        mimetype: string) => Promise<Game & Immutable.ImmutableObject<Game >> ;
+    getConfigurations: (
+        gameGuid: string,
+        profileName?: string) => Promise<{
+        [emulatorName: string]: ConfigurationCollection
+    } & Immutable.ImmutableObject<{
+        [emulatorName: string]: ConfigurationCollection
+    } >>
 }
 declare export interface Platform {
     PlatformID: string,

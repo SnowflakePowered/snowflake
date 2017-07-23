@@ -42,7 +42,12 @@ export class Games extends Service {
     }>;
     getGame: (uuid: string) => Promise<Game>;
     createGame: (title: string, platform: Platform) => Promise<Game>;
-    createFile: (game: Game, path: string, mimetype: string) => Promise<Game & Immutable.ImmutableObject<Game>>;
+    createFile: (gameGuid: string, path: string, mimetype: string) => Promise<Game & Immutable.ImmutableObject<Game>>;
+    getConfigurations: (gameGuid: string, profileName?: string) => Promise<{
+        [emulatorName: string]: ConfigurationCollection;
+    } & Immutable.ImmutableObject<{
+        [emulatorName: string]: ConfigurationCollection;
+    }>>;
 }
 
 export interface Platform {

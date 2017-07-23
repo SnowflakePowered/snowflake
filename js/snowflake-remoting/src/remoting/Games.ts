@@ -1,6 +1,7 @@
 import * as Immutable from 'seamless-immutable'
 import { request, Response, Service } from './Remoting'
 import { Platform } from './Stone'
+import { ConfigurationCollection } from "./Configuration";
 
 export interface Game {
   Files: File[]
@@ -52,10 +53,16 @@ export class Games extends Service {
     return Immutable.from(game.Response)
   }
 
-  public createFile = async (game: Game, path: string, mimetype: string) => {
-    const newGame = await request<Game>(this.getServiceUrl(game.Guid, 'files'), { path, mimetype }, 'Create')
+  public createFile = async (gameGuid: string, path: string, mimetype: string) => {
+    const newGame = await request<Game>(this.getServiceUrl(gameGuid, 'files'), { path, mimetype }, 'Create')
     if (newGame.Status.Code >= 400 ) { throw new Error(newGame.Status.Message) }
     return Immutable.from(newGame.Response)
   }
 
+  public getConfigurations = async (gameGuid: string, profileName?: string) => {
+    profileName = profileName || 'default'
+    const configurations = await request<{ [emulatorName: string]: ConfigurationCollection }>(this.getServiceUrl(gameGuid, 'configs', profileName))
+    if (configurations.Status.Code >= 400 ) { throw new Error(configurations.Status.Message) }
+    return Immutable.from(configurations.Response)
+  }
 }
