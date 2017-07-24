@@ -1,5 +1,5 @@
 import * as React from 'react'
-import injectSheet from 'mui-jss-inject'
+import injectSheet, { StyleProps } from 'support/InjectSheet'
 import ImageBackground from 'components/ImageBackground/ImageBackground'
 import GameLaunchHeader from 'components/GameLaunchHeader/GameLaunchHeader'
 
@@ -58,7 +58,6 @@ const style = {
 }
 
 type GameDisplayViewProps = {
-  classes?: any,
   gameTitle: string,
   gamePublisher: string,
   gameDescription: string,
@@ -66,7 +65,7 @@ type GameDisplayViewProps = {
   platform: Platform
 }
 
-const GameDisplayView: React.SFC<GameDisplayViewProps> = ({ classes, gameTitle, gamePublisher, gameDescription, game, platform }) => (
+const GameDisplayView: React.SFC<GameDisplayViewProps & StyleProps> = ({ classes, gameTitle, gamePublisher, gameDescription, game, platform }) => (
     <div className={classes.container}>
       <ImageBackground image='https://r.mprd.se/media/images/35787-Super_Mario_World_(USA)-2.jpg' />
       <div className={classes.centeredContainer}>
@@ -163,4 +162,4 @@ class GameDisplayViewMenu extends React.Component {
   }
 }
 
-export default injectSheet(style)(GameDisplayView)
+export default injectSheet<GameDisplayViewProps>(style)(GameDisplayView)

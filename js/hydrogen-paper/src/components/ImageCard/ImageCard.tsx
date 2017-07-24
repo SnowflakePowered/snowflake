@@ -2,7 +2,7 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
 import Paper from 'material-ui/Paper'
-import injectSheet from 'mui-jss-inject'
+import injectSheet from 'support/InjectSheet'
 
 const styles = {
   imageContainer: {

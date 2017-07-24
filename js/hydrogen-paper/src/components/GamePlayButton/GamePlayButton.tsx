@@ -3,7 +3,7 @@ import PlayArrow from 'material-ui-icons/PlayArrow'
 import IconButton from 'material-ui/IconButton'
 import { CircularProgress } from 'material-ui/Progress'
 
-import injectSheet from 'mui-jss-inject'
+import injectSheet from 'support/InjectSheet'
 import { styles } from './GamePlayButton.style'
 
 type GamePlayButtonProps = {

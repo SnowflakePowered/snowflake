@@ -1,5 +1,5 @@
 import * as React from 'react'
-import injectSheet from 'mui-jss-inject'
+import injectSheet from 'support/InjectSheet'
 import { AutoSizer, Grid, ColumnSizer, WindowScroller } from 'react-virtualized'
 import { dimensions } from 'components/GameCard/GameCard.style'
 import { styles } from './GameCardGrid.style'
@@ -126,4 +126,4 @@ class GameCardGrid extends React.PureComponent<GameCardGridProps, GameCardGridSt
   }
 }
 
-export default injectSheet(styles)(GameCardGrid)
+export default injectSheet<GameCardGridProps>(styles)(GameCardGrid)

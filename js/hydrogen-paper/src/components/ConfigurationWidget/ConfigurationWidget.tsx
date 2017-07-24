@@ -1,5 +1,5 @@
 import * as React from 'react'
-import injectSheet from 'mui-jss-inject'
+import injectSheet, { StyleProps } from 'support/InjectSheet'
 
 const sheet = {
   container: {
@@ -24,11 +24,10 @@ const sheet = {
 }
 
 type ConfigurationWidgetProps = {
-  classes?: any,
   name: string,
   description: string
 }
-const ConfigurationWidget: React.SFC<ConfigurationWidgetProps> = ({classes, name, description, children}) => (
+const ConfigurationWidget: React.SFC<ConfigurationWidgetProps & StyleProps> = ({classes, name, description, children}) => (
   <div className={classes.container}>
     <div className={classes.description}>
       <div className={classes.configTitle}>
@@ -44,4 +43,4 @@ const ConfigurationWidget: React.SFC<ConfigurationWidgetProps> = ({classes, name
   </div>
 )
 
-export default injectSheet(sheet)(ConfigurationWidget)
+export default injectSheet<ConfigurationWidgetProps>(sheet)(ConfigurationWidget)

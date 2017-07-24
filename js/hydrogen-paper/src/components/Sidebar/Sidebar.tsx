@@ -1,5 +1,5 @@
 import * as React from 'react'
-import injectSheet from 'mui-jss-inject'
+import injectSheet from 'support/InjectSheet'
 import withSnowflake from 'decorators/withSnowflake'
 
 import List, {

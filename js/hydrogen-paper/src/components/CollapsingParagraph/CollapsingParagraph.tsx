@@ -4,7 +4,7 @@ import * as PropTypes from 'prop-types'
 import Collapse from 'material-ui/transitions/Collapse'
 import Typography from 'material-ui/Typography'
 
-import injectSheet from 'mui-jss-inject'
+import injectSheet from 'support/InjectSheet'
 import * as classnames from 'classnames'
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore'
 import IconButton from 'material-ui/IconButton'

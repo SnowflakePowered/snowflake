@@ -1,5 +1,5 @@
 import * as React from 'react'
-import injectSheet from 'mui-jss-inject'
+import injectSheet, { StyleProps } from 'support/InjectSheet'
 
 import Typography from 'material-ui/Typography'
 import Card, { CardContent, CardMedia } from 'material-ui/Card'
@@ -16,7 +16,6 @@ import { styles } from './GameCard.style'
 // todo: button on hover
 type GameCardProps = {
   // tslint:disable-next-line:no-any
-  classes?: any,
   image: string,
   title: string,
   publisher: string,
@@ -27,7 +26,7 @@ type GameCardProps = {
   platformID: string
 }
 
-const GameCard: React.SFC<GameCardProps> = ({ classes, image, title, publisher, portrait, landscape, square, guid, platformID }) => (
+const GameCard: React.SFC<GameCardProps & StyleProps> = ({ classes, image, title, publisher, portrait, landscape, square, guid, platformID }) => (
   <div className={classNames({
     [classes.cardContainer]: true,
     [classes.cardContainerSquare]: square,

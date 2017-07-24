@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
-import injectSheet from 'mui-jss-inject'
+import injectSheet from 'support/InjectSheet'
 
 import GameDisplay from 'components/GameDisplay/GameDisplay'
 import GamePlayButton from 'components/GamePlayButton/GamePlayButton'

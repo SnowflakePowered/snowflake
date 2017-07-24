@@ -1,5 +1,5 @@
 import * as React from 'react'
-import injectSheet from 'mui-jss-inject'
+import injectSheet from 'support/InjectSheet'
 import * as _ from 'lodash'
 import List, { ListItem } from 'material-ui/List'
 import Typography from 'material-ui/Typography'

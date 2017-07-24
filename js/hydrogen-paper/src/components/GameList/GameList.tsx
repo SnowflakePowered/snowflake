@@ -1,5 +1,5 @@
 import * as React from 'react'
-import injectSheet from 'mui-jss-inject'
+import injectSheet, { StyleProps } from 'support/InjectSheet'
 
 import GameGrid from 'components/GameCardGrid/GameCardGrid'
 import GameCard from 'containers/GameCard/GameCardContainer'
@@ -10,7 +10,7 @@ import PlatformDisplay from 'containers/PlatformDisplay/PlatformDisplayContainer
 import { Platform, Game } from 'snowflake-remoting'
 import { detailsHeaderStyles, titleHeaderStyles, styles } from './GameList.style'
 
-const _TitleHeader = ({ classes }: { classes?: any }) => (
+const _TitleHeader: React.SFC<StyleProps> = ({ classes }) => (
   <div className={classes.mainHeader}>
     <div className={classes.title}>
       Snowflake
@@ -24,19 +24,19 @@ const _TitleHeader = ({ classes }: { classes?: any }) => (
 const TitleHeader = injectSheet(titleHeaderStyles)(_TitleHeader)
 
 type GameListViewProps = {
-  classes?: any,
   platform: Platform,
   games: Game[]
 }
-const _DetailsHeader: React.SFC<GameListViewProps> = ({ classes, platform, games }) => (
+
+const _DetailsHeader: React.SFC<GameListViewProps & StyleProps> = ({ classes, platform, games }) => (
   <div className={classes.detailsHeader}>
     <PlatformDisplay platform={platform} gameCount={games.length}/>
   </div>
 )
 
-const DetailsHeader = injectSheet(detailsHeaderStyles)(_DetailsHeader)
+const DetailsHeader = injectSheet<GameListViewProps>(detailsHeaderStyles)(_DetailsHeader)
 
-const GameListView: React.SFC<GameListViewProps> = ({ classes, games, platform }) => (
+const GameListView: React.SFC<GameListViewProps & StyleProps> = ({ classes, games, platform }) => (
   <div className={classes.gridContainer}>
     <GameGrid header={[<TitleHeader />, <DetailsHeader platform={platform} games={games}/>]}>
       {
