@@ -39,4 +39,4 @@ GameLaunchHeader.propTypes = {
   gamePublisher: PropTypes.string,
   onPlayButtonClicked: PropTypes.func
 }
-export default injectSheet<GameLaunchHeaderProps>(styles)(GameLaunchHeader)
+export default injectSheet(styles)(GameLaunchHeader)

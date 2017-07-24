@@ -1,5 +1,5 @@
 import * as React from 'react'
-import injectSheet from 'support/InjectSheet'
+import injectSheet, { StyleProps } from "support/InjectSheet";
 
 import Paper from 'material-ui/Paper'
 import FormControl from 'material-ui/Form/FormControl'
@@ -11,12 +11,11 @@ import grey from 'material-ui/colors/grey'
 import { styles } from './SearchBar.style'
 
 type SearchBarProps = {
-  classes?: any,
   tagline?: string,
   onChange?: (e: string) => void
 }
 
-const SearchBar: React.SFC<SearchBarProps> = ({ classes, tagline, onChange }) => (
+const SearchBar: React.SFC<SearchBarProps & StyleProps> = ({ classes, tagline, onChange }) => (
   <Paper className={classes.barContainer}>
     <SearchIcon color={grey[400]} className={classes.searchIcon} />
     <FormControl className={classes.input}>
@@ -29,4 +28,4 @@ const SearchBar: React.SFC<SearchBarProps> = ({ classes, tagline, onChange }) =>
   </Paper>
 )
 
-export default injectSheet<SearchBarProps>(styles)(SearchBar)
+export default injectSheet(styles)(SearchBar)

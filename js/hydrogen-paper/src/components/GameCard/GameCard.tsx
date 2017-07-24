@@ -62,4 +62,4 @@ const GameCard: React.SFC<GameCardProps & StyleProps> = ({ classes, image, title
     </Card>
   </div>)
 
-export default injectSheet<GameCardProps>(styles)(GameCard)
+export default injectSheet(styles)(GameCard)

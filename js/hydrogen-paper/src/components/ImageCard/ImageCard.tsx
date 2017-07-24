@@ -66,4 +66,4 @@ ImageCard.propTypes = {
   elevation: PropTypes.number
 }
 
-export default injectSheet<ImageCardProps>(styles)(ImageCard)
+export default injectSheet(styles)(ImageCard)

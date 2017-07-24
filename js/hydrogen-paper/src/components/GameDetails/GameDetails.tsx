@@ -162,4 +162,4 @@ class GameDisplayViewMenu extends React.Component {
   }
 }
 
-export default injectSheet<GameDisplayViewProps>(style)(GameDisplayView)
+export default injectSheet(style)(GameDisplayView)

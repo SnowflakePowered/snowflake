@@ -40,4 +40,4 @@ InfoDisplay.propTypes = {
   ]))
 }
 
-export default injectSheet<InfoDisplayProps>(styles)(InfoDisplay)
+export default injectSheet(styles)(InfoDisplay)

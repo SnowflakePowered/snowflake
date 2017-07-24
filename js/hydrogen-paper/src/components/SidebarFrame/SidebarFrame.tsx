@@ -1,10 +1,10 @@
 import * as React from 'react'
-import injectSheet from 'support/InjectSheet'
-
+import injectSheet, { StyleProps } from 'support/InjectSheet'
+import { NoProps } from 'support/NoProps'
 import Sidebar from 'components/Sidebar/Sidebar'
 import { styles } from './SidebarFrame.style'
 
-const SidebarFrame: React.SFC<{classes?: any}> = ({ classes, children }) => (
+const SidebarFrame: React.SFC<NoProps & StyleProps> = ({ classes, children }) => (
   <div className={classes.container}>
     <div className={classes.sidebarContainer}>
       <Sidebar />

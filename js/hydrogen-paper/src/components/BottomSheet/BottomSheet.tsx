@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Paper from 'material-ui/Paper'
 
-import injectSheet from 'support/InjectSheet'
+import injectSheet, { StyleProps } from "support/InjectSheet";
 
 const styles = {
   container: {
@@ -12,12 +12,11 @@ const styles = {
 }
 
 type BottomSheetProps = {
-  classes?: any,
   children: React.ReactNode[] | React.ReactNode,
   className?: string
 }
 
-const BottomSheet: React.StatelessComponent<BottomSheetProps> = ({children, classes}) => (
+const BottomSheet: React.StatelessComponent<BottomSheetProps & StyleProps> = ({children, classes}) => (
   <Paper>
     <div className={classes.container}>
       { children }
@@ -25,4 +24,4 @@ const BottomSheet: React.StatelessComponent<BottomSheetProps> = ({children, clas
   </Paper>
 )
 
-export default injectSheet<BottomSheetProps>(styles)(BottomSheet)
+export default injectSheet(styles)(BottomSheet)

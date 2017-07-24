@@ -55,4 +55,4 @@ const PlatformList: React.SFC<PlatformListProps> = ({ classes, platforms, platfo
   )
 }
 
-export default injectSheet<PlatformListProps>(styles)(PlatformList)
+export default injectSheet(styles)(PlatformList)

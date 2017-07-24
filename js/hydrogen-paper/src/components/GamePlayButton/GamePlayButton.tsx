@@ -20,4 +20,4 @@ const GamePlayButton: React.SFC<GamePlayButtonProps & StyleProps> = ({classes, o
   </div>
 )
 
-export default injectSheet<GamePlayButtonProps>(styles)(GamePlayButton)
+export default injectSheet(styles)(GamePlayButton)

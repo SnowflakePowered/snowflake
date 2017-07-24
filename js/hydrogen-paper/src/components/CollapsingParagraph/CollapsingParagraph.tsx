@@ -72,4 +72,4 @@ class CollapsingParagaph extends React.Component<CollapsingParagaphProps & Style
   }
 }
 
-export default injectSheet<CollapsingParagaphProps>(styles)(CollapsingParagaph)
+export default injectSheet(styles)(CollapsingParagaph)

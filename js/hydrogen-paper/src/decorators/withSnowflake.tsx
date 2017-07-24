@@ -4,7 +4,7 @@ import { wrapDisplayName } from 'recompose'
 import { SnowflakeData } from 'state/SnowflakeProvider'
 
 export type SnowflakeProps = {
-  snowflake?: SnowflakeData;
+  snowflake: SnowflakeData
 }
 
 type SnowflakeContext = {
@@ -16,12 +16,17 @@ function objectWithoutKey<T extends object> (object: T, key: string): T {
   return otherKeys as T
 }
 
-const withSnowflake = <TOriginalProps extends {}>(
+/**
+ * Injects current Snowflake data into the specified React Component.
+ * This HOC always returns a ComponentClass.
+ * @param WrappedComponent The component to inject
+ */
+const withSnowflake = <T extends {}>(
   WrappedComponent:
-    | React.ComponentClass<TOriginalProps & SnowflakeProps>
-    | React.StatelessComponent<TOriginalProps & SnowflakeProps>
-): React.ComponentClass<TOriginalProps & SnowflakeProps> => {
-  return class extends React.Component<TOriginalProps & SnowflakeProps, {}> {
+    | React.ComponentClass<T & SnowflakeProps>
+    | React.StatelessComponent<T & SnowflakeProps>
+): React.ComponentClass<T> => {
+  return class extends React.Component<T & SnowflakeProps, {}> {
     static contextTypes = {
       Snowflake: PropTypes.object
     }

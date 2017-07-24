@@ -8,18 +8,18 @@ export type QueryProps = {
   query?: { [key: string]: string | string[] }
 }
 
-function mapStateToProps <OwnProps> (state: RouterState, ownProps: OwnProps): QueryProps {
+function mapStateToProps <T> (state: RouterState, ownProps: T): QueryProps {
   return {
     query: queryParamsSelector(state)
   }
 }
 
-const withQuery = <OwnProps extends {}>(
+const withQuery = <T extends {}>(
   WrappedComponent:
-    | React.ComponentClass<OwnProps & QueryProps>
-    | React.StatelessComponent<OwnProps & QueryProps>
-): React.ComponentClass<OwnProps & QueryProps> => {
-  return connect(mapStateToProps)(class extends React.Component<OwnProps & QueryProps, {}> {
+    | React.ComponentClass<T & QueryProps>
+    | React.StatelessComponent<T & QueryProps>
+): React.ComponentClass<T> => {
+  return connect(mapStateToProps)(class extends React.Component<T & QueryProps, {}> {
     static displayName = wrapDisplayName(WrappedComponent, 'WithQuery')
     render (): JSX.Element {
       return (

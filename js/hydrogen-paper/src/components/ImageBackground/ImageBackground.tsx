@@ -13,4 +13,4 @@ const ImageBackground: React.SFC<ImageBackgroundProps & StyleProps> = ({ classes
   </div>
 )
 
-export default injectSheet<ImageBackgroundProps>(styles)(ImageBackground)
+export default injectSheet(styles)(ImageBackground)

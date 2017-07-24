@@ -125,4 +125,4 @@ class GameCardGrid extends React.PureComponent<GameCardGridProps & StyleProps, G
   }
 }
 
-export default injectSheet<GameCardGridProps>(styles)(GameCardGrid)
+export default injectSheet(styles)(GameCardGrid)

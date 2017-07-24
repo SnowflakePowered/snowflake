@@ -1,5 +1,6 @@
 import * as React from 'react'
 import injectSheet, { StyleProps } from 'support/InjectSheet'
+import { NoProps } from 'support/NoProps'
 
 import GameGrid from 'components/GameCardGrid/GameCardGrid'
 import GameCard from 'containers/GameCard/GameCardContainer'
@@ -10,7 +11,7 @@ import PlatformDisplay from 'containers/PlatformDisplay/PlatformDisplayContainer
 import { Platform, Game } from 'snowflake-remoting'
 import { detailsHeaderStyles, titleHeaderStyles, styles } from './GameList.style'
 
-const _TitleHeader: React.SFC<StyleProps> = ({ classes }) => (
+const _TitleHeader: React.SFC<NoProps & StyleProps> = ({ classes }) => (
   <div className={classes.mainHeader}>
     <div className={classes.title}>
       Snowflake
@@ -34,7 +35,7 @@ const _DetailsHeader: React.SFC<GameListViewProps & StyleProps> = ({ classes, pl
   </div>
 )
 
-const DetailsHeader = injectSheet<GameListViewProps>(detailsHeaderStyles)(_DetailsHeader)
+const DetailsHeader = injectSheet(detailsHeaderStyles)(_DetailsHeader)
 
 const GameListView: React.SFC<GameListViewProps & StyleProps> = ({ classes, games, platform }) => (
   <div className={classes.gridContainer}>
@@ -46,4 +47,4 @@ const GameListView: React.SFC<GameListViewProps & StyleProps> = ({ classes, game
   </div>
 )
 
-export default injectSheet<GameListViewProps>(styles)(GameListView)
+export default injectSheet(styles)(GameListView)
