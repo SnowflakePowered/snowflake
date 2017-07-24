@@ -8,6 +8,8 @@ interface State extends RouterState {
   Platforms: { [platformId: string]: Platform }
   ActivePlatform: string,
   ActiveGame: string,
+  ActiveEmulator: string,
+  ActiveGameConfigProfile: string,
   GameConfigurations: Immutable.Map<ConfigurationKey, ConfigurationCollection>
 }
 
@@ -17,6 +19,8 @@ export const InitialState: State = {
   ActivePlatform: '',
   ActiveGame: '',
   location: null,
+  ActiveGameConfigProfile: '',
+  ActiveEmulator: '',
   GameConfigurations: Immutable.Map()
 }
 

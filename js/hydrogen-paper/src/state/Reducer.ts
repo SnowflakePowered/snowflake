@@ -37,12 +37,6 @@ const reducer = reducerWithInitialState<State>(InitialState)
       location: payload
     }
   })
-  .case(Actions.refreshActiveGameConfiguration.done, (action, payload) => {
-    return {
-      ...action,
-      ActiveGameConfiguration: payload.result
-    }
-  })
   .case(Actions.retrieveGameConfiguration.done, (action, payload) => {
     const configs = payload.result
     const { gameGuid, profileName } = payload.params
@@ -57,6 +51,12 @@ const reducer = reducerWithInitialState<State>(InitialState)
     return {
       ...action,
       GameConfigurations: action.GameConfigurations.merge(newMap)
+    }
+  })
+  .case(Actions.setActiveEmulator, (action, payload) => {
+    return {
+      ...action,
+      ActiveEmulator: payload
     }
   })
   .build()

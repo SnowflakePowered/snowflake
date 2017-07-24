@@ -4,12 +4,12 @@ import { connect, Dispatch } from 'react-redux'
 import State from 'state/State'
 import Snowflake, {
   Platform,
-  Game
+  Game,
+  ConfigurationCollection
 } from 'snowflake-remoting'
 import { Action } from 'redux'
 import * as Actions from 'state/Actions'
 import * as Selectors from 'state/Selectors'
-import { get } from 'lodash'
 type SnowflakeContext = {
   Snowflake: SnowflakeData
 }
@@ -35,6 +35,7 @@ export type SnowflakeData = {
    * The games for the currently active platform
    */
   ActivePlatformGames: Game[],
+  ActiveEmulatorConfiguration: ConfigurationCollection
   /**
    * The main action dispatcher
    */
@@ -60,6 +61,7 @@ function mapStateToProps (state: State): SnowflakeData {
     ActivePlatform: Selectors.activePlatformSelector(state)!,
     ActiveGame: Selectors.activeGameSelector(state),
     ActivePlatformGames: Selectors.activePlatformGamesSelector(state),
+    ActiveEmulatorConfiguration: Selectors.activeEmulatorConfigurationSelector(state),
     Api: snowflake
   }
 }
@@ -81,8 +83,7 @@ class SnowflakeProvider extends React.Component<SnowflakeData & { Dispatch: Disp
   }
 
   render (): JSX.Element {
-    const guid = get(this.props.ActiveGame, 'Guid', '')
-    this.props.Dispatch(Actions.retrieveGameConfiguration.started({gameGuid: guid, profileName: 'default'}))
+    console.log(this.props)
     return (
       <div>
         { this.props.children }

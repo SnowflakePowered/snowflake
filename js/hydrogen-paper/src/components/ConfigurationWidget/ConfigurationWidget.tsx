@@ -43,4 +43,4 @@ const ConfigurationWidget: React.SFC<ConfigurationWidgetProps & StyleProps> = ({
   </div>
 )
 
-export default injectSheet<ConfigurationWidgetProps>(sheet)(ConfigurationWidget)
+export default injectSheet(sheet)(ConfigurationWidget)

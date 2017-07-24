@@ -38,18 +38,10 @@ function* refreshActiveState (): SagaIterator {
   const query: { [key: string]: string } = yield select(Selectors.queryParamsSelector)
   yield put(syncDispatch(Actions.setActivePlatform, query['platform']))
   yield put(syncDispatch(Actions.setActiveGame, query['game']))
-  // yield put(syncDispatch(Actions.refreshActiveGameConfiguration.started, { emulatorName: 'TestEmulator', gameUuid: query['game'] }))
+  yield put(syncDispatch(Actions.setActiveConfigurationProfile, query['profile']))
+  yield put(syncDispatch(Actions.setActiveEmulator, query['emulator']))
+  yield put(syncDispatch(Actions.retrieveGameConfiguration.started, { gameGuid: query['game'], profileName: query['profile'] }))
 }
-
-/*
-function* refreshActiveGameConfiguration (snowflake: Snowflake, action: SyncPayload<{emulatorName: string, gameUuid: string}>): SagaIterator {
-  try {
-    const config: ConfigurationCollection = yield call(snowflake.emulators.getConfiguration, action.payload.emulatorName, action.payload.gameUuid)
-    yield put(successDispatch(Actions.refreshActiveGameConfiguration, config))
-  } catch (e) {
-    yield put(failedDispatch(Actions.refreshActiveGameConfiguration, e))
-  }
-}*/
 
 function* retrieveGameConfigurations (snowflake: Snowflake, action: SyncPayload<{gameGuid: string, profileName: string}>): SagaIterator {
   try {
@@ -64,9 +56,8 @@ function* retrieveGameConfigurations (snowflake: Snowflake, action: SyncPayload<
 function* rootSaga (snowflake: Snowflake): SagaIterator {
   yield takeEvery(Actions.refreshPlatforms.type, refreshPlatformsWorker, snowflake)
   yield takeEvery(Actions.refreshGames.type, refreshGamesWorker, snowflake)
-  yield takeEvery(Actions.locationChange, refreshActiveState)
-  // yield takeEvery(Actions.refreshActiveGameConfiguration.started, refreshActiveGameConfiguration, snowflake)
   yield takeEvery(Actions.retrieveGameConfiguration.started, retrieveGameConfigurations, snowflake)
+  yield takeEvery(Actions.locationChange, refreshActiveState)
 }
 
 export default rootSaga

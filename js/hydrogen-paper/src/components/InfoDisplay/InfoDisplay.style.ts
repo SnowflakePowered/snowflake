@@ -9,7 +9,7 @@ export const styles = {
   },
   title: {
     fontSize: '1.5em',
-    wordBreak: 'break-all'
+    wordBreak: 'break-word'
   },
   subTitle: {
     fontSize: '1em'
