@@ -1,5 +1,5 @@
 import * as React from 'react'
-import injectSheet from 'support/InjectSheet'
+import injectSheet, { StyleProps } from 'support/InjectSheet'
 import { AutoSizer, Grid, ColumnSizer, WindowScroller } from 'react-virtualized'
 import { dimensions } from 'components/GameCard/GameCard.style'
 import { styles } from './GameCardGrid.style'
@@ -34,7 +34,6 @@ const getDimensions = (portrait, landscape, square) => {
 }
 
 type GameCardGridProps = {
-  classes?: any,
   portrait?: boolean,
   landscape?: boolean,
   square?: boolean,
@@ -45,7 +44,7 @@ type GameCardGridState = {
   scrollElement?: HTMLElement | null
 }
 
-class GameCardGrid extends React.PureComponent<GameCardGridProps, GameCardGridState> {
+class GameCardGrid extends React.PureComponent<GameCardGridProps & StyleProps, GameCardGridState> {
 
   state = {
     scrollElement: null

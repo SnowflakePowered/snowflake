@@ -4,7 +4,7 @@ import * as PropTypes from 'prop-types'
 import Collapse from 'material-ui/transitions/Collapse'
 import Typography from 'material-ui/Typography'
 
-import injectSheet from 'support/InjectSheet'
+import injectSheet, { StyleProps } from 'support/InjectSheet'
 import * as classnames from 'classnames'
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore'
 import IconButton from 'material-ui/IconButton'
@@ -12,8 +12,7 @@ import IconButton from 'material-ui/IconButton'
 import { styles } from './CollapsingParagraph.style'
 
 type CollapsingParagaphProps = {
-  children: string,
-  classes?: any
+  children: string
 }
 
 type CollapsingParagaphState = {
@@ -21,7 +20,7 @@ type CollapsingParagaphState = {
   isCollapsing: boolean
 }
 
-class CollapsingParagaph extends React.Component<CollapsingParagaphProps, CollapsingParagaphState> {
+class CollapsingParagaph extends React.Component<CollapsingParagaphProps & StyleProps, CollapsingParagaphState> {
   static propTypes = {
     children: PropTypes.string
   }

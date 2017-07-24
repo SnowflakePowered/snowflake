@@ -1,5 +1,5 @@
 import * as React from 'react'
-import injectSheet from 'support/InjectSheet'
+import injectSheet, { StyleProps } from "support/InjectSheet";
 import withSnowflake from 'decorators/withSnowflake'
 
 import List, {
@@ -11,11 +11,7 @@ import GamepadIcon from 'material-ui-icons/VideogameAsset'
 import Link from 'components/Link/Link'
 import { styles } from './Sidebar.style'
 
-type SidebarProps = {
-  classes?: any
-}
-
-const Sidebar = withSnowflake<SidebarProps>(({ classes, snowflake }) => (
+const Sidebar = withSnowflake<StyleProps>(({ classes, snowflake }) => (
   <div className={classes.container}>
     <List>
       <Link to={`/games?platform=${snowflake!.ActivePlatform ? snowflake!.ActivePlatform.PlatformID : ''}`}>

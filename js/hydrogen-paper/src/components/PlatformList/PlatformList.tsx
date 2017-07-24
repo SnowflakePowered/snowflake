@@ -24,7 +24,7 @@ const PlatformList: React.SFC<PlatformListProps> = ({ classes, platforms, platfo
       <div className={classes.platformSelector}>
         <List>
           {Object.entries(platforms).map(([k, p]) =>
-            <Link to={`?platform=${p.PlatformID}`}>
+            <Link to={`?platform=${p.PlatformID}`} key={p.PlatformID}>
               <ListItem key={p.PlatformID} button>
                 <Typography>{p.FriendlyName}</Typography>
               </ListItem>

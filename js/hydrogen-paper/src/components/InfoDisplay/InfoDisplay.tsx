@@ -1,11 +1,10 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
-import injectSheet from 'support/InjectSheet'
+import injectSheet, { StyleProps } from 'support/InjectSheet'
 
 import { styles } from './InfoDisplay.style'
 
 type InfoDisplayProps = {
-  classes?: any,
   title?: string,
   subtitle?: string,
   tagline?: string,
@@ -13,7 +12,7 @@ type InfoDisplayProps = {
   stats?: string[]
 }
 
-const InfoDisplay: React.SFC<InfoDisplayProps> = ({ classes, title, subtitle, tagline, metadata, stats }) => (
+const InfoDisplay: React.SFC<InfoDisplayProps & StyleProps> = ({ classes, title, subtitle, tagline, metadata, stats }) => (
   <div className={classes.container}>
     <div className={classes.top}>
       <div className={classes.title}>{title || ''}</div>
@@ -22,7 +21,7 @@ const InfoDisplay: React.SFC<InfoDisplayProps> = ({ classes, title, subtitle, ta
       {(metadata || []).map(m => <div className={classes.metadata} key={m}>{m || ''}</div>)}
     </div>
     <div className={classes.bottom}>
-      {(stats || []).map(s => <div className={classes.stats}>{s || ''}</div>)}
+      {(stats || []).map(s => <div className={classes.stats} key={s}>{s || ''}</div>)}
     </div>
   </div>
 )

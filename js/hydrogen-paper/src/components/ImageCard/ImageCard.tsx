@@ -2,7 +2,7 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
 import Paper from 'material-ui/Paper'
-import injectSheet from 'support/InjectSheet'
+import injectSheet, { StyleProps } from "support/InjectSheet";
 
 const styles = {
   imageContainer: {
@@ -43,13 +43,11 @@ const styles = {
 }
 
 type ImageCardProps = {
-  // tslint:disable-next-line:no-any
-  classes?: any
   image: string,
   elevation?: number
 }
 
-const ImageCard: React.SFC<ImageCardProps> = ({ classes, image, elevation }) => (
+const ImageCard: React.SFC<ImageCardProps & StyleProps> = ({ classes, image, elevation }) => (
   <div className={classes.padding}>
     <div className={classes.container}>
       <div className={classes.paperContainer}>

@@ -16,7 +16,7 @@ type ThemedStyleSheet = (theme: any) => StyleSheet
 const sanitize = displayName => (displayName.replace(/(\(|\[)/g, '-').replace(/(\)|\])/g, '')) // todo make this better
 
 const injectSheet = <T>(styles: StyleSheet | ThemedStyleSheet) =>
- (component: React.ComponentClass<T> | React.StatelessComponent<T>): React.ComponentClass<T> => {
+ (component: React.ComponentClass<T & StyleProps> | React.StatelessComponent<T & StyleProps>): React.ComponentClass<T> => {
    const styleSheetName = sanitize(getDisplayName(component))
    const styleSheet = createStyleSheet(styleSheetName, styles)
    return withStyles(styleSheet)(component)

@@ -40,7 +40,7 @@ const GameListView: React.SFC<GameListViewProps & StyleProps> = ({ classes, game
   <div className={classes.gridContainer}>
     <GameGrid header={[<TitleHeader />, <DetailsHeader platform={platform} games={games}/>]}>
       {
-        games.map(g => <GameCard game={g} />)
+        games.map(g => <GameCard game={g} key={g.Guid}/>)
       }
     </GameGrid>
   </div>

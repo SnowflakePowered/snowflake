@@ -1,13 +1,12 @@
 import * as React from 'react'
-import injectSheet from 'support/InjectSheet'
+import injectSheet, { StyleProps } from 'support/InjectSheet'
 import { styles } from './ImageBackground.style'
 
 type ImageBackgroundProps = {
-  classes?: any,
   image: string
 }
 
-const ImageBackground: React.SFC<ImageBackgroundProps> = ({ classes, image }) => (
+const ImageBackground: React.SFC<ImageBackgroundProps & StyleProps> = ({ classes, image }) => (
   <div className={classes.headerBackgroundContainer}>
     <img className={classes.headerBackground}
       src={image} />

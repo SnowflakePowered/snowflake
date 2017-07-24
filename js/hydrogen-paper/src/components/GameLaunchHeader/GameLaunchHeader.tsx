@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
-import injectSheet from 'support/InjectSheet'
+import injectSheet, { StyleProps } from 'support/InjectSheet'
 
 import GameDisplay from 'components/GameDisplay/GameDisplay'
 import GamePlayButton from 'components/GamePlayButton/GamePlayButton'
@@ -9,14 +9,13 @@ import GamePlayButton from 'components/GamePlayButton/GamePlayButton'
 import { styles } from './GameLaunchHeader.style'
 
 type GameLaunchHeaderProps = {
-  classes?: any,
   gameTitle: string,
   gamePublisher: string,
   gameDescription?: string,
   onPlayButtonClicked?: (event: Event) => void
 }
 
-const GameLaunchHeader: React.SFC<GameLaunchHeaderProps> = ({ classes, gameTitle, gamePublisher, gameDescription, onPlayButtonClicked }) => (
+const GameLaunchHeader: React.SFC<GameLaunchHeaderProps & StyleProps> = ({ classes, gameTitle, gamePublisher, gameDescription, onPlayButtonClicked }) => (
   <div className={classes.detailContainer}>
     <div className={classes.controlContainer}>
       <div className={classes.topControls}>
