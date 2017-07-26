@@ -1,12 +1,19 @@
 import actionCreatorFactory from 'typescript-fsa'
-import { Platform, Game, ConfigurationCollection } from 'snowflake-remoting'
+import {
+  Platform,
+  Game,
+  ConfigurationCollection,
+  ConfigurationValue
+} from "snowflake-remoting";
+import { ConfigurationKey } from "support/ConfigurationKey";
 
 const actionCreator = actionCreatorFactory()
 
 enum SnowflakeActions {
   REFRESH_GAMES = '@@snowflake/REFRESH_GAMES',
   REFRESH_PLATFORMS = '@@snowflake/REFRESH_PLATFORMS',
-  RETRIEVE_GAME_CONFIGURATION = '@@snowflake/RETRIEVE_GAME_CONFIGURATION'
+  RETRIEVE_GAME_CONFIGURATION = '@@snowflake/RETRIEVE_GAME_CONFIGURATION',
+  REFRESH_GAME_CONFIGURATION = '@@snowflake/REFRESH_GAME_CONFIGURATION'
 }
 
 enum StateActions {
@@ -27,6 +34,9 @@ export const refreshGames = actionCreator
 
 export const retrieveGameConfiguration = actionCreator
       .async<{gameGuid: string, profileName: string}, { [emulatorName: string]: ConfigurationCollection }>(SnowflakeActions.RETRIEVE_GAME_CONFIGURATION)
+
+export const refreshGameConfiguration = actionCreator
+      .async<{configKey: ConfigurationKey, newValue: ConfigurationValue}, ConfigurationCollection>(SnowflakeActions.REFRESH_GAME_CONFIGURATION)
 
 export const setActivePlatform = actionCreator<string>(StateActions.SET_ACTIVE_PLATFORM)
 

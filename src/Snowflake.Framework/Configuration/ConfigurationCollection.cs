@@ -45,6 +45,7 @@ namespace Snowflake.Configuration
             this.collectionInterceptor = new CollectionInterceptor<T>(defaults);
             this.Configuration = generator.CreateInterfaceProxyWithoutTarget<T>(new CollectionCircularInterceptor<T>(this), this.collectionInterceptor);
         }
+
         public IEnumerator<KeyValuePair<string, IConfigurationSection>> GetEnumerator()
         {
             return this.Descriptor.SectionKeys.Select(k => new KeyValuePair<string, IConfigurationSection>

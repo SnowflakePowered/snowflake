@@ -3,7 +3,8 @@ import { takeEvery, call, put, select } from 'redux-saga/effects'
 import Snowflake, {
   Platform,
   Game,
-  ConfigurationCollection
+  ConfigurationCollection,
+  ConfigurationValue
 } from 'snowflake-remoting'
 
 import * as Actions from './Actions'
@@ -15,6 +16,7 @@ import {
 } from './ResultDispatches'
 
 import * as Selectors from './Selectors'
+import { ConfigurationKey } from "support/ConfigurationKey";
 
 function* refreshPlatformsWorker (snowflake: Snowflake): SagaIterator {
   try {
@@ -53,11 +55,22 @@ function* retrieveGameConfigurations (snowflake: Snowflake, action: SyncPayload<
   }
 }
 
+function* refreshGameConfigurations (snowflake: Snowflake, action: SyncPayload<{configKey: ConfigurationKey, newValue: ConfigurationValue}>): SagaIterator {
+  try {
+    const { gameGuid, profileName, emulatorName } = action.payload.configKey
+    const config: ConfigurationCollection = yield call(snowflake.games.setEmulatorConfigurationValue, gameGuid, profileName, emulatorName, action.payload.newValue)
+    yield put(successDispatch(Actions.refreshGameConfiguration, config, action.payload))
+  } catch (e) {
+    yield put (failedDispatch(Actions.refreshGameConfiguration, e))
+  }
+}
+
 function* rootSaga (snowflake: Snowflake): SagaIterator {
   yield takeEvery(Actions.refreshPlatforms.type, refreshPlatformsWorker, snowflake)
   yield takeEvery(Actions.refreshGames.type, refreshGamesWorker, snowflake)
   yield takeEvery(Actions.retrieveGameConfiguration.started, retrieveGameConfigurations, snowflake)
   yield takeEvery(Actions.locationChange, refreshActiveState)
+  yield takeEvery(Actions.refreshGameConfiguration.started, refreshGameConfigurations, snowflake)
 }
 
 export default rootSaga

@@ -44,3 +44,9 @@ export interface ConfigurationSection {
 export interface ConfigurationCollection {
   [SectionName: string]: ConfigurationSection
 }
+
+export class Configuration extends Service {
+  constructor(rootUrl: string) {
+    super(rootUrl, 'configuration')
+  }
+}

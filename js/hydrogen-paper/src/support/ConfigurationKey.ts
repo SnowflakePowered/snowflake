@@ -7,8 +7,7 @@ class ConfigurationKeyProxyHandler implements ProxyHandler<ConfigurationKey> {
   }
 
   public get (target, property, receiver) {
-    if (this.immutableBacking.contains(property)) return this.immutableBacking.get(property)
-    return this.immutableBacking[property]
+    return this.immutableBacking.get(property) || this.immutableBacking[property]
   }
 
   public set (target, property, value, receiver) {

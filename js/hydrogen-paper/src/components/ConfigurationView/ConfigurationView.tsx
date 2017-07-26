@@ -1,14 +1,22 @@
 import * as React from 'react'
 import withSnowflake, { SnowflakeProps } from 'decorators/withSnowflake'
 import { NoProps } from 'support/NoProps'
-import { ConfigurationSection } from 'snowflake-remoting/dist/snowflake'
-// import BooleanWidget from 'components/BooleanWidget/BooleanWidget'
+import { ConfigurationSection, ConfigurationOption } from 'snowflake-remoting'
+import BooleanWidget from 'components/BooleanWidget/BooleanWidget'
+import { ConfigurationKey } from 'support/ConfigurationKey'
 
-const ConfigurationSection: React.SFC<{config: ConfigurationSection}> = ({config}) => {
+const ConfigurationOptionView: React.SFC<{config: ConfigurationOption, configkey: ConfigurationKey}> = ({config, configkey}) => {
+  if (config.Descriptor.Type === 'boolean') {
+    return <BooleanWidget option={config} configkey={configkey} />
+  }
+  return (<div/>)
+}
+
+const ConfigurationSectionView: React.SFC<{config: ConfigurationSection, configkey: ConfigurationKey}> = ({config, configkey}) => {
   return (
     <div>
     <div>{config ? config.Descriptor.DisplayName : ''}</div>
-    {Object.values(config.Configuration).map(c => <div>{c.Descriptor.DisplayName}</div>)}
+    {Object.values(config.Configuration).map(c => <ConfigurationOptionView config={c} configkey={configkey}/>)}
     </div>
   )
 }
@@ -16,11 +24,12 @@ const ConfigurationSection: React.SFC<{config: ConfigurationSection}> = ({config
 class ConfigurationView extends React.Component<NoProps & SnowflakeProps> {
   render () {
     // todo: use get.
-    if (!this.props.snowflake.ActiveEmulatorConfiguration) return <div/>
+    if (!this.props.snowflake.ActiveEmulatorConfiguration.config) return <div/>
+    const key = this.props.snowflake.ActiveEmulatorConfiguration.key
     return (
       <div>
-        {Object.values(this.props.snowflake.ActiveEmulatorConfiguration)
-            .map(c => <ConfigurationSection config={c}/>)}
+        {Object.values(this.props.snowflake.ActiveEmulatorConfiguration.config)
+            .map(c => <ConfigurationSectionView configkey={key} config={c}/>)}
       </div>
     )
   }

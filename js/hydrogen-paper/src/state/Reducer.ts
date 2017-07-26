@@ -40,11 +40,9 @@ const reducer = reducerWithInitialState<State>(InitialState)
   .case(Actions.retrieveGameConfiguration.done, (action, payload) => {
     const configs = payload.result
     const { gameGuid, profileName } = payload.params
-    let test
     const mapEntries: [ConfigurationKey, ConfigurationCollection][] = Object.entries(configs).map(([emulatorName, config]) => {
       const key: ConfigurationKey = ConfigurationKey(gameGuid, emulatorName, profileName)
       const entry: [ConfigurationKey, ConfigurationCollection] = [Immutable.fromJS(key), config]
-      test = key
       return entry
     })
     const newMap = Map<ConfigurationKey, ConfigurationCollection>(mapEntries)
@@ -53,10 +51,27 @@ const reducer = reducerWithInitialState<State>(InitialState)
       GameConfigurations: action.GameConfigurations.merge(newMap)
     }
   })
+  .case(Actions.refreshGameConfiguration.done, (action, payload) => {
+    const config = payload.result
+    const { gameGuid, profileName, emulatorName } = payload.params.configKey
+    const key: ConfigurationKey = ConfigurationKey(gameGuid, emulatorName, profileName)
+    const newMap = Map<ConfigurationKey, ConfigurationCollection>([[Immutable.fromJS(key), config]])
+    return {
+      ...action,
+      GameConfigurations: action.GameConfigurations.merge(newMap)
+    }
+
+  })
   .case(Actions.setActiveEmulator, (action, payload) => {
     return {
       ...action,
       ActiveEmulator: payload
+    }
+  })
+  .case(Actions.setActiveConfigurationProfile, (action, payload) => {
+    return {
+      ...action,
+      ActiveGameConfigProfile: payload
     }
   })
   .build()

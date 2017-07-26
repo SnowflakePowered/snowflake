@@ -67,6 +67,7 @@ namespace Snowflake.Configuration
                     ? NonGenericEnums.Parse(optionType, strValue)//return parsed enum if enum
                     : TypeDescriptor.GetConverter(optionType).ConvertFromInvariantString(strValue);
         }
+
         private IConfigurationValue FromValueTuple(KeyValuePair<string,(string stringValue, Guid guid)> tuple)
         {
             Type t = this.Descriptor[tuple.Key].Type;

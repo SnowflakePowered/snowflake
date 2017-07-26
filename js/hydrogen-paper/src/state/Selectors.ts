@@ -43,5 +43,9 @@ export const activeEmulatorConfigurationSelector = createSelector(
   activeEmulatorSelector,
   activeProfileSelector,
   gameConfigsSelector,
-  (gameGuid, emulatorName, profileName, configs) => configs.get(ConfigurationKey(gameGuid, emulatorName, profileName))
+  (gameGuid, emulatorName, profileName, configs) => {
+    const key = ConfigurationKey(gameGuid, emulatorName, profileName)
+    const config = configs.get(key)
+    return { key: key, config: config }
+  }
 )

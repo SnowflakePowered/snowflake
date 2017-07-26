@@ -97,8 +97,10 @@ namespace Snowflake.Configuration
                     dbConnection.Execute(
                         @"UPDATE configuration SET value = @Value WHERE uuid == @Guid", new
                         {
-                            value.Value,
-                            value.Guid
+                            Value = value.Value.GetType().GetTypeInfo().IsEnum ?
+                            NonGenericEnums.GetName(value.Value.GetType(), value.Value) : //optimized path for enums
+                            Convert.ToString(value.Value), //so i put a value in your value so you can value values,
+                            Guid = value.Guid
                         });
                 });
             }
@@ -107,7 +109,6 @@ namespace Snowflake.Configuration
                 throw new KeyNotFoundException("Value GUID was not found in store.");
             }
         }
-
     }
 
     class ConfigurationRecord

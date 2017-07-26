@@ -1,7 +1,7 @@
 import * as Immutable from 'seamless-immutable'
 import { request, Response, Service } from './Remoting'
 import { Platform } from './Stone'
-import { ConfigurationCollection } from "./Configuration";
+import { ConfigurationCollection, ConfigurationOption, ConfigurationValue } from "./Configuration";
 
 export interface Game {
   Files: File[]
@@ -62,6 +62,19 @@ export class Games extends Service {
   public getConfigurations = async (gameGuid: string, profileName?: string) => {
     profileName = profileName || 'default'
     const configurations = await request<{ [emulatorName: string]: ConfigurationCollection }>(this.getServiceUrl(gameGuid, 'configs', profileName))
+    if (configurations.Status.Code >= 400 ) { throw new Error(configurations.Status.Message) }
+    return Immutable.from(configurations.Response)
+  }
+
+  public getEmulatorConfigurations = async (gameGuid: string, profileName: string, emulator: string) => {
+    const configurations = await request<ConfigurationCollection>(this.getServiceUrl(gameGuid, 'configs', profileName, emulator))
+    if (configurations.Status.Code >= 400 ) { throw new Error(configurations.Status.Message) }
+    return Immutable.from(configurations.Response)
+  }
+
+  public setEmulatorConfigurationValue = async  (gameGuid: string, profileName: string, emulator: string, newValue: ConfigurationValue) => {
+    const configurations = await request<ConfigurationCollection>(this.getServiceUrl(gameGuid, 'configs', profileName, emulator),
+                                 { valueGuid: newValue.Guid, newStrValue: newValue.Value }, 'Update')
     if (configurations.Status.Code >= 400 ) { throw new Error(configurations.Status.Message) }
     return Immutable.from(configurations.Response)
   }

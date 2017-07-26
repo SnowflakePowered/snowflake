@@ -14,6 +14,7 @@ using Snowflake.Resources.Stone;
 using Snowflake.Resources.Emulators;
 using Snowflake.Emulator;
 using Snowflake.Mappers;
+using Snowflake.Configuration;
 
 namespace Snowflake.Support.Remoting
 {
@@ -24,13 +25,14 @@ namespace Snowflake.Support.Remoting
         [ImportService(typeof(IStoneProvider))]
         [ImportService(typeof(IGameLibrary))]
         [ImportService(typeof(IServiceRegistrationProvider))]
+        [ImportService(typeof(IConfigurationCollectionStore))]
         public void Compose(IModule module, Loader.IServiceRepository coreInstance)
         {
             var manager = coreInstance.Get<IPluginManager>();
             var stone = coreInstance.Get<IStoneProvider>();
             var gameLib = coreInstance.Get<IGameLibrary>();
             var register = coreInstance.Get<IServiceRegistrationProvider>();
-       
+            var store = coreInstance.Get<IConfigurationCollectionStore>();
             IResourceContainer container = new ResourceContainer()
             {
                 { new GameLibraryRoot(gameLib) },
@@ -45,7 +47,8 @@ namespace Snowflake.Support.Remoting
                 { new PlatformsRoot(stone) },
                 { new EmulatorsRoot(manager.Get<IEmulatorAdapter>()) },
                 { new EmulatorsGameConfigRoot(manager.Get<IEmulatorAdapter>()) },
-                { new GameConfigurationCollectionsRoot(manager.Get<IEmulatorAdapter>())}
+                { new GameConfigurationCollectionsRoot(manager.Get<IEmulatorAdapter>()) },
+                { new GameConfigurationCollectionsValueRoot(manager.Get<IEmulatorAdapter>(), store) }
             };
 
             container.AddTypeMapping(new GameRecordMapping(gameLib));

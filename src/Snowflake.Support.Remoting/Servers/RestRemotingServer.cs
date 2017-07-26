@@ -57,6 +57,7 @@ namespace Snowflake.Support.Remoting.Servers
                 var buffer = new MemoryStream(Encoding.UTF8.GetBytes(str.ToString())).Compress();
                 context.Response.AddHeader("Content-Encoding", "gzip");
                 context.Response.AddHeader("Access-Control-Allow-Origin", "*");
+                context.Response.AddHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
                 RestRemotingServer.WriteToOutputStream(context, buffer.Length, buffer, 0);
                 return true;
             });

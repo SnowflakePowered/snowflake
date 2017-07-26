@@ -989,6 +989,20 @@ class Games extends __WEBPACK_IMPORTED_MODULE_1__Remoting__["a" /* Service */] {
             }
             return __WEBPACK_IMPORTED_MODULE_0_seamless_immutable__["from"](configurations.Response);
         };
+        this.getEmulatorConfigurations = async (gameGuid, profileName, emulator) => {
+            const configurations = await __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__Remoting__["b" /* request */])(this.getServiceUrl(gameGuid, 'configs', profileName, emulator));
+            if (configurations.Status.Code >= 400) {
+                throw new Error(configurations.Status.Message);
+            }
+            return __WEBPACK_IMPORTED_MODULE_0_seamless_immutable__["from"](configurations.Response);
+        };
+        this.setEmulatorConfigurationValue = async (gameGuid, profileName, emulator, newValue) => {
+            const configurations = await __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__Remoting__["b" /* request */])(this.getServiceUrl(gameGuid, 'configs', profileName, emulator), { valueGuid: newValue.Guid, newStrValue: newValue.Value }, 'Update');
+            if (configurations.Status.Code >= 400) {
+                throw new Error(configurations.Status.Message);
+            }
+            return __WEBPACK_IMPORTED_MODULE_0_seamless_immutable__["from"](configurations.Response);
+        };
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Games;

@@ -10,8 +10,9 @@ import Snowflake, {
 import { Action } from 'redux'
 import * as Actions from 'state/Actions'
 import * as Selectors from 'state/Selectors'
+import { ConfigurationKey } from 'support/ConfigurationKey'
 type SnowflakeContext = {
-  Snowflake: SnowflakeData
+  Snowflake: SnowflakeData;
 }
 
 /**
@@ -35,7 +36,7 @@ export type SnowflakeData = {
    * The games for the currently active platform
    */
   ActivePlatformGames: Game[],
-  ActiveEmulatorConfiguration: ConfigurationCollection
+  ActiveEmulatorConfiguration: {key: ConfigurationKey, config: ConfigurationCollection }
   /**
    * The main action dispatcher
    */

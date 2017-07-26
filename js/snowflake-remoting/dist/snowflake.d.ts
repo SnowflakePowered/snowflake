@@ -48,6 +48,8 @@ export class Games extends Service {
     } & Immutable.ImmutableObject<{
         [emulatorName: string]: ConfigurationCollection;
     }>>;
+    getEmulatorConfigurations: (gameGuid: string, profileName: string, emulator: string) => Promise<ConfigurationCollection & Immutable.ImmutableObject<ConfigurationCollection>>;
+    setEmulatorConfigurationValue: (gameGuid: string, profileName: string, emulator: string, newValue: ConfigurationValue) => Promise<ConfigurationCollection & Immutable.ImmutableObject<ConfigurationCollection>>;
 }
 
 export interface Platform {
@@ -129,5 +131,8 @@ export interface ConfigurationSection {
 }
 export interface ConfigurationCollection {
     [SectionName: string]: ConfigurationSection;
+}
+export class Configuration extends Service {
+    constructor(rootUrl: string);
 }
 
