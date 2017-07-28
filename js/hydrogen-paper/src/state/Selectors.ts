@@ -10,6 +10,7 @@ const activeGameUuidSelector = (state: State) => state.ActiveGame
 const activeEmulatorSelector = (state: State) => state.ActiveEmulator
 const activeProfileSelector = (state: State) => state.ActiveGameConfigProfile
 const locationSelector = (state: RouterState) => state.location
+const elementLoadingStateSelector = (state: State) => state.ElementLoadingStates
 
 export const gameConfigsSelector = (state: State) => state.GameConfigurations
 export const gamesSelector = (state: State) => state.Games
@@ -48,4 +49,9 @@ export const activeEmulatorConfigurationSelector = createSelector(
     const config = configs.get(key)
     return { key: key, config: config }
   }
+)
+
+export const isElementLoadingSelector = createSelector(
+  elementLoadingStateSelector,
+  (elementLoadingState) => (elementId: string) => elementLoadingState.get(elementId) || false
 )

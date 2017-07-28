@@ -4,8 +4,8 @@ import {
   Game,
   ConfigurationCollection,
   ConfigurationValue
-} from "snowflake-remoting";
-import { ConfigurationKey } from "support/ConfigurationKey";
+} from 'snowflake-remoting'
+import { ConfigurationKey } from 'support/ConfigurationKey'
 
 const actionCreator = actionCreatorFactory()
 
@@ -20,7 +20,8 @@ enum StateActions {
   SET_ACTIVE_GAME = '@@state/SET_ACTIVE_GAME',
   SET_ACTIVE_PLATFORM = '@@state/SET_ACTIVE_PLATFORM',
   SET_ACTIVE_EMULATOR = '@@state/SET_ACTIVE_EMULATOR',
-  SET_ACTIVE_CONFIGURATION_PROFILE = '@@state/SET_ACTIVE_CONFIGURATION_PROFILE'
+  SET_ACTIVE_CONFIGURATION_PROFILE = '@@state/SET_ACTIVE_CONFIGURATION_PROFILE',
+  SET_ELEMENT_LOADING_STATE = '@@state/SET_ELEMENT_LOADING_STATE'
 }
 
 type LOCATION_CHANGE = '@@router/LOCATION_CHANGE'
@@ -47,3 +48,5 @@ export const setActiveEmulator = actionCreator<string>(StateActions.SET_ACTIVE_E
 export const setActiveConfigurationProfile = actionCreator<string>(StateActions.SET_ACTIVE_CONFIGURATION_PROFILE)
 
 export const locationChange = actionCreator<any>(LOCATION_CHANGE)
+
+export const setElementLoadingState = actionCreator<{elementId: string, loadingState: boolean}>(StateActions.SET_ELEMENT_LOADING_STATE)

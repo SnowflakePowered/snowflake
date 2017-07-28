@@ -1,5 +1,6 @@
 import * as React from 'react'
 import injectSheet, { StyleProps } from 'support/InjectSheet'
+import { CircularProgress } from 'material-ui/Progress'
 
 const sheet = {
   container: {
@@ -25,9 +26,10 @@ const sheet = {
 
 type ConfigurationWidgetProps = {
   name: string,
-  description: string
+  description: string,
+  isLoading: boolean
 }
-const ConfigurationWidget: React.SFC<ConfigurationWidgetProps & StyleProps> = ({classes, name, description, children}) => (
+const ConfigurationWidget: React.SFC<ConfigurationWidgetProps & StyleProps> = ({classes, name, description, isLoading, children}) => (
   <div className={classes.container}>
     <div className={classes.description}>
       <div className={classes.configTitle}>
@@ -38,7 +40,7 @@ const ConfigurationWidget: React.SFC<ConfigurationWidgetProps & StyleProps> = ({
       </div>
     </div>
     <div className={classes.control}>
-      {children}
+      {isLoading ? <CircularProgress size={24} /> : children}
     </div>
   </div>
 )

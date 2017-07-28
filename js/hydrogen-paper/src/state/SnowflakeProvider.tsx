@@ -19,6 +19,7 @@ type SnowflakeContext = {
  * Represents the current store of data from the running Snowflake instance
  */
 export type SnowflakeData = {
+  ElementLoadingStates: (elementId: string) => boolean
   /**
    * A map of Stone platforms from ID to Platform
    */
@@ -63,6 +64,7 @@ function mapStateToProps (state: State): SnowflakeData {
     ActiveGame: Selectors.activeGameSelector(state),
     ActivePlatformGames: Selectors.activePlatformGamesSelector(state),
     ActiveEmulatorConfiguration: Selectors.activeEmulatorConfigurationSelector(state),
+    ElementLoadingStates: Selectors.isElementLoadingSelector(state),
     Api: snowflake
   }
 }

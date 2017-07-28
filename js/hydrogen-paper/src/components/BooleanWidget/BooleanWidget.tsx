@@ -2,31 +2,26 @@ import * as React from 'react'
 import Switch from 'material-ui/Switch'
 
 import ConfigurationWidget from 'components/ConfigurationWidget/ConfigurationWidget'
-import withSnowflake, { SnowflakeProps } from 'decorators/withSnowflake'
-import { ConfigurationOption, ConfigurationValue } from "snowflake-remoting";
-import * as Actions from 'state/Actions'
+import { ConfigurationOption } from 'snowflake-remoting'
 import { ConfigurationKey } from 'support/ConfigurationKey'
 
-export type BooleanWidgetProps = {
-  option: ConfigurationOption,
+type BooleanWidgetProps = {
+  booleanOption: ConfigurationOption,
   configkey: ConfigurationKey,
-  onValueChange?: (event: Event) => void
+  isLoading: boolean,
+  onValueChange: (newValue: boolean) => void
 }
 // todo: Refactor this out to a container.
-const BooleanWidget: React.SFC<SnowflakeProps & BooleanWidgetProps> = ({snowflake, option, configkey, onValueChange}) => {
+const BooleanWidget: React.SFC<BooleanWidgetProps> = ({booleanOption, isLoading, configkey, onValueChange}) => {
   const valueChangeHandler = (event: Event, value: boolean) => {
-    const newValue: ConfigurationValue = { ...option.Value, Value: value}
-    snowflake.Dispatch!(Actions.refreshGameConfiguration.started({
-      configKey: configkey,
-      newValue: newValue
-    }))
+    onValueChange(value)
   }
 
   return (
-    <ConfigurationWidget name={option.Descriptor.DisplayName} description={option.Descriptor.Description}>
-      <Switch checked={option.Value.Value} onChange={valueChangeHandler}/>
+    <ConfigurationWidget name={booleanOption.Descriptor.DisplayName} description={booleanOption.Descriptor.Description} isLoading={isLoading}>
+      <Switch checked={booleanOption.Value.Value} onChange={valueChangeHandler}/>
     </ConfigurationWidget>
   )
 }
 
-export default withSnowflake(BooleanWidget)
+export default BooleanWidget

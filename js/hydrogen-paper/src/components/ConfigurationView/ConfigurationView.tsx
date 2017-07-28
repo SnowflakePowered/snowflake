@@ -2,12 +2,12 @@ import * as React from 'react'
 import withSnowflake, { SnowflakeProps } from 'decorators/withSnowflake'
 import { NoProps } from 'support/NoProps'
 import { ConfigurationSection, ConfigurationOption } from 'snowflake-remoting'
-import BooleanWidget from 'components/BooleanWidget/BooleanWidget'
+import BooleanWidget from 'containers/BooleanWidget/BooleanWidgetContainer'
 import { ConfigurationKey } from 'support/ConfigurationKey'
 
 const ConfigurationOptionView: React.SFC<{config: ConfigurationOption, configkey: ConfigurationKey}> = ({config, configkey}) => {
   if (config.Descriptor.Type === 'boolean') {
-    return <BooleanWidget option={config} configkey={configkey} />
+    return <BooleanWidget booleanOption={config} configKey={configkey} />
   }
   return (<div/>)
 }

@@ -11,6 +11,7 @@ interface State extends RouterState {
   ActiveEmulator: string,
   ActiveGameConfigProfile: string,
   GameConfigurations: Immutable.Map<ConfigurationKey, ConfigurationCollection>
+  ElementLoadingStates: Immutable.Map<string, boolean>
 }
 
 export const InitialState: State = {
@@ -21,7 +22,8 @@ export const InitialState: State = {
   location: null,
   ActiveGameConfigProfile: '',
   ActiveEmulator: '',
-  GameConfigurations: Immutable.Map()
+  GameConfigurations: Immutable.Map(),
+  ElementLoadingStates: Immutable.Map()
 }
 
 export default State

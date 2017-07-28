@@ -74,6 +74,12 @@ const reducer = reducerWithInitialState<State>(InitialState)
       ActiveGameConfigProfile: payload
     }
   })
+  .case(Actions.setElementLoadingState, (action, payload) => {
+    return {
+      ...action,
+      ElementLoadingStates: action.ElementLoadingStates.set(payload.elementId, payload.loadingState)
+    }
+  })
   .build()
 
 export default reducer

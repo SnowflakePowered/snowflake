@@ -56,12 +56,16 @@ function* retrieveGameConfigurations (snowflake: Snowflake, action: SyncPayload<
 }
 
 function* refreshGameConfigurations (snowflake: Snowflake, action: SyncPayload<{configKey: ConfigurationKey, newValue: ConfigurationValue}>): SagaIterator {
+  const elementId = action.payload.newValue.Guid
   try {
     const { gameGuid, profileName, emulatorName } = action.payload.configKey
+    yield put(syncDispatch(Actions.setElementLoadingState, { elementId: elementId, loadingState: true}))
     const config: ConfigurationCollection = yield call(snowflake.games.setEmulatorConfigurationValue, gameGuid, profileName, emulatorName, action.payload.newValue)
     yield put(successDispatch(Actions.refreshGameConfiguration, config, action.payload))
+    yield put(syncDispatch(Actions.setElementLoadingState, { elementId: elementId, loadingState: false}))
   } catch (e) {
     yield put (failedDispatch(Actions.refreshGameConfiguration, e))
+    yield put(syncDispatch(Actions.setElementLoadingState, { elementId: elementId, loadingState: false}))
   }
 }
 
@@ -71,6 +75,7 @@ function* rootSaga (snowflake: Snowflake): SagaIterator {
   yield takeEvery(Actions.retrieveGameConfiguration.started, retrieveGameConfigurations, snowflake)
   yield takeEvery(Actions.locationChange, refreshActiveState)
   yield takeEvery(Actions.refreshGameConfiguration.started, refreshGameConfigurations, snowflake)
+
 }
 
 export default rootSaga
