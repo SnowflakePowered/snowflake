@@ -50,6 +50,7 @@ export class Games extends Service {
     }>>;
     getEmulatorConfigurations: (gameGuid: string, profileName: string, emulator: string) => Promise<ConfigurationCollection & Immutable.ImmutableObject<ConfigurationCollection>>;
     setEmulatorConfigurationValue: (gameGuid: string, profileName: string, emulator: string, newValue: ConfigurationValue) => Promise<ConfigurationCollection & Immutable.ImmutableObject<ConfigurationCollection>>;
+    setEmulatorConfigurationValues: (gameGuid: string, profileName: string, emulator: string, newValues: ConfigurationValue[]) => Promise<ConfigurationCollection & Immutable.ImmutableObject<ConfigurationCollection>>;
 }
 
 export interface Platform {

@@ -54,7 +54,12 @@ declare export class Games mixins Service {
         gameGuid: string,
         profileName: string,
         emulator: string,
-        newValue: ConfigurationValue) => Promise<ConfigurationCollection & Immutable.ImmutableObject<ConfigurationCollection >>
+        newValue: ConfigurationValue) => Promise<ConfigurationCollection & Immutable.ImmutableObject<ConfigurationCollection >> ;
+    setEmulatorConfigurationValues: (
+        gameGuid: string,
+        profileName: string,
+        emulator: string,
+        newValues: ConfigurationValue[]) => Promise<ConfigurationCollection & Immutable.ImmutableObject<ConfigurationCollection >>
 }
 declare export interface Platform {
     PlatformID: string,

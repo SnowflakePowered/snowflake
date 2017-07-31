@@ -1003,6 +1003,13 @@ class Games extends __WEBPACK_IMPORTED_MODULE_1__Remoting__["a" /* Service */] {
             }
             return __WEBPACK_IMPORTED_MODULE_0_seamless_immutable__["from"](configurations.Response);
         };
+        this.setEmulatorConfigurationValues = async (gameGuid, profileName, emulator, newValues) => {
+            for (const value of newValues) {
+                await this.setEmulatorConfigurationValue(gameGuid, profileName, emulator, value);
+            }
+            const refreshedConfig = await this.getEmulatorConfigurations(gameGuid, profileName, emulator);
+            return refreshedConfig;
+        };
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Games;

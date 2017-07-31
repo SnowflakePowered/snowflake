@@ -78,4 +78,12 @@ export class Games extends Service {
     if (configurations.Status.Code >= 400 ) { throw new Error(configurations.Status.Message) }
     return Immutable.from(configurations.Response)
   }
+
+  public setEmulatorConfigurationValues = async (gameGuid: string, profileName: string, emulator: string, newValues: ConfigurationValue[]) => {
+    for (const value of newValues) {
+      await this.setEmulatorConfigurationValue(gameGuid, profileName, emulator, value)
+    }
+    const refreshedConfig = await this.getEmulatorConfigurations(gameGuid, profileName, emulator)
+    return refreshedConfig
+  }
 }
