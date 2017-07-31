@@ -1,7 +1,7 @@
 import * as Immutable from 'seamless-immutable'
 import { request, Response, Service } from './Remoting'
 import { Platform } from './Stone'
-import { ConfigurationCollection, ConfigurationOption, ConfigurationValue } from "./Configuration";
+import { ConfigurationCollection, ConfigurationOption, ConfigurationValue } from './Configuration'
 
 export interface Game {
   Files: File[]

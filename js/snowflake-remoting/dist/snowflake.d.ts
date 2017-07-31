@@ -94,7 +94,7 @@ export class Service {
 export type Verb = 'Create' | 'Read' | 'Delete' | 'Update';
 export const request: <T>(url: string, payload?: any, verb?: Verb) => Promise<Response<T>>;
 
-export type ConfigurationOptionType = 'integer' | 'boolean' | 'decimal' | 'selection';
+export type ConfigurationOptionType = 'integer' | 'boolean' | 'decimal' | 'selection' | 'string';
 export interface ConfigurationValue {
     Value: number | boolean | string;
     Guid: string;

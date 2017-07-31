@@ -108,7 +108,11 @@ declare export class Service {
 }
 declare export type Verb = Create | Read | Delete | Update;
 declare export var request:<T>(url: string, payload?: any, verb?: Verb) => Promise<Response<T >> ;
-declare export type ConfigurationOptionType = integer | boolean | decimal | selection;
+declare export type ConfigurationOptionType = integer |
+    boolean |
+    decimal |
+    selection |
+    string;
 declare export interface ConfigurationValue {
     Value: number | boolean | string,
         Guid: string

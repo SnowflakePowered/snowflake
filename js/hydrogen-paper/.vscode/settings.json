@@ -5,5 +5,8 @@
     "tslint.enable": true,
     "tslint.jsEnable": true,
     "editor.tabSize": 2,
-    "editor.detectIndentation": false
-}
+    "editor.detectIndentation": false,
+    "files.exclude": {
+      "node_modules/**/*": true
+    }
+  }

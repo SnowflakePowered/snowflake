@@ -1,7 +1,7 @@
 import * as Immutable from 'seamless-immutable'
 import { request, Response, Service } from './Remoting'
 
-export type ConfigurationOptionType = 'integer' | 'boolean' | 'decimal' | 'selection'
+export type ConfigurationOptionType = 'integer' | 'boolean' | 'decimal' | 'selection' | 'string'
 
 export interface ConfigurationValue {
   Value: number | boolean | string,
