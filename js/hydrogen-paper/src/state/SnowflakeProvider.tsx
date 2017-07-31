@@ -37,7 +37,7 @@ export type SnowflakeData = {
    * The games for the currently active platform
    */
   ActivePlatformGames: Game[],
-  ActiveEmulatorConfiguration: {key: ConfigurationKey, config: ConfigurationCollection }
+  ActiveEmulatorConfiguration: { key: ConfigurationKey, config: ConfigurationCollection }
   /**
    * The main action dispatcher
    */
