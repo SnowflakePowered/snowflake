@@ -4,6 +4,9 @@ import { NoProps } from 'support/NoProps'
 import { ConfigurationSection, ConfigurationOption, ConfigurationValue, ConfigurationCollection } from 'snowflake-remoting'
 import BooleanWidget from 'containers/BooleanWidget/BooleanWidgetContainer'
 import StringWidget from 'containers/StringWidget/StringWidgetContainer'
+import IntegerWidget from 'containers/IntegerWidget/IntegerWidgetContainer'
+import DecimalWidget from 'containers/DecimalWidget/DecimalWidgetContainer'
+
 import * as Actions from 'state/Actions'
 import { ConfigurationKey } from 'support/ConfigurationKey'
 import Button from 'material-ui/Button'
@@ -16,10 +19,16 @@ type ConfigurationProps = {
 
 const ConfigurationOptionView: React.SFC<{config: ConfigurationOption} & ConfigurationProps> = ({config, configKey, handleUpdate}) => {
   if (config.Descriptor.Type === 'boolean') {
-    return <BooleanWidget booleanOption={config} configKey={configKey} handleUpdate={handleUpdate}/>
+    return <BooleanWidget option={config} configKey={configKey} handleUpdate={handleUpdate}/>
   }
   if (config.Descriptor.Type === 'string') {
-    return <StringWidget stringOption={config} configKey={configKey} handleUpdate={handleUpdate}/>
+    return <StringWidget option={config} configKey={configKey} handleUpdate={handleUpdate}/>
+  }
+  if (config.Descriptor.Type === 'integer') {
+    return <IntegerWidget option={config} configKey={configKey} handleUpdate={handleUpdate}/>
+  }
+  if (config.Descriptor.Type === 'decimal') {
+    return <DecimalWidget option={config} configKey={configKey} handleUpdate={handleUpdate}/>
   }
   return (<div/>)
 }

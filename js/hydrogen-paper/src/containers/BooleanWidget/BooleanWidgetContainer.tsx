@@ -6,19 +6,19 @@ import { ConfigurationKey } from 'support/ConfigurationKey'
 import BooleanWidget from 'components/BooleanWidget/BooleanWidget'
 
 type BooleanWidgetProps = {
-  booleanOption: ConfigurationOption,
+  option: ConfigurationOption,
   configKey: ConfigurationKey,
   handleUpdate: (configKey: ConfigurationKey, newValue: ConfigurationValue, option: ConfigurationOption) => void
 }
 // todo: Refactor this out to a container.
-const BooleanWidgetContainer: React.SFC<SnowflakeProps & BooleanWidgetProps> = ({snowflake, booleanOption, configKey, handleUpdate}) => {
+const BooleanWidgetContainer: React.SFC<SnowflakeProps & BooleanWidgetProps> = ({snowflake, option, configKey, handleUpdate}) => {
   const valueChangeHandler = (value: boolean) => {
-    const newValue: ConfigurationValue = { ...booleanOption.Value, Value: value}
-    handleUpdate(configKey, newValue, booleanOption)
+    const newValue: ConfigurationValue = { ...option.Value, Value: value}
+    handleUpdate(configKey, newValue, option)
   }
-  const isLoading = snowflake.ElementLoadingStates(booleanOption.Value.Guid)
+  const isLoading = snowflake.ElementLoadingStates(option.Value.Guid)
   return (
-    <BooleanWidget booleanOption={booleanOption}
+    <BooleanWidget booleanOption={option}
                    configkey={configKey}
                    onValueChange={valueChangeHandler}
                    isLoading={isLoading} />
