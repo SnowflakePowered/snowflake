@@ -60,7 +60,16 @@ const reducer = reducerWithInitialState<State>(InitialState)
       ...action,
       GameConfigurations: action.GameConfigurations.merge(newMap)
     }
-
+  })
+  .case(Actions.refreshGameConfigurations.done, (action, payload) => {
+    const config = payload.result
+    const { gameGuid, profileName, emulatorName } = payload.params.configKey
+    const key: ConfigurationKey = ConfigurationKey(gameGuid, emulatorName, profileName)
+    const newMap = Map<ConfigurationKey, ConfigurationCollection>([[Immutable.fromJS(key), config]])
+    return {
+      ...action,
+      GameConfigurations: action.GameConfigurations.merge(newMap)
+    }
   })
   .case(Actions.setActiveEmulator, (action, payload) => {
     return {

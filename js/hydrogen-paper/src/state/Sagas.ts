@@ -55,7 +55,7 @@ function* retrieveGameConfigurations (snowflake: Snowflake, action: SyncPayload<
   }
 }
 
-function* refreshGameConfigurations (snowflake: Snowflake, action: SyncPayload<{configKey: ConfigurationKey, newValue: ConfigurationValue}>): SagaIterator {
+function* refreshGameConfiguration (snowflake: Snowflake, action: SyncPayload<{configKey: ConfigurationKey, newValue: ConfigurationValue}>): SagaIterator {
   const elementId = action.payload.newValue.Guid
   try {
     const { gameGuid, profileName, emulatorName } = action.payload.configKey
@@ -69,12 +69,33 @@ function* refreshGameConfigurations (snowflake: Snowflake, action: SyncPayload<{
   }
 }
 
+function* refreshGameConfigurations (snowflake: Snowflake, action: SyncPayload<{configKey: ConfigurationKey, newValues: ConfigurationValue[]}>): SagaIterator {
+  const elementIds = action.payload.newValues.map(v => v.Guid)
+  for (const elementId of elementIds) {
+      yield put(syncDispatch(Actions.setElementLoadingState, { elementId: elementId, loadingState: true}))
+  }
+
+  try {
+    const { gameGuid, profileName, emulatorName } = action.payload.configKey
+    const config: ConfigurationCollection = yield call(snowflake.games.setEmulatorConfigurationValues, gameGuid, profileName, emulatorName, action.payload.newValues)
+    yield put(successDispatch(Actions.refreshGameConfigurations, config, action.payload))
+  } catch (e) {
+    yield put (failedDispatch(Actions.refreshGameConfigurations, e))
+  } finally {
+    for (const elementId of elementIds) {
+      yield put(syncDispatch(Actions.setElementLoadingState, { elementId: elementId, loadingState: false}))
+    }
+  }
+}
+
+
 function* rootSaga (snowflake: Snowflake): SagaIterator {
   yield takeEvery(Actions.refreshPlatforms.type, refreshPlatformsWorker, snowflake)
   yield takeEvery(Actions.refreshGames.type, refreshGamesWorker, snowflake)
   yield takeEvery(Actions.retrieveGameConfiguration.started, retrieveGameConfigurations, snowflake)
   yield takeEvery(Actions.locationChange, refreshActiveState)
-  yield takeEvery(Actions.refreshGameConfiguration.started, refreshGameConfigurations, snowflake)
+  yield takeEvery(Actions.refreshGameConfiguration.started, refreshGameConfiguration, snowflake)
+  yield takeEvery(Actions.refreshGameConfigurations.started, refreshGameConfigurations, snowflake)
 
 }
 

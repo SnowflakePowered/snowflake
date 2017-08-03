@@ -13,7 +13,8 @@ enum SnowflakeActions {
   REFRESH_GAMES = '@@snowflake/REFRESH_GAMES',
   REFRESH_PLATFORMS = '@@snowflake/REFRESH_PLATFORMS',
   RETRIEVE_GAME_CONFIGURATION = '@@snowflake/RETRIEVE_GAME_CONFIGURATION',
-  REFRESH_GAME_CONFIGURATION = '@@snowflake/REFRESH_GAME_CONFIGURATION'
+  REFRESH_GAME_CONFIGURATION = '@@snowflake/REFRESH_GAME_CONFIGURATION',
+  REFRESH_MANY_GAME_CONFIGURATIONS = '@@snowflake/REFRESH_MANY_GAME_CONFIGURATIONS'
 }
 
 enum StateActions {
@@ -38,6 +39,9 @@ export const retrieveGameConfiguration = actionCreator
 
 export const refreshGameConfiguration = actionCreator
       .async<{configKey: ConfigurationKey, newValue: ConfigurationValue}, ConfigurationCollection>(SnowflakeActions.REFRESH_GAME_CONFIGURATION)
+
+export const refreshGameConfigurations = actionCreator
+      .async<{configKey: ConfigurationKey, newValues: ConfigurationValue[]}, ConfigurationCollection>(SnowflakeActions.REFRESH_MANY_GAME_CONFIGURATIONS)
 
 export const setActivePlatform = actionCreator<string>(StateActions.SET_ACTIVE_PLATFORM)
 
