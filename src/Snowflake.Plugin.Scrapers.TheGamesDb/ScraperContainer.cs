@@ -11,7 +11,7 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb
         [ImportService(typeof(IQueryProviderSource))]
         [ImportService(typeof(IContentDirectoryProvider))]
         [ImportService(typeof(IKeyedImageCache))]
-        public void Compose(IModule composableModule, IServiceProvider serviceContainer)
+        public void Compose(IModule composableModule, IServiceRepository serviceContainer)
         {
             var appdata = serviceContainer.Get<IContentDirectoryProvider>();
             serviceContainer.Get<IQueryProviderSource>()

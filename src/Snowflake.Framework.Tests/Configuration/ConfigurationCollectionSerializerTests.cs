@@ -17,10 +17,8 @@ namespace Snowflake.Configuration.Tests
             JObject jobject = 
                 JsonConvert.DeserializeObject<JObject>
                 (JsonConvert.SerializeObject(new ConfigurationCollection<ExampleConfigurationCollection>())).Children<JProperty>().First().Value as JObject;
-            Assert.Contains("Values", jobject.Properties().Select(k => k.Name));
-            Assert.Contains("Options", jobject.Properties().Select(k => k.Name));
-            Assert.Contains("Selections", jobject.Properties().Select(k => k.Name));
-
+            Assert.Contains("Configuration", jobject.Properties().Select(k => k.Name));
+            Assert.Contains("Descriptor", jobject.Properties().Select(k => k.Name));
 
         }
     }

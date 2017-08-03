@@ -10,18 +10,6 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <Compile Remove="resource\%2540common\**" />
-    <Compile Remove="resource\RetroArchCommonConfiguration\**" />
-    <EmbeddedResource Remove="resource\RetroArchCommonConfiguration\**" />
-    <EmbeddedResource Include="resource\**" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <EmbeddedResource Remove="resource\%2540common\**" />
-    <None Remove="resource\%2540common\**" />
-  </ItemGroup>
-  
-  <ItemGroup>
     <PackageReference Include="System.Diagnostics.Process" Version="4.3.0" />
   </ItemGroup>
 

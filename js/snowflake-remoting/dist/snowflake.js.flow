@@ -1,0 +1,160 @@
+declare export default class Snowflake {
+    constructor(rootUrl?: string): this;
+    games: Games;
+    stone: Stone;
+    emulators: Emulators
+}
+declare export interface Game {
+    Files: File[],
+        Guid: string,
+        Metadata: {
+            [key: string]: Metadata
+        },
+        PlatformID: string,
+        Title: string
+}
+declare export interface File {
+    FilePath: string,
+        Guid: string,
+        Metadata: {
+            [key: string]: Metadata
+        },
+        MimeType: string,
+        Record: string
+}
+declare export interface Metadata {
+    Guid: string,
+        Key: string,
+        Record: string,
+        Value: string
+}
+declare export class Games mixins Service {
+    constructor(rootUrl: string): this;
+    getGames: () => Promise<{
+        [gameGuid: string]: Game
+    }>;
+    getGame: (uuid: string) => Promise<Game>;
+    createGame: (title: string, platform: Platform) => Promise<Game>;
+    createFile: (
+        gameGuid: string,
+        path: string,
+        mimetype: string) => Promise<Game & Immutable.ImmutableObject<Game >> ;
+    getConfigurations: (
+        gameGuid: string,
+        profileName?: string) => Promise<{
+        [emulatorName: string]: ConfigurationCollection
+    } & Immutable.ImmutableObject<{
+        [emulatorName: string]: ConfigurationCollection
+    } >> ;
+    getEmulatorConfigurations: (
+        gameGuid: string,
+        profileName: string,
+        emulator: string) => Promise<ConfigurationCollection & Immutable.ImmutableObject<ConfigurationCollection >> ;
+    setEmulatorConfigurationValue: (
+        gameGuid: string,
+        profileName: string,
+        emulator: string,
+        newValue: ConfigurationValue) => Promise<ConfigurationCollection & Immutable.ImmutableObject<ConfigurationCollection >> ;
+    setEmulatorConfigurationValues: (
+        gameGuid: string,
+        profileName: string,
+        emulator: string,
+        newValues: ConfigurationValue[]) => Promise<ConfigurationCollection & Immutable.ImmutableObject<ConfigurationCollection >>
+}
+declare export interface Platform {
+    PlatformID: string,
+        Metadata: {
+            [key: string]: string
+        },
+        MaximumInputs: number,
+        FriendlyName: string,
+        FileTypes: {
+            [key: string]: string
+        }
+}
+declare export class Stone mixins Service {
+    constructor(rootUrl: string): this;
+    getPlatforms: () => Promise<{
+        [platformID: string]: Platform
+    } >
+}
+declare export class Emulators mixins Service {
+    constructor(rootUrl: string): this;
+    getConfiguration: (emulatorName: string, gameUuid: string) => Promise<ConfigurationCollection >
+}
+declare export type ErrorCode = 400 |
+    401 |
+    403 |
+    404 |
+    405 |
+    415 |
+    500 |
+    501 |
+    502 |
+    503;
+declare export type OKCode = 200 |
+    201 |
+    202 |
+    204 |
+    205;
+declare export interface Response<T>{
+    Response: T,
+    Status: {
+        Message: string,
+        Type: string,
+        Code: OKCode | ErrorCode
+    }
+}
+declare export class Service {
+    rootUrl: string;
+    serviceName: string;
+    constructor(rootUrl: string, serviceName: string): this;
+    getServiceUrl: (...path: string[]) => string
+}
+declare export type Verb = Create | Read | Delete | Update;
+declare export var request:<T>(url: string, payload?: any, verb?: Verb) => Promise<Response<T >> ;
+declare export type ConfigurationOptionType = integer |
+    boolean |
+    decimal |
+    selection |
+    string;
+declare export interface ConfigurationValue {
+    Value: number | boolean | string,
+        Guid: string
+}
+declare export interface ConfigurationDescriptor {
+    Default: number | boolean | string,
+        Description: string,
+        DisplayName: string,
+        Simple: boolean,
+        Type: ConfigurationOptionType,
+        Min?: number,
+        Max?: number,
+        Increment?: number
+}
+declare export interface ConfigurationSelection {
+    DisplayName: string,
+        Private: boolean
+}
+declare export interface ConfigurationOption {
+    Value: ConfigurationValue,
+        Descriptor: ConfigurationDescriptor,
+        Selection?: ConfigurationSelection
+}
+declare export interface ConfigurationSectionDescriptor {
+    Description: string,
+        DisplayName: string,
+        SectionName: string
+}
+declare export interface ConfigurationSection {
+    Configuration: {
+            [OptionName: string]: ConfigurationOption
+        },
+        Descriptor: ConfigurationSectionDescriptor
+}
+declare export interface ConfigurationCollection {
+    [SectionName: string]: ConfigurationSection
+}
+declare export class Configuration mixins Service {
+    constructor(rootUrl: string): this
+}

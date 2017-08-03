@@ -16,31 +16,46 @@ namespace Snowflake.JsonConverters
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
             IConfigurationCollection collection = (IConfigurationCollection) value;
-            JObject root = new JObject();
-            
-            foreach(var section in collection)
+            JObject collectionRoot = new JObject();
+            foreach(var section in collection.Select(s => s.Value))
             {
-                JObject sectionRoot = new JObject
+                JObject sectionOptionsRoot = new JObject();
+                foreach(var option in section)
                 {
-                    { "Values", new JObject(section.Value.Values.Select(v => new JProperty(v.Key, JToken.FromObject(v.Value)))) },
-                    { "Options", new JObject(section.Value.Descriptor.Options
-                        .Select(o => new JProperty(o.KeyName, ConfigurationCollectionSerializer.SerializeOption(o))))
-                    }
-                };
-                var selectionRoot = new JObject();
-                var props = section.Value.Where(o => o.Key.Type.GetTypeInfo().IsEnum).Select(o => new { o.Key.KeyName, Values = ConfigurationCollectionSerializer.SerializeEnumValues(o.Key.Type) });
-                foreach(var prop in props)
-                {
-                    selectionRoot.Add(prop.KeyName, new JObject(prop.Values));
+                   JObject optionRoot = new JObject()
+                   {
+                       {"Value", JObject.FromObject(option.Value)},
+                       {"Descriptor", ConfigurationCollectionSerializer.SerializeOption(option.Key)}
+                   };
+                   if (option.Key.Type.GetTypeInfo().IsEnum)
+                   {
+                        optionRoot.Add("Selection", new JObject(ConfigurationCollectionSerializer.SerializeEnumValues(option.Key.Type)));
+                   }
+                    sectionOptionsRoot.Add(option.Key.KeyName, optionRoot);
                 }
 
-                sectionRoot.Add("Selections", selectionRoot);
-                root.Add(section.Key, sectionRoot);
+                JObject sectionRoot = new JObject
+                {
+                    { "Configuration", sectionOptionsRoot },
+                    { "Descriptor", ConfigurationCollectionSerializer.SerializeSectionDescriptor(section.Descriptor) }
+                };
+
+                collectionRoot.Add(section.Descriptor.SectionName, sectionRoot);
             }
            
-            root.WriteTo(writer, new StringEnumConverter());
+            collectionRoot.WriteTo(writer, new StringEnumConverter());
         }
 
+        private static JObject SerializeSectionDescriptor(IConfigurationSectionDescriptor d)
+        {
+            var descriptorRoot = new JObject
+            {
+                {nameof(d.Description), d.Description},
+                {nameof(d.DisplayName), d.DisplayName},
+                {nameof(d.SectionName), d.SectionName }
+            };
+            return descriptorRoot;
+        }
         private static IEnumerable<JProperty> SerializeEnumValues(Type selectionEnum)
         {
 

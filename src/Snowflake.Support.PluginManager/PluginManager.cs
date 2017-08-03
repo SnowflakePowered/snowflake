@@ -39,13 +39,16 @@ namespace Snowflake.Support.PluginManager
             var resourceDirectory = composableModule.ContentsDirectory
                                     .CreateSubdirectory("resource"); //todo: check for missing directory!!
             var pluginAttr = typeof(T).GetTypeInfo().GetCustomAttribute<PluginAttribute>();
+            if (pluginAttr == null) throw new InvalidOperationException($"Can not load provision for {typeof(T)} without a PluginAttribute");
             if (pluginAttr.PluginName == "common") throw new UnauthorizedAccessException("Plugin name can not be 'common'.");
             var pluginResourceDirectory = resourceDirectory.CreateSubdirectory(pluginAttr.PluginName);
             var pluginCommonResourceDirectory = resourceDirectory.CreateSubdirectory("common");
+            var pluginJsonFile = pluginResourceDirectory.GetFiles()
+                .FirstOrDefault(f => f.Name == "plugin.json");
+            if (pluginJsonFile == null) throw new FileNotFoundException($"Unable to find plugin.json for {pluginAttr.PluginName}");
             IPluginProperties properties = new JsonPluginProperties(JObject
                .FromObject(JsonConvert
-               .DeserializeObject(File.ReadAllText(pluginResourceDirectory.GetFiles().Where(f => f.Name == "plugin.json")
-               .First().FullName)), new JsonSerializer { Culture = CultureInfo.InvariantCulture }));
+               .DeserializeObject(File.ReadAllText(pluginJsonFile.FullName)), new JsonSerializer { Culture = CultureInfo.InvariantCulture }));
             var pluginDataDirectory = this.contentDirectory.ApplicationData.CreateSubdirectory("plugincontents")
                     .CreateSubdirectory(pluginAttr.PluginName);
             var pluginConfigDb = this.databaseProvider.CreateDatabase("pluginconfiguration", $"{pluginAttr.PluginName}.Configuration");

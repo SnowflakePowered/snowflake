@@ -1,12 +1,13 @@
-import 'whatwg-fetch'
+export type ErrorCode = 400 | 401 | 403 | 404 | 405 | 415 | 500 | 501 | 502 | 503
+export type OKCode = 200 | 201 | 202 | 204 | 205
 
 export interface Response<T> {
   Response: T
-  Error: Error
-}
-
-export interface Error {
-  Message?: string
+  Status: {
+    Message: string,
+    Type: string,
+    Code: OKCode | ErrorCode
+  }
 }
 
 export class Service {
@@ -50,7 +51,7 @@ export const request = async <T> (url: string, payload: any = '', verb: Verb = '
   })
   if (result.ok) {
     let json = await result.json()
-    return { Response: json.Response, Error: json.Error }
+    return { Response: json.Response, Status: json.Status }
   }
-  return { Response: null, Error: { Message: 'Unable to resolve promise.' } }
+  return { Response: null, Status: { Message: 'Unable to resolve promise.', Type: 'ErrorRequest', Code: 400 } }
 }

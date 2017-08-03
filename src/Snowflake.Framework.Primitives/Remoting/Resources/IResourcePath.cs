@@ -13,6 +13,6 @@ namespace Snowflake.Remoting.Resources
         IEnumerable<IParameter> ResourceParameters { get; }
 
         bool Match(IRequestPath requestPath);
-        IEnumerable<ISerializedArgument> MatchArguments(IRequestPath requestPath);
+        IEnumerable<ISerializedArgument> SerializePathArguments(IRequestPath requestPath);
     }
 }

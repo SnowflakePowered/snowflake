@@ -43,9 +43,10 @@ namespace Snowflake.Support.Remoting.Servers
                 var split = context.RequestPath().Split('/');
                 var requestPath = RestRemotingServer.ToRequestPath(context.RequestPathCaseSensitive());
                 var endpointVerb = verb.ToCrud();
-                var endpointArguments = context.RequestBody() != null ? 
-                    JsonConvert.DeserializeObject<Dictionary<string, string>>(context.RequestBody())
-                    .Select(v => new EndpointArgument(v.Key, v.Value)).Cast<IEndpointArgument>() 
+                var requestBody = context.RequestBody();
+                var endpointArguments = requestBody != null ?
+                   JsonConvert.DeserializeObject<IDictionary<string, string>>(requestBody)
+                  .Select(v => new EndpointArgument(v.Key, v.Value)).Cast<IEndpointArgument>() 
                     : Enumerable.Empty<IEndpointArgument>();
 
                 var response = endpoints.ExecuteRequest(new Request(requestPath, endpointVerb, endpointArguments));
@@ -56,6 +57,7 @@ namespace Snowflake.Support.Remoting.Servers
                 var buffer = new MemoryStream(Encoding.UTF8.GetBytes(str.ToString())).Compress();
                 context.Response.AddHeader("Content-Encoding", "gzip");
                 context.Response.AddHeader("Access-Control-Allow-Origin", "*");
+                context.Response.AddHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
                 RestRemotingServer.WriteToOutputStream(context, buffer.Length, buffer, 0);
                 return true;
             });

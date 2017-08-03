@@ -36,7 +36,7 @@ namespace Snowflake.Remoting
             var res = new DummyResource();
             var _req = "game/foobar";
             var req = new RequestPath(_req.Split("/"));
-            var args = res.Path.MatchArguments(req).ToList();
+            var args = res.Path.SerializePathArguments(req).ToList();
             Assert.Contains(args, p => p.StringValue == "foobar");
         }
 
@@ -48,7 +48,7 @@ namespace Snowflake.Remoting
             var _req = "game/foobar";
             var req = new RequestPath(_req.Split("/"));
             var param = Enumerable.Empty<EndpointArgument>();
-            var matched = res.MatchEndpoint(EndpointVerb.Read, param);
+            var matched = res.MatchEndpointWithParams(EndpointVerb.Read, param);
             Assert.Equal(mInfo, matched.EndpointMethodInfo);
         }
 
@@ -64,7 +64,7 @@ namespace Snowflake.Remoting
                 new EndpointArgument("echoText", "Some Echo")
             };
 
-            var matched = res.MatchEndpoint(EndpointVerb.Create, param);
+            var matched = res.MatchEndpointWithParams(EndpointVerb.Create, param);
             Assert.Equal(mInfo, matched.EndpointMethodInfo);
         }
 
@@ -77,12 +77,13 @@ namespace Snowflake.Remoting
             var req = new RequestPath(_req.Split("/"));
             var param = new[]
             {
+                new EndpointArgument("echo", "0"),
                 new EndpointArgument("echoText", "Some Echo"),
                 new EndpointArgument("someOther", "helloWorld")
             };
 
-            var matched = res.MatchEndpoint(EndpointVerb.Create, param);
-            Assert.Equal(mInfo, matched.EndpointMethodInfo);
+            var matched = res.MatchEndpointWithParams(EndpointVerb.Create, param);
+            Assert.Null(matched);
         }
 
         [Fact]
@@ -98,9 +99,9 @@ namespace Snowflake.Remoting
                 new EndpointArgument("someOther", "helloWorld")
             };
 
-            var matched = res.MatchEndpoint(EndpointVerb.Create, param);
-            var pathArgs = res.Path.MatchArguments(req);
-            var endsArgs = matched.MatchArguments(param);
+            var matched = res.MatchEndpointWithParams(EndpointVerb.Create, param);
+            var pathArgs = res.Path.SerializePathArguments(req);
+            var endsArgs = matched.SerializeEndpointArguments(param);
             var casted = ArgumentTypeMapper.Default.CastArguments(pathArgs, endsArgs);
         }
 
@@ -118,9 +119,9 @@ namespace Snowflake.Remoting
                 new EndpointArgument("someOther", "helloWorld")
             };
 
-            var matched = res.MatchEndpoint(EndpointVerb.Create, param);
-            var pathArgs = res.Path.MatchArguments(req);
-            var endsArgs = matched.MatchArguments(param);
+            var matched = res.MatchEndpointWithParams(EndpointVerb.Create, param);
+            var pathArgs = res.Path.SerializePathArguments(req);
+            var endsArgs = matched.SerializeEndpointArguments(param);
             var casted = ArgumentTypeMapper.Default.CastArguments(pathArgs, endsArgs);
             var result = res.Execute(matched, casted);
             Assert.Equal("foobarSome EchohelloWorld", (string)result);
@@ -139,10 +140,28 @@ namespace Snowflake.Remoting
                 new EndpointArgument("someOther", "helloWorld")
             };
 
-            var matched = res.MatchEndpoint(EndpointVerb.Create, param);
-            var pathArgs = res.Path.MatchArguments(req);
-            var endsArgs = matched.MatchArguments(param);
+            var matched = res.MatchEndpointWithParams(EndpointVerb.Create, param);
+            var pathArgs = res.Path.SerializePathArguments(req);
+            var endsArgs = matched.SerializeEndpointArguments(param);
             var casted = ArgumentTypeMapper.Default.CastArguments(pathArgs, endsArgs);
+            var result = res.Execute(matched, casted);
+            Assert.Equal("foobarSome EchohelloWorld", (string)result);
+        }
+
+        [Fact]
+        public void MatchWithMisMatchedResourceTypeParams_Test()
+        {
+            var res = new DummyResource();
+            var _req = "game/foobar";
+            var req = new RequestPath(_req.Split("/"));
+            var param = new[]
+            {
+                new EndpointArgument("echoTextMisMatched", "Some Echo"),
+                new EndpointArgument("someOther", "helloWorld")
+            };
+
+            var matched = res.MatchEndpointWithParams(EndpointVerb.Create, param);
+            Assert.Null(matched);
         }
     }
 }
