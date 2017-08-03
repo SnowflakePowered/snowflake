@@ -2,12 +2,12 @@ import * as React from 'react'
 import injectSheet, { StyleProps } from 'support/InjectSheet'
 import ImageBackground from 'components/ImageBackground/ImageBackground'
 import GameLaunchHeader from 'components/GameLaunchHeader/GameLaunchHeader'
-
+import ConfigurationView from 'containers/ConfigurationView/ConfigurationViewContainer'
 import Paper from 'material-ui/Paper'
 import ImageCard from 'components/ImageCard/ImageCard'
-import Tabs, { Tab } from 'material-ui/Tabs'
 import CollapsingParagaph from 'components/CollapsingParagraph/CollapsingParagraph'
 import { Game, Platform } from 'snowflake-remoting'
+import { NoProps } from "support/NoProps";
 
 const style = {
   container: {
@@ -136,7 +136,13 @@ const GameDisplayView: React.SFC<GameDisplayViewProps & StyleProps> = ({ classes
     </div>
   )
 
-class GameDisplayViewMenu extends React.Component {
+const ViewSheet = {
+  container: {
+    margin: 10
+  }
+}
+
+const GameDisplayViewMenu = injectSheet(ViewSheet)(class GameDisplayViewMenu extends React.Component<NoProps & StyleProps> {
   state = {
     index: 0
   }
@@ -147,19 +153,11 @@ class GameDisplayViewMenu extends React.Component {
 
   render () {
     return (
-      <Tabs
-        index={this.state.index}
-        onChange={this.handleChange}
-        indicatorColor='primary'
-        textColor='primary'
-        centered
-      >
-        <Tab label='Item One' />
-        <Tab label='Item Two' />
-        <Tab label='Item Three' />
-      </Tabs>
+      <div className={this.props.classes.container}>
+        <ConfigurationView/>
+      </div>
     )
   }
-}
+})
 
 export default injectSheet(style)(GameDisplayView)

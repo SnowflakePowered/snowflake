@@ -1,16 +1,11 @@
 import * as React from 'react'
-import withSnowflake, { SnowflakeProps } from 'decorators/withSnowflake'
-import { NoProps } from 'support/NoProps'
 import { ConfigurationSection, ConfigurationOption, ConfigurationValue, ConfigurationCollection } from 'snowflake-remoting'
 import BooleanWidget from 'containers/BooleanWidget/BooleanWidgetContainer'
 import StringWidget from 'containers/StringWidget/StringWidgetContainer'
 import IntegerWidget from 'containers/IntegerWidget/IntegerWidgetContainer'
 import DecimalWidget from 'containers/DecimalWidget/DecimalWidgetContainer'
-
-import * as Actions from 'state/Actions'
 import { ConfigurationKey } from 'support/ConfigurationKey'
 import Button from 'material-ui/Button'
-import { OrderedMap } from 'immutable'
 
 type ConfigurationProps = {
   configKey: ConfigurationKey,
@@ -47,84 +42,24 @@ const ConfigurationSectionView: React.SFC<{config: ConfigurationSection} & Confi
   )
 }
 
-type ConfigurationUpdate = {
-  configKey: ConfigurationKey,
-  newValue: ConfigurationValue
-}
-
-type ConfigurationViewState = {
+type ConfigurationViewProps = {
+  handleSave: () => void,
   emulatorConfig: { key?: ConfigurationKey, config?: ConfigurationCollection },
-  delta: OrderedMap<string, ConfigurationUpdate>
+  handleUpdate: (sectionName: string) => (optionName: string) => (configKey: ConfigurationKey, newValue: ConfigurationValue) => void
 }
 
-class ConfigurationView extends React.Component<NoProps & SnowflakeProps, ConfigurationViewState> {
-
-  constructor (props) {
-    super(props)
-    this.state = {
-      emulatorConfig: {},
-      delta: OrderedMap()
-    }
-  }
-
-  handleUpdate = (sectionName: string) => (optionName: string) => (configKey: ConfigurationKey, newValue: ConfigurationValue) => {
-    // nested spread.
-    this.setState({
-      delta: this.state.delta.set(newValue.Guid, {configKey: configKey, newValue: newValue}),
-      emulatorConfig: {
-        ...this.state.emulatorConfig,
-       config: {
-         ...this.state.emulatorConfig.config as any,
-         [sectionName]: {
-           ...this.state.emulatorConfig.config![sectionName],
-           Configuration: {
-             ...this.state.emulatorConfig.config![sectionName].Configuration,
-             [optionName]: {
-               ...this.state.emulatorConfig.config![sectionName].Configuration[optionName],
-               Value: newValue
-             }
-           }
-         }
-       }
-      }
-    })
-  }
-
-  componentDidMount () {
-    this.setState({emulatorConfig: this.props.snowflake.ActiveEmulatorConfiguration})
-  }
-
-  componentWillReceiveProps (nextProps: SnowflakeProps) {
-    this.setState({emulatorConfig: nextProps.snowflake.ActiveEmulatorConfiguration})
-  }
-
-  // We can diff the delta with the stored state for an optimization later on.
-  handleSave = () => {
-    if (this.state.delta.count() === 0) return
-    const configKey = this.state.delta.first().configKey
-    const values = this.state.delta.toArray().map(v => v.newValue)
-    this.props.snowflake.Dispatch!(Actions.refreshGameConfigurations.started({
-      configKey: configKey,
-      newValues: values
-    }))
-    this.setState({
-      ...this.state,
-      delta: this.state.delta.clear()
-    })
-  }
-
-  render () {
+const ConfigurationView: React.SFC<ConfigurationViewProps> = ({handleSave, handleUpdate, emulatorConfig}) =>  {
     // todo: use get.
-    if (!this.state.emulatorConfig.config) return <div/>
-    const key = this.state.emulatorConfig.key!
+    if (!emulatorConfig.config) return <div/>
+    const key = emulatorConfig.key!
     return (
       <div>
-        <Button onClick={this.handleSave}>Save Changes</Button>
-        {Object.entries(this.state.emulatorConfig.config)
-            .map(([section, c]) => <ConfigurationSectionView configKey={key} config={c} handleUpdate={this.handleUpdate(section)}/>)}
+        <Button onClick={handleSave}>Save Changes</Button>
+        {Object.entries(emulatorConfig.config)
+            .map(([section, c]) => <ConfigurationSectionView configKey={key} config={c} handleUpdate={handleUpdate(section)}/>)}
       </div>
     )
-  }
+  
 }
 
-export default withSnowflake(ConfigurationView)
+export default ConfigurationView

@@ -5,7 +5,6 @@ import PlatformList from 'components/PlatformList/PlatformList'
 import SidebarFrame from 'components/SidebarFrame/SidebarFrame'
 import GameList from 'components/GameList/GameList'
 import GameDetails from 'components/GameDetails/GameDetails'
-import ConfigurationView from 'components/ConfigurationView/ConfigurationView'
 import { get } from 'lodash'
 
 const PlatformRendererTest = withSnowflake(({ snowflake }) =>
@@ -41,7 +40,6 @@ class Switchboard extends React.Component {
           <Route path='/platforms/' component={PlatformRendererTest} />
           <Route path='/games/' component={GameRendererTest} />
           <Route path='/gamedetail/' component={GameViewRenderTest}/>
-          <Route path='/config/' render={() => <ConfigurationView/>}/>
         </SidebarFrame>
       </div>
     )

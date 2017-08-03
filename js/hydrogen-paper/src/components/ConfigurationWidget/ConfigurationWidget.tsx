@@ -7,7 +7,9 @@ const sheet = {
     fontFamily: 'Roboto, sans-serif',
     display: 'grid',
     width: '100%',
-    gridTemplateColumns: '80% 20%'
+    gridTemplateColumns: '[main] 60% [control] 40%',
+    gridGap: 10,
+    height: 60
   },
   description: {
 
@@ -40,7 +42,7 @@ const ConfigurationWidget: React.SFC<ConfigurationWidgetProps & StyleProps> = ({
       </div>
     </div>
     <div className={classes.control}>
-      {isLoading ? <CircularProgress size={24} /> : children}
+      {isLoading ? <CircularProgress size={32} /> : children}
     </div>
   </div>
 )
