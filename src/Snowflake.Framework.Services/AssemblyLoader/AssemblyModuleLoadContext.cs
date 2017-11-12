@@ -28,7 +28,7 @@ namespace Snowflake.Services.AssemblyLoader
         {
             logger.Info($"Attempting to load {assemblyName.Name}");
             var deps = DependencyContext.Default;
-            var resources = deps.RuntimeLibraries.Where(d => d.Name.Contains(assemblyName.Name)).ToList();
+            var resources = deps.RuntimeLibraries.Where(d => d.Name.ToLowerInvariant() == assemblyName.Name.ToLower()).ToList();
 
             if (assemblyName.Name == "Snowflake.Framework.Primitives")
             {
@@ -42,6 +42,7 @@ namespace Snowflake.Services.AssemblyLoader
             }
 
             //todo: use .netstandard 2.0 AssemblyLoadContext.GetLoadedAssemblies()
+            
             var runtimeLibs = deps.RuntimeLibraries.Select(lib => new { lib.Name, lib.Version }).ToList();
             if (runtimeLibs.Select(l => l.Name.ToLower()).Contains(assemblyName.Name.ToLower()))
             {

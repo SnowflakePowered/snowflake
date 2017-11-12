@@ -29,6 +29,7 @@ using System.Linq;
 using System.Text;
 using Xunit;
 using System.Data.HashFunction;
+using System.Data.HashFunction.CRC;
 
 namespace Snowflake.Utility.Crc32.Tests
 {
@@ -102,7 +103,7 @@ namespace Snowflake.Utility.Crc32.Tests
             private void FactByteSequence(byte[] data)
             {
                 var actual = Crc32Algorithm.Compute(data);
-                var expected = BitConverter.ToUInt32(new CRC().ComputeHash(data), 0);
+                var expected = BitConverter.ToUInt32(new Crc32Algorithm().ComputeHash(data), 0);
 
                 if (expected != actual)
                 {

@@ -1,22 +1,23 @@
 ﻿using Snowflake.Services;
+using Snowflake.Support.Remoting.GraphQl.Servers;
 using Snowflake.Support.Remoting.Servers;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using Unosquare.Labs.EmbedIO;
 
-namespace Snowflake.Servers
+namespace Snowflake.Support.Remoting.GraphQl.Servers
 {
-    public class WebServerWrapper : ILocalWebService
+    public class GraphQlServerWrapper : ILocalWebService
     {
-        private RestRemotingServer remote;
-        public WebServerWrapper(RestRemotingServer remote)
+        private GraphQlServer remote;
+        public GraphQlServerWrapper(GraphQlServer remote)
         {
             this.remote = remote;
 
         }
 
-        public int Port => 9696;
+        public int Port => 9797;
 
         public string Protocol => "http";
 
