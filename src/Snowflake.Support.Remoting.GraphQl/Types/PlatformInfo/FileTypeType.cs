@@ -10,8 +10,8 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.PlatformInfo
         public FileTypeType()
         {
             Name = "FileType";
-            Field<NonNullGraphType<StringGraphType>>(p => p.Extension).Description("The file extension of the file type");
-            Field<NonNullGraphType<StringGraphType>>("mime", "The mimetype of the file type");
+            Field(p => p.Extension).Description("The file extension of the file type");
+            Field(p => p.Mime).Description("The mimetype of the file type");
         }
     }
 
