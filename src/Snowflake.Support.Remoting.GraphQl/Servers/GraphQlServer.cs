@@ -1,15 +1,15 @@
 ﻿using GraphQL;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using Snowflake.Support.Remoting.GraphQl.Framework;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
-using System.Threading;
+using System.Threading.Tasks;
 using Unosquare.Labs.EmbedIO;
-using Unosquare.Net;
+using Unosquare.Labs.EmbedIO.Constants;
 
 namespace Snowflake.Support.Remoting.GraphQl.Servers
 {
@@ -22,27 +22,27 @@ namespace Snowflake.Support.Remoting.GraphQl.Servers
         private const int chunkSize = 8 * 1024;
         public GraphQlServer(GraphQlExecuterProvider provider)
         {
-            this.AddHandler(ModuleMap.AnyPath, HttpVerbs.Any, (server, context) =>
+          
+            this.AddHandler(ModuleMap.AnyPath, HttpVerbs.Any, async (context, token) =>
             {
                 context.NoCache();
                 context.Response.ContentType = "application/json";
                 var requestBody = context.RequestBody();
                 var request = JsonConvert.DeserializeObject<GraphQlRequest>(requestBody);
-                var result = provider.ExecuteRequestAsync(request).Result;
+                var result = await provider.ExecuteRequestAsync(request);
                 string str = provider.Write(result);
                 var buffer = new MemoryStream(Encoding.UTF8.GetBytes(str.ToString())).Compress();
                 context.Response.AddHeader("Content-Encoding", "gzip");
                 context.Response.AddHeader("Access-Control-Allow-Origin", "*");
                 context.Response.AddHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
                 context.Response.StatusCode = result.Errors?.Any() == true ? (int)System.Net.HttpStatusCode.BadRequest : (int)System.Net.HttpStatusCode.OK;
-                GraphQlServer.WriteToOutputStream(context, buffer.Length, buffer, 0);
+                await GraphQlServer.WriteToOutputStream(context, buffer.Length, buffer, 0);
                 return true;
             });
         }
 
         //ripped from EmbedIO StaticFilesModule
-        private static void WriteToOutputStream(HttpListenerContext context, long byteLength, Stream buffer,
-        int lowerByteIndex)
+        private async static Task WriteToOutputStream(HttpListenerContext context, long byteLength, Stream buffer, int lowerByteIndex)
         {
             var streamBuffer = new byte[chunkSize];
             var sendData = 0;
@@ -58,7 +58,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Servers
                 if (read == 0) break;
 
                 sendData += read;
-                context.Response.OutputStream.Write(streamBuffer, 0, readBufferSize);
+                await context.Response.OutputStream.WriteAsync(streamBuffer, 0, readBufferSize);
             }
         }
     }

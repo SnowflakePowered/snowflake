@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Unosquare.Labs.EmbedIO;
+using Unosquare.Labs.EmbedIO.Constants;
 
 namespace Snowflake.Support.Remoting.Servers
 {

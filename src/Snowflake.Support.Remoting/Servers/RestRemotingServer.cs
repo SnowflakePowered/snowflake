@@ -13,9 +13,11 @@ using Snowflake.Support.Remoting.Framework;
 using Newtonsoft.Json.Converters;
 using System.IO.Compression;
 using System.IO;
-using Unosquare.Net;
 using Snowflake.Remoting.Requests;
 using Snowflake.Remoting.Marshalling;
+using Unosquare.Labs.EmbedIO.Constants;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace Snowflake.Support.Remoting.Servers
 {
@@ -35,7 +37,7 @@ namespace Snowflake.Support.Remoting.Servers
                 return settings; //stopgap solution
             });
 
-            this.AddHandler(ModuleMap.AnyPath, HttpVerbs.Any, (server, context) =>
+            this.AddHandler(ModuleMap.AnyPath, HttpVerbs.Any, async (context, token) =>
             {
                 var verb = context.RequestVerb();
                 context.NoCache();
@@ -58,13 +60,13 @@ namespace Snowflake.Support.Remoting.Servers
                 context.Response.AddHeader("Content-Encoding", "gzip");
                 context.Response.AddHeader("Access-Control-Allow-Origin", "*");
                 context.Response.AddHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-                RestRemotingServer.WriteToOutputStream(context, buffer.Length, buffer, 0);
+                await RestRemotingServer.WriteToOutputStream(context, buffer.Length, buffer, 0);
                 return true;
             });
         }
 
         //ripped from EmbedIO StaticFilesModule
-        private static void WriteToOutputStream(HttpListenerContext context, long byteLength, Stream buffer,
+        private static async Task WriteToOutputStream(HttpListenerContext context, long byteLength, Stream buffer,
         int lowerByteIndex)
         {
             var streamBuffer = new byte[chunkSize];
@@ -81,7 +83,7 @@ namespace Snowflake.Support.Remoting.Servers
                 if (read == 0) break;
 
                 sendData += read;
-                context.Response.OutputStream.Write(streamBuffer, 0, readBufferSize);
+                await context.Response.OutputStream.WriteAsync(streamBuffer, 0, readBufferSize);
             }
         }
 

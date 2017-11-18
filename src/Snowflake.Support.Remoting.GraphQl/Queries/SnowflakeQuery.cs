@@ -13,14 +13,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
     {
         public SnowflakeQuery(IStoneProvider stone)
         {
-            this.Name = "Query";
-
-            var connection = Connection<IGraphType>()
-              .Name("platformInfosX")
-              .Description("All Stone Platforms.");
-            connection.FieldType.Type = typeof(PlatformInfoType);
-            connection.Resolve(context => ConnectionUtils.ToConnection(stone.Platforms.Values, context));
-              
+            this.Name = "Query"; 
         }
 
         private IEnumerable<string> GetValues(ResolveFieldContext<object> context)
