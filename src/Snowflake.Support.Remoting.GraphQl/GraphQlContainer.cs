@@ -20,8 +20,12 @@ namespace Snowflake.Support.Remoting.GraphQl
             var root = new RootQuery();
             var schema = new SnowflakeSchema(root);
             var platformQueries = new PlatformInfoQueryBuilder(stone);
+            var controllerQueries = new ControllerLayoutQueryBuilder(stone);
+
             platformQueries.RegisterConnectionQueries(root);
             platformQueries.RegisterFieldQueries(root);
+            controllerQueries.RegisterConnectionQueries(root);
+            controllerQueries.RegisterFieldQueries(root);
             var webServer = new GraphQlServerWrapper(new GraphQlServer(new GraphQlExecuterProvider(schema)));
             webServer.Start();
             //register.RegisterService<ILocalWebService>(webServer); //todo should be plugin.

@@ -10,6 +10,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.PlatformInfo
         public FileTypeType()
         {
             Name = "FileType";
+            Description = "A FileType is defined by its common extension, and a mimetype, usually of";
             Field(p => p.Extension).Description("The file extension of the file type");
             Field(p => p.Mime).Description("The mimetype of the file type");
         }

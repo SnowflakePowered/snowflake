@@ -10,6 +10,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.PlatformInfo
     {
         public BiosFilesType()
         {
+            Description = "The BIOS Files that this Platform is known to have.";
             Name = "BiosFiles";
             Field<NonNullGraphType<StringGraphType>>("fileName",
                 description: "The file name of this BIOS file.",

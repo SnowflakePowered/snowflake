@@ -13,7 +13,7 @@ namespace Snowflake.Support.Remoting.GraphQl
 {
     class SnowflakeSchema : Schema
     {
-        public SnowflakeSchema(IObjectGraphType query)
+        public SnowflakeSchema(RootQuery query)
         {
             this.Query = query;
         }

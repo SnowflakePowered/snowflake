@@ -25,7 +25,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
             return this.StoneProvider.Platforms[platformId];
         }
 
-        [Connection("platformInfos", "All registered Stone Platforms", typeof(PlatformInfoType))]
+        [Connection("platformInfos", "All Registered Stone Platforms", typeof(PlatformInfoType))]
         public IEnumerable<IPlatformInfo> GetPlatforms()
         {
             return this.StoneProvider.Platforms.Values;
