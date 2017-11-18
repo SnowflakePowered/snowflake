@@ -5,14 +5,22 @@ using System.Linq;
 using System.IO;
 using Snowflake.Utility;
 using Snowflake.Loader;
+using Snowflake.Services.Logging;
 
 namespace Snowflake.Services.AssemblyLoader
 {
     internal class AssemblyModuleLoader : IModuleLoader<IComposable>
     {
+        public AssemblyModuleLoader()
+        {
+
+        }
+
         public IEnumerable<IComposable> LoadModule(IModule module)
         {
-            Console.WriteLine($"Loading module {module.Entry}");
+            var logger = new LogProvider().GetLogger("AssemblyComposer"); //Unknown if logging service is available.
+        
+            logger.Info($"Loading module {module.Entry}");
             try
             {
                 var deps = module.ModuleDirectory.EnumerateDirectories().First(d => d.Name == "contents");
@@ -21,6 +29,7 @@ namespace Snowflake.Services.AssemblyLoader
             {
                 throw new DirectoryNotFoundException($"Unable to find module contents for {module.Entry}", ex);
             }
+
             var loadContext = new AssemblyModuleLoadContext(module);
             //todo: check for semver!!
             var entryPath = Path.Combine(module.ModuleDirectory.FullName, "contents", module.Entry);
