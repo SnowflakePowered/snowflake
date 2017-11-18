@@ -19,10 +19,10 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
         }
 
         [Field("platformInfo", "A Stone Platform", typeof(PlatformInfoType))]
-        [Parameter(typeof(string), typeof(StringGraphType), "platformId", "The Stone PlatformID for this platform")]
-        public IPlatformInfo GetPlatform(string platformId)
+        [Parameter(typeof(string), typeof(StringGraphType), "platformID", "The Stone PlatformID for this platform")]
+        public IPlatformInfo GetPlatform(string platformID)
         {
-            return this.StoneProvider.Platforms[platformId];
+            return this.StoneProvider.Platforms[platformID];
         }
 
         [Connection("platformInfos", "All Registered Stone Platforms", typeof(PlatformInfoType))]

@@ -21,10 +21,10 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
         }
 
         [Field("controllerLayout", "A Stone Controller Layout", typeof(ControllerLayoutType))]
-        [Parameter(typeof(string), typeof(StringGraphType), "layoutId", "The Stone Layout ID for this controller")]
-        public IControllerLayout GetControllerLayout(string layoutId)
+        [Parameter(typeof(string), typeof(StringGraphType), "layoutID", "The Stone Layout ID for this controller")]
+        public IControllerLayout GetControllerLayout(string layoutID)
         {
-            return this.StoneProvider.Controllers[layoutId];
+            return this.StoneProvider.Controllers[layoutID];
         }
 
         [Connection("controllerLayouts", "All Stone Controller Layouts", typeof(ControllerLayoutType))]
