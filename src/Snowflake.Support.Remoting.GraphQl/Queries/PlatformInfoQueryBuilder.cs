@@ -1,4 +1,5 @@
-﻿using Snowflake.Platform;
+﻿using GraphQL.Types;
+using Snowflake.Platform;
 using Snowflake.Services;
 using Snowflake.Support.Remoting.GraphQl.Framework.Attributes;
 using Snowflake.Support.Remoting.GraphQl.Framework.Query;
@@ -18,7 +19,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
         }
 
         [Field("platformInfo", "A Stone Platform", typeof(PlatformInfoType))]
-        [Parameter(typeof(string), "platformId", "The Stone PlatformID for this platform")]
+        [Parameter(typeof(string), typeof(StringGraphType), "platformId", "The Stone PlatformID for this platform")]
         public IPlatformInfo GetPlatform(string platformId)
         {
             return this.StoneProvider.Platforms[platformId];

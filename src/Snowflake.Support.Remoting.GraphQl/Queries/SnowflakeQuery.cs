@@ -11,10 +11,10 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
 {
     public class SnowflakeQuery: ObjectGraphType<object>
     {
-        public SnowflakeQuery(IStoneProvider stone)
+        public SnowflakeQuery()
         {
             this.Name = "Query";
-
+            /*
             Field<PlatformInfoType>(
                  "platformInfo",
                  arguments: new QueryArguments(
@@ -28,6 +28,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
               .Name("platformInfos")
               .Description("All Stone Platforms.")
               .Resolve(context => ConnectionUtils.ToConnection(stone.Platforms.Values, context));
+              */
         }
     }
 }
