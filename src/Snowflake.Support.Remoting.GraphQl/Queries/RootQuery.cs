@@ -9,16 +9,12 @@ using System.Text;
 
 namespace Snowflake.Support.Remoting.GraphQl.Queries
 {
-    public class SnowflakeQuery: ObjectGraphType<object>
+    public class RootQuery : ObjectGraphType<object>
     {
-        public SnowflakeQuery(IStoneProvider stone)
+        public RootQuery()
         {
-            this.Name = "Query"; 
-        }
-
-        private IEnumerable<string> GetValues(ResolveFieldContext<object> context)
-        {
-            yield return "Hello";
+            this.Name = "Query";
+            this.Description = "The query root of Snowflake's GraphQL interface";
         }
     }
 }
