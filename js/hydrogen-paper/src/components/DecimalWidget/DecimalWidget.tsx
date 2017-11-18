@@ -19,7 +19,7 @@ const NumberInputProps: (decimalOption: ConfigurationOption) => DetailedHTMLProp
     step: integerOption.Descriptor.Increment,
     max: infinite ? Number.MAX_SAFE_INTEGER : integerOption.Descriptor.Max,
     min: infinite ? Number.MIN_SAFE_INTEGER: integerOption.Descriptor.Min
-  } 
+  }
 }
 
 // <Switch checked={stringOption.Value.Value} onChange={valueChangeHandler}/>
@@ -31,7 +31,7 @@ const DecimalWidget: React.SFC<DecimalWidgetProps> = ({decimalOption, isLoading,
   const inputProps = NumberInputProps(decimalOption)
   return (
     <ConfigurationWidget name={decimalOption.Descriptor.DisplayName} description={decimalOption.Descriptor.Description} isLoading={isLoading}>
-     <TextField value={decimalOption.Value.Value} onChange={valueChangeHandler} type='number' inputProps={inputProps}/>
+     <TextField value={decimalOption.Value.Value as number} onChange={valueChangeHandler} type='number' inputProps={inputProps}/>
     </ConfigurationWidget>
   )
 }

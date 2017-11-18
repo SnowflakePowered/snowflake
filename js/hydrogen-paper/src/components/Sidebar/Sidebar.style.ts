@@ -1,5 +1,5 @@
 import grey from 'material-ui/colors/grey'
-import { white } from 'material-ui/colors/common'
+import white from 'material-ui/colors/common'
 
 export const styles = {
   container: {

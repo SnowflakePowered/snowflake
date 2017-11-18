@@ -16,7 +16,7 @@ import {
 } from './ResultDispatches'
 
 import * as Selectors from './Selectors'
-import { ConfigurationKey } from "support/ConfigurationKey";
+import { ConfigurationKey } from 'support/ConfigurationKey'
 
 function* refreshPlatformsWorker (snowflake: Snowflake): SagaIterator {
   try {
@@ -72,7 +72,7 @@ function* refreshGameConfiguration (snowflake: Snowflake, action: SyncPayload<{c
 function* refreshGameConfigurations (snowflake: Snowflake, action: SyncPayload<{configKey: ConfigurationKey, newValues: ConfigurationValue[]}>): SagaIterator {
   const elementIds = action.payload.newValues.map(v => v.Guid)
   for (const elementId of elementIds) {
-      yield put(syncDispatch(Actions.setElementLoadingState, { elementId: elementId, loadingState: true}))
+    yield put(syncDispatch(Actions.setElementLoadingState, { elementId: elementId, loadingState: true}))
   }
 
   try {
@@ -87,7 +87,6 @@ function* refreshGameConfigurations (snowflake: Snowflake, action: SyncPayload<{
     }
   }
 }
-
 
 function* rootSaga (snowflake: Snowflake): SagaIterator {
   yield takeEvery(Actions.refreshPlatforms.type, refreshPlatformsWorker, snowflake)

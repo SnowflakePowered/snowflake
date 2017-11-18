@@ -2,7 +2,7 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
 import Paper from 'material-ui/Paper'
-import injectSheet, { StyleProps } from "support/InjectSheet";
+import injectSheet, { StyleProps } from 'support/InjectSheet'
 
 const styles = {
   imageContainer: {
@@ -29,7 +29,7 @@ const styles = {
     maxWidth: 'inherit',
     maxHeight: 'inherit'
   },
-  container: {
+  root: {
     width: 'inherit',
     height: 'inherit',
     display: 'flex',
@@ -49,7 +49,7 @@ type ImageCardProps = {
 
 const ImageCard: React.SFC<ImageCardProps & StyleProps> = ({ classes, image, elevation }) => (
   <div className={classes.padding}>
-    <div className={classes.container}>
+    <div className={classes.root}>
       <div className={classes.paperContainer}>
         <Paper elevation={elevation || 1} className={classes.paper}>
           <div className={classes.imageContainer}>

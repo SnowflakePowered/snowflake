@@ -24,11 +24,11 @@
     "immutable": "^3.8.1",
     "lodash": "^4.17.4",
     "map.prototype.tojson": "^0.1.3",
-    "material-ui": "^1.0.0-beta.3",
+    "material-ui": "1.0.0-beta.9",
     "material-ui-icons": "^1.0.0-alpha.19",
     "prop-types": "^15.5.10",
     "query-string": "^5.0.0",
-    "react": "^15.6.1",
+    "react": "^16.0.0",
     "react-dom": "^15.6.1",
     "react-redux": "^5.0.5",
     "react-router-dom": "^4.1.2",
@@ -46,7 +46,6 @@
     "typescript-fsa-redux-saga": "^1.0.2"
   },
   "devDependencies": {
-    "material-ui-next-types": "^1.0.0",
     "react-scripts-ts": "^2.5.0",
     "tslint-config-standard": "^6.0.1",
     "tslint-language-service": "^0.9.6"

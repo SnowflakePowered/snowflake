@@ -1,22 +1,26 @@
 import * as React from 'react'
 import { getDisplayName } from 'recompose'
-import { createStyleSheet, withStyles } from 'material-ui/styles'
+import { withStyles, StyleRules, Theme } from "material-ui/styles";
+import { StyledComponentProps } from "material-ui";
 
 type ClassList = { [className: string]: string }
 
 /**
  * Exposes the classes props for CSS-in-JS.
  */
-export type StyleProps = {
-  classes: ClassList
+type StyleShape = {
+  classes: StyleSheet,
+  theme?: Theme<{}>
 }
 
-type StyleSheetBlock = { [ruleName: string]: string | number | string[] | number[] | (string|number)[] | StyleSheetBlock }
+export type StyleProps = {
+  classes: { [className: string]: string }
+}
+
+type StyleSheetBlock = { [ruleName: string]: string | number | string[] | number[] | (string | number)[] | StyleSheetBlock } 
 
 type StyleSheet = { [className: string]: StyleSheetBlock }
 type ThemedStyleSheet = (theme: any) => StyleSheet
-
-const sanitize = displayName => (displayName.replace(/(\(|\[)/g, '-').replace(/(\)|\])/g, '')) // todo make this better
 
 /**
  * Injects a plain JSS stylesheet object, or a theme reactor function, into a React Component.
@@ -25,14 +29,12 @@ const sanitize = displayName => (displayName.replace(/(\(|\[)/g, '-').replace(/(
  * NoProps & StyleProps.
  * @param styles The JSS stylesheet object or stylesheet function. This should be a plain Javascript object.
  */
-const injectSheet = (styles: StyleSheet | ThemedStyleSheet) =>
+const injectSheet = (styles: StyleRules) =>
 /**
  * @param component The React component to inject styles into.
  */
- <T extends {}>(component: React.ComponentClass<T & StyleProps> | React.StatelessComponent<T & StyleProps>): React.ComponentClass<T> => {
-   const styleSheetName = sanitize(getDisplayName(component))
-   const styleSheet = createStyleSheet(styleSheetName, styles)
-   return withStyles(styleSheet)(component)
+ <T extends {}>(component: React.ComponentType<T & StyleProps>): React.ComponentClass<T> => {
+   return withStyles(styles)(component) as React.ComponentClass<T>
  }
 
 export default injectSheet

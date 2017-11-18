@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GraphQL.Types;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -18,8 +19,9 @@ namespace Snowflake.Support.Remoting.GraphQl.Framework.Attributes
             this.ParameterType = parameterType;
             this.Key = parameterKey;
             this.Description = description;
-            this.Nullable = nullable;
-            this.GraphQlType = graphQlType;
+
+            this.GraphQlType = nullable ? graphQlType : typeof(NonNullGraphType<>).MakeGenericType(graphQlType);
+
         }
     }
 }
