@@ -13,9 +13,10 @@ namespace Snowflake.Support.Remoting.GraphQl
 {
     class SnowflakeSchema : Schema
     {
-        public SnowflakeSchema(RootQuery query)
+        public SnowflakeSchema(RootQuery query, RootMutation mutation)
         {
             this.Query = query;
+            this.Mutation = mutation;
         }
     }
 }

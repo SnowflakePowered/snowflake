@@ -17,10 +17,12 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.ControllerLayout
             Field(c => c.LayoutID).Description("The Stone Layout ID for this controller layout");
             Field<ListGraphType<StringGraphType>>(
                 "platforms",
+                description: "The platforms this controller supports.",
                 resolve: context => context.Source.Platforms.ToList()
             );
             Field<ListGraphType<ControllerElementInfoType>>(
                 "layout",
+                description: "The layout of this controller.",
                 resolve: context => context.Source.Layout.ToList()
              );
         }

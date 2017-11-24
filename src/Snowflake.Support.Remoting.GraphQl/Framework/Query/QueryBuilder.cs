@@ -21,6 +21,21 @@ namespace Snowflake.Support.Remoting.GraphQl.Framework.Query
             }
         }
 
+
+        /// <summary>
+        /// Register mutation field queries of this class with the given root query.
+        /// </summary>
+        /// <param name="root"></param>
+        public void RegisterMutationQueries(RootMutation root)
+        {
+            var fieldQueries = this.EnumerateMutationQueries();
+            foreach (var query in fieldQueries)
+            {
+                var madeQuery = this.MakeMutationQuery(query.fieldMethod, query.fieldAttr, query.paramAttr);
+                this.RegisterQuery(madeQuery, root);
+            }
+        }
+
         public void RegisterConnectionQueries(RootQuery root)
         {
             var fieldQueries = this.EnumerateConnectionQueries();
