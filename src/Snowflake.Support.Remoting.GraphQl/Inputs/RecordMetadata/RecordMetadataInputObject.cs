@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Snowflake.Support.Remoting.GraphQl.Inputs.Record
+namespace Snowflake.Support.Remoting.GraphQl.Inputs.RecordMetadata
 {
     public class RecordMetadataInputObject
     {

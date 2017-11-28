@@ -7,7 +7,8 @@ using Snowflake.Records.Game;
 using Snowflake.Services;
 using Snowflake.Support.Remoting.GraphQl.Framework.Attributes;
 using Snowflake.Support.Remoting.GraphQl.Framework.Query;
-using Snowflake.Support.Remoting.GraphQl.Inputs.Record;
+using Snowflake.Support.Remoting.GraphQl.Inputs.FileRecord;
+using Snowflake.Support.Remoting.GraphQl.Inputs.GameRecord;
 using Snowflake.Support.Remoting.GraphQl.Types.ControllerLayout;
 using Snowflake.Support.Remoting.GraphQl.Types.PlatformInfo;
 using Snowflake.Support.Remoting.GraphQl.Types.Record;
@@ -21,9 +22,11 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
     public class RecordQueryBuilder : QueryBuilder
     {
         private IGameLibrary GameLibrary { get; }
-        public RecordQueryBuilder(IGameLibrary gameLibrary)
+        private IStoneProvider StoneProvider { get; }
+        public RecordQueryBuilder(IGameLibrary gameLibrary, IStoneProvider stoneProvider)
         {
             this.GameLibrary = gameLibrary;
+            this.StoneProvider = stoneProvider;
         }
 
         [Connection("games", "Get all Games", typeof(GameRecordType))]
@@ -71,11 +74,33 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
             return this.GameLibrary.GetGamesByPlatform(platformId);
         }
 
-        [Mutation("addGame", "Get a game by an ID", typeof(StringGraphType))]
+        [Mutation("addGame", "Adds a game to the database directly.", typeof(StringGraphType))]
         [Parameter(typeof(GameRecordInputObject), typeof(GameRecordInputType), "gameObject", "game input")]
-        public string AddGame(GameRecordInputObject gameObject)
+        public IGameRecord AddGame(GameRecordInputObject gameObject)
         {
-            return gameObject.Metadata[0].Value;
+            try
+            {
+                var platform = this.StoneProvider.Platforms[gameObject.Platform];
+                var game = new GameRecord(platform, gameObject.Title);
+                foreach (var metadata in gameObject.Metadata)
+                {
+                    game.Metadata.Add(metadata.Key, metadata.Value);
+                }
+                return game;
+            }
+            catch (KeyNotFoundException)
+            {
+                throw new KeyNotFoundException($"Unable to find platform {gameObject.Platform}.");
+            }
+        }
+
+        [Mutation("addFile", "Adds a file to the database directly.", typeof(StringGraphType))]
+        [Parameter(typeof(FileRecordInputObject), typeof(FileRecordInputType), "fileObject", "File input")]
+        public IFileRecord AddFile(FileRecordInputObject fileObject)
+        {
+            var file = new FileRecord(fileObject.FilePath, fileObject.MimeType, fileObject.Record);
+            this.GameLibrary.FileLibrary.Set(file);
+            return file;
         }
     }
 }

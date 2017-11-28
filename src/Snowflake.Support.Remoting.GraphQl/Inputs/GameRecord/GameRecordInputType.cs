@@ -1,10 +1,11 @@
 ﻿using GraphQL.Types;
+using Snowflake.Support.Remoting.GraphQl.Inputs.RecordMetadata;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Snowflake.Support.Remoting.GraphQl.Inputs.Record { 
+namespace Snowflake.Support.Remoting.GraphQl.Inputs.GameRecord { 
     public class GameRecordInputType : InputObjectGraphType<GameRecordInputObject>
     {
         public GameRecordInputType()
@@ -15,6 +16,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Inputs.Record {
                 description: "Some metadata about the game.",
                 resolve: context => context.Source.Metadata
             );
+            Field(p => p.Platform).Description("The platform of the game.");
         }
     }
 }

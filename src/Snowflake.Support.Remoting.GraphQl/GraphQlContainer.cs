@@ -24,7 +24,7 @@ namespace Snowflake.Support.Remoting.GraphQl
             var schema = new SnowflakeSchema(root, mutation);
             var platformQueries = new PlatformInfoQueryBuilder(stone);
             var controllerQueries = new ControllerLayoutQueryBuilder(stone);
-            var recordQueries = new RecordQueryBuilder(games);
+            var recordQueries = new RecordQueryBuilder(games, stone);
             platformQueries.RegisterConnectionQueries(root);
             platformQueries.RegisterFieldQueries(root);
             controllerQueries.RegisterConnectionQueries(root);
