@@ -14,17 +14,20 @@ namespace Snowflake.Support.Remoting.GraphQl
     {
         [ImportService(typeof(IStoneProvider))]
         [ImportService(typeof(IGameLibrary))]
+        [ImportService(typeof(IConfigurationCollectionStore))]
         [ImportService(typeof(IServiceRegistrationProvider))]
         public void Compose(IModule module, IServiceRepository coreInstance)
         {
             var stone = coreInstance.Get<IStoneProvider>();
             var games = coreInstance.Get<IGameLibrary>();
+            var config = coreInstance.Get<IConfigurationCollectionStore>();
             var root = new RootQuery();
             var mutation = new RootMutation();
             var schema = new SnowflakeSchema(root, mutation);
             var platformQueries = new PlatformInfoQueryBuilder(stone);
             var controllerQueries = new ControllerLayoutQueryBuilder(stone);
             var recordQueries = new RecordQueryBuilder(games, stone);
+            var configQuery = new ConfigurationQueryBuilder(config);
             platformQueries.RegisterConnectionQueries(root);
             platformQueries.RegisterFieldQueries(root);
             controllerQueries.RegisterConnectionQueries(root);
@@ -32,6 +35,7 @@ namespace Snowflake.Support.Remoting.GraphQl
             recordQueries.RegisterConnectionQueries(root);
             recordQueries.RegisterFieldQueries(root);
             recordQueries.RegisterMutationQueries(mutation);
+            configQuery.RegisterConnectionQueries(root);
             var webServer = new GraphQlServerWrapper(new GraphQlServer(new GraphQlExecuterProvider(schema)));
             webServer.Start();
             //register.RegisterService<ILocalWebService>(webServer); //todo should be plugin.
