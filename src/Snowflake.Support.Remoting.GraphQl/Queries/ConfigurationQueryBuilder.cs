@@ -18,11 +18,17 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
             this.Store = store;
         }
         [Connection("configValues", "Config Values", typeof(ConfigurationValueType))]
-        public IEnumerable<IConfigurationValue> GetAllValues()
+        public IEnumerable<KeyValuePair<string, IConfigurationValue>> GetAllValues()
         {
             var config = this.Store.Get<ITestConfigurationCollection>(Guid.NewGuid(), "TestEmulator", "DefaultProfile");
-            var vals = config.Configuration.TestConfiguration.Values.Values.ToList();
-            return vals;
+            return config.Configuration.TestConfiguration.Values.ToList();
+        }
+        //            
+        [Connection("configOptions", "Config Options", typeof(ConfigurationOptionType))]
+        public IEnumerable<IConfigurationOption> GetAllOptions()
+        {
+            var config = this.Store.Get<ITestConfigurationCollection>(Guid.NewGuid(), "TestEmulator", "DefaultProfile");
+            return config.Configuration.TestConfiguration.Descriptor.Options;
         }
     }
 }
