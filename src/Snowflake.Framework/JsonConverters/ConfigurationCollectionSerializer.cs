@@ -58,8 +58,6 @@ namespace Snowflake.JsonConverters
         }
         private static IEnumerable<JProperty> SerializeEnumValues(Type selectionEnum)
         {
-
-
             return from enumOption in NonGenericEnums.GetMembers(selectionEnum)
                 where enumOption.Attributes.Has<SelectionOptionAttribute>()
                 let attribute = enumOption.Attributes.Get<SelectionOptionAttribute>()
@@ -69,7 +67,7 @@ namespace Snowflake.JsonConverters
                     {nameof(attribute.Private), attribute.Private}
                 });
         }
-        private static JObject SerializeOption(IConfigurationOption o)
+        private static JObject SerializeOption(IConfigurationOptionDescriptor o)
         {
             var optionRoot = new JObject
             {
@@ -96,7 +94,7 @@ namespace Snowflake.JsonConverters
             return optionRoot;
         }
 
-        private static string GetTypeString(IConfigurationOption o)
+        private static string GetTypeString(IConfigurationOptionDescriptor o)
         {
             if (o.Type == typeof(int)) return "integer";
             if (o.Type == typeof(bool)) return "boolean";

@@ -16,9 +16,9 @@ namespace Snowflake.Configuration
         public string Description { get; }
         public string DisplayName { get; }
         public string SectionName { get; }
-        public IEnumerable<IConfigurationOption> Options { get; }
+        public IEnumerable<IConfigurationOptionDescriptor> Options { get; }
 
-        public IConfigurationOption this[string optionKey] => this.Options.First(o => o.KeyName == optionKey);
+        public IConfigurationOptionDescriptor this[string optionKey] => this.Options.First(o => o.KeyName == optionKey);
 
         internal ConfigurationSectionDescriptor()
         {
@@ -28,7 +28,7 @@ namespace Snowflake.Configuration
                           let attr = prop.GetCustomAttribute<ConfigurationOptionAttribute>()
                           let name = prop.Name
                           let metadata = prop.GetCustomAttributes<CustomMetadataAttribute>()
-                          select new ConfigurationOption(attr, metadata, name))
+                          select new ConfigurationOptionDescriptor(attr, metadata, name))
                           .ToImmutableList();
             var sectionMetadata = typeof(T).GetAttribute<ConfigurationSectionAttribute>() ?? new ConfigurationSectionAttribute("", "");
             this.SectionName = sectionMetadata.SectionName;

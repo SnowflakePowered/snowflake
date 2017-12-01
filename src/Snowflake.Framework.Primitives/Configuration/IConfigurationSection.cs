@@ -17,7 +17,7 @@ namespace Snowflake.Configuration
     /// <summary>
     /// Represents a serializable section in a configuration 
     /// </summary>
-    public interface IConfigurationSection : IEnumerable<KeyValuePair<IConfigurationOption, IConfigurationValue>>
+    public interface IConfigurationSection : IEnumerable<KeyValuePair<IConfigurationOptionDescriptor, IConfigurationValue>>
     {
         /// <summary>
         /// The descriptor that describes the configuration section.

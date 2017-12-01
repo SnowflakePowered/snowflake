@@ -74,10 +74,10 @@ namespace Snowflake.Configuration
             return new ConfigurationValue(FromString(tuple.Value.stringValue, t), tuple.Value.guid);
         }
 
-        public IEnumerator<KeyValuePair<IConfigurationOption, IConfigurationValue>> GetEnumerator()
+        public IEnumerator<KeyValuePair<IConfigurationOptionDescriptor, IConfigurationValue>> GetEnumerator()
         {
             return this.Descriptor.Options
-                .Select(o => new KeyValuePair<IConfigurationOption, IConfigurationValue>(o, this.Values[o.KeyName]))
+                .Select(o => new KeyValuePair<IConfigurationOptionDescriptor, IConfigurationValue>(o, this.Values[o.KeyName]))
                 .GetEnumerator();
         }
 

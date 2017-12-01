@@ -26,12 +26,12 @@ namespace Snowflake.Configuration
         /// The implementation is responsible for ensuring this is immutable
         /// and correctly ordered.
         /// </summary>
-        IEnumerable<IConfigurationOption> Options { get; }
+        IEnumerable<IConfigurationOptionDescriptor> Options { get; }
         /// <summary>
         /// Gets the configuration option with the specified property name
         /// </summary>
         /// <param name="optionKey">The property name of the option as declared</param>
         /// <returns>The configuration option</returns>
-        IConfigurationOption this[string optionKey] { get; }
+        IConfigurationOptionDescriptor this[string optionKey] { get; }
     }
 }

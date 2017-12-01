@@ -23,9 +23,9 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
             var config = this.Store.Get<ITestConfigurationCollection>(Guid.NewGuid(), "TestEmulator", "DefaultProfile");
             return config.Configuration.TestConfiguration.Values.ToList();
         }
-        //            
-        [Connection("configOptions", "Config Options", typeof(ConfigurationOptionType))]
-        public IEnumerable<IConfigurationOption> GetAllOptions()
+                    
+        [Connection("configOptions", "Config Options", typeof(ConfigurationOptionGraphType))]
+        public IEnumerable<IConfigurationOptionDescriptor> GetAllOptions()
         {
             var config = this.Store.Get<ITestConfigurationCollection>(Guid.NewGuid(), "TestEmulator", "DefaultProfile");
             return config.Configuration.TestConfiguration.Descriptor.Options;

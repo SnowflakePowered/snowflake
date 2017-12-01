@@ -17,7 +17,7 @@ namespace Snowflake.Configuration.Input
     public class InputConfigurationSection<T> : IConfigurationSection<T> where T : class, IInputTemplate<T>
     {
         public T Configuration { get; }
-        public IEnumerable<IConfigurationOption> Options { get; }
+        public IEnumerable<IConfigurationOptionDescriptor> Options { get; }
 
         public IConfigurationSectionDescriptor Descriptor { get; }
 
@@ -41,7 +41,7 @@ namespace Snowflake.Configuration.Input
                           let attr = prop.GetCustomAttribute<ConfigurationOptionAttribute>()
                           let name = prop.Name
                           let metadata = prop.GetCustomAttributes<CustomMetadataAttribute>()
-                          select new ConfigurationOption(attr, metadata, name) as IConfigurationOption;
+                          select new ConfigurationOptionDescriptor(attr, metadata, name) as IConfigurationOptionDescriptor;
 
             this.Options = options.ToList();
             this.configurationInterceptor = new ConfigurationInterceptor(this.Descriptor);
@@ -50,7 +50,7 @@ namespace Snowflake.Configuration.Input
                     configurationInterceptor, inputTemplate);
         }
 
-        public IEnumerator<KeyValuePair<IConfigurationOption, IConfigurationValue>> GetEnumerator()
+        public IEnumerator<KeyValuePair<IConfigurationOptionDescriptor, IConfigurationValue>> GetEnumerator()
         {
             return this.Configuration.GetEnumerator();
         }

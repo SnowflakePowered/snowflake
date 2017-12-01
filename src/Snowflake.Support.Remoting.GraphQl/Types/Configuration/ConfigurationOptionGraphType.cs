@@ -8,9 +8,9 @@ using System.Text;
 
 namespace Snowflake.Support.Remoting.GraphQl.Types.Configuration
 {
-    public class ConfigurationOptionType : ObjectGraphType<IConfigurationOption>
+    public class ConfigurationOptionGraphType : ObjectGraphType<IConfigurationOptionDescriptor>
     {
-        public ConfigurationOptionType()
+        public ConfigurationOptionGraphType()
         {
             Name = "ConfigurationOption";
             Description = "Describes a configuration option.";
@@ -22,12 +22,13 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.Configuration
             Field(o => o.Private).Description("Whether or not tihs option should be showed to the user.");
             Field(o => o.Flag).Description("Whether or not this option is a flag.");
             Field(o => o.IsPath).Description("Whether or not this option is a file path option.");
+            Field(o => o.IsSelection).Description("Whether or not this option is a selection option.");
             Field(o => o.Min).Description("The minimum value allowed if this option is a numeric option.");
             Field(o => o.Max).Description("The maximum value allowed if this option is a numeric option.");
             Field(o => o.Increment).Description("The increment allowed if this option is a numeric option.");
             Field<ConfigurationOptionTypeEnum>("type",
                 description: "The option value type",
-                resolve: context => ConfigurationOptionTypeEnum.GetType(context.Source));
+                resolve: context => context.Source.OptionType);
             Field<ListGraphType<CustomMetadataType>>("customMetadata",
                 description: "Any custom metadata this option may have.",
                 resolve: context => context.Source.CustomMetadata);
@@ -37,6 +38,9 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.Configuration
             Field<ValueGraphType>("typedDefault",
              description: "The default value of this option, boxed into a union of possible types.",
              resolve: context => context.Source.Default);
+            Field<ListGraphType<SelectionOptionDescriptorGraphType>>("selections",
+                description: "A list of selections if this is a selection option.",
+                resolve: context => context.Source.SelectionOptions);
         }
     }
 }
