@@ -12,6 +12,8 @@ namespace Snowflake.Configuration
         public bool Private { get; }
         public string SerializeAs { get; }
         public int NumericValue { get; }
+        public string EnumName { get; }
+        public Type EnumType { get; }
 
         internal SelectionOptionDescriptor(EnumMember selectionEnum)
         {
@@ -25,6 +27,8 @@ namespace Snowflake.Configuration
             }
             var selection = selectionEnum.Attributes.Get<SelectionOptionAttribute>();
             this.DisplayName = selection.DisplayName ?? selectionEnum.Name;
+            this.EnumName = selectionEnum.Name;
+            this.EnumType = selectionEnum.Value.GetType();
             this.Private = selection.Private;
             this.SerializeAs = selection.SerializeAs;
             this.NumericValue = selectionEnum.ToInt32();

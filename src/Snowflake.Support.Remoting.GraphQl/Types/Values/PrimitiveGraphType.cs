@@ -11,7 +11,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.Values
         public PrimitiveGraphType()
         {
             Name = "Primitive";
-            Description = "A type-unsafe primitive value.";
+            Description = "A type-unsafe scalar value.";
         }
         public override object ParseLiteral(IValue value)
         {

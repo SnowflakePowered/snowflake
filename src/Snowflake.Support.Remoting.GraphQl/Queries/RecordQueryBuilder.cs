@@ -76,13 +76,13 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
 
         [Mutation("addGame", "Adds a game to the database directly.", typeof(StringGraphType))]
         [Parameter(typeof(GameRecordInputObject), typeof(GameRecordInputType), "gameObject", "game input")]
-        public IGameRecord AddGame(GameRecordInputObject gameObject)
+        public IGameRecord AddGame(GameRecordInputObject input)
         {
             try
             {
-                var platform = this.StoneProvider.Platforms[gameObject.Platform];
-                var game = new GameRecord(platform, gameObject.Title);
-                foreach (var metadata in gameObject.Metadata)
+                var platform = this.StoneProvider.Platforms[input.Platform];
+                var game = new GameRecord(platform, input.Title);
+                foreach (var metadata in input.Metadata)
                 {
                     game.Metadata.Add(metadata.Key, metadata.Value);
                 }
@@ -90,15 +90,15 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
             }
             catch (KeyNotFoundException)
             {
-                throw new KeyNotFoundException($"Unable to find platform {gameObject.Platform}.");
+                throw new KeyNotFoundException($"Unable to find platform {input.Platform}.");
             }
         }
 
         [Mutation("addFile", "Adds a file to the database directly.", typeof(StringGraphType))]
         [Parameter(typeof(FileRecordInputObject), typeof(FileRecordInputType), "fileObject", "File input")]
-        public IFileRecord AddFile(FileRecordInputObject fileObject)
+        public IFileRecord AddFile(FileRecordInputObject input)
         {
-            var file = new FileRecord(fileObject.FilePath, fileObject.MimeType, fileObject.Record);
+            var file = new FileRecord(input.FilePath, input.MimeType, input.Record);
             this.GameLibrary.FileLibrary.Set(file);
             return file;
         }

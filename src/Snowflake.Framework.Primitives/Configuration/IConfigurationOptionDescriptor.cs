@@ -63,7 +63,7 @@ namespace Snowflake.Configuration
         /// <summary>
         /// The key of the configuration option
         /// </summary>
-        string KeyName { get; }
+        string OptionKey { get; }
 
         /// <summary>
         /// The default object.

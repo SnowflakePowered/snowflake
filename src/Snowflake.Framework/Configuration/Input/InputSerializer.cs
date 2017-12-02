@@ -23,7 +23,7 @@ namespace Snowflake.Configuration.Input
             IConfigurationSection inputOptions = inputTemplate;
             foreach (var config in inputOptions.Descriptor.Options)
             {
-                stringBuilder.AppendLine(this.ConfigurationSerializer.SerializeLine(config.OptionName.Replace("{N}", inputTemplate.PlayerIndex.ToString()), inputOptions.Values[config.KeyName].Value));
+                stringBuilder.AppendLine(this.ConfigurationSerializer.SerializeLine(config.OptionName.Replace("{N}", inputTemplate.PlayerIndex.ToString()), inputOptions.Values[config.OptionKey].Value));
             }
 
             foreach (var input in inputTemplate.Options)

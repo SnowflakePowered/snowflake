@@ -18,7 +18,7 @@ namespace Snowflake.Configuration
         public string SectionName { get; }
         public IEnumerable<IConfigurationOptionDescriptor> Options { get; }
 
-        public IConfigurationOptionDescriptor this[string optionKey] => this.Options.First(o => o.KeyName == optionKey);
+        public IConfigurationOptionDescriptor this[string optionKey] => this.Options.First(o => o.OptionKey == optionKey);
 
         internal ConfigurationSectionDescriptor()
         {

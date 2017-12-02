@@ -9,6 +9,8 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.Values
     {
         public EnumIntValueGraphType()
         {
+            Name = "EnumIntValue";
+            Description = "Boxes a CLR Enum into its numeric value, and the enumeration name.";
             Field<IntGraphType>("value",
                 resolve: context => Convert.ToInt32(context.Source));
             Field<StringGraphType>("name",

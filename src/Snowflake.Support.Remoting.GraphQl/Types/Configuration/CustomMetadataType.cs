@@ -10,6 +10,8 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.Configuration
     {
         public CustomMetadataType()
         {
+            Name = "CustomMetadata";
+            Description = "Custom metadata for usually flag options.";
             Field(k => k.Key).Description("The custom metadata key.");
             Field<PrimitiveGraphType>("value",
                 description: "The value of the custom metadata.",

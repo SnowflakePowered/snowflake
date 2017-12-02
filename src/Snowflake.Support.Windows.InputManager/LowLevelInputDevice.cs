@@ -21,5 +21,6 @@ namespace Snowflake.Plugin.InputManager.Win32
         public string UDEV_MountPath { get { return null; } set { } }
         public bool? XI_IsConnected { get; set; }
         public DeviceType DI_DeviceType { get; set;}
+        public InputApi DiscoveryApi { get; set; }
     }
 }

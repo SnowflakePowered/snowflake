@@ -9,13 +9,13 @@ using Snowflake.Support.Remoting.GraphQl.Types.Values;
 
 namespace Snowflake.Support.Remoting.GraphQl.Types.Configuration
 {
-    public class ConfigurationValueType : ObjectGraphType<KeyValuePair<string, IConfigurationValue>>
+    public class ConfigurationValueGraphType : ObjectGraphType<KeyValuePair<string, IConfigurationValue>>
     {
-        public ConfigurationValueType()
+        public ConfigurationValueGraphType()
         {
             Name = "ConfigurationValue";
             Description = "The value of a single configuration option key.";
-            Field<StringGraphType>("keyName",
+            Field<StringGraphType>("optionKey",
                 description: "The key of the Configuration option this value maps for.",
                 resolve: context => context.Source.Key
             );

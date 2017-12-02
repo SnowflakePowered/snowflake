@@ -25,6 +25,7 @@ namespace Snowflake.Plugin.InputManager.Win32
             var keyboards = directInput.GetDevices(DeviceClass.Keyboard, DeviceEnumerationFlags.AllDevices)
                 .Select(keyboard => new LowLevelInputDevice()
             {
+                DiscoveryApi = InputApi.DirectInput,
                 DI_InstanceGUID = keyboard.InstanceGuid,
                 DI_InstanceName = keyboard.InstanceName.Trim('\0'),
                 DI_ProductName = keyboard.ProductName.Trim('\0'),
@@ -36,6 +37,7 @@ namespace Snowflake.Plugin.InputManager.Win32
             var mice = directInput.GetDevices(DeviceClass.Pointer, 
                 DeviceEnumerationFlags.AllDevices).Select(mouse => new LowLevelInputDevice()
             {
+                DiscoveryApi = InputApi.DirectInput,
                 DI_InstanceGUID = mouse.InstanceGuid,
                 DI_InstanceName = mouse.InstanceName.Trim('\0'),
                 DI_ProductName = mouse.ProductName.Trim('\0'),
@@ -56,6 +58,7 @@ namespace Snowflake.Plugin.InputManager.Win32
 
                 var inputDevice = new LowLevelInputDevice()
                 {
+                    DiscoveryApi = InputApi.DirectInput,
                     DI_InstanceGUID = deviceInstance.InstanceGuid,
                     DI_InstanceName = deviceInstance.InstanceName.Trim('\0'),
                     DI_ProductName = deviceInstance.ProductName.Trim('\0'),
@@ -93,6 +96,7 @@ namespace Snowflake.Plugin.InputManager.Win32
                 var xinput = new SharpDX.XInput.Controller((UserIndex)i);
                 var device = new LowLevelInputDevice()
                 {
+                    DiscoveryApi = InputApi.XInput,
                     DI_DeviceType = DeviceType.Gamepad,
                     XI_GamepadIndex = i,
                     XI_IsXInput = true,

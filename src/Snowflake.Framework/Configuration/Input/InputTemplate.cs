@@ -78,7 +78,7 @@ namespace Snowflake.Configuration.Input
             var configOptionValues = new Dictionary<string, IConfigurationValue>();
             foreach (var custom in this.configurationOptions)
             {
-                configOptionValues[custom.KeyName] = new ConfigurationValue(custom.Default);
+                configOptionValues[custom.OptionKey] = new ConfigurationValue(custom.Default);
             }
             var attr = typeof(T).GetTypeInfo().GetCustomAttribute<InputTemplateAttribute>();
 

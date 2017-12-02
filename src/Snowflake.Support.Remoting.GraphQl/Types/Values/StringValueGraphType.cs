@@ -9,6 +9,8 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.Values
     {
         public StringValueGraphType()
         {
+            Name = "StringValue";
+            Description = "Boxes a `String` scalar into an ObjectGraphType.";
             Field<StringGraphType>("value",
                 resolve: context => context.Source);
         }

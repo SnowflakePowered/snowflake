@@ -14,7 +14,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.Values
             Type<IntValueGraphType>();
             Type<BooleanValueGraphType>();
             Type<StringValueGraphType>();
-            Type<DecimalValueGraphType>();
+            Type<FloatValueGraphType>();
             Type<EnumIntValueGraphType>();
         }
     }

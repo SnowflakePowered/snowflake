@@ -5,10 +5,12 @@ using System.Text;
 
 namespace Snowflake.Support.Remoting.GraphQl.Types.Values
 {
-    public class DecimalValueGraphType : ObjectGraphType<double>
+    public class FloatValueGraphType : ObjectGraphType<double>
     {
-        public DecimalValueGraphType()
+        public FloatValueGraphType()
         {
+            Name = "FloatValue";
+            Description = "Boxes a `Float` scalar into an ObjectGraphType.";
             Field<FloatGraphType>("value",
                 resolve: context => context.Source);
         }

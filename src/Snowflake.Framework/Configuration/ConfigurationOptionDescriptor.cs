@@ -25,7 +25,7 @@ namespace Snowflake.Configuration
         public double Increment { get; }
         public bool IsPath { get; }
         public string OptionName { get; }
-        public string KeyName { get; }
+        public string OptionKey { get; }
         public object Default { get; }
         public bool IsSelection { get; }
         public Type Type { get; }
@@ -48,7 +48,7 @@ namespace Snowflake.Configuration
             this.CustomMetadata = customMetadata.ToDictionary(m => m.Key, m => m.Value);
             this.Increment = configOption.Increment;
             this.OptionName = configOption.OptionName;
-            this.KeyName = keyName;
+            this.OptionKey = keyName;
             this.OptionType = ConfigurationOptionDescriptor.GetOptionType(this.Type, this.IsPath);
             this.IsSelection = this.OptionType == ConfigurationOptionType.Selection;
             this.SelectionOptions = this.IsSelection ? NonGenericEnums.GetMembers(this.Type)

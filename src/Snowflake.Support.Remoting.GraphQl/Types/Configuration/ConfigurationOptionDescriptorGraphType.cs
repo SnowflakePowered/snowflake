@@ -8,16 +8,16 @@ using System.Text;
 
 namespace Snowflake.Support.Remoting.GraphQl.Types.Configuration
 {
-    public class ConfigurationOptionGraphType : ObjectGraphType<IConfigurationOptionDescriptor>
+    public class ConfigurationOptionDescriptorGraphType : ObjectGraphType<IConfigurationOptionDescriptor>
     {
-        public ConfigurationOptionGraphType()
+        public ConfigurationOptionDescriptorGraphType()
         {
-            Name = "ConfigurationOption";
+            Name = "ConfigurationOptionDescriptor";
             Description = "Describes a configuration option.";
             Field(o => o.Description).Description("The option description.");
             Field(o => o.DisplayName).Description("The human readable name of this option.");
             Field(o => o.OptionName).Description("The option name as it is serialized into the configuration.");
-            Field(o => o.KeyName).Description("The key name of this option.");
+            Field(o => o.OptionKey).Description("The key name of this option.");
             Field(o => o.Simple).Description("Whether or not this option is for 'simple' display mode.");
             Field(o => o.Private).Description("Whether or not tihs option should be showed to the user.");
             Field(o => o.Flag).Description("Whether or not this option is a flag.");

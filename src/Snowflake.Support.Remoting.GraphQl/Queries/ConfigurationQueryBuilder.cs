@@ -17,18 +17,32 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
         {
             this.Store = store;
         }
-        [Connection("configValues", "Config Values", typeof(ConfigurationValueType))]
+        [Connection("configValues", "Config Values", typeof(ConfigurationValueGraphType))]
         public IEnumerable<KeyValuePair<string, IConfigurationValue>> GetAllValues()
         {
             var config = this.Store.Get<ITestConfigurationCollection>(Guid.NewGuid(), "TestEmulator", "DefaultProfile");
             return config.Configuration.TestConfiguration.Values.ToList();
         }
                     
-        [Connection("configOptions", "Config Options", typeof(ConfigurationOptionGraphType))]
+        [Connection("configOptions", "Config Options", typeof(ConfigurationOptionDescriptorGraphType))]
         public IEnumerable<IConfigurationOptionDescriptor> GetAllOptions()
         {
             var config = this.Store.Get<ITestConfigurationCollection>(Guid.NewGuid(), "TestEmulator", "DefaultProfile");
             return config.Configuration.TestConfiguration.Descriptor.Options;
+        }
+
+        [Connection("configSections", "Config Options", typeof(ConfigurationSectionGraphType))]
+        public IEnumerable<KeyValuePair<string, IConfigurationSection>> GetAllSections()
+        {
+            var config = this.Store.Get<ITestConfigurationCollection>(Guid.NewGuid(), "TestEmulator", "DefaultProfile");
+            return config.Configuration;
+        }
+
+        [Connection("configCollection", "Config Options", typeof(ConfigurationCollectionGraphType))]
+        public IEnumerable<IConfigurationCollection> GetCollection()
+        {
+            var config = this.Store.Get<ITestConfigurationCollection>(Guid.NewGuid(), "TestEmulator", "DefaultProfile");
+            yield return config;
         }
     }
 }

@@ -9,6 +9,8 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.Values
     {
         public IntValueGraphType()
         {
+            Name = "IntValue";
+            Description = "Boxes a `Int` scalar into an ObjectGraphType.";
             Field<IntGraphType>("value",
                 resolve: context => context.Source);
         }
