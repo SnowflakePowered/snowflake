@@ -3,7 +3,7 @@ using Unosquare.Labs.EmbedIO;
 
 namespace Snowflake.Support.Remoting.GraphQl.Servers
 {
-    public class GraphQlServerWrapper : ILocalWebService
+    internal class GraphQlServerWrapper : ILocalWebService
     {
         private GraphQlServer remote;
         public GraphQlServerWrapper(GraphQlServer remote)

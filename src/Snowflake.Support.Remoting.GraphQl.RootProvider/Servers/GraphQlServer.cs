@@ -14,9 +14,9 @@ using Unosquare.Labs.EmbedIO.Constants;
 
 namespace Snowflake.Support.Remoting.GraphQl.Servers
 {
-    public class GraphQlServer : WebModuleBase
+    internal class GraphQlServer : WebModuleBase
     {
-        public override string Name => "Snowflake REST Remoting";
+        public override string Name => "Snowflake GraphQL Remoting";
         /// <summary>
         /// The chuck size for sending files
         /// </summary>
