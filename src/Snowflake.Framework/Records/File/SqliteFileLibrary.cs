@@ -15,7 +15,7 @@ using System.Data.Common;
 
 namespace Snowflake.Records.File
 {
-    internal class SqliteFileLibrary : RecordLibrary<IFileRecord>, IFileLibrary
+    internal class SqliteFileLibrary : SqliteRecordLibrary<IFileRecord>, IFileLibrary
     {
         public override IMetadataLibrary MetadataLibrary { get; }
         private static readonly string[] columns = new[]

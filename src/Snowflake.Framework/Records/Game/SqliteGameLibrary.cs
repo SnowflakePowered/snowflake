@@ -11,7 +11,7 @@ using System.Data.Common;
 
 namespace Snowflake.Records.Game
 {
-    internal class SqliteGameLibrary : RecordLibrary<IGameRecord>, IGameLibrary
+    internal class SqliteGameLibrary : SqliteRecordLibrary<IGameRecord>, IGameLibrary
     {
         public override IMetadataLibrary MetadataLibrary { get; }
         public IFileLibrary FileLibrary { get; }

@@ -7,13 +7,17 @@ using Snowflake.Records.Metadata;
 
 namespace Snowflake.Records
 {
-    internal abstract class RecordLibrary<TRecord> : IRecordLibrary<TRecord> where TRecord : IRecord 
+    /// <summary>
+    /// An Sqlite backed record library that allows junctions.
+    /// </summary>
+    /// <typeparam name="TRecord"></typeparam>
+    internal abstract class SqliteRecordLibrary<TRecord> : IRecordLibrary<TRecord> where TRecord : IRecord 
     {
         private readonly ISqlDatabase backingDatabase;
         public string LibraryName { get; }
         public abstract IMetadataLibrary MetadataLibrary { get; }
 
-        public RecordLibrary(ISqlDatabase database, string libraryName, params string[] columns)
+        public SqliteRecordLibrary(ISqlDatabase database, string libraryName, params string[] columns)
         {
             this.backingDatabase = database;
             this.LibraryName = libraryName;
@@ -27,7 +31,13 @@ namespace Snowflake.Records
         }
 
      
-        protected RecordLibraryJunction<TRecord, T> CreateJunction<T>(RecordLibrary<T> junctionWith) where T: IRecord
+        /// <summary>
+        /// Creates a junction between two record libraries
+        /// </summary>
+        /// <typeparam name="T">The type of the other record</typeparam>
+        /// <param name="junctionWith">The other record library to junction with.</param>
+        /// <returns>A record junction</returns>
+        protected RecordLibraryJunction<TRecord, T> CreateJunction<T>(SqliteRecordLibrary<T> junctionWith) where T: IRecord
         {
             return new RecordLibraryJunction<TRecord, T>(this.backingDatabase, this, junctionWith);
         }

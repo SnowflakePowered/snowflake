@@ -8,13 +8,18 @@ using System.Text;
 
 namespace Snowflake.Records
 {
-    internal class RecordLibraryJunction <T1, T2> where T1 : IRecord where T2 : IRecord
+    /// <summary>
+    /// A junction between two record libraries
+    /// </summary>
+    /// <typeparam name="TParent">The parent library.</typeparam>
+    /// <typeparam name="TChildren">The child library to junction with.</typeparam>
+    internal class RecordLibraryJunction <TParent, TChildren> where TParent : IRecord where TChildren : IRecord
     {
         private readonly ISqlDatabase backingDatabase;
         public string JunctionName { get; }
-        private RecordLibrary<T1> ParentLibrary { get; }
-        private RecordLibrary<T2> ChildLibrary { get; }
-        public RecordLibraryJunction(ISqlDatabase database, RecordLibrary<T1> parentLibrary, RecordLibrary<T2> childLibrary)
+        private SqliteRecordLibrary<TParent> ParentLibrary { get; }
+        private SqliteRecordLibrary<TChildren> ChildLibrary { get; }
+        public RecordLibraryJunction(ISqlDatabase database, SqliteRecordLibrary<TParent> parentLibrary, SqliteRecordLibrary<TChildren> childLibrary)
         {
             this.backingDatabase = database;
             this.JunctionName = $"{parentLibrary.LibraryName}_{childLibrary.LibraryName}";
@@ -32,15 +37,14 @@ namespace Snowflake.Records
             );
         }
 
-        //select files.* from games_files join files on files.uuid = files_uuid and games_uuid = x'45379b93e1eb064a9bb63deda29a242d'
 
-        public void MakeRelation(T1 parentRelation, IEnumerable<T2> childRelation, IDbConnection dbConnection)
+        public void MakeRelation(TParent parentRelation, IEnumerable<TChildren> childRelation, IDbConnection dbConnection)
         {
             dbConnection.Execute($@"INSERT OR REPLACE into {this.JunctionName}({this.ParentLibrary.LibraryName}_uuid, {this.ChildLibrary.LibraryName}_uuid)
                                    VALUES (@parentUuid, @childUuid)", childRelation.Select( c => new { parentUuid = parentRelation.Guid, childUuid = c.Guid} ));
         }
       
-        public void DeleteAllRelations(T1 parentRelation, IDbConnection dbConnection)
+        public void DeleteAllRelations(TParent parentRelation, IDbConnection dbConnection)
         {
             dbConnection.Execute($@"DELETE FROM {this.JunctionName} WHERE {this.ParentLibrary.LibraryName}_uuid = @Guid", parentRelation);
         }
