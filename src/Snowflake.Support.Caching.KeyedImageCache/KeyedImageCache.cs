@@ -64,7 +64,7 @@ namespace Snowflake.Support.Caching.KeyedImageCache
                     resizedImage.Save(path, ImageFormat.Jpeg);
                 }
             }
-            var record = new FileRecord(path, "image/jpeg", recordGuid);
+            var record = new FileRecord(path, "image/jpeg");
             var data = new List<IRecordMetadata>()
             {
                 {new RecordMetadata(ImageMetadataKeys.CacheId, cacheId.ToString(), record.Guid)},

@@ -25,7 +25,7 @@ namespace Snowflake.Records.Tests
             var library = new SqliteGameLibrary(new SqliteDatabase(Path.GetTempFileName()));
 
             var gameRecord = new GameRecord(platformInfo.Object, "Test Game");
-            var fileRecord = new FileRecord(@"C:\somefile\test.txt", "text/plain", gameRecord);
+            var fileRecord = new FileRecord(@"C:\somefile\test.txt", "text/plain");
             fileRecord.Metadata.Add("test_metadata", new RecordMetadata("test_metadata", "hello world", fileRecord));
 
             gameRecord.Files.Add(fileRecord);
@@ -41,12 +41,12 @@ namespace Snowflake.Records.Tests
             var library = new SqliteGameLibrary(new SqliteDatabase(Path.GetTempFileName()));
 
             var gameRecord = new GameRecord(platformInfo.Object, "Test Game");
-            var fileRecord = new FileRecord(@"C:\somefile\test.txt", "text/plain", gameRecord);
+            var fileRecord = new FileRecord(@"C:\somefile\test.txt", "text/plain");
             fileRecord.Metadata.Add("test_metadata", new RecordMetadata("test_metadata", "hello world", fileRecord));
             gameRecord.Files.Add(fileRecord);
 
             var gameRecord2 = new GameRecord(platformInfo.Object, "Test Game II");
-            var fileRecord2 = new FileRecord(@"C:\somefile\test.txt", "text/plain", gameRecord2);
+            var fileRecord2 = new FileRecord(@"C:\somefile\test.txt", "text/plain");
             gameRecord2.Files.Add(fileRecord2);
             library.Set(new List<IGameRecord> { gameRecord, gameRecord2 });
         }
@@ -59,7 +59,7 @@ namespace Snowflake.Records.Tests
             var library = new SqliteGameLibrary(new SqliteDatabase(Path.GetTempFileName()));
 
             var gameRecord = new GameRecord(platformInfo.Object, "Test Game");
-            var fileRecord = new FileRecord(@"C:\somefile\test.txt", "text/plain", gameRecord);
+            var fileRecord = new FileRecord(@"C:\somefile\test.txt", "text/plain");
             fileRecord.Metadata.Add("test_metadata", new RecordMetadata("test_metadata", "hello world", fileRecord));
             gameRecord.Files.Add(fileRecord);
 
@@ -78,12 +78,12 @@ namespace Snowflake.Records.Tests
             var library = new SqliteGameLibrary(new SqliteDatabase(Path.GetTempFileName()));
 
             var gameRecord = new GameRecord(platformInfo.Object, "Test Game");
-            var fileRecord = new FileRecord(@"C:\somefile\test.txt", "text/plain", gameRecord);
+            var fileRecord = new FileRecord(@"C:\somefile\test.txt", "text/plain");
             fileRecord.Metadata.Add("test_metadata", new RecordMetadata("test_metadata", "hello world", fileRecord));
             gameRecord.Files.Add(fileRecord);
 
             var gameRecord2 = new GameRecord(platformInfo.Object, "Test Game II");
-            var fileRecord2 = new FileRecord(@"C:\somefile\test.txt", "text/plain", gameRecord2);
+            var fileRecord2 = new FileRecord(@"C:\somefile\test.txt", "text/plain");
             gameRecord2.Files.Add(fileRecord2);
             library.Set(new List<IGameRecord> { gameRecord, gameRecord2 });
             Assert.NotEmpty(library.GetAllRecords());
@@ -99,7 +99,7 @@ namespace Snowflake.Records.Tests
             var library = new SqliteGameLibrary(new SqliteDatabase(Path.GetTempFileName()));
 
             var gameRecord = new GameRecord(platformInfo.Object, "Test Game");
-            var fileRecord = new FileRecord(@"C:\somefile\test.txt", "text/plain", gameRecord);
+            var fileRecord = new FileRecord(@"C:\somefile\test.txt", "text/plain");
             fileRecord.Metadata.Add("test_metadata", new RecordMetadata("test_metadata", "hello world", fileRecord));
 
             gameRecord.Files.Add(fileRecord);
@@ -116,7 +116,7 @@ namespace Snowflake.Records.Tests
             var library = new SqliteGameLibrary(new SqliteDatabase(Path.GetTempFileName()));
 
             var gameRecord = new GameRecord(platformInfo.Object, "Test Game");
-            var fileRecord = new FileRecord(@"C:\somefile\test.txt", "text/plain", gameRecord);
+            var fileRecord = new FileRecord(@"C:\somefile\test.txt", "text/plain");
             fileRecord.Metadata.Add("test_metadata", new RecordMetadata("test_metadata", "hello world", fileRecord));
 
             gameRecord.Files.Add(fileRecord);
@@ -133,7 +133,7 @@ namespace Snowflake.Records.Tests
             var library = new SqliteGameLibrary(new SqliteDatabase(Path.GetTempFileName()));
 
             var gameRecord = new GameRecord(platformInfo.Object, "Test Game");
-            var fileRecord = new FileRecord(@"C:\somefile\test.txt", "text/plain", gameRecord);
+            var fileRecord = new FileRecord(@"C:\somefile\test.txt", "text/plain");
             fileRecord.Metadata.Add("test_metadata", new RecordMetadata("test_metadata", "hello world", fileRecord));
 
             gameRecord.Files.Add(fileRecord);
@@ -149,7 +149,7 @@ namespace Snowflake.Records.Tests
             var library = new SqliteGameLibrary(new SqliteDatabase(Path.GetTempFileName()));
 
             var gameRecord = new GameRecord(platformInfo.Object, "Test Game");
-            var fileRecord = new FileRecord(@"C:\somefile\test.txt", "text/plain", gameRecord);
+            var fileRecord = new FileRecord(@"C:\somefile\test.txt", "text/plain");
             fileRecord.Metadata.Add("test_metadata", new RecordMetadata("test_metadata", "hello world", fileRecord));
 
             gameRecord.Files.Add(fileRecord);
@@ -165,7 +165,7 @@ namespace Snowflake.Records.Tests
             var library = new SqliteGameLibrary(new SqliteDatabase(Path.GetTempFileName()));
 
             var gameRecord = new GameRecord(platformInfo.Object, "Test Game");
-            var fileRecord = new FileRecord(@"C:\somefile\test.txt", "text/plain", gameRecord);
+            var fileRecord = new FileRecord(@"C:\somefile\test.txt", "text/plain");
             fileRecord.Metadata.Add("test_metadata", new RecordMetadata("test_metadata", "hello world", fileRecord));
 
             gameRecord.Files.Add(fileRecord);

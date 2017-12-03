@@ -35,8 +35,8 @@ namespace Snowflake.Records.Game
             this.backingDatabase.Execute(dbConnection =>
             {
                 dbConnection.Execute(@"INSERT OR REPLACE INTO games(uuid) VALUES (@Guid)", record);
-                dbConnection.Execute(@"INSERT OR REPLACE INTO files(uuid, game, path, mimetype) 
-                                         VALUES (@Guid, @Record, @FilePath, @MimeType)", record.Files);
+                dbConnection.Execute(@"INSERT OR REPLACE INTO files(uuid, path, mimetype) 
+                                         VALUES (@Guid, @FilePath, @MimeType)", record.Files);
                 dbConnection.Execute(@"INSERT OR REPLACE INTO metadata(uuid, record, key, value) 
                                         VALUES (@Guid, @Record, @Key, @Value)",
                                         record.Metadata.Values.Concat(record.Files.SelectMany(m => m.Metadata.Values)));
@@ -50,8 +50,8 @@ namespace Snowflake.Records.Game
             {
                 var gameRecords = games as IList<IGameRecord> ?? games.ToList();
                 dbConnection.Execute(@"INSERT OR REPLACE INTO games(uuid) VALUES (@Guid)", gameRecords);
-                dbConnection.Execute(@"INSERT OR REPLACE INTO files(uuid, game, path, mimetype) 
-                                       VALUES (@Guid, @Record, @FilePath, @MimeType)",
+                dbConnection.Execute(@"INSERT OR REPLACE INTO files(uuid, path, mimetype) 
+                                       VALUES (@Guid, @FilePath, @MimeType)",
                                        gameRecords.SelectMany(g => g.Files));
                 dbConnection.Execute(@"INSERT OR REPLACE INTO metadata(uuid, record, key, value) 
                                        VALUES (@Guid, @Record, @Key, @Value)",
@@ -87,9 +87,9 @@ namespace Snowflake.Records.Game
         {
             const string sql =
                           @"SELECT * FROM games WHERE uuid = @game;
-                            SELECT files.* FROM games_files JOIN files ON files.uuid = files_uuid AND games_uuid = @game;
+                            SELECT * FROM games_files JOIN files ON files.uuid = files_uuid AND games_uuid = @game;
                             SELECT * FROM metadata WHERE record IN 
-                                (SELECT uuid FROM files WHERE game = @game
+                                (SELECT files.uuid FROM games_files JOIN files ON files.uuid = files_uuid AND games_uuid = @game
                                  UNION ALL SELECT uuid from games WHERE uuid = @game)";
             return this.GetSingleByQuery(sql, new { game });
         }
@@ -97,10 +97,10 @@ namespace Snowflake.Records.Game
         public override IEnumerable<IGameRecord> Get(IEnumerable<Guid> games)
         {
             const string sql = @"SELECT * from games WHERE uuid IN @games;
-                                 SELECT files.* FROM games_files JOIN files ON files.uuid = files_uuid AND games_uuid IN @games;
+                                 SELECT * FROM games_files JOIN files ON files.uuid = files_uuid AND games_uuid IN @games;
                                  SELECT * FROM metadata WHERE record IN 
                                         (SELECT uuid from games WHERE uuid IN @games 
-                                        UNION ALL SELECT uuid FROM files WHERE game IN @games)";
+                                        UNION ALL SELECT files.uuid FROM games_files JOIN files ON files.uuid = files_uuid AND games_uuid IN @games)";
             return this.GetMultipleByQuery(sql, games);
         }
 
@@ -121,13 +121,13 @@ namespace Snowflake.Records.Game
             const string sql = @"SELECT * FROM games WHERE uuid IN 
                                 (SELECT record FROM metadata WHERE key = @key AND value LIKE @likeValue);
 
-                                SELECT files.* FROM games_files JOIN files ON files.uuid = files_uuid AND games_uuid IN 
+                                SELECT * FROM games_files JOIN files ON files.uuid = files_uuid AND games_uuid IN 
                                     (SELECT uuid FROM games WHERE uuid IN 
                                         (SELECT record FROM metadata WHERE key = @key AND value LIKE @likeValue));
 
                                 SELECT * FROM metadata WHERE record IN (SELECT uuid FROM games WHERE uuid IN 
                                     (SELECT record FROM metadata WHERE key = @key AND value LIKE @likeValue)
-                                    UNION ALL SELECT uuid FROM files WHERE game IN (SELECT uuid FROM games WHERE uuid IN 
+                                    UNION ALL SELECT files.uuid FROM games_files JOIN files ON files.uuid = files_uuid AND games_uuid IN (SELECT uuid FROM games WHERE uuid IN 
                                     (SELECT record FROM metadata WHERE key = @key AND value LIKE @likeValue)))";
             //this sql is gross, can we shorten this somehow?
             return this.GetMultipleByQuery(sql, new {key, likeValue = $"%{likeValue}%"});
@@ -138,13 +138,13 @@ namespace Snowflake.Records.Game
             const string sql = @"SELECT * FROM games WHERE uuid IN 
                                 (SELECT record FROM metadata WHERE key = @key AND value = @exactValue);
 
-                                SELECT files.* FROM games_files JOIN files ON files.uuid = files_uuid AND games_uuid IN  
+                                SELECT * FROM games_files JOIN files ON files.uuid = files_uuid AND games_uuid IN  
                                     (SELECT uuid FROM games WHERE uuid IN 
                                         (SELECT record FROM metadata WHERE key = @key AND value = @exactValue));
 
                                 SELECT * FROM metadata WHERE record IN (SELECT uuid FROM games WHERE uuid IN 
                                     (SELECT record FROM metadata WHERE key = @key AND value = @exactValue)
-                                    UNION ALL SELECT uuid FROM files WHERE game IN (SELECT uuid FROM games WHERE uuid IN 
+                                    UNION ALL SELECT files.uuid FROM games_files JOIN files ON files.uuid = files_uuid AND games_uuid IN (SELECT uuid FROM games WHERE uuid IN 
                                     (SELECT record FROM metadata WHERE key = @key AND value = @exactValue)))";
             return this.GetMultipleByQuery(sql, new { key, exactValue });
 
@@ -153,10 +153,10 @@ namespace Snowflake.Records.Game
         public override IEnumerable<IGameRecord> GetAllRecords()
         {
             const string sql = @"SELECT * FROM games;
-                                 SELECT files.* FROM games_files JOIN files ON files.uuid = files_uuid AND games_uuid IN (SELECT uuid FROM games);
+                                 SELECT * FROM games_files JOIN files ON files.uuid = files_uuid AND games_uuid IN (SELECT uuid FROM games);
                                  SELECT * FROM metadata WHERE record IN 
                                         (SELECT uuid FROM games 
-                                        UNION ALL SELECT uuid FROM files WHERE game IN (SELECT uuid FROM games))";
+                                        UNION ALL SELECT files.uuid FROM games_files JOIN files ON files.uuid = files_uuid AND games_uuid IN (SELECT uuid FROM games))";
             return this.GetMultipleByQuery(sql, null);
         }
 
@@ -191,8 +191,8 @@ namespace Snowflake.Records.Game
                         var games = query.Read().Select(game => new Guid(game.uuid));
 
                         var files = query.Read().Select(file => (
+                            Game: new Guid(file.games_uuid),
                             Guid: new Guid(file.uuid),
-                            Game: new Guid(file.game),
                             Path: (string)file.path,
                             MimeType: (string)file.mimetype
                         ));
@@ -208,11 +208,11 @@ namespace Snowflake.Records.Game
                         var fileRecords = (from f in files
                                            let md = (from m in metadatas where m.Record == f.Guid select m)
                                                .ToDictionary(md => md.Key, md => md)
-                                           select new FileRecord(f.Game, md, f.Path, f.MimeType)).ToList();
+                                           select (game: f.Game, file: new FileRecord(f.Guid, md, f.Path, f.MimeType))).ToList();
 
                         return (from game in games
                                 let gameFiles =
-                                    (from f in fileRecords where f.Record == game select f)
+                                    (from f in fileRecords where f.game == game select f.file)
                                     .Cast<IFileRecord>().ToList()
                                 let md = (from m in metadatas where m.Record == game select m)
                                     .ToDictionary(md => md.Key, md => md)
@@ -250,7 +250,6 @@ namespace Snowflake.Records.Game
                         var files = query.Read().Select(f => (
                         
                             Guid: new Guid(f.uuid),
-                            Game: new Guid(f.game),
                             Path: (string)f.path,
                             MimeType: (string)f.mimetype
                        ));
@@ -267,7 +266,7 @@ namespace Snowflake.Records.Game
                         var fileRecords = (from f in files
                                            let md = (from m in metadatas where m.Record == f.Guid select m)
                                                .ToDictionary(md => md.Key, md => md)
-                                           select new FileRecord(f.Game, md, f.Path, f.MimeType))
+                                           select new FileRecord(f.Guid, md, f.Path, f.MimeType))
                                            .Cast<IFileRecord>().ToList();
                         var gameMetadata =
                             (from m in metadatas where m.Record == gameGuid select m)

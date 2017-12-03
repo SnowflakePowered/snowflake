@@ -50,7 +50,7 @@ namespace Snowflake.Scraper
         {
             var gr = new GameRecord(this.stoneProvider.Platforms[fileRecord.Metadata[FileMetadataKeys.RomPlatform]], 
                 fileRecord.Metadata[FileMetadataKeys.RomCanonicalTitle]);
-            gr.Files.Add(new FileRecord(fileRecord, gr));
+            gr.Files.Add(fileRecord);
             //merge scrape resu;ts
             var bestMatch = (from provider in this.providers.MetadataProviders.AsParallel()
                              from result in provider.Query(fileRecord.Metadata)

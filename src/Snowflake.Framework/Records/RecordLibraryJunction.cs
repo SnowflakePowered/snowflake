@@ -26,8 +26,8 @@ namespace Snowflake.Records
         private void CreateDatabase()
         {
             this.backingDatabase.CreateTable(this.JunctionName,
-                $"{this.ParentLibrary.LibraryName}_uuid REFERENCES {this.ParentLibrary.LibraryName}(uuid)",
-                $"{this.ChildLibrary.LibraryName}_uuid REFERENCES {this.ChildLibrary.LibraryName}(uuid)",
+                $"{this.ParentLibrary.LibraryName}_uuid UUID REFERENCES {this.ParentLibrary.LibraryName}(uuid)",
+                $"{this.ChildLibrary.LibraryName}_uuid UUID REFERENCES {this.ChildLibrary.LibraryName}(uuid)",
                 $"PRIMARY KEY ({this.ParentLibrary.LibraryName}_uuid, {this.ChildLibrary.LibraryName}_uuid)"
             );
         }

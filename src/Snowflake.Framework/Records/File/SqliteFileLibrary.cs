@@ -20,7 +20,6 @@ namespace Snowflake.Records.File
         public override IMetadataLibrary MetadataLibrary { get; }
         private static readonly string[] columns = new[]
         {
-           "game UUID",
            "path TEXT",
            "mimetype TEXT"
         };
@@ -43,8 +42,8 @@ namespace Snowflake.Records.File
 
             this.backingDatabase.Execute(dbConnection =>
             {
-                dbConnection.Execute(@"INSERT OR REPLACE INTO files(uuid, game, path, mimetype) 
-                                         VALUES (@Guid, @Record, @FilePath, @MimeType)", record);
+                dbConnection.Execute(@"INSERT OR REPLACE INTO files(uuid, path, mimetype) 
+                                         VALUES (@Guid, @FilePath, @MimeType)", record);
                 dbConnection.Execute(@"INSERT OR REPLACE INTO metadata(uuid, record, key, value) 
                                         VALUES (@Guid, @Record, @Key, @Value)", record.Metadata.Values);
             });
@@ -54,8 +53,8 @@ namespace Snowflake.Records.File
         {
             this.backingDatabase.Execute(dbConnection =>
             {
-                dbConnection.Execute(@"INSERT OR REPLACE INTO files(uuid, game, path, mimetype) 
-                                         VALUES (@Guid, @Record, @FilePath, @MimeType)", records);
+                dbConnection.Execute(@"INSERT OR REPLACE INTO files(uuid, path, mimetype) 
+                                         VALUES (@Guid, @FilePath, @MimeType)", records);
                 dbConnection.Execute(@"INSERT OR REPLACE INTO metadata(uuid, record, key, value) 
                                         VALUES (@Guid, @Record, @Key, @Value)", records.SelectMany(record => record.Metadata.Values));
             });
@@ -109,18 +108,6 @@ namespace Snowflake.Records.File
             const string sql = @"SELECT * FROM files;
                                  SELECT * FROM metadata WHERE record IN (SELECT uuid FROM files)";
             return this.GetMultipleByQuery(sql, null);
-        }
-
-        public IEnumerable<IFileRecord> GetFilesForGame(IGameRecord game)
-        {
-           return this.GetFilesForGame(game.Guid);
-        }
-
-        public IEnumerable<IFileRecord> GetFilesForGame(Guid game)
-        {
-            const string sql = @"SELECT * FROM files WHERE game = @game;
-                                 SELECT * FROM metadata WHERE record IN (SELECT uuid FROM files WHERE game = @game)";
-            return this.GetMultipleByQuery(sql, new {game});
         }
 
         public IFileRecord Get(string filePath)
@@ -198,7 +185,6 @@ namespace Snowflake.Records.File
                         if (_file == null) return null;
                         var file = (
                             Guid: new Guid(_file.uuid),
-                            Game: new Guid(_file.game),
                             Path: (string)_file.path,
                             MimeType: (string)_file.mimetype
                         );
@@ -210,7 +196,7 @@ namespace Snowflake.Records.File
                         )).Select(m => new RecordMetadata(m.Guid, m.Record, m.Key, m.Value))?
                         .Cast<IRecordMetadata>()?
                         .ToDictionary(m => m.Key, m => m); 
-                        return new FileRecord(file.Game, metadatas, file.Path, file.MimeType);
+                        return new FileRecord(file.Guid, metadatas, file.Path, file.MimeType);
                     }
                     catch (DbException)
                     {
