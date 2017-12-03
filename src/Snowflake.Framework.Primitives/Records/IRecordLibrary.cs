@@ -33,5 +33,11 @@ namespace Snowflake.Records
         /// The metadata store associated with this library.
         /// </summary>
         IMetadataLibrary MetadataLibrary { get; }
+
+        /// <summary>
+        /// The name of this library.
+        /// </summary>
+        string LibraryName { get; }
+
     }
 }

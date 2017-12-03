@@ -43,7 +43,7 @@ namespace Snowflake.Records.Game
 
         public GameRecord(IPlatformInfo platformInfo, string title, string filename, string mimetype) : this(platformInfo, title)
         {
-            this.Files.Add(new FileRecord(filename, mimetype, this.Guid));
+            this.Files.Add(new FileRecord(filename, mimetype));
         }
     }
 }

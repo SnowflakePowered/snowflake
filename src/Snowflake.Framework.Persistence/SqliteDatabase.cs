@@ -35,7 +35,6 @@ namespace Snowflake.Persistence
                                          "PRAGMA synchronous = NORMAL;";
                 walCommand.ExecuteNonQuery();
             }
-            connection.Close();
             return connection;
 
         }
@@ -50,10 +49,12 @@ namespace Snowflake.Persistence
         public T Query<T>(Func<IDbConnection, T> queryFunction)
         {
             T record;
-            using (var dbConnection = this.GetConnection())
+            using (var dbTransaction = this.GetConnection().BeginTransaction())
+            using(var dbConnection = dbTransaction.Connection)
             {
                 dbConnection.Open();
                 record = queryFunction(dbConnection);
+                dbTransaction.Commit();
                 if (dbConnection.State != ConnectionState.Closed) dbConnection.Close();
             }
             return record;
@@ -66,10 +67,12 @@ namespace Snowflake.Persistence
         /// <param name="queryFunction">A function to query the database using the opened connection</param>
         public void Execute(Action<IDbConnection> queryFunction)
         {
-            using (var dbConnection = this.GetConnection())
+            using (var dbTransaction = this.GetConnection().BeginTransaction())
+            using (var dbConnection = dbTransaction.Connection)
             {
                 dbConnection.Open();
                 queryFunction(dbConnection);
+                dbTransaction.Commit();
                 if (dbConnection.State != ConnectionState.Closed) dbConnection.Close();
             }
         }
@@ -118,7 +121,6 @@ namespace Snowflake.Persistence
         /// <param name="columns">The names of the columns to create</param>
         public void CreateTable(string tableName, params string[] columns)
         {
-
             this.Execute($@"CREATE TABLE IF NOT EXISTS {tableName}({String.Join(",", columns)})");
         }
     }
