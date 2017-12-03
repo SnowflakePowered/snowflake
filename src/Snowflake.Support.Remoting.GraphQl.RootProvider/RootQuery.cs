@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Snowflake.Support.Remoting.GraphQl.RootProvider
 {
-    public class RootQuery : ObjectGraphType<object>
+    internal class RootQuery : ObjectGraphType<object>
     {
         public RootQuery()
         {

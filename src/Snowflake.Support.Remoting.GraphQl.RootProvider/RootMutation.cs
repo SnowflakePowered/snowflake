@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Snowflake.Support.Remoting.GraphQl.RootProvider
 {
-    public class RootMutation : ObjectGraphType<object>
+    internal class RootMutation : ObjectGraphType<object>
     {
         public RootMutation()
         {

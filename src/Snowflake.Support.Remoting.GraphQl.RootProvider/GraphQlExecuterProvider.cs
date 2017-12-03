@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Snowflake.Support.Remoting.GraphQl.RootProvider
 {
-    public class GraphQlExecuterProvider
+    internal class GraphQlExecuterProvider
     {
         private IDocumentExecuter Executer { get; }
         private IDocumentWriter Writer { get; }

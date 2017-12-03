@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Snowflake.Support.Remoting.GraphQl.RootProvider
 {
-    public class GraphQlRequest
+    internal class GraphQlRequest
     {
         public string OperationName { get; set; }
         public string Query { get; set; }
