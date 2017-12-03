@@ -26,7 +26,7 @@ namespace Snowflake.JsonConverters
                 let elementKey = Enums.Parse<ControllerElement>(layoutElements.Name)
                 let elementLabel = layoutElements.Value.Value<string>("Label")
                 let elementType = Enums.Parse<ControllerElementType>(layoutElements.Value.Value<string>("Type"))
-                select (elementKey, elementInfo: new ControllerElementInfo(elementLabel, elementType)))
+                select (elementKey: elementKey, elementInfo: new ControllerElementInfo(elementLabel, elementType)))
             {
                 layout.Add(controllerElement.elementKey, controllerElement.elementInfo); 
             }
