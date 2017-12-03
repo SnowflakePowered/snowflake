@@ -19,7 +19,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.Record
             Field<GuidGraphType>("guid",
               description: "The unique ID of the game.",
               resolve: context => context.Source);
-            Field<ListGraphType<RecordMetadataType>>(
+            Field<ListGraphType<RecordMetadataGraphType>>(
                 "metadata",
                 description: "A list of metadata related to this game.",
                 resolve: context => context.Source.Metadata.Select(m => m.Value)

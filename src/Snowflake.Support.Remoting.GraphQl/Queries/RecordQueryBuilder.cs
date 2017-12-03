@@ -32,27 +32,27 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
             this.StoneProvider = stoneProvider;
         }
 
-        [Connection("games", "Get all Games", typeof(GameRecordType))]
+        [Connection("games", "Get all Games", typeof(GameRecordGraphType))]
         public IEnumerable<IGameRecord> GetGames()
         {
             return this.GameLibrary.GetAllRecords();
         }
 
-        [Connection("files", "Get all files", typeof(FileRecordType))]
+        [Connection("files", "Get all files", typeof(FileRecordGraphType))]
         public IEnumerable<IFileRecord> GetFiles()
         {
             return this.GameLibrary.FileLibrary.GetAllRecords();
         }
 
 
-        [Field("file", "Get a file by an ID", typeof(FileRecordType))]
+        [Field("file", "Get a file by an ID", typeof(FileRecordGraphType))]
         [Parameter(typeof(Guid), typeof(GuidGraphType), "guid", "The unique file GUID")]
         public IFileRecord GetFile(Guid guid)
         {
             return this.GameLibrary.FileLibrary.Get(guid);
         }
 
-        [Field("fileByPath", "Get a file by a filepath", typeof(FileRecordType))]
+        [Field("fileByPath", "Get a file by a filepath", typeof(FileRecordGraphType))]
         [Parameter(typeof(string), typeof(StringGraphType), "filePath", "The path of the file on the FileSystem")]
         public IFileRecord GetFileByPath(string filePath)
         {
@@ -64,21 +64,21 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
             return path;
         }
 
-        [Field("game", "Get a game by an ID", typeof(GameRecordType))]
+        [Field("game", "Get a game by an ID", typeof(GameRecordGraphType))]
         [Parameter(typeof(Guid), typeof(GuidGraphType), "guid", "The unique game GUID")]
         public IGameRecord GetGame(Guid guid)
         {
             return this.GameLibrary.Get(guid);
         }
 
-        [Connection("gamesByPlatform", "Get games filtered by a given platform", typeof(GameRecordType))]
+        [Connection("gamesByPlatform", "Get games filtered by a given platform", typeof(GameRecordGraphType))]
         [Parameter(typeof(string), typeof(StringGraphType), "platformId", "The platform ID")]
         public IEnumerable<IGameRecord> GetGamesByPlatform(string platformId)
         {
             return this.GameLibrary.GetGamesByPlatform(platformId);
         }
 
-        [Mutation("addGame", "Adds a game to the database directly.", typeof(GameRecordType))]
+        [Mutation("addGame", "Adds a game to the database directly.", typeof(GameRecordGraphType))]
         [Parameter(typeof(GameRecordInputObject), typeof(GameRecordInputType), "input", "game input")]
         public IGameRecord AddGame(GameRecordInputObject input)
         {
@@ -99,7 +99,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
             }
         }
 
-        [Mutation("addFile", "Adds a file to the database directly.", typeof(FileRecordType))]
+        [Mutation("addFile", "Adds a file to the database directly.", typeof(FileRecordGraphType))]
         [Parameter(typeof(FileRecordInputObject), typeof(FileRecordInputType), "input", "File input")]
         public IFileRecord AddFile(FileRecordInputObject input)
         {

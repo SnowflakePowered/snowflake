@@ -7,6 +7,7 @@ using Snowflake.Support.Remoting.GraphQl.Framework;
 using Snowflake.Support.Remoting.GraphQl.Queries;
 using System.Linq;
 using Snowflake.Input.Device;
+using Snowflake.Input;
 
 namespace Snowflake.Support.Remoting.GraphQl
 {
@@ -19,6 +20,7 @@ namespace Snowflake.Support.Remoting.GraphQl
         [ImportService(typeof(IServiceRegistrationProvider))]
         [ImportService(typeof(IInputManager))]
         [ImportService(typeof(IPluginManager))]
+        [ImportService(typeof(IMappedControllerElementCollectionStore))]
         public void Compose(IModule module, IServiceRepository coreInstance)
         {
             var stone = coreInstance.Get<IStoneProvider>();
@@ -26,6 +28,7 @@ namespace Snowflake.Support.Remoting.GraphQl
             var config = coreInstance.Get<IConfigurationCollectionStore>();
             var input = coreInstance.Get<IInputManager>();
             var plugin = coreInstance.Get<IPluginManager>();
+            var mapp = coreInstance.Get<IMappedControllerElementCollectionStore>();
             var root = new RootQuery();
             var mutation = new RootMutation();
             var schema = new SnowflakeSchema(root, mutation);
@@ -41,8 +44,9 @@ namespace Snowflake.Support.Remoting.GraphQl
             recordQueries.RegisterFieldQueries(root);
             recordQueries.RegisterMutationQueries(mutation);
             configQuery.RegisterConnectionQueries(root);
-            var inputQuery = new InputQueryBuilder(input, plugin);
+            var inputQuery = new InputQueryBuilder(input, plugin, mapp, stone);
             inputQuery.RegisterConnectionQueries(root);
+            inputQuery.RegisterFieldQueries(root);
             var webServer = new GraphQlServerWrapper(new GraphQlServer(new GraphQlExecuterProvider(schema)));
             webServer.Start();
             //register.RegisterService<ILocalWebService>(webServer); //todo should be plugin.
