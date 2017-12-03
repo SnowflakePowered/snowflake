@@ -34,6 +34,7 @@ namespace Snowflake.Records.Game
         {
             this.backingDatabase.Execute(dbConnection =>
             {
+                this.FileJunction.DeleteAllRelations(record, dbConnection);  // ensure relations do not conflict.
                 dbConnection.Execute(@"INSERT OR REPLACE INTO games(uuid) VALUES (@Guid)", record);
                 dbConnection.Execute(@"INSERT OR REPLACE INTO files(uuid, path, mimetype) 
                                          VALUES (@Guid, @FilePath, @MimeType)", record.Files);
@@ -49,6 +50,7 @@ namespace Snowflake.Records.Game
             this.backingDatabase.Execute(dbConnection =>
             {
                 var gameRecords = games as IList<IGameRecord> ?? games.ToList();
+                this.FileJunction.DeleteAllRelations(games.Select(g => g.Guid), dbConnection); // ensure relations do not conflict.
                 dbConnection.Execute(@"INSERT OR REPLACE INTO games(uuid) VALUES (@Guid)", gameRecords);
                 dbConnection.Execute(@"INSERT OR REPLACE INTO files(uuid, path, mimetype) 
                                        VALUES (@Guid, @FilePath, @MimeType)",
