@@ -9,6 +9,7 @@ using Snowflake.Support.Remoting.GraphQl.Framework.Attributes;
 using Snowflake.Support.Remoting.GraphQl.Framework.Query;
 using Snowflake.Support.Remoting.GraphQl.Inputs.FileRecord;
 using Snowflake.Support.Remoting.GraphQl.Inputs.GameRecord;
+using Snowflake.Support.Remoting.GraphQl.Inputs.RecordMetadata;
 using Snowflake.Support.Remoting.GraphQl.Types.ControllerLayout;
 using Snowflake.Support.Remoting.GraphQl.Types.PlatformInfo;
 using Snowflake.Support.Remoting.GraphQl.Types.Record;
@@ -16,6 +17,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Linq;
+using System.Collections;
 
 namespace Snowflake.Support.Remoting.GraphQl.Queries
 {
@@ -69,13 +72,14 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
         }
 
         [Connection("gamesByPlatform", "Get games filtered by a given platform", typeof(GameRecordType))]
+        [Parameter(typeof(string), typeof(StringGraphType), "platformId", "The platform ID")]
         public IEnumerable<IGameRecord> GetGamesByPlatform(string platformId)
         {
             return this.GameLibrary.GetGamesByPlatform(platformId);
         }
 
-        [Mutation("addGame", "Adds a game to the database directly.", typeof(StringGraphType))]
-        [Parameter(typeof(GameRecordInputObject), typeof(GameRecordInputType), "gameObject", "game input")]
+        [Mutation("addGame", "Adds a game to the database directly.", typeof(GameRecordType))]
+        [Parameter(typeof(GameRecordInputObject), typeof(GameRecordInputType), "input", "game input")]
         public IGameRecord AddGame(GameRecordInputObject input)
         {
             try
@@ -86,7 +90,8 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
                 {
                     game.Metadata.Add(metadata.Key, metadata.Value);
                 }
-                return game;
+                this.GameLibrary.Set(game);
+                return this.GameLibrary.Get(game.Guid);
             }
             catch (KeyNotFoundException)
             {
@@ -94,11 +99,11 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
             }
         }
 
-        [Mutation("addFile", "Adds a file to the database directly.", typeof(StringGraphType))]
-        [Parameter(typeof(FileRecordInputObject), typeof(FileRecordInputType), "fileObject", "File input")]
+        [Mutation("addFile", "Adds a file to the database directly.", typeof(FileRecordType))]
+        [Parameter(typeof(FileRecordInputObject), typeof(FileRecordInputType), "input", "File input")]
         public IFileRecord AddFile(FileRecordInputObject input)
         {
-            var file = new FileRecord(input.FilePath, input.MimeType, input.Record);
+            var file = new FileRecord(input.FilePath, input.MimeType);
             this.GameLibrary.FileLibrary.Set(file);
             return file;
         }

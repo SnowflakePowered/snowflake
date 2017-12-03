@@ -12,7 +12,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Inputs.GameRecord {
         {
             Name = "GameRecordInputType";
             Field(p => p.Title).Description("The title of the game.");
-            Field<ListGraphType<RecordMetadataInputType>>("metadata",
+            Field<NonNullGraphType<ListGraphType<RecordMetadataInputType>>>("metadata",
                 description: "Some metadata about the game.",
                 resolve: context => context.Source.Metadata
             );

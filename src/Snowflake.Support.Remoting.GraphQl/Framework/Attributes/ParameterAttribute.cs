@@ -20,7 +20,6 @@ namespace Snowflake.Support.Remoting.GraphQl.Framework.Attributes
             this.Key = parameterKey;
             this.Description = description;
             this.GraphQlType = nullable ? graphQlType : typeof(NonNullGraphType<>).MakeGenericType(graphQlType);
-
         }
     }
 }

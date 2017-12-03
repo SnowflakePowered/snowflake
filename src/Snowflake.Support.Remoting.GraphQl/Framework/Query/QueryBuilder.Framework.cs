@@ -34,7 +34,11 @@ namespace Snowflake.Support.Remoting.GraphQl.Framework.Query
                              let queryAttr = m.GetCustomAttribute<TAttribute>()
                              where queryAttr != null
                              let endpointParamsAttrs = m.GetCustomAttributes<ParameterAttribute>()
-                             select (m, queryAttr, endpointParamsAttrs));
+                             select (methodInfo: m, queryAttr: queryAttr, paramAttrs: endpointParamsAttrs));
+            foreach(var endpoint in endpoints)
+            {
+                this.VerifyParameters(endpoint.methodInfo, endpoint.paramAttrs);
+            }
             return endpoints;
         }
 

@@ -22,7 +22,7 @@ namespace Snowflake.Input.Device
         protected InputEnumerator(IPluginProvision p) : base(p)
         { 
             this.ControllerLayout =
-                JsonConvert.DeserializeObject<ControllerLayout>(File.ReadAllText(p.ContentDirectory.GetFiles()
+                JsonConvert.DeserializeObject<ControllerLayout>(File.ReadAllText(p.ResourceDirectory.GetFiles()
                             .First(f => f.Name == "layout.json").FullName));
         }
     }

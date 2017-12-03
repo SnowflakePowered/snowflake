@@ -10,6 +10,5 @@ namespace Snowflake.Support.Remoting.GraphQl.Inputs.FileRecord
         public string FilePath { get; set; }
         public string MimeType { get; set; }
         public IList<RecordMetadataInputObject> Metadata { get; set; }
-        public Guid Record { get; set; }
     }
 }

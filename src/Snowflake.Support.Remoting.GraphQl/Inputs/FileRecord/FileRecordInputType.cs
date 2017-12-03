@@ -18,9 +18,6 @@ namespace Snowflake.Support.Remoting.GraphQl.Inputs.FileRecord {
                 resolve: context => context.Source.Metadata
             );
             Field(p => p.MimeType).Description("The mimetype of the file.");
-            Field<GuidGraphType>("record",
-                description: "The linked record of this file.",
-                resolve: context => context.Source.Record);
         }
     }
 }
