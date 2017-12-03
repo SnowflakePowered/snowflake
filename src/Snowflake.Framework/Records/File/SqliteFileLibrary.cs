@@ -15,32 +15,30 @@ using System.Data.Common;
 
 namespace Snowflake.Records.File
 {
-    internal class SqliteFileLibrary : IFileLibrary
+    internal class SqliteFileLibrary : RecordLibrary<IFileRecord>, IFileLibrary
     {
-        public IMetadataLibrary MetadataLibrary { get; }
+        public override IMetadataLibrary MetadataLibrary { get; }
+        private static readonly string[] columns = new[]
+        {
+           "game UUID",
+           "path TEXT",
+           "mimetype TEXT"
+        };
 
         private readonly ISqlDatabase backingDatabase;
-        public SqliteFileLibrary(ISqlDatabase database, IMetadataLibrary metadataLibrary)
+        public SqliteFileLibrary(ISqlDatabase database, IMetadataLibrary metadataLibrary) : base(database, "files", SqliteFileLibrary.columns)
         {
             this.backingDatabase = database;
             this.MetadataLibrary = metadataLibrary;
-            this.CreateDatabase();
         }
 
         public SqliteFileLibrary(ISqlDatabase database) : this(database, new SqliteMetadataLibrary(database))
         {
             
         }
-        private void CreateDatabase()
-        {
-            this.backingDatabase.CreateTable("files",
-                "uuid UUID PRIMARY KEY",
-                "game UUID",
-                "path TEXT",
-                "mimetype TEXT");
-        }
+     
 
-        public void Set(IFileRecord record)
+        public override void Set(IFileRecord record)
         {
 
             this.backingDatabase.Execute(dbConnection =>
@@ -52,7 +50,7 @@ namespace Snowflake.Records.File
             });
         }
 
-        public void Set(IEnumerable<IFileRecord> records)
+        public override void Set(IEnumerable<IFileRecord> records)
         {
             this.backingDatabase.Execute(dbConnection =>
             {
@@ -64,55 +62,55 @@ namespace Snowflake.Records.File
             //since metadata are unique across records, we can do this.
         }
 
-        public void Remove(IFileRecord record)
+        public override void Remove(IFileRecord record)
         {
             this.Remove(record.Guid);
         }
 
-        public void Remove(IEnumerable<IFileRecord> records)
+        public override void Remove(IEnumerable<IFileRecord> records)
         {
             this.Remove(records.Select(record => record.Guid));
         }
 
-        public void Remove(Guid guid)
+        public override void Remove(Guid guid)
         {
 
             this.backingDatabase.Execute(@"DELETE FROM files WHERE uuid = @guid", new { guid });
         }
 
-        public void Remove(IEnumerable<Guid> guids)
+        public override void Remove(IEnumerable<Guid> guids)
         {
             this.backingDatabase.Execute(@"DELETE FROM files WHERE uuid IN @guids", new { guids });
         }
 
-        public IEnumerable<IFileRecord> SearchByMetadata(string key, string likeValue)
+        public override IEnumerable<IFileRecord> SearchByMetadata(string key, string likeValue)
         {
             const string sql = @"SELECT * FROM files WHERE uuid IN (SELECT record FROM metadata WHERE key = @key AND value LIKE @likeValue);
                                  SELECT * FROM metadata WHERE key = @key AND value LIKE @likeValue";
             return this.GetMultipleByQuery(sql, new {key, likeValue = $"%{likeValue}%"});
         }
 
-        public IEnumerable<IFileRecord> GetByMetadata(string key, string exactValue)
+        public override IEnumerable<IFileRecord> GetByMetadata(string key, string exactValue)
         {
             const string sql = @"SELECT * FROM files WHERE uuid IN (SELECT record FROM metadata WHERE key = @key AND value = @exactValue);
                                  SELECT * FROM metadata WHERE key = @key AND value = @exactValue";
             return this.GetMultipleByQuery(sql, new {key, exactValue});
         }
 
-        public IEnumerable<IFileRecord> Get(IEnumerable<Guid> guids)
+        public override IEnumerable<IFileRecord> Get(IEnumerable<Guid> guids)
         {
             const string sql = @"SELECT * FROM files WHERE uuid IN @guids;
                                  SELECT * FROM metadata WHERE record IN (SELECT uuid FROM files WHERE uuid IN @guids)";
             return this.GetMultipleByQuery(sql, new { guids }); 
         }
 
-        public IEnumerable<IFileRecord> GetAllRecords()
+        public override IEnumerable<IFileRecord> GetAllRecords()
         {
             const string sql = @"SELECT * FROM files;
                                  SELECT * FROM metadata WHERE record IN (SELECT uuid FROM files)";
             return this.GetMultipleByQuery(sql, null);
         }
-        
+
         public IEnumerable<IFileRecord> GetFilesForGame(IGameRecord game)
         {
            return this.GetFilesForGame(game.Guid);
@@ -133,7 +131,7 @@ namespace Snowflake.Records.File
             return this.GetSingleByQuery(sql, new {filePath});
         }
 
-        public IFileRecord Get(Guid recordGuid)
+        public override IFileRecord Get(Guid recordGuid)
         {
             const string sql =
                             @"SELECT * FROM files WHERE uuid = @recordGuid;
