@@ -26,28 +26,52 @@ namespace Snowflake.Support.Remoting.GraphQl.Framework.Query
                                                ConnectionUtils.ToConnection(items, context)).GetGenericMethodDefinition();
 
         }
-        private IEnumerable<(MethodInfo fieldMethod, FieldAttribute fieldAttr, IEnumerable<ParameterAttribute> paramAttr)> EnumerateFieldQueries()
+
+        private IEnumerable<(MethodInfo fieldMethod, TAttribute attr, IEnumerable<ParameterAttribute> paramAttr)>
+            EnumerateQueries<TAttribute>() where TAttribute: Attribute
         {
             var endpoints = (from m in this.GetType().GetRuntimeMethods()
-                             let fieldQueryAttr = m.GetCustomAttribute<FieldAttribute>()
-                             where fieldQueryAttr != null
+                             let queryAttr = m.GetCustomAttribute<TAttribute>()
+                             where queryAttr != null
                              let endpointParamsAttrs = m.GetCustomAttributes<ParameterAttribute>()
-                             select (m, fieldQueryAttr, endpointParamsAttrs));
+                             select (m, queryAttr, endpointParamsAttrs));
             return endpoints;
         }
+
+        private IEnumerable<(MethodInfo fieldMethod, FieldAttribute fieldAttr, IEnumerable<ParameterAttribute> paramAttr)>
+            EnumerateFieldQueries() => this.EnumerateQueries<FieldAttribute>();
 
         private IEnumerable<(MethodInfo fieldMethod, ConnectionAttribute connectionAttr,
                     IEnumerable<ParameterAttribute> paramAttr)> EnumerateConnectionQueries()
-        {
-            var endpoints = (from m in this.GetType().GetRuntimeMethods()
-                             let connectionAttr = m.GetCustomAttribute<ConnectionAttribute>()
-                             where connectionAttr != null
-                             let endpointParamsAttrs = m.GetCustomAttributes<ParameterAttribute>()
-                             select (m, connectionAttr, endpointParamsAttrs));
-            return endpoints;
-        }
+            => this.EnumerateQueries<ConnectionAttribute>();
+
+        private IEnumerable<(MethodInfo fieldMethod, MutationAttribute fieldAttr,
+                   IEnumerable<ParameterAttribute> paramAttr)> EnumerateMutationQueries()
+           => this.EnumerateQueries<MutationAttribute>();
 
         private FieldQuery MakeFieldQuery(MethodInfo fieldMethod, FieldAttribute fieldAttr, IEnumerable<ParameterAttribute> paramAttr)
+        {
+            var invoker = this.CreateInvoker(fieldMethod);
+            var resolver = this.CreateResolver(invoker, fieldMethod);
+            var methodParams = fieldMethod.GetParameters();
+            IList<QueryArgument> arguments = (from param in paramAttr
+                                              select new QueryArgument(param.GraphQlType)
+                                              {
+                                                  Name = param.Key,
+                                                  Description = param.Description,
+                                                  DefaultValue = methodParams.FirstOrDefault(p => p.Name == param.Key)?.DefaultValue,
+                                              }).ToList();
+            return new FieldQuery()
+            {
+                Description = fieldAttr.Description,
+                Name = fieldAttr.FieldName,
+                GraphType = fieldAttr.GraphType,
+                Arguments = arguments.Count != 0 ? new QueryArguments(arguments) : null,
+                Resolver = resolver
+            };
+        }
+
+        private FieldQuery MakeMutationQuery(MethodInfo fieldMethod, MutationAttribute fieldAttr, IEnumerable<ParameterAttribute> paramAttr)
         {
             var invoker = this.CreateInvoker(fieldMethod);
             var resolver = this.CreateResolver(invoker, fieldMethod);

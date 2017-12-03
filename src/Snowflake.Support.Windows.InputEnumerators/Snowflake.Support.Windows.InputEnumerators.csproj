@@ -6,16 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="resource\InputEnumerator-Keyboard\layout.json" />
-    <EmbeddedResource Include="resource\InputEnumerator-Keyboard\plugin.json" />
-    <EmbeddedResource Include="resource\InputEnumerator-Wiimote\plugin.json" />
-    <EmbeddedResource Include="resource\InputEnumerator-Xbox360\layout.json" />
-    <EmbeddedResource Include="resource\InputEnumerator-Xbox360\plugin.json" />
-    <EmbeddedResource Include="resource\InputEnumerator-XInput\layout.json" />
-    <EmbeddedResource Include="resource\InputEnumerator-XInput\plugin.json" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Snowflake.Framework.Primitives\Snowflake.Framework.Primitives.csproj" />
     <ProjectReference Include="..\Snowflake.Framework.Utility\Snowflake.Framework.Utility.csproj" />
     <ProjectReference Include="..\Snowflake.Framework\Snowflake.Framework.csproj" />
@@ -23,5 +13,15 @@
 
   <ItemGroup>
     <DotNetCliToolReference Include="dotnet-pack-snowflake" Version="1.2.0" />
+    <DotNetCliToolReference Include="dotnet-install-snowflake" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="module.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="resource\**\*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

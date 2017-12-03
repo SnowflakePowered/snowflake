@@ -5,9 +5,9 @@ using Snowflake.Configuration.Attributes;
 namespace Snowflake.Configuration
 {
     /// <summary>
-    /// Represents a configuration option.
+    /// Describes a configuration option.
     /// </summary>
-    public interface IConfigurationOption
+    public interface IConfigurationOptionDescriptor
     {
         /// <summary>
         /// The display name for human readable purposes of this option
@@ -63,7 +63,7 @@ namespace Snowflake.Configuration
         /// <summary>
         /// The key of the configuration option
         /// </summary>
-        string KeyName { get; }
+        string OptionKey { get; }
 
         /// <summary>
         /// The default object.
@@ -76,10 +76,25 @@ namespace Snowflake.Configuration
         Type Type { get; }
 
         /// <summary>
+        /// The option type of the option
+        /// </summary>
+        ConfigurationOptionType OptionType { get; }
+
+        /// <summary>
         /// Any custom metadata attached to this option
         /// </summary>
         /// <see cref="CustomMetadataAttribute"/>
         IDictionary<string, object> CustomMetadata { get; }
+
+        /// <summary>
+        /// A list of selection option descriptors if this option is an enum.
+        /// </summary>
+        IEnumerable<ISelectionOptionDescriptor> SelectionOptions { get; }
+       
+        /// <summary>
+        /// Whether or not this option is an enum.
+        /// </summary>
+        bool IsSelection { get; }
     }
 
 }

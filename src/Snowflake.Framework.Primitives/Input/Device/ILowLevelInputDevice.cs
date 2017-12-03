@@ -90,5 +90,10 @@ namespace Snowflake.Input.Device
         /// Whether or not the XInput Device is connected
         /// </summary>
         bool? XI_IsConnected { get; set; }
+
+        /// <summary>
+        /// The API used to discover this device
+        /// </summary>
+        InputApi DiscoveryApi { get; set; }
     }
 }

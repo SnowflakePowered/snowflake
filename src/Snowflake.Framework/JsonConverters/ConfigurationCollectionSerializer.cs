@@ -31,7 +31,7 @@ namespace Snowflake.JsonConverters
                    {
                         optionRoot.Add("Selection", new JObject(ConfigurationCollectionSerializer.SerializeEnumValues(option.Key.Type)));
                    }
-                    sectionOptionsRoot.Add(option.Key.KeyName, optionRoot);
+                    sectionOptionsRoot.Add(option.Key.OptionKey, optionRoot);
                 }
 
                 JObject sectionRoot = new JObject
@@ -58,8 +58,6 @@ namespace Snowflake.JsonConverters
         }
         private static IEnumerable<JProperty> SerializeEnumValues(Type selectionEnum)
         {
-
-
             return from enumOption in NonGenericEnums.GetMembers(selectionEnum)
                 where enumOption.Attributes.Has<SelectionOptionAttribute>()
                 let attribute = enumOption.Attributes.Get<SelectionOptionAttribute>()
@@ -69,12 +67,12 @@ namespace Snowflake.JsonConverters
                     {nameof(attribute.Private), attribute.Private}
                 });
         }
-        private static JObject SerializeOption(IConfigurationOption o)
+        private static JObject SerializeOption(IConfigurationOptionDescriptor o)
         {
             var optionRoot = new JObject
             {
                 {nameof(o.Default), JToken.FromObject(o.Default)},
-                {nameof(o.DisplayName), o.DisplayName != String.Empty ? o.DisplayName : o.KeyName},
+                {nameof(o.DisplayName), o.DisplayName != String.Empty ? o.DisplayName : o.OptionKey},
                 {nameof(o.Description), o.Description},
                 {nameof(o.Simple), o.Simple},
                 {nameof(o.CustomMetadata), JToken.FromObject(o.CustomMetadata)},
@@ -96,7 +94,7 @@ namespace Snowflake.JsonConverters
             return optionRoot;
         }
 
-        private static string GetTypeString(IConfigurationOption o)
+        private static string GetTypeString(IConfigurationOptionDescriptor o)
         {
             if (o.Type == typeof(int)) return "integer";
             if (o.Type == typeof(bool)) return "boolean";

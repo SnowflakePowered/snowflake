@@ -32,7 +32,7 @@ namespace Snowflake.Configuration.Input
 
         private IDictionary<string, IInputOption> _Options { get; }
         private readonly InputTemplateInterceptor<T> inputTemplateInterceptor;
-        private readonly IList<IConfigurationOption> configurationOptions;
+        private readonly IList<IConfigurationOptionDescriptor> configurationOptions;
         public ControllerElement this[ControllerElement virtualElement]
         {
             set
@@ -73,12 +73,12 @@ namespace Snowflake.Configuration.Input
                           let configAttribute = prop.GetCustomAttribute<ConfigurationOptionAttribute>()
                           let name = prop.Name
                           let metadata = prop.GetCustomAttributes<CustomMetadataAttribute>()
-                          select new ConfigurationOption(configAttribute, metadata, name) as IConfigurationOption).ToList();
+                          select new ConfigurationOptionDescriptor(configAttribute, metadata, name) as IConfigurationOptionDescriptor).ToList();
 
             var configOptionValues = new Dictionary<string, IConfigurationValue>();
             foreach (var custom in this.configurationOptions)
             {
-                configOptionValues[custom.KeyName] = new ConfigurationValue(custom.Default);
+                configOptionValues[custom.OptionKey] = new ConfigurationValue(custom.Default);
             }
             var attr = typeof(T).GetTypeInfo().GetCustomAttribute<InputTemplateAttribute>();
 
@@ -99,7 +99,7 @@ namespace Snowflake.Configuration.Input
         }
 
         T IConfigurationSection<T>.Configuration => this.Configuration.Configuration;
-        public IEnumerator<KeyValuePair<IConfigurationOption, IConfigurationValue>> GetEnumerator()
+        public IEnumerator<KeyValuePair<IConfigurationOptionDescriptor, IConfigurationValue>> GetEnumerator()
         {
             return this.Configuration.GetEnumerator();
         }
