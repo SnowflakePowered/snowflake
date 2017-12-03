@@ -18,12 +18,14 @@ namespace Snowflake.Support.Remoting.GraphQl
         [ImportService(typeof(IConfigurationCollectionStore))]
         [ImportService(typeof(IServiceRegistrationProvider))]
         [ImportService(typeof(IInputManager))]
+        [ImportService(typeof(IPluginManager))]
         public void Compose(IModule module, IServiceRepository coreInstance)
         {
             var stone = coreInstance.Get<IStoneProvider>();
             var games = coreInstance.Get<IGameLibrary>();
             var config = coreInstance.Get<IConfigurationCollectionStore>();
             var input = coreInstance.Get<IInputManager>();
+            var plugin = coreInstance.Get<IPluginManager>();
             var root = new RootQuery();
             var mutation = new RootMutation();
             var schema = new SnowflakeSchema(root, mutation);
@@ -39,7 +41,7 @@ namespace Snowflake.Support.Remoting.GraphQl
             recordQueries.RegisterFieldQueries(root);
             recordQueries.RegisterMutationQueries(mutation);
             configQuery.RegisterConnectionQueries(root);
-            var inputQuery = new InputQueryBuilder(input);
+            var inputQuery = new InputQueryBuilder(input, plugin);
             inputQuery.RegisterConnectionQueries(root);
             var webServer = new GraphQlServerWrapper(new GraphQlServer(new GraphQlExecuterProvider(schema)));
             webServer.Start();

@@ -30,8 +30,8 @@ namespace Snowflake.Plugin.InputEnumerators
         public override IEnumerable<IInputDevice> GetConnectedDevices()
         {
             return (from device in this.inputManager.GetAllDevices()
-                where device.DI_InterfacePath.IndexOf("IG_", StringComparison.OrdinalIgnoreCase) >= 0
-                select new InputDevice(InputApi.DirectInput, device, this.ControllerLayout));
+                where device.DI_InterfacePath?.IndexOf("IG_", StringComparison.OrdinalIgnoreCase) >= 0
+                select new InputDevice(InputApi.DirectInput, device, this.ControllerLayout) { DeviceIndex = device.DI_EnumerationNumber });
         }
     }
 }
