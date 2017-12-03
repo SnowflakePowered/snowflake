@@ -5,21 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Connections\**" />
-    <EmbeddedResource Remove="Connections\**" />
-    <None Remove="Connections\**" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="EmbedIO" Version="1.11.3" />
     <PackageReference Include="GraphQL" Version="2.0.0-alpha-817" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Snowflake.Framework.Persistence\Snowflake.Framework.Persistence.csproj" />
     <ProjectReference Include="..\Snowflake.Framework.Primitives\Snowflake.Framework.Primitives.csproj" />
-    <ProjectReference Include="..\Snowflake.Framework.Utility\Snowflake.Framework.Utility.csproj" />
-    <ProjectReference Include="..\Snowflake.Framework\Snowflake.Framework.csproj" />
-    <ProjectReference Include="..\Snowflake.Plugin.Emulators.TestEmulator\Snowflake.Plugin.Emulators.TestEmulator.csproj" />
     <ProjectReference Include="..\Snowflake.Support.Remoting.GraphQl.Framework\Snowflake.Support.Remoting.GraphQl.Framework.csproj" />
   </ItemGroup>
 
@@ -28,9 +19,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <PropertyGroup>
-    <DependsOnNETStandard>true</DependsOnNETStandard>
-  </PropertyGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="dotnet-pack-snowflake" Version="1.2.0" />
     <DotNetCliToolReference Include="dotnet-install-snowflake" Version="1.0.0" />

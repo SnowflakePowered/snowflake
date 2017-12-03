@@ -1,6 +1,7 @@
 ﻿using GraphQL;
 using Newtonsoft.Json;
 using Snowflake.Support.Remoting.GraphQl.Framework;
+using Snowflake.Support.Remoting.GraphQl.RootProvider;
 using System;
 using System.Collections.Generic;
 using System.IO;

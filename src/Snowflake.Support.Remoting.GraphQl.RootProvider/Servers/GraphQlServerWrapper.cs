@@ -16,13 +16,12 @@ namespace Snowflake.Support.Remoting.GraphQl.Servers
 
         public string Protocol => "http";
 
-        public string Name => "Remoting";
+        public string Name => "GraphQL Root";
 
         public void Start()
         {
             var webServer = new WebServer($"http://localhost:{this.Port}/");
             webServer.RegisterModule(remote);
-
             webServer.RunAsync();
         }
     }

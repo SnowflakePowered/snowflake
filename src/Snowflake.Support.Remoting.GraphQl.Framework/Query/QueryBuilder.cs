@@ -1,4 +1,4 @@
-﻿using Snowflake.Support.Remoting.GraphQl.Queries;
+﻿using GraphQL.Types;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,7 +11,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Framework.Query
         /// Register field queries of this class with the given root query.
         /// </summary>
         /// <param name="root"></param>
-        public void RegisterFieldQueries(RootQuery root)
+        internal void RegisterFieldQueries(ObjectGraphType<object> root)
         {
             var fieldQueries = this.EnumerateFieldQueries();
             foreach (var query in fieldQueries)
@@ -26,7 +26,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Framework.Query
         /// Register mutation field queries of this class with the given root query.
         /// </summary>
         /// <param name="root"></param>
-        public void RegisterMutationQueries(RootMutation root)
+        internal void RegisterMutationQueries(ObjectGraphType<object> root)
         {
             var fieldQueries = this.EnumerateMutationQueries();
             foreach (var query in fieldQueries)
@@ -36,7 +36,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Framework.Query
             }
         }
 
-        public void RegisterConnectionQueries(RootQuery root)
+        internal void RegisterConnectionQueries(ObjectGraphType<object> root)
         {
             var fieldQueries = this.EnumerateConnectionQueries();
             foreach (var query in fieldQueries)

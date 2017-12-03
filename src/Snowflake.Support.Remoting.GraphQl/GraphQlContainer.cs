@@ -2,7 +2,6 @@
 using Snowflake.Loader;
 using Snowflake.Records.Game;
 using Snowflake.Configuration;
-using Snowflake.Support.Remoting.GraphQl.Servers;
 using Snowflake.Support.Remoting.GraphQl.Framework;
 using Snowflake.Support.Remoting.GraphQl.Queries;
 using System.Linq;
@@ -17,7 +16,7 @@ namespace Snowflake.Support.Remoting.GraphQl
         [ImportService(typeof(IStoneProvider))]
         [ImportService(typeof(IGameLibrary))]
         [ImportService(typeof(IConfigurationCollectionStore))]
-        [ImportService(typeof(IServiceRegistrationProvider))]
+        [ImportService(typeof(IGraphQlRootSchema))]
         [ImportService(typeof(IInputManager))]
         [ImportService(typeof(IPluginManager))]
         [ImportService(typeof(IMappedControllerElementCollectionStore))]
@@ -29,27 +28,21 @@ namespace Snowflake.Support.Remoting.GraphQl
             var input = coreInstance.Get<IInputManager>();
             var plugin = coreInstance.Get<IPluginManager>();
             var mapp = coreInstance.Get<IMappedControllerElementCollectionStore>();
-            var root = new RootQuery();
-            var mutation = new RootMutation();
-            var schema = new SnowflakeSchema(root, mutation);
+
+            var rootSchema = coreInstance.Get<IGraphQlRootSchema>();
             var platformQueries = new PlatformInfoQueryBuilder(stone);
             var controllerQueries = new ControllerLayoutQueryBuilder(stone);
             var recordQueries = new RecordQueryBuilder(games, stone);
             var configQuery = new ConfigurationQueryBuilder(config);
-            platformQueries.RegisterConnectionQueries(root);
-            platformQueries.RegisterFieldQueries(root);
-            controllerQueries.RegisterConnectionQueries(root);
-            controllerQueries.RegisterFieldQueries(root);
-            recordQueries.RegisterConnectionQueries(root);
-            recordQueries.RegisterFieldQueries(root);
-            recordQueries.RegisterMutationQueries(mutation);
-            configQuery.RegisterConnectionQueries(root);
+  
             var inputQuery = new InputQueryBuilder(input, plugin, mapp, stone);
-            inputQuery.RegisterConnectionQueries(root);
-            inputQuery.RegisterFieldQueries(root);
-            var webServer = new GraphQlServerWrapper(new GraphQlServer(new GraphQlExecuterProvider(schema)));
-            webServer.Start();
-            //register.RegisterService<ILocalWebService>(webServer); //todo should be plugin.
+
+            rootSchema.Register(platformQueries);
+            rootSchema.Register(controllerQueries);
+            rootSchema.Register(recordQueries);
+            rootSchema.Register(configQuery);
+            rootSchema.Register(inputQuery);
+
         }
     }
 }

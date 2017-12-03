@@ -2,12 +2,11 @@
 using GraphQL.Types;
 using GraphQL.Types.Relay;
 using Snowflake.Services;
-using Snowflake.Support.Remoting.GraphQl.Types.PlatformInfo;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Snowflake.Support.Remoting.GraphQl.Queries
+namespace Snowflake.Support.Remoting.GraphQl.RootProvider
 {
     public class RootMutation : ObjectGraphType<object>
     {

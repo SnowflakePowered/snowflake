@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Snowflake.Support.Remoting.GraphQl.Framework
+namespace Snowflake.Support.Remoting.GraphQl.RootProvider
 {
     public class GraphQlExecuterProvider
     {

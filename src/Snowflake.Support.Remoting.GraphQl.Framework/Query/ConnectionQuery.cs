@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Snowflake.Support.Remoting.GraphQl.Framework.Query
 {
-    class ConnectionQuery
+    internal class ConnectionQuery
     {
         public string Description { get; set; }
         public string Name { get; set; }
