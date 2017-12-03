@@ -30,6 +30,7 @@ using System.Text;
 using Xunit;
 using System.Data.HashFunction;
 using System.Data.HashFunction.CRC;
+using System.Collections;
 
 namespace Snowflake.Utility.Crc32.Tests
 {
@@ -57,7 +58,7 @@ namespace Snowflake.Utility.Crc32.Tests
                     foreach (int len in Enumerable.Range(1, 32))
                     {
                         var data = Enumerable.Repeat((byte)x, len).ToArray();
-                        FactByteSequence(data);
+                        TestByteSequence(data);
                     }
                 }
             }
@@ -81,7 +82,7 @@ namespace Snowflake.Utility.Crc32.Tests
             [Theory]
             [InlineData(0x00)]
             [InlineData(0xFF)]
-            public void SlidingBytePatternFact(byte fillValue)
+            public void SlidingBytePatternTest(byte fillValue)
             {
                 foreach (int len in Enumerable.Range(1, 32))
                 {
@@ -92,7 +93,7 @@ namespace Snowflake.Utility.Crc32.Tests
                         foreach (var x in Enumerable.Range(0, 256))
                         {
                             data[i] = (byte)x;
-                            FactByteSequence(data);
+                            TestByteSequence(data);
                         }
 
                         data[i] = fillValue;
@@ -100,15 +101,23 @@ namespace Snowflake.Utility.Crc32.Tests
                 }
             }
 
-            private void FactByteSequence(byte[] data)
+            private static byte[] BitArrayToByteArray(BitArray bits)
+            {
+                byte[] ret = new byte[(bits.Length - 1) / 8 + 1];
+                bits.CopyTo(ret, 0);
+                return ret;
+            }
+
+            private void TestByteSequence(byte[] data)
             {
                 var actual = Crc32Algorithm.Compute(data);
-                var expected = BitConverter.ToUInt32(new Crc32Algorithm().ComputeHash(data), 0);
+                var reference = CRCFactory.Instance.Create().ComputeHash(data).AsBitArray();
+                var expected = BitConverter.ToUInt32(BitArrayToByteArray(reference), 0);
 
                 if (expected != actual)
                 {
                     var message = string.Format(
-                        "Fact failed for {0}\nExpected: {1:x8}\nBut was: {2:x8}",
+                        "Test failed for {0}\nExpected: {1:x8}\nBut was: {2:x8}",
                         BitConverter.ToString(data),
                         expected,
                         actual);
