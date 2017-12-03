@@ -6,9 +6,9 @@ using System.Text;
 
 namespace Snowflake.Support.Remoting.GraphQl.Types.ControllerLayout
 {
-    public class ControllerElementInfoType : ObjectGraphType<KeyValuePair<ControllerElement, IControllerElementInfo>>
+    public class ControllerElementInfoGraphType : ObjectGraphType<KeyValuePair<ControllerElement, IControllerElementInfo>>
     {
-        public ControllerElementInfoType()
+        public ControllerElementInfoGraphType()
         {
             Name = "ControllerElementInfo";
             Description = "A layout element of a controller in a controller layout.";

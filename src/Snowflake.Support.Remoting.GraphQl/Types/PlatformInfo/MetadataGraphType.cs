@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Snowflake.Support.Remoting.GraphQl.Types.PlatformInfo
 {
-    internal class MetadataType: ObjectGraphType<KeyValuePair<string, string>>
+    internal class MetadataGraphType: ObjectGraphType<KeyValuePair<string, string>>
     {
-        public MetadataType()
+        public MetadataGraphType()
         {
             Name = "Metadata";
             Field(p => p.Key).Description("The metadata key.");

@@ -18,14 +18,14 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
             this.StoneProvider = stoneProvider;
         }
 
-        [Field("platformInfo", "A Stone Platform", typeof(PlatformInfoType))]
+        [Field("platformInfo", "A Stone Platform", typeof(PlatformInfoGraphType))]
         [Parameter(typeof(string), typeof(StringGraphType), "platformID", "The Stone PlatformID for this platform")]
         public IPlatformInfo GetPlatform(string platformID)
         {
             return this.StoneProvider.Platforms[platformID];
         }
 
-        [Connection("platformInfos", "All Registered Stone Platforms", typeof(PlatformInfoType))]
+        [Connection("platformInfos", "All Registered Stone Platforms", typeof(PlatformInfoGraphType))]
         public IEnumerable<IPlatformInfo> GetPlatforms()
         {
             return this.StoneProvider.Platforms.Values;

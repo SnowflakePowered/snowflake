@@ -7,9 +7,9 @@ using System.Text;
 
 namespace Snowflake.Support.Remoting.GraphQl.Types.ControllerLayout
 {
-    public class ControllerLayoutType : ObjectGraphType<IControllerLayout>
+    public class ControllerLayoutGraphType : ObjectGraphType<IControllerLayout>
     {
-        public ControllerLayoutType()
+        public ControllerLayoutGraphType()
         {
             Name = "ControllerLayout";
             Description = "A Stone Controller Layout";
@@ -20,7 +20,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.ControllerLayout
                 description: "The platforms this controller supports.",
                 resolve: context => context.Source.Platforms.ToList()
             );
-            Field<ListGraphType<ControllerElementInfoType>>(
+            Field<ListGraphType<ControllerElementInfoGraphType>>(
                 "layout",
                 description: "The layout of this controller.",
                 resolve: context => context.Source.Layout.ToList()

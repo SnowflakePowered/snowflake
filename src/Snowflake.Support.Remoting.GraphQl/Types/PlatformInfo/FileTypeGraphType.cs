@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Snowflake.Support.Remoting.GraphQl.Types.PlatformInfo
 {
-    internal class FileTypeType : ObjectGraphType<FileType>
+    internal class FileTypeGraphType : ObjectGraphType<FileType>
     {
-        public FileTypeType()
+        public FileTypeGraphType()
         {
             Name = "FileType";
             Description = "A FileType is defined by its common extension, and a mimetype, usually of";

@@ -8,9 +8,9 @@ using System.Text;
 
 namespace Snowflake.Support.Remoting.GraphQl.Types.Record
 {
-    public class FileRecordType : ObjectGraphType<IFileRecord>
+    public class FileRecordGraphType : ObjectGraphType<IFileRecord>
     {
-        public FileRecordType()
+        public FileRecordGraphType()
         {
             Name = "FileRecord";
             Description = "A record of a file related to a game or other metadatable record.";

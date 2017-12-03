@@ -6,9 +6,9 @@ using System.Text;
 
 namespace Snowflake.Support.Remoting.GraphQl.Types.PlatformInfo
 {
-    internal class BiosFilesType: ObjectGraphType<IGrouping<string, string>>
+    internal class BiosFilesGraphType: ObjectGraphType<IGrouping<string, string>>
     {
-        public BiosFilesType()
+        public BiosFilesGraphType()
         {
             Description = "The BIOS Files that this Platform is known to have.";
             Name = "BiosFiles";

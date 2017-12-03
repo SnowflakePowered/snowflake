@@ -8,13 +8,13 @@ using System.Text;
 
 namespace Snowflake.Support.Remoting.GraphQl.Types.Record
 {
-    public class GameRecordType : ObjectGraphType<IGameRecord>
+    public class GameRecordGraphType : ObjectGraphType<IGameRecord>
     {
-        public GameRecordType()
+        public GameRecordGraphType()
         {
             Name = "GameRecord";
             Description = "A record of an executable Game";
-            Field<ListGraphType<FileRecordType>>(
+            Field<ListGraphType<FileRecordGraphType>>(
                 "files",
                 description: "A list of files associated with this game.",
                 resolve: context => context.Source.Files

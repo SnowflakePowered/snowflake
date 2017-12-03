@@ -7,9 +7,9 @@ using System.Text;
 
 namespace Snowflake.Support.Remoting.GraphQl.Types.Record
 {
-    public class RecordMetadataType : ObjectGraphType<IRecordMetadata>
+    public class RecordMetadataGraphType : ObjectGraphType<IRecordMetadata>
     {
-        public RecordMetadataType()
+        public RecordMetadataGraphType()
         {
             Name = "RecordMetadata";
             Description = "A piece of metadata associated with a record.";
