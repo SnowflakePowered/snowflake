@@ -27,7 +27,7 @@ namespace Snowflake.Resources.Games
         public IGameRecord CreateFile(Guid gameGuid, string path, string mimetype)
         {
             if (path == null || mimetype == null) throw new InvalidFileException();
-            var file = new FileRecord(path, mimetype, gameGuid);
+            var file = new FileRecord(path, mimetype);
             this.Library.FileLibrary.Set(file);
             return this.Library.Get(gameGuid);
         }

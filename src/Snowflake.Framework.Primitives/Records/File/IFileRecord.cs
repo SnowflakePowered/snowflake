@@ -21,10 +21,5 @@ namespace Snowflake.Records.File
         /// The file path of the file
         /// </summary>
         string FilePath { get; }
-
-        /// <summary>
-        /// The game record attached to this Guid.
-        /// </summary>
-        Guid Record { get; }
     }
 }
