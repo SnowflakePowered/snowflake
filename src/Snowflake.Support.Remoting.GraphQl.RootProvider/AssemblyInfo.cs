@@ -6,7 +6,6 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyCulture("")]
-[assembly: InternalsVisibleTo("Snowflake.Support.Remoting.GraphQl.RootProvider")]
 [assembly: InternalsVisibleTo("Snowflake.Framework.Tests")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
