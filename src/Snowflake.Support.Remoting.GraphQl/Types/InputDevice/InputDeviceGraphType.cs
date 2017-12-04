@@ -11,6 +11,8 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.InputDevice
     {
         public InputDeviceGraphType()
         {
+            Name = "InputDevice";
+            Description = "Describes an enumerated input device with a determined layout.";
             Field<InputApiEnum>("deviceApi",
                 description: "The input API of this device.",
                 resolve: context => context.Source.DeviceApi);

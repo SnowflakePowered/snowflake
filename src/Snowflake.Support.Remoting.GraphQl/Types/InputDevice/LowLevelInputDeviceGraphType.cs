@@ -11,6 +11,8 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.InputDevice
     {
         public LowLevelInputDeviceGraphType()
         {
+            Name = "LowLevelInputDevice";
+            Description = "Describes an attached input device at the input API level.";
             Field<StringGraphType>("di_InstanceName",
                 description: "DirectInput Instance Name.",
                 resolve: context => context.Source.DI_InstanceName);

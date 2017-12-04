@@ -12,6 +12,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.InputDevice.Mapped
         public MappedControllerElementGraphType()
         {
             Name = "MappedControllerElement";
+            Description = "Decribes a mapping between an element on a real input device to an element on an emulated controller.";
             Field<ControllerElementEnum>("deviceElement",
                 description: "The element on the real input device.",
                 resolve: context => context.Source.DeviceElement);
