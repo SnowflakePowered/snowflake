@@ -39,8 +39,7 @@ namespace Snowflake.Input
 
         /// <summary>
         /// Sets the corresponding mapping profile for the provided profile name.
-        /// Partial mapping profiles are supported, only the <see cref="IMappedControllerElement"/>s contained within the
-        /// <see cref="IMappedControllerElement"/> will be overwritten.
+        /// Replaces the entire mapping profile, without checking if it is complete.
         /// </summary>
         /// <param name="mappedCollection">The mapping profile to set, including the layout and controller ID</param>
         /// <param name="profileName">The name of the profile. Should none be specified, the default profile</param>
