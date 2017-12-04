@@ -21,7 +21,6 @@ namespace Snowflake.Support.Remoting.GraphQl.Framework.Query
             }
         }
 
-
         /// <summary>
         /// Register mutation field queries of this class with the given root query.
         /// </summary>
