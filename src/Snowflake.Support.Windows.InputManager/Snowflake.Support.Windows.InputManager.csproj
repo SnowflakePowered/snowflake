@@ -7,9 +7,9 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <PackageReference Include="SharpDX" Version="4.0.1" />
-    <PackageReference Include="SharpDX.DirectInput" Version="4.0.1" />
-    <PackageReference Include="SharpDX.XInput" Version="4.0.1" />
+    <PackageReference Include="SharpDX" Version="4.1.0-ci184" />
+    <PackageReference Include="SharpDX.DirectInput" Version="4.1.0-ci184" />
+    <PackageReference Include="SharpDX.XInput" Version="4.1.0-ci184" />
   </ItemGroup>
   
   <ItemGroup>
@@ -19,5 +19,12 @@
 
   <ItemGroup>
     <DotNetCliToolReference Include="dotnet-pack-snowflake" Version="1.2.0" />
+    <DotNetCliToolReference Include="dotnet-install-snowflake" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="module.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

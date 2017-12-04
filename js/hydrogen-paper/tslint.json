@@ -1,0 +1,14 @@
+{
+    "extends": ["tslint-react", "tslint-config-standard"],
+    "defaultSeverity": "error",
+    "rules": {
+        "ter-indent": [true, 2],
+        "space-before-function-paren": [true],
+        "jsx-no-multiline-js": [false],
+        "jsx-alignment": [false],
+        "jsx-curly-spacing": [true, 1],
+        "no-unsafe-any": true,
+        "jsx-boolean-value": [false, "always"],
+        "jsx-no-lambda": false
+    }
+}

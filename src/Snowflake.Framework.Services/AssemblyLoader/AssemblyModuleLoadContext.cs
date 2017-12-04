@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Runtime.Loader;
 using Snowflake.Extensibility;
 using Snowflake.Services.Logging;
+using System.Collections.Immutable;
 
 namespace Snowflake.Services.AssemblyLoader
 {
@@ -14,6 +15,12 @@ namespace Snowflake.Services.AssemblyLoader
     {
         private string folderPath;
         private readonly ILogger logger;
+        private static IImmutableDictionary<(string name, Version unsignedVersion), Assembly> unsignedAssemblies;
+        static AssemblyModuleLoadContext()
+        {
+            AssemblyModuleLoadContext.unsignedAssemblies = ImmutableDictionary.Create<(string name, Version unsignedVersion),
+                Assembly>();
+        }
         private AssemblyModuleLoadContext(string folderPath)
         {
             this.logger = new LogProvider().GetLogger("AssemblyComposer"); //Unknown if logging service is available.
@@ -27,8 +34,13 @@ namespace Snowflake.Services.AssemblyLoader
         protected override Assembly Load(AssemblyName assemblyName)
         {
             logger.Info($"Attempting to load {assemblyName.Name}");
+            if (assemblyName.GetPublicKeyToken().Length == 0 && unsignedAssemblies.ContainsKey((assemblyName.Name, assemblyName.Version)))
+            {
+                logger.Warn($"Resolving {assemblyName.Name} version {assemblyName.Version} from unsigned assembly cache.");
+                return AssemblyModuleLoadContext.unsignedAssemblies[(assemblyName.Name, assemblyName.Version)];
+            }
             var deps = DependencyContext.Default;
-            var resources = deps.RuntimeLibraries.Where(d => d.Name.Contains(assemblyName.Name)).ToList();
+            var resources = deps.RuntimeLibraries.Where(d => d.Name.ToLowerInvariant() == assemblyName.Name.ToLower()).ToList();
 
             if (assemblyName.Name == "Snowflake.Framework.Primitives")
             {
@@ -42,10 +54,11 @@ namespace Snowflake.Services.AssemblyLoader
             }
 
             //todo: use .netstandard 2.0 AssemblyLoadContext.GetLoadedAssemblies()
+            
             var runtimeLibs = deps.RuntimeLibraries.Select(lib => new { lib.Name, lib.Version }).ToList();
             if (runtimeLibs.Select(l => l.Name.ToLower()).Contains(assemblyName.Name.ToLower()))
             {
-                logger.Info($"Attempting to resolve {assemblyName.Name} from runtime...");
+                logger.Info($"Attempting to resolve {assemblyName.Name} version {assemblyName.Version} from runtime...");
                 try
                 {
                     return Assembly.Load(assemblyName);
@@ -75,8 +88,16 @@ namespace Snowflake.Services.AssemblyLoader
                 if (File.Exists(dependencyFileInfo.FullName))
                 {
                     var dependencyLoadContext = new AssemblyModuleLoadContext(dependencyFileInfo.DirectoryName);
-                    logger.Info($"Loading {assemblyName.Name} from module dependencies");
-                    return dependencyLoadContext.LoadFromAssemblyPath(dependencyFileInfo.FullName);
+                    logger.Info($"Loading {assemblyName.Name} {assemblyName.Version} from module dependencies");
+                    var loadedDependency = dependencyLoadContext.LoadFromAssemblyPath(dependencyFileInfo.FullName);
+                    var loadedDependencyName = loadedDependency.GetName();
+                    if (loadedDependencyName.GetPublicKeyToken().Length == 0)
+                    {
+                        logger.Info($"Caching unsigned assembly {assemblyName.Name} {assemblyName.Version}.");
+                        AssemblyModuleLoadContext.unsignedAssemblies =
+                            unsignedAssemblies.Add((loadedDependencyName.Name, loadedDependencyName.Version), loadedDependency);
+                    }
+                    return loadedDependency;
                 }
                 else
                 {

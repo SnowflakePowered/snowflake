@@ -30,7 +30,7 @@ namespace Snowflake.Plugin.InputEnumerators
         public override IEnumerable<IInputDevice> GetConnectedDevices()
         {
             return from device in this.inputManager.GetAllDevices()
-                where device.DI_DeviceType == DeviceType.Keyboard 
+                where device?.DI_DeviceType == DeviceType.Keyboard 
                 select new InputDevice(InputApi.DirectInput, device, this.ControllerLayout);
         }
     }

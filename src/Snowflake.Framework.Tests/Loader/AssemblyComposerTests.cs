@@ -12,7 +12,6 @@ using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using Xunit;
-
 namespace Snowflake.Loader.Tests
 {
     public class AssemblyComposerTests

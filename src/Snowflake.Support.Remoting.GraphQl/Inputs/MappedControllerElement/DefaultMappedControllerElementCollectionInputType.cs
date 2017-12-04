@@ -1,0 +1,17 @@
+﻿using GraphQL.Types;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Snowflake.Support.Remoting.GraphQl.Inputs.MappedControllerElement
+{
+    public class DefaultMappedControllerElementCollectionInputType : InputObjectGraphType<DefaultMappedControllerElementCollectionInputObject>
+    {
+        public DefaultMappedControllerElementCollectionInputType()
+        {
+            Field(p => p.ControllerId);
+            Field(p => p.DeviceId);
+            Field(p => p.ProfileName).DefaultValue("default");
+        }
+    }
+}

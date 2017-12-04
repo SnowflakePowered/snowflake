@@ -61,7 +61,7 @@ namespace Snowflake.Plugin.InputEnumerators
         {
             var guid = new Guid("0306057e-0000-0000-0000-504944564944");
             return (from device in this.inputManager.GetAllDevices()
-                    where device.DI_ProductGUID == guid
+                    where device?.DI_ProductGUID == guid
                     let wiimoteHandle = WiimoteEnumerator.CreateFile(device.DI_InterfacePath)
                     let deviceId = "DEVICE_WII_REMOTE"
                     where WiimoteEnumerator.IsWiimoteConnected(wiimoteHandle)

@@ -85,7 +85,7 @@ namespace Snowflake.Services.AssemblyLoader
 
         private void ComposeContainer(IModule module, IComposable moduleComposable, IList<string> services)
         {
-            Loader.IServiceProvider container = new Loader.ServiceProvider(this.coreService, services);
+            Loader.IServiceRepository container = new Loader.ServiceProvider(this.coreService, services);
             moduleComposable.Compose(module, container);
         }
     }

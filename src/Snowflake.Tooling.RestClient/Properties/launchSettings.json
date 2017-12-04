@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "Snowflake.Tooling.RestClient": {
-      "commandName": "Project",
-      "commandLineArgs": "game --title \"Test Game One\" --platform \"NINTENDO_NES\""
-    }
-  }
-}

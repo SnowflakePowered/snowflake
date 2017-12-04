@@ -19,5 +19,7 @@
   
   <ItemGroup>
     <DotNetCliToolReference Include="dotnet-pack-snowflake" Version="1.2.0" />
+    <DotNetCliToolReference Include="dotnet-install-snowflake" Version="1.0.0" />
+
   </ItemGroup>
 </Project>

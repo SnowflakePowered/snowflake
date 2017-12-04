@@ -67,16 +67,17 @@ namespace Snowflake.Configuration
                     ? NonGenericEnums.Parse(optionType, strValue)//return parsed enum if enum
                     : TypeDescriptor.GetConverter(optionType).ConvertFromInvariantString(strValue);
         }
+
         private IConfigurationValue FromValueTuple(KeyValuePair<string,(string stringValue, Guid guid)> tuple)
         {
             Type t = this.Descriptor[tuple.Key].Type;
             return new ConfigurationValue(FromString(tuple.Value.stringValue, t), tuple.Value.guid);
         }
 
-        public IEnumerator<KeyValuePair<IConfigurationOption, IConfigurationValue>> GetEnumerator()
+        public IEnumerator<KeyValuePair<IConfigurationOptionDescriptor, IConfigurationValue>> GetEnumerator()
         {
             return this.Descriptor.Options
-                .Select(o => new KeyValuePair<IConfigurationOption, IConfigurationValue>(o, this.Values[o.KeyName]))
+                .Select(o => new KeyValuePair<IConfigurationOptionDescriptor, IConfigurationValue>(o, this.Values[o.OptionKey]))
                 .GetEnumerator();
         }
 

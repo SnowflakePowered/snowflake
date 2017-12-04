@@ -55,7 +55,12 @@ namespace Snowflake.Configuration
                 .ToDictionary(o => o.option, o => 
                 new ValueTuple<string, Guid>(o.value, new Guid(o.uuid))) 
                 as IDictionary<string, ValueTuple<string, Guid>>);
-            return new ConfigurationCollection<T>(defs);
+            var config =  new ConfigurationCollection<T>(defs);
+
+            // We have to cache the value to preserve purity across multiple accesses
+            // Otherwise a new configuration with differing GUIDs will be generated every time
+            this.Set<T>(config, gameRecord, emulator, profile);
+            return config;
         }
 
         public void Set<T>(IConfigurationCollection<T> configuration, Guid gameRecord, string emulator, string profile) 
@@ -92,8 +97,10 @@ namespace Snowflake.Configuration
                     dbConnection.Execute(
                         @"UPDATE configuration SET value = @Value WHERE uuid == @Guid", new
                         {
-                            value.Value,
-                            value.Guid
+                            Value = value.Value.GetType().GetTypeInfo().IsEnum ?
+                            NonGenericEnums.GetName(value.Value.GetType(), value.Value) : //optimized path for enums
+                            Convert.ToString(value.Value), //so i put a value in your value so you can value values,
+                            Guid = value.Guid
                         });
                 });
             }
@@ -102,7 +109,6 @@ namespace Snowflake.Configuration
                 throw new KeyNotFoundException("Value GUID was not found in store.");
             }
         }
-
     }
 
     class ConfigurationRecord

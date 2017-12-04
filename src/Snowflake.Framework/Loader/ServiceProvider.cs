@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Snowflake.Loader
 {
-    internal class ServiceProvider : IServiceProvider
+    internal class ServiceProvider : IServiceRepository
     {
         private IServiceContainer coreService;
         private IList<string> services;
