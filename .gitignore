@@ -12,6 +12,7 @@ bower_*/
 bower_*/*
 !dummysmb.nes
 .vs/
+.vscode/
 # User-specific files
 *.suo
 *.user
@@ -153,7 +154,6 @@ AppPackages/
 sql/
 *.Cache
 ClientBin/
-[Ss]tyle[Cc]op.*
 ~$*
 *~
 *.dbmdl
