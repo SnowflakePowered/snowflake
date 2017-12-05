@@ -5,8 +5,8 @@ using Snowflake.Input.Controller;
 
 namespace Snowflake.Configuration.Interceptors
 {
-
-    internal class InputTemplateCircularInterceptor<T> : IInterceptor where T : class, IInputTemplate<T>
+    internal class InputTemplateCircularInterceptor<T> : IInterceptor
+        where T : class, IInputTemplate<T>
     {
         private readonly IInputTemplate<T> @this;
 
@@ -15,6 +15,7 @@ namespace Snowflake.Configuration.Interceptors
             this.@this = @this;
         }
 
+        /// <inheritdoc/>
         public void Intercept(IInvocation invocation)
         {
             switch (invocation.Method.Name.Substring(4))
@@ -44,10 +45,12 @@ namespace Snowflake.Configuration.Interceptors
                         {
                             @this[(string)invocation.Arguments[0]] = invocation.Arguments[1];
                         }
+
                         if (invocation.Method.Name.StartsWith("get_"))
                         {
-                            invocation.ReturnValue = @this[(string) invocation.Arguments[0]];
+                            invocation.ReturnValue = @this[(string)invocation.Arguments[0]];
                         }
+
                         break;
                     }
 
@@ -55,9 +58,10 @@ namespace Snowflake.Configuration.Interceptors
                     {
                         if (invocation.Method.Name.StartsWith("set_"))
                         {
-                            @this[(ControllerElement) invocation.Arguments[0]] = (ControllerElement)invocation.Arguments[1];
+                            @this[(ControllerElement)invocation.Arguments[0]] = (ControllerElement)invocation.Arguments[1];
                         }
                     }
+
                     break;
                 default:
                     invocation.Proceed();
@@ -65,5 +69,4 @@ namespace Snowflake.Configuration.Interceptors
             }
         }
     }
-
 }

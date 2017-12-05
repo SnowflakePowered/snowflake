@@ -1,7 +1,7 @@
-﻿using GraphQL.Types;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using GraphQL.Types;
 
 namespace Snowflake.Support.Remoting.GraphQl.Types.PlatformInfo
 {
@@ -21,5 +21,4 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.PlatformInfo
         public string Extension { get; set; }
         public string Mime { get; set; }
     }
-
 }

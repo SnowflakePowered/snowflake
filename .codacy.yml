@@ -1,0 +1,19 @@
+---
+engines:
+ sonar-csharp:
+   enabled: true
+ 'Sonar C#':
+   enabled: true
+ duplication:
+   enabled: true
+ metrics:
+   enabled: true
+exclude_paths:
+  - .bundle/**
+  - spec/**/*
+  - benchmarks/**/*
+  - '*.min.js'
+  - '**/tests/**' 
+  - 'scripts/**'
+  - 'src/Snowflake.Framework.Tests/**'
+  - 'src/Snowflake.Framework.Tests.*/**'

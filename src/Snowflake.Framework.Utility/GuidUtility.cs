@@ -1,4 +1,4 @@
-﻿//https://github.com/LogosBible/Logos.Utility/blob/master/src/Logos.Utility/GuidUtility.cs
+﻿// https://github.com/LogosBible/Logos.Utility/blob/master/src/Logos.Utility/GuidUtility.cs
 using System;
 using System.Security.Cryptography;
 using System.Text;
@@ -34,9 +34,14 @@ namespace Snowflake.Utility
         public static Guid Create(Guid namespaceId, string name, int version)
         {
             if (name == null)
+            {
                 throw new ArgumentNullException("name");
+            }
+
             if (version != 3 && version != 5)
+            {
                 throw new ArgumentOutOfRangeException("version", "version must be either 3 or 5.");
+            }
 
             // convert the name to a sequence of octets (as defined by the standard or conventions of its namespace) (step 3)
             // ASSUME: UTF-8 encoding is always appropriate
@@ -49,14 +54,15 @@ namespace Snowflake.Utility
             // comput the hash of the name space ID concatenated with the name (step 4)
             byte[] hash;
             using (var algorithm = version == 3 ? (HashAlgorithm)MD5.Create() : (HashAlgorithm)SHA1.Create())
-            using(var incrementalHash = version == 3 ? IncrementalHash.CreateHash(HashAlgorithmName.MD5) : IncrementalHash.CreateHash(HashAlgorithmName.SHA1))
+            using (var incrementalHash = version == 3 ? IncrementalHash.CreateHash(HashAlgorithmName.MD5) : IncrementalHash.CreateHash(HashAlgorithmName.SHA1))
             {
                 incrementalHash.AppendData(namespaceBytes);
                 incrementalHash.AppendData(nameBytes);
                 hash = incrementalHash.GetHashAndReset();
                 /*algorithm.TransformBlock(namespaceBytes, 0, namespaceBytes.Length, null, 0);
                 algorithm.TransformFinalBlock(nameBytes, 0, nameBytes.Length);
-                hash = algorithm.Hash;*/ //todo verify correctness;
+                hash = algorithm.Hash;*/
+ // todo verify correctness;
             }
 
             // most bytes from the hash are copied straight to the bytes of the new GUID (steps 5-7, 9, 11-12)

@@ -23,7 +23,7 @@ namespace Shiragame.Builder.Parser
 
         private static SerialInfo GetSerial(string idlist, string platformId)
         {
-            var line = idlist.Split(new [] {' '}, 2);
+            var line = idlist.Split(new [] { ' ' }, 2);
             string serial = line[0];
             string name = line[1].Trim('"');
             string region = IdlistParser.GetSonyRegionCode(serial);
@@ -32,15 +32,19 @@ namespace Shiragame.Builder.Parser
 
         private static string GetSonyRegionCode(string serial)
         {
-            if (serial.StartsWith("A")) return "AS";
+            if (serial.StartsWith("A"))
+            {
+                return "AS";
+            }
+
             char region = serial[2];
             switch (region)
             {
-                case 'P': //asia
+                case 'P': // asia
                     return "JP";
-                case 'E': //europe
+                case 'E': // europe
                     return "EU";
-                case 'U': //usa
+                case 'U': // usa
                     return "US";
                 default:
                     return "ZZ";

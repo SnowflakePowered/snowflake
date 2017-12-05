@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Reflection;
 using Dapper;
 using EnumsNET.NonGeneric;
 using Snowflake.Persistence;
-using System.Data.Common;
 
 namespace Snowflake.Configuration
 {
@@ -37,25 +37,28 @@ namespace Snowflake.Configuration
                 "PRIMARY KEY (game, option, section, emulator, profile)");
         }
 
-        public IConfigurationCollection<T> Get<T>(Guid gameRecord, string emulator, string profile) where T: class, IConfigurationCollection<T>
+        /// <inheritdoc/>
+        public IConfigurationCollection<T> Get<T>(Guid gameRecord, string emulator, string profile)
+            where T : class, IConfigurationCollection<T>
         {
             var records = this.backingDatabase.Query(dbConnection =>
             {
                 return dbConnection.Query<ConfigurationRecord>(
-                    "SELECT * FROM configuration WHERE game == @gameRecord AND emulator == @emulator AND profile == @profile", new
+                    "SELECT * FROM configuration WHERE game == @gameRecord AND emulator == @emulator AND profile == @profile",
+                    new
                     {
                         gameRecord,
                         emulator,
-                        profile
+                        profile,
                     });
             });
-            
+
             var defs = records.GroupBy(p => p.section)
                 .ToDictionary(p => p.Key, p => p
-                .ToDictionary(o => o.option, o => 
-                new ValueTuple<string, Guid>(o.value, new Guid(o.uuid))) 
+                .ToDictionary(o => o.option, o =>
+                new ValueTuple<string, Guid>(o.value, new Guid(o.uuid)))
                 as IDictionary<string, ValueTuple<string, Guid>>);
-            var config =  new ConfigurationCollection<T>(defs);
+            var config = new ConfigurationCollection<T>(defs);
 
             // We have to cache the value to preserve purity across multiple accesses
             // Otherwise a new configuration with differing GUIDs will be generated every time
@@ -63,8 +66,9 @@ namespace Snowflake.Configuration
             return config;
         }
 
-        public void Set<T>(IConfigurationCollection<T> configuration, Guid gameRecord, string emulator, string profile) 
-            where T: class, IConfigurationCollection<T>
+        /// <inheritdoc/>
+        public void Set<T>(IConfigurationCollection<T> configuration, Guid gameRecord, string emulator, string profile)
+            where T : class, IConfigurationCollection<T>
         {
             var values = from section in configuration
                 from value in section.Value.Values
@@ -72,13 +76,13 @@ namespace Snowflake.Configuration
                 {
                     uuid = value.Value.Guid,
                     game = gameRecord,
-                    value = value.Value.Value.GetType().GetTypeInfo().IsEnum ? 
-                            NonGenericEnums.GetName(value.Value.Value.GetType(), value.Value.Value) : //optimized path for enums
-                            Convert.ToString(value.Value.Value), //so i put a value in your value so you can value values
+                    value = value.Value.Value.GetType().GetTypeInfo().IsEnum ?
+                            NonGenericEnums.GetName(value.Value.Value.GetType(), value.Value.Value) : // optimized path for enums
+                            Convert.ToString(value.Value.Value), // so i put a value in your value so you can value values
                     option = value.Key,
-                    section = section.Key, 
+                    section = section.Key,
                     emulator,
-                    profile
+                    profile,
                 };
             this.backingDatabase.Execute(dbConnection =>
             {
@@ -88,6 +92,7 @@ namespace Snowflake.Configuration
             });
         }
 
+        /// <inheritdoc/>
         public void Set(IConfigurationValue value)
         {
             try
@@ -98,9 +103,9 @@ namespace Snowflake.Configuration
                         @"UPDATE configuration SET value = @Value WHERE uuid == @Guid", new
                         {
                             Value = value.Value.GetType().GetTypeInfo().IsEnum ?
-                            NonGenericEnums.GetName(value.Value.GetType(), value.Value) : //optimized path for enums
-                            Convert.ToString(value.Value), //so i put a value in your value so you can value values,
-                            Guid = value.Guid
+                            NonGenericEnums.GetName(value.Value.GetType(), value.Value) : // optimized path for enums
+                            Convert.ToString(value.Value), // so i put a value in your value so you can value values,
+                            Guid = value.Guid,
                         });
                 });
             }
@@ -109,16 +114,16 @@ namespace Snowflake.Configuration
                 throw new KeyNotFoundException("Value GUID was not found in store.");
             }
         }
-    }
 
-    class ConfigurationRecord
-    {
-        public byte[] uuid;
-        public byte[] game;
-        public string value;
-        public string option;
-        public string section;
-        public string emulator;
-        public string profile;
+        private class ConfigurationRecord
+        {
+            public byte[] uuid;
+            public byte[] game;
+            public string value;
+            public string option;
+            public string section;
+            public string emulator;
+            public string profile;
+        }
     }
 }

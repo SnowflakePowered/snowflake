@@ -4,12 +4,12 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Snowflake.Persistence;
 using Snowflake.Records.File;
 using Snowflake.Records.Game;
 using Snowflake.Records.Metadata;
 using Snowflake.Utility;
 using Xunit;
-using Snowflake.Persistence;
 
 namespace Snowflake.Records.Tests
 {
@@ -32,7 +32,7 @@ namespace Snowflake.Records.Tests
 
             var library = new SqliteFileLibrary(new SqliteDatabase(Path.GetTempFileName()));
             fileRecord.Metadata.Add("test_metadata", new RecordMetadata("test_metadata", "hello world", fileRecord.Guid));
-            library.Set(new List<IFileRecord> {fileRecord, fileRecord2});
+            library.Set(new List<IFileRecord> { fileRecord, fileRecord2 });
         }
 
         [Fact]
@@ -57,7 +57,7 @@ namespace Snowflake.Records.Tests
             fileRecord.Metadata.Add("test_metadata", new RecordMetadata("test_metadata", "hello world", fileRecord.Guid));
             library.Set(new List<IFileRecord> { fileRecord, fileRecord2 });
             Assert.NotEmpty(library.GetAllRecords());
-            library.Remove(new List<IFileRecord> {fileRecord, fileRecord2});
+            library.Remove(new List<IFileRecord> { fileRecord, fileRecord2 });
             Assert.Empty(library.GetAllRecords());
         }
 
@@ -69,7 +69,7 @@ namespace Snowflake.Records.Tests
 
             var library = new SqliteFileLibrary(new SqliteDatabase(Path.GetTempFileName()));
             fileRecord.Metadata.Add("test_metadata", new RecordMetadata("test_metadata", "hello world", fileRecord.Guid));
-            var records = new List<IFileRecord> {fileRecord, fileRecord2};
+            var records = new List<IFileRecord> { fileRecord, fileRecord2 };
             library.Set(records);
             Assert.NotEmpty(library.Get(records.Select(f => f.Guid)));
         }
@@ -103,7 +103,7 @@ namespace Snowflake.Records.Tests
             library.Set(fileRecord);
             Assert.NotEmpty(library.SearchByMetadata("test_metadata", "world"));
         }
-       
+
         [Fact]
         public void GetFilesByPath_Test()
         {
@@ -123,7 +123,5 @@ namespace Snowflake.Records.Tests
             library.Set(fileRecord);
             Assert.NotNull(library.Get(fileRecord.Guid));
         }
-
     }
-    
 }

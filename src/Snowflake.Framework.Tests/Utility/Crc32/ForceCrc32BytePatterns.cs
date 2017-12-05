@@ -1,8 +1,8 @@
 ﻿/**
 * The MIT License (MIT)
-* 
+*
 * Copyright (c) 2016 force
-* 
+*
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
 * in the Software without restriction, including without limitation the rights
@@ -21,16 +21,15 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
 */
-
-using Force.Crc32;
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Xunit;
 using System.Data.HashFunction;
 using System.Data.HashFunction.CRC;
-using System.Collections;
+using System.Linq;
+using System.Text;
+using Force.Crc32;
+using Xunit;
 
 namespace Snowflake.Utility.Crc32.Tests
 {
@@ -45,7 +44,7 @@ namespace Snowflake.Utility.Crc32.Tests
                 Assert.Equal<uint>(0, actual);
             }
 
-            // Pattern: 
+            // Pattern:
             // xx
             // xx xx
             // xx xx xx

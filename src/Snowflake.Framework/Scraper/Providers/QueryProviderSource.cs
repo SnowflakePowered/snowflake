@@ -9,14 +9,16 @@ namespace Snowflake.Scraper.Providers
 {
     public class QueryProviderSource : IQueryProviderSource
     {
+        /// <inheritdoc/>
         public IEnumerable<IQueryProvider<IScrapedMetadataCollection>> MetadataProviders
             => this.metadataProviders.AsEnumerable();
 
-        public IEnumerable<IQueryProvider<IList<IFileRecord>>> MediaProviders => 
+        /// <inheritdoc/>
+        public IEnumerable<IQueryProvider<IList<IFileRecord>>> MediaProviders =>
             this.mediaProviders.AsEnumerable();
 
         private readonly IList<IQueryProvider<IScrapedMetadataCollection>> metadataProviders;
-        private readonly IList<IQueryProvider<IList<IFileRecord>>>  mediaProviders;
+        private readonly IList<IQueryProvider<IList<IFileRecord>>> mediaProviders;
 
         public QueryProviderSource()
         {
@@ -24,11 +26,13 @@ namespace Snowflake.Scraper.Providers
             this.mediaProviders = new List<IQueryProvider<IList<IFileRecord>>>();
         }
 
+        /// <inheritdoc/>
         public void Register(IQueryProvider<IScrapedMetadataCollection> queryProvider)
         {
             this.metadataProviders.Add(queryProvider);
         }
 
+        /// <inheritdoc/>
         public void Register(IQueryProvider<IList<IFileRecord>> queryProvider)
         {
             this.mediaProviders.Add(queryProvider);

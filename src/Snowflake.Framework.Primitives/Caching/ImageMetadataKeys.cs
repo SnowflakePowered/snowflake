@@ -15,6 +15,7 @@ namespace Snowflake.Caching
         /// The image date
         /// </summary>
         public const string Date = "image_date";
+
         /// <summary>
         /// The image type
         /// </summary>

@@ -1,8 +1,8 @@
-using System.IO;
 using System;
+using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Linq;
 namespace Snowflake.Utility
 {
     public static class PathUtility
@@ -13,14 +13,17 @@ namespace Snowflake.Utility
             {
                 return Path.Combine(Environment.ExpandEnvironmentVariables("%appdata%"));
             }
+
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
                 return Path.Combine(Environment.ExpandEnvironmentVariables("%HOME%"), "Library", "Application Support");
             }
+
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
                 return Path.Combine(Environment.ExpandEnvironmentVariables("%HOME%"), ".snowflake");
             }
+
             return Path.Combine(typeof(PathUtility).GetTypeInfo().Assembly.Location);
         }
 
@@ -41,6 +44,5 @@ namespace Snowflake.Utility
         {
             return Path.Combine(dataPath.Prepend(PathUtility.GetSnowflakeDataPath()).ToArray());
         }
-        
     }
 }

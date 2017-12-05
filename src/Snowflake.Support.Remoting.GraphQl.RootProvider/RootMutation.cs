@@ -1,10 +1,10 @@
-﻿using GraphQL.Relay.Types;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using GraphQL.Relay.Types;
 using GraphQL.Types;
 using GraphQL.Types.Relay;
 using Snowflake.Services;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Snowflake.Support.Remoting.GraphQl.RootProvider
 {

@@ -7,14 +7,15 @@ namespace Snowflake.Support.StoreProviders
 {
     public class MappedElementCollectionStoreComposable : IComposable
     {
+        /// <inheritdoc/>
         [ImportService(typeof(IServiceRegistrationProvider))]
         [ImportService(typeof(ISqliteDatabaseProvider))]
         public void Compose(IModule composableModule, IServiceRepository serviceContainer)
         {
             var register = serviceContainer.Get<IServiceRegistrationProvider>();
             var sqlDb = serviceContainer.Get<ISqliteDatabaseProvider>();
-            register.RegisterService<IMappedControllerElementCollectionStore>
-                            (new SqliteMappedControllerElementCollectionStore(sqlDb.CreateDatabase("controllermappings")));
+            register.RegisterService<IMappedControllerElementCollectionStore>(
+                            new SqliteMappedControllerElementCollectionStore(sqlDb.CreateDatabase("controllermappings")));
         }
     }
 }

@@ -1,10 +1,10 @@
-﻿using GraphQL;
-using GraphQL.Http;
-using GraphQL.Types;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using GraphQL;
+using GraphQL.Http;
+using GraphQL.Types;
 
 namespace Snowflake.Support.Remoting.GraphQl.RootProvider
 {
@@ -19,7 +19,7 @@ namespace Snowflake.Support.Remoting.GraphQl.RootProvider
             this.Writer = new DocumentWriter();
             this.RootSchema = schema;
         }
-            
+
         public async Task<ExecutionResult> ExecuteRequestAsync(GraphQlRequest request)
         {
             return await this.Executer.ExecuteAsync(_ =>

@@ -30,10 +30,10 @@ namespace Snowflake.Configuration
         FullscreenResolution FullscreenResolution { get; set; }
 
         [ConfigurationOption("Fullscreen", true)]
-        bool Fullscreen { get; set; } 
+        bool Fullscreen { get; set; }
 
         [ConfigurationOption("RenderToMain", true)]
-        bool RenderToMain { get; set; } 
+        bool RenderToMain { get; set; }
 
         [ConfigurationOption("RenderWindowWidth", 640)]
         int RenderWindowWidth { get; set; }
@@ -86,12 +86,6 @@ namespace Snowflake.Configuration
         [SelectionOption("2560x1440")]
         Resolution2560X1440,
         [SelectionOption("3840x2160")]
-        Resolution3840X2160
-
-
-
-
+        Resolution3840X2160,
     }
-
-    
 }

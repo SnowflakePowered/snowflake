@@ -14,6 +14,6 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Selections.InputConfiguration
         [SelectionOption("dinput", DisplayName = "DirectInput")]
         DirectInput,
         [SelectionOption("sdl2", DisplayName = "SDL2")]
-        SDL2
+        SDL2,
     }
 }

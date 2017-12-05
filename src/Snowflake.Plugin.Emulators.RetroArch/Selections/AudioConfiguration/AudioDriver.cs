@@ -14,6 +14,6 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Selections.AudioConfiguration
         [SelectionOption("xaudio", DisplayName = "XAudio (Windows)")]
         XAudio,
         [SelectionOption("dsound", DisplayName = "DirectSound (Windows)")]
-        DSound
+        DSound,
     }
 }

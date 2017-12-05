@@ -14,16 +14,21 @@ using Snowflake.Utility;
 
 namespace Snowflake.Configuration.Input
 {
-    public class InputConfigurationSection<T> : IConfigurationSection<T> where T : class, IInputTemplate<T>
+    public class InputConfigurationSection<T> : IConfigurationSection<T>
+        where T : class, IInputTemplate<T>
     {
+        /// <inheritdoc/>
         public T Configuration { get; }
         public IEnumerable<IConfigurationOptionDescriptor> Options { get; }
 
+        /// <inheritdoc/>
         public IConfigurationSectionDescriptor Descriptor { get; }
 
+        /// <inheritdoc/>
         public IDictionary<string, IConfigurationValue> Values
             => ImmutableDictionary.CreateRange(this.configurationInterceptor.Values);
 
+        /// <inheritdoc/>
         public object this[string key]
         {
             get { return configurationInterceptor.Values[key]; }
@@ -50,11 +55,13 @@ namespace Snowflake.Configuration.Input
                     configurationInterceptor, inputTemplate);
         }
 
+        /// <inheritdoc/>
         public IEnumerator<KeyValuePair<IConfigurationOptionDescriptor, IConfigurationValue>> GetEnumerator()
         {
             return this.Configuration.GetEnumerator();
         }
 
+        /// <inheritdoc/>
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();

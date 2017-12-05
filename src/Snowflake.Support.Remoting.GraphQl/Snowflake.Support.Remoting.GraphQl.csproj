@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,6 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="GraphQL" Version="2.0.0-alpha-817" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta004" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,4 +37,11 @@
     <DotNetCliToolReference Include="dotnet-pack-snowflake" Version="1.2.0" />
     <DotNetCliToolReference Include="dotnet-install-snowflake" Version="1.0.0" />
   </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="..\stylecop.json" />
+
+  </ItemGroup>
+  <PropertyGroup>
+    <CodeAnalysisRuleSet>..\Snowflake.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
 </Project>

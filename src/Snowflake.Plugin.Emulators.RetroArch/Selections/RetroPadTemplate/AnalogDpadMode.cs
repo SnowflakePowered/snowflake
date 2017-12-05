@@ -14,6 +14,6 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Selections.RetroPadTemplate
         [SelectionOption("1", DisplayName = "Left Analog")]
         LeftAnalog,
         [SelectionOption("2", DisplayName = "Right Analog")]
-        RightAnalog
+        RightAnalog,
     }
 }

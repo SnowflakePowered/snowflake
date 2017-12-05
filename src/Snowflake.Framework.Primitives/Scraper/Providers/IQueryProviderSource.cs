@@ -13,18 +13,21 @@ namespace Snowflake.Scraper.Providers
     public interface IQueryProviderSource
     {
         /// <summary>
-        /// Providers metadata providers
+        /// Gets providers metadata providers
         /// </summary>
         IEnumerable<IQueryProvider<IScrapedMetadataCollection>> MetadataProviders { get; }
+
         /// <summary>
-        /// Provides media providers in the form of file records to be attached to a game.
+        /// Gets provides media providers in the form of file records to be attached to a game.
         /// </summary>
         IEnumerable<IQueryProvider<IList<IFileRecord>>> MediaProviders { get; }
+
         /// <summary>
         /// Registers a metadata provider
         /// </summary>
         /// <param name="queryProvider">The provider to register</param>
         void Register(IQueryProvider<IScrapedMetadataCollection> queryProvider);
+
         /// <summary>
         /// Registers a media provider
         /// </summary>

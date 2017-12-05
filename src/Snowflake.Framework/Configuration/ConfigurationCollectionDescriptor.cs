@@ -12,9 +12,13 @@ using Snowflake.Utility;
 
 namespace Snowflake.Configuration
 {
-    public class ConfigurationCollectionDescriptor<T> : IConfigurationCollectionDescriptor where T: class, IConfigurationCollection
+    public class ConfigurationCollectionDescriptor<T> : IConfigurationCollectionDescriptor
+        where T : class, IConfigurationCollection
     {
+        /// <inheritdoc/>
         public IDictionary<string, IConfigurationFile> Outputs { get; }
+
+        /// <inheritdoc/>
         public IEnumerable<string> SectionKeys { get; }
         private IDictionary<string, string> DestinationMappings { get; }
 
@@ -33,11 +37,10 @@ namespace Snowflake.Configuration
                 select new KeyValuePair<string, string>(props.Name, destination));
         }
 
+        /// <inheritdoc/>
         public string GetDestination(string sectionKey)
         {
             return this.DestinationMappings.ContainsKey(sectionKey) ? this.DestinationMappings[sectionKey] : "#null";
         }
-        
-
     }
 }

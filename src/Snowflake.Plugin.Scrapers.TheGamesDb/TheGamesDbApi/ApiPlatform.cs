@@ -11,76 +11,77 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi
     internal class ApiPlatform
     {
         /// <summary>
-        /// Unique database ID.
+        /// Gets or sets unique database ID.
         /// </summary>
-        public int ID;
+        public int ID { get; set; }
 
         /// <summary>
-        /// The name of the platform.
+        /// Gets or sets the name of the platform.
         /// </summary>
-        public string Name;
+        public string Name { get; set; }
 
         /// <summary>
-        /// The max amount of controllers that can be connected to the device.
+        /// Gets or sets the max amount of controllers that can be connected to the device.
         /// </summary>
-        public int MaxControllers;
+        public int MaxControllers { get; set; }
 
         /// <summary>
-        /// General overview of the platform.
+        /// Gets or sets general overview of the platform.
         /// </summary>
-        public string Overview;
+        public string Overview { get; set; }
 
         /// <summary>
-        /// The developer(s) of the platform.
+        /// Gets or sets the developer(s) of the platform.
         /// </summary>
-        public string Developer;
+        public string Developer { get; set; }
 
         /// <summary>
-        /// The manufacturer(s) of the platform.
+        /// Gets or sets the manufacturer(s) of the platform.
         /// </summary>
-        public string Manufacturer;
+        public string Manufacturer { get; set; }
 
         /// <summary>
-        /// The CPU of the platform (for platforms which have one specific CPU).
+        /// Gets or sets the CPU of the platform (for platforms which have one specific CPU).
         /// </summary>
-        public string CPU;
+        public string CPU { get; set; }
 
         /// <summary>
-        /// Information about the platform's memory.
+        /// Gets or sets information about the platform's memory.
         /// </summary>
-        public string Memory;
+        public string Memory { get; set; }
 
         /// <summary>
-        /// The platform's graphics card.
+        /// Gets or sets the platform's graphics card.
         /// </summary>
-        public string Graphics;
+        public string Graphics { get; set; }
 
         /// <summary>
-        /// Information about the platform's sound capabilities.
+        /// Gets or sets information about the platform's sound capabilities.
         /// </summary>
-        public string Sound;
+        public string Sound { get; set; }
 
         /// <summary>
-        /// Display resolution (on the form: 'width'x'height')
+        /// Gets or sets display resolution (on the form: 'width'x'height')
         /// </summary>
-        public string Display;
+        public string Display { get; set; }
 
         /// <summary>
-        /// The game media the platform reads (eg. 'Disc').
+        /// Gets or sets the game media the platform reads (eg. 'Disc').
         /// </summary>
-        public string Media;
+        public string Media { get; set; }
 
         /// <summary>
-        /// The average rating as rated by the users on TheGamesDB.net.
+        /// Gets or sets the average rating as rated by the users on TheGamesDB.net.
         /// </summary>
-        public float Rating;
+        public float Rating { get; set; }
 
         /// <summary>
-        /// A PlatformImages-object containing all the images for the platform.
+        /// Gets or sets a PlatformImages-object containing all the images for the platform.
         /// </summary>
-        public PlatformImages Images;
+        public PlatformImages Images { get; set; }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="ApiPlatform"/> class.
         /// Creates a new Platform without any content.
         /// </summary>
         public ApiPlatform()
@@ -94,31 +95,32 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi
         public class PlatformImages
         {
             /// <summary>
-            /// Path to the image of the console.
+            /// Gets or sets path to the image of the console.
             /// </summary>
-            public string ConsoleArt;
+            public string ConsoleArt { get; set; }
 
             /// <summary>
-            /// Path to the image of the controller.
+            /// Gets or sets path to the image of the controller.
             /// </summary>
-            public string ControllerArt;
+            public string ControllerArt { get; set; }
 
             /// <summary>
-            /// Boxart for the platform
+            /// Gets or sets boxart for the platform
             /// </summary>
-            public PlatformImage Boxart;
+            public PlatformImage Boxart { get; set; }
 
             /// <summary>
-            /// A list of all the fanart for the platform that have been uploaded to the database.
+            /// Gets or sets a list of all the fanart for the platform that have been uploaded to the database.
             /// </summary>
-            public List<PlatformImage> Fanart;
+            public List<PlatformImage> Fanart { get; set; }
 
             /// <summary>
-            /// A list of all the banners for the platform that have been uploaded to the database.
+            /// Gets or sets a list of all the banners for the platform that have been uploaded to the database.
             /// </summary>
-            public List<PlatformImage> Banners;
+            public List<PlatformImage> Banners { get; set; }
 
             /// <summary>
+            /// Initializes a new instance of the <see cref="PlatformImages"/> class.
             /// Creates a new PlatformImages without any content.
             /// </summary>
             public PlatformImages()
@@ -165,22 +167,23 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi
             public class PlatformImage
             {
                 /// <summary>
-                /// The width of the image in pixels.
+                /// Gets or sets the width of the image in pixels.
                 /// </summary>
-                public int Width;
+                public int Width { get; set; }
 
                 /// <summary>
-                /// The height of the image in pixels.
+                /// Gets or sets the height of the image in pixels.
                 /// </summary>
-                public int Height;
+                public int Height { get; set; }
 
                 /// <summary>
-                /// The relative path to the image.
+                /// Gets or sets the relative path to the image.
                 /// </summary>
                 /// <seealso cref="ApiGamesDb.BaseImgURL"/>
-                public string Path;
+                public string Path { get; set; }
 
                 /// <summary>
+                /// Initializes a new instance of the <see cref="PlatformImage"/> class.
                 /// Creates an image from an XmlNode.
                 /// </summary>
                 /// <param name="node">XmlNode to get data from</param>
@@ -188,8 +191,10 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi
                 {
                     this.Path = node.InnerText;
 
-                    int.TryParse(node.Attributes.GetNamedItem("width").InnerText, out this.Width);
-                    int.TryParse(node.Attributes.GetNamedItem("height").InnerText, out this.Height);
+                    int.TryParse(node.Attributes.GetNamedItem("width").InnerText, out int width);
+                    int.TryParse(node.Attributes.GetNamedItem("height").InnerText, out int height);
+                    this.Width = width;
+                    this.Height = height;
                 }
             }
         }

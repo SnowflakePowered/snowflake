@@ -9,7 +9,6 @@ using Snowflake.Records.Game;
 
 namespace Snowflake.Emulator
 {
-
     public class SaveManager : ISaveManager
     {
         private string SavegameDirectory { get; }
@@ -18,15 +17,25 @@ namespace Snowflake.Emulator
             this.SavegameDirectory = Path.Combine(appdataDirectory, "saves");
         }
 
+        /// <inheritdoc/>
         public string GetSaveDirectory(string saveType, Guid gameGuid, int slot)
         {
-            if (slot < 0) return this.GetSharedSaveDirectory(saveType); //if the slot is less than 0, return the shared save directory
+            if (slot < 0)
+            {
+                return this.GetSharedSaveDirectory(saveType); // if the slot is less than 0, return the shared save directory
+            }
+
             string saveDirectory = Path.Combine(this.SavegameDirectory, saveType, gameGuid.ToString(), slot.ToString());
-            if (!Directory.Exists(saveDirectory)) Directory.CreateDirectory(saveDirectory);
-            File.WriteAllText(Path.Combine(saveDirectory,".modified"), DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString());
+            if (!Directory.Exists(saveDirectory))
+            {
+                Directory.CreateDirectory(saveDirectory);
+            }
+
+            File.WriteAllText(Path.Combine(saveDirectory, ".modified"), DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString());
             return saveDirectory;
         }
 
+        /// <inheritdoc/>
         public DateTimeOffset GetLastModified(string saveType, Guid gameGuid, int slot)
         {
             string timestamp = Path.Combine(this.SavegameDirectory, saveType, gameGuid.ToString(), slot.ToString(), ".modified");
@@ -35,20 +44,30 @@ namespace Snowflake.Emulator
                 : DateTimeOffset.UtcNow;
         }
 
+        /// <inheritdoc/>
         public string GetSharedSaveDirectory(string saveType)
         {
             string saveDirectory = Path.Combine(this.SavegameDirectory, saveType, "shared");
-            if (!Directory.Exists(saveDirectory)) Directory.CreateDirectory(saveDirectory);
+            if (!Directory.Exists(saveDirectory))
+            {
+                Directory.CreateDirectory(saveDirectory);
+            }
+
             return saveDirectory;
         }
 
+        /// <inheritdoc/>
         public IEnumerable<int> GetUsedSlots(string saveType, Guid gameGuid)
         {
             string saveDirectory = Path.Combine(this.SavegameDirectory, saveType, gameGuid.ToString());
-            if (!Directory.Exists(saveDirectory)) yield break;
+            if (!Directory.Exists(saveDirectory))
+            {
+                yield break;
+            }
+
             int slot = 0;
             foreach (string directory in Directory.GetDirectories(saveDirectory)
-                .Where(d => Int32.TryParse(Path.GetDirectoryName(d), out slot)))
+                .Where(d => int.TryParse(Path.GetDirectoryName(d), out slot)))
             {
                 yield return slot;
             }

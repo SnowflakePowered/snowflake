@@ -4,12 +4,13 @@ using System.Text;
 
 namespace Snowflake.Configuration
 {
-    public enum ConfigurationOptionType {
+    public enum ConfigurationOptionType
+    {
         String,
         Path,
         Boolean,
         Integer,
         Decimal,
-        Selection
+        Selection,
     }
 }

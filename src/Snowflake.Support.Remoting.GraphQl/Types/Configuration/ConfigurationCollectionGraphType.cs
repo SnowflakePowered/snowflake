@@ -1,9 +1,9 @@
-﻿using GraphQL.Types;
-using Snowflake.Configuration;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
+using System.Text;
+using GraphQL.Types;
+using Snowflake.Configuration;
 
 namespace Snowflake.Support.Remoting.GraphQl.Types.Configuration
 {
@@ -19,7 +19,6 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.Configuration
             Field<ListGraphType<ConfigurationSectionGraphType>>("sections",
                 description: "The various sections of this configuration collection.",
                 resolve: context => context.Source);
-
         }
     }
 }

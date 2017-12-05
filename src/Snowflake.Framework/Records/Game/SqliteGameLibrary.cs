@@ -1,23 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
+using Snowflake.Persistence;
 using Snowflake.Records.File;
 using Snowflake.Records.Metadata;
-using Snowflake.Persistence;
-using System.Data.Common;
 
 namespace Snowflake.Records.Game
 {
     internal class SqliteGameLibrary : SqliteRecordLibrary<IGameRecord>, IGameLibrary
     {
+        /// <inheritdoc/>
         public override IMetadataLibrary MetadataLibrary { get; }
+
+        /// <inheritdoc/>
         public IFileLibrary FileLibrary { get; }
         private RecordLibraryJunction<IGameRecord, IFileRecord> FileJunction { get; }
         private readonly ISqlDatabase backingDatabase;
-        public SqliteGameLibrary(ISqlDatabase database, SqliteMetadataLibrary metadataLibrary) : base(database, "games")
+        public SqliteGameLibrary(ISqlDatabase database, SqliteMetadataLibrary metadataLibrary)
+            : base(database, "games")
         {
             this.backingDatabase = database;
             this.MetadataLibrary = metadataLibrary;
@@ -25,11 +29,12 @@ namespace Snowflake.Records.Game
             this.FileJunction = this.CreateJunction<IFileRecord>(this.FileLibrary as SqliteFileLibrary);
         }
 
-        public SqliteGameLibrary(ISqlDatabase database) : this(database, new SqliteMetadataLibrary(database))
+        public SqliteGameLibrary(ISqlDatabase database)
+            : this(database, new SqliteMetadataLibrary(database))
         {
-
         }
 
+        /// <inheritdoc/>
         public override void Set(IGameRecord record)
         {
             this.backingDatabase.Execute(dbConnection =>
@@ -45,6 +50,7 @@ namespace Snowflake.Records.Game
             });
         }
 
+        /// <inheritdoc/>
         public override void Set(IEnumerable<IGameRecord> games)
         {
             this.backingDatabase.Execute(dbConnection =>
@@ -58,23 +64,26 @@ namespace Snowflake.Records.Game
                 dbConnection.Execute(@"INSERT OR REPLACE INTO metadata(uuid, record, key, value) 
                                        VALUES (@Guid, @Record, @Key, @Value)",
                                        gameRecords.SelectMany(g => g.Metadata.Values
-                                       .Concat(g.Files.SelectMany(m => m.Metadata.Values)))); //concatenate the files and game metadata at once
+                                       .Concat(g.Files.SelectMany(m => m.Metadata.Values)))); // concatenate the files and game metadata at once
                 dbConnection.Execute($@"INSERT OR REPLACE into games_files(games_uuid, files_uuid)
                                    VALUES (@parentUuid, @childUuid)", gameRecords
                                    .SelectMany(g => g.Files.Select(f => new { parentUuid = g.Guid, childUuid = f.Guid })));
             });
         }
 
+        /// <inheritdoc/>
         public override void Remove(IGameRecord record)
         {
             this.Remove(record.Guid);
         }
 
+        /// <inheritdoc/>
         public override void Remove(IEnumerable<IGameRecord> records)
         {
             this.Remove(records.Select(g => g.Guid));
         }
 
+        /// <inheritdoc/>
         public override void Remove(IEnumerable<Guid> games)
         {
             this.backingDatabase.Execute(dbConnection =>
@@ -85,6 +94,7 @@ namespace Snowflake.Records.Game
             });
         }
 
+        /// <inheritdoc/>
         public override IGameRecord Get(Guid game)
         {
             const string sql =
@@ -96,28 +106,33 @@ namespace Snowflake.Records.Game
             return this.GetSingleByQuery(sql, new { game });
         }
 
-        public override IEnumerable<IGameRecord> Get(IEnumerable<Guid> games)
+        /// <inheritdoc/>
+        public override IEnumerable<IGameRecord> Get(IEnumerable<Guid> gameGuids)
         {
             const string sql = @"SELECT * from games WHERE uuid IN @games;
                                  SELECT * FROM games_files JOIN files ON files.uuid = files_uuid AND games_uuid IN @games;
                                  SELECT * FROM metadata WHERE record IN 
                                         (SELECT uuid from games WHERE uuid IN @games 
                                         UNION ALL SELECT files.uuid FROM games_files JOIN files ON files.uuid = files_uuid AND games_uuid IN @games)";
-            return this.GetMultipleByQuery(sql, games);
+            return this.GetMultipleByQuery(sql, gameGuids);
         }
 
+        /// <inheritdoc/>
         public override void Remove(Guid game)
         {
-            this.backingDatabase.Execute(dbConnection => {
+            this.backingDatabase.Execute(dbConnection =>
+            {
                 this.FileJunction.DeleteAllRelations(game, dbConnection);
                 dbConnection.Execute(@"DELETE FROM games WHERE uuid = @game;
                                        DELETE FROM metadata WHERE record = @game", new { game });
-                }
-             );
-            //because file record guids are derived from game library, they can be safely left alone
+                });
+
+            // because file record guids are derived from game library, they can be safely left alone
         }
 
-        //select files.* from games_files join files on files.uuid = files_uuid and games_uuid = x'45379b93e1eb064a9bb63deda29a242d'
+        // select files.* from games_files join files on files.uuid = files_uuid and games_uuid = x'45379b93e1eb064a9bb63deda29a242d'
+
+        /// <inheritdoc/>
         public override IEnumerable<IGameRecord> SearchByMetadata(string key, string likeValue)
         {
             const string sql = @"SELECT * FROM games WHERE uuid IN 
@@ -131,10 +146,12 @@ namespace Snowflake.Records.Game
                                     (SELECT record FROM metadata WHERE key = @key AND value LIKE @likeValue)
                                     UNION ALL SELECT files.uuid FROM games_files JOIN files ON files.uuid = files_uuid AND games_uuid IN (SELECT uuid FROM games WHERE uuid IN 
                                     (SELECT record FROM metadata WHERE key = @key AND value LIKE @likeValue)))";
-            //this sql is gross, can we shorten this somehow?
-            return this.GetMultipleByQuery(sql, new {key, likeValue = $"%{likeValue}%"});
+
+            // this sql is gross, can we shorten this somehow?
+            return this.GetMultipleByQuery(sql, new { key, likeValue = $"%{likeValue}%" });
         }
 
+        /// <inheritdoc/>
         public override IEnumerable<IGameRecord> GetByMetadata(string key, string exactValue)
         {
             const string sql = @"SELECT * FROM games WHERE uuid IN 
@@ -149,9 +166,9 @@ namespace Snowflake.Records.Game
                                     UNION ALL SELECT files.uuid FROM games_files JOIN files ON files.uuid = files_uuid AND games_uuid IN (SELECT uuid FROM games WHERE uuid IN 
                                     (SELECT record FROM metadata WHERE key = @key AND value = @exactValue)))";
             return this.GetMultipleByQuery(sql, new { key, exactValue });
-
         }
 
+        /// <inheritdoc/>
         public override IEnumerable<IGameRecord> GetAllRecords()
         {
             const string sql = @"SELECT * FROM games;
@@ -162,22 +179,23 @@ namespace Snowflake.Records.Game
             return this.GetMultipleByQuery(sql, null);
         }
 
+        /// <inheritdoc/>
         public IEnumerable<IGameRecord> GetGamesByTitle(string nameSearch)
         {
             return this.SearchByMetadata(GameMetadataKeys.Title, nameSearch);
         }
 
+        /// <inheritdoc/>
         public IEnumerable<IGameRecord> GetGamesByPlatform(string platformId)
         {
             return this.GetByMetadata(GameMetadataKeys.Platform, platformId);
         }
 
-
         /// <summary>
         /// Gets multiple game records according to the query
         /// </summary>
-        /// <param name="sql">3 SQL queries together, 
-        /// the first gets game records, 
+        /// <param name="sql">3 SQL queries together,
+        /// the first gets game records,
         /// the second gets file records,
         /// and the third gets corresponding metadata records for both file and games.</param>
         /// <param name="param">The parameters</param>
@@ -196,15 +214,13 @@ namespace Snowflake.Records.Game
                             Game: new Guid(file.games_uuid),
                             Guid: new Guid(file.uuid),
                             Path: (string)file.path,
-                            MimeType: (string)file.mimetype
-                        ));
+                            MimeType: (string)file.mimetype));
 
                         var metadatas = query.Read().Select(metadata => (
                             Guid: new Guid(metadata.uuid),
                             Record: new Guid(metadata.record),
                             Key: (string)metadata.key,
-                            Value: (string)metadata.value
-                        )).Select(m => new RecordMetadata(m.Guid, m.Record, m.Key, m.Value))?
+                            Value: (string)metadata.value)).Select(m => new RecordMetadata(m.Guid, m.Record, m.Key, m.Value))?
                         .Cast<IRecordMetadata>();
 
                         var fileRecords = (from f in files
@@ -224,7 +240,6 @@ namespace Snowflake.Records.Game
                     {
                         return new List<IGameRecord>();
                     }
-
                 }
             });
         }
@@ -232,8 +247,8 @@ namespace Snowflake.Records.Game
         /// <summary>
         /// Gets a single game record according to the query
         /// </summary>
-        /// <param name="sql">3 SQL queries together, 
-        /// the first gets game records, 
+        /// <param name="sql">3 SQL queries together,
+        /// the first gets game records,
         /// the second gets file records,
         /// and the third gets corresponding metadata records for both file and games.</param>
         /// <param name="param">The parameters</param>
@@ -247,22 +262,24 @@ namespace Snowflake.Records.Game
                     try
                     {
                         dynamic _game = query.ReadFirstOrDefault();
-                        if (_game == null) return null;
+                        if (_game == null)
+                        {
+                            return null;
+                        }
+
                         Guid gameGuid = new Guid(_game.uuid);
                         var files = query.Read().Select(f => (
-                        
+
                             Guid: new Guid(f.uuid),
                             Path: (string)f.path,
-                            MimeType: (string)f.mimetype
-                       ));
+                            MimeType: (string)f.mimetype));
 
                         var metadatas = query.Read().Select(metadata =>
                         (
                             Guid: new Guid(metadata.uuid),
                             Record: new Guid(metadata.record),
                             Key: (string)metadata.key,
-                            Value: (string)metadata.value
-                        )).Select(m => new RecordMetadata(m.Guid, m.Record, m.Key, m.Value))
+                            Value: (string)metadata.value)).Select(m => new RecordMetadata(m.Guid, m.Record, m.Key, m.Value))
                         .Cast<IRecordMetadata>();
 
                         var fileRecords = (from f in files

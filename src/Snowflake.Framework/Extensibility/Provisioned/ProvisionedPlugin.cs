@@ -14,14 +14,19 @@ namespace Snowflake.Extensibility.Provisioned
 {
     public abstract class ProvisionedPlugin : IProvisionedPlugin
     {
+        /// <inheritdoc/>
         public IPluginProvision Provision { get; }
 
+        /// <inheritdoc/>
         public string Name => this.Provision.Name;
 
+        /// <inheritdoc/>
         public string Author => this.Provision.Author;
 
+        /// <inheritdoc/>
         public string Description => this.Provision.Description;
 
+        /// <inheritdoc/>
         public Version Version => this.Provision.Version;
 
         protected ProvisionedPlugin(IPluginProvision provision)
@@ -29,6 +34,7 @@ namespace Snowflake.Extensibility.Provisioned
             this.Provision = provision;
         }
 
+        /// <inheritdoc/>
         public virtual IConfigurationSection GetPluginConfiguration()
         {
             return EmptyPluginConfiguration.EmptyConfiguration;
@@ -39,9 +45,9 @@ namespace Snowflake.Extensibility.Provisioned
             return this.GetType().GetTypeInfo().GetCustomAttribute<PluginAttribute>().PluginName;
         }
 
+        /// <inheritdoc/>
         public virtual void Dispose()
         {
-
         }
     }
 }

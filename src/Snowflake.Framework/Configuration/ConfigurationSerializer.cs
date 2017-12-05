@@ -19,26 +19,36 @@ namespace Snowflake.Configuration
             this.TypeMapper = typeMapper;
         }
 
-        protected ConfigurationSerializer(IBooleanMapping booleanMapping, string nullSerializer) 
+        protected ConfigurationSerializer(IBooleanMapping booleanMapping, string nullSerializer)
             : this(new DefaultConfigurationTypeMapper(booleanMapping, nullSerializer))
         {
         }
 
+        /// <inheritdoc/>
         public IConfigurationTypeMapper TypeMapper { get; set; }
 
+        /// <inheritdoc/>
         public abstract string SerializeLine<T>(string key, T value);
 
+        /// <inheritdoc/>
         public string SerializeValue(object value)
         {
-            if (value == null) return this.TypeMapper.ConvertValue((object) null);
+            if (value == null)
+            {
+                return this.TypeMapper.ConvertValue((object)null);
+            }
+
             Type valueType = value.GetType();
             return this.TypeMapper[valueType, value];
         }
 
-        public virtual string SerializeHeader(string headerString) => String.Empty;
-        public virtual string SerializeFooter(string footerString) => String.Empty;
+        /// <inheritdoc/>
+        public virtual string SerializeHeader(string headerString) => string.Empty;
 
+        /// <inheritdoc/>
+        public virtual string SerializeFooter(string footerString) => string.Empty;
+
+        /// <inheritdoc/>
         public abstract string Serialize(IConfigurationSection configurationSection);
-
     }
 }

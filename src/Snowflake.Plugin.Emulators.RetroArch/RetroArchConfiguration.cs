@@ -82,6 +82,5 @@ namespace Snowflake.Plugin.Emulators.RetroArch
 
         [SerializableSection("#retroarch")]
         ConfigConfiguration ConfigConfiguration { get; }
-
     }
 }

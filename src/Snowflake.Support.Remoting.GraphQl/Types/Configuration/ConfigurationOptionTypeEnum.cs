@@ -1,9 +1,9 @@
-﻿using GraphQL.Types;
-using Snowflake.Configuration;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
+using GraphQL.Types;
+using Snowflake.Configuration;
 
 namespace Snowflake.Support.Remoting.GraphQl.Types.Configuration
 {

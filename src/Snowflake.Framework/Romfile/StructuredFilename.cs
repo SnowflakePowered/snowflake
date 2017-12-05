@@ -7,33 +7,42 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.SqlServer.Server;
-using Snowflake.Utility;
 using Snowflake.Romfile.Tokenizer;
+using Snowflake.Utility;
 
 namespace Snowflake.Romfile
 {
     public sealed class StructuredFilename : IStructuredFilename
     {
+        /// <inheritdoc/>
         public NamingConvention NamingConvention { get; private set; }
 
+        /// <inheritdoc/>
         public string RegionCode { get; }
 
+        /// <inheritdoc/>
         public string Title { get; }
 
+        /// <inheritdoc/>
         public string Year { get; }
 
+        /// <inheritdoc/>
         public string OriginalFilename { get; }
 
         public StructuredFilename(string originalFilename)
         {
             this.OriginalFilename = Path.GetFileName(originalFilename);
-            //todo: expose tokens to api
+
+            // todo: expose tokens to api
             (NamingConvention namingConvention, IEnumerable<StructuredFilenameToken> tokens) = GetBestMatch();
-            this.Title = Path.GetFileNameWithoutExtension(StructuredFilename.ParseTitle(tokens.FirstOrDefault(t => t.Type == 
+            this.Title = Path.GetFileNameWithoutExtension(StructuredFilename.ParseTitle(tokens.FirstOrDefault(t => t.Type ==
                 FieldType.Title)?.Value ?? "Unknown??!?"));
             this.NamingConvention = namingConvention;
-            this.RegionCode = String.Join('-', tokens.Where(t => t.Type == FieldType.Country).Select(t => t.Value));
-            if (String.IsNullOrEmpty(this.RegionCode)) this.RegionCode = "ZZ";
+            this.RegionCode = string.Join('-', tokens.Where(t => t.Type == FieldType.Country).Select(t => t.Value));
+            if (string.IsNullOrEmpty(this.RegionCode))
+            {
+                this.RegionCode = "ZZ";
+            }
 
             this.Year = tokens.FirstOrDefault(t => t.Type == FieldType.Date)?.Value.Split("-")[0] ?? "XXXX";
         }
@@ -64,7 +73,7 @@ namespace Snowflake.Romfile
             {
                 { (goodToolsTokens, StructuredFilename.GetUniqueDatatypeCount(goodToolsTokens)) },
                 { (noIntroTokens, StructuredFilename.GetUniqueDatatypeCount(noIntroTokens)) },
-                { (tosecTokens, StructuredFilename.GetUniqueDatatypeCount(tosecTokens)) }
+                { (tosecTokens, StructuredFilename.GetUniqueDatatypeCount(tosecTokens)) },
             };
 
             var bestMatch = aggregate.OrderByDescending(p => p.uniqueDatatypes).First().tokens;
@@ -85,7 +94,6 @@ namespace Snowflake.Romfile
                 .WithoutLastArticle("La")
                 .WithoutLastArticle("Le")
                 .WithoutLastArticle("Les");
-                
         }
     }
 
@@ -93,9 +101,13 @@ namespace Snowflake.Romfile
     {
         public static string WithoutLastArticle(this string title, string article)
         {
-            if (!title.Contains($", {article}")) return title;
+            if (!title.Contains($", {article}"))
+            {
+                return title;
+            }
+
             string[] titleWithoutArticle = title.Split($", {article}");
-            return String.Join("", titleWithoutArticle.Prepend(article + " "));
+            return string.Join(string.Empty, titleWithoutArticle.Prepend(article + " "));
         }
     }
 }

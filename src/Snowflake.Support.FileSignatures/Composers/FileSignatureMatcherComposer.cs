@@ -1,13 +1,14 @@
-﻿using Snowflake.Loader;
-using Snowflake.Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Snowflake.Loader;
+using Snowflake.Services;
 
 namespace Snowflake.Romfile.FileSignatures.Composers
 {
     public class FileSignatureMatcherComposer : IComposable
     {
+        /// <inheritdoc/>
         [ImportService(typeof(IStoneProvider))]
         [ImportService(typeof(IServiceRegistrationProvider))]
         public void Compose(IModule module, Loader.IServiceRepository serviceContainer)

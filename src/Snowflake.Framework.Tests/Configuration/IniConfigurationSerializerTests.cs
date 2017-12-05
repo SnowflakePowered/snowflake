@@ -18,8 +18,8 @@ namespace Snowflake.Configuration.Tests
             var config = new ConfigurationCollection<ExampleConfigurationCollection>();
             string serializedValue = serializer.Serialize(config.Configuration.ExampleConfiguration);
             Assert.Equal(TestUtilities.GetStringResource("Configurations.ExampleConfigurationSection.ini")
-                .Replace(Environment.NewLine, ""),
-                serializedValue.Replace(Environment.NewLine, ""));
+                .Replace(Environment.NewLine, string.Empty),
+                serializedValue.Replace(Environment.NewLine, string.Empty));
         }
     }
 }

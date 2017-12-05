@@ -13,52 +13,52 @@ namespace Snowflake.Extensibility.Provisioned
     public interface IPluginProvision
     {
         /// <summary>
-        /// The logger for the plugin
+        /// Gets the logger for the plugin
         /// </summary>
         ILogger Logger { get; }
 
         /// <summary>
-        /// The plugin's properties
+        /// Gets the plugin's properties
         /// </summary>
         IPluginProperties Properties { get; }
 
         /// <summary>
-        /// The plugin's configuration store
+        /// Gets the plugin's configuration store
         /// </summary>
         IPluginConfigurationStore ConfigurationStore { get; }
 
         /// <summary>
-        /// The plugin's name
+        /// Gets the plugin's name
         /// </summary>
         string Name { get; }
 
         /// <summary>
-        /// The author of the plugin.
+        /// Gets the author of the plugin.
         /// </summary>
         string Author { get; }
 
         /// <summary>
-        /// A short description of the plugin
+        /// Gets a short description of the plugin
         /// </summary>
         string Description { get; }
 
         /// <summary>
-        /// The version of the plugin
+        /// Gets the version of the plugin
         /// </summary>
         Version Version { get; }
 
         /// <summary>
-        /// This plugin's content directory
+        /// Gets this plugin's content directory
         /// </summary>
         DirectoryInfo ContentDirectory { get; }
 
         /// <summary>
-        /// The plugin's resource directory
+        /// Gets the plugin's resource directory
         /// </summary>
         DirectoryInfo ResourceDirectory { get; }
 
         /// <summary>
-        /// The resource directory common to the plugin's module.
+        /// Gets the resource directory common to the plugin's module.
         /// </summary>
         DirectoryInfo CommonResourceDirectory { get; }
     }

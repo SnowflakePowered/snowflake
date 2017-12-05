@@ -5,24 +5,30 @@ using System.Data.Common;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Microsoft.Data.Sqlite;
 using Dapper;
+using Microsoft.Data.Sqlite;
 using Snowflake.Persistence;
 
 namespace Snowflake.Persistence
 {
     public class SqliteDatabase : ISqlDatabase
     {
+        /// <inheritdoc/>
         public string DatabaseName { get; }
         private readonly string dbConnectionString;
 
         public SqliteDatabase(string fileName)
         {
             this.DatabaseName = fileName;
-            if(!File.Exists(this.DatabaseName)) File.Create(this.DatabaseName).Dispose();
+            if (!File.Exists(this.DatabaseName))
+            {
+                File.Create(this.DatabaseName).Dispose();
+            }
+
             this.dbConnectionString = $"Data Source={this.DatabaseName};";
         }
 
+        /// <inheritdoc/>
         public IDbConnection GetConnection()
         {
             var connection = new SqliteConnection(this.dbConnectionString);
@@ -31,12 +37,12 @@ namespace Snowflake.Persistence
             {
                 walCommand.CommandText = "PRAGMA journal_mode = WAL;" +
                                          "PRAGMA foreign_keys = ON;" +
-                                         "PRAGMA recursive_triggers = ON;" + 
+                                         "PRAGMA recursive_triggers = ON;" +
                                          "PRAGMA synchronous = NORMAL;";
                 walCommand.ExecuteNonQuery();
             }
-            return connection;
 
+            return connection;
         }
 
         /// <summary>
@@ -50,13 +56,17 @@ namespace Snowflake.Persistence
         {
             T record;
             using (var dbTransaction = this.GetConnection().BeginTransaction())
-            using(var dbConnection = dbTransaction.Connection)
+            using (var dbConnection = dbTransaction.Connection)
             {
                 dbConnection.Open();
                 record = queryFunction(dbConnection);
                 dbTransaction.Commit();
-                if (dbConnection.State != ConnectionState.Closed) dbConnection.Close();
+                if (dbConnection.State != ConnectionState.Closed)
+                {
+                    dbConnection.Close();
+                }
             }
+
             return record;
         }
 
@@ -73,7 +83,10 @@ namespace Snowflake.Persistence
                 dbConnection.Open();
                 queryFunction(dbConnection);
                 dbTransaction.Commit();
-                if (dbConnection.State != ConnectionState.Closed) dbConnection.Close();
+                if (dbConnection.State != ConnectionState.Closed)
+                {
+                    dbConnection.Close();
+                }
             }
         }
 
@@ -121,7 +134,7 @@ namespace Snowflake.Persistence
         /// <param name="columns">The names of the columns to create</param>
         public void CreateTable(string tableName, params string[] columns)
         {
-            this.Execute($@"CREATE TABLE IF NOT EXISTS {tableName}({String.Join(",", columns)})");
+            this.Execute($@"CREATE TABLE IF NOT EXISTS {tableName}({string.Join(",", columns)})");
         }
     }
 }

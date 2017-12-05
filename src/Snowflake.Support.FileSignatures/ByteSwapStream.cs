@@ -24,64 +24,75 @@ namespace Snowflake.FileSignatures
 {
     public abstract class ByteSwapStream : Stream
     {
-        private Stream m_BaseStream;
+        private Stream baseStream;
 
         protected ByteSwapStream(Stream baseStream)
         {
             if (baseStream == null)
+            {
                 throw new ArgumentNullException("baseStream");
+            }
 
-            this.m_BaseStream = baseStream;
+            this.baseStream = baseStream;
         }
 
+        /// <inheritdoc/>
         public sealed override bool CanRead
         {
-            get { return this.m_BaseStream.CanRead; }
+            get { return this.baseStream.CanRead; }
         }
 
+        /// <inheritdoc/>
         public sealed override bool CanSeek
         {
-            get { return this.m_BaseStream.CanSeek; }
+            get { return this.baseStream.CanSeek; }
         }
 
+        /// <inheritdoc/>
         public sealed override bool CanWrite
         {
-            get { return this.m_BaseStream.CanWrite; }
+            get { return this.baseStream.CanWrite; }
         }
 
+        /// <inheritdoc/>
         public sealed override void Flush()
         {
-            this.m_BaseStream.Flush();
+            this.baseStream.Flush();
         }
 
+        /// <inheritdoc/>
         public sealed override long Length
         {
-            get { return this.m_BaseStream.Length; }
+            get { return this.baseStream.Length; }
         }
 
+        /// <inheritdoc/>
         public sealed override long Position
         {
             get
             {
-                return this.m_BaseStream.Position;
+                return this.baseStream.Position;
             }
             set
             {
-                this.m_BaseStream.Position = value;
+                this.baseStream.Position = value;
             }
         }
 
+        /// <inheritdoc/>
         public sealed override int Read(byte[] buffer, int offset, int count)
         {
             if (buffer == null)
+            {
                 throw new ArgumentNullException("buffer");
+            }
 
             /* Copy a block of data that isn't swapped */
-            Byte[] innerBuffer = new Byte[count];
+            byte[] innerBuffer = new byte[count];
 
             try
             {
-                this.m_BaseStream.Read(innerBuffer, 0, count);
+                this.baseStream.Read(innerBuffer, 0, count);
             }
             catch (Exception e)
             {
@@ -93,50 +104,55 @@ namespace Snowflake.FileSignatures
             /* Read into the new buffer swapped */
             for (int i = offset; i < count; i++)
             {
-                buffer[i] = innerBuffer[(Int32)this.ComputeNextSwapPosition(i - offset)];
+                buffer[i] = innerBuffer[(int)this.ComputeNextSwapPosition(i - offset)];
             }
 
             return count;
         }
 
+        /// <inheritdoc/>
         public sealed override long Seek(long offset, SeekOrigin origin)
         {
-            return this.m_BaseStream.Seek(offset, origin);
+            return this.baseStream.Seek(offset, origin);
         }
 
+        /// <inheritdoc/>
         public sealed override void SetLength(long value)
         {
-            this.m_BaseStream.SetLength(value);
+            this.baseStream.SetLength(value);
         }
 
+        /// <inheritdoc/>
         public sealed override void Write(byte[] buffer, int offset, int count)
         {
-            Byte[] innerBuffer = new Byte[count];
+            byte[] innerBuffer = new byte[count];
 
             /* Write the data to inner buffer as unswapped */
             for (int i = offset; i < count; i++)
             {
-                innerBuffer[(Int32)this.ComputeNextSwapPosition(i - offset)] = buffer[i];
+                innerBuffer[(int)this.ComputeNextSwapPosition(i - offset)] = buffer[i];
             }
 
             try
             {
-                this.m_BaseStream.Write(innerBuffer, 0, count);
+                this.baseStream.Write(innerBuffer, 0, count);
             }
             catch { throw; }
         }
 
+        /// <inheritdoc/>
         public sealed override int ReadByte()
         {
-            return this.m_BaseStream.ReadByte();
+            return this.baseStream.ReadByte();
         }
 
+        /// <inheritdoc/>
         public sealed override void WriteByte(byte value)
         {
-            this.m_BaseStream.WriteByte(value);
+            this.baseStream.WriteByte(value);
         }
 
-        protected abstract Int64 ComputeNextSwapPosition(Int64 position);
+        protected abstract long ComputeNextSwapPosition(long position);
     }
 
     public sealed class Int16SwapStream : ByteSwapStream
@@ -146,6 +162,7 @@ namespace Snowflake.FileSignatures
         {
         }
 
+        /// <inheritdoc/>
         protected override long ComputeNextSwapPosition(long position)
         {
             return (position & unchecked(0x7FFFFFFFFFFFFFFEL)) + 1 - (position % 2);
@@ -159,6 +176,7 @@ namespace Snowflake.FileSignatures
         {
         }
 
+        /// <inheritdoc/>
         protected override long ComputeNextSwapPosition(long position)
         {
             return (position & unchecked(0x7FFFFFFFFFFFFFFCL)) + 3 - (position % 4);
@@ -172,6 +190,7 @@ namespace Snowflake.FileSignatures
         {
         }
 
+        /// <inheritdoc/>
         protected override long ComputeNextSwapPosition(long position)
         {
             return (position & unchecked(0x7FFFFFFFFFFFFFF8L)) + 7 - (position % 8);
@@ -185,6 +204,7 @@ namespace Snowflake.FileSignatures
         {
         }
 
+        /// <inheritdoc/>
         protected override long ComputeNextSwapPosition(long position)
         {
             return ((position / 12) * 12) + 11 - (position % 12);

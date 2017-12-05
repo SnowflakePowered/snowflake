@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Net.Http;
-using System.Net;
-using System.Threading.Tasks;
 using System.IO;
+using System.Net;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Snowflake.Utility
 {
@@ -13,7 +13,9 @@ namespace Snowflake.Utility
         public static Task DownloadAsync(string requestUri, string filename)
         {
             if (requestUri == null)
+            {
                 throw new ArgumentNullException("Request URL can not be null");
+            }
 
             return DownloadAsync(new Uri(requestUri), filename);
         }
@@ -21,7 +23,10 @@ namespace Snowflake.Utility
         public static async Task DownloadAsync(Uri requestUri, string filename)
         {
             if (filename == null)
+            {
                 throw new ArgumentNullException("Filename can not be null");
+            }
+
             using (var httpClient = new HttpClient())
             {
                 using (var request = new HttpRequestMessage(HttpMethod.Get, requestUri))
@@ -35,7 +40,6 @@ namespace Snowflake.Utility
                 }
             }
         }
-
 
         public static async Task<Stream> DownloadDataAsync(Uri requestUri)
         {

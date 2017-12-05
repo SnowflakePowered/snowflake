@@ -11,7 +11,7 @@ namespace Snowflake.Services
     public interface IContentDirectoryProvider
     {
         /// <summary>
-        /// The application content directory.
+        /// Gets the application content directory.
         /// </summary>
         DirectoryInfo ApplicationData { get; }
     }

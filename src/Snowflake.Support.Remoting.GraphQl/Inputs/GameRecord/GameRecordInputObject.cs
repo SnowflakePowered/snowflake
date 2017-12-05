@@ -1,7 +1,7 @@
-﻿using Snowflake.Support.Remoting.GraphQl.Inputs.RecordMetadata;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Snowflake.Support.Remoting.GraphQl.Inputs.RecordMetadata;
 
 namespace Snowflake.Support.Remoting.GraphQl.Inputs.GameRecord
 {

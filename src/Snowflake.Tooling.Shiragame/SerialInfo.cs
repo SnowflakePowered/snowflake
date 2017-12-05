@@ -12,28 +12,30 @@ namespace Shiragame
     public class SerialInfo
     {
         /// <summary>
-        /// The Stone platform ID
+        /// Gets the Stone platform ID
         /// </summary>
         public string PlatformId { get; }
+
         /// <summary>
-        /// The canonical game name 
+        /// Gets the canonical game name
         /// </summary>
         public string Title { get; }
+
         /// <summary>
-        /// The region code
+        /// Gets the region code
         /// </summary>
         public string Region { get; }
+
         /// <summary>
-        /// The game serials
+        /// Gets the game serials
         /// </summary>
         public string Serial { get; }
-
 
         internal SerialInfo(string platformId, string title, string region, string serial)
         {
             this.PlatformId = platformId;
             this.Title = title;
-            this.Serial = serial.Replace("-", "").Replace("_", "").ToUpperInvariant(); //normalize serial
+            this.Serial = serial.Replace("-", string.Empty).Replace("_", string.Empty).ToUpperInvariant(); // normalize serial
             this.Region = region;
         }
     }

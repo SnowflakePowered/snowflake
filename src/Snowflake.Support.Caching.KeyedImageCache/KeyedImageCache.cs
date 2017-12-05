@@ -4,9 +4,9 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
+using Snowflake.Caching;
 using Snowflake.Records.File;
 using Snowflake.Records.Metadata;
-using Snowflake.Caching;
 
 namespace Snowflake.Support.Caching.KeyedImageCache
 {
@@ -19,6 +19,7 @@ namespace Snowflake.Support.Caching.KeyedImageCache
             this.rootPath = appDataPath.CreateSubdirectory(".imgcache");
         }
 
+        /// <inheritdoc/>
         public IList<IFileRecord> Add(Stream imageStream, Guid recordGuid, string imageType)
         {
             Guid cacheId = Guid.NewGuid();
@@ -29,11 +30,11 @@ namespace Snowflake.Support.Caching.KeyedImageCache
                 KeyedImageCache.SaveImage(image, 100, cacheId, cachePath, imageType, recordGuid),
                 KeyedImageCache.SaveImage(image, 50, cacheId, cachePath, imageType, recordGuid),
                 KeyedImageCache.SaveImage(image, 25, cacheId, cachePath, imageType, recordGuid),
-                KeyedImageCache.SaveImage(image, 10, cacheId, cachePath, imageType, recordGuid)
-
+                KeyedImageCache.SaveImage(image, 10, cacheId, cachePath, imageType, recordGuid),
             };
         }
 
+        /// <inheritdoc/>
         public IList<IFileRecord> Add(Stream imageStream, Guid recordGuid, string imageType, DateTime dateTime)
         {
             Guid cacheId = Guid.NewGuid();
@@ -44,8 +45,7 @@ namespace Snowflake.Support.Caching.KeyedImageCache
                 KeyedImageCache.SaveImage(image, 100, cacheId, cachePath, imageType, recordGuid, dateTime),
                 KeyedImageCache.SaveImage(image, 50, cacheId, cachePath, imageType, recordGuid, dateTime),
                 KeyedImageCache.SaveImage(image, 25, cacheId, cachePath, imageType, recordGuid, dateTime),
-                KeyedImageCache.SaveImage(image, 10, cacheId, cachePath, imageType, recordGuid, dateTime)
-
+                KeyedImageCache.SaveImage(image, 10, cacheId, cachePath, imageType, recordGuid, dateTime),
             };
         }
 
@@ -55,7 +55,6 @@ namespace Snowflake.Support.Caching.KeyedImageCache
             if (percent == 100)
             {
                 image.Save(path, ImageFormat.Jpeg);
-                
             }
             else
             {
@@ -64,12 +63,13 @@ namespace Snowflake.Support.Caching.KeyedImageCache
                     resizedImage.Save(path, ImageFormat.Jpeg);
                 }
             }
+
             var record = new FileRecord(path, "image/jpeg");
             var data = new List<IRecordMetadata>()
             {
-                {new RecordMetadata(ImageMetadataKeys.CacheId, cacheId.ToString(), record.Guid)},
-                {new RecordMetadata(ImageMetadataKeys.Scale, percent.ToString(), record.Guid)},
-                {new RecordMetadata(ImageMetadataKeys.Type, imageType, record.Guid)}
+                { new RecordMetadata(ImageMetadataKeys.CacheId, cacheId.ToString(), record.Guid) },
+                { new RecordMetadata(ImageMetadataKeys.Scale, percent.ToString(), record.Guid) },
+                { new RecordMetadata(ImageMetadataKeys.Type, imageType, record.Guid) },
             };
 
             foreach (var metadata in data)
@@ -79,6 +79,7 @@ namespace Snowflake.Support.Caching.KeyedImageCache
 
             return record;
         }
+
         private static IFileRecord SaveImage(Image image, int percent, Guid cacheId, DirectoryInfo cachePath, string imageType, Guid recordGuid, DateTime dateTime)
         {
             var record = KeyedImageCache.SaveImage(image, percent, cacheId, cachePath, imageType, recordGuid);
@@ -116,8 +117,10 @@ namespace Snowflake.Support.Caching.KeyedImageCache
                     graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
                 }
             }
+
             return destImage;
         }
+
         /// <summary>
         /// Resize an image by a percentage factor
         /// </summary>

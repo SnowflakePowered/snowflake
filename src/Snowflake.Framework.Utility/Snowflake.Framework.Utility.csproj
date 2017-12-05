@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <RootNamespace>Snowflake</RootNamespace>
+    <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Cover' ">
@@ -12,6 +13,7 @@
   <ItemGroup>
     <PackageReference Include="Enums.NET" Version="2.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta004" />
     <PackageReference Include="System.Globalization.Extensions" Version="4.3.0" />
   </ItemGroup>
 
@@ -22,4 +24,11 @@
   <ItemGroup>
     <Folder Include="Hash\Crc32.NET\" />
   </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="..\stylecop.json" />
+
+  </ItemGroup>
+  <PropertyGroup>
+    <CodeAnalysisRuleSet>..\Snowflake.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
 </Project>

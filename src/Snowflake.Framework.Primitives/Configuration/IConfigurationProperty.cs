@@ -13,12 +13,12 @@ namespace Snowflake.Configuration
     public interface IConfigurationProperty
     {
         /// <summary>
-        /// The value of the property
+        /// Gets the value of the property
         /// </summary>
         object Value { get; }
 
         /// <summary>
-        /// The metadata associated with this property
+        /// Gets the metadata associated with this property
         /// </summary>
         ConfigurationOptionAttribute Metadata { get; }
     }

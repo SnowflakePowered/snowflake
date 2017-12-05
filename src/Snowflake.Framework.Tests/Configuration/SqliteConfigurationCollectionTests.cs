@@ -5,9 +5,9 @@ using System.Linq;
 using System.Runtime.Serialization.Formatters;
 using System.Text;
 using System.Threading.Tasks;
+using Snowflake.Persistence;
 using Snowflake.Utility;
 using Xunit;
-using Snowflake.Persistence;
 
 namespace Snowflake.Configuration.Tests
 {
@@ -32,7 +32,6 @@ namespace Snowflake.Configuration.Tests
 
             store.Set(configCollection, Guid.Empty, "test", "test");
 
-            
             var retrievedConfig = store.Get<ExampleConfigurationCollection>(Guid.Empty, "test", "test");
             Assert.NotNull(retrievedConfig);
             Assert.Equal(configCollection.Configuration.ExampleConfiguration.ISOPath0, retrievedConfig.Configuration.ExampleConfiguration.ISOPath0);
@@ -59,7 +58,6 @@ namespace Snowflake.Configuration.Tests
             Assert.Equal(configCollection.Configuration.ExampleConfiguration.FullscreenResolution, retrievedConfig.Configuration.ExampleConfiguration.FullscreenResolution);
             Assert.Equal(configCollection.Configuration.ExampleConfiguration.Fullscreen, retrievedConfig.Configuration.ExampleConfiguration.Fullscreen);
         }
-
 
         [Fact]
         public void ConfigurationStoreMultipleProfileIndividual_Test()
@@ -89,7 +87,6 @@ namespace Snowflake.Configuration.Tests
             Assert.NotEqual(retrievedConfig.Configuration.ExampleConfiguration.FullscreenResolution, newRetrievedConfig.Configuration.ExampleConfiguration.FullscreenResolution);
             Assert.NotEqual(retrievedConfig.Configuration.ExampleConfiguration.ISOPath0, newRetrievedConfig.Configuration.ExampleConfiguration.ISOPath0);
             Assert.NotEqual(retrievedConfig.Configuration.ExampleConfiguration.Fullscreen, newRetrievedConfig.Configuration.ExampleConfiguration.Fullscreen);
-
         }
 
         [Fact]
@@ -103,11 +100,6 @@ namespace Snowflake.Configuration.Tests
             Assert.Equal(configCollection.Configuration.ExampleConfiguration.ISOPath0, retrievedConfig.Configuration.ExampleConfiguration.ISOPath0);
             Assert.Equal(configCollection.Configuration.ExampleConfiguration.FullscreenResolution, retrievedConfig.Configuration.ExampleConfiguration.FullscreenResolution);
             Assert.Equal(configCollection.Configuration.ExampleConfiguration.Fullscreen, retrievedConfig.Configuration.ExampleConfiguration.Fullscreen);
-
         }
-
-
-
-
     }
 }

@@ -12,27 +12,27 @@ namespace Snowflake.Input.Controller
     public interface IControllerLayout
     {
         /// <summary>
-        /// The identifier or name of the layout.
+        /// Gets the identifier or name of the layout.
         /// </summary>
         string LayoutID { get; }
-        
+
         /// <summary>
-        /// The friendly name of this layout
+        /// Gets the friendly name of this layout
         /// </summary>
         string FriendlyName { get; }
 
         /// <summary>
-        /// Whether or not this is a real device layout or a virtual one.
+        /// Gets a value indicating whether whether or not this is a real device layout or a virtual one.
         /// </summary>
         bool IsRealDevice { get; }
 
         /// <summary>
-        /// The platforms this controller supports.
+        /// Gets the platforms this controller supports.
         /// </summary>
         IEnumerable<string> Platforms { get; }
 
         /// <summary>
-        /// The actual collection of layout elements
+        /// Gets the actual collection of layout elements
         /// </summary>
         IControllerElementCollection Layout { get; }
     }

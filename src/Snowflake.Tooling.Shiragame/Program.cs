@@ -6,10 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Shiragame.Builder.Parser;
+using Snowflake.Persistence;
 using Snowflake.Platform;
 using Snowflake.Services;
 using Snowflake.Utility;
-using Snowflake.Persistence;
 
 namespace Shiragame.Builder
 {
@@ -32,6 +32,7 @@ namespace Shiragame.Builder
                     Directory.CreateDirectory(Path.Combine("PlatformDats", platform.Key));
                 }
             }
+
             if (File.Exists(Path.Combine("PlatformDats", "openvgdb.sqlite")))
             {
                 Console.WriteLine("OpenVGDB Found. Parsing...");
@@ -40,9 +41,14 @@ namespace Shiragame.Builder
                 datInfos = datInfos.Concat(openvgdb.GetDatInfos().ToList());
                 mameFilenames = mameFilenames.Concat(openvgdb.GetMameFiles().ToList());
             }
-            foreach (string platformId in stone.Platforms.Select( p => p.Key))
+
+            foreach (string platformId in stone.Platforms.Select(p => p.Key))
             {
-                if (!Directory.Exists(Path.Combine("PlatformDats", platformId))) continue;
+                if (!Directory.Exists(Path.Combine("PlatformDats", platformId)))
+                {
+                    continue;
+                }
+
                 foreach (string file in Directory.EnumerateFiles(Path.Combine("PlatformDats", platformId)))
                 {
                     Console.Write(platformId + " found: " + Path.GetFileName(file));
@@ -53,6 +59,7 @@ namespace Shiragame.Builder
                         serialInfos = serialInfos.Concat(IdlistParser.ParseSerials(file, platformId));
                         continue;
                     }
+
                     switch (DatParser.GetParser(File.ReadLines(file).First()))
                     {
                         case ParserClass.Cmp:
@@ -77,15 +84,16 @@ namespace Shiragame.Builder
 
             Console.WriteLine("Generating shiragame.db ...");
             var memoryDb = new ShiragameDb();
-            if (!Directory.Exists("out")) Directory.CreateDirectory("out");
+            if (!Directory.Exists("out"))
+            {
+                Directory.CreateDirectory("out");
+            }
+
             var diskDb = new SqliteDatabase("out\\shiragame.db");
             memoryDb.Commit(datInfos.ToList());
-            memoryDb.Commit(serialInfos.DistinctBy(x => new { x.PlatformId, x.Serial}).ToList());
+            memoryDb.Commit(serialInfos.DistinctBy(x => new { x.PlatformId, x.Serial }).ToList());
             memoryDb.Commit(mameFilenames.ToList());
-            memoryDb.SaveTo(diskDb); //todo fix online backup API
-
-
+            memoryDb.SaveTo(diskDb); // todo fix online backup API
         }
-
     }
 }

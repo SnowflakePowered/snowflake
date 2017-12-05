@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Snowflake.Loader
 {
-    public interface IModuleLoader<out T> 
+    public interface IModuleLoader<out T>
     {
         IEnumerable<T> LoadModule(IModule module);
     }

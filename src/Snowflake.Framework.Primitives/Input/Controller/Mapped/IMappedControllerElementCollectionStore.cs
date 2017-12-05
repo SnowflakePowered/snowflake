@@ -5,17 +5,17 @@ namespace Snowflake.Input
 {
     /// <summary>
     /// Represents a store of controller mapping profiles <see cref="IMappedControllerElementCollection"/>
-    /// 
+    ///
     /// <para>
-    /// Mapping profiles are stored in standard Stone controller format in a database, keyed on 
-    /// the Stone layout name of the emulated controller, 
+    /// Mapping profiles are stored in standard Stone controller format in a database, keyed on
+    /// the Stone layout name of the emulated controller,
     /// the device name of the enumerated real controller <see cref="Input.Device.IInputDevice"/>,
     /// and a profile name, user specified and 'default'.
     /// </para>
-    /// 
+    ///
     /// <para>
     /// The IMappedControllerElementCollectionStore does not consider which player and only stores
-    /// a list of profiles for each combination of real to emulated controller. 
+    /// a list of profiles for each combination of real to emulated controller.
     /// </para>
     /// </summary>
     public interface IMappedControllerElementCollectionStore

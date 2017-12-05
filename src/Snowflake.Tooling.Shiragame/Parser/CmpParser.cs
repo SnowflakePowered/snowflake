@@ -28,7 +28,6 @@ namespace Shiragame.Builder.Parser
             return CmpParser.GetEntries(regex, platformId);
         }
 
-
         /// <summary>
         /// Parse ClrMamePro dat files
         /// </summary>
@@ -51,28 +50,35 @@ namespace Shiragame.Builder.Parser
                     gameEntry = new Dictionary<string, string>();
                     continue;
                 }
+
                 if (line.Equals(")"))
                 {
                     yield return gameEntry;
                     continue;
                 }
-                if (String.IsNullOrWhiteSpace(line))
+
+                if (string.IsNullOrWhiteSpace(line))
                 {
                     continue;
                 }
-                
-                var lines = line.Trim().Split(new char[] {' '}, 2, StringSplitOptions.None);
-                if (lines[0].Equals("rom")) continue;
+
+                var lines = line.Trim().Split(new char[] { ' ' }, 2, StringSplitOptions.None);
+                if (lines[0].Equals("rom"))
+                {
+                    continue;
+                }
+
                 gameEntry.Add(lines[0], lines[1].Trim('"'));
             }
         }
+
         private static IEnumerable<SerialInfo> GetSerials(IEnumerable<IDictionary<string, string>> cmpMatches, string platformId)
         {
             return from entry in cmpMatches.AsParallel()
                 where entry.ContainsKey("serial")
                 let name = entry["name"]
-                let serials = platformId.StartsWith("NINTENDO") ? 
-                        Regex.Replace(entry["serial"], "[A-Z]*?-[A-Z]-", "") : entry["serial"] //sanitize nintendo serials
+                let serials = platformId.StartsWith("NINTENDO") ?
+                        Regex.Replace(entry["serial"], "[A-Z]*?-[A-Z]-", string.Empty) : entry["serial"] // sanitize nintendo serials
                 let region = RegionParser.ParseRegion(name)
                 select new SerialInfo(platformId, name, region, serials);
         }

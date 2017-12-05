@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Reflection;
 using Dapper;
 using EnumsNET.NonGeneric;
-using Snowflake.Persistence;
-using System.Data.Common;
 using Snowflake.Configuration;
+using Snowflake.Persistence;
 
 namespace Snowflake.Extensibility.Configuration
 {
@@ -35,7 +35,9 @@ namespace Snowflake.Extensibility.Configuration
                 "PRIMARY KEY (uuid)");
         }
 
-        public IConfigurationSection<T> Get<T>() where T: class, IConfigurationSection<T>
+        /// <inheritdoc/>
+        public IConfigurationSection<T> Get<T>()
+            where T : class, IConfigurationSection<T>
         {
             string typeName = typeof(T).FullName;
             var records = this.backingDatabase.Query(dbConnection =>
@@ -48,18 +50,19 @@ namespace Snowflake.Extensibility.Configuration
             return new ConfigurationSection<T>(defs);
         }
 
-        public void Set<T>(IConfigurationSection<T> configuration) 
-            where T: class, IConfigurationSection<T>
+        /// <inheritdoc/>
+        public void Set<T>(IConfigurationSection<T> configuration)
+            where T : class, IConfigurationSection<T>
         {
             var values = from value in configuration.Values
                 select new
                 {
                     uuid = value.Value.Guid,
-                    value = value.Value.Value.GetType().GetTypeInfo().IsEnum ? 
-                            NonGenericEnums.GetName(value.Value.Value.GetType(), value.Value.Value) : //optimized path for enums
-                            Convert.ToString(value.Value.Value), //so i put a value in your value so you can value values
+                    value = value.Value.Value.GetType().GetTypeInfo().IsEnum ?
+                            NonGenericEnums.GetName(value.Value.Value.GetType(), value.Value.Value) : // optimized path for enums
+                            Convert.ToString(value.Value.Value), // so i put a value in your value so you can value values
                     option = value.Key,
-                    typeName = typeof(T).FullName
+                    typeName = typeof(T).FullName,
                 };
             this.backingDatabase.Execute(dbConnection =>
             {
@@ -69,6 +72,7 @@ namespace Snowflake.Extensibility.Configuration
             });
         }
 
+        /// <inheritdoc/>
         public void Set(IConfigurationValue value)
         {
             try
@@ -79,7 +83,7 @@ namespace Snowflake.Extensibility.Configuration
                         @"UPDATE configuration SET value = @Value WHERE uuid == @Guid", new
                         {
                             value.Value,
-                            value.Guid
+                            value.Guid,
                         });
                 });
             }
@@ -88,10 +92,9 @@ namespace Snowflake.Extensibility.Configuration
                 throw new KeyNotFoundException("Value GUID was not found in store.");
             }
         }
-
     }
 
-    class ConfigurationRecord
+    internal class ConfigurationRecord
     {
         public byte[] uuid;
         public string value;

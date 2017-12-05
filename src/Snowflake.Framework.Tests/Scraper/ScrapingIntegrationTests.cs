@@ -5,20 +5,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Caching;
+using Snowflake.Persistence;
+using Snowflake.Plugin.Scrapers.TheGamesDb;
 using Snowflake.Records.File;
 using Snowflake.Records.Game;
 using Snowflake.Romfile;
 using Snowflake.Romfile.FileSignatures;
+using Snowflake.Romfile.FileSignatures.Composers;
 using Snowflake.Scraper;
 using Snowflake.Scraper.Providers;
 using Snowflake.Scraper.Shiragame;
-using Snowflake.Plugin.Scrapers.TheGamesDb;
-using Xunit;
 using Snowflake.Services;
-using Snowflake.Romfile.FileSignatures.Composers;
 using Snowflake.Support.Caching.KeyedImageCache;
 using Snowflake.Support.ShiragameProvider;
-using Snowflake.Persistence;
+using Xunit;
 
 namespace Snowflake.Tests.Scraper
 {
@@ -57,6 +57,5 @@ namespace Snowflake.Tests.Scraper
             var fr = this.scrapeGen.GetFileInformation(fileName);
             return this.scrapeGen.GetGameRecordFromFile(fr);
         }
-
     }
 }

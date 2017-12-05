@@ -11,15 +11,14 @@ namespace Snowflake.Plugin.InputManager.Win32
 {
     public class InputManager : IInputManager
     {
-
+        /// <inheritdoc/>
         public IEnumerable<ILowLevelInputDevice> GetAllDevices()
         {
             var directInput = new SharpDX.DirectInput.DirectInput();
             var devices = directInput.GetDevices(DeviceClass.All, DeviceEnumerationFlags.AttachedOnly);
-            
 
             var directInputGamepads =
-                this.GetGenericGamepads(devices.Where(device => device.Type == SharpDX.DirectInput.DeviceType.Gamepad 
+                this.GetGenericGamepads(devices.Where(device => device.Type == SharpDX.DirectInput.DeviceType.Gamepad
                 || device.Type == SharpDX.DirectInput.DeviceType.Joystick), directInput);
             var xinputGamepads = this.GetXInputGamepads();
             var keyboards = directInput.GetDevices(DeviceClass.Keyboard, DeviceEnumerationFlags.AllDevices)
@@ -30,11 +29,10 @@ namespace Snowflake.Plugin.InputManager.Win32
                 DI_InstanceName = keyboard.InstanceName.Trim('\0'),
                 DI_ProductName = keyboard.ProductName.Trim('\0'),
                 DI_ProductGUID = keyboard.ProductGuid,
-                DI_DeviceType = DeviceType.Keyboard
-                
+                DI_DeviceType = DeviceType.Keyboard,
             });
 
-            var mice = directInput.GetDevices(DeviceClass.Pointer, 
+            var mice = directInput.GetDevices(DeviceClass.Pointer,
                 DeviceEnumerationFlags.AllDevices).Select(mouse => new LowLevelInputDevice()
             {
                 DiscoveryApi = InputApi.DirectInput,
@@ -42,7 +40,7 @@ namespace Snowflake.Plugin.InputManager.Win32
                 DI_InstanceName = mouse.InstanceName.Trim('\0'),
                 DI_ProductName = mouse.ProductName.Trim('\0'),
                 DI_ProductGUID = mouse.ProductGuid,
-                DI_DeviceType = DeviceType.Mouse
+                DI_DeviceType = DeviceType.Mouse,
             });
 
             return directInputGamepads.Concat(xinputGamepads).Concat(keyboards).Concat(mice);
@@ -64,8 +62,7 @@ namespace Snowflake.Plugin.InputManager.Win32
                     DI_ProductName = deviceInstance.ProductName.Trim('\0'),
                     DI_ProductGUID = deviceInstance.ProductGuid,
                     DI_DeviceType = DeviceType.Gamepad,
-                    DI_EnumerationNumber = i
-
+                    DI_EnumerationNumber = i,
                 };
 
                 try
@@ -85,6 +82,7 @@ namespace Snowflake.Plugin.InputManager.Win32
                     inputDevices.Add(inputDevice);
                 }
             }
+
             return inputDevices;
         }
 
@@ -100,10 +98,11 @@ namespace Snowflake.Plugin.InputManager.Win32
                     DI_DeviceType = DeviceType.Gamepad,
                     XI_GamepadIndex = i,
                     XI_IsXInput = true,
-                    XI_IsConnected = xinput.IsConnected
+                    XI_IsConnected = xinput.IsConnected,
                 };
                 inputDevices.Add(device);
             }
+
             return inputDevices;
         }
     }

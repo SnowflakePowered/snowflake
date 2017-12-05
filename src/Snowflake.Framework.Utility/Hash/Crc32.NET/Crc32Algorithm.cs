@@ -9,29 +9,20 @@ namespace Force.Crc32
     /// </summary>
     public class Crc32Algorithm : HashAlgorithm
     {
-        private uint _currentCrc;
-
-        private readonly bool _isBigEndian = true;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Crc32Algorithm"/> class. 
-        /// </summary>
-        public Crc32Algorithm()
-        {
-#if !NETCORE
-            HashSizeValue = 32;
-#endif
-        }
+        private readonly bool isBigEndian;
+        private uint currentCrc;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Crc32Algorithm"/> class. 
+        /// Initializes a new instance of the <see cref="Crc32Algorithm"/> class.
         /// </summary>
         /// <param name="isBigEndian">Should return bytes result as big endian or little endian</param>
         // Crc32 by dariogriffo uses big endian, so, we need to be compatible and return big endian as default
         public Crc32Algorithm(bool isBigEndian = true)
-            : this()
         {
-            _isBigEndian = isBigEndian;
+            this.isBigEndian = isBigEndian;
+#if !NETCORE
+            this.HashSizeValue = 32;
+#endif
         }
 
         /// <summary>
@@ -49,9 +40,15 @@ namespace Force.Crc32
         public static uint Append(uint initial, byte[] input, int offset, int length)
         {
             if (input == null)
+            {
                 throw new ArgumentNullException();
+            }
+
             if (offset < 0 || length < 0 || offset + length > input.Length)
+            {
                 throw new ArgumentOutOfRangeException("Selected range is outside the bounds of the input array");
+            }
+
             return AppendInternal(initial, input, offset, length);
         }
 
@@ -68,7 +65,10 @@ namespace Force.Crc32
         public static uint Append(uint initial, byte[] input)
         {
             if (input == null)
+            {
                 throw new ArgumentNullException();
+            }
+
             return AppendInternal(initial, input, 0, input.Length);
         }
 
@@ -104,7 +104,10 @@ namespace Force.Crc32
         public static uint ComputeAndWriteToEnd(byte[] input, int offset, int length)
         {
             if (length + 4 > input.Length)
+            {
                 throw new ArgumentOutOfRangeException("length", "Length of data should be less than array length - 4 bytes of CRC data");
+            }
+
             var crc = Append(0, input, offset, length);
             var r = offset + length;
             input[r] = (byte)crc;
@@ -122,7 +125,10 @@ namespace Force.Crc32
         public static uint ComputeAndWriteToEnd(byte[] input)
         {
             if (input.Length < 4)
+            {
                 throw new ArgumentOutOfRangeException("input", "input array should be 4 bytes at least");
+            }
+
             return ComputeAndWriteToEnd(input, 0, input.Length - 4);
         }
 
@@ -146,7 +152,10 @@ namespace Force.Crc32
         public static bool IsValidWithCrcAtEnd(byte[] input)
         {
             if (input.Length < 4)
+            {
                 throw new ArgumentOutOfRangeException("input", "input array should be 4 bytes at least");
+            }
+
             return Append(0, input, 0, input.Length) == 0x2144DF1C;
         }
 
@@ -155,7 +164,7 @@ namespace Force.Crc32
         /// </summary>
         public override void Initialize()
         {
-            _currentCrc = 0;
+            this.currentCrc = 0;
         }
 
         /// <summary>
@@ -163,7 +172,7 @@ namespace Force.Crc32
         /// </summary>
         protected override void HashCore(byte[] input, int offset, int length)
         {
-            _currentCrc = AppendInternal(_currentCrc, input, offset, length);
+            this.currentCrc = AppendInternal(this.currentCrc, input, offset, length);
         }
 
         /// <summary>
@@ -171,10 +180,14 @@ namespace Force.Crc32
         /// </summary>
         protected override byte[] HashFinal()
         {
-            if (_isBigEndian)
-                return new[] { (byte)(_currentCrc >> 24), (byte)(_currentCrc >> 16), (byte)(_currentCrc >> 8), (byte)_currentCrc };
+            if (this.isBigEndian)
+            {
+                return new[] { (byte)(this.currentCrc >> 24), (byte)(this.currentCrc >> 16), (byte)(this.currentCrc >> 8), (byte)this.currentCrc };
+            }
             else
-                return new[] { (byte)_currentCrc, (byte)(_currentCrc >> 8), (byte)(_currentCrc >> 16), (byte)(_currentCrc >> 24) };
+            {
+                return new[] { (byte)this.currentCrc, (byte)(this.currentCrc >> 8), (byte)(this.currentCrc >> 16), (byte)(this.currentCrc >> 24) };
+            }
         }
 
         private static readonly SafeProxy _proxy = new SafeProxy();

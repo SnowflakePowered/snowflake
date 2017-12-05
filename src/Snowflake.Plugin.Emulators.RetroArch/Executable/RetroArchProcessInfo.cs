@@ -3,9 +3,8 @@ using System.IO;
 
 namespace Snowflake.Plugin.Emulators.RetroArch.Executable
 {
-    internal class RetroArchProcessInfo 
+    internal class RetroArchProcessInfo
     {
-
         public string ConfigPath { private get; set; }
         public string CorePath { private get; set; }
         public string SavePath { private get; set; }
@@ -23,17 +22,16 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Executable
         {
             var info = new ProcessStartInfo(Path.Combine(this.retroArchDirectory, this.Debug ? "retroarch_debug" : "retroarch"))
             {
-                WorkingDirectory = this.retroArchDirectory, 
-                Arguments = $@"{(this.Debug ? "-v --log-file retroarch.log ": "")}{this.GetArgument(this.SavePath, "-s")}{this.GetArgument(this.ConfigPath, "-c")}{this.GetArgument(this.CorePath, "-L")}""{this.romFile}"" {this.GetArgument(this.Subsystem, "--subsystem")}",
-               
+                WorkingDirectory = this.retroArchDirectory,
+                Arguments = $@"{(this.Debug ? "-v --log-file retroarch.log " : string.Empty)}{this.GetArgument(this.SavePath, "-s")}{this.GetArgument(this.ConfigPath, "-c")}{this.GetArgument(this.CorePath, "-L")}""{this.romFile}"" {this.GetArgument(this.Subsystem, "--subsystem")}",
             };
-            
+
             return info;
         }
 
         internal string GetArgument(string value, string argumentName)
         {
-            return value != null ? $@"{argumentName} ""{value}"" " : "";
+            return value != null ? $@"{argumentName} ""{value}"" " : string.Empty;
         }
     }
 }

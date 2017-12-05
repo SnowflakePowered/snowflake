@@ -6,14 +6,13 @@
     public interface IMappedControllerElement
     {
         /// <summary>
-        /// The virtual element.
+        /// Gets the virtual element.
         /// </summary>
         ControllerElement LayoutElement { get; }
 
         /// <summary>
-        /// The real element.
+        /// Gets or sets the real element.
         /// </summary>
         ControllerElement DeviceElement { get; set; }
-
     }
 }

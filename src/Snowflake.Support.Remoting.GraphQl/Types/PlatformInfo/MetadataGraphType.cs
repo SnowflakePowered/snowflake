@@ -1,11 +1,11 @@
-﻿using GraphQL.Types;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using GraphQL.Types;
 
 namespace Snowflake.Support.Remoting.GraphQl.Types.PlatformInfo
 {
-    internal class MetadataGraphType: ObjectGraphType<KeyValuePair<string, string>>
+    internal class MetadataGraphType : ObjectGraphType<KeyValuePair<string, string>>
     {
         public MetadataGraphType()
         {

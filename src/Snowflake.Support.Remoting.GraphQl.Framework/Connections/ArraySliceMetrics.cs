@@ -12,21 +12,23 @@ namespace GraphQL.Relay.Types
         private IList<TSource> _items;
 
         /// <summary>
-        /// The Total number of items in outer list. May be >= the SliceSize
+        /// Gets or sets the Total number of items in outer list. May be >= the SliceSize
         /// </summary>
         public int TotalCount { get; set; }
 
         /// <summary>
-        /// The local total of the list slice.
+        /// Gets or sets the local total of the list slice.
         /// </summary>
         public int SliceSize { get; set; }
+
         /// <summary>
-        /// The start index of the slice within the larger List
+        /// Gets or sets the start index of the slice within the larger List
         /// </summary>
         /// <returns></returns>
         public int StartIndex { get; set; } = 0;
+
         /// <summary>
-        /// The end index of the slice within the larger List
+        /// Gets the end index of the slice within the larger List
         /// </summary>
         public int EndIndex => StartIndex + SliceSize;
 
@@ -37,20 +39,18 @@ namespace GraphQL.Relay.Types
 
         public ArraySliceMetrics(
             IList<TSource> slice,
-            ResolveConnectionContext<TParent> context
-        ) : this(slice, context, 0, slice.Count) { }
+            ResolveConnectionContext<TParent> context)
+            : this(slice, context, 0, slice.Count) { }
 
         public IEnumerable<TSource> Slice => _items.Slice(
             Math.Max(StartOffset - StartIndex, 0),
-            SliceSize - (EndIndex - EndOffset)
-        );
+            SliceSize - (EndIndex - EndOffset));
 
         public ArraySliceMetrics(
             IList<TSource> slice,
             ResolveConnectionContext<TParent> context,
             int sliceStartIndex,
-            int totalCount
-        )
+            int totalCount)
         {
             _items = slice;
 
@@ -64,10 +64,14 @@ namespace GraphQL.Relay.Types
             EndOffset = new[] { EndIndex - 1, beforeOffset, totalCount }.Max();
 
             if (context.First.HasValue)
+            {
                 EndOffset = Math.Min(EndOffset, StartOffset + context.First.Value);
+            }
 
             if (context.Last.HasValue)
+            {
                 StartOffset = Math.Min(StartOffset, EndOffset - context.Last.Value);
+            }
 
             var lowerBound = context.After != null ? afterOffset + 1 : 0;
             var upperBound = context.Before != null ? beforeOffset : totalCount;

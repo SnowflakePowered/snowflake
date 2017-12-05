@@ -17,7 +17,7 @@ namespace Snowflake.Records.Tests
         public void AddWithKeyValue_Test()
         {
             var recordMetadata = new RecordMetadata("TestKey", "TestValue", Guid.Empty);
-            var collection = new MetadataCollection(Guid.Empty) {{"TestKey", "TestValue"}};
+            var collection = new MetadataCollection(Guid.Empty) { { "TestKey", "TestValue" } };
             Assert.Equal(recordMetadata, collection["TestKey"]);
         }
 
@@ -25,7 +25,7 @@ namespace Snowflake.Records.Tests
         public void GetByGuid_Test()
         {
             var recordMetadata = new RecordMetadata("TestKey", "TestValue", Guid.Empty);
-            var collection = new MetadataCollection(Guid.Empty) {{"TestKey", "TestValue"}};
+            var collection = new MetadataCollection(Guid.Empty) { { "TestKey", "TestValue" } };
             Assert.Equal(collection[recordMetadata.Guid], recordMetadata);
         }
 
@@ -37,5 +37,4 @@ namespace Snowflake.Records.Tests
             Assert.Equal("TestValue", collection["TestKey"]);
         }
     }
-    
 }

@@ -8,7 +8,7 @@
   <PropertyGroup Condition=" '$(Configuration)' == 'Cover' ">
     <DebugType>Full</DebugType>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <PackageReference Include="System.Diagnostics.Process" Version="4.3.0" />
   </ItemGroup>
@@ -18,8 +18,13 @@
     <ProjectReference Include="..\Snowflake.Framework.Utility\Snowflake.Framework.Utility.csproj" />
     <ProjectReference Include="..\Snowflake.Framework\Snowflake.Framework.csproj" />
   </ItemGroup>
-  
   <ItemGroup>
     <DotNetCliToolReference Include="dotnet-pack-snowflake" Version="1.2.0" />
   </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="..\stylecop.json" />
+  </ItemGroup>
+  <PropertyGroup>
+    <CodeAnalysisRuleSet>..\Snowflake.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
 </Project>

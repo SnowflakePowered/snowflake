@@ -13,19 +13,22 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Shaders
     internal class ShaderAttribute : Attribute
     {
         /// <summary>
-        /// This shader's name
+        /// Gets this shader's name
         /// </summary>
         public string ShaderName { get; }
+
         /// <summary>
-        /// This shader supportes Cg format
+        /// Gets or sets a value indicating whether this shader supportes Cg format
         /// </summary>
         public bool CgSupport { get; set; }
+
         /// <summary>
-        /// This shader supports Glsl format
+        /// Gets or sets a value indicating whether this shader supports Glsl format
         /// </summary>
         public bool GlslSupport { get; set; }
+
         /// <summary>
-        /// This shader supports Slang format
+        /// Gets or sets a value indicating whether this shader supports Slang format
         /// </summary>
         public bool SlangSupport { get; set; }
         public ShaderAttribute(string shaderName)

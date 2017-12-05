@@ -16,6 +16,6 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Selections.AudioConfiguration
         [SelectionOption("nearest")]
         Nearest,
         [SelectionOption("CC")]
-        CC
+        CC,
     }
 }

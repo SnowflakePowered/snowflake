@@ -14,12 +14,11 @@ namespace Snowflake.Configuration.Tests
         [Fact]
         public void JsonSerialization_Test()
         {
-            JObject jobject = 
-                JsonConvert.DeserializeObject<JObject>
-                (JsonConvert.SerializeObject(new ConfigurationCollection<ExampleConfigurationCollection>())).Children<JProperty>().First().Value as JObject;
+            JObject jobject =
+                JsonConvert.DeserializeObject<JObject>(
+                JsonConvert.SerializeObject(new ConfigurationCollection<ExampleConfigurationCollection>())).Children<JProperty>().First().Value as JObject;
             Assert.Contains("Configuration", jobject.Properties().Select(k => k.Name));
             Assert.Contains("Descriptor", jobject.Properties().Select(k => k.Name));
-
         }
     }
 }

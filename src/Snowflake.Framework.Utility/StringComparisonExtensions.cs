@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Text.RegularExpressions;
-using System.Globalization;
+using System.Threading.Tasks;
 
 namespace Snowflake.Utility
 {
@@ -21,22 +21,23 @@ namespace Snowflake.Utility
 
             return string.Join(" ", tokens);
         }
+
         /// <summary>
         /// Normalizes a title string using certain rules
         /// </summary>
         private static string NormalizeTitle(this string input)
         {
-            var normalized = String.Join(" ", input.Trim().ToUpperInvariant().Split(' ', ':', '-')
-                .Where(w => !String.IsNullOrWhiteSpace(w)).ToArray())
+            var normalized = string.Join(" ", input.Trim().ToUpperInvariant().Split(' ', ':', '-')
+                .Where(w => !string.IsNullOrWhiteSpace(w)).ToArray())
                  .Replace("&", "AND")
-                    .Replace("!", "")
-                    .Replace("\"", "")
-                    .Replace("$", "")
-                    .Replace("'", "")
-                    .Replace("(", "")
-                    .Replace(")", "")
-                    .Replace(",", "")
-                    .Replace("?", "")
+                    .Replace("!", string.Empty)
+                    .Replace("\"", string.Empty)
+                    .Replace("$", string.Empty)
+                    .Replace("'", string.Empty)
+                    .Replace("(", string.Empty)
+                    .Replace(")", string.Empty)
+                    .Replace(",", string.Empty)
+                    .Replace("?", string.Empty)
                     .Trim()
                     .RemoveDiacritics();
             return normalized;
@@ -44,7 +45,11 @@ namespace Snowflake.Utility
 
         private static string RemoveDiacritics(this string str)
         {
-            if (str == null) return null;
+            if (str == null)
+            {
+                return null;
+            }
+
             var chars =
                 from c in str.Normalize(NormalizationForm.FormD).ToCharArray()
                 let uc = CharUnicodeInfo.GetUnicodeCategory(c)
@@ -55,6 +60,7 @@ namespace Snowflake.Utility
 
             return cleanStr;
         }
+
         public static int CompareTitle(this string s, string t) => s.NormalizeTitle().Levenshtein(t.NormalizeTitle());
 
         /// <summary>
@@ -78,14 +84,15 @@ namespace Snowflake.Utility
             }
 
             // Step 2
-            for (int i = 0; i <= n; d[i, 0] = i++);
-
+#pragma warning disable SA1503 // Braces should not be omitted
+            for (int i = 0; i <= n; d[i, 0] = i++) ;
             for (int j = 0; j <= m; d[0, j] = j++);
+#pragma warning restore SA1503 // Braces should not be omitted
 
             // Step 3
             for (int i = 1; i <= n; i++)
             {
-                //Step 4
+                // Step 4
                 for (int j = 1; j <= m; j++)
                 {
                     // Step 5
@@ -97,6 +104,7 @@ namespace Snowflake.Utility
                         d[i - 1, j - 1] + cost);
                 }
             }
+
             // Step 7
             return d[n, m];
         }

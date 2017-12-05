@@ -11,11 +11,25 @@ namespace Snowflake.Records.Metadata
     /// </summary>
     public interface IMetadataCollection : IDictionary<string, IRecordMetadata>
     {
-
         /// <summary>
-        /// The record guid this metadata collection is set to.
+        /// Gets the record guid this metadata collection is set to.
         /// </summary>
         Guid Record { get; }
+
+        /// <summary>
+        /// The value of this metadata.
+        /// If you want to get the raw records, enumerate <see cref="IDictionary{TKey, TValue}.Values"/>
+        /// </summary>
+        /// <param name="key">The metadata key</param>
+        /// <returns>The value of the metadata</returns>
+        new string this[string key] { get; set; }
+
+        /// <summary>
+        /// Gets a metadata with its guid
+        /// </summary>
+        /// <param name="guid">The guid of the metadata</param>
+        /// <returns>The requested metadata</returns>
+        IRecordMetadata this[Guid guid] { get; }
 
         /// <summary>
         /// Adds a metadata value
@@ -31,25 +45,9 @@ namespace Snowflake.Records.Metadata
         void Add(string key, string value);
 
         /// <summary>
-        /// Gets a metadata with its guid
-        /// </summary>
-        /// <param name="guid">The guid of the metadata</param>
-        /// <returns>The requested metadata</returns>
-        IRecordMetadata this[Guid guid] { get; }
-
-        /// <summary>
         /// Copy the metadata of one collection to another, changing the guid of the metadata.
         /// </summary>
         /// <param name="existingMetadata">The existing metadata</param>
         void Add(IDictionary<string, IRecordMetadata> existingMetadata);
-
-        /// <summary>
-        /// The value of this metadata.
-        /// If you want to get the raw records, enumerate <see cref="IDictionary{TKey, TValue}.Values"/>
-        /// </summary>
-        /// <param name="key"></param>
-        /// <returns>The value of the metadata</returns>
-        new string this[string key] { get; set; }
-
     }
 }

@@ -14,9 +14,21 @@ namespace Shiragame.Builder.Parser
 
         internal static ParserClass GetParser(string firstLine)
         {
-            if (firstLine.Contains("TITLES = http://www.gametdb.com")) return ParserClass.Tdb;
-            if (firstLine.Contains("clrmamepro")) return ParserClass.Cmp;
-            if (firstLine.Contains("xml version=\"1.0\"")) return ParserClass.Xml;
+            if (firstLine.Contains("TITLES = http://www.gametdb.com"))
+            {
+                return ParserClass.Tdb;
+            }
+
+            if (firstLine.Contains("clrmamepro"))
+            {
+                return ParserClass.Cmp;
+            }
+
+            if (firstLine.Contains("xml version=\"1.0\""))
+            {
+                return ParserClass.Xml;
+            }
+
             return ParserClass.None;
         }
 
@@ -30,8 +42,8 @@ namespace Shiragame.Builder.Parser
     internal enum ParserClass
     {
         None,
-        Cmp, //clearmamepro
-        Tdb, //gametdb
-        Xml //xml logiqx
+        Cmp, // clearmamepro
+        Tdb, // gametdb
+        Xml, // xml logiqx
     }
 }

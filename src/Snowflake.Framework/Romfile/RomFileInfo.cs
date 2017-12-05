@@ -8,8 +8,13 @@ namespace Snowflake.Romfile
 {
     public class RomFileInfo : IRomFileInfo
     {
+        /// <inheritdoc/>
         public string Mimetype { get; }
+
+        /// <inheritdoc/>
         public string Serial { get; }
+
+        /// <inheritdoc/>
         public string InternalName { get; }
 
         public RomFileInfo(string mimetype, string serial, string internalName)

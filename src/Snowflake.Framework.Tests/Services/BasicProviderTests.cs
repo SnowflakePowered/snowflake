@@ -1,15 +1,15 @@
-﻿using Snowflake.Extensibility;
-using Snowflake.Services;
-using Snowflake.Services.Logging;
-using Snowflake.Services.Persistence;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Xunit;
 using Moq;
+using Snowflake.Extensibility;
+using Snowflake.Services;
+using Snowflake.Services.Logging;
+using Snowflake.Services.Persistence;
 using Snowflake.Tests.Composable;
+using Xunit;
 
 namespace Snowflake.Services.Tests
 {

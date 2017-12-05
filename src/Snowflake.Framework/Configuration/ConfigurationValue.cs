@@ -4,10 +4,14 @@ namespace Snowflake.Configuration
 {
     public class ConfigurationValue : IConfigurationValue
     {
+        /// <inheritdoc/>
         public object Value { get; set; }
+
+        /// <inheritdoc/>
         public Guid Guid { get; }
-        
-        internal ConfigurationValue(object value) : this(value, Guid.NewGuid())
+
+        internal ConfigurationValue(object value)
+            : this(value, Guid.NewGuid())
         {
         }
 

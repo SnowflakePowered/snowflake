@@ -14,10 +14,12 @@ namespace Snowflake.Scraper.Providers
     public class ReturnMetadataAttribute : Attribute
     {
         /// <summary>
-        /// The key of metadata to be returned
+        /// Gets the key of metadata to be returned
         /// </summary>
         public string ReturnMetadata { get; }
+
         /// <summary>
+        /// Initializes a new instance of the <see cref="ReturnMetadataAttribute"/> class.
         /// Indicates what metadata is returned.
         /// Optional but recommended.
         /// </summary>

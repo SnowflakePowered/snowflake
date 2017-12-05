@@ -2,16 +2,24 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Data.SQLite" Version="2.0.0" />
     <PackageReference Include="Dapper" Version="1.50.4-alpha1-00070" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta004" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Snowflake.Framework.Primitives\Snowflake.Framework.Primitives.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="..\stylecop.json" />
 
+  </ItemGroup>
+  <PropertyGroup>
+    <CodeAnalysisRuleSet>..\Snowflake.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
 </Project>

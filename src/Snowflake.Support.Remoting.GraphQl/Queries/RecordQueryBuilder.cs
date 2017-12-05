@@ -1,4 +1,10 @@
-﻿using GraphQL.Conventions.Adapters.Types;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using GraphQL.Conventions.Adapters.Types;
 using GraphQL.Types;
 using Snowflake.Input.Controller;
 using Snowflake.Platform;
@@ -13,12 +19,6 @@ using Snowflake.Support.Remoting.GraphQl.Inputs.RecordMetadata;
 using Snowflake.Support.Remoting.GraphQl.Types.ControllerLayout;
 using Snowflake.Support.Remoting.GraphQl.Types.PlatformInfo;
 using Snowflake.Support.Remoting.GraphQl.Types.Record;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Linq;
-using System.Collections;
 
 namespace Snowflake.Support.Remoting.GraphQl.Queries
 {
@@ -44,7 +44,6 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
             return this.GameLibrary.FileLibrary.GetAllRecords();
         }
 
-
         [Field("file", "Get a file by an ID", typeof(FileRecordGraphType))]
         [Parameter(typeof(Guid), typeof(GuidGraphType), "guid", "The unique file GUID")]
         public IFileRecord GetFile(Guid guid)
@@ -61,6 +60,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
             {
                 throw new FileNotFoundException($"The record for ${filePath} was not found in the database.");
             }
+
             return path;
         }
 
@@ -90,6 +90,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
                 {
                     game.Metadata.Add(metadata.Key, metadata.Value);
                 }
+
                 this.GameLibrary.Set(game);
                 return this.GameLibrary.Get(game.Guid);
             }

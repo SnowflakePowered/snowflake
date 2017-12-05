@@ -18,7 +18,6 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Selections.InputConfiguration
         [SelectionOption("hid", DisplayName = "Human Interface Device")]
         HID,
         [SelectionOption("sdl2", DisplayName = "SDL2")]
-        SDL2
+        SDL2,
     }
-
 }

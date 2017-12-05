@@ -9,12 +9,22 @@ namespace Snowflake.Input.Device
 {
     public class InputDevice : IInputDevice
     {
-
+        /// <inheritdoc/>
         public string DeviceId { get; }
+
+        /// <inheritdoc/>
         public ILowLevelInputDevice DeviceInfo { get; }
+
+        /// <inheritdoc/>
         public int? DeviceIndex { get; set; }
+
+        /// <inheritdoc/>
         public string ControllerName { get; }
+
+        /// <inheritdoc/>
         public InputApi DeviceApi { get; }
+
+        /// <inheritdoc/>
         public IControllerLayout DeviceLayout { get; }
 
         public InputDevice(InputApi deviceApi, ILowLevelInputDevice deviceInfo, IControllerLayout deviceLayout)
@@ -25,7 +35,5 @@ namespace Snowflake.Input.Device
             this.DeviceInfo = deviceInfo;
             this.DeviceLayout = deviceLayout;
         }
-
-
     }
 }

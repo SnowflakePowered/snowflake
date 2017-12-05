@@ -10,10 +10,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Win32.SafeHandles;
 using Snowflake.Extensibility;
+using Snowflake.Extensibility.Provisioned;
 using Snowflake.Input;
 using Snowflake.Input.Device;
 using Snowflake.Services;
-using Snowflake.Extensibility.Provisioned;
 
 namespace Snowflake.Plugin.InputEnumerators
 {
@@ -22,19 +22,21 @@ namespace Snowflake.Plugin.InputEnumerators
     {
         private readonly IInputManager inputManager;
 
-        public XInputGamepadEnumerator(IPluginProvision p, IInputManager inputManager) : base(p)
+        public XInputGamepadEnumerator(IPluginProvision p, IInputManager inputManager)
+            : base(p)
         {
             this.inputManager = inputManager;
         }
 
+        /// <inheritdoc/>
         public override IEnumerable<IInputDevice> GetConnectedDevices()
         {
             var devices = this.inputManager.GetAllDevices();
-            
-            return (from device in devices
+
+            return from device in devices
                 where device.XI_IsXInput
                 where device.XI_IsConnected == true
-                select new InputDevice(InputApi.XInput, device, this.ControllerLayout) { DeviceIndex = device.XI_GamepadIndex });
+                select new InputDevice(InputApi.XInput, device, this.ControllerLayout) { DeviceIndex = device.XI_GamepadIndex };
         }
     }
 }

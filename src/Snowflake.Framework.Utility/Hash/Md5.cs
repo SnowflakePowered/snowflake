@@ -9,8 +9,9 @@ namespace Snowflake.Utility.Hash
         {
             file.Seek(0, SeekOrigin.Begin);
             using (var md5 = System.Security.Cryptography.MD5.Create())
+            {
                 return md5.ComputeHash(file).ToHex(true).Replace("-", string.Empty);
-
+            }
         }
     }
 }

@@ -13,7 +13,9 @@ public abstract class JsonCreationConverter<T> : JsonConverter
     // Disables the converter in a thread-safe manner.
     bool WriterDisabled { get { return writerDisabled; } set { writerDisabled = value; } }
 
+    /// <inheritdoc/>
     public override bool CanWrite => !this.WriterDisabled;
+
     /// <summary>Create an instance of objectType, based properties in the JSON object</summary>
     /// <param name="objectType">type of object expected</param>
     /// <param name="jObject">contents of JSON object that will be deserialized</param>
@@ -49,7 +51,9 @@ public abstract class JsonCreationConverter<T> : JsonConverter
     public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
     {
         if (reader.TokenType == JsonToken.Null)
+        {
             return null;
+        }
 
         // Load JObject from stream
         JObject jObject = JObject.Load(reader);
@@ -57,7 +61,7 @@ public abstract class JsonCreationConverter<T> : JsonConverter
         // Create target object based on JObject
         T target = this.Create(objectType, jObject);
 
-        //Create a new reader for this jObject, and set all properties to match the original reader.
+        // Create a new reader for this jObject, and set all properties to match the original reader.
         JsonReader jObjectReader = jObject.CreateReader();
         jObjectReader.Culture = reader.Culture;
         jObjectReader.DateParseHandling = reader.DateParseHandling;
@@ -80,13 +84,18 @@ public abstract class JsonCreationConverter<T> : JsonConverter
         Type type = value.GetType();
         foreach (var prop in type.GetProperties())
         {
-            if (!prop.CanRead) continue;
+            if (!prop.CanRead)
+            {
+                continue;
+            }
+
             object propVal = prop.GetValue(value, null);
             if (propVal != null)
             {
                 jo.Add(prop.Name, JToken.FromObject(propVal, serializer));
             }
         }
+
         jo.WriteTo(writer);
     }
 }

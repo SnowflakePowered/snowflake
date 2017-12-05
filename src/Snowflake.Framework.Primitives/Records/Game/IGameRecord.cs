@@ -14,18 +14,18 @@ namespace Snowflake.Records.Game
     public interface IGameRecord : IRecord
     {
         /// <summary>
-        /// The Stone platform ID of this record
+        /// Gets the Stone platform ID of this record
         /// </summary>
         string PlatformID { get; }
 
         /// <summary>
-        /// The title of the game
+        /// Gets the title of the game
         /// (must be equivalent to &quot;game_title&quot; <see cref="IRecord.Metadata"/>)
         /// </summary>
         string Title { get; }
 
         /// <summary>
-        /// All executable files should be mimetype application/romfile-*, 
+        /// Gets all executable files should be mimetype application/romfile-*,
         /// or application/romfile-*+zip if in zip format.
         /// </summary>
         IList<IFileRecord> Files { get; }

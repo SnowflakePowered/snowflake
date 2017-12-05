@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using GraphQL.Builders;
 using GraphQL.Types.Relay.DataObjects;
-using System;
-using System.Text;
 
 namespace GraphQL.Relay.Types
 {
@@ -13,8 +13,7 @@ namespace GraphQL.Relay.Types
 
         public static Connection<TSource> ToConnection<TSource, TParent>(
             IEnumerable<TSource> items,
-            ResolveConnectionContext<TParent> context
-        )
+            ResolveConnectionContext<TParent> context)
         {
             var list = items.ToList();
             return ToConnection(list, context, sliceStartIndex: 0, totalCount: list.Count);
@@ -24,8 +23,7 @@ namespace GraphQL.Relay.Types
             IEnumerable<TSource> slice,
             ResolveConnectionContext<TParent> context,
             int sliceStartIndex,
-            int totalCount
-        )
+            int totalCount)
         {
             var sliceList = slice as IList<TSource> ?? slice.ToList();
 
@@ -33,13 +31,12 @@ namespace GraphQL.Relay.Types
                 sliceList,
                 context,
                 sliceStartIndex,
-                totalCount
-            );
+                totalCount);
 
             var edges = metrics.Slice.Select((item, i) => new Edge<TSource>
             {
                 Node = item,
-                Cursor = OffsetToCursor(metrics.StartOffset + i)
+                Cursor = OffsetToCursor(metrics.StartOffset + i),
             })
                 .ToList();
 
@@ -56,7 +53,7 @@ namespace GraphQL.Relay.Types
                     EndCursor = lastEdge?.Cursor,
                     HasPreviousPage = metrics.HasPrevious,
                     HasNextPage = metrics.HasNext,
-                }
+                },
             };
         }
 
@@ -67,20 +64,19 @@ namespace GraphQL.Relay.Types
 
         public static string CursorForObjectInConnection<T>(
             IEnumerable<T> slice,
-            T item
-        )
+            T item)
         {
             var idx = slice.ToList().IndexOf(item);
 
             return idx == -1 ? null : OffsetToCursor(idx);
         }
+
         public static int CursorToOffset(string cursor)
         {
             byte[] data = Convert.FromBase64String(cursor);
             string cursorStr = Encoding.UTF8.GetString(data);
             return int.Parse(
-                cursorStr.Substring(Prefix.Length + 1)
-            );
+                cursorStr.Substring(Prefix.Length + 1));
         }
 
         public static string OffsetToCursor(int offset)
@@ -91,7 +87,9 @@ namespace GraphQL.Relay.Types
         public static int OffsetOrDefault(string cursor, int defaultOffset)
         {
             if (cursor == null)
+            {
                 return defaultOffset;
+            }
 
             try
             {

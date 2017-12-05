@@ -47,6 +47,7 @@ namespace Snowflake.Romfile.FileSignatures.Composers
                 new PlaystationPortableIso9660FileSignature());
         }
 
+        /// <inheritdoc/>
         [ImportService(typeof(IFileSignatureMatcher))]
         public void Compose(IModule module, IServiceRepository coreInstance)
         {
@@ -59,7 +60,7 @@ namespace Snowflake.Romfile.FileSignatures.Composers
             pluginManager.Register<IFileSignature>(new NintendoGBAFileSignature(coreInstance));
             pluginManager.Register<IFileSignature>(new NintendoGCNISOFileSignature(coreInstance));
 
-        
+
             pluginManager.Register<IFileSignature>(new NintendoNDSFileSignature(coreInstance));
             pluginManager.Register<IFileSignature>(new NintendoNESFileSignature(coreInstance));
             pluginManager.Register<IFileSignature>(new NintendoSNESFileSignature(coreInstance));
@@ -75,11 +76,6 @@ namespace Snowflake.Romfile.FileSignatures.Composers
             pluginManager.Register<IFileSignature>(new SonyPS2ISOFileSignature(coreInstance));
             pluginManager.Register<IFileSignature>(new SonyPSPISOFileSignature(coreInstance));
             pluginManager.Register<IFileSignature>(new SonyPSXISOFileSignature(coreInstance));*/
-
-
-
-
-
         }
     }
 }

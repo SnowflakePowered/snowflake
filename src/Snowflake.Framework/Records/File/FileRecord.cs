@@ -12,9 +12,16 @@ namespace Snowflake.Records.File
 {
     public class FileRecord : IFileRecord
     {
+        /// <inheritdoc/>
         public IMetadataCollection Metadata { get; }
+
+        /// <inheritdoc/>
         public Guid Guid { get; }
+
+        /// <inheritdoc/>
         public string MimeType { get; }
+
+        /// <inheritdoc/>
         public string FilePath { get; }
 
         internal FileRecord(Guid guid, IDictionary<string, IRecordMetadata> metadata, string filePath, string mimeType)
@@ -28,7 +35,6 @@ namespace Snowflake.Records.File
         public FileRecord(string filePath, string mimeType)
             : this(Guid.NewGuid(), new Dictionary<string, IRecordMetadata>(), filePath, mimeType)
         {
-
         }
     }
 }

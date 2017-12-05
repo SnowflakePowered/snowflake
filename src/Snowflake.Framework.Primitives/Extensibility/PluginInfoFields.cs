@@ -9,18 +9,21 @@ namespace Snowflake.Extensibility
         /// <summary>
         /// The name of the plugin
         /// </summary>
-        public static string Name = "name";
+        public const string Name = "name";
+
         /// <summary>
         /// The description of the plugin
         /// </summary>
-        public static string Description = "description";
+        public const string Description = "description";
+
         /// <summary>
         /// The author of the plugin
         /// </summary>
-        public static string Author = "author";
+        public const string Author = "author";
+
         /// <summary>
         /// The plugins supported platforms
         /// </summary>
-        public static string SupportedPlatforms = "platforms";
+        public const string SupportedPlatforms = "platforms";
     }
 }

@@ -12,6 +12,6 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Adapters.Nestopia.Selections
         [SelectionOption("8:7 PAR", DisplayName="8:7 Pixel Aspect Ratio")]
         EightSeven,
         [SelectionOption("4:3", DisplayName="4:3")]
-        FourThree
+        FourThree,
     }
 }

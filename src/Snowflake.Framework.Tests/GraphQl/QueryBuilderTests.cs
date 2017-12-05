@@ -1,13 +1,13 @@
-﻿using GraphQL.Types;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using GraphQL.Types;
 using GraphQL.Types.Relay.DataObjects;
 using Snowflake.Support.Remoting.GraphQl.Framework.Attributes;
 using Snowflake.Support.Remoting.GraphQl.Framework.Query;
 using Snowflake.Support.Remoting.GraphQl.RootProvider;
 using Snowflake.Support.Remoting.GraphQl.Servers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Xunit;
 
 namespace Snowflake.GraphQl
@@ -45,7 +45,6 @@ namespace Snowflake.GraphQl
             var queryBuilder = new BasicQueryBuilder();
             queryBuilder.RegisterMutationQueries(mutation);
             Assert.True(schema.Mutation.HasField("mutationTest"));
-
         }
 
         [Fact]
@@ -71,7 +70,6 @@ namespace Snowflake.GraphQl
             Assert.Throws<ArgumentOutOfRangeException>(() => schema.Register(queryBuilder));
         }
 
-
         [Fact]
         public void DefaultValue_Test()
         {
@@ -84,8 +82,8 @@ namespace Snowflake.GraphQl
             {
                 Arguments = new Dictionary<string, object>()
                 {
-                    {"returnOne", "Foo Bar and Eggs" }
-                }
+                    { "returnOne", "Foo Bar and Eggs" }
+                },
             });
 
             Assert.Equal("Foo Bar and EggsHello World", resolved);
@@ -94,9 +92,9 @@ namespace Snowflake.GraphQl
             {
                 Arguments = new Dictionary<string, object>()
                 {
-                    {"returnOne", "One" },
-                    {"returnTwo", "Two" }
-                }
+                    { "returnOne", "One" },
+                    { "returnTwo", "Two" }
+                },
             });
 
             Assert.Equal("OneTwo", resolvedTwo);
@@ -114,11 +112,11 @@ namespace Snowflake.GraphQl
             {
                 Arguments = new Dictionary<string, object>()
                 {
-                    {"returnOne", "One" },
-                    {"returnTwo", "Two" }
-                }
+                    { "returnOne", "One" },
+                    { "returnTwo", "Two" }
+                },
             });
-            
+
             IEnumerable<string> expected()
             {
                 yield return "One";
@@ -140,15 +138,15 @@ namespace Snowflake.GraphQl
             {
                 Arguments = new Dictionary<string, object>()
                 {
-                    {"input", new TestInputType()
+                    {
+                        "input", new TestInputType()
                         {
-                            Input = "Hello World"   
+                            Input = "Hello World"
                         }
                     }
-                }
+                },
             });
             Assert.Equal("Hello World", actual);
-
         }
 
         [Fact]
@@ -163,7 +161,6 @@ namespace Snowflake.GraphQl
             webServer.Start();
         }
 
-
         [Fact]
         public void GraphQLFieldQuery_Test()
         {
@@ -173,17 +170,15 @@ namespace Snowflake.GraphQl
             var queryBuilder = new BasicQueryBuilder();
             var executor = new GraphQlExecuterProvider(schema);
             schema.Register(queryBuilder);
-            var result = (executor.ExecuteRequestAsync(new GraphQlRequest()
+            var result = executor.ExecuteRequestAsync(new GraphQlRequest()
             {
                 Query = @"query {
                             defaultTest(returnOne: ""Hello"", returnTwo: ""World"")
-                        }"   
-            })).Result;
-          
+                        }",
+            }).Result;
 
             Assert.Equal("HelloWorld", ((dynamic)result.Data)["defaultTest"]);
         }
-
     }
 
     public class BrokenQueryBuilder : QueryBuilder
@@ -198,7 +193,7 @@ namespace Snowflake.GraphQl
     public class BasicQueryBuilder : QueryBuilder
     {
         [Connection("connectionTest", "", typeof(StringGraphType))]
-        [Parameter(typeof(string), typeof(StringGraphType),"returnOne", "")]
+        [Parameter(typeof(string), typeof(StringGraphType), "returnOne", "")]
         [Parameter(typeof(string), typeof(StringGraphType), "returnTwo", "")]
         public IEnumerable<string> ConnectionTest(string returnOne, string returnTwo)
         {
@@ -209,7 +204,7 @@ namespace Snowflake.GraphQl
         [Field("defaultTest", "", typeof(StringGraphType))]
         [Parameter(typeof(string), typeof(StringGraphType), "returnOne", "")]
         [Parameter(typeof(string), typeof(StringGraphType), "returnTwo", "")]
-        public string DefaultTest(string returnOne, string returnTwo="Hello World")
+        public string DefaultTest(string returnOne, string returnTwo = "Hello World")
         {
             return returnOne + returnTwo;
         }
@@ -235,4 +230,3 @@ namespace Snowflake.GraphQl
         }
     }
 }
-

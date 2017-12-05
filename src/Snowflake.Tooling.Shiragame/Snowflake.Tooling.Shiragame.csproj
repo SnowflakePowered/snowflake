@@ -4,7 +4,7 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <Compile Remove="dats\**" />
     <EmbeddedResource Remove="dats\**" />
@@ -16,10 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta004" />
-  </ItemGroup>
-  
-  <ItemGroup>
     <ProjectReference Include="..\Snowflake.Framework.Persistence\Snowflake.Framework.Persistence.csproj" />
     <ProjectReference Include="..\Snowflake.Framework.Primitives\Snowflake.Framework.Primitives.csproj" />
     <ProjectReference Include="..\Snowflake.Framework.Services\Snowflake.Framework.Services.csproj" />
@@ -27,4 +23,10 @@
     <ProjectReference Include="..\Snowflake.Framework\Snowflake.Framework.csproj" />
     <ProjectReference Include="..\Snowflake.Support.StoneProvider\Snowflake.Support.StoneProvider.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="..\stylecop.json" />
+  </ItemGroup>
+  <PropertyGroup>
+    <CodeAnalysisRuleSet>..\Snowflake.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
 </Project>

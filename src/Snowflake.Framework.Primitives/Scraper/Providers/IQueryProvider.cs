@@ -27,6 +27,7 @@ namespace Snowflake.Scraper.Providers
         /// <param name="platformId">Limit results to a single stone platform ID</param>
         /// <returns></returns>
         T QueryBestMatch(string searchQuery, string platformId);
+
         /// <summary>
         /// Gets all results from a source
         /// </summary>
@@ -34,8 +35,9 @@ namespace Snowflake.Scraper.Providers
         /// <param name="platformId">Limit results to a single stone platform ID</param>
         /// <returns>Results returned from the query</returns>
         IEnumerable<T> Query(string searchQuery, string platformId);
+
         /// <summary>
-        /// Queries a match given the available metadata, from the most well suited query function given the 
+        /// Queries a match given the available metadata, from the most well suited query function given the
         /// available keys in the metadata collection
         /// </summary>
         /// <param name="metadata">The metadata collection to query with</param>

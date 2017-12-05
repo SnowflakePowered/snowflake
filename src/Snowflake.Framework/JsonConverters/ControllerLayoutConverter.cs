@@ -11,6 +11,7 @@ namespace Snowflake.JsonConverters
 {
     public class ControllerLayoutConverter : JsonCreationConverter<IControllerLayout>
     {
+        /// <inheritdoc/>
         protected override IControllerLayout Create(Type objectType, JObject jObject)
         {
             string layoutName = jObject.Value<string>("LayoutID");
@@ -19,17 +20,18 @@ namespace Snowflake.JsonConverters
             var jlayout = jObject.Value<JObject>("Layout");
             bool isDevice = jObject.Value<bool>("IsRealDevice");
 
-            //var layout = new ControllerLayout(layoutName, platformsWhitelist, friendlyName, isDevice);
+            // var layout = new ControllerLayout(layoutName, platformsWhitelist, friendlyName, isDevice);
             var layout = new ControllerElementCollection();
-            foreach (var controllerElement in 
+            foreach (var controllerElement in
                 from layoutElements in jlayout.Properties()
                 let elementKey = Enums.Parse<ControllerElement>(layoutElements.Name)
                 let elementLabel = layoutElements.Value.Value<string>("Label")
                 let elementType = Enums.Parse<ControllerElementType>(layoutElements.Value.Value<string>("Type"))
                 select (elementKey: elementKey, elementInfo: new ControllerElementInfo(elementLabel, elementType)))
             {
-                layout.Add(controllerElement.elementKey, controllerElement.elementInfo); 
+                layout.Add(controllerElement.elementKey, controllerElement.elementInfo);
             }
+
             return new ControllerLayout(layoutName, platformsWhitelist, friendlyName, layout, isDevice);
         }
     }

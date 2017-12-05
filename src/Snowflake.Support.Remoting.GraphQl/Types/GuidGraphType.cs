@@ -12,11 +12,13 @@ namespace GraphQL.Conventions.Adapters.Types
             Description = "Globally Unique Identifier.";
         }
 
+        /// <inheritdoc/>
         public override object Serialize(object value)
         {
             return value?.ToString();
         }
 
+        /// <inheritdoc/>
         public override object ParseValue(object value)
         {
             var guid = value?.ToString().StripQuotes();
@@ -25,6 +27,7 @@ namespace GraphQL.Conventions.Adapters.Types
                 : (Guid?)Guid.Parse(guid);
         }
 
+        /// <inheritdoc/>
         public override object ParseLiteral(IValue value)
         {
             var str = value as StringValue;
@@ -32,6 +35,7 @@ namespace GraphQL.Conventions.Adapters.Types
             {
                 return ParseValue(str.Value);
             }
+
             return null;
         }
     }
@@ -45,6 +49,7 @@ internal static class StringExtensions
         {
             return value.Substring(1, value.Length - 2);
         }
+
         return value;
     }
 }

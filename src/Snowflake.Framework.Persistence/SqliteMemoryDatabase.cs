@@ -12,12 +12,10 @@ namespace Snowflake.Persistence
 {
     public class SqliteMemoryDatabase
     {
-
         private readonly SqliteConnection dbConnection;
 
         public SqliteMemoryDatabase()
         {
-           
             this.dbConnection = new SqliteConnection("Data Source=:memory:;");
             this.dbConnection.Open();
         }
@@ -88,7 +86,7 @@ namespace Snowflake.Persistence
         /// <param name="columns">The names of the columns to create</param>
         public void CreateTable(string tableName, params string[] columns)
         {
-            this.Execute($@"CREATE TABLE IF NOT EXISTS {tableName}({String.Join(",", columns)})");
+            this.Execute($@"CREATE TABLE IF NOT EXISTS {tableName}({string.Join(",", columns)})");
         }
 
         /// <summary>
@@ -99,15 +97,21 @@ namespace Snowflake.Persistence
         {
             using (var conn = database.GetConnection())
             {
+#pragma warning disable S125 // Sections of code should not be "commented out"
+#pragma warning disable CS0162 // Unreachable code detected
                 conn.Open();
                 throw new NotImplementedException();
-                //todo: reimplement backup database this.dbConnection.BackupDatabase(conn, "main", "main", -1, null, 0);
+
+                            // todo: reimplement backup database this.dbConnection.BackupDatabase(conn, "main", "main", -1, null, 0);
+                            // see: https://github.com/aspnet/Microsoft.Data.Sqlite/issues/17
                 conn.Close();
+#pragma warning restore S125 // Sections of code should not be "commented out"
+#pragma warning restore CS0162 // Unreachable code detected
             }
         }
 
         /// <summary>
-        /// Loads from a disk database to this in-memory database 
+        /// Loads from a disk database to this in-memory database
         /// </summary>
         /// <param name="database">The database to load from</param>
         public void LoadFrom(SqliteDatabase database)
@@ -116,7 +120,8 @@ namespace Snowflake.Persistence
             {
                 conn.Open();
                 throw new NotImplementedException();
-                //conn.BackupDatabase(this.dbConnection, "main", "main", -1, null, 0);
+
+                // conn.BackupDatabase(this.dbConnection, "main", "main", -1, null, 0);
                 conn.Close();
             }
         }

@@ -10,19 +10,22 @@ using Snowflake.Input.Controller.Mapped;
 namespace Snowflake.Configuration
 {
     /// <summary>
-    /// Provides a generic key value pair serializer with a 
+    /// Provides a generic key value pair serializer with a
     /// configuration separator:
-    /// 
+    ///
     /// key separator value
     /// </summary>
     public class KeyValuePairConfigurationSerializer : ConfigurationSerializer
     {
         private readonly string separator;
+
+        /// <inheritdoc/>
         public override string SerializeLine<T>(string key, T value)
         {
             return $"{key} {this.separator} \"{this.SerializeValue(value)}\"";
         }
 
+        /// <inheritdoc/>
         public override string Serialize(IConfigurationSection configurationSection)
         {
             StringBuilder stringBuilder = new StringBuilder();
@@ -30,6 +33,7 @@ namespace Snowflake.Configuration
             {
                 stringBuilder.AppendLine(this.SerializeLine(config.OptionName, configurationSection.Values[config.OptionKey].Value));
             }
+
             return stringBuilder.ToString();
         }
 

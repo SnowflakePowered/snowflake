@@ -21,7 +21,7 @@ namespace Snowflake.Configuration.Interceptors
                 p => values.ContainsKey(p.OptionKey) ? values[p.OptionKey] : new ConfigurationValue(p.Default));
         }
 
-
+        /// <inheritdoc/>
         public void Intercept(IInvocation invocation)
         {
             var propertyName = invocation.Method.Name.Substring(4); // remove get_ or set_
@@ -33,11 +33,12 @@ namespace Snowflake.Configuration.Interceptors
             {
                 if (invocation.Method.Name.StartsWith("get_"))
                 {
-                    invocation.ReturnValue = Values[propertyName].Value;
+                    invocation.ReturnValue = this.Values[propertyName].Value;
                 }
+
                 if (invocation.Method.Name.StartsWith("set_"))
                 {
-                    Values[propertyName].Value = invocation.Arguments[0];
+                    this.Values[propertyName].Value = invocation.Arguments[0];
                 }
             }
         }

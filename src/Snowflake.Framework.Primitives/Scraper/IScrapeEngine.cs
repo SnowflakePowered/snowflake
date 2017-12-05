@@ -8,8 +8,8 @@ using Snowflake.Records.Game;
 namespace Snowflake.Scraper
 {
     /// <summary>
-    /// Implements a pipeline to gather information from various sources, including a 
-    /// game database, scrape and media provider plugins, and the file itself 
+    /// Implements a pipeline to gather information from various sources, including a
+    /// game database, scrape and media provider plugins, and the file itself
     /// through file signature matching.
     /// </summary>
     public interface IScrapeEngine
@@ -20,6 +20,7 @@ namespace Snowflake.Scraper
         /// <param name="romfile"></param>
         /// <returns></returns>
         IFileRecord GetFileInformation(string romfile);
+
         /// <summary>
         /// Assumes the file given is a game and gathers information about such game
         /// </summary>

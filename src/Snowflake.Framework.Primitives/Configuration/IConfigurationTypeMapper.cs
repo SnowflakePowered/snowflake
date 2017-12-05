@@ -26,6 +26,7 @@ namespace Snowflake.Configuration
         /// <param name="value">The value to convert</param>
         /// <returns>The converted value</returns>
         string ConvertValue<T>(T value);
+
         /// <summary>
         /// Converts a value to the format using a previously configured converter function
         /// </summary>

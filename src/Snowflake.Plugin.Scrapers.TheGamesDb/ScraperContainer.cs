@@ -8,6 +8,7 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb
 {
     public class ScraperContainer : IComposable
     {
+        /// <inheritdoc/>
         [ImportService(typeof(IQueryProviderSource))]
         [ImportService(typeof(IContentDirectoryProvider))]
         [ImportService(typeof(IKeyedImageCache))]
@@ -15,7 +16,7 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb
         {
             var appdata = serviceContainer.Get<IContentDirectoryProvider>();
             serviceContainer.Get<IQueryProviderSource>()
-                .Register(new TheGamesDbMetadataProvider()); //todo use pluginManager with encapsulated interdfaces?
+                .Register(new TheGamesDbMetadataProvider()); // todo use pluginManager with encapsulated interdfaces?
             serviceContainer.Get<IQueryProviderSource>()
                 .Register(new TheGamesDbMediaProvider(serviceContainer.Get<IKeyedImageCache>()));
         }

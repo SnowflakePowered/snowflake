@@ -1,14 +1,14 @@
-﻿using GraphQL;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using GraphQL;
 using GraphQL.Types;
 using Snowflake.Configuration;
 using Snowflake.Loader;
 using Snowflake.Records.Game;
 using Snowflake.Services;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Snowflake.Support.Remoting.GraphQl.Framework.Query;
 using Snowflake.Support.Remoting.GraphQl.Framework;
+using Snowflake.Support.Remoting.GraphQl.Framework.Query;
 
 namespace Snowflake.Support.Remoting.GraphQl.RootProvider
 {
@@ -20,6 +20,7 @@ namespace Snowflake.Support.Remoting.GraphQl.RootProvider
             this.Mutation = mutation;
         }
 
+        /// <inheritdoc/>
         public void Register(QueryBuilder queries)
         {
             queries.RegisterConnectionQueries((RootQuery)this.Query);

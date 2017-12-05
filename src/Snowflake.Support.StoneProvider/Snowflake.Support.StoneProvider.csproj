@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <RootNamespace>Snowflake</RootNamespace>
     <AssemblyName>Snowflake.Support.StoneProvider</AssemblyName>
+    <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,4 +25,14 @@
   <ItemGroup>
     <DotNetCliToolReference Include="dotnet-pack-snowflake" Version="1.2.0" />
   </ItemGroup>
-</Project>  
+  <ItemGroup>
+    <AdditionalFiles Include="..\stylecop.json" />
+
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta004" />
+  </ItemGroup>
+  <PropertyGroup>
+    <CodeAnalysisRuleSet>..\Snowflake.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+</Project>

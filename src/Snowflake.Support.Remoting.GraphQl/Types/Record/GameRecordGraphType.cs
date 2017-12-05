@@ -1,10 +1,10 @@
-﻿using GraphQL.Conventions.Adapters.Types;
-using GraphQL.Types;
-using Snowflake.Records.Game;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using GraphQL.Conventions.Adapters.Types;
+using GraphQL.Types;
+using Snowflake.Records.Game;
 
 namespace Snowflake.Support.Remoting.GraphQl.Types.Record
 {
@@ -17,8 +17,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.Record
             Field<ListGraphType<FileRecordGraphType>>(
                 "files",
                 description: "A list of files associated with this game.",
-                resolve: context => context.Source.Files
-            );
+                resolve: context => context.Source.Files);
             Field(g => g.PlatformID).Description("The ID of the platform that this game is from.");
             Field(g => g.Title).Description("The title of the game.");
             Field<GuidGraphType>("guid",
@@ -27,8 +26,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.Record
             Field<ListGraphType<RecordMetadataGraphType>>(
                 "metadata",
                 description: "A list of metadata related to this game.",
-                resolve: context => context.Source.Metadata.Select(m => m.Value)
-                );
+                resolve: context => context.Source.Metadata.Select(m => m.Value));
             Interface<RecordInterface>();
         }
     }

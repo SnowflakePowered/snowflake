@@ -12,24 +12,23 @@ namespace Snowflake.Scraper.Shiragame
     public interface ISerialInfo
     {
         /// <summary>
-        /// The Stone platform ID
+        /// Gets the Stone platform ID
         /// </summary>
         string PlatformId { get; }
 
         /// <summary>
-        /// The canonical game name 
+        /// Gets the canonical game name
         /// </summary>
         string Title { get; }
 
         /// <summary>
-        /// The region code
+        /// Gets the region code
         /// </summary>
         string Region { get; }
 
         /// <summary>
-        /// The game serials
+        /// Gets the game serials
         /// </summary>
         string Serial { get; }
-    }  
-    
+    }
 }

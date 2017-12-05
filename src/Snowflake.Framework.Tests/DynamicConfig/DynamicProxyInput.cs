@@ -75,6 +75,5 @@ namespace Snowflake.Configuration.Tests
             Assert.Equal(ControllerElement.DirectionalS, x.Template.Template.Configuration.InputPlayerABtn);
             Assert.Equal(1, (x as IConfigurationSection<IRetroArchInput>).Configuration.InputDevice);
         }
-
     }
 }

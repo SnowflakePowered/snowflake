@@ -1,13 +1,13 @@
-﻿using Snowflake.Emulator;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using Snowflake.Configuration;
+using Snowflake.Emulator;
+using Snowflake.Extensibility;
+using Snowflake.Extensibility.Provisioned;
+using Snowflake.Plugin.Emulators.TestEmulator.Configuration;
 using Snowflake.Records.File;
 using Snowflake.Records.Game;
-using System.Collections.Generic;
-using Snowflake.Extensibility.Provisioned;
 using Snowflake.Services;
-using Snowflake.Plugin.Emulators.TestEmulator.Configuration;
-using Snowflake.Extensibility;
 
 namespace Snowflake.Plugin.Emulators.TestEmulator
 {
@@ -18,26 +18,29 @@ namespace Snowflake.Plugin.Emulators.TestEmulator
             IStoneProvider stoneProvider,
             IConfigurationCollectionStore collectionStore,
             IBiosManager biosManager,
-            ISaveManager saveManager) 
+            ISaveManager saveManager)
             : base(provision, stoneProvider, collectionStore, biosManager, saveManager)
         {
         }
 
+        /// <inheritdoc/>
         public override IConfigurationCollection GetConfiguration(IGameRecord gameRecord, string profileName = "default")
         {
-            return this.CollectionStore.Get<ITestConfigurationCollection>
-                (gameRecord.Guid, this.Name, profileName);
+            return this.CollectionStore.Get<ITestConfigurationCollection>(
+                gameRecord.Guid, this.Name, profileName);
         }
 
+        /// <inheritdoc/>
         public override IConfigurationCollection GetConfiguration()
         {
             return new ConfigurationCollection<ITestConfigurationCollection>();
         }
 
+        /// <inheritdoc/>
         public override IEmulatorInstance Instantiate(IGameRecord gameRecord, IFileRecord romFile, int saveSlot, IList<IEmulatedPort> ports)
         {
             var platform = this.StoneProvider.Platforms[gameRecord.PlatformID];
-            return new TestEmulatorInstance(this, gameRecord, romFile, saveSlot, platform, ports, 
+            return new TestEmulatorInstance(this, gameRecord, romFile, saveSlot, platform, ports,
                 this.Provision.Logger);
         }
     }

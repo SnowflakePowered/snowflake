@@ -1,16 +1,16 @@
-﻿using Moq;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
+using System.Linq;
+using System.Text;
+using Moq;
 using Snowflake.Services;
 using Snowflake.Services.AssemblyLoader;
 using Snowflake.Services.Tests;
 using Snowflake.Tests;
 using Snowflake.Tests.Composable;
 using Snowflake.Tests.InvalidComposable;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.IO.Compression;
-using System.Linq;
-using System.Text;
 using Xunit;
 namespace Snowflake.Loader.Tests
 {
@@ -29,16 +29,14 @@ namespace Snowflake.Loader.Tests
             archive.ExtractToDirectory(moduleDirectory.CreateSubdirectory("Snowflake.Framework.Tests").FullName);
             var container = new ServiceContainer(appDataDirectory.FullName);
 
-            Assert.True(container.Get<IModuleEnumerator>()
-                .Modules.Any(m => m.Entry == "Snowflake.Framework.Tests.DummyComposable.dll"));
+            Assert.Contains(container.Get<IModuleEnumerator>()
+                .Modules, m => m.Entry == "Snowflake.Framework.Tests.DummyComposable.dll");
 
             var assemblyComposer = new AssemblyComposer(container, container.Get<IModuleEnumerator>());
             assemblyComposer.Compose();
 
             Assert.Equal("Test", container.Get<IDummyComposable>().Test);
-
         }
-
 
         [Fact]
         public void AssemblyComposer_InvalidComposeTest()
@@ -53,13 +51,12 @@ namespace Snowflake.Loader.Tests
             archive.ExtractToDirectory(moduleDirectory.CreateSubdirectory("Snowflake.Framework.Tests").FullName);
             var container = new ServiceContainer(appDataDirectory.FullName);
 
-            Assert.True(container.Get<IModuleEnumerator>()
-                .Modules.Any(m => m.Entry == "Snowflake.Framework.Tests.InvalidComposable.dll"));
+            Assert.Contains(container.Get<IModuleEnumerator>()
+                .Modules, m => m.Entry == "Snowflake.Framework.Tests.InvalidComposable.dll");
 
             var assemblyComposer = new AssemblyComposer(container, container.Get<IModuleEnumerator>());
             assemblyComposer.Compose();
             Assert.Null(container.Get<IInvalidService>());
-
         }
 
         [Fact]

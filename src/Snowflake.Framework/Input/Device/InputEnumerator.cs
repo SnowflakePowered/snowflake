@@ -7,20 +7,23 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Snowflake.Extensibility;
+using Snowflake.Extensibility.Provisioned;
 using Snowflake.Input.Controller;
 using Snowflake.Services;
-using Snowflake.Extensibility.Provisioned;
 
 namespace Snowflake.Input.Device
 {
     public abstract class InputEnumerator : ProvisionedPlugin, IInputEnumerator
     {
+        /// <inheritdoc/>
         public IControllerLayout ControllerLayout { get; }
 
+        /// <inheritdoc/>
         public abstract IEnumerable<IInputDevice> GetConnectedDevices();
 
-        protected InputEnumerator(IPluginProvision p) : base(p)
-        { 
+        protected InputEnumerator(IPluginProvision p)
+            : base(p)
+        {
             this.ControllerLayout =
                 JsonConvert.DeserializeObject<ControllerLayout>(File.ReadAllText(p.ResourceDirectory.GetFiles()
                             .First(f => f.Name == "layout.json").FullName));

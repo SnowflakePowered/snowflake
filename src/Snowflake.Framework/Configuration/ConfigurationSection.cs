@@ -16,14 +16,20 @@ using Snowflake.Configuration.Interceptors;
 
 namespace Snowflake.Configuration
 {
-    public class ConfigurationSection<T> : IConfigurationSection<T> where T : class, IConfigurationSection<T>
+    public class ConfigurationSection<T> : IConfigurationSection<T>
+        where T : class, IConfigurationSection<T>
     {
+        /// <inheritdoc/>
         public T Configuration { get; }
+
+        /// <inheritdoc/>
         public IConfigurationSectionDescriptor Descriptor { get; }
 
+        /// <inheritdoc/>
         public IDictionary<string, IConfigurationValue> Values
             => ImmutableDictionary.CreateRange(this.configurationInterceptor.Values);
 
+        /// <inheritdoc/>
         public object this[string key]
         {
             get { return configurationInterceptor.Values[key]; }
@@ -32,20 +38,21 @@ namespace Snowflake.Configuration
 
         private readonly ConfigurationInterceptor configurationInterceptor;
 
-        public ConfigurationSection(): this(new Dictionary<string, IConfigurationValue>())
+        public ConfigurationSection()
+            : this(new Dictionary<string, IConfigurationValue>())
         {
         }
 
-        internal ConfigurationSection(IDictionary<string,(string stringValue, Guid guid)> values)
+        internal ConfigurationSection(IDictionary<string, (string stringValue, Guid guid)> values)
         {
             ProxyGenerator generator = new ProxyGenerator();
             this.Descriptor = ConfigurationDescriptorCache.GetSectionDescriptor<T>();
             this.configurationInterceptor = new ConfigurationInterceptor(this.Descriptor,
-                values.ToDictionary(p => p.Key, FromValueTuple));
+                values.ToDictionary(p => p.Key, this.FromValueTuple));
 
             this.Configuration =
                 generator.CreateInterfaceProxyWithoutTarget<T>(new ConfigurationCircularInterceptor<T>(this),
-                    configurationInterceptor);
+                    this.configurationInterceptor);
         }
 
         public ConfigurationSection(IDictionary<string, IConfigurationValue> values)
@@ -53,7 +60,7 @@ namespace Snowflake.Configuration
             ProxyGenerator generator = new ProxyGenerator();
             this.Descriptor = new ConfigurationSectionDescriptor<T>();
             this.configurationInterceptor = new ConfigurationInterceptor(this.Descriptor, values);
-          
+
             this.Configuration =
                 generator.CreateInterfaceProxyWithoutTarget<T>(new ConfigurationCircularInterceptor<T>(this),
                     configurationInterceptor);
@@ -62,18 +69,19 @@ namespace Snowflake.Configuration
         private static object FromString(string strValue, Type optionType)
         {
             return optionType == typeof(string)
-                ? strValue //return string value if string
+                ? strValue // return string value if string
                 : optionType.GetTypeInfo().IsEnum
-                    ? NonGenericEnums.Parse(optionType, strValue)//return parsed enum if enum
+                    ? NonGenericEnums.Parse(optionType, strValue) // return parsed enum if enum
                     : TypeDescriptor.GetConverter(optionType).ConvertFromInvariantString(strValue);
         }
 
-        private IConfigurationValue FromValueTuple(KeyValuePair<string,(string stringValue, Guid guid)> tuple)
+        private IConfigurationValue FromValueTuple(KeyValuePair<string, (string stringValue, Guid guid)> tuple)
         {
             Type t = this.Descriptor[tuple.Key].Type;
             return new ConfigurationValue(FromString(tuple.Value.stringValue, t), tuple.Value.guid);
         }
 
+        /// <inheritdoc/>
         public IEnumerator<KeyValuePair<IConfigurationOptionDescriptor, IConfigurationValue>> GetEnumerator()
         {
             return this.Descriptor.Options
@@ -81,12 +89,10 @@ namespace Snowflake.Configuration
                 .GetEnumerator();
         }
 
+        /// <inheritdoc/>
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
         }
     }
-
-
-
 }

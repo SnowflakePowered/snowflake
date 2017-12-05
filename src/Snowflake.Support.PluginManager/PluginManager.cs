@@ -1,20 +1,20 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Snowflake.Extensibility;
+using Snowflake.Extensibility.Configuration;
+using Snowflake.Extensibility.Provisioned;
+using Snowflake.Extensions;
 using Snowflake.Loader;
 using Snowflake.Services;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Reflection;
 using Snowflake.Utility;
-using System.IO;
-using Snowflake.Extensions;
-using System.Collections.Immutable;
-using Snowflake.Extensibility.Provisioned;
-using Snowflake.Extensibility.Configuration;
 
 namespace Snowflake.Support.PluginManager
 {
@@ -34,18 +34,32 @@ namespace Snowflake.Support.PluginManager
             this.databaseProvider = databaseProvider;
         }
 
-        public IPluginProvision GetProvision<T>(IModule composableModule) where T : IPlugin
+        /// <inheritdoc/>
+        public IPluginProvision GetProvision<T>(IModule composableModule)
+            where T : IPlugin
         {
             var resourceDirectory = composableModule.ContentsDirectory
-                                    .CreateSubdirectory("resource"); //todo: check for missing directory!!
+                                    .CreateSubdirectory("resource"); // todo: check for missing directory!!
             var pluginAttr = typeof(T).GetTypeInfo().GetCustomAttribute<PluginAttribute>();
-            if (pluginAttr == null) throw new InvalidOperationException($"Can not load provision for {typeof(T)} without a PluginAttribute");
-            if (pluginAttr.PluginName == "common") throw new UnauthorizedAccessException("Plugin name can not be 'common'.");
+            if (pluginAttr == null)
+            {
+                throw new InvalidOperationException($"Can not load provision for {typeof(T)} without a PluginAttribute");
+            }
+
+            if (pluginAttr.PluginName == "common")
+            {
+                throw new UnauthorizedAccessException("Plugin name can not be 'common'.");
+            }
+
             var pluginResourceDirectory = resourceDirectory.CreateSubdirectory(pluginAttr.PluginName);
             var pluginCommonResourceDirectory = resourceDirectory.CreateSubdirectory("common");
             var pluginJsonFile = pluginResourceDirectory.GetFiles()
                 .FirstOrDefault(f => f.Name == "plugin.json");
-            if (pluginJsonFile == null) throw new FileNotFoundException($"Unable to find plugin.json for {pluginAttr.PluginName}");
+            if (pluginJsonFile == null)
+            {
+                throw new FileNotFoundException($"Unable to find plugin.json for {pluginAttr.PluginName}");
+            }
+
             IPluginProperties properties = new JsonPluginProperties(JObject
                .FromObject(JsonConvert
                .DeserializeObject(File.ReadAllText(pluginJsonFile.FullName)), new JsonSerializer { Culture = CultureInfo.InvariantCulture }));
@@ -56,26 +70,32 @@ namespace Snowflake.Support.PluginManager
             return new PluginProvision(this.logProvider.GetLogger($"Plugin:{pluginAttr.PluginName}"),
                 properties,
                 pluginStore,
-                pluginAttr.PluginName, 
+                pluginAttr.PluginName,
                 properties.Get(PluginInfoFields.Author) ?? pluginAttr.Author,
                 properties.Get(PluginInfoFields.Description) ?? pluginAttr.Description,
                 pluginAttr.Version, pluginDataDirectory, pluginCommonResourceDirectory, pluginResourceDirectory);
         }
 
-        public IEnumerable<T> Get<T>() where T : IPlugin
+        /// <inheritdoc/>
+        public IEnumerable<T> Get<T>()
+            where T : IPlugin
         {
-            if(this.loadedPlugins.ContainsKey(typeof(T)))
+            if (this.loadedPlugins.ContainsKey(typeof(T)))
             {
                 return this.loadedPlugins[typeof(T)].Cast<T>().ToImmutableList();
             }
+
             return ImmutableList<T>.Empty;
         }
 
-        public T Get<T>(string pluginName) where T : IPlugin
+        /// <inheritdoc/>
+        public T Get<T>(string pluginName)
+            where T : IPlugin
         {
             return (T)this.loadedPlugins[typeof(T)].FirstOrDefault(p => p.Name == pluginName);
         }
 
+        /// <inheritdoc/>
         public IProvisionedPlugin Get(string pluginName)
         {
             return this.loadedPlugins.SelectMany(p => p.Value)
@@ -84,22 +104,31 @@ namespace Snowflake.Support.PluginManager
                 .FirstOrDefault(p => p.Name == pluginName);
         }
 
-        public void Register<T>(T plugin) where T : IPlugin
+        /// <inheritdoc/>
+        public void Register<T>(T plugin)
+            where T : IPlugin
         {
             if (!this.loadedPlugins.ContainsKey(typeof(T)))
+            {
                 this.loadedPlugins.Add(typeof(T), ImmutableList<IPlugin>.Empty);
+            }
+
             if (this.IsRegistered(plugin.Name))
             {
                 throw new InvalidOperationException($"Plugin {plugin.Name} is already registered.");
             }
+
             this.loadedPlugins[typeof(T)] = this.loadedPlugins[typeof(T)].Add(plugin);
         }
 
-        public bool IsRegistered<T>(string pluginName) where T : IPlugin
+        /// <inheritdoc/>
+        public bool IsRegistered<T>(string pluginName)
+            where T : IPlugin
         {
             return this.Get<T>(pluginName) != null;
         }
 
+        /// <inheritdoc/>
         public bool IsRegistered(string pluginName)
         {
             return this.loadedPlugins.SelectMany(p => p.Value).Any(p => p.Name == pluginName);
@@ -122,21 +151,22 @@ namespace Snowflake.Support.PluginManager
 
                 // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
                 // TODO: set large fields to null.
-
                 disposedValue = true;
             }
         }
 
         // This code added to correctly implement the disposable pattern.
+
+        /// <inheritdoc/>
         public void Dispose()
         {
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
             Dispose(true);
+
             // TODO: uncomment the following line if the finalizer is overridden above.
             // GC.SuppressFinalize(this);
         }
         #endregion
-
 
     }
 }

@@ -12,6 +12,7 @@ namespace Snowflake.Utility.Tests
             string hash = FileHash.GetCRC32(fileStream);
             Assert.Equal("00000000", hash);
         }
+
         [Fact]
         public void Hash_MD5_Test()
         {
@@ -19,6 +20,7 @@ namespace Snowflake.Utility.Tests
             string hash = FileHash.GetMD5(fileStream);
             Assert.Equal("D41D8CD98F00B204E9800998ECF8427E", hash);
         }
+
         [Fact]
         public void Hash_SHA1_Test()
         {

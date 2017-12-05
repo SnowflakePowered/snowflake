@@ -1,5 +1,5 @@
-﻿using Snowflake.Shell.Windows;
-using System;
+﻿using System;
+using Snowflake.Shell.Windows;
 
 class Program
 {

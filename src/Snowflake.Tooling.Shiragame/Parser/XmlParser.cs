@@ -26,6 +26,7 @@ namespace Shiragame.Builder.Parser
         {
             return XmlParser.GetMissingFileTypes(XDocument.Load(File.OpenRead(datFile)), platformId);
         }
+
         private static IEnumerable<RomInfo> GetEntries(XDocument xmlDat, string platformId)
         {
             return from game in xmlDat.Root.Elements("game").AsParallel()
@@ -40,6 +41,7 @@ namespace Shiragame.Builder.Parser
                    where mimetype != null
                    select new RomInfo(platformId, crc, md5, sha1, region, mimetype, filename);
         }
+
         internal  static IEnumerable<string> GetMissingFileTypes(XDocument xmlDat, string platformId)
         {
             return from game in xmlDat.Root.Elements("game").AsParallel()
@@ -50,6 +52,5 @@ namespace Shiragame.Builder.Parser
                    where !stoneProvider.Platforms[platformId].FileTypes.ContainsKey(ext)
                    select "Missing mimetype for " + ext + " at platform " + platformId;
         }
-
     }
 }

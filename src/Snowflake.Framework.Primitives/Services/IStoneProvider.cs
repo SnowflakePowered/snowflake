@@ -14,17 +14,17 @@ namespace Snowflake.Services
     public interface IStoneProvider
     {
         /// <summary>
-        /// The list of platforms loaded for this core service
+        /// Gets the list of platforms loaded for this core service
         /// </summary>
         IDictionary<string, IPlatformInfo> Platforms { get; }
 
         /// <summary>
-        /// The list of controllers loaded for this core service
+        /// Gets the list of controllers loaded for this core service
         /// </summary>
         IDictionary<string, IControllerLayout> Controllers { get; }
 
         /// <summary>
-        /// The version of stone definitions loaded
+        /// Gets the version of stone definitions loaded
         /// </summary>
         Version StoneVersion { get; }
     }

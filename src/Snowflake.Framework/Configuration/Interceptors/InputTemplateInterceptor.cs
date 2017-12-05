@@ -15,6 +15,8 @@ namespace Snowflake.Configuration.Interceptors
 
         internal readonly IDictionary<string, IConfigurationValue> ConfigValues;
         internal IDictionary<string, ControllerElement> InputValues;
+
+        /// <inheritdoc/>
         public void Intercept(IInvocation invocation)
         {
             var propertyName = invocation.Method.Name.Substring(4); // remove get_ or set_
@@ -22,7 +24,7 @@ namespace Snowflake.Configuration.Interceptors
             {
                 if (invocation.Method.Name.StartsWith("get_"))
                 {
-                    invocation.ReturnValue = InputValues[propertyName]; //type is IConfigurationSection<T>
+                    invocation.ReturnValue = InputValues[propertyName]; // type is IConfigurationSection<T>
                 }
             }
             else if (this.ConfigValues.ContainsKey(propertyName))
@@ -31,6 +33,7 @@ namespace Snowflake.Configuration.Interceptors
                 {
                     invocation.ReturnValue = ConfigValues[propertyName].Value;
                 }
+
                 if (invocation.Method.Name.StartsWith("set_"))
                 {
                     ConfigValues[propertyName].Value = invocation.Arguments[0];
@@ -42,5 +45,4 @@ namespace Snowflake.Configuration.Interceptors
             }
         }
     }
-    }
-
+ }

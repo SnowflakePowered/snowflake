@@ -1,14 +1,14 @@
-﻿using Snowflake.Extensibility.Provisioned;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using Snowflake.Extensibility.Provisioned;
 using Snowflake.Loader;
 using Snowflake.Services;
 using Snowflake.Services.Logging;
 using Snowflake.Services.Persistence;
 using Snowflake.Support.PluginManager;
 using Snowflake.Tests;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using Xunit;
 namespace Snowflake.Extensibility.Tests
 {
@@ -20,7 +20,8 @@ namespace Snowflake.Extensibility.Tests
     [Plugin("TestPluginProvisioned", Author = "TestAuthor", Description = "TestDescription")]
     class ProvisionedPluginImpl : ProvisionedPlugin
     {
-        public ProvisionedPluginImpl(IPluginProvision provision) : base(provision)
+        public ProvisionedPluginImpl(IPluginProvision provision)
+            : base(provision)
         {
         }
     }
@@ -55,7 +56,7 @@ namespace Snowflake.Extensibility.Tests
         {
             var appDataDirectory = new DirectoryInfo(Path.GetTempPath())
                 .CreateSubdirectory(Guid.NewGuid().ToString());
-            var module = new Module("","","","",appDataDirectory);
+            var module = new Module(string.Empty, string.Empty, string.Empty, string.Empty, appDataDirectory);
             var resourceDir = module.ContentsDirectory.CreateSubdirectory("resource").CreateSubdirectory("TestPluginProvisioned");
             string pluginJson = TestUtilities.GetStringResource("Loader.plugin.json");
             File.WriteAllText(Path.Combine(resourceDir.FullName, "plugin.json"), pluginJson);
@@ -68,7 +69,7 @@ namespace Snowflake.Extensibility.Tests
 
             pluginManager.Register<ProvisionedPlugin>(plugin);
             Assert.NotEmpty(pluginManager.Get<ProvisionedPlugin>());
-            Assert.NotNull(pluginManager.Get<ProvisionedPlugin>("TestPluginProvisioned")); 
+            Assert.NotNull(pluginManager.Get<ProvisionedPlugin>("TestPluginProvisioned"));
         }
     }
 }

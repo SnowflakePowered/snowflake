@@ -9,7 +9,7 @@ using System.Xml.Linq;
 
 namespace Snowflake.Tooling.AssemblyModuleInstaller
 {
-    class Program
+    static class Program
     {
         static void Main(string[] args)
         {

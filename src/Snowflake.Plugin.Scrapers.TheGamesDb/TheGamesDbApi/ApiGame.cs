@@ -76,6 +76,7 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi
         public ApiGameImages Images;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="ApiGame"/> class.
         /// Creates a new Game without any content.
         /// </summary>
         public ApiGame()
@@ -116,6 +117,7 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi
             public List<ApiGameImage> Screenshots;
 
             /// <summary>
+            /// Initializes a new instance of the <see cref="ApiGameImages"/> class.
             /// Creates a new GameImages without any content.
             /// </summary>
             public ApiGameImages()
@@ -184,6 +186,7 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi
                 public string Path;
 
                 /// <summary>
+                /// Initializes a new instance of the <see cref="ApiGameImage"/> class.
                 /// Creates an image from an XmlNode.
                 /// </summary>
                 /// <param name="node">XmlNode to get data from</param>

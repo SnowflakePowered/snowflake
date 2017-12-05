@@ -15,21 +15,22 @@ namespace Snowflake.Configuration.Attributes
     public sealed class SelectionOptionAttribute : Attribute
     {
         /// <summary>
-        /// The value to serialize this enum value as
+        /// Gets the value to serialize this enum value as
         /// </summary>
         public string SerializeAs { get; }
 
         /// <summary>
-        /// The display name of this value for human readable purposes
+        /// Gets or sets the display name of this value for human readable purposes
         /// </summary>
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// Whether or not this option is displayed for the user
+        /// Gets or sets a value indicating whether whether or not this option is displayed for the user
         /// </summary>
         public bool Private { get; set; }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="SelectionOptionAttribute"/> class.
         /// Represents a selection inside an enum that represents valid values for a configuration option
         /// </summary>
         /// <param name="serializeAs">The value to serialize this enum as</param>

@@ -10,91 +10,91 @@ namespace Snowflake.Configuration
     public interface IConfigurationOptionDescriptor
     {
         /// <summary>
-        /// The display name for human readable purposes of this option
+        /// Gets the display name for human readable purposes of this option
         /// </summary>
-        string DisplayName { get; } 
+        string DisplayName { get; }
 
         /// <summary>
-        /// A description of this configuration option
+        /// Gets a description of this configuration option
         /// </summary>
         string Description { get; }
 
         /// <summary>
-        /// Whether or not this option is a simple option (displayed in "Simple" configuration mode)
+        /// Gets a value indicating whether whether or not this option is a simple option (displayed in "Simple" configuration mode)
         /// </summary>
         bool Simple { get; }
 
         /// <summary>
-        /// Whether or not this option is private (not ever displayed to the user)
+        /// Gets a value indicating whether whether or not this option is private (not ever displayed to the user)
         /// </summary>
         bool Private { get; }
 
         /// <summary>
-        /// A 'flag' property is never serialized into the configuration option, and is instead used to cause
+        /// Gets a value indicating whether a 'flag' property is never serialized into the configuration option, and is instead used to cause
         /// side effects to the configuration during emulator instance creation by the emulator handler.
         /// If a flag affects the configuration, it should be placed in the same section it modifies.
         /// </summary>
         bool Flag { get; }
 
         /// <summary>
-        /// The maximum value allowable for a number value
+        /// Gets the maximum value allowable for a number value
         /// </summary>
         double Max { get; }
+
         /// <summary>
-        /// The minimum value allowable for a number value
+        /// Gets the minimum value allowable for a number value
         /// </summary>
         double Min { get; }
 
         /// <summary>
-        /// The increment to increase this by
+        /// Gets the increment to increase this by
         /// </summary>
         double Increment { get; }
 
         /// <summary>
-        /// Whether or not this string is a file path.
+        /// Gets a value indicating whether whether or not this string is a file path.
         /// </summary>
         bool IsPath { get; }
 
         /// <summary>
-        /// The name of the option as it appears inside the emulator configuration 
+        /// Gets the name of the option as it appears inside the emulator configuration
         /// </summary>
         string OptionName { get; }
 
         /// <summary>
-        /// The key of the configuration option
+        /// Gets the key of the configuration option
         /// </summary>
         string OptionKey { get; }
 
         /// <summary>
-        /// The default object.
+        /// Gets the default object.
         /// </summary>
         object Default { get; }
 
         /// <summary>
-        /// The CLR type of the option
+        /// Gets the CLR type of the option
         /// </summary>
         Type Type { get; }
 
         /// <summary>
-        /// The option type of the option
+        /// Gets the option type of the option
         /// </summary>
         ConfigurationOptionType OptionType { get; }
 
         /// <summary>
-        /// Any custom metadata attached to this option
+        /// Gets any custom metadata attached to this option
         /// </summary>
         /// <see cref="CustomMetadataAttribute"/>
         IDictionary<string, object> CustomMetadata { get; }
 
         /// <summary>
-        /// A list of selection option descriptors if this option is an enum.
+        /// Gets a list of selection option descriptors if this option is an enum.
         /// </summary>
         IEnumerable<ISelectionOptionDescriptor> SelectionOptions { get; }
-       
+
         /// <summary>
-        /// Whether or not this option is an enum.
+        /// Gets a value indicating whether whether or not this option is an enum.
         /// </summary>
         bool IsSelection { get; }
     }
-
 }

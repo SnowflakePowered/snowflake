@@ -18,10 +18,10 @@ namespace Snowflake.Romfile.Tokenizer
         {
             return Regex.Match(this.filename, @"(\([^]]*\))*(\[[^]]*\])*([\w\+\~\@\!\#\$\%\^\&\*\;\,\'\""\?\-\.\-\s]+)").Groups[3].Value.Trim();
         }
-        
+
         public IEnumerable<(string tokenValue, int tokenPosition)> GetParensTokens()
         {
-            var tagData = Regex.Matches(this.filename,@"(\()([^)]+)(\))").ToList();
+            var tagData = Regex.Matches(this.filename, @"(\()([^)]+)(\))").ToList();
             for (int i = 0; i < tagData.Count; i++)
             {
                 yield return (tagData[i].Groups[2].Value, i);

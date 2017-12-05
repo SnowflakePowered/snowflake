@@ -13,36 +13,38 @@ namespace Snowflake.JsonConverters
 {
     internal class ConfigurationCollectionSerializer : JsonConverter
     {
+        /// <inheritdoc/>
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            IConfigurationCollection collection = (IConfigurationCollection) value;
+            IConfigurationCollection collection = (IConfigurationCollection)value;
             JObject collectionRoot = new JObject();
-            foreach(var section in collection.Select(s => s.Value))
+            foreach (var section in collection.Select(s => s.Value))
             {
                 JObject sectionOptionsRoot = new JObject();
-                foreach(var option in section)
+                foreach (var option in section)
                 {
                    JObject optionRoot = new JObject()
                    {
-                       {"Value", JObject.FromObject(option.Value)},
-                       {"Descriptor", ConfigurationCollectionSerializer.SerializeOption(option.Key)}
+                       { "Value", JObject.FromObject(option.Value) },
+                       { "Descriptor", ConfigurationCollectionSerializer.SerializeOption(option.Key) },
                    };
                    if (option.Key.Type.GetTypeInfo().IsEnum)
                    {
                         optionRoot.Add("Selection", new JObject(ConfigurationCollectionSerializer.SerializeEnumValues(option.Key.Type)));
                    }
-                    sectionOptionsRoot.Add(option.Key.OptionKey, optionRoot);
+
+                   sectionOptionsRoot.Add(option.Key.OptionKey, optionRoot);
                 }
 
                 JObject sectionRoot = new JObject
                 {
                     { "Configuration", sectionOptionsRoot },
-                    { "Descriptor", ConfigurationCollectionSerializer.SerializeSectionDescriptor(section.Descriptor) }
+                    { "Descriptor", ConfigurationCollectionSerializer.SerializeSectionDescriptor(section.Descriptor) },
                 };
 
                 collectionRoot.Add(section.Descriptor.SectionName, sectionRoot);
             }
-           
+
             collectionRoot.WriteTo(writer, new StringEnumConverter());
         }
 
@@ -50,12 +52,13 @@ namespace Snowflake.JsonConverters
         {
             var descriptorRoot = new JObject
             {
-                {nameof(d.Description), d.Description},
-                {nameof(d.DisplayName), d.DisplayName},
-                {nameof(d.SectionName), d.SectionName }
+                { nameof(d.Description), d.Description },
+                { nameof(d.DisplayName), d.DisplayName },
+                { nameof(d.SectionName), d.SectionName },
             };
             return descriptorRoot;
         }
+
         private static IEnumerable<JProperty> SerializeEnumValues(Type selectionEnum)
         {
             return from enumOption in NonGenericEnums.GetMembers(selectionEnum)
@@ -63,20 +66,21 @@ namespace Snowflake.JsonConverters
                 let attribute = enumOption.Attributes.Get<SelectionOptionAttribute>()
                 select new JProperty(enumOption.Name, new JObject()
                 {
-                    {nameof(attribute.DisplayName), attribute.DisplayName ?? enumOption.Name},
-                    {nameof(attribute.Private), attribute.Private}
+                    { nameof(attribute.DisplayName), attribute.DisplayName ?? enumOption.Name },
+                    { nameof(attribute.Private), attribute.Private },
                 });
         }
+
         private static JObject SerializeOption(IConfigurationOptionDescriptor o)
         {
             var optionRoot = new JObject
             {
-                {nameof(o.Default), JToken.FromObject(o.Default)},
-                {nameof(o.DisplayName), o.DisplayName != String.Empty ? o.DisplayName : o.OptionKey},
-                {nameof(o.Description), o.Description},
-                {nameof(o.Simple), o.Simple},
-                {nameof(o.CustomMetadata), JToken.FromObject(o.CustomMetadata)},
-                {nameof(Type), ConfigurationCollectionSerializer.GetTypeString(o)}
+                { nameof(o.Default), JToken.FromObject(o.Default) },
+                { nameof(o.DisplayName), o.DisplayName != string.Empty ? o.DisplayName : o.OptionKey },
+                { nameof(o.Description), o.Description },
+                { nameof(o.Simple), o.Simple },
+                { nameof(o.CustomMetadata), JToken.FromObject(o.CustomMetadata) },
+                { nameof(Type), ConfigurationCollectionSerializer.GetTypeString(o) },
             };
 
             if (o.Type == typeof(int))
@@ -85,29 +89,54 @@ namespace Snowflake.JsonConverters
                 optionRoot.Add(nameof(o.Max), (int)o.Max);
                 optionRoot.Add(nameof(o.Increment), (int)o.Increment);
             }
+
             if (o.Type == typeof(double))
             {
                 optionRoot.Add(nameof(o.Min), o.Min);
                 optionRoot.Add(nameof(o.Max), o.Max);
                 optionRoot.Add(nameof(o.Increment), o.Increment);
             }
+
             return optionRoot;
         }
 
         private static string GetTypeString(IConfigurationOptionDescriptor o)
         {
-            if (o.Type == typeof(int)) return "integer";
-            if (o.Type == typeof(bool)) return "boolean";
-            if (o.Type == typeof(double)) return "decimal";
-            if (o.Type.GetTypeInfo().IsEnum) return "selection";
-            if (o.IsPath) return "path";
+            if (o.Type == typeof(int))
+            {
+                return "integer";
+            }
+
+            if (o.Type == typeof(bool))
+            {
+                return "boolean";
+            }
+
+            if (o.Type == typeof(double))
+            {
+                return "decimal";
+            }
+
+            if (o.Type.GetTypeInfo().IsEnum)
+            {
+                return "selection";
+            }
+
+            if (o.IsPath)
+            {
+                return "path";
+            }
+
             return "string";
         }
+
+        /// <inheritdoc/>
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public override bool CanConvert(Type objectType)
         {
             return typeof(IConfigurationCollection).IsAssignableFrom(objectType);

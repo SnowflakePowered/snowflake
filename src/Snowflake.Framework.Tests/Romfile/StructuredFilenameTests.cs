@@ -1,7 +1,7 @@
-﻿using Snowflake.Romfile.Tokenizer;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Snowflake.Romfile.Tokenizer;
 using Xunit;
 
 namespace Snowflake.Romfile.Tests
@@ -21,7 +21,7 @@ namespace Snowflake.Romfile.Tests
         [InlineData("Pokemon - Versione Blu (Italy) (SGB Enhanced).gb", "Pokemon - Versione Blu", NamingConvention.NoIntro, "IT")]
         [InlineData("Pop'n TwinBee (Europe).gb", "Pop'n TwinBee", NamingConvention.NoIntro, "EU")]
         [InlineData("Prince of Persia (Europe) (En,Fr,De,Es,It).gb", "Prince of Persia", NamingConvention.NoIntro, "EU")]
-        [InlineData("Purikura Pocket 2 - Kareshi Kaizou Daisakusen (Japan) (SGB Enhanced).gb", "Purikura Pocket 2 - Kareshi Kaizou Daisakusen", 
+        [InlineData("Purikura Pocket 2 - Kareshi Kaizou Daisakusen (Japan) (SGB Enhanced).gb", "Purikura Pocket 2 - Kareshi Kaizou Daisakusen",
             NamingConvention.NoIntro, "JP")]
         [InlineData("Thrill Kill (1998-07-09)(Virgin)(proto).ccd", "Thrill Kill", NamingConvention.TheOldSchoolEmulationCenter, "ZZ")]
         [InlineData("Biohazard 2 v2 (1997)(Capcom)(JP)(beta)", "Biohazard 2", NamingConvention.TheOldSchoolEmulationCenter, "JP")]
@@ -31,7 +31,6 @@ namespace Snowflake.Romfile.Tests
         [InlineData("Bionic Commando (1992)(Capcom)(US)", "Bionic Commando", NamingConvention.TheOldSchoolEmulationCenter, "US")]
         [InlineData("Legend of TOSEC, The (demo) (1986)(Devstudio)", "The Legend of TOSEC", NamingConvention.TheOldSchoolEmulationCenter, "ZZ")]
         [InlineData("Legend of TOSEC, The (demo) (19xx-08-09)(Devstudio)", "The Legend of TOSEC", NamingConvention.TheOldSchoolEmulationCenter, "ZZ")]
-        [InlineData("Legend of TOSEC, The (demo) (20xx-08-09)(Devstudio)", "The Legend of TOSEC", NamingConvention.TheOldSchoolEmulationCenter, "ZZ")]
         [InlineData("Legend of TOSEC, The (demo) (20xx-08-09)(Devstudio)", "The Legend of TOSEC", NamingConvention.TheOldSchoolEmulationCenter, "ZZ")]
         [InlineData("Legend of TOSEC, The (demo) (20xx-08-09)(Devstudio)(US-BR)", "The Legend of TOSEC", NamingConvention.TheOldSchoolEmulationCenter, "US-BR")]
         [InlineData("Legend of TOSEC, The (demo) (20xx-08-09)(Devstudio)(US-BR)(jp-yi)(NTSC)(Disc 1 of 1)[cr][!]", "The Legend of TOSEC", NamingConvention.TheOldSchoolEmulationCenter, "US-BR")]

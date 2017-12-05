@@ -15,10 +15,10 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Input
         int InputJoypadIndex { get; set; }
 
         [ConfigurationOption("input_libretro_device_p{N}", LibretroDevice.RetroPad, DisplayName = "Device Type")]
-        LibretroDevice InputLibretroDevice { get; set; } 
+        LibretroDevice InputLibretroDevice { get; set; }
 
         [ConfigurationOption("input_player{N}_analog_dpad_mode", AnalogDpadMode.None)]
-        AnalogDpadMode InputAnalogDpadMode { get; set; } 
+        AnalogDpadMode InputAnalogDpadMode { get; set; }
 
         [InputOption("input_player{N}_turbo", InputOptionType.Keyboard, ControllerElement.NoElement)]
         ControllerElement InputPlayerTurbo { get; }

@@ -1,13 +1,14 @@
-﻿using Snowflake.Loader;
-using Snowflake.Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Snowflake.Loader;
+using Snowflake.Services;
 
 namespace Snowflake.Support.PluginManager
 {
     public class PluginManagerComposable : IComposable
     {
+        /// <inheritdoc/>
         [ImportService(typeof(ILogProvider))]
         [ImportService(typeof(IContentDirectoryProvider))]
         [ImportService(typeof(IServiceRegistrationProvider))]

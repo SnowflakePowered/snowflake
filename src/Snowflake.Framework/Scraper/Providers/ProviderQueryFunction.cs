@@ -13,13 +13,15 @@ namespace Snowflake.Scraper.Providers
     internal class ProviderQueryFunction<T>
     {
         /// <summary>
-        /// The required metadata for this provider
+        /// Gets the required metadata for this provider
         /// </summary>
         public IEnumerable<string> RequiredMetadata { get; }
+
         /// <summary>
-        /// The metadata or file type that is guaranteed to return for this provider
+        /// Gets the metadata or file type that is guaranteed to return for this provider
         /// </summary>
         public IEnumerable<string> ReturnMetadata { get; }
+
         /// <summary>
         /// The provider function itself
         /// </summary>
@@ -40,7 +42,6 @@ namespace Snowflake.Scraper.Providers
             var instanceRef = Expression.Constant(instance, instance.GetType());
             var call = Expression.Call(instanceRef, methodInfo, metadataParam);
             return Expression.Lambda<Func<IMetadataCollection, T>>(call, metadataParam).Compile();
-
         }
     }
 }

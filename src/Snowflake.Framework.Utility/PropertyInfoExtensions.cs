@@ -8,7 +8,8 @@ namespace Snowflake.Utility
 {
     public static class PropertyInfoExtensions
     {
-        public static bool HasAttribute<T>(this PropertyInfo property) where T : Attribute
+        public static bool HasAttribute<T>(this PropertyInfo property)
+            where T : Attribute
         {
             return property.IsDefined(typeof(T));
         }

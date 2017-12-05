@@ -12,18 +12,19 @@ namespace Snowflake.Configuration.Input
     [Flags]
     public enum InputOptionType
     {
-
         /// <summary>
         /// This input option accepts only controller element mappings.
         /// </summary>
         Controller = 1 << 0,
+
         /// <summary>
         /// This input option is restricted to axes only
         /// </summary>
         ControllerAxes = 1 << 1,
+
         /// <summary>
         /// This input option accepts only keyboard keys
         /// </summary>
-        Keyboard = 1 << 2
+        Keyboard = 1 << 2,
     }
 }

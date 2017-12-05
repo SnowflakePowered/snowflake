@@ -1,10 +1,10 @@
-﻿using Snowflake.Configuration;
-using Snowflake.Extensibility.Configuration;
-using Snowflake.Persistence;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Snowflake.Configuration;
+using Snowflake.Extensibility.Configuration;
+using Snowflake.Persistence;
 using Xunit;
 
 namespace Snowflake.Extensibility.Tests
@@ -19,7 +19,6 @@ namespace Snowflake.Extensibility.Tests
             store.Set(configSection);
         }
 
-
         [Fact]
         public void ConfigurationStoreGet_Test()
         {
@@ -27,7 +26,6 @@ namespace Snowflake.Extensibility.Tests
             var configSection = new ConfigurationSection<ExampleConfigurationSection>();
             store.Set(configSection);
 
-            
             var retrievedConfig = store.Get<ExampleConfigurationSection>();
             Assert.NotNull(retrievedConfig);
             Assert.Equal(configSection.Configuration.ISOPath0, retrievedConfig.Configuration.ISOPath0);

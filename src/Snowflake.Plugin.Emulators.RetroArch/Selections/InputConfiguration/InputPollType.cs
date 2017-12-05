@@ -14,6 +14,6 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Selections.InputConfiguration
         [SelectionOption("1", DisplayName = "Late Polling")]
         Late,
         [SelectionOption("2", DisplayName = "Early Polling")]
-        Early
+        Early,
     }
 }

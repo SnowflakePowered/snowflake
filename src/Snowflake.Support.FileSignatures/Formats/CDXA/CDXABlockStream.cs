@@ -17,11 +17,14 @@ namespace Snowflake.Romfile.FileSignatures.Formats.CDXA
             this.LBA = lba;
             this.Length = CDXABlockStream.BlockLength;
         }
+
+        /// <inheritdoc/>
         public sealed override void Flush()
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public sealed override long Seek(long offset, SeekOrigin origin)
         {
             switch (origin)
@@ -36,14 +39,17 @@ namespace Snowflake.Romfile.FileSignatures.Formats.CDXA
                     this.Position += offset;
                     break;
             }
+
             return this.Position;
         }
 
+        /// <inheritdoc/>
         public sealed override void SetLength(long value)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public sealed override int Read(byte[] buffer, int offset, int count)
         {
             this.diskStream.Seek((CDXADisk.BlockSize * this.LBA) + CDXADisk.BlockHeaderSize + this.Position, SeekOrigin.Begin);
@@ -51,16 +57,26 @@ namespace Snowflake.Romfile.FileSignatures.Formats.CDXA
             return this.diskStream.Read(buffer, offset, count);
         }
 
+        /// <inheritdoc/>
         public sealed override void Write(byte[] buffer, int offset, int count)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public sealed override bool CanRead => true;
+
+        /// <inheritdoc/>
         public sealed override bool CanSeek => true;
+
+        /// <inheritdoc/>
         public sealed override bool CanWrite => false;
+
+        /// <inheritdoc/>
         public sealed override long Length { get; }
         public int LBA { get; }
+
+        /// <inheritdoc/>
         public sealed override long Position { get; set; }
     }
 }

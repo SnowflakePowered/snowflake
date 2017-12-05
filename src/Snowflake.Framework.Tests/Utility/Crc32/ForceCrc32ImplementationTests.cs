@@ -1,8 +1,8 @@
 ﻿/**
 * The MIT License (MIT)
-* 
+*
 * Copyright (c) 2016 force
-* 
+*
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
 * in the Software without restriction, including without limitation the rights
@@ -21,12 +21,11 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
 */
-
-using Force.Crc32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Force.Crc32;
 using Xunit;
 using E = Force.Crc32.Crc32Algorithm;
 
@@ -90,7 +89,11 @@ namespace Snowflake.Utility.Crc32
                 new Random().NextBytes(bytes);
                 var crc1 = Crc32Algorithm.Append(0, bytes, 0, bytes.Length);
                 var crc2Bytes = new Crc32Algorithm().ComputeHash(bytes);
-                if (BitConverter.IsLittleEndian) crc2Bytes = crc2Bytes.Reverse().ToArray();
+                if (BitConverter.IsLittleEndian)
+                {
+                    crc2Bytes = crc2Bytes.Reverse().ToArray();
+                }
+
                 var crc2 = BitConverter.ToUInt32(crc2Bytes, 0);
                 Assert.Equal(crc1, crc2);
             }

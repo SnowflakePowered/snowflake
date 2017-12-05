@@ -1,4 +1,8 @@
-﻿using GraphQL.Types;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using GraphQL.Types;
 using Snowflake.Configuration;
 using Snowflake.Input;
 using Snowflake.Input.Controller.Mapped;
@@ -11,10 +15,6 @@ using Snowflake.Support.Remoting.GraphQl.Inputs.MappedControllerElement;
 using Snowflake.Support.Remoting.GraphQl.Types.Configuration;
 using Snowflake.Support.Remoting.GraphQl.Types.InputDevice;
 using Snowflake.Support.Remoting.GraphQl.Types.InputDevice.Mapped;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Snowflake.Support.Remoting.GraphQl.Queries
 {
@@ -25,8 +25,10 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
         public IEnumerable<IInputEnumerator> Enumerators => this.Plugins.Get<IInputEnumerator>();
         public IMappedControllerElementCollectionStore MappedElementStore { get; }
         public IStoneProvider StoneProvider { get; }
-        public InputQueryBuilder(IInputManager manager, 
-            IPluginManager pluginManager, IMappedControllerElementCollectionStore mappedElementCollectionStore,
+
+        public InputQueryBuilder(IInputManager manager,
+            IPluginManager pluginManager,
+            IMappedControllerElementCollectionStore mappedElementCollectionStore,
             IStoneProvider stoneProvider)
         {
             this.Manager = manager;
@@ -56,7 +58,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
             return this.MappedElementStore.GetMappingProfile(controllerId, deviceId, profileName);
         }
 
-        //todo: make this a mutation input object.
+        // todo: make this a mutation input object.
         [Field("defaultControllerProfile", "Gets the default controller profile for the given Stone controller and real device.", typeof(MappedControllerElementCollectionGraphType))]
         [Parameter(typeof(string), typeof(StringGraphType), "controllerId", "The Stone Controller ID to map to.")]
         [Parameter(typeof(string), typeof(StringGraphType), "deviceId", "The real device to map from.")]
@@ -65,7 +67,8 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
         {
             var emulatedController = this.StoneProvider.Controllers[controllerId];
             var realController = this.GetAllInputDevices().FirstOrDefault(p => p.DeviceId == deviceId)?.DeviceLayout;
-            //todo: check for nulls
+
+            // todo: check for nulls
             return MappedControllerElementCollection.GetDefaultMappings(realController, emulatedController);
         }
 
@@ -75,7 +78,8 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
         {
             var emulatedController = this.StoneProvider.Controllers[input.ControllerId];
             var realController = this.GetAllInputDevices().FirstOrDefault(p => p.DeviceId == input.DeviceId)?.DeviceLayout;
-            //todo: check for nulls
+
+            // todo: check for nulls
             var defaults = MappedControllerElementCollection.GetDefaultMappings(realController, emulatedController);
             this.MappedElementStore.SetMappingProfile(defaults, input.ProfileName);
             return this.MappedElementStore.GetMappingProfile(input.ControllerId, input.DeviceId, input.ProfileName);
@@ -90,9 +94,9 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
             {
                 collection.Add(new MappedControllerElement(mapping.LayoutElement) { DeviceElement = mapping.DeviceElement });
             }
+
             this.MappedElementStore.SetMappingProfile(collection, input.ProfileName);
             return this.MappedElementStore.GetMappingProfile(input.ControllerId, input.DeviceId, input.ProfileName);
         }
-
     }
 }

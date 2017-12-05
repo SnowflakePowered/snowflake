@@ -15,6 +15,8 @@ namespace Snowflake.Configuration.Input
         {
             this.ConfigurationSerializer = configurationSerializer;
         }
+
+        /// <inheritdoc/>
         public virtual string Serialize(IInputTemplate inputTemplate, IInputMapping inputMapping)
         {
             StringBuilder stringBuilder = new StringBuilder();
@@ -30,14 +32,15 @@ namespace Snowflake.Configuration.Input
             {
                 stringBuilder.AppendLine(this.SerializeInput(input.OptionName.Replace("{N}", inputTemplate.PlayerIndex.ToString()), inputTemplate.Values[input.KeyName], inputMapping));
             }
+
             stringBuilder.Append(this.ConfigurationSerializer.SerializeFooter(inputTemplate.Descriptor.SectionName.Replace("{N}", inputTemplate.PlayerIndex.ToString())));
 
             return stringBuilder.ToString();
         }
 
+        /// <inheritdoc/>
         public virtual string SerializeInput(string key, ControllerElement element, IInputMapping inputMapping)
         {
-
             return
                 element == ControllerElement.NoElement ? this.ConfigurationSerializer.SerializeLine(key, this.ConfigurationSerializer.TypeMapper.ConvertValue((object)null))
                 : this.ConfigurationSerializer.SerializeLine(key, inputMapping[element]);

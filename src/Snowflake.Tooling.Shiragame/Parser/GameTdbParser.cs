@@ -16,7 +16,6 @@ namespace Shiragame.Builder.Parser
 {
     internal class GameTdbParser : DatParser
     {
-
         /// <summary>
         /// Parse gametdb dat files
         /// </summary>
@@ -35,25 +34,37 @@ namespace Shiragame.Builder.Parser
             string serial = line[0];
 
             string region = "ZZ";
-            if(platformId.StartsWith("NINTENDO")) region = GameTdbParser.GetNintendoRegionCode(serial);
-            if(platformId.StartsWith("SONY")) region = GameTdbParser.GetSonyRegionCode(serial);
+            if (platformId.StartsWith("NINTENDO"))
+            {
+                region = GameTdbParser.GetNintendoRegionCode(serial);
+            }
+
+            if (platformId.StartsWith("SONY"))
+            {
+                region = GameTdbParser.GetSonyRegionCode(serial);
+            }
+
             string name = line[1];
             return new SerialInfo(platformId, name, region, serial);
         }
 
         private static string GetSonyRegionCode(string serial)
         {
-            if (serial.StartsWith("A")) return "AS";
+            if (serial.StartsWith("A"))
+            {
+                return "AS";
+            }
+
             char region = serial[2];
             switch (region)
             {
-                case 'A': //asia
+                case 'A': // asia
                     return "AS";
-                case 'E': //europe
+                case 'E': // europe
                     return "EU";
-                case 'H': //southeast asia
+                case 'H': // southeast asia
                     return "AS";
-                case 'K': //hong kong
+                case 'K': // hong kong
                     return "HK";
                 case 'J':
                     return "JP";
@@ -63,15 +74,16 @@ namespace Shiragame.Builder.Parser
                     return "ZZ";
             }
         }
+
         private static string GetNintendoRegionCode(string serial)
         {
             char region = serial[3];
             switch (region)
             {
-                case 'D': //germany
+                case 'D': // germany
                     return "DE";
-                case 'E': //usa
-                case 'N': //jp import to usa
+                case 'E': // usa
+                case 'N': // jp import to usa
                     return "US";
                 case 'F':
                     return "FR";
@@ -79,20 +91,20 @@ namespace Shiragame.Builder.Parser
                     return "IT";
                 case 'J':
                     return "JP";
-                case 'Q': //kr with japanese lang
+                case 'Q': // kr with japanese lang
                 case 'K':
                     return "KR";
-                case 'P': //pal 
+                case 'P': // pal
                 case 'L':
-                case 'M': //jp import to eu
+                case 'M': // jp import to eu
                     return "EU";
                 case 'R':
                     return "RU";
                 case 'S':
                     return "ES";
-                case 'T': 
+                case 'T':
                     return "TW";
-                case 'U': //u for australia
+                case 'U': // u for australia
                     return "AU";
                 case 'C':
                     return "CN";
@@ -100,7 +112,5 @@ namespace Shiragame.Builder.Parser
                     return "ZZ";
             }
         }
-
-
     }
 }

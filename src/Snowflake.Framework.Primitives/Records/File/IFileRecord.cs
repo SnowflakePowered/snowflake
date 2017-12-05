@@ -13,12 +13,12 @@ namespace Snowflake.Records.File
     public interface IFileRecord : IRecord
     {
         /// <summary>
-        /// The mimetype of the file
+        /// Gets the mimetype of the file
         /// </summary>
         string MimeType { get; }
 
         /// <summary>
-        /// The file path of the file
+        /// Gets the file path of the file
         /// </summary>
         string FilePath { get; }
     }

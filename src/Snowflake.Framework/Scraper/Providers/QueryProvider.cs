@@ -8,7 +8,7 @@ using Snowflake.Records.Metadata;
 
 namespace Snowflake.Scraper.Providers
 {
-    public abstract class QueryProvider<T> : IQueryProvider<T> 
+    public abstract class QueryProvider<T> : IQueryProvider<T>
     {
         private readonly IList<ProviderQueryFunction<T>> cachedFunctions;
 
@@ -17,26 +17,29 @@ namespace Snowflake.Scraper.Providers
             this.cachedFunctions = this.CacheFunctions();
         }
 
+        /// <inheritdoc/>
         public abstract IEnumerable<T> Query(string searchQuery, string platformId);
 
+        /// <inheritdoc/>
         public abstract T QueryBestMatch(string searchQuery, string platformId);
 
+        /// <inheritdoc/>
         public IEnumerable<T> Query(IMetadataCollection metadata)
         {
-            return (from p in this.cachedFunctions.AsParallel()
+            return from p in this.cachedFunctions.AsParallel()
                     where metadata.Keys.Intersect(p.RequiredMetadata).Count() == p.RequiredMetadata.Count()
                     let result = p.Query(metadata)
-                    select result);
+                    select result;
         }
 
         private IList<ProviderQueryFunction<T>> CacheFunctions()
         {
             return (from m in this.GetType().GetMethods(BindingFlags.Instance | BindingFlags.Public)
                     where m.IsDefined(typeof(ProviderAttribute))
-                    let returnValues = (from attr in m.GetCustomAttributes<ReturnMetadataAttribute>()
-                                        select attr.ReturnMetadata)
-                    let requiredValues = (from attr in m.GetCustomAttributes<RequiredMetadataAttribute>()
-                                          select attr.Metadata)
+                    let returnValues = from attr in m.GetCustomAttributes<ReturnMetadataAttribute>()
+                                        select attr.ReturnMetadata
+                    let requiredValues = from attr in m.GetCustomAttributes<RequiredMetadataAttribute>()
+                                          select attr.Metadata
                     where requiredValues.Any()
                     let func = ProviderQueryFunction<T>.Make(this, m)
                     select new ProviderQueryFunction<T>(requiredValues, returnValues, func)).ToList();

@@ -14,14 +14,19 @@ using Snowflake.Utility;
 namespace Snowflake.Configuration
 {
     [JsonConverter(typeof(ConfigurationCollectionSerializer))]
-    public class ConfigurationCollection<T> : IConfigurationCollection<T> where T: class, IConfigurationCollection<T>
+    public class ConfigurationCollection<T> : IConfigurationCollection<T>
+        where T : class, IConfigurationCollection<T>
     {
+        /// <inheritdoc/>
         public T Configuration { get; }
+
+        /// <inheritdoc/>
         public IConfigurationCollectionDescriptor Descriptor { get; }
 
         private readonly CollectionInterceptor<T> collectionInterceptor;
 
-        public ConfigurationCollection() : this(new Dictionary<string, IDictionary<string, IConfigurationValue>>())
+        public ConfigurationCollection()
+            : this(new Dictionary<string, IDictionary<string, IConfigurationValue>>())
         {
         }
 
@@ -33,7 +38,9 @@ namespace Snowflake.Configuration
             this.collectionInterceptor = new CollectionInterceptor<T>(defaults);
             this.Configuration = generator.CreateInterfaceProxyWithoutTarget<T>(new CollectionCircularInterceptor<T>(this), this.collectionInterceptor);
         }
+
         /// <summary>
+        /// Initializes a new instance of the <see cref="ConfigurationCollection{T}"/> class.
         /// Used for the sqlite configuration collection store
         /// </summary>
         /// <param name="defaults"></param>
@@ -46,30 +53,36 @@ namespace Snowflake.Configuration
             this.Configuration = generator.CreateInterfaceProxyWithoutTarget<T>(new CollectionCircularInterceptor<T>(this), this.collectionInterceptor);
         }
 
+        /// <inheritdoc/>
         public IEnumerator<KeyValuePair<string, IConfigurationSection>> GetEnumerator()
         {
-            return this.Descriptor.SectionKeys.Select(k => new KeyValuePair<string, IConfigurationSection>
-            (k, this.collectionInterceptor.Values[k] as IConfigurationSection))
-                .GetEnumerator(); //ensure order
+            return this.Descriptor.SectionKeys.Select(k => new KeyValuePair<string, IConfigurationSection>(
+            k, this.collectionInterceptor.Values[k] as IConfigurationSection))
+                .GetEnumerator(); // ensure order
         }
 
+        /// <inheritdoc/>
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
+        /// <inheritdoc/>
         public IConfigurationSection this[string sectionName] => this.collectionInterceptor.Values[sectionName];
     }
 
-    class CollectionCircularInterceptor<T> : IInterceptor where T : class, IConfigurationCollection<T>
+    class CollectionCircularInterceptor<T> : IInterceptor
+        where T : class, IConfigurationCollection<T>
     {
         private readonly IConfigurationCollection<T> @this;
         public CollectionCircularInterceptor(IConfigurationCollection<T> @this)
         {
             this.@this = @this;
         }
+
+        /// <inheritdoc/>
         public void Intercept(IInvocation invocation)
         {
             if (invocation.Method.Name == nameof(@this.GetEnumerator))
             {
-                invocation.ReturnValue = @this.GetEnumerator(); //inherit enumerator.
+                invocation.ReturnValue = @this.GetEnumerator(); // inherit enumerator.
             }
             else
             {
@@ -81,8 +94,8 @@ namespace Snowflake.Configuration
                     case nameof(@this.Descriptor):
                         invocation.ReturnValue = @this.Descriptor;
                         break;
-                    case "Item": //circular indexer
-                        invocation.ReturnValue = @this[(string) invocation.Arguments[0]];
+                    case "Item": // circular indexer
+                        invocation.ReturnValue = @this[(string)invocation.Arguments[0]];
                         break;
                     default:
                         invocation.Proceed();
@@ -105,8 +118,9 @@ namespace Snowflake.Configuration
                                     select new { sectionAttr, type = props.PropertyType, name = props.Name })
             {
                 var sectionType = typeof(ConfigurationSection<>).MakeGenericType(section.type);
-                this.Values.Add(section.name, Instantiate.CreateInstance(sectionType, new[] { typeof(IDictionary<string, (string, Guid)>) },
-                    Expression.Constant(defaults.ContainsKey(section.name) ? defaults[section.name] 
+                this.Values.Add(section.name, Instantiate.CreateInstance(sectionType,
+                    new[] { typeof(IDictionary<string, (string, Guid)>) },
+                    Expression.Constant(defaults.ContainsKey(section.name) ? defaults[section.name]
                     : new Dictionary<string, (string, Guid)>())));
             }
         }
@@ -114,26 +128,31 @@ namespace Snowflake.Configuration
         internal CollectionInterceptor(IDictionary<string, IDictionary<string, IConfigurationValue>> defaults)
         {
             this.Values = new Dictionary<string, dynamic>();
-            //public ConfigurationSection(IDictionary<string, IConfigurationValue> values)
+
+            // public ConfigurationSection(IDictionary<string, IConfigurationValue> values)
             foreach (var section in from props in typeof(T).GetPublicProperties()
                                     let sectionAttr = props.GetAttributes<SerializableSectionAttribute>().FirstOrDefault()
-                                    where sectionAttr !=null
-                                    select new {sectionAttr, type = props.PropertyType, name = props.Name})
+                                    where sectionAttr != null
+                                    select new { sectionAttr, type = props.PropertyType, name = props.Name })
             {
                 var sectionType = typeof(ConfigurationSection<>).MakeGenericType(section.type);
-                this.Values.Add(section.name, Instantiate.CreateInstance(sectionType, new Type[] {typeof(IDictionary<string, IConfigurationValue>) },
-                    Expression.Constant(defaults.ContainsKey(section.name)? defaults[section.name] : new Dictionary<string, IConfigurationValue>())));
+                this.Values.Add(section.name, Instantiate.CreateInstance(sectionType, new Type[] { typeof(IDictionary<string, IConfigurationValue>) },
+                    Expression.Constant(defaults.ContainsKey(section.name) ? defaults[section.name] : new Dictionary<string, IConfigurationValue>())));
             }
         }
 
-
+        /// <inheritdoc/>
         public void Intercept(IInvocation invocation)
         {
             var propertyName = invocation.Method.Name.Substring(4); // remove get_ or set_
-            if (!this.Values.ContainsKey(propertyName)) return;
+            if (!this.Values.ContainsKey(propertyName))
+            {
+                return;
+            }
+
             if (invocation.Method.Name.StartsWith("get_"))
             {
-                invocation.ReturnValue = Values[propertyName].Configuration; //type is IConfigurationSection<T>
+                invocation.ReturnValue = Values[propertyName].Configuration; // type is IConfigurationSection<T>
             }
         }
     }

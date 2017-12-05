@@ -8,6 +8,6 @@ namespace Snowflake.Support.Remoting.GraphQl.Inputs.MappedControllerElement
     {
         public string DeviceId { get; set; }
         public string ControllerId { get; set; }
-        public string ProfileName { get; set; } 
+        public string ProfileName { get; set; }
     }
 }

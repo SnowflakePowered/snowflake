@@ -7,14 +7,26 @@ namespace Snowflake.Loader
 {
     public class Module : IModule
     {
+        /// <inheritdoc/>
         public string Name { get; }
+
+        /// <inheritdoc/>
         public string Entry { get; }
+
+        /// <inheritdoc/>
         public string Loader { get; }
+
+        /// <inheritdoc/>
         public string Author { get; }
+
+        /// <inheritdoc/>
         public DirectoryInfo ModuleDirectory { get; }
+
+        /// <inheritdoc/>
         public DirectoryInfo ContentsDirectory { get; }
 
-        public Module(string name, string entry, string loader, string author, DirectoryInfo moduleDirectory) {
+        public Module(string name, string entry, string loader, string author, DirectoryInfo moduleDirectory)
+        {
             this.Name = name;
             this.Entry = entry;
             this.Loader = loader;
@@ -33,10 +45,10 @@ namespace Snowflake.Loader
         private string Version { get; }
         private string Author { get; }
         public ModuleDefinition(string name,
-            string entry, 
-            string loader, 
-            string frameworkVersion, 
-            string author, 
+            string entry,
+            string loader,
+            string frameworkVersion,
+            string author,
             string version,
             dynamic loaderOptions)
         {
@@ -48,9 +60,9 @@ namespace Snowflake.Loader
             this.FrameworkVersion = frameworkVersion;
         }
 
-        public IModule ToModule(DirectoryInfo moduleDirectory) => new Module(this.Name, 
-            this.Entry, 
-            this.Loader, 
+        public IModule ToModule(DirectoryInfo moduleDirectory) => new Module(this.Name,
+            this.Entry,
+            this.Loader,
             this.Author,
             moduleDirectory);
     }

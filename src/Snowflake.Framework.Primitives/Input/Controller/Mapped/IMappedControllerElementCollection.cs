@@ -15,12 +15,12 @@ namespace Snowflake.Input.Controller.Mapped
     public interface IMappedControllerElementCollection : IEnumerable<IMappedControllerElement>
     {
         /// <summary>
-        /// The device id of the real device
+        /// Gets the device id of the real device
         /// </summary>
         string DeviceId { get; }
 
         /// <summary>
-        /// The controller id of the virtual controller layout
+        /// Gets the controller id of the virtual controller layout
         /// </summary>
         string ControllerId { get; }
     }
