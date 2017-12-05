@@ -6,12 +6,12 @@
     public interface IControllerElementInfo
     {
         /// <summary>
-        /// The user friendly label for this element
+        /// Gets the user friendly label for this element
         /// </summary>
         string Label { get; }
 
         /// <summary>
-        /// The type of element
+        /// Gets the type of element
         /// </summary>
         ControllerElementType Type { get; }
     }

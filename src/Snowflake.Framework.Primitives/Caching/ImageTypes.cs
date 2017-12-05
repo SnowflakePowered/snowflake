@@ -15,7 +15,7 @@ namespace Snowflake.Caching
         /// Front box art
         /// </summary>
         public const string MediaBoxartFront = "media_boxart_front";
-       
+
         /// <summary>
         /// Back box art
         /// </summary>
@@ -45,7 +45,7 @@ namespace Snowflake.Caching
         /// An arcade cabinet marquee
         /// </summary>
         public const string MediaMarquee = "media_marquee";
-        
+
         /// <summary>
         /// A game screenshot
         /// </summary>

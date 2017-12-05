@@ -18,6 +18,6 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Selections
         [SelectionOption("xmb")]
         XMB,
         [SelectionOption("null")]
-        Null
+        Null,
     }
 }

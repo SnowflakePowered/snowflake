@@ -12,12 +12,12 @@ namespace Snowflake.Scraper.MetadataProvider.Tests
 {
     public class MetadataProviderTests
     {
-        //test single query
+        // test single query
         [Fact]
         public void TestQuery()
         {
             var provider = new TestMetadataProvider();
-            var collection = new MetadataCollection(Guid.NewGuid()) {{"TestMetadataKey", "Test"}};
+            var collection = new MetadataCollection(Guid.NewGuid()) { { "TestMetadataKey", "Test" } };
             var result = provider.Query(collection);
             Assert.Equal("Test", result.First().Source);
         }
@@ -25,11 +25,13 @@ namespace Snowflake.Scraper.MetadataProvider.Tests
 
     internal class TestMetadataProvider : QueryProvider<IScrapedMetadataCollection>
     {
+        /// <inheritdoc/>
         public override IEnumerable<IScrapedMetadataCollection> Query(string searchQuery, string platformId)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public override IScrapedMetadataCollection QueryBestMatch(string searchQuery, string platformId)
         {
             throw new NotImplementedException();
@@ -42,9 +44,8 @@ namespace Snowflake.Scraper.MetadataProvider.Tests
         {
             IMetadataCollection retmetadata = new ScrapedMetadataCollection("Test", 1.0);
             retmetadata.Add("TestMetadataReturn", "lmao");
-            return (IScrapedMetadataCollection) retmetadata;
+            return (IScrapedMetadataCollection)retmetadata;
         }
-
 
         [Provider]
         [RequiredMetadata("TestMetadataKey")]
@@ -57,6 +58,5 @@ namespace Snowflake.Scraper.MetadataProvider.Tests
             retmetadata.Add("TestMetadataReturn", "lmao");
             return (IScrapedMetadataCollection)retmetadata;
         }
-
     }
 }

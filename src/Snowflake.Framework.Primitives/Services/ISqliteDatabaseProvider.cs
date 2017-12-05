@@ -16,6 +16,7 @@ namespace Snowflake.Services
         /// <param name="databaseName">The name of the database</param>
         /// <returns>A SQLite database instance</returns>
         ISqlDatabase CreateDatabase(string databaseName);
+
         /// <summary>
         /// Creates a database under the specified universe.
         /// </summary>

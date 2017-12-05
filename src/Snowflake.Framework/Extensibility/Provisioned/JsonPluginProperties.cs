@@ -15,14 +15,19 @@ namespace Snowflake.Extensibility.Provisioned
             this.propertyRoot = propertyRoot;
         }
 
+        /// <inheritdoc/>
         public IEnumerable<string> PropertyKeys => (this.propertyRoot as IDictionary<string, JToken>).Keys;
+
+        /// <inheritdoc/>
         public string Get(string key) => this.propertyRoot[key]?.Value<string>();
 
+        /// <inheritdoc/>
         public IEnumerable<string> GetEnumerable(string key)
         {
             return this.propertyRoot.Value<JArray>(key)?.Values<string>() ?? Enumerable.Empty<string>();
         }
 
+        /// <inheritdoc/>
         public IDictionary<string, string> GetDictionary(string key)
         {
             return this.propertyRoot.Value<JToken>(key)?.ToObject<IDictionary<string, string>>() ?? new Dictionary<string, string>();

@@ -13,50 +13,55 @@ namespace Snowflake.Input.Controller.Mapped
         private static readonly IDictionary<ControllerElement, ControllerElement> DefaultKeyboardMappings =
             new Dictionary<ControllerElement, ControllerElement>()
             {
-                {ControllerElement.Button0, ControllerElement.Key0},
-                {ControllerElement.Button1, ControllerElement.Key1},
-                {ControllerElement.Button2, ControllerElement.Key2},
-                {ControllerElement.Button3, ControllerElement.Key3},
-                {ControllerElement.Button4, ControllerElement.Key4},
-                {ControllerElement.Button5, ControllerElement.Key5},
-                {ControllerElement.Button6, ControllerElement.Key6},
-                {ControllerElement.Button7, ControllerElement.Key7},
-                {ControllerElement.Button8, ControllerElement.Key8},
-                {ControllerElement.Button9, ControllerElement.Key9},
-                {ControllerElement.ButtonStart, ControllerElement.KeySpacebar},
-                {ControllerElement.ButtonSelect, ControllerElement.KeyEnter},
-                {ControllerElement.ButtonA, ControllerElement.KeyZ},
-                {ControllerElement.ButtonB, ControllerElement.KeyX},
-                {ControllerElement.ButtonX, ControllerElement.KeyC},
-                {ControllerElement.ButtonY, ControllerElement.KeyV},
-                {ControllerElement.ButtonC, ControllerElement.KeyC},
-                {ControllerElement.ButtonL, ControllerElement.KeyQ},
-                {ControllerElement.ButtonR, ControllerElement.KeyE},
-                {ControllerElement.DirectionalN, ControllerElement.KeyUp},
-                {ControllerElement.DirectionalE, ControllerElement.KeyRight},
-                {ControllerElement.DirectionalS, ControllerElement.KeyDown},
-                {ControllerElement.DirectionalW, ControllerElement.KeyLeft},
-                {ControllerElement.AxisLeftAnalogPositiveY, ControllerElement.KeyW},
-                {ControllerElement.AxisLeftAnalogNegativeX, ControllerElement.KeyA},
-                {ControllerElement.AxisLeftAnalogNegativeY, ControllerElement.KeyS},
-                {ControllerElement.AxisLeftAnalogPositiveX, ControllerElement.KeyD},
-                {ControllerElement.AxisRightAnalogPositiveY, ControllerElement.KeyI},
-                {ControllerElement.AxisRightAnalogNegativeX, ControllerElement.KeyJ},
-                {ControllerElement.AxisRightAnalogNegativeY, ControllerElement.KeyK},
-                {ControllerElement.AxisRightAnalogPositiveX, ControllerElement.KeyL}
+                { ControllerElement.Button0, ControllerElement.Key0 },
+                { ControllerElement.Button1, ControllerElement.Key1 },
+                { ControllerElement.Button2, ControllerElement.Key2 },
+                { ControllerElement.Button3, ControllerElement.Key3 },
+                { ControllerElement.Button4, ControllerElement.Key4 },
+                { ControllerElement.Button5, ControllerElement.Key5 },
+                { ControllerElement.Button6, ControllerElement.Key6 },
+                { ControllerElement.Button7, ControllerElement.Key7 },
+                { ControllerElement.Button8, ControllerElement.Key8 },
+                { ControllerElement.Button9, ControllerElement.Key9 },
+                { ControllerElement.ButtonStart, ControllerElement.KeySpacebar },
+                { ControllerElement.ButtonSelect, ControllerElement.KeyEnter },
+                { ControllerElement.ButtonA, ControllerElement.KeyZ },
+                { ControllerElement.ButtonB, ControllerElement.KeyX },
+                { ControllerElement.ButtonX, ControllerElement.KeyC },
+                { ControllerElement.ButtonY, ControllerElement.KeyV },
+                { ControllerElement.ButtonC, ControllerElement.KeyC },
+                { ControllerElement.ButtonL, ControllerElement.KeyQ },
+                { ControllerElement.ButtonR, ControllerElement.KeyE },
+                { ControllerElement.DirectionalN, ControllerElement.KeyUp },
+                { ControllerElement.DirectionalE, ControllerElement.KeyRight },
+                { ControllerElement.DirectionalS, ControllerElement.KeyDown },
+                { ControllerElement.DirectionalW, ControllerElement.KeyLeft },
+                { ControllerElement.AxisLeftAnalogPositiveY, ControllerElement.KeyW },
+                { ControllerElement.AxisLeftAnalogNegativeX, ControllerElement.KeyA },
+                { ControllerElement.AxisLeftAnalogNegativeY, ControllerElement.KeyS },
+                { ControllerElement.AxisLeftAnalogPositiveX, ControllerElement.KeyD },
+                { ControllerElement.AxisRightAnalogPositiveY, ControllerElement.KeyI },
+                { ControllerElement.AxisRightAnalogNegativeX, ControllerElement.KeyJ },
+                { ControllerElement.AxisRightAnalogNegativeY, ControllerElement.KeyK },
+                { ControllerElement.AxisRightAnalogPositiveX, ControllerElement.KeyL },
             };
 
+        /// <inheritdoc/>
         public IEnumerator<IMappedControllerElement> GetEnumerator()
         {
             return this.controllerElements.GetEnumerator();
         }
 
+        /// <inheritdoc/>
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
         }
 
+        /// <inheritdoc/>
         public string DeviceId { get; }
+
+        /// <inheritdoc/>
         public string ControllerId { get; }
 
         private readonly List<IMappedControllerElement> controllerElements;
@@ -91,9 +96,9 @@ namespace Snowflake.Input.Controller.Mapped
             var mappedElements = from element in virtualDevice.Layout
                                  select new MappedControllerElement(element.Key)
                                  {
-                                     DeviceElement = MappedControllerElementCollection.DefaultKeyboardMappings.ContainsKey(element.Key) 
+                                     DeviceElement = MappedControllerElementCollection.DefaultKeyboardMappings.ContainsKey(element.Key)
                                      ? MappedControllerElementCollection.DefaultKeyboardMappings[element.Key]
-                                 : ControllerElement.KeyNone
+                                 : ControllerElement.KeyNone,
                                  };
             var elementCollection = new MappedControllerElementCollection(realKeyboard.LayoutID, virtualDevice.LayoutID);
             foreach (var element in mappedElements)
@@ -106,12 +111,11 @@ namespace Snowflake.Input.Controller.Mapped
 
         private static IMappedControllerElementCollection GetDefaultDeviceMappings(IControllerLayout realDevice, IControllerLayout virtualDevice)
         {
-            var mappedElements = (from element in virtualDevice.Layout
+            var mappedElements = from element in virtualDevice.Layout
                                   select new MappedControllerElement(element.Key)
                                   {
-                                      DeviceElement = realDevice.Layout[element.Key] != null ? element.Key : ControllerElement.NoElement
-                                  }
-                );
+                                      DeviceElement = realDevice.Layout[element.Key] != null ? element.Key : ControllerElement.NoElement,
+                                  };
             var elementCollection = new MappedControllerElementCollection(realDevice.LayoutID, virtualDevice.LayoutID);
             foreach (var element in mappedElements)
             {
@@ -120,6 +124,5 @@ namespace Snowflake.Input.Controller.Mapped
 
             return elementCollection;
         }
-
     }
 }

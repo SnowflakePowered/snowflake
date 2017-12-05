@@ -11,6 +11,6 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Shaders
         Unknown,
         Cg,
         Glsl,
-        Slang
+        Slang,
     }
 }

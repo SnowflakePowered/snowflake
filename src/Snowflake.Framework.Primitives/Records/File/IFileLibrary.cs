@@ -18,6 +18,5 @@ namespace Snowflake.Records.File
         /// <param name="filePath">The path to look for</param>
         /// <returns>The file path</returns>
         IFileRecord Get(string filePath);
-
     }
 }

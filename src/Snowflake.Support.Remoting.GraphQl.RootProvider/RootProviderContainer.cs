@@ -1,15 +1,16 @@
-﻿using Snowflake.Loader;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using Snowflake.Loader;
 using Snowflake.Services;
 using Snowflake.Support.Remoting.GraphQl.Framework;
 using Snowflake.Support.Remoting.GraphQl.Servers;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Snowflake.Support.Remoting.GraphQl.RootProvider
 {
     public class RootProviderContainer : IComposable
     {
+        /// <inheritdoc/>
         [ImportService(typeof(IServiceRegistrationProvider))]
         public void Compose(IModule composableModule, IServiceRepository serviceContainer)
         {

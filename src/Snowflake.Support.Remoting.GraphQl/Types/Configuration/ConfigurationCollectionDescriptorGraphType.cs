@@ -1,9 +1,9 @@
-﻿using GraphQL.Types;
-using Snowflake.Configuration;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using GraphQL.Types;
+using Snowflake.Configuration;
 
 namespace Snowflake.Support.Remoting.GraphQl.Types.Configuration
 {
@@ -16,7 +16,6 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.Configuration
             Field<ListGraphType<StringGraphType>>("sectionKeys",
                 description: "The keys of this section.",
                 resolve: context => context.Source.SectionKeys);
-
         }
     }
 }

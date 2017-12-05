@@ -15,29 +15,35 @@ namespace Snowflake.Input.Device
         /// XInput (Windows)
         /// </summary>
         XInput,
+
         /// <summary>
         /// DirectInput (Windows)
         /// </summary>
         DirectInput,
+
         /// <summary>
         /// RawInput (Windows)
         /// </summary>
         RawInput,
+
         /// <summary>
         /// Udev (Linux)
         /// </summary>
         Udev,
+
         /// <summary>
         /// WndProc messaging (Windows)
         /// </summary>
         WndProc,
+
         /// <summary>
         /// Human Interface Device interface (Windows)
         /// </summary>
         HID,
+
         /// <summary>
         /// Other
         /// </summary>
-        Other
+        Other,
     }
 }

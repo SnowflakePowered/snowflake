@@ -8,11 +8,12 @@ namespace Snowflake.Scraper.Providers
     public interface IScrapedMetadataCollection : IMetadataCollection
     {
         /// <summary>
-        /// The result sorce
+        /// Gets the result sorce
         /// </summary>
         string Source { get; }
+
         /// <summary>
-        /// The accuracy
+        /// Gets the accuracy
         /// </summary>
         double Accuracy { get; }
     }

@@ -48,8 +48,8 @@ namespace Snowflake.Configuration.Tests
             Assert.Equal("-2", mapping[ControllerElement.AxisRightAnalogNegativeX]);
             Assert.Equal("-3", mapping[ControllerElement.AxisRightAnalogPositiveY]);
             Assert.Equal("+3", mapping[ControllerElement.AxisRightAnalogNegativeY]);
-            Assert.Equal("", mapping[ControllerElement.RumbleBig]);
-            Assert.Equal("", mapping[ControllerElement.RumbleSmall]);
+            Assert.Equal(string.Empty, mapping[ControllerElement.RumbleBig]);
+            Assert.Equal(string.Empty, mapping[ControllerElement.RumbleSmall]);
         }
 
         [Fact]
@@ -163,12 +163,13 @@ namespace Snowflake.Configuration.Tests
                 JsonConvert.DeserializeObject<ControllerLayout>(
                     TestUtilities.GetStringResource("InputMappings.xinput_device.json"));
             var mapcol = MappedControllerElementCollection.GetDefaultMappings(realmapping, testmappings);
-            foreach (var controllerElem in (from elem in mapcol where elem.DeviceElement != ControllerElement.NoElement
-                                            select elem.DeviceElement))
+            foreach (var controllerElem in from elem in mapcol where elem.DeviceElement != ControllerElement.NoElement
+                                            select elem.DeviceElement)
             {
                 Assert.NotNull(realmapping.Layout[controllerElem]);
             }
         }
+
         [Fact]
         public void KvpSerialize_Test()
         {
@@ -181,11 +182,12 @@ namespace Snowflake.Configuration.Tests
                     TestUtilities.GetStringResource("InputMappings.xinput_device.json"));
             var mapcol = MappedControllerElementCollection.GetDefaultMappings(realmapping, testmappings);
             var template = new InputTemplate<IRetroArchInput>(mapcol, 0);
-            string serializedValue = new InputSerializer(serializer).Serialize(template, mapping).Replace(Environment.NewLine, "");
+            string serializedValue = new InputSerializer(serializer).Serialize(template, mapping).Replace(Environment.NewLine, string.Empty);
             Assert.Equal(
-                TestUtilities.GetStringResource("Configurations.ExampleInput.cfg").Replace(Environment.NewLine, ""),
+                TestUtilities.GetStringResource("Configurations.ExampleInput.cfg").Replace(Environment.NewLine, string.Empty),
                 serializedValue);
         }
+
         [Fact]
         public void IniSerialize_Test()
         {
@@ -198,9 +200,9 @@ namespace Snowflake.Configuration.Tests
                     TestUtilities.GetStringResource("InputMappings.xinput_device.json"));
             var mapcol = MappedControllerElementCollection.GetDefaultMappings(realmapping, testmappings);
             var template = new InputTemplate<IRetroArchInput>(mapcol, 0);
-            string serializedValue = new InputSerializer(serializer).Serialize(template, mapping).Replace(Environment.NewLine, "");
+            string serializedValue = new InputSerializer(serializer).Serialize(template, mapping).Replace(Environment.NewLine, string.Empty);
             Assert.Equal(
-                TestUtilities.GetStringResource("Configurations.ExampleInput.ini").Replace(Environment.NewLine, ""),
+                TestUtilities.GetStringResource("Configurations.ExampleInput.ini").Replace(Environment.NewLine, string.Empty),
                 serializedValue);
         }
     }

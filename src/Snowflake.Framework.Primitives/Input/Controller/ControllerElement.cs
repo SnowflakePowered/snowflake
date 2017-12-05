@@ -378,7 +378,7 @@ namespace Snowflake.Input.Controller
         AxisRightAnalogNegativeX,
 
         /// <summary>
-        /// Upwards movement of the right analog stick along the Y axis (vertically)	
+        /// Upwards movement of the right analog stick along the Y axis (vertically)
         /// </summary>
         AxisRightAnalogPositiveY,
 
@@ -451,484 +451,485 @@ namespace Snowflake.Input.Controller
         /// are only concerned with a single matrix due to the lack of multi-touch
         /// </summary>
         Touchscreen,
+
         // The following elements are keyboard keys.
         // By convention, these keys mappable from K -> K.
         // Instead, they can only be mapped from K -> C where
         // C is a controller element. Doing otherwise is undefined behavior.
-        ///<summary>
+
+        /// <summary>
         /// The None Key
-        ///</summary>
+        /// </summary>
         KeyNone,
 
-        ///<summary>
+        /// <summary>
         /// The A Key
-        ///</summary>
+        /// </summary>
         KeyA,
 
-        ///<summary>
+        /// <summary>
         /// The B Key
-        ///</summary>
+        /// </summary>
         KeyB,
 
-        ///<summary>
+        /// <summary>
         /// The C Key
-        ///</summary>
+        /// </summary>
         KeyC,
 
-        ///<summary>
+        /// <summary>
         /// The D Key
-        ///</summary>
+        /// </summary>
         KeyD,
 
-        ///<summary>
+        /// <summary>
         /// The E Key
-        ///</summary>
+        /// </summary>
         KeyE,
 
-        ///<summary>
+        /// <summary>
         /// The F Key
-        ///</summary>
+        /// </summary>
         KeyF,
 
-        ///<summary>
+        /// <summary>
         /// The G Key
-        ///</summary>
+        /// </summary>
         KeyG,
 
-        ///<summary>
+        /// <summary>
         /// The H Key
-        ///</summary>
+        /// </summary>
         KeyH,
 
-        ///<summary>
+        /// <summary>
         /// The I Key
-        ///</summary>
+        /// </summary>
         KeyI,
 
-        ///<summary>
+        /// <summary>
         /// The J Key
-        ///</summary>
+        /// </summary>
         KeyJ,
 
-        ///<summary>
+        /// <summary>
         /// The K Key
-        ///</summary>
+        /// </summary>
         KeyK,
 
-        ///<summary>
+        /// <summary>
         /// The L Key
-        ///</summary>
+        /// </summary>
         KeyL,
 
-        ///<summary>
+        /// <summary>
         /// The M Key
-        ///</summary>
+        /// </summary>
         KeyM,
 
-        ///<summary>
+        /// <summary>
         /// The N Key
-        ///</summary>
+        /// </summary>
         KeyN,
 
-        ///<summary>
+        /// <summary>
         /// The O Key
-        ///</summary>
+        /// </summary>
         KeyO,
 
-        ///<summary>
+        /// <summary>
         /// The P Key
-        ///</summary>
+        /// </summary>
         KeyP,
 
-        ///<summary>
+        /// <summary>
         /// The Q Key
-        ///</summary>
+        /// </summary>
         KeyQ,
 
-        ///<summary>
+        /// <summary>
         /// The R Key
-        ///</summary>
+        /// </summary>
         KeyR,
 
-        ///<summary>
+        /// <summary>
         /// The S Key
-        ///</summary>
+        /// </summary>
         KeyS,
 
-        ///<summary>
+        /// <summary>
         /// The T Key
-        ///</summary>
+        /// </summary>
         KeyT,
 
-        ///<summary>
+        /// <summary>
         /// The U Key
-        ///</summary>
+        /// </summary>
         KeyU,
 
-        ///<summary>
+        /// <summary>
         /// The V Key
-        ///</summary>
+        /// </summary>
         KeyV,
 
-        ///<summary>
+        /// <summary>
         /// The W Key
-        ///</summary>
+        /// </summary>
         KeyW,
 
-        ///<summary>
+        /// <summary>
         /// The X Key
-        ///</summary>
+        /// </summary>
         KeyX,
 
-        ///<summary>
+        /// <summary>
         /// The Y Key
-        ///</summary>
+        /// </summary>
         KeyY,
 
-        ///<summary>
+        /// <summary>
         /// The Z Key
-        ///</summary>
+        /// </summary>
         KeyZ,
 
-        ///<summary>
+        /// <summary>
         /// The 0 Key
-        ///</summary>
+        /// </summary>
         Key0,
 
-        ///<summary>
+        /// <summary>
         /// The 1 Key
-        ///</summary>
+        /// </summary>
         Key1,
 
-        ///<summary>
+        /// <summary>
         /// The 2 Key
-        ///</summary>
+        /// </summary>
         Key2,
 
-        ///<summary>
+        /// <summary>
         /// The 3 Key
-        ///</summary>
+        /// </summary>
         Key3,
 
-        ///<summary>
+        /// <summary>
         /// The 4 Key
-        ///</summary>
+        /// </summary>
         Key4,
 
-        ///<summary>
+        /// <summary>
         /// The 5 Key
-        ///</summary>
+        /// </summary>
         Key5,
 
-        ///<summary>
+        /// <summary>
         /// The 6 Key
-        ///</summary>
+        /// </summary>
         Key6,
 
-        ///<summary>
+        /// <summary>
         /// The 7 Key
-        ///</summary>
+        /// </summary>
         Key7,
 
-        ///<summary>
+        /// <summary>
         /// The 8 Key
-        ///</summary>
+        /// </summary>
         Key8,
 
-        ///<summary>
+        /// <summary>
         /// The 9 Key
-        ///</summary>
+        /// </summary>
         Key9,
 
-        ///<summary>
+        /// <summary>
         /// The Equals (=) Key
-        ///</summary>
+        /// </summary>
         KeyEquals,
 
-        ///<summary>
+        /// <summary>
         /// The Minus (-) Key
-        ///</summary>
+        /// </summary>
         KeyMinus,
 
-        ///<summary>
+        /// <summary>
         /// The Backspace Key
-        ///</summary>
+        /// </summary>
         KeyBackspace,
 
-        ///<summary>
+        /// <summary>
         /// The Spacebar Key
-        ///</summary>
+        /// </summary>
         KeySpacebar,
 
-        ///<summary>
+        /// <summary>
         /// The Enter Key
-        ///</summary>
+        /// </summary>
         KeyEnter,
 
-        ///<summary>
+        /// <summary>
         /// The Up Key
-        ///</summary>
+        /// </summary>
         KeyUp,
 
-        ///<summary>
+        /// <summary>
         /// The Down Key
-        ///</summary>
+        /// </summary>
         KeyDown,
 
-        ///<summary>
+        /// <summary>
         /// The Left Key
-        ///</summary>
+        /// </summary>
         KeyLeft,
 
-        ///<summary>
+        /// <summary>
         /// The Right Key
-        ///</summary>
+        /// </summary>
         KeyRight,
 
-        ///<summary>
+        /// <summary>
         /// The Tab Key
-        ///</summary>
+        /// </summary>
         KeyTab,
 
-        ///<summary>
+        /// <summary>
         /// The Insert Key
-        ///</summary>
+        /// </summary>
         KeyInsert,
 
-        ///<summary>
+        /// <summary>
         /// The Delete Key
-        ///</summary>
+        /// </summary>
         KeyDelete,
 
-        ///<summary>
+        /// <summary>
         /// The Home Key
-        ///</summary>
+        /// </summary>
         KeyHome,
 
-        ///<summary>
+        /// <summary>
         /// The End Key
-        ///</summary>
+        /// </summary>
         KeyEnd,
 
-        ///<summary>
+        /// <summary>
         /// The PageUp Key
-        ///</summary>
+        /// </summary>
         KeyPageUp,
 
-        ///<summary>
+        /// <summary>
         /// The PageDown Key
-        ///</summary>
+        /// </summary>
         KeyPageDown,
 
-        ///<summary>
+        /// <summary>
         /// The Shift Key
-        ///</summary>
+        /// </summary>
         KeyShift,
 
-        ///<summary>
+        /// <summary>
         /// The Ctrl Key
-        ///</summary>
+        /// </summary>
         KeyCtrl,
 
-        ///<summary>
+        /// <summary>
         /// The Alt Key
-        ///</summary>
+        /// </summary>
         KeyAlt,
 
-        ///<summary>
+        /// <summary>
         /// The Escape Key
-        ///</summary>
+        /// </summary>
         KeyEscape,
 
-        ///<summary>
+        /// <summary>
         /// The Tilde (~) Key
-        ///</summary>
+        /// </summary>
         KeyTilde,
 
-        ///<summary>
+        /// <summary>
         /// The Quote (') Key
-        ///</summary>
+        /// </summary>
         KeyQuote,
 
-        ///<summary>
+        /// <summary>
         /// The Semicolon (;) Key
-        ///</summary>
+        /// </summary>
         KeySemicolon,
 
-        ///<summary>
+        /// <summary>
         /// The Comma (:) Key
-        ///</summary>
+        /// </summary>
         KeyComma,
 
-        ///<summary>
+        /// <summary>
         /// The Period (.) Key
-        ///</summary>
+        /// </summary>
         KeyPeriod,
 
-        ///<summary>
+        /// <summary>
         /// The Slash (/) Key
-        ///</summary>
+        /// </summary>
         KeySlash,
 
-        ///<summary>
+        /// <summary>
         /// The Left Bracket ([)Key
-        ///</summary>
+        /// </summary>
         KeyBracketLeft,
 
-        ///<summary>
+        /// <summary>
         /// The Right Brackey (]) Key
-        ///</summary>
+        /// </summary>
         KeyBracketRight,
 
-        ///<summary>
+        /// <summary>
         /// The Backslash (\) Key
-        ///</summary>
+        /// </summary>
         KeyBackslash,
 
-        ///<summary>
+        /// <summary>
         /// The Right Alt Key
-        ///</summary>
+        /// </summary>
         KeyRightAlt,
 
-        ///<summary>
+        /// <summary>
         /// The Right Ctrl Key
-        ///</summary>
+        /// </summary>
         KeyRightCtrl,
 
-        ///<summary>
+        /// <summary>
         /// The Right Shift Key
-        ///</summary>
+        /// </summary>
         KeyRightShift,
 
-        ///<summary>
+        /// <summary>
         /// The Num0 Key
-        ///</summary>
+        /// </summary>
         KeyNum0,
 
-        ///<summary>
+        /// <summary>
         /// The Num1 Key
-        ///</summary>
+        /// </summary>
         KeyNum1,
 
-        ///<summary>
+        /// <summary>
         /// The Num2 Key
-        ///</summary>
+        /// </summary>
         KeyNum2,
 
-        ///<summary>
+        /// <summary>
         /// The Num3 Key
-        ///</summary>
+        /// </summary>
         KeyNum3,
 
-        ///<summary>
+        /// <summary>
         /// The Num4 Key
-        ///</summary>
+        /// </summary>
         KeyNum4,
 
-        ///<summary>
+        /// <summary>
         /// The Num5 Key
-        ///</summary>
+        /// </summary>
         KeyNum5,
 
-        ///<summary>
+        /// <summary>
         /// The Num6 Key
-        ///</summary>
+        /// </summary>
         KeyNum6,
 
-        ///<summary>
+        /// <summary>
         /// The Num7 Key
-        ///</summary>
+        /// </summary>
         KeyNum7,
 
-        ///<summary>
+        /// <summary>
         /// The Num8 Key
-        ///</summary>
+        /// </summary>
         KeyNum8,
 
-        ///<summary>
+        /// <summary>
         /// The Num9 Key
-        ///</summary>
+        /// </summary>
         KeyNum9,
 
-        ///<summary>
+        /// <summary>
         /// The NumPeriod Key
-        ///</summary>
+        /// </summary>
         KeyNumPeriod,
 
-        ///<summary>
+        /// <summary>
         /// The NumPlus Key
-        ///</summary>
+        /// </summary>
         KeyNumPlus,
 
-        ///<summary>
+        /// <summary>
         /// The NumMinus Key
-        ///</summary>
+        /// </summary>
         KeyNumMinus,
 
-        ///<summary>
+        /// <summary>
         /// The NumEnter Key
-        ///</summary>
+        /// </summary>
         KeyNumEnter,
 
-        ///<summary>
+        /// <summary>
         /// The F1 Key
-        ///</summary>
+        /// </summary>
         KeyF1,
 
-        ///<summary>
+        /// <summary>
         /// The F2 Key
-        ///</summary>
+        /// </summary>
         KeyF2,
 
-        ///<summary>
+        /// <summary>
         /// The F3 Key
-        ///</summary>
+        /// </summary>
         KeyF3,
 
-        ///<summary>
+        /// <summary>
         /// The F4 Key
-        ///</summary>
+        /// </summary>
         KeyF4,
 
-        ///<summary>
+        /// <summary>
         /// The F5 Key
-        ///</summary>
+        /// </summary>
         KeyF5,
 
-        ///<summary>
+        /// <summary>
         /// The F6 Key
-        ///</summary>
+        /// </summary>
         KeyF6,
 
-        ///<summary>
+        /// <summary>
         /// The F7 Key
-        ///</summary>
+        /// </summary>
         KeyF7,
 
-        ///<summary>
+        /// <summary>
         /// The F8 Key
-        ///</summary>
+        /// </summary>
         KeyF8,
 
-        ///<summary>
+        /// <summary>
         /// The F9 Key
-        ///</summary>
+        /// </summary>
         KeyF9,
 
-        ///<summary>
+        /// <summary>
         /// The F10 Key
-        ///</summary>
+        /// </summary>
         KeyF10,
 
-        ///<summary>
+        /// <summary>
         /// The F11 Key
-        ///</summary>
+        /// </summary>
         KeyF11,
 
-        ///<summary>
+        /// <summary>
         /// The F12 Key
-        ///</summary>
+        /// </summary>
         KeyF12,
-
     }
 }

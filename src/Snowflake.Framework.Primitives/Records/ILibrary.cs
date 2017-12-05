@@ -11,7 +11,7 @@ namespace Snowflake.Records
     /// Represents a generic library of metadata assignable items
     /// </summary>
     /// <typeparam name="T">The type of metadata assignable item</typeparam>
-    public interface ILibrary<T> 
+    public interface ILibrary<T>
     {
         /// <summary>
         /// Adds or updates a record to the library
@@ -68,6 +68,5 @@ namespace Snowflake.Records
         /// </summary>
         /// <returns></returns>
         IEnumerable<T> GetAllRecords();
-
     }
 }

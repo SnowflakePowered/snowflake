@@ -8,10 +8,9 @@ namespace Shiragame.Builder
 {
     static internal partial class RegionParser
     {
-	
         private static readonly IList<string> tosecLookupTable = new List<string>
         {
-            { "AE" }, 
+            { "AE" },
             { "AL" },
             { "AS" },
             { "AT" },
@@ -78,7 +77,7 @@ namespace Shiragame.Builder
             { "US" },
             { "VN" },
             { "YU" },
-            { "ZA" }
+            { "ZA" },
         };
         private static readonly IDictionary<string, string> goodToolsLookupTable = new Dictionary<string, string>()
         {
@@ -87,7 +86,7 @@ namespace Shiragame.Builder
             { "B", "BR" },
             { "C", "CA" },
             { "CH", "CN" },
-            { "D", "NL" }, //D FOR DUTCH (NETHERLANDS)
+            { "D", "NL" }, // D FOR DUTCH (NETHERLANDS)
             { "E", "EU" },
             { "F", "FR" },
             { "G", "DE" },
@@ -96,7 +95,7 @@ namespace Shiragame.Builder
             { "I", "IT" },
             { "J", "JP" },
             { "K", "KR" },
-            { "NK", "NL" }, //STILL NETHERLANDS
+            { "NK", "NL" }, // STILL NETHERLANDS
             { "NO", "NO" },
             { "R", "RU" },
             { "S", "ES" },
@@ -129,7 +128,7 @@ namespace Shiragame.Builder
             { "UK", "GB" },
             { "WORLD", "ZZ" },
             { "ASIA", "AS" },
-            { "UNKNOWN", "ZZ" }
+            { "UNKNOWN", "ZZ" },
         };
     }
 }

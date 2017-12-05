@@ -10,7 +10,8 @@ namespace Snowflake.Utility
 {
     public static class Instantiate
     {
-        public static T CreateInstance<T>() where T : new ()
+        public static T CreateInstance<T>()
+            where T : new()
         {
             return new T();
         }
@@ -31,18 +32,15 @@ namespace Snowflake.Utility
                 where parameters.Count() == constructorParams.Count()
                 select constructor;
             return constructors.First();
-            
         }
-        public static T CreateInstance<T>(Type type)
-        {
-            return Instantiate.CreateInstance<T>(new[] {type});
-        }
+
+        public static T CreateInstance<T>(Type type) => Instantiate.CreateInstance<T>(new[] { type });
 
         public static T CreateInstance<T>(Type[] constructorParams)
         {
             Func<T> instanceCreator = Expression.Lambda<Func<T>>(
-                Expression.New(Instantiate.GetConstructor<T>
-                (BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance, constructorParams)))
+                Expression.New(Instantiate.GetConstructor<T>(
+                BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance, constructorParams)))
                 .Compile();
             return instanceCreator();
         }

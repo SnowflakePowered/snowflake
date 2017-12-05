@@ -8,8 +8,10 @@ namespace Snowflake.Records.Metadata
 {
     public class MetadataCollection : Dictionary<string, IRecordMetadata>, IMetadataCollection
     {
+        /// <inheritdoc/>
         public IRecordMetadata this[Guid guid] => this.First(metadata => metadata.Value.Guid == guid).Value;
 
+        /// <inheritdoc/>
         public void Add(IDictionary<string, IRecordMetadata> existingMetadata)
         {
             foreach (var metadata in existingMetadata)
@@ -18,12 +20,14 @@ namespace Snowflake.Records.Metadata
             }
         }
 
+        /// <inheritdoc/>
         string IMetadataCollection.this[string key]
         {
             get { return this[key].Value; }
             set { this[key] = new RecordMetadata(key, value, this.Record); }
         }
 
+        /// <inheritdoc/>
         public Guid Record { get; }
 
         public MetadataCollection(Guid record)
@@ -31,20 +35,22 @@ namespace Snowflake.Records.Metadata
             this.Record = record;
         }
 
-        public MetadataCollection(Guid record, IDictionary<string, IRecordMetadata> recordMetadata) : base(recordMetadata)
+        public MetadataCollection(Guid record, IDictionary<string, IRecordMetadata> recordMetadata)
+            : base(recordMetadata)
         {
             this.Record = record;
         }
 
+        /// <inheritdoc/>
         public void Add(IRecordMetadata recordMetadata)
         {
             this.Add(recordMetadata.Key, recordMetadata);
         }
 
+        /// <inheritdoc/>
         public void Add(string key, string value)
         {
             this.Add(new RecordMetadata(key, value, this.Record));
         }
-        
     }
 }

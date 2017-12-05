@@ -5,8 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Platform;
-using Snowflake.Services;
 using Snowflake.Romfile;
+using Snowflake.Services;
 
 namespace Snowflake.Romfile.FileSignatures
 {
@@ -24,12 +24,15 @@ namespace Snowflake.Romfile.FileSignatures
             this.platforms = provider.Platforms;
             this.fileSignatures = new Dictionary<string, IList<IFileSignature>>();
         }
+
+        /// <inheritdoc/>
         public IEnumerable<string> GetPossibleMimetypes(string fileExtension)
-            => (from platform in this.platforms.Values
+            => from platform in this.platforms.Values
                 from mimetype in platform.FileTypes
                 where mimetype.Key == fileExtension
-                select mimetype.Value);
+                select mimetype.Value;
 
+        /// <inheritdoc/>
         public void RegisterFileSignature(string mimetype, IFileSignature fileSignature)
         {
             if (this.fileSignatures.ContainsKey(mimetype))
@@ -38,16 +41,16 @@ namespace Snowflake.Romfile.FileSignatures
             }
             else
             {
-                this.fileSignatures[mimetype] = new List<IFileSignature> {fileSignature};
+                this.fileSignatures[mimetype] = new List<IFileSignature> { fileSignature };
             }
-
         }
 
+        /// <inheritdoc/>
         public IRomFileInfo GetInfo(string fileName, Stream fileContents)
         {
             string fileExtension = Path.GetExtension(fileName).ToLowerInvariant();
             var mimetypes = this.GetPossibleMimetypes(fileExtension);
-           
+
             var sig = (from mimetype in mimetypes
                                 where this.fileSignatures.ContainsKey(mimetype)
                                 let fsl = this.fileSignatures[mimetype]
@@ -72,6 +75,5 @@ namespace Snowflake.Romfile.FileSignatures
                 return false;
             }
         }
-
     }
 }

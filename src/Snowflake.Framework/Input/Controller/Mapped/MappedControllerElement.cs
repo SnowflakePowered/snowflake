@@ -8,7 +8,10 @@ namespace Snowflake.Input.Controller.Mapped
 {
     public class MappedControllerElement : IMappedControllerElement
     {
+        /// <inheritdoc/>
         public ControllerElement LayoutElement { get; }
+
+        /// <inheritdoc/>
         public ControllerElement DeviceElement { get; set; }
 
         public MappedControllerElement(ControllerElement virtualElement)

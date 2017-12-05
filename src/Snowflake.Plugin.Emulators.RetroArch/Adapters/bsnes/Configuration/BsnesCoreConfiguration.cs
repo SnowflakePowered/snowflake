@@ -13,6 +13,6 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Adapters.bsnes.Configuration
     public interface BsnesCoreConfiguration : IConfigurationSection<BsnesCoreConfiguration>
     {
         [ConfigurationOption("flag#performanceprofile", PerformanceProfile.Performance, DisplayName = "Performance Profile", Flag = true)]
-        PerformanceProfile PerformanceProfile { get; set; } 
+        PerformanceProfile PerformanceProfile { get; set; }
     }
 }

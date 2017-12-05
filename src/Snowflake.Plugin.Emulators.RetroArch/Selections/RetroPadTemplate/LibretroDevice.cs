@@ -14,6 +14,6 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Selections.RetroPadTemplate
         [SelectionOption("1", DisplayName = "RetroPad")]
         RetroPad,
         [SelectionOption("5", DisplayName = "RetroPad w/ Analog")]
-        RetroPadWithAnalog
+        RetroPadWithAnalog,
     }
 }

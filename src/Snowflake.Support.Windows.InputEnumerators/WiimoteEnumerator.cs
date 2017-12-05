@@ -10,10 +10,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Win32.SafeHandles;
 using Snowflake.Extensibility;
+using Snowflake.Extensibility.Provisioned;
 using Snowflake.Input;
 using Snowflake.Input.Device;
 using Snowflake.Services;
-using Snowflake.Extensibility.Provisioned;
 
 namespace Snowflake.Plugin.InputEnumerators
 {
@@ -22,16 +22,17 @@ namespace Snowflake.Plugin.InputEnumerators
     {
         private readonly IInputManager inputManager;
 
-        public WiimoteEnumerator(IPluginProvision p, IInputManager inputManager) : base(p)
+        public WiimoteEnumerator(IPluginProvision p, IInputManager inputManager)
+            : base(p)
         {
             this.inputManager = inputManager;
         }
 
         [DllImport("hid.dll", SetLastError = true)]
         internal extern static bool HidD_SetOutputReport(
-            IntPtr HidDeviceObject,
+            IntPtr hidDeviceObject,
             byte[] lpReportBuffer,
-            uint ReportBufferLength);
+            uint reportBufferLength);
 
         [DllImport("Kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
         public static extern SafeFileHandle CreateFile(string fileName,
@@ -57,15 +58,16 @@ namespace Snowflake.Plugin.InputEnumerators
             return error != 0x1F && good;
         }
 
+        /// <inheritdoc/>
         public override IEnumerable<IInputDevice> GetConnectedDevices()
         {
             var guid = new Guid("0306057e-0000-0000-0000-504944564944");
-            return (from device in this.inputManager.GetAllDevices()
+            return from device in this.inputManager.GetAllDevices()
                     where device?.DI_ProductGUID == guid
                     let wiimoteHandle = WiimoteEnumerator.CreateFile(device.DI_InterfacePath)
                     let deviceId = "DEVICE_WII_REMOTE"
                     where WiimoteEnumerator.IsWiimoteConnected(wiimoteHandle)
-                    select new InputDevice(InputApi.Other, device, this.ControllerLayout));
+                    select new InputDevice(InputApi.Other, device, this.ControllerLayout);
         }
     }
 }

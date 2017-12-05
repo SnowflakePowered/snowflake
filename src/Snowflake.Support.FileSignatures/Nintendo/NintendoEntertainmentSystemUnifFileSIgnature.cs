@@ -5,14 +5,16 @@ namespace Snowflake.Romfile.FileSignatures.Nintendo
 {
     public sealed class NintendoEntertainmentSystemUnifFileSignature : IFileSignature
     {
-        public byte[] HeaderSignature => new byte[4] { 0x55, 0x4E, 0x49, 0x46 }; //'U' 'N' 'I' 'F'
+        /// <inheritdoc/>
+        public byte[] HeaderSignature => new byte[4] { 0x55, 0x4E, 0x49, 0x46 }; // 'U' 'N' 'I' 'F'
 
-
-
+        /// <inheritdoc/>
         public string GetInternalName(Stream fileContents) => null;
 
+        /// <inheritdoc/>
         public string GetSerial(Stream fileContents) => null;
 
+        /// <inheritdoc/>
         public bool HeaderSignatureMatches(Stream romStream)
         {
             romStream.Seek(0, SeekOrigin.Begin);
@@ -22,5 +24,3 @@ namespace Snowflake.Romfile.FileSignatures.Nintendo
         }
     }
 }
-
-

@@ -21,7 +21,7 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Shaders
             return (from preset in this.ShaderList
                 where preset.ShaderName.Equals(shaderName, StringComparison.OrdinalIgnoreCase)
                 where preset.ShaderType == shaderType
-                select preset.ShaderPath).FirstOrDefault() ?? "";
+                select preset.ShaderPath).FirstOrDefault() ?? string.Empty;
         }
 
         private static IEnumerable<ShaderPreset> EnumerateShaders(string shaderPath)

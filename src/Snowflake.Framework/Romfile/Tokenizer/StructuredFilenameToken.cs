@@ -32,6 +32,6 @@ namespace Snowflake.Romfile.Tokenizer
         DevelopmentStatus,
         MediaType,
         MediaLabel,
-        DumpInfo
+        DumpInfo,
     }
 }

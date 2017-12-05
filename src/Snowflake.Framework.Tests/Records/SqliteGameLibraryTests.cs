@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Moq;
+using Snowflake.Persistence;
 using Snowflake.Platform;
 using Snowflake.Records.File;
 using Snowflake.Records.Game;
 using Snowflake.Records.Metadata;
 using Snowflake.Utility;
 using Xunit;
-using Snowflake.Persistence;
 
 namespace Snowflake.Records.Tests
 {
@@ -30,7 +30,6 @@ namespace Snowflake.Records.Tests
 
             gameRecord.Files.Add(fileRecord);
             library.Set(gameRecord);
-
         }
 
         [Fact]
@@ -69,7 +68,6 @@ namespace Snowflake.Records.Tests
             Assert.Null(library.Get(gameRecord.Guid));
         }
 
-
         [Fact]
         public void RemoveMultiple_Test()
         {
@@ -87,7 +85,7 @@ namespace Snowflake.Records.Tests
             gameRecord2.Files.Add(fileRecord2);
             library.Set(new List<IGameRecord> { gameRecord, gameRecord2 });
             Assert.NotEmpty(library.GetAllRecords());
-            library.Remove(new List<IGameRecord> {gameRecord, gameRecord2});
+            library.Remove(new List<IGameRecord> { gameRecord, gameRecord2 });
             Assert.Empty(library.GetAllRecords());
         }
 
@@ -105,7 +103,6 @@ namespace Snowflake.Records.Tests
             gameRecord.Files.Add(fileRecord);
             library.Set(gameRecord);
             Assert.NotNull(library.Get(gameRecord.Guid));
-
         }
 
         [Fact]
@@ -173,7 +170,5 @@ namespace Snowflake.Records.Tests
             library.Set(gameRecord);
             Assert.NotEmpty(library.GetByMetadata("test_metadata", "game_test_value"));
         }
-
     }
-    
 }

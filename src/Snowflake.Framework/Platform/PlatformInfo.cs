@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 using Snowflake.JsonConverters;
-using System.Linq;
 
 namespace Snowflake.Platform
 {
@@ -19,11 +19,22 @@ namespace Snowflake.Platform
             this.FriendlyName = name;
         }
 
+        /// <inheritdoc/>
         public string FriendlyName { get; }
+
+        /// <inheritdoc/>
         public string PlatformID { get; }
+
+        /// <inheritdoc/>
         public IDictionary<string, string> Metadata { get; set; }
+
+        /// <inheritdoc/>
         public IDictionary<string, string> FileTypes { get; }
+
+        /// <inheritdoc/>
         public ILookup<string, string> BiosFiles { get; }
+
+        /// <inheritdoc/>
         public int MaximumInputs { get; }
     }
 }

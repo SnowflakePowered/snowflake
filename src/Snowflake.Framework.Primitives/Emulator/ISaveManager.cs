@@ -9,7 +9,7 @@ namespace Snowflake.Emulator
     /// <summary>
     /// Provides a save directory path for emulators.
     /// Save paths are unique for each game and are indexed by slot,
-    /// except for the shared save directory. 
+    /// except for the shared save directory.
     /// </summary>
     public interface ISaveManager
     {
@@ -22,6 +22,7 @@ namespace Snowflake.Emulator
         /// <param name="slot">The save slot index</param>
         /// <returns>A path to the save directory given the specified parameters</returns>
         string GetSaveDirectory(string saveType, Guid gameGuid, int slot);
+
         /// <summary>
         /// Gets the moment the save directory was last accessed using <see cref="GetSaveDirectory"/>.
         /// If the slot does not exist, or is the shared save directory, will return the current time.
@@ -31,12 +32,14 @@ namespace Snowflake.Emulator
         /// <param name="slot">The save slot index</param>
         /// <returns>The moment last accessed</returns>
         DateTimeOffset GetLastModified(string saveType, Guid gameGuid, int slot);
+
         /// <summary>
         /// Gets the shared save directory for a save type
         /// </summary>
         /// <param name="saveType">The type of save, eg. SRAM, SAV, MCR, WiiNand</param>
         /// <returns>The shared save directory</returns>
         string GetSharedSaveDirectory(string saveType);
+
         /// <summary>
         /// Gets the used slot indices for a save type and game.
         /// </summary>

@@ -1,8 +1,8 @@
-﻿using GraphQL.Types;
-using Snowflake.Input.Device;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using GraphQL.Types;
+using Snowflake.Input.Device;
 
 namespace Snowflake.Support.Remoting.GraphQl.Types.InputDevice
 {

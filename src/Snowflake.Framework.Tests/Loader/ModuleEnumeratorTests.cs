@@ -1,11 +1,11 @@
-﻿using Snowflake.Loader;
-using Snowflake.Services.Tests;
-using Snowflake.Tests;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Snowflake.Loader;
+using Snowflake.Services.Tests;
+using Snowflake.Tests;
 using Xunit;
 namespace Snowflake.Loader.Tests
 {
@@ -16,6 +16,7 @@ namespace Snowflake.Loader.Tests
         {
             var appDataDirectory = new DirectoryInfo(Path.GetTempPath())
                 .CreateSubdirectory(Guid.NewGuid().ToString());
+            new ModuleEnumerator(appDataDirectory.FullName);
             Assert.Contains(appDataDirectory.EnumerateDirectories(), d => d.Name == "modules");
         }
 
@@ -31,7 +32,6 @@ namespace Snowflake.Loader.Tests
             Assert.Contains(moduleEnum.Modules, m => m.Entry == "testModule");
             Assert.Equal(moduleDirectory.FullName, moduleEnum.Modules.First().ModuleDirectory.FullName);
             Assert.Equal(moduleDirectory.CreateSubdirectory("contents").FullName, moduleEnum.Modules.First().ContentsDirectory.FullName);
-
         }
     }
 }

@@ -1,8 +1,8 @@
-﻿using GraphQL.Types;
-using Snowflake.Input.Controller;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using GraphQL.Types;
+using Snowflake.Input.Controller;
 
 namespace Snowflake.Support.Remoting.GraphQl.Types.ControllerLayout
 {
@@ -24,7 +24,6 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.ControllerLayout
             AddValue(nameof(ControllerElementType.PointerAxisPositive), "A pointer axis that increases in value on the number line, where the pointer device itself is not limited to axis-based representation. For example, continous right mouse movement.", ControllerElementType.PointerAxisPositive);
             AddValue(nameof(ControllerElementType.PointerAxisNegative), "A pointer axis that increases in value on the number line, where the pointer device itself is not limited to axis-based representation. For example, continous left mouse movement.", ControllerElementType.PointerAxisNegative);
             AddValue(nameof(ControllerElementType.Touchscreen), "A touch sensitive surface of unspecified size and precision, where input can be expressed as a non-contiguous matrix of coordinates on a 2 dimentional cartesian plane. However, most touchscreens in video game controllers are only concerned with a single matrix due to the lack of multi-touch support.", ControllerElementType.Touchscreen);
-
         }
     }
 }

@@ -11,10 +11,19 @@ namespace Snowflake.Records.Game
 {
     public class GameRecord : IGameRecord
     {
+        /// <inheritdoc/>
         public IMetadataCollection Metadata { get; }
+
+        /// <inheritdoc/>
         public Guid Guid { get; }
+
+        /// <inheritdoc/>
         public string PlatformID => this.Metadata[GameMetadataKeys.Platform];
+
+        /// <inheritdoc/>
         public string Title => this.Metadata[GameMetadataKeys.Title];
+
+        /// <inheritdoc/>
         public IList<IFileRecord> Files { get; }
 
         internal GameRecord(Guid guid, IDictionary<string, IRecordMetadata> metadata, IList<IFileRecord> files)
@@ -36,12 +45,13 @@ namespace Snowflake.Records.Game
                 {
                     GameMetadataKeys.Title,
                     new RecordMetadata(GameMetadataKeys.Title, title, this.Guid)
-                }
+                },
             };
             this.Files = new List<IFileRecord>();
         }
 
-        public GameRecord(IPlatformInfo platformInfo, string title, string filename, string mimetype) : this(platformInfo, title)
+        public GameRecord(IPlatformInfo platformInfo, string title, string filename, string mimetype)
+            : this(platformInfo, title)
         {
             this.Files.Add(new FileRecord(filename, mimetype));
         }

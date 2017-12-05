@@ -19,7 +19,7 @@
   <ItemGroup>
     <EmbeddedResource Include="TestResources\**" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <None Include="..\..\shiragame.db">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -57,4 +57,7 @@
   <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json" />
   </ItemGroup>
+  <PropertyGroup>
+    <CodeAnalysisRuleSet>..\Snowflake.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
 </Project>

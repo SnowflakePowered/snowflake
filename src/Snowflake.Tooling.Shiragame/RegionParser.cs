@@ -20,13 +20,14 @@ namespace Shiragame.Builder
                @"(\()([^)]+)(\))");
             var validMatch = (from Match tagMatch in tagData
                               let match = tagMatch.Groups[2].Value
-                              from regionCode in (from regionCode in match.Split(',', '-') select regionCode.Trim())
+                              from regionCode in from regionCode in match.Split(',', '-') select regionCode.Trim()
                               where regionCode.Length != 2 || regionCode.ToLower().ToTitleCase() != regionCode
-                              //allow FR & France to be parsed, but not Fr inside En,Fr,De, etc..
+
+                              // allow FR & France to be parsed, but not Fr inside En,Fr,De, etc..
                               let isoRegion = RegionParser.ConvertToRegionCode(regionCode.ToUpperInvariant())
                               where isoRegion != null
                               select isoRegion).ToList();
-            return !validMatch.Any() ? "ZZ" : String.Join("-", from regionCode in validMatch select regionCode);
+            return !validMatch.Any() ? "ZZ" : string.Join("-", from regionCode in validMatch select regionCode);
         }
 
         private static string ConvertToRegionCode(string unknownRegion)
@@ -35,14 +36,17 @@ namespace Shiragame.Builder
             {
                 return RegionParser.goodToolsLookupTable[unknownRegion];
             }
+
             if (RegionParser.nointroLookupTable.ContainsKey(unknownRegion))
             {
                 return RegionParser.nointroLookupTable[unknownRegion];
             }
+
             if (RegionParser.tosecLookupTable.Contains(unknownRegion))
             {
                 return unknownRegion;
             }
+
             return null;
         }
     }

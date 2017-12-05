@@ -18,10 +18,7 @@ namespace Snowflake.Records.Tests
         {
             var x = new RecordMetadata("test_key", "one_value", Guid.Empty);
             var y = new RecordMetadata("test_key", "different_value", Guid.Empty);
-            Assert.Equal(x, y); //A record metadata with one key and one guid should be equal
+            Assert.Equal(x, y); // A record metadata with one key and one guid should be equal
         }
-
-
     }
-    
 }

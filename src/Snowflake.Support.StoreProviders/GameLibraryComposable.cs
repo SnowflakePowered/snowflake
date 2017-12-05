@@ -1,16 +1,17 @@
-﻿using Snowflake.Loader;
+﻿using System.IO;
+using Snowflake.Loader;
 using Snowflake.Persistence;
 using Snowflake.Records.File;
 using Snowflake.Records.Game;
 using Snowflake.Records.Metadata;
 using Snowflake.Services;
 using Snowflake.Utility;
-using System.IO;
 
 namespace Snowflake.Support.StoreProviders
 {
     public class GameLibraryComposable : IComposable
     {
+        /// <inheritdoc/>
         [ImportService(typeof(IServiceRegistrationProvider))]
         [ImportService(typeof(ISqliteDatabaseProvider))]
         public void Compose(IModule composableModule, IServiceRepository serviceContainer)

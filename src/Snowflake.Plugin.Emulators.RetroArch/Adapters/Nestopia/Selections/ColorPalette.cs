@@ -24,6 +24,6 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Adapters.Nestopia.Selections
         [SelectionOption("pal", DisplayName = "PAL Output")]
         PAL,
         [SelectionOption("raw", DisplayName = "Raw Output")]
-        Raw
+        Raw,
     }
 }

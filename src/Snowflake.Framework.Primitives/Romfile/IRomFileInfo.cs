@@ -9,15 +9,17 @@ namespace Snowflake.Romfile
     public interface IRomFileInfo
     {
         /// <summary>
-        /// The stone mimetype of the ROM. 
+        /// Gets the stone mimetype of the ROM.
         /// </summary>
         string Mimetype { get; }
+
         /// <summary>
-        /// The serial of the ROM, if available
+        /// Gets the serial of the ROM, if available
         /// </summary>
         string Serial { get; }
+
         /// <summary>
-        /// The internal name of the ROM, if available
+        /// Gets the internal name of the ROM, if available
         /// </summary>
         string InternalName { get; }
     }

@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Extensibility;
-using Xunit;
 using Snowflake.Services;
 using Snowflake.Support.PluginManager;
+using Xunit;
 
 namespace Snowflake.Services.Tests
 {
-
     public interface ITestPlugin : IPlugin
     {
         bool Test();
@@ -18,6 +17,5 @@ namespace Snowflake.Services.Tests
 
     public class PluginManagerTests
     {
-        
     }
 }

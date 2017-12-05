@@ -13,19 +13,25 @@ namespace Snowflake.Configuration
         {
             var typeInfo = type.GetTypeInfo();
             if (!typeInfo.IsInterface)
+            {
                 return type.GetProperties();
+            }
 
-            return  type.GetInterfaces()
+            return type.GetInterfaces()
                     .Concat(new Type[] { type })
                     .SelectMany(i => i.GetProperties());
         }
-        
-        public static IEnumerable<T> GetPublicAttributes<T>(this Type type) where T: System.Attribute
+
+        public static IEnumerable<T> GetPublicAttributes<T>(this Type type)
+            where T : System.Attribute
         {
             var typeInfo = type.GetTypeInfo();
 
             if (!typeInfo.IsInterface)
+            {
                 return typeInfo.GetCustomAttributes<T>();
+            }
+
             return type.GetInterfaces()
                    .Concat(new Type[] { type })
                    .SelectMany(i => i.GetTypeInfo().GetCustomAttributes<T>());

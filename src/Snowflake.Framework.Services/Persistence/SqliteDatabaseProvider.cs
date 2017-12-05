@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using Snowflake.Persistence;
-using System.IO;
 
 namespace Snowflake.Services.Persistence
 {
@@ -14,11 +14,13 @@ namespace Snowflake.Services.Persistence
             this.databaseRoot = databaseRoot;
         }
 
+        /// <inheritdoc/>
         public ISqlDatabase CreateDatabase(string databaseName)
         {
             return new SqliteDatabase(Path.Combine(databaseRoot.FullName, $"{databaseName}.db"));
         }
 
+        /// <inheritdoc/>
         public ISqlDatabase CreateDatabase(string universe, string databaseName)
         {
             return new SqliteDatabase(Path.Combine(databaseRoot.CreateSubdirectory(universe).FullName, $"{databaseName}.db"));

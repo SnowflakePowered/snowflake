@@ -7,21 +7,23 @@ namespace Snowflake.Configuration
     /// <summary>
     /// Describes a configuration collection.
     /// </summary>
-    public interface IConfigurationCollectionDescriptor 
+    public interface IConfigurationCollectionDescriptor
     {
         /// <summary>
-        /// The file outputs keyed on the file reference key to the file name
+        /// Gets the file outputs keyed on the file reference key to the file name
         /// The implementation should ensure this is immutable.
         /// <seealso cref="ConfigurationFileAttribute"/>
         /// <seealso cref="IConfigurationFile"/>
         /// </summary>
         IDictionary<string, IConfigurationFile> Outputs { get; }
+
         /// <summary>
-        /// The list of names of property section names.
+        /// Gets the list of names of property section names.
         /// The implementation should ensure this is immutable and enumerate in the same order
         /// as the properties were described in the collection type.
         /// </summary>
         IEnumerable<string> SectionKeys { get; }
+
         /// <summary>
         /// Gets the destination file reference key for a section
         /// </summary>

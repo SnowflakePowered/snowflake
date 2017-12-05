@@ -18,6 +18,5 @@ namespace Snowflake.Configuration.Tests
 
         [SerializableSection("#retroarch")]
         IVideoConfiguration VideoConfiguration { get; set; }
-
     }
 }

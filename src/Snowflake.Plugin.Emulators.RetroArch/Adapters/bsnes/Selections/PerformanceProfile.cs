@@ -10,6 +10,6 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Adapters.bsnes.Selections
     {
         Performance,
         Balanced,
-        Accuracy
+        Accuracy,
     }
 }

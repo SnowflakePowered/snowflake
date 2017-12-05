@@ -8,10 +8,13 @@ namespace Snowflake.Configuration
 {
     public class ConfigurationFile : IConfigurationFile
     {
+        /// <inheritdoc/>
         public IBooleanMapping BooleanMapping { get; }
 
+        /// <inheritdoc/>
         public string Destination { get; }
 
+        /// <inheritdoc/>
         public string Key { get; }
 
         public ConfigurationFile(string fileName, string key, IBooleanMapping booleanMapping)

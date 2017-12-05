@@ -15,9 +15,9 @@ namespace Snowflake.Configuration
     /// </summary>
     internal static class ConfigurationDescriptorCache
     {
-        private static IImmutableDictionary<Type, IConfigurationSectionDescriptor> _sectionDescriptors = 
+        private static IImmutableDictionary<Type, IConfigurationSectionDescriptor> sectionDescriptors =
             ImmutableDictionary<Type, IConfigurationSectionDescriptor>.Empty;
-        private static IImmutableDictionary<Type, IConfigurationCollectionDescriptor> _collectionDescriptors =
+        private static IImmutableDictionary<Type, IConfigurationCollectionDescriptor> collectionDescriptors =
             ImmutableDictionary<Type, IConfigurationCollectionDescriptor>.Empty;
 
         /// <summary>
@@ -28,23 +28,30 @@ namespace Snowflake.Configuration
         internal static IConfigurationSectionDescriptor GetSectionDescriptor<T>()
             where T : class, IConfigurationSection<T>
         {
-            if (_sectionDescriptors.ContainsKey(typeof(T)))
-                return _sectionDescriptors[typeof(T)];
-            _sectionDescriptors = _sectionDescriptors.Add(typeof(T), new ConfigurationSectionDescriptor<T>());
-            return _sectionDescriptors[typeof(T)];
+            if (sectionDescriptors.ContainsKey(typeof(T)))
+            {
+                return sectionDescriptors[typeof(T)];
+            }
+
+            sectionDescriptors = sectionDescriptors.Add(typeof(T), new ConfigurationSectionDescriptor<T>());
+            return sectionDescriptors[typeof(T)];
         }
-        
+
         /// <summary>
         /// Gets a new or existing collection descriptor
         /// </summary>
         /// <typeparam name="T">The type of the configuration collection</typeparam>
         /// <returns>The collection descriptor for <see cref="T"/></returns>
-        internal static IConfigurationCollectionDescriptor GetCollectionDescriptor<T>() where T : class, IConfigurationCollection<T>
+        internal static IConfigurationCollectionDescriptor GetCollectionDescriptor<T>()
+            where T : class, IConfigurationCollection<T>
         {
-            if (_collectionDescriptors.ContainsKey(typeof(T)))
-                return _collectionDescriptors[typeof(T)];
-            _collectionDescriptors = _collectionDescriptors.Add(typeof(T), new ConfigurationCollectionDescriptor<T>());
-            return _collectionDescriptors[typeof(T)];
+            if (collectionDescriptors.ContainsKey(typeof(T)))
+            {
+                return collectionDescriptors[typeof(T)];
+            }
+
+            collectionDescriptors = collectionDescriptors.Add(typeof(T), new ConfigurationCollectionDescriptor<T>());
+            return collectionDescriptors[typeof(T)];
         }
     }
 }

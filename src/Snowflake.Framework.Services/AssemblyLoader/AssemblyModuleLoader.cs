@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.IO;
-using Snowflake.Utility;
+using System.Linq;
 using Snowflake.Loader;
 using Snowflake.Services.Logging;
+using Snowflake.Utility;
 
 namespace Snowflake.Services.AssemblyLoader
 {
@@ -13,13 +13,13 @@ namespace Snowflake.Services.AssemblyLoader
     {
         public AssemblyModuleLoader()
         {
-
         }
 
+        /// <inheritdoc/>
         public IEnumerable<IComposable> LoadModule(IModule module)
         {
-            var logger = new LogProvider().GetLogger("AssemblyComposer"); //Unknown if logging service is available.
-        
+            var logger = new LogProvider().GetLogger("AssemblyComposer"); // Unknown if logging service is available.
+
             logger.Info($"Loading module {module.Entry}");
             try
             {
@@ -31,7 +31,8 @@ namespace Snowflake.Services.AssemblyLoader
             }
 
             var loadContext = new AssemblyModuleLoadContext(module);
-            //todo: check for semver!!
+
+            // todo: check for semver!!
             var entryPath = Path.Combine(module.ModuleDirectory.FullName, "contents", module.Entry);
 
             if (!File.Exists(entryPath))
@@ -46,7 +47,6 @@ namespace Snowflake.Services.AssemblyLoader
                 types = assembly.ExportedTypes
                         .Where(t => t.GetInterfaces().Contains(typeof(IComposable)))
                         .Where(t => t.GetConstructor(Type.EmptyTypes) != null);
-
             }
             catch (TypeLoadException ex)
             {

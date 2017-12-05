@@ -50,6 +50,6 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Selections.AudioConfiguration
         [SelectionOption("18", DisplayName = "32:9")]
         ThirtytwoNine,
         [SelectionOption("20", DisplayName = "4:3 (Square Pixels)")]
-        FourThreeSquarePixels
+        FourThreeSquarePixels,
     }
 }

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Snowflake.Persistence;
 using Snowflake.Services;
 using Snowflake.Utility;
-using Snowflake.Persistence;
 
 namespace Shiragame.Builder
 {
@@ -16,6 +16,7 @@ namespace Shiragame.Builder
         {
             this.CreateDatabase();
         }
+
         private void CreateDatabase()
         {
             this.CreateTable("rom",
@@ -31,7 +32,7 @@ namespace Shiragame.Builder
                 "serial TEXT",
                 "title TEXT",
                 "region TEXT");
-            this.CreateTable("mame", 
+            this.CreateTable("mame",
                 "filename TEXT PRIMARY KEY");
             this.CreateTable("shiragame",
                 "shiragame TEXT PRIMARY KEY",
@@ -46,14 +47,16 @@ namespace Shiragame.Builder
                              stoneversion = new StoneProvider().StoneVersion.ToString(),
                              generated = ShiragameDb.UnixTimeNow().ToString(),
                              version = typeof(ShiragameDb).GetTypeInfo().Assembly.GetName().Version.ToString(),
-                             uuid = Guid.NewGuid().ToString()
+                             uuid = Guid.NewGuid().ToString(),
                          });
         }
+
         internal static long UnixTimeNow()
         {
-            var timeSpan = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0).ToUniversalTime());
+            var timeSpan = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0).ToUniversalTime();
             return (long)timeSpan.TotalSeconds;
         }
+
         internal void Commit(IEnumerable<RomInfo> datInfos)
         {
             this.Execute(@"INSERT OR IGNORE INTO rom(platformId, crc32, md5, sha1, mimetype, filename, region)
@@ -62,7 +65,6 @@ namespace Shiragame.Builder
 
         internal void Commit(IEnumerable<SerialInfo> serialInfos)
         {
-
             this.Execute(
                 @"INSERT OR IGNORE INTO serial(platformId, serial, title, region)
                           VALUES (@PlatformId, @Serial, @Title, @Region)", serialInfos);

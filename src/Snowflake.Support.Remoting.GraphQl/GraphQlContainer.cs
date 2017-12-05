@@ -1,18 +1,18 @@
-﻿using Snowflake.Services;
+﻿using System.Linq;
+using Snowflake.Configuration;
+using Snowflake.Input;
+using Snowflake.Input.Device;
 using Snowflake.Loader;
 using Snowflake.Records.Game;
-using Snowflake.Configuration;
+using Snowflake.Services;
 using Snowflake.Support.Remoting.GraphQl.Framework;
 using Snowflake.Support.Remoting.GraphQl.Queries;
-using System.Linq;
-using Snowflake.Input.Device;
-using Snowflake.Input;
 
 namespace Snowflake.Support.Remoting.GraphQl
 {
-
     public class GraphQlContainer : IComposable
     {
+        /// <inheritdoc/>
         [ImportService(typeof(IStoneProvider))]
         [ImportService(typeof(IGameLibrary))]
         [ImportService(typeof(IConfigurationCollectionStore))]
@@ -34,7 +34,7 @@ namespace Snowflake.Support.Remoting.GraphQl
             var controllerQueries = new ControllerLayoutQueryBuilder(stone);
             var recordQueries = new RecordQueryBuilder(games, stone);
             var configQuery = new ConfigurationQueryBuilder(config);
-  
+
             var inputQuery = new InputQueryBuilder(input, plugin, mapp, stone);
 
             rootSchema.Register(platformQueries);
@@ -42,7 +42,6 @@ namespace Snowflake.Support.Remoting.GraphQl
             rootSchema.Register(recordQueries);
             rootSchema.Register(configQuery);
             rootSchema.Register(inputQuery);
-
         }
     }
 }

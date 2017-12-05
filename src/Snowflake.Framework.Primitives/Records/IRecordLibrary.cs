@@ -11,7 +11,8 @@ namespace Snowflake.Records
     /// Represents a library of records backed by a metadata store
     /// </summary>
     /// <typeparam name="T">A record type</typeparam>
-    public interface IRecordLibrary<T> : ILibrary<T> where T : IRecord
+    public interface IRecordLibrary<T> : ILibrary<T>
+        where T : IRecord
     {
         /// <summary>
         /// Executes a `LIKE` search on a metadata value
@@ -30,14 +31,13 @@ namespace Snowflake.Records
         IEnumerable<T> GetByMetadata(string key, string exactValue);
 
         /// <summary>
-        /// The metadata store associated with this library.
+        /// Gets the metadata store associated with this library.
         /// </summary>
         IMetadataLibrary MetadataLibrary { get; }
 
         /// <summary>
-        /// The name of this library.
+        /// Gets the name of this library.
         /// </summary>
         string LibraryName { get; }
-
     }
 }

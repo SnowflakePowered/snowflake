@@ -1,9 +1,9 @@
-﻿using GraphQL.Types;
-using Snowflake.Input.Controller;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using GraphQL.Types;
+using Snowflake.Input.Controller;
 
 namespace Snowflake.Support.Remoting.GraphQl.Types.ControllerLayout
 {
@@ -18,13 +18,11 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.ControllerLayout
             Field<ListGraphType<StringGraphType>>(
                 "platforms",
                 description: "The platforms this controller supports.",
-                resolve: context => context.Source.Platforms.ToList()
-            );
+                resolve: context => context.Source.Platforms.ToList());
             Field<ListGraphType<ControllerElementInfoGraphType>>(
                 "layout",
                 description: "The layout of this controller.",
-                resolve: context => context.Source.Layout.ToList()
-             );
+                resolve: context => context.Source.Layout.ToList());
         }
     }
 }

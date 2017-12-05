@@ -18,6 +18,6 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Adapters.Nestopia.Selections
         [SelectionOption("rgb", DisplayName = "RGB Output")]
         RGB,
         [SelectionOption("monochrome", DisplayName = "Monochrome")]
-        Monochrome
+        Monochrome,
     }
 }

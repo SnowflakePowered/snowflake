@@ -8,10 +8,13 @@ using Snowflake.FileSignatures;
 
 namespace Snowflake.Romfile.FileSignatures.Nintendo
 {
-    public abstract class Nintendo64FileSignature<T> : IFileSignature where T : Stream
+    public abstract class Nintendo64FileSignature<T> : IFileSignature
+        where T : Stream
     {
         private readonly Func<Stream, T> streamConverter;
         private readonly uint formatByte;
+
+        /// <inheritdoc/>
         public byte[] HeaderSignature { get; }
         public string CanonicalMimetype { get; }
 
@@ -22,16 +25,18 @@ namespace Snowflake.Romfile.FileSignatures.Nintendo
             this.CanonicalMimetype = mimetype;
         }
 
+        /// <inheritdoc/>
         public bool HeaderSignatureMatches(Stream fileContents)
         {
             fileContents.Seek(0, SeekOrigin.Begin);
-            BinaryReader reader = new BinaryReader(new Int32SwapStream(fileContents)); //always read from a 32swapped
-            return (reader.ReadUInt32() == this.formatByte);
+            BinaryReader reader = new BinaryReader(new Int32SwapStream(fileContents)); // always read from a 32swapped
+            return reader.ReadUInt32() == this.formatByte;
         }
 
+        /// <inheritdoc/>
         public string GetSerial(Stream fileContents)
         {
-            Stream swappedRomStream = this.streamConverter(fileContents); 
+            Stream swappedRomStream = this.streamConverter(fileContents);
             byte[] buffer = new byte[8];
             swappedRomStream.Seek(0x38, SeekOrigin.Begin);
             swappedRomStream.Read(buffer, 0, buffer.Length);
@@ -39,15 +44,15 @@ namespace Snowflake.Romfile.FileSignatures.Nintendo
             return code;
         }
 
+        /// <inheritdoc/>
         public string GetInternalName(Stream fileContents)
         {
-            Stream swappedRomStream = this.streamConverter(fileContents); //assume it is correct
+            Stream swappedRomStream = this.streamConverter(fileContents); // assume it is correct
             byte[] buffer = new byte[20];
             swappedRomStream.Seek(0x20, SeekOrigin.Begin);
             swappedRomStream.Read(buffer, 0, buffer.Length);
             string code = Encoding.UTF8.GetString(buffer).Trim('\0');
             return code;
         }
-
     }
 }

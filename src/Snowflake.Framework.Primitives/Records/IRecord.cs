@@ -13,13 +13,13 @@ namespace Snowflake.Records
     public interface IRecord
     {
         /// <summary>
-        /// The metadata related to this metadata
+        /// Gets the metadata related to this metadata
         /// </summary>
         IMetadataCollection Metadata { get; }
+
         /// <summary>
-        /// A metadata assignable must have a guid.
+        /// Gets a metadata assignable must have a guid.
         /// </summary>
         Guid Guid { get; }
-
     }
 }

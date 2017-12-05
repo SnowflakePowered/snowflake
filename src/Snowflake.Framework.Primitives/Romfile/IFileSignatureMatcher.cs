@@ -14,12 +14,14 @@ namespace Snowflake.Romfile
         /// <param name="fileExtension">The file extension, including the dot, to lookup</param>
         /// <returns>Possible sotne mimetypes</returns>
         IEnumerable<string> GetPossibleMimetypes(string fileExtension);
+
         /// <summary>
         /// Registers a file signature to the matcher
         /// </summary>
         /// <param name="mimetype">The mimetype the matcher matches for</param>
         /// <param name="fileSignature">The file signature to register</param>
         void RegisterFileSignature(string mimetype, IFileSignature fileSignature);
+
         /// <summary>
         /// Gets rom information using registered file signatures
         /// </summary>

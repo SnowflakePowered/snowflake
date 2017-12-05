@@ -8,18 +8,18 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi
     internal class ApiPlatformSearchResult
     {
         /// <summary>
-        /// Unique database ID.
+        /// Gets or sets unique database ID.
         /// </summary>
-        public int ID;
+        public int ID { get; set; }
 
         /// <summary>
-        /// Name of the platform.
+        /// Gets or sets name of the platform.
         /// </summary>
-        public string Name;
+        public string Name { get; set; }
 
         /// <summary>
-        /// URL alias
+        /// Gets or sets uRL alias
         /// </summary>
-        public string Alias;
+        public string Alias { get; set; }
     }
 }

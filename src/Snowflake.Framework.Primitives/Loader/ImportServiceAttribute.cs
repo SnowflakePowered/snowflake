@@ -7,7 +7,6 @@ namespace Snowflake.Loader
     [AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = true)]
     public sealed class ImportServiceAttribute : Attribute
     {
-      
         // This is a positional argument
         public ImportServiceAttribute(Type service)
         {

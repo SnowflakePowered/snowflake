@@ -9,7 +9,6 @@ namespace Snowflake.Romfile.FileSignatures.Formats.CDXA
 {
     public class PlaystationDisk
     {
-
         private readonly CDXADisk disk;
         public PlaystationDisk(CDXADisk disk)
         {
@@ -25,8 +24,10 @@ namespace Snowflake.Romfile.FileSignatures.Formats.CDXA
             {
                 block.Read(buf, 0, buf.Length);
             }
+
             return Encoding.UTF8.GetString(buf).Contains("Sony Computer Entertainment");
         }
+
         public string GetSystemCnf()
         {
             var file = this.disk.Files["SYSTEM.CNF"];
@@ -35,6 +36,7 @@ namespace Snowflake.Romfile.FileSignatures.Formats.CDXA
             {
                 block.Read(buf, 0, buf.Length);
             }
+
             return Encoding.UTF8.GetString(buf);
         }
     }

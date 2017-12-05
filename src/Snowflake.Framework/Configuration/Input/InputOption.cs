@@ -4,12 +4,17 @@ namespace Snowflake.Configuration.Input
 {
     public class InputOption : IInputOption
     {
-
+        /// <inheritdoc/>
         public InputOptionType InputOptionType { get; }
-        public ControllerElement TargetElement { get; }
-        public string OptionName { get; }
-        public string KeyName { get; }
 
+        /// <inheritdoc/>
+        public ControllerElement TargetElement { get; }
+
+        /// <inheritdoc/>
+        public string OptionName { get; }
+
+        /// <inheritdoc/>
+        public string KeyName { get; }
 
         internal InputOption(InputOptionAttribute attribute, string keyName)
         {

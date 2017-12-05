@@ -1,11 +1,11 @@
-﻿using Snowflake.Extensibility;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Snowflake.Utility;
 using System.Reflection;
+using Snowflake.Extensibility;
 using Snowflake.Loader;
 using Snowflake.Services.Logging;
+using Snowflake.Utility;
 
 namespace Snowflake.Services.AssemblyLoader
 {
@@ -19,7 +19,7 @@ namespace Snowflake.Services.AssemblyLoader
         public AssemblyComposer(IServiceContainer coreService, IModuleEnumerator modules)
         {
             this.coreService = coreService;
-            this.logger = new LogProvider().GetLogger("AssemblyComposer"); //Unknown if logging service is available.
+            this.logger = new LogProvider().GetLogger("AssemblyComposer"); // Unknown if logging service is available.
             this.modules = modules.Modules.Where(module => module.Loader == "assembly").ToList();
             var assemblyLoader = new AssemblyModuleLoader();
             this.moduleComposables = (from module in this.modules
@@ -50,8 +50,8 @@ namespace Snowflake.Services.AssemblyLoader
 
         public void Compose()
         {
-            var toCompose = this.moduleComposables.Select(p => (module: p.Module, 
-                composable: p.Composable, 
+            var toCompose = this.moduleComposables.Select(p => (module: p.Module,
+                composable: p.Composable,
                 services: this.GetImportedServices(p.Composable))).ToList();
             int count = toCompose.Count;
             while (count > 0)
@@ -63,7 +63,7 @@ namespace Snowflake.Services.AssemblyLoader
                     {
                         try
                         {
-                            this.logger.Info($"Composing {uncomposed.composable.GetType().Name} with services {String.Join(" ", uncomposed.services)}");
+                            this.logger.Info($"Composing {uncomposed.composable.GetType().Name} with services {string.Join(" ", uncomposed.services)}");
                             this.ComposeContainer(uncomposed.module, uncomposed.composable, uncomposed.services);
                             this.logger.Info($"Finished composing {uncomposed.composable.GetType().Name}");
                         }
@@ -78,8 +78,12 @@ namespace Snowflake.Services.AssemblyLoader
                         }
                     }
                 }
+
                 count = toCompose.Count;
-                if (prevCount == count) break; //no change
+                if (prevCount == count)
+                {
+                    break; // no change
+                }
             }
         }
 

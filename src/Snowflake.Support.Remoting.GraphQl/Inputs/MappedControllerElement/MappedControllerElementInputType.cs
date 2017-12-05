@@ -1,8 +1,8 @@
-﻿using GraphQL.Types;
-using Snowflake.Support.Remoting.GraphQl.Types.ControllerLayout;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using GraphQL.Types;
+using Snowflake.Support.Remoting.GraphQl.Types.ControllerLayout;
 
 namespace Snowflake.Support.Remoting.GraphQl.Inputs.MappedControllerElement
 {
@@ -10,11 +10,10 @@ namespace Snowflake.Support.Remoting.GraphQl.Inputs.MappedControllerElement
     {
         public MappedControllerElementInputType()
         {
-            Field<ControllerElementEnum>("layoutElement", 
+            Field<ControllerElementEnum>("layoutElement",
                 resolve: context => context.Source.LayoutElement);
             Field<ControllerElementEnum>("deviceElement",
                 resolve: context => context.Source.DeviceElement);
         }
-
     }
 }

@@ -19,22 +19,32 @@ namespace Snowflake.Configuration
             this.NullSerializer = nullSerializer;
         }
 
+        /// <inheritdoc/>
         public void Add<T>(Func<T, string> converter)
         {
-            this.typeMappers.Add(typeof (T), value => converter.Invoke((T)value));
+            this.typeMappers.Add(typeof(T), value => converter.Invoke((T)value));
         }
 
+        /// <inheritdoc/>
         public string ConvertValue<T>(T value) => this[typeof(T), value];
 
+        /// <inheritdoc/>
         public string this[Type t, object value]
         {
             get
             {
-                if (value == null) return this.NullSerializer;
-                if (value is Enum && !this.typeMappers.ContainsKey(value.GetType())) //Use the default Enum converter if a custom one isn't present
+                if (value == null)
+                {
+                    return this.NullSerializer;
+                }
+
+                if (value is Enum && !this.typeMappers.ContainsKey(value.GetType())) // Use the default Enum converter if a custom one isn't present
+                {
                     return this.typeMappers[typeof(Enum)].Invoke(value);
+                }
+
                 return this.typeMappers.ContainsKey(value.GetType()) ? this.typeMappers[t].Invoke(value) : Convert.ToString(value);
-            }  
-        } 
+            }
+        }
     }
 }

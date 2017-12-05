@@ -33,7 +33,6 @@ namespace Snowflake.Utility.Tests
             kvStore.InsertObject("testKey", testData);
         }
 
-
         [Fact]
         public void InsertObject_IgnoreTest()
         {
@@ -71,22 +70,21 @@ namespace Snowflake.Utility.Tests
         {
             IDictionary<string, string> testDict = new Dictionary<string, string>()
             {
-                {"Test1", "TEST1"},
-                {"Test2", "TEST2"}
+                { "Test1", "TEST1" },
+                { "Test2", "TEST2" },
             };
 
             var kvStore = new SqliteKeyValueStore(Path.GetTempFileName());
             kvStore.InsertObjects(testDict);
         }
 
-
         [Fact]
         public void InsertObjects_IgnoreTest()
         {
             IDictionary<string, string> testDict = new Dictionary<string, string>()
             {
-                {"Test1", "TEST1"},
-                {"Test2", "TEST2"}
+                { "Test1", "TEST1" },
+                { "Test2", "TEST2" },
             };
             var kvStore = new SqliteKeyValueStore(Path.GetTempFileName());
             kvStore.InsertObjects(testDict);
@@ -101,8 +99,8 @@ namespace Snowflake.Utility.Tests
         {
             IDictionary<string, string> testDict = new Dictionary<string, string>()
             {
-                {"Test1", "TEST1"},
-                {"Test2", "TEST2"}
+                { "Test1", "TEST1" },
+                { "Test2", "TEST2" },
             };
             var kvStore = new SqliteKeyValueStore(Path.GetTempFileName());
             kvStore.InsertObjects(testDict);
@@ -117,8 +115,8 @@ namespace Snowflake.Utility.Tests
         {
             IDictionary<string, string> testDict = new Dictionary<string, string>()
             {
-                {"Test1", "TEST1"},
-                {"Test2", "TEST2"}
+                { "Test1", "TEST1" },
+                { "Test2", "TEST2" },
             };
             var kvStore = new SqliteKeyValueStore(Path.GetTempFileName());
             kvStore.InsertObject("testKey", testDict);
@@ -154,7 +152,7 @@ namespace Snowflake.Utility.Tests
             {
                 SomeInt = someInt,
                 SomeBoolean = someBool,
-                SomeString = someString
+                SomeString = someString,
             };
             var kvStore = new SqliteKeyValueStore(Path.GetTempFileName());
             kvStore.InsertObject("testKey", testObject);
@@ -170,8 +168,8 @@ namespace Snowflake.Utility.Tests
         {
             IDictionary<string, string> testDict = new Dictionary<string, string>()
             {
-                {"Test1", "TEST1"},
-                {"Test2", "TEST2"}
+                { "Test1", "TEST1" },
+                { "Test2", "TEST2" },
             };
             var kvStore = new SqliteKeyValueStore(Path.GetTempFileName());
             kvStore.InsertObject("testKey", testDict);
@@ -208,7 +206,7 @@ namespace Snowflake.Utility.Tests
             kvStore.InsertObject("testKey1", "test1");
             kvStore.InsertObject("testKey2", "test2");
 
-            kvStore.DeleteObjects(new[] {"testKey1", "testKey2"});
+            kvStore.DeleteObjects(new[] { "testKey1", "testKey2" });
             var retrievedObjects = kvStore.GetObjects<string>(new[] { "testKey1", "testKey2" });
             Assert.Empty(retrievedObjects);
         }

@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi;
 using Snowflake.Records.File;
 using Snowflake.Records.Game;
 using Snowflake.Records.Metadata;
-using Snowflake.Utility;
 using Snowflake.Scraper.Providers;
-using Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi;
+using Snowflake.Utility;
 
 namespace Snowflake.Plugin.Scrapers.TheGamesDb
 {
@@ -17,50 +17,52 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb
     {
         private static IDictionary<string, string> map = new Dictionary<string, string>
         {
-            {"ATARI_2600", "Atari 2600"},
-            {"ATARI_5200", "Atari 5200"},
-            {"ATARI_LYNX", "Atari Lynx"},
-            {"NINTENDO_NES", "Nintendo Entertainment System (NES)"},
-            {"NINTENDO_SNES", "Super Nintendo (SNES)"},
-            {"NINTENDO_N64", "Nintendo 64"},
-            {"NINTENDO_GCN", "Nintendo GameCube"},
-            {"NINTENDO_WII", "Nintendo Wii"},
-            {"NINTENDO_GB", "Nintendo Game Boy"},
-            {"NINTENDO_GBC", "Nintendo Game Boy Color"},
-            {"NINTENDO_GBA", "Nintendo Game Boy Advance"},
-            {"NINTENDO_NDS", "Nintendo DS"},
-            {"SONY_PSX", "Sony Playstation"},
-            {"SONY_PS2", "Sony Playstation 2"},
-            {"SONY_PSP", "Sony PSP"},
-            {"SEGA_SMS", "Sega Master System"},
-            {"SEGA_GEN", "Sega Genesis"},
-            {"SEGA_MD", "Sega Mega Drive"},
-            {"SEGA_CD", "Sega CD"},
-            {"SEGA_32X", "Sega 32X"},
-            {"SEGA_SAT", "Sega Saturn"},
-            {"SEGA_DC", "Sega Dreamcast"},
-            {"SEGA_GG", "Sega Game Gear"}
+            { "ATARI_2600", "Atari 2600" },
+            { "ATARI_5200", "Atari 5200" },
+            { "ATARI_LYNX", "Atari Lynx" },
+            { "NINTENDO_NES", "Nintendo Entertainment System (NES)" },
+            { "NINTENDO_SNES", "Super Nintendo (SNES)" },
+            { "NINTENDO_N64", "Nintendo 64" },
+            { "NINTENDO_GCN", "Nintendo GameCube" },
+            { "NINTENDO_WII", "Nintendo Wii" },
+            { "NINTENDO_GB", "Nintendo Game Boy" },
+            { "NINTENDO_GBC", "Nintendo Game Boy Color" },
+            { "NINTENDO_GBA", "Nintendo Game Boy Advance" },
+            { "NINTENDO_NDS", "Nintendo DS" },
+            { "SONY_PSX", "Sony Playstation" },
+            { "SONY_PS2", "Sony Playstation 2" },
+            { "SONY_PSP", "Sony PSP" },
+            { "SEGA_SMS", "Sega Master System" },
+            { "SEGA_GEN", "Sega Genesis" },
+            { "SEGA_MD", "Sega Mega Drive" },
+            { "SEGA_CD", "Sega CD" },
+            { "SEGA_32X", "Sega 32X" },
+            { "SEGA_SAT", "Sega Saturn" },
+            { "SEGA_DC", "Sega Dreamcast" },
+            { "SEGA_GG", "Sega Game Gear" },
         };
 
+        /// <inheritdoc/>
         public override IEnumerable<IScrapedMetadataCollection> Query(string searchQuery, string platformId)
         {
             string tgdbPlatform = TheGamesDbMetadataProvider.map[platformId];
-            return (from r in ApiGamesDb.GetGames(searchQuery, tgdbPlatform)
+            return from r in ApiGamesDb.GetGames(searchQuery, tgdbPlatform)
                 where r.Platform == tgdbPlatform
                 let distance = r.Title.CompareTitle(searchQuery)
                 orderby distance
                 let gameMetadata = ApiGamesDb.GetGame(r.ID)
                 let metadata = new ScrapedMetadataCollection("scraper_thegamesdb", (100 - distance) * 0.01)
                 {
-                    {GameMetadataKeys.Title, gameMetadata.Title},
-                    {GameMetadataKeys.Description, gameMetadata.Overview},
-                    {GameMetadataKeys.Publisher, gameMetadata.Publisher},
-                    {GameMetadataKeys.ReleaseDate, gameMetadata.ReleaseDate},
-                    {"scraper_thegamesdb_id", gameMetadata.ID.ToString()}
+                    { GameMetadataKeys.Title, gameMetadata.Title },
+                    { GameMetadataKeys.Description, gameMetadata.Overview },
+                    { GameMetadataKeys.Publisher, gameMetadata.Publisher },
+                    { GameMetadataKeys.ReleaseDate, gameMetadata.ReleaseDate },
+                    { "scraper_thegamesdb_id", gameMetadata.ID.ToString() },
                 }
-                select metadata);
+                select metadata;
         }
 
+        /// <inheritdoc/>
         public override IScrapedMetadataCollection QueryBestMatch(string searchQuery, string platformId)
         {
             string tgdbPlatform = TheGamesDbMetadataProvider.map[platformId];
@@ -69,15 +71,19 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb
                           let distance = r.Title.CompareTitle(searchQuery)
                           orderby distance
                           select new { r, distance }).FirstOrDefault();
-            if (result == null) return null;
+            if (result == null)
+            {
+                return null;
+            }
+
             var gameMetadata = ApiGamesDb.GetGame(result.r);
             IScrapedMetadataCollection metadata = new ScrapedMetadataCollection("scraper_thegamesdb", (100 - result.distance) * 0.01)
             {
-                {GameMetadataKeys.Title, gameMetadata.Title},
-                {GameMetadataKeys.Description, gameMetadata.Overview},
-                {GameMetadataKeys.Publisher, gameMetadata.Publisher },
-                {GameMetadataKeys.ReleaseDate, gameMetadata.ReleaseDate },
-                {"scraper_thegamesdb_id", gameMetadata.ID.ToString() }
+                { GameMetadataKeys.Title, gameMetadata.Title },
+                { GameMetadataKeys.Description, gameMetadata.Overview },
+                { GameMetadataKeys.Publisher, gameMetadata.Publisher },
+                { GameMetadataKeys.ReleaseDate, gameMetadata.ReleaseDate },
+                { "scraper_thegamesdb_id", gameMetadata.ID.ToString() },
             };
             return metadata;
         }
@@ -109,6 +115,5 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb
             return this.QueryBestMatch(collection[FileMetadataKeys.RomInternalName],
                 collection[FileMetadataKeys.RomPlatform]);
         }
-
     }
 }

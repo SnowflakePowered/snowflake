@@ -8,12 +8,12 @@ using Snowflake.FileSignatures;
 
 namespace Snowflake.Romfile.FileSignatures.Nintendo
 {
-    //.v64
+    // .v64
     public class Nintendo64ByteswappedFileSignature : Nintendo64FileSignature<Int16SwapStream>
     {
-        public Nintendo64ByteswappedFileSignature() : base(0x37804012, "application/x-romfile-n64-byteswapped", s => new Int16SwapStream(s))
+        public Nintendo64ByteswappedFileSignature()
+            : base(0x37804012, "application/x-romfile-n64-byteswapped", s => new Int16SwapStream(s))
         {
-            
         }
     }
 }

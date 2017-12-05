@@ -32,6 +32,6 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Shaders
         Sabr,
         [Shader("advanced-aa", CgSupport = true, GlslSupport = true, SlangSupport = true)]
         [SelectionOption("#flag", DisplayName = "Advanced Anti-aliasing")]
-        AdvancedAA
+        AdvancedAA,
     }
 }

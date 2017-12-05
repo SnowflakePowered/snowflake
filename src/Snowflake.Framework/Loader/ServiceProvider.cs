@@ -1,9 +1,9 @@
-﻿using Snowflake.Extensibility;
-using Snowflake.Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Snowflake.Extensibility;
+using Snowflake.Services;
 
 namespace Snowflake.Loader
 {
@@ -17,11 +17,18 @@ namespace Snowflake.Loader
             this.services = serviceList.ToList();
         }
 
+        /// <inheritdoc/>
         public IEnumerable<string> Services => this.services.AsEnumerable();
 
-        public T Get<T>() where T : class
+        /// <inheritdoc/>
+        public T Get<T>()
+            where T : class
         {
-            if (services.Contains(typeof(T).FullName)) return this.coreService.Get<T>();
+            if (services.Contains(typeof(T).FullName))
+            {
+                return this.coreService.Get<T>();
+            }
+
             throw new InvalidOperationException($"Service container is not authorized to provide service {typeof(T).FullName} or service does not exist.");
         }
     }

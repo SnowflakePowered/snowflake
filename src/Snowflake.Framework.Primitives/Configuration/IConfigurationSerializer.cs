@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Snowflake.Configuration.Input;
-using Snowflake.Input.Controller;
 using Snowflake.Emulator;
+using Snowflake.Input.Controller;
 using Snowflake.Input.Controller.Mapped;
 using Snowflake.Input.Device;
 
@@ -20,9 +20,9 @@ namespace Snowflake.Configuration
         /// <see cref="Snowflake.Configuration.IConfigurationTypeMapper"/>
         /// </value>
         IConfigurationTypeMapper TypeMapper { get; set; }
-        
+
         /// <summary>
-        /// Serializes one single value using the type mapper. Usually not very useful as this does not serialize a line and should 
+        /// Serializes one single value using the type mapper. Usually not very useful as this does not serialize a line and should
         /// simply shim the TypeMapper, using reflection to get the runtime type of the objeect. Intended as a helper method for
         /// <see cref="SerializeLine{T}(string, T)"></see>
         /// </summary>
@@ -52,6 +52,7 @@ namespace Snowflake.Configuration
         /// <param name="headerString">The string to serialize as a header.</param>
         /// <returns>The serialized header line</returns>
         string SerializeHeader(string headerString);
+
         /// <summary>
         /// Serializes the footer of the configuration section
         /// </summary>

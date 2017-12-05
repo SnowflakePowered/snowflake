@@ -9,22 +9,25 @@ namespace Snowflake.Scraper.Providers
 {
     public class ScrapedMetadataCollection : MetadataCollection, IScrapedMetadataCollection
     {
-        public ScrapedMetadataCollection(string metadataSource, double accuracy) : base(Guid.NewGuid())
+        public ScrapedMetadataCollection(string metadataSource, double accuracy)
+            : base(Guid.NewGuid())
         {
             this.Source = metadataSource;
             this.Accuracy = accuracy;
         }
 
+        /// <inheritdoc/>
         public string Source
         {
             get { return this["metadata_source"].Value; }
             set { (this as IMetadataCollection)["metadata_source"] = value; }
         }
 
+        /// <inheritdoc/>
         public double Accuracy
         {
-            get { return Double.Parse(this["information_accuracy"].Value); }
-            set { (this as IMetadataCollection)["information_accuracy"] = value.ToString() ; }
+            get { return double.Parse(this["information_accuracy"].Value); }
+            set { (this as IMetadataCollection)["information_accuracy"] = value.ToString(); }
         }
     }
 }

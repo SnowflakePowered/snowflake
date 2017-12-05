@@ -1,10 +1,10 @@
 ﻿/* This is .NET safe implementation of Crc32 algorithm.
  * This implementation was investigated as fastest from different variants. It based on Robert Vazan native implementations of Crc32C
  * Also, it is good for x64 and for x86, so, it seems, there is no sense to do 2 different realizations.
- * 
+ *
  * Addition: some speed increase was found with splitting xor to 4 independent blocks. Also, some attempts to optimize unaligned tails was unsuccessfull (JIT limitations?).
- * 
- * 
+ *
+ *
  * Max Vysokikh, 2016-2017
  */
 
@@ -18,18 +18,22 @@ namespace Force.Crc32
 
         internal SafeProxy()
         {
-            Init(Poly);
+            this.Init(Poly);
         }
 
         protected void Init(uint poly)
         {
-            var table = _table;
+            var table = this._table;
             for (uint i = 0; i < 256; i++)
             {
                 uint res = i;
                 for (int t = 0; t < 16; t++)
                 {
-                    for (int k = 0; k < 8; k++) res = (res & 1) == 1 ? poly ^ (res >> 1) : (res >> 1);
+                    for (int k = 0; k < 8; k++)
+                    {
+                        res = (res & 1) == 1 ? poly ^ (res >> 1) : (res >> 1);
+                    }
+
                     table[(t * 256) + i] = res;
                 }
             }
@@ -39,7 +43,7 @@ namespace Force.Crc32
         {
             uint crcLocal = uint.MaxValue ^ crc;
 
-            uint[] table = _table;
+            uint[] table = this._table;
             while (length >= 16)
             {
                 var a = table[(3 * 256) + input[offset + 12]]
@@ -68,7 +72,9 @@ namespace Force.Crc32
             }
 
             while (--length >= 0)
+            {
                 crcLocal = table[(crcLocal ^ input[offset++]) & 0xff] ^ crcLocal >> 8;
+            }
 
             return crcLocal ^ uint.MaxValue;
         }

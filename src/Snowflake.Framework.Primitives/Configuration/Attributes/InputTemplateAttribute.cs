@@ -7,11 +7,10 @@ namespace Snowflake.Configuration.Attributes
     /// </summary>
     [AttributeUsage(AttributeTargets.Interface)]
     public class InputTemplateAttribute : ConfigurationSectionAttribute
-    {      
+    {
         public InputTemplateAttribute(string sectionName)
-            :base (sectionName, "input")
+            : base(sectionName, "input")
         {
-    
         }
     }
 }

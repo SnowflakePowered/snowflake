@@ -11,6 +11,7 @@ namespace Snowflake.JsonConverters
 {
     public class PlatformInfoConverter : JsonCreationConverter<IPlatformInfo>
     {
+        /// <inheritdoc/>
         protected override IPlatformInfo Create(Type objectType, JObject jObject)
         {
             string platformId = jObject.Value<string>("PlatformID");
@@ -20,11 +21,11 @@ namespace Snowflake.JsonConverters
             IDictionary<string, string> fileTypes = jObject.Value<JToken>("FileTypes").ToObject<IDictionary<string, string>>();
 
             var biosProps = jObject.Value<JToken>("BiosFiles")?.Values<JProperty>()?.Select(p => p.Value<JProperty>());
-            var biosFiles = (jObject.Value<JToken>("BiosFiles") != null 
+            var biosFiles = jObject.Value<JToken>("BiosFiles") != null
                 ? (from property in biosProps
-                   from hash in property?.Values<JToken>().Values<string>().DefaultIfEmpty("")
+                   from hash in property?.Values<JToken>().Values<string>().DefaultIfEmpty(string.Empty)
                    select new { FileName = property?.Name, Hash = hash })?.ToLookup(p => p.FileName, p => p.Hash)
-                             : EmptyLookup<string, string>.Instance);
+                             : EmptyLookup<string, string>.Instance;
             return new PlatformInfo(platformId, friendlyName, metadata, fileTypes, biosFiles, maximumInputs);
         }
     }

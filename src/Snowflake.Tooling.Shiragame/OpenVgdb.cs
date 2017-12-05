@@ -5,17 +5,17 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Snowflake.Persistence;
 using Snowflake.Services;
 using Snowflake.Utility;
-using Snowflake.Persistence;
 
 namespace Shiragame.Builder
 {
     public class OpenVgdb : SqliteDatabase
     {
-
         private readonly IStoneProvider stone = new StoneProvider();
-        public OpenVgdb(string fileName) : base(fileName)
+        public OpenVgdb(string fileName)
+            : base(fileName)
         {
         }
 
@@ -38,13 +38,13 @@ namespace Shiragame.Builder
         public IEnumerable<RomInfo> GetDatInfos()
         {
             const string sql = "select regionID, systemID, romHashCRC, romHashMD5, romHashSHA1, romFileName from ROMs";
-            return 
+            return
                 from o in this.Query<dynamic>(sql, null)
                 where this.PlatformMap.ContainsKey((int)o.systemID)
                 let platform = this.stone.Platforms[this.PlatformMap[(int)o.systemID]]
                 let ext = Path.GetExtension(o.romFileName)
                 let crc = o.romHashCRC
-                where crc != null //only accept hashable files
+                where crc != null // only accept hashable files
                 select new RomInfo(platform.PlatformID,
                    o.romHashCRC,
                    o.romHashMD5,
@@ -73,6 +73,7 @@ namespace Shiragame.Builder
             const string sql = "select romFileName from ROMs where systemID = 2";
             return this.Query<string>(sql, null);
         }
+
         private readonly IDictionary<int, string> PlatformMap = new Dictionary<int, string>
         {
             { 1, "PANASONIC_3DO" },
@@ -113,7 +114,7 @@ namespace Shiragame.Builder
             { 36, "SNK_NGP" },
             { 37, "SNK_NGPC" },
             { 38, "SONY_PSX" },
-            { 39, "SONY_PSP" }
+            { 39, "SONY_PSP" },
         };
         private readonly IDictionary<int, string> RegionMap = new Dictionary<int, string>
         {
@@ -131,7 +132,7 @@ namespace Shiragame.Builder
             { 12, "IT" },
             { 13, "JP" },
             { 14, "KR" },
-            { 15, "NL" }, //Still Netherlands
+            { 15, "NL" }, // Still Netherlands
             { 16, "RU" },
             { 17, "ES" },
             { 18, "SE" },

@@ -1,10 +1,10 @@
-﻿using GraphQL.Conventions.Adapters.Types;
-using GraphQL.Types;
-using Snowflake.Records.File;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using GraphQL.Conventions.Adapters.Types;
+using GraphQL.Types;
+using Snowflake.Records.File;
 
 namespace Snowflake.Support.Remoting.GraphQl.Types.Record
 {
@@ -22,8 +22,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.Record
             Field<ListGraphType<RecordMetadataGraphType>>(
                 "metadata",
                 description: "A list of metadata related to this game.",
-                resolve: context => context.Source.Metadata.Select(m => m.Value)
-                );
+                resolve: context => context.Source.Metadata.Select(m => m.Value));
             Interface<RecordInterface>();
         }
     }

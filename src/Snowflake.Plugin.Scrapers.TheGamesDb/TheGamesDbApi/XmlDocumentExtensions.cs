@@ -1,8 +1,8 @@
-﻿using Snowflake.Utility;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
+using Snowflake.Utility;
 
 namespace Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi
 {

@@ -18,6 +18,6 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Adapters.Nestopia.Selections
         [SelectionOption("famicom", DisplayName = "Famicom")]
         Famicom,
         [SelectionOption("dendy", DisplayName = "Dendy")]
-        Dendy
+        Dendy,
     }
 }

@@ -1,12 +1,12 @@
-﻿using GraphQL.Types;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using GraphQL.Types;
 using Snowflake.Platform;
 using Snowflake.Services;
 using Snowflake.Support.Remoting.GraphQl.Framework.Attributes;
 using Snowflake.Support.Remoting.GraphQl.Framework.Query;
 using Snowflake.Support.Remoting.GraphQl.Types.PlatformInfo;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Snowflake.Support.Remoting.GraphQl.Queries
 {

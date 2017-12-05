@@ -3,11 +3,19 @@ using Snowflake.Utility;
 
 namespace Snowflake.Records.Metadata
 {
-    public partial class RecordMetadata : IRecordMetadata
+    /// <inheritdoc/>
+    public sealed partial class RecordMetadata : IRecordMetadata
     {
+        /// <inheritdoc/>
         public string Key { get; }
+
+        /// <inheritdoc/>
         public string Value { get; }
+
+        /// <inheritdoc/>
         public Guid Guid { get; }
+
+        /// <inheritdoc/>
         public Guid Record { get; }
 
         public RecordMetadata(string key, string value, Guid record)
@@ -18,7 +26,8 @@ namespace Snowflake.Records.Metadata
             this.Guid = GuidUtility.Create(this.Record, this.Key);
         }
 
-        public RecordMetadata(string key, string value, IRecord record) : this(key, value, record.Guid)
+        public RecordMetadata(string key, string value, IRecord record)
+            : this(key, value, record.Guid)
         {
         }
 
@@ -31,8 +40,11 @@ namespace Snowflake.Records.Metadata
         }
 
         public bool Equals(IRecordMetadata metadata) => this.Guid == metadata.Guid;
+
+        /// <inheritdoc/>
         public override int GetHashCode() => this.Guid.GetHashCode();
 
+        /// <inheritdoc/>
         public override bool Equals(object metadata)
         {
             IRecordMetadata m = metadata as IRecordMetadata;

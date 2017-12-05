@@ -1,22 +1,21 @@
-﻿using Snowflake.Extensibility;
-using Snowflake.Services;
-using Snowflake.Services.Logging;
-using Snowflake.Services.Persistence;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Xunit;
 using Moq;
+using Snowflake.Extensibility;
 using Snowflake.Loader;
+using Snowflake.Services;
+using Snowflake.Services.Logging;
+using Snowflake.Services.Persistence;
 using Snowflake.Tests.Composable;
+using Xunit;
 
 namespace Snowflake.Services.Tests
 {
     public class ServiceProviderTests
     {
-
         [Fact]
         public void ServiceProvider_Test()
         {
@@ -32,7 +31,7 @@ namespace Snowflake.Services.Tests
             Assert.Contains(typeof(IDummyComposable), serviceContainer.Keys);
             Assert.Equal(dummyService, serviceContainer[typeof(IDummyComposable)]);
 
-            var serviceProvider = new ServiceProvider(coreService.Object, 
+            var serviceProvider = new ServiceProvider(coreService.Object,
                 new List<string>() { typeof(IDummyComposable).FullName });
             Assert.Equal(dummyService, serviceProvider.Get<IDummyComposable>());
         }

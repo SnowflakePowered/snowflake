@@ -16,7 +16,6 @@ namespace Snowflake.Configuration.Tests
         [SelectionOption("2", DisplayName = "180 Degrees")]
         OneEightyDegrees,
         [SelectionOption("3", DisplayName = "270 Degrees")]
-        TwoSeventyDegrees
-
+        TwoSeventyDegrees,
     }
 }

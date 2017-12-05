@@ -5,11 +5,12 @@ using Snowflake.FileSignatures.Formats.SFO;
 
 namespace Snowflake.Romfile.FileSignatures.Sony
 {
-    public sealed class PlaystationPortableIso9660FileSignature: IFileSignature
+    public sealed class PlaystationPortableIso9660FileSignature : IFileSignature
     {
-     
+        /// <inheritdoc/>
         public byte[] HeaderSignature => Encoding.UTF8.GetBytes("PSP_GAME");
 
+        /// <inheritdoc/>
         public bool HeaderSignatureMatches(Stream romStream)
         {
             romStream.Seek(0, SeekOrigin.Begin);
@@ -17,6 +18,7 @@ namespace Snowflake.Romfile.FileSignatures.Sony
             return reader.DirectoryExists(Encoding.UTF8.GetString(this.HeaderSignature));
         }
 
+        /// <inheritdoc/>
         public string GetSerial(Stream romStream)
         {
             romStream.Seek(0, SeekOrigin.Begin);
@@ -26,6 +28,7 @@ namespace Snowflake.Romfile.FileSignatures.Sony
             return sfo.KeyValues.ContainsKey("DISC_ID") ? sfo.KeyValues["DISC_ID"] : sfo.KeyValues["TITLE_ID"];
         }
 
+        /// <inheritdoc/>
         public string GetInternalName(Stream romStream)
         {
             romStream.Seek(0, SeekOrigin.Begin);

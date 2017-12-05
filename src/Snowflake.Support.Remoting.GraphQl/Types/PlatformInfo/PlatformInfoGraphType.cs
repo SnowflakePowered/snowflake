@@ -1,12 +1,12 @@
-﻿using GraphQL.Builders;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using GraphQL.Builders;
 using GraphQL.Types;
 using GraphQL.Types.Relay;
 using GraphQL.Types.Relay.DataObjects;
 using Snowflake.Platform;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Snowflake.Support.Remoting.GraphQl.Types.PlatformInfo
 {

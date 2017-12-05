@@ -1,16 +1,18 @@
-﻿using Snowflake.Configuration;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using Snowflake.Configuration;
 using Snowflake.Emulator;
 using Snowflake.Loader;
 using Snowflake.Services;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Snowflake.Plugin.Emulators.TestEmulator
 {
     public class TestEmulatorComposable : IComposable
     {
         // Import our services
+
+        /// <inheritdoc/>
         [ImportService(typeof(IPluginManager))]
         [ImportService(typeof(IContentDirectoryProvider))]
         [ImportService(typeof(IStoneProvider))]
@@ -21,8 +23,9 @@ namespace Snowflake.Plugin.Emulators.TestEmulator
         {
             // Get the plugin manager
             IPluginManager pluginManager = serviceContainer.Get<IPluginManager>();
+
             // Get the directory provider
-            IContentDirectoryProvider contentDirectoryProvider 
+            IContentDirectoryProvider contentDirectoryProvider
                 = serviceContainer.Get<IContentDirectoryProvider>();
 
             string appDataDirectory = contentDirectoryProvider.ApplicationData.FullName;

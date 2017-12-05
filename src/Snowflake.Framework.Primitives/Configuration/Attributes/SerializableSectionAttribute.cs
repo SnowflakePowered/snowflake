@@ -16,18 +16,21 @@ namespace Snowflake.Configuration.Attributes
         /// The flags pseudo-destination
         /// </summary>
         public const string FlagsOutputPath = "#flags";
+
         /// <summary>
         /// The input config pseudo-destination
         /// </summary>
         public const string InputOutputPath = "#input";
+
         /// <summary>
-        /// The destination the serialized form of this configuration will output to 
+        /// Gets the destination the serialized form of this configuration will output to
         /// as defined by the <see cref="ConfigurationFileAttribute"/> attributes
         /// in the <see cref="IConfigurationCollection{T}"/> class.
         /// </summary>
         public string Destination { get; }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="SerializableSectionAttribute"/> class.
         /// Default constructor for the section attribute
         /// </summary>
         /// <param name="destination">The destination the serialized form of this configuration will output to, see <see cref="Destination"/></param>

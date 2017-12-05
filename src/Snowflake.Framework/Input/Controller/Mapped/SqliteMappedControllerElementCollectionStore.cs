@@ -1,20 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Dapper;
+using EnumsNET;
 using Snowflake.Input.Controller;
 using Snowflake.Input.Controller.Mapped;
+using Snowflake.Persistence;
 using Snowflake.Platform;
 using Snowflake.Services;
 using Snowflake.Utility;
-using System.Dynamic;
-using Dapper;
-using EnumsNET;
-using Snowflake.Persistence;
 
 namespace Snowflake.Input.Controller.Mapped
 {
+    /// <summary>
+    /// A Mapped Controller Element Collection Store backed by an SQLite database.
+    /// </summary>
     public class SqliteMappedControllerElementCollectionStore : IMappedControllerElementCollectionStore
     {
         private readonly ISqlDatabase backingDatabase;
@@ -25,24 +28,31 @@ namespace Snowflake.Input.Controller.Mapped
             this.CreateDatabase();
         }
 
+        /// <inheritdoc/>
         public IMappedControllerElementCollection GetMappingProfile(string controllerId, string deviceId, string profileName = "default")
         {
             return this.backingDatabase.Query<IMappedControllerElementCollection>(dbConnection =>
             {
-                dynamic result = dbConnection.Query<dynamic>(@"SELECT * FROM mappings WHERE ControllerId = @controllerId AND DeviceId = @deviceId AND ProfileName = @profileName", 
+                dynamic result = dbConnection.Query<dynamic>(@"SELECT * FROM mappings WHERE ControllerId = @controllerId AND DeviceId = @deviceId AND ProfileName = @profileName",
                                 new { controllerId, deviceId, profileName }).FirstOrDefault();
                 if (result == null)
+                {
                     return null;
+                }
 
                 var collection = new MappedControllerElementCollection(result.DeviceId, result.ControllerId);
 
                 foreach (KeyValuePair<string, object> element in (IDictionary<string, object>)result)
                 {
-                    if (element.Key == "DeviceId" || element.Key == "ControllerId" || element.Key == "ProfileName" || element.Value == null) continue;
+                    if (element.Key == "DeviceId" || element.Key == "ControllerId" || element.Key == "ProfileName" || element.Value == null)
+                    {
+                        continue;
+                    }
+
                     string deviceElem = (string)element.Value;
                     var controllerElement = new MappedControllerElement(Enums.Parse<ControllerElement>(element.Key))
                     {
-                        DeviceElement = Enums.Parse<ControllerElement>(deviceElem)
+                        DeviceElement = Enums.Parse<ControllerElement>(deviceElem),
                     };
                     collection.Add(controllerElement);
                 }
@@ -50,6 +60,7 @@ namespace Snowflake.Input.Controller.Mapped
             });
         }
 
+        /// <inheritdoc/>
         public IEnumerable<string> GetProfileNames(string controllerId, string deviceId)
         {
             var profileNames = this.backingDatabase.Query(dbConnection =>
@@ -61,12 +72,13 @@ namespace Snowflake.Input.Controller.Mapped
             return profileNames;
         }
 
+        /// <inheritdoc/>
         public void SetMappingProfile(IMappedControllerElementCollection mappedCollection, string profileName = "default")
-        {          
+        {
             this.backingDatabase.Execute(dbConnection =>
             {
                 var query = SqliteMappedControllerElementCollectionStore.BuildQuery(mappedCollection, profileName);
-                SqlMapper.Execute(dbConnection, $@"INSERT OR REPLACE INTO mappings ({query.Item2}) VALUES ({query.Item1})", query.Item3); //will this work?
+                SqlMapper.Execute(dbConnection, $@"INSERT OR REPLACE INTO mappings ({query.Item2}) VALUES ({query.Item1})", query.Item3); // will this work?
             });
         }
 
@@ -77,16 +89,16 @@ namespace Snowflake.Input.Controller.Mapped
             queryObject.DeviceId = mappedCollection.DeviceId;
             queryObject.ProfileName = profileName;
             var parameters = new StringBuilder("@ControllerId, @DeviceId, @ProfileName");
-            foreach(var element in mappedCollection)
+            foreach (var element in mappedCollection)
             {
                 string layoutElementName = element.LayoutElement.GetMember().Name;
                 string deviceElement = element.DeviceElement.GetMember().Name;
                 parameters.Append(", @");
                 parameters.Append(layoutElementName);
-                ((IDictionary <string, object>)queryObject)[layoutElementName] = deviceElement;
+                ((IDictionary<string, object>)queryObject)[layoutElementName] = deviceElement;
             }
-            return new Tuple<string, string, dynamic>(parameters.ToString(), parameters.Replace("@", "").ToString(), queryObject);
 
+            return new Tuple<string, string, dynamic>(parameters.ToString(), parameters.Replace("@", string.Empty).ToString(), queryObject);
         }
 
         private void CreateDatabase()
@@ -170,8 +182,7 @@ namespace Snowflake.Input.Controller.Mapped
                 "PointerAxisNegativeZ TEXT",
                 "Touchscreen TEXT",
                 "Keyboard TEXT",
-                "PRIMARY KEY (ControllerId, DeviceId, ProfileName)"
-                );
+                "PRIMARY KEY (ControllerId, DeviceId, ProfileName)");
         }
     }
 }

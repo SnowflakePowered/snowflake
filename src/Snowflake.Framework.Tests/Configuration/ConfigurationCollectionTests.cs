@@ -21,7 +21,7 @@ namespace Snowflake.Configuration.Tests
                             "ISOPath0", new ConfigurationValue("Test", Guid.Empty)
                         }
                     }
-                }
+                },
             };
             var configuration = new ConfigurationCollection<ExampleConfigurationCollection>(values);
             Assert.Equal("Test", configuration.Configuration.ExampleConfiguration.ISOPath0);
@@ -43,21 +43,20 @@ namespace Snowflake.Configuration.Tests
                             "FullscreenResolution", new ValueTuple<string, Guid>(FullscreenResolution.Resolution1024X600.ToString(), Guid.Empty)
                         }
                     }
-                }
+                },
             };
             var configuration = new ConfigurationCollection<ExampleConfigurationCollection>(values);
             Assert.Equal("Test", configuration.Configuration.ExampleConfiguration.ISOPath0);
             Assert.Equal(FullscreenResolution.Resolution1024X600, configuration.Configuration.ExampleConfiguration.FullscreenResolution);
             Assert.Equal(Guid.Empty, configuration.Configuration.ExampleConfiguration.Values["ISOPath0"].Guid);
             Assert.Equal(Guid.Empty, configuration.Configuration.ExampleConfiguration.Values["FullscreenResolution"].Guid);
-
         }
 
         [Fact]
         public void DefaultsTests()
         {
             var configuration = new ConfigurationCollection<ExampleConfigurationCollection>();
-            Assert.Equal(configuration.Configuration.ExampleConfiguration.Descriptor["FullscreenResolution"].Default, 
+            Assert.Equal(configuration.Configuration.ExampleConfiguration.Descriptor["FullscreenResolution"].Default,
                 configuration.Configuration.ExampleConfiguration.FullscreenResolution);
         }
 

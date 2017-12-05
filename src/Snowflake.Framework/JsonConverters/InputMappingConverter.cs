@@ -13,6 +13,7 @@ namespace Snowflake.JsonConverters
 {
     public class InputMappingConverter : JsonCreationConverter<IInputMapping>
     {
+        /// <inheritdoc/>
         protected override IInputMapping Create(Type objectType, JObject jObject)
         {
             IDictionary<ControllerElement, string> controllerElements = (from prop in
@@ -20,10 +21,9 @@ namespace Snowflake.JsonConverters
                 select new
                 {
                     element = Enums.Parse<ControllerElement>(prop.Name),
-                    value = prop.Value.Value<string>()
+                    value = prop.Value.Value<string>(),
                 }).ToDictionary(o => o.element, o => o.value);
 
-         
             IEnumerable<string> deviceLayouts = jObject.Value<JArray>("DeviceLayouts").Values<string>();
             InputApi inputApi = Enums.Parse<InputApi>(jObject.Value<string>("InputApi"));
             string nullMapping = jObject.Value<string>("NullMapping");

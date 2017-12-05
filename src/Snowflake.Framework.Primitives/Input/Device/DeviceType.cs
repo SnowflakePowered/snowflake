@@ -9,14 +9,17 @@ namespace Snowflake.Input.Device
         /// Other or unknown
         /// </summary>
         Other,
+
         /// <summary>
         /// Gamepad device
         /// </summary>
         Gamepad,
+
         /// <summary>
         /// Mouse pointer device
         /// </summary>
         Mouse,
+
         /// <summary>
         /// Keyboard device
         /// </summary>

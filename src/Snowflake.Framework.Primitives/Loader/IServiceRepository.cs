@@ -17,7 +17,9 @@ namespace Snowflake.Loader
         /// <exception cref="InvalidOperationException">
         /// The service has not been imported or you do not have permissions to access the service.
         /// </exception>
-        T Get<T>() where T : class;
+        T Get<T>()
+            where T : class;
+
         /// <summary>
         /// Gets a list of available service types.
         /// </summary>

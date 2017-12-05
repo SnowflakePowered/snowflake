@@ -6,12 +6,11 @@ namespace Snowflake.FileSignatures.Formats.SFO
     {
         /**
          * Converts any byte[]-Array to a string with the specified encoding.
-         * 
+         *
          * @param byteArray
          * @param encoding
          * @return String
          */
-
         public static string ByteArrayToString(byte[] byteArray)
         {
             return SFOReaderUtilities.ByteArrayToString(byteArray, false);
@@ -20,14 +19,18 @@ namespace Snowflake.FileSignatures.Formats.SFO
         public static string ByteArrayToString(byte[] byteArray, bool isUtf)
         {
             if (isUtf)
+            {
                 return Encoding.UTF8.GetString(byteArray);
+            }
             else
+            {
                 return Encoding.ASCII.GetString(byteArray);
+            }
         }
 
         /**
          * Reverse any byte[]-Array and converts it then to an int
-         * 
+         *
          * @param b
          * @return int
          */
@@ -45,7 +48,7 @@ namespace Snowflake.FileSignatures.Formats.SFO
 
         /**
          * Returns any byte[]-Array as an int
-         * 
+         *
          * @param b
          * @return Integer
          */
@@ -56,7 +59,7 @@ namespace Snowflake.FileSignatures.Formats.SFO
 
         /**
          * Returns any byte[]-Array as an int from the given offset
-         * 
+         *
          * @param b
          * @param offset
          * @return Integer
@@ -69,6 +72,7 @@ namespace Snowflake.FileSignatures.Formats.SFO
                 int shift = (4 - 1 - i) * 8;
                 value += (b[i + offset] & 0x000000FF) << shift;
             }
+
             return value;
         }
     }

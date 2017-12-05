@@ -1,7 +1,7 @@
-﻿using Snowflake.Configuration.Attributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Snowflake.Configuration.Attributes;
 
 namespace Snowflake.Plugin.Emulators.TestEmulator.Configuration
 {
@@ -12,6 +12,6 @@ namespace Snowflake.Plugin.Emulators.TestEmulator.Configuration
         [SelectionOption("selectTwo")]
         TestTwo,
         [SelectionOption("selectThree")]
-        TestThree
+        TestThree,
     }
 }

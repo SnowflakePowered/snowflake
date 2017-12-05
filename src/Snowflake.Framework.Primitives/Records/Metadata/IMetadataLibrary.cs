@@ -11,7 +11,6 @@ namespace Snowflake.Records.Metadata
     /// </summary>
     public interface IMetadataLibrary : ILibrary<IRecordMetadata>
     {
-
         /// <summary>
         /// Gets all metadata with a specific target guid
         /// </summary>

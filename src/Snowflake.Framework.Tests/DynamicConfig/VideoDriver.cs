@@ -19,6 +19,6 @@ namespace Snowflake.Configuration.Tests
         [SelectionOption("sdl2", DisplayName = "SDL2", Private = true)]
         SDL2,
         [SelectionOption("vulkan", DisplayName = "vulkan")]
-        Vulkan
+        Vulkan,
     }
 }

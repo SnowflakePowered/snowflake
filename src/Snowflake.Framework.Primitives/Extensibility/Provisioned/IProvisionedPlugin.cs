@@ -12,7 +12,7 @@ namespace Snowflake.Extensibility.Provisioned
     public interface IProvisionedPlugin : IPlugin
     {
         /// <summary>
-        /// The plugin provision from the active plugin manager for this instance
+        /// Gets the plugin provision from the active plugin manager for this instance
         /// </summary>
         IPluginProvision Provision { get; }
 
@@ -21,6 +21,5 @@ namespace Snowflake.Extensibility.Provisioned
         /// </summary>
         /// <returns>The plugin configuration</returns>
         IConfigurationSection GetPluginConfiguration();
-
     }
 }

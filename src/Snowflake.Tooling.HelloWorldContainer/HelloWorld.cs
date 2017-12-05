@@ -1,13 +1,14 @@
-﻿using Snowflake.Extensibility;
+﻿using System;
+using Snowflake.Extensibility;
 using Snowflake.Loader;
 using Snowflake.Platform;
 using Snowflake.Services;
-using System;
 
 namespace Snowflake.Tooling.HelloWorldContainer
 {
     public class HelloWorld : IComposable
     {
+        /// <inheritdoc/>
         [ImportService(typeof(IStoneProvider))]
         public void Compose(IModule composableModule, Loader.IServiceRepository serviceContainer)
         {

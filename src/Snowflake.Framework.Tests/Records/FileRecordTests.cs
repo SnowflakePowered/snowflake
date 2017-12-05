@@ -13,7 +13,5 @@ namespace Snowflake.Records.Tests
 {
     public class FileRecordTests
     {
-      
     }
-    
 }

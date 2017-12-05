@@ -1,9 +1,9 @@
-﻿using NLog;
+﻿using System;
+using NLog;
 using NLog.Config;
 using NLog.Layouts;
 using NLog.Targets;
 using NLog.Targets.Wrappers;
-using System;
 
 namespace Snowflake.Services.Logging
 {
@@ -14,7 +14,11 @@ namespace Snowflake.Services.Logging
         private static bool isSetup = false;
         private static void Setup()
         {
-            if (NlogLogger.isSetup) return;
+            if (NlogLogger.isSetup)
+            {
+                return;
+            }
+
             var configuration = new LoggingConfiguration();
             var consoleTarget = new ColoredConsoleTarget("Console");
             var asyncConsoleTarget = new AsyncTargetWrapper("Console", consoleTarget);
@@ -36,25 +40,34 @@ namespace Snowflake.Services.Logging
             this.baseLogger = LogManager.GetLogger(loggerName);
         }
 
+        /// <inheritdoc/>
         public string Name => this.baseLogger.Name;
 
+        /// <inheritdoc/>
         public void Debug(string message) => this.baseLogger.Debug(message);
 
+        /// <inheritdoc/>
         public void Error(string message) => this.baseLogger.Error(message);
 
+        /// <inheritdoc/>
         public void Error(Exception ex, string message)
         {
             this.baseLogger.Error(ex, message);
         }
 
+        /// <inheritdoc/>
         public void Fatal(string message) => this.baseLogger.Fatal(message);
 
+        /// <inheritdoc/>
         public void Info(string message) => this.baseLogger.Info(message);
 
+        /// <inheritdoc/>
         public void Trace(string message) => this.baseLogger.Trace(message);
 
+        /// <inheritdoc/>
         public void Warn(string message) => this.baseLogger.Warn(message);
 
+        /// <inheritdoc/>
         public void Log(string messsage, Extensibility.LogLevel logLevel)
         {
             switch (logLevel)

@@ -10,8 +10,10 @@ namespace Snowflake.Romfile.FileSignatures.Sony
 {
     public sealed class PlaystationRawDiscFileSignature : IFileSignature
     {
+        /// <inheritdoc/>
         public byte[] HeaderSignature => Encoding.UTF8.GetBytes("PLAYSTATION");
 
+        /// <inheritdoc/>
         public bool HeaderSignatureMatches(Stream romStream)
         {
             romStream.Seek(0, SeekOrigin.Begin);
@@ -19,15 +21,17 @@ namespace Snowflake.Romfile.FileSignatures.Sony
             return disk.IsPlaystation();
         }
 
+        /// <inheritdoc/>
         public string GetSerial(Stream romStream)
         {
             romStream.Seek(0, SeekOrigin.Begin);
             var disk = new PlaystationDisk(new CDXADisk(romStream));
             string syscnf = disk.GetSystemCnf();
             string exe = syscnf.Substring(14, 11);
-            return exe.Replace(".", "").Replace("_", "-");
+            return exe.Replace(".", string.Empty).Replace("_", "-");
         }
 
+        /// <inheritdoc/>
         public string GetInternalName(Stream romStream)
         {
             romStream.Seek(0, SeekOrigin.Begin);

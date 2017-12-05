@@ -1,8 +1,8 @@
-﻿using Snowflake.Configuration;
-using Snowflake.Configuration.Attributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Snowflake.Configuration;
+using Snowflake.Configuration.Attributes;
 
 namespace Snowflake.Plugin.Emulators.TestEmulator.Configuration
 {
@@ -19,6 +19,5 @@ namespace Snowflake.Plugin.Emulators.TestEmulator.Configuration
         string StringOption { get; }
         [ConfigurationOption("enum_option", TestConfigurationEnum.TestTwo)]
         TestConfigurationEnum EnumOption { get; }
-        
     }
 }

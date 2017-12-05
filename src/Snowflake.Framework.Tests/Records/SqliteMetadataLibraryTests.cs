@@ -4,12 +4,12 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Snowflake.Persistence;
 using Snowflake.Records.File;
 using Snowflake.Records.Game;
 using Snowflake.Records.Metadata;
 using Snowflake.Utility;
 using Xunit;
-using Snowflake.Persistence;
 
 namespace Snowflake.Records.Tests
 {
@@ -29,7 +29,7 @@ namespace Snowflake.Records.Tests
             var metadata = new List<IRecordMetadata>
             {
                 new RecordMetadata("test", "value", Guid.Empty),
-                new RecordMetadata("test2", "value", Guid.Empty)
+                new RecordMetadata("test2", "value", Guid.Empty),
             };
             var library = new SqliteMetadataLibrary(new SqliteDatabase(Path.GetTempFileName()));
             library.Set(metadata);
@@ -52,7 +52,7 @@ namespace Snowflake.Records.Tests
             var metadata = new List<IRecordMetadata>
             {
                 new RecordMetadata("test", "value", Guid.Empty),
-                new RecordMetadata("test2", "value", Guid.Empty)
+                new RecordMetadata("test2", "value", Guid.Empty),
             };
             var library = new SqliteMetadataLibrary(new SqliteDatabase(Path.GetTempFileName()));
             library.Set(metadata);
@@ -67,7 +67,7 @@ namespace Snowflake.Records.Tests
             var metadata = new List<IRecordMetadata>
             {
                 new RecordMetadata("test", "value", Guid.Empty),
-                new RecordMetadata("test2", "value", Guid.Empty)
+                new RecordMetadata("test2", "value", Guid.Empty),
             };
             var library = new SqliteMetadataLibrary(new SqliteDatabase(Path.GetTempFileName()));
             library.Set(metadata);
@@ -101,5 +101,4 @@ namespace Snowflake.Records.Tests
             Assert.NotEmpty(library.GetAllRecords());
         }
     }
-    
 }

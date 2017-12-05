@@ -1,44 +1,47 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using System.Reflection;
-using Snowflake.Support.Remoting.GraphQl.Framework.Attributes;
 using System.Linq;
 using System.Linq.Expressions;
-using GraphQL.Types;
-using System.Collections;
-using GraphQL.Types.Relay;
-using GraphQL.Relay.Types;
+using System.Reflection;
+using System.Text;
 using GraphQL.Builders;
+using GraphQL.Relay.Types;
+using GraphQL.Types;
+using GraphQL.Types.Relay;
+using Snowflake.Support.Remoting.GraphQl.Framework.Attributes;
 
 namespace Snowflake.Support.Remoting.GraphQl.Framework.Query
 {
     public abstract partial class QueryBuilder
     {
         private static MethodInfo ConnectionMaker { get; }
-        static QueryBuilder() {
+        static QueryBuilder()
+        {
             MethodInfo GetMethod<T>(Expression<Func<ResolveConnectionContext<T>, IEnumerable<T>, T>> expression)
             {
                 MethodCallExpression methodCall = (MethodCallExpression)expression.Body;
                 return methodCall.Method;
             }
+
             QueryBuilder.ConnectionMaker = GetMethod<object>((context, items) =>
                                                ConnectionUtils.ToConnection(items, context)).GetGenericMethodDefinition();
-
         }
 
         private IEnumerable<(MethodInfo fieldMethod, TAttribute attr, IEnumerable<ParameterAttribute> paramAttr)>
-            EnumerateQueries<TAttribute>() where TAttribute: Attribute
+            EnumerateQueries<TAttribute>()
+            where TAttribute : Attribute
         {
-            var endpoints = (from m in this.GetType().GetRuntimeMethods()
+            var endpoints = from m in this.GetType().GetRuntimeMethods()
                              let queryAttr = m.GetCustomAttribute<TAttribute>()
                              where queryAttr != null
                              let endpointParamsAttrs = m.GetCustomAttributes<ParameterAttribute>()
-                             select (methodInfo: m, queryAttr: queryAttr, paramAttrs: endpointParamsAttrs));
-            foreach(var endpoint in endpoints)
+                             select (methodInfo: m, queryAttr: queryAttr, paramAttrs: endpointParamsAttrs);
+            foreach (var endpoint in endpoints)
             {
                 this.VerifyParameters(endpoint.methodInfo, endpoint.paramAttrs);
             }
+
             return endpoints;
         }
 
@@ -71,7 +74,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Framework.Query
                 Name = fieldAttr.FieldName,
                 GraphType = fieldAttr.GraphType,
                 Arguments = arguments.Count != 0 ? new QueryArguments(arguments) : null,
-                Resolver = resolver
+                Resolver = resolver,
             };
         }
 
@@ -93,9 +96,8 @@ namespace Snowflake.Support.Remoting.GraphQl.Framework.Query
                 Name = fieldAttr.FieldName,
                 GraphType = fieldAttr.GraphType,
                 Arguments = arguments.Count != 0 ? new QueryArguments(arguments) : null,
-                Resolver = resolver
+                Resolver = resolver,
             };
-
         }
 
         private ConnectionQuery MakeConnectionQuery(MethodInfo fieldMethod, ConnectionAttribute
@@ -105,12 +107,13 @@ namespace Snowflake.Support.Remoting.GraphQl.Framework.Query
             var resolver = this.CreateResolver(invoker, fieldMethod);
             var methodParams = fieldMethod.GetParameters();
             IList<QueryArgument> arguments = (from param in paramAttr
-                                                    select new QueryArgument(param.GraphQlType) {
+                                                    select new QueryArgument(param.GraphQlType)
+                                                    {
                                                         Name = param.Key,
                                                         Description = param.Description,
                                                         DefaultValue = methodParams.FirstOrDefault(p => p.Name == param.Key)?.DefaultValue,
                                                     }).ToList();
-            if (!fieldMethod.ReturnType.GetInterfaces().Contains(typeof(IEnumerable)) || 
+            if (!fieldMethod.ReturnType.GetInterfaces().Contains(typeof(IEnumerable)) ||
                 !fieldMethod.ReturnType.IsConstructedGenericType)
             {
                 throw new ArgumentOutOfRangeException("Connections must be of generic type IEnumerable!");
@@ -124,9 +127,8 @@ namespace Snowflake.Support.Remoting.GraphQl.Framework.Query
                 Arguments = arguments.Count != 0 ? new QueryArguments(arguments) : null,
                 Resolver = resolver,
                 ItemsType = fieldMethod.ReturnType.GetGenericArguments()[0],
-                ReturnType = fieldMethod.ReturnType
+                ReturnType = fieldMethod.ReturnType,
             };
-
         }
 
         private Func<ResolveConnectionContext<object>, object>
@@ -134,7 +136,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Framework.Query
         {
             var connectionBuildCall = QueryBuilder.ConnectionMaker.MakeGenericMethod(query.ItemsType, typeof(object));
             ParameterExpression context = Expression.Parameter(typeof(ResolveConnectionContext<object>), "context");
-            Expression<Func<ResolveFieldContext<object>, object>> resolvedValue = invokingContext => 
+            Expression<Func<ResolveFieldContext<object>, object>> resolvedValue = invokingContext =>
                 query.Resolver(invokingContext);
 
             var executor = Expression.Lambda<Func<ResolveConnectionContext<object>, object>>(
@@ -142,8 +144,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Framework.Query
                     null,
                     connectionBuildCall,
                     Expression.Convert(Expression.Invoke(resolvedValue, context), query.ReturnType),
-                    context
-                ), context);
+                    context), context);
             return executor.Compile();
         }
 
@@ -158,15 +159,15 @@ namespace Snowflake.Support.Remoting.GraphQl.Framework.Query
             {
                 connectionQuery.FieldType.Arguments.AddRange(query.Arguments);
             }
+
             connectionQuery.Resolve(context => connectionResolver(context));
         }
-
 
         private void RegisterQuery(FieldQuery query, ObjectGraphType<object> rootQuery)
         {
             rootQuery.Field(query.GraphType, query.Name, query.Description, query.Arguments, query.Resolver);
         }
- 
+
         /// <summary>
         /// Verify parameters for a query function.
         /// </summary>
@@ -181,6 +182,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Framework.Query
                 {
                     throw new ArgumentOutOfRangeException($"Parameter {param.Name} is not described for method {invokingMethod.Name}!");
                 }
+
                 if (paramDesc.ParameterType != param.ParameterType)
                 {
                     throw new InvalidCastException($"Parameter {param.Name} has mismatched types!");
@@ -191,7 +193,9 @@ namespace Snowflake.Support.Remoting.GraphQl.Framework.Query
         private static object GetDefaultValue(Type t)
         {
             if (t.IsValueType)
+            {
                 return Activator.CreateInstance(t);
+            }
 
             return null;
         }
@@ -205,7 +209,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Framework.Query
         private static object[] CollectParameters(ResolveFieldContext<object> context, MethodInfo invokingMethod)
         {
             IList<object> paramValues = new List<object>();
-            foreach(var parameter in invokingMethod.GetParameters())
+            foreach (var parameter in invokingMethod.GetParameters())
             {
                 try
                 {
@@ -216,12 +220,12 @@ namespace Snowflake.Support.Remoting.GraphQl.Framework.Query
                     paramValues.Add(QueryBuilder.GetDefaultValue(parameter.ParameterType));
                 }
             }
+
             return paramValues.ToArray();
-            
         }
 
         private Func<ResolveFieldContext<object>, object>
-            CreateResolver(Func<object[], object> invoker, MethodInfo invokingMethod) => 
+            CreateResolver(Func<object[], object> invoker, MethodInfo invokingMethod) =>
             this.CreateResolver<object>(invoker, invokingMethod);
 
         /// <summary>
@@ -234,7 +238,8 @@ namespace Snowflake.Support.Remoting.GraphQl.Framework.Query
         private Func<ResolveFieldContext<object>, T>
             CreateResolver<T>(Func<object[], T> invoker, MethodInfo invokingMethod)
         {
-            Func<ResolveFieldContext<object>, T> resolver = context => {
+            Func<ResolveFieldContext<object>, T> resolver = context =>
+            {
                 var args = QueryBuilder.CollectParameters(context, invokingMethod);
                 return invoker(args);
             };
@@ -243,7 +248,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Framework.Query
 
         /// <summary>
         /// Creates a compiled invoker for a method info that accepts a list of arguments in an object array.
-        /// If called with the arity of the array does not match, will throw an exception. Usage is similar to 
+        /// If called with the arity of the array does not match, will throw an exception. Usage is similar to
         /// MethodInfo.Invoke, but invoking time is similar or the same as a direct call if cached.
         /// </summary>
         /// <param name="invokingMethod">The methodinfo to invoke on.</param>
@@ -257,7 +262,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Framework.Query
 
             for (int i = 0; i < parameters.Length; i++)
             {
-                parameterRetrievals.Add(Expression.Convert(Expression.ArrayIndex(argumentList, 
+                parameterRetrievals.Add(Expression.Convert(Expression.ArrayIndex(argumentList,
                     Expression.Constant(i)), parameters[i].ParameterType));
             }
 
@@ -265,8 +270,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Framework.Query
                 Expression.Call(
                     Expression.Constant(this),
                     invokingMethod,
-                    parameterRetrievals
-                ), argumentList);
+                    parameterRetrievals), argumentList);
             return executor.Compile();
         }
 

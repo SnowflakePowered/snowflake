@@ -14,10 +14,12 @@ namespace Snowflake.Scraper.Providers
     public class RequiredMetadataAttribute : Attribute
     {
         /// <summary>
-        /// The key of the metadata that is required
+        /// Gets the key of the metadata that is required
         /// </summary>
         public string Metadata { get; }
+
         /// <summary>
+        /// Initializes a new instance of the <see cref="RequiredMetadataAttribute"/> class.
         /// Guarantees that only <see cref="IMetadataCollection"/> with such metadata will be passed to this function.
         /// </summary>
         /// <param name="metadata">The key of the metadata that is required</param>

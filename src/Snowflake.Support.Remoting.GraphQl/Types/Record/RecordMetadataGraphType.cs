@@ -1,9 +1,9 @@
-﻿using GraphQL.Conventions.Adapters.Types;
-using GraphQL.Types;
-using Snowflake.Records.Metadata;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using GraphQL.Conventions.Adapters.Types;
+using GraphQL.Types;
+using Snowflake.Records.Metadata;
 
 namespace Snowflake.Support.Remoting.GraphQl.Types.Record
 {
@@ -13,7 +13,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.Record
         {
             Name = "RecordMetadata";
             Description = "A piece of metadata associated with a record.";
-            Field<GuidGraphType>("guid", 
+            Field<GuidGraphType>("guid",
                        description: "The unique ID of the metadata.",
                        resolve: context => context.Source.Guid);
             Field<GuidGraphType>("record",
