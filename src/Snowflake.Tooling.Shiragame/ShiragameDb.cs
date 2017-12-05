@@ -63,14 +63,16 @@ namespace Shiragame.Builder
         internal void Commit(IEnumerable<SerialInfo> serialInfos)
         {
 
-            this.Execute(@"INSERT OR IGNORE INTO serial(platformId, serial, title, region)
+            this.Execute(
+                @"INSERT OR IGNORE INTO serial(platformId, serial, title, region)
                           VALUES (@PlatformId, @Serial, @Title, @Region)", serialInfos);
         }
 
         internal void Commit(IEnumerable<string> mameFilenames)
         {
-            this.Execute(@"INSERT OR IGNORE INTO mame(filename) VALUES (@filename)",
-                mameFilenames.Select(filename => new {filename})); //not sure if there's a better way.
+            this.Execute(
+                @"INSERT OR IGNORE INTO mame(filename) VALUES (@filename)",
+                mameFilenames.Select(filename => new { filename })); // not sure if there's a better way.
         }
     }
 }

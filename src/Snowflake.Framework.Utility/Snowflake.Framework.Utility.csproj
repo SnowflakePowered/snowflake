@@ -22,4 +22,7 @@
   <ItemGroup>
     <Folder Include="Hash\Crc32.NET\" />
   </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="..\stylecop.json" />
+  </ItemGroup>
 </Project>

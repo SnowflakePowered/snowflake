@@ -16,8 +16,7 @@ namespace Snowflake.Loader.Tests
         {
             var appDataDirectory = new DirectoryInfo(Path.GetTempPath())
                 .CreateSubdirectory(Guid.NewGuid().ToString());
-            var moduleEnum = new ModuleEnumerator(appDataDirectory.FullName);
-            Assert.True(appDataDirectory.EnumerateDirectories().Any(d => d.Name == "modules"));
+            Assert.Contains(appDataDirectory.EnumerateDirectories(), d => d.Name == "modules");
         }
 
         [Fact]
@@ -29,7 +28,7 @@ namespace Snowflake.Loader.Tests
             string testModule = TestUtilities.GetStringResource("Loader.testModule.json");
             File.WriteAllText(Path.Combine(moduleDirectory.FullName, "module.json"), testModule, Encoding.UTF8);
             var moduleEnum = new ModuleEnumerator(appDataDirectory.FullName);
-            Assert.True(moduleEnum.Modules.Any(m => m.Entry == "testModule"));
+            Assert.Contains(moduleEnum.Modules, m => m.Entry == "testModule");
             Assert.Equal(moduleDirectory.FullName, moduleEnum.Modules.First().ModuleDirectory.FullName);
             Assert.Equal(moduleDirectory.CreateSubdirectory("contents").FullName, moduleEnum.Modules.First().ContentsDirectory.FullName);
 

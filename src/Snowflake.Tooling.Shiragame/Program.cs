@@ -80,7 +80,7 @@ namespace Shiragame.Builder
             if (!Directory.Exists("out")) Directory.CreateDirectory("out");
             var diskDb = new SqliteDatabase("out\\shiragame.db");
             memoryDb.Commit(datInfos.ToList());
-            memoryDb.Commit(serialInfos.DistinctBy(x => new { x.PlatformId, x.Serial}).ToList());
+            memoryDb.Commit(serialInfos.DistinctBy(x => new { x.PlatformId, x.Serial }).ToList());
             memoryDb.Commit(mameFilenames.ToList());
             memoryDb.SaveTo(diskDb); //todo fix online backup API
 

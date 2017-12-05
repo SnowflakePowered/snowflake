@@ -61,7 +61,7 @@ namespace Shiragame.Builder.Parser
                     continue;
                 }
                 
-                var lines = line.Trim().Split(new char[] {' '}, 2, StringSplitOptions.None);
+                var lines = line.Trim().Split(new char[] { ' ' }, 2, StringSplitOptions.None);
                 if (lines[0].Equals("rom")) continue;
                 gameEntry.Add(lines[0], lines[1].Trim('"'));
             }

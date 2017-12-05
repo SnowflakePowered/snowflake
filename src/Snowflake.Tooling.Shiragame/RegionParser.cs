@@ -10,7 +10,7 @@ using Snowflake.Utility;
 
 namespace Shiragame.Builder
 {
-    internal partial class RegionParser
+    static internal partial class RegionParser
     {
         private static readonly TextInfo textInfo = new CultureInfo("en-US").TextInfo;
 

@@ -99,10 +99,15 @@ namespace Snowflake.Persistence
         {
             using (var conn = database.GetConnection())
             {
+#pragma warning disable S125 // Sections of code should not be "commented out"
+#pragma warning disable CS0162 // Unreachable code detected
                 conn.Open();
                 throw new NotImplementedException();
-                //todo: reimplement backup database this.dbConnection.BackupDatabase(conn, "main", "main", -1, null, 0);
+                            // todo: reimplement backup database this.dbConnection.BackupDatabase(conn, "main", "main", -1, null, 0);
+                            // see: https://github.com/aspnet/Microsoft.Data.Sqlite/issues/17
                 conn.Close();
+#pragma warning restore S125 // Sections of code should not be "commented out"
+#pragma warning restore CS0162 // Unreachable code detected
             }
         }
 

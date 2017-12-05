@@ -32,4 +32,7 @@
     <PackageReference Include="DiscUtils.Core" Version="0.13.0-alpha" />
     <PackageReference Include="DiscUtils.Iso9660" Version="0.13.0-alpha" />
   </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="..\stylecop.json" />
+  </ItemGroup>
 </Project>
