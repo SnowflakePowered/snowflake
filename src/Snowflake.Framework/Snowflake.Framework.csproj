@@ -11,6 +11,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Scraping\Scrapers\FileMimetypeScraper.cs" />
+    <Compile Remove="Scraping\Scrapers\OpenVgdbScraper.cs" />
+    <Compile Remove="Scraping\Scrapers\TheGamesDBSearchScraper.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Castle.Core" Version="4.2.1" />
     <PackageReference Include="Dapper" Version="1.50.4-alpha1-00070" />
     <PackageReference Include="Enums.NET" Version="2.2.0" />

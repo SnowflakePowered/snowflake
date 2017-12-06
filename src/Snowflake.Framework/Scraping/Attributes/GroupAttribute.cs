@@ -12,7 +12,7 @@ namespace Snowflake.Scraping.Attributes
         public GroupAttribute(string groupName, string groupOn)
         {
             this.GroupName = groupName;
-            this.GroupOn = GroupOn;
+            this.GroupOn = groupOn;
         }
     }
 }

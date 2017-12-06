@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Snowflake.Scraping.Scrapers
 {
-    [Attach(AttachTarget.Root)] //no parent specifies means ISeed will be the root.
+    [Attach(AttachTarget.Root)] // no parent specifies means ISeed will be the root.
     [Group("result", "group_name")] // groups all return values of this scraper under a result key with value game_title.
     public class GroupExampleScraper : Scraper
     {

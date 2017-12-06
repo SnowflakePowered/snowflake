@@ -1,63 +1,92 @@
 ﻿using Snowflake.Records.File;
 using Snowflake.Records.Game;
 using Snowflake.Scraping;
+using Snowflake.Scraping.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Snowflake.Support.ScrapeProvider
+namespace Snowflake.Scraping
 {
     public class ScrapeJob
     {
         public IEnumerable<IScraper> Scrapers { get; }
         public ISeedRootContext Context { get; }
-        public ScrapeJob(IEnumerable<SeedContent> initialSeeds)
+        private IList<(string, Guid)> Visited { get; }
+
+        public ScrapeJob(IEnumerable<IScraper> scrapers)
+            : this(Enumerable.Empty<SeedContent>(), scrapers)
+        {
+        }
+
+        public ScrapeJob(IEnumerable<SeedContent> initialSeeds, IEnumerable<IScraper> scrapers)
         {
             this.Context = new SeedRootContext();
+            this.Visited = new List<(string, Guid)>();
+            this.Scrapers = scrapers;
             foreach (var seed in initialSeeds)
             {
-                this.Context.AddSeed(seed, this.Context.Root);
+                this.Context.Add(seed, this.Context.Root, "_client");
             }
         }
 
-        public IEnumerable<ISeed> Progress(IEnumerable<SeedContent> seedsToAdd)
+        public bool Proceed(IEnumerable<SeedContent> seedsToAdd)
         {
+            // Add any client seeds.
             foreach (var seed in seedsToAdd)
             {
-                this.Context.AddSeed(seed, this.Context.Root);
+                this.Context.Add(seed, this.Context.Root, "_client");
             }
 
+            // Keep track of previously visited seeds.
+            int previousCount = this.Visited.Count;
             foreach (var scraper in this.Scrapers)
             {
-                foreach (var matchingSeed in this.Context.GetAllOfType(scraper.ParentType))
-                {
+                var matchingSeeds = this.Context.GetAllOfType(scraper.ParentType)
+                    .Where(s => !this.Visited.Contains((scraper.Name, s.Guid))).ToList();
 
+                foreach (var matchingSeed in matchingSeeds)
+                {
                     var requiredChildren = scraper.RequiredChildSeeds.SelectMany(seed => this.Context.GetChildren(matchingSeed)
                                 .Where(child => child.Content.Type == seed)).ToLookup(x => x.Content.Type, x => x.Content); ;
                     var requiredRoots = scraper.RequiredRootSeeds.SelectMany(seed => this.Context.GetChildren(this.Context.Root)
                               .Where(child => child.Content.Type == seed)).ToLookup(x => x.Content.Type, x => x.Content);
-                    if (!requiredChildren.Any() || !requiredRoots.Any())
+
+                    // We need to ensure that the number of keys match before continuing.
+                    // If the keys match then we are guaranteed that every key is successfully fulfilled.
+                    if (requiredChildren.GroupBy(p => p.Key).Count() != scraper.RequiredChildSeeds.Count()
+                        || requiredRoots.GroupBy(p => p.Key).Count() != scraper.RequiredRootSeeds.Count())
                     {
                         continue;
                     }
 
                     var resultsToAppend = new List<ISeed>();
+
+                    // Collect the results.
                     var results = scraper.Scrape(matchingSeed, requiredRoots, requiredChildren);
+                    this.Visited.Add((scraper.Name, matchingSeed.Guid)); // mark that matchingSeed was visited.
+
+                    // Attach the seeds.
+                    var attachSeed = scraper.Target == AttachTarget.Parent ? matchingSeed : this.Context.Root;
+
                     if (scraper.IsGroup)
                     {
-                        this.Context.AddSeed((scraper.GroupType, results.First(r => r.Type == scraper.GroupValueType).Value), matchingSeed);
-                        resultsToAppend.AddRange(results.Select(r => new Seed(r, scraper.GetType().Name, groupSeed)));
+                        var groupSeed = new Seed((scraper.GroupType,
+                                               results.First(r => r.Type == scraper.GroupValueType).Value),
+                                               this.Context.Root, scraper.Name);
+                        resultsToAppend.Add(groupSeed);
+                        resultsToAppend.AddRange(results.Select(r => new Seed(r, groupSeed, scraper.Name)));
                     }
                     else
                     {
-                        resultsToAppend.AddRange(results.Select(r => new Seed(r, scraper.GetType().Name, matchingSeed)));
+                        resultsToAppend.AddRange(results.Select(r => new Seed(r, attachSeed, scraper.Name)));
                     }
 
-                    // mark that matchingSeed was visited.
-                    this.Context.Add
+                    this.Context.AddRange(resultsToAppend);
                 }
             }
 
+            return this.Visited.Count != previousCount; // if there are no new additions to the table, then we know to stop.
             /*
              * Add seeds to add.
              * Check if we fulfill the requirements, and if so, do not continue.
@@ -75,7 +104,6 @@ namespace Snowflake.Support.ScrapeProvider
              *   keep track of visited.!
              *  return the currently seeds, and true or false if we want to progresss.
              */
-            yield break;
         }
 
         public IEnumerable<ISeed> Cull(IDictionary<string, string> cullers)

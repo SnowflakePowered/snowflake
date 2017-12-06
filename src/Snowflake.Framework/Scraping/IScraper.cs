@@ -13,6 +13,7 @@ namespace Snowflake.Scraping
         string GroupType { get; }
         string GroupValueType { get; }
         string ParentType { get; }
+        string Name { get; }
         IEnumerable<string> RequiredChildSeeds { get; }
         IEnumerable<string> RequiredRootSeeds { get; }
         IEnumerable<SeedContent> Scrape(ISeed parent, ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds);

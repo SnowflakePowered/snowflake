@@ -22,7 +22,7 @@ namespace Snowflake.Extensibility
 
         protected StandalonePlugin()
         {
-            var attribute = this.GetType().GetTypeInfo().GetCustomAttribute<PluginAttribute>();
+            var attribute = this.GetType().GetCustomAttribute<PluginAttribute>();
             if (attribute == null)
             {
                 throw new InvalidOperationException("Plugin is not marked with an attribute");

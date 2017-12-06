@@ -9,28 +9,36 @@ namespace Snowflake.Scraping
     {
         public ISeed Root { get; }
         public Guid SeedCollectionGuid { get; }
-        private IList<ISeed> Seeds { get; }
+        private List<ISeed> Seeds { get; }
 
         public SeedRootContext()
         {
-            this.Root = new Seed(new SeedContent("root", "__root"),
-                Guid.NewGuid(), this.SeedCollectionGuid);
+            this.Root = new Seed((SeedContent.RootSeedType, "__root"),
+                Guid.NewGuid(), this.SeedCollectionGuid, "collection");
             this.Seeds = new List<ISeed>();
+            this.Seeds.Add(this.Root);
         }
 
-        public void AddSeed(SeedContent content, ISeed parent)
+        public ISeed Add(SeedContent content, ISeed parent, string source)
         {
-            this.Seeds.Add(new Seed(content, Guid.NewGuid(), parent.Guid));
+            var seed = new Seed(content, Guid.NewGuid(), parent.Guid, source);
+            this.Seeds.Add(seed);
+            return seed;
+        }
+
+        public IEnumerable<ISeed> GetUnculled()
+        {
+            return this.Seeds.Where(s => !s.IsCulled);
         }
 
         public IEnumerable<ISeed> GetAllOfType(string type)
         {
-            return this.Seeds.Where(s => s.Content.Type == type);
+            return this.GetUnculled().Where(s => s.Content.Type == type);
         }
 
         public IEnumerable<ISeed> GetChildren(ISeed seed)
         {
-            return this.Seeds.Where(p => p.Parent == seed.Guid);
+            return this.GetUnculled().Where(p => p.Parent == seed.Guid);
         }
 
         public IEnumerable<ISeed> GetDescendants(ISeed seed)
@@ -53,6 +61,16 @@ namespace Snowflake.Scraping
             {
                 child.Cull();
             }
+        }
+
+        public void Add(ISeed seed)
+        {
+            this.Seeds.Add(seed);
+        }
+
+        public void AddRange(IEnumerable<ISeed> seeds)
+        {
+            this.Seeds.AddRange(seeds);
         }
     }
 }

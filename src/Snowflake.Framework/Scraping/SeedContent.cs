@@ -5,6 +5,8 @@ namespace Snowflake.Scraping
 {
     public struct SeedContent : IEquatable<SeedContent>
     {
+        public const string RootSeedType = "__root";
+
         public static implicit operator (string type, string value) (SeedContent seedContent)
         {
             return (seedContent.Type, seedContent.Value);

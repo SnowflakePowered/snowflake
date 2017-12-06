@@ -7,10 +7,11 @@ namespace Snowflake.Scraping
     {
         ISeed Root { get; }
         Guid SeedCollectionGuid { get; }
-
         IEnumerable<ISeed> GetAllOfType(string type);
         IEnumerable<ISeed> GetChildren(ISeed seed);
         IEnumerable<ISeed> GetRootSeeds();
-        void AddSeed(SeedContent value, ISeed parent);
+        ISeed Add(SeedContent value, ISeed parent, string source);
+        void Add(ISeed seed);
+        void AddRange(IEnumerable<ISeed> seeds);
     }
 }
