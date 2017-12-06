@@ -29,7 +29,33 @@ namespace Snowflake.Support.ScrapeProvider
 
             foreach (var scraper in this.Scrapers)
             {
+                foreach (var matchingSeed in this.Context.GetAllOfType(scraper.ParentType))
+                {
 
+                    var requiredChildren = scraper.RequiredChildSeeds.SelectMany(seed => this.Context.GetChildren(matchingSeed)
+                                .Where(child => child.Content.Type == seed)).ToLookup(x => x.Content.Type, x => x.Content); ;
+                    var requiredRoots = scraper.RequiredRootSeeds.SelectMany(seed => this.Context.GetChildren(this.Context.Root)
+                              .Where(child => child.Content.Type == seed)).ToLookup(x => x.Content.Type, x => x.Content);
+                    if (!requiredChildren.Any() || !requiredRoots.Any())
+                    {
+                        continue;
+                    }
+
+                    var resultsToAppend = new List<ISeed>();
+                    var results = scraper.Scrape(matchingSeed, requiredRoots, requiredChildren);
+                    if (scraper.IsGroup)
+                    {
+                        this.Context.AddSeed((scraper.GroupType, results.First(r => r.Type == scraper.GroupValueType).Value), matchingSeed);
+                        resultsToAppend.AddRange(results.Select(r => new Seed(r, scraper.GetType().Name, groupSeed)));
+                    }
+                    else
+                    {
+                        resultsToAppend.AddRange(results.Select(r => new Seed(r, scraper.GetType().Name, matchingSeed)));
+                    }
+
+                    // mark that matchingSeed was visited.
+                    this.Context.Add
+                }
             }
 
             /*
