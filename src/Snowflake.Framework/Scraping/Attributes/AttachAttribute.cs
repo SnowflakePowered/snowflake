@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Snowflake.Scraping.Attributes
 {
-    [AttributeUsage(AttributeTargets.Method)]
+    [AttributeUsage(AttributeTargets.Class)]
     public class AttachAttribute : Attribute
     {
         public AttachTarget Target { get; }

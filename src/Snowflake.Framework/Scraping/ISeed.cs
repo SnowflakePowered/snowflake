@@ -6,8 +6,7 @@ namespace Snowflake.Scraping
     {
         Guid Guid { get; }
         Guid Parent { get; }
-        string Type { get; }
-        string Value { get; }
+        SeedContent Content { get; }
         string Source { get; }
         bool IsCulled { get; }
         void Cull();

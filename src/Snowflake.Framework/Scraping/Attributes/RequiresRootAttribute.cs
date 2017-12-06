@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Snowflake.Scraping.Attributes
 {
-    [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public class RequiresRootAttribute : Attribute
     {
         public string Child { get; }

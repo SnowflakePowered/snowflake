@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Snowflake.Scraping.Attributes
 {
-    [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
     public sealed class ParentAttribute : Attribute
     {
         public string ParentType { get; }

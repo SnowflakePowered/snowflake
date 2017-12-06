@@ -13,19 +13,19 @@ namespace Snowflake.Scraping
 
         public SeedRootContext()
         {
-            this.Root = new Seed("root", "__root",
+            this.Root = new Seed(new SeedContent("root", "__root"),
                 Guid.NewGuid(), this.SeedCollectionGuid);
             this.Seeds = new List<ISeed>();
         }
 
-        public void AddSeed(string key, string value, ISeed parent)
+        public void AddSeed(SeedContent content, ISeed parent)
         {
-            this.Seeds.Add(new Seed(key, value, Guid.NewGuid(), parent.Guid));
+            this.Seeds.Add(new Seed(content, Guid.NewGuid(), parent.Guid));
         }
 
         public IEnumerable<ISeed> GetAllOfType(string type)
         {
-            return this.Seeds.Where(s => s.Type == type);
+            return this.Seeds.Where(s => s.Content.Type == type);
         }
 
         public IEnumerable<ISeed> GetChildren(ISeed seed)

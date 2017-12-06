@@ -11,25 +11,25 @@ namespace Snowflake.Scraping.Scrapers
         [Parent("search_title")]
         [Attach(AttachTarget.Parent)]
         [RequiresRoot("platform")]
-        public IEnumerable<(string key, string value)> Scrape(ISeed parent, ILookup<string, ISeed> rootSeeds,
+        public IEnumerable<ISeedContent> Scrape(ISeed parent, ILookup<string, ISeed> rootSeeds,
             ILookup<string, ISeed> childSeeds)
         {
             var platform = rootSeeds["platform"].First();
-            var search = parent.Value;
+            var search = parent.Content.Value;
             // do something 
-            yield return ("result_tgdb", "key");
+            yield return new SeedContent("result_tgdb", "key");
         }
 
         [Parent("result_tgdb")]
         [Attach(AttachTarget.Root)]
         [Group("result", "game_title")] // groups all return values of this scraper under a result key with value game_title.
-        public IEnumerable<(string key, string value)> Scrape_Result(ISeed parent, ILookup<string, ISeed> rootSeeds,
+        public IEnumerable<ISeedContent> Scrape_Result(ISeed parent, ILookup<string, ISeed> rootSeeds,
             ILookup<string, ISeed> childSeeds)
         {
             parent.Cull(); // Cull only your custom results.
-            var lookup = parent.Value;
+            var lookup = parent.Content.Value;
             //restore from cache here
-            yield return ("blah", "blah");
+            yield return new SeedContent("blah", "blah");
         }
     }
 }
