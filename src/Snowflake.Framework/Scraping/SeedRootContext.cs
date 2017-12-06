@@ -18,6 +18,11 @@ namespace Snowflake.Scraping
             this.Seeds = new List<ISeed>();
         }
 
+        public void AddSeed(string key, string value, ISeed parent)
+        {
+            this.Seeds.Add(new Seed(key, value, Guid.NewGuid(), parent.Guid));
+        }
+
         public IEnumerable<ISeed> GetAllOfType(string type)
         {
             return this.Seeds.Where(s => s.Type == type);

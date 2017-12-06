@@ -12,7 +12,16 @@ namespace Snowflake.Scraping.Scrapers
         [Attach(AttachTarget.Root)] // resultant seeds attach to parent
         public IEnumerable<(string key, string value)> GetSeeds(ISeed parent)
         {
-            yield return ("search", parent.Value); // lifts the 'filename_title' key to a 'search' key to the root.
+            yield return ("search_title", parent.Value); // lifts the 'filename_title' key to a 'search' key to the root.
+        }
+
+        [Parent("files")] // all ISeed objects will be of type file. that are not culled.
+        [RequiresChild("is_game_file")]
+        [RequiresChild("crc32")]
+        [Attach(AttachTarget.Root)] // resultant seeds attach to parent
+        public IEnumerable<(string key, string value)> Elevate_seeds(ISeed parent)
+        {
+            yield return ("search_crc32", parent.Value); // lifts the 'filename_title' key to a 'search' key to the root.
         }
     }
 }
