@@ -82,7 +82,7 @@ namespace Snowflake.GraphQl
             {
                 Arguments = new Dictionary<string, object>()
                 {
-                    { "returnOne", "Foo Bar and Eggs" }
+                    { "returnOne", "Foo Bar and Eggs" },
                 },
             });
 
@@ -93,7 +93,7 @@ namespace Snowflake.GraphQl
                 Arguments = new Dictionary<string, object>()
                 {
                     { "returnOne", "One" },
-                    { "returnTwo", "Two" }
+                    { "returnTwo", "Two" },
                 },
             });
 
@@ -113,17 +113,17 @@ namespace Snowflake.GraphQl
                 Arguments = new Dictionary<string, object>()
                 {
                     { "returnOne", "One" },
-                    { "returnTwo", "Two" }
+                    { "returnTwo", "Two" },
                 },
             });
 
-            IEnumerable<string> expected()
+            IEnumerable<string> Expected()
             {
                 yield return "One";
                 yield return "Two";
             }
 
-            Assert.True(!expected().Except(actual.Items).Any() && expected().Count() == actual.Items.Count());
+            Assert.True(!Expected().Except(actual.Items).Any() && Expected().Count() == actual.Items.Count());
         }
 
         [Fact]
@@ -141,9 +141,9 @@ namespace Snowflake.GraphQl
                     {
                         "input", new TestInputType()
                         {
-                            Input = "Hello World"
+                            Input = "Hello World",
                         }
-                    }
+                    },
                 },
             });
             Assert.Equal("Hello World", actual);
