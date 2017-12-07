@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Snowflake.Configuration;
 using Snowflake.Emulator;
 using Snowflake.Extensibility;
-using Snowflake.Extensibility.Provisioned;
+using Snowflake.Extensibility.Provisioning;
 using Snowflake.Loader;
 using Snowflake.Plugin.Emulators.RetroArch.Adapters;
 using Snowflake.Plugin.Emulators.RetroArch.Adapters.Bsnes;

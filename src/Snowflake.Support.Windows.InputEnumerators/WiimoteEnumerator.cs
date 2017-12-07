@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Win32.SafeHandles;
 using Snowflake.Extensibility;
-using Snowflake.Extensibility.Provisioned;
+using Snowflake.Extensibility.Provisioning;
 using Snowflake.Input;
 using Snowflake.Input.Device;
 using Snowflake.Services;

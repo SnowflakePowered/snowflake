@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Snowflake.Emulator;
 using Snowflake.Extensibility;
-using Snowflake.Extensibility.Provisioned;
+using Snowflake.Extensibility.Provisioning;
 using Snowflake.Loader;
 
 namespace Snowflake.Services

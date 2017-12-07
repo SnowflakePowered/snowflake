@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Snowflake.Extensibility;
 using Snowflake.Extensibility.Configuration;
-using Snowflake.Extensibility.Provisioned;
+using Snowflake.Extensibility.Provisioning;
 using Snowflake.Extensions;
 using Snowflake.Loader;
 using Snowflake.Services;

@@ -1,5 +1,5 @@
 ﻿using Snowflake.Extensibility;
-using Snowflake.Extensibility.Provisioned;
+using Snowflake.Extensibility.Provisioning;
 
 namespace Snowflake.Plugin.Emulators.RetroArch.Executable
 {
