@@ -11,14 +11,23 @@ using Snowflake.Services.Persistence;
 using Snowflake.Support.PluginManager;
 using Snowflake.Tests;
 using Xunit;
+using Snowflake.Configuration;
 
 namespace Snowflake.Extensibility.Tests
 {
-    [Plugin("TestPlugin", Author = "TestAuthor", Description = "TestDescription")]
+    [Plugin("TestPlugin", "1.0.0.0", Author = "TestAuthor", Description = "TestDescription")]
     public class StandalonePluginImpl : StandalonePlugin
     {
         public StandalonePluginImpl()
             : base(typeof(StandalonePluginImpl))
+        {
+        }
+    }
+
+    public class NonAttributedStandalonePluginImpl : StandalonePlugin
+    {
+        public NonAttributedStandalonePluginImpl()
+            : base(typeof(NonAttributedStandalonePluginImpl))
         {
         }
     }
@@ -41,6 +50,7 @@ namespace Snowflake.Extensibility.Tests
             Assert.Equal("TestPlugin", plugin.Name);
             Assert.Equal("TestAuthor", plugin.Author);
             Assert.Equal("TestDescription", plugin.Description);
+            Assert.Equal(Version.Parse("1.0.0.0"), plugin.Version);
             Assert.Throws<NotImplementedException>(() => plugin.Provision.CommonResourceDirectory);
             Assert.Throws<NotImplementedException>(() => plugin.Provision.ContentDirectory);
             Assert.Throws<NotImplementedException>(() => plugin.Provision.ResourceDirectory);
@@ -48,6 +58,31 @@ namespace Snowflake.Extensibility.Tests
             Assert.Throws<NotImplementedException>(() => plugin.Provision.ResourceDirectory);
             Assert.Equal(EmptyPluginConfigurationStore.EmptyConfigurationStore, plugin.Provision.ConfigurationStore);
             Assert.Equal(EmptyPluginProperties.EmptyProperties, plugin.Provision.Properties);
+        }
+
+        [Fact]
+        public void NonAttributedStandalonePluginImpl_Test()
+        {
+           Assert.Throws<InvalidOperationException>(() => new NonAttributedStandalonePluginImpl());
+        }
+
+        [Fact]
+        public void EmptyPluginProps_Test()
+        {
+            var props = EmptyPluginProperties.EmptyProperties;
+            Assert.Null(props.Get(String.Empty));
+            Assert.Empty(props.PropertyKeys);
+            Assert.Empty(props.GetEnumerable(String.Empty));
+            Assert.Empty(props.GetDictionary(String.Empty));
+        }
+
+
+        [Fact]
+        public void EmptyConfigurationStore_Test()
+        {
+            var config = EmptyPluginConfigurationStore.EmptyConfigurationStore;
+            config.Set(new ConfigurationSection<ExampleConfigurationSection>());
+            config.Get<ExampleConfigurationSection>();
         }
 
         [Fact]
