@@ -140,6 +140,7 @@ namespace Snowflake.Scraping
             }
         }
 
+        // todo: refactor out into a service?
         public IEnumerable<IFileRecord> TraverseFiles()
         {
             /**
@@ -166,6 +167,7 @@ namespace Snowflake.Scraping
              }
         }
 
+        // todo: refactor out into a service?
         public IEnumerable<IGameRecord> TraverseGames()
         {
             string platformId = this.Context.GetAllOfType("platform").FirstOrDefault()?.Content.Value;
