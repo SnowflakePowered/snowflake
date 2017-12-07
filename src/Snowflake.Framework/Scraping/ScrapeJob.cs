@@ -160,7 +160,7 @@ namespace Snowflake.Scraping
                 var fileRecord = new FileRecord(fileSeed.Content.Value, mimetypeSeed.Content.Value);
                 foreach (var content in metadataSeeds)
                 {
-                    fileRecord.Metadata.Add(content.Type, content.Value);
+                    fileRecord.Metadata[$"file_{content.Type}"] = content.Value;
                 }
 
                 yield return fileRecord;
@@ -180,21 +180,15 @@ namespace Snowflake.Scraping
 
             var fileRecords = this.TraverseFiles();
 
-            foreach (var resultSeed in this.Context.GetAllOfType("game"))
+            foreach (var resultSeed in this.Context.GetAllOfType("result"))
             {
                 var children = this.Context.GetChildren(resultSeed);
-                var titleSeed = children.FirstOrDefault(s => s.Content.Type == "game_title");
-                if (titleSeed == null)
-                {
-                    continue;
-                }
-
                 var metadataSeeds = this.Context.GetDescendants(resultSeed)
                     .DistinctBy(p => p.Content.Type).Select(p => p.Content);
-                var gameRecord = new GameRecord(platform, titleSeed.Content.Value);
+                var gameRecord = new GameRecord(platform, resultSeed.Content.Value);
                 foreach (var content in metadataSeeds)
                 {
-                    gameRecord.Metadata.Add(content.Type, content.Value);
+                    gameRecord.Metadata[$"game_{content.Type}"] = content.Value;
                 }
 
                 foreach (var file in fileRecords)

@@ -46,7 +46,7 @@ namespace Snowflake.Scraping
             IEnumerable<ISeed> descendants = this.GetChildren(seed);
             foreach (var child in this.GetChildren(seed))
             {
-                descendants.Concat(this.GetChildren(child)); // please don't overflow...
+                descendants = descendants.Concat(this.GetChildren(child)); // please don't overflow...
             }
 
             return descendants;
