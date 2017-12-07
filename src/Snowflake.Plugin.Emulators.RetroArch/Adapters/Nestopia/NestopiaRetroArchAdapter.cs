@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Snowflake.Configuration;
 using Snowflake.Emulator;
 using Snowflake.Extensibility;
-using Snowflake.Extensibility.Provisioned;
+using Snowflake.Extensibility.Provisioning;
 using Snowflake.Plugin.Emulators.RetroArch.Adapters.Nestopia.Configuration;
 using Snowflake.Plugin.Emulators.RetroArch.Executable;
 using Snowflake.Plugin.Emulators.RetroArch.Shaders;

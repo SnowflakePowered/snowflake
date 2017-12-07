@@ -8,7 +8,7 @@ using Snowflake.Configuration;
 using Snowflake.Configuration.Input;
 using Snowflake.Emulator;
 using Snowflake.Extensibility;
-using Snowflake.Extensibility.Provisioned;
+using Snowflake.Extensibility.Provisioning;
 using Snowflake.Input;
 using Snowflake.Input.Controller.Mapped;
 using Snowflake.Input.Device;

@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 using Snowflake.Extensibility.Configuration;
 
-namespace Snowflake.Extensibility.Provisioned
+namespace Snowflake.Extensibility.Provisioning
 {
     public class PluginProvision : IPluginProvision
     {
@@ -15,7 +15,9 @@ namespace Snowflake.Extensibility.Provisioned
             string author,
             string description,
             Version version,
-            DirectoryInfo contentDirectory, DirectoryInfo commonResourceDirectory, DirectoryInfo resourceDirectory)
+            DirectoryInfo contentDirectory,
+            DirectoryInfo commonResourceDirectory,
+            DirectoryInfo resourceDirectory)
         {
             this.Logger = logger;
             this.Properties = pluginProperties;

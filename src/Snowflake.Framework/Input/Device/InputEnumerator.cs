@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Snowflake.Extensibility;
-using Snowflake.Extensibility.Provisioned;
+using Snowflake.Extensibility.Provisioning;
 using Snowflake.Input.Controller;
 using Snowflake.Services;
 

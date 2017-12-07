@@ -40,8 +40,8 @@ namespace Snowflake.Extensibility
         public string Description { get; set; } = "No Description Set";
 
         /// <summary>
-        /// Gets or sets the version of the plugin
+        /// Gets the version of the plugin
         /// </summary>
-        public Version Version { get; set; }
+        public Version Version { get; }
     }
 }

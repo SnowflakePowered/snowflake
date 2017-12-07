@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Snowflake.Configuration;
 
-namespace Snowflake.Extensibility.Provisioned
+namespace Snowflake.Extensibility.Provisioning
 {
     /// <summary>
     /// Represents a plugin initialized with a provision
