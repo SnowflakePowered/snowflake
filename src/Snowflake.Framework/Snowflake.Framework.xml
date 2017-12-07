@@ -571,82 +571,67 @@
         <member name="M:Snowflake.Extensibility.Configuration.SqlitePluginConfigurationStore.Set(Snowflake.Configuration.IConfigurationValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Extensibility.Provisioned.JsonPluginProperties.PropertyKeys">
+        <member name="P:Snowflake.Extensibility.Provisioning.JsonPluginProperties.PropertyKeys">
             <inheritdoc/>
         </member>
-        <member name="M:Snowflake.Extensibility.Provisioned.JsonPluginProperties.Get(System.String)">
+        <member name="M:Snowflake.Extensibility.Provisioning.JsonPluginProperties.Get(System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:Snowflake.Extensibility.Provisioned.JsonPluginProperties.GetEnumerable(System.String)">
+        <member name="M:Snowflake.Extensibility.Provisioning.JsonPluginProperties.GetEnumerable(System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:Snowflake.Extensibility.Provisioned.JsonPluginProperties.GetDictionary(System.String)">
+        <member name="M:Snowflake.Extensibility.Provisioning.JsonPluginProperties.GetDictionary(System.String)">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Extensibility.Provisioned.PluginProvision.Logger">
+        <member name="P:Snowflake.Extensibility.Provisioning.PluginProvision.Logger">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Extensibility.Provisioned.PluginProvision.Properties">
+        <member name="P:Snowflake.Extensibility.Provisioning.PluginProvision.Properties">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Extensibility.Provisioned.PluginProvision.Name">
+        <member name="P:Snowflake.Extensibility.Provisioning.PluginProvision.Name">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Extensibility.Provisioned.PluginProvision.Description">
+        <member name="P:Snowflake.Extensibility.Provisioning.PluginProvision.Description">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Extensibility.Provisioned.PluginProvision.Author">
+        <member name="P:Snowflake.Extensibility.Provisioning.PluginProvision.Author">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Extensibility.Provisioned.PluginProvision.Version">
+        <member name="P:Snowflake.Extensibility.Provisioning.PluginProvision.Version">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Extensibility.Provisioned.PluginProvision.ContentDirectory">
+        <member name="P:Snowflake.Extensibility.Provisioning.PluginProvision.ContentDirectory">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Extensibility.Provisioned.PluginProvision.ResourceDirectory">
+        <member name="P:Snowflake.Extensibility.Provisioning.PluginProvision.ResourceDirectory">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Extensibility.Provisioned.PluginProvision.CommonResourceDirectory">
+        <member name="P:Snowflake.Extensibility.Provisioning.PluginProvision.CommonResourceDirectory">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Extensibility.Provisioned.PluginProvision.ConfigurationStore">
+        <member name="P:Snowflake.Extensibility.Provisioning.PluginProvision.ConfigurationStore">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Extensibility.Provisioned.ProvisionedPlugin.Provision">
+        <member name="P:Snowflake.Extensibility.Provisioning.ProvisionedPlugin.Provision">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Extensibility.Provisioned.ProvisionedPlugin.Name">
+        <member name="P:Snowflake.Extensibility.Provisioning.ProvisionedPlugin.Name">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Extensibility.Provisioned.ProvisionedPlugin.Author">
+        <member name="P:Snowflake.Extensibility.Provisioning.ProvisionedPlugin.Author">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Extensibility.Provisioned.ProvisionedPlugin.Description">
+        <member name="P:Snowflake.Extensibility.Provisioning.ProvisionedPlugin.Description">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Extensibility.Provisioned.ProvisionedPlugin.Version">
+        <member name="P:Snowflake.Extensibility.Provisioning.ProvisionedPlugin.Version">
             <inheritdoc/>
         </member>
-        <member name="M:Snowflake.Extensibility.Provisioned.ProvisionedPlugin.GetPluginConfiguration">
+        <member name="M:Snowflake.Extensibility.Provisioning.ProvisionedPlugin.GetPluginConfiguration">
             <inheritdoc/>
         </member>
-        <member name="M:Snowflake.Extensibility.Provisioned.ProvisionedPlugin.Dispose">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Extensibility.StandalonePlugin.Name">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Extensibility.StandalonePlugin.Author">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Extensibility.StandalonePlugin.Description">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Extensibility.StandalonePlugin.Version">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Extensibility.StandalonePlugin.Dispose">
+        <member name="M:Snowflake.Extensibility.Provisioning.ProvisionedPlugin.Dispose">
             <inheritdoc/>
         </member>
         <member name="P:Snowflake.Input.Controller.ControllerElementCollection.ButtonA">

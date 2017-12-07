@@ -10,7 +10,7 @@ using Snowflake.Configuration;
 using Snowflake.Extensibility.Configuration;
 using Snowflake.Services;
 
-namespace Snowflake.Extensibility.Provisioned
+namespace Snowflake.Extensibility.Provisioning
 {
     public abstract class ProvisionedPlugin : IProvisionedPlugin
     {

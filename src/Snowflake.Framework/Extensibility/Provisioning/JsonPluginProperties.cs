@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
-namespace Snowflake.Extensibility.Provisioned
+namespace Snowflake.Extensibility.Provisioning
 {
     public class JsonPluginProperties : IPluginProperties
     {

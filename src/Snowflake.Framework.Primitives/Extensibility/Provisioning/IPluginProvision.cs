@@ -5,7 +5,7 @@ using System.Text;
 using Snowflake.Configuration;
 using Snowflake.Extensibility.Configuration;
 
-namespace Snowflake.Extensibility.Provisioned
+namespace Snowflake.Extensibility.Provisioning
 {
     /// <summary>
     /// The plugin provisions provided by the plugin manager

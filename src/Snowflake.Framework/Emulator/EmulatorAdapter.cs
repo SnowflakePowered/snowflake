@@ -9,7 +9,7 @@ using Snowflake.Configuration;
 using Snowflake.Configuration.Input;
 using Snowflake.Extensibility;
 using Snowflake.Extensibility.Configuration;
-using Snowflake.Extensibility.Provisioned;
+using Snowflake.Extensibility.Provisioning;
 using Snowflake.Records.File;
 using Snowflake.Records.Game;
 using Snowflake.Services;

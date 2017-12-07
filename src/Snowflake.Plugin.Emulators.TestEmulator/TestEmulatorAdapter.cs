@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Snowflake.Configuration;
 using Snowflake.Emulator;
 using Snowflake.Extensibility;
-using Snowflake.Extensibility.Provisioned;
+using Snowflake.Extensibility.Provisioning;
 using Snowflake.Plugin.Emulators.TestEmulator.Configuration;
 using Snowflake.Records.File;
 using Snowflake.Records.Game;
