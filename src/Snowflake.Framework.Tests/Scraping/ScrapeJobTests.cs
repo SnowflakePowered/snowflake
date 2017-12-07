@@ -1,4 +1,6 @@
-﻿using Snowflake.Scraping.Scrapers;
+﻿using Moq;
+using Snowflake.Scraping.Scrapers;
+using Snowflake.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +15,8 @@ namespace Snowflake.Scraping.Tests
         public void Trivial_Test()
         {
             var scraper = new TrivialScraper();
-            var scrapeJob = new ScrapeJob(new[] { scraper });
+            var stoneProvider = new Mock<IStoneProvider>();
+            var scrapeJob = new ScrapeJob(stoneProvider.Object, new[] { scraper }, new ICuller[] { });
             Assert.True(scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
             Assert.NotEmpty(scrapeJob.Context.GetAllOfType("Test"));
             Assert.False(scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
@@ -24,10 +27,10 @@ namespace Snowflake.Scraping.Tests
         {
             var scraper = new TrivialScraper();
             var dependent = new DependentScraper();
-
+            var stoneProvider = new Mock<IStoneProvider>();
             // we make dependent before scraper to allow scrapeJob to resolve
             // all items after 3 iterations.
-            var scrapeJob = new ScrapeJob(new IScraper[] { dependent, scraper });
+            var scrapeJob = new ScrapeJob(stoneProvider.Object, new IScraper[] { dependent, scraper }, new ICuller[] { });
             Assert.True(scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
             Assert.NotEmpty(scrapeJob.Context.GetAllOfType("Test"));
             Assert.True(scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
@@ -39,7 +42,9 @@ namespace Snowflake.Scraping.Tests
         public void Group_Test()
         {
             var scraper = new GroupScraper();
-            var scrapeJob = new ScrapeJob(new IScraper[] { scraper });
+            var stoneProvider = new Mock<IStoneProvider>();
+            var scrapeJob = new ScrapeJob(stoneProvider.Object, new IScraper[] { scraper }, new ICuller[] { });
+
             Assert.True(scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
             Assert.False(scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
             Assert.NotEmpty(scrapeJob.Context.GetAllOfType("MyGroup"));

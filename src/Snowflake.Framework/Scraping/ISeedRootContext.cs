@@ -10,6 +10,7 @@ namespace Snowflake.Scraping
         IEnumerable<ISeed> GetAllOfType(string type);
         IEnumerable<ISeed> GetChildren(ISeed seed);
         IEnumerable<ISeed> GetRootSeeds();
+        IEnumerable<ISeed> GetDescendants(ISeed seed);
         ISeed Add(SeedContent value, ISeed parent, string source);
         void Add(ISeed seed);
         void AddRange(IEnumerable<ISeed> seeds);

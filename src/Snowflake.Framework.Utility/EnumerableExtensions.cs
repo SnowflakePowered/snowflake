@@ -19,5 +19,25 @@ namespace Snowflake.Utility
         {
             return !lookupList.Except(containingList).Any();
         }
+
+        /// <summary>
+        /// Returns values distinct by a predicate.
+        /// </summary>
+        /// <typeparam name="TSource">The source type</typeparam>
+        /// <typeparam name="TKey">The predicate to return/typeparam>
+        /// <param name="source">The enumerable to return.</param>
+        /// <param name="keySelector">The predicate to select on.</param>
+        /// <returns>The distinct items.</returns>
+        public static IEnumerable<TSource> DistinctBy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
+        {
+            HashSet<TKey> seenKeys = new HashSet<TKey>();
+            foreach (TSource element in source)
+            {
+                if (seenKeys.Add(keySelector(element)))
+                {
+                    yield return element;
+                }
+            }
+        }
     }
 }

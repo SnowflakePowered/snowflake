@@ -2,6 +2,8 @@
 using Snowflake.Records.Game;
 using Snowflake.Scraping;
 using Snowflake.Scraping.Attributes;
+using Snowflake.Services;
+using Snowflake.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,35 +17,40 @@ namespace Snowflake.Scraping
         public ISeedRootContext Context { get; }
         private IList<(string, Guid)> Visited { get; }
         public Guid JobGuid { get; }
-        IDictionary<string, ICuller> Cullers { get; }
-        public ScrapeJob(IEnumerable<IScraper> scrapers,
-            IDictionary<string, ICuller> cullers)
-            : this(Enumerable.Empty<SeedContent>(), scrapers, cullers)
+        public IEnumerable<ICuller> Cullers { get; }
+        public IStoneProvider StoneProvider { get; }
+
+        public ScrapeJob(IStoneProvider stone,
+            IEnumerable<IScraper> scrapers,
+            IEnumerable<ICuller> cullers)
+            : this(Enumerable.Empty<SeedContent>(), stone, scrapers, cullers)
         {
         }
 
         public ScrapeJob(IEnumerable<SeedContent> initialSeeds,
+            IStoneProvider stone,
             IEnumerable<IScraper> scrapers,
-            IDictionary<string, ICuller> cullers)
-            : this(initialSeeds, scrapers, cullers, Guid.NewGuid())
+            IEnumerable<ICuller> cullers)
+            : this(initialSeeds, stone, scrapers, cullers, Guid.NewGuid())
         {
         }
 
-        internal ScrapeJob(IEnumerable<SeedContent> initialSeeds,
-            IEnumerable<IScraper> scrapers, IDictionary<string, ICuller> cullers, Guid jobGuid)
+        internal ScrapeJob(IEnumerable<SeedContent> initialSeeds, IStoneProvider stone,
+            IEnumerable<IScraper> scrapers, IEnumerable<ICuller> cullers, Guid jobGuid)
         {
             this.Context = new SeedRootContext();
             this.Visited = new List<(string, Guid)>();
+            this.StoneProvider = stone;
             this.Scrapers = scrapers;
             this.Cullers = cullers;
-            this.Context.AddRange(initialSeeds.Select(p => (p, this.Context.Root)), "__client");
+            this.Context.AddRange(initialSeeds.Select(p => (p, this.Context.Root)), ScrapeJob.ClientSeedSource);
             this.JobGuid = jobGuid;
         }
 
         public bool Proceed(IEnumerable<SeedContent> seedsToAdd)
         {
             // Add any client seeds.
-            this.Context.AddRange(seedsToAdd.Select(p => (p, this.Context.Root)), "__client");
+            this.Context.AddRange(seedsToAdd.Select(p => (p, this.Context.Root)), ScrapeJob.ClientSeedSource);
 
             // Keep track of previously visited seeds.
             int previousCount = this.Visited.Count;
@@ -123,8 +130,8 @@ namespace Snowflake.Scraping
              */
             foreach (var culler in this.Cullers)
             {
-                var seedsToCull = this.Context.GetAllOfType(culler.Key);
-                var unculledSeeds = culler.Value.Cull(seedsToCull);
+                var seedsToCull = this.Context.GetAllOfType(culler.TargetType).Where(s => s.Source != ScrapeJob.ClientSeedSource);
+                var unculledSeeds = culler.Filter(seedsToCull);
                 var unculledSeedsGuid = unculledSeeds.Select(p => p.Guid).ToList();
                 foreach (var culledSeed in seedsToCull.Where(s => !unculledSeedsGuid.Contains(s.Guid)))
                 {
@@ -138,17 +145,62 @@ namespace Snowflake.Scraping
             /**
              * makes every 'file' type into a FileRecord
              */
-            yield break;
+             foreach (var fileSeed in this.Context.GetAllOfType("file"))
+             {
+                var children = this.Context.GetChildren(fileSeed);
+                var mimetypeSeed = children.FirstOrDefault(s => s.Content.Type == "mimetype");
+                if (mimetypeSeed == null)
+                {
+                    continue;
+                }
+
+                var metadataSeeds = this.Context.GetDescendants(fileSeed)
+                    .DistinctBy(p => p.Content.Type).Select(p => p.Content);
+                var fileRecord = new FileRecord(fileSeed.Content.Value, mimetypeSeed.Content.Value);
+                foreach (var content in metadataSeeds)
+                {
+                    fileRecord.Metadata.Add(content.Type, content.Value);
+                }
+
+                yield return fileRecord;
+             }
         }
 
         public IEnumerable<IGameRecord> TraverseGames()
         {
-            /**
-             * makes every 'result' type into a GameRecord with traversed files.
-             * theoretically this should only return one if there is one result,
-             * but the user can override this because seeds with source __user are untouched when culled.
-             */
-            yield break;
+            string platformId = this.Context.GetAllOfType("platform").FirstOrDefault()?.Content.Value;
+            if (!this.StoneProvider.Platforms.Keys.Contains(platformId))
+            {
+                yield break;
+            }
+
+            var platform = this.StoneProvider.Platforms[platformId];
+
+            var fileRecords = this.TraverseFiles();
+
+            foreach (var resultSeed in this.Context.GetAllOfType("game"))
+            {
+                var children = this.Context.GetChildren(resultSeed);
+                var titleSeed = children.FirstOrDefault(s => s.Content.Type == "game_title");
+                if (titleSeed == null)
+                {
+                    continue;
+                }
+
+                var metadataSeeds = this.Context.GetDescendants(resultSeed)
+                    .DistinctBy(p => p.Content.Type).Select(p => p.Content);
+                var gameRecord = new GameRecord(platform, titleSeed.Content.Value);
+                foreach (var content in metadataSeeds)
+                {
+                    gameRecord.Metadata.Add(content.Type, content.Value);
+                }
+
+                foreach (var file in fileRecords)
+                {
+                    gameRecord.Files.Add(file);
+                }
+                yield return gameRecord;
+            }
         }
 
     }
