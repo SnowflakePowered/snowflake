@@ -27,7 +27,6 @@ namespace Snowflake.Scraping
             this.Name = this.GetType().Name; // todo: make this pluginName.
             this.RequiredChildSeeds = this.GetType().GetCustomAttributes<RequiresChildAttribute>().Select(p => p.Child).ToList();
             this.RequiredRootSeeds = this.GetType().GetCustomAttributes<RequiresRootAttribute>().Select(p => p.Child).ToList();
-
         }
 
         public AttachTarget Target { get; }
