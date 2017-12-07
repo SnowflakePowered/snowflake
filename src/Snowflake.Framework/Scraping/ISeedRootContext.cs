@@ -13,5 +13,6 @@ namespace Snowflake.Scraping
         ISeed Add(SeedContent value, ISeed parent, string source);
         void Add(ISeed seed);
         void AddRange(IEnumerable<ISeed> seeds);
+        void AddRange(IEnumerable<(SeedContent value, ISeed parent)> seeds, string source);
     }
 }

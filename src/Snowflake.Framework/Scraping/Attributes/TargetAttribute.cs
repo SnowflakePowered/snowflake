@@ -5,12 +5,12 @@ using System.Text;
 namespace Snowflake.Scraping.Attributes
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
-    public sealed class ParentAttribute : Attribute
+    public sealed class TargetAttribute : Attribute
     {
-        public string ParentType { get; }
-        public ParentAttribute(string parentType)
+        public string TargetType { get; }
+        public TargetAttribute(string targetType)
         {
-            this.ParentType = parentType;
+            this.TargetType = targetType;
         }
     }
 }

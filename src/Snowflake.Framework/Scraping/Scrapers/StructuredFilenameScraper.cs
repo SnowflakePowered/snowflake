@@ -7,8 +7,8 @@ using System.Linq;
 
 namespace Snowflake.Scraping.Scrapers
 {
-    [Parent("file")] // all ISeed objects will be of type file.
-    [Attach(AttachTarget.Parent)] // resultant seeds attach to parent
+    [Target("file")] // all ISeed objects will be of type file.
+    [Attach(AttachTarget.Target)] // resultant seeds attach to parent
     public class StructuredFilenameScraper : Scraper
     {
         public override IEnumerable<SeedContent> Scrape(ISeed parent,

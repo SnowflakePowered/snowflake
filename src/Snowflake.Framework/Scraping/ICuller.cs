@@ -4,8 +4,8 @@ using System.Text;
 
 namespace Snowflake.Scraping
 {
-    public interface ITrimmer
+    public interface ICuller
     {
-        ISeed Trim(IEnumerable<ISeed> seedsToTrim);
+        IEnumerable<ISeed> Cull(IEnumerable<ISeed> seedsToTrim);
     }
 }

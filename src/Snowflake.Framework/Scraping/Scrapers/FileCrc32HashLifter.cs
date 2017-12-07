@@ -7,7 +7,7 @@ using System.Linq;
 namespace Snowflake.Scraping.Scrapers
 {
 
-    [Parent("files")] // all ISeed objects will be of type file. that are not culled.
+    [Target("files")] // all ISeed objects will be of type file. that are not culled.
     [RequiresChild("crc32")]
     [Attach(AttachTarget.Root)] // resultant seeds attach to parent
     public class FileCrc32HashLifter : Scraper

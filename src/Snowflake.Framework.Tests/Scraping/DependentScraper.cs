@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Snowflake.Scraping.Tests
 {
-    [Parent(SeedContent.RootSeedType)]
+    [Target(SeedContent.RootSeedType)]
     [Attach(AttachTarget.Root)]
     [RequiresRoot("Test")]
     public class DependentScraper : Scraper

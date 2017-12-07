@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Snowflake.Scraping
 {
-    public class SeedCollection
+    class Culler
     {
     }
 }

@@ -72,5 +72,13 @@ namespace Snowflake.Scraping
         {
             this.Seeds.AddRange(seeds);
         }
+
+        public void AddRange(IEnumerable<(SeedContent value, ISeed parent)> seeds, string source)
+        {
+            foreach ((SeedContent value, ISeed parent) in seeds)
+            {
+                this.Add(value, parent, source);
+            }
+        }
     }
 }

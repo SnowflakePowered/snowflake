@@ -2,7 +2,7 @@
 {
     public enum AttachTarget
     {
-        Parent,
+        Target,
         Root
     }
 }

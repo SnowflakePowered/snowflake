@@ -7,10 +7,10 @@ namespace Snowflake.Scraping.Attributes
     [AttributeUsage(AttributeTargets.Class)]
     public class AttachAttribute : Attribute
     {
-        public AttachTarget Target { get; }
+        public AttachTarget AttachTarget { get; }
         public AttachAttribute(AttachTarget target)
         {
-            this.Target = target;
+            this.AttachTarget = target;
         }
     }
 }

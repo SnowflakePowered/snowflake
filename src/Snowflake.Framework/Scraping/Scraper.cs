@@ -18,12 +18,12 @@ namespace Snowflake.Scraping
                 throw new MissingMemberException("Scraper must specify an attach target.");
             }
 
-            this.Target = attachAttr.Target;
+            this.Target = attachAttr.AttachTarget;
             var groupAttr = this.GetType().GetCustomAttribute<GroupAttribute>();
             this.IsGroup = groupAttr != null;
             this.GroupType = groupAttr?.GroupName;
             this.GroupValueType = groupAttr?.GroupOn;
-            this.ParentType = this.GetType().GetCustomAttribute<ParentAttribute>().ParentType ?? SeedContent.RootSeedType;
+            this.ParentType = this.GetType().GetCustomAttribute<TargetAttribute>().TargetType ?? SeedContent.RootSeedType;
             this.Name = this.GetType().Name; // todo: make this pluginName.
             this.RequiredChildSeeds = this.GetType().GetCustomAttributes<RequiresChildAttribute>().Select(p => p.Child).ToList();
             this.RequiredRootSeeds = this.GetType().GetCustomAttributes<RequiresRootAttribute>().Select(p => p.Child).ToList();

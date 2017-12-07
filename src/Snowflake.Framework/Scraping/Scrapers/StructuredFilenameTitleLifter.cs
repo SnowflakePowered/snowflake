@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Snowflake.Scraping.Scrapers
 {
-    [Parent("filename_title")] // all ISeed objects will be of type file. that are not culled.
+    [Target("filename_title")] // all ISeed objects will be of type file. that are not culled.
     [Attach(AttachTarget.Root)] // resultant seeds attach to parent
     public class StructuredFilenameTitleLifter : Scraper
     {

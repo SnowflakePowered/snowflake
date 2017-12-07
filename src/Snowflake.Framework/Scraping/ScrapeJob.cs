@@ -10,33 +10,40 @@ namespace Snowflake.Scraping
 {
     public class ScrapeJob
     {
+        public const string ClientSeedSource = "__client";
         public IEnumerable<IScraper> Scrapers { get; }
         public ISeedRootContext Context { get; }
         private IList<(string, Guid)> Visited { get; }
-
-        public ScrapeJob(IEnumerable<IScraper> scrapers)
-            : this(Enumerable.Empty<SeedContent>(), scrapers)
+        public Guid JobGuid { get; }
+        IDictionary<string, ICuller> Cullers { get; }
+        public ScrapeJob(IEnumerable<IScraper> scrapers,
+            IDictionary<string, ICuller> cullers)
+            : this(Enumerable.Empty<SeedContent>(), scrapers, cullers)
         {
         }
 
-        public ScrapeJob(IEnumerable<SeedContent> initialSeeds, IEnumerable<IScraper> scrapers)
+        public ScrapeJob(IEnumerable<SeedContent> initialSeeds,
+            IEnumerable<IScraper> scrapers,
+            IDictionary<string, ICuller> cullers)
+            : this(initialSeeds, scrapers, cullers, Guid.NewGuid())
+        {
+        }
+
+        internal ScrapeJob(IEnumerable<SeedContent> initialSeeds,
+            IEnumerable<IScraper> scrapers, IDictionary<string, ICuller> cullers, Guid jobGuid)
         {
             this.Context = new SeedRootContext();
             this.Visited = new List<(string, Guid)>();
             this.Scrapers = scrapers;
-            foreach (var seed in initialSeeds)
-            {
-                this.Context.Add(seed, this.Context.Root, "_client");
-            }
+            this.Cullers = cullers;
+            this.Context.AddRange(initialSeeds.Select(p => (p, this.Context.Root)), "__client");
+            this.JobGuid = jobGuid;
         }
 
         public bool Proceed(IEnumerable<SeedContent> seedsToAdd)
         {
             // Add any client seeds.
-            foreach (var seed in seedsToAdd)
-            {
-                this.Context.Add(seed, this.Context.Root, "_client");
-            }
+            this.Context.AddRange(seedsToAdd.Select(p => (p, this.Context.Root)), "__client");
 
             // Keep track of previously visited seeds.
             int previousCount = this.Visited.Count;
@@ -45,6 +52,7 @@ namespace Snowflake.Scraping
                 var matchingSeeds = this.Context.GetAllOfType(scraper.ParentType)
                     .Where(s => !this.Visited.Contains((scraper.Name, s.Guid))).ToList();
 
+                // todo: Parallelize this.
                 foreach (var matchingSeed in matchingSeeds)
                 {
                     var requiredChildren = scraper.RequiredChildSeeds.SelectMany(seed => this.Context.GetChildren(matchingSeed)
@@ -67,7 +75,7 @@ namespace Snowflake.Scraping
                     this.Visited.Add((scraper.Name, matchingSeed.Guid)); // mark that matchingSeed was visited.
 
                     // Attach the seeds.
-                    var attachSeed = scraper.Target == AttachTarget.Parent ? matchingSeed : this.Context.Root;
+                    var attachSeed = scraper.Target == AttachTarget.Target ? matchingSeed : this.Context.Root;
 
                     if (scraper.IsGroup)
                     {
@@ -106,14 +114,23 @@ namespace Snowflake.Scraping
              */
         }
 
-        public IEnumerable<ISeed> Cull(IDictionary<string, string> cullers)
+        public void Cull()
         {
             /**
              * group seeds by type.
              * run culler for each type (culler mapping? configuration? that makes this require a plugin provision)
              * return culled seeds.
              */
-            yield break;
+            foreach (var culler in this.Cullers)
+            {
+                var seedsToCull = this.Context.GetAllOfType(culler.Key);
+                var unculledSeeds = culler.Value.Cull(seedsToCull);
+                var unculledSeedsGuid = unculledSeeds.Select(p => p.Guid).ToList();
+                foreach (var culledSeed in seedsToCull.Where(s => !unculledSeedsGuid.Contains(s.Guid)))
+                {
+                    culledSeed.Cull();
+                }
+            }
         }
 
         public IEnumerable<IFileRecord> TraverseFiles()
