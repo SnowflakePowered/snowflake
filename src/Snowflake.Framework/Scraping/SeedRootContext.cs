@@ -21,6 +21,8 @@ namespace Snowflake.Scraping
             };
         }
 
+        public ISeed this[Guid seedGuid] => this.Seeds.FirstOrDefault(s => s.Guid == seedGuid) ?? this.Root;
+
         public ISeed Add(SeedContent content, ISeed parent, string source)
         {
             var seed = new Seed(content, Guid.NewGuid(), parent.Guid, source);

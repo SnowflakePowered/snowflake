@@ -5,6 +5,12 @@ namespace Snowflake.Scraping
 {
     public interface ISeedRootContext
     {
+        /// <summary>
+        /// Returns the seed with the given GUID. If it does not exists, returns the root.
+        /// </summary>
+        /// <param name="seedGuid"></param>
+        /// <returns></returns>
+        ISeed this[Guid seedGuid] { get; }
         ISeed Root { get; }
         Guid SeedCollectionGuid { get; }
         IEnumerable<ISeed> GetAllOfType(string type);

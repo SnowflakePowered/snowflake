@@ -3,6 +3,7 @@
     public enum AttachTarget
     {
         Target,
+        TargetParent,
         Root
     }
 }

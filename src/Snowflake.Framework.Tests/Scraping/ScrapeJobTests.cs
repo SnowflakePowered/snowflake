@@ -90,7 +90,7 @@ namespace Snowflake.Scraping.Tests
             scrapeJob.Context.Add(("example_metadata", "metadata_value"), fileSeed, ScrapeJob.ClientSeedSource);
             var nestedSeed = scrapeJob.Context.GetAllOfType("example_metadata").First();
             scrapeJob.Context.Add(("nested_metadata", "nested_value"), nestedSeed, ScrapeJob.ClientSeedSource);
-            var records = scrapeJob.TraverseFiles().ToList();
+            var records = scrapeJob.TraverseFiles(scrapeJob.Context.Root).ToList();
             Assert.Single(records);
             Assert.Equal("test:\\test_file", records[0].FilePath);
             Assert.Equal("application/octet-stream", records[0].MimeType);

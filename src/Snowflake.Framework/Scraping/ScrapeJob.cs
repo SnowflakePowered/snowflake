@@ -48,6 +48,21 @@ namespace Snowflake.Scraping
             this.JobGuid = jobGuid;
         }
 
+        private ISeed GetAttachTarget(AttachTarget t, ISeed matchingSeed)
+        {
+            switch (t)
+            {
+                case AttachTarget.Root:
+                    return this.Context.Root;
+                case AttachTarget.Target:
+                    return matchingSeed;
+                case AttachTarget.TargetParent:
+                    return this.Context[matchingSeed.Parent];
+                default:
+                    return this.Context.Root;
+            }
+        }
+
         public async Task<bool> Proceed(IEnumerable<SeedContent> seedsToAdd)
         {
             // Add any client seeds.
@@ -80,7 +95,7 @@ namespace Snowflake.Scraping
 
                     // Collect the results.
                     var results = new List<SeedContent>();
-                    var attachSeed = scraper.AttachPoint == AttachTarget.Target ? matchingSeed : this.Context.Root;
+                    var attachSeed = this.GetAttachTarget(scraper.AttachPoint, matchingSeed);
 
                     foreach (var task in scraper.Scrape(matchingSeed, requiredRoots, requiredChildren))
                     {
@@ -141,12 +156,12 @@ namespace Snowflake.Scraping
         }
 
         // todo: refactor out into a service?
-        public IEnumerable<IFileRecord> TraverseFiles()
+        public IEnumerable<IFileRecord> TraverseFiles(ISeed parent)
         {
             /**
              * makes every 'file' type into a FileRecord
              */
-             foreach (var fileSeed in this.Context.GetAllOfType("file"))
+             foreach (var fileSeed in this.Context.GetChildren(parent).Where(s => s.Content.Type == "file"))
              {
                 var children = this.Context.GetChildren(fileSeed);
                 var mimetypeSeed = children.FirstOrDefault(s => s.Content.Type == "mimetype");
@@ -178,7 +193,7 @@ namespace Snowflake.Scraping
 
             var platform = this.StoneProvider.Platforms[platformId];
 
-            var fileRecords = this.TraverseFiles();
+            var fileRecords = this.TraverseFiles(this.Context.Root);
 
             foreach (var resultSeed in this.Context.GetAllOfType("result"))
             {
@@ -191,7 +206,7 @@ namespace Snowflake.Scraping
                     gameRecord.Metadata[$"game_{content.Type}"] = content.Value;
                 }
 
-                foreach (var file in fileRecords)
+                foreach (var file in fileRecords.Concat(this.TraverseFiles(resultSeed)))
                 {
                     gameRecord.Files.Add(file);
                 }
