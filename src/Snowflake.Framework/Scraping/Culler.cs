@@ -6,7 +6,6 @@ using System.Text;
 
 namespace Snowflake.Scraping
 {
-
     public abstract class Culler : ICuller
     {
         public Culler()
@@ -16,6 +15,7 @@ namespace Snowflake.Scraping
             {
                 throw new InvalidOperationException("Culler must specify target");
             }
+
             this.TargetType = targetAttribute.TargetType;
         }
 

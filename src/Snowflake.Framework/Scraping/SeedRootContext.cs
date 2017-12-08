@@ -15,8 +15,10 @@ namespace Snowflake.Scraping
         {
             this.Root = new Seed((SeedContent.RootSeedType, "__root"),
                 Guid.NewGuid(), this.SeedCollectionGuid, "collection");
-            this.Seeds = new List<ISeed>();
-            this.Seeds.Add(this.Root);
+            this.Seeds = new List<ISeed>
+            {
+                this.Root,
+            };
         }
 
         public ISeed Add(SeedContent content, ISeed parent, string source)

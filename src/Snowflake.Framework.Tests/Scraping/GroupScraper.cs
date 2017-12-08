@@ -3,14 +3,19 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using Snowflake.Extensibility;
 
 namespace Snowflake.Scraping.Tests
 {
-    [Target(SeedContent.RootSeedType)]
-    [Attach(AttachTarget.Root)]
     [Group("MyGroup", "Test")]
+    [Plugin("GroupScraper")]
     public class GroupScraper : Scraper
     {
+        public GroupScraper()
+            : base(typeof(GroupScraper), AttachTarget.Root, SeedContent.RootSeedType)
+        {
+        }
+
         public override IEnumerable<SeedContent> Scrape(ISeed parent, ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds)
         {
             yield return ("Test", "Hello World");

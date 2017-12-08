@@ -5,31 +5,36 @@ using System.Text;
 using Snowflake.Scraping.Attributes;
 using Snowflake.Utility;
 using System.Reflection;
+using Snowflake.Extensibility.Provisioning;
+using Snowflake.Extensibility.Provisioning.Standalone;
 
 namespace Snowflake.Scraping
 {
-    public abstract class Scraper : IScraper
+    public abstract class Scraper : ProvisionedPlugin, IScraper
     {
-        public Scraper()
+        public Scraper(Type pluginType,
+                 AttachTarget target,
+                 string targetType)
+            : this(new StandalonePluginProvision(pluginType), target, targetType)
         {
-            var attachAttr = this.GetType().GetCustomAttribute<AttachAttribute>();
-            if (attachAttr == null)
-            {
-                throw new MissingMemberException("Scraper must specify an attach target.");
-            }
+        }
 
-            this.Target = attachAttr.AttachTarget;
+        public Scraper(IPluginProvision provision,
+            AttachTarget target,
+            string targetType)
+            : base(provision)
+        {
+            this.AttachPoint = target;
+            this.TargetType = targetType;
             var groupAttr = this.GetType().GetCustomAttribute<GroupAttribute>();
             this.IsGroup = groupAttr != null;
             this.GroupType = groupAttr?.GroupName;
             this.GroupValueType = groupAttr?.GroupOn;
-            this.ParentType = this.GetType().GetCustomAttribute<TargetAttribute>().TargetType ?? SeedContent.RootSeedType;
-            this.Name = this.GetType().Name; // todo: make this pluginName.
             this.RequiredChildSeeds = this.GetType().GetCustomAttributes<RequiresChildAttribute>().Select(p => p.Child).ToList();
             this.RequiredRootSeeds = this.GetType().GetCustomAttributes<RequiresRootAttribute>().Select(p => p.Child).ToList();
         }
 
-        public AttachTarget Target { get; }
+        public AttachTarget AttachPoint { get; }
 
         public bool IsGroup { get; }
 
@@ -37,9 +42,7 @@ namespace Snowflake.Scraping
 
         public string GroupValueType { get; }
 
-        public string ParentType { get; }
-
-        public string Name { get; }
+        public string TargetType { get; }
 
         public IEnumerable<string> RequiredChildSeeds { get; }
 

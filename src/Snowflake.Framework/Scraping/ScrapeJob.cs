@@ -56,7 +56,7 @@ namespace Snowflake.Scraping
             int previousCount = this.Visited.Count;
             foreach (var scraper in this.Scrapers)
             {
-                var matchingSeeds = this.Context.GetAllOfType(scraper.ParentType)
+                var matchingSeeds = this.Context.GetAllOfType(scraper.TargetType)
                     .Where(s => !this.Visited.Contains((scraper.Name, s.Guid))).ToList();
 
                 // todo: Parallelize this.
@@ -82,7 +82,7 @@ namespace Snowflake.Scraping
                     this.Visited.Add((scraper.Name, matchingSeed.Guid)); // mark that matchingSeed was visited.
 
                     // Attach the seeds.
-                    var attachSeed = scraper.Target == AttachTarget.Target ? matchingSeed : this.Context.Root;
+                    var attachSeed = scraper.AttachPoint == AttachTarget.Target ? matchingSeed : this.Context.Root;
 
                     if (scraper.IsGroup)
                     {

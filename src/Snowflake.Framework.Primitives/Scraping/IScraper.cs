@@ -1,4 +1,5 @@
-﻿using Snowflake.Scraping.Attributes;
+﻿using Snowflake.Extensibility;
+using Snowflake.Scraping.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,14 +7,13 @@ using System.Text;
 
 namespace Snowflake.Scraping
 {
-    public interface IScraper
+    public interface IScraper : IPlugin
     {
-        AttachTarget Target { get; }
+        AttachTarget AttachPoint { get; }
         bool IsGroup { get; }
         string GroupType { get; }
         string GroupValueType { get; }
-        string ParentType { get; }
-        string Name { get; }
+        string TargetType { get; }
         IEnumerable<string> RequiredChildSeeds { get; }
         IEnumerable<string> RequiredRootSeeds { get; }
         IEnumerable<SeedContent> Scrape(ISeed parent, ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds);
