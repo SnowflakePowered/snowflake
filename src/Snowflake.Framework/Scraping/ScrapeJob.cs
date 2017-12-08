@@ -7,6 +7,7 @@ using Snowflake.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Snowflake.Scraping
 {
@@ -47,7 +48,7 @@ namespace Snowflake.Scraping
             this.JobGuid = jobGuid;
         }
 
-        public bool Proceed(IEnumerable<SeedContent> seedsToAdd)
+        public async Task<bool> Proceed(IEnumerable<SeedContent> seedsToAdd)
         {
             // Add any client seeds.
             this.Context.AddRange(seedsToAdd.Select(p => (p, this.Context.Root)), ScrapeJob.ClientSeedSource);
@@ -78,7 +79,20 @@ namespace Snowflake.Scraping
                     var resultsToAppend = new List<ISeed>();
 
                     // Collect the results.
-                    var results = scraper.Scrape(matchingSeed, requiredRoots, requiredChildren);
+                    var results = new List<SeedContent>();
+
+                    foreach (var task in scraper.ScrapeAsync(matchingSeed, requiredRoots, requiredChildren))
+                    {
+                        try
+                        {
+                            results.Add(await task.ConfigureAwait(false));
+                        }
+                        catch
+                        {
+                            continue;
+                        }
+                    }
+
                     this.Visited.Add((scraper.Name, matchingSeed.Guid)); // mark that matchingSeed was visited.
 
                     // Attach the seeds.

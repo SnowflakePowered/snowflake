@@ -7,6 +7,7 @@ using Snowflake.Utility;
 using System.Reflection;
 using Snowflake.Extensibility.Provisioning;
 using Snowflake.Extensibility.Provisioning.Standalone;
+using System.Threading.Tasks;
 
 namespace Snowflake.Scraping
 {
@@ -48,6 +49,6 @@ namespace Snowflake.Scraping
 
         public IEnumerable<string> RequiredRootSeeds { get; }
 
-        public abstract IEnumerable<SeedContent> Scrape(ISeed parent, ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds);
+        public abstract IEnumerable<Task<SeedContent>> ScrapeAsync(ISeed parent, ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds);
     }
 }

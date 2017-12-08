@@ -8,7 +8,7 @@ using Snowflake.Extensibility;
 namespace Snowflake.Scraping.Tests
 {
     [Plugin("TrivialScraper")]
-    public class TrivialScraper : Scraper
+    public class TrivialScraper : SynchronousScraper
     {
         public TrivialScraper()
             : base(typeof(TrivialScraper), AttachTarget.Root, SeedContent.RootSeedType)
@@ -22,7 +22,7 @@ namespace Snowflake.Scraping.Tests
     }
 
     [Plugin("TrivialScraperTwo")]
-    public class TrivialScraperTwo : Scraper
+    public class TrivialScraperTwo : SynchronousScraper
     {
         public TrivialScraperTwo()
             : base(typeof(TrivialScraperTwo), AttachTarget.Root, SeedContent.RootSeedType)

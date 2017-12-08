@@ -9,7 +9,7 @@ namespace Snowflake.Scraping.Tests
 {
     [RequiresRoot("Test")]
     [Plugin("DependentScraper")]
-    public class DependentScraper : Scraper
+    public class DependentScraper : SynchronousScraper
     {
         public DependentScraper()
             : base(typeof(DependentScraper), AttachTarget.Root, SeedContent.RootSeedType)

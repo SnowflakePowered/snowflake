@@ -9,7 +9,7 @@ namespace Snowflake.Scraping.Tests
 {
     [Group("MyGroup", "Test")]
     [Plugin("GroupScraper")]
-    public class GroupScraper : Scraper
+    public class GroupScraper : SynchronousScraper
     {
         public GroupScraper()
             : base(typeof(GroupScraper), AttachTarget.Root, SeedContent.RootSeedType)

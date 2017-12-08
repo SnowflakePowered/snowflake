@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Snowflake.Scraping
 {
@@ -16,6 +17,6 @@ namespace Snowflake.Scraping
         string TargetType { get; }
         IEnumerable<string> RequiredChildSeeds { get; }
         IEnumerable<string> RequiredRootSeeds { get; }
-        IEnumerable<SeedContent> Scrape(ISeed parent, ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds);
+        IEnumerable<Task<SeedContent>> ScrapeAsync(ISeed parent, ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds);
     }
 }

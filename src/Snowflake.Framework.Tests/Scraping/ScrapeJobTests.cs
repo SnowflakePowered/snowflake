@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Snowflake.Scraping.Tests
@@ -12,18 +13,18 @@ namespace Snowflake.Scraping.Tests
     public class ScrapeJobTests
     {
         [Fact]
-        public void Trivial_Test()
+        public async Task Trivial_Test()
         {
             var scraper = new TrivialScraper();
             var stoneProvider = new Mock<IStoneProvider>();
             var scrapeJob = new ScrapeJob(stoneProvider.Object, new[] { scraper }, new ICuller[] { });
-            Assert.True(scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
+            Assert.True(await scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
             Assert.NotEmpty(scrapeJob.Context.GetAllOfType("Test"));
-            Assert.False(scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
+            Assert.False(await scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
         }
 
         [Fact]
-        public void Dependent_Test()
+        public async Task Dependent_Test()
         {
             var scraper = new TrivialScraper();
             var dependent = new DependentScraper();
@@ -31,22 +32,22 @@ namespace Snowflake.Scraping.Tests
             // we make dependent before scraper to allow scrapeJob to resolve
             // all items after 3 iterations.
             var scrapeJob = new ScrapeJob(stoneProvider.Object, new IScraper[] { dependent, scraper }, new ICuller[] { });
-            Assert.True(scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
+            Assert.True(await scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
             Assert.NotEmpty(scrapeJob.Context.GetAllOfType("Test"));
-            Assert.True(scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
+            Assert.True(await scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
             Assert.NotEmpty(scrapeJob.Context.GetAllOfType("TestDependent"));
-            Assert.False(scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
+            Assert.False(await scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
         }
 
         [Fact]
-        public void Group_Test()
+        public async Task Group_Test()
         {
             var scraper = new GroupScraper();
             var stoneProvider = new Mock<IStoneProvider>();
             var scrapeJob = new ScrapeJob(stoneProvider.Object, new IScraper[] { scraper }, new ICuller[] { });
 
-            Assert.True(scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
-            Assert.False(scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
+            Assert.True(await scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
+            Assert.False(await scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
             Assert.NotEmpty(scrapeJob.Context.GetAllOfType("MyGroup"));
             Assert.NotEmpty(scrapeJob.Context.GetAllOfType("Test"));
             Assert.NotEmpty(scrapeJob.Context.GetAllOfType("TestTwo"));
@@ -55,15 +56,15 @@ namespace Snowflake.Scraping.Tests
         }
 
         [Fact]
-        public void Cull_Test()
+        public async Task Cull_Test()
         {
             var scraper = new TrivialScraper();
             var scraperTwo = new TrivialScraperTwo();
             var stoneProvider = new Mock<IStoneProvider>();
             var scrapeJob = new ScrapeJob(stoneProvider.Object, new IScraper[] { scraper, scraperTwo }, new ICuller[] { new TrivialCuller() });
-            Assert.True(scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
+            Assert.True(await scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
             Assert.NotEmpty(scrapeJob.Context.GetAllOfType("Test"));
-            Assert.False(scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
+            Assert.False(await scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
             Assert.Equal(2, scrapeJob.Context.GetAllOfType("Test").Count());
             scrapeJob.Cull();
             Assert.Single(scrapeJob.Context.GetAllOfType("Test"));
