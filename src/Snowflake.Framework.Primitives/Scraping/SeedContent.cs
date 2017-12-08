@@ -1,11 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
+
 namespace Snowflake.Scraping
 {
     public struct SeedContent : IEquatable<SeedContent>
     {
         public const string RootSeedType = "__root";
+
+        public static implicit operator ReturnSeedContent(SeedContent content)
+        {
+            return Task.FromResult(content);
+        }
 
         public static implicit operator (string type, string value) (SeedContent seedContent)
         {

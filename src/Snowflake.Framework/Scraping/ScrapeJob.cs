@@ -81,11 +81,11 @@ namespace Snowflake.Scraping
                     // Collect the results.
                     var results = new List<SeedContent>();
 
-                    foreach (var task in scraper.ScrapeAsync(matchingSeed, requiredRoots, requiredChildren))
+                    foreach (var task in scraper.Scrape(matchingSeed, requiredRoots, requiredChildren))
                     {
                         try
                         {
-                            results.Add(await task.ConfigureAwait(false));
+                            results.Add(await task.Run().ConfigureAwait(false));
                         }
                         catch
                         {
