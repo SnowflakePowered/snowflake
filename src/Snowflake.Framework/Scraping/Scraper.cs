@@ -27,21 +27,11 @@ namespace Snowflake.Scraping
         {
             this.AttachPoint = target;
             this.TargetType = targetType;
-            var groupAttr = this.GetType().GetCustomAttribute<GroupAttribute>();
-            this.IsGroup = groupAttr != null;
-            this.GroupType = groupAttr?.GroupName;
-            this.GroupValueType = groupAttr?.GroupOn;
             this.RequiredChildSeeds = this.GetType().GetCustomAttributes<RequiresChildAttribute>().Select(p => p.Child).ToList();
             this.RequiredRootSeeds = this.GetType().GetCustomAttributes<RequiresRootAttribute>().Select(p => p.Child).ToList();
         }
 
         public AttachTarget AttachPoint { get; }
-
-        public bool IsGroup { get; }
-
-        public string GroupType { get; }
-
-        public string GroupValueType { get; }
 
         public string TargetType { get; }
 
@@ -49,6 +39,6 @@ namespace Snowflake.Scraping
 
         public IEnumerable<string> RequiredRootSeeds { get; }
 
-        public abstract IEnumerable<ReturnSeedContent> Scrape(ISeed parent, ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds);
+        public abstract IEnumerable<SeedTreeResult> Scrape(ISeed parent, ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds);
     }
 }

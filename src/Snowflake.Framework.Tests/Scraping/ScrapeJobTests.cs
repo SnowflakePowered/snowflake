@@ -51,6 +51,8 @@ namespace Snowflake.Scraping.Tests
             Assert.NotEmpty(scrapeJob.Context.GetAllOfType("MyGroup"));
             Assert.NotEmpty(scrapeJob.Context.GetAllOfType("Test"));
             Assert.NotEmpty(scrapeJob.Context.GetAllOfType("TestTwo"));
+            Assert.Equal(scrapeJob.Context.GetAllOfType("MyGroup").First().Content.Value, 
+                scrapeJob.Context.GetAllOfType("Test").First().Content.Value);
             Assert.NotEmpty(scrapeJob.Context.GetChildren(scrapeJob.Context.GetAllOfType("MyGroup").First()));
 
         }

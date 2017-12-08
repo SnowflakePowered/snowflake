@@ -9,11 +9,6 @@ namespace Snowflake.Scraping
     {
         public const string RootSeedType = "__root";
 
-        public static implicit operator ReturnSeedContent(SeedContent content)
-        {
-            return Task.FromResult(content);
-        }
-
         public static implicit operator (string type, string value) (SeedContent seedContent)
         {
             return (seedContent.Type, seedContent.Value);

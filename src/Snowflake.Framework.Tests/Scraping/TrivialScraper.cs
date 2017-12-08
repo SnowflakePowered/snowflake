@@ -15,7 +15,7 @@ namespace Snowflake.Scraping.Tests
         {
         }
 
-        public override IEnumerable<ReturnSeedContent> Scrape(ISeed parent, ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds)
+        public override IEnumerable<SeedTreeResult> Scrape(ISeed parent, ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds)
         {
             yield return ("Test", "Hello World");
         }
@@ -29,7 +29,7 @@ namespace Snowflake.Scraping.Tests
         {
         }
 
-        public override IEnumerable<ReturnSeedContent> Scrape(ISeed parent, ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds)
+        public override IEnumerable<SeedTreeResult> Scrape(ISeed parent, ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds)
         {
             yield return ("Test", "Goodbye World");
         }

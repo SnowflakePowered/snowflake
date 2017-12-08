@@ -17,14 +17,9 @@ namespace Snowflake.Scraping.Tests
         {
         }
 
-        public override IEnumerable<ReturnSeedContent> Scrape(ISeed parent, ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds)
+        public override IEnumerable<SeedTreeResult> Scrape(ISeed parent, ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds)
         {
             yield return ("TestDependent", $"{rootSeeds["Test"].First()} from Dependent Scraper");
-            yield return Task.Run(async () =>
-            {
-                await Task.Delay(1000);
-                return ("Test", "Two");
-            });
         }
     }
 }

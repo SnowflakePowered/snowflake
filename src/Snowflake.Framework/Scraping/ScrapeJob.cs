@@ -80,12 +80,13 @@ namespace Snowflake.Scraping
 
                     // Collect the results.
                     var results = new List<SeedContent>();
+                    var attachSeed = scraper.AttachPoint == AttachTarget.Target ? matchingSeed : this.Context.Root;
 
                     foreach (var task in scraper.Scrape(matchingSeed, requiredRoots, requiredChildren))
                     {
                         try
                         {
-                            results.Add(await task.Run().ConfigureAwait(false));
+                            resultsToAppend.AddRange((await task.Run().ConfigureAwait(false)).Collapse(attachSeed, scraper.Name));
                         }
                         catch
                         {
@@ -96,21 +97,6 @@ namespace Snowflake.Scraping
                     this.Visited.Add((scraper.Name, matchingSeed.Guid)); // mark that matchingSeed was visited.
 
                     // Attach the seeds.
-                    var attachSeed = scraper.AttachPoint == AttachTarget.Target ? matchingSeed : this.Context.Root;
-
-                    if (scraper.IsGroup)
-                    {
-                        var groupSeed = new Seed((scraper.GroupType,
-                                               results.First(r => r.Type == scraper.GroupValueType).Value),
-                                               this.Context.Root, scraper.Name);
-                        resultsToAppend.Add(groupSeed);
-                        resultsToAppend.AddRange(results.Select(r => new Seed(r, groupSeed, scraper.Name)));
-                    }
-                    else
-                    {
-                        resultsToAppend.AddRange(results.Select(r => new Seed(r, attachSeed, scraper.Name)));
-                    }
-
                     this.Context.AddRange(resultsToAppend);
                 }
             }

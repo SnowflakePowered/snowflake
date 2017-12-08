@@ -11,12 +11,9 @@ namespace Snowflake.Scraping
     public interface IScraper : IPlugin
     {
         AttachTarget AttachPoint { get; }
-        bool IsGroup { get; }
-        string GroupType { get; }
-        string GroupValueType { get; }
         string TargetType { get; }
         IEnumerable<string> RequiredChildSeeds { get; }
         IEnumerable<string> RequiredRootSeeds { get; }
-        IEnumerable<ReturnSeedContent> Scrape(ISeed parent, ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds);
+        IEnumerable<SeedTreeResult> Scrape(ISeed parent, ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds);
     }
 }

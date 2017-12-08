@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using Snowflake.Extensibility;
+using static Snowflake.Scraping.SeedTree;
 
 namespace Snowflake.Scraping.Tests
 {
-    [Group("MyGroup", "Test")]
     [Plugin("GroupScraper")]
     public class GroupScraper : Scraper
     {
@@ -16,10 +16,11 @@ namespace Snowflake.Scraping.Tests
         {
         }
 
-        public override IEnumerable<ReturnSeedContent> Scrape(ISeed parent, ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds)
+        public override IEnumerable<SeedTreeResult> Scrape(ISeed parent, ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds)
         {
-            yield return ("Test", "Hello World");
-            yield return ("TestTwo", "Foo Bar");
+            yield return ("MyGroup", "Hello World", With(
+                ("Test", "Hello World"),
+                ("TestTwo", "Foo Bar")));
         }
     }
 }
