@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using GraphQL;
 using Newtonsoft.Json;
-using Snowflake.Support.Remoting.GraphQl.Framework;
+using Snowflake.Extensibility;
 using Snowflake.Support.Remoting.GraphQl.RootProvider;
 using Unosquare.Labs.EmbedIO;
 using Unosquare.Labs.EmbedIO.Constants;
+using Unosquare.Swan;
 
 namespace Snowflake.Support.Remoting.GraphQl.Servers
 {
@@ -23,15 +21,16 @@ namespace Snowflake.Support.Remoting.GraphQl.Servers
         /// The chuck size for sending files
         /// </summary>
         private const int chunkSize = 8 * 1024;
-        public GraphQlServer(GraphQlExecuterProvider provider)
+        public GraphQlServer(GraphQlExecuterProvider provider, ILogger logger)
         {
+            Terminal.Settings.DisplayLoggingMessageType = LogMessageType.None;
             this.AddHandler(ModuleMap.AnyPath, HttpVerbs.Any, async (context, token) =>
             {
                 context.NoCache();
                 context.Response.ContentType = "application/json";
                 var requestBody = context.RequestBody();
                 var request = JsonConvert.DeserializeObject<GraphQlRequest>(requestBody);
-
+                logger.Info($"Received GraphQL Request.");
                 // Super-hacky workaround abusing Task.Run to make it run in a separate thread if nescessary.
                 var result = await Task.Run(async () => await provider.ExecuteRequestAsync(request).ConfigureAwait(false)).ConfigureAwait(false);
                 string str = provider.Write(result);
@@ -41,6 +40,14 @@ namespace Snowflake.Support.Remoting.GraphQl.Servers
                 context.Response.AddHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
                 context.Response.StatusCode = result.Errors?.Any() == true ? (int)HttpStatusCode.BadRequest : (int)HttpStatusCode.OK;
                 await GraphQlServer.WriteToOutputStream(context, buffer.Length, buffer, 0).ConfigureAwait(false);
+                if (result.Errors?.Any() == true)
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        logger.Warn($"Error occurred when processing GraphQL request {error.Message} from exception {error.InnerException}");
+                    }
+                }
+                logger.Info($"Processed GraphQL Request.");
                 return true;
             });
         }
