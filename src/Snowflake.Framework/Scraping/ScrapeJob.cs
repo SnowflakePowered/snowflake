@@ -1,17 +1,12 @@
-﻿using Snowflake.Records.File;
-using Snowflake.Records.Game;
-using Snowflake.Scraping;
-using Snowflake.Scraping.Attributes;
-using Snowflake.Services;
-using Snowflake.Utility;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Snowflake.Scraping.Attributes;
 
 namespace Snowflake.Scraping
 {
-    public class ScrapeJob
+    public class ScrapeJob : IScrapeJob
     {
         public const string ClientSeedSource = "__client";
         public IEnumerable<IScraper> Scrapers { get; }
@@ -19,29 +14,25 @@ namespace Snowflake.Scraping
         private IList<(string, Guid)> Visited { get; }
         public Guid JobGuid { get; }
         public IEnumerable<ICuller> Cullers { get; }
-        public IStoneProvider StoneProvider { get; }
 
-        public ScrapeJob(IStoneProvider stone,
-            IEnumerable<IScraper> scrapers,
+        public ScrapeJob(IEnumerable<IScraper> scrapers,
             IEnumerable<ICuller> cullers)
-            : this(Enumerable.Empty<SeedContent>(), stone, scrapers, cullers)
+            : this(Enumerable.Empty<SeedContent>(), scrapers, cullers)
         {
         }
 
         public ScrapeJob(IEnumerable<SeedContent> initialSeeds,
-            IStoneProvider stone,
             IEnumerable<IScraper> scrapers,
             IEnumerable<ICuller> cullers)
-            : this(initialSeeds, stone, scrapers, cullers, Guid.NewGuid())
+            : this(initialSeeds, scrapers, cullers, Guid.NewGuid())
         {
         }
 
-        internal ScrapeJob(IEnumerable<SeedContent> initialSeeds, IStoneProvider stone,
+        internal ScrapeJob(IEnumerable<SeedContent> initialSeeds,
             IEnumerable<IScraper> scrapers, IEnumerable<ICuller> cullers, Guid jobGuid)
         {
             this.Context = new SeedRootContext();
             this.Visited = new List<(string, Guid)>();
-            this.StoneProvider = stone;
             this.Scrapers = scrapers;
             this.Cullers = cullers;
             this.Context.AddRange(initialSeeds.Select(p => (p, this.Context.Root)), ScrapeJob.ClientSeedSource);
@@ -154,65 +145,5 @@ namespace Snowflake.Scraping
                 }
             }
         }
-
-        // todo: refactor out into a service?
-        public IEnumerable<IFileRecord> TraverseFiles(ISeed parent)
-        {
-            /**
-             * makes every 'file' type into a FileRecord
-             */
-             foreach (var fileSeed in this.Context.GetChildren(parent).Where(s => s.Content.Type == "file"))
-             {
-                var children = this.Context.GetChildren(fileSeed);
-                var mimetypeSeed = children.FirstOrDefault(s => s.Content.Type == "mimetype");
-                if (mimetypeSeed == null)
-                {
-                    continue;
-                }
-
-                var metadataSeeds = this.Context.GetDescendants(fileSeed)
-                    .DistinctBy(p => p.Content.Type).Select(p => p.Content);
-                var fileRecord = new FileRecord(fileSeed.Content.Value, mimetypeSeed.Content.Value);
-                foreach (var content in metadataSeeds)
-                {
-                    fileRecord.Metadata[$"file_{content.Type}"] = content.Value;
-                }
-
-                yield return fileRecord;
-             }
-        }
-
-        // todo: refactor out into a service?
-        public IEnumerable<IGameRecord> TraverseGames()
-        {
-            string platformId = this.Context.GetAllOfType("platform").FirstOrDefault()?.Content.Value;
-            if (!this.StoneProvider.Platforms.Keys.Contains(platformId))
-            {
-                yield break;
-            }
-
-            var platform = this.StoneProvider.Platforms[platformId];
-
-            var fileRecords = this.TraverseFiles(this.Context.Root);
-
-            foreach (var resultSeed in this.Context.GetAllOfType("result"))
-            {
-                var children = this.Context.GetChildren(resultSeed);
-                var metadataSeeds = this.Context.GetDescendants(resultSeed)
-                    .DistinctBy(p => p.Content.Type).Select(p => p.Content);
-                var gameRecord = new GameRecord(platform, resultSeed.Content.Value);
-                foreach (var content in metadataSeeds)
-                {
-                    gameRecord.Metadata[$"game_{content.Type}"] = content.Value;
-                }
-
-                foreach (var file in fileRecords.Concat(this.TraverseFiles(resultSeed)))
-                {
-                    gameRecord.Files.Add(file);
-                }
-                yield return gameRecord;
-            }
-        }
-
     }
 }

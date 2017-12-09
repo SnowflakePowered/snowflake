@@ -4,7 +4,8 @@ using System.Text;
 
 namespace Snowflake.Scraping
 {
-    public interface ITraverser
+    public interface ITraverser<T>
     {
+        IEnumerable<T> Traverse(ISeed relativeRoot, ISeedRootContext context);
     }
 }

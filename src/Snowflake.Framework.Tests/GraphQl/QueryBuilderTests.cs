@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using GraphQL.Types;
 using GraphQL.Types.Relay.DataObjects;
+using Snowflake.Services.Logging;
 using Snowflake.Support.Remoting.GraphQl.Framework.Attributes;
 using Snowflake.Support.Remoting.GraphQl.Framework.Query;
 using Snowflake.Support.Remoting.GraphQl.RootProvider;
@@ -156,8 +157,9 @@ namespace Snowflake.GraphQl
             var mutation = new RootMutation();
             var schema = new GraphQlRootSchema(root, mutation);
             var queryBuilder = new BasicQueryBuilder();
+            var logger = new NlogLogger("GraphQL");
             schema.Register(queryBuilder);
-            var webServer = new GraphQlServerWrapper(new GraphQlServer(new GraphQlExecuterProvider(schema)));
+            var webServer = new GraphQlServerWrapper(new GraphQlServer(new GraphQlExecuterProvider(schema), logger));
             webServer.Start();
         }
 
