@@ -31,20 +31,22 @@ namespace Snowflake.Support.Remoting.GraphQl.Servers
                 context.Response.ContentType = "application/json";
                 var requestBody = context.RequestBody();
                 var request = JsonConvert.DeserializeObject<GraphQlRequest>(requestBody);
-                var result = await provider.ExecuteRequestAsync(request);
+
+                // Super-hacky workaround abusing Task.Run to make it run in a separate thread if nescessary.
+                var result = await Task.Run(async () => await provider.ExecuteRequestAsync(request).ConfigureAwait(false)).ConfigureAwait(false);
                 string str = provider.Write(result);
                 var buffer = new MemoryStream(Encoding.UTF8.GetBytes(str.ToString())).Compress();
                 context.Response.AddHeader("Content-Encoding", "gzip");
                 context.Response.AddHeader("Access-Control-Allow-Origin", "*");
                 context.Response.AddHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-                context.Response.StatusCode = result.Errors?.Any() == true ? (int)System.Net.HttpStatusCode.BadRequest : (int)System.Net.HttpStatusCode.OK;
-                await GraphQlServer.WriteToOutputStream(context, buffer.Length, buffer, 0);
+                context.Response.StatusCode = result.Errors?.Any() == true ? (int)HttpStatusCode.BadRequest : (int)HttpStatusCode.OK;
+                await GraphQlServer.WriteToOutputStream(context, buffer.Length, buffer, 0).ConfigureAwait(false);
                 return true;
             });
         }
 
         // ripped from EmbedIO StaticFilesModule
-        private async static Task WriteToOutputStream(HttpListenerContext context, long byteLength, Stream buffer, int lowerByteIndex)
+        private static async Task WriteToOutputStream(HttpListenerContext context, long byteLength, Stream buffer, int lowerByteIndex)
         {
             var streamBuffer = new byte[chunkSize];
             var sendData = 0;
@@ -66,7 +68,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Servers
                 }
 
                 sendData += read;
-                await context.Response.OutputStream.WriteAsync(streamBuffer, 0, readBufferSize);
+                await context.Response.OutputStream.WriteAsync(streamBuffer, 0, readBufferSize).ConfigureAwait(false);
             }
         }
     }
