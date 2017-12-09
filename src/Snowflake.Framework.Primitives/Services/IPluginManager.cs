@@ -44,6 +44,17 @@ namespace Snowflake.Services
             where T : IPlugin;
 
         /// <summary>
+        /// Gets all plugins registered under the type category as a plugin collection.
+        /// </summary>
+        /// <typeparam name="T">
+        /// The plugin type category to register under.
+        /// Examples include <see cref="IEmulatorAdapter"/>
+        /// </typeparam>
+        /// <returns>All plugins registered under a specific category.</returns>
+        IPluginCollection<T> GetCollection<T>()
+            where T : IPlugin;
+
+        /// <summary>
         /// Gets a specific plugin registered under a given type category
         /// </summary>
         /// <typeparam name="T">
