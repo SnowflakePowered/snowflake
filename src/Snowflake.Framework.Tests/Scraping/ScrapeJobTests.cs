@@ -58,6 +58,39 @@ namespace Snowflake.Scraping.Tests
         }
 
         [Fact]
+        public async Task SimpleAsync_Test()
+        {
+            var scraper = new SimpleAsyncScraper();
+            var stoneProvider = new Mock<IStoneProvider>();
+            var scrapeJob = new ScrapeJob(stoneProvider.Object, new IScraper[] { scraper }, new ICuller[] { });
+
+            Assert.True(await scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
+            Assert.False(await scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
+            Assert.NotEmpty(scrapeJob.Context.GetAllOfType("TestAsync"));
+            Assert.Equal("Hello World",
+                scrapeJob.Context.GetAllOfType("TestAsync").First().Content.Value);
+        }
+
+        [Fact]
+        public async Task Async_Test()
+        {
+            var scraper = new AsyncScraper();
+            var stoneProvider = new Mock<IStoneProvider>();
+            var scrapeJob = new ScrapeJob(stoneProvider.Object, new IScraper[] { scraper }, new ICuller[] { });
+
+            Assert.True(await scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
+            Assert.False(await scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
+            Assert.NotEmpty(scrapeJob.Context.GetAllOfType("TestAsync"));
+            Assert.NotEmpty(scrapeJob.Context.GetAllOfType("TestSync"));
+            Assert.NotEmpty(scrapeJob.Context.GetAllOfType("TestAsyncNested"));
+            Assert.NotEmpty(scrapeJob.Context.GetAllOfType("TestAsyncNestedTwo"));
+            Assert.Equal("Nested Value Two",
+                scrapeJob.Context.GetAllOfType("TestAsyncNestedTwo").First().Content.Value);
+            Assert.Equal("Nested Value",
+                          scrapeJob.Context.GetAllOfType("TestAsyncNested").First().Content.Value);
+        }
+
+        [Fact]
         public async Task Cull_Test()
         {
             var scraper = new TrivialScraper();
@@ -135,7 +168,6 @@ namespace Snowflake.Scraping.Tests
             Assert.Equal("Test Game", games.First().Title);
             Assert.Single(games.First().Files);
             Assert.Contains(games.First().Metadata, k => k.Key == "game_example_metadata");
-
         }
     }
 }

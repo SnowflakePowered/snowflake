@@ -101,7 +101,7 @@ namespace Snowflake.Scraping
                     {
                         try
                         {
-                            resultsToAppend.AddRange((await task.Run().ConfigureAwait(false)).Collapse(attachSeed, scraper.Name));
+                            resultsToAppend.AddRange((await task).Collapse(attachSeed, scraper.Name));
                         }
                         catch
                         {

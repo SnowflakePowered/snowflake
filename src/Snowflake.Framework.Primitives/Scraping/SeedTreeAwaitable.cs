@@ -1,38 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Snowflake.Scraping
 {
-    public sealed class SeedTreeResult
+    public sealed class SeedTreeAwaitable
     {
         private Task<SeedTree> BaseTask { get; }
 
-        public static implicit operator SeedTreeResult(SeedContent seedContent)
+        public static implicit operator SeedTreeAwaitable(SeedContent seedContent)
         {
-            return new SeedTreeResult(Task.FromResult<SeedTree>(seedContent));
+            return new SeedTreeAwaitable(Task.FromResult<SeedTree>(seedContent));
         }
 
-        public static implicit operator SeedTreeResult((string type, string value) seedContent)
+        public static implicit operator SeedTreeAwaitable((string type, string value) seedContent)
         {
-            return new SeedTreeResult(Task.FromResult<SeedTree>(seedContent));
+            return new SeedTreeAwaitable(Task.FromResult<SeedTree>(seedContent));
         }
 
-        public static implicit operator SeedTreeResult((SeedContent Content,
+        public static implicit operator SeedTreeAwaitable((SeedContent Content,
             IEnumerable<SeedTree> Children) seedContent)
         {
-            return new SeedTreeResult(Task.FromResult<SeedTree>((seedContent.Content, seedContent.Children)));
+            return new SeedTreeAwaitable(Task.FromResult<SeedTree>((seedContent.Content, seedContent.Children)));
         }
 
-        public static implicit operator SeedTreeResult((string type, string value,
+        public static implicit operator SeedTreeAwaitable((string type, string value,
            IEnumerable<SeedTree> Children) seedContent)
         {
-            return new SeedTreeResult(Task.FromResult<SeedTree>(((seedContent.type, seedContent.value), seedContent.Children)));
+            return new SeedTreeAwaitable(Task.FromResult<SeedTree>(((seedContent.type, seedContent.value), seedContent.Children)));
         }
 
-        public static implicit operator SeedTreeResult(Task<(string type, string value,
+        public static implicit operator SeedTreeAwaitable(Task<(string type, string value,
             IEnumerable<SeedTree> Children)> seedContent)
         {
             var completionSource = new TaskCompletionSource<SeedTree>();
@@ -41,10 +42,10 @@ namespace Snowflake.Scraping
                 TaskContinuationOptions.OnlyOnFaulted);
             seedContent.ContinueWith(t => completionSource.SetCanceled(),
                 TaskContinuationOptions.OnlyOnCanceled);
-            return new SeedTreeResult(completionSource.Task);
+            return new SeedTreeAwaitable(completionSource.Task);
         }
 
-        public static implicit operator SeedTreeResult(Task<(string type, string value)> seedContent)
+        public static implicit operator SeedTreeAwaitable(Task<(string type, string value)> seedContent)
         {
             var completionSource = new TaskCompletionSource<SeedTree>();
             seedContent.ContinueWith(t => completionSource.SetResult(t.Result));
@@ -52,10 +53,10 @@ namespace Snowflake.Scraping
                 TaskContinuationOptions.OnlyOnFaulted);
             seedContent.ContinueWith(t => completionSource.SetCanceled(),
                 TaskContinuationOptions.OnlyOnCanceled);
-            return new SeedTreeResult(completionSource.Task);
+            return new SeedTreeAwaitable(completionSource.Task);
         }
 
-        public static implicit operator SeedTreeResult(Task<(SeedContent Content,
+        public static implicit operator SeedTreeAwaitable(Task<(SeedContent Content,
             IEnumerable<SeedTree> Children)> seedContent)
         {
             var completionSource = new TaskCompletionSource<SeedTree>();
@@ -64,10 +65,10 @@ namespace Snowflake.Scraping
                 TaskContinuationOptions.OnlyOnFaulted);
             seedContent.ContinueWith(t => completionSource.SetCanceled(),
                 TaskContinuationOptions.OnlyOnCanceled);
-            return new SeedTreeResult(completionSource.Task);
+            return new SeedTreeAwaitable(completionSource.Task);
         }
 
-        public static implicit operator SeedTreeResult(Task<SeedTree> seedContent)
+        public static implicit operator SeedTreeAwaitable(Task<SeedTree> seedContent)
         {
             var completionSource = new TaskCompletionSource<SeedTree>();
             seedContent.ContinueWith(t => completionSource.SetResult(t.Result));
@@ -75,17 +76,17 @@ namespace Snowflake.Scraping
                 TaskContinuationOptions.OnlyOnFaulted);
             seedContent.ContinueWith(t => completionSource.SetCanceled(),
                 TaskContinuationOptions.OnlyOnCanceled);
-            return new SeedTreeResult(completionSource.Task);
+            return new SeedTreeAwaitable(completionSource.Task);
         }
 
-        private SeedTreeResult(Task<SeedTree> baseTask)
+        private SeedTreeAwaitable(Task<SeedTree> baseTask)
         {
             this.BaseTask = baseTask;
         }
 
-        public async Task<SeedTree> Run()
+        public ConfiguredTaskAwaitable<SeedTree>.ConfiguredTaskAwaiter GetAwaiter()
         {
-            return await this.BaseTask;
+            return this.BaseTask.ConfigureAwait(false).GetAwaiter();
         }
     }
 }

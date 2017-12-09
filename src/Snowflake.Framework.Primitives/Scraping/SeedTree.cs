@@ -52,6 +52,7 @@ namespace Snowflake.Scraping
             return new SeedTree((contentTuple.type, contentTuple.value), contentTuple.children);
         }
 
+        public static IEnumerable<SeedTree> _(params SeedTree[] children) => children;
         public static IEnumerable<SeedTree> With(params SeedTree[] children) => children;
 
         public SeedContent Content { get; }

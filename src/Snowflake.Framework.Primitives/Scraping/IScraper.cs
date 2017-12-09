@@ -14,6 +14,6 @@ namespace Snowflake.Scraping
         string TargetType { get; }
         IEnumerable<string> RequiredChildSeeds { get; }
         IEnumerable<string> RequiredRootSeeds { get; }
-        IEnumerable<SeedTreeResult> Scrape(ISeed parent, ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds);
+        IEnumerable<SeedTreeAwaitable> Scrape(ISeed parent, ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds);
     }
 }
