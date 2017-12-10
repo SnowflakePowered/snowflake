@@ -17,6 +17,7 @@ namespace Snowflake.Scraping
         IEnumerable<ISeed> GetUnculled();
         IEnumerable<ISeed> GetAllOfType(string type);
         IEnumerable<ISeed> GetChildren(ISeed seed);
+        IEnumerable<ISeed> GetSiblings(ISeed seed);
         IEnumerable<ISeed> GetRootSeeds();
         IEnumerable<ISeed> GetDescendants(ISeed seed);
         ISeed Add(SeedContent value, ISeed parent, string source);

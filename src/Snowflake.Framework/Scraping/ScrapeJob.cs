@@ -88,18 +88,53 @@ namespace Snowflake.Scraping
                 // todo: Parallelize this.
                 foreach (var matchingSeed in matchingSeeds)
                 {
-                    var requiredChildren = scraper.RequiredChildSeeds.SelectMany(seed => this.Context.GetChildren(matchingSeed)
-                                .Where(child => child.Content.Type == seed)).ToLookup(x => x.Content.Type, x => x.Content); ;
-                    var requiredRoots = scraper.RequiredRootSeeds.SelectMany(seed => this.Context.GetChildren(this.Context.Root)
-                              .Where(child => child.Content.Type == seed)).ToLookup(x => x.Content.Type, x => x.Content);
+                    // todo: Refactor this out into child/sibling/root 
+
+                    var requiredChildrenDirectives = scraper.Directives
+                        .Where(p => p.Target == AttachTarget.Target && p.Directive == Directive.Requires).ToList();
+                    var excludedChildrenDirectives = scraper.Directives
+                        .Where(p => p.Target == AttachTarget.Target && p.Directive == Directive.Excludes)
+                        .Select(p => p.Type).ToList();
+
+                    var requiredRootDirectives = scraper.Directives
+                       .Where(p => p.Target == AttachTarget.Root && p.Directive == Directive.Requires).ToList();
+                    var excludedRootDirectives = scraper.Directives
+                        .Where(p => p.Target == AttachTarget.Root && p.Directive == Directive.Excludes)
+                        .Select(p => p.Type).ToList();
+
+                    var requiredSiblingDirectives = scraper.Directives
+                       .Where(p => p.Target == AttachTarget.TargetParent && p.Directive == Directive.Requires).ToList();
+                    var excludedSiblingDirectives = scraper.Directives
+                        .Where(p => p.Target == AttachTarget.TargetParent && p.Directive == Directive.Excludes)
+                        .Select(p => p.Type).ToList();
+
+                    var requiredChildren = requiredChildrenDirectives
+                        .SelectMany(seed => this.Context.GetChildren(matchingSeed)
+                                .Where(child => child.Content.Type == seed.Type)).ToLookup(x => x.Content.Type, x => x.Content);
+
+                    var requiredRoots = requiredRootDirectives
+                            .SelectMany(seed => this.Context.GetChildren(this.Context.Root)
+                              .Where(child => child.Content.Type == seed.Type)).ToLookup(x => x.Content.Type, x => x.Content);
+
+                    var requiredSiblings = requiredSiblingDirectives
+                            .SelectMany(seed => this.Context.GetSiblings(matchingSeed)
+                              .Where(child => child.Content.Type == seed.Type)).ToLookup(x => x.Content.Type, x => x.Content);
 
                     // We need to ensure that the number of keys match before continuing.
                     // If the keys match then we are guaranteed that every key is successfully fulfilled.
-                    if (requiredChildren.GroupBy(p => p.Key).Count() != scraper.RequiredChildSeeds.Count()
-                        || requiredRoots.GroupBy(p => p.Key).Count() != scraper.RequiredRootSeeds.Count())
+                    if (requiredChildren.GroupBy(p => p.Key).Count() != requiredChildrenDirectives.Count()
+                        || requiredRoots.GroupBy(p => p.Key).Count() != requiredRootDirectives.Count()
+                        || requiredSiblings.GroupBy(p => p.Key).Count() != requiredSiblingDirectives.Count()
+                        || this.Context.GetChildren(matchingSeed).Select(p => p.Content.Type)
+                        .Intersect(excludedChildrenDirectives).Any()
+                        || this.Context.GetRootSeeds().Select(p => p.Content.Type)
+                        .Intersect(excludedRootDirectives).Any()
+                        || this.Context.GetSiblings(matchingSeed).Select(p => p.Content.Type)
+                        .Intersect(excludedSiblingDirectives).Any())
                     {
                         continue;
                     }
+
 
                     var resultsToAppend = new List<ISeed>();
 
@@ -107,7 +142,7 @@ namespace Snowflake.Scraping
                     var results = new List<SeedContent>();
                     var attachSeed = this.GetAttachTarget(scraper.AttachPoint, matchingSeed);
 
-                    foreach (var task in await scraper.ScrapeAsync(matchingSeed, requiredRoots, requiredChildren))
+                    foreach (var task in await scraper.ScrapeAsync(matchingSeed, requiredRoots, requiredChildren, requiredSiblings))
                     {
                         try
                         {

@@ -9,7 +9,7 @@ using static Snowflake.Utility.SeedBuilder;
 
 namespace Snowflake.Scraping.Tests
 {
-    [RequiresRoot("Test")]
+    [Directive(AttachTarget.Root, Directive.Requires, "Test")]
     [Plugin("DependentScraper")]
     public class DependentScraper : Scraper
     {
@@ -18,7 +18,8 @@ namespace Snowflake.Scraping.Tests
         {
         }
 
-        public override async Task<IEnumerable<SeedTreeAwaitable>> ScrapeAsync(ISeed parent, ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds)
+        public override async Task<IEnumerable<SeedTreeAwaitable>> ScrapeAsync(ISeed parent,
+            ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds, ILookup<string, SeedContent> siblingSeeds)
         {
             return _("TestDependent", $"{rootSeeds["Test"].First()} from Dependent Scraper");
         }

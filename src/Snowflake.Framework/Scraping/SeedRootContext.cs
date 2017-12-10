@@ -50,6 +50,11 @@ namespace Snowflake.Scraping
             return this.GetUnculled().Where(p => p.Parent == seed.Guid);
         }
 
+        public IEnumerable<ISeed> GetSiblings(ISeed seed)
+        {
+            return this.GetUnculled().Where(s => s.Parent == seed.Parent);
+        }
+
         public IEnumerable<ISeed> GetDescendants(ISeed seed)
         {
             IEnumerable<ISeed> descendants = this.GetChildren(seed);

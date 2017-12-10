@@ -9,7 +9,7 @@ using Snowflake.Scraping.Attributes;
 using static Snowflake.Utility.SeedBuilder;
 namespace Snowflake.Plugin.Scraping.TheGamesDb
 {
-    [RequiresRoot("platform")]
+    [Directive(AttachTarget.Root, Directive.Requires, "platform")]
     [Plugin("TheGamesDBScraper")]
     public class TheGamesDbScraper : Scraper
     {
@@ -45,7 +45,8 @@ namespace Snowflake.Plugin.Scraping.TheGamesDb
         {
         }
 
-        public override async Task<IEnumerable<SeedTreeAwaitable>> ScrapeAsync(ISeed parent, ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds)
+        public override async Task<IEnumerable<SeedTreeAwaitable>> ScrapeAsync(ISeed parent,
+            ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds, ILookup<string, SeedContent> siblingSeeds)
         {
             string platformId = rootSeeds["platform"].First().Value;
             string tgdbPlatform = TheGamesDbScraper.map[platformId];

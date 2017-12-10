@@ -12,8 +12,10 @@ namespace Snowflake.Scraping
     {
         AttachTarget AttachPoint { get; }
         string TargetType { get; }
-        IEnumerable<string> RequiredChildSeeds { get; }
-        IEnumerable<string> RequiredRootSeeds { get; }
-        Task<IEnumerable<SeedTreeAwaitable>> ScrapeAsync(ISeed parent, ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds);
+        IEnumerable<IScraperDirective> Directives { get; }
+        Task<IEnumerable<SeedTreeAwaitable>> ScrapeAsync(ISeed target,
+            ILookup<string, SeedContent> rootSeeds,
+            ILookup<string, SeedContent> childSeeds,
+            ILookup<string, SeedContent> siblingSeeds);
     }
 }

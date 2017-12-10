@@ -55,6 +55,34 @@ namespace Snowflake.Scraping.Tests
         }
 
         [Fact]
+        public async Task Exclude_Test()
+        {
+            var scraper = new TrivialScraper();
+            var exclude = new ExcludeScraper();
+            var scrapeJob = new ScrapeJob(new SeedContent[] { ("ExcludeTest", "Test") },
+                new IScraper[] { scraper, exclude }, new ICuller[] { });
+
+            Assert.True(await scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
+            Assert.False(await scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
+            Assert.NotEmpty(scrapeJob.Context.GetAllOfType("Test"));
+            Assert.Empty(scrapeJob.Context.GetAllOfType("ThisShouldNeverAppear"));
+            Assert.Equal("Hello World",
+                scrapeJob.Context.GetAllOfType("Test").First().Content.Value);
+
+        }
+
+        [Fact]
+        public async Task ExcludeRunsWhenExclusionNotPresent_Test()
+        {
+            var exclude = new ExcludeScraper();
+            var scrapeJob = new ScrapeJob(new SeedContent[] { ("ExcludeTest", "Test") },
+                new IScraper[] { exclude }, new ICuller[] { });
+            Assert.True(await scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
+            Assert.False(await scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
+            Assert.NotEmpty(scrapeJob.Context.GetAllOfType("ThisShouldNeverAppear"));
+        }
+
+        [Fact]
         public async Task SimpleAsync_Test()
         {
             var scraper = new SimpleAsyncScraper();

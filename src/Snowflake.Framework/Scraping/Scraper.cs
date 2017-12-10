@@ -27,18 +27,19 @@ namespace Snowflake.Scraping
         {
             this.AttachPoint = target;
             this.TargetType = targetType;
-            this.RequiredChildSeeds = this.GetType().GetCustomAttributes<RequiresChildAttribute>().Select(p => p.Child).ToList();
-            this.RequiredRootSeeds = this.GetType().GetCustomAttributes<RequiresRootAttribute>().Select(p => p.Child).ToList();
+            this.Directives = this.GetType()
+                .GetCustomAttributes<DirectiveAttribute>().ToList();
         }
 
         public AttachTarget AttachPoint { get; }
 
         public string TargetType { get; }
 
-        public IEnumerable<string> RequiredChildSeeds { get; }
+        public IEnumerable<IScraperDirective> Directives { get; }
 
-        public IEnumerable<string> RequiredRootSeeds { get; }
-
-        public abstract Task<IEnumerable<SeedTreeAwaitable>> ScrapeAsync(ISeed parent, ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds);
+        public abstract Task<IEnumerable<SeedTreeAwaitable>> ScrapeAsync(ISeed parent,
+            ILookup<string, SeedContent> rootSeeds,
+            ILookup<string, SeedContent> childSeeds,
+            ILookup<string, SeedContent> siblingSeeds);
     }
 }
