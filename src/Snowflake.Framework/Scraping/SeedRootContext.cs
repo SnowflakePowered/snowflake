@@ -13,6 +13,7 @@ namespace Snowflake.Scraping
 
         public SeedRootContext()
         {
+            this.SeedCollectionGuid = Guid.NewGuid();
             this.Root = new Seed((SeedContent.RootSeedType, "__root"),
                 Guid.NewGuid(), this.SeedCollectionGuid, "collection");
             this.Seeds = new List<ISeed>
