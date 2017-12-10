@@ -51,15 +51,20 @@ namespace Snowflake.Plugin.Scraping.TheGamesDb
             string tgdbPlatform = TheGamesDbScraper.map[platformId];
             var results = await ApiGamesDb.GetGames(parent.Content.Value, tgdbPlatform)
                 .ConfigureAwait(false);
-            IList<SeedTreeAwaitable> resultTree = new List<SeedTreeAwaitable>();
-            foreach (var result in results)
-            {
-                resultTree.Add(("result", result.Title, _(
-                        ("title", result.Title),
-                        ("platform", result.Platform)
-                    )));
-            }
-            return resultTree;
+
+            return results.Where(r => r.Platform == tgdbPlatform)
+                .Select(r => (SeedTreeAwaitable)Task.Run(async () =>
+                {
+                    var details = await ApiGamesDb.GetGame(r)
+                        .ConfigureAwait(false);
+                    return
+                        ("result", r.Title, __(
+                            ("title", r.Title),
+                            ("description", details.Overview),
+                            ("publisher", details.Publisher),
+                            ("tgdb_id", details.ID.ToString())
+                       ));
+                }));
         }
     }
 }

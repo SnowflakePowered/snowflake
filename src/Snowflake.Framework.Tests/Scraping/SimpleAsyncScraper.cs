@@ -18,7 +18,7 @@ namespace Snowflake.Scraping.Tests
 
         public override async Task<IEnumerable<SeedTreeAwaitable>> ScrapeAsync(ISeed parent, ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds)
         {
-            return Results(Task.FromResult<SeedTree>(("TestAsync", "Hello World")));
+            return _(Task.FromResult<SeedTree>(("TestAsync", "Hello World")));
         }
     }
 }

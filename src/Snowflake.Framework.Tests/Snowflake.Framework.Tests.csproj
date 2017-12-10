@@ -35,6 +35,7 @@
     <ProjectReference Include="..\Snowflake.Framework.Services\Snowflake.Framework.Services.csproj" />
     <ProjectReference Include="..\Snowflake.Framework.Utility\Snowflake.Framework.Utility.csproj" />
     <ProjectReference Include="..\Snowflake.Framework\Snowflake.Framework.csproj" />
+    <ProjectReference Include="..\Snowflake.Plugin.Scraping.TheGamesDb\Snowflake.Plugin.Scraping.TheGamesDb.csproj" />
     <ProjectReference Include="..\Snowflake.Support.Caching.KeyedImageCache\Snowflake.Support.Caching.KeyedImageCache.csproj" />
     <ProjectReference Include="..\Snowflake.Support.FileSignatures\Snowflake.Support.FileSignatures.csproj" />
     <ProjectReference Include="..\Snowflake.Support.PluginManager\Snowflake.Support.PluginManager.csproj" />

@@ -72,6 +72,7 @@ namespace Snowflake.Scraping
             }
         }
 
+        public Task<bool> Proceed() => this.Proceed(Enumerable.Empty<SeedContent>());
         public async Task<bool> Proceed(IEnumerable<SeedContent> seedsToAdd)
         {
             // Add any client seeds.

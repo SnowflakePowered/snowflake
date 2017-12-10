@@ -11,6 +11,7 @@ namespace Snowflake.Scraping
         Guid JobGuid { get; }
         IEnumerable<IScraper> Scrapers { get; }
         void Cull();
+        Task<bool> Proceed();
         Task<bool> Proceed(IEnumerable<SeedContent> seedsToAdd);
     }
 }

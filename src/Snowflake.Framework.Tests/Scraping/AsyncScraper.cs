@@ -19,12 +19,12 @@ namespace Snowflake.Scraping.Tests
         public override async Task<IEnumerable<SeedTreeAwaitable>> ScrapeAsync(ISeed parent, ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds)
         {
 
-            return Results(
+            return _(
                 await Task.Run(async () =>
                     {
                         var nestedValue = await Task.FromResult("Nested Value");
-                        return ("TestAsync", $"Hello from Async Scraper", _(
-                                ("TestAsyncNested", nestedValue, _(
+                        return ("TestAsync", $"Hello from Async Scraper", __(
+                                ("TestAsyncNested", nestedValue, __(
                                   ("TestAsyncNestedTwo", await Task.FromResult("Nested Value Two"))))));
                     }),
                 ("TestSync", "Synchronous and Async"));

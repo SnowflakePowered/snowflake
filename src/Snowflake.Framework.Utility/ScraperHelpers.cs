@@ -16,20 +16,23 @@ namespace Snowflake.Utility
         /// </summary>
         /// <param name="children"></param>
         /// <returns></returns>
-        public static IEnumerable<SeedTreeAwaitable> Results(params SeedTreeAwaitable[] children) => Seeds(children);
+        public static IEnumerable<SeedTreeAwaitable> _(params SeedTreeAwaitable[] children) => Seeds(children);
 
         /// <summary>
         /// Continues a seed tree result with nested seeds.
         /// </summary>
         /// <param name="children"></param>
         /// <returns></returns>
-        public static IEnumerable<SeedTree> _(params SeedTree[] children) => WithSeed(children);
+        public static IEnumerable<SeedTree> __(params SeedTree[] children) => WithSeed(children);
 
         public static IEnumerable<SeedTreeAwaitable> _(string type, string value, IEnumerable<SeedTree> children)
-            => Results((type, value, children));
+            => _((type, value, children));
+
+        public static IEnumerable<SeedTree> __(string type, string value, IEnumerable<SeedTree> children)
+           => __((type, value, children));
 
         public static IEnumerable<SeedTreeAwaitable> _(string type, string value)
-            => Results((type, value));
+            => _((type, value));
 
     }
 }
