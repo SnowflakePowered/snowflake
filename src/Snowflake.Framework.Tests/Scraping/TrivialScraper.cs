@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using Snowflake.Extensibility;
-using static Snowflake.Utility.ScraperHelpers;
+using static Snowflake.Utility.SeedBuilder;
 using System.Threading.Tasks;
 
 namespace Snowflake.Scraping.Tests

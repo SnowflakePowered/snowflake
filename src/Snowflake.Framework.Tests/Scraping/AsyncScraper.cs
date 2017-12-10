@@ -1,11 +1,10 @@
-﻿using Snowflake.Scraping.Attributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
-using Snowflake.Extensibility;
+using System.Text;
 using System.Threading.Tasks;
-using static Snowflake.Utility.ScraperHelpers;
+using Snowflake.Extensibility;
+using static Snowflake.Utility.SeedBuilder;
 namespace Snowflake.Scraping.Tests
 {
     [Plugin("AsyncScraper")]
@@ -27,7 +26,8 @@ namespace Snowflake.Scraping.Tests
                                 ("TestAsyncNested", nestedValue, __(
                                   ("TestAsyncNestedTwo", await Task.FromResult("Nested Value Two"))))));
                     }),
-                ("TestSync", "Synchronous and Async"));
+                ("TestSync", "Synchronous and Async")
+                );
         }
     }
 }
