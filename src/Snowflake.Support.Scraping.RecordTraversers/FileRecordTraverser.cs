@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Snowflake.Records.File;
 using Snowflake.Scraping;
+using Snowflake.Scraping.Extensibility;
 using Snowflake.Utility;
 
 namespace Snowflake.Support.Scraping.RecordTraversers

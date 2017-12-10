@@ -5,9 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Plugin.Scraping.TheGamesDb;
 using Snowflake.Scraping;
+using Snowflake.Scraping.Extensibility;
 using Xunit;
 
-namespace Snowflake.Scraper
+namespace Snowflake.Scraping.Tests
 {
     public class ScraperIntegrationTests
     {

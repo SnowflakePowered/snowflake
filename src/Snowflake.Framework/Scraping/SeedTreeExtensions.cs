@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Snowflake.Scraping.Extensibility;
 
 namespace Snowflake.Scraping
 {

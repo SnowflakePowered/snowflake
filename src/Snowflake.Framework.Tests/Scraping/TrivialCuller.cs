@@ -1,5 +1,5 @@
 ﻿using Snowflake.Extensibility;
-using Snowflake.Scraping.Attributes;
+using Snowflake.Scraping.Extensibility;
 using System;
 using System.Collections.Generic;
 using System.Text;

@@ -5,6 +5,7 @@ using Snowflake.Loader;
 using Snowflake.Records.File;
 using Snowflake.Records.Game;
 using Snowflake.Scraping;
+using Snowflake.Scraping.Extensibility;
 using Snowflake.Services;
 
 namespace Snowflake.Support.Scraping.RecordTraversers

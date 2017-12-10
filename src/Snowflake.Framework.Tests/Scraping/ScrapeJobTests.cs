@@ -1,5 +1,6 @@
 ﻿using Moq;
 using Snowflake.Platform;
+using Snowflake.Scraping.Extensibility;
 using Snowflake.Services;
 using System;
 using System.Collections.Generic;

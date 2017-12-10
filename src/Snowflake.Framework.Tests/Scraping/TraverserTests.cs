@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Moq;
 using Snowflake.Platform;
+using Snowflake.Scraping.Extensibility;
 using Snowflake.Scraping.Tests;
 using Snowflake.Services;
 using Snowflake.Support.Scraping.RecordTraversers;

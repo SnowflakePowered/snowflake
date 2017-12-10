@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Scraping;
+using Snowflake.Scraping.Extensibility;
 
 namespace Snowflake.Utility
 {

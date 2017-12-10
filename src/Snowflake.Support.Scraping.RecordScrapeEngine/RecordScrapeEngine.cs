@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Extensibility;
 using Snowflake.Records.Game;
+using Snowflake.Scraping.Extensibility;
 using Snowflake.Support.Scraping.RecordScrapeEngine;
 
 namespace Snowflake.Scraping

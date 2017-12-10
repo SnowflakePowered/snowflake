@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Snowflake.Extensibility;
 using Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi;
 using Snowflake.Scraping;
-using Snowflake.Scraping.Attributes;
+using Snowflake.Scraping.Extensibility;
 using static Snowflake.Utility.SeedBuilder;
 namespace Snowflake.Plugin.Scraping.TheGamesDb
 {

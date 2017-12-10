@@ -1,11 +1,11 @@
-﻿using Snowflake.Scraping.Attributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using Snowflake.Extensibility;
 using System.Threading.Tasks;
 using static Snowflake.Utility.SeedBuilder;
+using Snowflake.Scraping.Extensibility;
 
 namespace Snowflake.Scraping.Tests
 {

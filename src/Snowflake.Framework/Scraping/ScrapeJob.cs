@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Snowflake.Scraping.Attributes;
+using Snowflake.Scraping.Extensibility;
 
 namespace Snowflake.Scraping
 {
