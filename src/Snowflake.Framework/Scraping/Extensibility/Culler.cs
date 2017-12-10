@@ -4,9 +4,8 @@ using System.Reflection;
 using System.Text;
 using Snowflake.Extensibility.Provisioning;
 using Snowflake.Extensibility.Provisioning.Standalone;
-using Snowflake.Scraping.Attributes;
 
-namespace Snowflake.Scraping
+namespace Snowflake.Scraping.Extensibility
 {
     public abstract class Culler : ProvisionedPlugin, ICuller
     {

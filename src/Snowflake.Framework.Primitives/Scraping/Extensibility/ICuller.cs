@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Snowflake.Extensibility;
 
-namespace Snowflake.Scraping
+namespace Snowflake.Scraping.Extensibility
 {
     public interface ICuller : IPlugin
     {

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Snowflake.Scraping
+namespace Snowflake.Scraping.Extensibility
 {
     public sealed class SeedTreeAwaitable
     {

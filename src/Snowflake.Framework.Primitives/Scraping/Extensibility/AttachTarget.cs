@@ -1,4 +1,4 @@
-﻿namespace Snowflake.Scraping
+﻿namespace Snowflake.Scraping.Extensibility
 {
     public enum AttachTarget
     {

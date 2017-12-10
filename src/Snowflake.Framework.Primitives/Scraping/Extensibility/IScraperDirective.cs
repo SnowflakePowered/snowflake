@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Snowflake.Scraping
+namespace Snowflake.Scraping.Extensibility
 {
     public interface IScraperDirective
     {

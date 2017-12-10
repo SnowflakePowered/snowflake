@@ -162,32 +162,10 @@ namespace Snowflake.Scraping
             }
 
             return this.Visited.Count != previousCount; // if there are no new additions to the table, then we know to stop.
-            /*
-             * Add seeds to add.
-             * Check if we fulfill the requirements, and if so, do not continue.
-             * 
-             * foreach scraper in scrapers:
-             *   if seed exists with the given key
-             *     if seed fulfills the requirements of the scraper
-             *       get the results of scraper(seed)
-             *       make list of seed values to attach
-             *       is the scraper group? if so group into one seed value and add to the list.
-             *       where does the seed attach?
-             *       if it attaches to root, attach all to root.
-             *       if it attaches to parent, attach all to parent.
-             *       if it doesn't attach, drop it.
-             *   keep track of visited.!
-             *  return the currently seeds, and true or false if we want to progresss.
-             */
         }
 
         public void Cull()
         {
-            /**
-             * group seeds by type.
-             * run culler for each type (culler mapping? configuration? that makes this require a plugin provision)
-             * return culled seeds.
-             */
             foreach (var culler in this.Cullers)
             {
                 var seedsToCull = this.Context.GetAllOfType(culler.TargetType);

@@ -1,12 +1,11 @@
 ﻿using Snowflake.Extensibility;
-using Snowflake.Scraping.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Snowflake.Scraping
+namespace Snowflake.Scraping.Extensibility
 {
     public interface IScraper : IPlugin
     {

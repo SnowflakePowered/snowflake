@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Snowflake.Scraping.Attributes
+namespace Snowflake.Scraping.Extensibility
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = true)]
     public sealed class DirectiveAttribute : Attribute, IScraperDirective

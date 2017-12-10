@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Snowflake.Scraping.Attributes;
 using Snowflake.Utility;
 using System.Reflection;
 using Snowflake.Extensibility.Provisioning;
 using Snowflake.Extensibility.Provisioning.Standalone;
 using System.Threading.Tasks;
 
-namespace Snowflake.Scraping
+namespace Snowflake.Scraping.Extensibility
 {
     public abstract class Scraper : ProvisionedPlugin, IScraper
     {
