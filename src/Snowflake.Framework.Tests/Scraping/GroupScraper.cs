@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using Snowflake.Extensibility;
-using static Snowflake.Scraping.SeedTree;
+using static Snowflake.Utility.ScraperHelpers;
+using System.Threading.Tasks;
 
 namespace Snowflake.Scraping.Tests
 {
@@ -16,9 +17,9 @@ namespace Snowflake.Scraping.Tests
         {
         }
 
-        public override IEnumerable<SeedTreeAwaitable> Scrape(ISeed parent, ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds)
+        public override async Task<IEnumerable<SeedTreeAwaitable>> ScrapeAsync(ISeed parent, ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds)
         {
-            yield return ("MyGroup", "Hello World", _(
+            return _("MyGroup", "Hello World", _(
                     ("Test", "Hello World"),
                     ("TestTwo", "Foo Bar"))
                 );

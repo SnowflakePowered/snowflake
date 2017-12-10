@@ -10,7 +10,6 @@ namespace Snowflake.Scraping
         IEnumerable<ICuller> Cullers { get; }
         Guid JobGuid { get; }
         IEnumerable<IScraper> Scrapers { get; }
-
         void Cull();
         Task<bool> Proceed(IEnumerable<SeedContent> seedsToAdd);
     }

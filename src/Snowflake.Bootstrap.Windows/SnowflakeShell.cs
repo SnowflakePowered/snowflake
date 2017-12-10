@@ -15,7 +15,7 @@ using Snowflake.Plugin.Emulators.RetroArch.Adapters.Bsnes;
 using Snowflake.Records.File;
 using Snowflake.Records.Game;
 using Snowflake.Romfile;
-using Snowflake.Scraper;
+using Snowflake.Shiragame;
 using Snowflake.Services;
 using Snowflake.Services.AssemblyLoader;
 using Snowflake.Utility;

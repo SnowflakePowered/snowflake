@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Snowflake.Scraper.Shiragame
+namespace Snowflake.Shiragame
 {
     /// <summary>
     /// Represents a file datum in a ClrMamePro or Logiqix XML Dat File

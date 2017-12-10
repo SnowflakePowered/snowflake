@@ -5,7 +5,7 @@ using System.Text;
 using System.Linq;
 using Snowflake.Extensibility;
 using System.Threading.Tasks;
-using static Snowflake.Scraping.SeedTree;
+using static Snowflake.Utility.ScraperHelpers;
 namespace Snowflake.Scraping.Tests
 {
     [Plugin("AsyncScraper")]
@@ -16,15 +16,18 @@ namespace Snowflake.Scraping.Tests
         {
         }
 
-        public override IEnumerable<SeedTreeAwaitable> Scrape(ISeed parent, ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds)
+        public override async Task<IEnumerable<SeedTreeAwaitable>> ScrapeAsync(ISeed parent, ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds)
         {
-            yield return Task.Run(async () => {
-                var nestedValue = await Task.FromResult("Nested Value");
-                return ("TestAsync", $"Hello from Async Scraper", _(
-                        ("TestAsyncNested", nestedValue, _(
-                          ("TestAsyncNestedTwo", await Task.FromResult("Nested Value Two"))))));
-                });
-            yield return ("TestSync", "Synchronous and Async");
+
+            return Results(
+                await Task.Run(async () =>
+                    {
+                        var nestedValue = await Task.FromResult("Nested Value");
+                        return ("TestAsync", $"Hello from Async Scraper", _(
+                                ("TestAsyncNested", nestedValue, _(
+                                  ("TestAsyncNestedTwo", await Task.FromResult("Nested Value Two"))))));
+                    }),
+                ("TestSync", "Synchronous and Async"));
         }
     }
 }

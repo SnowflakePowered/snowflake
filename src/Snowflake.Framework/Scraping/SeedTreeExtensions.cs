@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Snowflake.Scraping
 {
-    internal static class SeedContentTreeExtensions
+    internal static class SeedTreeExtensions
     {
         public static IEnumerable<ISeed> Collapse(this SeedTree @this, ISeed parent, string source)
         {

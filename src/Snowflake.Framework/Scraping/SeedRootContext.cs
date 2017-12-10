@@ -30,6 +30,11 @@ namespace Snowflake.Scraping
             return seed;
         }
 
+        public IEnumerable<ISeed> GetAll()
+        {
+            return this.Seeds.AsEnumerable();
+        }
+
         public IEnumerable<ISeed> GetUnculled()
         {
             return this.Seeds.Where(s => !s.IsCulled);
@@ -58,7 +63,7 @@ namespace Snowflake.Scraping
 
         public IEnumerable<ISeed> GetRootSeeds() => this.GetChildren(this.Root);
 
-        public void CullSeed(ISeed seed)
+        public void CullSeedTree(ISeed seed)
         {
             seed.Cull();
             foreach (var child in this.GetDescendants(seed))

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Snowflake.Scraper.Shiragame
+namespace Snowflake.Shiragame
 {
     /// <summary>
     /// Represents a Shiragame information database

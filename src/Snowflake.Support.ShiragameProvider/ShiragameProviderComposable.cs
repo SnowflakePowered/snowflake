@@ -2,7 +2,7 @@
 using System.IO;
 using Snowflake.Loader;
 using Snowflake.Persistence;
-using Snowflake.Scraper.Shiragame;
+using Snowflake.Shiragame;
 using Snowflake.Services;
 
 namespace Snowflake.Support.ShiragameProvider

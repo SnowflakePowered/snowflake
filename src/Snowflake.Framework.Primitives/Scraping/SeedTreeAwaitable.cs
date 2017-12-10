@@ -16,6 +16,11 @@ namespace Snowflake.Scraping
             return new SeedTreeAwaitable(Task.FromResult<SeedTree>(seedContent));
         }
 
+        public static implicit operator SeedTreeAwaitable(SeedTree seedContent)
+        {
+            return new SeedTreeAwaitable(Task.FromResult(seedContent));
+        }
+
         public static implicit operator SeedTreeAwaitable((string type, string value) seedContent)
         {
             return new SeedTreeAwaitable(Task.FromResult<SeedTree>(seedContent));

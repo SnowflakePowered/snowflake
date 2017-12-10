@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Xml;
+using Snowflake.Utility;
 
 namespace Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi
 {
@@ -22,10 +24,12 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi
         /// <param name="platform">Filters results by platform</param>
         /// <param name="genre">Filters results by genre</param>
         /// <returns>A collection of games that matched the search terms</returns>
-        public static ICollection<ApiGameSearchResult> GetGames(string name, string platform = "", string genre = "")
+        public static async Task<ICollection<ApiGameSearchResult>> GetGames(string name, string platform = "", string genre = "")
         {
             XmlDocument doc = new XmlDocument();
-            doc.Load(@"http://thegamesdb.net/api/GetGamesList.php?name=" + name + @"&platform=" + platform + @"&genre=" + genre);
+            var docstring = await WebClient.DownloadDataAsync(new Uri(@"http://thegamesdb.net/api/GetGamesList.php?name=" + name + @"&platform=" + platform + @"&genre=" + genre))
+                .ConfigureAwait(false);
+            doc.Load(docstring);
 
             XmlNode root = doc.DocumentElement;
             IEnumerator ienum = root.GetEnumerator();
@@ -49,7 +53,8 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi
                     switch (attributeNode.Name)
                     {
                         case "id":
-                            int.TryParse(attributeNode.InnerText, out game.ID);
+                            int.TryParse(attributeNode.InnerText, out int id);
+                            game.ID = id;
                             break;
                         case "GameTitle":
                             game.Title = attributeNode.InnerText;
@@ -74,10 +79,12 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi
         /// </summary>
         /// <param name="time">Last x seconds to get updated games for</param>
         /// <returns>A collection of game ID's for games that have been updated</returns>
-        public static ICollection<int> GetUpdatedGames(int time)
+        public static async Task<ICollection<int>> GetUpdatedGames(int time)
         {
             XmlDocument doc = new XmlDocument();
-            doc.Load(@"http://thegamesdb.net/api/Updates.php?time=" + time);
+            var docstring = await WebClient.DownloadDataAsync(new Uri(@"http://thegamesdb.net/api/Updates.php?time=" + time))
+                .ConfigureAwait(false);
+            doc.Load(docstring);
 
             XmlNode root = doc.DocumentElement;
             IEnumerator ienum = root.GetEnumerator();
@@ -105,10 +112,12 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi
         /// </summary>
         /// <param name="iD">The game ID to return data for</param>
         /// <returns>A Game-object containing all the data about the game, or null if no game was found</returns>
-        public static ApiGame GetGame(int iD)
+        public static async Task<ApiGame> GetGame(int iD)
         {
             XmlDocument doc = new XmlDocument();
-            doc.Load(@"http://thegamesdb.net/api/GetGame.php?id=" + iD);
+            var docstring = await WebClient.DownloadDataAsync(new Uri(@"http://thegamesdb.net/api/GetGame.php?id=" + iD))
+                .ConfigureAwait(false);
+            doc.Load(docstring);
 
             XmlNode root = doc.DocumentElement;
             IEnumerator ienum = root.GetEnumerator();
@@ -191,19 +200,24 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi
         /// </summary>
         /// <param name="game">The game to return data for</param>
         /// <returns>A Game-object containing all the data about the game, or null if no game was found</returns>
-        public static ApiGame GetGame(ApiGameSearchResult game)
+        public static async Task<ApiGame> GetGame(ApiGameSearchResult game)
         {
-            return ApiGamesDb.GetGame(game.ID);
+            return await ApiGamesDb.GetGame(game.ID)
+                .ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets a collection of all the available platforms.
         /// </summary>
         /// <returns>A collection of all the available platforms</returns>
-        public static ICollection<ApiPlatformSearchResult> GetPlatforms()
+        public static async Task<ICollection<ApiPlatformSearchResult>> GetPlatforms()
         {
             XmlDocument doc = new XmlDocument();
-            doc.Load(@"http://thegamesdb.net/api/GetPlatformsList.php");
+
+            var docstring = await WebClient.DownloadDataAsync(new Uri(@"http://thegamesdb.net/api/GetPlatformsList.php"))
+                .ConfigureAwait(false);
+
+            doc.Load(docstring);
 
             XmlNode root = doc.DocumentElement;
             IEnumerator ienum = root.FirstChild.NextSibling.GetEnumerator();
@@ -251,10 +265,12 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi
         /// </summary>
         /// <param name="iD">The platform ID to return data for (can be found by using GetPlatformsList)</param>
         /// <returns>A Platform-object containing all the data about the platform, or null if no platform was found</returns>
-        public static ApiPlatform GetPlatform(int iD)
+        public static async Task<ApiPlatform> GetPlatform(int iD)
         {
             XmlDocument doc = new XmlDocument();
-            doc.Load(@"http://thegamesdb.net/api/GetPlatform.php?id=" + iD);
+            var docstring = await WebClient.DownloadDataAsync(new Uri(@"http://thegamesdb.net/api/GetPlatform.php?id=" + iD))
+                .ConfigureAwait(false);
+            doc.Load(docstring);
 
             XmlNode root = doc.DocumentElement;
             IEnumerator ienum = root.GetEnumerator();
@@ -327,9 +343,9 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi
         /// </summary>
         /// <param name="platform">The platform to return data for (can be found by using GetPlatformsList)</param>
         /// <returns>A Platform-object containing all the data about the platform, or null if no platform was found</returns>
-        public static ApiPlatform GetPlatform(ApiPlatformSearchResult platform)
+        public static async Task<ApiPlatform> GetPlatform(ApiPlatformSearchResult platform)
         {
-            return ApiGamesDb.GetPlatform(platform.ID);
+            return await ApiGamesDb.GetPlatform(platform.ID).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -337,10 +353,12 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi
         /// </summary>
         /// <param name="iD">The platform ID to return games for (can be found by using GetPlatformsList)</param>
         /// <returns>A collection of all the games on the platform</returns>
-        public static ICollection<ApiGameSearchResult> GetPlatformGames(int iD)
+        public static async Task<ICollection<ApiGameSearchResult>> GetPlatformGames(int iD)
         {
             XmlDocument doc = new XmlDocument();
-            doc.Load(@"http://thegamesdb.net/api/GetPlatformGames.php?platform=" + iD);
+            var docstring = await WebClient.DownloadDataAsync(new Uri(@"http://thegamesdb.net/api/GetPlatformGames.php?platform=" + iD))
+                .ConfigureAwait(false);
+            doc.Load(docstring);
 
             XmlNode root = doc.DocumentElement;
             IEnumerator ienum = root.GetEnumerator();
@@ -364,7 +382,8 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi
                     switch (attributeNode.Name)
                     {
                         case "id":
-                            int.TryParse(attributeNode.InnerText, out game.ID);
+                            int.TryParse(attributeNode.InnerText, out int id);
+                            game.ID = id;
                             break;
                         case "GameTitle":
                             game.Title = attributeNode.InnerText;
@@ -386,9 +405,10 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi
         /// </summary>
         /// <param name="platform">The platform to return games for</param>
         /// <returns>A collection of all the games on the platform</returns>
-        public static ICollection<ApiGameSearchResult> GetPlatformGames(ApiPlatform platform)
+        public static async Task<ICollection<ApiGameSearchResult>> GetPlatformGames(ApiPlatform platform)
         {
-            ICollection<ApiGameSearchResult> games = ApiGamesDb.GetPlatformGames(platform.ID);
+            ICollection<ApiGameSearchResult> games = await ApiGamesDb.GetPlatformGames(platform.ID)
+                .ConfigureAwait(false);
             foreach (ApiGameSearchResult game in games)
             {
                 game.Platform = platform.Name;
@@ -402,117 +422,16 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi
         /// </summary>
         /// <param name="platform">The platform to return games for</param>
         /// <returns>A collection of all the games on the platform</returns>
-        public static ICollection<ApiGameSearchResult> GetPlatformGames(ApiPlatformSearchResult platform)
+        public static async Task<ICollection<ApiGameSearchResult>> GetPlatformGames(ApiPlatformSearchResult platform)
         {
-            ICollection<ApiGameSearchResult> games = ApiGamesDb.GetPlatformGames(platform.ID);
+            ICollection<ApiGameSearchResult> games = await ApiGamesDb.GetPlatformGames(platform.ID)
+                .ConfigureAwait(false);
             foreach (ApiGameSearchResult game in games)
             {
                 game.Platform = platform.Name;
             }
 
             return games;
-        }
-
-        /// <summary>
-        /// Gets all of a user's favorites.
-        /// </summary>
-        /// <param name="accountIdentifier">The unique 'account identifier' of the user in question. It can be found on their 'My User Info' page.</param>
-        /// <returns>Collection of game ID:s</returns>
-        public static ICollection<int> GetUserFavorites(string accountIdentifier)
-        {
-            XmlDocument doc = new XmlDocument();
-            doc.Load(@"http://thegamesdb.net/api/User_Favorites.php?accountid=" + accountIdentifier);
-
-            XmlNode root = doc.DocumentElement;
-            IEnumerator ienum = root.GetEnumerator();
-
-            List<int> favorites = new List<int>();
-
-            IEnumerator ienumGame = root.GetEnumerator();
-            XmlNode gameNode;
-            while (ienumGame.MoveNext())
-            {
-                gameNode = (XmlNode)ienumGame.Current;
-
-                int favorite = 0;
-                int.TryParse(gameNode.InnerText, out favorite);
-                favorites.Add(favorite);
-            }
-
-            return favorites;
-        }
-
-        /// <summary>
-        /// Adds a game to the user's favorites.
-        /// </summary>
-        /// <param name="accountIdentifier">The unique 'account identifier' of the user in question. It can be found on their 'My User Info' page.</param>
-        /// <param name="gameID">ID of the game to add</param>
-        public static void AddUserFavorite(string accountIdentifier, int gameID)
-        {
-            ApiGamesDb.SendRequest(@"http://thegamesdb.net/api/User_Favorites.php?accountid=" + accountIdentifier + @"&type=add&gameid=" + gameID);
-        }
-
-        /// <summary>
-        /// Removes a game from the user's favorites.
-        /// </summary>
-        /// <param name="accountIdentifier">The unique 'account identifier' of the user in question. It can be found on their 'My User Info' page.</param>
-        /// <param name="gameID">ID of the game to remove</param>
-        public static void RemoveUserFavorite(string accountIdentifier, int gameID)
-        {
-            ApiGamesDb.SendRequest(@"http://thegamesdb.net/api/User_Favorites.php?accountid=" + accountIdentifier + @"&type=remove&gameid=" + gameID);
-        }
-
-        /// <summary>
-        /// Gets a user's rating of a specific game.
-        /// </summary>
-        /// <param name="accountIdentifier">The unique 'account identifier' of the user in question. It can be found on their 'My User Info' page.</param>
-        /// <param name="gameID">ID of the game to get the rating of</param>
-        /// <returns>A rating of 1 to 10 (or 0 if the user has not rated the game)</returns>
-        public static int GetUserRating(string accountIdentifier, int gameID)
-        {
-            // Create an XML document instance.
-            XmlDocument doc = new XmlDocument();
-
-            // Load the XML data from a URL.
-            doc.Load(@"http://thegamesdb.net/api/User_Rating.php?accountid=58536D31278176DA&itemid=2");
-
-            XmlNode root = doc.DocumentElement;
-
-            int rating = 0;
-            int.TryParse(root.FirstChild.FirstChild.InnerText, out rating);
-            return rating;
-        }
-
-        /// <summary>
-        /// Sets a user's rating of a specific game.
-        /// </summary>
-        /// <param name="accountIdentifier">The unique 'account identifier' of the user in question. It can be found on their 'My User Info' page.</param>
-        /// <param name="gameID">ID of the game to rate</param>
-        /// <param name="rating">A rating of 1 to 10</param>
-        public static void SetUserRating(string accountIdentifier, int gameID, int rating)
-        {
-            if (rating < 1 || rating > 10)
-            {
-                throw new ArgumentOutOfRangeException();
-            }
-
-            ApiGamesDb.SendRequest(@"http://thegamesdb.net/api/User_Rating.php?accountid=" + accountIdentifier + @"&itemid=" + gameID + @"&rating=" + rating);
-        }
-
-        /// <summary>
-        /// Removes a user's rating of a specific game.
-        /// </summary>
-        /// <param name="accountIdentifier">The unique 'account identifier' of the user in question. It can be found on their 'My User Info' page.</param>
-        /// <param name="gameID">ID of the game to remove the rating for</param>
-        public static void RemoveUserRating(string accountIdentifier, int gameID)
-        {
-            ApiGamesDb.SendRequest(@"http://thegamesdb.net/api/User_Rating.php?accountid=" + accountIdentifier + @"&itemid=" + gameID + @"&rating=0");
-        }
-
-        private static void SendRequest(string uRL)
-        {
-            XmlDocument doc = new XmlDocument();
-            doc.Load(uRL);
         }
     }
 }

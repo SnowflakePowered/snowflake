@@ -7,7 +7,7 @@ using Snowflake.Persistence;
 using Snowflake.Support.ShiragameProvider;
 using Xunit;
 
-namespace Snowflake.Scraper.Shiragame.Tests
+namespace Snowflake.Shiragame.Tests
 {
     public class ShiragameTests
     {

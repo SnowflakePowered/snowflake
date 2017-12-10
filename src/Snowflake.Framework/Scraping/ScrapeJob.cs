@@ -28,6 +28,13 @@ namespace Snowflake.Scraping
         {
         }
 
+        public ScrapeJob(IEnumerable<SeedTree> initialSeeds,
+            IEnumerable<IScraper> scrapers,
+            IEnumerable<ICuller> cullers)
+            : this(initialSeeds, scrapers, cullers, Guid.NewGuid())
+        {
+        }
+
         internal ScrapeJob(IEnumerable<SeedContent> initialSeeds,
             IEnumerable<IScraper> scrapers, IEnumerable<ICuller> cullers, Guid jobGuid)
         {
@@ -36,6 +43,17 @@ namespace Snowflake.Scraping
             this.Scrapers = scrapers;
             this.Cullers = cullers;
             this.Context.AddRange(initialSeeds.Select(p => (p, this.Context.Root)), ScrapeJob.ClientSeedSource);
+            this.JobGuid = jobGuid;
+        }
+
+        internal ScrapeJob(IEnumerable<SeedTree> initialSeeds,
+            IEnumerable<IScraper> scrapers, IEnumerable<ICuller> cullers, Guid jobGuid)
+        {
+            this.Context = new SeedRootContext();
+            this.Visited = new List<(string, Guid)>();
+            this.Scrapers = scrapers;
+            this.Cullers = cullers;
+            this.Context.AddRange(initialSeeds.SelectMany(s => s.Collapse(this.Context.Root, ScrapeJob.ClientSeedSource)));
             this.JobGuid = jobGuid;
         }
 
@@ -88,7 +106,7 @@ namespace Snowflake.Scraping
                     var results = new List<SeedContent>();
                     var attachSeed = this.GetAttachTarget(scraper.AttachPoint, matchingSeed);
 
-                    foreach (var task in scraper.Scrape(matchingSeed, requiredRoots, requiredChildren))
+                    foreach (var task in await scraper.ScrapeAsync(matchingSeed, requiredRoots, requiredChildren))
                     {
                         try
                         {
@@ -136,12 +154,12 @@ namespace Snowflake.Scraping
              */
             foreach (var culler in this.Cullers)
             {
-                var seedsToCull = this.Context.GetAllOfType(culler.TargetType).Where(s => s.Source != ScrapeJob.ClientSeedSource);
-                var unculledSeeds = culler.Filter(seedsToCull);
+                var seedsToCull = this.Context.GetAllOfType(culler.TargetType);
+                var unculledSeeds = culler.Filter(seedsToCull, this.Context);
                 var unculledSeedsGuid = unculledSeeds.Select(p => p.Guid).ToList();
                 foreach (var culledSeed in seedsToCull.Where(s => !unculledSeedsGuid.Contains(s.Guid)))
                 {
-                    culledSeed.Cull();
+                    this.Context.CullSeedTree(culledSeed);
                 }
             }
         }
