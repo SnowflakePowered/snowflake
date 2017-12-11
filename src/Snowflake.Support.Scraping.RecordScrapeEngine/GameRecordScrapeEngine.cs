@@ -32,7 +32,9 @@ namespace Snowflake.Support.Scraping.RecordScrapeEngine
 
             while (await scrapeJob.Proceed(Enumerable.Empty<SeedContent>())) { }
             scrapeJob.Cull();
-            return this.GameTraverser.Traverse(scrapeJob.Context.Root, scrapeJob.Context).FirstOrDefault();
+            var result = this.GameTraverser.Traverse(scrapeJob.Context.Root, scrapeJob.Context).FirstOrDefault();
+            this.ScrapeJobs = this.ScrapeJobs.Remove(scrapeJobId);
+            return result;
         }
 
         public Guid CreateJob(IEnumerable<SeedTree> initialSeeds, IEnumerable<IScraper> scrapers, IEnumerable<ICuller> cullers)
