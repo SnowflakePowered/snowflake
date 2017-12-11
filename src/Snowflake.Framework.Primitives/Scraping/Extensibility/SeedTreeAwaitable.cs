@@ -71,7 +71,7 @@ namespace Snowflake.Scraping.Extensibility
         /// </summary>
         /// <param name="seedContent">The <see cref="Task{SeedTree}"/> to coerce.</param>
         public static implicit operator SeedTreeAwaitable(Task<(string type, string value,
-            IEnumerable<SeedTree> Children)> seedContent)
+            IEnumerable<SeedTree> children)> seedContent)
         {
             var completionSource = new TaskCompletionSource<SeedTree>();
             seedContent.ContinueWith(t => completionSource.SetResult(t.Result));

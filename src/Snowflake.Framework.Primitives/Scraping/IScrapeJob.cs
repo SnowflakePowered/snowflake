@@ -27,7 +27,7 @@ namespace Snowflake.Scraping
         Guid JobGuid { get; }
 
         /// <summary>
-        /// Gets the list of <see cref="Scraper"/> that will be used to produce the resultant seed tree.
+        /// Gets the list of <see cref="IScraper"/> that will be used to produce the resultant seed tree.
         /// </summary>s
         IEnumerable<IScraper> Scrapers { get; }
 

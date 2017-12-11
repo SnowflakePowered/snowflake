@@ -90,7 +90,16 @@ namespace Snowflake.Scraping
         /// <param name="seed">The seed to cull.</param>
         void CullSeedTree(ISeed seed);
 
+        /// <summary>
+        /// Adds a seed directly to the context.
+        /// </summary>
+        /// <param name="seed">The seed to add to the context.</param>
         void Add(ISeed seed);
+
+        /// <summary>
+        /// Adds multiple seeds directly to the context. 
+        /// </summary>
+        /// <param name="seeds">The seeds to add directly to the context.</param>
         void AddRange(IEnumerable<ISeed> seeds);
 
         /// <summary>
