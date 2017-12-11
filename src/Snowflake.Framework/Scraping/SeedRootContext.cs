@@ -53,7 +53,7 @@ namespace Snowflake.Scraping
 
         public IEnumerable<ISeed> GetSiblings(ISeed seed)
         {
-            return this.GetUnculled().Where(s => s.Parent == seed.Parent);
+            return this.GetUnculled().Where(s => s.Parent == seed.Parent && s.Guid != seed.Guid);
         }
 
         public IEnumerable<ISeed> GetDescendants(ISeed seed)
@@ -93,12 +93,17 @@ namespace Snowflake.Scraping
             this.Seeds = this.Seeds.AddRange(seeds);
         }
 
-        public void AddRange(IEnumerable<(SeedContent value, ISeed parent)> seeds, string source)
+        public IEnumerable<ISeed> AddRange(IEnumerable<(SeedContent value, ISeed parent)> seeds, string source)
         {
+            var addedSeeds = new List<ISeed>();
             foreach ((SeedContent value, ISeed parent) in seeds)
             {
-                this.Add(value, parent, source);
+                // We can not use yield here because its laziness will prevent
+                // anything from being executed if the value is ignored.
+                addedSeeds.Add(this.Add(value, parent, source));
             }
+
+            return addedSeeds;
         }
     }
 }
