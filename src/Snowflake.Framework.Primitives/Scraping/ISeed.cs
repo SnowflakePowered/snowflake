@@ -1,4 +1,5 @@
 ﻿using System;
+using Snowflake.Scraping.Extensibility;
 
 namespace Snowflake.Scraping
 {
@@ -8,7 +9,5 @@ namespace Snowflake.Scraping
         Guid Parent { get; }
         SeedContent Content { get; }
         string Source { get; }
-        bool IsCulled { get; }
-        void Cull();
     }
 }

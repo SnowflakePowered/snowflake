@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 
@@ -9,17 +10,16 @@ namespace Snowflake.Scraping
     {
         public ISeed Root { get; }
         public Guid SeedCollectionGuid { get; }
-        private List<ISeed> Seeds { get; }
-
+        private IImmutableList<ISeed> Seeds { get; set; }
+        private ImmutableHashSet<Guid> Culled { get; set; }
         public SeedRootContext()
         {
             this.SeedCollectionGuid = Guid.NewGuid();
+            this.Culled = ImmutableHashSet<Guid>.Empty;
             this.Root = new Seed((SeedContent.RootSeedType, "__root"),
                 Guid.NewGuid(), this.SeedCollectionGuid, "collection");
-            this.Seeds = new List<ISeed>
-            {
-                this.Root,
-            };
+            this.Seeds = ImmutableList<ISeed>.Empty;
+            this.Add(this.Root);
         }
 
         public ISeed this[Guid seedGuid] => this.Seeds.FirstOrDefault(s => s.Guid == seedGuid) ?? this.Root;
@@ -27,7 +27,7 @@ namespace Snowflake.Scraping
         public ISeed Add(SeedContent content, ISeed parent, string source)
         {
             var seed = new Seed(content, Guid.NewGuid(), parent.Guid, source);
-            this.Seeds.Add(seed);
+            this.Add(seed);
             return seed;
         }
 
@@ -38,7 +38,7 @@ namespace Snowflake.Scraping
 
         public IEnumerable<ISeed> GetUnculled()
         {
-            return this.Seeds.Where(s => !s.IsCulled);
+            return this.Seeds.Where(s => !this.Culled.Contains(s.Guid));
         }
 
         public IEnumerable<ISeed> GetAllOfType(string type)
@@ -71,21 +71,26 @@ namespace Snowflake.Scraping
 
         public void CullSeedTree(ISeed seed)
         {
-            seed.Cull();
+            this.CullSeed(seed);
             foreach (var child in this.GetDescendants(seed))
             {
-                child.Cull();
+                this.CullSeed(child);
             }
+        }
+
+        private void CullSeed(ISeed seed)
+        {
+            this.Culled = this.Culled.Add(seed.Guid);
         }
 
         public void Add(ISeed seed)
         {
-            this.Seeds.Add(seed);
+            this.Seeds = this.Seeds.Add(seed);
         }
 
         public void AddRange(IEnumerable<ISeed> seeds)
         {
-            this.Seeds.AddRange(seeds);
+            this.Seeds = this.Seeds.AddRange(seeds);
         }
 
         public void AddRange(IEnumerable<(SeedContent value, ISeed parent)> seeds, string source)
