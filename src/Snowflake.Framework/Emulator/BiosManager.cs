@@ -42,10 +42,10 @@ namespace Snowflake.Emulator
             string biosDirectory = Path.Combine(this.BiosDirectory, platformInfo.PlatformID);
             if (!Directory.Exists(biosDirectory))
             {
-                return platformInfo.BiosFiles.Select(p => p.Key);
+                return platformInfo.BiosFiles.Select(p => p.FileName);
             }
 
-            return platformInfo.BiosFiles.Select(p => p.Key)
+            return platformInfo.BiosFiles.Select(p => p.FileName)
                 .Except(Directory.GetFiles(biosDirectory)
                            .Select(Path.GetFileName), StringComparer.OrdinalIgnoreCase);
         }
