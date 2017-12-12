@@ -1,0 +1,8 @@
+﻿{
+  "entry": "Snowflake.Support.Scraping.RecordScrapeEngine.dll",
+  "loader": "assembly",
+  "frameworkVersion": "1.0.0",
+  "version": "1.0.0",
+  "author": "Snowflake",
+  "name": "Snowflake Scraping Record Engines"
+}

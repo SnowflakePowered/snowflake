@@ -134,6 +134,13 @@ namespace Snowflake.Support.PluginManager
             return this.loadedPlugins.SelectMany(p => p.Value).Any(p => p.Name == pluginName);
         }
 
+        /// <inheritdoc/>
+        public IPluginCollection<T> GetCollection<T>()
+            where T : IPlugin
+        {
+            return new PluginCollection<T>(this);
+        }
+
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
 

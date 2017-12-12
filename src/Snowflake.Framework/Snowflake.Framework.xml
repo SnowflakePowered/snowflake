@@ -1354,115 +1354,67 @@
         <member name="M:Snowflake.Romfile.Tokenizer.TosecTokenClassifier.ExtractTitleTokens(System.String)">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Scraper.Providers.ProviderQueryFunction`1.RequiredMetadata">
-            <summary>
-            Gets the required metadata for this provider
-            </summary>
-        </member>
-        <member name="P:Snowflake.Scraper.Providers.ProviderQueryFunction`1.ReturnMetadata">
-            <summary>
-            Gets the metadata or file type that is guaranteed to return for this provider
-            </summary>
-        </member>
-        <member name="F:Snowflake.Scraper.Providers.ProviderQueryFunction`1.provider">
-            <summary>
-            The provider function itself
-            </summary>
-        </member>
-        <member name="M:Snowflake.Scraper.Providers.QueryProvider`1.Query(System.String,System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Scraper.Providers.QueryProvider`1.QueryBestMatch(System.String,System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Scraper.Providers.QueryProvider`1.Query(Snowflake.Records.Metadata.IMetadataCollection)">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Scraper.Providers.QueryProviderSource.MetadataProviders">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Scraper.Providers.QueryProviderSource.MediaProviders">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Scraper.Providers.QueryProviderSource.Register(Snowflake.Scraper.Providers.IQueryProvider{Snowflake.Scraper.Providers.IScrapedMetadataCollection})">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Scraper.Providers.QueryProviderSource.Register(Snowflake.Scraper.Providers.IQueryProvider{System.Collections.Generic.IList{Snowflake.Records.File.IFileRecord}})">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Scraper.Providers.ScrapedMetadataCollection.Source">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Scraper.Providers.ScrapedMetadataCollection.Accuracy">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Scraper.ScrapeEngine.GetGameRecordFromFile(Snowflake.Records.File.IFileRecord)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Scraper.ScrapeEngine.GetFileInformation(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="T:Snowflake.Scraper.Shiragame.RomInfo">
+        <member name="T:Snowflake.Shiragame.RomInfo">
             <summary>
             Represents a file datum in a ClrMamePro or Logiqix XML Dat File
             </summary>
         </member>
-        <member name="P:Snowflake.Scraper.Shiragame.RomInfo.PlatformId">
+        <member name="P:Snowflake.Shiragame.RomInfo.PlatformId">
             <summary>
             Gets the Stone platform ID
             </summary>
         </member>
-        <member name="P:Snowflake.Scraper.Shiragame.RomInfo.CRC32">
+        <member name="P:Snowflake.Shiragame.RomInfo.CRC32">
             <summary>
             Gets the canonical CRC32 from the dat file
             </summary>
         </member>
-        <member name="P:Snowflake.Scraper.Shiragame.RomInfo.MD5">
+        <member name="P:Snowflake.Shiragame.RomInfo.MD5">
             <summary>
             Gets the canonical MD5 from the dat file
             </summary>
         </member>
-        <member name="P:Snowflake.Scraper.Shiragame.RomInfo.SHA1">
+        <member name="P:Snowflake.Shiragame.RomInfo.SHA1">
             <summary>
             Gets the canonical SHA1 from the dat file
             </summary>
         </member>
-        <member name="P:Snowflake.Scraper.Shiragame.RomInfo.MimeType">
+        <member name="P:Snowflake.Shiragame.RomInfo.MimeType">
             <summary>
             Gets the mimetype of the file
             </summary>
         </member>
-        <member name="P:Snowflake.Scraper.Shiragame.RomInfo.FileName">
+        <member name="P:Snowflake.Shiragame.RomInfo.FileName">
             <summary>
             Gets the canonical filename from the dat file
             </summary>
         </member>
-        <member name="P:Snowflake.Scraper.Shiragame.RomInfo.Region">
+        <member name="P:Snowflake.Shiragame.RomInfo.Region">
             <summary>
             Gets the ISO 3166-1 alpha-2 region code for this rom
             </summary>
         </member>
-        <member name="T:Snowflake.Scraper.Shiragame.SerialInfo">
+        <member name="T:Snowflake.Shiragame.SerialInfo">
             <summary>
             Represents a datum matching a serial number to a game name
             </summary>
         </member>
-        <member name="P:Snowflake.Scraper.Shiragame.SerialInfo.PlatformId">
+        <member name="P:Snowflake.Shiragame.SerialInfo.PlatformId">
             <summary>
             Gets the Stone platform ID
             </summary>
         </member>
-        <member name="P:Snowflake.Scraper.Shiragame.SerialInfo.Title">
+        <member name="P:Snowflake.Shiragame.SerialInfo.Title">
             <summary>
             Gets the canonical game name
             </summary>
         </member>
-        <member name="P:Snowflake.Scraper.Shiragame.SerialInfo.Region">
+        <member name="P:Snowflake.Shiragame.SerialInfo.Region">
             <summary>
             Gets the region code
             </summary>
         </member>
-        <member name="P:Snowflake.Scraper.Shiragame.SerialInfo.Serial">
+        <member name="P:Snowflake.Shiragame.SerialInfo.Serial">
             <summary>
             Gets the game serials
             </summary>

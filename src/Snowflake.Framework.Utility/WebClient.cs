@@ -8,8 +8,14 @@ using System.Threading.Tasks;
 
 namespace Snowflake.Utility
 {
-    public class WebClient
+    public static class WebClient
     {
+        private static HttpClient Client { get; }
+        static WebClient()
+        {
+            WebClient.Client = new HttpClient();
+        }
+
         public static Task DownloadAsync(string requestUri, string filename)
         {
             if (requestUri == null)
@@ -27,29 +33,23 @@ namespace Snowflake.Utility
                 throw new ArgumentNullException("Filename can not be null");
             }
 
-            using (var httpClient = new HttpClient())
+            using (var request = new HttpRequestMessage(HttpMethod.Get, requestUri))
             {
-                using (var request = new HttpRequestMessage(HttpMethod.Get, requestUri))
+                using (
+                    Stream contentStream = await (await Client.SendAsync(request)).Content.ReadAsStreamAsync(),
+                    stream = new FileStream(filename, FileMode.Create, FileAccess.Write, FileShare.None, 4096, true))
                 {
-                    using (
-                        Stream contentStream = await (await httpClient.SendAsync(request)).Content.ReadAsStreamAsync(),
-                        stream = new FileStream(filename, FileMode.Create, FileAccess.Write, FileShare.None, 4096, true))
-                    {
-                        await contentStream.CopyToAsync(stream);
-                    }
+                    await contentStream.CopyToAsync(stream);
                 }
             }
         }
 
         public static async Task<Stream> DownloadDataAsync(Uri requestUri)
         {
-            using (var httpClient = new HttpClient())
+            using (var request = new HttpRequestMessage(HttpMethod.Get, requestUri))
             {
-                using (var request = new HttpRequestMessage(HttpMethod.Get, requestUri))
-                {
-                    Stream contentStream = await (await httpClient.SendAsync(request)).Content.ReadAsStreamAsync();
-                    return contentStream;
-                }
+                Stream contentStream = await (await Client.SendAsync(request)).Content.ReadAsStreamAsync();
+                return contentStream;
             }
         }
 

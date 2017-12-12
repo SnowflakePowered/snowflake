@@ -1,0 +1,8 @@
+﻿{
+  "entry": "Snowflake.Plugin.Scraping.TheGamesDb.dll",
+  "loader": "assembly",
+  "frameworkVersion": "1.0.0",
+  "version": "1.0.0",
+  "author": "Snowflake",
+  "name": "Snowflake The Games DB Scraper"
+}

@@ -31,16 +31,17 @@
     <ProjectReference Include="..\Snowflake.Framework.Persistence\Snowflake.Framework.Persistence.csproj" />
     <ProjectReference Include="..\Snowflake.Framework.Tests.DummyComposableInterface\Snowflake.Framework.Tests.DummyComposableInterface.csproj" />
     <ProjectReference Include="..\Snowflake.Framework.Tests.InvalidComposable\Snowflake.Framework.Tests.InvalidComposable.csproj" />
-    <ProjectReference Include="..\Snowflake.Plugin.Scrapers.TheGamesDb\Snowflake.Plugin.Scrapers.TheGamesDb.csproj" />
     <ProjectReference Include="..\Snowflake.Framework.Primitives\Snowflake.Framework.Primitives.csproj" />
     <ProjectReference Include="..\Snowflake.Framework.Services\Snowflake.Framework.Services.csproj" />
     <ProjectReference Include="..\Snowflake.Framework.Utility\Snowflake.Framework.Utility.csproj" />
     <ProjectReference Include="..\Snowflake.Framework\Snowflake.Framework.csproj" />
+    <ProjectReference Include="..\Snowflake.Plugin.Scraping.TheGamesDb\Snowflake.Plugin.Scraping.TheGamesDb.csproj" />
     <ProjectReference Include="..\Snowflake.Support.Caching.KeyedImageCache\Snowflake.Support.Caching.KeyedImageCache.csproj" />
     <ProjectReference Include="..\Snowflake.Support.FileSignatures\Snowflake.Support.FileSignatures.csproj" />
     <ProjectReference Include="..\Snowflake.Support.PluginManager\Snowflake.Support.PluginManager.csproj" />
     <ProjectReference Include="..\Snowflake.Support.Remoting.GraphQl.Framework\Snowflake.Support.Remoting.GraphQl.Framework.csproj" />
     <ProjectReference Include="..\Snowflake.Support.Remoting.GraphQl.RootProvider\Snowflake.Support.Remoting.GraphQl.RootProvider.csproj" />
+    <ProjectReference Include="..\Snowflake.Support.Scraping.RecordTraversers\Snowflake.Support.Scraping.RecordTraversers.csproj" />
     <ProjectReference Include="..\Snowflake.Support.ShiragameProvider\Snowflake.Support.ShiragameProvider.csproj" />
     <ProjectReference Include="..\Snowflake.Support.StoneProvider\Snowflake.Support.StoneProvider.csproj" />
   </ItemGroup>

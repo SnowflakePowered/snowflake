@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Persistence;
-using Snowflake.Scraper.Shiragame;
+using Snowflake.Shiragame;
 using Snowflake.Utility;
 
 namespace Snowflake.Support.ShiragameProvider

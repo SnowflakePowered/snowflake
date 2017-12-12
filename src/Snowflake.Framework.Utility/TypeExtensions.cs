@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Snowflake.Configuration
+namespace Snowflake.Utility
 {
     public static class TypeExtensions
     {
