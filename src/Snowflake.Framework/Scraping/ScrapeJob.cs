@@ -164,8 +164,15 @@ namespace Snowflake.Scraping
             return this.Visited.Count != previousCount; // if there are no new additions to the table, then we know to stop.
         }
 
-        public void Cull()
+        public void Cull() => this.Cull(Enumerable.Empty<Guid>());
+
+        public void Cull(IEnumerable<Guid> manualCull)
         {
+            foreach (var culledSeed in manualCull.SelectMany(m => this.Context.GetAll().Where(s => s.Guid == m)))
+            {
+                this.Context.CullSeedTree(culledSeed);
+            }
+
             foreach (var culler in this.Cullers)
             {
                 var seedsToCull = this.Context.GetAllOfType(culler.TargetType);

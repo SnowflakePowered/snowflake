@@ -76,5 +76,14 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
         {
             return await this.ScrapeEngine.Result(jobGuid);
         }
+
+        [Field("cullSeeds", "Cull the seeds", typeof(ListGraphType<SeedGraphType>))]
+        [Parameter(typeof(Guid), typeof(GuidGraphType), "jobGuid", "The GUID of the job")]
+        [Parameter(typeof(IEnumerable<Guid>), typeof(ListGraphType<GuidGraphType>), "culledSeeds", "Culled Seeds")]
+        public IEnumerable<ISeed> CullSeeds(Guid jobGuid, IEnumerable<Guid> culledSeeds)
+        {
+            this.ScrapeEngine.CullJob(jobGuid, culledSeeds);
+            return this.ScrapeEngine.GetJobState(jobGuid);
+        }
     }
 }

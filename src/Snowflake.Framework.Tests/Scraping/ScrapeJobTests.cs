@@ -129,5 +129,20 @@ namespace Snowflake.Scraping.Tests
             Assert.Equal("Goodbye World", scrapeJob.Context.GetAllOfType("Test").First().Content.Value);
 
         }
+
+        [Fact]
+        public async Task ManualCull_Test()
+        {
+            var scraper = new TrivialScraper();
+            var scraperTwo = new TrivialScraperTwo();
+            var scrapeJob = new ScrapeJob(new IScraper[] { scraper, scraperTwo }, new ICuller[] { });
+            Assert.True(await scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
+            Assert.NotEmpty(scrapeJob.Context.GetAllOfType("Test"));
+            Assert.False(await scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
+            Assert.Equal(2, scrapeJob.Context.GetAllOfType("Test").Count());
+            scrapeJob.Cull(new[] { scrapeJob.Context.GetAllOfType("Test").First().Guid });
+            Assert.Single(scrapeJob.Context.GetAllOfType("Test"));
+
+        }
     }
 }

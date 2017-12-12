@@ -37,6 +37,12 @@ namespace Snowflake.Scraping
         void Cull();
 
         /// <summary>
+        /// Culls the given seeds before additionally culling the seed tree with the given <see cref="Cullers"/>
+        /// </summary>
+        /// <param name="manualCull">The seeds to manually cull</param>
+        void Cull(IEnumerable<Guid> manualCull);
+
+        /// <summary>
         /// Proceed with populating the seed tree using the given <see cref="Scrapers"/>.
         /// </summary>
         /// <returns>Whether or not all possible seeds have been added with the given <see cref="Scrapers"/></returns>

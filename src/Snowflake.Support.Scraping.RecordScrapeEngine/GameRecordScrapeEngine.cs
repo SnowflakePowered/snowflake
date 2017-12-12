@@ -76,5 +76,17 @@ namespace Snowflake.Support.Scraping.RecordScrapeEngine
 
             return scrapeJob.Context.GetUnculled();
         }
+
+        public void CullJob(Guid jobGuid)
+        {
+            this.ScrapeJobs.TryGetValue(jobGuid, out IScrapeJob scrapeJob);
+            scrapeJob?.Cull();
+        }
+
+        public void CullJob(Guid jobGuid, IEnumerable<Guid> manualCull)
+        {
+            this.ScrapeJobs.TryGetValue(jobGuid, out IScrapeJob scrapeJob);
+            scrapeJob?.Cull(manualCull);
+        }
     }
 }

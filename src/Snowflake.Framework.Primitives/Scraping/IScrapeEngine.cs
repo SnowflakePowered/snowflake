@@ -44,6 +44,20 @@ namespace Snowflake.Scraping
         Task<bool> ProceedJob(Guid jobGuid, IEnumerable<SeedContent> initialSeeds);
 
         /// <summary>
+        /// Culls the seeds of a ScrapeJob.
+        /// </summary>
+        /// <param name="jobGuid">The GUID of the job</param>
+        void CullJob(Guid jobGuid);
+
+        /// <summary>
+        /// Removes the given seeds, then culls the seeds of a ScrapeJob.
+        /// </summary>
+        /// <param name="jobGuid">The GUID of the job.</param>
+        /// <param name="manualCull">The list of seeds to cull.</param>
+        void CullJob(Guid jobGuid, IEnumerable<Guid> manualCull);
+
+
+        /// <summary>
         /// Gets the current state of the seed tree of the context with the given job ID.
         /// </summary>
         /// <param name="jobGuid">The GUID of the job.</param>
