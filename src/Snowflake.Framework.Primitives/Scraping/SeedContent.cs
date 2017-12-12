@@ -19,6 +19,11 @@ namespace Snowflake.Scraping
         public const string RootSeedType = "__root";
 
         /// <summary>
+        /// Represents a null value seedcontent.
+        /// </summary>
+        public const string NullSeedType = "__null";
+
+        /// <summary>
         /// A <see cref="SeedContent"/> is polymorphically equivalent to a
         /// <see cref="ValueTuple{String, String}"/>
         /// </summary>
@@ -61,12 +66,12 @@ namespace Snowflake.Scraping
         }
 
         /// <summary>
-        /// The semantic type of the content.
+        /// Gets the semantic type of the content.
         /// </summary>
         public string Type { get; }
 
         /// <summary>
-        /// The string value of the content.
+        /// Gets the string value of the content.
         /// </summary>
         public string Value { get; }
 
@@ -77,8 +82,8 @@ namespace Snowflake.Scraping
         /// <param name="value">The value of the content.</param>
         public SeedContent(string type, string value)
         {
-            this.Type = type;
-            this.Value = value;
+            this.Type = type ?? SeedContent.NullSeedType;
+            this.Value = value ?? SeedContent.NullSeedType;
         }
 
         /// <summary>

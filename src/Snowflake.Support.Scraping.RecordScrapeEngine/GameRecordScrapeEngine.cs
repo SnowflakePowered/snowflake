@@ -66,7 +66,7 @@ namespace Snowflake.Support.Scraping.RecordScrapeEngine
             return await scrapeJob.Proceed(initialSeeds);
         }
 
-        public IEnumerable<ISeed> GetCurrentState(Guid jobGuid)
+        public IEnumerable<ISeed> GetJobState(Guid jobGuid)
         {
             this.ScrapeJobs.TryGetValue(jobGuid, out IScrapeJob scrapeJob);
             if (scrapeJob == null)

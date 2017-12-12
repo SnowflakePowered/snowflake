@@ -41,7 +41,7 @@ namespace Snowflake.Support.Remoting.GraphQl
 
             var inputQuery = new InputQueryBuilder(input, plugin, mapp, stone);
 
-            var scrapeQuery = new ScrapingQueryBuilder(plugin.GetCollection<IScraper>(), engine);
+            var scrapeQuery = new ScrapingQueryBuilder(plugin.GetCollection<IScraper>(), plugin.GetCollection<ICuller>(), engine);
             rootSchema.Register(platformQueries);
             rootSchema.Register(controllerQueries);
             rootSchema.Register(recordQueries);

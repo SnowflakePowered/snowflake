@@ -29,7 +29,7 @@ namespace Snowflake.Support.Scraping.RecordScrapeEngine
             var crc32Results = seedsToTrim.Where(s => context[s.Parent]?.Content.Type == "search_crc32");
             var mostDetailed = crc32Results.OrderByDescending(s => context.GetChildren(s).Count()).FirstOrDefault();
 
-            if (crc32Results != null)
+            if (mostDetailed != null)
             {
                 yield return mostDetailed;
                 yield break;

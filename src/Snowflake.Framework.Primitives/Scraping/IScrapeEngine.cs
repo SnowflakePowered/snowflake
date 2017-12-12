@@ -48,7 +48,7 @@ namespace Snowflake.Scraping
         /// </summary>
         /// <param name="jobGuid">The GUID of the job.</param>
         /// <returns>The list of seeds in the context of the given job.</returns>
-        IEnumerable<ISeed> GetCurrentState(Guid jobGuid);
+        IEnumerable<ISeed> GetJobState(Guid jobGuid);
 
         /// <summary>
         /// Continues with the job until it is completed, return the result. and

@@ -4,7 +4,7 @@ using System.Text;
 using GraphQL.Types;
 using Snowflake.Scraping;
 
-namespace Snowflake.Support.Remoting.GraphQl.Inputs.Scraping
+namespace Snowflake.Support.Remoting.GraphQl.Types.Scraping
 {
     public class SeedContentGraphType : ObjectGraphType<SeedContent>
     {

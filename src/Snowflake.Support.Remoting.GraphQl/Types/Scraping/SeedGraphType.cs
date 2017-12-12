@@ -5,7 +5,7 @@ using GraphQL.Conventions.Adapters.Types;
 using GraphQL.Types;
 using Snowflake.Scraping;
 
-namespace Snowflake.Support.Remoting.GraphQl.Inputs.Scraping
+namespace Snowflake.Support.Remoting.GraphQl.Types.Scraping
 {
     public class SeedGraphType : ObjectGraphType<ISeed>
     {

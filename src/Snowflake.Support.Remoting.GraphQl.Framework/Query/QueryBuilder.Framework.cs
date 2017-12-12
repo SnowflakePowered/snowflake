@@ -267,10 +267,11 @@ namespace Snowflake.Support.Remoting.GraphQl.Framework.Query
             }
 
             var executor = Expression.Lambda<Func<object[], T>>(
-                Expression.Call(
+                Expression.Convert(Expression.Call(
                     Expression.Constant(this),
                     invokingMethod,
-                    parameterRetrievals), argumentList);
+                    parameterRetrievals), typeof(object)),
+                argumentList);
             return executor.Compile();
         }
 
