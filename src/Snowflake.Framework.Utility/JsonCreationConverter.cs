@@ -61,16 +61,6 @@ public abstract class JsonCreationConverter<T> : JsonConverter
         // Create target object based on JObject
         T target = this.Create(objectType, jObject);
 
-        // Create a new reader for this jObject, and set all properties to match the original reader.
-        JsonReader jObjectReader = jObject.CreateReader();
-        jObjectReader.Culture = reader.Culture;
-        jObjectReader.DateParseHandling = reader.DateParseHandling;
-        jObjectReader.DateTimeZoneHandling = reader.DateTimeZoneHandling;
-        jObjectReader.FloatParseHandling = reader.FloatParseHandling;
-
-        // Populate the object properties
-        serializer.Populate(jObjectReader, target);
-
         return target;
     }
 
