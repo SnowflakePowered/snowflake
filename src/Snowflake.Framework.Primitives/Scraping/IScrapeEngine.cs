@@ -56,7 +56,6 @@ namespace Snowflake.Scraping
         /// <param name="manualCull">The list of seeds to cull.</param>
         void CullJob(Guid jobGuid, IEnumerable<Guid> manualCull);
 
-
         /// <summary>
         /// Gets the current state of the seed tree of the context with the given job ID.
         /// </summary>
