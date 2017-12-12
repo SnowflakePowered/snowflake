@@ -75,13 +75,13 @@ after_test:
     - dotnet pack src\Snowflake.Framework.Services --version-suffix pre-alpha.%APPVEYOR_BUILD_NUMBER% -o ..\..\nupkg
 
 artifacts:
-    - path: 'nupkg\Snowflake.Framework.Primitives.0.2.0-pre-alpha.%APPVEYOR_BUILD_NUMBER%.nupkg'
+    - path: '.\nupkg\Snowflake.Framework.Primitives.0.2.0-pre-alpha.%APPVEYOR_BUILD_NUMBER%.nupkg'
       name: Snowflake Framework Primitives
-    - path: 'nupkg\Snowflake.Framework.Utility.0.2.0-pre-alpha.%APPVEYOR_BUILD_NUMBER%.nupkg'
+    - path: '.\nupkg\Snowflake.Framework.Utility.0.2.0-pre-alpha.%APPVEYOR_BUILD_NUMBER%.nupkg'
       name: Snowflake Framework Utility
-    - path: 'nupkg\Snowflake.Framework.0.2.0-pre-alpha.%APPVEYOR_BUILD_NUMBER%.nupkg'
+    - path: '.\nupkg\Snowflake.Framework.0.2.0-pre-alpha.%APPVEYOR_BUILD_NUMBER%.nupkg'
       name: Snowflake Framework Implementation
-    - path: 'nupkg\Snowflake.Framework.Services.0.2.0-pre-alpha.%APPVEYOR_BUILD_NUMBER%.nupkg'
+    - path: '.\nupkg\Snowflake.Framework.Services.0.2.0-pre-alpha.%APPVEYOR_BUILD_NUMBER%.nupkg'
       name: Snowflake Framework Services
 #    - path: doc
 #      name: Snowflake Generated Documentation (Doxygen)
