@@ -18,8 +18,6 @@ namespace Snowflake.Scraping.Extensibility
 
         /// <summary>
         /// Determines the seeds that REMAIN for traversal.
-        /// A culler should never call <see cref="ISeed.Cull"/>, and instead
-        /// specifies the eeeds that should NOT be culled.
         /// </summary>
         /// <param name="seedsToFilter">The seeds of the specified type in the current job.</param>
         /// <param name="context">The root context of the current job.</param>
