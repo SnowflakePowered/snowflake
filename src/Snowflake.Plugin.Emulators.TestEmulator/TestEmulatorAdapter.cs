@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Snowflake.Configuration;
-using Snowflake.Emulator;
+using Snowflake.EmulatorOld;
 using Snowflake.Extensibility;
 using Snowflake.Extensibility.Provisioning;
 using Snowflake.Plugin.Emulators.TestEmulator.Configuration;

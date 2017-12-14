@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Snowflake.Records.File;
 using Snowflake.Records.Game;
 
-namespace Snowflake.Emulator
+namespace Snowflake.EmulatorOld
 {
     public class SaveManager : ISaveManager
     {

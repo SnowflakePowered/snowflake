@@ -6,7 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using Snowflake.Configuration;
-using Snowflake.Emulator;
+using Snowflake.EmulatorOld;
 using Snowflake.Input.Controller.Mapped;
 using Snowflake.Input.Device;
 using Snowflake.Loader;

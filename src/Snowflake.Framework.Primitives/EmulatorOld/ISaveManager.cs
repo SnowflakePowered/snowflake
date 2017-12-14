@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Snowflake.Emulator
+namespace Snowflake.EmulatorOld
 {
     /// <summary>
     /// Provides a save directory path for emulators.

@@ -4,7 +4,7 @@ using System.Text;
 using Snowflake.Records.File;
 using Snowflake.Records.Game;
 
-namespace Snowflake.Emulator.Saving
+namespace Snowflake.EmulatorOld.Saving
 {
     public interface ISaveFile
     {

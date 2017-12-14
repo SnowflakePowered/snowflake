@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
-using Snowflake.Emulator;
+using Snowflake.EmulatorOld;
 using Snowflake.Extensibility;
 using Snowflake.Extensibility.Provisioning;
 using Snowflake.Plugin.Emulators.RetroArch.Adapters.bsnes;

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Snowflake.Configuration.Input;
-using Snowflake.Emulator;
+using Snowflake.EmulatorOld;
 using Snowflake.Input.Controller;
 using Snowflake.Input.Controller.Mapped;
 using Snowflake.Input.Device;

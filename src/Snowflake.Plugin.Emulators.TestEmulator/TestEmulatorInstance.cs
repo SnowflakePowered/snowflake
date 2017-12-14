@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Newtonsoft.Json;
-using Snowflake.Emulator;
+using Snowflake.EmulatorOld;
 using Snowflake.Extensibility;
 using Snowflake.Platform;
 using Snowflake.Records.File;

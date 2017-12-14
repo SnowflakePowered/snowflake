@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Snowflake.Configuration;
-using Snowflake.Emulator;
+using Snowflake.EmulatorOld;
 using Snowflake.Loader;
 using Snowflake.Services;
 

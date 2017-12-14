@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Snowflake.Platform;
 using Snowflake.Services;
 
-namespace Snowflake.Emulator
+namespace Snowflake.EmulatorOld
 {
     public class BiosManager : IBiosManager
     {

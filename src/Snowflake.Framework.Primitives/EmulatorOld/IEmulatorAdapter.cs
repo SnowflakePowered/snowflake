@@ -11,7 +11,7 @@ using Snowflake.Records.File;
 using Snowflake.Records.Game;
 using Snowflake.Services;
 
-namespace Snowflake.Emulator
+namespace Snowflake.EmulatorOld
 {
     /// <summary>
     /// Emulator adapters manage the instance generation of a certain emulator that supports one or more

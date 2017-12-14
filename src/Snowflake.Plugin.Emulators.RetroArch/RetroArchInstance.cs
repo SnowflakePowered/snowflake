@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
 using Snowflake.Configuration.Input;
-using Snowflake.Emulator;
+using Snowflake.EmulatorOld;
 using Snowflake.Input.Controller;
 using Snowflake.Input.Device;
 using Snowflake.Platform;

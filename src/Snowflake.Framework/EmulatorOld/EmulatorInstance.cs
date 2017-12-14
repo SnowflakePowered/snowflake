@@ -6,7 +6,7 @@ using Snowflake.Platform;
 using Snowflake.Records.File;
 using Snowflake.Records.Game;
 using Snowflake.Utility;
-namespace Snowflake.Emulator
+namespace Snowflake.EmulatorOld
 {
     public abstract class EmulatorInstance : IEmulatorInstance
     {

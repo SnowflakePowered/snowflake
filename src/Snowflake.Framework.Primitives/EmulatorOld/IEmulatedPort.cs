@@ -2,7 +2,7 @@
 using Snowflake.Input.Controller.Mapped;
 using Snowflake.Input.Device;
 
-namespace Snowflake.Emulator
+namespace Snowflake.EmulatorOld
 {
     /// <summary>
     /// Represents a controller port on the emulated machine

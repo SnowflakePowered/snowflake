@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Platform;
 
-namespace Snowflake.Emulator
+namespace Snowflake.EmulatorOld
 {
     /// <summary>
     /// Manages BIOS files for multiple platforms.
