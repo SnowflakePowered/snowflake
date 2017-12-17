@@ -50,13 +50,19 @@ namespace Snowflake.Emulator.Saving
         {
 
             var list = new List<FileInfo>();
-            foreach (var fileInfo in this.LocationRoot.GetFiles("*.*", SearchOption.AllDirectories))
-            {
-                string fileName = Path.GetFileName(fileInfo.FullName);
-                list.Add(fileInfo.CopyTo(Path.Combine(emulatorSaveDirectory.FullName, fileName), true));
-            }
+          
 
             return list;
+        }
+
+        private static IEnumerable<FileInfo> CopyAll(DirectoryInfo from, DirectoryInfo to)
+        {
+            foreach (var fileInfo in from.GetFiles("*.*", SearchOption.AllDirectories))
+            {
+                string fileName = Path.GetFileName(fileInfo.FullName);
+                yield return fileInfo.CopyTo(Path.Combine(to.FullName, fileName), true);
+            }
+
         }
     }
 }

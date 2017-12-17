@@ -38,7 +38,6 @@ namespace Snowflake.Shell.Windows
             var loader = this.loadedCore.Get<IModuleEnumerator>();
             var composer = new AssemblyComposer(this.loadedCore, loader);
             composer.Compose();
-
             // this.loadedCore.Get<IEmulatorAssembliesManager>()?.LoadEmulatorAssemblies();
             // this.loadedCore.Get<IPluginManager>()?.Initialize();
            /* this.loadedCore.Get<IServerManager>().RegisterServer("ThemeServer", new ThemeServer(Path.Combine(this.loadedCore.AppDataDirectory, "themes")));

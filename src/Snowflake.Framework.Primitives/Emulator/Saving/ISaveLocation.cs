@@ -35,7 +35,7 @@ namespace Snowflake.Emulator.Saving
         string SaveFormat { get; }
 
         /// <summary>
-        /// 
+        ///     
         /// </summary>
         DateTimeOffset LastModified { get; }
 
