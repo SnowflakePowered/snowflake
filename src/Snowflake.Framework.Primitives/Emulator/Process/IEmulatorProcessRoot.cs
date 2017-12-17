@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Snowflake.Emulator.Process
 {
+    /// <summary>
+    /// The directory for an emulator process.
+    /// </summary>
     public interface IEmulatorProcessRoot
     {
         DirectoryInfo ProcessRoot { get; }
