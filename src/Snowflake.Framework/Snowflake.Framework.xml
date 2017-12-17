@@ -415,140 +415,145 @@
         <member name="M:Snowflake.Configuration.SqliteConfigurationCollectionStore.Set(Snowflake.Configuration.IConfigurationValue)">
             <inheritdoc/>
         </member>
-        <member name="M:Snowflake.Emulator.BiosManager.GetBiosDirectory(Snowflake.Platform.IPlatformInfo)">
+        <member name="M:Snowflake.EmulatorOld.BiosManager.GetBiosDirectory(Snowflake.Platform.IPlatformInfo)">
             <inheritdoc/>
         </member>
-        <member name="M:Snowflake.Emulator.BiosManager.GetAvailableBios(Snowflake.Platform.IPlatformInfo)">
+        <member name="M:Snowflake.EmulatorOld.BiosManager.GetAvailableBios(Snowflake.Platform.IPlatformInfo)">
             <inheritdoc/>
         </member>
-        <member name="M:Snowflake.Emulator.BiosManager.GetMissingBios(Snowflake.Platform.IPlatformInfo)">
+        <member name="M:Snowflake.EmulatorOld.BiosManager.GetMissingBios(Snowflake.Platform.IPlatformInfo)">
             <inheritdoc/>
         </member>
-        <member name="M:Snowflake.Emulator.BiosManager.IsBiosAvailable(Snowflake.Platform.IPlatformInfo,System.String)">
+        <member name="M:Snowflake.EmulatorOld.BiosManager.IsBiosAvailable(Snowflake.Platform.IPlatformInfo,System.String)">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Emulator.EmulatedPort.EmulatedPortNumber">
+        <member name="P:Snowflake.EmulatorOld.EmulatedPort.EmulatedPortNumber">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Emulator.EmulatedPort.PluggedDevice">
+        <member name="P:Snowflake.EmulatorOld.EmulatedPort.PluggedDevice">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Emulator.EmulatedPort.EmulatedController">
+        <member name="P:Snowflake.EmulatorOld.EmulatedPort.EmulatedController">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Emulator.EmulatedPort.MappedElementCollection">
+        <member name="P:Snowflake.EmulatorOld.EmulatedPort.MappedElementCollection">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Emulator.EmulatorAdapter.InputMappings">
+        <member name="P:Snowflake.EmulatorOld.EmulatorAdapter.InputMappings">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Emulator.EmulatorAdapter.Capabilities">
+        <member name="P:Snowflake.EmulatorOld.EmulatorAdapter.Capabilities">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Emulator.EmulatorAdapter.Mimetypes">
+        <member name="P:Snowflake.EmulatorOld.EmulatorAdapter.Mimetypes">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Emulator.EmulatorAdapter.SaveManager">
+        <member name="P:Snowflake.EmulatorOld.EmulatorAdapter.SaveManager">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Emulator.EmulatorAdapter.BiosManager">
+        <member name="P:Snowflake.EmulatorOld.EmulatorAdapter.BiosManager">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Emulator.EmulatorAdapter.SaveType">
+        <member name="P:Snowflake.EmulatorOld.EmulatorAdapter.SaveType">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Emulator.EmulatorAdapter.RequiredBios">
+        <member name="P:Snowflake.EmulatorOld.EmulatorAdapter.RequiredBios">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Emulator.EmulatorAdapter.OptionalBios">
+        <member name="P:Snowflake.EmulatorOld.EmulatorAdapter.OptionalBios">
             <inheritdoc/>
         </member>
-        <member name="M:Snowflake.Emulator.EmulatorAdapter.Instantiate(Snowflake.Records.Game.IGameRecord,Snowflake.Records.File.IFileRecord,System.Int32,System.Collections.Generic.IList{Snowflake.Emulator.IEmulatedPort})">
+        <member name="M:Snowflake.EmulatorOld.EmulatorAdapter.Instantiate(Snowflake.Records.Game.IGameRecord,Snowflake.Records.File.IFileRecord,System.Int32,System.Collections.Generic.IList{Snowflake.EmulatorOld.IEmulatedPort})">
             <inheritdoc/>
         </member>
-        <member name="M:Snowflake.Emulator.EmulatorAdapter.GetConfiguration(Snowflake.Records.Game.IGameRecord,System.String)">
+        <member name="M:Snowflake.EmulatorOld.EmulatorAdapter.GetConfiguration(Snowflake.Records.Game.IGameRecord,System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:Snowflake.Emulator.EmulatorAdapter.GetConfiguration">
+        <member name="M:Snowflake.EmulatorOld.EmulatorAdapter.GetConfiguration">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Emulator.EmulatorInstance.InstanceGuid">
+        <member name="P:Snowflake.EmulatorOld.EmulatorInstance.InstanceGuid">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Emulator.EmulatorInstance.EmulatorAdapter">
+        <member name="P:Snowflake.EmulatorOld.EmulatorInstance.EmulatorAdapter">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Emulator.EmulatorInstance.ControllerPorts">
+        <member name="P:Snowflake.EmulatorOld.EmulatorInstance.ControllerPorts">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Emulator.EmulatorInstance.SaveSlot">
+        <member name="P:Snowflake.EmulatorOld.EmulatorInstance.SaveSlot">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Emulator.EmulatorInstance.Configuration">
+        <member name="P:Snowflake.EmulatorOld.EmulatorInstance.Configuration">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Emulator.EmulatorInstance.InstanceMetadata">
+        <member name="P:Snowflake.EmulatorOld.EmulatorInstance.InstanceMetadata">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Emulator.EmulatorInstance.Game">
+        <member name="P:Snowflake.EmulatorOld.EmulatorInstance.Game">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Emulator.EmulatorInstance.RomFile">
+        <member name="P:Snowflake.EmulatorOld.EmulatorInstance.RomFile">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Emulator.EmulatorInstance.Platform">
+        <member name="P:Snowflake.EmulatorOld.EmulatorInstance.Platform">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Emulator.EmulatorInstance.InstancePath">
+        <member name="P:Snowflake.EmulatorOld.EmulatorInstance.InstancePath">
             <inheritdoc/>
         </member>
-        <member name="M:Snowflake.Emulator.EmulatorInstance.Create">
+        <member name="M:Snowflake.EmulatorOld.EmulatorInstance.Create">
             <inheritdoc/>
         </member>
-        <member name="M:Snowflake.Emulator.EmulatorInstance.Start">
+        <member name="M:Snowflake.EmulatorOld.EmulatorInstance.Start">
             <inheritdoc/>
         </member>
-        <member name="M:Snowflake.Emulator.EmulatorInstance.Pause">
+        <member name="M:Snowflake.EmulatorOld.EmulatorInstance.Pause">
             <inheritdoc/>
         </member>
-        <member name="M:Snowflake.Emulator.EmulatorInstance.Resume">
+        <member name="M:Snowflake.EmulatorOld.EmulatorInstance.Resume">
             <inheritdoc/>
         </member>
-        <member name="M:Snowflake.Emulator.EmulatorInstance.Destroy">
+        <member name="M:Snowflake.EmulatorOld.EmulatorInstance.Destroy">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Emulator.EmulatorInstance.CreateTime">
+        <member name="P:Snowflake.EmulatorOld.EmulatorInstance.CreateTime">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Emulator.EmulatorInstance.StartTime">
+        <member name="P:Snowflake.EmulatorOld.EmulatorInstance.StartTime">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Emulator.EmulatorInstance.DestroyTime">
+        <member name="P:Snowflake.EmulatorOld.EmulatorInstance.DestroyTime">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Emulator.EmulatorInstance.IsActive">
+        <member name="P:Snowflake.EmulatorOld.EmulatorInstance.IsActive">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Emulator.EmulatorInstance.IsRunning">
+        <member name="P:Snowflake.EmulatorOld.EmulatorInstance.IsRunning">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Emulator.EmulatorInstance.IsCreated">
+        <member name="P:Snowflake.EmulatorOld.EmulatorInstance.IsCreated">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Emulator.EmulatorInstance.IsDestroyed">
+        <member name="P:Snowflake.EmulatorOld.EmulatorInstance.IsDestroyed">
             <inheritdoc/>
         </member>
-        <member name="M:Snowflake.Emulator.SaveManager.GetSaveDirectory(System.String,System.Guid,System.Int32)">
+        <member name="M:Snowflake.EmulatorOld.SaveManager.GetSaveDirectory(System.String,System.Guid,System.Int32)">
             <inheritdoc/>
         </member>
-        <member name="M:Snowflake.Emulator.SaveManager.GetLastModified(System.String,System.Guid,System.Int32)">
+        <member name="M:Snowflake.EmulatorOld.SaveManager.GetLastModified(System.String,System.Guid,System.Int32)">
             <inheritdoc/>
         </member>
-        <member name="M:Snowflake.Emulator.SaveManager.GetSharedSaveDirectory(System.String)">
+        <member name="M:Snowflake.EmulatorOld.SaveManager.GetSharedSaveDirectory(System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:Snowflake.Emulator.SaveManager.GetUsedSlots(System.String,System.Guid)">
+        <member name="M:Snowflake.EmulatorOld.SaveManager.GetUsedSlots(System.String,System.Guid)">
             <inheritdoc/>
+        </member>
+        <member name="T:Snowflake.Emulator.Saving.SaveLocationManifest">
+            <summary>
+            Represents a JSON manifest for savelocations.
+            </summary>
         </member>
         <member name="F:Snowflake.Extensibility.EmptyPluginConfiguration.EmptyConfiguration">
             <summary>

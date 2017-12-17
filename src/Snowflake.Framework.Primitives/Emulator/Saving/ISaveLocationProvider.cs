@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using Snowflake.Records.Game;
 
 namespace Snowflake.Emulator.Saving
@@ -17,7 +18,7 @@ namespace Snowflake.Emulator.Saving
         /// <param name="gameRecord">The game to provision this location for.</param>
         /// <param name="saveType">The type of save this location contains.</param>
         /// <returns>The newly created save location</returns>
-        ISaveLocation CreateSaveLocation(IGameRecord gameRecord, string saveType);
+        Task<ISaveLocation> CreateSaveLocationAsync(IGameRecord gameRecord, string saveType);
 
         /// <summary>
         /// Gets the save location with the given GUID.
@@ -25,7 +26,7 @@ namespace Snowflake.Emulator.Saving
         /// <param name="saveLocationGuid">The GUID of the desired save location.</param>
         /// <exception cref="FileNotFoundException">If the save location is not found.</exception>
         /// <returns>The save location.</returns>
-        ISaveLocation GetSaveLocation(Guid saveLocationGuid);
+        Task<ISaveLocation> GetSaveLocationAsync(Guid saveLocationGuid);
 
         /// <summary>
         /// Deletes the save location with the given GUID. Does nothing if the save location does not exist.
@@ -40,13 +41,13 @@ namespace Snowflake.Emulator.Saving
         /// </summary>
         /// <param name="gameRecord">The game associated with the save locations.</param>
         /// <returns>An enumerable of all the save locationa previously provisioned foe the given game.</returns>
-        IEnumerable<ISaveLocation> GetSaveLocations(IGameRecord gameRecord);
+        Task<IEnumerable<ISaveLocation>> GetSaveLocationsAsync(IGameRecord gameRecord);
 
         /// <summary>
         /// Gets all the save locations managed by this provider.
         /// </summary>
         /// <returns>All the save locations managed by this provider.</returns>
-        IEnumerable<ISaveLocation> GetAllSaveLocations();
+        Task<IEnumerable<ISaveLocation>> GetAllSaveLocationsAsync();
 
     }
 }

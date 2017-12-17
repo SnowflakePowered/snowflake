@@ -1,34 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
+using Newtonsoft.Json;
 using Snowflake.Records.Game;
 
 namespace Snowflake.Emulator.Saving
 {
     public class SaveLocation : ISaveLocation
     {
-        public SaveLocation(IGameRecord gameRecord, string saveFormat, DirectoryInfo providerRoot)
+        internal SaveLocation(Guid gameRecordGuid, string saveFormat, 
+            DirectoryInfo locationRoot,
+            Guid locationGuid, DateTimeOffset lastModified)
         {
-            this.GameRecord = gameRecord;
-            this.SaveFormat = saveFormat;
-            this.LocationGuid = Guid.NewGuid();
-            this.LocationRoot = providerRoot.CreateSubdirectory(this.LocationGuid.ToString());
-        }
-
-        internal SaveLocation(IGameRecord gameRecord, string saveFormat, DirectoryInfo locationRoot, Guid locationGuid)
-        {
-            this.GameRecord = gameRecord;
+            this.RecordGuid = gameRecordGuid;
             this.SaveFormat = saveFormat;
             this.LocationRoot = locationRoot;
             this.LocationGuid = locationGuid;
+            this.LastModified = lastModified;
         }
 
         public Guid LocationGuid { get; }
 
         public DirectoryInfo LocationRoot { get; }
 
-        public IGameRecord GameRecord { get; }
+        public Guid RecordGuid { get; }
 
         public string SaveFormat { get; }
 
@@ -36,23 +33,12 @@ namespace Snowflake.Emulator.Saving
 
         public IEnumerable<FileInfo> PersistFrom(DirectoryInfo emulatorSaveDirectory)
         {
-            var list = new List<FileInfo>();
-            foreach (var fileInfo in emulatorSaveDirectory.GetFiles("*.*", SearchOption.AllDirectories))
-            {
-                string fileName = Path.GetFileName(fileInfo.FullName);
-                list.Add(fileInfo.CopyTo(Path.Combine(this.LocationRoot.FullName, fileName), true));
-            }
-
-            return list;
+            return SaveLocation.CopyAll(emulatorSaveDirectory, this.LocationRoot).ToList();
         }
 
         public IEnumerable<FileInfo> RetrieveTo(DirectoryInfo emulatorSaveDirectory)
         {
-
-            var list = new List<FileInfo>();
-          
-
-            return list;
+            return SaveLocation.CopyAll(this.LocationRoot, emulatorSaveDirectory).ToList();
         }
 
         private static IEnumerable<FileInfo> CopyAll(DirectoryInfo from, DirectoryInfo to)

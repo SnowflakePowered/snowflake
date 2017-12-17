@@ -24,9 +24,9 @@ namespace Snowflake.Emulator.Saving
         DirectoryInfo LocationRoot { get; }
 
         /// <summary>
-        /// Gets the game record this save location
+        /// Gets the game record guid of this save location
         /// </summary>
-        IGameRecord GameRecord { get; }
+        Guid RecordGuid { get; }
 
         /// <summary>
         /// Gets the format of this save file.
