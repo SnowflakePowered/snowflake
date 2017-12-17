@@ -23,7 +23,7 @@ namespace Snowflake.Emulator.Saving
 
             var location = new SaveLocationProvider(contentDirMock.Object);
             var save = await location.CreateSaveLocationAsync(gameMock.Object, "test");
-            Assert.True(File.Exists(Path.Combine(save.LocationRoot.FullName, "manifest.json")));
+            Assert.True(File.Exists(Path.Combine(save.LocationRoot.FullName, SaveLocationProvider.ManifestFileName)));
         }
 
         [Fact]
@@ -36,7 +36,7 @@ namespace Snowflake.Emulator.Saving
                          .CreateSubdirectory(Path.GetFileNameWithoutExtension(Path.GetTempFileName())));
             var location = new SaveLocationProvider(contentDirMock.Object);
             var save = await location.CreateSaveLocationAsync(gameMock.Object, "test");
-            Assert.True(File.Exists(Path.Combine(save.LocationRoot.FullName, "manifest.json")));
+            Assert.True(File.Exists(Path.Combine(save.LocationRoot.FullName, SaveLocationProvider.ManifestFileName)));
 
             var retrieved = await location.GetSaveLocationAsync(save.LocationGuid);
             Assert.Equal(save.LocationGuid, retrieved.LocationGuid);
@@ -52,7 +52,7 @@ namespace Snowflake.Emulator.Saving
                          .CreateSubdirectory(Path.GetFileNameWithoutExtension(Path.GetTempFileName())));
             var location = new SaveLocationProvider(contentDirMock.Object);
             var save = await location.CreateSaveLocationAsync(gameMock.Object, "test");
-            Assert.True(File.Exists(Path.Combine(save.LocationRoot.FullName, "manifest.json")));
+            Assert.True(File.Exists(Path.Combine(save.LocationRoot.FullName, SaveLocationProvider.ManifestFileName)));
 
             Assert.Single(await location.GetAllSaveLocationsAsync());
             Assert.Single(await location.GetSaveLocationsAsync(gameMock.Object));

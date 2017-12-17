@@ -12,6 +12,7 @@ namespace Snowflake.Emulator.Saving
 {
     public class SaveLocationProvider : ISaveLocationProvider
     {
+        internal const string ManifestFileName = ".snowflakemanifest";
         private DirectoryInfo SaveLocationRoot { get; }
         public SaveLocationProvider(IContentDirectoryProvider contentDirectoryProvider)
         {
@@ -28,7 +29,7 @@ namespace Snowflake.Emulator.Saving
             var saveLocation = new SaveLocation(gameRecord.Guid, saveType, locationRoot, saveGuid, DateTimeOffset.UtcNow);
             var manifest = saveLocation.ToManifest();
             var json = JsonConvert.SerializeObject(manifest, Formatting.Indented);
-            await File.WriteAllTextAsync(Path.Combine(locationRoot.FullName, "manifest.json"), json);
+            await File.WriteAllTextAsync(Path.Combine(locationRoot.FullName, ManifestFileName), json);
             return saveLocation;
         }
 
@@ -50,7 +51,7 @@ namespace Snowflake.Emulator.Saving
         public async Task<ISaveLocation> GetSaveLocationAsync(Guid saveLocationGuid)
         {
             string manifestPath = Path.Combine(this.SaveLocationRoot.FullName, saveLocationGuid.ToString(),
-                "manifest.json");
+                 ManifestFileName);
             if (!File.Exists(manifestPath))
             {
                 throw new FileNotFoundException();

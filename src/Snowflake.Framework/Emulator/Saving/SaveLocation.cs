@@ -29,10 +29,11 @@ namespace Snowflake.Emulator.Saving
 
         public string SaveFormat { get; }
 
-        public DateTimeOffset LastModified { get; }
+        public DateTimeOffset LastModified { get; private set; }
 
         public IEnumerable<FileInfo> PersistFrom(DirectoryInfo emulatorSaveDirectory)
         {
+            this.LastModified = DateTime.UtcNow;
             return SaveLocation.CopyAll(emulatorSaveDirectory, this.LocationRoot).ToList();
         }
 
@@ -46,6 +47,11 @@ namespace Snowflake.Emulator.Saving
             foreach (var fileInfo in from.GetFiles("*.*", SearchOption.AllDirectories))
             {
                 string fileName = Path.GetFileName(fileInfo.FullName);
+                if (fileName == SaveLocationProvider.ManifestFileName)
+                {
+                    continue;
+                }
+
                 yield return fileInfo.CopyTo(Path.Combine(to.FullName, fileName), true);
             }
 
