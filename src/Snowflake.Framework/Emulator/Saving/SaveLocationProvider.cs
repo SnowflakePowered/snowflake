@@ -27,10 +27,7 @@ namespace Snowflake.Emulator.Saving
             DirectoryInfo locationRoot = this.SaveLocationRoot
                 .CreateSubdirectory(saveGuid.ToString());
             var saveLocation = new SaveLocation(gameRecord.Guid, saveType, locationRoot, saveGuid, DateTimeOffset.UtcNow);
-            var manifest = saveLocation.ToManifest();
-            var json = JsonConvert.SerializeObject(manifest, Formatting.Indented);
-            await File.WriteAllTextAsync(Path.Combine(locationRoot.FullName, ManifestFileName), json);
-            return saveLocation;
+            return await this.UpdateSaveLocation(saveLocation);
         }
 
         public void DeleteSaveLocation(Guid saveLocationGuid)
@@ -65,6 +62,14 @@ namespace Snowflake.Emulator.Saving
         {
             return (await this.GetAllSaveLocationsAsync())
                 .Where(s => s.RecordGuid == gameRecord.Guid);
+        }
+
+        public async Task<ISaveLocation> UpdateSaveLocation(ISaveLocation location)
+        {
+            var manifest = location.ToManifest();
+            var json = JsonConvert.SerializeObject(manifest, Formatting.Indented);
+            await File.WriteAllTextAsync(Path.Combine(location.LocationRoot.FullName, ManifestFileName), json);
+            return location;
         }
     }
 }

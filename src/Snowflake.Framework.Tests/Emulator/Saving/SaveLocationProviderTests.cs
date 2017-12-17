@@ -93,5 +93,23 @@ namespace Snowflake.Emulator.Saving
             save.PersistFrom(loadlocation);
             Assert.True(File.Exists(Path.Combine(save.LocationRoot.FullName, "TestSave")));
         }
+
+        [Fact]
+        public async Task UpdateLocation_Test()
+        {
+            var gameMock = new Mock<IGameRecord>();
+            gameMock.Setup(g => g.Guid).Returns(Guid.NewGuid());
+            var contentDirMock = new Mock<IContentDirectoryProvider>();
+            contentDirMock.Setup(g => g.ApplicationData).Returns(new DirectoryInfo(Path.GetTempPath())
+                         .CreateSubdirectory(Path.GetFileNameWithoutExtension(Path.GetTempFileName())));
+            var location = new SaveLocationProvider(contentDirMock.Object);
+            var save = await location.CreateSaveLocationAsync(gameMock.Object, "test");
+            var loadlocation = new DirectoryInfo(Path.GetTempPath())
+                .CreateSubdirectory(Path.GetFileNameWithoutExtension(Path.GetTempFileName()));
+            File.Create(Path.Combine(loadlocation.FullName, "TestSave")).Close();
+
+            save.PersistFrom(loadlocation);
+            await location.UpdateSaveLocation(save);
+        }
     }
 }

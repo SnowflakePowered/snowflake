@@ -31,7 +31,7 @@ namespace Snowflake.Emulator.Saving
 
     internal static class SaveLocationExtensions
     {
-        public static SaveLocationManifest ToManifest(this SaveLocation location)
+        public static SaveLocationManifest ToManifest(this ISaveLocation location)
         {
             return new SaveLocationManifest()
             {

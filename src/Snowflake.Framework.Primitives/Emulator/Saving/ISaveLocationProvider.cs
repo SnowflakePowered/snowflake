@@ -21,6 +21,13 @@ namespace Snowflake.Emulator.Saving
         Task<ISaveLocation> CreateSaveLocationAsync(IGameRecord gameRecord, string saveType);
 
         /// <summary>
+        /// Updates the save location to the registery
+        /// </summary>
+        /// <param name="location">The location to update.</param>
+        /// <returns>The new location.</returns>
+        Task<ISaveLocation> UpdateSaveLocation(ISaveLocation location);
+
+        /// <summary>
         /// Gets the save location with the given GUID.
         /// </summary>
         /// <param name="saveLocationGuid">The GUID of the desired save location.</param>
