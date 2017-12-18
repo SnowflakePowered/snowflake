@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace Snowflake.Emulator.Process
+namespace Snowflake.Execution.Process
 {
     /// <summary>
     /// The directory for an emulator process.

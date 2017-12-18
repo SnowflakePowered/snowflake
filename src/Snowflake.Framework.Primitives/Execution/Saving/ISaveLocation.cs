@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using Snowflake.Emulator.Process;
+using Snowflake.Execution.Process;
 using Snowflake.Records.Game;
 
-namespace Snowflake.Emulator.Saving
+namespace Snowflake.Execution.Saving
 {
     /// <summary>
     /// Represents a location where saves from emulators are to persist and
@@ -35,7 +35,7 @@ namespace Snowflake.Emulator.Saving
         string SaveFormat { get; }
 
         /// <summary>
-        ///     
+        /// Gets the date this save location was last persisted to.
         /// </summary>
         DateTimeOffset LastModified { get; }
 

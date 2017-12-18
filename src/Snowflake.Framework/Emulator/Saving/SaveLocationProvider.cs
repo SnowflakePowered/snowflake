@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 using Snowflake.Records.Game;
 using Snowflake.Services;
 
-namespace Snowflake.Emulator.Saving
+namespace Snowflake.Execution.Saving
 {
     public class SaveLocationProvider : ISaveLocationProvider
     {

@@ -8,7 +8,7 @@ using Snowflake.Records.Game;
 using Snowflake.Services;
 using Xunit;
 
-namespace Snowflake.Emulator.Saving
+namespace Snowflake.Execution.Saving
 {
     public class SaveLocationProviderTests
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace Snowflake.Emulator.Saving
+namespace Snowflake.Execution.Saving
 {
     /// <summary>
     /// Represents a JSON manifest for savelocations.

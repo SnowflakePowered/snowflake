@@ -5,7 +5,7 @@ using System.Text;
 using Newtonsoft.Json;
 using Xunit;
 
-namespace Snowflake.Emulator.Saving.Tests
+namespace Snowflake.Execution.Saving.Tests
 {
     public class SaveLocationTests
     {

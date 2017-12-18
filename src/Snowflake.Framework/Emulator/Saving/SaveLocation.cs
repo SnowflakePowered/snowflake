@@ -6,7 +6,7 @@ using System.Text;
 using Newtonsoft.Json;
 using Snowflake.Records.Game;
 
-namespace Snowflake.Emulator.Saving
+namespace Snowflake.Execution.Saving
 {
     public class SaveLocation : ISaveLocation
     {
@@ -54,7 +54,6 @@ namespace Snowflake.Emulator.Saving
 
                 yield return fileInfo.CopyTo(Path.Combine(to.FullName, fileName), true);
             }
-
         }
     }
 }

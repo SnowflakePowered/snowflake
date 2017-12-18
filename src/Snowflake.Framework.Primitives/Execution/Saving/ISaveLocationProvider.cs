@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Records.Game;
 
-namespace Snowflake.Emulator.Saving
+namespace Snowflake.Execution.Saving
 {
     /// <summary>
     /// Provides and manages <see cref="ISaveLocation"s/>
@@ -55,6 +55,5 @@ namespace Snowflake.Emulator.Saving
         /// </summary>
         /// <returns>All the save locations managed by this provider.</returns>
         Task<IEnumerable<ISaveLocation>> GetAllSaveLocationsAsync();
-
     }
 }

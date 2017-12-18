@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Platform;
 
-namespace Snowflake.Emulator.SystemFIles
+namespace Snowflake.Execution.SystemFIles
 {
     /// <summary>
     /// Provides System and BIOS files for emulator adapters.

@@ -8,7 +8,7 @@ using Snowflake.Platform;
 using Snowflake.Services;
 using Xunit;
 
-namespace Snowflake.Emulator.SystemFiles
+namespace Snowflake.Execution.SystemFiles
 {
     public class SystemFileProviderTests
     {
