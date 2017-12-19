@@ -5,7 +5,7 @@ using Snowflake.Configuration;
 using Snowflake.Configuration.Input;
 using Snowflake.Records.Game;
 
-namespace Snowflake.Execution
+namespace Snowflake.Execution.Extensibility
 {
     /// <summary>
     /// Provides configuration collections specific to the given emulator.

@@ -6,7 +6,7 @@ using Snowflake.Configuration.Input;
 using Snowflake.Execution.Saving;
 using Snowflake.Records.Game;
 
-namespace Snowflake.Execution
+namespace Snowflake.Execution.Extensibility
 {
     public interface IEmulatorTask
     {

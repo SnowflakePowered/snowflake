@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Snowflake.Platform;
 
-namespace Snowflake.Execution
+namespace Snowflake.Execution.Extensibility
 {
     public interface IEmulatorProperties
     {

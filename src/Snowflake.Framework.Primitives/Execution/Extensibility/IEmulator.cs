@@ -8,7 +8,7 @@ using Snowflake.Extensibility;
 using Snowflake.Platform;
 using Snowflake.Records.Game;
 
-namespace Snowflake.Execution
+namespace Snowflake.Execution.Extensibility
 {
     public interface IEmulator : IPlugin
     {

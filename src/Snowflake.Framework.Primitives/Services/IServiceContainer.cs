@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Snowflake.Loader;
 using Snowflake.Platform;
 
 namespace Snowflake.Services
@@ -29,7 +30,7 @@ namespace Snowflake.Services
 
         /// <summary>
         /// Get a service.
-        /// The <see cref="IStoneProvider"/> service will always be available.
+        /// The <see cref="IModuleEnumerator"/> service will always be available.
         /// </summary>
         /// <typeparam name="T">The type of service.</typeparam>
         /// <returns>The service instance</returns>

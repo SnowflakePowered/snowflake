@@ -994,6 +994,9 @@
         <member name="P:Snowflake.Loader.Module.ContentsDirectory">
             <inheritdoc/>
         </member>
+        <member name="P:Snowflake.Loader.Module.Version">
+            <inheritdoc/>
+        </member>
         <member name="P:Snowflake.Loader.ModuleEnumerator.Modules">
             <inheritdoc/>
         </member>

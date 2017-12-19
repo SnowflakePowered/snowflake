@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Snowflake.Framework.Primitives\Snowflake.Framework.Primitives.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="module.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="dotnet-pack-snowflake" Version="1.2.0" />
+    <DotNetCliToolReference Include="dotnet-install-snowflake" Version="1.0.0" />
+  </ItemGroup>
+</Project>
