@@ -47,4 +47,36 @@ namespace Snowflake.Execution.Extensibility
         /// <returns>A valid input template for the given emulated device details.</returns>
         IInputTemplate GetInputTemplate(IEmulatedController emulatedDevice);
     }
+
+    /// <summary>
+    /// Generic version of <see cref="IConfigurationFactory"/>
+    /// </summary>
+    /// <typeparam name="TConfigurationCollection">The collection this factory produces.</typeparam>
+    /// <typeparam name="TInputTemplate">The collection this factory produces.</typeparam>
+    public interface IConfigurationFactory<out TConfigurationCollection, out TInputTemplate> : IConfigurationFactory
+        where TConfigurationCollection : class, IConfigurationCollection<TConfigurationCollection>
+        where TInputTemplate : class, IInputTemplate<TInputTemplate>
+    {
+        /// <summary>
+        /// Gets the valid set of configuration required to launch this emulator for a given game record.
+        /// </summary>
+        /// <seealso cref="IConfigurationCollectionStore"/>
+        /// <param name="gameRecord">The game that is associated with this set of configuration collections</param>
+        /// <param name="profileName">The profile name to get configuration for. By default, the profile name must be 'default'</param>
+        /// <returns>A set of configuration collection keyed on the expected file names of the configuration files.</returns>
+        new IConfigurationCollection<TConfigurationCollection> GetConfiguration(IGameRecord gameRecord, string profileName = "default");
+
+        /// <summary>
+        /// Gets the default valid set of configuration required to launch this emulator for a given game record.
+        /// </summary>
+        /// <returns>A set of configuration collection keyed on the expected file names of the configuration files.</returns>
+        new IConfigurationCollection<TConfigurationCollection> GetConfiguration();
+
+        /// <summary>
+        /// Gets the input template for the given emulated controller port.
+        /// </summary>
+        /// <param name="emulatedDevice">The given device to create an input template for.</param>
+        /// <returns>A valid input template for the given emulated device details.</returns>
+        new IInputTemplate<TInputTemplate> GetInputTemplate(IEmulatedController emulatedDevice);
+    }
 }

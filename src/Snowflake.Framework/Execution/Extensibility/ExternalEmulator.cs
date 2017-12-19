@@ -23,7 +23,7 @@ namespace Snowflake.Execution.Extensibility
 
         protected abstract IConfigurationFactory ConfigurationFactory { get; }
 
-        public abstract IEmulatorTaskRunner Runner { get; protected set; }
+        public abstract IEmulatorTaskRunner Runner { get; }
 
         public IEmulatorProperties Properties { get; }
 

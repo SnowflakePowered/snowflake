@@ -1,9 +1,0 @@
-﻿{
-    "name": "exe-retroarch-win64",
-    "type": "plugin_emulator_retroarch_support",
-    "version": "1.3.6.0",
-    "authors": [
-        "Snowflake"
-    ],
-  "description": "RetroArch Windows Executable Wrapper"
-}

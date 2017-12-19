@@ -11,7 +11,10 @@ using Snowflake.Records.Game;
 
 namespace Snowflake.Execution.Extensibility
 {
-    public abstract class ConfigurationFactory : IConfigurationFactory
+    public abstract class ConfigurationFactory<TConfigurationCollection, TInputTemplate> : IConfigurationFactory<TConfigurationCollection, TInputTemplate>
+        where TConfigurationCollection : class, IConfigurationCollection<TConfigurationCollection>
+        where TInputTemplate : class, IInputTemplate<TInputTemplate>
+
     {
         public IEnumerable<IInputMapping> InputMappings { get; }
 
@@ -27,8 +30,25 @@ namespace Snowflake.Execution.Extensibility
             this.InputMappings = inputMappings;
         }
 
-        public abstract IConfigurationCollection GetConfiguration(IGameRecord gameRecord, string profileName = "default");
-        public abstract IConfigurationCollection GetConfiguration();
-        public abstract IInputTemplate GetInputTemplate(IEmulatedController emulatedDevice);
+        IConfigurationCollection IConfigurationFactory.GetConfiguration(IGameRecord gameRecord, string profileName = "default")
+        {
+            return this.GetConfiguration(gameRecord, profileName);
+        }
+
+        IConfigurationCollection IConfigurationFactory.GetConfiguration()
+        {
+            return this.GetConfiguration();
+        }
+
+        IInputTemplate IConfigurationFactory.GetInputTemplate(IEmulatedController emulatedDevice)
+        {
+            return this.GetInputTemplate(emulatedDevice);
+        }
+
+        public abstract IInputTemplate<TInputTemplate> GetInputTemplate(IEmulatedController emulatedDevice);
+
+        public abstract IConfigurationCollection<TConfigurationCollection> GetConfiguration(IGameRecord gameRecord, string profileName);
+
+        public abstract IConfigurationCollection<TConfigurationCollection> GetConfiguration();
     }
 }

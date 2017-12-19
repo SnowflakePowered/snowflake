@@ -5,7 +5,7 @@ namespace Snowflake.Configuration.Attributes
     /// <summary>
     /// Defines an alias to an output configuration file for a given configuration collection.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Interface, AllowMultiple = true)]
+    [AttributeUsage(AttributeTargets.Interface, AllowMultiple = true, Inherited = true)]
     public class ConfigurationFileAttribute : Attribute
     {
         /// <summary>

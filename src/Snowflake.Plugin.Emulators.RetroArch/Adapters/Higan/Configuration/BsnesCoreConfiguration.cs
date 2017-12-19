@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
 using Snowflake.Configuration.Attributes;
-using Snowflake.Plugin.Emulators.RetroArch.Adapters.bsnes.Selections;
+using Snowflake.Plugin.Emulators.RetroArch.Adapters.Higan.Selections;
 
-namespace Snowflake.Plugin.Emulators.RetroArch.Adapters.bsnes.Configuration
+namespace Snowflake.Plugin.Emulators.RetroArch.Adapters.Higan.Configuration
 {
     [ConfigurationSection("bsnes", "BSNES Settings")]
     public interface BsnesCoreConfiguration : IConfigurationSection<BsnesCoreConfiguration>
