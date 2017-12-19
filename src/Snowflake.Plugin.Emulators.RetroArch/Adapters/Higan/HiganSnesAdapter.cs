@@ -30,6 +30,7 @@ namespace Snowflake.Adapters.Higan
         {
             this.Runner = new HiganTaskRunner();
             this.ConfigurationFactory = new HiganConfigurationFactory(provision, store);
+            this.TaskRootProvider = provider;
         }
 
         public override IEmulatorTaskRunner Runner { get; }

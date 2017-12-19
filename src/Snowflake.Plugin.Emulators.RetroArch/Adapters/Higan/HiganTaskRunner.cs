@@ -19,9 +19,9 @@ namespace Snowflake.Adapters.Higan
         public async Task<IEmulatorTaskResult> ExecuteEmulationAsync(IEmulatorTask task)
         {
             IEmulatorTaskResult result = new RetroArchTaskResult(task.ProcessTaskRoot, task.GameSaveLocation);
-            IProcessBuilder builder = this.RetroArchExecutable.GetProcessBuilder();
+          /*  IProcessBuilder builder = this.RetroArchExecutable.GetProcessBuilder();
             builder.WithArgument("--verbose")
-                .WithArgument("-s", task.ProcessTaskRoot.SaveDirectory.FullName);
+                .WithArgument("-s", task.ProcessTaskRoot.SaveDirectory.FullName);*/
             foreach (var cfg in this.BuildConfiguration(task.TaskConfiguration, task.ControllerConfiguration))
             {
                 await File.WriteAllTextAsync(Path.Combine(task.ProcessTaskRoot.ConfigurationDirectory.FullName,
