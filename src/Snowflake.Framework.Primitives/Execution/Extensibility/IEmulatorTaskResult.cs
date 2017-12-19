@@ -8,8 +8,8 @@ namespace Snowflake.Execution.Extensibility
     {
         string EmulatorName { get; }
         DateTimeOffset StartTime { get; }
-        bool IsRunning { get; }
+        bool IsRunning { get; set; }
         Guid TaskIdentifier { get; }
-        event EventHandler Closed;
+        void Closed();
     }
 }

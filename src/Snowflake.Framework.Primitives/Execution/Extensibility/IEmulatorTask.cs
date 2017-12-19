@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Text;
 using Snowflake.Configuration;
 using Snowflake.Configuration.Input;
@@ -14,5 +15,6 @@ namespace Snowflake.Execution.Extensibility
         IList<IInputTemplate> ControllerConfiguration { get; }
         IGameRecord EmulatingGame { get; }
         ISaveLocation GameSaveLocation { get; }
+        IImmutableDictionary<string, string> Pragmas { get; }
     }
 }

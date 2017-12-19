@@ -8,9 +8,9 @@ namespace Snowflake.Execution.Process
     /// <summary>
     /// The directory for an emulator process.
     /// </summary>
-    public interface IEmulatorProcessRoot
+    public interface IEmulatorTaskRoot
     {
-        DirectoryInfo ProcessRoot { get; }
+        DirectoryInfo TaskRoot { get; }
         DirectoryInfo SaveDirectory { get; }
         DirectoryInfo ConfigurationDirectory { get; }
         DirectoryInfo SystemDirectory { get; }
