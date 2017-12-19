@@ -8,6 +8,6 @@ namespace Snowflake.Execution.Process
 {
     public interface IEmulatorTaskRootDirectoryProvider
     {
-        DirectoryInfo GetTaskRoot();
+        DirectoryInfo GetTaskRoot(IEmulatorTask task);
     }
 }

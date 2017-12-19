@@ -10,7 +10,6 @@ namespace Snowflake.Execution.Extensibility
         {
             this.EmulatorName = emulatorName;
             this.StartTime = startTime;
-            this.TaskIdentifier = Guid.NewGuid();
         }
 
         public EmulatorTaskResult(string emulatorName)
@@ -23,8 +22,6 @@ namespace Snowflake.Execution.Extensibility
         public DateTimeOffset StartTime { get; }
 
         public bool IsRunning { get; set; }
-
-        public Guid TaskIdentifier { get; }
 
         public abstract void Closed();
     }

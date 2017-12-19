@@ -45,7 +45,7 @@ namespace Snowflake.Execution.Extensibility
         /// </summary>
         /// <param name="emulatedDevice">The given device to create an input template for.</param>
         /// <returns>A valid input template for the given emulated device details.</returns>
-        IInputTemplate GetInputTemplate(IEmulatedController emulatedDevice);
+        (IInputTemplate template, IInputMapping mapping) GetInputMappings(IEmulatedController emulatedDevice);
     }
 
     /// <summary>
@@ -53,7 +53,7 @@ namespace Snowflake.Execution.Extensibility
     /// </summary>
     /// <typeparam name="TConfigurationCollection">The collection this factory produces.</typeparam>
     /// <typeparam name="TInputTemplate">The collection this factory produces.</typeparam>
-    public interface IConfigurationFactory<out TConfigurationCollection, out TInputTemplate> : IConfigurationFactory
+    public interface IConfigurationFactory<out TConfigurationCollection, TInputTemplate> : IConfigurationFactory
         where TConfigurationCollection : class, IConfigurationCollection<TConfigurationCollection>
         where TInputTemplate : class, IInputTemplate<TInputTemplate>
     {
@@ -77,6 +77,6 @@ namespace Snowflake.Execution.Extensibility
         /// </summary>
         /// <param name="emulatedDevice">The given device to create an input template for.</param>
         /// <returns>A valid input template for the given emulated device details.</returns>
-        new IInputTemplate<TInputTemplate> GetInputTemplate(IEmulatedController emulatedDevice);
+        new (IInputTemplate<TInputTemplate> template, IInputMapping mapping) GetInputMappings(IEmulatedController emulatedDevice);
     }
 }

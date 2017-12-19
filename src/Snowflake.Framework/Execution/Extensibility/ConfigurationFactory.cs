@@ -40,12 +40,12 @@ namespace Snowflake.Execution.Extensibility
             return this.GetConfiguration();
         }
 
-        IInputTemplate IConfigurationFactory.GetInputTemplate(IEmulatedController emulatedDevice)
+        (IInputTemplate template, IInputMapping mapping) IConfigurationFactory.GetInputMappings(IEmulatedController emulatedDevice)
         {
-            return this.GetInputTemplate(emulatedDevice);
+            return this.GetInputMappings(emulatedDevice);
         }
 
-        public abstract IInputTemplate<TInputTemplate> GetInputTemplate(IEmulatedController emulatedDevice);
+        public abstract (IInputTemplate<TInputTemplate> template, IInputMapping mapping) GetInputMappings(IEmulatedController emulatedDevice);
 
         public abstract IConfigurationCollection<TConfigurationCollection> GetConfiguration(IGameRecord gameRecord, string profileName);
 

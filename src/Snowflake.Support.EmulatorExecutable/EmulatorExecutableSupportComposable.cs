@@ -7,7 +7,7 @@ using Snowflake.Services;
 
 namespace Snowflake.Support.EmulatorExecutable
 {
-    public class EmulatorExecutableProviderComposable : IComposable
+    public class EmulatorExecutableSupportComposable : IComposable
     {
         [ImportService(typeof(IServiceRegistrationProvider))]
         [ImportService(typeof(IModuleEnumerator))]

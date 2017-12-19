@@ -29,14 +29,7 @@ namespace Snowflake.Plugin.Emulators.TestEmulator
                 = serviceContainer.Get<IContentDirectoryProvider>();
 
             string appDataDirectory = contentDirectoryProvider.ApplicationData.FullName;
-            var provision = pluginManager.GetProvision<TestEmulatorAdapter>(composableModule);
-
-            pluginManager.Register<IEmulatorAdapter>(new TestEmulatorAdapter(
-                provision,
-                serviceContainer.Get<IStoneProvider>(),
-                serviceContainer.Get<IConfigurationCollectionStore>(),
-                new BiosManager(appDataDirectory),
-                new SaveManager(appDataDirectory)));
+       
         }
     }
 }

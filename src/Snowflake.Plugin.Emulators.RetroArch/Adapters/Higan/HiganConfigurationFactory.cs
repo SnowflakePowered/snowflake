@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 using Snowflake.Configuration;
 using Snowflake.Configuration.Input;
 using Snowflake.Execution.Extensibility;
@@ -8,6 +9,7 @@ using Snowflake.Extensibility.Provisioning;
 using Snowflake.Plugin.Emulators.RetroArch.Adapters.Higan.Configuration;
 using Snowflake.Plugin.Emulators.RetroArch.Input;
 using Snowflake.Records.Game;
+using Snowflake.Input.Device;
 
 namespace Snowflake.Adapters.Higan
 {
@@ -39,9 +41,14 @@ namespace Snowflake.Adapters.Higan
             return new ConfigurationCollection<HiganRetroArchConfiguration>();
         }
 
-        public override IInputTemplate<RetroPadTemplate> GetInputTemplate(IEmulatedController emulatedDevice)
+        public override (IInputTemplate<RetroPadTemplate> template, IInputMapping mapping) GetInputMappings(IEmulatedController emulatedDevice)
         {
-            return new InputTemplate<RetroPadTemplate>(emulatedDevice.LayoutMapping, emulatedDevice.PortIndex);
+            var template = new InputTemplate<RetroPadTemplate>(emulatedDevice.LayoutMapping, emulatedDevice.PortIndex);
+            var mapping = (from inputMappings in this.InputMappings
+                            where inputMappings.InputApi == InputApi.DirectInput
+                            where inputMappings.DeviceLayouts.Contains(emulatedDevice.PhysicalDevice.DeviceLayout.LayoutID)
+                            select inputMappings).FirstOrDefault();
+            return (template, mapping);
         }
     }
 }

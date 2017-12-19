@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2010
+VisualStudioVersion = 15.0.27004.2008
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Framework", "Framework", "{49B7A61F-B3BE-485E-84D0-B78C08656412}"
 EndProject
@@ -79,9 +79,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scraping", "Scraping", "{86
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Plugin.Scraping.TheGamesDb", "Snowflake.Plugin.Scraping.TheGamesDb\Snowflake.Plugin.Scraping.TheGamesDb.csproj", "{48700C7A-7410-46B3-9F55-42AA02F53FEA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Support.EmulatorExecutable", "Snowflake.Support.EmulatorExecutable\Snowflake.Support.EmulatorExecutable.csproj", "{1CAD38A3-0E21-441A-964C-338CE3CC67E8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Plugin.Execution.RetroArch", "Snowflake.Plugin.Execution.RetroArch\Snowflake.Plugin.Execution.RetroArch.csproj", "{6DFA84E0-32DD-4A3B-A9FC-19EE1EFE7BFC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Support.EmulatorExecutable", "Snowflake.Support.EmulatorExecutable\Snowflake.Support.EmulatorExecutable.csproj", "{1CAD38A3-0E21-441A-964C-338CE3CC67E8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -465,18 +463,6 @@ Global
 		{1CAD38A3-0E21-441A-964C-338CE3CC67E8}.Release|x64.Build.0 = Release|Any CPU
 		{1CAD38A3-0E21-441A-964C-338CE3CC67E8}.Release|x86.ActiveCfg = Release|Any CPU
 		{1CAD38A3-0E21-441A-964C-338CE3CC67E8}.Release|x86.Build.0 = Release|Any CPU
-		{6DFA84E0-32DD-4A3B-A9FC-19EE1EFE7BFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6DFA84E0-32DD-4A3B-A9FC-19EE1EFE7BFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6DFA84E0-32DD-4A3B-A9FC-19EE1EFE7BFC}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{6DFA84E0-32DD-4A3B-A9FC-19EE1EFE7BFC}.Debug|x64.Build.0 = Debug|Any CPU
-		{6DFA84E0-32DD-4A3B-A9FC-19EE1EFE7BFC}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{6DFA84E0-32DD-4A3B-A9FC-19EE1EFE7BFC}.Debug|x86.Build.0 = Debug|Any CPU
-		{6DFA84E0-32DD-4A3B-A9FC-19EE1EFE7BFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6DFA84E0-32DD-4A3B-A9FC-19EE1EFE7BFC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6DFA84E0-32DD-4A3B-A9FC-19EE1EFE7BFC}.Release|x64.ActiveCfg = Release|Any CPU
-		{6DFA84E0-32DD-4A3B-A9FC-19EE1EFE7BFC}.Release|x64.Build.0 = Release|Any CPU
-		{6DFA84E0-32DD-4A3B-A9FC-19EE1EFE7BFC}.Release|x86.ActiveCfg = Release|Any CPU
-		{6DFA84E0-32DD-4A3B-A9FC-19EE1EFE7BFC}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -515,7 +501,6 @@ Global
 		{86D5767F-B32D-4E1B-BBA2-B87A0DEC6C6F} = {4D861CF0-7989-4E65-8F7C-B802B5D1AD86}
 		{48700C7A-7410-46B3-9F55-42AA02F53FEA} = {86D5767F-B32D-4E1B-BBA2-B87A0DEC6C6F}
 		{1CAD38A3-0E21-441A-964C-338CE3CC67E8} = {FBD15674-246A-4C57-B865-07214D8BB9A1}
-		{6DFA84E0-32DD-4A3B-A9FC-19EE1EFE7BFC} = {C81398F8-AD50-4179-A0EC-2566EF978F1E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {532F5D25-2D82-45B3-BF60-DDA40A0FB795}

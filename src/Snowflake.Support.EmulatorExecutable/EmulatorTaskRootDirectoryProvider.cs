@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Snowflake.Execution.Extensibility;
 using Snowflake.Execution.Process;
 using Snowflake.Services;
 
@@ -16,9 +17,9 @@ namespace Snowflake.Support.EmulatorExecutable
 
         private DirectoryInfo EmulatorTaskRoot { get; }
 
-        public DirectoryInfo GetTaskRoot()
+        public DirectoryInfo GetTaskRoot(IEmulatorTask task)
         {
-            return this.EmulatorTaskRoot.CreateSubdirectory(Guid.NewGuid().ToString());
+            return this.EmulatorTaskRoot.CreateSubdirectory(task.TaskIdentifier.ToString());
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Snowflake.Configuration;
 using Snowflake.Execution.Saving;
 using Snowflake.Extensibility.Provisioning;
@@ -21,15 +22,11 @@ namespace Snowflake.Execution.Extensibility
 
         protected IStoneProvider StoneProvider { get; }
 
-        protected abstract IConfigurationFactory ConfigurationFactory { get; }
-
         public abstract IEmulatorTaskRunner Runner { get; }
 
         public IEmulatorProperties Properties { get; }
 
         public abstract IEmulatorTask CreateTask(IGameRecord executingGame,
             ISaveLocation saveLocation, IList<IEmulatedController> controllerConfiguration, string profileContext = "default");
-
-        public abstract IEmulatorTask CreateTask(IGameRecord executingGame, ISaveLocation saveLocation, IList<IEmulatedController> controllerConfiguration, IConfigurationCollection gameConfiguration);
     }
 }
