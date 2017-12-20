@@ -25,10 +25,12 @@ namespace Snowflake.Adapters.Higan
         public HiganSnesAdapter(IPluginProvision provision,
             IStoneProvider stone,
             IEmulatorTaskRootDirectoryProvider provider,
+            IEmulatorExecutableProvider emulatorProvider,
             IConfigurationCollectionStore store)
             : base(provision, stone)
         {
-            this.Runner = new HiganTaskRunner();
+            this.Runner = new HiganTaskRunner(emulatorProvider.GetEmulator("RetroArch"),
+                provision);
             this.ConfigurationFactory = new HiganConfigurationFactory(provision, store);
             this.TaskRootProvider = provider;
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,9 @@ using Snowflake.Configuration;
 using Snowflake.Configuration.Input;
 using Snowflake.Execution.Extensibility;
 using Snowflake.Execution.Process;
+using Snowflake.Extensibility.Provisioning;
 using Snowflake.Input.Device;
+using Snowflake.Records.File;
 
 namespace Snowflake.Adapters.Higan
 {
@@ -16,19 +19,48 @@ namespace Snowflake.Adapters.Higan
     {
         public IEmulatorExecutable RetroArchExecutable { get; }
         public IEmulatorTaskRootDirectoryProvider DirectoryProvider { get; }
+        public DirectoryInfo CoreDirectory { get; }
+        public IEmulatorProperties Properties { get; }
+        public HiganTaskRunner(IEmulatorExecutable retroArchExecutable,
+            IPluginProvision pluginProvision,
+            IEmulatorProperties properties)
+        {
+            this.RetroArchExecutable = retroArchExecutable;
+            if (this.RetroArchExecutable == null)
+            {
+                throw new FileNotFoundException("RetroArch emulator executable was not installed!");
+            }
+
+            this.Properties = properties;
+            this.CoreDirectory = pluginProvision.CommonResourceDirectory.CreateSubdirectory("cores");
+        }
+
         public async Task<IEmulatorTaskResult> ExecuteEmulationAsync(IEmulatorTask task)
         {
+            IFileRecord fileToExecute = task.EmulatingGame.Files.FirstOrDefault(f => this.Properties.Mimetypes.Contains(f.MimeType));
+
+            if (fileToExecute == null)
+            {
+                throw new FileNotFoundException($"Unable to find a compatible ROM for game {task.EmulatingGame.Guid}.");
+            }
+
             IEmulatorTaskResult result = new RetroArchTaskResult(task.ProcessTaskRoot, task.GameSaveLocation);
-          /*  IProcessBuilder builder = this.RetroArchExecutable.GetProcessBuilder();
+            IProcessBuilder builder = this.RetroArchExecutable.GetProcessBuilder();
             builder.WithArgument("--verbose")
-                .WithArgument("-s", task.ProcessTaskRoot.SaveDirectory.FullName);*/
+                .WithArgument("-s", task.ProcessTaskRoot.SaveDirectory.FullName)
+                .WithArgument("-c", Path.Combine(task.ProcessTaskRoot.ConfigurationDirectory.FullName, "retroarch.cfg"))
+                .WithArgument("-L", Path.Combine(this.CoreDirectory.FullName, task.Pragmas["retroarch_core"]))
+                .WithArgument(fileToExecute.FilePath);
+
             foreach (var cfg in this.BuildConfiguration(task.TaskConfiguration, task.ControllerConfiguration))
             {
                 await File.WriteAllTextAsync(Path.Combine(task.ProcessTaskRoot.ConfigurationDirectory.FullName,
                     task.TaskConfiguration.Descriptor.Outputs[cfg.Key].Destination), cfg.Value);
             }
 
-            // todo: pragma.
+            var psi = builder.ToProcessStartInfo();
+            var process = Process.Start(psi);
+            process.Exited += (s, e) => result.Closed();
             return result;
         }
 
