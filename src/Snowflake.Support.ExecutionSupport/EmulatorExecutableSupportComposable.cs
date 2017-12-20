@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 using Snowflake.Execution.Process;
+using Snowflake.Execution.Saving;
+using Snowflake.Execution.SystemFIles;
 using Snowflake.Loader;
 using Snowflake.Services;
 
-namespace Snowflake.Support.EmulatorExecutable
+namespace Snowflake.Support.ExecutionSupport
 {
     public class EmulatorExecutableSupportComposable : IComposable
     {
@@ -25,6 +27,12 @@ namespace Snowflake.Support.EmulatorExecutable
 
             var emucdp = new EmulatorTaskRootDirectoryProvider(cdp);
             register.RegisterService<IEmulatorTaskRootDirectoryProvider>(emucdp);
+
+            var systemFileProvider = new SystemFileProvider(cdp);
+            register.RegisterService<ISystemFileProvider>(systemFileProvider);
+
+            var savingProvider = new SaveLocationProvider(cdp);
+            register.RegisterService<ISaveLocationProvider>(savingProvider);
         }
     }
 }

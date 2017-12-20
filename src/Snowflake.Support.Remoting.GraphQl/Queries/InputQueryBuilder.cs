@@ -7,7 +7,6 @@ using Snowflake.Configuration;
 using Snowflake.Input;
 using Snowflake.Input.Controller.Mapped;
 using Snowflake.Input.Device;
-using Snowflake.Plugin.Emulators.TestEmulator.Configuration;
 using Snowflake.Services;
 using Snowflake.Support.Remoting.GraphQl.Framework.Attributes;
 using Snowflake.Support.Remoting.GraphQl.Framework.Query;

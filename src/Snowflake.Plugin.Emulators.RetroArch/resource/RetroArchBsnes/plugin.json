@@ -7,6 +7,6 @@
     ],
   "description": "RetroArch bsnes",
   "saveformat": "retroarch-sram-snes",
-  "mimetypes": [ "application/x-romfile-snes-sfc" ],
+  "mimetypes": [ "application/vnd.stone-romfile.nintendo.snes" ],
   "retroarch_core": "bsnes_performance_libretro.dll" 
 }

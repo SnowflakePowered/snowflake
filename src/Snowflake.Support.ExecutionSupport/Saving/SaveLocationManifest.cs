@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Snowflake.Execution.Saving;
 
-namespace Snowflake.Execution.Saving
+namespace Snowflake.Support.ExecutionSupport
 {
     /// <summary>
     /// Represents a JSON manifest for savelocations.

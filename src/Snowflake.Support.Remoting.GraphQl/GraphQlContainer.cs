@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Snowflake.Configuration;
 using Snowflake.Execution.Extensibility;
+using Snowflake.Execution.Saving;
 using Snowflake.Input;
 using Snowflake.Input.Device;
 using Snowflake.Loader;
@@ -24,6 +25,7 @@ namespace Snowflake.Support.Remoting.GraphQl
         [ImportService(typeof(IPluginManager))]
         [ImportService(typeof(IMappedControllerElementCollectionStore))]
         [ImportService(typeof(IContentDirectoryProvider))]
+        [ImportService(typeof(ISaveLocationProvider))]
       //  [ImportService(typeof(IScrapeEngine<IGameRecord>))]
         public void Compose(IModule module, IServiceRepository coreInstance)
         {
@@ -33,6 +35,7 @@ namespace Snowflake.Support.Remoting.GraphQl
             var input = coreInstance.Get<IInputManager>();
             var plugin = coreInstance.Get<IPluginManager>();
             var mapp = coreInstance.Get<IMappedControllerElementCollectionStore>();
+            var saves = coreInstance.Get<ISaveLocationProvider>();
          //   var engine = coreInstance.Get<IScrapeEngine<IGameRecord>>();
             var cdp = coreInstance.Get<IContentDirectoryProvider>();
 
@@ -43,12 +46,7 @@ namespace Snowflake.Support.Remoting.GraphQl
             var configQuery = new ConfigurationQueryBuilder(config);
 
             var inputQuery = new InputQueryBuilder(input, plugin, mapp, stone);
-            var emuQuery = new EmulationQueries()
-            {
-                Emulators = plugin.GetCollection<IEmulator>(),
-                Cdp = cdp,
-                Stone = stone,
-            };
+            var emuQuery = new EmulationQueryBuilder(plugin.GetCollection<IEmulator>(), stone, saves, inputQuery, controllerQueries);
 
            // var scrapeQuery = new ScrapingQueryBuilder(plugin.GetCollection<IScraper>(), plugin.GetCollection<ICuller>(), engine);
             rootSchema.Register(platformQueries);

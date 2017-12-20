@@ -6,7 +6,7 @@ using Snowflake.Execution.Extensibility;
 using Snowflake.Execution.Process;
 using Snowflake.Services;
 
-namespace Snowflake.Support.EmulatorExecutable
+namespace Snowflake.Support.ExecutionSupport
 {
     public sealed class EmulatorTaskRootDirectoryProvider : IEmulatorTaskRootDirectoryProvider
     {

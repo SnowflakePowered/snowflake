@@ -550,11 +550,6 @@
         <member name="M:Snowflake.EmulatorOld.SaveManager.GetUsedSlots(System.String,System.Guid)">
             <inheritdoc/>
         </member>
-        <member name="T:Snowflake.Execution.Saving.SaveLocationManifest">
-            <summary>
-            Represents a JSON manifest for savelocations.
-            </summary>
-        </member>
         <member name="F:Snowflake.Extensibility.EmptyPluginConfiguration.EmptyConfiguration">
             <summary>
             The empty plugin configuration.

@@ -51,7 +51,9 @@ namespace Snowflake.Adapters.Higan
             var task = new EmulatorTask(executingGame)
             {
                 GameSaveLocation = saveLocation,
-                ControllerConfiguration = templates.Cast<(IInputTemplate, IInputMapping)>().ToList(),
+                ControllerConfiguration = templates
+                // todo: refactor out into extension method.
+                    .Select(t => (t.template as IInputTemplate, t.mapping)).ToList(),
             };
             task.ProcessTaskRoot = new RetroArchTaskRoot(this.TaskRootProvider.GetTaskRoot(task));
 

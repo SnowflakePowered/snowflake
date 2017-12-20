@@ -5,7 +5,7 @@ using Snowflake.Execution.Process;
 using Snowflake.Extensibility;
 using Snowflake.Loader;
 
-namespace Snowflake.Support.EmulatorExecutable
+namespace Snowflake.Support.ExecutionSupport
 {
     public class EmulatorExecutableLoader : IModuleLoader<IEmulatorExecutable>
     {
