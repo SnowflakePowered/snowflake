@@ -30,7 +30,8 @@ namespace Snowflake.Adapters.Higan
             : base(provision, stone)
         {
             this.Runner = new HiganTaskRunner(emulatorProvider.GetEmulator("RetroArch"),
-                provision);
+                provision,
+                this.Properties);
             this.ConfigurationFactory = new HiganConfigurationFactory(provision, store);
             this.TaskRootProvider = provider;
         }
