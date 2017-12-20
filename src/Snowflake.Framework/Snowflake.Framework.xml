@@ -399,22 +399,6 @@
         <member name="P:Snowflake.Configuration.SelectionOptionDescriptor.EnumType">
             <inheritdoc/>
         </member>
-        <member name="M:Snowflake.Configuration.SqliteConfigurationCollectionStore.CreateDatabase">
-            <summary>
-            Enums are stored as their string representation
-            Strings are stored as strings
-            Primitives are stored as primitive
-            </summary>
-        </member>
-        <member name="M:Snowflake.Configuration.SqliteConfigurationCollectionStore.Get``1(System.Guid,System.String,System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Configuration.SqliteConfigurationCollectionStore.Set``1(Snowflake.Configuration.IConfigurationCollection{``0},System.Guid,System.String,System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Configuration.SqliteConfigurationCollectionStore.Set(Snowflake.Configuration.IConfigurationValue)">
-            <inheritdoc/>
-        </member>
         <member name="M:Snowflake.EmulatorOld.BiosManager.GetBiosDirectory(Snowflake.Platform.IPlatformInfo)">
             <inheritdoc/>
         </member>
@@ -1031,61 +1015,6 @@
         <member name="P:Snowflake.Records.File.FileRecord.FilePath">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Records.File.SqliteFileLibrary.MetadataLibrary">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.File.SqliteFileLibrary.Set(Snowflake.Records.File.IFileRecord)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.File.SqliteFileLibrary.Set(System.Collections.Generic.IEnumerable{Snowflake.Records.File.IFileRecord})">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.File.SqliteFileLibrary.Remove(Snowflake.Records.File.IFileRecord)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.File.SqliteFileLibrary.Remove(System.Collections.Generic.IEnumerable{Snowflake.Records.File.IFileRecord})">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.File.SqliteFileLibrary.Remove(System.Guid)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.File.SqliteFileLibrary.Remove(System.Collections.Generic.IEnumerable{System.Guid})">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.File.SqliteFileLibrary.SearchByMetadata(System.String,System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.File.SqliteFileLibrary.GetByMetadata(System.String,System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.File.SqliteFileLibrary.Get(System.Collections.Generic.IEnumerable{System.Guid})">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.File.SqliteFileLibrary.GetAllRecords">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.File.SqliteFileLibrary.Get(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.File.SqliteFileLibrary.Get(System.Guid)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.File.SqliteFileLibrary.GetMultipleByQuery(System.String,System.Object)">
-            <summary>
-            Gets multiple file records according to the query
-            </summary>
-            <param name="sql">2 SQL queries together, the first gets file records, and the second gets corresponding metadata records</param>
-            <param name="param">The parameters</param>
-            <returns>A list of file records</returns>
-        </member>
-        <member name="M:Snowflake.Records.File.SqliteFileLibrary.GetSingleByQuery(System.String,System.Object)">
-            <summary>
-            Gets a single file record in accordance to query
-            </summary>
-            <param name="sql">2 sql queries together, the first gets file records, and the second gets corresponding metadata records</param>
-            <param name="param">The parameters</param>
-            <returns>A single file record</returns>
-        </member>
         <member name="P:Snowflake.Records.Game.GameRecord.Metadata">
             <inheritdoc/>
         </member>
@@ -1100,73 +1029,6 @@
         </member>
         <member name="P:Snowflake.Records.Game.GameRecord.Files">
             <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Records.Game.SqliteGameLibrary.MetadataLibrary">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Records.Game.SqliteGameLibrary.FileLibrary">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.Game.SqliteGameLibrary.Set(Snowflake.Records.Game.IGameRecord)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.Game.SqliteGameLibrary.Set(System.Collections.Generic.IEnumerable{Snowflake.Records.Game.IGameRecord})">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.Game.SqliteGameLibrary.Remove(Snowflake.Records.Game.IGameRecord)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.Game.SqliteGameLibrary.Remove(System.Collections.Generic.IEnumerable{Snowflake.Records.Game.IGameRecord})">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.Game.SqliteGameLibrary.Remove(System.Collections.Generic.IEnumerable{System.Guid})">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.Game.SqliteGameLibrary.Get(System.Guid)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.Game.SqliteGameLibrary.Get(System.Collections.Generic.IEnumerable{System.Guid})">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.Game.SqliteGameLibrary.Remove(System.Guid)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.Game.SqliteGameLibrary.SearchByMetadata(System.String,System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.Game.SqliteGameLibrary.GetByMetadata(System.String,System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.Game.SqliteGameLibrary.GetAllRecords">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.Game.SqliteGameLibrary.GetGamesByTitle(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.Game.SqliteGameLibrary.GetGamesByPlatform(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.Game.SqliteGameLibrary.GetMultipleByQuery(System.String,System.Object)">
-            <summary>
-            Gets multiple game records according to the query
-            </summary>
-            <param name="sql">3 SQL queries together,
-            the first gets game records,
-            the second gets file records,
-            and the third gets corresponding metadata records for both file and games.</param>
-            <param name="param">The parameters</param>
-            <returns>A list of file records</returns>
-        </member>
-        <member name="M:Snowflake.Records.Game.SqliteGameLibrary.GetSingleByQuery(System.String,System.Object)">
-            <summary>
-            Gets a single game record according to the query
-            </summary>
-            <param name="sql">3 SQL queries together,
-            the first gets game records,
-            the second gets file records,
-            and the third gets corresponding metadata records for both file and games.</param>
-            <param name="param">The parameters</param>
-            <returns>A single game record</returns>
         </member>
         <member name="P:Snowflake.Records.Metadata.MetadataCollection.Item(System.Guid)">
             <inheritdoc/>
@@ -1205,105 +1067,6 @@
             <inheritdoc/>
         </member>
         <member name="M:Snowflake.Records.Metadata.RecordMetadata.Equals(System.Object)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.Metadata.SqliteMetadataLibrary.Set(Snowflake.Records.Metadata.IRecordMetadata)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.Metadata.SqliteMetadataLibrary.Set(System.Collections.Generic.IEnumerable{Snowflake.Records.Metadata.IRecordMetadata})">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.Metadata.SqliteMetadataLibrary.Remove(Snowflake.Records.Metadata.IRecordMetadata)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.Metadata.SqliteMetadataLibrary.Remove(System.Collections.Generic.IEnumerable{Snowflake.Records.Metadata.IRecordMetadata})">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.Metadata.SqliteMetadataLibrary.Remove(System.Guid)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.Metadata.SqliteMetadataLibrary.Remove(System.Collections.Generic.IEnumerable{System.Guid})">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.Metadata.SqliteMetadataLibrary.GetAllForElement(System.Guid)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.Metadata.SqliteMetadataLibrary.Search(System.String,System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.Metadata.SqliteMetadataLibrary.Get(System.String,System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.Metadata.SqliteMetadataLibrary.GetAllRecords">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.Metadata.SqliteMetadataLibrary.Get(System.Guid)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.Metadata.SqliteMetadataLibrary.Get(System.Collections.Generic.IEnumerable{System.Guid})">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.Metadata.SqliteMetadataLibrary.Get(System.String,System.Guid)">
-            <inheritdoc/>
-        </member>
-        <member name="T:Snowflake.Records.RecordLibraryJunction`2">
-            <summary>
-            A junction between two record libraries
-            </summary>
-            <typeparam name="TParent">The parent library.</typeparam>
-            <typeparam name="TChildren">The child library to junction with.</typeparam>
-        </member>
-        <member name="T:Snowflake.Records.SqliteRecordLibrary`1">
-            <summary>
-            An Sqlite backed record library that allows junctions.
-            </summary>
-            <typeparam name="TRecord"></typeparam>
-        </member>
-        <member name="P:Snowflake.Records.SqliteRecordLibrary`1.LibraryName">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Records.SqliteRecordLibrary`1.MetadataLibrary">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.SqliteRecordLibrary`1.CreateJunction``1(Snowflake.Records.SqliteRecordLibrary{``0})">
-            <summary>
-            Creates a junction between two record libraries
-            </summary>
-            <typeparam name="T">The type of the other record</typeparam>
-            <param name="junctionWith">The other record library to junction with.</param>
-            <returns>A record junction</returns>
-        </member>
-        <member name="M:Snowflake.Records.SqliteRecordLibrary`1.SearchByMetadata(System.String,System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.SqliteRecordLibrary`1.GetByMetadata(System.String,System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.SqliteRecordLibrary`1.Set(`0)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.SqliteRecordLibrary`1.Set(System.Collections.Generic.IEnumerable{`0})">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.SqliteRecordLibrary`1.Remove(`0)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.SqliteRecordLibrary`1.Remove(System.Collections.Generic.IEnumerable{`0})">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.SqliteRecordLibrary`1.Remove(System.Guid)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.SqliteRecordLibrary`1.Remove(System.Collections.Generic.IEnumerable{System.Guid})">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.SqliteRecordLibrary`1.Get(System.Guid)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.SqliteRecordLibrary`1.Get(System.Collections.Generic.IEnumerable{System.Guid})">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.SqliteRecordLibrary`1.GetAllRecords">
             <inheritdoc/>
         </member>
         <member name="P:Snowflake.Romfile.RomFileInfo.Mimetype">

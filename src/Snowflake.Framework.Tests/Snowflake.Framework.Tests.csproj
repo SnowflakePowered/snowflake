@@ -46,6 +46,7 @@
     <ProjectReference Include="..\Snowflake.Support.Scraping.RecordTraversers\Snowflake.Support.Scraping.RecordTraversers.csproj" />
     <ProjectReference Include="..\Snowflake.Support.ShiragameProvider\Snowflake.Support.ShiragameProvider.csproj" />
     <ProjectReference Include="..\Snowflake.Support.StoneProvider\Snowflake.Support.StoneProvider.csproj" />
+    <ProjectReference Include="..\Snowflake.Support.StoreProviders\Snowflake.Support.StoreProviders.csproj" />
   </ItemGroup>
 
   <ItemGroup>
