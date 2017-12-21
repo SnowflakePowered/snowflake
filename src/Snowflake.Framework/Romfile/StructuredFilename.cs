@@ -7,6 +7,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.SqlServer.Server;
+using Snowflake.Romfile.Extensions;
 using Snowflake.Romfile.Tokenizer;
 
 
@@ -93,33 +94,8 @@ namespace Snowflake.Romfile
                 .WithoutLastArticle("De")
                 .WithoutLastArticle("La")
                 .WithoutLastArticle("Le")
-                .WithoutLastArticle("Les");
-        }
-    }
-
-    public static class StringExtensions
-    {
-        public static string WithoutLastArticle(this string title, string article)
-        {
-            if (!title.Contains($", {article}"))
-            {
-                return title;
-            }
-
-            string[] titleWithoutArticle = title.Split($", {article}");
-            return string.Join(string.Empty, titleWithoutArticle.Prepend(article + " "));
-        }
-
-        public static string ToTitleCase(this string str)
-        {
-            var tokens = str.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-            for (var i = 0; i < tokens.Length; i++)
-            {
-                var token = tokens[i];
-                tokens[i] = token.Substring(0, 1).ToUpper() + token.Substring(1);
-            }
-
-            return string.Join(" ", tokens);
+                .WithoutLastArticle("Les")
+                .ToTitleCase();
         }
     }
 }

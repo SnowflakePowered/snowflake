@@ -54,6 +54,7 @@ namespace Snowflake.Support.Scraping.RecordScrapeEngine.Utility
         /// <summary>
         /// Compute the distance between two strings.
         /// </summary>
+        /// <returns>The levenshtein difference between the two strings.</returns>
         public static int Levenshtein(this string s, string t)
         {
             int n = s.Length;
@@ -73,9 +74,11 @@ namespace Snowflake.Support.Scraping.RecordScrapeEngine.Utility
 
             // Step 2
 #pragma warning disable SA1503 // Braces should not be omitted
-            for (int i = 0; i <= n; d[i, 0] = i++) ;
+#pragma warning disable SA1106 // Code should not contain empty statements
+            for (int i = 0; i <= n; d[i, 0] = i++);
             for (int j = 0; j <= m; d[0, j] = j++);
 #pragma warning restore SA1503 // Braces should not be omitted
+#pragma warning restore SA1106 // Code should not contain empty statements
 
             // Step 3
             for (int i = 1; i <= n; i++)
