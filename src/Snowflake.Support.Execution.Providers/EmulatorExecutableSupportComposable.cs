@@ -7,7 +7,7 @@ using Snowflake.Execution.SystemFIles;
 using Snowflake.Loader;
 using Snowflake.Services;
 
-namespace Snowflake.Support.ExecutionSupport
+namespace Snowflake.Support.Execution
 {
     public class EmulatorExecutableSupportComposable : IComposable
     {

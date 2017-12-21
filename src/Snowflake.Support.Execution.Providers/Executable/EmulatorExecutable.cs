@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 using Snowflake.Execution.Process;
 
-namespace Snowflake.Support.ExecutionSupport
+namespace Snowflake.Support.Execution
 {
     internal sealed class EmulatorExecutable : IEmulatorExecutable
     {
