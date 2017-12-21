@@ -2,9 +2,8 @@ language: csharp
 sudo: required
 solution: Snowflake.sln
 mono: none
-dotnet: 2.0.0
+dotnet: 2.1.2
 dist: trusty 
-group: deprecated-2017Q4
 osx_image: xcode8.3
 os:
   - linux
