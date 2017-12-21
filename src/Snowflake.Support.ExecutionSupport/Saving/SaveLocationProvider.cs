@@ -22,7 +22,6 @@ namespace Snowflake.Support.ExecutionSupport
 
         public async Task<ISaveLocation> CreateSaveLocationAsync(IGameRecord gameRecord, string saveType)
         {
-
             Guid saveGuid = Guid.NewGuid();
 
             DirectoryInfo locationRoot = this.SaveLocationRoot

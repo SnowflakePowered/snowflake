@@ -13,7 +13,6 @@ namespace Snowflake.Execution.Extensibility
 {
     public interface IEmulator : IPlugin
     {
-
         IEmulatorTaskRunner Runner { get; }
 
         IEmulatorProperties Properties { get; }
