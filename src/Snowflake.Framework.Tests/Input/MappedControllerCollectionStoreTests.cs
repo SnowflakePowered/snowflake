@@ -10,7 +10,7 @@ using Snowflake.Input.Controller.Mapped;
 using Snowflake.Persistence;
 using Snowflake.Services;
 using Snowflake.Tests;
-using Snowflake.Utility;
+
 using Xunit;
 
 namespace Snowflake.Input.Tests

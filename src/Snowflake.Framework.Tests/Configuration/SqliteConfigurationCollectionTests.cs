@@ -6,7 +6,7 @@ using System.Runtime.Serialization.Formatters;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Persistence;
-using Snowflake.Utility;
+
 using Xunit;
 
 namespace Snowflake.Configuration.Tests

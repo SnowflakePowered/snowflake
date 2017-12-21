@@ -93,12 +93,11 @@ namespace Snowflake.Romfile
                 .WithoutLastArticle("De")
                 .WithoutLastArticle("La")
                 .WithoutLastArticle("Le")
-                .WithoutLastArticle("Les")
-                .ToTitleCase();
+                .WithoutLastArticle("Les");
         }
     }
 
-    static class StringExtensions
+    public static class StringExtensions
     {
         public static string WithoutLastArticle(this string title, string article)
         {

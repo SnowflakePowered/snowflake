@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Snowflake.Records.File;
 using Snowflake.Records.Game;
 using Snowflake.Records.Metadata;
-using Snowflake.Utility;
+
 using Xunit;
 
 namespace Snowflake.Records.Tests
