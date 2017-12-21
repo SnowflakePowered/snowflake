@@ -11,7 +11,6 @@ using Castle.DynamicProxy;
 using Snowflake.Configuration.Attributes;
 using Snowflake.Configuration.Interceptors;
 
-
 namespace Snowflake.Configuration.Input
 {
     public class InputConfigurationSection<T> : IConfigurationSection<T>

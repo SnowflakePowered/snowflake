@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Castle.Core.Internal;
 using Snowflake.Configuration.Attributes;
 
-
 namespace Snowflake.Configuration
 {
     public class ConfigurationSectionDescriptor<T> : IConfigurationSectionDescriptor

@@ -11,7 +11,6 @@ using Snowflake.Persistence;
 using Snowflake.Records.Game;
 using Snowflake.Records.Metadata;
 
-
 namespace Snowflake.Records.File
 {
     internal class SqliteFileLibrary : SqliteRecordLibrary<IFileRecord>, IFileLibrary

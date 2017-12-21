@@ -75,8 +75,15 @@ namespace Snowflake.Support.Scraping.RecordScrapeEngine.Utility
             // Step 2
 #pragma warning disable SA1503 // Braces should not be omitted
 #pragma warning disable SA1106 // Code should not contain empty statements
-            for (int i = 0; i <= n; d[i, 0] = i++);
-            for (int j = 0; j <= m; d[0, j] = j++);
+            
+            // We shift the indices of the array.
+            for (int i = 0; i <= n; d[i, 0] = i++)
+            {
+            }
+
+            for (int j = 0; j <= m; d[0, j] = j++)
+            {
+            }
 #pragma warning restore SA1503 // Braces should not be omitted
 #pragma warning restore SA1106 // Code should not contain empty statements
 

@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Snowflake.Persistence;
 using Snowflake.Services;
 
-
 namespace Shiragame.Builder
 {
     public class OpenVgdb : SqliteDatabase

@@ -4,7 +4,6 @@ using Snowflake.Loader;
 using Snowflake.Services;
 using Snowflake.Services.AssemblyLoader;
 
-
 namespace Snowflake.Shell.Windows
 {
     internal class SnowflakeShell

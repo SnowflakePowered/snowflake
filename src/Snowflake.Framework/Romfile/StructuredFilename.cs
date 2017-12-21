@@ -10,7 +10,6 @@ using Microsoft.SqlServer.Server;
 using Snowflake.Romfile.Extensions;
 using Snowflake.Romfile.Tokenizer;
 
-
 namespace Snowflake.Romfile
 {
     public sealed class StructuredFilename : IStructuredFilename

@@ -135,7 +135,6 @@ namespace Snowflake.Scraping
                         continue;
                     }
 
-
                     var resultsToAppend = new List<ISeed>();
 
                     // Collect the results.

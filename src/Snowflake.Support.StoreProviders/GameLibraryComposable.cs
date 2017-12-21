@@ -6,7 +6,6 @@ using Snowflake.Records.Game;
 using Snowflake.Records.Metadata;
 using Snowflake.Services;
 
-
 namespace Snowflake.Support.StoreProviders
 {
     public class GameLibraryComposable : IComposable

@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Snowflake.Persistence;
 using Snowflake.Shiragame;
 
-
 namespace Snowflake.Support.ShiragameProvider
 {
     internal class ShiragameProvider : IShiragameProvider

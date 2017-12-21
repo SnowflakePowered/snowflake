@@ -7,7 +7,6 @@ using Snowflake.Scraping;
 using Snowflake.Scraping.Extensibility;
 using Snowflake.Support.Scraping.RecordScrapeEngine.Utility;
 
-
 namespace Snowflake.Support.Scraping.RecordScrapeEngine
 {
     [Plugin("RecordScrapeEngine-ResultCuller")]

@@ -12,7 +12,6 @@ using Snowflake.Persistence;
 using Snowflake.Platform;
 using Snowflake.Services;
 
-
 namespace Snowflake.Input.Controller.Mapped
 {
     /// <summary>

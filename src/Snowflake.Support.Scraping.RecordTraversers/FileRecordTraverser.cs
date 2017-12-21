@@ -6,7 +6,6 @@ using Snowflake.Scraping;
 using Snowflake.Scraping.Extensibility;
 using Snowflake.Support.Scraping.RecordTraversers.Extensions;
 
-
 namespace Snowflake.Support.Scraping.RecordTraversers
 {
     public class FileRecordTraverser : ITraverser<IFileRecord>

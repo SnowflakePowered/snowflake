@@ -7,7 +7,6 @@ using Snowflake.Records.File;
 using Snowflake.Records.Game;
 using Snowflake.Records.Metadata;
 
-
 namespace Snowflake.Records.File
 {
     public class FileRecord : IFileRecord

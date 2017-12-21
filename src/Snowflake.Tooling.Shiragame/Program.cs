@@ -10,7 +10,6 @@ using Snowflake.Persistence;
 using Snowflake.Platform;
 using Snowflake.Services;
 
-
 namespace Shiragame.Builder
 {
     class Program

@@ -9,7 +9,6 @@ using Snowflake.Scraping.Extensibility;
 using Snowflake.Services;
 using Snowflake.Support.Scraping.RecordTraversers.Extensions;
 
-
 namespace Snowflake.Support.Scraping.RecordTraversers
 {
     public class GameRecordTraverser : ITraverser<IGameRecord>

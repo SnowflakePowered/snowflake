@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Snowflake.Persistence;
 using Snowflake.Services;
 
-
 namespace Shiragame.Builder
 {
     internal class ShiragameDb : SqliteMemoryDatabase
