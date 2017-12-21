@@ -44,12 +44,9 @@ namespace Snowflake.Configuration.Input
         IEnumerable<IInputOption> Options { get; }
 
         /// <summary>
-        /// Sets the real device element that has been mapped to a virtual element.
-        /// Because of keyboard/gamepad covariance, this mapping is not one-to-one and thus
-        /// a getter is not possible. You must enumerate over the values and options
-        /// to get the resulting element.
+        /// Gets or sets the real device element that has been mapped to a virtual element.
         /// </summary>
         /// <param name="virtualElement">The virtual element on the controller definition</param>
-        ControllerElement this[ControllerElement virtualElement] { set; }
+        ControllerElement this[ControllerElement virtualElement] { get; set; }
     }
 }

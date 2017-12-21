@@ -9,7 +9,7 @@ using Snowflake.Input.Device;
 namespace Snowflake.Configuration.Input
 {
     /// <summary>
-    /// Maps controller elements onto the real key for the device.
+    /// Maps controller elements onto the string representation of the element for the configuration.
     /// </summary>
     public interface IInputMapping
     {

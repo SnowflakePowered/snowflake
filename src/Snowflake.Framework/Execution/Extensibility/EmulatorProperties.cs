@@ -16,10 +16,12 @@ namespace Snowflake.Execution.Extensibility
             this.Mimetypes = provision.Properties.GetEnumerable("mimetypes").ToList();
             this.SaveFormat = provision.Properties.Get("saveformat");
             this.OptionalSystemFiles = (from biosFile in provision.Properties.GetEnumerable("optionalbios")
-                                     let files = stone.Platforms.Values.SelectMany(p => p.BiosFiles).Where(b => b.FileName == biosFile)
+                                     let files = stone.Platforms.Values.SelectMany(p => p.BiosFiles)
+                                     .Where(b => b.FileName.Equals(biosFile, StringComparison.OrdinalIgnoreCase))
                                      select files).SelectMany(p => p).ToList();
             this.RequiredSystemFiles = (from biosFile in provision.Properties.GetEnumerable("requiredbios")
-                                      let files = stone.Platforms.Values.SelectMany(p => p.BiosFiles).Where(b => b.FileName == biosFile)
+                                      let files = stone.Platforms.Values.SelectMany(p => p.BiosFiles)
+                                      .Where(b => b.FileName.Equals(biosFile, StringComparison.OrdinalIgnoreCase))
                                       select files).SelectMany(p => p).ToList();
         }
 

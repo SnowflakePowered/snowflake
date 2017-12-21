@@ -32,7 +32,7 @@ namespace Snowflake.Configuration
         /// <inheritdoc/>
         public object this[string key]
         {
-            get { return configurationInterceptor.Values[key]; }
+            get { return configurationInterceptor.Values[key].Value; }
             set { this.configurationInterceptor.Values[key].Value = value; }
         }
 
