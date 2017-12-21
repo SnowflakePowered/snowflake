@@ -1,21 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using Snowflake.Configuration;
-using Snowflake.Emulator;
-using Snowflake.Input.Controller.Mapped;
-using Snowflake.Input.Device;
 using Snowflake.Loader;
-using Snowflake.Platform;
-using Snowflake.Plugin.Emulators.RetroArch.Adapters.Bsnes;
-using Snowflake.Records.File;
-using Snowflake.Records.Game;
-using Snowflake.Romfile;
-using Snowflake.Shiragame;
 using Snowflake.Services;
 using Snowflake.Services.AssemblyLoader;
 using Snowflake.Utility;
@@ -38,7 +22,6 @@ namespace Snowflake.Shell.Windows
             var loader = this.loadedCore.Get<IModuleEnumerator>();
             var composer = new AssemblyComposer(this.loadedCore, loader);
             composer.Compose();
-
             // this.loadedCore.Get<IEmulatorAssembliesManager>()?.LoadEmulatorAssemblies();
             // this.loadedCore.Get<IPluginManager>()?.Initialize();
            /* this.loadedCore.Get<IServerManager>().RegisterServer("ThemeServer", new ThemeServer(Path.Combine(this.loadedCore.AppDataDirectory, "themes")));

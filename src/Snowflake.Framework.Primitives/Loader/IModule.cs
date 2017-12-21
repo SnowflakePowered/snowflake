@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace Snowflake.Loader
 {
@@ -36,5 +37,10 @@ namespace Snowflake.Loader
         /// Gets the name of the module.
         /// </summary>
         string Name { get; }
+
+        /// <summary>
+        /// The version of this module.
+        /// </summary>
+        Version Version { get; }
     }
 }

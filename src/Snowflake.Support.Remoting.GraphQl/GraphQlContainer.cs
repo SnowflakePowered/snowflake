@@ -1,5 +1,7 @@
 ﻿using System.Linq;
 using Snowflake.Configuration;
+using Snowflake.Execution.Extensibility;
+using Snowflake.Execution.Saving;
 using Snowflake.Input;
 using Snowflake.Input.Device;
 using Snowflake.Loader;
@@ -22,7 +24,9 @@ namespace Snowflake.Support.Remoting.GraphQl
         [ImportService(typeof(IInputManager))]
         [ImportService(typeof(IPluginManager))]
         [ImportService(typeof(IMappedControllerElementCollectionStore))]
-        [ImportService(typeof(IScrapeEngine<IGameRecord>))]
+        [ImportService(typeof(IContentDirectoryProvider))]
+        [ImportService(typeof(ISaveLocationProvider))]
+      //  [ImportService(typeof(IScrapeEngine<IGameRecord>))]
         public void Compose(IModule module, IServiceRepository coreInstance)
         {
             var stone = coreInstance.Get<IStoneProvider>();
@@ -31,7 +35,9 @@ namespace Snowflake.Support.Remoting.GraphQl
             var input = coreInstance.Get<IInputManager>();
             var plugin = coreInstance.Get<IPluginManager>();
             var mapp = coreInstance.Get<IMappedControllerElementCollectionStore>();
-            var engine = coreInstance.Get<IScrapeEngine<IGameRecord>>();
+            var saves = coreInstance.Get<ISaveLocationProvider>();
+         //   var engine = coreInstance.Get<IScrapeEngine<IGameRecord>>();
+            var cdp = coreInstance.Get<IContentDirectoryProvider>();
 
             var rootSchema = coreInstance.Get<IGraphQlRootSchema>();
             var platformQueries = new PlatformInfoQueryBuilder(stone);
@@ -40,14 +46,16 @@ namespace Snowflake.Support.Remoting.GraphQl
             var configQuery = new ConfigurationQueryBuilder(config);
 
             var inputQuery = new InputQueryBuilder(input, plugin, mapp, stone);
+            var emuQuery = new EmulationQueryBuilder(plugin.GetCollection<IEmulator>(), stone, saves, inputQuery, controllerQueries);
 
-            var scrapeQuery = new ScrapingQueryBuilder(plugin.GetCollection<IScraper>(), plugin.GetCollection<ICuller>(), engine);
+           // var scrapeQuery = new ScrapingQueryBuilder(plugin.GetCollection<IScraper>(), plugin.GetCollection<ICuller>(), engine);
             rootSchema.Register(platformQueries);
             rootSchema.Register(controllerQueries);
             rootSchema.Register(recordQueries);
             rootSchema.Register(configQuery);
             rootSchema.Register(inputQuery);
-            rootSchema.Register(scrapeQuery);
+          //  rootSchema.Register(scrapeQuery);
+            rootSchema.Register(emuQuery);
         }
     }
 }

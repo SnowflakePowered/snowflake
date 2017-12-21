@@ -104,7 +104,7 @@ namespace Snowflake.Extensibility.Tests
         {
             var appDataDirectory = new DirectoryInfo(Path.GetTempPath())
                 .CreateSubdirectory(Guid.NewGuid().ToString());
-            var module = new Module(string.Empty, string.Empty, string.Empty, string.Empty, appDataDirectory);
+            var module = new Module(string.Empty, string.Empty, string.Empty, string.Empty, appDataDirectory, Version.Parse("1.0.0"));
             var resourceDir = module.ContentsDirectory.CreateSubdirectory("resource").CreateSubdirectory("TestPluginProvisioned");
             string pluginJson = TestUtilities.GetStringResource("Loader.plugin.json");
             File.WriteAllText(Path.Combine(resourceDir.FullName, "plugin.json"), pluginJson);

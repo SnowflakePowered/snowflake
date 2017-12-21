@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Snowflake.Configuration;
-using Snowflake.Plugin.Emulators.TestEmulator.Configuration;
 using Snowflake.Support.Remoting.GraphQl.Framework.Attributes;
 using Snowflake.Support.Remoting.GraphQl.Framework.Query;
 using Snowflake.Support.Remoting.GraphQl.Types.Configuration;
@@ -18,7 +17,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
             this.Store = store;
         }
 
-        [Connection("configValues", "Config Values", typeof(ConfigurationValueGraphType))]
+       /* [Connection("configValues", "Config Values", typeof(ConfigurationValueGraphType))]
         public IEnumerable<KeyValuePair<string, IConfigurationValue>> GetAllValues()
         {
             var config = this.Store.Get<ITestConfigurationCollection>(Guid.NewGuid(), "TestEmulator", "DefaultProfile");
@@ -44,6 +43,6 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
         {
             var config = this.Store.Get<ITestConfigurationCollection>(Guid.NewGuid(), "TestEmulator", "DefaultProfile");
             yield return config;
-        }
+        }*/
     }
 }

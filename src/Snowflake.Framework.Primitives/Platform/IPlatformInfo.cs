@@ -32,7 +32,7 @@ namespace Snowflake.Platform
         /// <summary>
         /// Gets the list of bios files for this platform
         /// </summary>
-        ILookup<string, string> BiosFiles { get; }
+        IEnumerable<IBiosFile> BiosFiles { get; }
 
         /// <summary>
         /// Gets the maximum amount of inputs that are physically possible for this platform to have.

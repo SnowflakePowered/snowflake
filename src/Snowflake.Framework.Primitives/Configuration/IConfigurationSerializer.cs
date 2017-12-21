@@ -1,11 +1,4 @@
-﻿using System.Collections.Generic;
-using Snowflake.Configuration.Input;
-using Snowflake.Emulator;
-using Snowflake.Input.Controller;
-using Snowflake.Input.Controller.Mapped;
-using Snowflake.Input.Device;
-
-namespace Snowflake.Configuration
+﻿namespace Snowflake.Configuration
 {
     /// <summary>
     /// A configuration serializer serializes a ConfigurationSection into valid emulator configuration.

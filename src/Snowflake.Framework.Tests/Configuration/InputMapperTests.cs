@@ -205,5 +205,25 @@ namespace Snowflake.Configuration.Tests
                 TestUtilities.GetStringResource("Configurations.ExampleInput.ini").Replace(Environment.NewLine, string.Empty),
                 serializedValue);
         }
+
+        [Fact]
+        public void InputTemplateGetterSetter_Test()
+        {
+            var realLayout =
+             JsonConvert.DeserializeObject<ControllerLayout>(
+               TestUtilities.GetStringResource("InputMappings.keyboard_device.json"));
+
+            var targetLayout =
+             JsonConvert.DeserializeObject<ControllerLayout>(
+                 TestUtilities.GetStringResource("InputMappings.xinput_device.json"));
+
+            var mapcol = MappedControllerElementCollection.GetDefaultMappings(realLayout, targetLayout);
+            IInputTemplate template = new InputTemplate<IRetroArchInput>(mapcol, 0);
+
+            Assert.Equal(ControllerElement.KeyZ, template[ControllerElement.ButtonA]);
+            template[ControllerElement.ButtonA] = ControllerElement.KeyX;
+            Assert.Equal(ControllerElement.KeyX, template[ControllerElement.ButtonA]);
+
+        }
     }
 }

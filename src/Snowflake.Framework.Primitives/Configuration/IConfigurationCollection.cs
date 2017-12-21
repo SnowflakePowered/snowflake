@@ -13,7 +13,7 @@ namespace Snowflake.Configuration
     /// The enumeration is guaranteed to enumerate in the order in which the section properties were described.
     /// </summary>
     /// <typeparam name="T">The type of the configuration collection</typeparam>
-    public interface IConfigurationCollection<out T> : IConfigurationCollection 
+    public interface IConfigurationCollection<out T> : IConfigurationCollection
         where T : class, IConfigurationCollection<T>
     {
         /// <summary>

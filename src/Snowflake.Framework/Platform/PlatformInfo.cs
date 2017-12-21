@@ -9,7 +9,7 @@ namespace Snowflake.Platform
     public class PlatformInfo : IPlatformInfo
     {
         public PlatformInfo(string platformId, string name, IDictionary<string, string> metadata,
-            IDictionary<string, string> fileTypes, ILookup<string, string> biosFiles, int maximumInputs)
+            IDictionary<string, string> fileTypes, IEnumerable<IBiosFile> biosFiles, int maximumInputs)
         {
             this.PlatformID = platformId;
             this.Metadata = metadata;
@@ -32,7 +32,7 @@ namespace Snowflake.Platform
         public IDictionary<string, string> FileTypes { get; }
 
         /// <inheritdoc/>
-        public ILookup<string, string> BiosFiles { get; }
+        public IEnumerable<IBiosFile> BiosFiles { get; }
 
         /// <inheritdoc/>
         public int MaximumInputs { get; }

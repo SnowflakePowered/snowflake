@@ -6,7 +6,7 @@
         "Snowflake"
     ],
   "description": "RetroArch bsnes",
-  "savetype": "retroarch-sram-snes",
-  "mimetypes": [ "application/x-romfile-snes-sfc" ],
+  "saveformat": "retroarch-sram-snes",
+  "mimetypes": [ "application/vnd.stone-romfile.nintendo.snes" ],
   "retroarch_core": "bsnes_performance_libretro.dll" 
 }

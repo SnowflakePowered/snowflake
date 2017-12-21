@@ -44,6 +44,19 @@ namespace Snowflake.Configuration.Input
         /// <inheritdoc/>
         public ControllerElement this[ControllerElement virtualElement]
         {
+            get
+            {
+                string optionKey = (from option in this._Options
+                                    where option.Value.TargetElement == virtualElement
+                                    select option.Key).FirstOrDefault();
+                if (optionKey == null)
+                {
+                    throw new KeyNotFoundException("This template does not support the target element or element type.");
+                }
+
+                return this.inputTemplateInterceptor.InputValues[optionKey];
+            }
+
             set
             {
                 string optionKey = (from option in this._Options

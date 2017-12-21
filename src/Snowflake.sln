@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2003
+VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Framework", "Framework", "{49B7A61F-B3BE-485E-84D0-B78C08656412}"
 EndProject
@@ -61,8 +61,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{16BB
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Framework.Tests.InvalidComposable", "Snowflake.Framework.Tests.InvalidComposable\Snowflake.Framework.Tests.InvalidComposable.csproj", "{89242BED-0913-4B7A-8C3A-8333B01EE9E9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Plugin.Emulators.TestEmulator", "Snowflake.Plugin.Emulators.TestEmulator\Snowflake.Plugin.Emulators.TestEmulator.csproj", "{4FA4C7DE-8242-4442-8DEB-DA86BBBFA782}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Support.Remoting.GraphQl", "Snowflake.Support.Remoting.GraphQl\Snowflake.Support.Remoting.GraphQl.csproj", "{3910B1F9-7346-46B4-BDF5-6750F148CB53}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Tooling.AssemblyModuleInstaller", "Snowflake.Tooling.AssemblyModuleInstaller\Snowflake.Tooling.AssemblyModuleInstaller.csproj", "{A105F458-EA8A-4A28-942D-970C66EE8CDF}"
@@ -71,13 +69,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Support.Remoting.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Support.Remoting.GraphQl.RootProvider", "Snowflake.Support.Remoting.GraphQl.RootProvider\Snowflake.Support.Remoting.GraphQl.RootProvider.csproj", "{F12EA8F4-07F4-4068-8B4C-CE18E13B9256}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Support.Scraping.RecordTraversers", "Snowflake.Support.Scraping.RecordTraversers\Snowflake.Support.Scraping.RecordTraversers.csproj", "{2D879147-2492-4B91-BBB3-C250432ACB32}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Support.Scraping.RecordTraversers", "Snowflake.Support.Scraping.RecordTraversers\Snowflake.Support.Scraping.RecordTraversers.csproj", "{2D879147-2492-4B91-BBB3-C250432ACB32}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Support.Scraping.RecordScrapeEngine", "Snowflake.Support.Scraping.RecordScrapeEngine\Snowflake.Support.Scraping.RecordScrapeEngine.csproj", "{4573C1CB-E648-4DAD-A055-444B43754247}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Support.Scraping.RecordScrapeEngine", "Snowflake.Support.Scraping.RecordScrapeEngine\Snowflake.Support.Scraping.RecordScrapeEngine.csproj", "{4573C1CB-E648-4DAD-A055-444B43754247}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scraping", "Scraping", "{86D5767F-B32D-4E1B-BBA2-B87A0DEC6C6F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Plugin.Scraping.TheGamesDb", "Snowflake.Plugin.Scraping.TheGamesDb\Snowflake.Plugin.Scraping.TheGamesDb.csproj", "{48700C7A-7410-46B3-9F55-42AA02F53FEA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Plugin.Scraping.TheGamesDb", "Snowflake.Plugin.Scraping.TheGamesDb\Snowflake.Plugin.Scraping.TheGamesDb.csproj", "{48700C7A-7410-46B3-9F55-42AA02F53FEA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Support.Execution.Providers", "Snowflake.Support.Execution.Providers\Snowflake.Support.Execution.Providers.csproj", "{A3EC6024-6CDA-4C65-9A48-113D84E0E616}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -353,18 +353,6 @@ Global
 		{89242BED-0913-4B7A-8C3A-8333B01EE9E9}.Release|x64.Build.0 = Release|Any CPU
 		{89242BED-0913-4B7A-8C3A-8333B01EE9E9}.Release|x86.ActiveCfg = Release|Any CPU
 		{89242BED-0913-4B7A-8C3A-8333B01EE9E9}.Release|x86.Build.0 = Release|Any CPU
-		{4FA4C7DE-8242-4442-8DEB-DA86BBBFA782}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4FA4C7DE-8242-4442-8DEB-DA86BBBFA782}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4FA4C7DE-8242-4442-8DEB-DA86BBBFA782}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{4FA4C7DE-8242-4442-8DEB-DA86BBBFA782}.Debug|x64.Build.0 = Debug|Any CPU
-		{4FA4C7DE-8242-4442-8DEB-DA86BBBFA782}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{4FA4C7DE-8242-4442-8DEB-DA86BBBFA782}.Debug|x86.Build.0 = Debug|Any CPU
-		{4FA4C7DE-8242-4442-8DEB-DA86BBBFA782}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4FA4C7DE-8242-4442-8DEB-DA86BBBFA782}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4FA4C7DE-8242-4442-8DEB-DA86BBBFA782}.Release|x64.ActiveCfg = Release|Any CPU
-		{4FA4C7DE-8242-4442-8DEB-DA86BBBFA782}.Release|x64.Build.0 = Release|Any CPU
-		{4FA4C7DE-8242-4442-8DEB-DA86BBBFA782}.Release|x86.ActiveCfg = Release|Any CPU
-		{4FA4C7DE-8242-4442-8DEB-DA86BBBFA782}.Release|x86.Build.0 = Release|Any CPU
 		{3910B1F9-7346-46B4-BDF5-6750F148CB53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3910B1F9-7346-46B4-BDF5-6750F148CB53}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3910B1F9-7346-46B4-BDF5-6750F148CB53}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -449,6 +437,18 @@ Global
 		{48700C7A-7410-46B3-9F55-42AA02F53FEA}.Release|x64.Build.0 = Release|Any CPU
 		{48700C7A-7410-46B3-9F55-42AA02F53FEA}.Release|x86.ActiveCfg = Release|Any CPU
 		{48700C7A-7410-46B3-9F55-42AA02F53FEA}.Release|x86.Build.0 = Release|Any CPU
+		{A3EC6024-6CDA-4C65-9A48-113D84E0E616}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3EC6024-6CDA-4C65-9A48-113D84E0E616}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3EC6024-6CDA-4C65-9A48-113D84E0E616}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A3EC6024-6CDA-4C65-9A48-113D84E0E616}.Debug|x64.Build.0 = Debug|Any CPU
+		{A3EC6024-6CDA-4C65-9A48-113D84E0E616}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A3EC6024-6CDA-4C65-9A48-113D84E0E616}.Debug|x86.Build.0 = Debug|Any CPU
+		{A3EC6024-6CDA-4C65-9A48-113D84E0E616}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3EC6024-6CDA-4C65-9A48-113D84E0E616}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3EC6024-6CDA-4C65-9A48-113D84E0E616}.Release|x64.ActiveCfg = Release|Any CPU
+		{A3EC6024-6CDA-4C65-9A48-113D84E0E616}.Release|x64.Build.0 = Release|Any CPU
+		{A3EC6024-6CDA-4C65-9A48-113D84E0E616}.Release|x86.ActiveCfg = Release|Any CPU
+		{A3EC6024-6CDA-4C65-9A48-113D84E0E616}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -477,7 +477,6 @@ Global
 		{28E6E924-BC59-4124-9EB1-F02A57C7A7E3} = {16BB0B43-6224-42C2-9A33-A039348CF965}
 		{1F42B6A4-FAB1-4E49-B984-6FEA213C6D92} = {16BB0B43-6224-42C2-9A33-A039348CF965}
 		{89242BED-0913-4B7A-8C3A-8333B01EE9E9} = {16BB0B43-6224-42C2-9A33-A039348CF965}
-		{4FA4C7DE-8242-4442-8DEB-DA86BBBFA782} = {C81398F8-AD50-4179-A0EC-2566EF978F1E}
 		{3910B1F9-7346-46B4-BDF5-6750F148CB53} = {FBD15674-246A-4C57-B865-07214D8BB9A1}
 		{A105F458-EA8A-4A28-942D-970C66EE8CDF} = {8E178A6E-EAA5-413A-9EBE-36557DFF288E}
 		{1D0D030D-5F03-43B5-96BB-82B0F48714EF} = {FBD15674-246A-4C57-B865-07214D8BB9A1}
@@ -486,6 +485,7 @@ Global
 		{4573C1CB-E648-4DAD-A055-444B43754247} = {FBD15674-246A-4C57-B865-07214D8BB9A1}
 		{86D5767F-B32D-4E1B-BBA2-B87A0DEC6C6F} = {4D861CF0-7989-4E65-8F7C-B802B5D1AD86}
 		{48700C7A-7410-46B3-9F55-42AA02F53FEA} = {86D5767F-B32D-4E1B-BBA2-B87A0DEC6C6F}
+		{A3EC6024-6CDA-4C65-9A48-113D84E0E616} = {FBD15674-246A-4C57-B865-07214D8BB9A1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {532F5D25-2D82-45B3-BF60-DDA40A0FB795}

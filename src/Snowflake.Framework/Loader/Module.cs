@@ -25,7 +25,10 @@ namespace Snowflake.Loader
         /// <inheritdoc/>
         public DirectoryInfo ContentsDirectory { get; }
 
-        public Module(string name, string entry, string loader, string author, DirectoryInfo moduleDirectory)
+        /// <inheritdoc/>
+        public Version Version { get; }
+
+        public Module(string name, string entry, string loader, string author, DirectoryInfo moduleDirectory, Version version)
         {
             this.Name = name;
             this.Entry = entry;
@@ -33,6 +36,7 @@ namespace Snowflake.Loader
             this.Author = author;
             this.ModuleDirectory = moduleDirectory;
             this.ContentsDirectory = moduleDirectory.CreateSubdirectory("contents");
+            this.Version = version;
         }
     }
 
@@ -64,6 +68,7 @@ namespace Snowflake.Loader
             this.Entry,
             this.Loader,
             this.Author,
-            moduleDirectory);
+            moduleDirectory,
+            System.Version.Parse(this.Version));
     }
 }

@@ -10,7 +10,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Adapters\Nestopia\**" />
+    <EmbeddedResource Remove="Adapters\Nestopia\**" />
+    <None Remove="Adapters\Nestopia\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="System.Diagnostics.Process" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="dotnet-pack-snowflake" Version="1.2.0" />
+    <DotNetCliToolReference Include="dotnet-install-snowflake" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,10 +30,21 @@
     <ProjectReference Include="..\Snowflake.Framework\Snowflake.Framework.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <DotNetCliToolReference Include="dotnet-pack-snowflake" Version="1.2.0" />
+    <AdditionalFiles Include="..\stylecop.json" />
   </ItemGroup>
   <ItemGroup>
-    <AdditionalFiles Include="..\stylecop.json" />
+    <None Update="module.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="resource\common\InputMappings\DirectInput.KEYBOARD_DEVICE.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="resource\common\InputMappings\DirectInput.XINPUT_DEVICE.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="resource\RetroArchBsnes\plugin.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\Snowflake.ruleset</CodeAnalysisRuleSet>
