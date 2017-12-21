@@ -14,7 +14,7 @@ using Snowflake.Support.Remoting.GraphQl.Framework.Query;
 using Snowflake.Support.Remoting.GraphQl.Inputs.Scraping;
 using Snowflake.Support.Remoting.GraphQl.Types.Record;
 using Snowflake.Support.Remoting.GraphQl.Types.Scraping;
-using static Snowflake.Utility.SeedBuilder;
+using static Snowflake.Scraping.Extensibility.SeedBuilder;
 namespace Snowflake.Support.Remoting.GraphQl.Queries
 {
     public class ScrapingQueryBuilder : QueryBuilder

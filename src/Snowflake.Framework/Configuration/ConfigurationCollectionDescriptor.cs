@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Castle.Core.Internal;
 using Snowflake.Configuration.Attributes;
-using Snowflake.Utility;
+using Snowflake.Configuration.Extensions;
 
 namespace Snowflake.Configuration
 {
@@ -28,7 +28,7 @@ namespace Snowflake.Configuration
                 .ToDictionary(f => f.Key, f => new ConfigurationFile(f.FileName, f.Key, new BooleanMapping(f.TrueMapping, f.FalseMapping)) as IConfigurationFile));
             var sections =
                 (from props in typeof(T).GetPublicProperties()
-                    where props.HasAttribute<SerializableSectionAttribute>()
+                    where props.IsDefined(typeof(SerializableSectionAttribute))
                     select props).ToImmutableList();
             this.SectionKeys = ImmutableList.CreateRange(from props in sections select props.Name);
 

@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.SqlServer.Server;
 using Snowflake.Romfile.Tokenizer;
-using Snowflake.Utility;
+
 
 namespace Snowflake.Romfile
 {
@@ -93,7 +93,8 @@ namespace Snowflake.Romfile
                 .WithoutLastArticle("De")
                 .WithoutLastArticle("La")
                 .WithoutLastArticle("Le")
-                .WithoutLastArticle("Les");
+                .WithoutLastArticle("Les")
+                .ToTitleCase();
         }
     }
 
@@ -108,6 +109,18 @@ namespace Snowflake.Romfile
 
             string[] titleWithoutArticle = title.Split($", {article}");
             return string.Join(string.Empty, titleWithoutArticle.Prepend(article + " "));
+        }
+
+        public static string ToTitleCase(this string str)
+        {
+            var tokens = str.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+            for (var i = 0; i < tokens.Length; i++)
+            {
+                var token = tokens[i];
+                tokens[i] = token.Substring(0, 1).ToUpper() + token.Substring(1);
+            }
+
+            return string.Join(" ", tokens);
         }
     }
 }

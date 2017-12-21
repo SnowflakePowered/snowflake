@@ -4,6 +4,7 @@ using System.Linq;
 using Snowflake.Records.File;
 using Snowflake.Scraping;
 using Snowflake.Scraping.Extensibility;
+using Snowflake.Support.Scraping.RecordTraversers.Extensions;
 using Snowflake.Utility;
 
 namespace Snowflake.Support.Scraping.RecordTraversers

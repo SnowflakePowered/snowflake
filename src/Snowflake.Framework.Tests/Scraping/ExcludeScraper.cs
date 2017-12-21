@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Extensibility;
 using Snowflake.Scraping.Extensibility;
-using static Snowflake.Utility.SeedBuilder;
+using static Snowflake.Scraping.Extensibility.SeedBuilder;
 
 namespace Snowflake.Scraping
 {

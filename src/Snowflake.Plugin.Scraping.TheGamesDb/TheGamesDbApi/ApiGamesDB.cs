@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Xml;
-using Snowflake.Utility;
+using Snowflake.Plugin.Scraping.TheGamesDb.Utility;
 
 namespace Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi
 {
@@ -27,7 +27,7 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi
         public static async Task<ICollection<ApiGameSearchResult>> GetGames(string name, string platform = "", string genre = "")
         {
             XmlDocument doc = new XmlDocument();
-            var docstring = await WebClient.DownloadDataAsync(new Uri(@"http://thegamesdb.net/api/GetGamesList.php?name=" + name + @"&platform=" + platform + @"&genre=" + genre))
+            var docstring = await StaticWebClient.DownloadDataAsync(new Uri(@"http://thegamesdb.net/api/GetGamesList.php?name=" + name + @"&platform=" + platform + @"&genre=" + genre))
                 .ConfigureAwait(false);
             doc.Load(docstring);
 
@@ -82,7 +82,7 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi
         public static async Task<ICollection<int>> GetUpdatedGames(int time)
         {
             XmlDocument doc = new XmlDocument();
-            var docstring = await WebClient.DownloadDataAsync(new Uri(@"http://thegamesdb.net/api/Updates.php?time=" + time))
+            var docstring = await StaticWebClient.DownloadDataAsync(new Uri(@"http://thegamesdb.net/api/Updates.php?time=" + time))
                 .ConfigureAwait(false);
             doc.Load(docstring);
 
@@ -98,8 +98,7 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi
             {
                 gameNode = (XmlNode)ienum.Current;
 
-                int game;
-                int.TryParse(gameNode.InnerText, out game);
+                int.TryParse(gameNode.InnerText, out int game);
 
                 games.Add(game);
             }
@@ -115,7 +114,7 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi
         public static async Task<ApiGame> GetGame(int iD)
         {
             XmlDocument doc = new XmlDocument();
-            var docstring = await WebClient.DownloadDataAsync(new Uri(@"http://thegamesdb.net/api/GetGame.php?id=" + iD))
+            var docstring = await StaticWebClient.DownloadDataAsync(new Uri(@"http://thegamesdb.net/api/GetGame.php?id=" + iD))
                 .ConfigureAwait(false);
             doc.Load(docstring);
 
@@ -214,7 +213,7 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi
         {
             XmlDocument doc = new XmlDocument();
 
-            var docstring = await WebClient.DownloadDataAsync(new Uri(@"http://thegamesdb.net/api/GetPlatformsList.php"))
+            var docstring = await StaticWebClient.DownloadDataAsync(new Uri(@"http://thegamesdb.net/api/GetPlatformsList.php"))
                 .ConfigureAwait(false);
 
             doc.Load(docstring);
@@ -268,7 +267,7 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi
         public static async Task<ApiPlatform> GetPlatform(int iD)
         {
             XmlDocument doc = new XmlDocument();
-            var docstring = await WebClient.DownloadDataAsync(new Uri(@"http://thegamesdb.net/api/GetPlatform.php?id=" + iD))
+            var docstring = await StaticWebClient.DownloadDataAsync(new Uri(@"http://thegamesdb.net/api/GetPlatform.php?id=" + iD))
                 .ConfigureAwait(false);
             doc.Load(docstring);
 
@@ -356,7 +355,7 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi
         public static async Task<ICollection<ApiGameSearchResult>> GetPlatformGames(int iD)
         {
             XmlDocument doc = new XmlDocument();
-            var docstring = await WebClient.DownloadDataAsync(new Uri(@"http://thegamesdb.net/api/GetPlatformGames.php?platform=" + iD))
+            var docstring = await StaticWebClient.DownloadDataAsync(new Uri(@"http://thegamesdb.net/api/GetPlatformGames.php?platform=" + iD))
                 .ConfigureAwait(false);
             doc.Load(docstring);
 

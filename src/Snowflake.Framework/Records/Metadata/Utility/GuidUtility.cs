@@ -3,12 +3,12 @@ using System;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Snowflake.Utility
+namespace Snowflake.Records.Metadata.Utility
 {
     /// <summary>
     /// Helper methods for working with <see cref="Guid"/>.
     /// </summary>
-    public static class GuidUtility
+    internal static class GuidCreator
     {
         /// <summary>
         /// Creates a name-based UUID using the algorithm from RFC 4122 §4.3.
@@ -19,7 +19,7 @@ namespace Snowflake.Utility
         /// <remarks>See <a href="http://code.logos.com/blog/2011/04/generating_a_deterministic_guid.html">Generating a deterministic GUID</a>.</remarks>
         public static Guid Create(Guid namespaceId, string name)
         {
-            return GuidUtility.Create(namespaceId, name, 5);
+            return GuidCreator.Create(namespaceId, name, 5);
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Snowflake.Utility
 
             // convert the namespace UUID to network order (step 3)
             byte[] namespaceBytes = namespaceId.ToByteArray();
-            GuidUtility.SwapByteOrder(namespaceBytes);
+            GuidCreator.SwapByteOrder(namespaceBytes);
 
             // comput the hash of the name space ID concatenated with the name (step 4)
             byte[] hash;
@@ -76,7 +76,7 @@ namespace Snowflake.Utility
             newGuid[8] = (byte)((newGuid[8] & 0x3F) | 0x80);
 
             // convert the resulting UUID to local byte order (step 13)
-            GuidUtility.SwapByteOrder(newGuid);
+            GuidCreator.SwapByteOrder(newGuid);
             return new Guid(newGuid);
         }
 
@@ -98,10 +98,10 @@ namespace Snowflake.Utility
         // Converts a GUID (expressed as a byte array) to/from network order (MSB-first).
         internal static void SwapByteOrder(byte[] guid)
         {
-            GuidUtility.SwapBytes(guid, 0, 3);
-            GuidUtility.SwapBytes(guid, 1, 2);
-            GuidUtility.SwapBytes(guid, 4, 5);
-            GuidUtility.SwapBytes(guid, 6, 7);
+            GuidCreator.SwapBytes(guid, 0, 3);
+            GuidCreator.SwapBytes(guid, 1, 2);
+            GuidCreator.SwapBytes(guid, 4, 5);
+            GuidCreator.SwapBytes(guid, 6, 7);
         }
 
         private static void SwapBytes(byte[] guid, int left, int right)

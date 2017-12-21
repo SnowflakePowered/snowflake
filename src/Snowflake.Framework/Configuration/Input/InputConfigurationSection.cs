@@ -10,7 +10,7 @@ using Castle.Core.Internal;
 using Castle.DynamicProxy;
 using Snowflake.Configuration.Attributes;
 using Snowflake.Configuration.Interceptors;
-using Snowflake.Utility;
+
 
 namespace Snowflake.Configuration.Input
 {
@@ -42,8 +42,8 @@ namespace Snowflake.Configuration.Input
             this.Descriptor = new ConfigurationSectionDescriptor<T>();
             ProxyGenerator generator = new ProxyGenerator();
             var options = from prop in typeof(T).GetProperties()
-                          where prop.HasAttribute<ConfigurationOptionAttribute>()
                           let attr = prop.GetCustomAttribute<ConfigurationOptionAttribute>()
+                          where attr != null
                           let name = prop.Name
                           let metadata = prop.GetCustomAttributes<CustomMetadataAttribute>()
                           select new ConfigurationOptionDescriptor(attr, metadata, name) as IConfigurationOptionDescriptor;

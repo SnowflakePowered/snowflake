@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using Snowflake.Extensibility;
-using static Snowflake.Utility.SeedBuilder;
 using System.Threading.Tasks;
 using Snowflake.Scraping.Extensibility;
+using static Snowflake.Scraping.Extensibility.SeedBuilder;
 
 namespace Snowflake.Scraping.Tests
 {

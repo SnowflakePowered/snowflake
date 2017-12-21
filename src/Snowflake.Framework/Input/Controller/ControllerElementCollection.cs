@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Snowflake.Utility;
+using Snowflake.Input.Controller.Extensions;
 
 namespace Snowflake.Input.Controller
 {

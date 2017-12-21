@@ -6,9 +6,9 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Snowflake.Utility
+namespace Snowflake.Configuration.Utility
 {
-    public static class Instantiate
+    internal static class Instantiate
     {
         public static T CreateInstance<T>()
             where T : new()

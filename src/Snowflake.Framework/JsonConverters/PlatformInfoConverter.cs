@@ -9,7 +9,7 @@ using Snowflake.Platform;
 
 namespace Snowflake.JsonConverters
 {
-    public class PlatformInfoConverter : JsonCreationConverter<IPlatformInfo>
+    internal class PlatformInfoConverter : JsonCreationConverter<IPlatformInfo>
     {
         /// <inheritdoc/>
         protected override IPlatformInfo Create(Type objectType, JObject jObject)
