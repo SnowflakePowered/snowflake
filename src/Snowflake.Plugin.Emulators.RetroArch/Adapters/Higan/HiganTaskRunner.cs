@@ -52,10 +52,10 @@ namespace Snowflake.Adapters.Higan
                 .WithArgument("-L", Path.Combine(this.CoreDirectory.FullName, task.Pragmas["retroarch_core"]))
                 .WithArgument(fileToExecute.FilePath);
 
-            foreach (var cfg in this.BuildConfiguration(task.TaskConfiguration, task.ControllerConfiguration))
+            foreach (var cfg in this.BuildConfiguration(task.EmulatorConfiguration, task.ControllerConfiguration))
             {
                 await File.WriteAllTextAsync(Path.Combine(task.ProcessTaskRoot.ConfigurationDirectory.FullName,
-                    task.TaskConfiguration.Descriptor.Outputs[cfg.Key].Destination), cfg.Value);
+                    task.EmulatorConfiguration.Descriptor.Outputs[cfg.Key].Destination), cfg.Value);
             }
 
             var psi = builder.ToProcessStartInfo();

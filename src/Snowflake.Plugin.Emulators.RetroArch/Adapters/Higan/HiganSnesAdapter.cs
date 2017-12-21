@@ -81,7 +81,7 @@ namespace Snowflake.Adapters.Higan
                     break;
             }
 
-            task.TaskConfiguration = configuration;
+            task.EmulatorConfiguration = configuration;
             return task;
         }
     }

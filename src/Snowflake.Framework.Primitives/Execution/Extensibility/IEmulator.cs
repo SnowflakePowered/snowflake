@@ -28,16 +28,16 @@ namespace Snowflake.Execution.Extensibility
         IEmulatorProperties Properties { get; }
 
         /// <summary>
-        /// Creates a task to exeut
+        /// Creates a task to execute the given game with the emulator <see cref="Runner"/>
         /// </summary>
-        /// <param name="executingGame"></param>
-        /// <param name="saveLocation"></param>
-        /// <param name="controllerConfiguration"></param>
-        /// <param name="profileContext"></param>
+        /// <param name="executingGame">The game to execute.</param>
+        /// <param name="saveLocation">The provided save location.</param>
+        /// <param name="controllerConfiguration">The emulated controller configuration.</param>
+        /// <param name="configurationProfile">The profile name of the emulator configuration.</param>
         /// <returns></returns>
         IEmulatorTask CreateTask(IGameRecord executingGame,
             ISaveLocation saveLocation,
             IList<IEmulatedController> controllerConfiguration,
-            string profileContext = "default");
+            string configurationProfile = "default");
     }
 }

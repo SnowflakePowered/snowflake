@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Snowflake.Execution.Extensibility
 {
+    /// <inheritdoc/>s
     public abstract class EmulatorTaskResult : IEmulatorTaskResult
     {
         public EmulatorTaskResult(string emulatorName, DateTimeOffset startTime)
@@ -17,12 +18,16 @@ namespace Snowflake.Execution.Extensibility
         {
         }
 
+        /// <inheritdoc/>
         public string EmulatorName { get; }
 
+        /// <inheritdoc/>
         public DateTimeOffset StartTime { get; }
 
+        /// <inheritdoc/>
         public bool IsRunning { get; set; }
 
+        /// <inheritdoc/>
         public abstract void Closed();
     }
 }
