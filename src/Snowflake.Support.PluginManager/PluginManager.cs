@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Globalization;
@@ -171,6 +172,19 @@ namespace Snowflake.Support.PluginManager
 
             // TODO: uncomment the following line if the finalizer is overridden above.
             // GC.SuppressFinalize(this);
+        }
+        #endregion
+
+
+        #region IEnumerable Support
+        public IEnumerator<IPlugin> GetEnumerator()
+        {
+            return this.loadedPlugins.SelectMany(p => p.Value).GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
         }
         #endregion
 
