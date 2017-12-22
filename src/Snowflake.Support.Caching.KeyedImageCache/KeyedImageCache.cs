@@ -24,14 +24,16 @@ namespace Snowflake.Support.Caching.KeyedImageCache
         {
             Guid cacheId = Guid.NewGuid();
             DirectoryInfo cachePath = this.rootPath.CreateSubdirectory(cacheId.ToString());
-            var image = Image.Load(imageStream, out IImageFormat imageFormat);
-            return new List<IFileRecord>
+            using (var image = Image.Load(imageStream, out IImageFormat imageFormat))
             {
-                KeyedImageCache.SaveImage(image, 100, cacheId, cachePath, imageType, recordGuid),
-                KeyedImageCache.SaveImage(image, 50, cacheId, cachePath, imageType, recordGuid),
-                KeyedImageCache.SaveImage(image, 25, cacheId, cachePath, imageType, recordGuid),
-                KeyedImageCache.SaveImage(image, 10, cacheId, cachePath, imageType, recordGuid),
-            };
+                return new List<IFileRecord>
+                {
+                    KeyedImageCache.SaveImage(image, 100, cacheId, cachePath, imageType, recordGuid),
+                    KeyedImageCache.SaveImage(image, 50, cacheId, cachePath, imageType, recordGuid),
+                    KeyedImageCache.SaveImage(image, 25, cacheId, cachePath, imageType, recordGuid),
+                    KeyedImageCache.SaveImage(image, 10, cacheId, cachePath, imageType, recordGuid),
+                };
+            }
         }
 
         /// <inheritdoc/>
@@ -39,14 +41,16 @@ namespace Snowflake.Support.Caching.KeyedImageCache
         {
             Guid cacheId = Guid.NewGuid();
             DirectoryInfo cachePath = this.rootPath.CreateSubdirectory(cacheId.ToString());
-            var image = Image.Load(imageStream, out IImageFormat imageFormat);
-            return new List<IFileRecord>
+            using (var image = Image.Load(imageStream, out IImageFormat imageFormat))
             {
-                KeyedImageCache.SaveImage(image, 100, cacheId, cachePath, imageType, recordGuid, dateTime),
-                KeyedImageCache.SaveImage(image, 50, cacheId, cachePath, imageType, recordGuid, dateTime),
-                KeyedImageCache.SaveImage(image, 25, cacheId, cachePath, imageType, recordGuid, dateTime),
-                KeyedImageCache.SaveImage(image, 10, cacheId, cachePath, imageType, recordGuid, dateTime),
-            };
+                return new List<IFileRecord>
+                {
+                    KeyedImageCache.SaveImage(image, 100, cacheId, cachePath, imageType, recordGuid, dateTime),
+                    KeyedImageCache.SaveImage(image, 50, cacheId, cachePath, imageType, recordGuid, dateTime),
+                    KeyedImageCache.SaveImage(image, 25, cacheId, cachePath, imageType, recordGuid, dateTime),
+                    KeyedImageCache.SaveImage(image, 10, cacheId, cachePath, imageType, recordGuid, dateTime),
+                };
+            }
         }
 
         private static IFileRecord SaveImage(Image<Rgba32> image, int percent, Guid cacheId, DirectoryInfo cachePath, string imageType, Guid recordGuid)
