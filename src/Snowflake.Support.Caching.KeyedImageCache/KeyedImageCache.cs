@@ -68,9 +68,12 @@ namespace Snowflake.Support.Caching.KeyedImageCache
                     int newHeight = Convert.ToInt32(Math.Ceiling(image.Height * percent * 0.01));
                     int newWidth = Convert.ToInt32(Math.Ceiling(image.Width * percent * 0.01));
 
-                    image.Mutate(a => a.Resize(newWidth, newHeight));
-                    image.SaveAsJpeg(stream);
-                    stream.Close();
+                    using (var resizedImage = image.Clone(a => a.Resize(newWidth, newHeight)))
+                    {
+                        resizedImage.SaveAsJpeg(stream);
+                        stream.Close();
+                    }
+
                 }
             }
 
