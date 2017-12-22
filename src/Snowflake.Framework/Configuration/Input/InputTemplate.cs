@@ -12,9 +12,9 @@ using Snowflake.Configuration.Attributes;
 using Snowflake.Configuration.Input;
 using Snowflake.Configuration.Interceptors;
 using Snowflake.Input.Controller;
+using Snowflake.Input.Controller.Extensions;
 using Snowflake.Input.Controller.Mapped;
 using Snowflake.Input.Device;
-using Snowflake.Utility;
 
 namespace Snowflake.Configuration.Input
 {
@@ -77,11 +77,10 @@ namespace Snowflake.Configuration.Input
         {
             this.PlayerIndex = playerIndex;
             ProxyGenerator generator = new ProxyGenerator();
-
             this._Options = (from prop in typeof(T).GetProperties()
-                where prop.HasAttribute<InputOptionAttribute>()
-                let name = prop.Name
                 let inputOptionAttribute = prop.GetCustomAttribute<InputOptionAttribute>()
+                where inputOptionAttribute != null
+                let name = prop.Name
                 select new KeyValuePair<string, IInputOption>(name, new InputOption(inputOptionAttribute, name))).ToDictionary(o => o.Key,
                     o => o.Value);
             var overrides = (from element in mappedElements
@@ -96,8 +95,8 @@ namespace Snowflake.Configuration.Input
                 let value = overrides.ContainsKey(key) ? overrides[key] : ControllerElement.NoElement
                 select new KeyValuePair<string, ControllerElement>(key, value);
             this.configurationOptions = (from prop in typeof(T).GetProperties()
-                          where prop.HasAttribute<ConfigurationOptionAttribute>()
                           let configAttribute = prop.GetCustomAttribute<ConfigurationOptionAttribute>()
+                          where configAttribute != null
                           let name = prop.Name
                           let metadata = prop.GetCustomAttributes<CustomMetadataAttribute>()
                           select new ConfigurationOptionDescriptor(configAttribute, metadata, name) as IConfigurationOptionDescriptor).ToList();

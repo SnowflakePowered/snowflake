@@ -10,7 +10,6 @@ using Snowflake.Loader;
 using Snowflake.Records.Game;
 using Snowflake.Services.Logging;
 using Snowflake.Services.Persistence;
-using Snowflake.Utility;
 
 namespace Snowflake.Services
 {

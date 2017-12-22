@@ -4,8 +4,8 @@ using System.Linq;
 using System.Reflection;
 using Snowflake.Extensibility;
 using Snowflake.Loader;
+using Snowflake.Services.AssemblyLoader.Extensions;
 using Snowflake.Services.Logging;
-using Snowflake.Utility;
 
 namespace Snowflake.Services.AssemblyLoader
 {

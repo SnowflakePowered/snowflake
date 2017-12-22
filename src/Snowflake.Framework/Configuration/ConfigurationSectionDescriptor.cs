@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Castle.Core.Internal;
 using Snowflake.Configuration.Attributes;
-using Snowflake.Utility;
 
 namespace Snowflake.Configuration
 {
@@ -33,8 +32,8 @@ namespace Snowflake.Configuration
         {
             // todo cache descriptors
             this.Options = (from prop in typeof(T).GetProperties()
-                          where prop.HasAttribute<ConfigurationOptionAttribute>()
                           let attr = prop.GetCustomAttribute<ConfigurationOptionAttribute>()
+                          where attr != null
                           let name = prop.Name
                           let metadata = prop.GetCustomAttributes<CustomMetadataAttribute>()
                           select new ConfigurationOptionDescriptor(attr, metadata, name))

@@ -6,22 +6,10 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Snowflake.Utility
+namespace Snowflake.Support.Scraping.RecordScrapeEngine.Utility
 {
-    public static class StringComparisonExtensions
+    public static class StringExtensions
     {
-        public static string ToTitleCase(this string str)
-        {
-            var tokens = str.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-            for (var i = 0; i < tokens.Length; i++)
-            {
-                var token = tokens[i];
-                tokens[i] = token.Substring(0, 1).ToUpper() + token.Substring(1);
-            }
-
-            return string.Join(" ", tokens);
-        }
-
         /// <summary>
         /// Normalizes a title string using certain rules
         /// </summary>
@@ -66,6 +54,7 @@ namespace Snowflake.Utility
         /// <summary>
         /// Compute the distance between two strings.
         /// </summary>
+        /// <returns>The levenshtein difference between the two strings.</returns>
         public static int Levenshtein(this string s, string t)
         {
             int n = s.Length;
@@ -85,9 +74,18 @@ namespace Snowflake.Utility
 
             // Step 2
 #pragma warning disable SA1503 // Braces should not be omitted
-            for (int i = 0; i <= n; d[i, 0] = i++) ;
-            for (int j = 0; j <= m; d[0, j] = j++);
+#pragma warning disable SA1106 // Code should not contain empty statements
+            
+            // We shift the indices of the array.
+            for (int i = 0; i <= n; d[i, 0] = i++)
+            {
+            }
+
+            for (int j = 0; j <= m; d[0, j] = j++)
+            {
+            }
 #pragma warning restore SA1503 // Braces should not be omitted
+#pragma warning restore SA1106 // Code should not contain empty statements
 
             // Step 3
             for (int i = 1; i <= n; i++)

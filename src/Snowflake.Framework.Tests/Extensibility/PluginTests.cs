@@ -76,7 +76,6 @@ namespace Snowflake.Extensibility.Tests
             Assert.Empty(props.GetDictionary(string.Empty));
         }
 
-
         [Fact]
         public void EmptyConfigurationStore_Test()
         {

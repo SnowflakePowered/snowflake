@@ -5,9 +5,9 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Snowflake.Utility
+namespace Snowflake.Configuration.Extensions
 {
-    public static class TypeExtensions
+    internal static class TypeExtensions
     {
         public static IEnumerable<PropertyInfo> GetPublicProperties(this Type type)
         {

@@ -8,8 +8,9 @@ using Castle.Core.Internal;
 using Castle.DynamicProxy;
 using Newtonsoft.Json;
 using Snowflake.Configuration.Attributes;
+using Snowflake.Configuration.Extensions;
+using Snowflake.Configuration.Utility;
 using Snowflake.JsonConverters;
-using Snowflake.Utility;
 
 namespace Snowflake.Configuration
 {

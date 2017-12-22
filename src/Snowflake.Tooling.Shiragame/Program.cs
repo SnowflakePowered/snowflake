@@ -9,7 +9,6 @@ using Shiragame.Builder.Parser;
 using Snowflake.Persistence;
 using Snowflake.Platform;
 using Snowflake.Services;
-using Snowflake.Utility;
 
 namespace Shiragame.Builder
 {

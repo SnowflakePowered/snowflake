@@ -6,7 +6,7 @@ using Snowflake.Extensibility;
 using Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi;
 using Snowflake.Scraping;
 using Snowflake.Scraping.Extensibility;
-using static Snowflake.Utility.SeedBuilder;
+using static Snowflake.Scraping.Extensibility.SeedBuilder;
 namespace Snowflake.Plugin.Scraping.TheGamesDb
 {
     [Directive(AttachTarget.Root, Directive.Requires, "platform")]

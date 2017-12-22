@@ -24,7 +24,6 @@ namespace Snowflake.Scraping.Extensibility
             return seedTree.Content;
         }
 
- 
         /// <summary>
         /// Implicitly coerces a <see cref="SeedContent"/> into
         /// a single <see cref="SeedTree"/> without children.
@@ -68,7 +67,6 @@ namespace Snowflake.Scraping.Extensibility
             return (seedTree.Content, seedTree.Children);
         }
 
-
         /// <summary>
         /// Implicitly coerces a <see cref="SeedTree"/>
         /// into a <see cref="ValueTuple{SeedContent, IEnumerable{SeedTree}}"/>
@@ -79,7 +77,6 @@ namespace Snowflake.Scraping.Extensibility
         {
             return (seedTree.Content, seedTree.Children);
         }
-
 
         /// <summary>
         /// Implicitly coerces a <see cref="ValueTuple{SeedContent, IEnumerable{SeedTree}}"/>

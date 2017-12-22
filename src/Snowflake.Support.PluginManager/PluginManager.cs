@@ -13,7 +13,6 @@ using Snowflake.Extensibility.Configuration;
 using Snowflake.Extensibility.Provisioning;
 using Snowflake.Loader;
 using Snowflake.Services;
-using Snowflake.Utility;
 
 namespace Snowflake.Support.PluginManager
 {
@@ -23,6 +22,7 @@ namespace Snowflake.Support.PluginManager
         private readonly IContentDirectoryProvider contentDirectory;
         private readonly IDictionary<Type, IImmutableList<IPlugin>> loadedPlugins;
         private readonly ISqliteDatabaseProvider databaseProvider;
+
         public PluginManager(ILogProvider logProvider,
             IContentDirectoryProvider contentDirectory,
             ISqliteDatabaseProvider databaseProvider)

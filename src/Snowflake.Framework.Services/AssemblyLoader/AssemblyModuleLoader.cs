@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Snowflake.AssemblyLoader.Utility;
 using Snowflake.Loader;
 using Snowflake.Services.Logging;
-using Snowflake.Utility;
 
 namespace Snowflake.Services.AssemblyLoader
 {

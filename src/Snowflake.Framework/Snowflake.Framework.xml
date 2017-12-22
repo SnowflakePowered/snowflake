@@ -399,6 +399,72 @@
         <member name="P:Snowflake.Configuration.SelectionOptionDescriptor.EnumType">
             <inheritdoc/>
         </member>
+        <member name="T:Snowflake.Execution.Extensibility.EmulatorTask">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Execution.Extensibility.EmulatorTask.EmulatorConfiguration">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Execution.Extensibility.EmulatorTask.ControllerConfiguration">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Execution.Extensibility.EmulatorTask.EmulatingGame">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Execution.Extensibility.EmulatorTask.GameSaveLocation">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Execution.Extensibility.EmulatorTask.Pragmas">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Execution.Extensibility.EmulatorTask.ProcessTaskRoot">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Execution.Extensibility.EmulatorTask.TaskIdentifier">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Execution.Extensibility.EmulatorTask.AddPragma(System.String,System.String)">
+            <summary>
+            Add a pragma to the task.
+            </summary>
+            <param name="pragmaKey">The key of the pragma.</param>
+            <param name="pragmaValue">The value of the pragma.</param>
+        </member>
+        <member name="T:Snowflake.Execution.Extensibility.EmulatorTaskResult">
+            <inheritdoc/>s
+        </member>
+        <member name="P:Snowflake.Execution.Extensibility.EmulatorTaskResult.EmulatorName">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Execution.Extensibility.EmulatorTaskResult.StartTime">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Execution.Extensibility.EmulatorTaskResult.IsRunning">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Execution.Extensibility.EmulatorTaskResult.Closed">
+            <inheritdoc/>
+        </member>
+        <member name="T:Snowflake.Execution.Extensibility.ExternalEmulator">
+            <summary>
+            Represents a <see cref="T:Snowflake.Execution.Extensibility.IEmulator"/> that wraps an external emulator.
+            </summary>
+        </member>
+        <member name="P:Snowflake.Execution.Extensibility.ExternalEmulator.StoneProvider">
+            <summary>
+            Gets a <see cref="T:Snowflake.Services.IStoneProvider"/>. We noticed that many emulator wrappers require
+            access to platform and controller information through Stone.
+            </summary>
+        </member>
+        <member name="P:Snowflake.Execution.Extensibility.ExternalEmulator.Runner">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Execution.Extensibility.ExternalEmulator.Properties">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Execution.Extensibility.ExternalEmulator.CreateTask(Snowflake.Records.Game.IGameRecord,Snowflake.Execution.Saving.ISaveLocation,System.Collections.Generic.IList{Snowflake.Execution.Extensibility.IEmulatedController},System.String)">
+            <inheritdoc/>
+        </member>
         <member name="F:Snowflake.Extensibility.EmptyPluginConfiguration.EmptyConfiguration">
             <summary>
             The empty plugin configuration.
@@ -738,6 +804,25 @@
         <member name="P:Snowflake.Input.Controller.ControllerLayout.Layout">
             <inheritdoc/>
         </member>
+        <member name="T:Snowflake.Input.Controller.Extensions.ControllerElementExtensions">
+            <summary>
+            Controller element extensions.
+            </summary>
+        </member>
+        <member name="M:Snowflake.Input.Controller.Extensions.ControllerElementExtensions.IsKeyboardKey(Snowflake.Input.Controller.ControllerElement)">
+            <summary>
+            Checks if the element is a keyboard key element.
+            </summary>
+            <param name="element">The controller element to check.</param>
+            <returns>Whether the element is a keyboard key element</returns>
+        </member>
+        <member name="M:Snowflake.Input.Controller.Extensions.ControllerElementExtensions.IsAxis(Snowflake.Input.Controller.ControllerElement)">
+            <summary>
+            Checks if the element is an axis element
+            </summary>
+            <param name="element">The controller element to check.</param>
+            <returns>Whether the element is a keyboard key element</returns>
+        </member>
         <member name="P:Snowflake.Input.Controller.Mapped.MappedControllerElement.LayoutElement">
             <inheritdoc/>
         </member>
@@ -816,6 +901,44 @@
         </member>
         <member name="M:Snowflake.JsonConverters.InputMappingConverter.Create(System.Type,Newtonsoft.Json.Linq.JObject)">
             <inheritdoc/>
+        </member>
+        <member name="T:Snowflake.JsonConverters.JsonCreationConverter`1">
+            <summary>Base Generic JSON Converter that can help quickly define converters for specific types by automatically
+            generating the CanConvert, ReadJson, and WriteJson methods, requiring the implementer only to define a strongly typed Create method.</summary>
+        </member>
+        <member name="P:Snowflake.JsonConverters.JsonCreationConverter`1.CanWrite">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.JsonConverters.JsonCreationConverter`1.Create(System.Type,Newtonsoft.Json.Linq.JObject)">
+            <summary>Create an instance of objectType, based properties in the JSON object</summary>
+            <param name="objectType">type of object expected</param>
+            <param name="jObject">contents of JSON object that will be deserialized</param>
+        </member>
+        <member name="M:Snowflake.JsonConverters.JsonCreationConverter`1.Transform(`0)">
+            <summary>
+            Gives a chance to transform the object before being serialized
+            </summary>
+            <param name="value">The value to transform</param>
+            <returns>The transformed object graph to be serialized</returns>
+        </member>
+        <member name="M:Snowflake.JsonConverters.JsonCreationConverter`1.CanConvert(System.Type)">
+            <summary>Determines if this converted is designed to deserialization to objects of the specified type.</summary>
+            <param name="objectType">The target type for deserialization.</param>
+            <returns>True if the type is supported.</returns>
+        </member>
+        <member name="M:Snowflake.JsonConverters.JsonCreationConverter`1.ReadJson(Newtonsoft.Json.JsonReader,System.Type,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <summary>Parses the json to the specified type.</summary>
+            <param name="reader">Newtonsoft.Json.JsonReader</param>
+            <param name="objectType">Target type.</param>
+            <param name="existingValue">Ignored</param>
+            <param name="serializer">Newtonsoft.Json.JsonSerializer to use.</param>
+            <returns>Deserialized Object</returns>
+        </member>
+        <member name="M:Snowflake.JsonConverters.JsonCreationConverter`1.WriteJson(Newtonsoft.Json.JsonWriter,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <summary>Serializes to the specified type</summary>
+            <param name="writer">Newtonsoft.Json.JsonWriter</param>
+            <param name="value">Object to serialize.</param>
+            <param name="serializer">Newtonsoft.Json.JsonSerializer to use.</param>
         </member>
         <member name="M:Snowflake.JsonConverters.PlatformInfoConverter.Create(System.Type,Newtonsoft.Json.Linq.JObject)">
             <inheritdoc/>
@@ -934,6 +1057,46 @@
         <member name="M:Snowflake.Records.Metadata.RecordMetadata.Equals(System.Object)">
             <inheritdoc/>
         </member>
+        <member name="T:Snowflake.Records.Metadata.Utility.GuidCreator">
+            <summary>
+            Helper methods for working with <see cref="T:System.Guid"/>.
+            </summary>
+        </member>
+        <member name="M:Snowflake.Records.Metadata.Utility.GuidCreator.Create(System.Guid,System.String)">
+            <summary>
+            Creates a name-based UUID using the algorithm from RFC 4122 §4.3.
+            </summary>
+            <param name="namespaceId">The ID of the namespace.</param>
+            <param name="name">The name (within that namespace).</param>
+            <returns>A UUID derived from the namespace and name.</returns>
+            <remarks>See <a href="http://code.logos.com/blog/2011/04/generating_a_deterministic_guid.html">Generating a deterministic GUID</a>.</remarks>
+        </member>
+        <member name="M:Snowflake.Records.Metadata.Utility.GuidCreator.Create(System.Guid,System.String,System.Int32)">
+            <summary>
+            Creates a name-based UUID using the algorithm from RFC 4122 §4.3.
+            </summary>
+            <param name="namespaceId">The ID of the namespace.</param>
+            <param name="name">The name (within that namespace).</param>
+            <param name="version">The version number of the UUID to create; this value must be either
+            3 (for MD5 hashing) or 5 (for SHA-1 hashing).</param>
+            <returns>A UUID derived from the namespace and name.</returns>
+            <remarks>See <a href="http://code.logos.com/blog/2011/04/generating_a_deterministic_guid.html">Generating a deterministic GUID</a>.</remarks>
+        </member>
+        <member name="F:Snowflake.Records.Metadata.Utility.GuidCreator.DnsNamespace">
+            <summary>
+            The namespace for fully-qualified domain names (from RFC 4122, Appendix C).
+            </summary>
+        </member>
+        <member name="F:Snowflake.Records.Metadata.Utility.GuidCreator.UrlNamespace">
+            <summary>
+            The namespace for URLs (from RFC 4122, Appendix C).
+            </summary>
+        </member>
+        <member name="F:Snowflake.Records.Metadata.Utility.GuidCreator.IsoOidNamespace">
+            <summary>
+            The namespace for ISO OIDs (from RFC 4122, Appendix C).
+            </summary>
+        </member>
         <member name="P:Snowflake.Romfile.RomFileInfo.Mimetype">
             <inheritdoc/>
         </member>
@@ -984,6 +1147,87 @@
         </member>
         <member name="M:Snowflake.Romfile.Tokenizer.TosecTokenClassifier.ExtractTitleTokens(System.String)">
             <inheritdoc/>
+        </member>
+        <member name="T:Snowflake.Scraping.Extensibility.SeedBuilder">
+            <summary>
+            <para>
+            Provides helper methods for building <see cref="T:Snowflake.Scraping.Extensibility.SeedTree"/> and <see cref="T:Snowflake.Scraping.Extensibility.SeedTreeAwaitable"/>
+            for use in <see cref="T:Snowflake.Scraping.Extensibility.IScraper"/> implementations.
+            </para>
+            <para>
+            Enables use of underscore methods for "SeedBuilder syntax".
+            Import this class with a <code>using static</code> directive.
+            </para>
+            <para>
+            Use <seealso cref="M:Snowflake.Scraping.Extensibility.SeedBuilder._(Snowflake.Scraping.Extensibility.SeedTreeAwaitable[])"/> to begin a seed tree, and
+            <seealso cref="M:Snowflake.Scraping.Extensibility.SeedBuilder.__(Snowflake.Scraping.Extensibility.SeedTree[])"/> to continue for nested seeds.
+            </para>
+            <para>
+            Remember that top-level seeds can be <seealso cref="T:System.Threading.Tasks.Task`1"/> and other awaitables.
+            </para>
+            </summary>
+        </member>
+        <member name="M:Snowflake.Scraping.Extensibility.SeedBuilder.AwaitableSeeds(Snowflake.Scraping.Extensibility.SeedTreeAwaitable[])">
+            <summary>
+            Begins a seed tree result with multiple top-level results.
+            Top-level seeds can be awaitable.
+            Use Seed Builder Syntax rather than the full call.
+            <see cref="M:Snowflake.Scraping.Extensibility.SeedBuilder._(Snowflake.Scraping.Extensibility.SeedTreeAwaitable[])"/>
+            </summary>
+            <param name="children">The list of seed results to return</param>
+            <returns>A seed tree result.</returns>
+        </member>
+        <member name="M:Snowflake.Scraping.Extensibility.SeedBuilder.WithSeeds(Snowflake.Scraping.Extensibility.SeedTree[])">
+            <summary>
+            Continues a seed tree result with a list of nested results.
+            Nested seeds can not be awaitable, but can be returned from an asynchronous context.
+            Use Seed Builder Syntax rather than the full call.
+            </summary>
+            <param name="children">The list of seed results to return</param>
+            <returns>The nested portion of a seed tree result.</returns>
+        </member>
+        <member name="M:Snowflake.Scraping.Extensibility.SeedBuilder._(Snowflake.Scraping.Extensibility.SeedTreeAwaitable[])">
+            <summary>
+            Begins a seed tree result with multiple top-level results.
+            Top-level seeds can be awaitable.
+            </summary>
+            <param name="children">The list of seed results to return</param>
+            <returns>A seed tree result.</returns>
+        </member>
+        <member name="M:Snowflake.Scraping.Extensibility.SeedBuilder.__(Snowflake.Scraping.Extensibility.SeedTree[])">
+            <summary>
+            Continues a seed tree result with multiple nested seeds.
+            </summary>
+            <param name="children">The list of seed results to return</param>
+            <returns>The nested portion of a seed tree result.</returns>
+        </member>
+        <member name="M:Snowflake.Scraping.Extensibility.SeedBuilder._(System.String,System.String,System.Collections.Generic.IEnumerable{Snowflake.Scraping.Extensibility.SeedTree})">
+            <summary>
+            Begins a seed tree result with a single top level seed.
+            Top-level seeds can be awaitable.
+            </summary>
+            <param name="type">The type of the seed.</param>
+            <param name="value">The value of the seed.</param>
+            <param name="children">The list of seed results to return</param>
+            <returns>A seed tree result.</returns>
+        </member>
+        <member name="M:Snowflake.Scraping.Extensibility.SeedBuilder._(System.String,System.String)">
+            <summary>
+            Returns a single seed result.
+            </summary>
+            <param name="type">The type of the seed.</param>
+            <param name="value">The value of the seed.</param>
+            <returns>A single seed result.</returns>
+        </member>
+        <member name="M:Snowflake.Scraping.Extensibility.SeedBuilder.__(System.String,System.String,System.Collections.Generic.IEnumerable{Snowflake.Scraping.Extensibility.SeedTree})">
+            <summary>
+            Continues a seed tree result with a single nested seed.
+            Nested seeds must not be awaitable, but can be returned from an asynchronous context.
+            </summary>
+            <param name="type">The type of the seed.</param>
+            <param name="value">The value of the seed.</param>
+            <param name="children">The list of seed results to return</param>
+            <returns>A seed tree result.</returns>
         </member>
         <member name="T:Snowflake.Shiragame.RomInfo">
             <summary>

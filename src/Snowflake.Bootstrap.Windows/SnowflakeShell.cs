@@ -1,14 +1,14 @@
 ﻿using System;
+using Snowflake.Bootstrap.Windows.Utility;
 using Snowflake.Loader;
 using Snowflake.Services;
 using Snowflake.Services.AssemblyLoader;
-using Snowflake.Utility;
 
 namespace Snowflake.Shell.Windows
 {
     internal class SnowflakeShell
     {
-        private readonly string appDataDirectory = PathUtility.GetSnowflakeDataPath();
+        private readonly string appDataDirectory = PathUtility.GetApplicationDataPath().CreateSubdirectory("snowflake").FullName;
         private IServiceContainer loadedCore;
 
         internal SnowflakeShell()

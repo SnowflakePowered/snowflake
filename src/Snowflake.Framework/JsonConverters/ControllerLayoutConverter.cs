@@ -9,7 +9,7 @@ using Snowflake.Input.Controller;
 
 namespace Snowflake.JsonConverters
 {
-    public class ControllerLayoutConverter : JsonCreationConverter<IControllerLayout>
+    internal class ControllerLayoutConverter : JsonCreationConverter<IControllerLayout>
     {
         /// <inheritdoc/>
         protected override IControllerLayout Create(Type objectType, JObject jObject)

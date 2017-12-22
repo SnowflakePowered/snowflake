@@ -55,7 +55,6 @@ namespace Snowflake.Scraping.Extensibility
             return new SeedTreeAwaitable(Task.FromResult<SeedTree>((seedContent.Content, seedContent.Children)));
         }
 
-
         /// <summary>
         /// Implicitly coerces a <see cref="SeedTree"/> into a <see cref="SeedTreeAwaitable"/>
         /// </summary>

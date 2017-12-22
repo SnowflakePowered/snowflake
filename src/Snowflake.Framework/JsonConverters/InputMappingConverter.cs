@@ -11,7 +11,7 @@ using Snowflake.Input.Device;
 
 namespace Snowflake.JsonConverters
 {
-    public class InputMappingConverter : JsonCreationConverter<IInputMapping>
+    internal class InputMappingConverter : JsonCreationConverter<IInputMapping>
     {
         /// <inheritdoc/>
         protected override IInputMapping Create(Type objectType, JObject jObject)

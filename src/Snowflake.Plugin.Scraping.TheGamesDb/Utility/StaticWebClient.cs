@@ -6,14 +6,14 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Snowflake.Utility
+namespace Snowflake.Plugin.Scraping.TheGamesDb.Utility
 {
-    public static class WebClient
+    internal static class StaticWebClient
     {
         private static HttpClient Client { get; }
-        static WebClient()
+        static StaticWebClient()
         {
-            WebClient.Client = new HttpClient();
+            StaticWebClient.Client = new HttpClient();
         }
 
         public static Task DownloadAsync(string requestUri, string filename)
@@ -55,17 +55,17 @@ namespace Snowflake.Utility
 
         public static void Download(Uri requestUri, string filename)
         {
-            WebClient.DownloadAsync(requestUri, filename).RunSynchronously();
+            StaticWebClient.DownloadAsync(requestUri, filename).RunSynchronously();
         }
 
         public static void Download(string requestUri, string filename)
         {
-            WebClient.DownloadAsync(requestUri, filename).RunSynchronously();
+            StaticWebClient.DownloadAsync(requestUri, filename).RunSynchronously();
         }
 
         public static Stream DownloadData(Uri requestUri)
         {
-            return WebClient.DownloadDataAsync(requestUri).Result;
+            return StaticWebClient.DownloadDataAsync(requestUri).Result;
         }
     }
 }

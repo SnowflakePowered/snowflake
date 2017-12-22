@@ -6,24 +6,10 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Snowflake.Utility
+namespace Snowflake.Configuration.Utility
 {
-    public static class Instantiate
+    internal static class Instantiate
     {
-        public static T CreateInstance<T>()
-            where T : new()
-        {
-            return new T();
-        }
-
-        private static ConstructorInfo GetConstructor<T>(BindingFlags flags, Type[] constructorParams)
-        {
-            return Instantiate.GetConstructor(flags, typeof(T), constructorParams);
-       /*  from constructor in typeof(T).GetConstructors()
-            where !constructor.GetParameters().Select(p => p.GetType()).Except(constructorParams).Any()
-            select constructor).FirstOrDefault() */
-        }
-
         private static ConstructorInfo GetConstructor(BindingFlags flags, Type type, Type[] constructorParams)
         {
             var constructors = from constructor in type.GetConstructors(flags)
@@ -32,17 +18,6 @@ namespace Snowflake.Utility
                 where parameters.Count() == constructorParams.Count()
                 select constructor;
             return constructors.First();
-        }
-
-        public static T CreateInstance<T>(Type type) => Instantiate.CreateInstance<T>(new[] { type });
-
-        public static T CreateInstance<T>(Type[] constructorParams)
-        {
-            Func<T> instanceCreator = Expression.Lambda<Func<T>>(
-                Expression.New(Instantiate.GetConstructor<T>(
-                BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance, constructorParams)))
-                .Compile();
-            return instanceCreator();
         }
 
         public static object CreateInstance(Type createType)

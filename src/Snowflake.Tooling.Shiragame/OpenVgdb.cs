@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Persistence;
 using Snowflake.Services;
-using Snowflake.Utility;
 
 namespace Shiragame.Builder
 {

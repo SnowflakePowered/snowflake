@@ -5,7 +5,7 @@ using System.Text;
 using Snowflake.Extensibility;
 using Snowflake.Scraping;
 using Snowflake.Scraping.Extensibility;
-using Snowflake.Utility;
+using Snowflake.Support.Scraping.RecordScrapeEngine.Utility;
 
 namespace Snowflake.Support.Scraping.RecordScrapeEngine
 {

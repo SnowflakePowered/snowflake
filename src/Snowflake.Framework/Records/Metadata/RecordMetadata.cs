@@ -1,5 +1,5 @@
 ﻿using System;
-using Snowflake.Utility;
+using Snowflake.Records.Metadata.Utility;
 
 namespace Snowflake.Records.Metadata
 {
@@ -23,7 +23,7 @@ namespace Snowflake.Records.Metadata
             this.Key = key;
             this.Value = value;
             this.Record = record;
-            this.Guid = GuidUtility.Create(this.Record, this.Key);
+            this.Guid = GuidCreator.Create(this.Record, this.Key);
         }
 
         public RecordMetadata(string key, string value, IRecord record)
