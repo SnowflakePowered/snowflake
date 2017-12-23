@@ -26,6 +26,7 @@ namespace Snowflake.Support.Remoting.GraphQl
         [ImportService(typeof(IMappedControllerElementCollectionStore))]
         [ImportService(typeof(IContentDirectoryProvider))]
         [ImportService(typeof(ISaveLocationProvider))]
+        [ImportService(typeof(IModuleEnumerator))]
       //  [ImportService(typeof(IScrapeEngine<IGameRecord>))]
         public void Compose(IModule module, IServiceRepository coreInstance)
         {
@@ -48,6 +49,7 @@ namespace Snowflake.Support.Remoting.GraphQl
             var inputQuery = new InputQueryBuilder(input, plugin, mapp, stone);
             var emuQuery = new EmulationQueryBuilder(plugin.GetCollection<IEmulator>(), stone, saves, inputQuery, controllerQueries);
 
+            var moduleQuery = new ExtensibilityQueryBuilder(coreInstance.Get<IModuleEnumerator>(), plugin);
            // var scrapeQuery = new ScrapingQueryBuilder(plugin.GetCollection<IScraper>(), plugin.GetCollection<ICuller>(), engine);
             rootSchema.Register(platformQueries);
             rootSchema.Register(controllerQueries);
@@ -56,6 +58,7 @@ namespace Snowflake.Support.Remoting.GraphQl
             rootSchema.Register(inputQuery);
           //  rootSchema.Register(scrapeQuery);
             rootSchema.Register(emuQuery);
+            rootSchema.Register(moduleQuery);
         }
     }
 }

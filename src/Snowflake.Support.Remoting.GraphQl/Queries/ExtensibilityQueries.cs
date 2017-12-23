@@ -10,20 +10,28 @@ using Snowflake.Services;
 using Snowflake.Support.Remoting.GraphQl.Framework.Attributes;
 using Snowflake.Support.Remoting.GraphQl.Framework.Query;
 using Snowflake.Support.Remoting.GraphQl.Types.Module;
+using Snowflake.Support.Remoting.GraphQl.Types.Plugin;
 
 namespace Snowflake.Support.Remoting.GraphQl.Queries
 {
-    public class ExtensibilityQueries : QueryBuilder
+    public class ExtensibilityQueryBuilder : QueryBuilder
     {
         private IModuleEnumerator ModuleEnumerator { get; }
         private IPluginManager PluginManager { get; }
 
-        [Field("installedModules", "Get a list of modules installed in the module directory.", typeof(ModuleGraphType))]
+        public ExtensibilityQueryBuilder(IModuleEnumerator enumerator, IPluginManager pluginManager)
+        {
+            this.ModuleEnumerator = enumerator;
+            this.PluginManager = pluginManager;
+        }
+
+        [Connection("installedModules", "Get a list of modules installed in the module directory.", typeof(ModuleGraphType))]
         public IEnumerable<IModule> GetInstalledModules()
         {
             return this.ModuleEnumerator.Modules;
         }
 
+        [Connection("loadedPlugins", "Gets a list of plugins loaded.", typeof(PluginGraphType))]
         public IEnumerable<IPlugin> GetLoadedPlugins()
         {
             return this.PluginManager;

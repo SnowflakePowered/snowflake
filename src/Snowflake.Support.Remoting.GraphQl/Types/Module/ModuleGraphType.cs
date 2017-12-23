@@ -14,7 +14,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.Module
             Field(m => m.Name).Description("THe name of the module.");
             Field(m => m.Loader).Description("The name of the loader used to load this module.");
             Field<NonNullGraphType<StringGraphType>>("version",
-                resolve: context => context.Source.Version,
+                resolve: context => context.Source.Version.ToString(),
                 description: "The version of the module as specified in its manifest.");
         }
     }
