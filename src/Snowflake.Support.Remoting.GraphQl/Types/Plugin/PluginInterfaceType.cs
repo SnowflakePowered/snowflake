@@ -6,9 +6,9 @@ using Snowflake.Extensibility;
 
 namespace Snowflake.Support.Remoting.GraphQl.Types.Plugin
 {
-    public class PluginGraphType : ObjectGraphType<IPlugin>
+    public class PluginInterfaceType : InterfaceGraphType<IPlugin>
     {
-        public PluginGraphType()
+        public PluginInterfaceType()
         {
             Field(p => p.Author).Description("The author of the plugin.");
             Field(p => p.Description).Description("The description of the plugin.");
@@ -16,7 +16,6 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.Plugin
             Field<NonNullGraphType<StringGraphType>>("version",
                 resolve: context => context.Source.Version.ToString(),
                 description: "The version of the plugin.");
-            Interface<PluginInterfaceType>();
         }
     }
 }

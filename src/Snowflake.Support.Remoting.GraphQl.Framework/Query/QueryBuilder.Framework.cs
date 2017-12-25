@@ -265,7 +265,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Framework.Query
                 parameterRetrievals.Add(Expression.Convert(
                         Expression.ArrayIndex(argumentList,
                         Expression.Constant(i)),
-                   parameters[i].ParameterType));
+                        parameters[i].ParameterType));
             }
 
             var executor = Expression.Lambda<Func<object[], T>>(

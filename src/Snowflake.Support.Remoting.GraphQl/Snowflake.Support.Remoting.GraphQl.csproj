@@ -33,6 +33,9 @@
     <AdditionalFiles Include="..\stylecop.json" />
 
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Inputs\Configuration\" />
+  </ItemGroup>
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\Snowflake.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>

@@ -32,13 +32,15 @@ namespace Snowflake.Adapters.Higan
             this.Runner = new HiganTaskRunner(emulatorProvider.GetEmulator("RetroArch"),
                 provision,
                 this.Properties);
-            this.ConfigurationFactory = new HiganConfigurationFactory(provision, store);
+            this.GenericConfigurationFactory = new HiganConfigurationFactory(provision, store);
             this.TaskRootProvider = provider;
         }
 
         public override IEmulatorTaskRunner Runner { get; }
 
-        private ConfigurationFactory<HiganRetroArchConfiguration, RetroPadTemplate> ConfigurationFactory { get; }
+        private IConfigurationFactory<HiganRetroArchConfiguration, RetroPadTemplate> GenericConfigurationFactory { get; }
+
+        public override IConfigurationFactory ConfigurationFactory => this.GenericConfigurationFactory;
 
         private IEmulatorTaskRootDirectoryProvider TaskRootProvider { get; }
 
@@ -48,7 +50,7 @@ namespace Snowflake.Adapters.Higan
             string profileContext = "default")
         {
             IConfigurationCollection<HiganRetroArchConfiguration> configuration =
-            this.ConfigurationFactory.GetConfiguration(executingGame, profileContext);
+            this.GenericConfigurationFactory.GetConfiguration(executingGame.Guid, profileContext);
 
             var templates = controllerConfiguration.Select(c => this.ConfigurationFactory.GetInputMappings(c)).ToList();
             var task = new EmulatorTask(executingGame)

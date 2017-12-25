@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Snowflake.Configuration;
+using Snowflake.Execution.Extensibility;
+using Snowflake.Extensibility;
+using Snowflake.Services;
 using Snowflake.Support.Remoting.GraphQl.Framework.Attributes;
 using Snowflake.Support.Remoting.GraphQl.Framework.Query;
 using Snowflake.Support.Remoting.GraphQl.Types.Configuration;
@@ -11,38 +14,25 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
 {
     public class ConfigurationQueryBuilder : QueryBuilder
     {
+        private IPluginManager PluginManager { get; }
         private IConfigurationCollectionStore Store { get; }
         public ConfigurationQueryBuilder(IConfigurationCollectionStore store)
         {
             this.Store = store;
         }
 
-       /* [Connection("configValues", "Config Values", typeof(ConfigurationValueGraphType))]
-        public IEnumerable<KeyValuePair<string, IConfigurationValue>> GetAllValues()
+        [Field("configurationCollection", "Config Options", typeof(ConfigurationCollectionGraphType))]
+        public IConfigurationCollection GetCollection(string emulatorName, Guid gameGuid, string profileName = "default")
         {
-            var config = this.Store.Get<ITestConfigurationCollection>(Guid.NewGuid(), "TestEmulator", "DefaultProfile");
-            return config.Configuration.TestConfiguration.Values.ToList();
+            var emulator = this.PluginManager.Get<IEmulator>(emulatorName);
+            var config = emulator.ConfigurationFactory.GetConfiguration(gameGuid, profileName);
+            return config;
         }
 
-        [Connection("configOptions", "Config Options", typeof(ConfigurationOptionDescriptorGraphType))]
-        public IEnumerable<IConfigurationOptionDescriptor> GetAllOptions()
+        [Mutation("setConfigurationValue", "Config Options", typeof(ConfigurationCollectionGraphType))]
+        public void SetConfigurationValue(IConfigurationValue value)
         {
-            var config = this.Store.Get<ITestConfigurationCollection>(Guid.NewGuid(), "TestEmulator", "DefaultProfile");
-            return config.Configuration.TestConfiguration.Descriptor.Options;
+            this.Store.Set(value);
         }
-
-        [Connection("configSections", "Config Options", typeof(ConfigurationSectionGraphType))]
-        public IEnumerable<KeyValuePair<string, IConfigurationSection>> GetAllSections()
-        {
-            var config = this.Store.Get<ITestConfigurationCollection>(Guid.NewGuid(), "TestEmulator", "DefaultProfile");
-            return config.Configuration;
-        }
-
-        [Connection("configCollection", "Config Options", typeof(ConfigurationCollectionGraphType))]
-        public IEnumerable<IConfigurationCollection> GetCollection()
-        {
-            var config = this.Store.Get<ITestConfigurationCollection>(Guid.NewGuid(), "TestEmulator", "DefaultProfile");
-            yield return config;
-        }*/
     }
 }
