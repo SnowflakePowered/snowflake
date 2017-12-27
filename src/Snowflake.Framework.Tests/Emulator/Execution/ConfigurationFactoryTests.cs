@@ -86,7 +86,7 @@ namespace Snowflake.Emulator.Execution
             throw new NotImplementedException();
         }
 
-        public override IConfigurationCollection<ExampleConfigurationCollection> GetConfiguration(IGameRecord gameRecord, string profileName)
+        public override IConfigurationCollection<ExampleConfigurationCollection> GetConfiguration(Guid gameRecord, string profileName)
         {
             return new ConfigurationCollection<ExampleConfigurationCollection>();
         }
