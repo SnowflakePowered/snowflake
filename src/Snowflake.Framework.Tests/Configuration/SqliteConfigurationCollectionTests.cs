@@ -60,6 +60,33 @@ namespace Snowflake.Configuration.Tests
         }
 
         [Fact]
+        public void ConfigurationStoreSetIndividualEnumerable_Test()
+        {
+            var store = new SqliteConfigurationCollectionStore(new SqliteDatabase(Path.GetTempFileName()));
+            var configCollection = new ConfigurationCollection<ExampleConfigurationCollection>();
+            configCollection.Configuration.ExampleConfiguration.ISOPath0 = "TestEqual";
+            configCollection.Configuration.ExampleConfiguration.FullscreenResolution = FullscreenResolution.Resolution1152X648;
+            configCollection.Configuration.ExampleConfiguration.Fullscreen = false;
+
+            store.Set(configCollection, Guid.Empty, "test", "test");
+            configCollection.Configuration.ExampleConfiguration.FullscreenResolution = FullscreenResolution.Resolution1280X768;
+            configCollection.Configuration.ExampleConfiguration.Fullscreen = true;
+            configCollection.Configuration.ExampleConfiguration.ISOPath0 = "TestEqual!";
+            store.Set(new[]
+                {
+                    configCollection.Configuration.ExampleConfiguration.Values["FullscreenResolution"],
+                    configCollection.Configuration.ExampleConfiguration.Values["Fullscreen"],
+                    configCollection.Configuration.ExampleConfiguration.Values["ISOPath0"],
+                });
+
+            var retrievedConfig = store.Get<ExampleConfigurationCollection>(Guid.Empty, "test", "test");
+            Assert.NotNull(retrievedConfig);
+            Assert.Equal(configCollection.Configuration.ExampleConfiguration.ISOPath0, retrievedConfig.Configuration.ExampleConfiguration.ISOPath0);
+            Assert.Equal(configCollection.Configuration.ExampleConfiguration.FullscreenResolution, retrievedConfig.Configuration.ExampleConfiguration.FullscreenResolution);
+            Assert.Equal(configCollection.Configuration.ExampleConfiguration.Fullscreen, retrievedConfig.Configuration.ExampleConfiguration.Fullscreen);
+        }
+
+        [Fact]
         public void ConfigurationStoreMultipleProfileIndividual_Test()
         {
             var store = new SqliteConfigurationCollectionStore(new SqliteDatabase(Path.GetTempFileName()));

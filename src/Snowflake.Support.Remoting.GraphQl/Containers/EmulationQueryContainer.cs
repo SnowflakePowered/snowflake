@@ -45,7 +45,6 @@ namespace Snowflake.Support.Remoting.GraphQl.Containers
             logger.Info("Registered Controller GraphQL Queries.");
             logger.Info("Registered Input GraphQL Queries.");
             logger.Info("Registered Emulation GraphQL Queries.");
-
         }
     }
 }

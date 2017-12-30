@@ -187,6 +187,5 @@ namespace Snowflake.Support.PluginManager
             return this.GetEnumerator();
         }
         #endregion
-
     }
 }

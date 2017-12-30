@@ -7,9 +7,11 @@ using GraphQL.Types;
 using Snowflake.Configuration;
 using Snowflake.Execution.Extensibility;
 using Snowflake.Extensibility;
+using Snowflake.Extensibility.Configuration;
 using Snowflake.Services;
 using Snowflake.Support.Remoting.GraphQl.Framework.Attributes;
 using Snowflake.Support.Remoting.GraphQl.Framework.Query;
+using Snowflake.Support.Remoting.GraphQl.Inputs.Configuration;
 using Snowflake.Support.Remoting.GraphQl.Types.Configuration;
 
 namespace Snowflake.Support.Remoting.GraphQl.Queries
@@ -17,10 +19,14 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
     public class ConfigurationQueryBuilder : QueryBuilder
     {
         private IPluginManager PluginManager { get; }
-        private IConfigurationCollectionStore Store { get; }
-        public ConfigurationQueryBuilder(IConfigurationCollectionStore store, IPluginManager pluginManager)
+        private IConfigurationCollectionStore GameConfigurationStore { get; }
+        private IPluginConfigurationStore PluginConfigurationStore { get; }
+        public ConfigurationQueryBuilder(IConfigurationCollectionStore gameConfigurationStore,
+            IPluginConfigurationStore pluginConfigurationStore,
+            IPluginManager pluginManager)
         {
-            this.Store = store;
+            this.PluginConfigurationStore = pluginConfigurationStore;
+            this.GameConfigurationStore = gameConfigurationStore;
             this.PluginManager = pluginManager;
         }
 
@@ -44,11 +50,20 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
             return plugin.GetPluginConfiguration();
         }
 
-        /*[Mutation("setConfigurationValue", "Config Options", typeof(ConfigurationCollectionGraphType))]
-        [Parameter(typeof(IConfigurationValue), typeof(ConfigurationValueGraphType), "value", "The value to set.")]
-        public void SetConfigurationValue(IConfigurationValue value)
+        [Mutation("setGameConfigurationValue", "Config Options", typeof(ConfigurationValueInputGraphType))]
+        [Parameter(typeof(IEnumerable<ConfigurationValueInputObject>), typeof(ListGraphType<ConfigurationValueInputType>), "input", "The value to set.")]
+        public IEnumerable<IConfigurationValue> SetGameConfigurationValue(IEnumerable<ConfigurationValueInputObject> input)
         {
-            this.Store.Set(value);
-        }*/
+            this.GameConfigurationStore.Set(input);
+            return input;
+        }
+
+        [Mutation("setPluginConfigurationValue", "Config Options", typeof(ConfigurationValueInputGraphType))]
+        [Parameter(typeof(IEnumerable<ConfigurationValueInputObject>), typeof(ListGraphType<ConfigurationValueInputType>), "input", "The value to set.")]
+        public IEnumerable<IConfigurationValue> SetPluginConfigurationValue(IEnumerable<ConfigurationValueInputObject> input)
+        {
+            this.PluginConfigurationStore.Set(input);
+            return input;
+        }
     }
 }
