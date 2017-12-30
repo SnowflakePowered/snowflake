@@ -36,8 +36,7 @@ namespace Snowflake.Services
             this.RegisterService<IContentDirectoryProvider>(directoryProvider);
             this.RegisterService<IServiceRegistrationProvider>(new ServiceRegistrationProvider(this));
             this.RegisterService<ISqliteDatabaseProvider>(new SqliteDatabaseProvider(directoryProvider.ApplicationData.CreateSubdirectory("libraries")));
-
-            // this.RegisterService<IPluginManager>(new PluginManager(this.AppDataDirectory, this));
+            this.RegisterService<IServiceEnumerator>(new ServiceEnumerator(this));
         }
 
         /// <inheritdoc/>

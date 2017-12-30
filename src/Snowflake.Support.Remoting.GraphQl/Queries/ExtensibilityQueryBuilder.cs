@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using GraphQL.Types;
 using Snowflake.Execution.Extensibility;
 using Snowflake.Extensibility;
 using Snowflake.Loader;
@@ -17,11 +18,14 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
     public class ExtensibilityQueryBuilder : QueryBuilder
     {
         private IModuleEnumerator ModuleEnumerator { get; }
+        private IServiceEnumerator ServiceEnumerator { get; }
         private IPluginManager PluginManager { get; }
 
-        public ExtensibilityQueryBuilder(IModuleEnumerator enumerator, IPluginManager pluginManager)
+        public ExtensibilityQueryBuilder(IModuleEnumerator moduleEnumerator, IServiceEnumerator serviceEnumerator, 
+            IPluginManager pluginManager)
         {
-            this.ModuleEnumerator = enumerator;
+            this.ServiceEnumerator = serviceEnumerator;
+            this.ModuleEnumerator = moduleEnumerator;
             this.PluginManager = pluginManager;
         }
 
@@ -29,6 +33,12 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
         public IEnumerable<IModule> GetInstalledModules()
         {
             return this.ModuleEnumerator.Modules;
+        }
+
+        [Connection("loadedServices", "Get a list of services loaded.", typeof(StringGraphType))]
+        public IEnumerable<string> GetLoadedServices()
+        {
+            return this.ServiceEnumerator.Services;
         }
 
         [Connection("loadedPlugins", "Gets a list of plugins loaded.", typeof(PluginGraphType))]

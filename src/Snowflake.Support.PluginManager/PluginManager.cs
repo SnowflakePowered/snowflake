@@ -173,7 +173,6 @@ namespace Snowflake.Support.PluginManager
         }
         #endregion
 
-
         #region IEnumerable Support
         public IEnumerator<IPlugin> GetEnumerator()
         {
