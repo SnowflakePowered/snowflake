@@ -43,6 +43,12 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
             return this.PluginManager.GetCollection<IScraper>();
         }
 
+        [Connection("loadedCullers", "Gets a list of cullers loaded.", typeof(PluginGraphType))]
+        public IEnumerable<IPlugin> GetLoadedCullers()
+        {
+            return this.PluginManager.GetCollection<ICuller>();
+        }
+
         [Connection("loadedEmulators", "Gets a list of emulators loaded.", typeof(EmulatorGraphType))]
         public IEnumerable<IEmulator> GetLoadedEmulators()
         {
