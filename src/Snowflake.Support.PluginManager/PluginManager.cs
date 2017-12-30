@@ -22,16 +22,16 @@ namespace Snowflake.Support.PluginManager
         private readonly ILogProvider logProvider;
         private readonly IContentDirectoryProvider contentDirectory;
         private readonly IDictionary<Type, IImmutableList<IPlugin>> loadedPlugins;
-        private readonly ISqliteDatabaseProvider databaseProvider;
+        private readonly IPluginConfigurationStore configurationStore;
 
         public PluginManager(ILogProvider logProvider,
             IContentDirectoryProvider contentDirectory,
-            ISqliteDatabaseProvider databaseProvider)
+            IPluginConfigurationStore databaseProvider)
         {
             this.logProvider = logProvider;
             this.contentDirectory = contentDirectory;
             this.loadedPlugins = new Dictionary<Type, IImmutableList<IPlugin>>();
-            this.databaseProvider = databaseProvider;
+            this.configurationStore = databaseProvider;
         }
 
         /// <inheritdoc/>
@@ -65,11 +65,9 @@ namespace Snowflake.Support.PluginManager
                .DeserializeObject(File.ReadAllText(pluginJsonFile.FullName)), new JsonSerializer { Culture = CultureInfo.InvariantCulture }));
             var pluginDataDirectory = this.contentDirectory.ApplicationData.CreateSubdirectory("plugincontents")
                     .CreateSubdirectory(pluginAttr.PluginName);
-            var pluginConfigDb = this.databaseProvider.CreateDatabase("pluginconfiguration", $"{pluginAttr.PluginName}.Configuration");
-            var pluginStore = new SqlitePluginConfigurationStore(pluginConfigDb);
             return new PluginProvision(this.logProvider.GetLogger($"Plugin:{pluginAttr.PluginName}"),
                 properties,
-                pluginStore,
+                this.configurationStore,
                 pluginAttr.PluginName,
                 properties.Get(PluginInfoFields.Author) ?? pluginAttr.Author,
                 properties.Get(PluginInfoFields.Description) ?? pluginAttr.Description,

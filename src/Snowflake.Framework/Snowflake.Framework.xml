@@ -473,22 +473,6 @@
             The empty plugin configuration.
             </summary>
         </member>
-        <member name="M:Snowflake.Extensibility.Configuration.SqlitePluginConfigurationStore.CreateDatabase">
-            <summary>
-            Enums are stored as their string representation
-            Strings are stored as strings
-            Primitives are stored as primitive
-            </summary>
-        </member>
-        <member name="M:Snowflake.Extensibility.Configuration.SqlitePluginConfigurationStore.Get``1">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Extensibility.Configuration.SqlitePluginConfigurationStore.Set``1(Snowflake.Configuration.IConfigurationSection{``0})">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Extensibility.Configuration.SqlitePluginConfigurationStore.Set(Snowflake.Configuration.IConfigurationValue)">
-            <inheritdoc/>
-        </member>
         <member name="P:Snowflake.Extensibility.Provisioning.JsonPluginProperties.PropertyKeys">
             <inheritdoc/>
         </member>
