@@ -9,6 +9,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Inputs.MappedControllerElement
     {
         public DefaultMappedControllerElementCollectionInputType()
         {
+            Name = "DefaultMappedControllerElementCollectionInput";
             Field(p => p.ControllerId);
             Field(p => p.DeviceId);
             Field(p => p.ProfileName).DefaultValue("default");

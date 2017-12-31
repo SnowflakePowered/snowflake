@@ -10,6 +10,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Inputs.EmulatedController
     {
         public EmulatedControllerInputType()
         {
+            Name = "EmulatedControllerInput";
             Field(p => p.PortIndex)
                 .Description("The port index of the emulated controller.");
             Field(p => p.ControllerProfile)

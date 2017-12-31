@@ -10,6 +10,8 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.Module
     {
         public ModuleGraphType()
         {
+            Name = "Module";
+            Description = "A module installed in the modules folder.";
             Field(m => m.Author).Description("The author of the module.");
             Field(m => m.Name).Description("THe name of the module.");
             Field(m => m.Loader).Description("The name of the loader used to load this module.");

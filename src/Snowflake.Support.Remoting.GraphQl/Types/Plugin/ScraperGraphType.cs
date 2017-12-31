@@ -10,6 +10,8 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.Plugin
     {
         public ScraperGraphType()
         {
+            Name = "Scraper";
+            Description = "A scraper plugin produces seeds to create game records.";
             Field(p => p.Author).Description("The author of the plugin.");
             Field(p => p.Description).Description("The description of the plugin.");
             Field(p => p.Name).Description("The plugin name.");

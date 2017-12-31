@@ -11,6 +11,8 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.Plugin
     {
         public EmulatorGraphType()
         {
+            Name = "Emulator";
+            Description = "An emulator plugin.";
             Field(p => p.Author).Description("The author of the plugin.");
             Field(p => p.Description).Description("The description of the plugin.");
             Field(p => p.Name).Description("The name of the emulator.");

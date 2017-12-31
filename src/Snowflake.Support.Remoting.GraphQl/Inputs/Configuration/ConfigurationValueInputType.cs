@@ -11,6 +11,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Inputs.Configuration
     {
         public ConfigurationValueInputType()
         {
+            Name = "ConfigurationValueInput";
             Field<GuidGraphType>("guid",
                 description: "The GUID of the value to set.",
                 resolve: context => context.Source.Guid);

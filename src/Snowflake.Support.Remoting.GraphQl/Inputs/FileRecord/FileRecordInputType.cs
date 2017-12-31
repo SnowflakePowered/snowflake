@@ -12,7 +12,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Inputs.FileRecord
     {
         public FileRecordInputType()
         {
-            Name = "FileRecordInputType";
+            Name = "FileRecordInput";
             Field(p => p.FilePath).Description("The path of the file.");
             Field<ListGraphType<RecordMetadataInputType>>("metadata",
                 description: "Some metadata about the file.",

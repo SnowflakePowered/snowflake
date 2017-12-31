@@ -10,6 +10,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Inputs.MappedControllerElement
     {
         public MappedControllerElementInputType()
         {
+            Name = "MappedControllerElementInput";
             Field<ControllerElementEnum>("layoutElement",
                 resolve: context => context.Source.LayoutElement);
             Field<ControllerElementEnum>("deviceElement",

@@ -10,6 +10,8 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.Plugin
     {
         public PluginGraphType()
         {
+            Name = "Plugin";
+            Description = "A loadable Snowflake plugin managed by the plugin manager.";
             Field(p => p.Author).Description("The author of the plugin.");
             Field(p => p.Description).Description("The description of the plugin.");
             Field(p => p.Name).Description("The plugin name.");
