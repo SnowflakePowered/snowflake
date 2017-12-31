@@ -20,13 +20,15 @@ namespace Snowflake.Support.Remoting.GraphQl.Containers
         [ImportService(typeof(IGraphQlRootSchema))]
         [ImportService(typeof(IPluginManager))]
         [ImportService(typeof(IModuleEnumerator))]
+        [ImportService(typeof(IServiceEnumerator))]
         [ImportService(typeof(ILogProvider))]
         public void Compose(IModule module, IServiceRepository coreInstance)
         {
-            var plugin = coreInstance.Get<IPluginManager>();
+            var pluginManager = coreInstance.Get<IPluginManager>();
             var rootSchema = coreInstance.Get<IGraphQlRootSchema>();
             var moduleEnumerator = coreInstance.Get<IModuleEnumerator>();
-            var moduleQuery = new ExtensibilityQueryBuilder(moduleEnumerator, plugin);
+            var serviceEnumerator = coreInstance.Get<IServiceEnumerator>();
+            var moduleQuery = new ExtensibilityQueryBuilder(moduleEnumerator, serviceEnumerator, pluginManager);
             rootSchema.Register(moduleQuery);
 
             var logger = coreInstance.Get<ILogProvider>().GetLogger("graphql");
