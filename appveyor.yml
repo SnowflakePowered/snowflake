@@ -70,15 +70,12 @@ after_test:
     - codecov -f "coverage.xml"
     - rem Packing NuGet packages...
     - dotnet pack src\Snowflake.Framework.Primitives --version-suffix pre-alpha.%APPVEYOR_BUILD_NUMBER% -o  ..\..\nupkg
-    - dotnet pack src\Snowflake.Framework.Utility --version-suffix pre-alpha.%APPVEYOR_BUILD_NUMBER% -o ..\..\nupkg
     - dotnet pack src\Snowflake.Framework --version-suffix pre-alpha.%APPVEYOR_BUILD_NUMBER% -o ..\..\nupkg
     - dotnet pack src\Snowflake.Framework.Services --version-suffix pre-alpha.%APPVEYOR_BUILD_NUMBER% -o ..\..\nupkg
 
 artifacts:
     - path: '**\Snowflake.Framework.Primitives.*.nupkg'
       name: Snowflake Framework Primitives
-    - path: '**\Snowflake.Framework.Utility.*.nupkg'
-      name: Snowflake Framework Utility
     - path: '**\Snowflake.Framework.*.nupkg'
       name: Snowflake Framework Implementation
     - path: '**\Snowflake.Framework.Services.*.nupkg'
