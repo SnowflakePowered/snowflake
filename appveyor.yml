@@ -56,7 +56,7 @@ build_script:
     - dotnet build src/Snowflake.Framework.Tests
 test_script:
     - rem Running Tests...
-    - OpenCover\tools\OpenCover.Console.exe -target:"dotnet.exe" -targetargs:"test src/Snowflake.Framework.Tests -c Cover" -register:user -filter:"+[Snowflake.Framework*]* +[Snowflake.Support.StoreProviders] +[Snowflake.Support.StoneProvider] +[Snowflake.Support.PluginManager] +[Snowflake.Support.GraphQl.Framework] +[Snowflake.Support.Scraping]* -[xunit*]*" -output:coverage.xml -oldStyle
+    - OpenCover\tools\OpenCover.Console.exe -target:"dotnet.exe" -targetargs:"test src/Snowflake.Framework.Tests -c Cover" -register:user -filter:"+[Snowflake.Framework*]* +[Snowflake.Support*]* -[xunit*]*" -output:coverage.xml -oldStyle
 
 after_test:
 #    - rem Generating Sandcastle Documentation...
