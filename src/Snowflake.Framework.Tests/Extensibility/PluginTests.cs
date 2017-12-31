@@ -12,6 +12,7 @@ using Snowflake.Support.PluginManager;
 using Snowflake.Tests;
 using Xunit;
 using Snowflake.Configuration;
+using Snowflake.Extensibility.Configuration;
 
 namespace Snowflake.Extensibility.Tests
 {
@@ -90,7 +91,7 @@ namespace Snowflake.Extensibility.Tests
             var appDataDirectory = new DirectoryInfo(Path.GetTempPath())
                 .CreateSubdirectory(Guid.NewGuid().ToString());
             var directoryProvider = new ContentDirectoryProvider(appDataDirectory.FullName);
-            var sqliteProvider = new SqliteDatabaseProvider(appDataDirectory);
+            var sqliteProvider = new SqlitePluginConfigurationStore(new SqliteDatabaseProvider(appDataDirectory).CreateDatabase("pluginConfig"));
             var logProvider = new LogProvider();
             var pluginManager = new PluginManager(logProvider, directoryProvider, sqliteProvider);
             pluginManager.Register<StandalonePlugin>(new StandalonePluginImpl());
@@ -108,7 +109,7 @@ namespace Snowflake.Extensibility.Tests
             string pluginJson = TestUtilities.GetStringResource("Loader.plugin.json");
             File.WriteAllText(Path.Combine(resourceDir.FullName, "plugin.json"), pluginJson);
             var directoryProvider = new ContentDirectoryProvider(appDataDirectory.FullName);
-            var sqliteProvider = new SqliteDatabaseProvider(appDataDirectory);
+            var sqliteProvider = new SqlitePluginConfigurationStore(new SqliteDatabaseProvider(appDataDirectory).CreateDatabase("pluginConfig"));
             var logProvider = new LogProvider();
             var pluginManager = new PluginManager(logProvider, directoryProvider, sqliteProvider);
             var provision = pluginManager.GetProvision<ProvisionedPluginImpl>(module);

@@ -9,6 +9,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Inputs.Scraping
     {
         public SeedTreeInputObjectCollectionType()
         {
+            Name = "SeedTreeInputObjectCollection";
             Field<ListGraphType<SeedTreeInputType>>("seeds",
                 resolve: context => context.Source.Seeds);
         }

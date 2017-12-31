@@ -115,7 +115,29 @@ namespace Snowflake.Configuration
             }
         }
 
-        private class ConfigurationRecord
+        public void Set(IEnumerable<IConfigurationValue> values)
+        {
+            try
+            {
+                this.backingDatabase.Execute(dbConnection =>
+                {
+                    dbConnection.Execute(
+                        @"UPDATE configuration SET value = @Value WHERE uuid == @Guid", values.Select(value => new
+                        {
+                            Value = value.Value.GetType().GetTypeInfo().IsEnum ?
+                            NonGenericEnums.GetName(value.Value.GetType(), value.Value) : // optimized path for enums
+                            Convert.ToString(value.Value), // so i put a value in your value so you can value values,
+                            Guid = value.Guid,
+                        }));
+                });
+            }
+            catch (DbException)
+            {
+                throw new KeyNotFoundException("Value GUIDS was not found in store.");
+            }
+        }
+
+    private class ConfigurationRecord
         {
             public byte[] uuid;
             public byte[] game;

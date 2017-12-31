@@ -2,7 +2,7 @@
 
 namespace Snowflake.Configuration
 {
-    public class ConfigurationValue : IConfigurationValue
+    internal class ConfigurationValue : IConfigurationValue
     {
         /// <inheritdoc/>
         public object Value { get; set; }

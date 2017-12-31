@@ -462,6 +462,9 @@
         <member name="P:Snowflake.Execution.Extensibility.ExternalEmulator.Properties">
             <inheritdoc/>
         </member>
+        <member name="P:Snowflake.Execution.Extensibility.ExternalEmulator.ConfigurationFactory">
+            <inheritdoc/>
+        </member>
         <member name="M:Snowflake.Execution.Extensibility.ExternalEmulator.CreateTask(Snowflake.Records.Game.IGameRecord,Snowflake.Execution.Saving.ISaveLocation,System.Collections.Generic.IList{Snowflake.Execution.Extensibility.IEmulatedController},System.String)">
             <inheritdoc/>
         </member>
@@ -469,22 +472,6 @@
             <summary>
             The empty plugin configuration.
             </summary>
-        </member>
-        <member name="M:Snowflake.Extensibility.Configuration.SqlitePluginConfigurationStore.CreateDatabase">
-            <summary>
-            Enums are stored as their string representation
-            Strings are stored as strings
-            Primitives are stored as primitive
-            </summary>
-        </member>
-        <member name="M:Snowflake.Extensibility.Configuration.SqlitePluginConfigurationStore.Get``1">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Extensibility.Configuration.SqlitePluginConfigurationStore.Set``1(Snowflake.Configuration.IConfigurationSection{``0})">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Extensibility.Configuration.SqlitePluginConfigurationStore.Set(Snowflake.Configuration.IConfigurationValue)">
-            <inheritdoc/>
         </member>
         <member name="P:Snowflake.Extensibility.Provisioning.JsonPluginProperties.PropertyKeys">
             <inheritdoc/>

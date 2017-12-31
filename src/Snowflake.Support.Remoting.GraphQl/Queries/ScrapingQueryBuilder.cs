@@ -32,27 +32,30 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
             this.ScrapeEngine = scrapeEngine;
         }
 
-        [Field("seedTest", "seed test", typeof(ListGraphType<SeedGraphType>))]
+        [Field("autoScrape", "seed test", typeof(ListGraphType<SeedGraphType>))]
         [Parameter(typeof(string), typeof(StringGraphType), "platform", "platform")]
         [Parameter(typeof(string), typeof(StringGraphType), "title", "title")]
-        public async Task<IList<ISeed>> SeedTest(string platform, string title)
+        [Parameter(typeof(IEnumerable<string>), typeof(ListGraphType<StringGraphType>), "scraperNames", "The scrapers to use for this job.")]
+        [Parameter(typeof(IEnumerable<string>), typeof(ListGraphType<StringGraphType>), "cullerNames", "The cullers to use for this job.")]
+        public async Task<IList<ISeed>> AutoScrape(string platform, string title,
+            IEnumerable<string> scraperNames, IEnumerable<string> cullerNames)
         {
             var job = this.ScrapeEngine.CreateJob(__(("platform", platform), ("search_title", title)),
-                this.Scrapers,
-                Enumerable.Empty<ICuller>()
-                );
+                this.Scrapers.Where(s => scraperNames.Contains(s.Name, StringComparer.OrdinalIgnoreCase)),
+                this.Cullers.Where(s => cullerNames.Contains(s.Name, StringComparer.OrdinalIgnoreCase)));
             while (await this.ScrapeEngine.ProceedJob(job)) { }
             return this.ScrapeEngine.GetJobState(job).ToList();
         }
 
         [Field("createJobWithAllScrapers", "Creates a scrape job using all registered scrapers (testing only)", typeof(GuidGraphType))]
         [Parameter(typeof(SeedTreeInputObjectCollection), typeof(SeedTreeInputObjectCollectionType), "seeds", "input")]
-        public Guid CreateJob(SeedTreeInputObjectCollection seeds)
+        [Parameter(typeof(IEnumerable<string>), typeof(ListGraphType<StringGraphType>), "scraperNames", "The scrapers to use for this job.")]
+        [Parameter(typeof(IEnumerable<string>), typeof(ListGraphType<StringGraphType>), "cullerNames", "The cullers to use for this job.")]
+        public Guid CreateJob(SeedTreeInputObjectCollection seeds, IEnumerable<string> scraperNames, IEnumerable<string> cullerNames)
         {
             var job = this.ScrapeEngine.CreateJob(seeds.Seeds.Select(s => s.ToSeedTree()).ToList(),
-               this.Scrapers,
-               this.Cullers
-             );
+                this.Scrapers.Where(s => scraperNames.Contains(s.Name, StringComparer.OrdinalIgnoreCase)),
+                this.Cullers.Where(s => cullerNames.Contains(s.Name, StringComparer.OrdinalIgnoreCase)));
             return job;
         }
 

@@ -30,7 +30,7 @@ namespace Snowflake.Execution.Extensibility
             this.InputMappings = inputMappings;
         }
 
-        IConfigurationCollection IConfigurationFactory.GetConfiguration(IGameRecord gameRecord, string profileName = "default")
+        IConfigurationCollection IConfigurationFactory.GetConfiguration(Guid gameRecord, string profileName = "default")
         {
             return this.GetConfiguration(gameRecord, profileName);
         }
@@ -47,7 +47,7 @@ namespace Snowflake.Execution.Extensibility
 
         public abstract (IInputTemplate<TInputTemplate> template, IInputMapping mapping) GetInputMappings(IEmulatedController emulatedDevice);
 
-        public abstract IConfigurationCollection<TConfigurationCollection> GetConfiguration(IGameRecord gameRecord, string profileName);
+        public abstract IConfigurationCollection<TConfigurationCollection> GetConfiguration(Guid gameRecord, string profileName);
 
         public abstract IConfigurationCollection<TConfigurationCollection> GetConfiguration();
     }

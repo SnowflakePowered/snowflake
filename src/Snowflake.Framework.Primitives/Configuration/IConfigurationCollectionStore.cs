@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Snowflake.Configuration
 {
@@ -48,5 +49,12 @@ namespace Snowflake.Configuration
         /// </summary>
         /// <param name="value">The configuration value with valid GUID and updated data</param>
         void Set(IConfigurationValue value);
+
+        /// <summary>
+        /// Updates multiple <em>existing</em> configuration values, this will error if the GUID is not found in
+        /// the database.
+        /// </summary>
+        /// <param name="values">The configuration value with valid GUID and updated data</param>
+        void Set(IEnumerable<IConfigurationValue> values);
     }
 }
