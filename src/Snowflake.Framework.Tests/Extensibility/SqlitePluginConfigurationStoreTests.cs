@@ -54,5 +54,30 @@ namespace Snowflake.Extensibility.Tests
             Assert.Equal(configSection.Configuration.FullscreenResolution, retrievedConfig.Configuration.FullscreenResolution);
             Assert.Equal(configSection.Configuration.Fullscreen, retrievedConfig.Configuration.Fullscreen);
         }
+
+        [Fact]
+        public void ConfigurationStoreSetIndividualEnumerable_Test()
+        {
+            var store = new SqlitePluginConfigurationStore(new SqliteDatabase(Path.GetTempFileName()));
+            var configSection = new ConfigurationSection<ExampleConfigurationSection>();
+            store.Set(configSection);
+            configSection.Configuration.ISOPath0 = "TestEqual";
+            configSection.Configuration.FullscreenResolution = FullscreenResolution.Resolution1152X648;
+            configSection.Configuration.Fullscreen = false;
+
+            store.Set(configSection);
+            configSection.Configuration.FullscreenResolution = FullscreenResolution.Resolution1280X768;
+            configSection.Configuration.Fullscreen = true;
+            store.Set(new[] { configSection.Configuration.Values["FullscreenResolution"],
+                              configSection.Configuration.Values["Fullscreen"],
+            });
+
+            var retrievedConfig = store.Get<ExampleConfigurationSection>();
+            Assert.NotNull(retrievedConfig);
+            Assert.NotNull(retrievedConfig);
+            Assert.Equal(configSection.Configuration.ISOPath0, retrievedConfig.Configuration.ISOPath0);
+            Assert.Equal(configSection.Configuration.FullscreenResolution, retrievedConfig.Configuration.FullscreenResolution);
+            Assert.Equal(configSection.Configuration.Fullscreen, retrievedConfig.Configuration.Fullscreen);
+        }
     }
 }

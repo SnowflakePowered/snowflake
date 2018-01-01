@@ -2,47 +2,68 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using GraphQL.Conventions.Adapters.Types;
+using GraphQL.Types;
 using Snowflake.Configuration;
+using Snowflake.Execution.Extensibility;
+using Snowflake.Extensibility;
+using Snowflake.Extensibility.Configuration;
+using Snowflake.Services;
 using Snowflake.Support.Remoting.GraphQl.Framework.Attributes;
 using Snowflake.Support.Remoting.GraphQl.Framework.Query;
+using Snowflake.Support.Remoting.GraphQl.Inputs.Configuration;
 using Snowflake.Support.Remoting.GraphQl.Types.Configuration;
 
 namespace Snowflake.Support.Remoting.GraphQl.Queries
 {
     public class ConfigurationQueryBuilder : QueryBuilder
     {
-        private IConfigurationCollectionStore Store { get; }
-        public ConfigurationQueryBuilder(IConfigurationCollectionStore store)
+        private IPluginManager PluginManager { get; }
+        private IConfigurationCollectionStore GameConfigurationStore { get; }
+        private IPluginConfigurationStore PluginConfigurationStore { get; }
+        public ConfigurationQueryBuilder(IConfigurationCollectionStore gameConfigurationStore,
+            IPluginConfigurationStore pluginConfigurationStore,
+            IPluginManager pluginManager)
         {
-            this.Store = store;
+            this.PluginConfigurationStore = pluginConfigurationStore;
+            this.GameConfigurationStore = gameConfigurationStore;
+            this.PluginManager = pluginManager;
         }
 
-       /* [Connection("configValues", "Config Values", typeof(ConfigurationValueGraphType))]
-        public IEnumerable<KeyValuePair<string, IConfigurationValue>> GetAllValues()
+        [Field("gameConfiguration", "Gets the emulator configuration the specified game and emulator.", typeof(ConfigurationCollectionGraphType))]
+        [Parameter(typeof(string), typeof(StringGraphType), "emulatorName", "The plugin name of the emulator.")]
+        [Parameter(typeof(Guid), typeof(GuidGraphType), "gameGuid", "The GUID of the game of this collection")]
+        [Parameter(typeof(string), typeof(StringGraphType), "profileName", "The name of the configuration profile.", nullable: false)]
+        public IConfigurationCollection GetEmulatorConfigCollection(string emulatorName, Guid gameGuid, string profileName = "default")
         {
-            var config = this.Store.Get<ITestConfigurationCollection>(Guid.NewGuid(), "TestEmulator", "DefaultProfile");
-            return config.Configuration.TestConfiguration.Values.ToList();
+            var emulator = this.PluginManager.Get<IEmulator>(emulatorName);
+            var config = emulator.ConfigurationFactory.GetConfiguration(gameGuid, profileName);
+            return config;
         }
 
-        [Connection("configOptions", "Config Options", typeof(ConfigurationOptionDescriptorGraphType))]
-        public IEnumerable<IConfigurationOptionDescriptor> GetAllOptions()
+        [Field("pluginConfiguration", "Gets the plugin configuration options for the specified plugin.",
+            typeof(ConfigurationSectionGraphType))]
+        [Parameter(typeof(string), typeof(StringGraphType), "pluginName", "The name of the plugin.")]
+        public IConfigurationSection GetPluginConfiguration(string pluginName)
         {
-            var config = this.Store.Get<ITestConfigurationCollection>(Guid.NewGuid(), "TestEmulator", "DefaultProfile");
-            return config.Configuration.TestConfiguration.Descriptor.Options;
+            var plugin = this.PluginManager.Get(pluginName);
+            return plugin.GetPluginConfiguration();
         }
 
-        [Connection("configSections", "Config Options", typeof(ConfigurationSectionGraphType))]
-        public IEnumerable<KeyValuePair<string, IConfigurationSection>> GetAllSections()
+        [Mutation("setGameConfigurationValue", "Config Options", typeof(ConfigurationValueInputGraphType))]
+        [Parameter(typeof(IEnumerable<ConfigurationValueInputObject>), typeof(ListGraphType<ConfigurationValueInputType>), "input", "The value to set.")]
+        public IEnumerable<IConfigurationValue> SetGameConfigurationValue(IEnumerable<ConfigurationValueInputObject> input)
         {
-            var config = this.Store.Get<ITestConfigurationCollection>(Guid.NewGuid(), "TestEmulator", "DefaultProfile");
-            return config.Configuration;
+            this.GameConfigurationStore.Set(input);
+            return input;
         }
 
-        [Connection("configCollection", "Config Options", typeof(ConfigurationCollectionGraphType))]
-        public IEnumerable<IConfigurationCollection> GetCollection()
+        [Mutation("setPluginConfigurationValue", "Config Options", typeof(ConfigurationValueInputGraphType))]
+        [Parameter(typeof(IEnumerable<ConfigurationValueInputObject>), typeof(ListGraphType<ConfigurationValueInputType>), "input", "The value to set.")]
+        public IEnumerable<IConfigurationValue> SetPluginConfigurationValue(IEnumerable<ConfigurationValueInputObject> input)
         {
-            var config = this.Store.Get<ITestConfigurationCollection>(Guid.NewGuid(), "TestEmulator", "DefaultProfile");
-            yield return config;
-        }*/
+            this.PluginConfigurationStore.Set(input);
+            return input;
+        }
     }
 }

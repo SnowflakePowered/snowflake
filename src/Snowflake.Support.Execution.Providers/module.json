@@ -1,5 +1,5 @@
 ﻿{
-  "entry": "Snowflake.Support.ExecutionSupport.dll",
+  "entry": "Snowflake.Support.Execution.Providers.dll",
   "loader": "assembly",
   "frameworkVersion": "1.0.0",
   "version": "1.0.0",

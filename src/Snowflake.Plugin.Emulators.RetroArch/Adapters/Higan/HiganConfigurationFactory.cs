@@ -31,9 +31,9 @@ namespace Snowflake.Adapters.Higan
             this.CollectionStore = collectionStore;
         }
 
-        public override IConfigurationCollection<HiganRetroArchConfiguration> GetConfiguration(IGameRecord gameRecord, string profileName = "default")
+        public override IConfigurationCollection<HiganRetroArchConfiguration> GetConfiguration(Guid gameRecord, string profileName = "default")
         {
-            return this.CollectionStore.Get<HiganRetroArchConfiguration>(gameRecord.Guid, "retroarch-higan", profileName);
+            return this.CollectionStore.Get<HiganRetroArchConfiguration>(gameRecord, "retroarch-higan", profileName);
         }
 
         public override IConfigurationCollection<HiganRetroArchConfiguration> GetConfiguration()

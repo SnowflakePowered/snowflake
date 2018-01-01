@@ -29,5 +29,10 @@ namespace Snowflake.Extensibility.Provisioning.Standalone
         {
             return;
         }
+
+        public void Set(IEnumerable<IConfigurationValue> values)
+        {
+            return;
+        }
     }
 }

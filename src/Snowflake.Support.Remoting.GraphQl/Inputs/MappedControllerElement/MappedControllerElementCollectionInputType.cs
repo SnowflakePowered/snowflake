@@ -9,6 +9,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Inputs.MappedControllerElement
     {
         public MappedControllerElementCollectionInputType()
         {
+            Name = "MappedControllerElementCollectionInput";
             Field(p => p.ControllerId);
             Field(p => p.DeviceId);
             Field(p => p.ProfileName);
