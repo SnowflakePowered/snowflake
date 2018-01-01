@@ -12,9 +12,9 @@ namespace Snowflake.Tooling.Taskrunner.Framework.Executor
 {
     public class TaskExecutor
     {
-        public VerbContainer Verbs { get; }
+        public TaskContainer Verbs { get; }
         public ArgumentParser Parser { get; }
-        public TaskExecutor(VerbContainer verbContainer, ArgumentParser parser)
+        public TaskExecutor(TaskContainer verbContainer, ArgumentParser parser)
         {
             this.Verbs = verbContainer;
             this.Parser = parser;

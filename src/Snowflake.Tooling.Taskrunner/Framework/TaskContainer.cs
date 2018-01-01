@@ -6,18 +6,18 @@ using Snowflake.Tooling.Taskrunner.Framework.Tasks;
 
 namespace Snowflake.Tooling.Taskrunner.Framework
 {
-    public class VerbContainer : IEnumerable<IVerbTask>
+    public class TaskContainer : IEnumerable<ITaskRunner>
     {
-        private Dictionary<string, IVerbTask> Container { get; }
+        private Dictionary<string, ITaskRunner> Container { get; }
 
-        public IVerbTask this[string key] => this.Container[key];
+        public ITaskRunner this[string key] => this.Container[key];
 
-        public VerbContainer()
+        public TaskContainer()
         {
-            this.Container = new Dictionary<string, IVerbTask>();
+            this.Container = new Dictionary<string, ITaskRunner>();
         }
 
-        public void Add (IVerbTask task)
+        public void Add (ITaskRunner task)
         {
             this.Container.Add(task.Name, task);
         }
@@ -27,7 +27,7 @@ namespace Snowflake.Tooling.Taskrunner.Framework
             return this.Container.ContainsKey(taskName);
         }
 
-        public IEnumerator<IVerbTask> GetEnumerator()
+        public IEnumerator<ITaskRunner> GetEnumerator()
         {
             return this.Container.Values.GetEnumerator();
         }

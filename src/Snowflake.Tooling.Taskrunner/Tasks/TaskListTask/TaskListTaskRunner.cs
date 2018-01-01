@@ -11,8 +11,8 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.TaskListTask
     [Task("list", "Lists the available tasks.")]
     public class TaskListTaskRunner : TaskRunner<EmptyArguments>
     {
-        private VerbContainer Verbs { get; }
-        public TaskListTaskRunner(VerbContainer container)
+        private TaskContainer Verbs { get; }
+        public TaskListTaskRunner(TaskContainer container)
         {
             this.Verbs = container;
         }

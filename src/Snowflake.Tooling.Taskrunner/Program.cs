@@ -17,7 +17,7 @@ namespace Snowflake.Tooling.Taskrunner
         static void Main(string[] args)
         {
             var parser = new ArgumentParser();
-            var container = new VerbContainer();
+            var container = new TaskContainer();
             var executor = new TaskExecutor(container, parser);
             container.Add(new HelpTaskRunner(container));
             container.Add(new TaskListTaskRunner(container));

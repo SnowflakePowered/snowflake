@@ -13,8 +13,8 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.HelpTask
     [Task("help", "Displays help for the given task.")]
     public class HelpTaskRunner : TaskRunner<HelpTaskArguments>
     {
-        private VerbContainer Verbs { get; }
-        public HelpTaskRunner(VerbContainer container)
+        private TaskContainer Verbs { get; }
+        public HelpTaskRunner(TaskContainer container)
         {
             this.Verbs = container;
         }
