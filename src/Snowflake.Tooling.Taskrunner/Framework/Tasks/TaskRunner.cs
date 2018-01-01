@@ -7,7 +7,7 @@ using Snowflake.Tooling.Taskrunner.Framework.Attributes;
 
 namespace Snowflake.Tooling.Taskrunner.Framework.Tasks
 {
-    public abstract class TaskRunner<T> : IVerbTask<T> where T: class, new()
+    public abstract class TaskRunner<T> : ITaskRunner<T> where T: class, new()
     {
         public string Name { get; }
 
@@ -36,9 +36,7 @@ namespace Snowflake.Tooling.Taskrunner.Framework.Tasks
                     RaisedExceptions = e.InnerExceptions,
                 };
             }
-            
         }
-
         public abstract Task<int> Execute(T arguments, string[] args);
     }
 }

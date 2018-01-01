@@ -16,7 +16,6 @@ namespace Snowflake.Tooling.Taskrunner
     {
         static void Main(string[] args)
         {
-          
             var parser = new ArgumentParser();
             var container = new VerbContainer();
             var executor = new TaskExecutor(container, parser);

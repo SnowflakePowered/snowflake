@@ -82,6 +82,5 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.AssemlyModuleBuilderTask
             var moduleFile = contentsDirectory.EnumerateFiles().FirstOrDefault(f => f.Name == "module.json");
             return moduleFile.CopyTo(Path.Combine(moduleFile.Directory.Parent.FullName, moduleFile.Name)); 
         }
-
     }
 }
