@@ -23,7 +23,7 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.TaskListTask
             Console.WriteLine("Tasks:");
             foreach (var task in this.Verbs)
             {
-                Console.WriteLine($"{task.Name.PadLeft(5).PadRight(20)} {task.Description}");
+                Console.WriteLine($"{task.Name.PadLeft(task.Name.Length + 2).PadRight(20)} {task.Description}");
             }
             return 0;
         }

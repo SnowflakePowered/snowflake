@@ -53,32 +53,31 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.HelpTask
                 Console.Write(" [options]");
             }
 
-            Console.WriteLine("\n");
-
             if (posArgs.Count != 0)
             {
+                Console.WriteLine("\n");
                 Console.WriteLine("Arguments: ");
                 foreach ((var attr, var propName) in posArgs)
                 {
-                    Console.WriteLine($"{$"<{propName.ToUpperInvariant()}>".PadLeft(10).PadRight(10)} {attr.Description}");
+                    Console.WriteLine($"{$"<{propName.ToUpperInvariant()}>".PadLeft(propName.Length + 2).PadRight(10)} {attr.Description}");
                 }
             }
 
-            Console.WriteLine("\n");
-
             if (namedArgs.Count != 0)
             {
+                Console.WriteLine("\n");
                 Console.WriteLine("Options: ");
                 foreach ((var attr, var propName, var propType) in namedArgs)
                 {
-                    Console.Write($"-{attr.ShortName}, --{attr.LongName}");
+                    string optionString = $"-{attr.ShortName}, --{attr.LongName}";
 
                     if (propType != typeof(bool))
                     {
-                        Console.Write($" <{propName}> ");
+                        optionString += ($" <{propName.ToUpperInvariant()}> ");
                     }
 
-                    Console.Write($"{attr.Description.PadLeft(attr.Description.Length + 10)}");
+                    Console.Write($"{optionString.PadLeft(optionString.Length + 2).PadRight(50)}");
+                    Console.Write($"{attr.Description}");
                     Console.WriteLine();
                 }
             }

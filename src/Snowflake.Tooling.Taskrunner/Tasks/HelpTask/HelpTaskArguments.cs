@@ -8,6 +8,6 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.HelpTask
     public sealed class HelpTaskArguments
     {
         [PositionalArgument(0, "The task to assist with.")]
-        public string Task { get; set; }
+        public string Task { get; set; } = "help";
     }
 }

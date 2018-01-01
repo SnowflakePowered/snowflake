@@ -8,7 +8,7 @@ using Snowflake.Tooling.Taskrunner.Framework.Tasks;
 
 namespace Snowflake.Tooling.Taskrunner.Tasks.ArgumentDisplayTask
 {
-    [Task("display", "Displays the parsed arguments.")]
+    [Task("display", "[Debug] Displays the parsed arguments using the argument parser.")]
     public class ArgumentDisplayTaskRunner : TaskRunner<EmptyArguments>
     {
         public override async Task<int> Execute(EmptyArguments arguments, string[] args)
