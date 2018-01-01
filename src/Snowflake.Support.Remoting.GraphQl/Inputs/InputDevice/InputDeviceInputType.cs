@@ -10,6 +10,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Inputs.InputDevice
     {
         public InputDeviceInputType()
         {
+            Name = "InputDeviceInput";
             Field<IntGraphType>("deviceIndex",
                 resolve: context => context.Source.DeviceIndex,
                 description: "The index of the device.");

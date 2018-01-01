@@ -7,9 +7,9 @@ using Snowflake.Loader;
 namespace Snowflake.Services
 {
     /// <summary>
-    /// The IPluginManager manages all plugins except for Ajax plugins
+    /// The IPluginManager manages all plugins.
     /// </summary>
-    public interface IPluginManager : IDisposable
+    public interface IPluginManager : IDisposable, IEnumerable<IPlugin>
     {
         /// <summary>
         /// Provisions a <see cref="IProvisionedPlugin"/> relative to the given module for initialization.

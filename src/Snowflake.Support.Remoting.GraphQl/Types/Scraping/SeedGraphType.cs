@@ -11,6 +11,8 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.Scraping
     {
         public SeedGraphType()
         {
+            Name = "Seed";
+            Description = "A seed represents a piece of data in the process of scraping a game.";
             Field(s => s.Source).Description("The source of this seed.");
             Field<GuidGraphType>("guid",
                 resolve: context => context.Source.Guid);
