@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>dotnet-snowflake</AssemblyName>
+    <RootNamespace>Snowflake.Tooling.Taskrunner</RootNamespace>
+    <OutputType>Exe</OutputType>
+    <StartupObject />
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <Authors>Snowflake Developers</Authors>
+    <Title>Snowflake .NET Tooling Taskrunner</Title>
+    <PackageType>DotNetCliTool</PackageType>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <Folder Include="Testing\" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.1-beta1" />
+  </ItemGroup>
+
+</Project>
