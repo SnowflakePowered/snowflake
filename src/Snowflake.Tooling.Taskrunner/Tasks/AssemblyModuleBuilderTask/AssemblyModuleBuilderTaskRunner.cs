@@ -18,7 +18,7 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.AssemblyModuleBuilderTask
     {
         public override async Task<int> Execute(AssemblyModuleBuilderTaskArguments arguments, string[] args)
         {
-            Console.WriteLine($"Snowball Assembly Packer version {Assembly.GetEntryAssembly().GetName().Version}");
+            Console.WriteLine($"Snowball Assembly Builder version {Assembly.GetEntryAssembly().GetName().Version}");
             var cwd = arguments.SourceDirectory != null ? new DirectoryInfo(Path.GetFullPath(arguments.SourceDirectory))
                 : DirectoryProvider.WorkingDirectory;
             Console.WriteLine($"Attempting to build module in {cwd.FullName}...");

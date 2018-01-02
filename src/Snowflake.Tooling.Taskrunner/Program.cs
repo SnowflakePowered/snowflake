@@ -8,6 +8,8 @@ using Snowflake.Tooling.Taskrunner.Framework.Parser;
 using Snowflake.Tooling.Taskrunner.Tasks.ArgumentDisplayTask;
 using Snowflake.Tooling.Taskrunner.Tasks.AssemblyModuleBuilderTask;
 using Snowflake.Tooling.Taskrunner.Tasks.HelpTask;
+using Snowflake.Tooling.Taskrunner.Tasks.InstallTask;
+using Snowflake.Tooling.Taskrunner.Tasks.PackTask;
 using Snowflake.Tooling.Taskrunner.Tasks.TaskListTask;
 
 namespace Snowflake.Tooling.Taskrunner
@@ -23,6 +25,8 @@ namespace Snowflake.Tooling.Taskrunner
             container.Add(new TaskListTaskRunner(container));
             container.Add(new ArgumentDisplayTaskRunner());
             container.Add(new AssemblyModuleBuilderTaskRunner());
+            container.Add(new PackTaskRunner());
+            container.Add(new InstallTaskRunner());
 
             if (args.Length == 0)
             {
