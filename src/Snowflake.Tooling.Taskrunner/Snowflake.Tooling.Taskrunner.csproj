@@ -5,12 +5,14 @@
     <AssemblyName>dotnet-snowflake</AssemblyName>
     <RootNamespace>Snowflake.Tooling.Taskrunner</RootNamespace>
     <OutputType>Exe</OutputType>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Version>1.0.0</Version>
     <StartupObject />
   </PropertyGroup>
   
   <PropertyGroup>
     <Authors>Snowflake Developers</Authors>
-    <Title>Snowflake .NET Tooling Taskrunner</Title>
+    <Title>Snowflake .NET Tooling CLI</Title>
     <PackageType>DotNetCliTool</PackageType>
   </PropertyGroup>
   
