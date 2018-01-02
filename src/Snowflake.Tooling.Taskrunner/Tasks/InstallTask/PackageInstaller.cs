@@ -46,7 +46,17 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.InstallTask
                             byte[] packageNameBytes = packageStream.ToArray();
                             packageStream.Close();
                             string packageName = Encoding.UTF8.GetString(packageNameBytes);
-                            
+
+                            try
+                            {
+                                Console.WriteLine("Cleaning module directory...");
+                                moduleDirectory.CreateSubdirectory(packageName).Delete(true);
+                            }
+                            catch
+                            {
+                                throw new IOException("Unable to clean directory module directory, is it in use?");
+                            }
+
                             foreach(ZipEntry entry in contentArchive)
                             {
                                 if (!entry.IsFile)

@@ -30,7 +30,6 @@ namespace Snowflake.Tooling.Taskrunner.Framework.Tasks
             }
             catch (AggregateException e)
             {
-                throw;
                 return new VerbTaskResult()
                 {
                     ExitCode = 1,
