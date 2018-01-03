@@ -8,6 +8,8 @@ coverage:
   precision: 2
   round: down
   range: "50...80"
+  fixes:
+    - "build/::"
   status:
     project:
       default:
@@ -20,6 +22,7 @@ coverage:
         if_no_uploads: error
         target: '50'
         set_pending: yes
+
 comment:
   layout: "header, diff, changes, suggestions, sunburst"
   behavior: default

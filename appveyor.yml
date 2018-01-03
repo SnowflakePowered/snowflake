@@ -1,5 +1,5 @@
 version: 0.2.{build}
-os: Visual Studio 2017 Preview
+os: Visual Studio 2017
 branches:
   # whitelist
   only:
@@ -13,12 +13,7 @@ configuration: Debug
 # Fix line endings on Windows
 init:
   - git config --global core.autocrlf true
-#build:
-#  project: src/Snowflake.sln
-#  parallel: true
-#  publish_nuget: true
-#  publish_nuget_symbols: true
-#  verbosity: minimal
+
 environment:
     COVERALLS_REPO_TOKEN:
       secure: nBi3LwnqgslaH8hbsvjnWTqpe/UbKn705TJujxqJwtcL5OLGfcydM8AnVyld6Ngu
@@ -26,7 +21,7 @@ environment:
       secure: 5cuY6qLcjz85TBpjs2Ba9B8QKKT5XuvQse3pnVmk8wo=
     CoverityNotificationEmail:
       secure: YObG6alHbjgc0M1b5aIThLfeiTS18PFiFnIjEcSNqa0=
-    PATH: C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
+    DOTNET_CLI_TELEMETRY_OPTOUT: 1
     GITHUB_BUILDBOT_TOKEN:
       secure: LZO5KXv/W++ny6vI/qhQ/NhscaTqhFAe+h3t0/sTMj44LlGeJi3n7nIR9b8KXXHr
 cache:
@@ -34,55 +29,38 @@ cache:
   
 install:
     - nuget update -self > nul 2>&1
-    - nuget install OpenCover -ExcludeVersion > nul 2>&1
- #   - nuget install xunit.runner.console -Version 2.1.0
- #   - nuget install EWSoftware.SHFB -ExcludeVersion
- #   - nuget install EWSoftware.SHFB.NETFramework -ExcludeVersion
- #   - choco install -y doxygen.portable > nul 2>&1
     - git submodule update --init --recursive > nul 2>&1
-    - dotnet restore src/Snowflake.sln
+    - rem USING DOTNET SDK VERSION
+    - dotnet --version
 
-#after_build:
-#    - ps: |
-#        if ($env:CoverityProjectToken)
-#        {
-#          cov-configure.exe --cs
-#          cov-build.exe --dir cov-int msbuild /t:Rebuild Snowflake.sln
-#          nuget.exe install PublishCoverity -ExcludeVersion
-#          PublishCoverity\tools\PublishCoverity.exe compress -o coverity.zip -i cov-int
-#          PublishCoverity\tools\PublishCoverity.exe publish -t "$env:CoverityProjectToken" -e "$env:CoverityNotificationEmail" -r "$env:APPVEYOR_REPO_NAME" -z coverity.zip -d "AppVeyor $env:APPVEYOR_BUILD_VERSION" --codeVersion "$env:APPVEYOR_REPO_COMMIT"
-#        }
 build_script:
-    - dotnet build src/Snowflake.Framework.Tests
-test_script:
-    - rem Running Tests...
-    - OpenCover\tools\OpenCover.Console.exe -target:"dotnet.exe" -targetargs:"test src/Snowflake.Framework.Tests -c Cover" -register:user -filter:"+[Snowflake.Framework*]* +[Snowflake.Support*]* -[xunit*]*" -output:coverage.xml -oldStyle
-
-after_test:
-#    - rem Generating Sandcastle Documentation...
-#    - msbuild "C:\projects\snowflake\Snowflake.Documentation.shfbproj" /verbosity:quiet /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" > nul 2>&1
-    - rem Generating Doxygen Documentation...
-    - echo "PROJECT_NUMBER = %APPVEYOR_BUILD_VERSION%+git.%APPVEYOR_REPO_COMMIT%" >> snowflake.doxygen
-#    - doxygen snowflake.doxygen > nul 2>&1
-    - rem Uploading Code Coverage Report to Codecov...
-    - "SET PATH=C:\\Python34;C:\\Python34\\Scripts;%PATH%"
-    - pip install codecov > nul 2>&1
-    - codecov -f "coverage.xml"
-    - rem Packing NuGet packages...
-    - dotnet pack src\Snowflake.Framework.Primitives --version-suffix pre-alpha.%APPVEYOR_BUILD_NUMBER% -o  ..\..\nupkg
-    - dotnet pack src\Snowflake.Framework --version-suffix pre-alpha.%APPVEYOR_BUILD_NUMBER% -o ..\..\nupkg
-    - dotnet pack src\Snowflake.Framework.Services --version-suffix pre-alpha.%APPVEYOR_BUILD_NUMBER% -o ..\..\nupkg
+    - ps: .\build\build.ps1 -Script build\build.cake -Target Appveyor
 
 artifacts:
-    - path: '**\Snowflake.Framework.Primitives.*.nupkg'
-      name: Snowflake Framework Primitives
-    - path: '**\Snowflake.Framework.*.nupkg'
-      name: Snowflake Framework Implementation
-    - path: '**\Snowflake.Framework.Services.*.nupkg'
-      name: Snowflake Framework Services
-#    - path: doc
-#      name: Snowflake Generated Documentation (Doxygen)
-#      type: zip
+    - path: 'build\out\Snowflake.Framework.Primitives.*.nupkg'
+      name: Snowflake Framework Primitives Interfaces
+      type: NuGetPackage
+      
+    - path: 'build\out\Snowflake.Framework.*.nupkg'
+      name: Snowflake Framework Base Classes
+      type: NuGetPackage
+      
+    - path: 'build\out\Snowflake.Framework.Services.*.nupkg'
+      name: Snowflake Framework Service Classes
+      type: NuGetPackage
+      
+    - path: 'build\out\Snowflake.Framework.Persistence.*.nupkg'
+      name: Snowflake Framework Persistence Base Classes
+      type: NuGetPackage
+      
+    - path: 'build\out\Snowflake.Framework.Remoting.GraphQl.*.nupkg'
+      name: Snowflake Framework GraphQL Remoting Base Classes
+      type: NuGetPackage
+      
+    - path: 'build\out\*.snowpkg'
+      name: 'Snowflake Support Package'
+      type: File
+
 deploy:
     - provider: NuGet
       server: https://www.myget.org/F/snowflake-nightly/api/v2/package
@@ -93,6 +71,8 @@ deploy:
 after_deploy:
     - rem Uploading Build Documentation
     - git init doc/html
+on_finish:
+#  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 #    - echo docs.snowflakepowe.red > doc/html/CNAME
  #   - echo > doc/html/.nojekyll
  #   - git -C doc/html add --all > nul 2>&1

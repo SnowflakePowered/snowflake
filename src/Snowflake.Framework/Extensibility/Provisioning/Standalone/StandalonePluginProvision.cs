@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Text;
 using Snowflake.Extensibility.Configuration;
-using System.Reflection;
 
 namespace Snowflake.Extensibility.Provisioning.Standalone
 {

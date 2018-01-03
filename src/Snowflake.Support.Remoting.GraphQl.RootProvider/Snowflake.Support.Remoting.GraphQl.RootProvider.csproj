@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Snowflake.Framework.Primitives\Snowflake.Framework.Primitives.csproj" />
-    <ProjectReference Include="..\Snowflake.Support.Remoting.GraphQl.Framework\Snowflake.Support.Remoting.GraphQl.Framework.csproj" />
+    <ProjectReference Include="..\Snowflake.Framework.Remoting.GraphQl\Snowflake.Framework.Remoting.GraphQl.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,8 +22,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <DotNetCliToolReference Include="dotnet-pack-snowflake" Version="1.2.0" />
-    <DotNetCliToolReference Include="dotnet-install-snowflake" Version="1.0.0" />
+    <DotNetCliToolReference Include="dotnet-snowflake" Version="1.0.1" />
+
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json" />
