@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Snowflake.Framework.Remoting.GraphQl;
 using Snowflake.Loader;
 using Snowflake.Services;
-using Snowflake.Support.Remoting.GraphQl.Framework;
 using Snowflake.Support.Remoting.GraphQl.Servers;
 
 namespace Snowflake.Support.Remoting.GraphQl.RootProvider

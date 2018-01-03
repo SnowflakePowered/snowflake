@@ -4,11 +4,11 @@ using System.Text;
 using GraphQL;
 using GraphQL.Types;
 using Snowflake.Configuration;
+using Snowflake.Framework.Remoting.GraphQl;
+using Snowflake.Framework.Remoting.GraphQl.Query;
 using Snowflake.Loader;
 using Snowflake.Records.Game;
 using Snowflake.Services;
-using Snowflake.Support.Remoting.GraphQl.Framework;
-using Snowflake.Support.Remoting.GraphQl.Framework.Query;
 
 namespace Snowflake.Support.Remoting.GraphQl.RootProvider
 {

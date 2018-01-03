@@ -7,10 +7,10 @@ using GraphQL.Types;
 using Snowflake.Execution.Extensibility;
 using Snowflake.Execution.Saving;
 using Snowflake.Extensibility;
+using Snowflake.Framework.Remoting.GraphQl.Attributes;
+using Snowflake.Framework.Remoting.GraphQl.Query;
 using Snowflake.Records.Game;
 using Snowflake.Services;
-using Snowflake.Support.Remoting.GraphQl.Framework.Attributes;
-using Snowflake.Support.Remoting.GraphQl.Framework.Query;
 using Snowflake.Support.Remoting.GraphQl.Inputs.EmulatedController;
 using Snowflake.Support.Remoting.GraphQl.Types.Execution;
 

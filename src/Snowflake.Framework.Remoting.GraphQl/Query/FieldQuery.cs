@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using GraphQL.Types;
 
-namespace Snowflake.Support.Remoting.GraphQl.Framework.Query
+namespace Snowflake.Framework.Remoting.GraphQl.Query
 {
     internal class FieldQuery
     {

@@ -8,9 +8,9 @@ using Snowflake.Configuration;
 using Snowflake.Execution.Extensibility;
 using Snowflake.Extensibility;
 using Snowflake.Extensibility.Configuration;
+using Snowflake.Framework.Remoting.GraphQl.Attributes;
+using Snowflake.Framework.Remoting.GraphQl.Query;
 using Snowflake.Services;
-using Snowflake.Support.Remoting.GraphQl.Framework.Attributes;
-using Snowflake.Support.Remoting.GraphQl.Framework.Query;
 using Snowflake.Support.Remoting.GraphQl.Inputs.Configuration;
 using Snowflake.Support.Remoting.GraphQl.Types.Configuration;
 

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using GraphQL.Types;
 
-namespace Snowflake.Support.Remoting.GraphQl.Framework.Attributes
+namespace Snowflake.Framework.Remoting.GraphQl.Attributes
 {
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
     public sealed class ConnectionAttribute : Attribute

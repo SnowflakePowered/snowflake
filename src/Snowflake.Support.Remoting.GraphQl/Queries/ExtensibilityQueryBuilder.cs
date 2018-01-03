@@ -5,11 +5,11 @@ using System.Text;
 using GraphQL.Types;
 using Snowflake.Execution.Extensibility;
 using Snowflake.Extensibility;
+using Snowflake.Framework.Remoting.GraphQl.Attributes;
+using Snowflake.Framework.Remoting.GraphQl.Query;
 using Snowflake.Loader;
 using Snowflake.Scraping.Extensibility;
 using Snowflake.Services;
-using Snowflake.Support.Remoting.GraphQl.Framework.Attributes;
-using Snowflake.Support.Remoting.GraphQl.Framework.Query;
 using Snowflake.Support.Remoting.GraphQl.Types.Module;
 using Snowflake.Support.Remoting.GraphQl.Types.Plugin;
 

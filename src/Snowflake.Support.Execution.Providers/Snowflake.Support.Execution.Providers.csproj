@@ -15,6 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <DotNetCliToolReference Include="dotnet-snowflake" Version="1.0.0" />
+    <DotNetCliToolReference Include="dotnet-snowflake" Version="1.0.1" />
   </ItemGroup>
 </Project>

@@ -9,9 +9,9 @@ using GraphQL.Builders;
 using GraphQL.Relay.Types;
 using GraphQL.Types;
 using GraphQL.Types.Relay;
-using Snowflake.Support.Remoting.GraphQl.Framework.Attributes;
+using Snowflake.Framework.Remoting.GraphQl.Attributes;
 
-namespace Snowflake.Support.Remoting.GraphQl.Framework.Query
+namespace Snowflake.Framework.Remoting.GraphQl.Query
 {
     public abstract partial class QueryBuilder
     {
