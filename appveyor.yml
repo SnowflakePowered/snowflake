@@ -75,6 +75,8 @@ deploy:
 after_deploy:
     - rem Uploading Build Documentation
     - git init doc/html
+on_finish:
+  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 #    - echo docs.snowflakepowe.red > doc/html/CNAME
  #   - echo > doc/html/.nojekyll
  #   - git -C doc/html add --all > nul 2>&1
