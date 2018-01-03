@@ -5,7 +5,7 @@ using Snowflake.Loader;
 
 namespace Snowflake.Services
 {
-    public class StoneProviderComposer : IComposable
+    public class StoneProviderComposable : IComposable
     {
         /// <inheritdoc/>
         [ImportService(typeof(IServiceRegistrationProvider))]
