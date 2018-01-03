@@ -33,23 +33,22 @@ Task("PackFrameworkNuget")
     });
   });
 
-Task("BuildModules")
+Task("PackModules")
   .IsDependentOn("Default")
+  .IsDependentOn("CreateArtifactsOutputDirectory")
   .DoesForEach(ParseSolution(new FilePath("../src/Snowflake.sln"))
                .GetProjects(), project => {
     var projectProps = ParseProject(project.Path, "debug");
     if (projectProps.NetCore?.DotNetCliToolReferences?.Any(r => r.Name == "dotnet-snowflake") == true) {
         Information($"Building {projectProps.AssemblyName}");
-        DotNetCoreTool(project.Path, "snowflake", $"build");
+        DotNetCoreTool(project.Path, "snowflake", "build");
+        Information($"Packing module..");
+        DotNetCoreTool(project.Path, "snowflake", new ProcessArgumentBuilder()
+            .Append("pack")
+            .AppendQuoted($"./bin/module/{projectProps.AssemblyName}")
+            .Append("-o")
+            .AppendQuoted($"{Environment.CurrentDirectory}/out"));
     }
-  });
-
-Task("PackModules")
-  .IsDependentOn("BuildModules")
-  .IsDependentOn("BuildTooling")
-  .IsDependentOn("CreateArtifactsOutputDirectory")
-  .DoesForEach(GetDirectories("../src/Snowflake.Support.*/bin/module/*"), (moduleDirectory) => {
-    DotNetCoreExecute("./snowflake-cli/dotnet-snowflake.dll", $"pack {moduleDirectory.FullPath} -o ./out");
   });
 
 Task("Test")
@@ -111,8 +110,19 @@ Task("Bootstrap")
     DotNetCoreExecute("./snowflake-cli/dotnet-snowflake.dll", $"install-all -d ./out");
   });
 
+Task("AppveyorBuild")
+  .Does(() => {
+    var msBuildSettings = new DotNetCoreMSBuildSettings();
+    msBuildSettings.Loggers.Add(new MSBuildLogger() {
+      Assembly = @"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.V14.dll",
+    });
+    NuGetRestore("../src/Snowflake.sln");
+    DotNetCoreBuild("../src/Snowflake.sln", new DotNetCoreBuildSettings() {
+      MSBuildSettings = msBuildSettings
+    });
+  });
 Task("Appveyor")
-  .IsDependentOn("Default")
+  .IsDependentOn("AppveyorBuild")
   .IsDependentOn("Codecov")
   .IsDependentOn("PackModules")
   .IsDependentOn("PackFrameworkNuget");
