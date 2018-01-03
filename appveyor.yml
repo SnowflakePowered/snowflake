@@ -36,10 +36,6 @@ install:
 build_script:
     - ps: .\build\build.ps1 -Script build\build.cake -Target Appveyor
 
-test_script:
-    - rem Running Tests...
-    - ps: .\build\build.ps1 -Script build\build.cake -Target Test
-
 artifacts:
     - path: 'build\out\Snowflake.Framework.Primitives.*.nupkg'
       name: Snowflake Framework Primitives Interfaces
@@ -76,7 +72,7 @@ after_deploy:
     - rem Uploading Build Documentation
     - git init doc/html
 on_finish:
-  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+#  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 #    - echo docs.snowflakepowe.red > doc/html/CNAME
  #   - echo > doc/html/.nojekyll
  #   - git -C doc/html add --all > nul 2>&1
