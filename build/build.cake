@@ -110,8 +110,19 @@ Task("Bootstrap")
     DotNetCoreExecute("./snowflake-cli/dotnet-snowflake.dll", $"install-all -d ./out");
   });
 
+Task("AppveyorBuild")
+  .Does(() => {
+    var msBuildSettings = new MSBuildSettings();
+    msBuildSettings.Loggers.Add(new MSBuildLogger() {
+      Assembly = @"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll",
+    });
+    NuGetRestore("../src/Snowflake.sln");
+    MSBuild("../src/Snowflake.sln", msBuildSettings);
+//Task("AppveyorBuild")
+
+  });
 Task("Appveyor")
-  .IsDependentOn("Default")
+  .IsDependentOn("AppveyorBuild")
   .IsDependentOn("Codecov")
   .IsDependentOn("PackFrameworkNuget")
   .IsDependentOn("PackModules");
