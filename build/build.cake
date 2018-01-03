@@ -104,6 +104,12 @@ Task("Codecov")
     Codecov("./coverage/coverage.xml");
   });
 
+Task("Bootstrap")
+  .IsDependentOn("PackModules")
+  .Does(() => {
+    DotNetCoreExecute("./snowflake-cli/dotnet-snowflake.dll", $"install-all -d ./out");
+  });
+
 Task("Appveyor")
   .IsDependentOn("Default")
   .IsDependentOn("Codecov")

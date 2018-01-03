@@ -22,12 +22,13 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.InstallAllTask
             DirectoryInfo packageDirectory = arguments.PackageDirectory != null
                            ? new DirectoryInfo(Path.GetFullPath(arguments.PackageDirectory))
                            : DirectoryProvider.WorkingDirectory;
+
             int exitCode = 0;
             foreach(var package in packageDirectory.EnumerateFiles("*.snowpkg"))
             {
                 try
                 {
-                    var pkg = new PackageInstaller(File.OpenRead(package.Name));
+                    var pkg = new PackageInstaller(File.OpenRead(package.FullName));
                     if (!arguments.NoVerify)
                     {
                         Console.WriteLine($"Verifying {package.Name}...");
@@ -41,9 +42,9 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.InstallAllTask
                     string installPath = await pkg.InstallPackage(moduleDirectory);
                     Console.WriteLine($"Installed {package.Name} to {installPath}.");
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    Console.WriteLine($"Unable to install package {package.Name}.");
+                    Console.WriteLine($"Unable to install package {package.Name} due to {e.Message}.");
                     exitCode = 1;
                     continue;
                 }
