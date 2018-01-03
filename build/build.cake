@@ -29,7 +29,8 @@ Task("PackFrameworkNuget")
                .GetProjects()
                .Where(p => p.Name.StartsWith("Snowflake.Framework")), project => {
     DotNetCorePack(project.Path.FullPath, new DotNetCorePackSettings() {
-      OutputDirectory = "out"
+      OutputDirectory = "out",
+      VersionSuffix = "alpha.%APPVEYOR_BUILD_NUMBER%"
     });
   });
 
