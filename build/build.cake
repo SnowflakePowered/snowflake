@@ -40,11 +40,12 @@ Task("BuildModules")
     var projectProps = ParseProject(project.Path, "debug");
     if (projectProps.NetCore?.DotNetCliToolReferences?.Any(r => r.Name == "dotnet-snowflake") == true) {
         Information($"Building {projectProps.AssemblyName}");
+        DotNetCoreTool(project.Path, "snowflake", $"build");
     }
   });
 
 Task("PackModules")
-  //.IsDependentOn("BuildModules")
+  .IsDependentOn("BuildModules")
   .IsDependentOn("BuildTooling")
   .IsDependentOn("CreateArtifactsOutputDirectory")
   .DoesForEach(GetDirectories("../src/Snowflake.Support.*/bin/module/*"), (moduleDirectory) => {

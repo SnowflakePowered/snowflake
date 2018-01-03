@@ -20,6 +20,8 @@ coverage:
         if_no_uploads: error
         target: '50'
         set_pending: yes
+fixes:
+  - "build/::"
 comment:
   layout: "header, diff, changes, suggestions, sunburst"
   behavior: default
