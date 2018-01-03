@@ -112,14 +112,14 @@ Task("Bootstrap")
 
 Task("AppveyorBuild")
   .Does(() => {
-    var msBuildSettings = new DotNetCoreBuildSettings();
-    msBuildSettings.MSBuildSettings.Loggers.Add(new MSBuildLogger() {
+    var msBuildSettings = new DotNetCoreMSBuildSettings();
+    msBuildSettings.Loggers.Add(new MSBuildLogger() {
       Assembly = @"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll",
     });
     NuGetRestore("../src/Snowflake.sln");
-    DotNetCoreBuild("../src/Snowflake.sln", msBuildSettings);
-//Task("AppveyorBuild")
-
+    DotNetCoreBuild("../src/Snowflake.sln", new DotNetCoreBuildSettings() {
+      MSBuildSettings = msBuildSettings
+    });
   });
 Task("Appveyor")
   .IsDependentOn("AppveyorBuild")

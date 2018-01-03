@@ -34,7 +34,6 @@ install:
     - dotnet --version
 
 build_script:
-    - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
     - ps: .\build\build.ps1 -Script build\build.cake -Target Appveyor
 
 test_script:
@@ -76,8 +75,6 @@ deploy:
 after_deploy:
     - rem Uploading Build Documentation
     - git init doc/html
-on_finish:
-  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 #    - echo docs.snowflakepowe.red > doc/html/CNAME
  #   - echo > doc/html/.nojekyll
  #   - git -C doc/html add --all > nul 2>&1
