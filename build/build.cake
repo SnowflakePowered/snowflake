@@ -8,7 +8,7 @@ Task("Default")
   .Does(() =>
   {
     NuGetRestore("../src/Snowflake.sln");
-    MSBuild("../src/Snowflake.sln");
+    DotNetCoreBuild("../src/Snowflake.sln");
   });
 
 Task("BuildTooling")
@@ -44,7 +44,7 @@ Task("BuildModules")
   });
 
 Task("PackModules")
-  .IsDependentOn("BuildModules")
+  //.IsDependentOn("BuildModules")
   .IsDependentOn("BuildTooling")
   .IsDependentOn("CreateArtifactsOutputDirectory")
   .DoesForEach(GetDirectories("../src/Snowflake.Support.*/bin/module/*"), (moduleDirectory) => {
@@ -112,19 +112,19 @@ Task("Bootstrap")
 
 Task("AppveyorBuild")
   .Does(() => {
-    var msBuildSettings = new MSBuildSettings();
-    msBuildSettings.Loggers.Add(new MSBuildLogger() {
+    var msBuildSettings = new DotNetCoreBuildSettings();
+    msBuildSettings.MSBuildSettings.Loggers.Add(new MSBuildLogger() {
       Assembly = @"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll",
     });
     NuGetRestore("../src/Snowflake.sln");
-    MSBuild("../src/Snowflake.sln", msBuildSettings);
+    DotNetCoreBuild("../src/Snowflake.sln", msBuildSettings);
 //Task("AppveyorBuild")
 
   });
 Task("Appveyor")
   .IsDependentOn("AppveyorBuild")
   .IsDependentOn("Codecov")
-  .IsDependentOn("PackFrameworkNuget")
-  .IsDependentOn("PackModules");
+  .IsDependentOn("PackModules")
+  .IsDependentOn("PackFrameworkNuget");
 
 RunTarget(target);
