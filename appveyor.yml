@@ -1,5 +1,5 @@
 version: 0.2.{build}
-os: Visual Studio 2017 Preview
+os: Visual Studio 2017
 branches:
   # whitelist
   only:
@@ -21,7 +21,7 @@ environment:
       secure: 5cuY6qLcjz85TBpjs2Ba9B8QKKT5XuvQse3pnVmk8wo=
     CoverityNotificationEmail:
       secure: YObG6alHbjgc0M1b5aIThLfeiTS18PFiFnIjEcSNqa0=
-    PATH: C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
+    DOTNET_CLI_TELEMETRY_OPTOUT: 1
     GITHUB_BUILDBOT_TOKEN:
       secure: LZO5KXv/W++ny6vI/qhQ/NhscaTqhFAe+h3t0/sTMj44LlGeJi3n7nIR9b8KXXHr
 cache:
@@ -30,7 +30,8 @@ cache:
 install:
     - nuget update -self > nul 2>&1
     - git submodule update --init --recursive > nul 2>&1
-    - dotnet -h
+    - rem USING DOTNET SDK VERSION
+    - dotnet --version
 
 build_script:
     - ps: .\build\build.ps1 -Script build\build.cake -Target Appveyor
