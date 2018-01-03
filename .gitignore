@@ -23,10 +23,12 @@ src/tools/*
 [Dd]ebugPublic/
 [Rr]elease/
 x64/
-build/
 bld/
 [Bb]in/
 [Oo]bj/
+build/**/*
+!build.ps1
+!build.cake
 
 # MSTest test Results
 [Tt]est[Rr]esult*/
