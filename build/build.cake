@@ -30,7 +30,18 @@ Task("PackFrameworkNuget")
                .Where(p => p.Name.StartsWith("Snowflake.Framework")), project => {
     DotNetCorePack(project.Path.FullPath, new DotNetCorePackSettings() {
       OutputDirectory = "out",
-      VersionSuffix = "alpha.%APPVEYOR_BUILD_NUMBER%"
+    });
+  });
+
+
+Task("PackFrameworkNugetAppveyor")
+  .IsDependentOn("Default")
+  .DoesForEach(ParseSolution(new FilePath("../src/Snowflake.sln"))
+               .GetProjects()
+               .Where(p => p.Name.StartsWith("Snowflake.Framework")), project => {
+    DotNetCorePack(project.Path.FullPath, new DotNetCorePackSettings() {
+      OutputDirectory = "out",
+      VersionSuffix = $"alpha.{EnvironmentVariable("APPVEYOR_BUILD_NUMBER")}"
     });
   });
 
@@ -115,6 +126,6 @@ Task("Appveyor")
   .IsDependentOn("Default")
   .IsDependentOn("Codecov")
   .IsDependentOn("PackModules")
-  .IsDependentOn("PackFrameworkNuget");
+  .IsDependentOn("PackFrameworkNugetAppveyor");
 
 RunTarget(target);
