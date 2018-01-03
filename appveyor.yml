@@ -32,11 +32,11 @@ install:
     - git submodule update --init --recursive > nul 2>&1
 
 build_script:
-    - build\build.ps1 -Target Appveyor
+    - ps: .\build\build.ps1 -Script build\build.cake -Target Appveyor
 
 test_script:
     - rem Running Tests...
-    - build\build.ps1 -Target Test
+    - ps: .\build\build.ps1 -Script build\build.cake -Target Test
 
 artifacts:
     - path: 'build\out\Snowflake.Framework.Primitives.*.nupkg'
