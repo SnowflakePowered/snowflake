@@ -30,8 +30,7 @@ cache:
 install:
     - nuget update -self > nul 2>&1
     - git submodule update --init --recursive > nul 2>&1
-    - rem USING DOTNET SDK VERSION
-    - dotnet --version
+    - dotnet --info
 
 build_script:
     - ps: .\build\build.ps1 -Script build\build.cake -Target Appveyor
