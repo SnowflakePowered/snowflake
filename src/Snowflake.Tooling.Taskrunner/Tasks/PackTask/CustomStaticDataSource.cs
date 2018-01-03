@@ -22,5 +22,4 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.PackTask
             _stream.Position = 0;
         }
     }
-
 }

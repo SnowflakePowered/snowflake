@@ -128,7 +128,6 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.InstallTask
                             }
                         }
                     }
-
                 }
             }
         }

@@ -30,7 +30,6 @@ namespace Snowflake.Tooling.Taskrunner
             container.Add(new InstallTaskRunner());
             container.Add(new InstallAllTaskRunner());
 
-
             if (args.Length == 0)
             {
                 executor.ExecuteTask("list", args);
