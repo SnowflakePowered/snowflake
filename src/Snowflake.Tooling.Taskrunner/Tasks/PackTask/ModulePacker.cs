@@ -43,7 +43,7 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.PackTask
             using (ZipOutputStream snowballArchive = new ZipOutputStream(snowballArchiveStream))
             {
                 byte[] sha512 = this.GetSHA512(packageContents);
-                byte[] signedSha512 = rsa.SignHash(sha512, HashAlgorithmName.SHA512, RSASignaturePadding.Pss);
+                byte[] signedSha512 = rsa.SignHash(sha512, HashAlgorithmName.SHA512, RSASignaturePadding.Pkcs1);
 
                 snowballArchive.SetLevel(5);
                 snowballArchive.UseZip64 = UseZip64.On;
