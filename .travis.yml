@@ -1,6 +1,5 @@
 language: csharp
 sudo: required
-solution: Snowflake.sln
 mono: latest
 dotnet: 2.1.2
 dist: trusty 
@@ -12,6 +11,6 @@ matrix:
   fast_finish: true
   allow_failures:
     - os: osx
-  
+
 script:
   - ./build/build.sh --script "./build/build.cake" -target=Travis
