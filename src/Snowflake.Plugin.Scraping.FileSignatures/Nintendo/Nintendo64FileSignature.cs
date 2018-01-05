@@ -17,13 +17,11 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Nintendo
 
         /// <inheritdoc/>
         public byte[] HeaderSignature { get; }
-        public string CanonicalMimetype { get; }
 
-        protected Nintendo64FileSignature(uint formatByte, string mimetype, Func<Stream, T> streamConverter)
+        protected Nintendo64FileSignature(uint formatByte, Func<Stream, T> streamConverter)
         {
             this.streamConverter = streamConverter;
             this.formatByte = formatByte;
-            this.CanonicalMimetype = mimetype;
         }
 
         /// <inheritdoc/>

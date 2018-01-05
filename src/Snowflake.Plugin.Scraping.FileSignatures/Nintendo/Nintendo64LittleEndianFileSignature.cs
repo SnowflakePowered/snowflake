@@ -12,7 +12,7 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Nintendo
     public class Nintendo64LittleEndianFileSignature : Nintendo64FileSignature<Int32SwapStream>
     {
         public Nintendo64LittleEndianFileSignature()
-            : base(0x40123780, "application/x-romfile-n64-littleendian", s => new Int32SwapStream(s))
+            : base(0x40123780, s => new Int32SwapStream(s))
         {
         }
     }
