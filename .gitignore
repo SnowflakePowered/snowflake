@@ -29,6 +29,7 @@ bld/
 build/**/*
 !build.ps1
 !build.cake
+!build.sh
 
 # MSTest test Results
 [Tt]est[Rr]esult*/
