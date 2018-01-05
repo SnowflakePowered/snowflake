@@ -50,10 +50,6 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Formats.CDXA
         }
 
         /// <inheritdoc/>
-        /// <remarks>
-        /// Does not protect against out of bounds reading.
-        /// To access file contents, use the much safer <see cref="CDXAFile.OpenFile"/>
-        /// </remarks>
         public sealed override int Read(byte[] buffer, int offset, int count)
         {
             this.diskStream.Seek((CDXADisk.BlockSize * this.LBA) + CDXADisk.BlockHeaderSize + this.Position, SeekOrigin.Begin);

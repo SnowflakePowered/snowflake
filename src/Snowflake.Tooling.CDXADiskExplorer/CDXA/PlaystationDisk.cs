@@ -32,13 +32,12 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Formats.CDXA
         {
             var file = this.disk.Files["SYSTEM.CNF"];
             byte[] buf = new byte[file.Length];
-
-            using (Stream block = file.OpenFile())
-            using (MemoryStream cnfMemory = new MemoryStream())
+            using (Stream block = this.disk.OpenBlock(file.LBAStart))
             {
-                block.CopyTo(cnfMemory);
-                return Encoding.UTF8.GetString(cnfMemory.ToArray());
+                block.Read(buf, 0, buf.Length);
             }
+
+            return Encoding.UTF8.GetString(buf);
         }
     }
 }

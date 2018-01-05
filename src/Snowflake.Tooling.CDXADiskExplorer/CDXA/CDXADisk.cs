@@ -85,14 +85,6 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Formats.CDXA
             }
         }
 
-        /// <summary>
-        /// Opens an LBA Block as a Stream.
-        /// The returned Stream acts simply as a pointer to the LBA and does not protect
-        /// against out of bounds reads. In order to read file data, use the much safer
-        /// <see cref="CDXAFile.OpenFile"/>.
-        /// </summary>
-        /// <param name="lba">The LBA to open.</param>
-        /// <returns>The LBA block as a Stream.</returns>
         public Stream OpenBlock(int lba)
         {
             return new CDXABlockStream(lba, this.diskStream);
