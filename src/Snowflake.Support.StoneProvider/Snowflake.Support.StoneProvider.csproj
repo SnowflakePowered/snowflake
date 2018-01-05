@@ -23,7 +23,7 @@
   </ItemGroup>
   <!-- The tools reference -->
   <ItemGroup>
-    <DotNetCliToolReference Include="dotnet-snowflake" Version="1.0.1" />
+    <DotNetCliToolReference Include="dotnet-snowflake" Version="1.1.0" />
   </ItemGroup>
   
   <ItemGroup>

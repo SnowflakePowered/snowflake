@@ -7,7 +7,7 @@ var target = Argument("target", "Default");
 Task("Default")
   .Does(() =>
   {
-    NuGetRestore("../src/Snowflake.sln");
+    DotNetCoreRestore("../src/Snowflake.sln");
     DotNetCoreBuild("../src/Snowflake.sln");
   });
 
@@ -60,6 +60,7 @@ Task("PackModules")
             .AppendQuoted($"./bin/module/{projectProps.AssemblyName}")
             .Append("-o")
             .AppendQuoted($"{Environment.CurrentDirectory}/out"));
+
     }
   });
 
@@ -128,4 +129,9 @@ Task("Appveyor")
   .IsDependentOn("PackModules")
   .IsDependentOn("PackFrameworkNugetAppveyor");
 
+Task("Travis")
+  .IsDependentOn("Default")
+  .IsDependentOn("Test")
+  .IsDependentOn("PackModules");
+  
 RunTarget(target);
