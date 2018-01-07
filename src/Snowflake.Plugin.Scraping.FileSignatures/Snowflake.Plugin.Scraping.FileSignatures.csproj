@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <RootNamespace>Snowflake</RootNamespace>
+    <RootNamespace>Snowflake.Plugin.Scraping.FileSignatures</RootNamespace>
     <AssemblyName>Snowflake.Plugin.Scraping.FileSignatures</AssemblyName>
     <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
