@@ -13,6 +13,7 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Composers
     public class RomFileScraperComposable : IComposable
     {
         [ImportService(typeof(IPluginManager))]
+        [ImportService(typeof(IStoneProvider))]
         public void Compose(IModule composableModule, IServiceRepository serviceContainer)
         {
             var fileSignatureCollection = new FileSignatureCollection();
@@ -20,6 +21,8 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Composers
                 new PlaystationRawDiscFileSignature());
             var romFile = new RomFileInfoScraper(fileSignatureCollection);
             serviceContainer.Get<IPluginManager>().Register<IScraper>(romFile);
+            serviceContainer.Get<IPluginManager>().Register<IScraper>(new StructuredFilenameScraper(
+                serviceContainer.Get<IStoneProvider>()));
         }
     }
 }
