@@ -37,16 +37,10 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Formats.N64
         }
 
         /// <inheritdoc/>
-        public sealed override bool CanRead
-        {
-            get { return this.baseStream.CanRead; }
-        }
+        public sealed override bool CanRead => this.baseStream.CanRead;
 
         /// <inheritdoc/>
-        public sealed override bool CanSeek
-        {
-            get { return this.baseStream.CanSeek; }
-        }
+        public sealed override bool CanSeek => this.baseStream.CanSeek;
 
         /// <inheritdoc/>
         public sealed override bool CanWrite

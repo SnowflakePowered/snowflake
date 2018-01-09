@@ -89,8 +89,8 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Scrapers
                     return _("platform", platform.PlatformID);
                 }
             }
+
             return _();
         }
     }
-
 }

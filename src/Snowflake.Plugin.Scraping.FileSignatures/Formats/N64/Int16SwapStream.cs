@@ -22,7 +22,6 @@ using System.IO;
 
 namespace Snowflake.Plugin.Scraping.FileSignatures.Formats.N64
 {
-
     public sealed class Int16SwapStream : ByteSwapStream
     {
         public Int16SwapStream(Stream baseStream)

@@ -45,5 +45,4 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Scrapers
             return _("mimetype", MimeUtility.GetMimeMapping(parent.Content.Value));
         }
     }
-
 }
