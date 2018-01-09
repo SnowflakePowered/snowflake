@@ -19,10 +19,12 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Composers
             var fileSignatureCollection = new FileSignatureCollection();
             fileSignatureCollection.Add("application/vnd.stone-romfile.sony.psx-discimage",
                 new PlaystationRawDiscFileSignature());
-            var romFile = new RomFileInfoScraper(fileSignatureCollection);
-            serviceContainer.Get<IPluginManager>().Register<IScraper>(romFile);
-            serviceContainer.Get<IPluginManager>().Register<IScraper>(new StructuredFilenameScraper(
-                serviceContainer.Get<IStoneProvider>()));
+            var pluginManager = serviceContainer.Get<IPluginManager>();
+            var stoneProvider = serviceContainer.Get<IStoneProvider>();
+            pluginManager.Register<IScraper>(new RomFileInfoScraper(fileSignatureCollection));
+            pluginManager.Register<IScraper>(new StructuredFilenameTitleScraper(stoneProvider));
+            pluginManager.Register<IScraper>(new FileMimetypeScraper(stoneProvider));
+            pluginManager.Register<IScraper>(new PlatformInferralScraper(stoneProvider, fileSignatureCollection));
         }
     }
 }

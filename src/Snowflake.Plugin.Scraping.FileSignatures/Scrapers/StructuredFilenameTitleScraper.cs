@@ -13,13 +13,13 @@ using static Snowflake.Scraping.Extensibility.SeedBuilder;
 
 namespace Snowflake.Plugin.Scraping.FileSignatures.Scrapers
 {
-    [Plugin("StructuredFilenameScraper")]
+    [Plugin("StructuredFilenameTitleScraper")]
     [Directive(AttachTarget.Target, Directive.Requires, "mimetype")]
-    public class StructuredFilenameScraper : Scraper
+    public class StructuredFilenameTitleScraper : Scraper
     {
         HashSet<string> MimeTypes { get; }
-        public StructuredFilenameScraper(IStoneProvider stoneProvider)
-            : base(typeof(StructuredFilenameScraper), AttachTarget.Root, "file")
+        public StructuredFilenameTitleScraper(IStoneProvider stoneProvider)
+            : base(typeof(StructuredFilenameTitleScraper), AttachTarget.Root, "file")
         {
             this.MimeTypes = stoneProvider
                 .Platforms.SelectMany(p => p.Value.FileTypes.Select(f => f.Value)).ToHashSet();

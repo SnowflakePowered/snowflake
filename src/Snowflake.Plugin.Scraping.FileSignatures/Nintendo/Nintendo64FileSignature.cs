@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Plugin.Scraping.FileSignatures;
+using Snowflake.Plugin.Scraping.FileSignatures.Formats.N64;
 using Snowflake.Romfile;
 
 namespace Snowflake.Plugin.Scraping.FileSignatures.Nintendo

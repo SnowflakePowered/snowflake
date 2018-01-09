@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 using System;
 using System.IO;
 
-namespace Snowflake.Plugin.Scraping.FileSignatures
+namespace Snowflake.Plugin.Scraping.FileSignatures.Formats.N64
 {
     public abstract class ByteSwapStream : Stream
     {
@@ -153,61 +153,5 @@ namespace Snowflake.Plugin.Scraping.FileSignatures
         }
 
         protected abstract long ComputeNextSwapPosition(long position);
-    }
-
-    public sealed class Int16SwapStream : ByteSwapStream
-    {
-        public Int16SwapStream(Stream baseStream)
-            : base(baseStream)
-        {
-        }
-
-        /// <inheritdoc/>
-        protected override long ComputeNextSwapPosition(long position)
-        {
-            return (position & unchecked(0x7FFFFFFFFFFFFFFEL)) + 1 - (position % 2);
-        }
-    }
-
-    public sealed class Int32SwapStream : ByteSwapStream
-    {
-        public Int32SwapStream(Stream baseStream)
-            : base(baseStream)
-        {
-        }
-
-        /// <inheritdoc/>
-        protected override long ComputeNextSwapPosition(long position)
-        {
-            return (position & unchecked(0x7FFFFFFFFFFFFFFCL)) + 3 - (position % 4);
-        }
-    }
-
-    public sealed class Int64SwapStream : ByteSwapStream
-    {
-        public Int64SwapStream(Stream baseStream)
-            : base(baseStream)
-        {
-        }
-
-        /// <inheritdoc/>
-        protected override long ComputeNextSwapPosition(long position)
-        {
-            return (position & unchecked(0x7FFFFFFFFFFFFFF8L)) + 7 - (position % 8);
-        }
-    }
-
-    public sealed class Int96SwapStream : ByteSwapStream
-    {
-        public Int96SwapStream(Stream baseStream)
-            : base(baseStream)
-        {
-        }
-
-        /// <inheritdoc/>
-        protected override long ComputeNextSwapPosition(long position)
-        {
-            return ((position / 12) * 12) + 11 - (position % 12);
-        }
     }
 }

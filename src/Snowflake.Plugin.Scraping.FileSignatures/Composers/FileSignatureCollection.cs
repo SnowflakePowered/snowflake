@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using Snowflake.Romfile;
 
 namespace Snowflake.Plugin.Scraping.FileSignatures.Comoposers
 {
-    public class FileSignatureCollection
+    public class FileSignatureCollection : IEnumerable<KeyValuePair<string, IFileSignature>>
     {
         public FileSignatureCollection()
         {
@@ -24,6 +25,16 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Comoposers
         public bool Contains(string mimeType)
         {
             return this.FileSignatures.ContainsKey(mimeType);
+        }
+
+        public IEnumerator<KeyValuePair<string, IFileSignature>> GetEnumerator()
+        {
+            return this.FileSignatures.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
         }
     }
 }
