@@ -1,5 +1,5 @@
 
-![Snowflake](branding/Snowflake-Banner-Katakana-256.png) 
+![Snowflake](branding/horizon/snowflake/exports/Logo-Logotype@500px.png) 
 =========
 
 **Build Status**
