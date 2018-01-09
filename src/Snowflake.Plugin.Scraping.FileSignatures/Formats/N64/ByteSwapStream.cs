@@ -43,10 +43,7 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Formats.N64
         public sealed override bool CanSeek => this.baseStream.CanSeek;
 
         /// <inheritdoc/>
-        public sealed override bool CanWrite
-        {
-            get { return this.baseStream.CanWrite; }
-        }
+        public sealed override bool CanWrite => this.baseStream.CanWrite;
 
         /// <inheritdoc/>
         public sealed override void Flush()
@@ -55,10 +52,7 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Formats.N64
         }
 
         /// <inheritdoc/>
-        public sealed override long Length
-        {
-            get { return this.baseStream.Length; }
-        }
+        public sealed override long Length => this.baseStream.Length;
 
         /// <inheritdoc/>
         public sealed override long Position
@@ -131,7 +125,10 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Formats.N64
             {
                 this.baseStream.Write(innerBuffer, 0, count);
             }
-            catch { throw; }
+            catch
+            {
+                throw;
+            }
         }
 
         /// <inheritdoc/>
