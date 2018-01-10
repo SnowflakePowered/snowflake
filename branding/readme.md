@@ -1,64 +1,110 @@
-Logo and branding guidelines
-==================
 
-Snowflake provides various logos for use in branding official documentation, and to provide a consistent identity to end users. All logos are licensed under [Creative Commons Attribution-ShareAlike 4.0 International License.](http://creativecommons.org/licenses/by-sa/4.0/) (CC-BY-SA 4.0). The Illustrator sources, SVG, as well as rendered PNG images are provided for use. Please don't hotlink from the repository, instead feel free to re-host the images or hotlink from our Github Page (Coming Soon)
+# Logo and branding guidelines
 
-The Ring Logo
-----------------
-![Logo][ring]
+Snowflake provides various logos for use in branding official documentation, and to provide a consistent identity to end users. All logos are licensed under [Creative Commons Attribution-ShareAlike 4.0 International License.](http://creativecommons.org/licenses/by-sa/4.0/) (CC-BY-SA 4.0). The Illustrator sources, SVG, as well as rendered PNG images are provided for use. 
 
-The ring logo is the type-less version of the Snowflake logo. A white rounded snowflake is contained within a yellow circle. A blue directional pad with white accents peeks out horizontally from half the snowflake, the other half remains unseen, disappearing between the snowflake's bottom dendrites. The snowflake and directional pad arrows are oddly lit, with outer shadows forming at a shallow acute degree on some sub-dendrites of the snowflake. 
+## Snowflake
+Logos are provided for the Snowflake framework itself under [`horizon/snowflake`](horizon/snowflake).
 
-Going clockwise from the dendrite pointing directly up, here are the locations of the shadows:
+### The Name
+**Snowflake** must always be written as a proper noun when written as text. It must never be transliterated or translated into any other language or writing system.
 
-* On the middle sub-dendrite on the first dendrite going leftwards
-* On the middle and right sub-dendrite on the second dendrite going going leftwards
-* On the middle sub-dendrite on the third dendrite going rightwards
-* On the right sub-dendrite on the fourth dendrite going leftwards
-* On the middle sub-dendrite on the fifth dendrite going leftwards
+### Palette
+The following colours are used in the Snowflake branding materials. We also assign names to the colours and will refer to them as such later on.
 
-The directional pad arrows are as follows
+| |Hex Code|Name|
+|-|--------|----|
+|![#e4bfff](https://dummyimage.com/16x16/e4bfff.gif&text=+)|`#e4bfff`|Lilac|
+|![#d4e5ff](https://dummyimage.com/16x16/d4e5ff.gif&text=+)|`#d4e5ff`|Periwinkle|
+|![#444444](https://dummyimage.com/16x16/444444.gif&text=+)|`#444444`|Dark Grey|
+|![#fefefe](https://dummyimage.com/16x16/fefefe.gif&text=+)|`#fefefe`|Off-white|
 
-* The arrow pointing left casts an outer shadow on the directional-pad interior on the bottom edge of the arrow
-* The arrow pointing up lasts an inner shadow on itself on the right edge of the arrow
-  
-The colours used are as follows:
+### The *Badge Logo*
+![badge-snowflake]
 
-* #ABD5FF Blue Outer Ring
-* #D48AFF Purple Outer Ring
-* #FFEB97 Yellow Ring Interior
-* #FFFFFF White Snowflake and Directional Pad Arrows
-* #4ABAFF Blue Directional Pad Interrior
+The badge logo is provided in three variants: *gradient*, *white*, and *black* in a variety of different sizes. The variant preferred and displayed above is the *gradient* variant.
 
-Shadows are formed by adding 22% black to the colour onto which the shadow has been cast.
+#### Description
+The badge logo is a figure of an 18-dendrite snowflake superimposed on a hexagon that matches the closest polygonal outline of the snowflake. The *gradient* variant has the hexagon a 75 degree even linear gradient from *Periwinkle* to *Lilac*, such that the very top of the logo is coloured *Periwinkle*, and the bottom of the logo is coloured *Lilac*. 
 
-The banner logo
-------------------
-![Logo][banner]
+#### Guidelines
 
-The banner logo has 'SNOWFLAKE' written in all capitals as well as some other typographical features as well as the Ring logo set on the left side. There is approximately 45px space between the Type and the Ring logo. The height of the banner logo should equal the height of the Ring, and the main 'Snowflake' should be vertically centered on the image.
+* **DO** Use the *gradient* variant whenever possible.
+* **DO** Use the *white* variant if a colour-neutral design is required.
+* **DO** Recolor the logo in a **solid** colour if absolutely necessary.
+* **DO NOT** Use the *black* varieat except against stark white (`#fff`). The *gradient* variant is preferred against stark white as well.
+* **DO NOT** Apply any gradient besides the provided *gradient* variant.
+* **DO NOT** Display the logo in a resolution less than 65px in any variant except the *gradient* variant.
+* **DO NOT** Add drop shadows or special effects to the logo.
+* **DO NOT** Invert the logo so the snowflake is not enclosed in its hexagon.
+* **DO NOT** Enclose the logo in another shape.
 
-40px beneath "SNOWFLAKE" is a horizontal rule and a subtitle. The subtitle text contains the word 'Snowflake' written in Katakana スノーフレーク (*sunōfurēku*), a bullet mark, and the words "emulator frontend" in lowercase letters — *"スノーフレーク • emulator frontend"*. These elements are aligned with the "S" in "SNOWFLAKE". The horizontal rule has the same length as the length of the "SNOWFLAKE" and should end where the "E" ends.
-  
-The colours for the text is as follows
+### The *Banner Logo*
+![banner-snowflake]
 
-* #000000 Black "SNOWFLAKE"
-* #8C8C8C Grey Subtitle Elements and Horizontal Rule
+The banner logo is provided in two variants: *normal* and *inverted*. The variant displayed above is the *normal* variant.
 
-The sizes of the elements relative to an image height of 2048px are as follows:
+#### Description
+The banner logo is the *gradient* variant of badge logo with the wordmark "SNOWFLAKE" written in uppercase typeset in *FF DIN Round Pro Light*. The text is coloured in **Dark Grey**, or **Off-white** in the *inverted* variant.
 
-* 12pt Horizontal Rule Thickness
-* 1296pt "SNOWFLAKE"
-* 128pt "スノーフレーク • emulator frontend"
+#### Guidelines
 
-The fonts used are as follows. Some fonts may not be free, feel free to substitute a similar font if needed, however, please ensure that the font retains the same serifness.
+* **DO** Use the banner logo whenever possible, over the badge logo.
+* **DO** Use the *inverted* variant on dark backgrounds.
+* **DO NOT** Recolor any elements of the logo. The badge logo in the banner must always be the *gradient* variant.
 
-* Bebas Neue Light "SNOWFLAKE"
-* Kozuka Gothic (小塚ゴシック) Pr6N Regular "スノーフレーク"
-* Caslon Regular "• emulator frontend"
+## hydrogen
+Logos are provided for hydrogen, the reference Electron-based host UI for Snowflake, under [`horizon/hydrogen`](horizon/hydrogen)
 
-###Why is there katakana in the logo  
-There is no actual reason why there is katakana in the logo besides the fact that I think it looks cool. Feel free to create a banner that omits the katakana and the bullet mark, aligning "emulator frontend" with the horizontal rule.   
+### The Name
+**hydrogen** must always be written in all lower case when written as text. It must never be transliterated or translated into any other language or writing system.
 
-[ring]: Snowflake-Ring-128.png "Snowflake Ring Logo"
-[banner]: Snowflake-Banner-Katakana-128.png "Snowflake Ring Logo"
+### Palette
+The following colours are used in the hydrogen branding materials. We also assign names to the colours and will refer to them as such later on.
+
+| |Hex Code|Name|
+|-|--------|----|
+|![#9694ff](https://dummyimage.com/16x16/9694ff.gif&text=+)|`#9694ff`|[Aster](https://irocore.com/shion-iro/)|
+|![#94faff](https://dummyimage.com/16x16/94faff.gif&text=+)|`#94faff`|Cyan|
+|![#444444](https://dummyimage.com/16x16/444444.gif&text=+)|`#444444`|Dark Grey|
+|![#fefefe](https://dummyimage.com/16x16/fefefe.gif&text=+)|`#fefefe`|Off-white|
+|![#f0f0f0](https://dummyimage.com/16x16/f0f0f0.gif&text=+)|`#f0f0f0`|Light Gray|
+
+
+### The *Badge Logo*
+![badge-hydrogen]
+
+The badge logo is provided in three variants: *color*, *white*, and *black* in a variety of different sizes. The variant preferred and displayed above is the *color* variant.
+
+#### Description
+The badge logo is a figure of a classical depiction of a hydrogen atom superimposed on a sheet of material. The nucleus of the atom is at the center with an electron at a 45 degree angle from the first quadrant to the nucleus at a distance 1.5 the radius of the nucleus, with a 4pt ring intersecting with the electron surrounding the nucleus. On the *color* variant, the nucleus, ring, and electron are coloured with a 75 degree even linear gradient from *Aster* to *Cyan* such that the electron is wholly coloured cyan. The sheet on which the atom is superimposed is coloured with a 90 degree even linear gradient such that the top of the sheet is *Off-white*, while the bottom of the sheet is *Light Gray*. The sheet has a bottom 1px shaded edge beginning from 2/3rds down the circle, smoothly darkening reaching a maximum of about 30% darkness.
+
+#### Guidelines
+
+* **DO** Use the *color* variant whenever possible.
+* **DO** Use the *white* variant if a colour-neutral design is required.
+* **DO NOT** Use the *black* varieat except against stark white (`#fff`). The *color* variant is preferred against stark white as well.
+* **DO NOT** Apply any gradient besides the provided *gradient* variant.
+* **DO NOT** Recolour the logo in any other colour except the provided colours.
+* **DO NOT** Display the logo in a resolution less than 65px in any variant except the *color* variant.
+* **DO NOT** Enclose the logo in another shape.
+
+
+### The *Banner Logo*
+![banner-hydrogen]
+
+The banner logo is provided in two variants: *normal* and *inverted*. The variant displayed above is the *normal* variant.
+
+#### Description
+The banner logo is the *color* variant of badge logo with the wordmark "hydrogen" written in lowercase typeset in *FF DIN Round Pro Light*. The text is coloured in **Dark Grey**, or **Off-white** in the *inverted* variant.
+
+#### Guidelines
+
+* **DO** Use the banner logo whenever possible, over the badge logo.
+* **DO** Use the *inverted* variant on dark backgrounds.
+* **DO NOT** Recolor any elements of the logo. The badge logo in the banner must always be the *color* variant.
+
+[badge-snowflake]: horizon/snowflake/exports/Logo-Badge@250px.png "Snowflake Badge"
+[banner-snowflake]: horizon/snowflake/exports/Logo-Logotype@500px.png "Snowflake Banner"
+[badge-hydrogen]: horizon/hydrogen/exports/Logo-Badge@250px.png "hydrogen Badge"
+[banner-hydrogen]: horizon/hydrogen/exports/Logo-Logotype@500px.png "hydrogen Banner"
