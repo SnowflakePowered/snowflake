@@ -1,7 +1,6 @@
 language: csharp
 sudo: required
-solution: Snowflake.sln
-mono: none
+mono: latest
 dotnet: 2.1.2
 dist: trusty 
 osx_image: xcode8.3
@@ -12,9 +11,6 @@ matrix:
   fast_finish: true
   allow_failures:
     - os: osx
-install:
-  - dotnet restore src/Snowflake.sln
-  
+
 script:
-  - dotnet build src/Snowflake.Framework.Tests
-  - dotnet test src/Snowflake.Framework.Tests/Snowflake.Framework.Tests.csproj
+  - ./build/build.sh --script "./build/build.cake" -target=Travis
