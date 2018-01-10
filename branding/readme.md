@@ -91,7 +91,7 @@ The badge logo is a figure of a classical depiction of a hydrogen atom superimpo
 
 
 ### The *Banner Logo*
-![banner-snowflake]
+![banner-hydrogen]
 
 The banner logo is provided in two variants: *normal* and *inverted*. The variant displayed above is the *normal* variant.
 
