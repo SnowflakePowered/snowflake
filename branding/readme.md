@@ -25,7 +25,7 @@ The following colours are used in the Snowflake branding materials. We also assi
 The badge logo is provided in three variants: *gradient*, *white*, and *black* in a variety of different sizes. The variant preferred and displayed above is the *gradient* variant.
 
 #### Description
-The badge logo is a figure of an 18-dendrite snowflake superimposed on a hexagon that matches the closest polygonal outline of the snowflake. The *gradient* variant has the hexagon a 75 degree even linear gradient from *Periwinkle* to *Lilac*, such that the very top of the logo is coloured *Periwinkle*, and the bottom of the logo is coloured *Lilac*. 
+The badge logo is a figure of 18 three fingered dendrites equally spaced around a ring forming a snowflake-like figure, superimposed on a hexagon that matches the closest polygonal outline of the snowflake. The *gradient* variant has the hexagon a 75 degree even linear gradient from *Periwinkle* to *Lilac*, such that the very top of the logo is coloured *Periwinkle*, and the bottom of the logo is coloured *Lilac*. 
 
 #### Guidelines
 
