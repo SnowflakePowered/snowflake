@@ -22,23 +22,27 @@ The following colours are used in the Snowflake branding materials. We also assi
 ### The *Badge Logo*
 ![badge-snowflake]
 
-The badge logo is provided in three variants: *gradient*, *white*, and *black* in a variety of different sizes.
+The badge logo is provided in three variants: *gradient*, *white*, and *black* in a variety of different sizes. The variant preferred and displayed above is the *gradient* variant.
 
 #### Description
-The badge logo is a figure of an 18-dendrite snowflake superimposed on a hexagon that matches the closest polygonal outline of the snowflake. The *gradient* variant consist of a 75 degree linear gradient from *Periwinkle* to *Lilac*. 
+The badge logo is a figure of an 18-dendrite snowflake superimposed on a hexagon that matches the closest polygonal outline of the snowflake. The *gradient* variant has the hexagon a 75 degree even linear gradient from *Periwinkle* to *Lilac*, such that the very top of the logo is coloured *Periwinkle*, and the bottom of the logo is coloured *Lilac*. 
 
 #### Guidelines
 
 * **DO** Use the *gradient* variant whenever possible.
-* **DO** Use the *white* varient if a colour-neutral design is required.
+* **DO** Use the *white* variant if a colour-neutral design is required.
 * **DO** Recolor the logo in a **solid** colour if absolutely necessary.
-* **DO NOT** Use the *black* varieat except against stark white (`#fff`).
+* **DO NOT** Use the *black* varieat except against stark white (`#fff`). The *gradient* variant is preferred against stark white as well.
 * **DO NOT** Apply any gradient besides the provided *gradient* variant.
+* **DO NOT** Display the logo in a resolution less than 65px in any variant except the *gradient* variant.
+* **DO NOT** Add drop shadows or special effects to the logo.
+* **DO NOT** Invert the logo so the snowflake is not enclosed in its hexagon.
+* **DO NOT** Enclose the logo in another shape.
 
 ### The *Banner Logo*
 ![banner-snowflake]
 
-The banner logo is provided in two variants: *normal* and *inverted*
+The banner logo is provided in two variants: *normal* and *inverted*. The variant displayed above is the *normal* variant.
 
 #### Description
 The banner logo is the *gradient* variant of badge logo with the wordmark "SNOWFLAKE" written in uppercase typeset in *FF DIN Round Pro Light*. The text is coloured in **Dark Grey**, or **Off-white** in the *inverted* variant.
@@ -67,5 +71,40 @@ The following colours are used in the hydrogen branding materials. We also assig
 |![#f0f0f0](https://dummyimage.com/16x16/f0f0f0.gif&text=+)|`#f0f0f0`|Light Gray|
 
 
-[badge-snowflake]: horizon/snowflake/exports/Logo-Badge@250px.png "Snowflake Ring Logo"
+### The *Badge Logo*
+![badge-hydrogen]
+
+The badge logo is provided in three variants: *color*, *white*, and *black* in a variety of different sizes. The variant preferred and displayed above is the *color* variant.
+
+#### Description
+The badge logo is a figure of a classical depiction of a hydrogen atom superimposed on a sheet of material. The nucleus of the atom is at the center with an electron at a 45 degree angle from the first quadrant to the nucleus at a distance 1.5 the radius of the nucleus, with a 4pt ring intersecting with the electron surrounding the nucleus. On the *color* variant, the nucleus, ring, and electron are coloured with a 75 degree even linear gradient from *Aster* to *Cyan* such that the electron is wholly coloured cyan. The sheet on which the atom is superimposed is coloured with a 90 degree even linear gradient such that the top of the sheet is *Off-white*, while the bottom of the sheet is *Light Gray*. The sheet has a bottom 1px shaded edge beginning from 2/3rds down the circle, smoothly darkening reaching a maximum of about 30% darkness.
+
+#### Guidelines
+
+* **DO** Use the *color* variant whenever possible.
+* **DO** Use the *white* variant if a colour-neutral design is required.
+* **DO NOT** Use the *black* varieat except against stark white (`#fff`). The *color* variant is preferred against stark white as well.
+* **DO NOT** Apply any gradient besides the provided *gradient* variant.
+* **DO NOT** Recolour the logo in any other colour except the provided colours.
+* **DO NOT** Display the logo in a resolution less than 65px in any variant except the *color* variant.
+* **DO NOT** Enclose the logo in another shape.
+
+
+### The *Banner Logo*
+![banner-snowflake]
+
+The banner logo is provided in two variants: *normal* and *inverted*. The variant displayed above is the *normal* variant.
+
+#### Description
+The banner logo is the *color* variant of badge logo with the wordmark "hydrogen" written in lowercase typeset in *FF DIN Round Pro Light*. The text is coloured in **Dark Grey**, or **Off-white** in the *inverted* variant.
+
+#### Guidelines
+
+* **DO** Use the banner logo whenever possible, over the badge logo.
+* **DO** Use the *inverted* variant on dark backgrounds.
+* **DO NOT** Recolor any elements of the logo. The badge logo in the banner must always be the *color* variant.
+
+[badge-snowflake]: horizon/snowflake/exports/Logo-Badge@250px.png "Snowflake Badge"
 [banner-snowflake]: horizon/snowflake/exports/Logo-Logotype@500px.png "Snowflake Banner"
+[badge-hydrogen]: horizon/hydrogen/exports/Logo-Badge@250px.png "hydrogen Badge"
+[banner-hydrogen]: horizon/hydrogen/exports/Logo-Logotype@500px.png "hydrogen Banner"
