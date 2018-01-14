@@ -29,7 +29,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.Values
         /// <inheritdoc/>
         public override object Serialize(object value)
         {
-            return ParseValue(value);
+            return value;
         }
     }
 }

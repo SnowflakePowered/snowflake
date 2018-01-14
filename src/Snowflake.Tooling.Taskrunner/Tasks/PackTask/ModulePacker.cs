@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,9 +36,9 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.PackTask
             }
         }
 
-        public async Task<string> PackArchive(DirectoryInfo outputDirectory)
+        public async Task<string> PackArchive(DirectoryInfo outputDirectory, bool noTreeShaking = false)
         {
-            (FileStream packageContents, RSA rsa) = await this.CreateArchive();
+            (FileStream packageContents, RSA rsa) = await this.CreateArchive(noTreeShaking);
 
             using (FileStream snowballArchiveStream = File.Create(Path.Combine(outputDirectory.FullName, $"{this.GetPackageName()}.snowpkg")))
             using (ZipOutputStream snowballArchive = new ZipOutputStream(snowballArchiveStream))
@@ -62,7 +63,7 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.PackTask
                     await streamReader.CopyToAsync(snowballArchive, 1024).ConfigureAwait(false);
                     snowballArchive.CloseEntry();
                 }
-
+                
                 using (MemoryStream streamReader = new MemoryStream(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(this.ModuleDefinition))))
                 {
                     snowballArchive.PutNextEntry(new ZipEntry("module"));
@@ -74,9 +75,12 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.PackTask
             return Path.Combine(outputDirectory.FullName, $"{this.GetPackageName()}.snowpkg");
         }
 
-        private async Task<(FileStream fileStream, RSA signature)> CreateArchive()
+        private async Task<(FileStream fileStream, RSA signature)> CreateArchive(bool noTreeShaking)
         {
             string fileName = Path.GetTempFileName();
+            var treeShaker = noTreeShaking ? Enumerable.Empty<string>() : new AssemblyTreeShaker()
+                .GetFrameworkDependencies(this.ModuleDirectory, this.ModuleDefinition);
+
             FileStream archiveStream = File.Create(fileName, 4096, FileOptions.DeleteOnClose);
             RSA rsa = RSA.Create();
             rsa.KeySize = 2048;
@@ -85,7 +89,8 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.PackTask
                 zipStream.SetLevel(1);
                 zipStream.UseZip64 = UseZip64.On;
                 zipStream.IsStreamOwner = false;
-                foreach (var file in this.ModuleDirectory.EnumerateFiles("*", SearchOption.AllDirectories))
+                foreach (var file in this.ModuleDirectory.EnumerateFiles("*", SearchOption.AllDirectories)
+                    .Where(f => !treeShaker.Contains(Path.GetFileName(f.Name))))
                 {
                     Console.WriteLine($"Packing {file.Name}...");
                     var entry = new ZipEntry(ZipEntry.CleanName(Path.Combine($"{this.GetPackageName()}",

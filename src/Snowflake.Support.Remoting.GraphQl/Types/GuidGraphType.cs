@@ -22,9 +22,10 @@ namespace GraphQL.Conventions.Adapters.Types
         public override object ParseValue(object value)
         {
             var guid = value?.ToString().StripQuotes();
+
             return string.IsNullOrWhiteSpace(guid)
-                ? null
-                : (Guid?)Guid.Parse(guid);
+                ? Guid.Empty
+                : Guid.Parse(guid);
         }
 
         /// <inheritdoc/>
@@ -35,7 +36,7 @@ namespace GraphQL.Conventions.Adapters.Types
                 return ParseValue(str.Value);
             }
 
-            return null;
+            return Guid.Empty;
         }
     }
 }
