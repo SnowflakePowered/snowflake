@@ -83,7 +83,7 @@ The badge logo is a figure of a classical depiction of a hydrogen atom superimpo
 
 * **DO** Use the *color* variant whenever possible.
 * **DO** Use the *white* variant if a colour-neutral design is required.
-* **DO NOT** Use the *black* varieat except against stark white (`#fff`). The *color* variant is preferred against stark white as well.
+* **DO NOT** Use the *black* variant except against stark white (`#fff`). The *color* variant is preferred against stark white as well.
 * **DO NOT** Apply any gradient besides the provided *gradient* variant.
 * **DO NOT** Recolour the logo in any other colour except the provided colours.
 * **DO NOT** Display the logo in a resolution less than 65px in any variant except the *color* variant.
