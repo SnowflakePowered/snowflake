@@ -6,7 +6,7 @@
     <RootNamespace>Snowflake.Tooling.Taskrunner</RootNamespace>
     <OutputType>Exe</OutputType>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>1.2.0</Version>
+    <Version>1.4.0</Version>
     <StartupObject />
     <LangVersion>7.1</LangVersion>
   </PropertyGroup>
@@ -16,6 +16,7 @@
     <Title>Snowflake .NET Tooling CLI</Title>
     <Description>CLI Tooling for Snowflake .NET development.</Description>
     <PackageType>DotNetCliTool</PackageType>
+    <PackageIconUrl>https://raw.githubusercontent.com/SnowflakePowered/snowflake/master/branding/horizon/snowflake/exports/Logo-Badge%40500px.png</PackageIconUrl>
   </PropertyGroup>
   
   <ItemGroup>
