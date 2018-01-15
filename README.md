@@ -1,5 +1,5 @@
 
-![Snowflake](branding/Snowflake-Banner-Katakana-256.png) 
+![Snowflake](branding/horizon/snowflake/exports/Logo-Logotype@500px.png) 
 =========
 
 **Build Status**
@@ -15,41 +15,54 @@
 | [![MyGetFeed](https://img.shields.io/myget/snowflake-nightly/vpre/Snowflake.Framework.svg?style=flat)](https://www.myget.org/gallery/snowflake-nightly) | [![NuGet version](https://badge.fury.io/nu/Snowflake.Framework.svg)](https://www.nuget.org/packages/Snowflake.Framework) |
 
 
-Snowflake is a framework for building flexible and beautiful emulator frontends. With features such as advanced configuration generation and an intelligent scraping system, Snowflake provides a powerful set of tools to manage, play, and organize your games when designing your dream frontend using HTML and modern Javascript.
+Snowflake is a framework for building flexible and beautiful emulator frontends. With features such as advanced configuration generation and an intelligent scraping system, Snowflake provides a powerful set of tools to manage, play, and organize your games when designing your dream frontend using the language of your choice.
 
 
 Features
 --------
-Snowflake provides a comprehensive C# API and Javascript bindings to handle all aspects of an emulator frontend.
+Snowflake features innovative solutions to many problems with current emulator frontends.
+* Full cross-patform support through .NET Core.
+* Dynamic and flexible tree-based game scraping.
+* Programmatic per-game emulator configuration generation and input management.
+* Multi-disc and multi-file capable relational games database.
 
-* Scraping
-  * Efficient ROM file-type identification using filetype signatures.
-  * [Stone](https://github.com/SnowflakePowered/stone)-mimetype based ROM types.
-  * Plugin-based architecture for arbitrary information sources (TheGamesDB, OpenVGDB, etc.), and arbitrary media files (Automatic CUE generation, EmuMovies, Screenshots and Boxarts).
-  * [Shiragame](https://github.com/SnowflakePowered/shiragame) hashed ROM database as a secondary identification source.
-* Games
-  * Multi-disc and multi-file oriented games database. 
-  * Relational metadata and linked media files to each Game record.
-  * Stone platform definitions for platform metadata and management.
-* Emulators
-  * On-the-fly per-game configuration generation and configuration metadata.
-  * Comprehensive input management API for input configuration generation and metadata using Stone controller definitions.
-  * Plugin-based architecture for emulation launch management allowing for increased control over the emulator launch process.
-* Development
-  * React-ready TypeScript bindings for all relevant APIs.
-  * Electron-based desktop user interface.
-  * Arbitrary binding support for additional bindings to any environment.
-  * Fully documented C# API.
-  * Full Linux support through .NET Core and .NET Standard.
+At its core, Snowflake is designed to be moddable and easy to develop for, with a comprehensive C# API for extensibility and GraphQL interface for frontend UIs.
+* Language-agnostic GraphQL interface for communicating with the Snowflake framework.
+* Plugin API to extend the framework with C# plugins.
+* Module-based runtime extensibility.
+* [Stone](https://github.com/SnowflakePowered/stone) platform, controller, and canonical ROM file mimetype compliant.
+* Dedicated CLI to help you get started quickly and easily. 
 
+Star this repository and bookmark our [website at http://snowflakepowe.red](http://snowflakepowe.red/) to keep up with Snowflake's development. We'll have something new in store for you soon!
 
+Getting Started
+---------------
 
+Snowflake does not currently have a well defined install process for end-users, but it is easy to set up a development environment. 
+You will need the [.NET Core SDK 2.1](https://www.microsoft.com/net/download/) to get started. 
 
-Star our repository and bookmark our [website at http://snowflakepowe.red](http://snowflakepowe.red/) to keep up with Snowflake's development. We'll have something new in store for you soon!
+**Windows**
+```cli
+> git clone --recursive https://github.com/SnowflakePowered/snowflake/
+> cd snowflake
+> cd build
+> .\build.ps1 -Target Bootstrap
+```
 
+**Linux**
+```cli
+$ git clone --recursive https://github.com/SnowflakePowered/snowflake/
+$ cd snowflake
+$ cd build
+$ ./build.sh -target=Bootstrap
+```
+
+This command will build and install all support modules required for Snowflake to be functional to your application data directory (`%appdata%\snowflake\modules` or `~/.snowflake/snowflake/modules` on Linux). Note that you may have to delete the installed module `assembly.Snowflake.Framework.Test.InvalidComposable`, which is designed deliberately to error on load, however this is not necessary.
+
+As well, input management APIs are currently only available on Windows. Attempting to use these APIs on Linux will fail to enumerate any device.
 
 Legal
 -----
-Snowflake is licensed under the Mozilla Public License 2.0 since Pull Request #231. Since May 1, 2016, this license is retroactively applied to all prior copies of Snowflake's source code. 
+Snowflake is licensed under the Mozilla Public License 2.0 (MPL2) with certain parts dual licensed under the GNU General Public License version 3 and MPL2 as indicated. Since May 1, 2016, this license is retroactively applied to all prior copies of Snowflake's source code which may have been licensed under different terms. 
 
 Snowflake does not in any way facilitate the download of illegal ROM images or warez of any kind. 

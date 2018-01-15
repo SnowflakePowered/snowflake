@@ -12,5 +12,8 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.PackTask
 
         [NamedArgument("o", "output", "The name of the output file.")]
         public string OutputFile { get; set; }
+
+        [NamedArgument("a", "notreeshaking", "Disable dependency tree shaking for assembly modules.")]
+        public bool NoTreeShaking { get; set; }
     }
 }
