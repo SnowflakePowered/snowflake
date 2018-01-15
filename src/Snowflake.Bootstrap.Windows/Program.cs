@@ -7,7 +7,6 @@ class Program
     {
         Console.WriteLine("Starting Shell...");
         var snowflakeShell = new SnowflakeShell();
-        snowflakeShell.StartShell();
-        Console.ReadLine();
+        while (Console.ReadLine() != "exit") ;
     }
 }

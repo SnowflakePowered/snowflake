@@ -18,7 +18,6 @@ namespace Snowflake.Services.Logging
             {
                 return;
             }
-
             var configuration = new LoggingConfiguration();
             var consoleTarget = new ColoredConsoleTarget("Console");
             var asyncConsoleTarget = new AsyncTargetWrapper("Console", consoleTarget);

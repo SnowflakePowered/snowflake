@@ -12,7 +12,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="2.0.4" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.1-beta1" />
-    <PackageReference Include="NLog" Version="5.0.0-beta11" />
+    <PackageReference Include="NLog" Version="4.5.0-rc03" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta004" />
   </ItemGroup>
 

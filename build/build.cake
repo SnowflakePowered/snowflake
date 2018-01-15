@@ -106,7 +106,6 @@ Task("AnalyseXml")
       .WithFilter("+:module=Snowflake.Support*")
       .WithFilter("-:module=Snowflake.Framework.Tests*")
       .WithFilter("-:module=Snowflake.Support.Caching.KeyedImageCache")
-      .WithFilter("-:module=Snowflake.Support.FileSignatures")
       .WithFilter("-:module=Snowflake*;class=*Composable")
     );
   });
