@@ -5,7 +5,7 @@ using Snowflake.Romfile;
 
 namespace Snowflake.Plugin.Scraping.FileSignatures.Sega
 {
-    public sealed class SegaCdRawImageFileSignature : IFileSignature
+    public sealed class Sega32XCdRawImageFileSignature : IFileSignature
     {
         /// <inheritdoc/>
         public byte[] HeaderSignature => Encoding.UTF8.GetBytes("SEGADISCSYSTEM");
@@ -24,7 +24,7 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Sega
             romStream.Read(buffer, 0, buffer.Length);
             bool thirtyTwoX = thiryTwoXbuffer.SequenceEqual(Sega32x);
 
-            return diskSystem && !thirtyTwoX;
+            return diskSystem && thirtyTwoX;
         }
 
         /// <inheritdoc/>

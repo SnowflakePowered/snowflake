@@ -41,6 +41,8 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Composers
                 { "application/vnd.stone-romfile.sega.gen", new SegaGenesisFileSignature() },
                 { "application/vnd.stone-romfile.sega.gg", new SegaGameGearFileSignature() },
                 { "application/vnd.stone-romfile.sega.sat-discimage", new SegaSaturnFileSignature() },
+                { "application/vnd.stone-romfile.sega.32xcd-discimage", new Sega32XCdRawImageFileSignature() },
+
             };
 
             var pluginManager = serviceContainer.Get<IPluginManager>();
