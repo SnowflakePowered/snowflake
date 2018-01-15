@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using MimeMapping;
 using Snowflake.Extensibility;
+using Snowflake.Plugin.Scraping.FileSignatures.Composers;
+using Snowflake.Romfile;
 using Snowflake.Scraping;
 using Snowflake.Scraping.Extensibility;
 using Snowflake.Services;
@@ -19,11 +21,35 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Scrapers
     public class FileMimetypeScraper : Scraper
     {
         private IStoneProvider StoneProvider { get; }
+        private FileSignatureCollection FileSignatures { get; }
 
-        public FileMimetypeScraper(IStoneProvider stoneProvider)
+        public FileMimetypeScraper(IStoneProvider stoneProvider, FileSignatureCollection fileSignatures)
             : base(typeof(FileMimetypeScraper), AttachTarget.Target, "file")
         {
+            this.FileSignatures = fileSignatures;
             this.StoneProvider = stoneProvider;
+        }
+
+        private string GetMatchingMimetype(FileStream romStream)
+        {
+            foreach ((string mimetype, IFileSignature fileSignature) in this.FileSignatures)
+            {
+                try
+                {
+                    romStream.Position = 0;
+                    if (fileSignature.HeaderSignatureMatches(romStream))
+                    {
+                        romStream.Position = 0;
+                        return mimetype;
+                    }
+                }
+                catch
+                {
+                    continue;
+                }
+            }
+
+            return null;
         }
 
         public override async Task<IEnumerable<SeedTreeAwaitable>>
@@ -31,6 +57,15 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Scrapers
             ILookup<string, SeedContent> childSeeds,
             ILookup<string, SeedContent> siblingSeeds)
         {
+            using (FileStream romStream = File.OpenRead(parent.Content.Value))
+            {
+                string inferredMimeType = this.GetMatchingMimetype(romStream);
+                if (inferredMimeType != null)
+                {
+                    return _("mimetype", inferredMimeType);
+                }
+            }
+
             string platformId = rootSeeds["platform"].First().Value;
             if (!this.StoneProvider.Platforms.TryGetValue(platformId, out var platform))
             {

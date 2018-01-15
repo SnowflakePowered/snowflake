@@ -17,7 +17,7 @@ namespace Snowflake.Scraping.Extensibility
         string TargetType { get; }
 
         /// <summary>
-        /// Determines the seeds that REMAIN for traversal.
+        /// Determines the seeds that REMAIN for traversal for the given target type.
         /// </summary>
         /// <param name="seedsToFilter">The seeds of the specified type in the current job.</param>
         /// <param name="context">The root context of the current job.</param>

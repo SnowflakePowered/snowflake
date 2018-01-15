@@ -7,7 +7,7 @@ using Snowflake.Services;
 
 namespace Snowflake.Plugin.Scraping.FileSignatures.Sega
 {
-    public sealed class SegaSATFileSignature : IFileSignature
+    public sealed class SegaSaturnFileSignature : IFileSignature
     {
         /// <inheritdoc/>
         public byte[] HeaderSignature => Encoding.UTF8.GetBytes("SEGA SEGASATURN ");

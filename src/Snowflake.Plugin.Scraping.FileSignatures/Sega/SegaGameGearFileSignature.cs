@@ -4,7 +4,7 @@ using Snowflake.Romfile;
 
 namespace Snowflake.Plugin.Scraping.FileSignatures.Sega
 {
-    public sealed class SegaGGFileSignature : IFileSignature
+    public sealed class SegaGameGearFileSignature : IFileSignature
     {
         /// <inheritdoc/>
         public byte[] HeaderSignature => new byte[8] { 0x54, 0x4D, 0x52, 0x20, 0x53, 0x45, 0x47, 0x41 }; // 'TMR SEGA'

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using Snowflake.Romfile;
 
-namespace Snowflake.Plugin.Scraping.FileSignatures.Comoposers
+namespace Snowflake.Plugin.Scraping.FileSignatures.Composers
 {
     public class FileSignatureCollection : IEnumerable<KeyValuePair<string, IFileSignature>>
     {

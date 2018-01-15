@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using MimeMapping;
 using Snowflake.Extensibility;
 using Snowflake.Platform;
-using Snowflake.Plugin.Scraping.FileSignatures.Comoposers;
+using Snowflake.Plugin.Scraping.FileSignatures.Composers;
 using Snowflake.Romfile;
 using Snowflake.Scraping;
 using Snowflake.Scraping.Extensibility;
@@ -49,6 +49,7 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Scrapers
                     continue;
                 }
             }
+
             return null;
         }
 

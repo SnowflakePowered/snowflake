@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Extensibility;
-using Snowflake.Plugin.Scraping.FileSignatures.Comoposers;
+using Snowflake.Plugin.Scraping.FileSignatures.Composers;
 using Snowflake.Romfile;
 using Snowflake.Scraping;
 using Snowflake.Scraping.Extensibility;
