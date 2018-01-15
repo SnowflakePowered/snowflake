@@ -56,18 +56,29 @@ namespace Snowflake.Framework.Remoting.GraphQl.Query
                    IEnumerable<ParameterAttribute> paramAttr)> EnumerateMutationQueries()
            => this.EnumerateQueries<MutationAttribute>();
 
+        private IList<QueryArgument> GetArguments(ParameterInfo[] methodParams, IEnumerable<ParameterAttribute> paramAttr)
+        {
+            return (from param in paramAttr
+             let parameterValue = methodParams.FirstOrDefault(p => p.Name == param.Key)
+             select parameterValue?.HasDefaultValue == true ?
+             new QueryArgument(param.GraphQlType)
+             {
+                 Name = param.Key,
+                 Description = param.Description,
+                 DefaultValue = parameterValue.DefaultValue,
+             } : new QueryArgument(param.GraphQlType)
+             {
+                 Name = param.Key,
+                 Description = param.Description,
+             }).ToList();
+        }
+
         private FieldQuery MakeFieldQuery(MethodInfo fieldMethod, FieldAttribute fieldAttr, IEnumerable<ParameterAttribute> paramAttr)
         {
             var invoker = this.CreateInvoker(fieldMethod);
             var resolver = this.CreateResolver(invoker, fieldMethod);
             var methodParams = fieldMethod.GetParameters();
-            IList<QueryArgument> arguments = (from param in paramAttr
-                                              select new QueryArgument(param.GraphQlType)
-                                              {
-                                                  Name = param.Key,
-                                                  Description = param.Description,
-                                                  DefaultValue = methodParams.FirstOrDefault(p => p.Name == param.Key)?.DefaultValue,
-                                              }).ToList();
+            IList<QueryArgument> arguments = this.GetArguments(methodParams, paramAttr);
             return new FieldQuery()
             {
                 Description = fieldAttr.Description,
@@ -83,13 +94,8 @@ namespace Snowflake.Framework.Remoting.GraphQl.Query
             var invoker = this.CreateInvoker(fieldMethod);
             var resolver = this.CreateResolver(invoker, fieldMethod);
             var methodParams = fieldMethod.GetParameters();
-            IList<QueryArgument> arguments = (from param in paramAttr
-                                              select new QueryArgument(param.GraphQlType)
-                                              {
-                                                  Name = param.Key,
-                                                  Description = param.Description,
-                                                  DefaultValue = methodParams.FirstOrDefault(p => p.Name == param.Key)?.DefaultValue,
-                                              }).ToList();
+            IList<QueryArgument> arguments = this.GetArguments(methodParams, paramAttr);
+
             return new FieldQuery()
             {
                 Description = fieldAttr.Description,
@@ -106,13 +112,8 @@ namespace Snowflake.Framework.Remoting.GraphQl.Query
             var invoker = this.CreateInvoker(fieldMethod);
             var resolver = this.CreateResolver(invoker, fieldMethod);
             var methodParams = fieldMethod.GetParameters();
-            IList<QueryArgument> arguments = (from param in paramAttr
-                                                    select new QueryArgument(param.GraphQlType)
-                                                    {
-                                                        Name = param.Key,
-                                                        Description = param.Description,
-                                                        DefaultValue = methodParams.FirstOrDefault(p => p.Name == param.Key)?.DefaultValue,
-                                                    }).ToList();
+            IList<QueryArgument> arguments = this.GetArguments(methodParams, paramAttr);
+
             if (!fieldMethod.ReturnType.GetInterfaces().Contains(typeof(IEnumerable)) ||
                 !fieldMethod.ReturnType.IsConstructedGenericType)
             {
