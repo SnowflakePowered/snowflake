@@ -5,12 +5,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Snowflake.Framework.Primitives\Snowflake.Framework.Primitives.csproj" />
-    <ProjectReference Include="..\Snowflake.Framework\Snowflake.Framework.csproj" />
+    <PackageReference Include="GraphQL" Version="2.0.0-alpha-820" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Snowflake.Framework.Primitives\Snowflake.Framework.Primitives.csproj" />
+    <ProjectReference Include="..\Snowflake.Framework.Remoting.Electron\Snowflake.Framework.Remoting.Electron.csproj" />
+    <ProjectReference Include="..\Snowflake.Framework.Remoting.GraphQl\Snowflake.Framework.Remoting.GraphQl.csproj" />
+  </ItemGroup>
+
   <ItemGroup>
     <DotNetCliToolReference Include="dotnet-snowflake" Version="1.4.0" />
   </ItemGroup>
+
   <ItemGroup>
     <None Update="module.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
