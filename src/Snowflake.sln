@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2010
+VisualStudioVersion = 15.0.27130.2020
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Framework", "Framework", "{49B7A61F-B3BE-485E-84D0-B78C08656412}"
 EndProject
@@ -76,6 +76,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Framework.Remoting.GraphQl", "Snowflake.Framework.Remoting.GraphQl\Snowflake.Framework.Remoting.GraphQl.csproj", "{3657686F-1039-4213-9185-B58830AA4A18}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Plugin.Scraping.FileSignatures", "Snowflake.Plugin.Scraping.FileSignatures\Snowflake.Plugin.Scraping.FileSignatures.csproj", "{4D54E42D-4D1A-4627-9245-D8A46620F8DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Support.Remoting.Electron.ThemeProvider", "Snowflake.Support.Remoting.Electron.ThemeProvider\Snowflake.Support.Remoting.Electron.ThemeProvider.csproj", "{FDA33F17-5D5F-4651-917A-19E6CD804AB2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Framework.Remoting.Electron", "Snowflake.Framework.Remoting.Electron\Snowflake.Framework.Remoting.Electron.csproj", "{C4E7974F-7537-4E27-9785-72CF6195D547}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -423,6 +427,30 @@ Global
 		{4D54E42D-4D1A-4627-9245-D8A46620F8DB}.Release|x64.Build.0 = Release|Any CPU
 		{4D54E42D-4D1A-4627-9245-D8A46620F8DB}.Release|x86.ActiveCfg = Release|Any CPU
 		{4D54E42D-4D1A-4627-9245-D8A46620F8DB}.Release|x86.Build.0 = Release|Any CPU
+		{FDA33F17-5D5F-4651-917A-19E6CD804AB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDA33F17-5D5F-4651-917A-19E6CD804AB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDA33F17-5D5F-4651-917A-19E6CD804AB2}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{FDA33F17-5D5F-4651-917A-19E6CD804AB2}.Debug|x64.Build.0 = Debug|Any CPU
+		{FDA33F17-5D5F-4651-917A-19E6CD804AB2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FDA33F17-5D5F-4651-917A-19E6CD804AB2}.Debug|x86.Build.0 = Debug|Any CPU
+		{FDA33F17-5D5F-4651-917A-19E6CD804AB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDA33F17-5D5F-4651-917A-19E6CD804AB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FDA33F17-5D5F-4651-917A-19E6CD804AB2}.Release|x64.ActiveCfg = Release|Any CPU
+		{FDA33F17-5D5F-4651-917A-19E6CD804AB2}.Release|x64.Build.0 = Release|Any CPU
+		{FDA33F17-5D5F-4651-917A-19E6CD804AB2}.Release|x86.ActiveCfg = Release|Any CPU
+		{FDA33F17-5D5F-4651-917A-19E6CD804AB2}.Release|x86.Build.0 = Release|Any CPU
+		{C4E7974F-7537-4E27-9785-72CF6195D547}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4E7974F-7537-4E27-9785-72CF6195D547}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4E7974F-7537-4E27-9785-72CF6195D547}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C4E7974F-7537-4E27-9785-72CF6195D547}.Debug|x64.Build.0 = Debug|Any CPU
+		{C4E7974F-7537-4E27-9785-72CF6195D547}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C4E7974F-7537-4E27-9785-72CF6195D547}.Debug|x86.Build.0 = Debug|Any CPU
+		{C4E7974F-7537-4E27-9785-72CF6195D547}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4E7974F-7537-4E27-9785-72CF6195D547}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4E7974F-7537-4E27-9785-72CF6195D547}.Release|x64.ActiveCfg = Release|Any CPU
+		{C4E7974F-7537-4E27-9785-72CF6195D547}.Release|x64.Build.0 = Release|Any CPU
+		{C4E7974F-7537-4E27-9785-72CF6195D547}.Release|x86.ActiveCfg = Release|Any CPU
+		{C4E7974F-7537-4E27-9785-72CF6195D547}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -458,6 +486,8 @@ Global
 		{68750828-29F8-4CB4-AF7B-0F48305FA06D} = {8E178A6E-EAA5-413A-9EBE-36557DFF288E}
 		{3657686F-1039-4213-9185-B58830AA4A18} = {49B7A61F-B3BE-485E-84D0-B78C08656412}
 		{4D54E42D-4D1A-4627-9245-D8A46620F8DB} = {86D5767F-B32D-4E1B-BBA2-B87A0DEC6C6F}
+		{FDA33F17-5D5F-4651-917A-19E6CD804AB2} = {FBD15674-246A-4C57-B865-07214D8BB9A1}
+		{C4E7974F-7537-4E27-9785-72CF6195D547} = {49B7A61F-B3BE-485E-84D0-B78C08656412}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {532F5D25-2D82-45B3-BF60-DDA40A0FB795}

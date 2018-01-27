@@ -28,26 +28,35 @@ namespace Snowflake.Support.Remoting.GraphQl.Servers
             {
                 context.NoCache();
                 context.Response.ContentType = "application/json";
-                var requestBody = context.RequestBody();
-                var request = JsonConvert.DeserializeObject<GraphQlRequest>(requestBody);
-                logger.Info($"Received GraphQL Request.");
-                // Super-hacky workaround abusing Task.Run to make it run in a separate thread if nescessary.
-                var result = await Task.Run(async () => await provider.ExecuteRequestAsync(request).ConfigureAwait(false)).ConfigureAwait(false);
-                string str = provider.Write(result);
-                var buffer = new MemoryStream(Encoding.UTF8.GetBytes(str.ToString())).Compress();
                 context.Response.AddHeader("Content-Encoding", "gzip");
                 context.Response.AddHeader("Access-Control-Allow-Origin", "*");
                 context.Response.AddHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-                context.Response.StatusCode = result.Errors?.Any() == true ? (int)HttpStatusCode.BadRequest : (int)HttpStatusCode.OK;
-                await GraphQlServer.WriteToOutputStream(context, buffer.Length, buffer, 0).ConfigureAwait(false);
-                if (result.Errors?.Any() == true)
+                context.Response.AddHeader("Access-Control-Allow-Headers", "Origin, Content-Type, X-Auth-Token");
+                var requestBody = context.RequestBody();
+                try
                 {
-                    foreach (var error in result.Errors)
+                    var request = JsonConvert.DeserializeObject<GraphQlRequest>(requestBody);
+
+                    logger.Info($"Received GraphQL Request.");
+                    // Super-hacky workaround abusing Task.Run to make it run in a separate thread if nescessary.
+                    var result = await Task.Run(async () => await provider.ExecuteRequestAsync(request).ConfigureAwait(false)).ConfigureAwait(false);
+                    string str = provider.Write(result);
+                    var buffer = new MemoryStream(Encoding.UTF8.GetBytes(str.ToString())).Compress();
+                    context.Response.StatusCode = result.Errors?.Any() == true ? (int)HttpStatusCode.BadRequest : (int)HttpStatusCode.OK;
+                    await GraphQlServer.WriteToOutputStream(context, buffer.Length, buffer, 0).ConfigureAwait(false);
+                    if (result.Errors?.Any() == true)
                     {
-                        logger.Warn($"Error occurred when processing GraphQL request {error.Message} from exception {error.InnerException}");
+                        foreach (var error in result.Errors)
+                        {
+                            logger.Warn($"Error occurred when processing GraphQL request {error.Message} from exception {error.InnerException}");
+                        }
                     }
+                    logger.Info($"Processed GraphQL Request.");
                 }
-                logger.Info($"Processed GraphQL Request.");
+                catch
+                {
+
+                }
                 return true;
             });
         }

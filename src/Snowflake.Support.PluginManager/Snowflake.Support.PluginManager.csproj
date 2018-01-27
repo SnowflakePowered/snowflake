@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <DotNetCliToolReference Include="dotnet-snowflake" Version="1.3.0" />
+    <DotNetCliToolReference Include="dotnet-snowflake" Version="1.4.0" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json" />
