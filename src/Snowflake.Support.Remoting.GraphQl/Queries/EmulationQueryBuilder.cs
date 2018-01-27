@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GraphQL.Conventions.Adapters.Types;
 using GraphQL.Types;
 using Snowflake.Execution.Extensibility;
 using Snowflake.Execution.Saving;
@@ -21,10 +22,12 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
         public IPluginCollection<IEmulator> Emulators { get; }
         public IStoneProvider Stone { get; }
         public ISaveLocationProvider SaveLocationProvider { get; }
+        public IGameLibrary GameLibrary { get; }
         public InputQueryBuilder InputQueryApi { get; }
         public ControllerLayoutQueryBuilder ControllerQueryApi { get; }
         public EmulationQueryBuilder(IPluginCollection<IEmulator> emulators,
             IStoneProvider stone,
+            IGameLibrary library,
             ISaveLocationProvider saveLocationProvider,
             InputQueryBuilder inputQueryBuilder,
             ControllerLayoutQueryBuilder controllerLayoutQueryBuilder)
@@ -34,6 +37,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
             this.SaveLocationProvider = saveLocationProvider;
             this.InputQueryApi = inputQueryBuilder;
             this.ControllerQueryApi = controllerLayoutQueryBuilder;
+            this.GameLibrary = library;
         }
 
         [Field("testEmuTask", "test", typeof(EmulatorTaskResultGraphType))]
@@ -46,6 +50,25 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
             var task = emu.CreateTask(game, saveLocation, controllers.Select(c => this.ParseController(c)).ToList());
             return await emu.Runner.ExecuteEmulationAsync(task);
         }
+
+
+        [Field("launchEmulatorTask", "Launches an emulator task", typeof(EmulatorTaskResultGraphType))]
+        [Parameter(typeof(IList<EmulatedControllerInputObject>), typeof(ListGraphType<EmulatedControllerInputType>), "controllers", "The emulated controller input")]
+        [Parameter(typeof(string), typeof(StringGraphType), "emulator", "The name of the emulator to launch.")]
+        [Parameter(typeof(Guid), typeof(GuidGraphType), "gameGuid", "The GUID of the game to launch.")]
+
+        public async Task<IEmulatorTaskResult> LaunchEmulatorTask(
+            string emulator,
+            Guid gameGuid,
+            IList<EmulatedControllerInputObject> controllers)
+        {
+            var emu = this.Emulators.Where(e => e.Name.Equals(emulator, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+            var game = this.GameLibrary.Get(gameGuid);
+            var saveLocation = await this.SaveLocationProvider.CreateSaveLocationAsync(game, emu.Properties.SaveFormat);
+            var task = emu.CreateTask(game, saveLocation, controllers.Select(c => this.ParseController(c)).ToList());
+            return await emu.Runner.ExecuteEmulationAsync(task);
+        }
+
 
         [Field("emulatedController", "Gets the emulated controller object", typeof(EmulatedControllerGraphType))]
         [Parameter(typeof(EmulatedControllerInputObject), typeof(EmulatedControllerInputType), "input", "The emulated controller input")]

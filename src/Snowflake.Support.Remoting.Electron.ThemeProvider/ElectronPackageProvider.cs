@@ -17,7 +17,6 @@ namespace Snowflake.Support.Remoting.Electron
         {
             var modules = enumerator.Modules.Where(m => m.Loader == "electron");
             var loader = new ElectronAsarLoader(logger);
-
             this.Interfaces = modules.SelectMany(m => loader.LoadModule(m)).ToList().ToImmutableList();
         }
     }

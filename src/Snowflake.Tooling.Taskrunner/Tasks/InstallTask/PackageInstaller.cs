@@ -124,7 +124,7 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.InstallTask
                             RSAParameters parameters = JsonConvert.DeserializeObject<RSAParameters>(keyJson);
                             using (RSA rsa = RSA.Create(parameters))
                             {
-                                return rsa.VerifyHash(hash, signature, HashAlgorithmName.SHA512, RSASignaturePadding.Pss);
+                                return rsa.VerifyHash(hash, signature, HashAlgorithmName.SHA512, RSASignaturePadding.Pkcs1);
                             }
                         }
                     }

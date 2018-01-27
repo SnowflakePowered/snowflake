@@ -24,6 +24,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Containers
         [ImportService(typeof(ISaveLocationProvider))]
         [ImportService(typeof(IGraphQlRootSchema))]
         [ImportService(typeof(ILogProvider))]
+        [ImportService(typeof(IGameLibrary))]
         public void Compose(IModule module, IServiceRepository coreInstance)
         {
             var stone = coreInstance.Get<IStoneProvider>();
@@ -31,11 +32,12 @@ namespace Snowflake.Support.Remoting.GraphQl.Containers
             var plugin = coreInstance.Get<IPluginManager>();
             var mappedController = coreInstance.Get<IMappedControllerElementCollectionStore>();
             var saves = coreInstance.Get<ISaveLocationProvider>();
+            var gameLib = coreInstance.Get<IGameLibrary>();
 
             var rootSchema = coreInstance.Get<IGraphQlRootSchema>();
             var inputQuery = new InputQueryBuilder(input, plugin, mappedController, stone);
             var controllerQueries = new ControllerLayoutQueryBuilder(stone);
-            var emuQuery = new EmulationQueryBuilder(plugin.GetCollection<IEmulator>(), stone, saves,
+            var emuQuery = new EmulationQueryBuilder(plugin.GetCollection<IEmulator>(), stone, gameLib, saves,
                 inputQuery, controllerQueries);
 
             rootSchema.Register(controllerQueries);
