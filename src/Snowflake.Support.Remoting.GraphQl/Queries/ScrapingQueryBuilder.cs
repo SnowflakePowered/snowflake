@@ -32,7 +32,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
             this.ScrapeEngine = scrapeEngine;
         }
 
-        [Field("autoScrape", "seed test", typeof(ListGraphType<SeedGraphType>))]
+        [Field("autoScrape", "Automatically results scrape to end.", typeof(ListGraphType<SeedGraphType>))]
         [Parameter(typeof(string), typeof(StringGraphType), "platform", "platform")]
         [Parameter(typeof(string), typeof(StringGraphType), "title", "title")]
         [Parameter(typeof(IEnumerable<string>), typeof(ListGraphType<StringGraphType>), "scraperNames", "The scrapers to use for this job.")]
