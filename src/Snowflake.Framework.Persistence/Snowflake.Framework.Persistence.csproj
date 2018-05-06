@@ -6,10 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Data.SQLite" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Data.SQLite" Version="2.1.0-preview2-final" />
     <PackageReference Include="Dapper" Version="1.50.4" />
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.1-beta1" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta004" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta006" />
   </ItemGroup>
 
   <ItemGroup>

@@ -36,7 +36,7 @@
     <PackageReference Include="DiscUtils.Core" Version="0.13.0-alpha" />
     <PackageReference Include="DiscUtils.Iso9660" Version="0.13.0-alpha" />
     <PackageReference Include="MimeMapping" Version="1.0.1.12" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta004" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta006" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json" />

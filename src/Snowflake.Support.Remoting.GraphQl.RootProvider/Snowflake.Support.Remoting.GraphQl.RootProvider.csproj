@@ -6,9 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EmbedIO" Version="1.11.3" />
-    <PackageReference Include="GraphQL" Version="2.0.0-alpha-820" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta004" />
+    <PackageReference Include="EmbedIO" Version="1.13.0" />
+    <PackageReference Include="GraphQL" Version="2.0.0-alpha-899" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta006" />
   </ItemGroup>
 
   <ItemGroup>
