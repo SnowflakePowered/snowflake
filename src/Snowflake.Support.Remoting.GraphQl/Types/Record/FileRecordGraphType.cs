@@ -18,7 +18,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.Record
             Field(f => f.MimeType).Description("The file's mimetype.");
             Field<GuidGraphType>("guid",
               description: "The unique ID of the game.",
-              resolve: context => context.Source);
+              resolve: context => context.Source.Guid);
             Field<ListGraphType<RecordMetadataGraphType>>(
                 "metadata",
                 description: "A list of metadata related to this game.",
