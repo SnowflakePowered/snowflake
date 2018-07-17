@@ -15,7 +15,7 @@
 | [![MyGetFeed](https://img.shields.io/myget/snowflake-nightly/vpre/Snowflake.Framework.svg?style=flat)](https://www.myget.org/gallery/snowflake-nightly) | [![NuGet version](https://badge.fury.io/nu/Snowflake.Framework.svg)](https://www.nuget.org/packages/Snowflake.Framework) |
 
 
-Snowflake is a framework for building flexible and beautiful emulator frontends. With features such as advanced configuration generation and an intelligent scraping system, Snowflake provides a powerful set of tools to manage, play, and organize your games when designing your dream frontend using the language of your choice.
+Snowflake is a framework for building adaptable and beautiful emulator frontends. With features such as advanced configuration generation and an intelligent scraping system, Snowflake provides a powerful set of tools to manage, play, and organize your games when designing your dream frontend (in the language of your choice).
 
 
 Features
@@ -26,19 +26,19 @@ Snowflake features innovative solutions to many problems with current emulator f
 * Programmatic per-game emulator configuration generation and input management.
 * Multi-disc and multi-file capable relational games database.
 
-At its core, Snowflake is designed to be moddable and easy to develop for, with a comprehensive C# API for extensibility and GraphQL interface for frontend UIs.
+Snowflake is designed to be modifiable and easy to develop use, with a comprehensive C# API for extensibility and GraphQL interface for frontend UIs.
 * Language-agnostic GraphQL interface for communicating with the Snowflake framework.
 * Plugin API to extend the framework with C# plugins.
 * Module-based runtime extensibility.
 * [Stone](https://github.com/SnowflakePowered/stone) platform, controller, and canonical ROM file mimetype compliant.
 * Dedicated CLI to help you get started quickly and easily. 
 
-Star this repository and bookmark our [website at http://snowflakepowe.red](http://snowflakepowe.red/) to keep up with Snowflake's development. We'll have something new in store for you soon!
+Star this repository and bookmark our [website at http://snowflakepowe.red](http://snowflakepowe.red/) to keep up with Snowflake's development. We will have something new in store for you soon!
 
 Getting Started
 ---------------
 
-Snowflake does not currently have a well defined install process for end-users, but it is easy to set up a development environment. 
+Snowflake does not currently have a well defined install process for users, but it is easy to set up a development environment. 
 You will need the [.NET Core SDK 2.1](https://www.microsoft.com/net/download/) to get started. 
 
 **Windows**
@@ -57,9 +57,9 @@ $ cd build
 $ ./build.sh -target=Bootstrap
 ```
 
-This command will build and install all support modules required for Snowflake to be functional to your application data directory (`%appdata%\snowflake\modules` or `~/.snowflake/snowflake/modules` on Linux). Note that you may have to delete the installed module `assembly.Snowflake.Framework.Test.InvalidComposable`, which is designed deliberately to error on load, however this is not necessary.
+This command will build and install all support modules required for Snowflake to be functional to your application data directory (`%appdata%\snowflake\modules` or `~/.snowflake/snowflake/modules` on Linux). Note that you may have to delete the installed module `assembly.Snowflake.Framework.Test.InvalidComposable`, which is designed deliberately to display an error on load. The deletion, however, is not necessary.
 
-As well, input management APIs are currently only available on Windows. Attempting to use these APIs on Linux will fail to enumerate any device.
+Input management APIs are currently only available on Windows. Attempting to use these APIs on Linux will fail to enumerate any device.
 
 Legal
 -----
