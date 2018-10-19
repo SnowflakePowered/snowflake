@@ -114,6 +114,11 @@
             lifetime of the application.
             </summary>
         </member>
+        <member name="M:Snowflake.Configuration.ConfigurationDescriptorCache.GetProxyGenerator">
+            <summary>
+            Gets a reused proxy generator that survives for the lifetime of the application.
+            </summary>
+        </member>
         <member name="M:Snowflake.Configuration.ConfigurationDescriptorCache.GetSectionDescriptor``1">
             <summary>
             Gets a new or existing section descriptor

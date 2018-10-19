@@ -45,24 +45,24 @@ namespace Snowflake.Configuration
 
         internal ConfigurationSection(IDictionary<string, (string stringValue, Guid guid)> values)
         {
-            ProxyGenerator generator = new ProxyGenerator();
             this.Descriptor = ConfigurationDescriptorCache.GetSectionDescriptor<T>();
             this.configurationInterceptor = new ConfigurationInterceptor(this.Descriptor,
                 values.ToDictionary(p => p.Key, this.FromValueTuple));
 
             this.Configuration =
-                generator.CreateInterfaceProxyWithoutTarget<T>(new ConfigurationCircularInterceptor<T>(this),
+                ConfigurationDescriptorCache
+                .GetProxyGenerator().CreateInterfaceProxyWithoutTarget<T>(new ConfigurationCircularInterceptor<T>(this),
                     this.configurationInterceptor);
         }
 
         public ConfigurationSection(IDictionary<string, IConfigurationValue> values)
         {
-            ProxyGenerator generator = new ProxyGenerator();
             this.Descriptor = new ConfigurationSectionDescriptor<T>();
             this.configurationInterceptor = new ConfigurationInterceptor(this.Descriptor, values);
 
             this.Configuration =
-                generator.CreateInterfaceProxyWithoutTarget<T>(new ConfigurationCircularInterceptor<T>(this),
+                  ConfigurationDescriptorCache
+                .GetProxyGenerator().CreateInterfaceProxyWithoutTarget<T>(new ConfigurationCircularInterceptor<T>(this),
                     configurationInterceptor);
         }
 
