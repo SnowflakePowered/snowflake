@@ -4,6 +4,7 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Castle.DynamicProxy;
 
 namespace Snowflake.Configuration
 {
@@ -19,6 +20,16 @@ namespace Snowflake.Configuration
             ImmutableDictionary<Type, IConfigurationSectionDescriptor>.Empty;
         private static IImmutableDictionary<Type, IConfigurationCollectionDescriptor> collectionDescriptors =
             ImmutableDictionary<Type, IConfigurationCollectionDescriptor>.Empty;
+
+        private static ProxyGenerator proxyGenerator = new ProxyGenerator();
+
+        /// <summary>
+        /// Gets a reused proxy generator that survives for the lifetime of the application.
+        /// </summary>
+        internal static IProxyGenerator GetProxyGenerator()
+        {
+            return ConfigurationDescriptorCache.proxyGenerator;
+        }
 
         /// <summary>
         /// Gets a new or existing section descriptor

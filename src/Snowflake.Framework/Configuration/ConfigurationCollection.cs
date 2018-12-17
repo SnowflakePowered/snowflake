@@ -33,11 +33,13 @@ namespace Snowflake.Configuration
 
         public ConfigurationCollection(IDictionary<string, IDictionary<string, IConfigurationValue>> defaults)
         {
-            ProxyGenerator generator = new ProxyGenerator();
+           
             this.Descriptor =
                 ConfigurationDescriptorCache.GetCollectionDescriptor<T>();
             this.collectionInterceptor = new CollectionInterceptor<T>(defaults);
-            this.Configuration = generator.CreateInterfaceProxyWithoutTarget<T>(new CollectionCircularInterceptor<T>(this), this.collectionInterceptor);
+            
+            this.Configuration = ConfigurationDescriptorCache
+                    .GetProxyGenerator().CreateInterfaceProxyWithoutTarget<T>(new CollectionCircularInterceptor<T>(this), this.collectionInterceptor);
         }
 
         /// <summary>
@@ -47,11 +49,11 @@ namespace Snowflake.Configuration
         /// <param name="defaults"></param>
         internal ConfigurationCollection(IDictionary<string, IDictionary<string, (string, Guid)>> defaults)
         {
-            ProxyGenerator generator = new ProxyGenerator();
             this.Descriptor =
                 ConfigurationDescriptorCache.GetCollectionDescriptor<T>();
             this.collectionInterceptor = new CollectionInterceptor<T>(defaults);
-            this.Configuration = generator.CreateInterfaceProxyWithoutTarget<T>(new CollectionCircularInterceptor<T>(this), this.collectionInterceptor);
+            this.Configuration = ConfigurationDescriptorCache
+                    .GetProxyGenerator().CreateInterfaceProxyWithoutTarget<T>(new CollectionCircularInterceptor<T>(this), this.collectionInterceptor);
         }
 
         /// <inheritdoc/>

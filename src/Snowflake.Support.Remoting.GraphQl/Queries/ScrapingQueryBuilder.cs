@@ -47,7 +47,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
             return this.ScrapeEngine.GetJobState(job).ToList();
         }
 
-        [Field("createJobWithAllScrapers", "Creates a scrape job using all registered scrapers (testing only)", typeof(GuidGraphType))]
+        [Mutation("createJobWithAllScrapers", "Creates a scrape job using all registered scrapers (testing only)", typeof(GuidGraphType))]
         [Parameter(typeof(SeedTreeInputObjectCollection), typeof(SeedTreeInputObjectCollectionType), "seeds", "input")]
         [Parameter(typeof(IEnumerable<string>), typeof(ListGraphType<StringGraphType>), "scraperNames", "The scrapers to use for this job.")]
         [Parameter(typeof(IEnumerable<string>), typeof(ListGraphType<StringGraphType>), "cullerNames", "The cullers to use for this job.")]
@@ -59,7 +59,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
             return job;
         }
 
-        [Field("proceedScrapeJob", "Proceeds with the scrape job", typeof(BooleanGraphType))]
+        [Mutation("proceedScrapeJob", "Proceeds with the scrape job", typeof(BooleanGraphType))]
         [Parameter(typeof(Guid), typeof(GuidGraphType), "jobGuid", "The GUID of the job")]
         public async Task<bool> ProceedJob(Guid jobGuid)
         {
@@ -73,14 +73,14 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
             return this.ScrapeEngine.GetJobState(jobGuid);
         }
 
-        [Field("resultJob", "Results the job. Does not add to database!!", typeof(GameRecordGraphType))]
+        [Mutation("resultJob", "Results the job. Does not add to database!", typeof(GameRecordGraphType))]
         [Parameter(typeof(Guid), typeof(GuidGraphType), "jobGuid", "The GUID of the job")]
         public async Task<IGameRecord> Result(Guid jobGuid)
         {
             return await this.ScrapeEngine.Result(jobGuid);
         }
 
-        [Field("cullSeeds", "Cull the seeds", typeof(ListGraphType<SeedGraphType>))]
+        [Mutation("cullSeeds", "Cull the seeds", typeof(ListGraphType<SeedGraphType>))]
         [Parameter(typeof(Guid), typeof(GuidGraphType), "jobGuid", "The GUID of the job")]
         [Parameter(typeof(IEnumerable<Guid>), typeof(ListGraphType<GuidGraphType>), "culledSeeds", "Culled Seeds")]
         public IEnumerable<ISeed> CullSeeds(Guid jobGuid, IEnumerable<Guid> culledSeeds)

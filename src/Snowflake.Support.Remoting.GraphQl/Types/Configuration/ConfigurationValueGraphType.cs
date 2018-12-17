@@ -21,6 +21,9 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.Configuration
             Field<GuidGraphType>("guid",
                 description: "The GUID of this saved configuration value.",
                 resolve: context => context.Source.Value.Guid);
+            Field<StringGraphType>("id",
+             description: "The opaque GraphQL unique ID of this ConfigurationValue. For caching purposes only.",
+             resolve: context => context.Source.Value.Guid.ToGraphQlUniqueId("ConfigurationValue"));
             Field<PrimitiveGraphType>("value",
                 description: "The value of this saved configuration value.",
                 resolve: context => context.Source.Value.Value);
