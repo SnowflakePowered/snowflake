@@ -446,6 +446,13 @@ namespace Snowflake.Input.Controller
         /// </summary>
         IControllerElementInfo Touchscreen { get; }
 
+         /// <summary>
+        /// Gets a 3 axis rotation gyroscope of unspecified precision, 
+        /// where input can be expressed as a vector of 3 coordinates X, Y, and Z
+        /// </summary>
+
+        IControllerElementInfo Gyroscope { get; }
+
         /// <summary>
         /// Indexer accessor for the elements in this collection.
         /// If not present, should return null.

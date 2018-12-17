@@ -452,6 +452,12 @@ namespace Snowflake.Input.Controller
         /// </summary>
         Touchscreen,
 
+        /// <summary>
+        /// A 3 axis rotation gyroscope of unspecified precision,
+        /// where input can be expressed as a vector of 3 coordinates X, Y, and Z
+        /// </summary>
+        Gyroscope,
+
         // The following elements are keyboard keys.
         // By convention, these keys mappable from K -> K.
         // Instead, they can only be mapped from K -> C where

@@ -81,5 +81,11 @@ namespace Snowflake.Input.Controller
         /// are only concerned with a single matrix due to the lack of multi-touch support.
         /// </summary>
         Touchscreen,
+
+        /// <summary>
+        /// A 3 axis rotation gyroscope of unspecified precision, 
+        /// where input can be expressed as a vector of 3 coordinates X, Y, and Z
+        /// </summary>
+        Gyroscope,
     }
 }
