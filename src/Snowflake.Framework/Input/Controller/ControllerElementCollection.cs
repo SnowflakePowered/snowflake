@@ -261,6 +261,9 @@ namespace Snowflake.Input.Controller
         /// <inheritdoc/>
         public IControllerElementInfo Touchscreen => this[ControllerElement.Touchscreen];
 
+        /// <inheritdoc/>
+        public IControllerElementInfo Gyroscope => this[ControllerElement.Gyroscope];
+
         private readonly IDictionary<ControllerElement, IControllerElementInfo> controllerElements;
 
         /// <inheritdoc/>
