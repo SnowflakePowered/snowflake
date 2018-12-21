@@ -1,18 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>  
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">  
-  <Import Sdk="Microsoft.NET.Sdk" Project="Sdk.targets" />
+  <Import Sdk="Snowflake.Framework.Dependencies.Sdk/2.0.0" Project="Sdk.props" />
   <ItemGroup>
-    <Compile Include="$(NuGetPackageRoot)\snowflake.framework.sdk\1.0.0\*.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Snowflake.Framework" Version="1.0.0" />
-    <PackageReference Include="Snowflake.Framework.Primitives" Version="1.0.0" />
-    <PackageReference Include="Snowflake.Framework.Persistence" Version="1.0.0" />
-    <PackageReference Include="Snowflake.Framework.Services" Version="1.0.0" />
-    <PackageReference Include="Snowflake.Framework.Remoting.GraphQl" Version="1.0.0" />
-
-  </ItemGroup>
-  <ItemGroup>
-    <DotNetCliToolReference Include="dotnet-snowflake" Version="1.5.0" />
+    <PackageReference Include="Snowflake.Framework.Library" Version="1.0.1" IsImplicitlyDefined="true"/>
   </ItemGroup>
 </Project>  

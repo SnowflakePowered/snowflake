@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Snowflake.Framework.Dependencies.Sdk/2.0.0">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
@@ -8,7 +8,6 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Data.SQLite" Version="2.2.0" />
     <PackageReference Include="Dapper" Version="1.50.5" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
   </ItemGroup>
 
   <ItemGroup>
