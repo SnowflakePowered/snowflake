@@ -158,7 +158,10 @@ namespace Snowflake.Framework.Remoting.GraphQl.Query
             connectionQuery.FieldType.Type = typeof(ConnectionType<>).MakeGenericType(query.GraphType);
             if (query.Arguments != null)
             {
-                connectionQuery.FieldType.Arguments.AddRange(query.Arguments);
+                foreach (var argument in query.Arguments)
+                {
+                    connectionQuery.FieldType.Arguments.Add(argument);
+                }
             }
 
             connectionQuery.Resolve(context => connectionResolver(context));

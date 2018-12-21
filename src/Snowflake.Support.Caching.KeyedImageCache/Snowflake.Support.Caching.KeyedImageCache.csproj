@@ -6,8 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0003" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta006" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0005" />
   </ItemGroup>
 
   <ItemGroup>

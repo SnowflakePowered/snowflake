@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using GraphQL.Conventions.Adapters.Types;
 using GraphQL.Types;
 using Snowflake.Support.Remoting.GraphQl.Types.Values;
 

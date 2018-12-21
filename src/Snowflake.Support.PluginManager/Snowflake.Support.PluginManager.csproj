@@ -23,10 +23,6 @@
   <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json" />
   </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta006" />
-  </ItemGroup>
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\Snowflake.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>

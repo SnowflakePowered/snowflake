@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using GraphQL.Conventions.Adapters.Types;
 using GraphQL.Types;
 using Snowflake.Configuration;
 using Snowflake.Execution.Extensibility;
