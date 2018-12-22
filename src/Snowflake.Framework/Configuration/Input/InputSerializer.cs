@@ -42,7 +42,7 @@ namespace Snowflake.Configuration.Input
         public virtual string SerializeInput(string key, ControllerElement element, IInputMapping inputMapping)
         {
             return
-                element == ControllerElement.NoElement ? this.ConfigurationSerializer.SerializeLine(key, this.ConfigurationSerializer.TypeMapper.ConvertValue((object)null))
+                element == ControllerElement.NoElement ? this.ConfigurationSerializer.SerializeLine(key, this.ConfigurationSerializer.TypeMapper.ConvertValue((object?)null))
                 : this.ConfigurationSerializer.SerializeLine(key, inputMapping[element]);
         }
     }

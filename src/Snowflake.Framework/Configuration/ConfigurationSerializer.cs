@@ -31,11 +31,11 @@ namespace Snowflake.Configuration
         public abstract string SerializeLine<T>(string key, T value);
 
         /// <inheritdoc/>
-        public string SerializeValue(object value)
+        public string SerializeValue(object? value)
         {
             if (value == null)
             {
-                return this.TypeMapper.ConvertValue((object)null);
+                return this.TypeMapper.ConvertValue((object?)null);
             }
 
             Type valueType = value.GetType();

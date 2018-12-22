@@ -11,11 +11,11 @@ namespace Snowflake.Configuration
 {
     public abstract class ConfigurationTypeMapper : IConfigurationTypeMapper
     {
-        private readonly IDictionary<Type, Func<object, string>> typeMappers;
+        private readonly IDictionary<Type, Func<object?, string>> typeMappers;
         private string NullSerializer { get; }
         protected ConfigurationTypeMapper(string nullSerializer)
         {
-            this.typeMappers = new Dictionary<Type, Func<object, string>>();
+            this.typeMappers = new Dictionary<Type, Func<object?, string>>();
             this.NullSerializer = nullSerializer;
         }
 
@@ -29,7 +29,7 @@ namespace Snowflake.Configuration
         public string ConvertValue<T>(T value) => this[typeof(T), value];
 
         /// <inheritdoc/>
-        public string this[Type t, object value]
+        public string this[Type t, object? value]
         {
             get
             {

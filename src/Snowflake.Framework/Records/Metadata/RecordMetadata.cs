@@ -47,7 +47,7 @@ namespace Snowflake.Records.Metadata
         /// <inheritdoc/>
         public override bool Equals(object metadata)
         {
-            IRecordMetadata m = metadata as IRecordMetadata;
+            IRecordMetadata? m = metadata as IRecordMetadata;
 
             if (m == null)
             {
