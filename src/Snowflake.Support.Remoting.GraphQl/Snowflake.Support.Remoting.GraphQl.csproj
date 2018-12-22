@@ -1,13 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GraphQL" Version="2.0.0-alpha-899" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta006" />
+    <PackageReference Include="GraphQL" Version="2.4.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,7 +24,7 @@
     <DependsOnNETStandard>true</DependsOnNETStandard>
   </PropertyGroup>
   <ItemGroup>
-    <DotNetCliToolReference Include="dotnet-snowflake" Version="1.4.0" />
+    <DotNetCliToolReference Include="dotnet-snowflake" Version="1.5.1" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json" />

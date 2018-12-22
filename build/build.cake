@@ -1,5 +1,5 @@
 #addin "Cake.Incubator"
-#tool "nuget:?package=JetBrains.dotCover.CommandLineTools"
+#tool nuget:?package=JetBrains.dotCover.CommandLineTools&version=2018.3
 #tool nuget:?package=Codecov
 #addin nuget:?package=Cake.Codecov
 var target = Argument("target", "Default");

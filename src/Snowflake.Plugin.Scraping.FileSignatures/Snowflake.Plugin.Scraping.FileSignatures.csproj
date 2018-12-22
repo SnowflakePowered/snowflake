@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <RootNamespace>Snowflake.Plugin.Scraping.FileSignatures</RootNamespace>
     <AssemblyName>Snowflake.Plugin.Scraping.FileSignatures</AssemblyName>
     <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
@@ -29,14 +29,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <DotNetCliToolReference Include="dotnet-snowflake" Version="1.4.0" />
+    <DotNetCliToolReference Include="dotnet-snowflake" Version="1.5.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DiscUtils.Core" Version="0.13.0-alpha" />
-    <PackageReference Include="DiscUtils.Iso9660" Version="0.13.0-alpha" />
+    <PackageReference Include="DiscUtils.Core" Version="0.14.0-alpha234" />
+    <PackageReference Include="DiscUtils.Iso9660" Version="0.14.0-alpha234" />
     <PackageReference Include="MimeMapping" Version="1.0.1.12" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta006" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json" />

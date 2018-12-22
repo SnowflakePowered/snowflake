@@ -1,14 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EmbedIO" Version="1.13.0" />
-    <PackageReference Include="GraphQL" Version="2.0.0-alpha-899" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta006" />
+    <PackageReference Include="EmbedIO" Version="2.1.1" />
+    <PackageReference Include="GraphQL" Version="2.4.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,7 +21,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <DotNetCliToolReference Include="dotnet-snowflake" Version="1.4.0" />
+    <DotNetCliToolReference Include="dotnet-snowflake" Version="1.5.1" />
 
   </ItemGroup>
   <ItemGroup>

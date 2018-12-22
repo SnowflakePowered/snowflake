@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using GraphQL.Conventions.Adapters.Types;
 using GraphQL.Types;
 using Snowflake.Framework.Remoting.GraphQl.Attributes;
 using Snowflake.Framework.Remoting.GraphQl.Query;

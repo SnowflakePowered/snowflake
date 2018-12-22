@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using GraphQL.Conventions.Adapters.Types;
 using GraphQL.Types;
 using Snowflake.Execution.Extensibility;
 using Snowflake.Execution.Saving;

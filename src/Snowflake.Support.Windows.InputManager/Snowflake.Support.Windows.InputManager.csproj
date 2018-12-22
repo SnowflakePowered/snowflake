@@ -1,17 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <RootNamespace>Snowflake</RootNamespace>
     <AssemblyName>Snowflake.Support.Windows.InputManager</AssemblyName>
     <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="SharpDX" Version="4.1.0-ci217" />
-    <PackageReference Include="SharpDX.DirectInput" Version="4.1.0-ci217" />
-    <PackageReference Include="SharpDX.XInput" Version="4.1.0-ci217" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta006" />
+    <PackageReference Include="SharpDX" Version="4.2.0" />
+    <PackageReference Include="SharpDX.DirectInput" Version="4.2.0" />
+    <PackageReference Include="SharpDX.XInput" Version="4.2.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <DotNetCliToolReference Include="dotnet-snowflake" Version="1.4.0" />
+    <DotNetCliToolReference Include="dotnet-snowflake" Version="1.5.1" />
   </ItemGroup>
 
   <ItemGroup>

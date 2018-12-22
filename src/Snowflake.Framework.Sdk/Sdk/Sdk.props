@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>  
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">  
+  <Import Sdk="Snowflake.Framework.Dependencies.Sdk/2.0.0" Project="Sdk.props" />
+  <ItemGroup>
+    <PackageReference Include="Snowflake.Framework.Library" Version="1.0.1" IsImplicitlyDefined="true"/>
+  </ItemGroup>
+</Project>  

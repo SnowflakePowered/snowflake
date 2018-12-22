@@ -766,6 +766,9 @@
         <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Touchscreen">
             <inheritdoc/>
         </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Gyroscope">
+            <inheritdoc/>
+        </member>
         <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Item(Snowflake.Input.Controller.ControllerElement)">
             <inheritdoc/>
         </member>

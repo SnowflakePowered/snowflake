@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Snowflake.Framework.Dependencies.Sdk/2.0.0">
   <PropertyGroup>
     <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
     <RootNamespace>Snowflake</RootNamespace>
@@ -13,11 +13,6 @@
     <Compile Remove="Extensibility\Events\**" />
     <EmbeddedResource Remove="Extensibility\Events\**" />
     <None Remove="Extensibility\Events\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta006" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json" />

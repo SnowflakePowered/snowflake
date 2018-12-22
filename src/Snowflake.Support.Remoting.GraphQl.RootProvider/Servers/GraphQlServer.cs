@@ -41,7 +41,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Servers
                     // Super-hacky workaround abusing Task.Run to make it run in a separate thread if nescessary.
                     var result = await Task.Run(async () => await provider.ExecuteRequestAsync(request).ConfigureAwait(false)).ConfigureAwait(false);
                     string str = provider.Write(result);
-                    var buffer = new MemoryStream(Encoding.UTF8.GetBytes(str.ToString())).Compress();
+                    var buffer = await new MemoryStream(Encoding.UTF8.GetBytes(str.ToString())).CompressAsync();
                     context.Response.StatusCode = result.Errors?.Any() == true ? (int)HttpStatusCode.BadRequest : (int)HttpStatusCode.OK;
                     await GraphQlServer.WriteToOutputStream(context, buffer.Length, buffer, 0).ConfigureAwait(false);
                     if (result.Errors?.Any() == true)
@@ -62,7 +62,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Servers
         }
 
         // ripped from EmbedIO StaticFilesModule
-        private static async Task WriteToOutputStream(HttpListenerContext context, long byteLength, Stream buffer, int lowerByteIndex)
+        private static async Task WriteToOutputStream(IHttpContext context, long byteLength, Stream buffer, int lowerByteIndex)
         {
             var streamBuffer = new byte[chunkSize];
             var sendData = 0;
