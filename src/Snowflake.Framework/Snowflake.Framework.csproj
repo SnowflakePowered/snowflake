@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Snowflake.Framework.Dependencies.Sdk/2.0.0">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework> 
     <RootNamespace>Snowflake</RootNamespace>
     <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
