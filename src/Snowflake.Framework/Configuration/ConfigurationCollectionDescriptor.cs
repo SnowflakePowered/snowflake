@@ -12,6 +12,10 @@ using Snowflake.Configuration.Extensions;
 
 namespace Snowflake.Configuration
 {
+    /// <summary>
+    /// Default implementation for <see cref="IConfigurationCollectionDescriptor"/>
+    /// </summary>
+    /// <typeparam name="T">The type of the configuration collection</typeparam>
     public class ConfigurationCollectionDescriptor<T> : IConfigurationCollectionDescriptor
         where T : class, IConfigurationCollection
     {

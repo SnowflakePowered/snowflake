@@ -13,7 +13,7 @@ namespace Snowflake.Model.FileSystem
 
         IDirectory? OpenDirectory(string name);
         IDirectory CreateOrOpenDirectory(string name);
-
+ 
         IDirectory? CopyDirectoryFrom(string fullPath);
         IDirectory? CopyDirectoryFrom(DirectoryInfo directory);
 
@@ -25,7 +25,6 @@ namespace Snowflake.Model.FileSystem
 
         IFile? CopyFileFrom(string fullPath);
         IFile? CopyFileFrom(FileInfo file);
-
    
         IFile? CopyFileFrom(string fullPath, string newName);
         IFile? CopyFileFrom(FileInfo file, string newName);

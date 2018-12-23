@@ -267,7 +267,7 @@ namespace Snowflake.Input.Controller
         private readonly IDictionary<ControllerElement, IControllerElementInfo> controllerElements;
 
         /// <inheritdoc/>
-        public IControllerElementInfo this[ControllerElement element]
+        public IControllerElementInfo? this[ControllerElement element]
         {
             get
             {

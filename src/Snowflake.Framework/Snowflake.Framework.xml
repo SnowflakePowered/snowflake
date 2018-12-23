@@ -4,6 +4,11 @@
         <name>Snowflake.Framework</name>
     </assembly>
     <members>
+        <member name="T:Snowflake.Configuration.BooleanMapping">
+            <summary>
+            Default implementation for <see cref="T:Snowflake.Configuration.IBooleanMapping"/>
+            </summary>
+        </member>
         <member name="P:Snowflake.Configuration.BooleanMapping.True">
             <inheritdoc/>
         </member>
@@ -97,6 +102,12 @@
         <member name="M:Snowflake.Configuration.CollectionInterceptor`1.Intercept(Castle.DynamicProxy.IInvocation)">
             <inheritdoc/>
         </member>
+        <member name="T:Snowflake.Configuration.ConfigurationCollectionDescriptor`1">
+            <summary>
+            Default implementation for <see cref="T:Snowflake.Configuration.IConfigurationCollectionDescriptor"/>
+            </summary>
+            <typeparam name="T">The type of the configuration collection</typeparam>
+        </member>
         <member name="P:Snowflake.Configuration.ConfigurationCollectionDescriptor`1.Outputs">
             <inheritdoc/>
         </member>
@@ -124,14 +135,14 @@
             Gets a new or existing section descriptor
             </summary>
             <typeparam name="T">The type of the configuration section</typeparam>
-            <returns>The section descriptor for <see cref="!:T"/></returns>
+            <returns>The section descriptor for <see cref="T:self"/></returns>
         </member>
         <member name="M:Snowflake.Configuration.ConfigurationDescriptorCache.GetCollectionDescriptor``1">
             <summary>
             Gets a new or existing collection descriptor
             </summary>
             <typeparam name="T">The type of the configuration collection</typeparam>
-            <returns>The collection descriptor for <see cref="!:T"/></returns>
+            <returns>The collection descriptor for <see cref="T:self"/></returns>
         </member>
         <member name="P:Snowflake.Configuration.ConfigurationFile.BooleanMapping">
             <inheritdoc/>
@@ -141,6 +152,11 @@
         </member>
         <member name="P:Snowflake.Configuration.ConfigurationFile.Key">
             <inheritdoc/>
+        </member>
+        <member name="T:Snowflake.Configuration.ConfigurationOptionDescriptor">
+            <summary>
+            Default constructor for <see cref="T:Snowflake.Configuration.IConfigurationOptionDescriptor"/>
+            </summary>
         </member>
         <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.DisplayName">
             <inheritdoc/>
@@ -210,6 +226,12 @@
         </member>
         <member name="M:Snowflake.Configuration.ConfigurationSection`1.System#Collections#IEnumerable#GetEnumerator">
             <inheritdoc/>
+        </member>
+        <member name="T:Snowflake.Configuration.ConfigurationSectionDescriptor`1">
+            <summary>
+            Default constructor for <see cref="T:Snowflake.Configuration.IConfigurationSectionDescriptor"/>
+            </summary>
+            <typeparam name="T">The type of the configuration.</typeparam>
         </member>
         <member name="P:Snowflake.Configuration.ConfigurationSectionDescriptor`1.Description">
             <inheritdoc/>
@@ -1143,6 +1165,12 @@
         <member name="M:Snowflake.Romfile.Tokenizer.TosecTokenClassifier.ExtractTitleTokens(System.String)">
             <inheritdoc/>
         </member>
+        <member name="P:Snowflake.Scraping.Extensibility.Culler.TargetType">
+            <inheritdoc />
+        </member>
+        <member name="M:Snowflake.Scraping.Extensibility.Culler.Filter(System.Collections.Generic.IEnumerable{Snowflake.Scraping.ISeed},Snowflake.Scraping.ISeedRootContext)">
+            <inheritdoc />
+        </member>
         <member name="T:Snowflake.Scraping.Extensibility.SeedBuilder">
             <summary>
             <para>
@@ -1223,6 +1251,26 @@
             <param name="value">The value of the seed.</param>
             <param name="children">The list of seed results to return</param>
             <returns>A seed tree result.</returns>
+        </member>
+        <member name="F:Snowflake.Scraping.ScrapeJob.ClientSeedSource">
+            <summary>
+             The default source for a Client-provided seed.
+            </summary>
+        </member>
+        <member name="P:Snowflake.Scraping.ScrapeJob.Scrapers">
+            <inheritdoc />
+        </member>
+        <member name="P:Snowflake.Scraping.ScrapeJob.Context">
+            <inheritdoc />
+        </member>
+        <member name="P:Snowflake.Scraping.ScrapeJob.Visited">
+            <inheritdoc />
+        </member>
+        <member name="P:Snowflake.Scraping.ScrapeJob.JobGuid">
+            <inheritdoc />
+        </member>
+        <member name="P:Snowflake.Scraping.ScrapeJob.Cullers">
+            <inheritdoc />
         </member>
         <member name="T:Snowflake.Shiragame.RomInfo">
             <summary>

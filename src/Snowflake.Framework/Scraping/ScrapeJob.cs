@@ -8,11 +8,24 @@ namespace Snowflake.Scraping
 {
     public class ScrapeJob : IScrapeJob
     {
+        /// <summary>
+        ///  The default source for a Client-provided seed.
+        /// </summary>
         public const string ClientSeedSource = "__client";
+
+        /// <inheritdoc />
         public IEnumerable<IScraper> Scrapers { get; }
+
+        /// <inheritdoc />
         public ISeedRootContext Context { get; }
+
+        /// <inheritdoc />
         private IList<(string, Guid)> Visited { get; }
+
+        /// <inheritdoc />
         public Guid JobGuid { get; }
+
+        /// <inheritdoc />
         public IEnumerable<ICuller> Cullers { get; }
 
         public ScrapeJob(IEnumerable<IScraper> scrapers,

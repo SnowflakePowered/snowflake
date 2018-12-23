@@ -28,7 +28,7 @@ namespace Snowflake.Input.Controller.Mapped
         }
 
         /// <inheritdoc/>
-        public IMappedControllerElementCollection GetMappingProfile(string controllerId, string deviceId, string profileName = "default")
+        public IMappedControllerElementCollection? GetMappingProfile(string controllerId, string deviceId, string profileName = "default")
         {
             return this.backingDatabase.Query<IMappedControllerElementCollection>(dbConnection =>
             {

@@ -28,7 +28,7 @@ namespace Snowflake.JsonConverters
         /// </summary>
         /// <param name="value">The value to transform</param>
         /// <returns>The transformed object graph to be serialized</returns>
-        protected virtual object Transform(T value)
+        protected virtual object? Transform(T value)
         {
             return value;
         }

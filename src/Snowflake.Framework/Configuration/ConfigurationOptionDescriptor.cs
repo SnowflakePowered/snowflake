@@ -11,6 +11,9 @@ using Snowflake.Configuration.Input;
 
 namespace Snowflake.Configuration
 {
+    /// <summary>
+    /// Default constructor for <see cref="IConfigurationOptionDescriptor"/>
+    /// </summary>
     public class ConfigurationOptionDescriptor : IConfigurationOptionDescriptor
     {
         /// <inheritdoc/>

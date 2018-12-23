@@ -35,7 +35,7 @@ namespace Snowflake.Configuration
         /// Gets a new or existing section descriptor
         /// </summary>
         /// <typeparam name="T">The type of the configuration section</typeparam>
-        /// <returns>The section descriptor for <see cref="T"/></returns>
+        /// <returns>The section descriptor for <see cref="T:self"/></returns>
         internal static IConfigurationSectionDescriptor GetSectionDescriptor<T>()
             where T : class, IConfigurationSection<T>
         {
@@ -52,7 +52,7 @@ namespace Snowflake.Configuration
         /// Gets a new or existing collection descriptor
         /// </summary>
         /// <typeparam name="T">The type of the configuration collection</typeparam>
-        /// <returns>The collection descriptor for <see cref="T"/></returns>
+        /// <returns>The collection descriptor for <see cref="T:self"/></returns>
         internal static IConfigurationCollectionDescriptor GetCollectionDescriptor<T>()
             where T : class, IConfigurationCollection<T>
         {

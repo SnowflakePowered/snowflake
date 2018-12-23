@@ -17,7 +17,7 @@ namespace Snowflake.Configuration
         /// <inheritdoc/>
         public string Key { get; }
 
-        public ConfigurationFile(string fileName, string key, IBooleanMapping booleanMapping)
+        internal ConfigurationFile(string fileName, string key, IBooleanMapping booleanMapping)
         {
             this.Destination = fileName;
             this.Key = key;

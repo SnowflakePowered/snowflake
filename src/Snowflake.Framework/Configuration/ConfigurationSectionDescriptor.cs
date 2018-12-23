@@ -10,6 +10,10 @@ using Snowflake.Configuration.Attributes;
 
 namespace Snowflake.Configuration
 {
+    /// <summary>
+    /// Default constructor for <see cref="IConfigurationSectionDescriptor"/>
+    /// </summary>
+    /// <typeparam name="T">The type of the configuration.</typeparam>
     public class ConfigurationSectionDescriptor<T> : IConfigurationSectionDescriptor
         where T : class, IConfigurationSection<T>
     {

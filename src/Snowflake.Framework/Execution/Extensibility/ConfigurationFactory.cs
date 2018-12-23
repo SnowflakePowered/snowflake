@@ -30,7 +30,7 @@ namespace Snowflake.Execution.Extensibility
             this.InputMappings = inputMappings;
         }
 
-        IConfigurationCollection IConfigurationFactory.GetConfiguration(Guid gameRecord, string profileName = "default")
+        IConfigurationCollection IConfigurationFactory.GetConfiguration(Guid gameRecord, string profileName)
         {
             return this.GetConfiguration(gameRecord, profileName);
         }

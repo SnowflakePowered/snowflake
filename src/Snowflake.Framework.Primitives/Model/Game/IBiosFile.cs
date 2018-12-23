@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Snowflake.Platform
+namespace Snowflake.Model.Game
 {
     /// <summary>
     /// Represents a BIOS file of a Stone <see cref="IPlatformInfo"/> definition.
