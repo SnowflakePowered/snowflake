@@ -27,17 +27,17 @@ namespace Snowflake.Configuration
         private readonly CollectionInterceptor<T> collectionInterceptor;
 
         public ConfigurationCollection()
-            : this(new Dictionary<string, IDictionary<string, IConfigurationValue>>())
+            : this(new ConfigurationValueCollection())
         {
         }
 
-        public ConfigurationCollection(IDictionary<string, IDictionary<string, IConfigurationValue>> defaults)
+        public ConfigurationCollection(IConfigurationValueCollection defaults)
         {
-           
+
             this.Descriptor =
                 ConfigurationDescriptorCache.GetCollectionDescriptor<T>();
             this.collectionInterceptor = new CollectionInterceptor<T>(defaults);
-            
+
             this.Configuration = ConfigurationDescriptorCache
                     .GetProxyGenerator().CreateInterfaceProxyWithoutTarget<T>(new CollectionCircularInterceptor<T>(this), this.collectionInterceptor);
         }
@@ -47,7 +47,7 @@ namespace Snowflake.Configuration
         /// Used for the sqlite configuration collection store
         /// </summary>
         /// <param name="defaults"></param>
-        internal ConfigurationCollection(IDictionary<string, IDictionary<string, (string, Guid)>> defaults)
+        internal ConfigurationCollection(IEnumerable<(string section, string key, (string, Guid) strvalue)> defaults)
         {
             this.Descriptor =
                 ConfigurationDescriptorCache.GetCollectionDescriptor<T>();
@@ -110,25 +110,30 @@ namespace Snowflake.Configuration
 
     class CollectionInterceptor<T> : IInterceptor
     {
-        internal readonly IDictionary<string, dynamic> Values;
+        // IDictionary<string, IConfigurationSection<T>>
+        internal IDictionary<string, dynamic> Values;
 
-        internal CollectionInterceptor(IDictionary<string, IDictionary<string, (string, Guid)>> defaults)
+        internal CollectionInterceptor(IEnumerable<(string section, string key, (string, Guid) strvalue)> values)
         {
             this.Values = new Dictionary<string, dynamic>();
             foreach (var section in from props in typeof(T).GetPublicProperties()
                                     let sectionAttr = props.GetAttributes<SerializableSectionAttribute>().FirstOrDefault()
                                     where sectionAttr != null
-                                    select new { sectionAttr, type = props.PropertyType, name = props.Name })
+                                    select new
+                                    {
+                                        sectionAttr,
+                                        type = props.PropertyType,
+                                        name = props.Name
+                                    })
             {
-                var sectionType = typeof(ConfigurationSection<>).MakeGenericType(section.type);
-                this.Values.Add(section.name, Instantiate.CreateInstance(sectionType,
-                    new[] { typeof(IDictionary<string, (string, Guid)>) },
-                    Expression.Constant(defaults.ContainsKey(section.name) ? defaults[section.name]
-                    : new Dictionary<string, (string, Guid)>())));
+                var sectionDescType = typeof(ConfigurationSectionDescriptor<>).MakeGenericType(section.type);
+                var descriptor = Instantiate.CreateInstance(sectionDescType,
+                    new[] { typeof(string) },
+                    Expression.Constant(section.name));
             }
         }
 
-        internal CollectionInterceptor(IDictionary<string, IDictionary<string, IConfigurationValue>> defaults)
+        internal CollectionInterceptor(IConfigurationValueCollection defaults)
         {
             this.Values = new Dictionary<string, dynamic>();
 
@@ -139,8 +144,13 @@ namespace Snowflake.Configuration
                                     select new { sectionAttr, type = props.PropertyType, name = props.Name })
             {
                 var sectionType = typeof(ConfigurationSection<>).MakeGenericType(section.type);
-                this.Values.Add(section.name, Instantiate.CreateInstance(sectionType, new Type[] { typeof(IDictionary<string, IConfigurationValue>) },
-                    Expression.Constant(defaults.ContainsKey(section.name) ? defaults[section.name] : new Dictionary<string, IConfigurationValue>())));
+
+                if (section?.name != null)
+                {
+                    this.Values.Add(section.name,
+                        Instantiate.CreateInstance(sectionType, new Type[] { typeof(IConfigurationValueCollection), typeof(string) },
+                        Expression.Constant(defaults), Expression.Constant(section.name)));
+                }
             }
         }
 

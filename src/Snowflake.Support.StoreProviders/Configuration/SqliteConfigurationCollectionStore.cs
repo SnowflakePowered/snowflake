@@ -53,12 +53,8 @@ namespace Snowflake.Configuration
                     });
             });
 
-            var defs = records.GroupBy(p => p.section)
-                .ToDictionary(p => p.Key, p => p
-                .ToDictionary(o => o.option, o =>
-                new ValueTuple<string, Guid>(o.value, new Guid(o.uuid)))
-                as IDictionary<string, ValueTuple<string, Guid>>);
-            var config = new ConfigurationCollection<T>(defs);
+            var defs = records.Select(g => (g.section, g.option, (g.value, new Guid(g.uuid))));
+            var config = new ConfigurationCollection<T>(ConfigurationValueCollection.MakeExistingValueCollection<T>(defs, Guid.NewGuid()));
 
             // We have to cache the value to preserve purity across multiple accesses
             // Otherwise a new configuration with differing GUIDs will be generated every time

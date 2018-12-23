@@ -24,21 +24,21 @@ namespace Snowflake.Configuration.Input
         public IConfigurationSectionDescriptor Descriptor { get; }
 
         /// <inheritdoc/>
-        public IDictionary<string, IConfigurationValue> Values
-            => ImmutableDictionary.CreateRange(this.configurationInterceptor.Values);
+        public IReadOnlyDictionary<string, IConfigurationValue> Values
+            => ImmutableDictionary.CreateRange(this.configurationInterceptor.Values[this.Descriptor]);
 
         /// <inheritdoc/>
         public object this[string key]
         {
-            get { return configurationInterceptor.Values[key]; }
-            set { this.configurationInterceptor.Values[key].Value = value; }
+            get { return configurationInterceptor.Values[this.Descriptor, key]; }
+            set { this.configurationInterceptor.Values[this.Descriptor, key].Value = value; }
         }
 
         private readonly ConfigurationInterceptor configurationInterceptor;
 
         internal InputConfigurationSection(InputTemplateCircularInterceptor<T> interceptor, InputTemplateInterceptor<T> inputTemplate)
         {
-            this.Descriptor = new ConfigurationSectionDescriptor<T>();
+            this.Descriptor = new ConfigurationSectionDescriptor<T>(typeof(T).Name);
             ProxyGenerator generator = new ProxyGenerator();
             var options = from prop in typeof(T).GetProperties()
                           let attr = prop.GetCustomAttribute<ConfigurationOptionAttribute>()
@@ -48,7 +48,8 @@ namespace Snowflake.Configuration.Input
                           select new ConfigurationOptionDescriptor(attr, metadata, name) as IConfigurationOptionDescriptor;
 
             this.Options = options.ToList();
-            this.configurationInterceptor = new ConfigurationInterceptor(this.Descriptor);
+            // todo: fix this.
+            this.configurationInterceptor = new ConfigurationInterceptor(this.Descriptor, new ConfigurationValueCollection());
             this.Configuration =
                 generator.CreateInterfaceProxyWithoutTarget<T>(interceptor,
                     configurationInterceptor, inputTemplate);

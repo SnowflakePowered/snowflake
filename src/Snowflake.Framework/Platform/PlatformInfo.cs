@@ -2,6 +2,7 @@
 using System.Linq;
 using Newtonsoft.Json;
 using Snowflake.JsonConverters;
+using Snowflake.Model.Game;
 
 namespace Snowflake.Platform
 {

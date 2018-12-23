@@ -33,7 +33,7 @@ namespace Snowflake.Configuration
         /// The implementation is responsible for ensuring this mapping synced with the
         /// values stored in the object and ensuring this mapping is immutable.
         /// </summary>
-        IDictionary<string, IConfigurationValue> Values { get; }
+        IReadOnlyDictionary<string, IConfigurationValue> Values { get; }
 
         /// <summary>
         /// Gets or sets the option value with the specified property name in the configuration section
@@ -43,6 +43,6 @@ namespace Snowflake.Configuration
         /// through the <see cref="IConfigurationSection{T}.Configuration"/> property.</remarks>
         /// <param name="key">The property name of the configuration option</param>
         /// <returns>The untyped value of the configuration value</returns>
-        object this[string key] { get; set; }
+        object? this[string key] { get; set; }
     }
 }

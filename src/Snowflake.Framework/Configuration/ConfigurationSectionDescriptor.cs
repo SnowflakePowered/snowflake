@@ -26,14 +26,18 @@ namespace Snowflake.Configuration
         /// <inheritdoc/>
         public string SectionName { get; }
 
+        /// <inheritdoc />
+        public string SectionKey { get; }
+
         /// <inheritdoc/>
         public IEnumerable<IConfigurationOptionDescriptor> Options { get; }
 
         /// <inheritdoc/>
         public IConfigurationOptionDescriptor this[string optionKey] => this.Options.First(o => o.OptionKey == optionKey);
 
-        internal ConfigurationSectionDescriptor()
+        internal ConfigurationSectionDescriptor(string sectionKey)
         {
+            this.SectionKey = sectionKey;
             // todo cache descriptors
             this.Options = (from prop in typeof(T).GetProperties()
                           let attr = prop.GetCustomAttribute<ConfigurationOptionAttribute>()

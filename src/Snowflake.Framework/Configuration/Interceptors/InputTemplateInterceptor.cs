@@ -7,13 +7,19 @@ namespace Snowflake.Configuration.Interceptors
 {
     internal class InputTemplateInterceptor<T> : IInterceptor
     {
-        internal InputTemplateInterceptor(IDictionary<string, ControllerElement> inputValues, IDictionary<string, IConfigurationValue> configValues)
+        internal InputTemplateInterceptor(
+            IDictionary<string, ControllerElement> inputValues, 
+            IConfigurationValueCollection configValues,
+            IConfigurationSectionDescriptor descriptor)
         {
+            this.Descriptor = descriptor;
             this.InputValues = inputValues;
             this.ConfigValues = configValues;
         }
 
-        internal readonly IDictionary<string, IConfigurationValue> ConfigValues;
+        internal IConfigurationValueCollection ConfigValues { get; }
+        public IConfigurationSectionDescriptor Descriptor { get; }
+
         internal IDictionary<string, ControllerElement> InputValues;
 
         /// <inheritdoc/>
@@ -27,16 +33,16 @@ namespace Snowflake.Configuration.Interceptors
                     invocation.ReturnValue = InputValues[propertyName]; // type is IConfigurationSection<T>
                 }
             }
-            else if (this.ConfigValues.ContainsKey(propertyName))
+            else if (this.ConfigValues[this.Descriptor].ContainsKey(propertyName))
             {
                 if (invocation.Method.Name.StartsWith("get_"))
                 {
-                    invocation.ReturnValue = ConfigValues[propertyName].Value;
+                    invocation.ReturnValue = this.ConfigValues[this.Descriptor, propertyName]!.Value;
                 }
 
                 if (invocation.Method.Name.StartsWith("set_"))
                 {
-                    ConfigValues[propertyName].Value = invocation.Arguments[0];
+                    this.ConfigValues[this.Descriptor, propertyName]!.Value = invocation.Arguments[0];
                 }
             }
             else

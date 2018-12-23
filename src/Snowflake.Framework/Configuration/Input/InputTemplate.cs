@@ -28,7 +28,7 @@ namespace Snowflake.Configuration.Input
         public T Template { get; }
 
         /// <inheritdoc/>
-        public IDictionary<string, ControllerElement> Values
+        public IReadOnlyDictionary<string, ControllerElement> Values
             => ImmutableDictionary.CreateRange(this.inputTemplateInterceptor.InputValues);
 
         /// <inheritdoc/>
@@ -101,22 +101,25 @@ namespace Snowflake.Configuration.Input
                           let metadata = prop.GetCustomAttributes<CustomMetadataAttribute>()
                           select new ConfigurationOptionDescriptor(configAttribute, metadata, name) as IConfigurationOptionDescriptor).ToList();
 
-            var configOptionValues = new Dictionary<string, IConfigurationValue>();
-            foreach (var custom in this.configurationOptions)
-            {
-                configOptionValues[custom.OptionKey] = new ConfigurationValue(custom.Default);
-            }
+            var configOptionValues = new ConfigurationValueCollection();
+            var configDescriptor = new ConfigurationSectionDescriptor<T>(typeof(T).Name);
+            configOptionValues.EnsureSectionDefaults(configDescriptor);
+            //foreach (var custom in this.configurationOptions)
+            //{
+            //    configOptionValues[this.Configuration.Descriptor, custom.OptionKey]!.Value = custom.Default;
+            //}
 
             var attr = typeof(T).GetTypeInfo().GetCustomAttribute<InputTemplateAttribute>();
 
-            this.inputTemplateInterceptor = new InputTemplateInterceptor<T>(map.ToDictionary(m => m.Key, m => m.Value), configOptionValues);
+            this.inputTemplateInterceptor = new InputTemplateInterceptor<T>(map.ToDictionary(m => m.Key, m => m.Value), configOptionValues, 
+                    configDescriptor);
             var circular = new InputTemplateCircularInterceptor<T>(this);
             this.Configuration = new InputConfigurationSection<T>(circular, this.inputTemplateInterceptor);
             this.Template = generator.CreateInterfaceProxyWithoutTarget<T>(circular, this.inputTemplateInterceptor);
         }
 
         /// <inheritdoc/>
-        IDictionary<string, IConfigurationValue> IConfigurationSection.Values => this.Configuration.Values;
+        IReadOnlyDictionary<string, IConfigurationValue> IConfigurationSection.Values => this.Configuration.Values;
 
         /// <inheritdoc/>
         IConfigurationSectionDescriptor IConfigurationSection.Descriptor => this.Configuration.Descriptor;

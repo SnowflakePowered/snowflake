@@ -46,8 +46,8 @@ namespace Snowflake.Extensibility.Configuration
                     "SELECT * FROM configuration WHERE configurationType == @typeName", new { typeName });
             });
 
-            var defs = records.ToDictionary(p => p.option, p => (p.value, new Guid(p.uuid)));
-            return new ConfigurationSection<T>(defs);
+            var defs = records.Select(p => (p.option, (p.value, new Guid(p.uuid))));
+            return new ConfigurationSection<T>(ConfigurationValueCollection.MakeExistingValueCollection<T>(defs, "section", Guid.NewGuid()), "section");
         }
 
         /// <inheritdoc/>

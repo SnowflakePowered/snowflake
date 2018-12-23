@@ -34,7 +34,7 @@ namespace Snowflake.Configuration.Input
         /// The implementation of this properly should require this be immutable.
         /// This dictionary is keyed on the property names of the input template interface.
         /// </summary>
-        new IDictionary<string, ControllerElement> Values { get; }
+        new IReadOnlyDictionary<string, ControllerElement> Values { get; }
 
         /// <summary>
         /// Gets the options representing the fields in which the options are serialized in configuration,

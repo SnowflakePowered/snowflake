@@ -80,7 +80,7 @@
         <member name="P:Snowflake.Configuration.ConfigurationCollection`1.Descriptor">
             <inheritdoc/>
         </member>
-        <member name="M:Snowflake.Configuration.ConfigurationCollection`1.#ctor(System.Collections.Generic.IDictionary{System.String,System.Collections.Generic.IDictionary{System.String,System.ValueTuple{System.String,System.Guid}}})">
+        <member name="M:Snowflake.Configuration.ConfigurationCollection`1.#ctor(System.Collections.Generic.IEnumerable{System.ValueTuple{System.String,System.String,System.ValueTuple{System.String,System.Guid}}})">
             <summary>
             Initializes a new instance of the <see cref="T:Snowflake.Configuration.ConfigurationCollection`1"/> class.
             Used for the sqlite configuration collection store
@@ -130,7 +130,7 @@
             Gets a reused proxy generator that survives for the lifetime of the application.
             </summary>
         </member>
-        <member name="M:Snowflake.Configuration.ConfigurationDescriptorCache.GetSectionDescriptor``1">
+        <member name="M:Snowflake.Configuration.ConfigurationDescriptorCache.GetSectionDescriptor``1(System.String)">
             <summary>
             Gets a new or existing section descriptor
             </summary>
@@ -241,6 +241,9 @@
         </member>
         <member name="P:Snowflake.Configuration.ConfigurationSectionDescriptor`1.SectionName">
             <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.ConfigurationSectionDescriptor`1.SectionKey">
+            <inheritdoc />
         </member>
         <member name="P:Snowflake.Configuration.ConfigurationSectionDescriptor`1.Options">
             <inheritdoc/>

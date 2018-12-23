@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Snowflake.Extensibility.Provisioning;
+using Snowflake.Model.Game;
 using Snowflake.Platform;
 using Snowflake.Services;
 

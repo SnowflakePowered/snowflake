@@ -36,7 +36,7 @@ namespace Snowflake.Configuration
         /// </summary>
         /// <typeparam name="T">The type of the configuration section</typeparam>
         /// <returns>The section descriptor for <see cref="T:self"/></returns>
-        internal static IConfigurationSectionDescriptor GetSectionDescriptor<T>()
+        internal static IConfigurationSectionDescriptor GetSectionDescriptor<T>(string sectionKey)
             where T : class, IConfigurationSection<T>
         {
             if (sectionDescriptors.ContainsKey(typeof(T)))
@@ -44,7 +44,7 @@ namespace Snowflake.Configuration
                 return sectionDescriptors[typeof(T)];
             }
 
-            sectionDescriptors = sectionDescriptors.Add(typeof(T), new ConfigurationSectionDescriptor<T>());
+            sectionDescriptors = sectionDescriptors.Add(typeof(T), new ConfigurationSectionDescriptor<T>(sectionKey));
             return sectionDescriptors[typeof(T)];
         }
 

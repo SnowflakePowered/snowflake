@@ -5,7 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using Snowflake.Input.Controller;
+using Snowflake.Model.Game;
 using Snowflake.Platform;
+using IPlatformInfo = Snowflake.Platform.IPlatformInfo;
 
 namespace Snowflake.JsonConverters
 {

@@ -9,6 +9,11 @@ namespace Snowflake.Configuration
     public interface IConfigurationSectionDescriptor
     {
         /// <summary>
+        /// The key of the section as it is described in its parent Collection.
+        /// </summary>
+        string SectionKey { get; }
+
+        /// <summary>
         /// Gets the description of the section
         /// </summary>
         string Description { get; }
