@@ -42,18 +42,6 @@ namespace Snowflake.Configuration
         {
         }
 
-        //internal ConfigurationSection(IDictionary<string, (string stringValue, Guid guid)> values)
-        //{
-        //    this.Descriptor = ConfigurationDescriptorCache.GetSectionDescriptor<T>();
-        //    this.configurationInterceptor = new ConfigurationInterceptor(this.Descriptor,
-        //        values.ToDictionary(p => p.Key, this.FromValueTuple));
-
-        //    this.Configuration =
-        //        ConfigurationDescriptorCache
-        //        .GetProxyGenerator().CreateInterfaceProxyWithoutTarget<T>(new ConfigurationCircularInterceptor<T>(this),
-        //            this.configurationInterceptor);
-        //}
-
         public ConfigurationSection(IConfigurationValueCollection values, string sectionKey)
         {
             this.Descriptor = new ConfigurationSectionDescriptor<T>(sectionKey);

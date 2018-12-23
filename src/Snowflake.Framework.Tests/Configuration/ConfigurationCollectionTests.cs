@@ -25,27 +25,10 @@ namespace Snowflake.Configuration.Tests
         [Fact]
         public void StringInitializationTests()
         {
-            //var values = new Dictionary<string, IDictionary<string, ValueTuple<string, Guid>>>()
-            //{
-            //    {
-            //        "ExampleConfiguration", new Dictionary<string, ValueTuple<string, Guid>>()
-            //        {
-            //            {
-            //                "ISOPath0", new ValueTuple<string, Guid>("Test", Guid.Empty)
-            //            },
-            //            {
-            //                "FullscreenResolution", new ValueTuple<string, Guid>(, Guid.Empty)
-            //            }
-            //        }
-            //    },
-            //};
-
             var values = new List<(string, string, (string, Guid))>()
             {
                 ("ExampleConfiguration", "ISOPath0", ("Test", Guid.Empty)),
                 ("ExampleConfiguration", "FullscreenResolution", (FullscreenResolution.Resolution1024X600.ToString(), Guid.Empty))
-
-
             };
 
             var collection = ConfigurationValueCollection.MakeExistingValueCollection<ExampleConfigurationCollection>(values, Guid.Empty);

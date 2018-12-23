@@ -18,6 +18,11 @@ namespace Snowflake.Configuration
     public class ConfigurationValueCollection : IConfigurationValueCollection
     {
         private IDictionary<string, Dictionary<string, IConfigurationValue>> BackingDictionary { get; }
+        
+        /// <summary>
+        /// Cache of ensured descriptors
+        /// </summary>
+        private HashSet<string> EnsuredDescriptors { get; }
         public ConfigurationValueCollection() : this(Enumerable.Empty<(string, string, IConfigurationValue)>())
         {
 
@@ -96,6 +101,7 @@ namespace Snowflake.Configuration
             var defs = values.GroupBy(p => p.section)
                 .ToDictionary(p => p.Key, p => p.ToDictionary(o => o.option, k => k.value));
             this.BackingDictionary = defs;
+            this.EnsuredDescriptors = new HashSet<string>();
         }
 
         public IReadOnlyDictionary<string, IConfigurationValue> this[IConfigurationSectionDescriptor descriptor] {
@@ -108,6 +114,9 @@ namespace Snowflake.Configuration
 
         internal void EnsureSectionDefaults(IConfigurationSectionDescriptor descriptor)
         {
+            if (this.EnsuredDescriptors.Contains(descriptor.SectionKey)) return;
+            this.EnsuredDescriptors.Add(descriptor.SectionKey);
+
             if (!this.BackingDictionary.ContainsKey(descriptor.SectionKey))
             {
                 this.BackingDictionary[descriptor.SectionKey] = new Dictionary<string, IConfigurationValue>();
@@ -123,11 +132,30 @@ namespace Snowflake.Configuration
 
         }
 
+        internal void EnsureSectionDefault(IConfigurationSectionDescriptor descriptor, string option)
+        {
+            if (this.EnsuredDescriptors.Contains(descriptor.SectionKey)) return;
+
+            if (!this.BackingDictionary.ContainsKey(descriptor.SectionKey))
+            {
+                this.BackingDictionary[descriptor.SectionKey] = new Dictionary<string, IConfigurationValue>();
+            }
+            var key = descriptor.Options.FirstOrDefault(o => o.OptionKey == option);
+
+            if (key != null
+                && !this.BackingDictionary[descriptor.SectionKey].ContainsKey(option))
+            {
+                this.BackingDictionary[descriptor.SectionKey][key.OptionKey] 
+                        = new ConfigurationValue(key.Default);
+
+            }
+        }
+
         public IConfigurationValue? this[IConfigurationSectionDescriptor descriptor, string option]
         {
             get
             {
-                this.EnsureSectionDefaults(descriptor);
+                this.EnsureSectionDefault(descriptor, option);
                 if (!this.BackingDictionary[descriptor.SectionKey].ContainsKey(option)) return null;
                 return this.BackingDictionary[descriptor.SectionKey][option];
             }

@@ -104,10 +104,6 @@ namespace Snowflake.Configuration.Input
             var configOptionValues = new ConfigurationValueCollection();
             var configDescriptor = new ConfigurationSectionDescriptor<T>(typeof(T).Name);
             configOptionValues.EnsureSectionDefaults(configDescriptor);
-            //foreach (var custom in this.configurationOptions)
-            //{
-            //    configOptionValues[this.Configuration.Descriptor, custom.OptionKey]!.Value = custom.Default;
-            //}
 
             var attr = typeof(T).GetTypeInfo().GetCustomAttribute<InputTemplateAttribute>();
 
