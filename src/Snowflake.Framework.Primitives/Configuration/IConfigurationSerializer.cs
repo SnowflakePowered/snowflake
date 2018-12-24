@@ -21,7 +21,7 @@
         /// </summary>
         /// <param name="value">The value to serialize</param>
         /// <returns>The value serialized with the typemapper</returns>
-        string SerializeValue(object value);
+        string SerializeValue(object? value);
 
         /// <summary>
         /// Serializes a line in the configuration with a key and a value

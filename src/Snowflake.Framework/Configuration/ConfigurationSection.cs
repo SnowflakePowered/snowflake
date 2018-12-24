@@ -32,11 +32,6 @@ namespace Snowflake.Configuration
 
         private readonly ConfigurationInterceptor configurationInterceptor;
 
-        internal ConfigurationSection(string sectionKey)
-            : this(new ConfigurationValueCollection(), sectionKey)
-        {
-        }
-
         internal ConfigurationSection()
             : this(new ConfigurationValueCollection(), typeof(T).Name)
         {
@@ -60,12 +55,6 @@ namespace Snowflake.Configuration
                 : optionType.GetTypeInfo().IsEnum
                     ? NonGenericEnums.Parse(optionType, strValue) // return parsed enum if enum
                     : TypeDescriptor.GetConverter(optionType).ConvertFromInvariantString(strValue);
-        }
-
-        private IConfigurationValue FromValueTuple((string optionKey, (string stringValue, Guid guid) value) tuple)
-        {
-            Type t = this.Descriptor[tuple.optionKey].Type;
-            return new ConfigurationValue(FromString(tuple.value.stringValue, t), tuple.value.guid);
         }
 
         /// <inheritdoc/>

@@ -42,20 +42,6 @@ namespace Snowflake.Configuration
                     .GetProxyGenerator().CreateInterfaceProxyWithoutTarget<T>(new CollectionCircularInterceptor<T>(this), this.collectionInterceptor);
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ConfigurationCollection{T}"/> class.
-        /// Used for the sqlite configuration collection store
-        /// </summary>
-        /// <param name="defaults"></param>
-        internal ConfigurationCollection(IEnumerable<(string section, string key, (string, Guid) strvalue)> defaults)
-        {
-            this.Descriptor =
-                ConfigurationDescriptorCache.GetCollectionDescriptor<T>();
-            this.collectionInterceptor = new CollectionInterceptor<T>(defaults);
-            this.Configuration = ConfigurationDescriptorCache
-                    .GetProxyGenerator().CreateInterfaceProxyWithoutTarget<T>(new CollectionCircularInterceptor<T>(this), this.collectionInterceptor);
-        }
-
         /// <inheritdoc/>
         public IEnumerator<KeyValuePair<string, IConfigurationSection>> GetEnumerator()
         {

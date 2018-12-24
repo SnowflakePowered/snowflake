@@ -284,6 +284,11 @@
         <member name="P:Snowflake.Configuration.ConfigurationValue.Guid">
             <inheritdoc/>
         </member>
+        <member name="P:Snowflake.Configuration.ConfigurationValueCollection.EnsuredDescriptors">
+            <summary>
+            Cache of ensured descriptors
+            </summary>
+        </member>
         <member name="T:Snowflake.Configuration.IniConfigurationSerializer">
              <summary>
              A configuration serializer that uses INI format

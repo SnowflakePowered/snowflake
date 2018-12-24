@@ -121,7 +121,7 @@ namespace Snowflake.Configuration.Input
         IConfigurationSectionDescriptor IConfigurationSection.Descriptor => this.Configuration.Descriptor;
 
         /// <inheritdoc/>
-        object IConfigurationSection.this[string key]
+        object? IConfigurationSection.this[string key]
         {
             get { return this.Configuration[key]; }
             set { this.Configuration[key] = value; }
