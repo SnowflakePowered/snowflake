@@ -5,32 +5,25 @@ using System.IO;
 
 namespace Snowflake.Model.FileSystem
 {
+    /// <summary>
+    /// Represents the root of a Directory
+    /// </summary>
     public interface IDirectory
     {
-        DirectoryInfo RawInfo { get; }
-
+        /// <summary>
+        /// Gets the name of the directory
+        /// </summary>
         string Name { get; }
+        
+        /// <summary>
+        /// Opens an existing child directory with the given name.
+        /// If the directory does not exist, returns null.
+        /// </summary>
+        /// <param name="name">The name of the existing directory</param>
+        /// <returns>The directory if it exists, or null if it does not.</returns>
+        IDirectory OpenDirectory(string name);
 
-        IDirectory? OpenDirectory(string name);
-        IDirectory CreateOrOpenDirectory(string name);
- 
-        IDirectory? CopyDirectoryFrom(string fullPath);
-        IDirectory? CopyDirectoryFrom(DirectoryInfo directory);
-
-        IDirectory? CopyDirectoryFrom(string fullPath, string newName);
-        IDirectory? CopyDirectoryFrom(DirectoryInfo directory, string newName);
-
-        IFile? OpenFile(string file);
-        IFile CreateOrOpenFile(string file);
-
-        IFile? CopyFileFrom(string fullPath);
-        IFile? CopyFileFrom(FileInfo file);
-   
-        IFile? CopyFileFrom(string fullPath, string newName);
-        IFile? CopyFileFrom(FileInfo file, string newName);
-
-        IDirectory Rename(IDirectory directory, string newName);
-        IFile Rename(IFile file, string newName);
+        IFile OpenFile(string file);
 
         IEnumerable<IDirectory> EnumerateDirectories();
         IEnumerable<IFile> EnumerateFiles();
@@ -38,7 +31,6 @@ namespace Snowflake.Model.FileSystem
         bool ContainsFile(string file);
         bool ContainsDirectory(string directory);
 
-        void DeleteChild(IDirectory directory);
-        void DeleteChild(IFile file);
+        DirectoryInfo GetPath();
     }
 }

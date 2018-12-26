@@ -80,13 +80,6 @@
         <member name="P:Snowflake.Configuration.ConfigurationCollection`1.Descriptor">
             <inheritdoc/>
         </member>
-        <member name="M:Snowflake.Configuration.ConfigurationCollection`1.#ctor(System.Collections.Generic.IEnumerable{System.ValueTuple{System.String,System.String,System.ValueTuple{System.String,System.Guid}}})">
-            <summary>
-            Initializes a new instance of the <see cref="T:Snowflake.Configuration.ConfigurationCollection`1"/> class.
-            Used for the sqlite configuration collection store
-            </summary>
-            <param name="defaults"></param>
-        </member>
         <member name="M:Snowflake.Configuration.ConfigurationCollection`1.GetEnumerator">
             <inheritdoc/>
         </member>
