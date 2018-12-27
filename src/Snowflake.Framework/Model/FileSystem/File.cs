@@ -6,7 +6,7 @@ using Zio;
 
 namespace Snowflake.Model.FileSystem
 {
-    public class File : IFile
+    internal class File : IFile
     {
         internal File(IDirectory parentDirectory, FileEntry file)
         {
@@ -16,7 +16,7 @@ namespace Snowflake.Model.FileSystem
 
         public string Name => this.RawInfo.Name;
 
-        private FileEntry RawInfo { get; }
+        internal FileEntry RawInfo { get; }
 
         public long Length => this.RawInfo.Length;
 
@@ -34,14 +34,23 @@ namespace Snowflake.Model.FileSystem
             return this.RawInfo.Open(FileMode.OpenOrCreate, rw);
         }
 
-        public void Rename(string newName)
+        public virtual void Rename(string newName)
         {
             this.RawInfo.MoveTo((UPath)"/" / Path.GetFileName(newName));
         }
 
-        public void Delete()
+        public virtual void Delete()
         {
-            this.RawInfo.Delete();
+            if (this.RawInfo.Exists)
+            {
+                this.RawInfo.Delete();
+            }
+        }
+
+        public FileInfo GetFilePath()
+        {
+            return new FileInfo(this.RawInfo.FileSystem.
+                ConvertPathToInternal(this.RawInfo.Path));
         }
     }
 }
