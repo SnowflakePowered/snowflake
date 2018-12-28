@@ -46,15 +46,55 @@ namespace Snowflake.FileSystem
             var dir = new FS.Directory("test", pfs);
 
             Assert.Equal(NormalizePath(dir.GetPath().FullName),
-                NormalizePath(temp));
+                 NormalizePath(Path.Combine(temp, "test")));
 
-            Assert.Equal(NormalizePath(dir.OpenDirectory("test").GetPath().FullName),
-              NormalizePath(Path.Combine(temp, "test")));
+            Assert.Equal(NormalizePath(dir.OpenDirectory("dir1").GetPath().FullName),
+              NormalizePath(Path.Combine(temp, "test", "dir1")));
 
             Assert.Equal(NormalizePath(dir.OpenDirectory("test").OpenDirectory("test").GetPath().FullName),
-                NormalizePath(Path.Combine(temp, "test", "test")));
+                NormalizePath(Path.Combine(temp, "test", "test", "test")));
 
 
+        }
+
+        [Fact]
+        public void DirectoryManifestCreated_Test()
+        {
+            var fs = new PhysicalFileSystem();
+            var temp = Path.GetTempPath();
+            var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
+            var dir = new FS.Directory("test", pfs);
+            dir.OpenFile("test.txt");
+            Assert.True(dir.ContainsFile(".manifest"));
+        }
+
+        [Fact]
+        public void DirectoryManifestPersist_Test()
+        {
+            var fs = new PhysicalFileSystem();
+            var temp = Path.GetTempPath();
+            var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
+            var dir = new FS.Directory("test", pfs);
+            var file = dir.OpenFile("test.txt");
+            Assert.True(dir.ContainsFile(".manifest"));
+            Assert.Equal(file.FileGuid, dir.GetGuid("test.txt"));
+        
+        }
+
+        [Fact]
+        public void DirectoryManifestRemove_Test()
+        {
+            var fs = new PhysicalFileSystem();
+            var temp = Path.GetTempPath();
+            var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
+            var dir = new FS.Directory("test", pfs);
+            var file = dir.OpenFile("test.txt");
+            Assert.True(dir.ContainsFile(".manifest"));
+            Assert.Equal(file.FileGuid, dir.GetGuid("test.txt"));
+            file.Delete();
+            var newFile = dir.OpenFile("test.txt");
+            Assert.NotEqual(newFile.FileGuid, file.FileGuid);
+            //  Assert.True(dir.Manifest.ContainsKey("test.txt"));
         }
 
 

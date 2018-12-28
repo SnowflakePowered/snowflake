@@ -8,7 +8,11 @@ using System.Threading;
 namespace Snowflake.Model.FileSystem
 {
     /// <summary>
-    /// Represents the root of a Directory
+    /// Represents the root of a Directory, where each file that is access through a directory is
+    /// associated with a GUID in the directory's manifest.
+    /// 
+    /// When files are moved between IDirectories, the files GUID is preserved. Thus, metadata can 
+    /// be preserved throughout
     /// </summary>
     public interface IDirectory
     {
@@ -18,28 +22,12 @@ namespace Snowflake.Model.FileSystem
         string Name { get; }
         
         /// <summary>
-        /// Returns whether or not this is a manifested directory
-        /// </summary>
-        bool HasManifest { get; }
-
-        /// <summary>
         /// Opens an existing child directory with the given name.
         /// If the directory does not exist, returns null.
         /// </summary>
         /// <param name="name">The name of the existing directory</param>
         /// <returns>The directory if it exists, or null if it does not.</returns>
         IDirectory OpenDirectory(string name);
-
-        /// <summary>
-        /// If this directory has a manifest, reopens this directory as
-        /// a manifested directory. If this directory does not
-        /// have a manifest, returns null. A Directory can not open itself
-        /// as manifested, and must be opened by the parent as so.
-        /// </summary>
-        /// <returns></returns>
-        IManifestedDirectory? AsManifestedDirectory();
-
-        IManifestedDirectory OpenManifestedDirectory(string name);
 
         /// <summary>
         /// Opens or creates a file.
@@ -72,12 +60,6 @@ namespace Snowflake.Model.FileSystem
         Task<IFile?> CopyFromAsync(IFile source, bool overwrite);
 
         Task<IFile?> CopyFromAsync(IFile source, bool overwrite, CancellationToken cancellation);
-
-        /// <summary>
-        /// Enumerates child directories that contain a manifest.
-        /// </summary>
-        /// <returns></returns>
-        IEnumerable<IManifestedDirectory> EnumerateManifestedDirectories();
 
         IEnumerable<IDirectory> EnumerateDirectories();
 

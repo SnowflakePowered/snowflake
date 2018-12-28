@@ -15,24 +15,24 @@ namespace Snowflake.Model.Game
         {
             this.Root = gameRoot;
             this.Record = record;
-            this.SavesRoot = this.Root.OpenManifestedDirectory("saves");
-            this.ProgramRoot = this.Root.OpenManifestedDirectory("program");
-            this.MediaRoot = this.Root.OpenManifestedDirectory("media");
-            this.ResourceRoot = this.Root.OpenManifestedDirectory("resource");
-            this.RuntimeRoot = this.Root.OpenManifestedDirectory("runtime");
+            this.SavesRoot = this.Root.OpenDirectory("saves");
+            this.ProgramRoot = this.Root.OpenDirectory("program");
+            this.MediaRoot = this.Root.OpenDirectory("media");
+            this.ResourceRoot = this.Root.OpenDirectory("resource");
+            this.RuntimeRoot = this.Root.OpenDirectory("runtime");
         }
 
         private IDirectory Root { get; }
 
-        public IManifestedDirectory SavesRoot { get; }
+        public IDirectory SavesRoot { get; }
 
-        public IManifestedDirectory ProgramRoot { get; }
+        public IDirectory ProgramRoot { get; }
 
-        public IManifestedDirectory MediaRoot { get; }
+        public IDirectory MediaRoot { get; }
 
-        public IManifestedDirectory MiscRoot { get; }
+        public IDirectory MiscRoot { get; }
 
-        public IManifestedDirectory ResourceRoot { get; }
+        public IDirectory ResourceRoot { get; }
 
         public IDirectory RuntimeRoot { get; }
 
@@ -45,9 +45,9 @@ namespace Snowflake.Model.Game
             return this.RuntimeRoot.OpenDirectory(Guid.NewGuid().ToString());
         }
 
-        public IManifestedDirectory GetSavesLocation(string saveType)
+        public IDirectory GetSavesLocation(string saveType)
         {
-            return this.SavesRoot.OpenManifestedDirectory(saveType);
+            throw new NotImplementedException();
         }
     }
 }

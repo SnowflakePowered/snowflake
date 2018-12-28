@@ -15,6 +15,9 @@ namespace Snowflake.Model.FileSystem
         Stream OpenStream(FileAccess rw);
         void Rename(string newName);
         void Delete();
+
+        ///
+        Guid FileGuid { get; }
         bool Created { get; }
 
         /// <summary>

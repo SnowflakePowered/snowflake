@@ -7,24 +7,61 @@ using System.Linq;
 using Zio;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Collections.Concurrent;
+using System.Collections.Immutable;
+using Snowflake.Persistence;
+using Dapper;
 
 namespace Snowflake.Model.FileSystem
 {
     internal sealed class Directory : IDirectory
     {
+
+        private SqliteDatabase Manifest { get; }
         internal Directory(string name, IFileSystem parentFs)
         {
-            this.ParentFileSystem = parentFs;
+           
             this.FileSystem = parentFs.GetOrCreateSubFileSystem((UPath)"/" / name);
             this.Name = name;
+            this.Manifest = new SqliteDatabase(this.FileSystem.ConvertPathToInternal("/.manifest"));
+            this.Manifest.CreateTable("directory_manifest", "uuid UUID", "filename TEXT PRIMARY KEY");
         }
 
-        private IFileSystem ParentFileSystem { get; }
+        private void AddGuid(string file, Guid guid)
+        {
+            this.Manifest.Execute(connection =>
+            {
+                connection.Execute(@"INSERT OR REPLACE INTO directory_manifest (uuid, filename) VALUES (@guid, @file)", new { guid, file } );
+            });
+        }
+
+        internal void RemoveGuid(string file)
+        {
+            this.Manifest.Execute(connection =>
+            {
+                connection.Execute(@"DELETE FROM directory_manifest WHERE filename = @file", new { file });
+            });
+        }
+
+        
+        internal Guid GetGuid(string file)
+        {
+            return this.Manifest.Query(conn =>
+            {
+                var bytes = conn.Query<byte[]>(@"SELECT uuid FROM directory_manifest WHERE filename = @file", new { file });
+                if (bytes.Count() == 0)
+                {
+                    conn.Execute(@"INSERT OR REPLACE INTO directory_manifest (uuid, filename) VALUES (@guid, @file)", new { guid = Guid.NewGuid(), file });
+                    bytes = conn.Query<byte[]>(@"SELECT uuid FROM directory_manifest WHERE filename = @file", new { file });
+                    return new Guid(bytes.First());
+                }
+                return new Guid(bytes.First());
+            });
+        }
+
         private IFileSystem FileSystem { get; }
 
         public string Name { get; }
-
-        public bool HasManifest => this.FileSystem.FileExists("/.manifest");
 
         public bool ContainsDirectory(string directory)
         {
@@ -39,13 +76,7 @@ namespace Snowflake.Model.FileSystem
         public IDirectory OpenDirectory(string name)
         {
             return new Directory(name, 
-               this.FileSystem.GetOrCreateSubFileSystem((UPath)"/" / new UPath(name).GetName()));
-        }
-
-        public IManifestedDirectory OpenManifestedDirectory(string name)
-        {
-            return new ManifestedDirectory(name,
-             this.FileSystem.GetOrCreateSubFileSystem((UPath)"/" / new UPath(name).GetName()));
+               this.FileSystem);
         }
 
         public IEnumerable<IDirectory> EnumerateDirectories()
@@ -62,10 +93,10 @@ namespace Snowflake.Model.FileSystem
 
         private IFile OpenFile(UPath file)
         {
-           return new File(this, new FileEntry(this.FileSystem, file));
+            if (file.GetName() == ".manifest") throw new UnauthorizedAccessException("Unable to open manifest file.");
+           return new File(this, new FileEntry(this.FileSystem, file), this.GetGuid(file.GetName()));
         }
 
-      
         public DirectoryInfo GetPath()
         {
             return new DirectoryInfo(this.FileSystem.ConvertPathToInternal("/"));
@@ -107,6 +138,8 @@ namespace Snowflake.Model.FileSystem
 
         public IFile? CopyFrom(IFile source, bool overwrite)
         {
+            if (this.ContainsFile(source.Name) && !overwrite) return null;
+            this.AddGuid(source.Name, source.FileGuid);
 #pragma warning disable CS0618 // Type or member is obsolete
             return this.CopyFrom(source.GetFilePath(), overwrite);
 #pragma warning restore CS0618 // Type or member is obsolete
@@ -117,10 +150,14 @@ namespace Snowflake.Model.FileSystem
         public Task<IFile?> CopyFromAsync(IFile source, bool overwrite) =>
             this.CopyFromAsync(source, overwrite, CancellationToken.None);
 
-        public Task<IFile?> CopyFromAsync(IFile source, bool overwrite, CancellationToken cancellation)
+        public async Task<IFile?> CopyFromAsync(IFile source, bool overwrite, CancellationToken cancellation)
+        {
+            if (this.ContainsFile(source.Name) && !overwrite) return null;
+            this.AddGuid(source.Name, source.FileGuid);
 #pragma warning disable CS0618 // Type or member is obsolete
-            => this.CopyFromAsync(source.GetFilePath(), overwrite, cancellation);
+            return await this.CopyFromAsync(source.GetFilePath(), overwrite, cancellation);
 #pragma warning restore CS0618 // Type or member is obsolete
+        }
 
         public IFile? CopyFrom(IFile source) => this.CopyFrom(source, false);
 
@@ -129,6 +166,8 @@ namespace Snowflake.Model.FileSystem
         public IFile? MoveFrom(IFile source, bool overwrite)
         {
             if (!source.Created) return null;
+            if (this.ContainsFile(source.Name) && !overwrite) return null;
+            this.AddGuid(source.Name, source.FileGuid);
             var file = this.OpenFile(source.Name);
             // unsafe usage here as optimization.
 #pragma warning disable CS0618 // Type or member is obsolete
@@ -136,18 +175,6 @@ namespace Snowflake.Model.FileSystem
 #pragma warning restore CS0618 // Type or member is obsolete
             source.Delete();
             return file;
-        }
-
-        public IManifestedDirectory? AsManifestedDirectory()
-        {
-            if (!this.HasManifest) return null;
-            return new ManifestedDirectory(this.Name, this.ParentFileSystem);
-        }
-
-        public IEnumerable<IManifestedDirectory> EnumerateManifestedDirectories()
-        {
-            return this.EnumerateDirectories()
-                .Where(d => d.HasManifest).Select(d => d.AsManifestedDirectory()!);
         }
     }
 }
