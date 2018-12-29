@@ -35,5 +35,6 @@ namespace Snowflake.Model.Game
             return false;
         }
 
+        public static implicit operator PlatformId(string other) => new PlatformId(other);
     }
 }

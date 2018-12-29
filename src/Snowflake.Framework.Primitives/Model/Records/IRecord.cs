@@ -18,8 +18,8 @@ namespace Snowflake.Model.Records
         IMetadataCollection Metadata { get; }
 
         /// <summary>
-        /// Gets a metadata assignable must have a guid.
+        /// Gets the unique ID of the record.
         /// </summary>
-        Guid Reference { get; }
+        Guid RecordId { get; }
     }
 }
