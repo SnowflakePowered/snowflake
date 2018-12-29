@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Logging;
 using Snowflake.Model.Database;
-using Snowflake.Model.Database.Contexts;
+using Snowflake.Model.Database.Models;
 using Snowflake.Model.Records;
 using Snowflake.Records.Metadata;
 using Xunit;
@@ -19,12 +19,11 @@ namespace Snowflake.Records.Tests
         [Fact]
         public void Set_Test()
         {
-            var optionsBuilder = new DbContextOptionsBuilder<GameRecordContext>();
+            var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
             optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
-            var lib = new GameLibrary(optionsBuilder.Options);
-            var guid = Guid.NewGuid();
-            var record = new GameRecord("NINTENDO_NES", guid, new MetadataCollection(guid));
-            lib.AddRecord(record);
+            var lib = new GameRecordLibrary(optionsBuilder);
+            var record = lib.CreateRecord("NINTENDO_NES");
+            var guid = record.RecordId;
             var newRecord = lib.GetAllRecords().First();
             Assert.Equal(guid, newRecord.RecordId);
             Assert.Equal(record.PlatformId, newRecord.PlatformId);
@@ -35,16 +34,16 @@ namespace Snowflake.Records.Tests
         public void SetRemoveMetadata_Test()
         {
           
-            var optionsBuilder = new DbContextOptionsBuilder<GameRecordContext>();
+            var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
             optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
 
-            var lib = new GameLibrary(optionsBuilder.Options);
-            var guid = Guid.NewGuid();
-            var record = new GameRecord("NINTENDO_NES", guid, new MetadataCollection(guid));
+            var lib = new GameRecordLibrary(optionsBuilder);
+            var record = lib.CreateRecord("NINTENDO_NES");
+            var guid = record.RecordId;
 
             record.Metadata.Add("is_test", "true");
 
-            lib.AddRecord(record);
+            lib.UpdateRecord(record);
             var newRecord = lib.GetAllRecords().First();
             Assert.Equal(guid, newRecord.RecordId);
             Assert.Equal(record.PlatformId, newRecord.PlatformId);
@@ -65,17 +64,16 @@ namespace Snowflake.Records.Tests
         public void SetWithMetadata_Test()
         {
        
-            var optionsBuilder = new DbContextOptionsBuilder<GameRecordContext>();
+            var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
             optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}")
                 .ConfigureWarnings(warnings => warnings.Throw(RelationalEventId.QueryClientEvaluationWarning));
 
-            var lib = new GameLibrary(optionsBuilder.Options);
-            var guid = Guid.NewGuid();
-            var record = new GameRecord("NINTENDO_NES", guid, new MetadataCollection(guid));
+            var lib = new GameRecordLibrary(optionsBuilder);
+            var record = lib.CreateRecord("NINTENDO_NES");
+            var guid = record.RecordId;
 
             record.Metadata.Add("is_test", "true");
-
-            lib.AddRecord(record);
+            lib.UpdateRecord(record);
             var newRecord = lib.GetAllRecords().First();
             Assert.Equal(guid, newRecord.RecordId);
             Assert.Equal(record.PlatformId, newRecord.PlatformId);

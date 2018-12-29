@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Xunit;
 using Zio;
@@ -43,7 +44,7 @@ namespace Snowflake.FileSystem
             var fs = new PhysicalFileSystem();
             var temp = Path.GetTempPath();
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
-            var dir = new FS.Directory("test", pfs);
+            var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
 
             Assert.Equal(NormalizePath(dir.GetPath().FullName),
                  NormalizePath(Path.Combine(temp, "test")));
@@ -63,7 +64,7 @@ namespace Snowflake.FileSystem
             var fs = new PhysicalFileSystem();
             var temp = Path.GetTempPath();
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
-            var dir = new FS.Directory("test", pfs);
+            var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
             dir.OpenFile("test.txt");
             Assert.True(dir.ContainsFile(".manifest"));
         }
@@ -74,11 +75,10 @@ namespace Snowflake.FileSystem
             var fs = new PhysicalFileSystem();
             var temp = Path.GetTempPath();
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
-            var dir = new FS.Directory("test", pfs);
+            var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
             var file = dir.OpenFile("test.txt");
             Assert.True(dir.ContainsFile(".manifest"));
             Assert.Equal(file.FileGuid, dir.GetGuid("test.txt"));
-        
         }
 
         [Fact]
@@ -87,7 +87,7 @@ namespace Snowflake.FileSystem
             var fs = new PhysicalFileSystem();
             var temp = Path.GetTempPath();
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
-            var dir = new FS.Directory("test", pfs);
+            var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
             var file = dir.OpenFile("test.txt");
             Assert.True(dir.ContainsFile(".manifest"));
             Assert.Equal(file.FileGuid, dir.GetGuid("test.txt"));
@@ -97,6 +97,20 @@ namespace Snowflake.FileSystem
             //  Assert.True(dir.Manifest.ContainsKey("test.txt"));
         }
 
-
+        [Fact]
+        public void DirectoryRecursiveFileOpen_Test()
+        {
+            var fs = new PhysicalFileSystem();
+            var temp = Path.GetTempPath();
+            var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
+            var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
+            var file = dir.OpenFile("test.txt");
+            Assert.True(dir.ContainsFile(".manifest"));
+            Assert.Equal(file.FileGuid, dir.GetGuid("test.txt"));
+            file.OpenStream().Close();
+            dir.OpenDirectory("next_test").OpenFile("test2.txt").OpenStream().Close();
+            var iter = dir.EnumerateFilesRecursive();
+            Assert.True(iter.Count() >= 2);
+        }
     }
 }

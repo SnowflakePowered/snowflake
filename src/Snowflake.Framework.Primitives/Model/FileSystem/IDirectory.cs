@@ -11,8 +11,8 @@ namespace Snowflake.Model.FileSystem
     /// Represents the root of a Directory, where each file that is access through a directory is
     /// associated with a GUID in the directory's manifest.
     /// 
-    /// When files are moved between IDirectories, the files GUID is preserved. Thus, metadata can 
-    /// be preserved throughout
+    /// When files are moved between IDirectories, the files GUID is preserved. 
+    /// Thus, metadata can be preserved throughout.
     /// </summary>
     public interface IDirectory
     {
@@ -64,6 +64,8 @@ namespace Snowflake.Model.FileSystem
         IEnumerable<IDirectory> EnumerateDirectories();
 
         IEnumerable<IFile> EnumerateFiles();
+
+        IEnumerable<IFile> EnumerateFilesRecursive();
 
         bool ContainsFile(string file);
         bool ContainsDirectory(string directory);

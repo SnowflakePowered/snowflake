@@ -24,6 +24,7 @@ namespace Snowflake.Model.Game
         IGameRecord Record { get; }
 
         IEnumerable<IFileRecord> Files { get; }
-
+        IFileRecord? GetFileInfo(IFile file);
+        IFileRecord RegisterFile(IFile file, string v);
     }
 }

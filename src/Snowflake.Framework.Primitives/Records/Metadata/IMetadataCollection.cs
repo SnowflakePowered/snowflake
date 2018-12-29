@@ -19,10 +19,13 @@ namespace Snowflake.Records.Metadata
         /// <summary>
         /// The value of this metadata.
         /// If you want to get the raw records, enumerate <see cref="IDictionary{TKey, TValue}.Values"/>
+        /// 
+        /// If the request key does not exist, returns null.
+        /// If the value is set to null, removes the value.
         /// </summary>
         /// <param name="key">The metadata key</param>
         /// <returns>The value of the metadata</returns>
-        new string this[string key] { get; set; }
+        new string? this[string key] { get; set; }
 
         /// <summary>
         /// Gets a metadata with its guid

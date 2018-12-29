@@ -16,10 +16,5 @@ namespace Snowflake.Model.Records.File
         /// Gets the mimetype of the file
         /// </summary>
         string MimeType { get; }
-
-        /// <summary>
-        /// Gets the full file path of the file
-        /// </summary>
-        string Path { get; } 
     }
 }

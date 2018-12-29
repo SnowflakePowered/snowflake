@@ -21,21 +21,31 @@ namespace Snowflake.Records.Metadata
         }
 
         /// <inheritdoc/>
-        string IMetadataCollection.this[string key]
+        string? IMetadataCollection.this[string key]
         {
-            get { return this[key].Value; }
-            set { this[key] = new RecordMetadata(key, value, this.Record); }
+            get { return this.ContainsKey(key) ? this[key].Value : null; }
+            set
+            {
+                if (value != null)
+                {
+                    this[key] = new RecordMetadata(key, value, this.Record);
+                }
+                else
+                {
+                    this.Remove(key);
+                }
+            }
         }
 
         /// <inheritdoc/>
         public Guid Record { get; }
 
-        public MetadataCollection(Guid record)
+        internal MetadataCollection(Guid record)
         {
             this.Record = record;
         }
 
-        public MetadataCollection(Guid record, IDictionary<string, IRecordMetadata> recordMetadata)
+        internal MetadataCollection(Guid record, IDictionary<string, IRecordMetadata> recordMetadata)
             : base(recordMetadata)
         {
             this.Record = record;

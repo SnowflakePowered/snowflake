@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Snowflake.Model.Database;
 using Snowflake.Model.FileSystem;
 using Snowflake.Model.Records;
 using Snowflake.Model.Records.File;
@@ -11,19 +12,21 @@ namespace Snowflake.Model.Game
 {
     public class Game : IGame
     {
-        internal Game(IGameRecord record, IDirectory gameRoot)
+        internal Game(IGameRecord record, IFileSystem gameFsRoot, FileRecordLibrary files)
         {
-            this.Root = gameRoot;
+            this.Root = new Directory(gameFsRoot);
+            this.FileRecordLibrary = files;
             this.Record = record;
             this.SavesRoot = this.Root.OpenDirectory("saves");
             this.ProgramRoot = this.Root.OpenDirectory("program");
             this.MediaRoot = this.Root.OpenDirectory("media");
             this.ResourceRoot = this.Root.OpenDirectory("resource");
             this.RuntimeRoot = this.Root.OpenDirectory("runtime");
+            this.MiscRoot = this.Root.OpenDirectory("misc");
         }
 
-        private IDirectory Root { get; }
-
+        private Directory Root { get; }
+        internal FileRecordLibrary FileRecordLibrary { get; }
         public IDirectory SavesRoot { get; }
 
         public IDirectory ProgramRoot { get; }
@@ -38,7 +41,7 @@ namespace Snowflake.Model.Game
 
         public IGameRecord Record { get; }
 
-        public IEnumerable<IFileRecord> Files => throw new NotImplementedException();
+        public IEnumerable<IFileRecord> Files => this.FileRecordLibrary.GetFileRecords(this.Root);
 
         public IDirectory GetRuntimeLocation()
         {
@@ -48,6 +51,14 @@ namespace Snowflake.Model.Game
         public IDirectory GetSavesLocation(string saveType)
         {
             throw new NotImplementedException();
+        }
+
+        public IFileRecord? GetFileInfo(IFile file) => this.FileRecordLibrary.GetRecord(file);
+
+        public IFileRecord RegisterFile(IFile file, string mimetype)
+        {
+            this.FileRecordLibrary.RegisterFile(file, mimetype);
+            return this.GetFileInfo(file)!;
         }
     }
 }

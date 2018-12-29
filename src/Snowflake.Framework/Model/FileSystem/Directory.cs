@@ -18,12 +18,25 @@ namespace Snowflake.Model.FileSystem
     {
 
         private SqliteDatabase Manifest { get; }
-        internal Directory(string name, IFileSystem parentFs)
+        internal Directory(string name, IFileSystem rootFs, DirectoryEntry parentDirectory)
         {
-           
-            this.FileSystem = parentFs.GetOrCreateSubFileSystem((UPath)"/" / name);
+            this.RootFileSystem = rootFs;
+            this.ThisDirectory = parentDirectory.CreateSubdirectory(name);
             this.Name = name;
-            this.Manifest = new SqliteDatabase(this.FileSystem.ConvertPathToInternal("/.manifest"));
+            
+            this.Manifest = 
+                new SqliteDatabase(this.RootFileSystem.ConvertPathToInternal(this.ThisDirectory.Path / ".manifest"));
+            this.Manifest.CreateTable("directory_manifest", "uuid UUID", "filename TEXT PRIMARY KEY");
+        }
+
+        internal Directory(IFileSystem rootFs)
+        {
+            this.RootFileSystem = rootFs;
+            this.ThisDirectory = rootFs.GetDirectoryEntry("/");
+            this.Name = "#FSROOT";
+
+            this.Manifest =
+                new SqliteDatabase(this.RootFileSystem.ConvertPathToInternal(this.ThisDirectory.Path / ".manifest"));
             this.Manifest.CreateTable("directory_manifest", "uuid UUID", "filename TEXT PRIMARY KEY");
         }
 
@@ -59,52 +72,57 @@ namespace Snowflake.Model.FileSystem
             });
         }
 
-        private IFileSystem FileSystem { get; }
+        internal IFileSystem RootFileSystem { get; }
+        internal DirectoryEntry ThisDirectory { get; }
+        //internal IFileSystem FileSystem { get; }
 
         public string Name { get; }
 
         public bool ContainsDirectory(string directory)
         {
-            return this.FileSystem.DirectoryExists((UPath)"/" / directory);
+            return this.RootFileSystem.DirectoryExists(this.ThisDirectory.Path / directory);
         }
 
         public bool ContainsFile(string file)
         {
-            return this.FileSystem.FileExists((UPath)"/" / file);
+            return this.RootFileSystem.FileExists(this.ThisDirectory.Path / file);
         }
 
         public IDirectory OpenDirectory(string name)
         {
             return new Directory(name, 
-               this.FileSystem);
+               this.RootFileSystem,
+               this.ThisDirectory);
         }
 
         public IEnumerable<IDirectory> EnumerateDirectories()
         {
-            return this.FileSystem.EnumerateDirectories("/")
-                .Select(d => this.OpenDirectory(d.GetName()));
+            return this.ThisDirectory.EnumerateDirectories()
+                .Select(d => this.OpenDirectory(d.Name));
         }
 
         public IEnumerable<IFile> EnumerateFiles()
         {
-            return this.FileSystem.EnumerateFiles("/")
-                    .Select(f => this.OpenFile(f));
+            return this.ThisDirectory.EnumerateFiles()
+                    .Where(f => f.Name != ".manifest")
+                    .Select(f => this.OpenFile(f.Name));
         }
 
         private IFile OpenFile(UPath file)
         {
             if (file.GetName() == ".manifest") throw new UnauthorizedAccessException("Unable to open manifest file.");
-           return new File(this, new FileEntry(this.FileSystem, file), this.GetGuid(file.GetName()));
+           return new File(this, new FileEntry(this.RootFileSystem, file), 
+               this.GetGuid(file.GetName()));
         }
 
         public DirectoryInfo GetPath()
         {
-            return new DirectoryInfo(this.FileSystem.ConvertPathToInternal("/"));
+            return new DirectoryInfo(this.RootFileSystem.ConvertPathToInternal(this.ThisDirectory.Path));
         }
 
         public IFile OpenFile(string file)
         {
-            return this.OpenFile((UPath)"/" / Path.GetFileName(file));
+            return this.OpenFile(this.ThisDirectory.Path / Path.GetFileName(file));
         }
 
         public IFile? CopyFrom(FileInfo source) => this.CopyFrom(source, false);
@@ -113,7 +131,7 @@ namespace Snowflake.Model.FileSystem
         {
             if (!source.Exists) return null;
             string fileName = Path.GetFileName(source.Name);
-            source.CopyTo(this.FileSystem.ConvertPathToInternal($"/{fileName}"));
+            source.CopyTo(this.RootFileSystem.ConvertPathToInternal(this.ThisDirectory.Path / fileName));
             return this.OpenFile(fileName);
         }
 
@@ -175,6 +193,12 @@ namespace Snowflake.Model.FileSystem
 #pragma warning restore CS0618 // Type or member is obsolete
             source.Delete();
             return file;
+        }
+
+        public IEnumerable<IFile> EnumerateFilesRecursive()
+        {
+            return this.EnumerateFiles()
+                .Concat(this.EnumerateDirectories().SelectMany(d => d.EnumerateFilesRecursive()));
         }
     }
 }

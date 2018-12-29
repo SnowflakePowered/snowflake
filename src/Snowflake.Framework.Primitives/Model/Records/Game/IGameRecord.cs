@@ -20,9 +20,9 @@ namespace Snowflake.Model.Records.Game
         PlatformId PlatformId { get; }
 
         /// <summary>
-        /// Gets the title of the game
+        /// Gets or sets the title of the game
         /// (must be equivalent to &quot;game_title&quot; <see cref="IRecord.Metadata"/>)
         /// </summary>
-        string? Title { get; }
+        string? Title { get; set; }
     }
 }

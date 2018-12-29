@@ -33,5 +33,10 @@ namespace Snowflake.Model.FileSystem
         /// <returns>The real file path of the file.</returns>
         [Obsolete("Avoid accessing the underlying file path, and use the object methods instead.")]
         FileInfo GetFilePath();
+
+        /// <summary>
+        /// The path of this file, relative to the root of the directory provider.
+        /// </summary>
+        string RootedPath { get; }
     }
 }

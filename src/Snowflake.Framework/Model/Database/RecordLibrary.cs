@@ -3,58 +3,38 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
-using Snowflake.Model.Database.Contexts;
+using Snowflake.Model.Database.Models;
 using Snowflake.Model.Records;
-using Snowflake.Model.Records.Game;
 
 namespace Snowflake.Model.Database
 {
-    internal class GameLibrary
+    internal abstract class RecordLibrary<TRecord>
+        where TRecord : class, IRecord
     {
-        private DbContextOptions<GameRecordContext> Options { get; }
-        public GameLibrary(DbContextOptions<GameRecordContext> options)
+        protected DbContextOptionsBuilder<DatabaseContext> Options { get; private set; }
+
+        protected RecordLibrary(DbContextOptionsBuilder<DatabaseContext> options)
         {
             this.Options = options;
-            using (var context = new GameRecordContext(options))
+            using (var context = new DatabaseContext(options.Options))
             {
                 context.Database.EnsureCreated();
             }
         }
 
-        public IEnumerable<IGameRecord> GetAllRecords()
+        public void UpdateRecord(TRecord record)
         {
-            using (var context = new GameRecordContext(this.Options))
+            using (var context = new DatabaseContext(this.Options.Options))
             {
-                return (from record in context.GameRecords
-                        where record.RecordType == "game"
-                        let metadata = context.Metadata.Where(m => m.RecordID == record.RecordID)
-                        select new GameRecord(record.Platform, record.RecordID, 
-                            metadata.AsMetadataCollection(record.RecordID)))
-                        .ToList();
-            }
-        }
-
-        public void AddRecord(IGameRecord record)
-        {
-            using (var context = new GameRecordContext(this.Options))
-            {
-                context.GameRecords.Add(record.AsModel());
-                context.SaveChanges();
-            }
-        }
-
-        public void UpdateRecord(IGameRecord record)
-        {
-            using (var context = new GameRecordContext(this.Options))
-            {
-                foreach 
+                foreach
                     (var metadata in
                     context.Metadata.Where(m => m.RecordID == record.RecordId))
                 {
                     if (!record.Metadata.ContainsKey(metadata.MetadataKey))
                     {
                         context.Entry(metadata).State = EntityState.Deleted;
-                    } else if (record.Metadata[metadata.MetadataKey] != metadata.MetadataValue)
+                    }
+                    else if (record.Metadata[metadata.MetadataKey] != metadata.MetadataValue)
                     {
                         metadata.MetadataValue = record.Metadata[metadata.MetadataKey];
                         context.Entry(metadata).State = EntityState.Modified;

@@ -40,7 +40,7 @@ namespace Snowflake.Model.FileSystem
 
         public void Rename(string newName)
         {
-            this.RawInfo.MoveTo((UPath)"/" / Path.GetFileName(newName));
+            this.RawInfo.MoveTo(this.RawInfo.Parent.Path / Path.GetFileName(newName));
         }
 
         public void Delete()
@@ -57,5 +57,7 @@ namespace Snowflake.Model.FileSystem
             return new FileInfo(this.RawInfo.FileSystem.
                 ConvertPathToInternal(this.RawInfo.Path));
         }
+
+        public string RootedPath => this.RawInfo.Path.ToString();
     }
 }

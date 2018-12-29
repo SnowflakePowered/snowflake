@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Snowflake.Records.Metadata;
 using System.Linq;
-using Snowflake.Model.Database.Contexts;
+using Snowflake.Model.Database.Models;
 
 namespace Snowflake.Model.Database
 {

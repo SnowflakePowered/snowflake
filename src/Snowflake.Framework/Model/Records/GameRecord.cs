@@ -12,7 +12,7 @@ namespace Snowflake.Model.Records
 {
     public class GameRecord : IGameRecord
     {
-        public GameRecord(PlatformId platform,
+        internal GameRecord(PlatformId platform,
             Guid recordId,
             IMetadataCollection metadata)
         {
@@ -23,7 +23,10 @@ namespace Snowflake.Model.Records
 
         public PlatformId PlatformId { get; }
 
-        public string? Title => this.Metadata[GameMetadataKeys.Title];
+        public string? Title {
+            get => this.Metadata[GameMetadataKeys.Title];
+            set => this.Metadata[GameMetadataKeys.Title] = value;
+        }
 
         public IMetadataCollection Metadata { get; }
 

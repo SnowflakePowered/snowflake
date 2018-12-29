@@ -991,6 +991,15 @@
         <member name="M:Snowflake.Loader.ServiceProvider.Get``1">
             <inheritdoc/>
         </member>
+        <member name="P:Snowflake.Model.Records.FileRecord.Metadata">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Model.Records.FileRecord.RecordId">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Model.Records.FileRecord.MimeType">
+            <inheritdoc/>
+        </member>
         <member name="P:Snowflake.Persistence.SqliteDatabase.DatabaseName">
             <inheritdoc/>
         </member>
