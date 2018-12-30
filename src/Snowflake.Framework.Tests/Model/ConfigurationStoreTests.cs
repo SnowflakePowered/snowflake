@@ -20,7 +20,7 @@ namespace Snowflake.Model.Tests
             var configStore = new ConfigurationCollectionStore(optionsBuilder);
             var gameGuid = Guid.NewGuid();
             var config = configStore
-                .CreateConfiguration<ExampleConfigurationCollection>();
+                .CreateConfiguration<ExampleConfigurationCollection>("TestConfiguration");
             var retrieved = configStore.GetConfiguration<ExampleConfigurationCollection>
                 (config.ValueCollection.Guid);
         }
@@ -33,12 +33,33 @@ namespace Snowflake.Model.Tests
             var configStore = new ConfigurationCollectionStore(optionsBuilder);
             var gameGuid = Guid.NewGuid();
             var config = configStore
-                .CreateConfiguration<ExampleConfigurationCollection>();
+                .CreateConfiguration<ExampleConfigurationCollection>("TestConfiguration");
             // trigger an ensure of the ExampleConfiguration
             var res = config.Configuration.ExampleConfiguration.FullscreenResolution;
             configStore.UpdateConfiguration(config);
             var retrieved = configStore.GetConfiguration<ExampleConfigurationCollection>
                 (config.ValueCollection.Guid);
         }
+
+        [Fact]
+        public void ConfigurationStore_CreateAndRetrieveEnsureUpdate_Test()
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
+            optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
+            var configStore = new ConfigurationCollectionStore(optionsBuilder);
+            var gameGuid = Guid.NewGuid();
+            var config = configStore
+                .CreateConfiguration<ExampleConfigurationCollection>("TestConfiguration");
+            // trigger an ensure of the ExampleConfiguration
+            config.Configuration.ExampleConfiguration.FullscreenResolution 
+                = Configuration.FullscreenResolution.Resolution3840X2160;
+            configStore.UpdateConfiguration(config);
+            var retrieved = configStore.GetConfiguration<ExampleConfigurationCollection>
+                (config.ValueCollection.Guid);
+            Assert.Equal(Configuration.FullscreenResolution.Resolution3840X2160, retrieved
+                .Configuration.ExampleConfiguration.FullscreenResolution);
+        }
+
+
     }
 }

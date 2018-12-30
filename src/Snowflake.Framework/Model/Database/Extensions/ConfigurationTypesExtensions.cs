@@ -12,13 +12,13 @@ namespace Snowflake.Model.Database.Extensions
     internal static class ConfigurationTypesExtensions
     {
         public static ConfigurationProfileModel AsModel<T>
-            (this IConfigurationCollection<T> @this)
+            (this IConfigurationCollection<T> @this, string prototypeName)
             where T : class, IConfigurationCollection<T>
         {
             return new ConfigurationProfileModel
             {
                 ValueCollectionGuid = @this.ValueCollection.Guid,
-                CollectionTypeName = typeof(T).Name,
+                ConfigurationSource = prototypeName,
                 Values = @this.ValueCollection.AsModel()
             };
         }

@@ -9,8 +9,6 @@ namespace Snowflake.Input.Controller.Mapped
 {
     /// <summary>
     /// Represents a collection of mapped elements.
-    /// Because having properties for each is ambiguous, simply
-    /// iterate over every element or use Linq to get the equivalent element.
     /// </summary>
     public interface IControllerElementMappings : IEnumerable<IMappedControllerElement>
     {
@@ -23,5 +21,16 @@ namespace Snowflake.Input.Controller.Mapped
         /// Gets the controller id of the virtual controller layout
         /// </summary>
         string ControllerId { get; }
+
+        /// <summary>
+        /// Gets or sets the device element mapped to the given layout element,
+        /// if the layout element exists for this particular layout.
+        /// 
+        /// If it does not exist, then the setter does nothing, and
+        /// the device element returns <see cref="ControllerElement.NoElement"/>
+        /// </summary>
+        /// <param name="layoutElement">The layout element</param>
+        /// <returns>The device element that is mapped to the given layout element.</returns>
+        ControllerElement this[ControllerElement layoutElement] { get; set; }
     }
 }

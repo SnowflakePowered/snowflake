@@ -64,6 +64,19 @@ namespace Snowflake.Input.Controller.Mapped
         /// <inheritdoc/>
         public string ControllerId { get; }
 
+        public ControllerElement this[ControllerElement layoutElement] {
+            get
+            {
+                return this.controllerElements.FirstOrDefault(l => l.LayoutElement == layoutElement)?
+                    .DeviceElement ?? ControllerElement.NoElement;
+            }
+            set
+            {
+                var mappedElement = this.controllerElements.FirstOrDefault(l => l.LayoutElement == layoutElement);
+                if (mappedElement != null) mappedElement.DeviceElement = value;
+            }
+        }
+
         private readonly List<IMappedControllerElement> controllerElements;
 
         public ControllerElementMappings(string deviceId, string controllerId)

@@ -36,7 +36,7 @@ namespace Snowflake.Model.Database.Models
                 .HasForeignKey(p => new { p.ControllerID, p.DeviceID, p.ProfileName });
 
             modelBuilder.Entity<MappedControllerElementModel>()
-               .HasKey(p => new { p.ControllerID, p.DeviceID, p.ProfileName, p.LayoutElement, p.DeviceElement });
+               .HasKey(p => new { p.ControllerID, p.DeviceID, p.ProfileName, p.LayoutElement });
         }
     }
 }

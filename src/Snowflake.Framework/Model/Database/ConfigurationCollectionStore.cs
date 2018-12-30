@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Snowflake.Configuration;
@@ -22,14 +23,14 @@ namespace Snowflake.Model.Database
             }
         }
 
-        public IConfigurationCollection<T> CreateConfiguration<T>()
+        public IConfigurationCollection<T> CreateConfiguration<T>(string prototypeName)
             where T: class, IConfigurationCollection<T>
         {
             var collection = new ConfigurationCollection<T>();
             
             using (var context = new DatabaseContext(this.Options.Options))
             {
-                context.ConfigurationProfiles.Add(collection.AsModel());
+                context.ConfigurationProfiles.Add(collection.AsModel(prototypeName));
                 context.SaveChanges();
             }
 
