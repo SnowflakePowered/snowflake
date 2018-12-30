@@ -48,15 +48,6 @@ namespace Snowflake.Configuration
                     configurationInterceptor);
         }
 
-        private static object FromString(string strValue, Type optionType)
-        {
-            return optionType == typeof(string)
-                ? strValue // return string value if string
-                : optionType.GetTypeInfo().IsEnum
-                    ? NonGenericEnums.Parse(optionType, strValue) // return parsed enum if enum
-                    : TypeDescriptor.GetConverter(optionType).ConvertFromInvariantString(strValue);
-        }
-
         /// <inheritdoc/>
         public IEnumerator<KeyValuePair<IConfigurationOptionDescriptor, IConfigurationValue>> GetEnumerator()
         {

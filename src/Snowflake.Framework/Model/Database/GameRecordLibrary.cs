@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Snowflake.Model.Database.Extensions;
 using Snowflake.Model.Database.Models;
 using Snowflake.Model.Game;
 using Snowflake.Model.Records;
@@ -40,6 +42,18 @@ namespace Snowflake.Model.Database
                  .Select(record => new GameRecord(record.Platform, record.RecordID,
                          record.Metadata.AsMetadataCollection(record.RecordID)))
                  .Where(predicate).ToList();
+                return records;
+            }
+        }
+
+        public async Task<IEnumerable<IGameRecord>> GetRecordsAsync(Expression<Func<IGameRecord, bool>> predicate)
+        {
+            using (var context = new DatabaseContext(this.Options.Options))
+            {
+                var records = await context.GameRecords.Include(r => r.Metadata)
+                 .Select(record => new GameRecord(record.Platform, record.RecordID,
+                         record.Metadata.AsMetadataCollection(record.RecordID)))
+                 .Where(predicate).ToListAsync();
                 return records;
             }
         }

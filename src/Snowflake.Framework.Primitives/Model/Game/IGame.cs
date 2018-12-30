@@ -10,21 +10,8 @@ namespace Snowflake.Model.Game
 {
     public interface IGame 
     {
-        IDirectory SavesRoot { get; }
-        IDirectory ProgramRoot { get; }
-        IDirectory MediaRoot { get; }
-        IDirectory MiscRoot { get; }
-        IDirectory ResourceRoot { get; }
-
-        IDirectory RuntimeRoot { get; }
-
-        IDirectory GetSavesLocation(string saveType);
-        IDirectory GetRuntimeLocation();
-
         IGameRecord Record { get; }
 
-        IEnumerable<IFileRecord> Files { get; }
-        IFileRecord? GetFileInfo(IFile file);
-        IFileRecord RegisterFile(IFile file, string v);
+        TExtension? GetExtension<TExtension>() where TExtension : class, IGameExtension;
     }
 }

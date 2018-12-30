@@ -5,7 +5,7 @@ using Snowflake.Records.Metadata;
 using System.Linq;
 using Snowflake.Model.Database.Models;
 
-namespace Snowflake.Model.Database
+namespace Snowflake.Model.Database.Extensions
 {
     internal static class MetadataCollectionExtensions
     {

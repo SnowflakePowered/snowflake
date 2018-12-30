@@ -21,8 +21,11 @@ namespace Snowflake.Configuration
         /// <inheritdoc/>
         public T Configuration { get; }
 
+        
         /// <inheritdoc/>
         public IConfigurationCollectionDescriptor Descriptor { get; }
+
+        public IConfigurationValueCollection ValueCollection { get; }
 
         private readonly CollectionInterceptor<T> collectionInterceptor;
 
@@ -31,7 +34,7 @@ namespace Snowflake.Configuration
         {
         }
 
-        public ConfigurationCollection(IConfigurationValueCollection defaults)
+        internal ConfigurationCollection(IConfigurationValueCollection defaults)
         {
 
             this.Descriptor =
@@ -39,7 +42,10 @@ namespace Snowflake.Configuration
             this.collectionInterceptor = new CollectionInterceptor<T>(defaults);
 
             this.Configuration = ConfigurationDescriptorCache
-                    .GetProxyGenerator().CreateInterfaceProxyWithoutTarget<T>(new CollectionCircularInterceptor<T>(this), this.collectionInterceptor);
+                    .GetProxyGenerator().CreateInterfaceProxyWithoutTarget<T>
+                    (new CollectionCircularInterceptor<T>(this), this.collectionInterceptor);
+
+            this.ValueCollection = defaults;
         }
 
         /// <inheritdoc/>
@@ -82,6 +88,9 @@ namespace Snowflake.Configuration
                         break;
                     case nameof(@this.Descriptor):
                         invocation.ReturnValue = @this.Descriptor;
+                        break;
+                    case nameof(@this.ValueCollection):
+                        invocation.ReturnValue = @this.ValueCollection;
                         break;
                     case "Item": // circular indexer
                         invocation.ReturnValue = @this[(string)invocation.Arguments[0]];

@@ -12,7 +12,7 @@ using Snowflake.Model.Records;
 using Snowflake.Records.Metadata;
 using Xunit;
 
-namespace Snowflake.Records.Tests
+namespace Snowflake.Model.Tests
 {
     public class EntityGameLibraryTests
     {

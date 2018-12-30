@@ -23,12 +23,14 @@ namespace Snowflake.Configuration
         /// Cache of ensured descriptors
         /// </summary>
         private HashSet<string> EnsuredDescriptors { get; }
-        public ConfigurationValueCollection() : this(Enumerable.Empty<(string, string, IConfigurationValue)>())
+
+        internal ConfigurationValueCollection() 
+            : this(Enumerable.Empty<(string section, string option, IConfigurationValue value)>())
         {
 
         }
 
-        public ConfigurationValueCollection(IEnumerable<(string, string, IConfigurationValue)> values)
+        internal ConfigurationValueCollection(IEnumerable<(string section, string option, IConfigurationValue)> values)
             : this(values, Guid.NewGuid())
         {
 
@@ -97,7 +99,7 @@ namespace Snowflake.Configuration
 
         internal ConfigurationValueCollection(IEnumerable<(string section, string option, IConfigurationValue value)> values, Guid guid)
         {
-            this.ValueCollectionGuid = guid;
+            this.Guid = guid;
             var defs = values.GroupBy(p => p.section)
                 .ToDictionary(p => p.Key, p => p.ToDictionary(o => o.option, k => k.value));
             this.BackingDictionary = defs;
@@ -161,7 +163,7 @@ namespace Snowflake.Configuration
             }
         }
 
-        public Guid ValueCollectionGuid { get; }
+        public Guid Guid { get; }
 
         public IEnumerator<(string, string, IConfigurationValue)> GetEnumerator()
         {

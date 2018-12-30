@@ -8,7 +8,7 @@ using Snowflake.Model.Records.File;
 using Snowflake.Model.Records.Game;
 using Snowflake.Records.Metadata;
 
-namespace Snowflake.Model.Database
+namespace Snowflake.Model.Database.Extensions
 {
     internal static class GameRecordExtensions
     {

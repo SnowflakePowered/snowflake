@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Snowflake.Model.Database;
 using Snowflake.Model.Database.Models;
@@ -16,23 +17,37 @@ namespace Snowflake.Model.Game
 {
     internal class GameLibrary
     {
-        internal GameLibrary(GameRecordLibrary gamesLibrary, FileRecordLibrary fileLibrary, 
-            IFileSystem gameFolderFs)
+        IDictionary<Type, (Type extensionType, IGameLibraryExtension extension)> Extensions { get; }
+
+        internal GameLibrary(GameRecordLibrary gamesLibrary)
         {
             this.GameRecordLibrary = gamesLibrary;
-            this.FileRecordLibrary = fileLibrary;
-            this.GameFolderRoot = gameFolderFs;
+            this.Extensions = new Dictionary<Type, (Type, IGameLibraryExtension)>();
+        }
+
+        public void AddExtension<TExtensionMaker, TExtension>(TExtensionMaker extension)
+            where TExtensionMaker : IGameLibraryExtension<TExtension>
+            where TExtension: class, IGameExtension
+        {
+            this.Extensions.Add(typeof(TExtensionMaker), (typeof(TExtension), extension));
+        } 
+
+        public T? GetExtension<T>()
+            where T: class, IGameLibraryExtension
+        {
+            return this.Extensions[typeof(T)].extension as T;
         }
 
         private GameRecordLibrary GameRecordLibrary { get; }
-        public FileRecordLibrary FileRecordLibrary { get; }
+
         public IFileSystem GameFolderRoot { get; }
 
         public IGame CreateGame(PlatformId platformId)
         {
             var gameRecord = this.GameRecordLibrary.CreateRecord(platformId);
-            var gameFsRoot = this.GameFolderRoot.GetOrCreateSubFileSystem((UPath)"/" / gameRecord.RecordId.ToString());
-            return new Game(gameRecord, gameFsRoot, this.FileRecordLibrary);
+            var extensions = this.Extensions
+                .ToDictionary(k => k.Value.extensionType, v => v.Value.extension.MakeExtension(gameRecord));
+            return new Game(gameRecord, extensions);
         }
 
         public void UpdateGame(IGameRecord game)
@@ -40,17 +55,13 @@ namespace Snowflake.Model.Game
             this.GameRecordLibrary.UpdateRecord(game);
         }
 
-        public void UpdateFile(IFileRecord file)
-        {
-            this.FileRecordLibrary.UpdateRecord(file);
-        }
-
         public IGame? GetGame(Guid guid)
         {
             var gameRecord = this.GameRecordLibrary.GetRecord(guid);
             if (gameRecord == null) return null;
-            var gameFsRoot = this.GameFolderRoot.GetOrCreateSubFileSystem((UPath)"/" / gameRecord.RecordId.ToString());
-            return new Game(gameRecord, gameFsRoot, this.FileRecordLibrary);
+            var extensions = this.Extensions
+                .ToDictionary(k => k.Value.extensionType, v => v.Value.extension.MakeExtension(gameRecord));
+            return new Game(gameRecord, extensions); 
         }
 
         public IEnumerable<IGame> GetGames(Expression<Func<IGameRecord, bool>> predicate)
@@ -58,9 +69,21 @@ namespace Snowflake.Model.Game
            return this.GameRecordLibrary.GetRecords(predicate)
            .Select(gameRecord =>
             {
-               var gameFsRoot = this.GameFolderRoot.GetOrCreateSubFileSystem((UPath)"/" / gameRecord.RecordId.ToString());
-                    return new Game(gameRecord, gameFsRoot, this.FileRecordLibrary);
-           });
+                var extensions = this.Extensions
+                .ToDictionary(k => k.Value.extensionType, v => v.Value.extension.MakeExtension(gameRecord));
+                return new Game(gameRecord, extensions);
+            });
+        }
+
+        public async Task<IEnumerable<IGame>> GetGamesAsync(Expression<Func<IGameRecord, bool>> predicate)
+        {
+            return (await this.GameRecordLibrary.GetRecordsAsync(predicate))
+            .Select(gameRecord =>
+            {
+                var extensions = this.Extensions
+               .ToDictionary(k => k.Value.extensionType, v => v.Value.extension.MakeExtension(gameRecord));
+                return new Game(gameRecord, extensions);
+            });
         }
     }
 }

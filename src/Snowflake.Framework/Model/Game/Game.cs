@@ -12,53 +12,19 @@ namespace Snowflake.Model.Game
 {
     public class Game : IGame
     {
-        internal Game(IGameRecord record, IFileSystem gameFsRoot, FileRecordLibrary files)
-        {
-            this.Root = new Directory(gameFsRoot);
-            this.FileRecordLibrary = files;
-            this.Record = record;
-            this.SavesRoot = this.Root.OpenDirectory("saves");
-            this.ProgramRoot = this.Root.OpenDirectory("program");
-            this.MediaRoot = this.Root.OpenDirectory("media");
-            this.ResourceRoot = this.Root.OpenDirectory("resource");
-            this.RuntimeRoot = this.Root.OpenDirectory("runtime");
-            this.MiscRoot = this.Root.OpenDirectory("misc");
-        }
-
-        private Directory Root { get; }
-        internal FileRecordLibrary FileRecordLibrary { get; }
-        public IDirectory SavesRoot { get; }
-
-        public IDirectory ProgramRoot { get; }
-
-        public IDirectory MediaRoot { get; }
-
-        public IDirectory MiscRoot { get; }
-
-        public IDirectory ResourceRoot { get; }
-
-        public IDirectory RuntimeRoot { get; }
-
         public IGameRecord Record { get; }
+        public IDictionary<Type, IGameExtension> Extensions { get; }
 
-        public IEnumerable<IFileRecord> Files => this.FileRecordLibrary.GetFileRecords(this.Root);
-
-        public IDirectory GetRuntimeLocation()
+        internal Game(IGameRecord record, IDictionary<Type, IGameExtension> extensions)
         {
-            return this.RuntimeRoot.OpenDirectory(Guid.NewGuid().ToString());
+            this.Record = record;
+            this.Extensions = extensions;
         }
 
-        public IDirectory GetSavesLocation(string saveType)
+        public TExtension? GetExtension<TExtension>() where TExtension : class, IGameExtension
         {
-            throw new NotImplementedException();
-        }
-
-        public IFileRecord? GetFileInfo(IFile file) => this.FileRecordLibrary.GetRecord(file);
-
-        public IFileRecord RegisterFile(IFile file, string mimetype)
-        {
-            this.FileRecordLibrary.RegisterFile(file, mimetype);
-            return this.GetFileInfo(file)!;
+            this.Extensions.TryGetValue(typeof(TExtension), out IGameExtension t);
+            return t as TExtension;
         }
     }
 }

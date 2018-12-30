@@ -7,7 +7,7 @@ namespace Snowflake.Configuration
     public interface IConfigurationValueCollection 
         : IEnumerable<(string section, string option, IConfigurationValue value)>
     {
-        Guid ValueCollectionGuid { get; }
+        Guid Guid { get; }
 
         IConfigurationValue? this[IConfigurationSectionDescriptor descriptor, string option] { get; }
         IReadOnlyDictionary<string, IConfigurationValue> this[IConfigurationSectionDescriptor descriptor] { get; }
