@@ -12,7 +12,7 @@ namespace Snowflake.Input.Controller.Mapped
     /// Because having properties for each is ambiguous, simply
     /// iterate over every element or use Linq to get the equivalent element.
     /// </summary>
-    public interface IMappedControllerElementCollection : IEnumerable<IMappedControllerElement>
+    public interface IControllerElementMappings : IEnumerable<IMappedControllerElement>
     {
         /// <summary>
         /// Gets the device id of the real device

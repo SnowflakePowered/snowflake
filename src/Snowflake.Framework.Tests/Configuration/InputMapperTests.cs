@@ -162,7 +162,7 @@ namespace Snowflake.Configuration.Tests
             var realmapping =
                 JsonConvert.DeserializeObject<ControllerLayout>(
                     TestUtilities.GetStringResource("InputMappings.xinput_device.json"));
-            var mapcol = MappedControllerElementCollection.GetDefaultMappings(realmapping, testmappings);
+            var mapcol = ControllerElementMappings.GetDefaultMappings(realmapping, testmappings);
             foreach (var controllerElem in from elem in mapcol where elem.DeviceElement != ControllerElement.NoElement
                                             select elem.DeviceElement)
             {
@@ -180,7 +180,7 @@ namespace Snowflake.Configuration.Tests
             var realmapping =
                 JsonConvert.DeserializeObject<ControllerLayout>(
                     TestUtilities.GetStringResource("InputMappings.xinput_device.json"));
-            var mapcol = MappedControllerElementCollection.GetDefaultMappings(realmapping, testmappings);
+            var mapcol = ControllerElementMappings.GetDefaultMappings(realmapping, testmappings);
             var template = new InputTemplate<IRetroArchInput>(mapcol, 0);
             string serializedValue = new InputSerializer(serializer).Serialize(template, mapping).Replace(Environment.NewLine, string.Empty);
             Assert.Equal(
@@ -198,7 +198,7 @@ namespace Snowflake.Configuration.Tests
             var realmapping =
                 JsonConvert.DeserializeObject<ControllerLayout>(
                     TestUtilities.GetStringResource("InputMappings.xinput_device.json"));
-            var mapcol = MappedControllerElementCollection.GetDefaultMappings(realmapping, testmappings);
+            var mapcol = ControllerElementMappings.GetDefaultMappings(realmapping, testmappings);
             var template = new InputTemplate<IRetroArchInput>(mapcol, 0);
             string serializedValue = new InputSerializer(serializer).Serialize(template, mapping).Replace(Environment.NewLine, string.Empty);
             Assert.Equal(
@@ -217,7 +217,7 @@ namespace Snowflake.Configuration.Tests
              JsonConvert.DeserializeObject<ControllerLayout>(
                  TestUtilities.GetStringResource("InputMappings.xinput_device.json"));
 
-            var mapcol = MappedControllerElementCollection.GetDefaultMappings(realLayout, targetLayout);
+            var mapcol = ControllerElementMappings.GetDefaultMappings(realLayout, targetLayout);
             IInputTemplate template = new InputTemplate<IRetroArchInput>(mapcol, 0);
 
             Assert.Equal(ControllerElement.KeyZ, template[ControllerElement.ButtonA]);

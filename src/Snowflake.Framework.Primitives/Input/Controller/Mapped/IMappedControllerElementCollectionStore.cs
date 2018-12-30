@@ -27,7 +27,7 @@ namespace Snowflake.Input
         /// <param name="deviceId">The enumerated ID of the input device</param>
         /// <param name="profileName">The name of the profile. Should none be specified, the default profile</param>
         /// <returns>The mapping profile that maps emulated controller button elements to the device layout</returns>
-        IMappedControllerElementCollection GetMappingProfile(string controllerId, string deviceId, string profileName = "default");
+        IControllerElementMappings GetMappingProfile(string controllerId, string deviceId, string profileName = "default");
 
         /// <summary>
         /// Gets saved profile names for a certain combination of an emulated controller and an input device
@@ -43,6 +43,6 @@ namespace Snowflake.Input
         /// </summary>
         /// <param name="mappedCollection">The mapping profile to set, including the layout and controller ID</param>
         /// <param name="profileName">The name of the profile. Should none be specified, the default profile</param>
-        void SetMappingProfile(IMappedControllerElementCollection mappedCollection, string profileName = "default");
+        void SetMappingProfile(IControllerElementMappings mappedCollection, string profileName = "default");
     }
 }

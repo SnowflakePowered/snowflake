@@ -8,7 +8,7 @@ using Snowflake.Input.Device;
 
 namespace Snowflake.Input.Controller.Mapped
 {
-    public class MappedControllerElementCollection : IMappedControllerElementCollection
+    public class ControllerElementMappings : IControllerElementMappings
     {
         private static readonly IDictionary<ControllerElement, ControllerElement> DefaultKeyboardMappings =
             new Dictionary<ControllerElement, ControllerElement>()
@@ -66,7 +66,7 @@ namespace Snowflake.Input.Controller.Mapped
 
         private readonly List<IMappedControllerElement> controllerElements;
 
-        public MappedControllerElementCollection(string deviceId, string controllerId)
+        public ControllerElementMappings(string deviceId, string controllerId)
         {
             this.DeviceId = deviceId;
             this.ControllerId = controllerId;
@@ -84,23 +84,21 @@ namespace Snowflake.Input.Controller.Mapped
         /// <param name="realDevice">The button layout of the real controller device</param>
         /// <param name="virtualDevice">The button layout of the defined controller device</param>
         /// <returns></returns>
-        public static IMappedControllerElementCollection GetDefaultMappings(IControllerLayout realDevice, IControllerLayout virtualDevice)
+        public static IControllerElementMappings GetDefaultMappings(IControllerLayout realDevice, IControllerLayout virtualDevice)
         {
             return realDevice.Layout.Keyboard == null
-                ? MappedControllerElementCollection.GetDefaultDeviceMappings(realDevice, virtualDevice)
-                : MappedControllerElementCollection.GetDefaultKeyboardMappings(realDevice, virtualDevice);
+                ? ControllerElementMappings.GetDefaultDeviceMappings(realDevice, virtualDevice)
+                : ControllerElementMappings.GetDefaultKeyboardMappings(realDevice, virtualDevice);
         }
 
-        private static IMappedControllerElementCollection GetDefaultKeyboardMappings(IControllerLayout realKeyboard, IControllerLayout virtualDevice)
+        private static IControllerElementMappings GetDefaultKeyboardMappings(IControllerLayout realKeyboard, IControllerLayout virtualDevice)
         {
             var mappedElements = from element in virtualDevice.Layout
-                                 select new MappedControllerElement(element.Key)
-                                 {
-                                     DeviceElement = MappedControllerElementCollection.DefaultKeyboardMappings.ContainsKey(element.Key)
-                                     ? MappedControllerElementCollection.DefaultKeyboardMappings[element.Key]
-                                 : ControllerElement.KeyNone,
-                                 };
-            var elementCollection = new MappedControllerElementCollection(realKeyboard.LayoutID, virtualDevice.LayoutID);
+                                 select new MappedControllerElement(element.Key,
+                                 ControllerElementMappings.DefaultKeyboardMappings.ContainsKey(element.Key)
+                                     ? ControllerElementMappings.DefaultKeyboardMappings[element.Key]
+                                 : ControllerElement.KeyNone);
+            var elementCollection = new ControllerElementMappings(realKeyboard.LayoutID, virtualDevice.LayoutID);
             foreach (var element in mappedElements)
             {
                 elementCollection.Add(element);
@@ -109,19 +107,17 @@ namespace Snowflake.Input.Controller.Mapped
             return elementCollection;
         }
 
-        private static IMappedControllerElementCollection GetDefaultDeviceMappings(IControllerLayout realDevice, IControllerLayout virtualDevice)
+        private static IControllerElementMappings GetDefaultDeviceMappings(IControllerLayout realDevice, IControllerLayout virtualDevice)
         {
             var mappedElements = from element in virtualDevice.Layout
-                                  select new MappedControllerElement(element.Key)
-                                  {
-                                      DeviceElement = realDevice.Layout[element.Key] != null ? element.Key : ControllerElement.NoElement,
-                                  };
-            var elementCollection = new MappedControllerElementCollection(realDevice.LayoutID, virtualDevice.LayoutID);
+                                 select new MappedControllerElement(element.Key, realDevice.Layout[element.Key] != null ? element.Key : ControllerElement.NoElement);
+                                  
+            var elementCollection = new ControllerElementMappings(realDevice.LayoutID, virtualDevice.LayoutID);
+
             foreach (var element in mappedElements)
             {
                 elementCollection.Add(element);
             }
-
             return elementCollection;
         }
     }

@@ -17,6 +17,9 @@ namespace Snowflake.Model.Database.Models
         public DbSet<ConfigurationProfileModel> ConfigurationProfiles { get; set; }
         public DbSet<ConfigurationValueModel> ConfigurationValues { get; set; }
 
+        public DbSet<ControllerElementMappingsModel> ControllerElementMappings { get; set; }
+        public DbSet<MappedControllerElementModel> MappedControllerElements { get; set; }
+
         public DatabaseContext(DbContextOptions<DatabaseContext> options)
             : base(options)
         {
@@ -25,6 +28,9 @@ namespace Snowflake.Model.Database.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            MappedControllerElementModel.SetupModel(modelBuilder);
+            ControllerElementMappingsModel.SetupModel(modelBuilder);
 
             ConfigurationValueModel.SetupModel(modelBuilder);
             ConfigurationProfileModel.SetupModel(modelBuilder);

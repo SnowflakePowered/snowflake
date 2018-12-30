@@ -28,9 +28,9 @@ namespace Snowflake.Input.Controller.Mapped
         }
 
         /// <inheritdoc/>
-        public IMappedControllerElementCollection? GetMappingProfile(string controllerId, string deviceId, string profileName = "default")
+        public IControllerElementMappings? GetMappingProfile(string controllerId, string deviceId, string profileName = "default")
         {
-            return this.backingDatabase.Query<IMappedControllerElementCollection>(dbConnection =>
+            return this.backingDatabase.Query<IControllerElementMappings>(dbConnection =>
             {
                 dynamic result = dbConnection.Query<dynamic>(@"SELECT * FROM mappings WHERE ControllerId = @controllerId AND DeviceId = @deviceId AND ProfileName = @profileName",
                                 new { controllerId, deviceId, profileName }).FirstOrDefault();
@@ -39,7 +39,7 @@ namespace Snowflake.Input.Controller.Mapped
                     return null;
                 }
 
-                var collection = new MappedControllerElementCollection(result.DeviceId, result.ControllerId);
+                var collection = new ControllerElementMappings(result.DeviceId, result.ControllerId);
 
                 foreach (KeyValuePair<string, object> element in (IDictionary<string, object>)result)
                 {
@@ -49,10 +49,7 @@ namespace Snowflake.Input.Controller.Mapped
                     }
 
                     string deviceElem = (string)element.Value;
-                    var controllerElement = new MappedControllerElement(Enums.Parse<ControllerElement>(element.Key))
-                    {
-                        DeviceElement = Enums.Parse<ControllerElement>(deviceElem),
-                    };
+                    var controllerElement = new MappedControllerElement(Enums.Parse<ControllerElement>(element.Key), Enums.Parse<ControllerElement>(deviceElem));
                     collection.Add(controllerElement);
                 }
                 return collection;
@@ -72,7 +69,7 @@ namespace Snowflake.Input.Controller.Mapped
         }
 
         /// <inheritdoc/>
-        public void SetMappingProfile(IMappedControllerElementCollection mappedCollection, string profileName = "default")
+        public void SetMappingProfile(IControllerElementMappings mappedCollection, string profileName = "default")
         {
             this.backingDatabase.Execute(dbConnection =>
             {
@@ -81,7 +78,7 @@ namespace Snowflake.Input.Controller.Mapped
             });
         }
 
-        private static Tuple<string, string, dynamic> BuildQuery(IMappedControllerElementCollection mappedCollection, string profileName)
+        private static Tuple<string, string, dynamic> BuildQuery(IControllerElementMappings mappedCollection, string profileName)
         {
             dynamic queryObject = new ExpandoObject();
             queryObject.ControllerId = mappedCollection.ControllerId;

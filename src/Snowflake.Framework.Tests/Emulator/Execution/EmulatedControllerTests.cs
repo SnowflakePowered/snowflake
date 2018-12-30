@@ -18,7 +18,7 @@ namespace Snowflake.Emulator.Execution.Tests
 
             var physicalDevice = new Mock<IInputDevice>();
             var targetLayout = new Mock<IControllerLayout>();
-            var layoutMapping = new Mock<IMappedControllerElementCollection>();
+            var layoutMapping = new Mock<IControllerElementMappings>();
 
             IEmulatedController emulatedcontroller = new EmulatedController(0, physicalDevice.Object,
                 targetLayout.Object, layoutMapping.Object);

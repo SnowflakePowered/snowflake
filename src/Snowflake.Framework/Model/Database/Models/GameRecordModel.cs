@@ -12,7 +12,6 @@ namespace Snowflake.Model.Database.Models
 
         internal static void SetupModel(ModelBuilder modelBuilder)
         {
-
             modelBuilder.Entity<GameRecordModel>()
                 .Property(r => r.Platform)
                 .HasConversion(p => p.PlatformIdString,

@@ -65,7 +65,7 @@ namespace Snowflake.Emulator.Execution
             fakeInputDevice.Setup(p => p.DeviceLayout).Returns(realLayout);
             fakeInputDevice.Setup(p => p.DeviceApi).Returns(InputApi.DirectInput);
 
-            var map = MappedControllerElementCollection.GetDefaultMappings(realLayout, targetLayout);
+            var map = ControllerElementMappings.GetDefaultMappings(realLayout, targetLayout);
             var emulatedController = new EmulatedController(0, fakeInputDevice.Object, targetLayout, map);
 
             (IInputTemplate template, IInputMapping inputMappings) = configFactory.GetInputMappings(emulatedController);

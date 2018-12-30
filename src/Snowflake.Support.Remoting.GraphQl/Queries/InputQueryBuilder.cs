@@ -52,7 +52,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
         [Parameter(typeof(string), typeof(StringGraphType), "controllerId", "The Stone Controller ID to map to.")]
         [Parameter(typeof(string), typeof(StringGraphType), "deviceId", "The real device to map from.")]
         [Parameter(typeof(string), typeof(StringGraphType), "profileName", "A profile name.", nullable: true)]
-        public IMappedControllerElementCollection GetProfile(string controllerId, string deviceId, string profileName = "default")
+        public IControllerElementMappings GetProfile(string controllerId, string deviceId, string profileName = "default")
         {
             return this.MappedElementStore.GetMappingProfile(controllerId, deviceId, profileName);
         }
@@ -62,36 +62,36 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
         [Parameter(typeof(string), typeof(StringGraphType), "controllerId", "The Stone Controller ID to map to.")]
         [Parameter(typeof(string), typeof(StringGraphType), "deviceId", "The real device to map from.")]
         [Parameter(typeof(string), typeof(StringGraphType), "profileName", "A profile name.", nullable: true)]
-        public IMappedControllerElementCollection GetDefaultProfile(string controllerId, string deviceId, string profileName = "default")
+        public IControllerElementMappings GetDefaultProfile(string controllerId, string deviceId, string profileName = "default")
         {
             var emulatedController = this.StoneProvider.Controllers[controllerId];
             var realController = this.GetAllInputDevices().FirstOrDefault(p => p.DeviceId == deviceId)?.DeviceLayout;
 
             // todo: check for nulls
-            return MappedControllerElementCollection.GetDefaultMappings(realController, emulatedController);
+            return ControllerElementMappings.GetDefaultMappings(realController, emulatedController);
         }
 
         [Mutation("createControllerProfile", "Creates the default controller profile for the given Stone controller and real device.", typeof(MappedControllerElementCollectionGraphType))]
         [Parameter(typeof(DefaultMappedControllerElementCollectionInputObject), typeof(DefaultMappedControllerElementCollectionInputType), "input", "The input")]
-        public IMappedControllerElementCollection CreateProfile(DefaultMappedControllerElementCollectionInputObject input)
+        public IControllerElementMappings CreateProfile(DefaultMappedControllerElementCollectionInputObject input)
         {
             var emulatedController = this.StoneProvider.Controllers[input.ControllerId];
             var realController = this.GetAllInputDevices().FirstOrDefault(p => p.DeviceId == input.DeviceId)?.DeviceLayout;
 
             // todo: check for nulls
-            var defaults = MappedControllerElementCollection.GetDefaultMappings(realController, emulatedController);
+            var defaults = ControllerElementMappings.GetDefaultMappings(realController, emulatedController);
             this.MappedElementStore.SetMappingProfile(defaults, input.ProfileName);
             return this.MappedElementStore.GetMappingProfile(input.ControllerId, input.DeviceId, input.ProfileName);
         }
 
         [Mutation("setControllerProfile", "Creates the default controller profile for the given Stone controller and real device.", typeof(MappedControllerElementCollectionGraphType))]
         [Parameter(typeof(MappedControllerElementCollectionInputObject), typeof(MappedControllerElementCollectionInputType), "input", "The input")]
-        public IMappedControllerElementCollection SetProfile(MappedControllerElementCollectionInputObject input)
+        public IControllerElementMappings SetProfile(MappedControllerElementCollectionInputObject input)
         {
-            var collection = new MappedControllerElementCollection(input.DeviceId, input.ControllerId);
+            var collection = new ControllerElementMappings(input.DeviceId, input.ControllerId);
             foreach (var mapping in input.Mappings)
             {
-                collection.Add(new MappedControllerElement(mapping.LayoutElement) { DeviceElement = mapping.DeviceElement });
+                collection.Add(new MappedControllerElement(mapping.LayoutElement, mapping.DeviceElement));
             }
 
             this.MappedElementStore.SetMappingProfile(collection, input.ProfileName);

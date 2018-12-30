@@ -841,31 +841,31 @@
             <param name="element">The controller element to check.</param>
             <returns>Whether the element is a keyboard key element</returns>
         </member>
-        <member name="P:Snowflake.Input.Controller.Mapped.MappedControllerElement.LayoutElement">
+        <member name="M:Snowflake.Input.Controller.Mapped.ControllerElementMappings.GetEnumerator">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Input.Controller.Mapped.MappedControllerElement.DeviceElement">
+        <member name="M:Snowflake.Input.Controller.Mapped.ControllerElementMappings.System#Collections#IEnumerable#GetEnumerator">
             <inheritdoc/>
         </member>
-        <member name="M:Snowflake.Input.Controller.Mapped.MappedControllerElementCollection.GetEnumerator">
+        <member name="P:Snowflake.Input.Controller.Mapped.ControllerElementMappings.DeviceId">
             <inheritdoc/>
         </member>
-        <member name="M:Snowflake.Input.Controller.Mapped.MappedControllerElementCollection.System#Collections#IEnumerable#GetEnumerator">
+        <member name="P:Snowflake.Input.Controller.Mapped.ControllerElementMappings.ControllerId">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Input.Controller.Mapped.MappedControllerElementCollection.DeviceId">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Input.Controller.Mapped.MappedControllerElementCollection.ControllerId">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Input.Controller.Mapped.MappedControllerElementCollection.GetDefaultMappings(Snowflake.Input.Controller.IControllerLayout,Snowflake.Input.Controller.IControllerLayout)">
+        <member name="M:Snowflake.Input.Controller.Mapped.ControllerElementMappings.GetDefaultMappings(Snowflake.Input.Controller.IControllerLayout,Snowflake.Input.Controller.IControllerLayout)">
             <summary>
             Gets default mappings for a real device to a virtual device
             </summary>
             <param name="realDevice">The button layout of the real controller device</param>
             <param name="virtualDevice">The button layout of the defined controller device</param>
             <returns></returns>
+        </member>
+        <member name="P:Snowflake.Input.Controller.Mapped.MappedControllerElement.LayoutElement">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.Mapped.MappedControllerElement.DeviceElement">
+            <inheritdoc/>
         </member>
         <member name="T:Snowflake.Input.Controller.Mapped.SqliteMappedControllerElementCollectionStore">
             <summary>
@@ -878,7 +878,7 @@
         <member name="M:Snowflake.Input.Controller.Mapped.SqliteMappedControllerElementCollectionStore.GetProfileNames(System.String,System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:Snowflake.Input.Controller.Mapped.SqliteMappedControllerElementCollectionStore.SetMappingProfile(Snowflake.Input.Controller.Mapped.IMappedControllerElementCollection,System.String)">
+        <member name="M:Snowflake.Input.Controller.Mapped.SqliteMappedControllerElementCollectionStore.SetMappingProfile(Snowflake.Input.Controller.Mapped.IControllerElementMappings,System.String)">
             <inheritdoc/>
         </member>
         <member name="P:Snowflake.Input.Device.InputDevice.DeviceId">
