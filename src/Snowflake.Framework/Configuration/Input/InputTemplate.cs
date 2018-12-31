@@ -101,13 +101,14 @@ namespace Snowflake.Configuration.Input
                           let metadata = prop.GetCustomAttributes<CustomMetadataAttribute>()
                           select new ConfigurationOptionDescriptor(configAttribute, metadata, name) as IConfigurationOptionDescriptor).ToList();
 
-            var configOptionValues = new ConfigurationValueCollection();
+            this.ValueCollection = new ConfigurationValueCollection();
+
             var configDescriptor = new ConfigurationSectionDescriptor<T>(typeof(T).Name);
-            configOptionValues.EnsureSectionDefaults(configDescriptor);
+            ((ConfigurationValueCollection)this.ValueCollection).EnsureSectionDefaults(configDescriptor);
 
             var attr = typeof(T).GetTypeInfo().GetCustomAttribute<InputTemplateAttribute>();
 
-            this.inputTemplateInterceptor = new InputTemplateInterceptor<T>(map.ToDictionary(m => m.Key, m => m.Value), configOptionValues, 
+            this.inputTemplateInterceptor = new InputTemplateInterceptor<T>(map.ToDictionary(m => m.Key, m => m.Value), this.ValueCollection, 
                     configDescriptor);
             var circular = new InputTemplateCircularInterceptor<T>(this);
             this.Configuration = new InputConfigurationSection<T>(circular, this.inputTemplateInterceptor);
@@ -129,6 +130,8 @@ namespace Snowflake.Configuration.Input
 
         /// <inheritdoc/>
         T IConfigurationSection<T>.Configuration => this.Configuration.Configuration;
+
+        public IConfigurationValueCollection ValueCollection { get; }
 
         /// <inheritdoc/>
         public IEnumerator<KeyValuePair<IConfigurationOptionDescriptor, IConfigurationValue>> GetEnumerator()

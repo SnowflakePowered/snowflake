@@ -27,6 +27,8 @@ namespace Snowflake.Configuration.Input
         public IReadOnlyDictionary<string, IConfigurationValue> Values
             => ImmutableDictionary.CreateRange(this.configurationInterceptor.Values[this.Descriptor]);
 
+        public IConfigurationValueCollection ValueCollection { get; }
+
         /// <inheritdoc/>
         public object this[string key]
         {
@@ -49,7 +51,8 @@ namespace Snowflake.Configuration.Input
 
             this.Options = options.ToList();
             // todo: fix this.
-            this.configurationInterceptor = new ConfigurationInterceptor(this.Descriptor, new ConfigurationValueCollection());
+            this.ValueCollection = new ConfigurationValueCollection();
+            this.configurationInterceptor = new ConfigurationInterceptor(this.Descriptor, this.ValueCollection);
             this.Configuration =
                 generator.CreateInterfaceProxyWithoutTarget<T>(interceptor,
                     configurationInterceptor, inputTemplate);

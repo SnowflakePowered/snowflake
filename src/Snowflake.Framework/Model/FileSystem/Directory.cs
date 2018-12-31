@@ -16,7 +16,6 @@ namespace Snowflake.Model.FileSystem
 {
     internal sealed class Directory : IDirectory
     {
-
         private SqliteDatabase Manifest { get; }
         internal Directory(string name, IFileSystem rootFs, DirectoryEntry parentDirectory)
         {

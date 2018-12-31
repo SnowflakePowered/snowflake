@@ -23,6 +23,8 @@ namespace Snowflake.Configuration
         public IReadOnlyDictionary<string, IConfigurationValue> Values
             => ImmutableDictionary.CreateRange(this.configurationInterceptor.Values[this.Descriptor]);
 
+        public IConfigurationValueCollection ValueCollection { get; }
+
         /// <inheritdoc/>
         public object? this[string key]
         {
@@ -37,14 +39,18 @@ namespace Snowflake.Configuration
         {
         }
 
-        public ConfigurationSection(IConfigurationValueCollection values, string sectionKey)
+        internal ConfigurationSection(IConfigurationValueCollection values, string sectionKey)
         {
             this.Descriptor = new ConfigurationSectionDescriptor<T>(sectionKey);
             this.configurationInterceptor = new ConfigurationInterceptor(this.Descriptor, values);
+            // if this is a CVC base implementation, we should ensure defaults.
+            (values as ConfigurationValueCollection)?.EnsureSectionDefaults(this.Descriptor);
+            this.ValueCollection = values;
 
             this.Configuration =
                   ConfigurationDescriptorCache
-                .GetProxyGenerator().CreateInterfaceProxyWithoutTarget<T>(new ConfigurationCircularInterceptor<T>(this),
+                .GetProxyGenerator()
+                .CreateInterfaceProxyWithoutTarget<T>(new ConfigurationCircularInterceptor<T>(this),
                     configurationInterceptor);
         }
 

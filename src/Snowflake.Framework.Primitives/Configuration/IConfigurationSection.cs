@@ -36,6 +36,15 @@ namespace Snowflake.Configuration
         IReadOnlyDictionary<string, IConfigurationValue> Values { get; }
 
         /// <summary>
+        /// Gets the values backing this configuration section,
+        /// as well as those in the parent configuration collection.
+        /// 
+        /// It is well recommended to use <see cref="IConfigurationSection.Values"/> instead,
+        /// however direct access to the value collection may be useful in some cases.
+        /// </summary>
+        IConfigurationValueCollection ValueCollection { get; }
+
+        /// <summary>
         /// Gets or sets the option value with the specified property name in the configuration section
         /// in an untyped and unsafe manner.
         /// </summary>

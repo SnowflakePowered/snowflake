@@ -23,6 +23,19 @@ namespace Snowflake.Model.Database.Extensions
             };
         }
 
+
+        public static ConfigurationProfileModel AsModel<T>
+            (this IConfigurationSection<T> @this, string prototypeName)
+            where T : class, IConfigurationSection<T>
+        {
+            return new ConfigurationProfileModel
+            {
+                ValueCollectionGuid = @this.ValueCollection.Guid,
+                ConfigurationSource = prototypeName,
+                Values = @this.ValueCollection.AsModel()
+            };
+        }
+
         public static string AsConfigurationStringValue(this object @this)
         {
             return @this.GetType().GetTypeInfo().IsEnum ?
@@ -50,6 +63,16 @@ namespace Snowflake.Model.Database.Extensions
             var valueCollection = ConfigurationValueCollection.MakeExistingValueCollection<T>
                 (values, model.ValueCollectionGuid);
             return new ConfigurationCollection<T>(valueCollection);
+        }
+
+        public static IConfigurationSection<T> AsConfigurationSection<T>(this ConfigurationProfileModel model)
+           where T : class, IConfigurationSection<T>
+        {
+            var sectionKey = model.Values.First().SectionKey;
+            var values = model.Values.Select(v => (v.OptionKey, (v.Value, v.Guid)));
+            var valueCollection = ConfigurationValueCollection.MakeExistingValueCollection<T>
+                (values, sectionKey, model.ValueCollectionGuid);
+            return new ConfigurationSection<T>(valueCollection, sectionKey);
         }
     }
 }

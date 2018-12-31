@@ -36,8 +36,8 @@ namespace Snowflake.Model.Database.Models
              .IsRequired();
 
             modelBuilder.Entity<ConfigurationValueModel>()
-           .Property(p => p.OptionKey)
-           .IsRequired();
+               .Property(p => p.OptionKey)
+               .IsRequired();
 
 
             modelBuilder.Entity<ConfigurationValueModel>()

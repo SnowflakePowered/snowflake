@@ -33,14 +33,14 @@ namespace Snowflake.Extensibility.Configuration
             where T : class, IConfigurationSection<T>;
 
         /// <summary>
-        /// Updates a single <em>existing</em> configuration value, this will error if the GUID is not found in
+        /// Updates a single <em>existing</em> configuration value, this will do nothing if the GUID is not found in
         /// the database.
         /// </summary>
         /// <param name="value">The configuration value with valid GUID and updated data</param>
         void Set(IConfigurationValue value);
 
         /// <summary>
-        /// Updates multiple <em>existing</em> configuration values, this will error if the GUID is not found in
+        /// Updates multiple <em>existing</em> configuration values, this will do nothing for the GUID is not found in
         /// the database.
         /// </summary>
         /// <param name="values">The configuration value with valid GUID and updated data</param>

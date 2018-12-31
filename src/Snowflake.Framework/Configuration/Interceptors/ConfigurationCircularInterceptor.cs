@@ -36,6 +36,9 @@ namespace Snowflake.Configuration.Interceptors
                 case nameof(@this.Values):
                     invocation.ReturnValue = @this.Values;
                     break;
+                case nameof(@this.ValueCollection):
+                    invocation.ReturnValue = @this.ValueCollection;
+                    break;
                 default:
                     invocation.Proceed();
                     break;

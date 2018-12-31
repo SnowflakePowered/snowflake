@@ -35,6 +35,9 @@ namespace Snowflake.Configuration.Interceptors
                 case nameof(@this.PlayerIndex):
                     invocation.ReturnValue = @this.PlayerIndex;
                     break;
+                case nameof(@this.ValueCollection):
+                    invocation.ReturnValue = @this.ValueCollection;
+                    break;
                 case nameof(@this.Template):
                     invocation.ReturnValue = @this.Template;
                     break;
