@@ -28,7 +28,6 @@ namespace Snowflake.Model.Database
                 var records = context.GameRecords.Include(r => r.Metadata)
                     .Select(record => new GameRecord(record.Platform, record.RecordID,
                             record.Metadata.AsMetadataCollection(record.RecordID)))
-
                         .ToList();
                 return records;
             }

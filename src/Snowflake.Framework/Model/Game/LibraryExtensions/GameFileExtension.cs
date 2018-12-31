@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using Snowflake.Model.Database;
 using Snowflake.Model.FileSystem;
-using Snowflake.Model.Game.Extensions;
+using Snowflake.Model.Game.LibraryExtensions;
 using Snowflake.Model.Records.File;
 using Zio;
 
-namespace Snowflake.Model.Game
+namespace Snowflake.Model.Game.LibraryExtensions
 {
     internal class GameFileExtension : IGameFileExtension
     {

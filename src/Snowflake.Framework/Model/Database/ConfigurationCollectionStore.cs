@@ -5,8 +5,10 @@ using System.Linq.Expressions;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Snowflake.Configuration;
+using Snowflake.Model.Database.Exceptions;
 using Snowflake.Model.Database.Extensions;
 using Snowflake.Model.Database.Models;
+using Snowflake.Model.Records.Game;
 
 namespace Snowflake.Model.Database
 {
@@ -23,23 +25,95 @@ namespace Snowflake.Model.Database
             }
         }
 
-        public IConfigurationCollection<T> CreateConfiguration<T>(string prototypeName)
+        public IEnumerable<IGrouping<string, string>> 
+            GetProfileNames(IGameRecord gameRecord)
+        {
+            using (var context = new DatabaseContext(this.Options.Options))
+            {
+               return context.GameRecords
+                    .Include(g => g.ConfigurationProfiles)
+                    .SingleOrDefault(g => g.RecordID == gameRecord.RecordId)
+                    .ConfigurationProfiles
+                    .GroupBy(p => p.ConfigurationSource, p => p.ProfileName);
+            }
+        }
+
+        public IConfigurationCollection<T> CreateConfiguration<T>(string sourceName)
             where T: class, IConfigurationCollection<T>
         {
             var collection = new ConfigurationCollection<T>();
             
             using (var context = new DatabaseContext(this.Options.Options))
             {
-                context.ConfigurationProfiles.Add(collection.AsModel(prototypeName));
+                context.ConfigurationProfiles.Add(collection.AsModel(sourceName));
                 context.SaveChanges();
             }
 
             return collection;
         }
 
+        public IConfigurationCollection<T> CreateConfigurationForGame<T>(IGameRecord gameRecord, 
+            string sourceName, string profileName)
+            where T : class, IConfigurationCollection<T>
+        {
+            var collection = new ConfigurationCollection<T>();
+
+            using (var context = new DatabaseContext(this.Options.Options))
+            {
+                var gameEntity = context.GameRecords
+                    .Include(p => p.ConfigurationProfiles)
+                    .SingleOrDefault(p => p.RecordID == gameRecord.RecordId);
+
+                if (gameEntity == null) throw new DependentEntityNotExistsException(gameRecord.RecordId);
+                    
+                var entity = context.ConfigurationProfiles
+                        .Add(collection.AsModel(sourceName));
+
+                gameEntity.ConfigurationProfiles.Add(new GameRecordConfigurationProfileModel
+                {
+                    ProfileName = profileName,
+                    ConfigurationSource = sourceName,
+                    Profile = entity.Entity
+                });
+
+                context.SaveChanges();
+            }
+            return collection;
+        }
+
+        public void DeleteConfiguration(Guid configurationValueCollectionGuid)
+        {
+            using (var context = new DatabaseContext(this.Options.Options))
+            {
+                var profile = context.ConfigurationProfiles.Find(configurationValueCollectionGuid);
+                if (profile == null) return;
+
+                context.Entry(profile).State = EntityState.Deleted;
+                context.SaveChanges();
+            }
+        }
+
+        public void DeleteConfigurationForGame(Guid gameGuid, string sourceName, string profileName)
+        {
+            using (var context = new DatabaseContext(this.Options.Options))
+            {
+                var profileJunction = context.GameRecordsConfigurationProfiles
+                    .Include(p => p.Profile)
+                    .SingleOrDefault(g => g.GameID == gameGuid 
+                    && g.ConfigurationSource == sourceName 
+                    && g.ProfileName == profileName);
+                if (profileJunction == null) return;
+
+                context.Entry(profileJunction).State = EntityState.Deleted;
+                context.Entry(profileJunction.Profile).State = EntityState.Deleted;
+
+                context.SaveChanges();
+            }
+        }
+
+
         public void UpdateConfiguration(IConfigurationCollection configurationCollection)
         {
-
             using (var context = new DatabaseContext(this.Options.Options))
             {
                 var guid = configurationCollection.ValueCollection.Guid;
@@ -58,7 +132,6 @@ namespace Snowflake.Model.Database
                         value.Value = realValue;
                         context.Entry(value).State = EntityState.Modified;
                     }
-
                 }
 
                 foreach (var t in configurationCollection.ValueCollection)
@@ -89,6 +162,42 @@ namespace Snowflake.Model.Database
                     .SingleOrDefault(c => c.ValueCollectionGuid == valueCollectionGuid);
                 if (config == null) return null;
                 return config.AsConfiguration<T>();
+            }
+        }
+
+        public IConfigurationCollection<T>? GetConfiguration<T>(Guid gameGuid, 
+            string sourceName, string profileName)
+                where T : class, IConfigurationCollection<T>
+
+        {
+            using (var context = new DatabaseContext(this.Options.Options))
+            {
+                var profileJunction = context.GameRecordsConfigurationProfiles
+                    .Include(g => g.Profile)
+                    .ThenInclude(g => g.Values)
+                    .SingleOrDefault(g => g.GameID == gameGuid
+                    && g.ConfigurationSource == sourceName
+                    && g.ProfileName == profileName);
+                if (profileJunction == null) return null;
+
+                var profile = context.ConfigurationProfiles
+                    .SingleOrDefault(s => s.ValueCollectionGuid == profileJunction.ProfileID);
+
+                return profile?.AsConfiguration<T>();
+            }
+        }
+
+        public void UpdateValue(IConfigurationValue value) => this.UpdateValue(value.Guid, value.Value);
+
+        public void UpdateValue(Guid valueGuid, object value)
+        {
+            using (var context = new DatabaseContext(this.Options.Options))
+            {
+                var entityValue = context.ConfigurationValues.Find(valueGuid);
+                if (entityValue == null) return;
+                entityValue.Value = value.AsConfigurationStringValue();
+                context.Entry(entityValue).State = EntityState.Modified;
+                context.SaveChanges();
             }
         }
     }

@@ -17,13 +17,6 @@ namespace Snowflake.Model.Database.Models
         {
             modelBuilder.Entity<ConfigurationProfileModel>()
                 .HasKey(p => p.ValueCollectionGuid);
-
-            //modelBuilder.Entity<ConfigurationProfileModel>()
-            //    .HasOne(p => p.Game)
-            //    .WithMany()
-            //    .HasForeignKey(p => p.GameRecordGuid)
-            //    .IsRequired(false);
- 
         }
     }
 }

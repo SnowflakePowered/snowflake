@@ -16,6 +16,7 @@ namespace Snowflake.Model.Database.Models
 
         public DbSet<ConfigurationProfileModel> ConfigurationProfiles { get; set; }
         public DbSet<ConfigurationValueModel> ConfigurationValues { get; set; }
+        public DbSet<GameRecordConfigurationProfileModel> GameRecordsConfigurationProfiles { get; set; }
 
         public DbSet<ControllerElementMappingsModel> ControllerElementMappings { get; set; }
         public DbSet<MappedControllerElementModel> MappedControllerElements { get; set; }
@@ -40,6 +41,8 @@ namespace Snowflake.Model.Database.Models
 
             GameRecordModel.SetupModel(modelBuilder);
             FileRecordModel.SetupModel(modelBuilder);
+
+            GameRecordConfigurationProfileModel.SetupModel(modelBuilder);
 
        
         }

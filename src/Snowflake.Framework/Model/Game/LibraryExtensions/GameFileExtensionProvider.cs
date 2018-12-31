@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Text;
 using Snowflake.Model.Database;
-using Snowflake.Model.Game.Extensions;
+using Snowflake.Model.Game.LibraryExtensions;
 using Snowflake.Model.Records.File;
 using Snowflake.Model.Records.Game;
 using Zio;
 
-namespace Snowflake.Model.Game
+namespace Snowflake.Model.Game.LibraryExtensions
 {
-    internal class GameLibraryFileExtension : IGameLibraryExtension<IGameFileExtension>
+    internal class GameFileExtensionProvider : IGameFileExtensionProvider
     {
-        public GameLibraryFileExtension
+        public GameFileExtensionProvider
             (FileRecordLibrary fileLibrary,
             IFileSystem gameFolderFs)
         {
@@ -21,7 +21,7 @@ namespace Snowflake.Model.Game
 
         internal FileRecordLibrary FileLibrary { get; }
 
-        internal IFileSystem GameFolderRoot{ get; }
+        internal IFileSystem GameFolderRoot { get; }
 
         public IGameFileExtension MakeExtension(IGameRecord record)
         {
@@ -35,7 +35,7 @@ namespace Snowflake.Model.Game
             this.FileLibrary.UpdateRecord(file);
         }
 
-        IGameExtension IGameLibraryExtension.MakeExtension(IGameRecord record)
+        IGameExtension IGameExtensionProvider.MakeExtension(IGameRecord record)
         {
             return this.MakeExtension(record);
         }

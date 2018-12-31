@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Text;
 using Snowflake.Model.Records.Game;
 
-namespace Snowflake.Model.Game
+namespace Snowflake.Model.Game.LibraryExtensions
 {
-    public interface IGameLibraryExtension<TExtension> : IGameLibraryExtension
+    public interface IGameExtensionProvider<out TExtension> : IGameExtensionProvider
         where TExtension : class, IGameExtension
     {
         TExtension MakeExtension(IGameRecord record);
     }
 
-    public interface IGameLibraryExtension
+    public interface IGameExtensionProvider
     {
         IGameExtension MakeExtension(IGameRecord record);
     }

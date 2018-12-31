@@ -4,8 +4,13 @@ using System.Text;
 using Snowflake.Model.FileSystem;
 using Snowflake.Model.Records.File;
 
-namespace Snowflake.Model.Game.Extensions
+namespace Snowflake.Model.Game.LibraryExtensions
 {
+    public interface IGameFileExtensionProvider : IGameExtensionProvider<IGameFileExtension>
+    {
+        void UpdateFile(IFileRecord file);
+    }
+
     public interface IGameFileExtension : IGameExtension
     {
         IDirectory SavesRoot { get; }
@@ -31,6 +36,11 @@ namespace Snowflake.Model.Game.Extensions
         public static IGameFileExtension WithFiles(this IGame @this)
         {
             return @this.GetExtension<IGameFileExtension>()!;
+        }
+
+        public static IGameFileExtensionProvider WithFileLibrary(this IGameLibrary @this)
+        {
+            return @this.GetExtension<IGameFileExtensionProvider>();
         }
     }
 }

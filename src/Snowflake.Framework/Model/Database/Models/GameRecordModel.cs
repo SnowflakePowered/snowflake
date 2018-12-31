@@ -10,6 +10,8 @@ namespace Snowflake.Model.Database.Models
     {
         public PlatformId Platform { get; set; } 
 
+        public List<GameRecordConfigurationProfileModel> ConfigurationProfiles { get; set; }
+
         internal static void SetupModel(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<GameRecordModel>()
