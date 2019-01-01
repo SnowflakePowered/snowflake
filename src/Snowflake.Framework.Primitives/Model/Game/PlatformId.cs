@@ -6,7 +6,8 @@ namespace Snowflake.Model.Game
 {
     public struct PlatformId : IEquatable<PlatformId>, IEquatable<string>
     {
-        public string PlatformIdString { get; }
+        private string PlatformIdString { get; }
+
         public PlatformId(string id)
         {
             this.PlatformIdString = id;
@@ -35,6 +36,11 @@ namespace Snowflake.Model.Game
             return false;
         }
 
+        public override string ToString()
+        {
+            return this.PlatformIdString;
+        }
+
         public static bool operator ==(PlatformId x, PlatformId y) => x.PlatformIdString == y.PlatformIdString;
         public static bool operator !=(PlatformId x, PlatformId y) => x.PlatformIdString != y.PlatformIdString;
 
@@ -44,5 +50,7 @@ namespace Snowflake.Model.Game
         public static bool operator !=(PlatformId x, string y) => x.PlatformIdString == y;
 
         public static implicit operator PlatformId(string other) => new PlatformId(other);
+        public static implicit operator string(PlatformId id) => id.PlatformIdString;
+
     }
 }

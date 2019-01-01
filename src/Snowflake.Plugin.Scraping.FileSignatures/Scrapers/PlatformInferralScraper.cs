@@ -87,7 +87,7 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Scrapers
                 var platform = this.GetPlatformFromMimetype(mimeType) ?? this.GetPlatformFromFileExtension(parent.Content.Value);
                 if (platform != null)
                 {
-                    return _("platform", platform.PlatformID);
+                    return _("platform", platform.PlatformId);
                 }
             }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Snowflake.Model.Game;
 
 namespace Shiragame
 {
@@ -14,7 +15,7 @@ namespace Shiragame
         /// <summary>
         /// Gets the Stone platform ID
         /// </summary>
-        public string PlatformId { get; }
+        public PlatformId PlatformId { get; }
 
         /// <summary>
         /// Gets the canonical game name
@@ -31,7 +32,7 @@ namespace Shiragame
         /// </summary>
         public string Serial { get; }
 
-        internal SerialInfo(string platformId, string title, string region, string serial)
+        internal SerialInfo(PlatformId platformId, string title, string region, string serial)
         {
             this.PlatformId = platformId;
             this.Title = title;

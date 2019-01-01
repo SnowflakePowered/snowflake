@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Snowflake.Model.Game;
 
 namespace Shiragame
 {
@@ -14,7 +15,7 @@ namespace Shiragame
         /// <summary>
         /// Gets the Stone platform ID
         /// </summary>
-        public string PlatformId { get; }
+        public PlatformId PlatformId { get; }
 
         /// <summary>
         /// Gets the canonical CRC32 from the dat file
@@ -46,7 +47,7 @@ namespace Shiragame
         /// </summary>
         public string Region { get; }
 
-        internal RomInfo(string platformId, string crc32, string md5, string sha1, string region, string mimetype, string fileName)
+        internal RomInfo(PlatformId platformId, string crc32, string md5, string sha1, string region, string mimetype, string fileName)
         {
             this.PlatformId = platformId;
             this.CRC32 = crc32;

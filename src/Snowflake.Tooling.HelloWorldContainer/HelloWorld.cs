@@ -14,7 +14,7 @@ namespace Snowflake.Tooling.HelloWorldContainer
         {
             foreach (IPlatformInfo platform in serviceContainer.Get<IStoneProvider>().Platforms.Values)
             {
-                Console.WriteLine(platform.PlatformID);
+                Console.WriteLine(platform.PlatformId);
             }
         }
     }

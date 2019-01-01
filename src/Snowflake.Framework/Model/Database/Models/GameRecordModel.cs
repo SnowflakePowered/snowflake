@@ -16,7 +16,7 @@ namespace Snowflake.Model.Database.Models
         {
             modelBuilder.Entity<GameRecordModel>()
                 .Property(r => r.Platform)
-                .HasConversion(p => p.PlatformIdString,
+                .HasConversion(p => p.ToString(),
                     p => new PlatformId(p))
                 .IsRequired();
         }

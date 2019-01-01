@@ -1188,7 +1188,7 @@
         <member name="P:Snowflake.Platform.PlatformInfo.FriendlyName">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Platform.PlatformInfo.PlatformID">
+        <member name="P:Snowflake.Platform.PlatformInfo.PlatformId">
             <inheritdoc/>
         </member>
         <member name="P:Snowflake.Platform.PlatformInfo.Metadata">

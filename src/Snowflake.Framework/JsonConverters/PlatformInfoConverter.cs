@@ -16,7 +16,7 @@ namespace Snowflake.JsonConverters
         /// <inheritdoc/>
         protected override IPlatformInfo Create(Type objectType, JObject jObject)
         {
-            string platformId = jObject.Value<string>("PlatformID");
+            string platformId = jObject.Value<string>("PlatformId");
             string friendlyName = jObject.Value<string>("FriendlyName");
             IDictionary<string, string> metadata = jObject.Value<JToken>("Metadata").ToObject<IDictionary<string, string>>();
             int maximumInputs = jObject.Value<int>("MaximumInputs");
