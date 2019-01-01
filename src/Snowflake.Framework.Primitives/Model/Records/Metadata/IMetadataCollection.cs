@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Snowflake.Records.Metadata
+namespace Snowflake.Model.Records
 {
     /// <summary>
     /// Represents a collection of metadata

@@ -22,6 +22,17 @@ namespace Snowflake.Model.Database
             }
         }
 
+        public void DeleteRecord(TRecord record)
+        {
+            using (var context = new DatabaseContext(this.Options.Options))
+            {
+                var recordToDelete = context.Records.SingleOrDefault(r => r.RecordID == record.RecordId);
+                if (record == null) return;
+                context.Entry(recordToDelete).State = EntityState.Deleted;
+                context.SaveChanges();
+            }
+        }
+
         public void UpdateRecord(TRecord record)
         {
             using (var context = new DatabaseContext(this.Options.Options))

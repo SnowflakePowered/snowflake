@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Moq;
 using Snowflake.Execution.Extensibility;
-using Snowflake.Records.Game;
+using Snowflake.Model.Records.Game;
 using Xunit;
 
 namespace Snowflake.Emulator.Execution

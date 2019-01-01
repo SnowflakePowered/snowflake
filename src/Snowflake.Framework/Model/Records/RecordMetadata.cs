@@ -1,7 +1,7 @@
 ﻿using System;
-using Snowflake.Records.Metadata.Utility;
+using Snowflake.Model.Records.Utility;
 
-namespace Snowflake.Records.Metadata
+namespace Snowflake.Model.Records
 {
     /// <inheritdoc/>
     public sealed partial class RecordMetadata : IRecordMetadata
@@ -27,7 +27,7 @@ namespace Snowflake.Records.Metadata
         }
 
         public RecordMetadata(string key, string value, IRecord record)
-            : this(key, value, record.Guid)
+            : this(key, value, record.RecordId)
         {
         }
 
@@ -47,9 +47,8 @@ namespace Snowflake.Records.Metadata
         /// <inheritdoc/>
         public override bool Equals(object metadata)
         {
-            IRecordMetadata? m = metadata as IRecordMetadata;
 
-            if (m == null)
+            if (!(metadata is IRecordMetadata m))
             {
                 return false;
             }

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Snowflake.Execution.Saving;
-using Snowflake.Records.Game;
+using Snowflake.Model.Records.Game;
 using Snowflake.Services;
 
 namespace Snowflake.Support.Execution
@@ -26,7 +26,7 @@ namespace Snowflake.Support.Execution
 
             DirectoryInfo locationRoot = this.SaveLocationRoot
                 .CreateSubdirectory(saveGuid.ToString());
-            var saveLocation = new SaveLocation(gameRecord.Guid, saveType, locationRoot, saveGuid, DateTimeOffset.UtcNow);
+            var saveLocation = new SaveLocation(gameRecord.RecordId, saveType, locationRoot, saveGuid, DateTimeOffset.UtcNow);
             return await this.UpdateSaveLocation(saveLocation);
         }
 
@@ -61,7 +61,7 @@ namespace Snowflake.Support.Execution
         public async Task<IEnumerable<ISaveLocation>> GetSaveLocationsAsync(IGameRecord gameRecord)
         {
             return (await this.GetAllSaveLocationsAsync())
-                .Where(s => s.RecordGuid == gameRecord.Guid);
+                .Where(s => s.RecordGuid == gameRecord.RecordId);
         }
 
         public async Task<ISaveLocation> UpdateSaveLocation(ISaveLocation location)

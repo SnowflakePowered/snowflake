@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Snowflake.Model.Game;
 using Snowflake.Model.Records.Game;
 using Snowflake.Platform;
-using Snowflake.Records.Metadata;
 
 namespace Snowflake.Model.Records
 {

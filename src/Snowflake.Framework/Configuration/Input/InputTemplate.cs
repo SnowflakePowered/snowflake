@@ -39,7 +39,6 @@ namespace Snowflake.Configuration.Input
         private IDictionary<string, IInputOption> _Options { get; }
 
         private readonly InputTemplateInterceptor<T> inputTemplateInterceptor;
-        private readonly IList<IConfigurationOptionDescriptor> configurationOptions;
 
         /// <inheritdoc/>
         public ControllerElement this[ControllerElement virtualElement]
@@ -94,12 +93,12 @@ namespace Snowflake.Configuration.Input
             var map = from key in this._Options.Keys
                 let value = overrides.ContainsKey(key) ? overrides[key] : ControllerElement.NoElement
                 select new KeyValuePair<string, ControllerElement>(key, value);
-            this.configurationOptions = (from prop in typeof(T).GetProperties()
-                          let configAttribute = prop.GetCustomAttribute<ConfigurationOptionAttribute>()
-                          where configAttribute != null
-                          let name = prop.Name
-                          let metadata = prop.GetCustomAttributes<CustomMetadataAttribute>()
-                          select new ConfigurationOptionDescriptor(configAttribute, metadata, name) as IConfigurationOptionDescriptor).ToList();
+            //this.configurationOptions = (from prop in typeof(T).GetProperties()
+            //              let configAttribute = prop.GetCustomAttribute<ConfigurationOptionAttribute>()
+            //              where configAttribute != null
+            //              let name = prop.Name
+            //              let metadata = prop.GetCustomAttributes<CustomMetadataAttribute>()
+            //              select new ConfigurationOptionDescriptor(configAttribute, metadata, name) as IConfigurationOptionDescriptor).ToList();
 
             this.ValueCollection = new ConfigurationValueCollection();
 

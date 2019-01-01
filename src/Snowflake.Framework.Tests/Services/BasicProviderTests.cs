@@ -7,7 +7,6 @@ using Moq;
 using Snowflake.Extensibility;
 using Snowflake.Services;
 using Snowflake.Services.Logging;
-using Snowflake.Services.Persistence;
 using Snowflake.Tests.Composable;
 using Xunit;
 
@@ -42,26 +41,6 @@ namespace Snowflake.Services.Tests
             logger.Log("Test", LogLevel.Trace);
 
             logger.Error(new Exception("Test"), "Test");
-        }
-
-        [Fact]
-        public void SqliteDatabaseProvider_Test()
-        {
-            DirectoryInfo dbRoot = new DirectoryInfo(Path.GetTempPath());
-            string fileName = Guid.NewGuid().ToString();
-            ISqliteDatabaseProvider dbProvider = new SqliteDatabaseProvider(dbRoot);
-            dbProvider.CreateDatabase(fileName);
-            Assert.True(File.Exists(Path.Combine(dbRoot.FullName, $"{fileName}.db")));
-        }
-
-        [Fact]
-        public void SqliteDatabaseProviderUniverse_Test()
-        {
-            DirectoryInfo dbRoot = new DirectoryInfo(Path.GetTempPath());
-            string fileName = Guid.NewGuid().ToString();
-            ISqliteDatabaseProvider dbProvider = new SqliteDatabaseProvider(dbRoot);
-            dbProvider.CreateDatabase("test", fileName);
-            Assert.True(File.Exists(Path.Combine(dbRoot.CreateSubdirectory("test").FullName, $"{fileName}.db")));
         }
 
         [Fact]

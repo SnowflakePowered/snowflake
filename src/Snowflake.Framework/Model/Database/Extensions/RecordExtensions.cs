@@ -6,7 +6,6 @@ using Snowflake.Model.FileSystem;
 using Snowflake.Model.Records;
 using Snowflake.Model.Records.File;
 using Snowflake.Model.Records.Game;
-using Snowflake.Records.Metadata;
 
 namespace Snowflake.Model.Database.Extensions
 {

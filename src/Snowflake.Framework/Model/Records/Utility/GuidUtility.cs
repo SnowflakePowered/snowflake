@@ -3,7 +3,7 @@ using System;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Snowflake.Records.Metadata.Utility
+namespace Snowflake.Model.Records.Utility
 {
     /// <summary>
     /// Helper methods for working with <see cref="Guid"/>.

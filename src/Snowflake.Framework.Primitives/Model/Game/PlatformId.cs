@@ -35,6 +35,14 @@ namespace Snowflake.Model.Game
             return false;
         }
 
+        public static bool operator ==(PlatformId x, PlatformId y) => x.PlatformIdString == y.PlatformIdString;
+        public static bool operator !=(PlatformId x, PlatformId y) => x.PlatformIdString != y.PlatformIdString;
+
+        public static bool operator ==(string x, PlatformId y) => x == y.PlatformIdString;
+        public static bool operator !=(string x, PlatformId y) => x != y.PlatformIdString;
+        public static bool operator ==(PlatformId x, string y) => x.PlatformIdString == y;
+        public static bool operator !=(PlatformId x, string y) => x.PlatformIdString == y;
+
         public static implicit operator PlatformId(string other) => new PlatformId(other);
     }
 }

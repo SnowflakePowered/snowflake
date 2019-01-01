@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Snowflake.Records.Metadata;
 using System.Linq;
 using Snowflake.Model.Database.Models;
+using Snowflake.Model.Records;
 
 namespace Snowflake.Model.Database.Extensions
 {

@@ -1,5 +1,4 @@
-﻿using Snowflake.Records.Metadata;
-
+﻿
 namespace Snowflake.Romfile
 {
     /// <summary>

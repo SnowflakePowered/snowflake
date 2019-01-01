@@ -20,7 +20,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Containers
         [ImportService(typeof(IStoneProvider))]
         [ImportService(typeof(IInputManager))]
         [ImportService(typeof(IPluginManager))]
-        [ImportService(typeof(IMappedControllerElementCollectionStore))]
+      //  [ImportService(typeof(IMappedControllerElementCollectionStore))]
         [ImportService(typeof(ISaveLocationProvider))]
         [ImportService(typeof(IGraphQlRootSchema))]
         [ImportService(typeof(ILogProvider))]

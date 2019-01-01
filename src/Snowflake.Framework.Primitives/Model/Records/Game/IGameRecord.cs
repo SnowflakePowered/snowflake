@@ -4,8 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Model.Game;
-using Snowflake.Records.File;
-using Snowflake.Records.Metadata;
 
 namespace Snowflake.Model.Records.Game
 {

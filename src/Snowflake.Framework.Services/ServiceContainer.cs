@@ -7,9 +7,7 @@ using Snowflake.Configuration;
 using Snowflake.Input;
 using Snowflake.Input.Controller.Mapped;
 using Snowflake.Loader;
-using Snowflake.Records.Game;
 using Snowflake.Services.Logging;
-using Snowflake.Services.Persistence;
 
 namespace Snowflake.Services
 {
@@ -35,7 +33,6 @@ namespace Snowflake.Services
             this.RegisterService<IModuleEnumerator>(new ModuleEnumerator(appDataDirectory));
             this.RegisterService<IContentDirectoryProvider>(directoryProvider);
             this.RegisterService<IServiceRegistrationProvider>(new ServiceRegistrationProvider(this));
-            this.RegisterService<ISqliteDatabaseProvider>(new SqliteDatabaseProvider(directoryProvider.ApplicationData.CreateSubdirectory("libraries")));
             this.RegisterService<IServiceEnumerator>(new ServiceEnumerator(this));
         }
 
@@ -61,7 +58,7 @@ namespace Snowflake.Services
         public T Get<T>()
         {
             // todo throw?
-            return this.serviceContainer.ContainsKey(typeof(T)) ? (T)this.serviceContainer[typeof(T)] : default(T);
+            return this.serviceContainer.ContainsKey(typeof(T)) ? (T)this.serviceContainer[typeof(T)] : default;
         }
 
         /// <inheritdoc/>

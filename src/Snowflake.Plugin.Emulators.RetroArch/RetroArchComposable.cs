@@ -17,14 +17,12 @@ namespace Snowflake.Plugin.Emulators.RetroArch
         [ImportService(typeof(IContentDirectoryProvider))]
         [ImportService(typeof(IStoneProvider))]
         [ImportService(typeof(ILogProvider))]
-        [ImportService(typeof(IConfigurationCollectionStore))]
         [ImportService(typeof(IEmulatorTaskRootDirectoryProvider))]
         [ImportService(typeof(IEmulatorExecutableProvider))]
         public void Compose(IModule composableModule, IServiceRepository serviceContainer)
         {
             var stone = serviceContainer.Get<IStoneProvider>();
             var emucdp = serviceContainer.Get<IEmulatorTaskRootDirectoryProvider>();
-            var ccs = serviceContainer.Get<IConfigurationCollectionStore>();
             var exe = serviceContainer.Get<IEmulatorExecutableProvider>();
             var pm = serviceContainer.Get<IPluginManager>();
             var appdata = serviceContainer.Get<IContentDirectoryProvider>();
@@ -32,7 +30,7 @@ namespace Snowflake.Plugin.Emulators.RetroArch
             string appDataDirectory = appdata.ApplicationData.FullName;
             // var shaderManager = new ShaderManager(processHandler.Provision.ContentDirectory.CreateSubdirectory("shaders").FullName);
             var higanProvision = pm.GetProvision<HiganSnesAdapter>(composableModule);
-            pm.Register<IEmulator>(new HiganSnesAdapter(higanProvision, stone, emucdp, exe, ccs));
+            pm.Register<IEmulator>(new HiganSnesAdapter(higanProvision, stone, emucdp, exe));
         }
     }
 }

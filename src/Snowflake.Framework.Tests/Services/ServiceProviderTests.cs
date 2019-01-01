@@ -8,7 +8,6 @@ using Snowflake.Extensibility;
 using Snowflake.Loader;
 using Snowflake.Services;
 using Snowflake.Services.Logging;
-using Snowflake.Services.Persistence;
 using Snowflake.Tests.Composable;
 using Xunit;
 

@@ -43,11 +43,9 @@
     <ProjectReference Include="..\Snowflake.Framework\Snowflake.Framework.csproj" />
     <ProjectReference Include="..\Snowflake.Plugin.Emulators.RetroArch\Snowflake.Plugin.Emulators.RetroArch.csproj" />
     <ProjectReference Include="..\Snowflake.Plugin.Scraping.TheGamesDb\Snowflake.Plugin.Scraping.TheGamesDb.csproj" />
-    <ProjectReference Include="..\Snowflake.Support.Caching.KeyedImageCache\Snowflake.Support.Caching.KeyedImageCache.csproj" />
     <ProjectReference Include="..\Snowflake.Support.Execution.Providers\Snowflake.Support.Execution.Providers.csproj" />
     <ProjectReference Include="..\Snowflake.Support.PluginManager\Snowflake.Support.PluginManager.csproj" />
     <ProjectReference Include="..\Snowflake.Support.Remoting.GraphQl.RootProvider\Snowflake.Support.Remoting.GraphQl.RootProvider.csproj" />
-    <ProjectReference Include="..\Snowflake.Support.Scraping.RecordTraversers\Snowflake.Support.Scraping.RecordTraversers.csproj" />
     <ProjectReference Include="..\Snowflake.Support.ShiragameProvider\Snowflake.Support.ShiragameProvider.csproj" />
     <ProjectReference Include="..\Snowflake.Support.StoneProvider\Snowflake.Support.StoneProvider.csproj" />
     <ProjectReference Include="..\Snowflake.Support.StoreProviders\Snowflake.Support.StoreProviders.csproj" />
@@ -67,5 +65,6 @@
   </ItemGroup>
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\Snowflake.ruleset</CodeAnalysisRuleSet>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
 </Project>

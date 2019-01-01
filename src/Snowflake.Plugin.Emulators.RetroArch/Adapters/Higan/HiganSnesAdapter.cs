@@ -11,10 +11,10 @@ using Snowflake.Execution.Process;
 using Snowflake.Execution.Saving;
 using Snowflake.Extensibility;
 using Snowflake.Extensibility.Provisioning;
+using Snowflake.Model.Records.Game;
 using Snowflake.Plugin.Emulators.RetroArch.Adapters.Higan.Configuration;
 using Snowflake.Plugin.Emulators.RetroArch.Adapters.Higan.Selections;
 using Snowflake.Plugin.Emulators.RetroArch.Input;
-using Snowflake.Records.Game;
 using Snowflake.Services;
 
 namespace Snowflake.Adapters.Higan
@@ -25,14 +25,14 @@ namespace Snowflake.Adapters.Higan
         public HiganSnesAdapter(IPluginProvision provision,
             IStoneProvider stone,
             IEmulatorTaskRootDirectoryProvider provider,
-            IEmulatorExecutableProvider emulatorProvider,
-            IConfigurationCollectionStore store)
+            IEmulatorExecutableProvider emulatorProvider
+           )
             : base(provision, stone)
         {
             this.Runner = new HiganTaskRunner(emulatorProvider.GetEmulator("RetroArch"),
                 provision,
                 this.Properties);
-            this.GenericConfigurationFactory = new HiganConfigurationFactory(provision, store);
+            this.GenericConfigurationFactory = null;
             this.TaskRootProvider = provider;
         }
 
@@ -50,7 +50,7 @@ namespace Snowflake.Adapters.Higan
             string profileContext = "default")
         {
             IConfigurationCollection<HiganRetroArchConfiguration> configuration =
-            this.GenericConfigurationFactory.GetConfiguration(executingGame.Guid, profileContext);
+            this.GenericConfigurationFactory.GetConfiguration(executingGame.RecordId, profileContext);
 
             var templates = controllerConfiguration.Select(c => this.ConfigurationFactory.GetInputMappings(c)).ToList();
             var task = new EmulatorTask(executingGame)

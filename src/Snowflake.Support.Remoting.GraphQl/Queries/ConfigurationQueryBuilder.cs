@@ -18,14 +18,13 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
     public class ConfigurationQueryBuilder : QueryBuilder
     {
         private IPluginManager PluginManager { get; }
-        private IConfigurationCollectionStore GameConfigurationStore { get; }
         private IPluginConfigurationStore PluginConfigurationStore { get; }
-        public ConfigurationQueryBuilder(IConfigurationCollectionStore gameConfigurationStore,
+        public ConfigurationQueryBuilder(
             IPluginConfigurationStore pluginConfigurationStore,
             IPluginManager pluginManager)
         {
             this.PluginConfigurationStore = pluginConfigurationStore;
-            this.GameConfigurationStore = gameConfigurationStore;
+            //this.GameConfigurationStore = gameConfigurationStore;
             this.PluginManager = pluginManager;
         }
 
@@ -53,7 +52,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
         [Parameter(typeof(IEnumerable<ConfigurationValueInputObject>), typeof(ListGraphType<ConfigurationValueInputType>), "input", "The value to set.")]
         public IEnumerable<IConfigurationValue> SetGameConfigurationValue(IEnumerable<ConfigurationValueInputObject> input)
         {
-            this.GameConfigurationStore.Set(input);
+            // this.GameConfigurationStore.Set(input);
             return input;
         }
 

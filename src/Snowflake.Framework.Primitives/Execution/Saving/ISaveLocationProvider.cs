@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using Snowflake.Records.Game;
+using Snowflake.Model.Records.Game;
 
 namespace Snowflake.Execution.Saving
 {

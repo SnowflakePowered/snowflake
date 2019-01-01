@@ -493,7 +493,7 @@
         <member name="P:Snowflake.Execution.Extensibility.ExternalEmulator.ConfigurationFactory">
             <inheritdoc/>
         </member>
-        <member name="M:Snowflake.Execution.Extensibility.ExternalEmulator.CreateTask(Snowflake.Records.Game.IGameRecord,Snowflake.Execution.Saving.ISaveLocation,System.Collections.Generic.IList{Snowflake.Execution.Extensibility.IEmulatedController},System.String)">
+        <member name="M:Snowflake.Execution.Extensibility.ExternalEmulator.CreateTask(Snowflake.Model.Records.Game.IGameRecord,Snowflake.Execution.Saving.ISaveLocation,System.Collections.Generic.IList{Snowflake.Execution.Extensibility.IEmulatedController},System.String)">
             <inheritdoc/>
         </member>
         <member name="F:Snowflake.Extensibility.EmptyPluginConfiguration.EmptyConfiguration">
@@ -867,20 +867,6 @@
         <member name="P:Snowflake.Input.Controller.Mapped.MappedControllerElement.DeviceElement">
             <inheritdoc/>
         </member>
-        <member name="T:Snowflake.Input.Controller.Mapped.SqliteMappedControllerElementCollectionStore">
-            <summary>
-            A Mapped Controller Element Collection Store backed by an SQLite database.
-            </summary>
-        </member>
-        <member name="M:Snowflake.Input.Controller.Mapped.SqliteMappedControllerElementCollectionStore.GetMappingProfile(System.String,System.String,System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Input.Controller.Mapped.SqliteMappedControllerElementCollectionStore.GetProfileNames(System.String,System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Input.Controller.Mapped.SqliteMappedControllerElementCollectionStore.SetMappingProfile(Snowflake.Input.Controller.Mapped.IControllerElementMappings,System.String)">
-            <inheritdoc/>
-        </member>
         <member name="P:Snowflake.Input.Device.InputDevice.DeviceId">
             <inheritdoc/>
         </member>
@@ -999,6 +985,85 @@
         </member>
         <member name="P:Snowflake.Model.Records.FileRecord.MimeType">
             <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Model.Records.MetadataCollection.Item(System.Guid)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Model.Records.MetadataCollection.Add(System.Collections.Generic.IDictionary{System.String,Snowflake.Model.Records.IRecordMetadata})">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Model.Records.MetadataCollection.Snowflake#Model#Records#IMetadataCollection#Item(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Model.Records.MetadataCollection.Record">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Model.Records.MetadataCollection.Add(Snowflake.Model.Records.IRecordMetadata)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Model.Records.MetadataCollection.Add(System.String,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Snowflake.Model.Records.RecordMetadata">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Model.Records.RecordMetadata.Key">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Model.Records.RecordMetadata.Value">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Model.Records.RecordMetadata.Guid">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Model.Records.RecordMetadata.Record">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Model.Records.RecordMetadata.GetHashCode">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Model.Records.RecordMetadata.Equals(System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Snowflake.Model.Records.Utility.GuidCreator">
+            <summary>
+            Helper methods for working with <see cref="T:System.Guid"/>.
+            </summary>
+        </member>
+        <member name="M:Snowflake.Model.Records.Utility.GuidCreator.Create(System.Guid,System.String)">
+            <summary>
+            Creates a name-based UUID using the algorithm from RFC 4122 §4.3.
+            </summary>
+            <param name="namespaceId">The ID of the namespace.</param>
+            <param name="name">The name (within that namespace).</param>
+            <returns>A UUID derived from the namespace and name.</returns>
+            <remarks>See <a href="http://code.logos.com/blog/2011/04/generating_a_deterministic_guid.html">Generating a deterministic GUID</a>.</remarks>
+        </member>
+        <member name="M:Snowflake.Model.Records.Utility.GuidCreator.Create(System.Guid,System.String,System.Int32)">
+            <summary>
+            Creates a name-based UUID using the algorithm from RFC 4122 §4.3.
+            </summary>
+            <param name="namespaceId">The ID of the namespace.</param>
+            <param name="name">The name (within that namespace).</param>
+            <param name="version">The version number of the UUID to create; this value must be either
+            3 (for MD5 hashing) or 5 (for SHA-1 hashing).</param>
+            <returns>A UUID derived from the namespace and name.</returns>
+            <remarks>See <a href="http://code.logos.com/blog/2011/04/generating_a_deterministic_guid.html">Generating a deterministic GUID</a>.</remarks>
+        </member>
+        <member name="F:Snowflake.Model.Records.Utility.GuidCreator.DnsNamespace">
+            <summary>
+            The namespace for fully-qualified domain names (from RFC 4122, Appendix C).
+            </summary>
+        </member>
+        <member name="F:Snowflake.Model.Records.Utility.GuidCreator.UrlNamespace">
+            <summary>
+            The namespace for URLs (from RFC 4122, Appendix C).
+            </summary>
+        </member>
+        <member name="F:Snowflake.Model.Records.Utility.GuidCreator.IsoOidNamespace">
+            <summary>
+            The namespace for ISO OIDs (from RFC 4122, Appendix C).
+            </summary>
         </member>
         <member name="P:Snowflake.Persistence.SqliteDatabase.DatabaseName">
             <inheritdoc/>
@@ -1137,112 +1202,6 @@
         </member>
         <member name="P:Snowflake.Platform.PlatformInfo.MaximumInputs">
             <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Records.File.FileRecord.Metadata">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Records.File.FileRecord.Guid">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Records.File.FileRecord.MimeType">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Records.File.FileRecord.FilePath">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Records.Game.GameRecord.Metadata">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Records.Game.GameRecord.Guid">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Records.Game.GameRecord.PlatformID">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Records.Game.GameRecord.Title">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Records.Game.GameRecord.Files">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Records.Metadata.MetadataCollection.Item(System.Guid)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.Metadata.MetadataCollection.Add(System.Collections.Generic.IDictionary{System.String,Snowflake.Records.Metadata.IRecordMetadata})">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Records.Metadata.MetadataCollection.Snowflake#Records#Metadata#IMetadataCollection#Item(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Records.Metadata.MetadataCollection.Record">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.Metadata.MetadataCollection.Add(Snowflake.Records.Metadata.IRecordMetadata)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.Metadata.MetadataCollection.Add(System.String,System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="T:Snowflake.Records.Metadata.RecordMetadata">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Records.Metadata.RecordMetadata.Key">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Records.Metadata.RecordMetadata.Value">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Records.Metadata.RecordMetadata.Guid">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Records.Metadata.RecordMetadata.Record">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.Metadata.RecordMetadata.GetHashCode">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Records.Metadata.RecordMetadata.Equals(System.Object)">
-            <inheritdoc/>
-        </member>
-        <member name="T:Snowflake.Records.Metadata.Utility.GuidCreator">
-            <summary>
-            Helper methods for working with <see cref="T:System.Guid"/>.
-            </summary>
-        </member>
-        <member name="M:Snowflake.Records.Metadata.Utility.GuidCreator.Create(System.Guid,System.String)">
-            <summary>
-            Creates a name-based UUID using the algorithm from RFC 4122 §4.3.
-            </summary>
-            <param name="namespaceId">The ID of the namespace.</param>
-            <param name="name">The name (within that namespace).</param>
-            <returns>A UUID derived from the namespace and name.</returns>
-            <remarks>See <a href="http://code.logos.com/blog/2011/04/generating_a_deterministic_guid.html">Generating a deterministic GUID</a>.</remarks>
-        </member>
-        <member name="M:Snowflake.Records.Metadata.Utility.GuidCreator.Create(System.Guid,System.String,System.Int32)">
-            <summary>
-            Creates a name-based UUID using the algorithm from RFC 4122 §4.3.
-            </summary>
-            <param name="namespaceId">The ID of the namespace.</param>
-            <param name="name">The name (within that namespace).</param>
-            <param name="version">The version number of the UUID to create; this value must be either
-            3 (for MD5 hashing) or 5 (for SHA-1 hashing).</param>
-            <returns>A UUID derived from the namespace and name.</returns>
-            <remarks>See <a href="http://code.logos.com/blog/2011/04/generating_a_deterministic_guid.html">Generating a deterministic GUID</a>.</remarks>
-        </member>
-        <member name="F:Snowflake.Records.Metadata.Utility.GuidCreator.DnsNamespace">
-            <summary>
-            The namespace for fully-qualified domain names (from RFC 4122, Appendix C).
-            </summary>
-        </member>
-        <member name="F:Snowflake.Records.Metadata.Utility.GuidCreator.UrlNamespace">
-            <summary>
-            The namespace for URLs (from RFC 4122, Appendix C).
-            </summary>
-        </member>
-        <member name="F:Snowflake.Records.Metadata.Utility.GuidCreator.IsoOidNamespace">
-            <summary>
-            The namespace for ISO OIDs (from RFC 4122, Appendix C).
-            </summary>
         </member>
         <member name="P:Snowflake.Romfile.RomFileInfo.Mimetype">
             <inheritdoc/>

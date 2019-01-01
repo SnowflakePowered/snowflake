@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Snowflake.Configuration;
 using Snowflake.Execution.Saving;
 using Snowflake.Extensibility.Provisioning;
-using Snowflake.Records.Game;
+using Snowflake.Model.Records.Game;
 using Snowflake.Services;
 
 namespace Snowflake.Execution.Extensibility

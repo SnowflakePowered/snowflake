@@ -8,7 +8,7 @@ namespace Snowflake.Extensibility.Provisioning.Standalone
 {
     internal class EmptyPluginConfigurationStore : IPluginConfigurationStore
     {
-        private static EmptyPluginConfigurationStore emptyPluginConfigurationStore = new EmptyPluginConfigurationStore();
+        private static readonly EmptyPluginConfigurationStore emptyPluginConfigurationStore = new EmptyPluginConfigurationStore();
 
         public static EmptyPluginConfigurationStore EmptyConfigurationStore
             { get => emptyPluginConfigurationStore; }

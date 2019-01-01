@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Snowflake.Records.Metadata
+namespace Snowflake.Model.Records
 {
     /// <summary>
     /// Represents a piece of metadata for a game or a file.

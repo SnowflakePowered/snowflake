@@ -10,7 +10,6 @@ using Snowflake.Model.Database.Models;
 using Snowflake.Model.Game;
 using Snowflake.Model.Records;
 using Snowflake.Model.Records.Game;
-using Snowflake.Records.Metadata;
 
 namespace Snowflake.Model.Database
 {

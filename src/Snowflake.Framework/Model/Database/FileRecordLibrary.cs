@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Snowflake.Model.Database.Extensions;
 using Snowflake.Model.Database.Models;
 using Snowflake.Model.FileSystem;
 using Snowflake.Model.Records;
 using Snowflake.Model.Records.File;
-using Snowflake.Records.Metadata;
 
 namespace Snowflake.Model.Database
 {
