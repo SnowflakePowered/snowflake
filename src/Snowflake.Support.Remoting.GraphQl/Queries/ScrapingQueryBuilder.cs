@@ -7,11 +7,11 @@ using GraphQL.Types;
 using Snowflake.Extensibility;
 using Snowflake.Framework.Remoting.GraphQl.Attributes;
 using Snowflake.Framework.Remoting.GraphQl.Query;
-using Snowflake.Records.Game;
+using Snowflake.Model.Records.Game;
 using Snowflake.Scraping;
 using Snowflake.Scraping.Extensibility;
 using Snowflake.Support.Remoting.GraphQl.Inputs.Scraping;
-using Snowflake.Support.Remoting.GraphQl.Types.Record;
+using Snowflake.Support.Remoting.GraphQl.Types.Model;
 using Snowflake.Support.Remoting.GraphQl.Types.Scraping;
 using static Snowflake.Scraping.Extensibility.SeedBuilder;
 namespace Snowflake.Support.Remoting.GraphQl.Queries

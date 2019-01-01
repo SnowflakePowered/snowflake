@@ -50,7 +50,7 @@ namespace Snowflake.Model.Game
             return new Game(gameRecord, extensions);
         }
 
-        public void UpdateGame(IGameRecord game)
+        public void UpdateGameRecord(IGameRecord game)
         {
             this.GameRecordLibrary.UpdateRecord(game);
         }
@@ -71,6 +71,17 @@ namespace Snowflake.Model.Game
             {
                 var extensions = this.Extensions
                 .ToDictionary(k => k.Value.extensionType, v => v.Value.extension.MakeExtension(gameRecord));
+                return new Game(gameRecord, extensions);
+            });
+        }
+
+        public IEnumerable<IGame> GetAllGames()
+        {
+            return this.GameRecordLibrary.GetAllRecords()
+            .Select(gameRecord =>
+            {
+                var extensions = this.Extensions
+               .ToDictionary(k => k.Value.extensionType, v => v.Value.extension.MakeExtension(gameRecord));
                 return new Game(gameRecord, extensions);
             });
         }

@@ -11,6 +11,7 @@ using Snowflake.Model.Database.Models;
 using Snowflake.Model.Game;
 using Snowflake.Model.Game.LibraryExtensions;
 using Snowflake.Services;
+using Zio;
 using Zio.FileSystems;
 
 namespace Snowflake.Support.StoreProviders
@@ -49,11 +50,11 @@ namespace Snowflake.Support.StoreProviders
             var physicalFs = new PhysicalFileSystem();
 
             var appDataPath = physicalFs.ConvertPathFromInternal(contentDirectory.ApplicationData.FullName);
-            physicalFs.CreateDirectory(appDataPath / "games");
+            var gameFs = physicalFs.GetOrCreateSubFileSystem(appDataPath / "games");
 
             // Add default extensions
             gameLibrary.AddExtension<IGameFileExtensionProvider, 
-                IGameFileExtension>(new GameFileExtensionProvider(fileLibrary, physicalFs));
+                IGameFileExtension>(new GameFileExtensionProvider(fileLibrary, gameFs));
 
             gameLibrary.AddExtension<IGameConfigurationExtensionProvider,
               IGameConfigurationExtension>(new GameConfigurationExtensionProvider(configStore));

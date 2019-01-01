@@ -91,7 +91,7 @@ namespace Snowflake.Model.Tests
 
             var game = gl.CreateGame("NINTENDO_NES");
             game.Record.Title = "My Awesome Game";
-            gl.UpdateGame(game.Record);
+            gl.UpdateGameRecord(game.Record);
 
             var file = game.WithFiles().MiscRoot.OpenFile("Test.txt");
             file.OpenStream().Close();

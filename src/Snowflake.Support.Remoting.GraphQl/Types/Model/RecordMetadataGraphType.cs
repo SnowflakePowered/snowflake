@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using GraphQL.Types;
-using Snowflake.Records.Metadata;
+using Snowflake.Model.Records;
 
-namespace Snowflake.Support.Remoting.GraphQl.Types.Record
+namespace Snowflake.Support.Remoting.GraphQl.Types.Model
 {
     public class RecordMetadataGraphType : ObjectGraphType<IRecordMetadata>
     {

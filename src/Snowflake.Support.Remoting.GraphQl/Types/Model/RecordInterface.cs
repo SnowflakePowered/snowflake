@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using GraphQL.Types;
-using Snowflake.Records;
+using Snowflake.Model.Records;
 
-namespace Snowflake.Support.Remoting.GraphQl.Types.Record
+namespace Snowflake.Support.Remoting.GraphQl.Types.Model
 {
     public class RecordInterface : InterfaceGraphType<IRecord>
     {
@@ -16,9 +15,12 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.Record
             Field<GuidGraphType>("guid",
                 description: "The unique ID of the record.",
                 resolve: context => context.Source);
+
             Field<StringGraphType>("id",
              description: "The opaque GraphQL unique ID of the game. For caching purposes only.",
-             resolve: context => context.Source.Guid.ToGraphQlUniqueId("Record"));
+             resolve: context => context.Source.RecordId.ToGraphQlUniqueId("Record"));
+
+      
             Field<ListGraphType<RecordMetadataGraphType>>(
                 "metadata",
                 description: "A list of metadata related to this data.",

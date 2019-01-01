@@ -4,9 +4,10 @@ using Snowflake.Execution.Extensibility;
 using Snowflake.Execution.Saving;
 using Snowflake.Framework.Remoting.GraphQl;
 using Snowflake.Input;
+using Snowflake.Input.Controller.Mapped;
 using Snowflake.Input.Device;
 using Snowflake.Loader;
-using Snowflake.Records.Game;
+using Snowflake.Model.Game;
 using Snowflake.Scraping;
 using Snowflake.Scraping.Extensibility;
 using Snowflake.Services;
@@ -20,7 +21,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Containers
         [ImportService(typeof(IStoneProvider))]
         [ImportService(typeof(IInputManager))]
         [ImportService(typeof(IPluginManager))]
-      //  [ImportService(typeof(IMappedControllerElementCollectionStore))]
+        [ImportService(typeof(IControllerElementMappingsStore))]
         [ImportService(typeof(ISaveLocationProvider))]
         [ImportService(typeof(IGraphQlRootSchema))]
         [ImportService(typeof(ILogProvider))]
@@ -30,7 +31,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Containers
             var stone = coreInstance.Get<IStoneProvider>();
             var input = coreInstance.Get<IInputManager>();
             var plugin = coreInstance.Get<IPluginManager>();
-            var mappedController = coreInstance.Get<IMappedControllerElementCollectionStore>();
+            var mappedController = coreInstance.Get<IControllerElementMappingsStore>();
             var saves = coreInstance.Get<ISaveLocationProvider>();
             var gameLib = coreInstance.Get<IGameLibrary>();
 

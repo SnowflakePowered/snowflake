@@ -22,12 +22,12 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
         public IInputManager Manager { get; }
         public IPluginManager Plugins { get; }
         public IEnumerable<IInputEnumerator> Enumerators => this.Plugins.Get<IInputEnumerator>();
-        public IMappedControllerElementCollectionStore MappedElementStore { get; }
+        public IControllerElementMappingsStore MappedElementStore { get; }
         public IStoneProvider StoneProvider { get; }
 
         public InputQueryBuilder(IInputManager manager,
             IPluginManager pluginManager,
-            IMappedControllerElementCollectionStore mappedElementCollectionStore,
+            IControllerElementMappingsStore mappedElementCollectionStore,
             IStoneProvider stoneProvider)
         {
             this.Manager = manager;
@@ -54,7 +54,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
         [Parameter(typeof(string), typeof(StringGraphType), "profileName", "A profile name.", nullable: true)]
         public IControllerElementMappings GetProfile(string controllerId, string deviceId, string profileName = "default")
         {
-            return this.MappedElementStore.GetMappingProfile(controllerId, deviceId, profileName);
+            return this.MappedElementStore.GetMappings(controllerId, deviceId, profileName);
         }
 
         // todo: make this a mutation input object.
@@ -80,22 +80,23 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
 
             // todo: check for nulls
             var defaults = ControllerElementMappings.GetDefaultMappings(realController, emulatedController);
-            this.MappedElementStore.SetMappingProfile(defaults, input.ProfileName);
-            return this.MappedElementStore.GetMappingProfile(input.ControllerId, input.DeviceId, input.ProfileName);
+            this.MappedElementStore.AddMappings(defaults, input.ProfileName);
+            return this.MappedElementStore.GetMappings(input.ControllerId, input.DeviceId, input.ProfileName);
         }
 
-        [Mutation("setControllerProfile", "Creates the default controller profile for the given Stone controller and real device.", typeof(MappedControllerElementCollectionGraphType))]
+        [Mutation("setControllerProfile", "Sets the values of the given controller profile for the given Stone controller and real device.", typeof(MappedControllerElementCollectionGraphType))]
         [Parameter(typeof(MappedControllerElementCollectionInputObject), typeof(MappedControllerElementCollectionInputType), "input", "The input")]
         public IControllerElementMappings SetProfile(MappedControllerElementCollectionInputObject input)
         {
-            var collection = new ControllerElementMappings(input.DeviceId, input.ControllerId);
+            var collection = this.MappedElementStore.GetMappings(input.ControllerId, input.DeviceId, input.ProfileName);
+
             foreach (var mapping in input.Mappings)
             {
-                collection.Add(new MappedControllerElement(mapping.LayoutElement, mapping.DeviceElement));
+                collection[mapping.LayoutElement] = mapping.DeviceElement;
             }
 
-            this.MappedElementStore.SetMappingProfile(collection, input.ProfileName);
-            return this.MappedElementStore.GetMappingProfile(input.ControllerId, input.DeviceId, input.ProfileName);
+            this.MappedElementStore.UpdateMappings(collection, input.ProfileName);
+            return this.MappedElementStore.GetMappings(input.ControllerId, input.DeviceId, input.ProfileName);
         }
     }
 }
