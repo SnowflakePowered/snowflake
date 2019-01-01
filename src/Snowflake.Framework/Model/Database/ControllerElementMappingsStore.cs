@@ -9,7 +9,7 @@ using Snowflake.Model.Database.Models;
 
 namespace Snowflake.Model.Database
 {
-    internal class ControllerElementMappingsStore
+    internal class ControllerElementMappingsStore : IControllerElementMappingsStore
     {
         private DbContextOptionsBuilder<DatabaseContext> Options { get; set; }
 
