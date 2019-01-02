@@ -25,7 +25,6 @@ namespace Snowflake.Model.Database.Models
             modelBuilder.Entity<RecordModel>()
                 .Property(r => r.RecordType)
                 .IsRequired();
-
         }
     }
 }

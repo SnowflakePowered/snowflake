@@ -1,5 +1,4 @@
-﻿
-namespace Snowflake.Romfile
+﻿namespace Snowflake.Romfile
 {
     /// <summary>
     /// Represents information retrieved from the contents of a rom through File Signatures

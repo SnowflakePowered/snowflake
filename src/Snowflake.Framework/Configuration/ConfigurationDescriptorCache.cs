@@ -18,6 +18,7 @@ namespace Snowflake.Configuration
     {
         private static IImmutableDictionary<Type, IConfigurationSectionDescriptor> sectionDescriptors =
             ImmutableDictionary<Type, IConfigurationSectionDescriptor>.Empty;
+
         private static IImmutableDictionary<Type, IConfigurationCollectionDescriptor> collectionDescriptors =
             ImmutableDictionary<Type, IConfigurationCollectionDescriptor>.Empty;
 

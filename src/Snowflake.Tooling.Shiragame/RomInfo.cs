@@ -47,7 +47,8 @@ namespace Shiragame
         /// </summary>
         public string Region { get; }
 
-        internal RomInfo(PlatformId platformId, string crc32, string md5, string sha1, string region, string mimetype, string fileName)
+        internal RomInfo(PlatformId platformId, string crc32, string md5, string sha1, string region, string mimetype,
+            string fileName)
         {
             this.PlatformId = platformId;
             this.CRC32 = crc32;

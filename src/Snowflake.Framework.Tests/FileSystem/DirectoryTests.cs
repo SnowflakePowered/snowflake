@@ -15,8 +15,8 @@ namespace Snowflake.FileSystem
         static string NormalizePath(string path)
         {
             return Path.GetFullPath(new Uri(path).LocalPath)
-                       .TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar)
-                       .ToLowerInvariant();
+                .TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar)
+                .ToLowerInvariant();
         }
 
         [Fact]
@@ -35,7 +35,6 @@ namespace Snowflake.FileSystem
             var pfs_sub_sub = pfs_sub.GetOrCreateSubFileSystem("/test");
             Assert.Equal(NormalizePath(pfs_sub_sub.ConvertPathToInternal("/")),
                 NormalizePath(Path.Combine(temp, "test", "test")));
-
         }
 
         [Fact]
@@ -47,15 +46,13 @@ namespace Snowflake.FileSystem
             var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
 
             Assert.Equal(NormalizePath(dir.GetPath().FullName),
-                 NormalizePath(Path.Combine(temp, "test")));
+                NormalizePath(Path.Combine(temp, "test")));
 
             Assert.Equal(NormalizePath(dir.OpenDirectory("dir1").GetPath().FullName),
-              NormalizePath(Path.Combine(temp, "test", "dir1")));
+                NormalizePath(Path.Combine(temp, "test", "dir1")));
 
             Assert.Equal(NormalizePath(dir.OpenDirectory("test").OpenDirectory("test").GetPath().FullName),
                 NormalizePath(Path.Combine(temp, "test", "test", "test")));
-
-
         }
 
         [Fact]

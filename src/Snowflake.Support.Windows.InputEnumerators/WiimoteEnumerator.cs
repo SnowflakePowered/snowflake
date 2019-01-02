@@ -36,16 +36,17 @@ namespace Snowflake.Plugin.InputEnumerators
 
         [DllImport("Kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
         public static extern SafeFileHandle CreateFile(string fileName,
-          [MarshalAs(UnmanagedType.U4)] FileAccess fileAccess,
-          [MarshalAs(UnmanagedType.U4)] FileShare fileShare,
-          IntPtr securityAttributes,
-          [MarshalAs(UnmanagedType.U4)] FileMode creationDisposition,
-          [MarshalAs(UnmanagedType.U4)] uint flags,
-          IntPtr template);
+            [MarshalAs(UnmanagedType.U4)] FileAccess fileAccess,
+            [MarshalAs(UnmanagedType.U4)] FileShare fileShare,
+            IntPtr securityAttributes,
+            [MarshalAs(UnmanagedType.U4)] FileMode creationDisposition,
+            [MarshalAs(UnmanagedType.U4)] uint flags,
+            IntPtr template);
 
         public static SafeHandle CreateFile(string devicePath)
         {
-            return WiimoteEnumerator.CreateFile(devicePath, FileAccess.ReadWrite, FileShare.ReadWrite, IntPtr.Zero, FileMode.Open,
+            return WiimoteEnumerator.CreateFile(devicePath, FileAccess.ReadWrite, FileShare.ReadWrite, IntPtr.Zero,
+                FileMode.Open,
                 0x40000000, IntPtr.Zero);
         }
 
@@ -53,7 +54,8 @@ namespace Snowflake.Plugin.InputEnumerators
         {
             var _mBuff = new byte[22];
             _mBuff[0] = 0x15;
-            bool good = WiimoteEnumerator.HidD_SetOutputReport(wiimoteHandle.DangerousGetHandle(), _mBuff, (uint)_mBuff.Length);
+            bool good = WiimoteEnumerator.HidD_SetOutputReport(wiimoteHandle.DangerousGetHandle(), _mBuff,
+                (uint) _mBuff.Length);
             int error = Marshal.GetLastWin32Error();
             return error != 0x1F && good;
         }
@@ -63,11 +65,11 @@ namespace Snowflake.Plugin.InputEnumerators
         {
             var guid = new Guid("0306057e-0000-0000-0000-504944564944");
             return from device in this.inputManager.GetAllDevices()
-                    where device?.DI_ProductGUID == guid
-                    let wiimoteHandle = WiimoteEnumerator.CreateFile(device.DI_InterfacePath)
-                    let deviceId = "DEVICE_WII_REMOTE"
-                    where WiimoteEnumerator.IsWiimoteConnected(wiimoteHandle)
-                    select new InputDevice(InputApi.Other, device, this.ControllerLayout);
+                where device?.DI_ProductGUID == guid
+                let wiimoteHandle = WiimoteEnumerator.CreateFile(device.DI_InterfacePath)
+                let deviceId = "DEVICE_WII_REMOTE"
+                where WiimoteEnumerator.IsWiimoteConnected(wiimoteHandle)
+                select new InputDevice(InputApi.Other, device, this.ControllerLayout);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Snowflake.Tooling.Taskrunner.Framework
             this.Container = new Dictionary<string, ITaskRunner>();
         }
 
-        public void Add (ITaskRunner task)
+        public void Add(ITaskRunner task)
         {
             this.Container.Add(task.Name, task);
         }

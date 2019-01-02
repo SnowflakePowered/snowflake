@@ -11,13 +11,16 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Selections.VideoConfiguration
     {
         [SelectionOption("null", DisplayName = "No Driver", Private = true)]
         Null,
+
         [SelectionOption("gl", DisplayName = "OpenGL")]
         OpenGL,
-        [CustomMetadata("osRestricted", "windows")]
-        [SelectionOption("d3d", DisplayName = "Direct3D")]
+
+        [CustomMetadata("osRestricted", "windows")] [SelectionOption("d3d", DisplayName = "Direct3D")]
         Direct3D,
+
         [SelectionOption("sdl2", DisplayName = "SDL2", Private = true)]
         SDL2,
+
         [SelectionOption("vulkan", DisplayName = "vulkan")]
         Vulkan,
     }

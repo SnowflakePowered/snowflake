@@ -12,7 +12,8 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.Configuration
         public ConfigurationCollectionGraphType()
         {
             Name = "ConfigurationCollection";
-            Description = "A `ConfigurationCollection` is a collection of `ConfigurationSections` for a given emulator.";
+            Description =
+                "A `ConfigurationCollection` is a collection of `ConfigurationSections` for a given emulator.";
             Field<ConfigurationCollectionDescriptorGraphType>("descriptor",
                 description: "Describes this configuration collection.",
                 resolve: context => context.Source.Descriptor);

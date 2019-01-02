@@ -13,8 +13,8 @@ namespace Snowflake.Model.Database.Models
         internal static void SetupModel(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<FileRecordModel>()
-              .Property(r => r.MimeType)
-              .IsRequired();
+                .Property(r => r.MimeType)
+                .IsRequired();
         }
     }
 }

@@ -16,6 +16,7 @@ namespace Snowflake.Model.Database.Models
         public ConfigurationProfileModel Profile { get; set; }
         public string ProfileName { get; set; }
         public string ConfigurationSource { get; set; }
+
         public static void SetupModel(ModelBuilder modelBuilder)
         {
             // big yikes
@@ -30,18 +31,19 @@ namespace Snowflake.Model.Database.Models
                 .HasOne(p => p.Profile)
                 .WithOne()
                 .HasForeignKey<GameRecordConfigurationProfileModel>(p => p.ProfileID);
-                
+
 
             modelBuilder.Entity<GameRecordConfigurationProfileModel>()
                 .Property(p => p.ProfileName)
                 .IsRequired();
 
-            
+
             modelBuilder.Entity<GameRecordConfigurationProfileModel>()
-                .HasKey(k => new { k.ProfileName, k.GameID,
-                  k.ConfigurationSource });
-
-
+                .HasKey(k => new
+                {
+                    k.ProfileName, k.GameID,
+                    k.ConfigurationSource
+                });
         }
     }
 }

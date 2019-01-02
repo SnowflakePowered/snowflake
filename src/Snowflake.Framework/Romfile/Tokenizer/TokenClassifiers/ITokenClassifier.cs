@@ -6,8 +6,10 @@ namespace Snowflake.Romfile.Tokenizer
     {
         IEnumerable<StructuredFilenameToken>
             ClassifyParensTokens(IEnumerable<(string tokenValue, int tokenPosition)> tokens);
+
         IEnumerable<StructuredFilenameToken>
             ClassifyBracketsTokens(IEnumerable<(string tokenValue, int tokenPosition)> tokens);
+
         IEnumerable<StructuredFilenameToken>
             ExtractTitleTokens(string title);
     }

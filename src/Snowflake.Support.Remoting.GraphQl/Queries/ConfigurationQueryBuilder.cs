@@ -19,6 +19,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
     {
         private IPluginManager PluginManager { get; }
         private IPluginConfigurationStore PluginConfigurationStore { get; }
+
         public ConfigurationQueryBuilder(
             IPluginConfigurationStore pluginConfigurationStore,
             IPluginManager pluginManager)
@@ -57,8 +58,10 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
         //}
 
         [Mutation("setPluginConfigurationValue", "Config Options", typeof(ConfigurationValueInputGraphType))]
-        [Parameter(typeof(IEnumerable<ConfigurationValueInputObject>), typeof(ListGraphType<ConfigurationValueInputType>), "input", "The value to set.")]
-        public IEnumerable<IConfigurationValue> SetPluginConfigurationValue(IEnumerable<ConfigurationValueInputObject> input)
+        [Parameter(typeof(IEnumerable<ConfigurationValueInputObject>),
+            typeof(ListGraphType<ConfigurationValueInputType>), "input", "The value to set.")]
+        public IEnumerable<IConfigurationValue> SetPluginConfigurationValue(
+            IEnumerable<ConfigurationValueInputObject> input)
         {
             this.PluginConfigurationStore.Set(input);
             return input;

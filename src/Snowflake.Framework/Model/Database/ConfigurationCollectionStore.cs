@@ -25,12 +25,12 @@ namespace Snowflake.Model.Database
             }
         }
 
-        public IEnumerable<IGrouping<string, string>> 
+        public IEnumerable<IGrouping<string, string>>
             GetProfileNames(IGameRecord gameRecord)
         {
             using (var context = new DatabaseContext(this.Options.Options))
             {
-               return context.GameRecords
+                return context.GameRecords
                     .Include(g => g.ConfigurationProfiles)
                     .SingleOrDefault(g => g.RecordID == gameRecord.RecordId)
                     .ConfigurationProfiles
@@ -39,10 +39,10 @@ namespace Snowflake.Model.Database
         }
 
         public IConfigurationCollection<T> CreateConfiguration<T>(string sourceName)
-            where T: class, IConfigurationCollection<T>
+            where T : class, IConfigurationCollection<T>
         {
             var collection = new ConfigurationCollection<T>();
-            
+
             using (var context = new DatabaseContext(this.Options.Options))
             {
                 context.ConfigurationProfiles.Add(collection.AsModel(sourceName));
@@ -52,7 +52,7 @@ namespace Snowflake.Model.Database
             return collection;
         }
 
-        public IConfigurationCollection<T> CreateConfigurationForGame<T>(IGameRecord gameRecord, 
+        public IConfigurationCollection<T> CreateConfigurationForGame<T>(IGameRecord gameRecord,
             string sourceName, string profileName)
             where T : class, IConfigurationCollection<T>
         {
@@ -65,9 +65,9 @@ namespace Snowflake.Model.Database
                     .SingleOrDefault(p => p.RecordID == gameRecord.RecordId);
 
                 if (gameEntity == null) throw new DependentEntityNotExistsException(gameRecord.RecordId);
-                    
+
                 var entity = context.ConfigurationProfiles
-                        .Add(collection.AsModel(sourceName));
+                    .Add(collection.AsModel(sourceName));
 
                 gameEntity.ConfigurationProfiles.Add(new GameRecordConfigurationProfileModel
                 {
@@ -78,6 +78,7 @@ namespace Snowflake.Model.Database
 
                 context.SaveChanges();
             }
+
             return collection;
         }
 
@@ -99,9 +100,9 @@ namespace Snowflake.Model.Database
             {
                 var profileJunction = context.GameRecordsConfigurationProfiles
                     .Include(p => p.Profile)
-                    .SingleOrDefault(g => g.GameID == gameGuid 
-                    && g.ConfigurationSource == sourceName 
-                    && g.ProfileName == profileName);
+                    .SingleOrDefault(g => g.GameID == gameGuid
+                                          && g.ConfigurationSource == sourceName
+                                          && g.ProfileName == profileName);
                 if (profileJunction == null) return;
 
                 context.Entry(profileJunction).State = EntityState.Deleted;
@@ -122,8 +123,8 @@ namespace Snowflake.Model.Database
                 if (config == null) return;
 
                 foreach
-                   (var value in
-                   context.ConfigurationValues.Where(v => v.ValueCollectionGuid == guid))
+                (var value in
+                    context.ConfigurationValues.Where(v => v.ValueCollectionGuid == guid))
                 {
                     var realValue = configurationCollection[value.SectionKey][value.OptionKey]
                         ?.AsConfigurationStringValue();
@@ -138,7 +139,7 @@ namespace Snowflake.Model.Database
                 {
                     var value = context.ConfigurationValues.Find(t.value.Guid);
                     if (value != null) continue;
-                  
+
                     context.ConfigurationValues.Add(new ConfigurationValueModel
                     {
                         SectionKey = t.section,
@@ -148,6 +149,7 @@ namespace Snowflake.Model.Database
                         ValueCollectionGuid = configurationCollection.ValueCollection.Guid
                     });
                 }
+
                 context.SaveChanges();
             }
         }
@@ -165,9 +167,9 @@ namespace Snowflake.Model.Database
             }
         }
 
-        public IConfigurationCollection<T>? GetConfiguration<T>(Guid gameGuid, 
+        public IConfigurationCollection<T>? GetConfiguration<T>(Guid gameGuid,
             string sourceName, string profileName)
-                where T : class, IConfigurationCollection<T>
+            where T : class, IConfigurationCollection<T>
 
         {
             using (var context = new DatabaseContext(this.Options.Options))
@@ -176,8 +178,8 @@ namespace Snowflake.Model.Database
                     .Include(g => g.Profile)
                     .ThenInclude(g => g.Values)
                     .SingleOrDefault(g => g.GameID == gameGuid
-                    && g.ConfigurationSource == sourceName
-                    && g.ProfileName == profileName);
+                                          && g.ConfigurationSource == sourceName
+                                          && g.ProfileName == profileName);
                 if (profileJunction == null) return null;
 
                 var profile = context.ConfigurationProfiles

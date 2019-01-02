@@ -15,6 +15,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
     public class ControllerLayoutQueryBuilder : QueryBuilder
     {
         private IStoneProvider StoneProvider { get; }
+
         public ControllerLayoutQueryBuilder(IStoneProvider stoneProvider)
         {
             this.StoneProvider = stoneProvider;

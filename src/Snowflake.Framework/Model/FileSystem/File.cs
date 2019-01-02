@@ -49,13 +49,13 @@ namespace Snowflake.Model.FileSystem
             {
                 this.RawInfo.Delete();
             }
+
             this._ParentDirectory.RemoveGuid(this.Name);
         }
 
         public FileInfo GetFilePath()
         {
-            return new FileInfo(this.RawInfo.FileSystem.
-                ConvertPathToInternal(this.RawInfo.Path));
+            return new FileInfo(this.RawInfo.FileSystem.ConvertPathToInternal(this.RawInfo.Path));
         }
 
         public string RootedPath => this.RawInfo.Path.ToString();

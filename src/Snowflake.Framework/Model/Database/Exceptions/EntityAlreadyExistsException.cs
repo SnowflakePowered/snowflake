@@ -6,6 +6,5 @@ namespace Snowflake.Model.Database.Exceptions
 {
     public class EntityAlreadyExistsException : Exception
     {
-        
     }
 }

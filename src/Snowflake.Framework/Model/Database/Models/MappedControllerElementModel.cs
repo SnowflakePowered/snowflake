@@ -26,17 +26,17 @@ namespace Snowflake.Model.Database.Models
                 .IsRequired();
 
             modelBuilder.Entity<MappedControllerElementModel>()
-              .Property(p => p.DeviceElement)
-              .HasConversion(e => Enums.AsString(e), e => Enums.Parse<ControllerElement>(e))
-              .IsRequired();
+                .Property(p => p.DeviceElement)
+                .HasConversion(e => Enums.AsString(e), e => Enums.Parse<ControllerElement>(e))
+                .IsRequired();
 
             modelBuilder.Entity<MappedControllerElementModel>()
                 .HasOne(e => e.Collection)
                 .WithMany(e => e.MappedElements)
-                .HasForeignKey(p => new { p.ControllerID, p.DeviceID, p.ProfileName });
+                .HasForeignKey(p => new {p.ControllerID, p.DeviceID, p.ProfileName});
 
             modelBuilder.Entity<MappedControllerElementModel>()
-               .HasKey(p => new { p.ControllerID, p.DeviceID, p.ProfileName, p.LayoutElement });
+                .HasKey(p => new {p.ControllerID, p.DeviceID, p.ProfileName, p.LayoutElement});
         }
     }
 }

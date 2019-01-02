@@ -31,9 +31,11 @@ namespace Snowflake.Model.Database
                 {
                     context.FileRecords.Add((file, mimetype).AsModel());
                 }
+
                 context.SaveChanges();
             }
         }
+
         public IFileRecord? GetRecord(IFile file)
         {
             using (var context = new DatabaseContext(this.Options.Options))
@@ -45,10 +47,11 @@ namespace Snowflake.Model.Database
                     return new FileRecord(file, record.MimeType,
                         record.Metadata.AsMetadataCollection(file.FileGuid));
                 }
-                return null;
 
+                return null;
             }
         }
+
         public IEnumerable<IFileRecord> GetFileRecords(IDirectory directoryRoot)
         {
             using (var context = new DatabaseContext(this.Options.Options))

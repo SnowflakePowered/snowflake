@@ -10,7 +10,9 @@ using Snowflake.Extensibility.Provisioning;
 
 namespace Snowflake.Execution.Extensibility
 {
-    public abstract class ConfigurationFactory<TConfigurationCollection, TInputTemplate> : IConfigurationFactory<TConfigurationCollection, TInputTemplate>
+    public abstract class
+        ConfigurationFactory<TConfigurationCollection, TInputTemplate> : IConfigurationFactory<TConfigurationCollection,
+            TInputTemplate>
         where TConfigurationCollection : class, IConfigurationCollection<TConfigurationCollection>
         where TInputTemplate : class, IInputTemplate<TInputTemplate>
 
@@ -19,8 +21,8 @@ namespace Snowflake.Execution.Extensibility
 
         protected ConfigurationFactory(IPluginProvision provision)
             : this(provision.CommonResourceDirectory.CreateSubdirectory("InputMappings").EnumerateFiles()
-                 .Select(mapping => JsonConvert.DeserializeObject<InputMapping>(File.ReadAllText(mapping.FullName)))
-                 .Cast<IInputMapping>().ToList())
+                .Select(mapping => JsonConvert.DeserializeObject<InputMapping>(File.ReadAllText(mapping.FullName)))
+                .Cast<IInputMapping>().ToList())
         {
         }
 
@@ -39,14 +41,17 @@ namespace Snowflake.Execution.Extensibility
             return this.GetConfiguration();
         }
 
-        (IInputTemplate template, IInputMapping mapping) IConfigurationFactory.GetInputMappings(IEmulatedController emulatedDevice)
+        (IInputTemplate template, IInputMapping mapping) IConfigurationFactory.GetInputMappings(
+            IEmulatedController emulatedDevice)
         {
             return this.GetInputMappings(emulatedDevice);
         }
 
-        public abstract (IInputTemplate<TInputTemplate> template, IInputMapping mapping) GetInputMappings(IEmulatedController emulatedDevice);
+        public abstract (IInputTemplate<TInputTemplate> template, IInputMapping mapping) GetInputMappings(
+            IEmulatedController emulatedDevice);
 
-        public abstract IConfigurationCollection<TConfigurationCollection> GetConfiguration(Guid gameRecord, string profileName);
+        public abstract IConfigurationCollection<TConfigurationCollection> GetConfiguration(Guid gameRecord,
+            string profileName);
 
         public abstract IConfigurationCollection<TConfigurationCollection> GetConfiguration();
     }

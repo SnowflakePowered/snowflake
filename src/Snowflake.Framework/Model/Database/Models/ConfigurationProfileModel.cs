@@ -8,7 +8,7 @@ namespace Snowflake.Model.Database.Models
     internal class ConfigurationProfileModel
     {
         public string ConfigurationSource { get; set; }
-     
+
         public Guid ValueCollectionGuid { get; set; }
 
         public List<ConfigurationValueModel> Values { get; set; }

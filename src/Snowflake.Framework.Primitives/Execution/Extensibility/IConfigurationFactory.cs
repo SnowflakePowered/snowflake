@@ -63,7 +63,8 @@ namespace Snowflake.Execution.Extensibility
         /// <param name="gameRecord">The GUID of the game that is associated with this set of configuration collections</param>
         /// <param name="profileName">The profile name to get configuration for. By default, the profile name must be 'default'</param>
         /// <returns>A set of configuration collection keyed on the expected file names of the configuration files.</returns>
-        new IConfigurationCollection<TConfigurationCollection> GetConfiguration(Guid gameRecord, string profileName = "default");
+        new IConfigurationCollection<TConfigurationCollection> GetConfiguration(Guid gameRecord,
+            string profileName = "default");
 
         /// <summary>
         /// Gets the default valid set of configuration required to launch this emulator for a given game record.
@@ -76,6 +77,7 @@ namespace Snowflake.Execution.Extensibility
         /// </summary>
         /// <param name="emulatedDevice">The given device to create an input template for.</param>
         /// <returns>A valid input template for the given emulated device details.</returns>
-        new (IInputTemplate<TInputTemplate> template, IInputMapping mapping) GetInputMappings(IEmulatedController emulatedDevice);
+        new (IInputTemplate<TInputTemplate> template, IInputMapping mapping) GetInputMappings(
+            IEmulatedController emulatedDevice);
     }
 }

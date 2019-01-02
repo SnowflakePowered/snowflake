@@ -62,7 +62,7 @@ namespace Shiragame.Builder.Parser
                     continue;
                 }
 
-                var lines = line.Trim().Split(new char[] { ' ' }, 2, StringSplitOptions.None);
+                var lines = line.Trim().Split(new char[] {' '}, 2, StringSplitOptions.None);
                 if (lines[0].Equals("rom"))
                 {
                     continue;
@@ -72,13 +72,16 @@ namespace Shiragame.Builder.Parser
             }
         }
 
-        private static IEnumerable<SerialInfo> GetSerials(IEnumerable<IDictionary<string, string>> cmpMatches, string platformId)
+        private static IEnumerable<SerialInfo> GetSerials(IEnumerable<IDictionary<string, string>> cmpMatches,
+            string platformId)
         {
             return from entry in cmpMatches.AsParallel()
                 where entry.ContainsKey("serial")
                 let name = entry["name"]
-                let serials = platformId.StartsWith("NINTENDO") ?
-                        Regex.Replace(entry["serial"], "[A-Z]*?-[A-Z]-", string.Empty) : entry["serial"] // sanitize nintendo serials
+                let serials =
+                    platformId.StartsWith("NINTENDO")
+                        ? Regex.Replace(entry["serial"], "[A-Z]*?-[A-Z]-", string.Empty)
+                        : entry["serial"] // sanitize nintendo serials
                 let region = RegionParser.ParseRegion(name)
                 select new SerialInfo(platformId, name, region, serials);
         }
@@ -87,15 +90,15 @@ namespace Shiragame.Builder.Parser
         {
             const string regex = @"(?:\s|)(.*?)(?:\sname|\scrc|\scrc32|\smd5|\ssha1|\sbaddump|\snodump|\ssize|$)";
             return from Match romEntry in cmpMatches.AsParallel()
-                   let match = romEntry.Value
-                   let filename = Regex.Match(match, "name" + regex).Groups[1].Value.Trim('"')
-                   let crc = Regex.Match(match, "crc" + regex).Groups[1].Value
-                   let md5 = Regex.Match(match, "md5" + regex).Groups[1].Value
-                   let sha1 = Regex.Match(match, "sha1" + regex).Groups[1].Value
-                   let region = RegionParser.ParseRegion(filename)
-                   let mimetype = DatParser.GetMimeType(filename, platformId)
-                   where mimetype != null
-                   select new RomInfo(platformId, crc, md5, sha1, region, mimetype, filename);
+                let match = romEntry.Value
+                let filename = Regex.Match(match, "name" + regex).Groups[1].Value.Trim('"')
+                let crc = Regex.Match(match, "crc" + regex).Groups[1].Value
+                let md5 = Regex.Match(match, "md5" + regex).Groups[1].Value
+                let sha1 = Regex.Match(match, "sha1" + regex).Groups[1].Value
+                let region = RegionParser.ParseRegion(filename)
+                let mimetype = DatParser.GetMimeType(filename, platformId)
+                where mimetype != null
+                select new RomInfo(platformId, crc, md5, sha1, region, mimetype, filename);
         }
     }
 }

@@ -57,9 +57,11 @@ namespace Snowflake.Model.Tests
 
             Assert.NotEmpty(game.WithConfigurations().GetProfileNames());
 
-            profile.Configuration.ExampleConfiguration.FullscreenResolution = Configuration.FullscreenResolution.Resolution1600X1050;
+            profile.Configuration.ExampleConfiguration.FullscreenResolution =
+                Configuration.FullscreenResolution.Resolution1600X1050;
             gl.WithConfigurationLibrary().UpdateProfile(profile);
-            var newProfile = game.WithConfigurations().GetProfile<ExampleConfigurationCollection>("TestConfiguration", "test");
+            var newProfile = game.WithConfigurations()
+                .GetProfile<ExampleConfigurationCollection>("TestConfiguration", "test");
             Assert.Equal(Configuration.FullscreenResolution.Resolution1600X1050,
                 newProfile.Configuration.ExampleConfiguration.FullscreenResolution);
 
@@ -68,7 +70,6 @@ namespace Snowflake.Model.Tests
 
             game.WithConfigurations().DeleteProfile("TestConfiguration", "test");
             Assert.Empty(game.WithConfigurations().GetProfileNames());
-
         }
 
 
@@ -87,7 +88,7 @@ namespace Snowflake.Model.Tests
 
             var gl = new GameLibrary(glib);
             gl.AddExtension<GameFileExtensionProvider, IGameFileExtension
-                >(new GameFileExtensionProvider(flib, gfs));
+            >(new GameFileExtensionProvider(flib, gfs));
 
             var game = gl.CreateGame("NINTENDO_NES");
             game.Record.Title = "My Awesome Game";
@@ -102,7 +103,6 @@ namespace Snowflake.Model.Tests
 
             var newGame = gl.GetGame(game.Record.RecordId);
             Assert.NotEmpty(newGame.WithFiles().Files);
-            
         }
     }
 }

@@ -17,7 +17,8 @@ namespace Snowflake.JsonConverters
         protected override IInputMapping Create(Type objectType, JObject jObject)
         {
             IDictionary<ControllerElement, string> controllerElements = (from prop in
-                jObject.Value<JObject>("Controller").Properties().Concat(jObject.Value<JObject>("Keyboard").Properties())
+                    jObject.Value<JObject>("Controller").Properties()
+                        .Concat(jObject.Value<JObject>("Keyboard").Properties())
                 select new
                 {
                     element = Enums.Parse<ControllerElement>(prop.Name),

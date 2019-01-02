@@ -23,6 +23,7 @@ namespace Snowflake.Tooling.Taskrunner.Framework.Parser
                     i++; // skip the next argument as well.
                 }
             }
+
             return parsedArgs;
         }
 
@@ -36,11 +37,12 @@ namespace Snowflake.Tooling.Taskrunner.Framework.Parser
                 if (currentArg.StartsWith("--"))
                 {
                     string option = currentArg.Substring(2);
-                    if (i+1 >= args.Length || args[i + 1].StartsWith("-"))
+                    if (i + 1 >= args.Length || args[i + 1].StartsWith("-"))
                     {
                         parsedArgs.Add(option, "true"); // switch at the end, or a switch value.
                         continue;
                     }
+
                     parsedArgs.Add(option, args[++i]);
                 }
                 else if (currentArg.StartsWith("-"))
@@ -51,10 +53,12 @@ namespace Snowflake.Tooling.Taskrunner.Framework.Parser
                         parsedArgs.Add(option, "true"); // switch at the end, or a switch value.
                         continue;
                     }
+
                     parsedArgs.Add(option, args[++i]);
                 }
             }
+
             return parsedArgs;
-        }       
+        }
     }
 }

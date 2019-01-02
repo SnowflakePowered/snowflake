@@ -17,8 +17,8 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.InputDevice
                 description: "The input API of this device.",
                 resolve: context => context.Source.DeviceApi);
             Field<ControllerLayoutGraphType>("deviceLayout",
-               description: "The Stone layout for this device.",
-               resolve: context => context.Source.DeviceLayout);
+                description: "The Stone layout for this device.",
+                resolve: context => context.Source.DeviceLayout);
             Field<LowLevelInputDeviceGraphType>("deviceInfo",
                 description: "The low level device information for this enumerated input device",
                 resolve: context => context.Source.DeviceInfo);

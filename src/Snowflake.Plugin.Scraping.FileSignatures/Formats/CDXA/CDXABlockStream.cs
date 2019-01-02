@@ -11,6 +11,7 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Formats.CDXA
     {
         private readonly Stream diskStream;
         public const long BlockLength = CDXADisk.BlockSize - CDXADisk.BlockHeaderSize;
+
         public CDXABlockStream(int lba, Stream diskStream)
         {
             this.diskStream = diskStream;
@@ -56,7 +57,8 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Formats.CDXA
         /// </remarks>
         public sealed override int Read(byte[] buffer, int offset, int count)
         {
-            this.diskStream.Seek((CDXADisk.BlockSize * this.LBA) + CDXADisk.BlockHeaderSize + this.Position, SeekOrigin.Begin);
+            this.diskStream.Seek((CDXADisk.BlockSize * this.LBA) + CDXADisk.BlockHeaderSize + this.Position,
+                SeekOrigin.Begin);
             this.Position += count;
             return this.diskStream.Read(buffer, offset, count);
         }
@@ -78,6 +80,7 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Formats.CDXA
 
         /// <inheritdoc/>
         public sealed override long Length { get; }
+
         public int LBA { get; }
 
         /// <inheritdoc/>

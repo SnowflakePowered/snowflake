@@ -4,11 +4,10 @@ using System.Text;
 
 namespace Snowflake.Model.Database.Exceptions
 {
-    public class DependentEntityNotExistsException: Exception
+    public class DependentEntityNotExistsException : Exception
     {
         public DependentEntityNotExistsException(Guid entityGuid)
         {
-
         }
     }
 }

@@ -18,12 +18,12 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.Model
                 resolve: context => context.Source.Files);
 
             Field<ListGraphType<FileGraphType>>("programFiles",
-               description: "The files for which have metadata and are installed ",
-               arguments: new QueryArguments(new QueryArgument<BooleanGraphType> {  Name = "recursive", DefaultValue = false, }),
-               resolve: context => context.GetArgument("recursive", false) ? context.Source.ProgramRoot.EnumerateFilesRecursive() 
-                                : context.Source.ProgramRoot.EnumerateFiles());
-
-
+                description: "The files for which have metadata and are installed ",
+                arguments: new QueryArguments(new QueryArgument<BooleanGraphType>
+                    {Name = "recursive", DefaultValue = false,}),
+                resolve: context => context.GetArgument("recursive", false)
+                    ? context.Source.ProgramRoot.EnumerateFilesRecursive()
+                    : context.Source.ProgramRoot.EnumerateFiles());
         }
     }
 }

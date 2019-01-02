@@ -15,6 +15,7 @@ namespace Snowflake.Support.Execution
     {
         internal const string ManifestFileName = ".snowflakemanifest";
         private DirectoryInfo SaveLocationRoot { get; }
+
         public SaveLocationProvider(IContentDirectoryProvider contentDirectoryProvider)
         {
             this.SaveLocationRoot = contentDirectoryProvider.ApplicationData.CreateSubdirectory("saves");
@@ -26,7 +27,8 @@ namespace Snowflake.Support.Execution
 
             DirectoryInfo locationRoot = this.SaveLocationRoot
                 .CreateSubdirectory(saveGuid.ToString());
-            var saveLocation = new SaveLocation(gameRecord.RecordId, saveType, locationRoot, saveGuid, DateTimeOffset.UtcNow);
+            var saveLocation = new SaveLocation(gameRecord.RecordId, saveType, locationRoot, saveGuid,
+                DateTimeOffset.UtcNow);
             return await this.UpdateSaveLocation(saveLocation);
         }
 
@@ -38,23 +40,24 @@ namespace Snowflake.Support.Execution
         public async Task<IEnumerable<ISaveLocation>> GetAllSaveLocationsAsync()
         {
             ISaveLocation[] results = await Task.WhenAll(
-                   from directory in this.SaveLocationRoot.EnumerateDirectories()
-                   where Guid.TryParse(directory.Name, out _)
-                   let guid = Guid.Parse(directory.Name)
-                   select this.GetSaveLocationAsync(guid));
+                from directory in this.SaveLocationRoot.EnumerateDirectories()
+                where Guid.TryParse(directory.Name, out _)
+                let guid = Guid.Parse(directory.Name)
+                select this.GetSaveLocationAsync(guid));
             return results;
         }
 
         public async Task<ISaveLocation> GetSaveLocationAsync(Guid saveLocationGuid)
         {
             string manifestPath = Path.Combine(this.SaveLocationRoot.FullName, saveLocationGuid.ToString(),
-                 ManifestFileName);
+                ManifestFileName);
             if (!File.Exists(manifestPath))
             {
                 throw new FileNotFoundException();
             }
 
-            SaveLocationManifest manifest = JsonConvert.DeserializeObject<SaveLocationManifest>(await File.ReadAllTextAsync(manifestPath));
+            SaveLocationManifest manifest =
+                JsonConvert.DeserializeObject<SaveLocationManifest>(await File.ReadAllTextAsync(manifestPath));
             return manifest.ToSaveLocation();
         }
 

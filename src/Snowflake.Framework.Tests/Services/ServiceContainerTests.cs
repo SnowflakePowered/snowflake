@@ -5,6 +5,7 @@ using System.Text;
 using Snowflake.Loader;
 using Snowflake.Tests.Composable;
 using Xunit;
+
 namespace Snowflake.Services.Tests
 {
     public class ServiceContainerTests

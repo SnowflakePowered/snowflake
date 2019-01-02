@@ -29,7 +29,10 @@ namespace Snowflake.Configuration
         public object? this[string key]
         {
             get { return configurationInterceptor.Values[this.Descriptor, key]?.Value; }
-            set { this.configurationInterceptor.Values[this.Descriptor, key]!.Value = value!; }
+            set
+            {
+                this.configurationInterceptor.Values[this.Descriptor, key]!.Value = value!;
+            }
         }
 
         private readonly ConfigurationInterceptor configurationInterceptor;
@@ -48,17 +51,18 @@ namespace Snowflake.Configuration
             this.ValueCollection = values;
 
             this.Configuration =
-                  ConfigurationDescriptorCache
-                .GetProxyGenerator()
-                .CreateInterfaceProxyWithoutTarget<T>(new ConfigurationCircularInterceptor<T>(this),
-                    configurationInterceptor);
+                ConfigurationDescriptorCache
+                    .GetProxyGenerator()
+                    .CreateInterfaceProxyWithoutTarget<T>(new ConfigurationCircularInterceptor<T>(this),
+                        configurationInterceptor);
         }
 
         /// <inheritdoc/>
         public IEnumerator<KeyValuePair<IConfigurationOptionDescriptor, IConfigurationValue>> GetEnumerator()
         {
             return this.Descriptor.Options
-                .Select(o => new KeyValuePair<IConfigurationOptionDescriptor, IConfigurationValue>(o, this.Values[o.OptionKey]))
+                .Select(o =>
+                    new KeyValuePair<IConfigurationOptionDescriptor, IConfigurationValue>(o, this.Values[o.OptionKey]))
                 .GetEnumerator();
         }
 

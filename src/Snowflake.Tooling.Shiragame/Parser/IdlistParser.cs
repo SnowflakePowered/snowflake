@@ -23,7 +23,7 @@ namespace Shiragame.Builder.Parser
 
         private static SerialInfo GetSerial(string idlist, string platformId)
         {
-            var line = idlist.Split(new [] { ' ' }, 2);
+            var line = idlist.Split(new[] {' '}, 2);
             string serial = line[0];
             string name = line[1].Trim('"');
             string region = IdlistParser.GetSonyRegionCode(serial);

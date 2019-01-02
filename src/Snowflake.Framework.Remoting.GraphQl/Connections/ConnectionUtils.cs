@@ -34,10 +34,10 @@ namespace GraphQL.Relay.Types
                 totalCount);
 
             var edges = metrics.Slice.Select((item, i) => new Edge<TSource>
-            {
-                Node = item,
-                Cursor = OffsetToCursor(metrics.StartOffset + i),
-            })
+                {
+                    Node = item,
+                    Cursor = OffsetToCursor(metrics.StartOffset + i),
+                })
                 .ToList();
 
             var firstEdge = edges.FirstOrDefault();

@@ -15,16 +15,16 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.InstallAllTask
     {
         public override async Task<int> Execute(InstallAllTaskArguments arguments, string[] args)
         {
-            DirectoryInfo moduleDirectory = arguments.ModuleDirectory != null 
+            DirectoryInfo moduleDirectory = arguments.ModuleDirectory != null
                 ? new DirectoryInfo(Path.GetFullPath(arguments.ModuleDirectory))
                 : PathUtility.GetDefaultModulePath();
 
             DirectoryInfo packageDirectory = arguments.PackageDirectory != null
-                           ? new DirectoryInfo(Path.GetFullPath(arguments.PackageDirectory))
-                           : DirectoryProvider.WorkingDirectory;
+                ? new DirectoryInfo(Path.GetFullPath(arguments.PackageDirectory))
+                : DirectoryProvider.WorkingDirectory;
 
             int exitCode = 0;
-            foreach(var package in packageDirectory.EnumerateFiles("*.snowpkg"))
+            foreach (var package in packageDirectory.EnumerateFiles("*.snowpkg"))
             {
                 try
                 {
@@ -35,9 +35,11 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.InstallAllTask
                         bool verified = await pkg.VerifyPackage();
                         if (!verified)
                         {
-                            throw new InvalidOperationException($"Package failed to verify, use --noverify to install regardless.");
+                            throw new InvalidOperationException(
+                                $"Package failed to verify, use --noverify to install regardless.");
                         }
                     }
+
                     Console.WriteLine($"Installing package {package.Name}...");
                     string installPath = await pkg.InstallPackage(moduleDirectory);
                     Console.WriteLine($"Installed {package.Name} to {installPath}.");

@@ -27,7 +27,8 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Formats.SFO
             sfoFile.Read(entryByteArray, 0, sfoIndexTableEntry.GetSizeValueData());
             this.valueBytesReaded += sfoIndexTableEntry.GetSizeValueData();
 
-            long offsetNextValue = sfoIndexTableEntry.GetOffsetDataValueInDataTable() + sfoIndexTableEntry.GetSizeValueDataAndPadding(); // korrekt!
+            long offsetNextValue = sfoIndexTableEntry.GetOffsetDataValueInDataTable() +
+                                   sfoIndexTableEntry.GetSizeValueDataAndPadding(); // korrekt!
             long skipBytes = offsetNextValue - this.valueBytesReaded;
             sfoFile.Seek(skipBytes, SeekOrigin.Current);
             this.valueBytesReaded += Convert.ToInt32(skipBytes);

@@ -10,7 +10,7 @@ namespace Shiragame.Builder
     {
         // http://stackoverflow.com/a/11811764/1822679
         internal static IEnumerable<TSource> DistinctBy<TSource, TKey>(
-this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
+            this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
         {
             var known = new HashSet<TKey>();
             return source.Where(element => known.Add(keySelector(element)));

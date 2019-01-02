@@ -18,7 +18,8 @@ namespace Snowflake.Scraping.Tests
         }
 
         public override async Task<IEnumerable<SeedTreeAwaitable>> ScrapeAsync(ISeed parent,
-            ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds, ILookup<string, SeedContent> siblingSeeds)
+            ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds,
+            ILookup<string, SeedContent> siblingSeeds)
         {
             return _("Test", "Hello World");
         }
@@ -33,7 +34,8 @@ namespace Snowflake.Scraping.Tests
         }
 
         public override async Task<IEnumerable<SeedTreeAwaitable>> ScrapeAsync(ISeed parent,
-            ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds, ILookup<string, SeedContent> siblingSeeds)
+            ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds,
+            ILookup<string, SeedContent> siblingSeeds)
         {
             return _("Test", "Goodbye World");
         }

@@ -30,9 +30,8 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.Model
 #pragma warning restore CS0618 // Type or member is obsolete
 
             Field<GuidGraphType>("guid",
-              description: "The unique ID of the file.",
-              resolve: context => context.Source.FileGuid);
-
+                description: "The unique ID of the file.",
+                resolve: context => context.Source.FileGuid);
         }
     }
 }

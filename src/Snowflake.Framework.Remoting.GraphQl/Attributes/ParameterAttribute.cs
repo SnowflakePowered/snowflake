@@ -14,7 +14,9 @@ namespace Snowflake.Framework.Remoting.GraphQl.Attributes
         public string Description { get; }
         public bool Nullable { get; }
         public Type ConvertableType { get; }
-        public ParameterAttribute(Type parameterType, Type graphQlType, string parameterKey, string description, bool nullable = false, Type convertableType = null)
+
+        public ParameterAttribute(Type parameterType, Type graphQlType, string parameterKey, string description,
+            bool nullable = false, Type convertableType = null)
         {
             this.ParameterType = parameterType;
             this.Key = parameterKey;

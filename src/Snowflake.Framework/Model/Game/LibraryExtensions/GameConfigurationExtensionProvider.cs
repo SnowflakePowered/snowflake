@@ -37,7 +37,7 @@ namespace Snowflake.Model.Game.LibraryExtensions
         }
 
         public IConfigurationCollection<T>? GetProfile<T>(Guid valueCollectionGuid)
-            where T: class, IConfigurationCollection<T>
+            where T : class, IConfigurationCollection<T>
         {
             return this.CollectionStore.GetConfiguration<T>(valueCollectionGuid);
         }

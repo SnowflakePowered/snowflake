@@ -18,6 +18,7 @@ namespace Snowflake.Model.FileSystem
 
         ///
         Guid FileGuid { get; }
+
         bool Created { get; }
 
         /// <summary>

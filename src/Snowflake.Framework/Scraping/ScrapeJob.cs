@@ -66,7 +66,8 @@ namespace Snowflake.Scraping
             this.Visited = new List<(string, Guid)>();
             this.Scrapers = scrapers;
             this.Cullers = cullers;
-            this.Context.AddRange(initialSeeds.SelectMany(s => s.Collapse(this.Context.Root, ScrapeJob.ClientSeedSource)));
+            this.Context.AddRange(
+                initialSeeds.SelectMany(s => s.Collapse(this.Context.Root, ScrapeJob.ClientSeedSource)));
             this.JobGuid = jobGuid;
         }
 
@@ -86,6 +87,7 @@ namespace Snowflake.Scraping
         }
 
         public Task<bool> Proceed() => this.Proceed(Enumerable.Empty<SeedContent>());
+
         public async Task<bool> Proceed(IEnumerable<SeedContent> seedsToAdd)
         {
             // Add any client seeds.
@@ -110,28 +112,32 @@ namespace Snowflake.Scraping
                         .Select(p => p.Type).ToList();
 
                     var requiredRootDirectives = scraper.Directives
-                       .Where(p => p.Target == AttachTarget.Root && p.Directive == Directive.Requires).ToList();
+                        .Where(p => p.Target == AttachTarget.Root && p.Directive == Directive.Requires).ToList();
                     var excludedRootDirectives = scraper.Directives
                         .Where(p => p.Target == AttachTarget.Root && p.Directive == Directive.Excludes)
                         .Select(p => p.Type).ToList();
 
                     var requiredSiblingDirectives = scraper.Directives
-                       .Where(p => p.Target == AttachTarget.TargetParent && p.Directive == Directive.Requires).ToList();
+                        .Where(p => p.Target == AttachTarget.TargetParent && p.Directive == Directive.Requires)
+                        .ToList();
                     var excludedSiblingDirectives = scraper.Directives
                         .Where(p => p.Target == AttachTarget.TargetParent && p.Directive == Directive.Excludes)
                         .Select(p => p.Type).ToList();
 
                     var requiredChildren = requiredChildrenDirectives
                         .SelectMany(seed => this.Context.GetChildren(matchingSeed)
-                                .Where(child => child.Content.Type == seed.Type)).ToLookup(x => x.Content.Type, x => x.Content);
+                            .Where(child => child.Content.Type == seed.Type))
+                        .ToLookup(x => x.Content.Type, x => x.Content);
 
                     var requiredRoots = requiredRootDirectives
-                            .SelectMany(seed => this.Context.GetChildren(this.Context.Root)
-                              .Where(child => child.Content.Type == seed.Type)).ToLookup(x => x.Content.Type, x => x.Content);
+                        .SelectMany(seed => this.Context.GetChildren(this.Context.Root)
+                            .Where(child => child.Content.Type == seed.Type))
+                        .ToLookup(x => x.Content.Type, x => x.Content);
 
                     var requiredSiblings = requiredSiblingDirectives
-                            .SelectMany(seed => this.Context.GetSiblings(matchingSeed)
-                              .Where(child => child.Content.Type == seed.Type)).ToLookup(x => x.Content.Type, x => x.Content);
+                        .SelectMany(seed => this.Context.GetSiblings(matchingSeed)
+                            .Where(child => child.Content.Type == seed.Type))
+                        .ToLookup(x => x.Content.Type, x => x.Content);
 
                     // We need to ensure that the number of keys match before continuing.
                     // If the keys match then we are guaranteed that every key is successfully fulfilled.
@@ -139,11 +145,11 @@ namespace Snowflake.Scraping
                         || requiredRoots.GroupBy(p => p.Key).Count() != requiredRootDirectives.Count()
                         || requiredSiblings.GroupBy(p => p.Key).Count() != requiredSiblingDirectives.Count()
                         || this.Context.GetChildren(matchingSeed).Select(p => p.Content.Type)
-                        .Intersect(excludedChildrenDirectives).Any()
+                            .Intersect(excludedChildrenDirectives).Any()
                         || this.Context.GetRootSeeds().Select(p => p.Content.Type)
-                        .Intersect(excludedRootDirectives).Any()
+                            .Intersect(excludedRootDirectives).Any()
                         || this.Context.GetSiblings(matchingSeed).Select(p => p.Content.Type)
-                        .Intersect(excludedSiblingDirectives).Any())
+                            .Intersect(excludedSiblingDirectives).Any())
                     {
                         continue;
                     }
@@ -154,7 +160,8 @@ namespace Snowflake.Scraping
                     var results = new List<SeedContent>();
                     var attachSeed = this.GetAttachTarget(scraper.AttachPoint, matchingSeed);
 
-                    foreach (var task in await scraper.ScrapeAsync(matchingSeed, requiredRoots, requiredChildren, requiredSiblings))
+                    foreach (var task in await scraper.ScrapeAsync(matchingSeed, requiredRoots, requiredChildren,
+                        requiredSiblings))
                     {
                         try
                         {
@@ -173,7 +180,9 @@ namespace Snowflake.Scraping
                 }
             }
 
-            return this.Visited.Count != previousCount; // if there are no new additions to the table, then we know to stop.
+            return
+                this.Visited.Count !=
+                previousCount; // if there are no new additions to the table, then we know to stop.
         }
 
         public void Cull() => this.Cull(Enumerable.Empty<Guid>());

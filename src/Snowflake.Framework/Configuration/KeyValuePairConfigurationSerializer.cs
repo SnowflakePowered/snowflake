@@ -29,15 +29,19 @@ namespace Snowflake.Configuration
         public override string Serialize(IConfigurationSection configurationSection)
         {
             StringBuilder stringBuilder = new StringBuilder();
-            foreach (var config in from option in configurationSection.Descriptor.Options where !option.Flag select option)
+            foreach (var config in from option in configurationSection.Descriptor.Options
+                where !option.Flag
+                select option)
             {
-                stringBuilder.AppendLine(this.SerializeLine(config.OptionName, configurationSection.Values[config.OptionKey].Value));
+                stringBuilder.AppendLine(this.SerializeLine(config.OptionName,
+                    configurationSection.Values[config.OptionKey].Value));
             }
 
             return stringBuilder.ToString();
         }
 
-        public KeyValuePairConfigurationSerializer(IBooleanMapping booleanMapping, string nullSerializer, string separator)
+        public KeyValuePairConfigurationSerializer(IBooleanMapping booleanMapping, string nullSerializer,
+            string separator)
             : base(booleanMapping, nullSerializer)
         {
             this.separator = separator;

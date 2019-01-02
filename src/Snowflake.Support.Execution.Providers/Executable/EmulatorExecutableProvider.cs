@@ -28,7 +28,7 @@ namespace Snowflake.Support.Execution
         public IEmulatorExecutable GetEmulator(string name, Version semver)
         {
             return this.Executables.FirstOrDefault(e => e.EmulatorName == name
-                                                   && e.Version.Major == semver.Major);
+                                                        && e.Version.Major == semver.Major);
         }
     }
 }

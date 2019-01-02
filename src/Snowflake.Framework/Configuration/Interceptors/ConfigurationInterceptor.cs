@@ -9,14 +9,15 @@ namespace Snowflake.Configuration.Interceptors
     public class ConfigurationInterceptor : IInterceptor
     {
         internal IConfigurationValueCollection Values { get; }
-        private IConfigurationSectionDescriptor Descriptor { get; }  
+        private IConfigurationSectionDescriptor Descriptor { get; }
 
         //public ConfigurationInterceptor(IConfigurationSectionDescriptor descriptor)
         //{
         //    this.Values = descriptor.Options.ToDictionary(p => p.OptionKey, p => new ConfigurationValue(p.Default) as IConfigurationValue);
         //}
 
-        public ConfigurationInterceptor(IConfigurationSectionDescriptor descriptor, IConfigurationValueCollection values)
+        public ConfigurationInterceptor(IConfigurationSectionDescriptor descriptor,
+            IConfigurationValueCollection values)
         {
             this.Values = values;
             this.Descriptor = descriptor;

@@ -18,13 +18,13 @@ namespace Snowflake.Support.Remoting.GraphQl.Containers
     {
         /// <inheritdoc/>
         [ImportService(typeof(IPluginManager))]
-     //   [ImportService(typeof(IConfigurationCollectionStore))]
+        //   [ImportService(typeof(IConfigurationCollectionStore))]
         [ImportService(typeof(IPluginConfigurationStore))]
         [ImportService(typeof(IGraphQlRootSchema))]
         [ImportService(typeof(ILogProvider))]
         public void Compose(IModule module, IServiceRepository coreInstance)
         {
-   //         var gameConfig = coreInstance.Get<IConfigurationCollectionStore>();
+            //         var gameConfig = coreInstance.Get<IConfigurationCollectionStore>();
             var plugin = coreInstance.Get<IPluginManager>();
             var pluginConfig = coreInstance.Get<IPluginConfigurationStore>();
 

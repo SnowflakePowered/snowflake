@@ -38,7 +38,7 @@ namespace Snowflake.Model.Database
                 var mappings = context.ControllerElementMappings
                     .Include(p => p.MappedElements)
                     .SingleOrDefault(p => p.ControllerID == controllerId &&
-                    p.DeviceID == deviceId && p.ProfileName == profileName);
+                                          p.DeviceID == deviceId && p.ProfileName == profileName);
                 return mappings?.AsControllerElementMappings();
             }
         }
@@ -50,7 +50,7 @@ namespace Snowflake.Model.Database
                 var mappings = context.ControllerElementMappings
                     .Include(p => p.MappedElements)
                     .Where(p => p.ControllerID == controllerId &&
-                            p.DeviceID == deviceId)
+                                p.DeviceID == deviceId)
                     .Select(m => m.AsControllerElementMappings())
                     .ToList();
                 return mappings;
@@ -63,15 +63,15 @@ namespace Snowflake.Model.Database
             using (var context = new DatabaseContext(this.Options.Options))
             {
                 var retrievedMappings = context.ControllerElementMappings
-                .Include(p => p.MappedElements)
-                .Where(p => p.ControllerID == controllerId &&
-                    p.DeviceID == deviceId);
-                
+                    .Include(p => p.MappedElements)
+                    .Where(p => p.ControllerID == controllerId &&
+                                p.DeviceID == deviceId);
+
                 foreach (var retrievedMapping in retrievedMappings)
                 {
                     context.Entry(retrievedMapping).State = EntityState.Deleted;
                 }
- 
+
                 context.SaveChanges();
             }
         }
@@ -83,7 +83,7 @@ namespace Snowflake.Model.Database
                 var retrievedMappings = context.ControllerElementMappings
                     .Include(p => p.MappedElements)
                     .SingleOrDefault(p => p.ControllerID == mappings.ControllerId &&
-                    p.DeviceID == mappings.DeviceId && p.ProfileName == profileName);
+                                          p.DeviceID == mappings.DeviceId && p.ProfileName == profileName);
 
                 foreach (var mapping in retrievedMappings.MappedElements)
                 {
@@ -103,9 +103,9 @@ namespace Snowflake.Model.Database
             using (var context = new DatabaseContext(this.Options.Options))
             {
                 var retrievedMappings = context.ControllerElementMappings
-                .Include(p => p.MappedElements)
-                .SingleOrDefault(p => p.ControllerID == controllerId &&
-                    p.DeviceID == deviceId && p.ProfileName == profileName);
+                    .Include(p => p.MappedElements)
+                    .SingleOrDefault(p => p.ControllerID == controllerId &&
+                                          p.DeviceID == deviceId && p.ProfileName == profileName);
 
                 if (retrievedMappings != null)
                 {

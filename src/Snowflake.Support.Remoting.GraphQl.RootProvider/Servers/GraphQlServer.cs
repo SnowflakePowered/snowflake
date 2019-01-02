@@ -21,6 +21,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Servers
         /// The chuck size for sending files
         /// </summary>
         private const int chunkSize = 8 * 1024;
+
         public GraphQlServer(GraphQlExecuterProvider provider, ILogger logger)
         {
             Terminal.Settings.DisplayLoggingMessageType = LogMessageType.None;
@@ -39,30 +40,37 @@ namespace Snowflake.Support.Remoting.GraphQl.Servers
 
                     logger.Info($"Received GraphQL Request.");
                     // Super-hacky workaround abusing Task.Run to make it run in a separate thread if nescessary.
-                    var result = await Task.Run(async () => await provider.ExecuteRequestAsync(request).ConfigureAwait(false)).ConfigureAwait(false);
+                    var result = await Task
+                        .Run(async () => await provider.ExecuteRequestAsync(request).ConfigureAwait(false))
+                        .ConfigureAwait(false);
                     string str = provider.Write(result);
                     var buffer = await new MemoryStream(Encoding.UTF8.GetBytes(str.ToString())).CompressAsync();
-                    context.Response.StatusCode = result.Errors?.Any() == true ? (int)HttpStatusCode.BadRequest : (int)HttpStatusCode.OK;
+                    context.Response.StatusCode = result.Errors?.Any() == true
+                        ? (int) HttpStatusCode.BadRequest
+                        : (int) HttpStatusCode.OK;
                     await GraphQlServer.WriteToOutputStream(context, buffer.Length, buffer, 0).ConfigureAwait(false);
                     if (result.Errors?.Any() == true)
                     {
                         foreach (var error in result.Errors)
                         {
-                            logger.Warn($"Error occurred when processing GraphQL request {error.Message} from exception {error.InnerException}");
+                            logger.Warn(
+                                $"Error occurred when processing GraphQL request {error.Message} from exception {error.InnerException}");
                         }
                     }
+
                     logger.Info($"Processed GraphQL Request.");
                 }
                 catch
                 {
-
                 }
+
                 return true;
             });
         }
 
         // ripped from EmbedIO StaticFilesModule
-        private static async Task WriteToOutputStream(IHttpContext context, long byteLength, Stream buffer, int lowerByteIndex)
+        private static async Task WriteToOutputStream(IHttpContext context, long byteLength, Stream buffer,
+            int lowerByteIndex)
         {
             var streamBuffer = new byte[chunkSize];
             var sendData = 0;
@@ -72,7 +80,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Servers
             {
                 if (sendData + chunkSize > byteLength)
                 {
-                    readBufferSize = (int)(byteLength - sendData);
+                    readBufferSize = (int) (byteLength - sendData);
                 }
 
                 buffer.Seek(lowerByteIndex + sendData, SeekOrigin.Begin);

@@ -15,7 +15,8 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Configuration.Internal
             Private = true)]
         bool BundleAssetsExtractEnable { get; set; }
 
-        [ConfigurationOption("bundle_assets_extract_last_version", 0, DisplayName = "Bundle Assets Extract Last Version",
+        [ConfigurationOption("bundle_assets_extract_last_version", 0,
+            DisplayName = "Bundle Assets Extract Last Version",
             Private = true)]
         int BundleAssetsExtractLastVersion { get; set; }
 

@@ -20,9 +20,9 @@ namespace Snowflake.Model.Database.Extensions
             };
         }
 
-        private static MappedControllerElementModel AsModel(this IMappedControllerElement @this, 
+        private static MappedControllerElementModel AsModel(this IMappedControllerElement @this,
             string controllerId,
-            string deviceId, 
+            string deviceId,
             string profileName)
         {
             return new MappedControllerElementModel
@@ -42,6 +42,7 @@ namespace Snowflake.Model.Database.Extensions
             {
                 mappings.Add(new MappedControllerElement(mapping.LayoutElement, mapping.DeviceElement));
             }
+
             return mappings;
         }
     }

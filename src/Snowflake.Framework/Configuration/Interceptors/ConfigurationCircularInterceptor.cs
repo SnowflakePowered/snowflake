@@ -11,6 +11,7 @@ namespace Snowflake.Configuration.Interceptors
         where T : class, IConfigurationSection<T>
     {
         private readonly IConfigurationSection<T> @this;
+
         public ConfigurationCircularInterceptor(IConfigurationSection<T> @this)
         {
             this.@this = @this;

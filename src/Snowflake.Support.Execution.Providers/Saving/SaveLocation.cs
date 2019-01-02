@@ -10,7 +10,7 @@ namespace Snowflake.Support.Execution
 {
     public class SaveLocation : ISaveLocation
     {
-        internal SaveLocation(Guid gameRecordGuid, string saveFormat, 
+        internal SaveLocation(Guid gameRecordGuid, string saveFormat,
             DirectoryInfo locationRoot,
             Guid locationGuid, DateTimeOffset lastModified)
         {

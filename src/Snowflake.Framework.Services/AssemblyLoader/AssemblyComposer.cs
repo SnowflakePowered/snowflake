@@ -23,8 +23,8 @@ namespace Snowflake.Services.AssemblyLoader
             this.modules = modules.Modules.Where(module => module.Loader == "assembly").ToList();
             var assemblyLoader = new AssemblyModuleLoader();
             this.moduleComposables = (from module in this.modules
-                                     from pluginContainer in this.LoadComposables(assemblyLoader, module)
-                                     select (module, pluginContainer)).ToList();
+                from pluginContainer in this.LoadComposables(assemblyLoader, module)
+                select (module, pluginContainer)).ToList();
         }
 
         private IEnumerable<IComposable> LoadComposables(AssemblyModuleLoader loader, IModule module)
@@ -63,13 +63,15 @@ namespace Snowflake.Services.AssemblyLoader
                     {
                         try
                         {
-                            this.logger.Info($"Composing {uncomposed.composable.GetType().Name} with services {string.Join(" ", uncomposed.services)}");
+                            this.logger.Info(
+                                $"Composing {uncomposed.composable.GetType().Name} with services {string.Join(" ", uncomposed.services)}");
                             this.ComposeContainer(uncomposed.module, uncomposed.composable, uncomposed.services);
                             this.logger.Info($"Finished composing {uncomposed.composable.GetType().Name}");
                         }
                         catch (Exception ex)
                         {
-                            this.logger.Error($"Exception {ex.GetType()}: {ex.Message} occured when composing {uncomposed.composable.GetType().Name}.");
+                            this.logger.Error(
+                                $"Exception {ex.GetType()}: {ex.Message} occured when composing {uncomposed.composable.GetType().Name}.");
                             this.logger.Error($"Stack Trace:{Environment.NewLine + ex.StackTrace}");
                         }
                         finally

@@ -15,6 +15,7 @@ namespace Snowflake.Persistence
     {
         /// <inheritdoc/>
         public string DatabaseName { get; }
+
         private readonly string dbConnectionString;
 
         public SqliteDatabase(string fileName)
@@ -100,7 +101,7 @@ namespace Snowflake.Persistence
         /// <returns>The requested data.</returns>
         public IEnumerable<T> Query<T>(string query, object param = null)
         {
-           return this.Query(dbConnection => dbConnection.Query<T>(query, param));
+            return this.Query(dbConnection => dbConnection.Query<T>(query, param));
         }
 
         /// <summary>

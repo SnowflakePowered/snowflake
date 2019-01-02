@@ -6,6 +6,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Servers
     internal class GraphQlServerWrapper : ILocalWebService
     {
         private GraphQlServer remote;
+
         public GraphQlServerWrapper(GraphQlServer remote)
         {
             this.remote = remote;

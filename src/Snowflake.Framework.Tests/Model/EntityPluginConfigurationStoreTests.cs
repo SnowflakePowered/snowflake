@@ -28,7 +28,6 @@ namespace Snowflake.Extensibility.Tests
         [Fact]
         public void ConfigurationStoreGet_Test()
         {
-
             var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
             optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
             var store = new PluginConfigurationStore(optionsBuilder);
@@ -39,14 +38,14 @@ namespace Snowflake.Extensibility.Tests
             var retrievedConfig = store.Get<ExampleConfigurationSection>();
             Assert.NotNull(retrievedConfig);
             Assert.Equal(configSection.Configuration.ISOPath0, retrievedConfig.Configuration.ISOPath0);
-            Assert.Equal(configSection.Configuration.FullscreenResolution, retrievedConfig.Configuration.FullscreenResolution);
+            Assert.Equal(configSection.Configuration.FullscreenResolution,
+                retrievedConfig.Configuration.FullscreenResolution);
             Assert.Equal(configSection.Configuration.Fullscreen, retrievedConfig.Configuration.Fullscreen);
         }
 
         [Fact]
         public void ConfigurationStoreSetIndividual_Test()
         {
-
             var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
             optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
             var store = new PluginConfigurationStore(optionsBuilder);
@@ -65,14 +64,14 @@ namespace Snowflake.Extensibility.Tests
             Assert.NotNull(retrievedConfig);
             Assert.NotNull(retrievedConfig);
             Assert.Equal(configSection.Configuration.ISOPath0, retrievedConfig.Configuration.ISOPath0);
-            Assert.Equal(configSection.Configuration.FullscreenResolution, retrievedConfig.Configuration.FullscreenResolution);
+            Assert.Equal(configSection.Configuration.FullscreenResolution,
+                retrievedConfig.Configuration.FullscreenResolution);
             Assert.Equal(configSection.Configuration.Fullscreen, retrievedConfig.Configuration.Fullscreen);
         }
 
         [Fact]
         public void ConfigurationStoreSetIndividualEnumerable_Test()
         {
-
             var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
             optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
             var store = new PluginConfigurationStore(optionsBuilder);
@@ -86,15 +85,18 @@ namespace Snowflake.Extensibility.Tests
             store.Set(configSection);
             configSection.Configuration.FullscreenResolution = FullscreenResolution.Resolution1280X768;
             configSection.Configuration.Fullscreen = true;
-            store.Set(new[] { configSection.Configuration.Values["FullscreenResolution"],
-                              configSection.Configuration.Values["Fullscreen"],
+            store.Set(new[]
+            {
+                configSection.Configuration.Values["FullscreenResolution"],
+                configSection.Configuration.Values["Fullscreen"],
             });
 
             var retrievedConfig = store.Get<ExampleConfigurationSection>();
             Assert.NotNull(retrievedConfig);
             Assert.NotNull(retrievedConfig);
             Assert.Equal(configSection.Configuration.ISOPath0, retrievedConfig.Configuration.ISOPath0);
-            Assert.Equal(configSection.Configuration.FullscreenResolution, retrievedConfig.Configuration.FullscreenResolution);
+            Assert.Equal(configSection.Configuration.FullscreenResolution,
+                retrievedConfig.Configuration.FullscreenResolution);
             Assert.Equal(configSection.Configuration.Fullscreen, retrievedConfig.Configuration.Fullscreen);
         }
     }

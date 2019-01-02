@@ -1,6 +1,5 @@
-﻿
-namespace Snowflake.Configuration
-{ 
+﻿namespace Snowflake.Configuration
+{
     /// <summary>
     /// Default implementation for <see cref="IBooleanMapping"/>
     /// </summary>

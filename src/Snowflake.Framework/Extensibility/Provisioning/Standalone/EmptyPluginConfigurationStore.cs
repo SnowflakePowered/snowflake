@@ -8,10 +8,13 @@ namespace Snowflake.Extensibility.Provisioning.Standalone
 {
     internal class EmptyPluginConfigurationStore : IPluginConfigurationStore
     {
-        private static readonly EmptyPluginConfigurationStore emptyPluginConfigurationStore = new EmptyPluginConfigurationStore();
+        private static readonly EmptyPluginConfigurationStore emptyPluginConfigurationStore =
+            new EmptyPluginConfigurationStore();
 
         public static EmptyPluginConfigurationStore EmptyConfigurationStore
-            { get => emptyPluginConfigurationStore; }
+        {
+            get => emptyPluginConfigurationStore;
+        }
 
         public void Set(IConfigurationValue value)
         {
@@ -25,7 +28,7 @@ namespace Snowflake.Extensibility.Provisioning.Standalone
         }
 
         public void Set<T>(IConfigurationSection<T> configuration)
-             where T : class, IConfigurationSection<T>
+            where T : class, IConfigurationSection<T>
         {
             return;
         }

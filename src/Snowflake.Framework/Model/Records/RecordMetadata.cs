@@ -47,7 +47,6 @@ namespace Snowflake.Model.Records
         /// <inheritdoc/>
         public override bool Equals(object metadata)
         {
-
             if (!(metadata is IRecordMetadata m))
             {
                 return false;
@@ -57,7 +56,10 @@ namespace Snowflake.Model.Records
             return m.Guid == this.Guid;
         }
 
-        public static bool operator ==(RecordMetadata metadataX, IRecordMetadata metadataY) => metadataX.Equals(metadataY);
-        public static bool operator !=(RecordMetadata metadataX, IRecordMetadata metadataY) => !(metadataX == metadataY);
+        public static bool operator ==(RecordMetadata metadataX, IRecordMetadata metadataY) =>
+            metadataX.Equals(metadataY);
+
+        public static bool operator !=(RecordMetadata metadataX, IRecordMetadata metadataY) =>
+            !(metadataX == metadataY);
     }
 }

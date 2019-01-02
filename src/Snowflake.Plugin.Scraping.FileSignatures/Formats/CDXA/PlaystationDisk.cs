@@ -10,6 +10,7 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Formats.CDXA
     public class PlaystationDisk
     {
         private readonly CDXADisk disk;
+
         public PlaystationDisk(CDXADisk disk)
         {
             this.disk = disk;

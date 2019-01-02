@@ -13,7 +13,7 @@ namespace Snowflake.Model.Game.LibraryExtensions
         public IGameRecord GameRecord { get; }
         public ConfigurationCollectionStore ConfigurationStore { get; }
 
-        public GameConfigurationExtension(IGameRecord gameRecord, 
+        public GameConfigurationExtension(IGameRecord gameRecord,
             ConfigurationCollectionStore collectionStore)
         {
             GameRecord = gameRecord;
@@ -32,14 +32,14 @@ namespace Snowflake.Model.Game.LibraryExtensions
         }
 
         public IConfigurationCollection<T> CreateNewProfile<T>(string sourceName, string profile)
-            where T: class, IConfigurationCollection<T>
+            where T : class, IConfigurationCollection<T>
         {
             return this.ConfigurationStore
                 .CreateConfigurationForGame<T>(this.GameRecord, sourceName, profile);
         }
 
         public IConfigurationCollection<T>? GetProfile<T>(string sourceName, string profile)
-             where T : class, IConfigurationCollection<T>
+            where T : class, IConfigurationCollection<T>
         {
             return this.ConfigurationStore
                 .GetConfiguration<T>(this.GameRecord.RecordId, sourceName, profile);

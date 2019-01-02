@@ -19,16 +19,16 @@ namespace Snowflake.Romfile.Tokenizer
                 {
                     hasDemo = true;
                     yield return new StructuredFilenameToken(tokenValue,
-                            FieldType.Demo,
-                            NamingConvention.TheOldSchoolEmulationCenter);
+                        FieldType.Demo,
+                        NamingConvention.TheOldSchoolEmulationCenter);
                     continue;
                 }
 
                 if (tokenValue.StartsWith("19") || tokenValue.StartsWith("20") && tokenPosition == (hasDemo ? 1 : 0))
                 {
                     yield return new StructuredFilenameToken(tokenValue,
-                            FieldType.Date,
-                            NamingConvention.TheOldSchoolEmulationCenter);
+                        FieldType.Date,
+                        NamingConvention.TheOldSchoolEmulationCenter);
                     continue;
                 }
 
@@ -52,7 +52,8 @@ namespace Snowflake.Romfile.Tokenizer
                             continue;
                         }
 
-                        if (subToken.StartsWith("19") || subToken.StartsWith("20") && tokenPosition == (hasDemo ? 1 : 0))
+                        if (subToken.StartsWith("19") ||
+                            subToken.StartsWith("20") && tokenPosition == (hasDemo ? 1 : 0))
                         {
                             yield return new StructuredFilenameToken(subToken,
                                 FieldType.Date,
@@ -62,19 +63,20 @@ namespace Snowflake.Romfile.Tokenizer
                     }
                 }
 
-                if (tokenValue.StartsWith("M") && tokenValue.Length == 2 && int.TryParse(tokenValue.Substring(1), out _))
+                if (tokenValue.StartsWith("M") && tokenValue.Length == 2 &&
+                    int.TryParse(tokenValue.Substring(1), out _))
                 {
                     yield return new StructuredFilenameToken(tokenValue,
-                             FieldType.Language,
-                             NamingConvention.TheOldSchoolEmulationCenter);
+                        FieldType.Language,
+                        NamingConvention.TheOldSchoolEmulationCenter);
                     continue;
                 }
 
                 if (tosecLanguageLookupTable.Contains(tokenValue) && tokenPosition > (hasDemo ? 2 : 1))
                 {
                     yield return new StructuredFilenameToken(tokenValue,
-                               FieldType.Language,
-                               NamingConvention.TheOldSchoolEmulationCenter);
+                        FieldType.Language,
+                        NamingConvention.TheOldSchoolEmulationCenter);
                     continue;
                 }
 
@@ -125,16 +127,16 @@ namespace Snowflake.Romfile.Tokenizer
                         if (tokenValue.Contains(" of "))
                         {
                             yield return new StructuredFilenameToken(tokenValue,
-                                  FieldType.MediaType,
-                                  NamingConvention.TheOldSchoolEmulationCenter);
+                                FieldType.MediaType,
+                                NamingConvention.TheOldSchoolEmulationCenter);
                             break;
                         }
 
                         if (tokenValue.StartsWith("Side"))
                         {
                             yield return new StructuredFilenameToken(tokenValue,
-                                 FieldType.MediaType,
-                                 NamingConvention.TheOldSchoolEmulationCenter);
+                                FieldType.MediaType,
+                                NamingConvention.TheOldSchoolEmulationCenter);
                             break;
                         }
 
@@ -147,8 +149,8 @@ namespace Snowflake.Romfile.Tokenizer
                     !GoodToolsTokenClassifier.goodToolsCountryLookupTable.Keys.Contains(tokenValue.ToUpper()))
                 {
                     yield return new StructuredFilenameToken(tokenValue,
-                            FieldType.Publisher,
-                            NamingConvention.TheOldSchoolEmulationCenter);
+                        FieldType.Publisher,
+                        NamingConvention.TheOldSchoolEmulationCenter);
                     continue;
                 }
             }
@@ -157,7 +159,8 @@ namespace Snowflake.Romfile.Tokenizer
         }
 
         /// <inheritdoc/>
-        public IEnumerable<StructuredFilenameToken> ClassifyBracketsTokens(IEnumerable<(string tokenValue, int tokenPosition)> tokens)
+        public IEnumerable<StructuredFilenameToken> ClassifyBracketsTokens(
+            IEnumerable<(string tokenValue, int tokenPosition)> tokens)
         {
             foreach ((string tokenValue, int tokenPosition) in tokens)
             {
@@ -165,8 +168,8 @@ namespace Snowflake.Romfile.Tokenizer
                 if (tosecDumpInfoLookupTable.Contains(dumpInfo))
                 {
                     yield return new StructuredFilenameToken(dumpInfo,
-                            FieldType.DumpInfo,
-                            NamingConvention.TheOldSchoolEmulationCenter);
+                        FieldType.DumpInfo,
+                        NamingConvention.TheOldSchoolEmulationCenter);
                     continue;
                 }
             }
@@ -205,23 +208,23 @@ namespace Snowflake.Romfile.Tokenizer
                     if (isVersion)
                     {
                         yield return new StructuredFilenameToken(token.Substring(1),
-                        FieldType.Version,
-                        NamingConvention.TheOldSchoolEmulationCenter);
+                            FieldType.Version,
+                            NamingConvention.TheOldSchoolEmulationCenter);
                         continue;
                     }
                 }
 
                 if (token.StartsWith("v") && i == lastTokenIndex && long.TryParse(token.ToString().Substring(1), out _))
                 {
-                      yield return new StructuredFilenameToken(token.Substring(1),
-                          FieldType.Version,
-                          NamingConvention.TheOldSchoolEmulationCenter);
-                      continue;
+                    yield return new StructuredFilenameToken(token.Substring(1),
+                        FieldType.Version,
+                        NamingConvention.TheOldSchoolEmulationCenter);
+                    continue;
                 }
 
                 // the only game this will fail on is Guilty Gear Xrd Rev 2.
                 if (token == "Rev" && i == lastTokenIndex - 1 && !titleBuilder
-                    .ToString().Contains("Guilty Gear Xrd")) // nice special case.
+                        .ToString().Contains("Guilty Gear Xrd")) // nice special case.
                 {
                     nextTokenIsRevision = true;
                     continue;
@@ -230,8 +233,8 @@ namespace Snowflake.Romfile.Tokenizer
                 if (nextTokenIsRevision)
                 {
                     yield return new StructuredFilenameToken(token,
-                           FieldType.Version,
-                           NamingConvention.TheOldSchoolEmulationCenter);
+                        FieldType.Version,
+                        NamingConvention.TheOldSchoolEmulationCenter);
                     continue;
                 }
 
@@ -244,246 +247,255 @@ namespace Snowflake.Romfile.Tokenizer
         }
 
         #region Lookup Tables
+
         private static readonly IList<string> tosecDumpInfoLookupTable = new List<string>()
         {
-            { "cr" },
-            { "f" },
-            { "h" },
-            { "m" },
-            { "p" },
-            { "t" },
-            { "tr" },
-            { "o" },
-            { "u" },
-            { "v" },
-            { "b" },
-            { "a" },
-            { "!" },
+            {"cr"},
+            {"f"},
+            {"h"},
+            {"m"},
+            {"p"},
+            {"t"},
+            {"tr"},
+            {"o"},
+            {"u"},
+            {"v"},
+            {"b"},
+            {"a"},
+            {"!"},
         };
+
         private static readonly IList<string> tosecMediaLookupTable = new List<string>()
         {
-            { "Disc" },
-            { "Disk" },
-            { "File" },
-            { "Part" },
-            { "Side" },
-            { "Tape" },
+            {"Disc"},
+            {"Disk"},
+            {"File"},
+            {"Part"},
+            {"Side"},
+            {"Tape"},
         };
+
         private static readonly IList<string> tosecCopyrightLookupTable = new List<string>()
         {
-            { "CW" },
-            { "CW-R" },
-            { "FW" },
-            { "GW" },
-            { "GW-R" },
-            { "LW" },
-            { "PD" },
-            { "SW" },
-            { "SW-R" },
+            {"CW"},
+            {"CW-R"},
+            {"FW"},
+            {"GW"},
+            {"GW-R"},
+            {"LW"},
+            {"PD"},
+            {"SW"},
+            {"SW-R"},
         };
+
         private static readonly IList<string> tosecDevLookupTable = new List<string>()
         {
-            { "alpha" },
-            { "beta" },
-            { "preview" },
-            { "pre-release" },
-            { "proto" },
+            {"alpha"},
+            {"beta"},
+            {"preview"},
+            {"pre-release"},
+            {"proto"},
         };
+
         private static readonly IList<string> tosecSystemLookupTable = new List<string>()
         {
-            { "+2" },
-            { "+2a" },
-            { "+3" },
-            { "130XE" },
-            { "A1000" },
-            { "A1200" },
-            { "A1200-A4000" },
-            { "A2000" },
-            { "A2000-A3000" },
-            { "A2024" },
-            { "A2500-A3000UX" },
-            { "A3000" },
-            { "A4000" },
-            { "A4000T" },
-            { "A500" },
-            { "A500+" },
-            { "A500-A1000-A2000" },
-            { "A500-A1000-A2000-CDTV" },
-            { "A500-A1200" },
-            { "A500-A1200-A2000-A4000" },
-            { "A500-A2000" },
-            { "A500-A600-A2000" },
-            { "A570" },
-            { "A600" },
-            { "A600HD" },
-            { "AGA" },
-            { "AGA-CD32" },
-            { "Aladdin Deck Enhancer" },
-            { "CD32" },
-            { "CDTV" },
-            { "Computrainer" },
-            { "Doctor PC Jr." },
-            { "ECS" },
-            { "ECS-AGA" },
-            { "Executive" },
-            { "Mega ST" },
-            { "Mega-STE" },
-            { "OCS" },
-            { "OCS-AGA" },
-            { "ORCH80" },
-            { "Osbourne 1" },
-            { "PIANO90" },
-            { "PlayChoice-10" },
-            { "Plus4" },
-            { "Primo-A" },
-            { "Primo-A64" },
-            { "Primo-B" },
-            { "Primo-B64" },
-            { "Pro-Primo" },
-            { "ST" },
-            { "STE" },
-            { "STE-Falcon" },
-            { "TT" },
-            { "TURBO-R GT" },
-            { "TURBO-R ST" },
-            { "VS DualSystem" },
-            { "VS UniSystem" },
+            {"+2"},
+            {"+2a"},
+            {"+3"},
+            {"130XE"},
+            {"A1000"},
+            {"A1200"},
+            {"A1200-A4000"},
+            {"A2000"},
+            {"A2000-A3000"},
+            {"A2024"},
+            {"A2500-A3000UX"},
+            {"A3000"},
+            {"A4000"},
+            {"A4000T"},
+            {"A500"},
+            {"A500+"},
+            {"A500-A1000-A2000"},
+            {"A500-A1000-A2000-CDTV"},
+            {"A500-A1200"},
+            {"A500-A1200-A2000-A4000"},
+            {"A500-A2000"},
+            {"A500-A600-A2000"},
+            {"A570"},
+            {"A600"},
+            {"A600HD"},
+            {"AGA"},
+            {"AGA-CD32"},
+            {"Aladdin Deck Enhancer"},
+            {"CD32"},
+            {"CDTV"},
+            {"Computrainer"},
+            {"Doctor PC Jr."},
+            {"ECS"},
+            {"ECS-AGA"},
+            {"Executive"},
+            {"Mega ST"},
+            {"Mega-STE"},
+            {"OCS"},
+            {"OCS-AGA"},
+            {"ORCH80"},
+            {"Osbourne 1"},
+            {"PIANO90"},
+            {"PlayChoice-10"},
+            {"Plus4"},
+            {"Primo-A"},
+            {"Primo-A64"},
+            {"Primo-B"},
+            {"Primo-B64"},
+            {"Pro-Primo"},
+            {"ST"},
+            {"STE"},
+            {"STE-Falcon"},
+            {"TT"},
+            {"TURBO-R GT"},
+            {"TURBO-R ST"},
+            {"VS DualSystem"},
+            {"VS UniSystem"},
         };
+
         private static readonly IList<string> tosecVideoLookupTable = new List<string>()
         {
-            { "CGA" },
-            { "EGA" },
-            { "HGC" },
-            { "MCGA" },
-            { "MDA" },
-            { "NTSC" },
-            { "NTSC-PAL" },
-            { "PAL" },
-            { "PAL-60" },
-            { "PAL-NTSC" },
-            { "SVGA" },
-            { "VGA" },
-            { "XGA" },
+            {"CGA"},
+            {"EGA"},
+            {"HGC"},
+            {"MCGA"},
+            {"MDA"},
+            {"NTSC"},
+            {"NTSC-PAL"},
+            {"PAL"},
+            {"PAL-60"},
+            {"PAL-NTSC"},
+            {"SVGA"},
+            {"VGA"},
+            {"XGA"},
         };
+
         private static readonly IList<string> tosecLanguageLookupTable = new List<string>
         {
-            { "ar" },
-            { "bg" },
-            { "bs" },
-            { "cs" },
-            { "cy" },
-            { "da" },
-            { "de" },
-            { "el" },
-            { "en" },
-            { "eo" },
-            { "es" },
-            { "et" },
-            { "fa" },
-            { "fi" },
-            { "fr" },
-            { "ga" },
-            { "gu" },
-            { "he" },
-            { "hi" },
-            { "hr" },
-            { "hu" },
-            { "is" },
-            { "it" },
-            { "ja" },
-            { "ko" },
-            { "lt" },
-            { "lv" },
-            { "ms" },
-            { "nl" },
-            { "no" },
-            { "pl" },
-            { "pt" },
-            { "ro" },
-            { "ru" },
-            { "sk" },
-            { "sl" },
-            { "sq" },
-            { "sr" },
-            { "sv" },
-            { "th" },
-            { "tr" },
-            { "ur" },
-            { "vi" },
-            { "yi" },
-            { "zh" },
+            {"ar"},
+            {"bg"},
+            {"bs"},
+            {"cs"},
+            {"cy"},
+            {"da"},
+            {"de"},
+            {"el"},
+            {"en"},
+            {"eo"},
+            {"es"},
+            {"et"},
+            {"fa"},
+            {"fi"},
+            {"fr"},
+            {"ga"},
+            {"gu"},
+            {"he"},
+            {"hi"},
+            {"hr"},
+            {"hu"},
+            {"is"},
+            {"it"},
+            {"ja"},
+            {"ko"},
+            {"lt"},
+            {"lv"},
+            {"ms"},
+            {"nl"},
+            {"no"},
+            {"pl"},
+            {"pt"},
+            {"ro"},
+            {"ru"},
+            {"sk"},
+            {"sl"},
+            {"sq"},
+            {"sr"},
+            {"sv"},
+            {"th"},
+            {"tr"},
+            {"ur"},
+            {"vi"},
+            {"yi"},
+            {"zh"},
         };
+
         private static readonly IList<string> tosecCountryTable = new List<string>
         {
-            { "AE" },
-            { "AL" },
-            { "AS" },
-            { "AT" },
-            { "AU" },
-            { "BA" },
-            { "BE" },
-            { "BG" },
-            { "BR" },
-            { "CA" },
-            { "CH" },
-            { "CL" },
-            { "CN" },
-            { "CS" },
-            { "CY" },
-            { "CZ" },
-            { "DE" },
-            { "DK" },
-            { "EE" },
-            { "EG" },
-            { "ES" },
-            { "EU" },
-            { "FI" },
-            { "FR" },
-            { "GB" },
-            { "GR" },
-            { "HK" },
-            { "HR" },
-            { "HU" },
-            { "ID" },
-            { "IE" },
-            { "IL" },
-            { "IN" },
-            { "IR" },
-            { "IS" },
-            { "IT" },
-            { "JO" },
-            { "JP" },
-            { "KR" },
-            { "LT" },
-            { "LU" },
-            { "LV" },
-            { "MN" },
-            { "MX" },
-            { "MY" },
-            { "NL" },
-            { "NO" },
-            { "NP" },
-            { "NZ" },
-            { "OM" },
-            { "PE" },
-            { "PH" },
-            { "PL" },
-            { "PT" },
-            { "QA" },
-            { "RO" },
-            { "RU" },
-            { "SE" },
-            { "SG" },
-            { "SI" },
-            { "SK" },
-            { "TH" },
-            { "TR" },
-            { "TW" },
-            { "US" },
-            { "VN" },
-            { "YU" },
-            { "ZA" },
+            {"AE"},
+            {"AL"},
+            {"AS"},
+            {"AT"},
+            {"AU"},
+            {"BA"},
+            {"BE"},
+            {"BG"},
+            {"BR"},
+            {"CA"},
+            {"CH"},
+            {"CL"},
+            {"CN"},
+            {"CS"},
+            {"CY"},
+            {"CZ"},
+            {"DE"},
+            {"DK"},
+            {"EE"},
+            {"EG"},
+            {"ES"},
+            {"EU"},
+            {"FI"},
+            {"FR"},
+            {"GB"},
+            {"GR"},
+            {"HK"},
+            {"HR"},
+            {"HU"},
+            {"ID"},
+            {"IE"},
+            {"IL"},
+            {"IN"},
+            {"IR"},
+            {"IS"},
+            {"IT"},
+            {"JO"},
+            {"JP"},
+            {"KR"},
+            {"LT"},
+            {"LU"},
+            {"LV"},
+            {"MN"},
+            {"MX"},
+            {"MY"},
+            {"NL"},
+            {"NO"},
+            {"NP"},
+            {"NZ"},
+            {"OM"},
+            {"PE"},
+            {"PH"},
+            {"PL"},
+            {"PT"},
+            {"QA"},
+            {"RO"},
+            {"RU"},
+            {"SE"},
+            {"SG"},
+            {"SI"},
+            {"SK"},
+            {"TH"},
+            {"TR"},
+            {"TW"},
+            {"US"},
+            {"VN"},
+            {"YU"},
+            {"ZA"},
         };
-    #endregion
+
+        #endregion
     }
 }

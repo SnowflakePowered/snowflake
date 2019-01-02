@@ -19,12 +19,12 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.Model
             Field(f => f.MimeType).Description("The file's mimetype.");
 
             Field<GuidGraphType>("guid",
-              description: "The unique ID of the file.",
-              resolve: context => context.Source.RecordId);
+                description: "The unique ID of the file.",
+                resolve: context => context.Source.RecordId);
 
             Field<StringGraphType>("id",
-              description: "The opaque GraphQL unique ID of the file. For caching purposes only.",
-              resolve: context => context.Source.RecordId.ToGraphQlUniqueId("FileRecord"));
+                description: "The opaque GraphQL unique ID of the file. For caching purposes only.",
+                resolve: context => context.Source.RecordId.ToGraphQlUniqueId("FileRecord"));
 
             Field<ListGraphType<RecordMetadataGraphType>>(
                 "metadata",

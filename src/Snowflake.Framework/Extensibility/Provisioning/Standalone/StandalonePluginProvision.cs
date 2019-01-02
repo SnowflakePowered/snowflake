@@ -32,7 +32,6 @@ namespace Snowflake.Extensibility.Provisioning.Standalone
         public StandalonePluginProvision(Type pluginType)
             : this(pluginType, EmptyPluginProperties.EmptyProperties)
         {
-
         }
 
         public StandalonePluginProvision(Type pluginType, IPluginProperties pluginProperties)

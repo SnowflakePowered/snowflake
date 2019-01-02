@@ -51,7 +51,7 @@ namespace Snowflake.Model.Tests
             var config = configStore
                 .CreateConfiguration<ExampleConfigurationCollection>("TestConfiguration");
             // trigger an ensure of the ExampleConfiguration
-            config.Configuration.ExampleConfiguration.FullscreenResolution 
+            config.Configuration.ExampleConfiguration.FullscreenResolution
                 = Configuration.FullscreenResolution.Resolution3840X2160;
             configStore.UpdateConfiguration(config);
             var retrieved = configStore.GetConfiguration<ExampleConfigurationCollection>
@@ -59,7 +59,5 @@ namespace Snowflake.Model.Tests
             Assert.Equal(Configuration.FullscreenResolution.Resolution3840X2160, retrieved
                 .Configuration.ExampleConfiguration.FullscreenResolution);
         }
-
-
     }
 }

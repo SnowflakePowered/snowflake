@@ -14,7 +14,8 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.Execution
         public EmulatedControllerGraphType()
         {
             Name = "EmulatedController";
-            Description = "Represents an emulated controller definition with a real input device, a target layout, and a mapping.";
+            Description =
+                "Represents an emulated controller definition with a real input device, a target layout, and a mapping.";
             Field(p => p.PortIndex)
                 .Description("The index of the emulated port for this emulated controller.");
             Field<InputDeviceGraphType>("inputDevice",

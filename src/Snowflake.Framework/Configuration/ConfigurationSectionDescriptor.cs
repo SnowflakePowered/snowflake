@@ -33,20 +33,22 @@ namespace Snowflake.Configuration
         public IEnumerable<IConfigurationOptionDescriptor> Options { get; }
 
         /// <inheritdoc/>
-        public IConfigurationOptionDescriptor this[string optionKey] => this.Options.First(o => o.OptionKey == optionKey);
+        public IConfigurationOptionDescriptor this[string optionKey] =>
+            this.Options.First(o => o.OptionKey == optionKey);
 
         internal ConfigurationSectionDescriptor(string sectionKey)
         {
             this.SectionKey = sectionKey;
             // todo cache descriptors
             this.Options = (from prop in typeof(T).GetProperties()
-                          let attr = prop.GetCustomAttribute<ConfigurationOptionAttribute>()
-                          where attr != null
-                          let name = prop.Name
-                          let metadata = prop.GetCustomAttributes<CustomMetadataAttribute>()
-                          select new ConfigurationOptionDescriptor(attr, metadata, name))
-                          .ToImmutableList();
-            var sectionMetadata = typeof(T).GetAttribute<ConfigurationSectionAttribute>() ?? new ConfigurationSectionAttribute(string.Empty, string.Empty);
+                    let attr = prop.GetCustomAttribute<ConfigurationOptionAttribute>()
+                    where attr != null
+                    let name = prop.Name
+                    let metadata = prop.GetCustomAttributes<CustomMetadataAttribute>()
+                    select new ConfigurationOptionDescriptor(attr, metadata, name))
+                .ToImmutableList();
+            var sectionMetadata = typeof(T).GetAttribute<ConfigurationSectionAttribute>() ??
+                                  new ConfigurationSectionAttribute(string.Empty, string.Empty);
             this.SectionName = sectionMetadata.SectionName;
             this.DisplayName = sectionMetadata.DisplayName;
             this.Description = sectionMetadata.Description;

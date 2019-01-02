@@ -19,7 +19,8 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.AssemblyModuleBuilderTask
         public override async Task<int> Execute(AssemblyModuleBuilderTaskArguments arguments, string[] args)
         {
             Console.WriteLine($"Snowball Assembly Builder version {Assembly.GetEntryAssembly().GetName().Version}");
-            var cwd = arguments.SourceDirectory != null ? new DirectoryInfo(Path.GetFullPath(arguments.SourceDirectory))
+            var cwd = arguments.SourceDirectory != null
+                ? new DirectoryInfo(Path.GetFullPath(arguments.SourceDirectory))
                 : DirectoryProvider.WorkingDirectory;
             Console.WriteLine($"Attempting to build module in {cwd.FullName}...");
             if (!DirectoryProvider.IsProjectDirectory(cwd))
@@ -29,7 +30,8 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.AssemblyModuleBuilderTask
 
             if (!DirectoryProvider.IsModuleDirectory(cwd))
             {
-                throw new InvalidDataException("Error! No valid module.json found. Check for JSON errors or missing file.");
+                throw new InvalidDataException(
+                    "Error! No valid module.json found. Check for JSON errors or missing file.");
             }
 
             (var projectFile, var moduleFile) = DirectoryProvider.GetProjectFiles(cwd);
@@ -41,29 +43,33 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.AssemblyModuleBuilderTask
             }
             catch
             {
-                throw new InvalidDataException("Error! No valid module.json found. Check for JSON errors or missing file.");
+                throw new InvalidDataException(
+                    "Error! No valid module.json found. Check for JSON errors or missing file.");
             }
 
             if (!module.Entry.EndsWith(".dll") || module.Loader != "assembly")
             {
-                throw new InvalidDataException("Error! Module is not a proper assembly module, can not pack non-assembly modules!");
+                throw new InvalidDataException(
+                    "Error! Module is not a proper assembly module, can not pack non-assembly modules!");
             }
 
             var projectXml = XDocument.Parse(File.ReadAllText(projectFile.FullName)).Root.Descendants();
             string assemblyName = (from groups in projectXml
-                                   from element in groups.Descendants()
-                                   where element.Name.LocalName == "AssemblyName"
-                                   select element.Value).FirstOrDefault() ?? Path.GetFileNameWithoutExtension(projectFile.Name);
+                                      from element in groups.Descendants()
+                                      where element.Name.LocalName == "AssemblyName"
+                                      select element.Value).FirstOrDefault() ??
+                                  Path.GetFileNameWithoutExtension(projectFile.Name);
 
             if (assemblyName != Path.GetFileNameWithoutExtension(module.Entry))
             {
-                throw new InvalidOperationException($"Error! Entry point {module.Entry} is not consistent with output assembly name {assemblyName}!");
+                throw new InvalidOperationException(
+                    $"Error! Entry point {module.Entry} is not consistent with output assembly name {assemblyName}!");
             }
 
             string targetFramework = (from groups in projectXml
-                                      from element in groups.Descendants()
-                                      where element.Name.LocalName == "TargetFramework"
-                                      select element.Value).FirstOrDefault();
+                from element in groups.Descendants()
+                where element.Name.LocalName == "TargetFramework"
+                select element.Value).FirstOrDefault();
 
             if (targetFramework != "netcoreapp2.2")
             {
@@ -85,6 +91,6 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.AssemblyModuleBuilderTask
             {
                 throw new Exception($"Unable to build module due to {ex.Message}", ex);
             }
-         }
+        }
     }
 }

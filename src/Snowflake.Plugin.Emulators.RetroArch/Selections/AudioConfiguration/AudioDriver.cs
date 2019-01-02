@@ -11,8 +11,10 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Selections.AudioConfiguration
     {
         [SelectionOption("null", DisplayName = "No Audio")]
         Null,
+
         [SelectionOption("xaudio", DisplayName = "XAudio (Windows)")]
         XAudio,
+
         [SelectionOption("dsound", DisplayName = "DirectSound (Windows)")]
         DSound,
     }

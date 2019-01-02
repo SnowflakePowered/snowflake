@@ -17,7 +17,9 @@ namespace Snowflake.Services
 
         /// <inheritdoc/>
         public string AppDataDirectory { get; }
+
         private readonly IDictionary<Type, object> serviceContainer;
+
         #endregion
 
         // Flag: Has Dispose already been called?
@@ -58,7 +60,7 @@ namespace Snowflake.Services
         public T Get<T>()
         {
             // todo throw?
-            return this.serviceContainer.ContainsKey(typeof(T)) ? (T)this.serviceContainer[typeof(T)] : default;
+            return this.serviceContainer.ContainsKey(typeof(T)) ? (T) this.serviceContainer[typeof(T)] : default;
         }
 
         /// <inheritdoc/>
@@ -78,11 +80,10 @@ namespace Snowflake.Services
 
             if (disposing)
             {
-              this.Get<IPluginManager>().Dispose();
+                this.Get<IPluginManager>().Dispose();
 #pragma warning disable S1215 // "GC.Collect" should not be called
-              GC.Collect();
+                GC.Collect();
 #pragma warning restore S1215 // "GC.Collect" should not be called
-
             }
 
             // Free any unmanaged objects here.

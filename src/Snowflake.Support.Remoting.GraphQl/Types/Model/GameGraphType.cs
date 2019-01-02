@@ -22,17 +22,17 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.Model
             //    resolve: context => context.Source.WithFiles().Files);
 
             Field<GameRecordGraphType>("record",
-               description: "The record information of this game.",
-               resolve: context => context.Source.Record);
+                description: "The record information of this game.",
+                resolve: context => context.Source.Record);
 
             Field<GameFileExtensionGraphType>("files",
-             description: "The files of this game.",
-             resolve: context => context.Source.WithFiles());
+                description: "The files of this game.",
+                resolve: context => context.Source.WithFiles());
 
 
             Field<GameConfigurationExtensionGraphType>("configs",
-             description: "The files of this game.",
-             resolve: context => context.Source.WithConfigurations());
+                description: "The files of this game.",
+                resolve: context => context.Source.WithConfigurations());
         }
     }
 }

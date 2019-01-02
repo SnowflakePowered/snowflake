@@ -8,7 +8,7 @@ using Snowflake.Model.Records.Game;
 
 namespace Snowflake.Model.Game
 {
-    public interface IGame 
+    public interface IGame
     {
         IGameRecord Record { get; }
 

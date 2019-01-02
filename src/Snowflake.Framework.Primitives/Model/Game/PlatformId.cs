@@ -29,10 +29,12 @@ namespace Snowflake.Model.Game
             {
                 return this.Equals(p);
             }
+
             if (other is string s)
             {
                 return this.Equals(s);
             }
+
             return false;
         }
 
@@ -51,6 +53,5 @@ namespace Snowflake.Model.Game
 
         public static implicit operator PlatformId(string other) => new PlatformId(other);
         public static implicit operator string(PlatformId id) => id.PlatformIdString;
-
     }
 }

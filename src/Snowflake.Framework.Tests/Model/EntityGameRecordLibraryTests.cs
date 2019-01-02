@@ -32,7 +32,6 @@ namespace Snowflake.Model.Tests
         [Fact]
         public void SetRemoveMetadata_Test()
         {
-
             var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
             optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
 
@@ -62,7 +61,6 @@ namespace Snowflake.Model.Tests
         [Fact]
         public void SetWithMetadata_Test()
         {
-
             var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
             optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}")
                 .ConfigureWarnings(warnings => warnings.Throw(RelationalEventId.QueryClientEvaluationWarning));
@@ -93,7 +91,6 @@ namespace Snowflake.Model.Tests
         }
 
 
-
         [Fact]
         public void SetMultiple_Test()
         {
@@ -108,7 +105,6 @@ namespace Snowflake.Model.Tests
 
             lib.UpdateRecord(record);
             lib.UpdateRecord(record2);
-
         }
 
         [Fact]
@@ -122,7 +118,6 @@ namespace Snowflake.Model.Tests
             Assert.NotNull(lib.GetRecord(record.RecordId));
             lib.DeleteRecord(record);
             Assert.Null(lib.GetRecord(record.RecordId));
-
         }
 
         [Fact]

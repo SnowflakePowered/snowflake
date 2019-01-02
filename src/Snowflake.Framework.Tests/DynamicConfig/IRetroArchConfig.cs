@@ -11,7 +11,6 @@ namespace Snowflake.Configuration.Tests
     [ConfigurationFile("#retroarch", "retroarch.cfg")]
     public interface IRetroArchConfig : IConfigurationCollection<IRetroArchConfig>
     {
-        [SerializableSection("#retroarch")]
-        IVideoConfiguration VideoConfiguration { get; set; }
+        [SerializableSection("#retroarch")] IVideoConfiguration VideoConfiguration { get; set; }
     }
 }

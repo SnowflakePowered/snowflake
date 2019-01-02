@@ -20,7 +20,7 @@ namespace Snowflake.Support.Execution
 
     internal static class SaveLocationManifestExtensions
     {
-        public static ISaveLocation ToSaveLocation (this SaveLocationManifest manifest)
+        public static ISaveLocation ToSaveLocation(this SaveLocationManifest manifest)
         {
             return new SaveLocation(manifest.RecordGuid,
                 manifest.SaveFormat,

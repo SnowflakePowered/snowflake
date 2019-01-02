@@ -31,6 +31,7 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Shaders
         /// Gets or sets a value indicating whether this shader supports Slang format
         /// </summary>
         public bool SlangSupport { get; set; }
+
         public ShaderAttribute(string shaderName)
         {
             this.ShaderName = shaderName;

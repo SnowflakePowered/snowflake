@@ -67,7 +67,8 @@ namespace Snowflake.Configuration
         /// <inheritdoc/>
         public IEnumerable<ISelectionOptionDescriptor> SelectionOptions { get; }
 
-        internal ConfigurationOptionDescriptor(ConfigurationOptionAttribute configOption, IEnumerable<CustomMetadataAttribute> customMetadata, string keyName)
+        internal ConfigurationOptionDescriptor(ConfigurationOptionAttribute configOption,
+            IEnumerable<CustomMetadataAttribute> customMetadata, string keyName)
         {
             this.Default = configOption.Default;
             this.Type = configOption.Default.GetType();
@@ -85,9 +86,11 @@ namespace Snowflake.Configuration
             this.OptionKey = keyName;
             this.OptionType = ConfigurationOptionDescriptor.GetOptionType(this.Type, this.IsPath);
             this.IsSelection = this.OptionType == ConfigurationOptionType.Selection;
-            this.SelectionOptions = this.IsSelection ? NonGenericEnums.GetMembers(this.Type)
-                .Select(m => new SelectionOptionDescriptor(m))
-                .ToList() : Enumerable.Empty<ISelectionOptionDescriptor>();
+            this.SelectionOptions = this.IsSelection
+                ? NonGenericEnums.GetMembers(this.Type)
+                    .Select(m => new SelectionOptionDescriptor(m))
+                    .ToList()
+                : Enumerable.Empty<ISelectionOptionDescriptor>();
         }
 
         private static ConfigurationOptionType GetOptionType(Type t, bool isPath)

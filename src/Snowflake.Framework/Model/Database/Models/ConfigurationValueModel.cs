@@ -32,25 +32,24 @@ namespace Snowflake.Model.Database.Models
                 .IsRequired();
 
             modelBuilder.Entity<ConfigurationValueModel>()
-             .Property(p => p.SectionKey)
-             .IsRequired();
+                .Property(p => p.SectionKey)
+                .IsRequired();
 
             modelBuilder.Entity<ConfigurationValueModel>()
-               .Property(p => p.OptionKey)
-               .IsRequired();
+                .Property(p => p.OptionKey)
+                .IsRequired();
 
 
             modelBuilder.Entity<ConfigurationValueModel>()
-              .Property(p => p.ValueCollectionGuid)
-              .IsRequired();
+                .Property(p => p.ValueCollectionGuid)
+                .IsRequired();
 
             modelBuilder.Entity<ConfigurationValueModel>()
-              .Property(p => p.Value)
-              .IsRequired();
+                .Property(p => p.Value)
+                .IsRequired();
 
             modelBuilder.Entity<ConfigurationValueModel>()
                 .HasKey(p => p.Guid);
-
         }
     }
 }

@@ -13,7 +13,8 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Configuration.Internal
         [ConfigurationOption("network_cmd_port", 55355, DisplayName = "Network Cmd Port", Private = true)]
         int NetworkCmdPort { get; set; }
 
-        [ConfigurationOption("network_remote_base_port", 55400, DisplayName = "Network Remote Base Port", Private = true)]
+        [ConfigurationOption("network_remote_base_port", 55400, DisplayName = "Network Remote Base Port",
+            Private = true)]
         int NetworkRemoteBasePort { get; set; }
 
         [ConfigurationOption("network_remote_enable", true, DisplayName = "Enable Network Remoting", Private = true)]

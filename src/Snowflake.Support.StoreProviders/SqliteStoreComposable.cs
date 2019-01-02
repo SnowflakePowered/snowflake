@@ -20,7 +20,6 @@ namespace Snowflake.Support.StoreProviders
     {
         [ImportService(typeof(IServiceRegistrationProvider))]
         [ImportService(typeof(IContentDirectoryProvider))]
-
         public void Compose(IModule module, Loader.IServiceRepository serviceContainer)
         {
             var contentDirectory = serviceContainer.Get<IContentDirectoryProvider>();
@@ -53,11 +52,11 @@ namespace Snowflake.Support.StoreProviders
             var gameFs = physicalFs.GetOrCreateSubFileSystem(appDataPath / "games");
 
             // Add default extensions
-            gameLibrary.AddExtension<IGameFileExtensionProvider, 
+            gameLibrary.AddExtension<IGameFileExtensionProvider,
                 IGameFileExtension>(new GameFileExtensionProvider(fileLibrary, gameFs));
 
             gameLibrary.AddExtension<IGameConfigurationExtensionProvider,
-              IGameConfigurationExtension>(new GameConfigurationExtensionProvider(configStore));
+                IGameConfigurationExtension>(new GameConfigurationExtensionProvider(configStore));
 
             // register game library.
             serviceContainer.Get<IServiceRegistrationProvider>()
@@ -74,8 +73,7 @@ namespace Snowflake.Support.StoreProviders
 
             var inputStore = new ControllerElementMappingsStore(optionsBuilder);
             serviceContainer.Get<IServiceRegistrationProvider>()
-               .RegisterService<IControllerElementMappingsStore>(inputStore);
-
+                .RegisterService<IControllerElementMappingsStore>(inputStore);
         }
     }
 }

@@ -27,7 +27,7 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Sony
             var reader = new CDReader(romStream, true);
             var system = reader.OpenFile("SYSTEM.CNF", FileMode.Open);
             return Regex.Match(new StreamReader(system).ReadToEnd(), "[A-Z]+_[0-9][0-9][0-9].[0-9][0-9]",
-                            RegexOptions.IgnoreCase).Value.Replace(".", string.Empty).Replace("_", "-");
+                RegexOptions.IgnoreCase).Value.Replace(".", string.Empty).Replace("_", "-");
         }
 
         /// <inheritdoc/>

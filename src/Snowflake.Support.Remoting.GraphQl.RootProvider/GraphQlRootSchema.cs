@@ -22,9 +22,9 @@ namespace Snowflake.Support.Remoting.GraphQl.RootProvider
         /// <inheritdoc/>
         public void Register(QueryBuilder queries)
         {
-            queries.RegisterConnectionQueries((RootQuery)this.Query);
-            queries.RegisterFieldQueries((RootQuery)this.Query);
-            queries.RegisterMutationQueries((RootMutation)this.Mutation);
+            queries.RegisterConnectionQueries((RootQuery) this.Query);
+            queries.RegisterFieldQueries((RootQuery) this.Query);
+            queries.RegisterMutationQueries((RootMutation) this.Mutation);
         }
     }
 }

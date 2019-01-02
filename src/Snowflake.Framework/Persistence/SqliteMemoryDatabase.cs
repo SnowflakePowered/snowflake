@@ -102,8 +102,8 @@ namespace Snowflake.Persistence
                 conn.Open();
                 throw new NotImplementedException();
 
-                            // todo: reimplement backup database this.dbConnection.BackupDatabase(conn, "main", "main", -1, null, 0);
-                            // see: https://github.com/aspnet/Microsoft.Data.Sqlite/issues/17
+                // todo: reimplement backup database this.dbConnection.BackupDatabase(conn, "main", "main", -1, null, 0);
+                // see: https://github.com/aspnet/Microsoft.Data.Sqlite/issues/17
                 conn.Close();
 #pragma warning restore S125 // Sections of code should not be "commented out"
 #pragma warning restore CS0162 // Unreachable code detected

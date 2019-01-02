@@ -20,7 +20,7 @@ namespace Snowflake.Model.FileSystem
         /// Gets the name of the directory
         /// </summary>
         string Name { get; }
-        
+
         /// <summary>
         /// Opens an existing child directory with the given name.
         /// If the directory does not exist, returns null.

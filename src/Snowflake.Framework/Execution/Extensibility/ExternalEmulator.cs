@@ -40,6 +40,7 @@ namespace Snowflake.Execution.Extensibility
 
         /// <inheritdoc/>
         public abstract IEmulatorTask CreateTask(IGameRecord executingGame,
-            ISaveLocation saveLocation, IList<IEmulatedController> controllerConfiguration, string profileContext = "default");
+            ISaveLocation saveLocation, IList<IEmulatedController> controllerConfiguration,
+            string profileContext = "default");
     }
 }

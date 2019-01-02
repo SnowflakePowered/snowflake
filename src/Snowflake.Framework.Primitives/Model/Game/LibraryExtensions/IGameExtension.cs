@@ -1,6 +1,6 @@
 ﻿namespace Snowflake.Model.Game
 {
-    public interface IGameExtension 
+    public interface IGameExtension
     {
     }
 }

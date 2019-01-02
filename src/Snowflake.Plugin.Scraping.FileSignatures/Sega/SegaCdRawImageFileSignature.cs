@@ -9,6 +9,7 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Sega
     {
         /// <inheritdoc/>
         public byte[] HeaderSignature => Encoding.UTF8.GetBytes("SEGADISCSYSTEM");
+
         private byte[] Sega32x = Encoding.UTF8.GetBytes("SEGA 32X");
 
         /// <inheritdoc/>

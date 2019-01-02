@@ -17,16 +17,16 @@ namespace Shiragame.Builder
         internal static string ParseRegion(string name)
         {
             var tagData = Regex.Matches(name,
-               @"(\()([^)]+)(\))");
+                @"(\()([^)]+)(\))");
             var validMatch = (from Match tagMatch in tagData
-                              let match = tagMatch.Groups[2].Value
-                              from regionCode in from regionCode in match.Split(',', '-') select regionCode.Trim()
-                              where regionCode.Length != 2 || regionCode.ToLower().ToTitleCase() != regionCode
+                let match = tagMatch.Groups[2].Value
+                from regionCode in from regionCode in match.Split(',', '-') select regionCode.Trim()
+                where regionCode.Length != 2 || regionCode.ToLower().ToTitleCase() != regionCode
 
-                              // allow FR & France to be parsed, but not Fr inside En,Fr,De, etc..
-                              let isoRegion = RegionParser.ConvertToRegionCode(regionCode.ToUpperInvariant())
-                              where isoRegion != null
-                              select isoRegion).ToList();
+                // allow FR & France to be parsed, but not Fr inside En,Fr,De, etc..
+                let isoRegion = RegionParser.ConvertToRegionCode(regionCode.ToUpperInvariant())
+                where isoRegion != null
+                select isoRegion).ToList();
             return !validMatch.Any() ? "ZZ" : string.Join("-", from regionCode in validMatch select regionCode);
         }
 

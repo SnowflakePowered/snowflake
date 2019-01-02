@@ -6,7 +6,8 @@ using Snowflake.Input.Controller;
 
 namespace Snowflake.Support.Remoting.GraphQl.Types.ControllerLayout
 {
-    public class ControllerElementInfoGraphType : ObjectGraphType<KeyValuePair<ControllerElement, IControllerElementInfo>>
+    public class
+        ControllerElementInfoGraphType : ObjectGraphType<KeyValuePair<ControllerElement, IControllerElementInfo>>
     {
         public ControllerElementInfoGraphType()
         {

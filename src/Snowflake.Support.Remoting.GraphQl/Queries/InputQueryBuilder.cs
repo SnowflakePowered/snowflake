@@ -36,7 +36,8 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
             this.StoneProvider = stoneProvider;
         }
 
-        [Connection("lowLevelInputDevices", "Gets all enumerated input devices on this computer.", typeof(LowLevelInputDeviceGraphType))]
+        [Connection("lowLevelInputDevices", "Gets all enumerated input devices on this computer.",
+            typeof(LowLevelInputDeviceGraphType))]
         public IEnumerable<ILowLevelInputDevice> GetLLInputs()
         {
             return this.Manager.GetAllDevices();
@@ -48,21 +49,26 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
             return this.Enumerators.SelectMany(p => p.GetConnectedDevices());
         }
 
-        [Field("mappedControllerProfile", "Gets a controller profile for the given Stone controller and real device", typeof(MappedControllerElementCollectionGraphType))]
+        [Field("mappedControllerProfile", "Gets a controller profile for the given Stone controller and real device",
+            typeof(MappedControllerElementCollectionGraphType))]
         [Parameter(typeof(string), typeof(StringGraphType), "controllerId", "The Stone Controller ID to map to.")]
         [Parameter(typeof(string), typeof(StringGraphType), "deviceId", "The real device to map from.")]
         [Parameter(typeof(string), typeof(StringGraphType), "profileName", "A profile name.", nullable: true)]
-        public IControllerElementMappings GetProfile(string controllerId, string deviceId, string profileName = "default")
+        public IControllerElementMappings GetProfile(string controllerId, string deviceId,
+            string profileName = "default")
         {
             return this.MappedElementStore.GetMappings(controllerId, deviceId, profileName);
         }
 
         // todo: make this a mutation input object.
-        [Field("defaultControllerProfile", "Gets the default controller profile for the given Stone controller and real device.", typeof(MappedControllerElementCollectionGraphType))]
+        [Field("defaultControllerProfile",
+            "Gets the default controller profile for the given Stone controller and real device.",
+            typeof(MappedControllerElementCollectionGraphType))]
         [Parameter(typeof(string), typeof(StringGraphType), "controllerId", "The Stone Controller ID to map to.")]
         [Parameter(typeof(string), typeof(StringGraphType), "deviceId", "The real device to map from.")]
         [Parameter(typeof(string), typeof(StringGraphType), "profileName", "A profile name.", nullable: true)]
-        public IControllerElementMappings GetDefaultProfile(string controllerId, string deviceId, string profileName = "default")
+        public IControllerElementMappings GetDefaultProfile(string controllerId, string deviceId,
+            string profileName = "default")
         {
             var emulatedController = this.StoneProvider.Controllers[controllerId];
             var realController = this.GetAllInputDevices().FirstOrDefault(p => p.DeviceId == deviceId)?.DeviceLayout;
@@ -71,12 +77,16 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
             return ControllerElementMappings.GetDefaultMappings(realController, emulatedController);
         }
 
-        [Mutation("createControllerProfile", "Creates the default controller profile for the given Stone controller and real device.", typeof(MappedControllerElementCollectionGraphType))]
-        [Parameter(typeof(DefaultMappedControllerElementCollectionInputObject), typeof(DefaultMappedControllerElementCollectionInputType), "input", "The input")]
+        [Mutation("createControllerProfile",
+            "Creates the default controller profile for the given Stone controller and real device.",
+            typeof(MappedControllerElementCollectionGraphType))]
+        [Parameter(typeof(DefaultMappedControllerElementCollectionInputObject),
+            typeof(DefaultMappedControllerElementCollectionInputType), "input", "The input")]
         public IControllerElementMappings CreateProfile(DefaultMappedControllerElementCollectionInputObject input)
         {
             var emulatedController = this.StoneProvider.Controllers[input.ControllerId];
-            var realController = this.GetAllInputDevices().FirstOrDefault(p => p.DeviceId == input.DeviceId)?.DeviceLayout;
+            var realController = this.GetAllInputDevices().FirstOrDefault(p => p.DeviceId == input.DeviceId)
+                ?.DeviceLayout;
 
             // todo: check for nulls
             var defaults = ControllerElementMappings.GetDefaultMappings(realController, emulatedController);
@@ -84,8 +94,11 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
             return this.MappedElementStore.GetMappings(input.ControllerId, input.DeviceId, input.ProfileName);
         }
 
-        [Mutation("setControllerProfile", "Sets the values of the given controller profile for the given Stone controller and real device.", typeof(MappedControllerElementCollectionGraphType))]
-        [Parameter(typeof(MappedControllerElementCollectionInputObject), typeof(MappedControllerElementCollectionInputType), "input", "The input")]
+        [Mutation("setControllerProfile",
+            "Sets the values of the given controller profile for the given Stone controller and real device.",
+            typeof(MappedControllerElementCollectionGraphType))]
+        [Parameter(typeof(MappedControllerElementCollectionInputObject),
+            typeof(MappedControllerElementCollectionInputType), "input", "The input")]
         public IControllerElementMappings SetProfile(MappedControllerElementCollectionInputObject input)
         {
             var collection = this.MappedElementStore.GetMappings(input.ControllerId, input.DeviceId, input.ProfileName);

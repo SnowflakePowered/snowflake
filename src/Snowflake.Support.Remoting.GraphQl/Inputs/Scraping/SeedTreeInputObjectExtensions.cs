@@ -10,7 +10,8 @@ namespace Snowflake.Support.Remoting.GraphQl.Inputs.Scraping
     {
         public static SeedTree ToSeedTree(this SeedTreeInputObject @this)
         {
-            return (@this.Type, @this.Value, @this.Children?.Select(s => s.ToSeedTree()) ?? Enumerable.Empty<SeedTree>());
+            return (@this.Type, @this.Value,
+                @this.Children?.Select(s => s.ToSeedTree()) ?? Enumerable.Empty<SeedTree>());
         }
     }
 }

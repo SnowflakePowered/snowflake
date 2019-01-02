@@ -18,6 +18,7 @@ namespace Snowflake.Configuration.Input
     {
         /// <inheritdoc/>
         public T Configuration { get; }
+
         public IEnumerable<IConfigurationOptionDescriptor> Options { get; }
 
         /// <inheritdoc/>
@@ -38,16 +39,17 @@ namespace Snowflake.Configuration.Input
 
         private readonly ConfigurationInterceptor configurationInterceptor;
 
-        internal InputConfigurationSection(InputTemplateCircularInterceptor<T> interceptor, InputTemplateInterceptor<T> inputTemplate)
+        internal InputConfigurationSection(InputTemplateCircularInterceptor<T> interceptor,
+            InputTemplateInterceptor<T> inputTemplate)
         {
             this.Descriptor = new ConfigurationSectionDescriptor<T>(typeof(T).Name);
             ProxyGenerator generator = new ProxyGenerator();
             var options = from prop in typeof(T).GetProperties()
-                          let attr = prop.GetCustomAttribute<ConfigurationOptionAttribute>()
-                          where attr != null
-                          let name = prop.Name
-                          let metadata = prop.GetCustomAttributes<CustomMetadataAttribute>()
-                          select new ConfigurationOptionDescriptor(attr, metadata, name) as IConfigurationOptionDescriptor;
+                let attr = prop.GetCustomAttribute<ConfigurationOptionAttribute>()
+                where attr != null
+                let name = prop.Name
+                let metadata = prop.GetCustomAttributes<CustomMetadataAttribute>()
+                select new ConfigurationOptionDescriptor(attr, metadata, name) as IConfigurationOptionDescriptor;
 
             this.Options = options.ToList();
             // todo: fix this.

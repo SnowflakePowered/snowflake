@@ -11,7 +11,6 @@ using Snowflake.Input.Controller;
 using Snowflake.Model.Game;
 using Snowflake.Model.Records.Game;
 using Snowflake.Platform;
-
 using Snowflake.Services;
 using Snowflake.Support.Remoting.GraphQl.Inputs.FileRecord;
 using Snowflake.Support.Remoting.GraphQl.Inputs.GameRecord;
@@ -26,6 +25,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
     {
         private IGameLibrary GameLibrary { get; }
         private IStoneProvider StoneProvider { get; }
+
         public RecordQueryBuilder(IGameLibrary gameLibrary, IStoneProvider stoneProvider)
         {
             this.GameLibrary = gameLibrary;
@@ -86,10 +86,10 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
             {
                 var game = this.GameLibrary.CreateGame(input.Platform);
                 game.Record.Title = input.Title;
-               
+
                 foreach (var metadata in input.Metadata)
                 {
-                   game.Record.Metadata.Add(metadata.Key, metadata.Value);
+                    game.Record.Metadata.Add(metadata.Key, metadata.Value);
                 }
 
                 this.GameLibrary.UpdateGameRecord(game.Record);

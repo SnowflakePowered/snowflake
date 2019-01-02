@@ -26,8 +26,8 @@ namespace Snowflake.Model.Database
             {
                 var records = context.GameRecords.Include(r => r.Metadata)
                     .Select(record => new GameRecord(record.Platform, record.RecordID,
-                            record.Metadata.AsMetadataCollection(record.RecordID)))
-                        .ToList();
+                        record.Metadata.AsMetadataCollection(record.RecordID)))
+                    .ToList();
                 return records;
             }
         }
@@ -37,9 +37,9 @@ namespace Snowflake.Model.Database
             using (var context = new DatabaseContext(this.Options.Options))
             {
                 var records = context.GameRecords.Include(r => r.Metadata)
-                 .Select(record => new GameRecord(record.Platform, record.RecordID,
-                         record.Metadata.AsMetadataCollection(record.RecordID)))
-                 .Where(predicate).ToList();
+                    .Select(record => new GameRecord(record.Platform, record.RecordID,
+                        record.Metadata.AsMetadataCollection(record.RecordID)))
+                    .Where(predicate).ToList();
                 return records;
             }
         }
@@ -49,10 +49,10 @@ namespace Snowflake.Model.Database
             using (var context = new DatabaseContext(this.Options.Options))
             {
                 var records = await context.GameRecords
-                 .Include(r => r.Metadata)
-                 .Select(record => new GameRecord(record.Platform, record.RecordID,
-                         record.Metadata.AsMetadataCollection(record.RecordID)))
-                 .Where(predicate).ToListAsync();
+                    .Include(r => r.Metadata)
+                    .Select(record => new GameRecord(record.Platform, record.RecordID,
+                        record.Metadata.AsMetadataCollection(record.RecordID)))
+                    .Where(predicate).ToListAsync();
                 return records;
             }
         }
@@ -66,10 +66,10 @@ namespace Snowflake.Model.Database
                 if (record != null)
                 {
                     return new GameRecord(record.Platform, record.RecordID,
-                            record.Metadata.AsMetadataCollection(record.RecordID));
+                        record.Metadata.AsMetadataCollection(record.RecordID));
                 }
-                return null;
 
+                return null;
             }
         }
 
@@ -82,6 +82,7 @@ namespace Snowflake.Model.Database
                 context.GameRecords.Add(record.AsModel());
                 context.SaveChanges();
             }
+
             return record;
         }
     }

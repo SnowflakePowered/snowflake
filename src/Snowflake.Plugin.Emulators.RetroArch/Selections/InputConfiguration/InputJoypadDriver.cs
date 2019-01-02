@@ -11,12 +11,16 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Selections.InputConfiguration
     {
         [SelectionOption("null", DisplayName = "No Input")]
         Null,
+
         [SelectionOption("dinput", DisplayName = "DirectInput")]
         DirectInput,
+
         [SelectionOption("xinput", DisplayName = "XInput")]
         XInput,
+
         [SelectionOption("hid", DisplayName = "Human Interface Device")]
         HID,
+
         [SelectionOption("sdl2", DisplayName = "SDL2")]
         SDL2,
     }

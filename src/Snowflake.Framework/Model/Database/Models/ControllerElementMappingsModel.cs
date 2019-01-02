@@ -22,12 +22,11 @@ namespace Snowflake.Model.Database.Models
                 .IsRequired();
 
             modelBuilder.Entity<ControllerElementMappingsModel>()
-               .Property(p => p.DeviceID)
-               .IsRequired();
+                .Property(p => p.DeviceID)
+                .IsRequired();
 
             modelBuilder.Entity<ControllerElementMappingsModel>()
-               .HasKey(p => new { p.ControllerID, p.DeviceID, p.ProfileName});
+                .HasKey(p => new {p.ControllerID, p.DeviceID, p.ProfileName});
         }
     }
 }
-

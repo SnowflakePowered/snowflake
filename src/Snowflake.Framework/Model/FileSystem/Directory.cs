@@ -17,13 +17,14 @@ namespace Snowflake.Model.FileSystem
     internal sealed class Directory : IDirectory
     {
         private SqliteDatabase Manifest { get; }
+
         internal Directory(string name, IFileSystem rootFs, DirectoryEntry parentDirectory)
         {
             this.RootFileSystem = rootFs;
             this.ThisDirectory = parentDirectory.CreateSubdirectory(name);
             this.Name = name;
-            
-            this.Manifest = 
+
+            this.Manifest =
                 new SqliteDatabase(this.RootFileSystem.ConvertPathToInternal(this.ThisDirectory.Path / ".manifest"));
             this.Manifest.CreateTable("directory_manifest", "uuid UUID", "filename TEXT PRIMARY KEY");
         }
@@ -43,7 +44,9 @@ namespace Snowflake.Model.FileSystem
         {
             this.Manifest.Execute(connection =>
             {
-                connection.Execute(@"INSERT OR REPLACE INTO directory_manifest (uuid, filename) VALUES (@guid, @file)", new { guid, file } );
+                connection.Execute(
+                    @"INSERT OR REPLACE INTO directory_manifest (uuid, filename) VALUES (@guid, @file)",
+                    new {guid, file});
             });
         }
 
@@ -51,27 +54,32 @@ namespace Snowflake.Model.FileSystem
         {
             this.Manifest.Execute(connection =>
             {
-                connection.Execute(@"DELETE FROM directory_manifest WHERE filename = @file", new { file });
+                connection.Execute(@"DELETE FROM directory_manifest WHERE filename = @file", new {file});
             });
         }
 
-        
+
         internal Guid GetGuid(string file)
         {
             return this.Manifest.Query(conn =>
             {
-                var bytes = conn.Query<byte[]>(@"SELECT uuid FROM directory_manifest WHERE filename = @file", new { file });
+                var bytes = conn.Query<byte[]>(@"SELECT uuid FROM directory_manifest WHERE filename = @file",
+                    new {file});
                 if (bytes.Count() == 0)
                 {
-                    conn.Execute(@"INSERT OR REPLACE INTO directory_manifest (uuid, filename) VALUES (@guid, @file)", new { guid = Guid.NewGuid(), file });
-                    bytes = conn.Query<byte[]>(@"SELECT uuid FROM directory_manifest WHERE filename = @file", new { file });
+                    conn.Execute(@"INSERT OR REPLACE INTO directory_manifest (uuid, filename) VALUES (@guid, @file)",
+                        new {guid = Guid.NewGuid(), file});
+                    bytes = conn.Query<byte[]>(@"SELECT uuid FROM directory_manifest WHERE filename = @file",
+                        new {file});
                     return new Guid(bytes.First());
                 }
+
                 return new Guid(bytes.First());
             });
         }
 
         internal IFileSystem RootFileSystem { get; }
+
         internal DirectoryEntry ThisDirectory { get; }
         //internal IFileSystem FileSystem { get; }
 
@@ -89,9 +97,9 @@ namespace Snowflake.Model.FileSystem
 
         public IDirectory OpenDirectory(string name)
         {
-            return new Directory(name, 
-               this.RootFileSystem,
-               this.ThisDirectory);
+            return new Directory(name,
+                this.RootFileSystem,
+                this.ThisDirectory);
         }
 
         public IEnumerable<IDirectory> EnumerateDirectories()
@@ -103,15 +111,15 @@ namespace Snowflake.Model.FileSystem
         public IEnumerable<IFile> EnumerateFiles()
         {
             return this.ThisDirectory.EnumerateFiles()
-                    .Where(f => f.Name != ".manifest")
-                    .Select(f => this.OpenFile(f.Name));
+                .Where(f => f.Name != ".manifest")
+                .Select(f => this.OpenFile(f.Name));
         }
 
         private IFile OpenFile(UPath file)
         {
             if (file.GetName() == ".manifest") throw new UnauthorizedAccessException("Unable to open manifest file.");
-           return new File(this, new FileEntry(this.RootFileSystem, file), 
-               this.GetGuid(file.GetName()));
+            return new File(this, new FileEntry(this.RootFileSystem, file),
+                this.GetGuid(file.GetName()));
         }
 
         public DirectoryInfo GetPath()
@@ -150,6 +158,7 @@ namespace Snowflake.Model.FileSystem
             {
                 await sourceStream.CopyToAsync(newStream, cancellation);
             }
+
             return file;
         }
 

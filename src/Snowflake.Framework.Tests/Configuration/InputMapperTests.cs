@@ -13,6 +13,7 @@ using Snowflake.Input.Device;
 using Snowflake.Services;
 using Snowflake.Tests;
 using Xunit;
+
 namespace Snowflake.Configuration.Tests
 {
     public class InputMapperTests
@@ -163,8 +164,9 @@ namespace Snowflake.Configuration.Tests
                 JsonConvert.DeserializeObject<ControllerLayout>(
                     TestUtilities.GetStringResource("InputMappings.xinput_device.json"));
             var mapcol = ControllerElementMappings.GetDefaultMappings(realmapping, testmappings);
-            foreach (var controllerElem in from elem in mapcol where elem.DeviceElement != ControllerElement.NoElement
-                                            select elem.DeviceElement)
+            foreach (var controllerElem in from elem in mapcol
+                where elem.DeviceElement != ControllerElement.NoElement
+                select elem.DeviceElement)
             {
                 Assert.NotNull(realmapping.Layout[controllerElem]);
             }
@@ -182,9 +184,11 @@ namespace Snowflake.Configuration.Tests
                     TestUtilities.GetStringResource("InputMappings.xinput_device.json"));
             var mapcol = ControllerElementMappings.GetDefaultMappings(realmapping, testmappings);
             var template = new InputTemplate<IRetroArchInput>(mapcol, 0);
-            string serializedValue = new InputSerializer(serializer).Serialize(template, mapping).Replace(Environment.NewLine, string.Empty);
+            string serializedValue = new InputSerializer(serializer).Serialize(template, mapping)
+                .Replace(Environment.NewLine, string.Empty);
             Assert.Equal(
-                TestUtilities.GetStringResource("Configurations.ExampleInput.cfg").Replace(Environment.NewLine, string.Empty),
+                TestUtilities.GetStringResource("Configurations.ExampleInput.cfg")
+                    .Replace(Environment.NewLine, string.Empty),
                 serializedValue);
         }
 
@@ -200,9 +204,11 @@ namespace Snowflake.Configuration.Tests
                     TestUtilities.GetStringResource("InputMappings.xinput_device.json"));
             var mapcol = ControllerElementMappings.GetDefaultMappings(realmapping, testmappings);
             var template = new InputTemplate<IRetroArchInput>(mapcol, 0);
-            string serializedValue = new InputSerializer(serializer).Serialize(template, mapping).Replace(Environment.NewLine, string.Empty);
+            string serializedValue = new InputSerializer(serializer).Serialize(template, mapping)
+                .Replace(Environment.NewLine, string.Empty);
             Assert.Equal(
-                TestUtilities.GetStringResource("Configurations.ExampleInput.ini").Replace(Environment.NewLine, string.Empty),
+                TestUtilities.GetStringResource("Configurations.ExampleInput.ini")
+                    .Replace(Environment.NewLine, string.Empty),
                 serializedValue);
         }
 
@@ -210,12 +216,12 @@ namespace Snowflake.Configuration.Tests
         public void InputTemplateGetterSetter_Test()
         {
             var realLayout =
-             JsonConvert.DeserializeObject<ControllerLayout>(
-               TestUtilities.GetStringResource("InputMappings.keyboard_device.json"));
+                JsonConvert.DeserializeObject<ControllerLayout>(
+                    TestUtilities.GetStringResource("InputMappings.keyboard_device.json"));
 
             var targetLayout =
-             JsonConvert.DeserializeObject<ControllerLayout>(
-                 TestUtilities.GetStringResource("InputMappings.xinput_device.json"));
+                JsonConvert.DeserializeObject<ControllerLayout>(
+                    TestUtilities.GetStringResource("InputMappings.xinput_device.json"));
 
             var mapcol = ControllerElementMappings.GetDefaultMappings(realLayout, targetLayout);
             IInputTemplate template = new InputTemplate<IRetroArchInput>(mapcol, 0);
@@ -223,7 +229,6 @@ namespace Snowflake.Configuration.Tests
             Assert.Equal(ControllerElement.KeyZ, template[ControllerElement.ButtonA]);
             template[ControllerElement.ButtonA] = ControllerElement.KeyX;
             Assert.Equal(ControllerElement.KeyX, template[ControllerElement.ButtonA]);
-
         }
     }
 }

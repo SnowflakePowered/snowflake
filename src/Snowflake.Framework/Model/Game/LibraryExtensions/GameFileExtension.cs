@@ -13,7 +13,6 @@ namespace Snowflake.Model.Game.LibraryExtensions
     {
         public GameFileExtension(IFileSystem gameFsRoot, FileRecordLibrary files)
         {
-
             this.Root = new Directory(gameFsRoot);
             this.FileRecordLibrary = files;
             this.SavesRoot = this.Root.OpenDirectory("saves");

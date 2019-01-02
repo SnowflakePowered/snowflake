@@ -138,7 +138,7 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi
                 IEnumerator ienumImages = node.GetEnumerator();
                 while (ienumImages.MoveNext())
                 {
-                    XmlNode imageNode = (XmlNode)ienumImages.Current;
+                    XmlNode imageNode = (XmlNode) ienumImages.Current;
 
                     switch (imageNode.Name)
                     {

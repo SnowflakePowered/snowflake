@@ -10,10 +10,11 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.PackTask
     {
         public static DirectoryInfo WorkingDirectory => new DirectoryInfo(Directory.GetCurrentDirectory());
 
-        public static bool IsModuleDirectory(DirectoryInfo directory) 
+        public static bool IsModuleDirectory(DirectoryInfo directory)
             => directory.EnumerateFiles().Any(p => p.Name == "module.json")
-            && directory.EnumerateDirectories().Any(p => p.Name == "contents");
+               && directory.EnumerateDirectories().Any(p => p.Name == "contents");
 
-        public static FileInfo GetModule(DirectoryInfo directory) => directory.EnumerateFiles().FirstOrDefault(p => p.Name == "module.json");
+        public static FileInfo GetModule(DirectoryInfo directory) =>
+            directory.EnumerateFiles().FirstOrDefault(p => p.Name == "module.json");
     }
 }

@@ -15,7 +15,6 @@ namespace Snowflake.Emulator.Execution.Tests
         [Fact]
         public void EmulatedControllerCreation_Test()
         {
-
             var physicalDevice = new Mock<IInputDevice>();
             var targetLayout = new Mock<IControllerLayout>();
             var layoutMapping = new Mock<IControllerElementMappings>();
@@ -27,7 +26,6 @@ namespace Snowflake.Emulator.Execution.Tests
             Assert.Same(targetLayout.Object, emulatedcontroller.TargetLayout);
             Assert.Same(layoutMapping.Object, emulatedcontroller.LayoutMapping);
             Assert.Equal(0, emulatedcontroller.PortIndex);
-
         }
     }
 }

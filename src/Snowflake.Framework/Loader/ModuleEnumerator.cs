@@ -12,6 +12,7 @@ namespace Snowflake.Loader
 
         /// <inheritdoc/>
         public IEnumerable<IModule> Modules { get; }
+
         public ModuleEnumerator(string appDataDirectory)
         {
             this.ModuleDirectory = new DirectoryInfo(Path.Combine(appDataDirectory, "modules"));
@@ -22,10 +23,10 @@ namespace Snowflake.Loader
         private IEnumerable<IModule> EnumerateModules()
         {
             return from directory in this.ModuleDirectory.EnumerateDirectories()
-                    where File.Exists(Path.Combine(directory.FullName, "module.json"))
-                    select JsonConvert.DeserializeObject<ModuleDefinition>(
+                where File.Exists(Path.Combine(directory.FullName, "module.json"))
+                select JsonConvert.DeserializeObject<ModuleDefinition>(
                         File.ReadAllText(Path.Combine(directory.FullName, "module.json")))
-                        .ToModule(directory);
+                    .ToModule(directory);
         }
     }
 }

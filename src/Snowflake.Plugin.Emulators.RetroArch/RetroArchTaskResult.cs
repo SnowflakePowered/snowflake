@@ -14,6 +14,7 @@ namespace Snowflake.Adapters
     {
         private IEmulatorTaskRoot TaskRoot { get; }
         private ISaveLocation SaveLocation { get; }
+
         public RetroArchTaskResult(IEmulatorTaskRoot taskRoot, ISaveLocation location)
             : base("retroarch")
         {

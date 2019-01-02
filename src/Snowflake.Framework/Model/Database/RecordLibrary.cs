@@ -38,7 +38,7 @@ namespace Snowflake.Model.Database
             using (var context = new DatabaseContext(this.Options.Options))
             {
                 foreach
-                    (var metadata in
+                (var metadata in
                     context.Metadata.Where(m => m.RecordID == record.RecordId))
                 {
                     if (!record.Metadata.ContainsKey(metadata.MetadataKey))
@@ -49,7 +49,6 @@ namespace Snowflake.Model.Database
                     {
                         metadata.MetadataValue = record.Metadata[metadata.MetadataKey];
                         context.Entry(metadata).State = EntityState.Modified;
-
                     }
                 }
 
@@ -65,6 +64,7 @@ namespace Snowflake.Model.Database
                         MetadataKey = metadata.Key
                     });
                 }
+
                 context.SaveChanges();
             }
         }

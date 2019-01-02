@@ -22,7 +22,8 @@ namespace Snowflake.Model.Records
 
         public PlatformId PlatformId { get; }
 
-        public string? Title {
+        public string? Title
+        {
             get => this.Metadata[GameMetadataKeys.Title];
             set => this.Metadata[GameMetadataKeys.Title] = value;
         }

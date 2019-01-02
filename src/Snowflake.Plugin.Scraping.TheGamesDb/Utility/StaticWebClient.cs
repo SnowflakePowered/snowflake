@@ -11,6 +11,7 @@ namespace Snowflake.Plugin.Scraping.TheGamesDb.Utility
     internal static class StaticWebClient
     {
         private static HttpClient Client { get; }
+
         static StaticWebClient()
         {
             StaticWebClient.Client = new HttpClient();

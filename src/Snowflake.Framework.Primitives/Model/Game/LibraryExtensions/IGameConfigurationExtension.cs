@@ -9,7 +9,7 @@ namespace Snowflake.Model.Game.LibraryExtensions
     public interface IGameConfigurationExtension : IGameExtension
     {
         IConfigurationCollection<T> CreateNewProfile<T>(string sourceName, string profile)
-            where T: class, IConfigurationCollection<T>;
+            where T : class, IConfigurationCollection<T>;
 
         IEnumerable<IGrouping<string, string>> GetProfileNames();
 
@@ -19,7 +19,7 @@ namespace Snowflake.Model.Game.LibraryExtensions
         void DeleteProfile(string sourceName, string profile);
     }
 
-    public interface IGameConfigurationExtensionProvider 
+    public interface IGameConfigurationExtensionProvider
         : IGameExtensionProvider<IGameConfigurationExtension>
     {
         IConfigurationCollection<T> GetProfile<T>(Guid valueCollectionGuid)
@@ -32,7 +32,6 @@ namespace Snowflake.Model.Game.LibraryExtensions
         void UpdateValue(Guid valueGuid, object newValue);
 
         void UpdateProfile(IConfigurationCollection profile);
-
     }
 
     public static class GameConfigurationExtensionExtensions

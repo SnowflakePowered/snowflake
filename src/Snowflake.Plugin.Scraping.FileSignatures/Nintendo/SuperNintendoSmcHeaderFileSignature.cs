@@ -11,7 +11,7 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Nintendo
     public class SuperNintendoSmcHeaderFileSignature : IFileSignature
     {
         /// <inheritdoc/>
-        public byte[] HeaderSignature => new byte[7] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+        public byte[] HeaderSignature => new byte[7] {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
         /// <inheritdoc/>
         public bool HeaderSignatureMatches(Stream romStream)
@@ -48,7 +48,7 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Nintendo
             int fixedByte = romStream.ReadByte();
             return buffer.SequenceEqual(this.HeaderSignature) && fixedByte == 0x33;
 
-                // this should equal to 7 bytes of 0 starting from 0x7FB6 (+ 0x200 if HiRom)
+            // this should equal to 7 bytes of 0 starting from 0x7FB6 (+ 0x200 if HiRom)
         }
 
         /// <inheritdoc/>

@@ -49,12 +49,13 @@ namespace Snowflake.Model.Database
                     entity.Value = value.Value.AsConfigurationStringValue();
                     context.Entry(entity).State = EntityState.Modified;
                 }
+
                 context.SaveChanges();
             }
         }
 
         public IConfigurationSection<T> Get<T>()
-            where T: class, IConfigurationSection<T>
+            where T : class, IConfigurationSection<T>
         {
             using (var context = new DatabaseContext(Options.Options))
             {
@@ -84,7 +85,7 @@ namespace Snowflake.Model.Database
                 if (entity == null)
                 {
                     var defaults = new ConfigurationSection<T>
-                     (new ConfigurationValueCollection(), typeof(T).Name);
+                        (new ConfigurationValueCollection(), typeof(T).Name);
                     context.ConfigurationProfiles.Add(defaults.AsModel($"plugin:{typeof(T).Name}"));
                 }
                 else
@@ -100,6 +101,7 @@ namespace Snowflake.Model.Database
                         }
                     }
                 }
+
                 context.SaveChanges();
             }
         }

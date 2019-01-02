@@ -18,22 +18,20 @@ namespace Snowflake.Configuration
     public class ConfigurationValueCollection : IConfigurationValueCollection
     {
         private IDictionary<string, Dictionary<string, IConfigurationValue>> BackingDictionary { get; }
-        
+
         /// <summary>
         /// Cache of ensured descriptors
         /// </summary>
         private HashSet<string> EnsuredDescriptors { get; }
 
-        internal ConfigurationValueCollection() 
+        internal ConfigurationValueCollection()
             : this(Enumerable.Empty<(string section, string option, IConfigurationValue value)>())
         {
-
         }
 
         internal ConfigurationValueCollection(IEnumerable<(string section, string option, IConfigurationValue)> values)
             : this(values, Guid.NewGuid())
         {
-
         }
 
         private static object FromString(string strValue, Type optionType)
@@ -46,45 +44,47 @@ namespace Snowflake.Configuration
         }
 
         public static IConfigurationValueCollection MakeExistingValueCollection<T>
-               (IEnumerable<(string section, string option, (string stringValue, Guid guid) value)> values, 
-                    Guid collectionGuid)
+        (IEnumerable<(string section, string option, (string stringValue, Guid guid) value)> values,
+            Guid collectionGuid)
             where T : class, IConfigurationCollection, IConfigurationCollection<T>
         {
             var typedValues = new List<(string, string, IConfigurationValue)>();
             foreach (var section in from props in typeof(T).GetPublicProperties()
-                                    let sectionAttr = props.GetAttributes<SerializableSectionAttribute>().FirstOrDefault()
-                                    where sectionAttr != null
-                                    select new
-                                    {
-                                        sectionAttr,
-                                        type = props.PropertyType,
-                                        name = props.Name
-                                    })
+                let sectionAttr = props.GetAttributes<SerializableSectionAttribute>().FirstOrDefault()
+                where sectionAttr != null
+                select new
+                {
+                    sectionAttr,
+                    type = props.PropertyType,
+                    name = props.Name
+                })
             {
                 var sectionDescType = typeof(ConfigurationSectionDescriptor<>).MakeGenericType(section.type);
                 var descriptor = Instantiate.CreateInstance(sectionDescType,
-                    new[] { typeof(string) },
+                    new[] {typeof(string)},
                     Expression.Constant(section.name)) as IConfigurationSectionDescriptor;
-                foreach (var tuple in values.Where(s => s.section == descriptor.SectionKey)) {
+                foreach (var tuple in values.Where(s => s.section == descriptor.SectionKey))
+                {
                     Type? t = descriptor?[tuple.option]?.Type;
-                    typedValues.Add((tuple.section, tuple.option, 
+                    typedValues.Add((tuple.section, tuple.option,
                         new ConfigurationValue(FromString(tuple.value.stringValue, t), tuple.value.guid)));
                 }
             }
+
             return new ConfigurationValueCollection(typedValues, collectionGuid);
         }
 
         public static IConfigurationValueCollection MakeExistingValueCollection<T>
-              (IEnumerable<(string option, (string stringValue, Guid guid) value)> values,
-                   string sectionName,
-                   Guid collectionGuid)
-           where T : class, IConfigurationSection<T>
+        (IEnumerable<(string option, (string stringValue, Guid guid) value)> values,
+            string sectionName,
+            Guid collectionGuid)
+            where T : class, IConfigurationSection<T>
         {
             var typedValues = new List<(string, string, IConfigurationValue)>();
 
             var sectionDescType = typeof(ConfigurationSectionDescriptor<>).MakeGenericType(typeof(T));
             var descriptor = Instantiate.CreateInstance(sectionDescType,
-                new[] { typeof(string) },
+                new[] {typeof(string)},
                 Expression.Constant(sectionName)) as IConfigurationSectionDescriptor;
             foreach (var tuple in values)
             {
@@ -97,7 +97,8 @@ namespace Snowflake.Configuration
         }
 
 
-        internal ConfigurationValueCollection(IEnumerable<(string section, string option, IConfigurationValue value)> values, Guid guid)
+        internal ConfigurationValueCollection(
+            IEnumerable<(string section, string option, IConfigurationValue value)> values, Guid guid)
         {
             this.Guid = guid;
             var defs = values.GroupBy(p => p.section)
@@ -106,7 +107,8 @@ namespace Snowflake.Configuration
             this.EnsuredDescriptors = new HashSet<string>();
         }
 
-        public IReadOnlyDictionary<string, IConfigurationValue> this[IConfigurationSectionDescriptor descriptor] {
+        public IReadOnlyDictionary<string, IConfigurationValue> this[IConfigurationSectionDescriptor descriptor]
+        {
             get
             {
                 this.EnsureSectionDefaults(descriptor);
@@ -128,10 +130,10 @@ namespace Snowflake.Configuration
             {
                 if (!this.BackingDictionary[descriptor.SectionKey].ContainsKey(prop.OptionKey))
                 {
-                    this.BackingDictionary[descriptor.SectionKey][prop.OptionKey] = new ConfigurationValue(prop.Default);
+                    this.BackingDictionary[descriptor.SectionKey][prop.OptionKey] =
+                        new ConfigurationValue(prop.Default);
                 }
             }
-
         }
 
         internal void EnsureSectionDefault(IConfigurationSectionDescriptor descriptor, string option)
@@ -142,14 +144,14 @@ namespace Snowflake.Configuration
             {
                 this.BackingDictionary[descriptor.SectionKey] = new Dictionary<string, IConfigurationValue>();
             }
+
             var key = descriptor.Options.FirstOrDefault(o => o.OptionKey == option);
 
             if (key != null
                 && !this.BackingDictionary[descriptor.SectionKey].ContainsKey(option))
             {
-                this.BackingDictionary[descriptor.SectionKey][key.OptionKey] 
-                        = new ConfigurationValue(key.Default);
-
+                this.BackingDictionary[descriptor.SectionKey][key.OptionKey]
+                    = new ConfigurationValue(key.Default);
             }
         }
 
@@ -168,8 +170,8 @@ namespace Snowflake.Configuration
         public IEnumerator<(string, string, IConfigurationValue)> GetEnumerator()
         {
             return (from kvp in this.BackingDictionary
-                    from valuekvp in kvp.Value
-                    select (kvp.Key, valuekvp.Key, valuekvp.Value)).GetEnumerator();
+                from valuekvp in kvp.Value
+                select (kvp.Key, valuekvp.Key, valuekvp.Value)).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()

@@ -96,11 +96,11 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Formats.SFO
             var sb = new StringBuilder();
 
             sb.Append("== SFO Header Data ==\n")
-            .Append("fileType:         ").Append(this.fileType).Append("\n")
-            .Append("sfoVersion:       ").Append(this.sfoVersion).Append("\n")
-            .Append("offsetKeyTable:   ").Append(this.offsetKeyTable).Append("\n")
-            .Append("offsetValueTable: ").Append(this.offsetValueTable).Append("\n")
-            .Append("numberDataItems:  ").Append(this.numberDataItems).Append("\n");
+                .Append("fileType:         ").Append(this.fileType).Append("\n")
+                .Append("sfoVersion:       ").Append(this.sfoVersion).Append("\n")
+                .Append("offsetKeyTable:   ").Append(this.offsetKeyTable).Append("\n")
+                .Append("offsetValueTable: ").Append(this.offsetValueTable).Append("\n")
+                .Append("numberDataItems:  ").Append(this.numberDataItems).Append("\n");
 
             return sb.ToString();
         }

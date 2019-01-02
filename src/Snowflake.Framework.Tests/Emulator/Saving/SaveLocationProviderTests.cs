@@ -34,7 +34,7 @@ namespace Snowflake.Execution.Saving
             gameMock.Setup(g => g.RecordId).Returns(Guid.NewGuid());
             var contentDirMock = new Mock<IContentDirectoryProvider>();
             contentDirMock.Setup(g => g.ApplicationData).Returns(new DirectoryInfo(Path.GetTempPath())
-                         .CreateSubdirectory(Path.GetFileNameWithoutExtension(Path.GetTempFileName())));
+                .CreateSubdirectory(Path.GetFileNameWithoutExtension(Path.GetTempFileName())));
             var location = new SaveLocationProvider(contentDirMock.Object);
             var save = await location.CreateSaveLocationAsync(gameMock.Object, "test");
             Assert.True(File.Exists(Path.Combine(save.LocationRoot.FullName, SaveLocationProvider.ManifestFileName)));
@@ -50,14 +50,13 @@ namespace Snowflake.Execution.Saving
             gameMock.Setup(g => g.RecordId).Returns(Guid.NewGuid());
             var contentDirMock = new Mock<IContentDirectoryProvider>();
             contentDirMock.Setup(g => g.ApplicationData).Returns(new DirectoryInfo(Path.GetTempPath())
-                         .CreateSubdirectory(Path.GetFileNameWithoutExtension(Path.GetTempFileName())));
+                .CreateSubdirectory(Path.GetFileNameWithoutExtension(Path.GetTempFileName())));
             var location = new SaveLocationProvider(contentDirMock.Object);
             var save = await location.CreateSaveLocationAsync(gameMock.Object, "test");
             Assert.True(File.Exists(Path.Combine(save.LocationRoot.FullName, SaveLocationProvider.ManifestFileName)));
 
             Assert.Single(await location.GetAllSaveLocationsAsync());
             Assert.Single(await location.GetSaveLocationsAsync(gameMock.Object));
-
         }
 
         [Fact]
@@ -67,7 +66,7 @@ namespace Snowflake.Execution.Saving
             gameMock.Setup(g => g.RecordId).Returns(Guid.NewGuid());
             var contentDirMock = new Mock<IContentDirectoryProvider>();
             contentDirMock.Setup(g => g.ApplicationData).Returns(new DirectoryInfo(Path.GetTempPath())
-                         .CreateSubdirectory(Path.GetFileNameWithoutExtension(Path.GetTempFileName())));
+                .CreateSubdirectory(Path.GetFileNameWithoutExtension(Path.GetTempFileName())));
             var location = new SaveLocationProvider(contentDirMock.Object);
             var save = await location.CreateSaveLocationAsync(gameMock.Object, "test");
             File.Create(Path.Combine(save.LocationRoot.FullName, "TestSave")).Close();
@@ -84,7 +83,7 @@ namespace Snowflake.Execution.Saving
             gameMock.Setup(g => g.RecordId).Returns(Guid.NewGuid());
             var contentDirMock = new Mock<IContentDirectoryProvider>();
             contentDirMock.Setup(g => g.ApplicationData).Returns(new DirectoryInfo(Path.GetTempPath())
-                         .CreateSubdirectory(Path.GetFileNameWithoutExtension(Path.GetTempFileName())));
+                .CreateSubdirectory(Path.GetFileNameWithoutExtension(Path.GetTempFileName())));
             var location = new SaveLocationProvider(contentDirMock.Object);
             var save = await location.CreateSaveLocationAsync(gameMock.Object, "test");
             var loadlocation = new DirectoryInfo(Path.GetTempPath())
@@ -102,7 +101,7 @@ namespace Snowflake.Execution.Saving
             gameMock.Setup(g => g.RecordId).Returns(Guid.NewGuid());
             var contentDirMock = new Mock<IContentDirectoryProvider>();
             contentDirMock.Setup(g => g.ApplicationData).Returns(new DirectoryInfo(Path.GetTempPath())
-                         .CreateSubdirectory(Path.GetFileNameWithoutExtension(Path.GetTempFileName())));
+                .CreateSubdirectory(Path.GetFileNameWithoutExtension(Path.GetTempFileName())));
             var location = new SaveLocationProvider(contentDirMock.Object);
             var save = await location.CreateSaveLocationAsync(gameMock.Object, "test");
             var loadlocation = new DirectoryInfo(Path.GetTempPath())

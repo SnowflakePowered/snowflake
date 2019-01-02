@@ -1,4 +1,5 @@
 ﻿// https://github.com/LogosBible/Logos.Utility/blob/master/src/Logos.Utility/GuidUtility.cs
+
 using System;
 using System.Security.Cryptography;
 using System.Text;
@@ -53,8 +54,10 @@ namespace Snowflake.Model.Records.Utility
 
             // comput the hash of the name space ID concatenated with the name (step 4)
             byte[] hash;
-            using (var algorithm = version == 3 ? (HashAlgorithm)MD5.Create() : (HashAlgorithm)SHA1.Create())
-            using (var incrementalHash = version == 3 ? IncrementalHash.CreateHash(HashAlgorithmName.MD5) : IncrementalHash.CreateHash(HashAlgorithmName.SHA1))
+            using (var algorithm = version == 3 ? (HashAlgorithm) MD5.Create() : (HashAlgorithm) SHA1.Create())
+            using (var incrementalHash = version == 3
+                ? IncrementalHash.CreateHash(HashAlgorithmName.MD5)
+                : IncrementalHash.CreateHash(HashAlgorithmName.SHA1))
             {
                 incrementalHash.AppendData(namespaceBytes);
                 incrementalHash.AppendData(nameBytes);
@@ -62,7 +65,7 @@ namespace Snowflake.Model.Records.Utility
                 /*algorithm.TransformBlock(namespaceBytes, 0, namespaceBytes.Length, null, 0);
                 algorithm.TransformFinalBlock(nameBytes, 0, nameBytes.Length);
                 hash = algorithm.Hash;*/
- // todo verify correctness;
+                // todo verify correctness;
             }
 
             // most bytes from the hash are copied straight to the bytes of the new GUID (steps 5-7, 9, 11-12)
@@ -70,10 +73,10 @@ namespace Snowflake.Model.Records.Utility
             Array.Copy(hash, 0, newGuid, 0, 16);
 
             // set the four most significant bits (bits 12 through 15) of the time_hi_and_version field to the appropriate 4-bit version number from Section 4.1.3 (step 8)
-            newGuid[6] = (byte)((newGuid[6] & 0x0F) | (version << 4));
+            newGuid[6] = (byte) ((newGuid[6] & 0x0F) | (version << 4));
 
             // set the two most significant bits (bits 6 and 7) of the clock_seq_hi_and_reserved to zero and one, respectively (step 10)
-            newGuid[8] = (byte)((newGuid[8] & 0x3F) | 0x80);
+            newGuid[8] = (byte) ((newGuid[8] & 0x3F) | 0x80);
 
             // convert the resulting UUID to local byte order (step 13)
             GuidCreator.SwapByteOrder(newGuid);

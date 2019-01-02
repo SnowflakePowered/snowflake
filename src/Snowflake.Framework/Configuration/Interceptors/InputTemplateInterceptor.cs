@@ -8,7 +8,7 @@ namespace Snowflake.Configuration.Interceptors
     internal class InputTemplateInterceptor<T> : IInterceptor
     {
         internal InputTemplateInterceptor(
-            IDictionary<string, ControllerElement> inputValues, 
+            IDictionary<string, ControllerElement> inputValues,
             IConfigurationValueCollection configValues,
             IConfigurationSectionDescriptor descriptor)
         {
@@ -51,4 +51,4 @@ namespace Snowflake.Configuration.Interceptors
             }
         }
     }
- }
+}

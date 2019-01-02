@@ -13,7 +13,6 @@ using Snowflake.Model.Database.Models;
 using Snowflake.Persistence;
 using Snowflake.Services;
 using Snowflake.Tests;
-
 using Xunit;
 
 namespace Snowflake.Model.Tests
@@ -31,7 +30,7 @@ namespace Snowflake.Model.Tests
             var mapcol = ControllerElementMappings.GetDefaultMappings(realmapping, testmappings);
 
             var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
-            optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}") ;
+            optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
             var elementStore = new ControllerElementMappingsStore(optionsBuilder);
 
             elementStore.AddMappings(mapcol, "default");
@@ -44,8 +43,8 @@ namespace Snowflake.Model.Tests
             foreach (var testmappings in stoneProvider.Controllers.Values)
             {
                 var realmapping =
-                 JsonConvert.DeserializeObject<ControllerLayout>(
-                     TestUtilities.GetStringResource("InputMappings.xinput_device.json"));
+                    JsonConvert.DeserializeObject<ControllerLayout>(
+                        TestUtilities.GetStringResource("InputMappings.xinput_device.json"));
                 var mapcol = ControllerElementMappings.GetDefaultMappings(realmapping, testmappings);
 
                 var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
@@ -58,10 +57,11 @@ namespace Snowflake.Model.Tests
                 var retStore = elementStore.GetMappings(mapcol.ControllerId, mapcol.DeviceId, "default");
 
                 foreach (var element in retStore)
-                    {
-                        Assert.Contains(element.LayoutElement, mapcol.Select(x => x.LayoutElement));
-                        Assert.Equal(element.DeviceElement, mapcol.First(x => x.LayoutElement == element.LayoutElement).DeviceElement);
-                    }
+                {
+                    Assert.Contains(element.LayoutElement, mapcol.Select(x => x.LayoutElement));
+                    Assert.Equal(element.DeviceElement,
+                        mapcol.First(x => x.LayoutElement == element.LayoutElement).DeviceElement);
+                }
             }
         }
 
@@ -72,8 +72,8 @@ namespace Snowflake.Model.Tests
             foreach (var testmappings in stoneProvider.Controllers.Values)
             {
                 var realmapping =
-                 JsonConvert.DeserializeObject<ControllerLayout>(
-                     TestUtilities.GetStringResource("InputMappings.xinput_device.json"));
+                    JsonConvert.DeserializeObject<ControllerLayout>(
+                        TestUtilities.GetStringResource("InputMappings.xinput_device.json"));
                 var mapcol = ControllerElementMappings.GetDefaultMappings(realmapping, testmappings);
 
                 var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
@@ -92,7 +92,8 @@ namespace Snowflake.Model.Tests
                 foreach (var element in retStore)
                 {
                     Assert.Contains(element.LayoutElement, mapcol.Select(x => x.LayoutElement));
-                    Assert.Equal(element.DeviceElement, mapcol.First(x => x.LayoutElement == element.LayoutElement).DeviceElement);
+                    Assert.Equal(element.DeviceElement,
+                        mapcol.First(x => x.LayoutElement == element.LayoutElement).DeviceElement);
                 }
 
                 Assert.Equal(ControllerElement.ButtonB, retStore[ControllerElement.ButtonA]);
@@ -106,8 +107,8 @@ namespace Snowflake.Model.Tests
             foreach (var testmappings in stoneProvider.Controllers.Values)
             {
                 var realmapping =
-                JsonConvert.DeserializeObject<ControllerLayout>(
-                    TestUtilities.GetStringResource("InputMappings.keyboard_device.json"));
+                    JsonConvert.DeserializeObject<ControllerLayout>(
+                        TestUtilities.GetStringResource("InputMappings.keyboard_device.json"));
                 var mapcol = ControllerElementMappings.GetDefaultMappings(realmapping, testmappings);
 
                 var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
@@ -131,8 +132,8 @@ namespace Snowflake.Model.Tests
             foreach (var testmappings in stoneProvider.Controllers.Values)
             {
                 var realmapping =
-                JsonConvert.DeserializeObject<ControllerLayout>(
-                    TestUtilities.GetStringResource("InputMappings.keyboard_device.json"));
+                    JsonConvert.DeserializeObject<ControllerLayout>(
+                        TestUtilities.GetStringResource("InputMappings.keyboard_device.json"));
                 var mapcol = ControllerElementMappings.GetDefaultMappings(realmapping, testmappings);
 
                 var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
@@ -147,19 +148,18 @@ namespace Snowflake.Model.Tests
                 Assert.Single(elementStore.GetMappings(mapcol.ControllerId, mapcol.DeviceId));
                 elementStore.DeleteMappings(mapcol.ControllerId, mapcol.DeviceId);
                 Assert.Empty(elementStore.GetMappings(mapcol.ControllerId, mapcol.DeviceId));
-
             }
         }
 
         [Fact]
-        public void  AddKeyboardMappings_Test()
+        public void AddKeyboardMappings_Test()
         {
             var stoneProvider = new StoneProvider();
             foreach (var testmappings in stoneProvider.Controllers.Values)
             {
                 var realmapping =
-                JsonConvert.DeserializeObject<ControllerLayout>(
-                    TestUtilities.GetStringResource("InputMappings.keyboard_device.json"));
+                    JsonConvert.DeserializeObject<ControllerLayout>(
+                        TestUtilities.GetStringResource("InputMappings.keyboard_device.json"));
                 var mapcol = ControllerElementMappings.GetDefaultMappings(realmapping, testmappings);
 
                 var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
@@ -172,7 +172,8 @@ namespace Snowflake.Model.Tests
                 foreach (var element in retStore)
                 {
                     Assert.Contains(element.LayoutElement, mapcol.Select(x => x.LayoutElement));
-                    Assert.Equal(element.DeviceElement, mapcol.First(x => x.LayoutElement == element.LayoutElement).DeviceElement);
+                    Assert.Equal(element.DeviceElement,
+                        mapcol.First(x => x.LayoutElement == element.LayoutElement).DeviceElement);
                 }
             }
         }

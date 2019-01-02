@@ -12,7 +12,7 @@ namespace Snowflake.Model.Game.LibraryExtensions
     internal class GameFileExtensionProvider : IGameFileExtensionProvider
     {
         public GameFileExtensionProvider
-            (FileRecordLibrary fileLibrary,
+        (FileRecordLibrary fileLibrary,
             IFileSystem gameFolderFs)
         {
             this.FileLibrary = fileLibrary;
@@ -26,7 +26,7 @@ namespace Snowflake.Model.Game.LibraryExtensions
         public IGameFileExtension MakeExtension(IGameRecord record)
         {
             var gameFsRoot = this.GameFolderRoot
-                .GetOrCreateSubFileSystem((UPath)"/" / record.RecordId.ToString());
+                .GetOrCreateSubFileSystem((UPath) "/" / record.RecordId.ToString());
             return new GameFileExtension(gameFsRoot, this.FileLibrary);
         }
 

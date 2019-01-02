@@ -68,10 +68,12 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Configuration
             Private = true)]
         string JoypadAutoconfigDir { get; set; }
 
-        [ConfigurationOption("libretro_directory", "", DisplayName = "Libretro Directory", IsPath = true, Private = true)]
+        [ConfigurationOption("libretro_directory", "", DisplayName = "Libretro Directory", IsPath = true,
+            Private = true)]
         string LibretroDirectory { get; set; }
 
-        [ConfigurationOption("libretro_info_path", "", DisplayName = "Libretro Info Path", IsPath = true, Private = true)]
+        [ConfigurationOption("libretro_info_path", "", DisplayName = "Libretro Info Path", IsPath = true,
+            Private = true)]
         string LibretroInfoPath { get; set; }
 
         [ConfigurationOption("osk_overlay_directory", "default", DisplayName = "Osk Overlay Directory", IsPath = true,
@@ -86,11 +88,13 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Configuration
             Private = true)]
         string PlaylistDirectory { get; set; }
 
-        [ConfigurationOption("recording_config_directory", "", DisplayName = "Recording Config Directory", IsPath = true,
+        [ConfigurationOption("recording_config_directory", "", DisplayName = "Recording Config Directory",
+            IsPath = true,
             Private = true)]
         string RecordingConfigDirectory { get; set; }
 
-        [ConfigurationOption("recording_output_directory", "", DisplayName = "Recording Output Directory", IsPath = true,
+        [ConfigurationOption("recording_output_directory", "", DisplayName = "Recording Output Directory",
+            IsPath = true,
             Private = true)]
         string RecordingOutputDirectory { get; set; }
 

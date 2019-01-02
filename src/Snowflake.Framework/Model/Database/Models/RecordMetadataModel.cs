@@ -16,7 +16,6 @@ namespace Snowflake.Model.Database.Models
 
         internal static void SetupModel(ModelBuilder modelBuilder)
         {
-
             modelBuilder.Entity<RecordMetadataModel>()
                 .HasOne(r => r.Record)
                 .WithMany(r => r.Metadata)
@@ -27,21 +26,20 @@ namespace Snowflake.Model.Database.Models
                 .HasKey(r => r.RecordMetadataID);
 
             modelBuilder.Entity<RecordMetadataModel>()
-               .Property(r => r.MetadataKey)
-               .IsRequired();
+                .Property(r => r.MetadataKey)
+                .IsRequired();
 
             modelBuilder.Entity<RecordMetadataModel>()
                 .Property(r => r.RecordMetadataID)
                 .IsRequired();
 
             modelBuilder.Entity<RecordMetadataModel>()
-                  .Property(r => r.RecordID)
-                  .IsRequired();
+                .Property(r => r.RecordID)
+                .IsRequired();
 
             modelBuilder.Entity<RecordMetadataModel>()
-                  .Property(r => r.MetadataValue)
-                  .IsRequired();
-
+                .Property(r => r.MetadataValue)
+                .IsRequired();
         }
     }
 }

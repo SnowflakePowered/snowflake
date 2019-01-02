@@ -11,6 +11,7 @@ using Snowflake.Input.Controller.Mapped;
 using Snowflake.Services;
 using Snowflake.Tests;
 using Xunit;
+
 namespace Snowflake.Configuration.Tests
 {
     public class DynamicProxyInputTests

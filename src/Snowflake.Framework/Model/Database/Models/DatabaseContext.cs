@@ -24,12 +24,10 @@ namespace Snowflake.Model.Database.Models
         public DatabaseContext(DbContextOptions<DatabaseContext> options)
             : base(options)
         {
-
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
             MappedControllerElementModel.SetupModel(modelBuilder);
             ControllerElementMappingsModel.SetupModel(modelBuilder);
 
@@ -43,8 +41,6 @@ namespace Snowflake.Model.Database.Models
             FileRecordModel.SetupModel(modelBuilder);
 
             GameRecordConfigurationProfileModel.SetupModel(modelBuilder);
-
-       
         }
     }
 }

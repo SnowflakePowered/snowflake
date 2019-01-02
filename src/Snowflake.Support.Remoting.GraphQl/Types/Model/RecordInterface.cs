@@ -17,10 +17,10 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.Model
                 resolve: context => context.Source);
 
             Field<StringGraphType>("id",
-             description: "The opaque GraphQL unique ID of the game. For caching purposes only.",
-             resolve: context => context.Source.RecordId.ToGraphQlUniqueId("Record"));
+                description: "The opaque GraphQL unique ID of the game. For caching purposes only.",
+                resolve: context => context.Source.RecordId.ToGraphQlUniqueId("Record"));
 
-      
+
             Field<ListGraphType<RecordMetadataGraphType>>(
                 "metadata",
                 description: "A list of metadata related to this data.",

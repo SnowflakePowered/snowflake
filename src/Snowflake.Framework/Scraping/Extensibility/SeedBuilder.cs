@@ -88,7 +88,6 @@ namespace Snowflake.Scraping.Extensibility
         /// <param name="children">The list of seed results to return</param>
         /// <returns>A seed tree result.</returns>
         public static IEnumerable<SeedTree> __(string type, string value, IEnumerable<SeedTree> children)
-           => __((type, value, children));
-
+            => __((type, value, children));
     }
 }

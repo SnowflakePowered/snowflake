@@ -16,10 +16,12 @@ namespace Snowflake.Services.AssemblyLoader
         private string folderPath;
         private readonly ILogger logger;
         private static IImmutableDictionary<(string name, Version unsignedVersion), Assembly> unsignedAssemblies;
+
         static AssemblyModuleLoadContext()
         {
-            AssemblyModuleLoadContext.unsignedAssemblies = ImmutableDictionary.Create<(string name, Version unsignedVersion),
-                Assembly>();
+            AssemblyModuleLoadContext.unsignedAssemblies = ImmutableDictionary
+                .Create<(string name, Version unsignedVersion),
+                    Assembly>();
         }
 
         private AssemblyModuleLoadContext(string folderPath)
@@ -37,14 +39,17 @@ namespace Snowflake.Services.AssemblyLoader
         protected override Assembly Load(AssemblyName assemblyName)
         {
             logger.Info($"Attempting to load {assemblyName.Name}");
-            if (assemblyName.GetPublicKeyToken().Length == 0 && unsignedAssemblies.ContainsKey((assemblyName.Name, assemblyName.Version)))
+            if (assemblyName.GetPublicKeyToken().Length == 0 &&
+                unsignedAssemblies.ContainsKey((assemblyName.Name, assemblyName.Version)))
             {
-                logger.Warn($"Resolving {assemblyName.Name} version {assemblyName.Version} from unsigned assembly cache.");
+                logger.Warn(
+                    $"Resolving {assemblyName.Name} version {assemblyName.Version} from unsigned assembly cache.");
                 return AssemblyModuleLoadContext.unsignedAssemblies[(assemblyName.Name, assemblyName.Version)];
             }
 
             var deps = DependencyContext.Default;
-            var resources = deps.RuntimeLibraries.Where(d => d.Name.ToLowerInvariant() == assemblyName.Name.ToLower()).ToList();
+            var resources = deps.RuntimeLibraries.Where(d => d.Name.ToLowerInvariant() == assemblyName.Name.ToLower())
+                .ToList();
 
             if (assemblyName.Name == "Snowflake.Framework.Primitives")
             {
@@ -53,15 +58,17 @@ namespace Snowflake.Services.AssemblyLoader
                 if (assemblyName.Version.Major != supportedVersion.Major)
                 {
                     // todo: more robust version check
-                    throw new InvalidOperationException("Framework Version Mismatch! Please upgrade your plugin to the newest Snowflake Framework API!");
+                    throw new InvalidOperationException(
+                        "Framework Version Mismatch! Please upgrade your plugin to the newest Snowflake Framework API!");
                 }
             }
 
             // todo: use .netstandard 2.0 AssemblyLoadContext.GetLoadedAssemblies()
-            var runtimeLibs = deps.RuntimeLibraries.Select(lib => new { lib.Name, lib.Version }).ToList();
+            var runtimeLibs = deps.RuntimeLibraries.Select(lib => new {lib.Name, lib.Version}).ToList();
             if (runtimeLibs.Select(l => l.Name.ToLower()).Contains(assemblyName.Name.ToLower()))
             {
-                logger.Info($"Attempting to resolve {assemblyName.Name} version {assemblyName.Version} from runtime...");
+                logger.Info(
+                    $"Attempting to resolve {assemblyName.Name} version {assemblyName.Version} from runtime...");
                 try
                 {
                     return Assembly.Load(assemblyName);
@@ -72,8 +79,10 @@ namespace Snowflake.Services.AssemblyLoader
                     var prepAssembly = Assembly.Load(new AssemblyName(assemblyName.Name));
                     if (assemblyName.Version.Major == prepAssembly.GetName().Version.Major)
                     {
-                        logger.Warn($"Resolving {assemblyName.Name} version {assemblyName.Version} with mismatched minor version {prepAssembly.GetName().Version} from runtime.");
-                        logger.Info($"If this behaviour causes side effects, build against {prepAssembly.GetName().Version}.");
+                        logger.Warn(
+                            $"Resolving {assemblyName.Name} version {assemblyName.Version} with mismatched minor version {prepAssembly.GetName().Version} from runtime.");
+                        logger.Info(
+                            $"If this behaviour causes side effects, build against {prepAssembly.GetName().Version}.");
                         return prepAssembly;
                     }
                 }
@@ -97,7 +106,8 @@ namespace Snowflake.Services.AssemblyLoader
                     {
                         logger.Info($"Caching unsigned assembly {assemblyName.Name} {assemblyName.Version}.");
                         AssemblyModuleLoadContext.unsignedAssemblies =
-                            unsignedAssemblies.Add((loadedDependencyName.Name, loadedDependencyName.Version), loadedDependency);
+                            unsignedAssemblies.Add((loadedDependencyName.Name, loadedDependencyName.Version),
+                                loadedDependency);
                     }
 
                     return loadedDependency;

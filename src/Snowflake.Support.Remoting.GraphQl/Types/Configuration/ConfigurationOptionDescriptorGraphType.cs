@@ -36,8 +36,8 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.Configuration
                 description: "The default value of this option.",
                 resolve: context => context.Source.Default);
             Field<ValueGraphType>("typedDefault",
-             description: "The default value of this option, boxed into a union of possible types.",
-             resolve: context => context.Source.Default);
+                description: "The default value of this option, boxed into a union of possible types.",
+                resolve: context => context.Source.Default);
             Field<ListGraphType<SelectionOptionDescriptorGraphType>>("selections",
                 description: "A list of selections if this is a selection option.",
                 resolve: context => context.Source.SelectionOptions);

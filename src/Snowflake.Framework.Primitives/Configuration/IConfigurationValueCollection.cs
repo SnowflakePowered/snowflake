@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Snowflake.Configuration
 {
-    public interface IConfigurationValueCollection 
+    public interface IConfigurationValueCollection
         : IEnumerable<(string section, string option, IConfigurationValue value)>
     {
         Guid Guid { get; }

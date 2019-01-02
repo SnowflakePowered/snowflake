@@ -7,7 +7,7 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Nintendo
     public sealed class NintendoEntertainmentSystemiNesFileSignature : IFileSignature
     {
         /// <inheritdoc/>
-        public byte[] HeaderSignature => new byte[4] { 0x4E, 0x45, 0x53, 0x1A }; // 'N' 'E' 'S' <EOF>
+        public byte[] HeaderSignature => new byte[4] {0x4E, 0x45, 0x53, 0x1A}; // 'N' 'E' 'S' <EOF>
 
         /// <inheritdoc/>
         public string GetInternalName(Stream fileContents) => null;

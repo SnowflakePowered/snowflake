@@ -10,7 +10,7 @@ namespace Snowflake.Tooling.Taskrunner.Framework.Attributes
         public string ShortName { get; }
         public string LongName { get; }
         public string Description { get; }
-        
+
         public NamedArgumentAttribute(string shortName, string longName, string description)
         {
             this.ShortName = shortName;

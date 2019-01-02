@@ -7,7 +7,6 @@ namespace Snowflake.Model.FileSystem
 {
     public static class DirectoryExtensions
     {
-
         //public static IFile? CopyFrom(this IDirectory @this, FileInfo file)
         //{
         //    return @this.CopyFileFrom(file);

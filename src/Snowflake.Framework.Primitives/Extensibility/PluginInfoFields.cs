@@ -1,5 +1,4 @@
-﻿
-namespace Snowflake.Extensibility
+﻿namespace Snowflake.Extensibility
 {
     /// <summary>
     /// Static fields in plugin information

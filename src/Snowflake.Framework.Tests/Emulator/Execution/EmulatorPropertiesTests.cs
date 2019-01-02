@@ -18,15 +18,15 @@ namespace Snowflake.Emulator.Execution
             var stone = new StoneProvider();
             var pluginProps = new Mock<IPluginProperties>();
             pluginProps.Setup(p => p.GetEnumerable("capabilities"))
-                .Returns(new[] { "testcapability", "testcapability2" });
+                .Returns(new[] {"testcapability", "testcapability2"});
             pluginProps.Setup(p => p.GetEnumerable("mimetypes"))
-               .Returns(new[] { "application/vnd.stone-romfile.nintendo.snes" });
+                .Returns(new[] {"application/vnd.stone-romfile.nintendo.snes"});
             pluginProps.Setup(p => p.Get("saveformat"))
                 .Returns("test-sram");
             pluginProps.Setup(p => p.GetEnumerable("optionalbios"))
-                .Returns(new[] { "BS-X.bin" });
+                .Returns(new[] {"BS-X.bin"});
             pluginProps.Setup(p => p.GetEnumerable("requiredbios"))
-               .Returns(new[] { "cx4.data.rom" });
+                .Returns(new[] {"cx4.data.rom"});
             var pluginProvision = new Mock<IPluginProvision>();
             pluginProvision.Setup(p => p.Properties)
                 .Returns(pluginProps.Object);
@@ -38,7 +38,6 @@ namespace Snowflake.Emulator.Execution
             Assert.Equal("test-sram", emulatorProps.SaveFormat);
             Assert.Equal("fed4d8242cfbed61343d53d48432aced", emulatorProps.OptionalSystemFiles.First().Md5Hash);
             Assert.Equal("037ac4296b6b6a5c47c440188d3c72e3", emulatorProps.RequiredSystemFiles.First().Md5Hash);
-
         }
     }
 }
