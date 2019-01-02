@@ -1,0 +1,14 @@
+path_classifiers:
+  test:
+    - "src/Snowflake.Framework.Tests"
+    - "scripts/**/*"
+extraction:
+  csharp:
+    index:
+      solution: src/Snowflake.sln
+      vstools_version: 15
+      dotnet:
+        version: 3.0.100-preview-009812
+  python:
+    python_setup: 
+      version: 3
