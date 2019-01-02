@@ -57,7 +57,6 @@ namespace Snowflake.Model.Database
             }
         }
 
-
         public void DeleteMappings(string controllerId, string deviceId)
         {
             using (var context = new DatabaseContext(this.Options.Options))

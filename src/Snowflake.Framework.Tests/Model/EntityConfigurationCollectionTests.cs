@@ -58,7 +58,6 @@ namespace Snowflake.Configuration.Tests
             var store = new ConfigurationCollectionStore(optionsBuilder);
             var configCollection = store.CreateConfiguration<ExampleConfigurationCollection>("Test");
 
-
             configCollection.Configuration.ExampleConfiguration.ISOPath0 = "TestEqual";
             configCollection.Configuration.ExampleConfiguration.FullscreenResolution =
                 FullscreenResolution.Resolution1152X648;
@@ -79,7 +78,6 @@ namespace Snowflake.Configuration.Tests
             Assert.Equal(configCollection.Configuration.ExampleConfiguration.Fullscreen,
                 retrievedConfig.Configuration.ExampleConfiguration.Fullscreen);
         }
-
 
         [Fact]
         public void ConfigurationStoreMultipleProfileIndividual_Test()

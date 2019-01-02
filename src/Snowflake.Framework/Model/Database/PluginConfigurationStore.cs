@@ -15,7 +15,6 @@ namespace Snowflake.Model.Database
     {
         private DbContextOptionsBuilder<DatabaseContext> Options { get; set; }
 
-
         public PluginConfigurationStore(DbContextOptionsBuilder<DatabaseContext> options)
         {
             this.Options = options;

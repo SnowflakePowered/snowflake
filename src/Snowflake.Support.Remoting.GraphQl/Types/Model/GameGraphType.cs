@@ -29,7 +29,6 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.Model
                 description: "The files of this game.",
                 resolve: context => context.Source.WithFiles());
 
-
             Field<GameConfigurationExtensionGraphType>("configs",
                 description: "The files of this game.",
                 resolve: context => context.Source.WithConfigurations());

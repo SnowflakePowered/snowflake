@@ -112,7 +112,6 @@ namespace Snowflake.Model.Database
             }
         }
 
-
         public void UpdateConfiguration(IConfigurationCollection configurationCollection)
         {
             using (var context = new DatabaseContext(this.Options.Options))
@@ -170,7 +169,6 @@ namespace Snowflake.Model.Database
         public IConfigurationCollection<T>? GetConfiguration<T>(Guid gameGuid,
             string sourceName, string profileName)
             where T : class, IConfigurationCollection<T>
-
         {
             using (var context = new DatabaseContext(this.Options.Options))
             {

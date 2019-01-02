@@ -53,7 +53,6 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
             return null;
         }
 
-
         [Field("launchEmulatorTask", "Launches an emulator task", typeof(EmulatorTaskResultGraphType))]
         [Parameter(typeof(IList<EmulatedControllerInputObject>), typeof(ListGraphType<EmulatedControllerInputType>),
             "controllers", "The emulated controller input")]
@@ -71,7 +70,6 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
             //return await emu.Runner.ExecuteEmulationAsync(task);
             return null;
         }
-
 
         [Field("emulatedController", "Gets the emulated controller object", typeof(EmulatedControllerGraphType))]
         [Parameter(typeof(EmulatedControllerInputObject), typeof(EmulatedControllerInputType), "input",

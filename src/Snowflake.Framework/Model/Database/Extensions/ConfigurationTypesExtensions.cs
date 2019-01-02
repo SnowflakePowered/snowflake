@@ -23,7 +23,6 @@ namespace Snowflake.Model.Database.Extensions
             };
         }
 
-
         public static ConfigurationProfileModel AsModel<T>
             (this IConfigurationSection<T> @this, string prototypeName)
             where T : class, IConfigurationSection<T>

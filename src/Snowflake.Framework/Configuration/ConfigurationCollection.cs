@@ -21,7 +21,6 @@ namespace Snowflake.Configuration
         /// <inheritdoc/>
         public T Configuration { get; }
 
-
         /// <inheritdoc/>
         public IConfigurationCollectionDescriptor Descriptor { get; }
 

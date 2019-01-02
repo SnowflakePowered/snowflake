@@ -72,7 +72,6 @@ namespace Snowflake.Model.Tests
             Assert.Empty(game.WithConfigurations().GetProfileNames());
         }
 
-
         [Fact]
         public void GameLibraryIntegrationUpdate_Test()
         {

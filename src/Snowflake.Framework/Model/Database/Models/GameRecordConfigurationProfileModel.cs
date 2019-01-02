@@ -32,11 +32,9 @@ namespace Snowflake.Model.Database.Models
                 .WithOne()
                 .HasForeignKey<GameRecordConfigurationProfileModel>(p => p.ProfileID);
 
-
             modelBuilder.Entity<GameRecordConfigurationProfileModel>()
                 .Property(p => p.ProfileName)
                 .IsRequired();
-
 
             modelBuilder.Entity<GameRecordConfigurationProfileModel>()
                 .HasKey(k => new

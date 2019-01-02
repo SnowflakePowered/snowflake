@@ -35,7 +35,6 @@ namespace Snowflake.Tooling.Taskrunner.Framework.Executor
             var posArgs = this.Parser.ParsePositionalArguments(args);
             var typedArguments = Instantiate.CreateInstance(task.ArgumentType);
 
-
             foreach (KeyValuePair<string, string> namedArg in namedArgs)
             {
                 foreach ((var prop, var converted) in from prop in task.ArgumentType.GetProperties()

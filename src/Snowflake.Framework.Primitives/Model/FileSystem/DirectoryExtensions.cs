@@ -12,7 +12,6 @@ namespace Snowflake.Model.FileSystem
         //    return @this.CopyFileFrom(file);
         //}
 
-
         //public static IDirectory? CopyFrom(this IDirectory @this, DirectoryInfo dir)
         //{
         //    return @this.CopyDirectoryFrom(dir);
@@ -22,7 +21,6 @@ namespace Snowflake.Model.FileSystem
         //{
         //    return @this.CopyFileFrom(file, newName);
         //}
-
 
         //public static IDirectory? CopyFrom(this IDirectory @this, DirectoryInfo dir, string newName)
         //{

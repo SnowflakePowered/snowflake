@@ -96,7 +96,6 @@ namespace Snowflake.Configuration
             return new ConfigurationValueCollection(typedValues, collectionGuid);
         }
 
-
         internal ConfigurationValueCollection(
             IEnumerable<(string section, string option, IConfigurationValue value)> values, Guid guid)
         {

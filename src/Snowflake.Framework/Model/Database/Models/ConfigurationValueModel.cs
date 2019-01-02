@@ -18,7 +18,6 @@ namespace Snowflake.Model.Database.Models
         public Guid ValueCollectionGuid { get; set; }
         public ConfigurationProfileModel? Profile { get; set; }
 
-
         internal static void SetupModel(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ConfigurationValueModel>()
@@ -38,7 +37,6 @@ namespace Snowflake.Model.Database.Models
             modelBuilder.Entity<ConfigurationValueModel>()
                 .Property(p => p.OptionKey)
                 .IsRequired();
-
 
             modelBuilder.Entity<ConfigurationValueModel>()
                 .Property(p => p.ValueCollectionGuid)

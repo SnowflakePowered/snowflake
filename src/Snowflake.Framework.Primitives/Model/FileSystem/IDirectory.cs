@@ -42,7 +42,6 @@ namespace Snowflake.Model.FileSystem
 
         Task<IFile?> CopyFromAsync(FileInfo source);
 
-
         Task<IFile?> CopyFromAsync(FileInfo source, bool overwrite);
 
         Task<IFile?> CopyFromAsync(FileInfo source, bool overwrite, CancellationToken cancellation);

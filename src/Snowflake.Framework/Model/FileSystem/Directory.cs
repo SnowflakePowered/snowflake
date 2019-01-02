@@ -58,7 +58,6 @@ namespace Snowflake.Model.FileSystem
             });
         }
 
-
         internal Guid GetGuid(string file)
         {
             return this.Manifest.Query(conn =>

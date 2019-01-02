@@ -25,7 +25,6 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.Model
                 description: "The platform or console this game was created for",
                 resolve: context => context.Source.PlatformId.ToString());
 
-
             Field<GuidGraphType>("guid",
                 description: "The unique ID of the game.",
                 resolve: context => context.Source.RecordId);

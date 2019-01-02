@@ -28,7 +28,6 @@ namespace Snowflake.Model.Tests
             Assert.Equal(record.PlatformId, newRecord.PlatformId);
         }
 
-
         [Fact]
         public void SetRemoveMetadata_Test()
         {
@@ -89,7 +88,6 @@ namespace Snowflake.Model.Tests
             Assert.Contains("is_test_two", newNewRecord.Metadata.Keys);
             Assert.Equal("true", newNewRecord.Metadata["is_test_two"]);
         }
-
 
         [Fact]
         public void SetMultiple_Test()
