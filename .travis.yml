@@ -1,9 +1,7 @@
 language: csharp
 sudo: required
 mono: none
-dotnet: 
-  - 2.2.0
-  - 3.0.100-preview-009812
+dotnet: 3.0.100
 dist: xenial
 osx_image: xcode9.4
 os:
