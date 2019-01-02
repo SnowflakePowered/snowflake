@@ -10,6 +10,7 @@ namespace Snowflake.Extensibility.Provisioning
     public class JsonPluginProperties : IPluginProperties
     {
         private readonly JObject propertyRoot;
+
         public JsonPluginProperties(JObject propertyRoot)
         {
             this.propertyRoot = propertyRoot;
@@ -30,7 +31,8 @@ namespace Snowflake.Extensibility.Provisioning
         /// <inheritdoc/>
         public IDictionary<string, string> GetDictionary(string key)
         {
-            return this.propertyRoot.Value<JToken>(key)?.ToObject<IDictionary<string, string>>() ?? new Dictionary<string, string>();
+            return this.propertyRoot.Value<JToken>(key)?.ToObject<IDictionary<string, string>>() ??
+                   new Dictionary<string, string>();
         }
     }
 }

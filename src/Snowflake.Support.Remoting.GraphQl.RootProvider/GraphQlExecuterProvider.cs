@@ -13,6 +13,7 @@ namespace Snowflake.Support.Remoting.GraphQl.RootProvider
         private IDocumentExecuter Executer { get; }
         private IDocumentWriter Writer { get; }
         private Schema RootSchema { get; }
+
         public GraphQlExecuterProvider(Schema schema)
         {
             this.Executer = new DocumentExecuter();

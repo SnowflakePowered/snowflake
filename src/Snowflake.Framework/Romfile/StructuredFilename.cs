@@ -35,8 +35,9 @@ namespace Snowflake.Romfile
 
             // todo: expose tokens to api
             (NamingConvention namingConvention, IEnumerable<StructuredFilenameToken> tokens) = GetBestMatch();
-            this.Title = Path.GetFileNameWithoutExtension(StructuredFilename.ParseTitle(tokens.FirstOrDefault(t => t.Type ==
-                FieldType.Title)?.Value ?? "Unknown??!?"));
+            this.Title = Path.GetFileNameWithoutExtension(StructuredFilename.ParseTitle(
+                tokens.FirstOrDefault(t => t.Type ==
+                                           FieldType.Title)?.Value ?? "Unknown??!?"));
             this.NamingConvention = namingConvention;
             this.RegionCode = string.Join('-', tokens.Where(t => t.Type == FieldType.Country).Select(t => t.Value));
             if (string.IsNullOrEmpty(this.RegionCode))
@@ -61,19 +62,19 @@ namespace Snowflake.Romfile
 
             var noIntro = new NoIntroTokenClassifier();
             var noIntroTokens = noIntro.ClassifyBracketsTokens(brackets)
-              .Concat(noIntro.ClassifyParensTokens(parens))
-              .Concat(noIntro.ExtractTitleTokens(title)).ToList();
+                .Concat(noIntro.ClassifyParensTokens(parens))
+                .Concat(noIntro.ExtractTitleTokens(title)).ToList();
 
             var tosec = new TosecTokenClassifier();
             var tosecTokens = tosec.ClassifyBracketsTokens(brackets)
-              .Concat(tosec.ClassifyParensTokens(parens))
-              .Concat(tosec.ExtractTitleTokens(title)).ToList();
+                .Concat(tosec.ClassifyParensTokens(parens))
+                .Concat(tosec.ExtractTitleTokens(title)).ToList();
 
             var aggregate = new List<(IEnumerable<StructuredFilenameToken> tokens, int uniqueDatatypes)>()
             {
-                { (goodToolsTokens, StructuredFilename.GetUniqueDatatypeCount(goodToolsTokens)) },
-                { (noIntroTokens, StructuredFilename.GetUniqueDatatypeCount(noIntroTokens)) },
-                { (tosecTokens, StructuredFilename.GetUniqueDatatypeCount(tosecTokens)) },
+                {(goodToolsTokens, StructuredFilename.GetUniqueDatatypeCount(goodToolsTokens))},
+                {(noIntroTokens, StructuredFilename.GetUniqueDatatypeCount(noIntroTokens))},
+                {(tosecTokens, StructuredFilename.GetUniqueDatatypeCount(tosecTokens))},
             };
 
             var bestMatch = aggregate.OrderByDescending(p => p.uniqueDatatypes).First().tokens;

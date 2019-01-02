@@ -12,6 +12,7 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.InstallTask
     public class PackageInstaller
     {
         private Stream PackageStream { get; }
+
         public PackageInstaller(Stream stream)
         {
             this.PackageStream = stream;
@@ -34,7 +35,8 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.InstallTask
                 file.IsStreamOwner = false;
                 using (Stream contents = file.GetInputStream(file.GetEntry("contents")))
                 {
-                    using (FileStream tempContents = File.Create(Path.GetTempFileName(), 4096, FileOptions.DeleteOnClose))
+                    using (FileStream tempContents =
+                        File.Create(Path.GetTempFileName(), 4096, FileOptions.DeleteOnClose))
                     {
                         await contents.CopyToAsync(tempContents);
                         using (ZipFile contentArchive = new ZipFile(tempContents))
@@ -57,12 +59,13 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.InstallTask
                                 throw new IOException("Unable to clean directory module directory, is it in use?");
                             }
 
-                            foreach(ZipEntry entry in contentArchive)
+                            foreach (ZipEntry entry in contentArchive)
                             {
                                 if (!entry.IsFile)
                                 {
                                     continue;
                                 }
+
                                 String entryFileName = entry.Name;
 
                                 if (!entryFileName.StartsWith(packageName))
@@ -80,12 +83,14 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.InstallTask
                                 {
                                     Directory.CreateDirectory(directoryName);
                                 }
+
                                 using (FileStream streamWriter = File.Create(fullZipToPath))
                                 {
                                     Console.WriteLine($"Unpacking {entryFileName}");
                                     await zipStream.CopyToAsync(streamWriter, 4096);
                                 }
                             }
+
                             return Path.Combine(moduleDirectory.FullName, packageName);
                         }
                     }
@@ -108,7 +113,8 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.InstallTask
                 signatureEntryStream.Close();
                 using (Stream contents = file.GetInputStream(file.GetEntry("contents")))
                 {
-                    using (FileStream tempContents = File.Create(Path.GetTempFileName(), 4096, FileOptions.DeleteOnClose))
+                    using (FileStream tempContents =
+                        File.Create(Path.GetTempFileName(), 4096, FileOptions.DeleteOnClose))
                     {
                         await contents.CopyToAsync(tempContents);
                         using (ZipFile contentArchive = new ZipFile(tempContents))
@@ -124,7 +130,8 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.InstallTask
                             RSAParameters parameters = JsonConvert.DeserializeObject<RSAParameters>(keyJson);
                             using (RSA rsa = RSA.Create(parameters))
                             {
-                                return rsa.VerifyHash(hash, signature, HashAlgorithmName.SHA512, RSASignaturePadding.Pss);
+                                return rsa.VerifyHash(hash, signature, HashAlgorithmName.SHA512,
+                                    RSASignaturePadding.Pss);
                             }
                         }
                     }

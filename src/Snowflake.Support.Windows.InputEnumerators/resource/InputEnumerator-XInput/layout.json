@@ -2,9 +2,8 @@
   "LayoutID": "XINPUT_DEVICE",
   "FriendlyName": "XInput Device",
   "Platforms": [
-
   ],
-   "IsRealDevice":  true, 
+  "IsRealDevice": true,
   "Layout": {
     "ButtonA": {
       "Label": "A",
@@ -116,5 +115,3 @@
     }
   }
 }
-
-

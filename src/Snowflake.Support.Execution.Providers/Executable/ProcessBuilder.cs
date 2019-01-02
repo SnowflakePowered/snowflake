@@ -10,6 +10,7 @@ namespace Snowflake.Execution.Process
     {
         private FileInfo ProcessPath { get; }
         private IList<string> Arguments { get; }
+
         public ProcessBuilder(FileInfo processPath)
         {
             this.ProcessPath = processPath;

@@ -33,7 +33,7 @@ namespace Snowflake.Persistence
         /// </summary>
         /// <param name="query">The SQL string query</param>
         /// <param name="param">The object containing the parameters</param>
-        void Execute(string query, object param = null);
+        void Execute(string query, object? param = null);
 
         /// <summary>
         /// Executes a typed query given a query function that returns the object.
@@ -50,7 +50,7 @@ namespace Snowflake.Persistence
         /// <param name="query">The parameterized string query.</param>
         /// <param name="param">The object containing the parameters</param>
         /// <returns>An enumerable or matching objects</returns>
-        IEnumerable<T> Query<T>(string query, object param = null);
+        IEnumerable<T> Query<T>(string query, object? param = null);
 
         /// <summary>
         /// Returns the first object given the string query, or null if no matching objects found.
@@ -59,7 +59,7 @@ namespace Snowflake.Persistence
         /// <param name="query">The parameterized string query.</param>
         /// <param name="param">The object containing the parameters</param>
         /// <returns>The first object given the string query, or null if no matching objects found.</returns>
-        T QueryFirstOrDefault<T>(string query, object param = null);
+        T QueryFirstOrDefault<T>(string query, object? param = null);
 
         /// <summary>
         /// Gets a connection to the database

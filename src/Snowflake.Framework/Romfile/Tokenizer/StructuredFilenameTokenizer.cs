@@ -9,6 +9,7 @@ namespace Snowflake.Romfile.Tokenizer
     internal class StructuredFilenameTokenizer
     {
         private readonly string filename;
+
         public StructuredFilenameTokenizer(string filename)
         {
             this.filename = filename;
@@ -16,7 +17,8 @@ namespace Snowflake.Romfile.Tokenizer
 
         public string GetTitle()
         {
-            return Regex.Match(this.filename, @"(\([^]]*\))*(\[[^]]*\])*([\w\+\~\@\!\#\$\%\^\&\*\;\,\'\""\?\-\.\-\s]+)").Groups[3].Value.Trim();
+            return Regex.Match(this.filename, @"(\([^]]*\))*(\[[^]]*\])*([\w\+\~\@\!\#\$\%\^\&\*\;\,\'\""\?\-\.\-\s]+)")
+                .Groups[3].Value.Trim();
         }
 
         public IEnumerable<(string tokenValue, int tokenPosition)> GetParensTokens()

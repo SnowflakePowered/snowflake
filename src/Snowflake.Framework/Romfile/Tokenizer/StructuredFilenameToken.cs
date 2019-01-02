@@ -9,6 +9,7 @@ namespace Snowflake.Romfile.Tokenizer
         public string Value { get; }
         public FieldType Type { get; }
         public NamingConvention NamingConvention { get; }
+
         public StructuredFilenameToken(string value, FieldType type, NamingConvention convention)
         {
             this.Value = value;

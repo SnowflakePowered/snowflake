@@ -13,9 +13,11 @@ namespace Snowflake.Execution.Saving.Tests
         [Fact]
         public void SaveLocationSerialization_Test()
         {
-            var location = new SaveLocation(Guid.NewGuid(), "sram", new DirectoryInfo(Path.GetTempPath()), Guid.NewGuid(), DateTimeOffset.Now);
+            var location = new SaveLocation(Guid.NewGuid(), "sram", new DirectoryInfo(Path.GetTempPath()),
+                Guid.NewGuid(), DateTimeOffset.Now);
             string serialized = JsonConvert.SerializeObject(location.ToManifest());
-            ISaveLocation deserialized = JsonConvert.DeserializeObject<SaveLocationManifest>(serialized).ToSaveLocation();
+            ISaveLocation deserialized =
+                JsonConvert.DeserializeObject<SaveLocationManifest>(serialized).ToSaveLocation();
             Assert.Equal(location.LocationGuid, deserialized.LocationGuid);
         }
     }

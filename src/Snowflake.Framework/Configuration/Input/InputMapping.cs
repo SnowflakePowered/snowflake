@@ -18,7 +18,9 @@ namespace Snowflake.Configuration.Input
         private readonly string nullMapping;
 
         /// <inheritdoc/>
-        public string this[ControllerElement element] => this.elementMappings.ContainsKey(element) ? this.elementMappings[element] : this.nullMapping;
+        public string this[ControllerElement element] => this.elementMappings.ContainsKey(element)
+            ? this.elementMappings[element]
+            : this.nullMapping;
 
         /// <inheritdoc/>
         public InputApi InputApi { get; }
@@ -26,7 +28,8 @@ namespace Snowflake.Configuration.Input
         /// <inheritdoc/>
         public IEnumerable<string> DeviceLayouts { get; }
 
-        public InputMapping(IDictionary<ControllerElement, string> elementMappings, string nullMapping, InputApi inputApi, IEnumerable<string> deviceLayouts)
+        public InputMapping(IDictionary<ControllerElement, string> elementMappings, string nullMapping,
+            InputApi inputApi, IEnumerable<string> deviceLayouts)
         {
             this.elementMappings = elementMappings;
             this.nullMapping = nullMapping;

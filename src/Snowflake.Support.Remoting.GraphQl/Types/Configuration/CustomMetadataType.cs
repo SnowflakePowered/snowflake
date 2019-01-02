@@ -17,8 +17,8 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.Configuration
                 description: "The value of the custom metadata.",
                 resolve: context => context.Source.Value);
             Field<ValueGraphType>("typedValue",
-               description: "The value of the custom metadata.",
-               resolve: context => context.Source.Value);
+                description: "The value of the custom metadata.",
+                resolve: context => context.Source.Value);
         }
     }
 }

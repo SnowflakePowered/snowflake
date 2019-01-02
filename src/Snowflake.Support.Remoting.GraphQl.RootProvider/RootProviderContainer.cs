@@ -21,7 +21,8 @@ namespace Snowflake.Support.Remoting.GraphQl.RootProvider
             var mutation = new RootMutation();
             var schema = new GraphQlRootSchema(root, mutation);
             registry.RegisterService<IGraphQlRootSchema>(schema);
-            var webServer = new GraphQlServerWrapper(new GraphQlServer(new GraphQlExecuterProvider(schema), logger.GetLogger("GraphQLServer")));
+            var webServer = new GraphQlServerWrapper(new GraphQlServer(new GraphQlExecuterProvider(schema),
+                logger.GetLogger("GraphQLServer")));
             webServer.Start();
         }
     }

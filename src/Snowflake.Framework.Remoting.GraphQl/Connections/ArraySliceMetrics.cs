@@ -40,7 +40,9 @@ namespace GraphQL.Relay.Types
         public ArraySliceMetrics(
             IList<TSource> slice,
             ResolveConnectionContext<TParent> context)
-            : this(slice, context, 0, slice.Count) { }
+            : this(slice, context, 0, slice.Count)
+        {
+        }
 
         public IEnumerable<TSource> Slice => _items.Slice(
             Math.Max(StartOffset - StartIndex, 0),
@@ -60,8 +62,8 @@ namespace GraphQL.Relay.Types
             var beforeOffset = ConnectionUtils.OffsetOrDefault(context.Before, totalCount);
             var afterOffset = ConnectionUtils.OffsetOrDefault(context.After, defaultOffset: -1);
 
-            StartOffset = new[] { sliceStartIndex - 1, afterOffset, -1 }.Max() + 1;
-            EndOffset = new[] { EndIndex - 1, beforeOffset, totalCount }.Max();
+            StartOffset = new[] {sliceStartIndex - 1, afterOffset, -1}.Max() + 1;
+            EndOffset = new[] {EndIndex - 1, beforeOffset, totalCount}.Max();
 
             if (context.First.HasValue)
             {

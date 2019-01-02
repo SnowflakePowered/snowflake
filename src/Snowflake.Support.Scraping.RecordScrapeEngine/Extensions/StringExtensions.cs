@@ -16,18 +16,18 @@ namespace Snowflake.Support.Scraping.RecordScrapeEngine.Utility
         private static string NormalizeTitle(this string input)
         {
             var normalized = string.Join(" ", input.Trim().ToUpperInvariant().Split(' ', ':', '-')
-                .Where(w => !string.IsNullOrWhiteSpace(w)).ToArray())
-                 .Replace("&", "AND")
-                    .Replace("!", string.Empty)
-                    .Replace("\"", string.Empty)
-                    .Replace("$", string.Empty)
-                    .Replace("'", string.Empty)
-                    .Replace("(", string.Empty)
-                    .Replace(")", string.Empty)
-                    .Replace(",", string.Empty)
-                    .Replace("?", string.Empty)
-                    .Trim()
-                    .RemoveDiacritics();
+                    .Where(w => !string.IsNullOrWhiteSpace(w)).ToArray())
+                .Replace("&", "AND")
+                .Replace("!", string.Empty)
+                .Replace("\"", string.Empty)
+                .Replace("$", string.Empty)
+                .Replace("'", string.Empty)
+                .Replace("(", string.Empty)
+                .Replace(")", string.Empty)
+                .Replace(",", string.Empty)
+                .Replace("?", string.Empty)
+                .Trim()
+                .RemoveDiacritics();
             return normalized;
         }
 
@@ -75,7 +75,7 @@ namespace Snowflake.Support.Scraping.RecordScrapeEngine.Utility
             // Step 2
 #pragma warning disable SA1503 // Braces should not be omitted
 #pragma warning disable SA1106 // Code should not contain empty statements
-            
+
             // We shift the indices of the array.
             for (int i = 0; i <= n; d[i, 0] = i++)
             {

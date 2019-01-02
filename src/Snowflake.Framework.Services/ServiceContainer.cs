@@ -7,9 +7,7 @@ using Snowflake.Configuration;
 using Snowflake.Input;
 using Snowflake.Input.Controller.Mapped;
 using Snowflake.Loader;
-using Snowflake.Records.Game;
 using Snowflake.Services.Logging;
-using Snowflake.Services.Persistence;
 
 namespace Snowflake.Services
 {
@@ -19,7 +17,9 @@ namespace Snowflake.Services
 
         /// <inheritdoc/>
         public string AppDataDirectory { get; }
+
         private readonly IDictionary<Type, object> serviceContainer;
+
         #endregion
 
         // Flag: Has Dispose already been called?
@@ -35,7 +35,6 @@ namespace Snowflake.Services
             this.RegisterService<IModuleEnumerator>(new ModuleEnumerator(appDataDirectory));
             this.RegisterService<IContentDirectoryProvider>(directoryProvider);
             this.RegisterService<IServiceRegistrationProvider>(new ServiceRegistrationProvider(this));
-            this.RegisterService<ISqliteDatabaseProvider>(new SqliteDatabaseProvider(directoryProvider.ApplicationData.CreateSubdirectory("libraries")));
             this.RegisterService<IServiceEnumerator>(new ServiceEnumerator(this));
         }
 
@@ -61,7 +60,7 @@ namespace Snowflake.Services
         public T Get<T>()
         {
             // todo throw?
-            return this.serviceContainer.ContainsKey(typeof(T)) ? (T)this.serviceContainer[typeof(T)] : default(T);
+            return this.serviceContainer.ContainsKey(typeof(T)) ? (T) this.serviceContainer[typeof(T)] : default;
         }
 
         /// <inheritdoc/>
@@ -81,11 +80,10 @@ namespace Snowflake.Services
 
             if (disposing)
             {
-              this.Get<IPluginManager>().Dispose();
+                this.Get<IPluginManager>().Dispose();
 #pragma warning disable S1215 // "GC.Collect" should not be called
-              GC.Collect();
+                GC.Collect();
 #pragma warning restore S1215 // "GC.Collect" should not be called
-
             }
 
             // Free any unmanaged objects here.

@@ -12,7 +12,6 @@ using Snowflake.Extensibility.Provisioning;
 using Snowflake.Input.Controller;
 using Snowflake.Input.Controller.Mapped;
 using Snowflake.Input.Device;
-using Snowflake.Records.Game;
 using Snowflake.Tests;
 using Xunit;
 
@@ -26,7 +25,7 @@ namespace Snowflake.Emulator.Execution
             IInputMapping mapping = JsonConvert.DeserializeObject<InputMapping>
                 (TestUtilities.GetStringResource("InputMappings.DirectInput.KEYBOARD_DEVICE.json"));
 
-            var configFactory = new TestConfigurationFactory(new[] { mapping });
+            var configFactory = new TestConfigurationFactory(new[] {mapping});
         }
 
         [Fact]
@@ -35,37 +34,39 @@ namespace Snowflake.Emulator.Execution
             IInputMapping mapping = JsonConvert.DeserializeObject<InputMapping>
                 (TestUtilities.GetStringResource("InputMappings.DirectInput.KEYBOARD_DEVICE.json"));
 
-            var configFactory = new TestConfigurationFactory(new[] { mapping });
+            var configFactory = new TestConfigurationFactory(new[] {mapping});
             var config = configFactory.GetConfiguration();
 
             Assert.Equal(config.Configuration.ExampleConfiguration.FullscreenResolution,
-                new ConfigurationCollection<ExampleConfigurationCollection>().Configuration.ExampleConfiguration.FullscreenResolution);
+                new ConfigurationCollection<ExampleConfigurationCollection>().Configuration.ExampleConfiguration
+                    .FullscreenResolution);
             Assert.Equal(config.Configuration.ExampleConfiguration.FullscreenResolution,
-                ((IConfigurationFactory)configFactory).GetConfiguration()["ExampleConfiguration"]["FullscreenResolution"]);
+                ((IConfigurationFactory) configFactory).GetConfiguration()["ExampleConfiguration"][
+                    "FullscreenResolution"]);
         }
 
         [Fact]
         public void ConfigurationFactoryInput_Test()
         {
             IInputMapping mapping = JsonConvert.DeserializeObject<InputMapping>
-              (TestUtilities.GetStringResource("InputMappings.DirectInput.KEYBOARD_DEVICE.json"));
+                (TestUtilities.GetStringResource("InputMappings.DirectInput.KEYBOARD_DEVICE.json"));
 
-            var configFactory = new TestConfigurationFactory(new[] { mapping });
+            var configFactory = new TestConfigurationFactory(new[] {mapping});
 
             var realLayout =
-             JsonConvert.DeserializeObject<ControllerLayout>(
-               TestUtilities.GetStringResource("InputMappings.keyboard_device.json"));
+                JsonConvert.DeserializeObject<ControllerLayout>(
+                    TestUtilities.GetStringResource("InputMappings.keyboard_device.json"));
 
             var targetLayout =
-             JsonConvert.DeserializeObject<ControllerLayout>(
-                 TestUtilities.GetStringResource("InputMappings.xinput_device.json"));
+                JsonConvert.DeserializeObject<ControllerLayout>(
+                    TestUtilities.GetStringResource("InputMappings.xinput_device.json"));
 
             var fakeInputDevice = new Mock<IInputDevice>();
             fakeInputDevice.Setup(p => p.DeviceId).Returns("KEYBOARD_DEVICE");
             fakeInputDevice.Setup(p => p.DeviceLayout).Returns(realLayout);
             fakeInputDevice.Setup(p => p.DeviceApi).Returns(InputApi.DirectInput);
 
-            var map = MappedControllerElementCollection.GetDefaultMappings(realLayout, targetLayout);
+            var map = ControllerElementMappings.GetDefaultMappings(realLayout, targetLayout);
             var emulatedController = new EmulatedController(0, fakeInputDevice.Object, targetLayout, map);
 
             (IInputTemplate template, IInputMapping inputMappings) = configFactory.GetInputMappings(emulatedController);
@@ -86,7 +87,8 @@ namespace Snowflake.Emulator.Execution
             throw new NotImplementedException();
         }
 
-        public override IConfigurationCollection<ExampleConfigurationCollection> GetConfiguration(Guid gameRecord, string profileName)
+        public override IConfigurationCollection<ExampleConfigurationCollection> GetConfiguration(Guid gameRecord,
+            string profileName)
         {
             return new ConfigurationCollection<ExampleConfigurationCollection>();
         }
@@ -96,13 +98,14 @@ namespace Snowflake.Emulator.Execution
             return new ConfigurationCollection<ExampleConfigurationCollection>();
         }
 
-        public override (IInputTemplate<IRetroArchInput> template, IInputMapping mapping) GetInputMappings(IEmulatedController emulatedDevice)
+        public override (IInputTemplate<IRetroArchInput> template, IInputMapping mapping) GetInputMappings(
+            IEmulatedController emulatedDevice)
         {
             var template = new InputTemplate<IRetroArchInput>(emulatedDevice.LayoutMapping, emulatedDevice.PortIndex);
             var mapping = (from inputMappings in this.InputMappings
-                           where inputMappings.InputApi == InputApi.DirectInput
-                           where inputMappings.DeviceLayouts.Contains(emulatedDevice.PhysicalDevice.DeviceLayout.LayoutID)
-                           select inputMappings).FirstOrDefault();
+                where inputMappings.InputApi == InputApi.DirectInput
+                where inputMappings.DeviceLayouts.Contains(emulatedDevice.PhysicalDevice.DeviceLayout.LayoutID)
+                select inputMappings).FirstOrDefault();
 
             return (template, mapping);
         }

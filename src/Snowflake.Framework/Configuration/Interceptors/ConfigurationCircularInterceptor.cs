@@ -11,6 +11,7 @@ namespace Snowflake.Configuration.Interceptors
         where T : class, IConfigurationSection<T>
     {
         private readonly IConfigurationSection<T> @this;
+
         public ConfigurationCircularInterceptor(IConfigurationSection<T> @this)
         {
             this.@this = @this;
@@ -35,6 +36,9 @@ namespace Snowflake.Configuration.Interceptors
                     break;
                 case nameof(@this.Values):
                     invocation.ReturnValue = @this.Values;
+                    break;
+                case nameof(@this.ValueCollection):
+                    invocation.ReturnValue = @this.ValueCollection;
                     break;
                 default:
                     invocation.Proceed();

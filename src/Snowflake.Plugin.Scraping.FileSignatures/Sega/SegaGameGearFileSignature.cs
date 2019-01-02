@@ -7,7 +7,7 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Sega
     public sealed class SegaGameGearFileSignature : IFileSignature
     {
         /// <inheritdoc/>
-        public byte[] HeaderSignature => new byte[8] { 0x54, 0x4D, 0x52, 0x20, 0x53, 0x45, 0x47, 0x41 }; // 'TMR SEGA'
+        public byte[] HeaderSignature => new byte[8] {0x54, 0x4D, 0x52, 0x20, 0x53, 0x45, 0x47, 0x41}; // 'TMR SEGA'
 
         /// <inheritdoc/>
         public bool HeaderSignatureMatches(Stream romStream)
@@ -24,9 +24,9 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Sega
             byte[] buffer = new byte[3];
             romStream.Seek(0x7FFC, SeekOrigin.Begin);
             romStream.Read(buffer, 0, buffer.Length);
-            string part1 = ((int)buffer[0]).ToString("X");
-            string part2 = ((int)buffer[1]).ToString("X");
-            string part3 = ((int)buffer[2]).ToString();
+            string part1 = ((int) buffer[0]).ToString("X");
+            string part2 = ((int) buffer[1]).ToString("X");
+            string part3 = ((int) buffer[2]).ToString();
             part3 = part3.Remove(part3.Length - 1);
             if (part1.Length == 1)
             {

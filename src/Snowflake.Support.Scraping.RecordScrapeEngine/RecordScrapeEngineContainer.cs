@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Snowflake.Loader;
-using Snowflake.Records.Game;
+using Snowflake.Model.Records.Game;
 using Snowflake.Scraping;
 using Snowflake.Scraping.Extensibility;
 using Snowflake.Services;

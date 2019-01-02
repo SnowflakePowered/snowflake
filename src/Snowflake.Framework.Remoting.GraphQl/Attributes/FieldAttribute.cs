@@ -12,6 +12,7 @@ namespace Snowflake.Framework.Remoting.GraphQl.Attributes
         public Type GraphType { get; }
         public string FieldName { get; }
         public string Description { get; }
+
         public FieldAttribute(string fieldName, string description, Type graphType)
         {
             this.GraphType = graphType;

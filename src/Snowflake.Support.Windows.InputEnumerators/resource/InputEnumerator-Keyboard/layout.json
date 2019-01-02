@@ -2,7 +2,6 @@
   "LayoutID": "KEYBOARD_DEVICE",
   "FriendlyName": "Keyboard and Mouse",
   "Platforms": [
-
   ],
   "IsRealDevice": true,
   "Layout": {
@@ -16,5 +15,3 @@
     }
   }
 }
-
-

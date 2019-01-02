@@ -16,8 +16,8 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.InputDevice
                 description: "DirectInput Instance Name.",
                 resolve: context => context.Source.DI_InstanceName);
             Field<StringGraphType>("di_InterfacePath",
-               description: "DirectInput Interface Path.",
-               resolve: context => context.Source.DI_InterfacePath);
+                description: "DirectInput Interface Path.",
+                resolve: context => context.Source.DI_InterfacePath);
             Field<StringGraphType>("di_ProductName",
                 description: "DirectInput Product Name.",
                 resolve: context => context.Source.DI_ProductName);
@@ -37,8 +37,8 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.InputDevice
                 description: "DirectInput Product ID",
                 resolve: context => context.Source.DI_ProductID);
             Field<IntGraphType>("di_VendorID",
-              description: "DirectInput Vendor ID",
-              resolve: context => context.Source.DI_VendorID);
+                description: "DirectInput Vendor ID",
+                resolve: context => context.Source.DI_VendorID);
             Field<InputApiEnum>("discoveryApi",
                 description: "Discovery API.",
                 resolve: context => context.Source.DiscoveryApi);
@@ -52,14 +52,14 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.InputDevice
                 description: "XInput Is Connected.",
                 resolve: context => context.Source.XI_IsConnected);
             Field<StringGraphType>("udev_Vendor",
-              description: "UDEV Vendor.",
-              resolve: context => context.Source.UDEV_Vendor);
+                description: "UDEV Vendor.",
+                resolve: context => context.Source.UDEV_Vendor);
             Field<StringGraphType>("udev_MountPath",
-              description: "UDEV MountPath.",
-              resolve: context => context.Source.UDEV_MountPath);
+                description: "UDEV MountPath.",
+                resolve: context => context.Source.UDEV_MountPath);
             Field<StringGraphType>("udev_Model",
-              description: "UDEV Model.",
-              resolve: context => context.Source.UDEV_Model);
+                description: "UDEV Model.",
+                resolve: context => context.Source.UDEV_Model);
         }
     }
 }

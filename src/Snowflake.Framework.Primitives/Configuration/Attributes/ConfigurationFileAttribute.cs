@@ -36,7 +36,8 @@ namespace Snowflake.Configuration.Attributes
         /// <param name="filename"> The filename that the section properties of the collection will output to.</param>
         /// <param name="trueMapping">The string that true maps to in the configuration file.</param>
         /// <param name="falseMapping">The string that false maps to in the configuration file.</param>
-        public ConfigurationFileAttribute(string key, string filename, string trueMapping = "True", string falseMapping = "False")
+        public ConfigurationFileAttribute(string key, string filename, string trueMapping = "True",
+            string falseMapping = "False")
         {
             this.Key = key;
             this.FileName = filename;

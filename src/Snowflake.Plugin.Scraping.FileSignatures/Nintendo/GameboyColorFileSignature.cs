@@ -8,7 +8,7 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Nintendo
     public sealed class GameboyColorFileSignature : IFileSignature
     {
         /// <inheritdoc/>
-        public byte[] HeaderSignature => new byte[8] { 0xCE, 0xED, 0x66, 0x66, 0xCC, 0x0D, 0x00, 0x0B };
+        public byte[] HeaderSignature => new byte[8] {0xCE, 0xED, 0x66, 0x66, 0xCC, 0x0D, 0x00, 0x0B};
 
         /// <inheritdoc/>
         public bool HeaderSignatureMatches(Stream romStream)

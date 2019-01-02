@@ -10,9 +10,9 @@ namespace Snowflake.Tooling.Taskrunner.Framework.Tasks
         public int ExitCode { get; set; } = 0;
         public IEnumerable<Exception> RaisedExceptions { get; set; } = Enumerable.Empty<Exception>();
 
-        public static implicit operator VerbTaskResult (int exitCode)
+        public static implicit operator VerbTaskResult(int exitCode)
         {
-            return new VerbTaskResult() { ExitCode = exitCode };
+            return new VerbTaskResult() {ExitCode = exitCode};
         }
     }
 }

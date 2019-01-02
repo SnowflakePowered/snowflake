@@ -1,9 +1,9 @@
 ﻿{
-    "name": "InputEnumerator-Keyboard",
-    "type": "plugin_inputenumerator",
-    "version": "1.0.0.0",
-    "authors": [
-        "Snowflake"
-    ],
-    "description": "Keyboard Input Enumerator"
+  "name": "InputEnumerator-Keyboard",
+  "type": "plugin_inputenumerator",
+  "version": "1.0.0.0",
+  "authors": [
+    "Snowflake"
+  ],
+  "description": "Keyboard Input Enumerator"
 }

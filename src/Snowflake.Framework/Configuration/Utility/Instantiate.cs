@@ -28,7 +28,9 @@ namespace Snowflake.Configuration.Utility
         public static object CreateInstance(Type createType, Type[] constructorParams)
         {
             Func<object> instanceCreator = Expression.Lambda<Func<object>>(
-                 Expression.New(Instantiate.GetConstructor(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance, createType, constructorParams)))
+                    Expression.New(Instantiate.GetConstructor(
+                        BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance, createType,
+                        constructorParams)))
                 .Compile();
             return instanceCreator();
         }
@@ -36,7 +38,9 @@ namespace Snowflake.Configuration.Utility
         public static object CreateInstance(Type createType, Type[] constructorParams, params Expression[] args)
         {
             Func<object> instanceCreator = Expression.Lambda<Func<object>>(
-               Expression.New(Instantiate.GetConstructor(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance, createType, constructorParams), args)).Compile();
+                Expression.New(
+                    Instantiate.GetConstructor(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance,
+                        createType, constructorParams), args)).Compile();
             return instanceCreator();
         }
     }

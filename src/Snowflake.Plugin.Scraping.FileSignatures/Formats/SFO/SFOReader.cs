@@ -10,6 +10,7 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Formats.SFO
         private SFOHeader sfoHeader;
         public IDictionary<string, string> KeyValues { get; }
         public IList<SFOIndexTableEntry> IndexTableEntries { get; }
+
         public SFOReader(string sfoFile)
             : this(new FileStream(sfoFile, FileMode.Open, FileAccess.Read))
         {

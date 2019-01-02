@@ -7,6 +7,7 @@ using Snowflake.Loader;
 using Snowflake.Services.Tests;
 using Snowflake.Tests;
 using Xunit;
+
 namespace Snowflake.Loader.Tests
 {
     public class ModuleEnumeratorTests
@@ -31,7 +32,8 @@ namespace Snowflake.Loader.Tests
             var moduleEnum = new ModuleEnumerator(appDataDirectory.FullName);
             Assert.Contains(moduleEnum.Modules, m => m.Entry == "testModule");
             Assert.Equal(moduleDirectory.FullName, moduleEnum.Modules.First().ModuleDirectory.FullName);
-            Assert.Equal(moduleDirectory.CreateSubdirectory("contents").FullName, moduleEnum.Modules.First().ContentsDirectory.FullName);
+            Assert.Equal(moduleDirectory.CreateSubdirectory("contents").FullName,
+                moduleEnum.Modules.First().ContentsDirectory.FullName);
         }
     }
 }

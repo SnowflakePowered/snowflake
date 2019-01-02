@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
-using Snowflake.Records.Game;
+using Snowflake.Model.Records.Game;
 using Snowflake.Scraping;
 using Snowflake.Scraping.Extensibility;
 using Snowflake.Support.Scraping.RecordScrapeEngine;
@@ -15,6 +15,7 @@ namespace Snowflake.Support.Scraping.RecordScrapeEngine
         private ITraverser<IGameRecord> GameTraverser { get; }
         private IImmutableDictionary<Guid, IScrapeJob> ScrapeJobs { get; set; }
         private ResultCuller ResultCuller { get; }
+
         public GameRecordScrapeEngine(ITraverser<IGameRecord> gameTraverser)
         {
             this.GameTraverser = gameTraverser;
@@ -30,14 +31,18 @@ namespace Snowflake.Support.Scraping.RecordScrapeEngine
                 return null;
             }
 
-            while (await scrapeJob.Proceed(Enumerable.Empty<SeedContent>())) { }
+            while (await scrapeJob.Proceed(Enumerable.Empty<SeedContent>()))
+            {
+            }
+
             scrapeJob.Cull();
             var result = this.GameTraverser.Traverse(scrapeJob.Context.Root, scrapeJob.Context).FirstOrDefault();
             this.ScrapeJobs = this.ScrapeJobs.Remove(scrapeJobId);
             return result;
         }
 
-        public Guid CreateJob(IEnumerable<SeedTree> initialSeeds, IEnumerable<IScraper> scrapers, IEnumerable<ICuller> cullers)
+        public Guid CreateJob(IEnumerable<SeedTree> initialSeeds, IEnumerable<IScraper> scrapers,
+            IEnumerable<ICuller> cullers)
         {
             var job = new ScrapeJob(initialSeeds, scrapers, cullers.Prepend(this.ResultCuller));
             this.ScrapeJobs = this.ScrapeJobs.Add(job.JobGuid, job);

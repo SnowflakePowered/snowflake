@@ -61,7 +61,7 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Scrapers
             }
 
             return this.StoneProvider.Platforms.Where(p => p.Value.FileTypes.Values
-            .Contains(mimeType, StringComparer.OrdinalIgnoreCase))
+                    .Contains(mimeType, StringComparer.OrdinalIgnoreCase))
                 .FirstOrDefault().Value;
         }
 
@@ -73,8 +73,8 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Scrapers
 
         public override async Task<IEnumerable<SeedTreeAwaitable>>
             ScrapeAsync(ISeed parent, ILookup<string, SeedContent> rootSeeds,
-            ILookup<string, SeedContent> childSeeds,
-            ILookup<string, SeedContent> siblingSeeds)
+                ILookup<string, SeedContent> childSeeds,
+                ILookup<string, SeedContent> siblingSeeds)
         {
             if (!File.Exists(parent.Content.Value))
             {
@@ -84,10 +84,11 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Scrapers
             using (FileStream romStream = File.OpenRead(parent.Content.Value))
             {
                 string mimeType = this.GetMatchingMimetype(romStream);
-                var platform = this.GetPlatformFromMimetype(mimeType) ?? this.GetPlatformFromFileExtension(parent.Content.Value);
+                var platform = this.GetPlatformFromMimetype(mimeType) ??
+                               this.GetPlatformFromFileExtension(parent.Content.Value);
                 if (platform != null)
                 {
-                    return _("platform", platform.PlatformID);
+                    return _("platform", platform.PlatformId);
                 }
             }
 

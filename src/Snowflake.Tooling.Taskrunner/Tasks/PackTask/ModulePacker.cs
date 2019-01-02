@@ -40,7 +40,8 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.PackTask
         {
             (FileStream packageContents, RSA rsa) = await this.CreateArchive(noTreeShaking);
 
-            using (FileStream snowballArchiveStream = File.Create(Path.Combine(outputDirectory.FullName, $"{this.GetPackageName()}.snowpkg")))
+            using (FileStream snowballArchiveStream =
+                File.Create(Path.Combine(outputDirectory.FullName, $"{this.GetPackageName()}.snowpkg")))
             using (ZipOutputStream snowballArchive = new ZipOutputStream(snowballArchiveStream))
             {
                 byte[] sha512 = this.GetSHA512(packageContents);
@@ -63,8 +64,9 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.PackTask
                     await streamReader.CopyToAsync(snowballArchive, 1024).ConfigureAwait(false);
                     snowballArchive.CloseEntry();
                 }
-                
-                using (MemoryStream streamReader = new MemoryStream(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(this.ModuleDefinition))))
+
+                using (MemoryStream streamReader =
+                    new MemoryStream(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(this.ModuleDefinition))))
                 {
                     snowballArchive.PutNextEntry(new ZipEntry("module"));
                     streamReader.Position = 0;
@@ -72,14 +74,17 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.PackTask
                     snowballArchive.CloseEntry();
                 }
             }
+
             return Path.Combine(outputDirectory.FullName, $"{this.GetPackageName()}.snowpkg");
         }
 
         private async Task<(FileStream fileStream, RSA signature)> CreateArchive(bool noTreeShaking)
         {
             string fileName = Path.GetTempFileName();
-            var treeShaker = noTreeShaking ? Enumerable.Empty<string>() : new AssemblyTreeShaker()
-                .GetFrameworkDependencies(this.ModuleDirectory, this.ModuleDefinition);
+            var treeShaker = noTreeShaking
+                ? Enumerable.Empty<string>()
+                : new AssemblyTreeShaker()
+                    .GetFrameworkDependencies(this.ModuleDirectory, this.ModuleDefinition);
 
             FileStream archiveStream = File.Create(fileName, 4096, FileOptions.DeleteOnClose);
             RSA rsa = RSA.Create();
@@ -102,9 +107,10 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.PackTask
                         streamReader.Position = 0;
                         await streamReader.CopyToAsync(zipStream, 4096).ConfigureAwait(false);
                     }
+
                     zipStream.CloseEntry();
                 }
-           
+
                 string rsaParameters = JsonConvert.SerializeObject(rsa.ExportParameters(false));
 
                 zipStream.PutNextEntry(new ZipEntry(Path.Combine("manifest", "key")));
@@ -113,6 +119,7 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.PackTask
                     keySig.Position = 0;
                     await keySig.CopyToAsync(zipStream, 4096).ConfigureAwait(false);
                 }
+
                 zipStream.CloseEntry();
 
                 zipStream.PutNextEntry(new ZipEntry(Path.Combine("manifest", "package")));
@@ -121,10 +128,11 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.PackTask
                     keySig.Position = 0;
                     await keySig.CopyToAsync(zipStream, 4096).ConfigureAwait(false);
                 }
+
                 zipStream.CloseEntry();
             }
+
             return (archiveStream, rsa);
         }
-
     }
 }

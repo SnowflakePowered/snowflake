@@ -35,6 +35,9 @@ namespace Snowflake.Configuration.Interceptors
                 case nameof(@this.PlayerIndex):
                     invocation.ReturnValue = @this.PlayerIndex;
                     break;
+                case nameof(@this.ValueCollection):
+                    invocation.ReturnValue = @this.ValueCollection;
+                    break;
                 case nameof(@this.Template):
                     invocation.ReturnValue = @this.Template;
                     break;
@@ -43,12 +46,12 @@ namespace Snowflake.Configuration.Interceptors
                     {
                         if (invocation.Method.Name.StartsWith("set_"))
                         {
-                            @this[(string)invocation.Arguments[0]] = invocation.Arguments[1];
+                            @this[(string) invocation.Arguments[0]] = invocation.Arguments[1];
                         }
 
                         if (invocation.Method.Name.StartsWith("get_"))
                         {
-                            invocation.ReturnValue = @this[(string)invocation.Arguments[0]];
+                            invocation.ReturnValue = @this[(string) invocation.Arguments[0]];
                         }
 
                         break;
@@ -58,7 +61,8 @@ namespace Snowflake.Configuration.Interceptors
                     {
                         if (invocation.Method.Name.StartsWith("set_"))
                         {
-                            @this[(ControllerElement)invocation.Arguments[0]] = (ControllerElement)invocation.Arguments[1];
+                            @this[(ControllerElement) invocation.Arguments[0]] =
+                                (ControllerElement) invocation.Arguments[1];
                         }
                     }
 

@@ -24,43 +24,33 @@ namespace Snowflake.Configuration
         /// <inheritdoc/>
         public IConfigurationCollectionDescriptor Descriptor { get; }
 
+        public IConfigurationValueCollection ValueCollection { get; }
+
         private readonly CollectionInterceptor<T> collectionInterceptor;
 
         public ConfigurationCollection()
-            : this(new Dictionary<string, IDictionary<string, IConfigurationValue>>())
+            : this(new ConfigurationValueCollection())
         {
         }
 
-        public ConfigurationCollection(IDictionary<string, IDictionary<string, IConfigurationValue>> defaults)
-        {
-           
-            this.Descriptor =
-                ConfigurationDescriptorCache.GetCollectionDescriptor<T>();
-            this.collectionInterceptor = new CollectionInterceptor<T>(defaults);
-            
-            this.Configuration = ConfigurationDescriptorCache
-                    .GetProxyGenerator().CreateInterfaceProxyWithoutTarget<T>(new CollectionCircularInterceptor<T>(this), this.collectionInterceptor);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ConfigurationCollection{T}"/> class.
-        /// Used for the sqlite configuration collection store
-        /// </summary>
-        /// <param name="defaults"></param>
-        internal ConfigurationCollection(IDictionary<string, IDictionary<string, (string, Guid)>> defaults)
+        internal ConfigurationCollection(IConfigurationValueCollection defaults)
         {
             this.Descriptor =
                 ConfigurationDescriptorCache.GetCollectionDescriptor<T>();
             this.collectionInterceptor = new CollectionInterceptor<T>(defaults);
+
             this.Configuration = ConfigurationDescriptorCache
-                    .GetProxyGenerator().CreateInterfaceProxyWithoutTarget<T>(new CollectionCircularInterceptor<T>(this), this.collectionInterceptor);
+                .GetProxyGenerator().CreateInterfaceProxyWithoutTarget<T>
+                    (new CollectionCircularInterceptor<T>(this), this.collectionInterceptor);
+
+            this.ValueCollection = defaults;
         }
 
         /// <inheritdoc/>
         public IEnumerator<KeyValuePair<string, IConfigurationSection>> GetEnumerator()
         {
             return this.Descriptor.SectionKeys.Select(k => new KeyValuePair<string, IConfigurationSection>(
-            k, this.collectionInterceptor.Values[k] as IConfigurationSection))
+                    k, this.collectionInterceptor.Values[k] as IConfigurationSection))
                 .GetEnumerator(); // ensure order
         }
 
@@ -75,6 +65,7 @@ namespace Snowflake.Configuration
         where T : class, IConfigurationCollection<T>
     {
         private readonly IConfigurationCollection<T> @this;
+
         public CollectionCircularInterceptor(IConfigurationCollection<T> @this)
         {
             this.@this = @this;
@@ -97,8 +88,11 @@ namespace Snowflake.Configuration
                     case nameof(@this.Descriptor):
                         invocation.ReturnValue = @this.Descriptor;
                         break;
+                    case nameof(@this.ValueCollection):
+                        invocation.ReturnValue = @this.ValueCollection;
+                        break;
                     case "Item": // circular indexer
-                        invocation.ReturnValue = @this[(string)invocation.Arguments[0]];
+                        invocation.ReturnValue = @this[(string) invocation.Arguments[0]];
                         break;
                     default:
                         invocation.Proceed();
@@ -110,37 +104,48 @@ namespace Snowflake.Configuration
 
     class CollectionInterceptor<T> : IInterceptor
     {
-        internal readonly IDictionary<string, dynamic> Values;
+        // IDictionary<string, IConfigurationSection<T>>
+        internal IDictionary<string, dynamic> Values;
 
-        internal CollectionInterceptor(IDictionary<string, IDictionary<string, (string, Guid)>> defaults)
+        internal CollectionInterceptor(IEnumerable<(string section, string key, (string, Guid) strvalue)> values)
         {
             this.Values = new Dictionary<string, dynamic>();
             foreach (var section in from props in typeof(T).GetPublicProperties()
-                                    let sectionAttr = props.GetAttributes<SerializableSectionAttribute>().FirstOrDefault()
-                                    where sectionAttr != null
-                                    select new { sectionAttr, type = props.PropertyType, name = props.Name })
+                let sectionAttr = props.GetAttributes<SerializableSectionAttribute>().FirstOrDefault()
+                where sectionAttr != null
+                select new
+                {
+                    sectionAttr,
+                    type = props.PropertyType,
+                    name = props.Name
+                })
             {
-                var sectionType = typeof(ConfigurationSection<>).MakeGenericType(section.type);
-                this.Values.Add(section.name, Instantiate.CreateInstance(sectionType,
-                    new[] { typeof(IDictionary<string, (string, Guid)>) },
-                    Expression.Constant(defaults.ContainsKey(section.name) ? defaults[section.name]
-                    : new Dictionary<string, (string, Guid)>())));
+                var sectionDescType = typeof(ConfigurationSectionDescriptor<>).MakeGenericType(section.type);
+                var descriptor = Instantiate.CreateInstance(sectionDescType,
+                    new[] {typeof(string)},
+                    Expression.Constant(section.name));
             }
         }
 
-        internal CollectionInterceptor(IDictionary<string, IDictionary<string, IConfigurationValue>> defaults)
+        internal CollectionInterceptor(IConfigurationValueCollection defaults)
         {
             this.Values = new Dictionary<string, dynamic>();
 
             // public ConfigurationSection(IDictionary<string, IConfigurationValue> values)
             foreach (var section in from props in typeof(T).GetPublicProperties()
-                                    let sectionAttr = props.GetAttributes<SerializableSectionAttribute>().FirstOrDefault()
-                                    where sectionAttr != null
-                                    select new { sectionAttr, type = props.PropertyType, name = props.Name })
+                let sectionAttr = props.GetAttributes<SerializableSectionAttribute>().FirstOrDefault()
+                where sectionAttr != null
+                select new {sectionAttr, type = props.PropertyType, name = props.Name})
             {
                 var sectionType = typeof(ConfigurationSection<>).MakeGenericType(section.type);
-                this.Values.Add(section.name, Instantiate.CreateInstance(sectionType, new Type[] { typeof(IDictionary<string, IConfigurationValue>) },
-                    Expression.Constant(defaults.ContainsKey(section.name) ? defaults[section.name] : new Dictionary<string, IConfigurationValue>())));
+
+                if (section?.name != null)
+                {
+                    this.Values.Add(section.name,
+                        Instantiate.CreateInstance(sectionType,
+                            new Type[] {typeof(IConfigurationValueCollection), typeof(string)},
+                            Expression.Constant(defaults), Expression.Constant(section.name)));
+                }
             }
         }
 

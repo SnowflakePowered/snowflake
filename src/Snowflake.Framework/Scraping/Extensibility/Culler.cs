@@ -20,7 +20,10 @@ namespace Snowflake.Scraping.Extensibility
             this.TargetType = targetType;
         }
 
+        /// <inheritdoc />
         public string TargetType { get; }
+
+        /// <inheritdoc />
         public abstract IEnumerable<ISeed> Filter(IEnumerable<ISeed> seedsToTrim, ISeedRootContext context);
     }
 }

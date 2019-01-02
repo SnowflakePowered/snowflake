@@ -35,7 +35,9 @@ namespace Shiragame.Builder.Parser
         protected static string GetMimeType(string filename, string platformId)
         {
             filename = filename.ToLowerInvariant();
-            return DatParser.stoneProvider.Platforms[platformId].FileTypes.ContainsKey(Path.GetExtension(filename)) ? DatParser.stoneProvider.Platforms[platformId].FileTypes[Path.GetExtension(filename)] : null;
+            return DatParser.stoneProvider.Platforms[platformId].FileTypes.ContainsKey(Path.GetExtension(filename))
+                ? DatParser.stoneProvider.Platforms[platformId].FileTypes[Path.GetExtension(filename)]
+                : null;
         }
     }
 

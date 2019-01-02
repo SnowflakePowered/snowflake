@@ -144,6 +144,12 @@ namespace Snowflake.Configuration.Attributes
         {
         }
 
+        public ConfigurationOptionAttribute(string optionName, string @default, string fileSystemRoot)
+            : this(optionName, @default, typeof(string))
+        {
+            this.IsPath = true;
+        }
+
         private ConfigurationOptionAttribute(string optionName, object @default, Type valueType)
         {
             this.OptionName = optionName;

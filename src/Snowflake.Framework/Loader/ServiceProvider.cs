@@ -11,6 +11,7 @@ namespace Snowflake.Loader
     {
         private IServiceContainer coreService;
         private IList<string> services;
+
         internal ServiceProvider(IServiceContainer coreService, IEnumerable<string> serviceList)
         {
             this.coreService = coreService;
@@ -29,7 +30,8 @@ namespace Snowflake.Loader
                 return this.coreService.Get<T>();
             }
 
-            throw new InvalidOperationException($"Service container is not authorized to provide service {typeof(T).FullName} or service does not exist.");
+            throw new InvalidOperationException(
+                $"Service container is not authorized to provide service {typeof(T).FullName} or service does not exist.");
         }
     }
 }

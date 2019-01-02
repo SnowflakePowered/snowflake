@@ -7,7 +7,6 @@ using Snowflake.Configuration.Input;
 using Snowflake.Execution.Extensibility;
 using Snowflake.Execution.Process;
 using Snowflake.Execution.Saving;
-using Snowflake.Records.Game;
 
 namespace Snowflake.Adapters
 {
@@ -15,6 +14,7 @@ namespace Snowflake.Adapters
     {
         private IEmulatorTaskRoot TaskRoot { get; }
         private ISaveLocation SaveLocation { get; }
+
         public RetroArchTaskResult(IEmulatorTaskRoot taskRoot, ISaveLocation location)
             : base("retroarch")
         {

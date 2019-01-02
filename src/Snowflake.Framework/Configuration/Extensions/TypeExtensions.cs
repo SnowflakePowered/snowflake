@@ -18,8 +18,8 @@ namespace Snowflake.Configuration.Extensions
             }
 
             return type.GetInterfaces()
-                    .Concat(new Type[] { type })
-                    .SelectMany(i => i.GetProperties());
+                .Concat(new Type[] {type})
+                .SelectMany(i => i.GetProperties());
         }
 
         public static IEnumerable<T> GetPublicAttributes<T>(this Type type)
@@ -33,8 +33,8 @@ namespace Snowflake.Configuration.Extensions
             }
 
             return type.GetInterfaces()
-                   .Concat(new Type[] { type })
-                   .SelectMany(i => i.GetTypeInfo().GetCustomAttributes<T>());
+                .Concat(new Type[] {type})
+                .SelectMany(i => i.GetTypeInfo().GetCustomAttributes<T>());
         }
     }
 }

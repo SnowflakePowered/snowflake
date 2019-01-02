@@ -5,7 +5,8 @@ using GraphQL.Types;
 
 namespace Snowflake.Support.Remoting.GraphQl.Inputs.MappedControllerElement
 {
-    public class MappedControllerElementCollectionInputType : InputObjectGraphType<MappedControllerElementCollectionInputObject>
+    public class
+        MappedControllerElementCollectionInputType : InputObjectGraphType<MappedControllerElementCollectionInputObject>
     {
         public MappedControllerElementCollectionInputType()
         {

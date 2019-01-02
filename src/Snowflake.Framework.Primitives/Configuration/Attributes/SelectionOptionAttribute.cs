@@ -22,7 +22,7 @@ namespace Snowflake.Configuration.Attributes
         /// <summary>
         /// Gets or sets the display name of this value for human readable purposes
         /// </summary>
-        public string DisplayName { get; set; }
+        public string DisplayName { get; set; } = "";
 
         /// <summary>
         /// Gets or sets a value indicating whether whether or not this option is displayed for the user

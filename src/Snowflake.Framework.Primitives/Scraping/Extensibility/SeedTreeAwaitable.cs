@@ -60,9 +60,10 @@ namespace Snowflake.Scraping.Extensibility
         /// </summary>
         /// <param name="seedContent">The <see cref="SeedTree"/> to coerce.</param>
         public static implicit operator SeedTreeAwaitable((string type, string value,
-           IEnumerable<SeedTree> Children) seedContent)
+            IEnumerable<SeedTree> Children) seedContent)
         {
-            return new SeedTreeAwaitable(Task.FromResult<SeedTree>(((seedContent.type, seedContent.value), seedContent.Children)));
+            return new SeedTreeAwaitable(Task.FromResult<SeedTree>(((seedContent.type, seedContent.value),
+                seedContent.Children)));
         }
 
         /// <summary>

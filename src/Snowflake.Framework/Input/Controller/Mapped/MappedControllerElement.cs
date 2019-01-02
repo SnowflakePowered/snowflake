@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Snowflake.Input.Controller.Mapped
 {
-    public class MappedControllerElement : IMappedControllerElement
+    public struct MappedControllerElement : IMappedControllerElement
     {
         /// <inheritdoc/>
         public ControllerElement LayoutElement { get; }
@@ -14,9 +14,10 @@ namespace Snowflake.Input.Controller.Mapped
         /// <inheritdoc/>
         public ControllerElement DeviceElement { get; set; }
 
-        public MappedControllerElement(ControllerElement virtualElement)
+        public MappedControllerElement(ControllerElement virtualElement, ControllerElement deviceElement)
         {
             this.LayoutElement = virtualElement;
+            this.DeviceElement = deviceElement;
         }
     }
 }

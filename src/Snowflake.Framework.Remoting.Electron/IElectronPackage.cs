@@ -11,7 +11,7 @@ namespace Snowflake.Framework.Remoting.Electron
         string Entry { get; }
         string Icon { get; }
         string Description { get; }
-        string Name{ get; }
+        string Name { get; }
         string Version { get; }
     }
 }

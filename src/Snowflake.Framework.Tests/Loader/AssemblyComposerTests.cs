@@ -12,6 +12,7 @@ using Snowflake.Tests;
 using Snowflake.Tests.Composable;
 using Snowflake.Tests.InvalidComposable;
 using Xunit;
+
 namespace Snowflake.Loader.Tests
 {
     public class AssemblyComposerTests
@@ -23,7 +24,8 @@ namespace Snowflake.Loader.Tests
                 .CreateSubdirectory(Guid.NewGuid().ToString());
             var moduleDirectory = appDataDirectory.CreateSubdirectory("modules");
 
-            Stream composableAssemblyZipStream = TestUtilities.GetResource("Loader.Snowflake.Framework.Tests.DummyComposable.zip");
+            Stream composableAssemblyZipStream =
+                TestUtilities.GetResource("Loader.Snowflake.Framework.Tests.DummyComposable.zip");
             ZipArchive archive = new ZipArchive(composableAssemblyZipStream);
 
             archive.ExtractToDirectory(moduleDirectory.CreateSubdirectory("Snowflake.Framework.Tests").FullName);
@@ -45,7 +47,8 @@ namespace Snowflake.Loader.Tests
                 .CreateSubdirectory(Guid.NewGuid().ToString());
             var moduleDirectory = appDataDirectory.CreateSubdirectory("modules");
 
-            Stream composableAssemblyZipStream = TestUtilities.GetResource("Loader.Snowflake.Framework.Tests.InvalidComposable.zip");
+            Stream composableAssemblyZipStream =
+                TestUtilities.GetResource("Loader.Snowflake.Framework.Tests.InvalidComposable.zip");
             ZipArchive archive = new ZipArchive(composableAssemblyZipStream);
 
             archive.ExtractToDirectory(moduleDirectory.CreateSubdirectory("Snowflake.Framework.Tests").FullName);
@@ -66,7 +69,8 @@ namespace Snowflake.Loader.Tests
                 .CreateSubdirectory(Guid.NewGuid().ToString());
             var moduleDirectory = appDataDirectory.CreateSubdirectory("modules");
 
-            Stream composableAssemblyZipStream = TestUtilities.GetResource("Loader.Snowflake.Framework.Tests.InvalidComposable.zip");
+            Stream composableAssemblyZipStream =
+                TestUtilities.GetResource("Loader.Snowflake.Framework.Tests.InvalidComposable.zip");
             ZipArchive archive = new ZipArchive(composableAssemblyZipStream);
 
             archive.ExtractToDirectory(moduleDirectory.CreateSubdirectory("Snowflake.Framework.Tests").FullName);
@@ -84,7 +88,7 @@ namespace Snowflake.Loader.Tests
             Assert.Throws<InvalidOperationException>(() =>
             {
                 invalidComposable.Compose(module,
-                    new ServiceProvider(container, new List<string>() { typeof(IServiceRegistrationProvider).FullName }));
+                    new ServiceProvider(container, new List<string>() {typeof(IServiceRegistrationProvider).FullName}));
             });
         }
     }

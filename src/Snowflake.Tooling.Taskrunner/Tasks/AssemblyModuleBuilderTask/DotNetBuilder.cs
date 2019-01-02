@@ -15,7 +15,9 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.AssemlyModuleBuilderTask
         private readonly ModuleDefinition moduleDefinition;
         private readonly IEnumerable<string> args;
         private readonly string outputDirectory;
-        public DotNetBuilder(ModuleDefinition moduleDefinition, FileInfo projectFile, string outputDirectory, string args)
+
+        public DotNetBuilder(ModuleDefinition moduleDefinition, FileInfo projectFile, string outputDirectory,
+            string args)
         {
             this.dotnetProcess = new ProcessStartInfo()
             {
@@ -30,13 +32,13 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.AssemlyModuleBuilderTask
 
         public DirectoryInfo Clean()
         {
-            var outputDirectory = this.outputDirectory != null ? 
-                new DirectoryInfo(Path.GetFullPath(this.outputDirectory))
-                .CreateSubdirectory(Path.GetFileNameWithoutExtension(moduleDefinition.Entry))
+            var outputDirectory = this.outputDirectory != null
+                ? new DirectoryInfo(Path.GetFullPath(this.outputDirectory))
+                    .CreateSubdirectory(Path.GetFileNameWithoutExtension(moduleDefinition.Entry))
                 : projectFile.Directory
-                           .CreateSubdirectory("bin")
-                           .CreateSubdirectory("module")
-                           .CreateSubdirectory(Path.GetFileNameWithoutExtension(moduleDefinition.Entry));
+                    .CreateSubdirectory("bin")
+                    .CreateSubdirectory("module")
+                    .CreateSubdirectory(Path.GetFileNameWithoutExtension(moduleDefinition.Entry));
 
             try
             {
@@ -44,6 +46,7 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.AssemlyModuleBuilderTask
                 {
                     dir.Delete(true);
                 }
+
                 foreach (var file in outputDirectory.EnumerateFiles())
                 {
                     file.Delete();
@@ -53,7 +56,7 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.AssemlyModuleBuilderTask
             {
                 throw new IOException("Unable to clean output directory, is it in use?", ex);
             }
-        
+
             return outputDirectory.CreateSubdirectory("contents");
         }
 
@@ -68,19 +71,22 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.AssemlyModuleBuilderTask
             this.dotnetProcess.Arguments = String.Join(" ", dotnetArgs);
             this.dotnetProcess.RedirectStandardOutput = true;
             var output = Process.Start(this.dotnetProcess);
-            await Task.Run(() => {
+            await Task.Run(() =>
+            {
                 output.OutputDataReceived += (s, e) => Console.WriteLine(e.Data);
                 output.BeginOutputReadLine();
                 output.WaitForExit();
             });
-            if (output.ExitCode != 0) throw new InvalidOperationException("Unable to build module; MSBuild was unable to build your assembly.");
+            if (output.ExitCode != 0)
+                throw new InvalidOperationException(
+                    "Unable to build module; MSBuild was unable to build your assembly.");
             return this.CopyModuleFile(moduleContents).Directory;
         }
 
         public FileInfo CopyModuleFile(DirectoryInfo contentsDirectory)
         {
             var moduleFile = contentsDirectory.EnumerateFiles().FirstOrDefault(f => f.Name == "module.json");
-            return moduleFile.CopyTo(Path.Combine(moduleFile.Directory.Parent.FullName, moduleFile.Name)); 
+            return moduleFile.CopyTo(Path.Combine(moduleFile.Directory.Parent.FullName, moduleFile.Name));
         }
     }
 }

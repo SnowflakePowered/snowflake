@@ -50,7 +50,8 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Configuration
         InputPollType InputPollTypeBehavior { get; set; }
 
         // disabled and private as core wrapper handles input
-        [ConfigurationOption("input_remap_binds_enable", false, DisplayName = "Input Remap Binds Enable", Private = true)]
+        [ConfigurationOption("input_remap_binds_enable", false, DisplayName = "Input Remap Binds Enable",
+            Private = true)]
         bool InputRemapBindsEnable { get; set; }
 
         [ConfigurationOption("input_turbo_period", 6, DisplayName = "Input Turbo Period")]
@@ -68,18 +69,22 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Configuration
             Private = true)]
         int KeyboardGamepadMappingType { get; set; }
 
-        [ConfigurationOption("input_menu_toggle", "nul", DisplayName = "Menu Toggle Stub", Private = true)] // stub the menu toggle hotkey
+        [ConfigurationOption("input_menu_toggle", "nul", DisplayName = "Menu Toggle Stub",
+            Private = true)] // stub the menu toggle hotkey
         string InputMenuToggle { get; set; }
 
-        [ConfigurationOption("input_toggle_fast_forward", "nul", DisplayName = "Fast Forward Stub", Private = true)] // stub fast-forwad
+        [ConfigurationOption("input_toggle_fast_forward", "nul", DisplayName = "Fast Forward Stub",
+            Private = true)] // stub fast-forwad
         string InputFastForward { get; set; }
+
         #region InputOverlay
 
         // The input overlay is useless on desktops.
         [ConfigurationOption("input_osk_overlay", "", DisplayName = "Input Osk Overlay", Private = true)]
         string InputOskOverlay { get; set; }
 
-        [ConfigurationOption("input_osk_overlay_enable", false, DisplayName = "Input Osk Overlay Enable", Private = true)]
+        [ConfigurationOption("input_osk_overlay_enable", false, DisplayName = "Input Osk Overlay Enable",
+            Private = true)]
         bool InputOskOverlayEnable { get; set; }
 
         [ConfigurationOption("input_overlay", "", DisplayName = "Input Overlay", Private = true)]

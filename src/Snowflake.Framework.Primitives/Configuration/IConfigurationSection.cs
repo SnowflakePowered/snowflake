@@ -18,7 +18,8 @@ namespace Snowflake.Configuration
     /// <summary>
     /// Represents a serializable section in a configuration
     /// </summary>
-    public interface IConfigurationSection : IEnumerable<KeyValuePair<IConfigurationOptionDescriptor, IConfigurationValue>>
+    public interface
+        IConfigurationSection : IEnumerable<KeyValuePair<IConfigurationOptionDescriptor, IConfigurationValue>>
     {
         /// <summary>
         /// Gets the descriptor that describes the configuration section.
@@ -33,7 +34,16 @@ namespace Snowflake.Configuration
         /// The implementation is responsible for ensuring this mapping synced with the
         /// values stored in the object and ensuring this mapping is immutable.
         /// </summary>
-        IDictionary<string, IConfigurationValue> Values { get; }
+        IReadOnlyDictionary<string, IConfigurationValue> Values { get; }
+
+        /// <summary>
+        /// Gets the values backing this configuration section,
+        /// as well as those in the parent configuration collection.
+        /// 
+        /// It is well recommended to use <see cref="IConfigurationSection.Values"/> instead,
+        /// however direct access to the value collection may be useful in some cases.
+        /// </summary>
+        IConfigurationValueCollection ValueCollection { get; }
 
         /// <summary>
         /// Gets or sets the option value with the specified property name in the configuration section
@@ -43,6 +53,6 @@ namespace Snowflake.Configuration
         /// through the <see cref="IConfigurationSection{T}.Configuration"/> property.</remarks>
         /// <param name="key">The property name of the configuration option</param>
         /// <returns>The untyped value of the configuration value</returns>
-        object this[string key] { get; set; }
+        object? this[string key] { get; set; }
     }
 }

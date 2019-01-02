@@ -26,14 +26,14 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.Plugin
                 resolve: context => context.Source.Properties.RequiredSystemFiles,
                 description: "The BIOS system files this emulator requires.");
             Field<ListGraphType<StringGraphType>>("optionalBios",
-              resolve: context => context.Source.Properties.OptionalSystemFiles,
-              description: "The BIOS system files this emulator may use to unlock additional functionality.");
+                resolve: context => context.Source.Properties.OptionalSystemFiles,
+                description: "The BIOS system files this emulator may use to unlock additional functionality.");
             Field<StringGraphType>("saveFormat",
-              resolve: context => context.Source.Properties.SaveFormat,
-              description: "The format this emulator saves game data as.");
+                resolve: context => context.Source.Properties.SaveFormat,
+                description: "The format this emulator saves game data as.");
             Field<ListGraphType<StringGraphType>>("specialCapabilities",
-              resolve: context => context.Source.Properties.SpecialCapabilities,
-              description: "The special capabilities this emulator has.");
+                resolve: context => context.Source.Properties.SpecialCapabilities,
+                description: "The special capabilities this emulator has.");
             Interface<PluginInterfaceType>();
         }
     }

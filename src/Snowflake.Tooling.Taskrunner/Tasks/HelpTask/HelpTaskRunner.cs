@@ -14,6 +14,7 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.HelpTask
     public class HelpTaskRunner : TaskRunner<HelpTaskArguments>
     {
         private TaskContainer Verbs { get; }
+
         public HelpTaskRunner(TaskContainer container)
         {
             this.Verbs = container;
@@ -31,23 +32,23 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.HelpTask
             Console.WriteLine(this.Verbs[arguments.Task].Description);
             Console.WriteLine();
             var namedArgs = (from prop in taskArgType.GetProperties()
-                            let attr = prop.GetCustomAttribute<NamedArgumentAttribute>()
-                            where attr != null
-                            select (attr, prop.Name, prop.PropertyType)).ToList();
+                let attr = prop.GetCustomAttribute<NamedArgumentAttribute>()
+                where attr != null
+                select (attr, prop.Name, prop.PropertyType)).ToList();
 
             var posArgs = (from prop in taskArgType.GetProperties()
-                           let attr = prop.GetCustomAttribute<PositionalArgumentAttribute>()
-                           where attr != null
-                           orderby attr.Position
-                           select (attr, prop.Name)).ToList();
+                let attr = prop.GetCustomAttribute<PositionalArgumentAttribute>()
+                where attr != null
+                orderby attr.Position
+                select (attr, prop.Name)).ToList();
 
             Console.Write($"Usage: dotnet snowflake {arguments.Task}");
 
-            foreach((var attr, var propName) in posArgs)
+            foreach ((var attr, var propName) in posArgs)
             {
                 Console.Write($" <{propName.ToUpperInvariant()}> ");
             }
-               
+
             if (namedArgs.Count != 0)
             {
                 Console.Write(" [options]");
@@ -59,7 +60,8 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.HelpTask
                 Console.WriteLine("Arguments: ");
                 foreach ((var attr, var propName) in posArgs)
                 {
-                    Console.WriteLine($"{$"<{propName.ToUpperInvariant()}>".PadLeft(propName.Length + 2).PadRight(10)} {attr.Description}");
+                    Console.WriteLine(
+                        $"{$"<{propName.ToUpperInvariant()}>".PadLeft(propName.Length + 2).PadRight(10)} {attr.Description}");
                 }
             }
 

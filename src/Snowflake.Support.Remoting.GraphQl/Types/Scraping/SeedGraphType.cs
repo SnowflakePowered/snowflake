@@ -16,7 +16,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Types.Scraping
             Field<GuidGraphType>("guid",
                 resolve: context => context.Source.Guid);
             Field<GuidGraphType>("parent",
-              resolve: context => context.Source.Parent);
+                resolve: context => context.Source.Parent);
             Field<SeedContentGraphType>("content",
                 resolve: context => context.Source.Content);
         }

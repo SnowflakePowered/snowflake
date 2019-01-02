@@ -21,6 +21,7 @@ namespace Snowflake.Configuration.Attributes
         /// Gets the value of the metadata
         /// </summary>
         public object Value { get; }
+
         public CustomMetadataAttribute(string metadataKey, object value)
         {
             this.Key = metadataKey;

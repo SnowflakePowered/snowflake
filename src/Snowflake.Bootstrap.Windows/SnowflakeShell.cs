@@ -8,7 +8,9 @@ namespace Snowflake.Shell.Windows
 {
     internal class SnowflakeShell
     {
-        private readonly string appDataDirectory = PathUtility.GetApplicationDataPath().CreateSubdirectory("snowflake").FullName;
+        private readonly string appDataDirectory =
+            PathUtility.GetApplicationDataPath().CreateSubdirectory("snowflake").FullName;
+
         private IServiceContainer loadedCore;
 
         internal SnowflakeShell()

@@ -17,7 +17,8 @@ namespace Snowflake.Plugin.Scraping.FileSignatures
             romStream.Seek(0x100, SeekOrigin.Begin);
             byte[] buffer = new byte[16];
             romStream.Read(buffer, 0, buffer.Length);
-            return Encoding.UTF8.GetString(buffer).Contains("SEGA GENESIS") || Encoding.UTF8.GetString(buffer).Contains("SEGA MEGA DRIVE");
+            return Encoding.UTF8.GetString(buffer).Contains("SEGA GENESIS") ||
+                   Encoding.UTF8.GetString(buffer).Contains("SEGA MEGA DRIVE");
         }
 
         /// <inheritdoc/>

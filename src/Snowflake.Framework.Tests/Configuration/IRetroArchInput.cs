@@ -176,73 +176,89 @@ namespace Snowflake.Configuration.Tests
         [InputOption("input_player{N}_l_x_plus", InputOptionType.Keyboard, ControllerElement.AxisLeftAnalogPositiveX)]
         ControllerElement InputPlayerLXPlus { get; }
 
-        [InputOption("input_player{N}_l_x_plus_btn", InputOptionType.Controller, ControllerElement.AxisLeftAnalogPositiveX)]
+        [InputOption("input_player{N}_l_x_plus_btn", InputOptionType.Controller,
+            ControllerElement.AxisLeftAnalogPositiveX)]
         ControllerElement InputPlayerLXPlusBtn { get; }
 
-        [InputOption("input_player{N}_l_x_plus_axis", InputOptionType.ControllerAxes, ControllerElement.AxisLeftAnalogPositiveX)]
+        [InputOption("input_player{N}_l_x_plus_axis", InputOptionType.ControllerAxes,
+            ControllerElement.AxisLeftAnalogPositiveX)]
         ControllerElement InputPlayerLXPlusAxis { get; }
 
         [InputOption("input_player{N}_l_x_minus", InputOptionType.Keyboard, ControllerElement.AxisLeftAnalogNegativeX)]
         ControllerElement InputPlayerLXMinus { get; }
 
-        [InputOption("input_player{N}_l_x_minus_btn", InputOptionType.Controller, ControllerElement.AxisLeftAnalogNegativeX)]
+        [InputOption("input_player{N}_l_x_minus_btn", InputOptionType.Controller,
+            ControllerElement.AxisLeftAnalogNegativeX)]
         ControllerElement InputPlayerLXMinusBtn { get; }
 
-        [InputOption("input_player{N}_l_x_minus_axis", InputOptionType.ControllerAxes, ControllerElement.AxisLeftAnalogNegativeX)]
+        [InputOption("input_player{N}_l_x_minus_axis", InputOptionType.ControllerAxes,
+            ControllerElement.AxisLeftAnalogNegativeX)]
         ControllerElement InputPlayerLXMinusAxis { get; }
 
         [InputOption("input_player{N}_l_y_plus", InputOptionType.Keyboard, ControllerElement.AxisLeftAnalogPositiveY)]
         ControllerElement InputPlayerLYPlus { get; }
 
-        [InputOption("input_player{N}_l_y_plus_btn", InputOptionType.Controller, ControllerElement.AxisLeftAnalogPositiveY)]
+        [InputOption("input_player{N}_l_y_plus_btn", InputOptionType.Controller,
+            ControllerElement.AxisLeftAnalogPositiveY)]
         ControllerElement InputPlayerLYPlusBtn { get; }
 
-        [InputOption("input_player{N}_l_y_plus_axis", InputOptionType.ControllerAxes, ControllerElement.AxisLeftAnalogPositiveY)]
+        [InputOption("input_player{N}_l_y_plus_axis", InputOptionType.ControllerAxes,
+            ControllerElement.AxisLeftAnalogPositiveY)]
         ControllerElement InputPlayerLYPlusAxis { get; }
 
         [InputOption("input_player{N}_l_y_minus", InputOptionType.Keyboard, ControllerElement.AxisLeftAnalogNegativeY)]
         ControllerElement InputPlayerLYMinus { get; }
 
-        [InputOption("input_player{N}_l_y_minus_btn", InputOptionType.Controller, ControllerElement.AxisLeftAnalogNegativeY)]
+        [InputOption("input_player{N}_l_y_minus_btn", InputOptionType.Controller,
+            ControllerElement.AxisLeftAnalogNegativeY)]
         ControllerElement InputPlayerLYMinusBtn { get; }
 
-        [InputOption("input_player{N}_l_y_minus_axis", InputOptionType.ControllerAxes, ControllerElement.AxisLeftAnalogNegativeY)]
+        [InputOption("input_player{N}_l_y_minus_axis", InputOptionType.ControllerAxes,
+            ControllerElement.AxisLeftAnalogNegativeY)]
         ControllerElement InputPlayerLYMinusAxis { get; }
 
         [InputOption("input_player{N}_r_x_plus", InputOptionType.Keyboard, ControllerElement.AxisRightAnalogPositiveX)]
         ControllerElement InputPlayerRXPlus { get; }
 
-        [InputOption("input_player{N}_r_x_plus_btn", InputOptionType.Controller, ControllerElement.AxisRightAnalogPositiveX)]
+        [InputOption("input_player{N}_r_x_plus_btn", InputOptionType.Controller,
+            ControllerElement.AxisRightAnalogPositiveX)]
         ControllerElement InputPlayerRXPlusBtn { get; }
 
-        [InputOption("input_player{N}_r_x_plus_axis", InputOptionType.ControllerAxes, ControllerElement.AxisRightAnalogPositiveX)]
+        [InputOption("input_player{N}_r_x_plus_axis", InputOptionType.ControllerAxes,
+            ControllerElement.AxisRightAnalogPositiveX)]
         ControllerElement InputPlayerRXPlusAxis { get; }
 
         [InputOption("input_player{N}_r_x_minus", InputOptionType.Keyboard, ControllerElement.AxisRightAnalogNegativeX)]
         ControllerElement InputPlayerRXMinus { get; }
 
-        [InputOption("input_player{N}_r_x_minus_btn", InputOptionType.Controller, ControllerElement.AxisRightAnalogNegativeX)]
+        [InputOption("input_player{N}_r_x_minus_btn", InputOptionType.Controller,
+            ControllerElement.AxisRightAnalogNegativeX)]
         ControllerElement InputPlayerRXMinusBtn { get; }
 
-        [InputOption("input_player{N}_r_x_minus_axis", InputOptionType.ControllerAxes, ControllerElement.AxisRightAnalogNegativeX)]
+        [InputOption("input_player{N}_r_x_minus_axis", InputOptionType.ControllerAxes,
+            ControllerElement.AxisRightAnalogNegativeX)]
         ControllerElement InputPlayerRXMinusAxis { get; }
 
         [InputOption("input_player{N}_r_y_plus", InputOptionType.Keyboard, ControllerElement.AxisRightAnalogPositiveY)]
         ControllerElement InputPlayerRYPlus { get; }
 
-        [InputOption("input_player{N}_r_y_plus_btn", InputOptionType.Controller, ControllerElement.AxisRightAnalogPositiveY)]
+        [InputOption("input_player{N}_r_y_plus_btn", InputOptionType.Controller,
+            ControllerElement.AxisRightAnalogPositiveY)]
         ControllerElement InputPlayerRYPlusBtn { get; }
 
-        [InputOption("input_player{N}_r_y_plus_axis", InputOptionType.ControllerAxes, ControllerElement.AxisRightAnalogPositiveY)]
+        [InputOption("input_player{N}_r_y_plus_axis", InputOptionType.ControllerAxes,
+            ControllerElement.AxisRightAnalogPositiveY)]
         ControllerElement InputPlayerRYPlusAxis { get; }
 
         [InputOption("input_player{N}_r_y_minus", InputOptionType.Keyboard, ControllerElement.AxisRightAnalogNegativeY)]
         ControllerElement InputPlayerRYMinus { get; }
 
-        [InputOption("input_player{N}_r_y_minus_btn", InputOptionType.Controller, ControllerElement.AxisRightAnalogNegativeY)]
+        [InputOption("input_player{N}_r_y_minus_btn", InputOptionType.Controller,
+            ControllerElement.AxisRightAnalogNegativeY)]
         ControllerElement InputPlayerRYMinusBtn { get; }
 
-        [InputOption("input_player{N}_r_y_minus_axis", InputOptionType.ControllerAxes, ControllerElement.AxisRightAnalogNegativeY)]
+        [InputOption("input_player{N}_r_y_minus_axis", InputOptionType.ControllerAxes,
+            ControllerElement.AxisRightAnalogNegativeY)]
         ControllerElement InputPlayerRYMinusAxis { get; }
     }
 }

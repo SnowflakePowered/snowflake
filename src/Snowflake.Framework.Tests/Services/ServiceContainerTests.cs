@@ -5,6 +5,7 @@ using System.Text;
 using Snowflake.Loader;
 using Snowflake.Tests.Composable;
 using Xunit;
+
 namespace Snowflake.Services.Tests
 {
     public class ServiceContainerTests
@@ -26,7 +27,6 @@ namespace Snowflake.Services.Tests
             Assert.NotNull(container.Get<IServiceRegistrationProvider>());
             Assert.NotNull(container.Get<IContentDirectoryProvider>());
             Assert.NotNull(container.Get<ILogProvider>());
-            Assert.NotNull(container.Get<ISqliteDatabaseProvider>());
             Assert.NotNull(container.Get<IModuleEnumerator>());
         }
 

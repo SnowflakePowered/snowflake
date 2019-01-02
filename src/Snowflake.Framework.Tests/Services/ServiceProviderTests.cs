@@ -8,7 +8,6 @@ using Snowflake.Extensibility;
 using Snowflake.Loader;
 using Snowflake.Services;
 using Snowflake.Services.Logging;
-using Snowflake.Services.Persistence;
 using Snowflake.Tests.Composable;
 using Xunit;
 
@@ -21,10 +20,13 @@ namespace Snowflake.Services.Tests
         {
             var coreService = new Mock<IServiceContainer>();
             IDictionary<Type, object> serviceContainer = new Dictionary<Type, object>();
-            coreService.Setup(c => c.RegisterService(It.IsAny<IDummyComposable>())).Callback<IDummyComposable>(d => serviceContainer
-                        .Add(typeof(IDummyComposable), d));
-            coreService.Setup(c => c.AvailableServices()).Returns(() => serviceContainer.Keys.Select(service => service.FullName));
-            coreService.Setup(c => c.Get<IDummyComposable>()).Returns(() => (IDummyComposable)serviceContainer[typeof(IDummyComposable)]);
+            coreService.Setup(c => c.RegisterService(It.IsAny<IDummyComposable>())).Callback<IDummyComposable>(d =>
+                serviceContainer
+                    .Add(typeof(IDummyComposable), d));
+            coreService.Setup(c => c.AvailableServices())
+                .Returns(() => serviceContainer.Keys.Select(service => service.FullName));
+            coreService.Setup(c => c.Get<IDummyComposable>())
+                .Returns(() => (IDummyComposable) serviceContainer[typeof(IDummyComposable)]);
             var dummyService = new DummyService();
             var provider = new ServiceRegistrationProvider(coreService.Object);
             provider.RegisterService<IDummyComposable>(dummyService);
@@ -32,7 +34,7 @@ namespace Snowflake.Services.Tests
             Assert.Equal(dummyService, serviceContainer[typeof(IDummyComposable)]);
 
             var serviceProvider = new ServiceProvider(coreService.Object,
-                new List<string>() { typeof(IDummyComposable).FullName });
+                new List<string>() {typeof(IDummyComposable).FullName});
             Assert.Equal(dummyService, serviceProvider.Get<IDummyComposable>());
         }
 
@@ -41,10 +43,13 @@ namespace Snowflake.Services.Tests
         {
             var coreService = new Mock<IServiceContainer>();
             IDictionary<Type, object> serviceContainer = new Dictionary<Type, object>();
-            coreService.Setup(c => c.RegisterService(It.IsAny<IDummyComposable>())).Callback<IDummyComposable>(d => serviceContainer
-                        .Add(typeof(IDummyComposable), d));
-            coreService.Setup(c => c.AvailableServices()).Returns(() => serviceContainer.Keys.Select(service => service.FullName));
-            coreService.Setup(c => c.Get<IDummyComposable>()).Returns(() => (IDummyComposable)serviceContainer[typeof(IDummyComposable)]);
+            coreService.Setup(c => c.RegisterService(It.IsAny<IDummyComposable>())).Callback<IDummyComposable>(d =>
+                serviceContainer
+                    .Add(typeof(IDummyComposable), d));
+            coreService.Setup(c => c.AvailableServices())
+                .Returns(() => serviceContainer.Keys.Select(service => service.FullName));
+            coreService.Setup(c => c.Get<IDummyComposable>())
+                .Returns(() => (IDummyComposable) serviceContainer[typeof(IDummyComposable)]);
             var dummyService = new DummyService();
             var provider = new ServiceRegistrationProvider(coreService.Object);
             provider.RegisterService<IDummyComposable>(dummyService);

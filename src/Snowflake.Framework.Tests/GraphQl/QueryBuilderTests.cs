@@ -79,24 +79,26 @@ namespace Snowflake.GraphQl
             var schema = new GraphQlRootSchema(root, mutation);
             var queryBuilder = new BasicQueryBuilder();
             schema.Register(queryBuilder);
-            var resolved = schema.Query.Fields.First(p => p.Name == "defaultTest").Resolver.Resolve(new ResolveFieldContext()
-            {
-                Arguments = new Dictionary<string, object>()
+            var resolved = schema.Query.Fields.First(p => p.Name == "defaultTest").Resolver.Resolve(
+                new ResolveFieldContext()
                 {
-                    { "returnOne", "Foo Bar and Eggs" },
-                },
-            });
+                    Arguments = new Dictionary<string, object>()
+                    {
+                        {"returnOne", "Foo Bar and Eggs"},
+                    },
+                });
 
             Assert.Equal("Foo Bar and EggsHello World", resolved);
 
-            var resolvedTwo = schema.Query.Fields.First(p => p.Name == "defaultTest").Resolver.Resolve(new ResolveFieldContext()
-            {
-                Arguments = new Dictionary<string, object>()
+            var resolvedTwo = schema.Query.Fields.First(p => p.Name == "defaultTest").Resolver.Resolve(
+                new ResolveFieldContext()
                 {
-                    { "returnOne", "One" },
-                    { "returnTwo", "Two" },
-                },
-            });
+                    Arguments = new Dictionary<string, object>()
+                    {
+                        {"returnOne", "One"},
+                        {"returnTwo", "Two"},
+                    },
+                });
 
             Assert.Equal("OneTwo", resolvedTwo);
         }
@@ -109,14 +111,15 @@ namespace Snowflake.GraphQl
             var schema = new GraphQlRootSchema(root, mutation);
             var queryBuilder = new BasicQueryBuilder();
             schema.Register(queryBuilder);
-            var actual = (Connection<string>)schema.Query.Fields.First(p => p.Name == "connectionTest").Resolver.Resolve(new ResolveFieldContext()
-            {
-                Arguments = new Dictionary<string, object>()
+            var actual = (Connection<string>) schema.Query.Fields.First(p => p.Name == "connectionTest").Resolver
+                .Resolve(new ResolveFieldContext()
                 {
-                    { "returnOne", "One" },
-                    { "returnTwo", "Two" },
-                },
-            });
+                    Arguments = new Dictionary<string, object>()
+                    {
+                        {"returnOne", "One"},
+                        {"returnTwo", "Two"},
+                    },
+                });
 
             IEnumerable<string> Expected()
             {
@@ -135,18 +138,19 @@ namespace Snowflake.GraphQl
             var schema = new GraphQlRootSchema(root, mutation);
             var queryBuilder = new BasicQueryBuilder();
             schema.Register(queryBuilder);
-            var actual = schema.Mutation.Fields.First(p => p.Name == "mutationTest").Resolver.Resolve(new ResolveFieldContext()
-            {
-                Arguments = new Dictionary<string, object>()
+            var actual = schema.Mutation.Fields.First(p => p.Name == "mutationTest").Resolver.Resolve(
+                new ResolveFieldContext()
                 {
+                    Arguments = new Dictionary<string, object>()
                     {
-                        "input", new TestInputType()
                         {
-                            Input = "Hello World",
-                        }
+                            "input", new TestInputType()
+                            {
+                                Input = "Hello World",
+                            }
+                        },
                     },
-                },
-            });
+                });
             Assert.Equal("Hello World", actual);
         }
 
@@ -179,7 +183,7 @@ namespace Snowflake.GraphQl
                         }",
             }).Result;
 
-            Assert.Equal("HelloWorld", ((dynamic)result.Data)["defaultTest"]);
+            Assert.Equal("HelloWorld", ((dynamic) result.Data)["defaultTest"]);
         }
     }
 

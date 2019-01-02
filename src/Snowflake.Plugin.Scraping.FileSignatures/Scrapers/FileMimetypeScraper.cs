@@ -54,8 +54,8 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Scrapers
 
         public override async Task<IEnumerable<SeedTreeAwaitable>>
             ScrapeAsync(ISeed parent, ILookup<string, SeedContent> rootSeeds,
-            ILookup<string, SeedContent> childSeeds,
-            ILookup<string, SeedContent> siblingSeeds)
+                ILookup<string, SeedContent> childSeeds,
+                ILookup<string, SeedContent> siblingSeeds)
         {
             using (FileStream romStream = File.OpenRead(parent.Content.Value))
             {

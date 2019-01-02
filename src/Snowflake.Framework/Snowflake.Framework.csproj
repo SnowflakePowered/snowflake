@@ -4,6 +4,8 @@
     <TargetFramework>netcoreapp2.2</TargetFramework> 
     <RootNamespace>Snowflake</RootNamespace>
     <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
+    <LangVersion>8.0</LangVersion>
+    <NullableReferenceTypes>true</NullableReferenceTypes>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Cover' ">
@@ -24,6 +26,10 @@
     <PackageReference Include="Castle.Core" Version="4.3.1" />
     <PackageReference Include="Dapper" Version="1.50.5" />
     <PackageReference Include="Enums.NET" Version="2.3.2" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.0" />
+    <PackageReference Include="Zio" Version="0.7.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,6 +43,6 @@
   </PropertyGroup>
   <PropertyGroup>
     <WarningsAsErrors>NU1605</WarningsAsErrors>
-    <NoWarn>1701;1702;1705;1519</NoWarn>
+    <NoWarn>1701;1702;1705;1519;1591</NoWarn>
   </PropertyGroup>
 </Project>

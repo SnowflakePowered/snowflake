@@ -19,9 +19,9 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Shaders
         public string GetShaderPath(string shaderName, ShaderType shaderType)
         {
             return (from preset in this.ShaderList
-                where preset.ShaderName.Equals(shaderName, StringComparison.OrdinalIgnoreCase)
-                where preset.ShaderType == shaderType
-                select preset.ShaderPath).FirstOrDefault() ?? string.Empty;
+                       where preset.ShaderName.Equals(shaderName, StringComparison.OrdinalIgnoreCase)
+                       where preset.ShaderType == shaderType
+                       select preset.ShaderPath).FirstOrDefault() ?? string.Empty;
         }
 
         private static IEnumerable<ShaderPreset> EnumerateShaders(string shaderPath)
@@ -31,9 +31,9 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Shaders
                 where extension == ".glslp" || extension == ".cgp" || extension == ".slangp"
                 let name = Path.GetFileNameWithoutExtension(file)
                 let type = extension == ".slangp" ? ShaderType.Slang :
-                extension == ".cgp" ? ShaderType.Cg :
-                extension == ".glslp" ? ShaderType.Glsl :
-                ShaderType.Unknown
+                    extension == ".cgp" ? ShaderType.Cg :
+                    extension == ".glslp" ? ShaderType.Glsl :
+                    ShaderType.Unknown
                 select new ShaderPreset(name, file, type);
         }
     }

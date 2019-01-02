@@ -1,13 +1,12 @@
 ﻿{
-	"LayoutID": "KEYBOARD_DEVICE",
-	"FriendlyName": "Standard Keyboard",
-	"Platforms": [
-
-	],
-	"Layout": {
-		"Keyboard": {
-			"Label": "Keyboard",
-			"Type": "Keyboard"
-		}
-	}
+  "LayoutID": "KEYBOARD_DEVICE",
+  "FriendlyName": "Standard Keyboard",
+  "Platforms": [
+  ],
+  "Layout": {
+    "Keyboard": {
+      "Label": "Keyboard",
+      "Type": "Keyboard"
+    }
+  }
 }

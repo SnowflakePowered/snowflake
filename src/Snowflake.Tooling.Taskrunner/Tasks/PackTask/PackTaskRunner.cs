@@ -27,7 +27,8 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.PackTask
             var moduleDirectory = new DirectoryInfo(Path.GetFullPath(arguments.ModuleDirectory));
             if (!DirectoryProvider.IsModuleDirectory(moduleDirectory))
             {
-                throw new InvalidDataException("Error! No valid module.json  or contents found. Check for JSON errors or missing file.");
+                throw new InvalidDataException(
+                    "Error! No valid module.json  or contents found. Check for JSON errors or missing file.");
             }
 
             var moduleFile = DirectoryProvider.GetModule(moduleDirectory);
@@ -39,13 +40,15 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.PackTask
             }
             catch
             {
-                throw new InvalidDataException("Error! No valid module.json found. Check for JSON errors or missing file.");
+                throw new InvalidDataException(
+                    "Error! No valid module.json found. Check for JSON errors or missing file.");
             }
 
             var packer = new ModulePacker(moduleDirectory, module);
 
-            DirectoryInfo directory = arguments.OutputFile != null ?
-                new DirectoryInfo(Path.GetFullPath(arguments.OutputFile)) : DirectoryProvider.WorkingDirectory;
+            DirectoryInfo directory = arguments.OutputFile != null
+                ? new DirectoryInfo(Path.GetFullPath(arguments.OutputFile))
+                : DirectoryProvider.WorkingDirectory;
             Console.WriteLine($"Packed {await packer.PackArchive(directory)}");
             return 0;
         }

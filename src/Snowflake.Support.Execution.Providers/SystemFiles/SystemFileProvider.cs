@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using Snowflake.Execution.SystemFIles;
+using Snowflake.Execution.SystemFiles;
+using Snowflake.Model.Game;
 using Snowflake.Platform;
 using Snowflake.Services;
 

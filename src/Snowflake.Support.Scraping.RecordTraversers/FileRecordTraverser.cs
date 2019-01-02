@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Snowflake.Records.File;
+using Snowflake.Model.Records;
+using Snowflake.Model.Records.File;
 using Snowflake.Scraping;
 using Snowflake.Scraping.Extensibility;
 using Snowflake.Support.Scraping.RecordTraversers.Extensions;
@@ -23,13 +24,13 @@ namespace Snowflake.Support.Scraping.RecordTraversers
 
                 var metadataSeeds = context.GetDescendants(fileSeed)
                     .DistinctBy(p => p.Content.Type).Select(p => p.Content);
-                var fileRecord = new FileRecord(fileSeed.Content.Value, mimetypeSeed.Content.Value);
+           //     var fileRecord = new FileRecord(fileSeed.Content.Value, mimetypeSeed.Content.Value);
                 foreach (var content in metadataSeeds)
                 {
-                    fileRecord.Metadata[$"file_{content.Type}"] = content.Value;
+                   // fileRecord.Metadata[$"file_{content.Type}"] = content.Value;
                 }
 
-                yield return fileRecord;
+                yield return null;
             }
         }
     }

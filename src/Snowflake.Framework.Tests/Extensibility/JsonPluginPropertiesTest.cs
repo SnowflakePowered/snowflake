@@ -14,7 +14,8 @@ namespace Snowflake.Extensibility.Tests
         [Fact]
         public void JsonPluginProperties_Tests()
         {
-            var propRoot = JsonConvert.DeserializeObject<JObject>(TestUtilities.GetStringResource("Loader.plugin.json"));
+            var propRoot =
+                JsonConvert.DeserializeObject<JObject>(TestUtilities.GetStringResource("Loader.plugin.json"));
             IPluginProperties properties = new JsonPluginProperties(propRoot);
             Assert.Equal("TestString", properties.Get("someString"));
             Assert.Contains("One", properties.GetEnumerable("someArray"));
@@ -26,7 +27,8 @@ namespace Snowflake.Extensibility.Tests
         [Fact]
         public void JsonPluginProperties_InvalidTests()
         {
-            var propRoot = JsonConvert.DeserializeObject<JObject>(TestUtilities.GetStringResource("Loader.plugin.json"));
+            var propRoot =
+                JsonConvert.DeserializeObject<JObject>(TestUtilities.GetStringResource("Loader.plugin.json"));
             IPluginProperties properties = new JsonPluginProperties(propRoot);
             Assert.Null(properties.Get("notInObject"));
             Assert.Empty(properties.GetEnumerable("notInObject"));

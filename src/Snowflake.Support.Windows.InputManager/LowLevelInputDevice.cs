@@ -39,13 +39,25 @@ namespace Snowflake.Plugin.InputManager.Win32
         public int? DI_EnumerationNumber { get; set; }
 
         /// <inheritdoc/>
-        public string UDEV_Vendor { get { return null; } set { } }
+        public string UDEV_Vendor
+        {
+            get { return null; }
+            set { }
+        }
 
         /// <inheritdoc/>
-        public string UDEV_Model { get { return null; } set { } }
+        public string UDEV_Model
+        {
+            get { return null; }
+            set { }
+        }
 
         /// <inheritdoc/>
-        public string UDEV_MountPath { get { return null; } set { } }
+        public string UDEV_MountPath
+        {
+            get { return null; }
+            set { }
+        }
 
         /// <inheritdoc/>
         public bool? XI_IsConnected { get; set; }

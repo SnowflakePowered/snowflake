@@ -28,7 +28,7 @@ namespace Snowflake.Scraping
         /// <see cref="ValueTuple{String, String}"/>
         /// </summary>
         /// <param name="seedContent">The <see cref="SeedContent"/> to coerce.</param>
-        public static implicit operator (string type, string value) (SeedContent seedContent)
+        public static implicit operator (string type, string value)(SeedContent seedContent)
         {
             return (seedContent.Type, seedContent.Value);
         }
@@ -108,7 +108,7 @@ namespace Snowflake.Scraping
                 return false;
             }
 
-            return (SeedContent)other == this;
+            return (SeedContent) other == this;
         }
 
         /// <summary>
@@ -120,6 +120,5 @@ namespace Snowflake.Scraping
             // todo: use System.HashCode when available.
             return (this.Type, this.Value).GetHashCode();
         }
-
     }
 }

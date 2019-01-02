@@ -28,7 +28,8 @@ namespace Snowflake.Loader
         /// <inheritdoc/>
         public Version Version { get; }
 
-        public Module(string name, string entry, string loader, string author, DirectoryInfo moduleDirectory, Version version)
+        public Module(string name, string entry, string loader, string author, DirectoryInfo moduleDirectory,
+            Version version)
         {
             this.Name = name;
             this.Entry = entry;
@@ -48,6 +49,7 @@ namespace Snowflake.Loader
         private string FrameworkVersion { get; }
         private string Version { get; }
         private string Author { get; }
+
         public ModuleDefinition(string name,
             string entry,
             string loader,
