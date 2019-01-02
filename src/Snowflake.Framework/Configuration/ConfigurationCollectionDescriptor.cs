@@ -12,6 +12,10 @@ using Snowflake.Configuration.Extensions;
 
 namespace Snowflake.Configuration
 {
+    /// <summary>
+    /// Default implementation for <see cref="IConfigurationCollectionDescriptor"/>
+    /// </summary>
+    /// <typeparam name="T">The type of the configuration collection</typeparam>
     public class ConfigurationCollectionDescriptor<T> : IConfigurationCollectionDescriptor
         where T : class, IConfigurationCollection
     {
@@ -20,12 +24,15 @@ namespace Snowflake.Configuration
 
         /// <inheritdoc/>
         public IEnumerable<string> SectionKeys { get; }
+
         private IDictionary<string, string> DestinationMappings { get; }
 
         internal ConfigurationCollectionDescriptor()
         {
             this.Outputs = ImmutableDictionary.CreateRange(typeof(T).GetPublicAttributes<ConfigurationFileAttribute>()
-                .ToDictionary(f => f.Key, f => new ConfigurationFile(f.FileName, f.Key, new BooleanMapping(f.TrueMapping, f.FalseMapping)) as IConfigurationFile));
+                .ToDictionary(f => f.Key,
+                    f => new ConfigurationFile(f.FileName, f.Key, new BooleanMapping(f.TrueMapping, f.FalseMapping)) as
+                        IConfigurationFile));
             var sections =
                 (from props in typeof(T).GetPublicProperties()
                     where props.IsDefined(typeof(SerializableSectionAttribute))

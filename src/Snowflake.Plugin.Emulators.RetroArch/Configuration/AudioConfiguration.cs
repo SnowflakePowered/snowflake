@@ -27,7 +27,8 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Configuration
         [ConfigurationOption("audio_filter_dir", "default", DisplayName = "Audio Filter Dir", IsPath = true)]
         string AudioFilterDir { get; set; }
 
-        [ConfigurationOption("audio_latency", 64, DisplayName = "Audio Latency (ms)", Min = 8, Max = 504, Increment = 24)]
+        [ConfigurationOption("audio_latency", 64, DisplayName = "Audio Latency (ms)", Min = 8, Max = 504,
+            Increment = 24)]
         int AudioLatency { get; set; }
 
         [ConfigurationOption("audio_max_timing_skew", 0.050000, DisplayName = "Audio Max Timing Skew", Max = 0.5,

@@ -9,11 +9,14 @@ namespace Snowflake.JsonConverters
     /// generating the CanConvert, ReadJson, and WriteJson methods, requiring the implementer only to define a strongly typed Create method.</summary>
     internal abstract class JsonCreationConverter<T> : JsonConverter
     {
-        [ThreadStatic]
-        static bool writerDisabled;
+        [ThreadStatic] static bool writerDisabled;
 
         // Disables the converter in a thread-safe manner.
-        private bool WriterDisabled { get { return writerDisabled; } set { writerDisabled = value; } }
+        private bool WriterDisabled
+        {
+            get { return writerDisabled; }
+            set { writerDisabled = value; }
+        }
 
         /// <inheritdoc/>
         public override bool CanWrite => !this.WriterDisabled;
@@ -28,7 +31,7 @@ namespace Snowflake.JsonConverters
         /// </summary>
         /// <param name="value">The value to transform</param>
         /// <returns>The transformed object graph to be serialized</returns>
-        protected virtual object Transform(T value)
+        protected virtual object? Transform(T value)
         {
             return value;
         }
@@ -50,7 +53,8 @@ namespace Snowflake.JsonConverters
         /// <param name="existingValue">Ignored</param>
         /// <param name="serializer">Newtonsoft.Json.JsonSerializer to use.</param>
         /// <returns>Deserialized Object</returns>
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
+            JsonSerializer serializer)
         {
             if (reader.TokenType == JsonToken.Null)
             {

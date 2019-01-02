@@ -26,7 +26,7 @@ namespace Snowflake.Input.Device
         {
             this.ControllerLayout =
                 JsonConvert.DeserializeObject<ControllerLayout>(File.ReadAllText(p.ResourceDirectory.GetFiles()
-                            .First(f => f.Name == "layout.json").FullName));
+                    .First(f => f.Name == "layout.json").FullName));
         }
     }
 }

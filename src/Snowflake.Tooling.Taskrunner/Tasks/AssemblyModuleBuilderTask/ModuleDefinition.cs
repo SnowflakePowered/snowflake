@@ -13,12 +13,12 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.AssemlyModuleBuilderTask
         public string FrameworkVersion { get; }
         public string Version { get; }
         public string Author { get; }
-        
+
         public ModuleDefinition(string name,
-            string entry, 
-            string loader, 
-            string frameworkVersion, 
-            string author, 
+            string entry,
+            string loader,
+            string frameworkVersion,
+            string author,
             string version)
         {
             this.Name = name;

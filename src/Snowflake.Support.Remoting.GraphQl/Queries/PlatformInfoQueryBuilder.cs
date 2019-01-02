@@ -13,6 +13,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
     public class PlatformInfoQueryBuilder : QueryBuilder
     {
         private IStoneProvider StoneProvider { get; }
+
         public PlatformInfoQueryBuilder(IStoneProvider stoneProvider)
         {
             this.StoneProvider = stoneProvider;

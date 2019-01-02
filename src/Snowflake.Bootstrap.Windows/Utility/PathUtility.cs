@@ -17,7 +17,8 @@ namespace Snowflake.Bootstrap.Windows.Utility
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                return new DirectoryInfo(Path.Combine(Environment.ExpandEnvironmentVariables("%HOME%"), "Library", "Application Support"));
+                return new DirectoryInfo(Path.Combine(Environment.ExpandEnvironmentVariables("%HOME%"), "Library",
+                    "Application Support"));
             }
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))

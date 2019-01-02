@@ -9,13 +9,9 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Selections.AudioConfiguration
 {
     public enum AudioResampler
     {
-        [SelectionOption("null")]
-        Null,
-        [SelectionOption("sinc")]
-        Sinc,
-        [SelectionOption("nearest")]
-        Nearest,
-        [SelectionOption("CC")]
-        CC,
+        [SelectionOption("null")] Null,
+        [SelectionOption("sinc")] Sinc,
+        [SelectionOption("nearest")] Nearest,
+        [SelectionOption("CC")] CC,
     }
 }

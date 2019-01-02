@@ -7,12 +7,14 @@ using Snowflake.Extensibility.Provisioning.Standalone;
 using Snowflake.Loader;
 using Snowflake.Services;
 using Snowflake.Services.Logging;
-using Snowflake.Services.Persistence;
 using Snowflake.Support.PluginManager;
 using Snowflake.Tests;
 using Xunit;
 using Snowflake.Configuration;
 using Snowflake.Extensibility.Configuration;
+using Microsoft.EntityFrameworkCore;
+using Snowflake.Model.Database;
+using Snowflake.Model.Database.Models;
 
 namespace Snowflake.Extensibility.Tests
 {
@@ -64,7 +66,7 @@ namespace Snowflake.Extensibility.Tests
         [Fact]
         public void NonAttributedStandalonePluginImpl_Test()
         {
-           Assert.Throws<InvalidOperationException>(() => new NonAttributedStandalonePluginImpl());
+            Assert.Throws<InvalidOperationException>(() => new NonAttributedStandalonePluginImpl());
         }
 
         [Fact]
@@ -91,7 +93,9 @@ namespace Snowflake.Extensibility.Tests
             var appDataDirectory = new DirectoryInfo(Path.GetTempPath())
                 .CreateSubdirectory(Guid.NewGuid().ToString());
             var directoryProvider = new ContentDirectoryProvider(appDataDirectory.FullName);
-            var sqliteProvider = new SqlitePluginConfigurationStore(new SqliteDatabaseProvider(appDataDirectory).CreateDatabase("pluginConfig"));
+            var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
+            optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
+            var sqliteProvider = new PluginConfigurationStore(optionsBuilder);
             var logProvider = new LogProvider();
             var pluginManager = new PluginManager(logProvider, directoryProvider, sqliteProvider);
             pluginManager.Register<StandalonePlugin>(new StandalonePluginImpl());
@@ -104,12 +108,17 @@ namespace Snowflake.Extensibility.Tests
         {
             var appDataDirectory = new DirectoryInfo(Path.GetTempPath())
                 .CreateSubdirectory(Guid.NewGuid().ToString());
-            var module = new Module(string.Empty, string.Empty, string.Empty, string.Empty, appDataDirectory, Version.Parse("1.0.0"));
-            var resourceDir = module.ContentsDirectory.CreateSubdirectory("resource").CreateSubdirectory("TestPluginProvisioned");
+            var module = new Module(string.Empty, string.Empty, string.Empty, string.Empty, appDataDirectory,
+                Version.Parse("1.0.0"));
+            var resourceDir = module.ContentsDirectory.CreateSubdirectory("resource")
+                .CreateSubdirectory("TestPluginProvisioned");
             string pluginJson = TestUtilities.GetStringResource("Loader.plugin.json");
             File.WriteAllText(Path.Combine(resourceDir.FullName, "plugin.json"), pluginJson);
             var directoryProvider = new ContentDirectoryProvider(appDataDirectory.FullName);
-            var sqliteProvider = new SqlitePluginConfigurationStore(new SqliteDatabaseProvider(appDataDirectory).CreateDatabase("pluginConfig"));
+            var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
+            optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
+            var sqliteProvider = new PluginConfigurationStore(optionsBuilder);
+
             var logProvider = new LogProvider();
             var pluginManager = new PluginManager(logProvider, directoryProvider, sqliteProvider);
             var provision = pluginManager.GetProvision<ProvisionedPluginImpl>(module);

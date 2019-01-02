@@ -41,19 +41,19 @@ namespace Shiragame.Builder
                 "uuid TEXT");
             this.Execute(@"INSERT OR REPLACE INTO shiragame(shiragame, stoneversion, generated, version, uuid)" +
                          "VALUES (@shiragame, @stoneversion, @generated, @version, @uuid)", new
-                         {
-                             shiragame = "SHIRAGAME",
-                             stoneversion = new StoneProvider().StoneVersion.ToString(),
-                             generated = ShiragameDb.UnixTimeNow().ToString(),
-                             version = typeof(ShiragameDb).GetTypeInfo().Assembly.GetName().Version.ToString(),
-                             uuid = Guid.NewGuid().ToString(),
-                         });
+            {
+                shiragame = "SHIRAGAME",
+                stoneversion = new StoneProvider().StoneVersion.ToString(),
+                generated = ShiragameDb.UnixTimeNow().ToString(),
+                version = typeof(ShiragameDb).GetTypeInfo().Assembly.GetName().Version.ToString(),
+                uuid = Guid.NewGuid().ToString(),
+            });
         }
 
         internal static long UnixTimeNow()
         {
             var timeSpan = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0).ToUniversalTime();
-            return (long)timeSpan.TotalSeconds;
+            return (long) timeSpan.TotalSeconds;
         }
 
         internal void Commit(IEnumerable<RomInfo> datInfos)
@@ -73,7 +73,7 @@ namespace Shiragame.Builder
         {
             this.Execute(
                 @"INSERT OR IGNORE INTO mame(filename) VALUES (@filename)",
-                mameFilenames.Select(filename => new { filename })); // not sure if there's a better way.
+                mameFilenames.Select(filename => new {filename})); // not sure if there's a better way.
         }
     }
 }

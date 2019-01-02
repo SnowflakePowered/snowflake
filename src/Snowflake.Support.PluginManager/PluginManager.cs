@@ -39,11 +39,12 @@ namespace Snowflake.Support.PluginManager
             where T : IPlugin
         {
             var resourceDirectory = composableModule.ContentsDirectory
-                                    .CreateSubdirectory("resource"); // todo: check for missing directory!!
+                .CreateSubdirectory("resource"); // todo: check for missing directory!!
             var pluginAttr = typeof(T).GetTypeInfo().GetCustomAttribute<PluginAttribute>();
             if (pluginAttr == null)
             {
-                throw new InvalidOperationException($"Can not load provision for {typeof(T)} without a PluginAttribute");
+                throw new InvalidOperationException(
+                    $"Can not load provision for {typeof(T)} without a PluginAttribute");
             }
 
             if (pluginAttr.PluginName == "common")
@@ -61,10 +62,11 @@ namespace Snowflake.Support.PluginManager
             }
 
             IPluginProperties properties = new JsonPluginProperties(JObject
-               .FromObject(JsonConvert
-               .DeserializeObject(File.ReadAllText(pluginJsonFile.FullName)), new JsonSerializer { Culture = CultureInfo.InvariantCulture }));
+                .FromObject(JsonConvert
+                        .DeserializeObject(File.ReadAllText(pluginJsonFile.FullName)),
+                    new JsonSerializer {Culture = CultureInfo.InvariantCulture}));
             var pluginDataDirectory = this.contentDirectory.ApplicationData.CreateSubdirectory("plugincontents")
-                    .CreateSubdirectory(pluginAttr.PluginName);
+                .CreateSubdirectory(pluginAttr.PluginName);
             return new PluginProvision(this.logProvider.GetLogger($"Plugin:{pluginAttr.PluginName}"),
                 properties,
                 this.configurationStore,
@@ -90,7 +92,7 @@ namespace Snowflake.Support.PluginManager
         public T Get<T>(string pluginName)
             where T : IPlugin
         {
-            return (T)this.loadedPlugins[typeof(T)].FirstOrDefault(p => p.Name == pluginName);
+            return (T) this.loadedPlugins[typeof(T)].FirstOrDefault(p => p.Name == pluginName);
         }
 
         /// <inheritdoc/>
@@ -140,6 +142,7 @@ namespace Snowflake.Support.PluginManager
         }
 
         #region IDisposable Support
+
         private bool disposedValue = false; // To detect redundant calls
 
         protected virtual void Dispose(bool disposing)
@@ -171,9 +174,11 @@ namespace Snowflake.Support.PluginManager
             // TODO: uncomment the following line if the finalizer is overridden above.
             // GC.SuppressFinalize(this);
         }
+
         #endregion
 
         #region IEnumerable Support
+
         public IEnumerator<IPlugin> GetEnumerator()
         {
             return this.loadedPlugins.SelectMany(p => p.Value).GetEnumerator();
@@ -183,6 +188,7 @@ namespace Snowflake.Support.PluginManager
         {
             return this.GetEnumerator();
         }
+
         #endregion
     }
 }

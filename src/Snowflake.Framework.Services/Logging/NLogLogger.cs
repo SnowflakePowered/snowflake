@@ -12,12 +12,14 @@ namespace Snowflake.Services.Logging
         private readonly NLog.ILogger baseLogger;
 
         private static bool isSetup = false;
+
         private static void Setup()
         {
             if (NlogLogger.isSetup)
             {
                 return;
             }
+
             var configuration = new LoggingConfiguration();
             var consoleTarget = new ColoredConsoleTarget("Console");
             var asyncConsoleTarget = new AsyncTargetWrapper("Console", consoleTarget);

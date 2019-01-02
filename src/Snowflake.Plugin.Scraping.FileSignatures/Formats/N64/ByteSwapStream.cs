@@ -57,14 +57,8 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Formats.N64
         /// <inheritdoc/>
         public sealed override long Position
         {
-            get
-            {
-                return this.baseStream.Position;
-            }
-            set
-            {
-                this.baseStream.Position = value;
-            }
+            get { return this.baseStream.Position; }
+            set { this.baseStream.Position = value; }
         }
 
         /// <inheritdoc/>
@@ -92,7 +86,7 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Formats.N64
             /* Read into the new buffer swapped */
             for (int i = offset; i < count; i++)
             {
-                buffer[i] = innerBuffer[(int)this.ComputeNextSwapPosition(i - offset)];
+                buffer[i] = innerBuffer[(int) this.ComputeNextSwapPosition(i - offset)];
             }
 
             return count;
@@ -118,7 +112,7 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Formats.N64
             /* Write the data to inner buffer as unswapped */
             for (int i = offset; i < count; i++)
             {
-                innerBuffer[(int)this.ComputeNextSwapPosition(i - offset)] = buffer[i];
+                innerBuffer[(int) this.ComputeNextSwapPosition(i - offset)] = buffer[i];
             }
 
             try

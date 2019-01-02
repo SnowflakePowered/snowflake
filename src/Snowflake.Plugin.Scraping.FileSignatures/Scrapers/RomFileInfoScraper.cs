@@ -19,13 +19,16 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Scrapers
     public class RomFileInfoScraper : Scraper
     {
         private FileSignatureCollection FileSignatures { get; }
+
         public RomFileInfoScraper(FileSignatureCollection fileSignatures)
-          : base(typeof(RomFileInfoScraper), AttachTarget.Target, "file")
+            : base(typeof(RomFileInfoScraper), AttachTarget.Target, "file")
         {
             this.FileSignatures = fileSignatures;
         }
 
-        public override async Task<IEnumerable<SeedTreeAwaitable>> ScrapeAsync(ISeed parent, ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds, ILookup<string, SeedContent> siblingSeeds)
+        public override async Task<IEnumerable<SeedTreeAwaitable>> ScrapeAsync(ISeed parent,
+            ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds,
+            ILookup<string, SeedContent> siblingSeeds)
         {
             string mimeType = childSeeds["mimetype"].First().Value;
             if (!File.Exists(parent.Content.Value) || !this.FileSignatures.Contains(mimeType))

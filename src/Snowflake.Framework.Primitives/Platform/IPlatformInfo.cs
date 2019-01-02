@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Snowflake.Model.Game;
 
 namespace Snowflake.Platform
 {
@@ -11,7 +12,7 @@ namespace Snowflake.Platform
         /// <summary>
         /// Gets the id of the platform that this object is related to
         /// </summary>
-        string PlatformID { get; }
+        PlatformId PlatformId { get; }
 
         /// <summary>
         /// Gets the friendly name of this platform

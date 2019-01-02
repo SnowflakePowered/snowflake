@@ -45,18 +45,20 @@ namespace Snowflake.Services.AssemblyLoader
             try
             {
                 types = assembly.ExportedTypes
-                        .Where(t => t.GetInterfaces().Contains(typeof(IComposable)))
-                        .Where(t => t.GetConstructor(Type.EmptyTypes) != null);
+                    .Where(t => t.GetInterfaces().Contains(typeof(IComposable)))
+                    .Where(t => t.GetConstructor(Type.EmptyTypes) != null);
             }
             catch (TypeLoadException ex)
             {
-                throw new TypeLoadException($"Unable to load {module.Entry}, are you sure it is compatible with this version of Snowflake?", ex);
+                throw new TypeLoadException(
+                    $"Unable to load {module.Entry}, are you sure it is compatible with this version of Snowflake?",
+                    ex);
             }
 
             foreach (var type in types)
             {
                 var container = Instantiate.CreateInstance(type);
-                var castedContainer = (IComposable)container;
+                var castedContainer = (IComposable) container;
                 Console.WriteLine($"Found Container {container.GetType().Name}");
                 yield return castedContainer;
             }

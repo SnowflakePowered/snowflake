@@ -5,7 +5,7 @@ using Snowflake.Loader;
 using Snowflake.Services;
 
 namespace Snowflake.Framework.Sdk
-{ 
+{
     public class Composable : IComposable
     {
         [ImportService(typeof(IServiceRegistrationProvider))]

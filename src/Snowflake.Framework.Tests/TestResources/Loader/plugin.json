@@ -1,14 +1,14 @@
 ﻿{
-    "name": "NameNotFromAttribute",
-    "type": "plugin_test",
+  "name": "NameNotFromAttribute",
+  "type": "plugin_test",
   "version": "1.0.0.0",
-  "author":  "Snowflake",
-    "authors": [
-        "Snowflake"
-    ],
+  "author": "Snowflake",
+  "authors": [
+    "Snowflake"
+  ],
   "description": "Test",
   "someString": "TestString",
-  "someArray": [ "One", "Two" ],
+  "someArray": ["One", "Two"],
   "someDictionary": {
     "one": "1",
     "two": "2"

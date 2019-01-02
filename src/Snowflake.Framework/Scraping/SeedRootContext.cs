@@ -12,6 +12,7 @@ namespace Snowflake.Scraping
         public Guid SeedCollectionGuid { get; }
         private IImmutableList<ISeed> Seeds { get; set; }
         private ImmutableHashSet<Guid> Culled { get; set; }
+
         public SeedRootContext()
         {
             this.SeedCollectionGuid = Guid.NewGuid();

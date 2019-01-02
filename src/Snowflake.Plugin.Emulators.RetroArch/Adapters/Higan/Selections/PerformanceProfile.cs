@@ -11,8 +11,10 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Adapters.Higan.Selections
     {
         [SelectionOption("#flag", DisplayName = "Performance")]
         Performance,
+
         [SelectionOption("#flag", DisplayName = "Performance")]
         Balanced,
+
         [SelectionOption("$flag", DisplayName = "Performance")]
         Accuracy,
     }

@@ -9,6 +9,7 @@ namespace Snowflake.Tooling.Taskrunner.Framework.Attributes
     {
         public string Name { get; }
         public string Description { get; }
+
         public TaskAttribute(string name, string description)
         {
             this.Name = name;

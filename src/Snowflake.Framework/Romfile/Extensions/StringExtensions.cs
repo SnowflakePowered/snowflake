@@ -18,10 +18,12 @@ namespace Snowflake.Romfile.Extensions
             return string.Join(string.Empty, titleWithoutArticle.Prepend(article + " "));
         }
 
-        private static readonly string[] Articles = new string[] { "the", "from", "a", "of", "to", "an", "in", "at", "for", "by", "or", "but", "on", };
+        private static readonly string[] Articles = new string[]
+            {"the", "from", "a", "of", "to", "an", "in", "at", "for", "by", "or", "but", "on",};
+
         public static string ToTitleCase(this string str)
         {
-            var tokens = str.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+            var tokens = str.Split(new[] {" "}, StringSplitOptions.RemoveEmptyEntries);
             for (var i = 0; i < tokens.Length; i++)
             {
                 var token = tokens[i];

@@ -5,13 +5,7 @@ using System.Collections.Immutable;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using Castle.Core.Internal;
-using Castle.DynamicProxy;
 using EnumsNET.NonGeneric;
-using Snowflake.Configuration.Attributes;
 using Snowflake.Configuration.Interceptors;
 
 namespace Snowflake.Configuration
@@ -26,66 +20,49 @@ namespace Snowflake.Configuration
         public IConfigurationSectionDescriptor Descriptor { get; }
 
         /// <inheritdoc/>
-        public IDictionary<string, IConfigurationValue> Values
-            => ImmutableDictionary.CreateRange(this.configurationInterceptor.Values);
+        public IReadOnlyDictionary<string, IConfigurationValue> Values
+            => ImmutableDictionary.CreateRange(this.configurationInterceptor.Values[this.Descriptor]);
+
+        public IConfigurationValueCollection ValueCollection { get; }
 
         /// <inheritdoc/>
-        public object this[string key]
+        public object? this[string key]
         {
-            get { return configurationInterceptor.Values[key].Value; }
-            set { this.configurationInterceptor.Values[key].Value = value; }
+            get { return configurationInterceptor.Values[this.Descriptor, key]?.Value; }
+            set
+            {
+                this.configurationInterceptor.Values[this.Descriptor, key]!.Value = value!;
+            }
         }
 
         private readonly ConfigurationInterceptor configurationInterceptor;
 
-        public ConfigurationSection()
-            : this(new Dictionary<string, IConfigurationValue>())
+        internal ConfigurationSection()
+            : this(new ConfigurationValueCollection(), typeof(T).Name)
         {
         }
 
-        internal ConfigurationSection(IDictionary<string, (string stringValue, Guid guid)> values)
+        internal ConfigurationSection(IConfigurationValueCollection values, string sectionKey)
         {
-            this.Descriptor = ConfigurationDescriptorCache.GetSectionDescriptor<T>();
-            this.configurationInterceptor = new ConfigurationInterceptor(this.Descriptor,
-                values.ToDictionary(p => p.Key, this.FromValueTuple));
+            this.Descriptor = new ConfigurationSectionDescriptor<T>(sectionKey);
+            this.configurationInterceptor = new ConfigurationInterceptor(this.Descriptor, values);
+            // if this is a CVC base implementation, we should ensure defaults.
+            (values as ConfigurationValueCollection)?.EnsureSectionDefaults(this.Descriptor);
+            this.ValueCollection = values;
 
             this.Configuration =
                 ConfigurationDescriptorCache
-                .GetProxyGenerator().CreateInterfaceProxyWithoutTarget<T>(new ConfigurationCircularInterceptor<T>(this),
-                    this.configurationInterceptor);
-        }
-
-        public ConfigurationSection(IDictionary<string, IConfigurationValue> values)
-        {
-            this.Descriptor = new ConfigurationSectionDescriptor<T>();
-            this.configurationInterceptor = new ConfigurationInterceptor(this.Descriptor, values);
-
-            this.Configuration =
-                  ConfigurationDescriptorCache
-                .GetProxyGenerator().CreateInterfaceProxyWithoutTarget<T>(new ConfigurationCircularInterceptor<T>(this),
-                    configurationInterceptor);
-        }
-
-        private static object FromString(string strValue, Type optionType)
-        {
-            return optionType == typeof(string)
-                ? strValue // return string value if string
-                : optionType.GetTypeInfo().IsEnum
-                    ? NonGenericEnums.Parse(optionType, strValue) // return parsed enum if enum
-                    : TypeDescriptor.GetConverter(optionType).ConvertFromInvariantString(strValue);
-        }
-
-        private IConfigurationValue FromValueTuple(KeyValuePair<string, (string stringValue, Guid guid)> tuple)
-        {
-            Type t = this.Descriptor[tuple.Key].Type;
-            return new ConfigurationValue(FromString(tuple.Value.stringValue, t), tuple.Value.guid);
+                    .GetProxyGenerator()
+                    .CreateInterfaceProxyWithoutTarget<T>(new ConfigurationCircularInterceptor<T>(this),
+                        configurationInterceptor);
         }
 
         /// <inheritdoc/>
         public IEnumerator<KeyValuePair<IConfigurationOptionDescriptor, IConfigurationValue>> GetEnumerator()
         {
             return this.Descriptor.Options
-                .Select(o => new KeyValuePair<IConfigurationOptionDescriptor, IConfigurationValue>(o, this.Values[o.OptionKey]))
+                .Select(o =>
+                    new KeyValuePair<IConfigurationOptionDescriptor, IConfigurationValue>(o, this.Values[o.OptionKey]))
                 .GetEnumerator();
         }
 

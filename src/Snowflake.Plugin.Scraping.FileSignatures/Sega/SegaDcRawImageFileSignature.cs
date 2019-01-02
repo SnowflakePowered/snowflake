@@ -12,7 +12,8 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Sega
     public sealed class SegaDcRawImageFileSignature : IFileSignature
     {
         /// <inheritdoc/>
-        public byte[] HeaderSignature => new byte[15] { 0x53, 0x45, 0x47, 0x41, 0x20, 0x53, 0x45, 0x47, 0x41, 0x4B, 0x41, 0x54, 0x41, 0x4E, 0x41 };
+        public byte[] HeaderSignature => new byte[15]
+            {0x53, 0x45, 0x47, 0x41, 0x20, 0x53, 0x45, 0x47, 0x41, 0x4B, 0x41, 0x54, 0x41, 0x4E, 0x41};
 
         // adapted from http://stackoverflow.com/posts/332667
         private List<int> IndexOfSequence(byte[] buffer, byte[] pattern, int startIndex)
@@ -40,7 +41,9 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Sega
 
             for (int i = 1; i < stream.Length / 1024; i++)
             {
-                long streamPos = stream.Length - (i * buffer.Length); // read 1MiB chunks from the end, as the IP.BIN file is near the end of the ISO file.
+                long streamPos =
+                    stream.Length -
+                    (i * buffer.Length); // read 1MiB chunks from the end, as the IP.BIN file is near the end of the ISO file.
                 if (streamPos < 0)
                 {
                     break;

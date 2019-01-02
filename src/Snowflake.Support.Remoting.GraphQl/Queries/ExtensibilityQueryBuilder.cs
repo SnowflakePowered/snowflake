@@ -21,7 +21,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
         private IServiceEnumerator ServiceEnumerator { get; }
         private IPluginManager PluginManager { get; }
 
-        public ExtensibilityQueryBuilder(IModuleEnumerator moduleEnumerator, IServiceEnumerator serviceEnumerator, 
+        public ExtensibilityQueryBuilder(IModuleEnumerator moduleEnumerator, IServiceEnumerator serviceEnumerator,
             IPluginManager pluginManager)
         {
             this.ServiceEnumerator = serviceEnumerator;
@@ -29,7 +29,8 @@ namespace Snowflake.Support.Remoting.GraphQl.Queries
             this.PluginManager = pluginManager;
         }
 
-        [Connection("installedModules", "Get a list of modules installed in the module directory.", typeof(ModuleGraphType))]
+        [Connection("installedModules", "Get a list of modules installed in the module directory.",
+            typeof(ModuleGraphType))]
         public IEnumerable<IModule> GetInstalledModules()
         {
             return this.ModuleEnumerator.Modules;

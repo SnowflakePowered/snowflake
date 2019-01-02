@@ -13,6 +13,7 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Formats.CDXA
         public int LBAStart { get; }
         public string Path { get; }
         public long Length { get; }
+
         public CDXAFile(Stream diskStream, int lba, string path, long length)
         {
             this.diskStream = diskStream;

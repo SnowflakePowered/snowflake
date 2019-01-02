@@ -44,5 +44,10 @@ namespace Snowflake.Configuration
         /// <param name="sectionName">The property name of the section</param>
         /// <returns>The untyped configuration section with the given property name.</returns>
         IConfigurationSection this[string sectionName] { get; }
+
+        /// <summary>
+        /// Gets the values backing this configuration collection.
+        /// </summary>
+        IConfigurationValueCollection ValueCollection { get; }
     }
 }

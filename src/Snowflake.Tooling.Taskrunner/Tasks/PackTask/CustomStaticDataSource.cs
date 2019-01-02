@@ -9,6 +9,7 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.PackTask
     public class CustomStaticDataSource : IStaticDataSource
     {
         private Stream _stream;
+
         // Implement method from IStaticDataSource
         public Stream GetSource()
         {

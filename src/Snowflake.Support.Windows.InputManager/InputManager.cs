@@ -19,18 +19,19 @@ namespace Snowflake.Plugin.InputManager.Win32
 
             var directInputGamepads =
                 this.GetGenericGamepads(devices.Where(device => device.Type == SharpDX.DirectInput.DeviceType.Gamepad
-                || device.Type == SharpDX.DirectInput.DeviceType.Joystick), directInput);
+                                                                || device.Type == SharpDX.DirectInput.DeviceType
+                                                                    .Joystick), directInput);
             var xinputGamepads = this.GetXInputGamepads();
             var keyboards = directInput.GetDevices(DeviceClass.Keyboard, DeviceEnumerationFlags.AllDevices)
                 .Select(keyboard => new LowLevelInputDevice()
-            {
-                DiscoveryApi = InputApi.DirectInput,
-                DI_InstanceGUID = keyboard.InstanceGuid,
-                DI_InstanceName = keyboard.InstanceName.Trim('\0'),
-                DI_ProductName = keyboard.ProductName.Trim('\0'),
-                DI_ProductGUID = keyboard.ProductGuid,
-                DI_DeviceType = DeviceType.Keyboard,
-            });
+                {
+                    DiscoveryApi = InputApi.DirectInput,
+                    DI_InstanceGUID = keyboard.InstanceGuid,
+                    DI_InstanceName = keyboard.InstanceName.Trim('\0'),
+                    DI_ProductName = keyboard.ProductName.Trim('\0'),
+                    DI_ProductGUID = keyboard.ProductGuid,
+                    DI_DeviceType = DeviceType.Keyboard,
+                });
 
             var mice = directInput.GetDevices(DeviceClass.Pointer,
                 DeviceEnumerationFlags.AllDevices).Select(mouse => new LowLevelInputDevice()
@@ -46,7 +47,8 @@ namespace Snowflake.Plugin.InputManager.Win32
             return directInputGamepads.Concat(xinputGamepads).Concat(keyboards).Concat(mice);
         }
 
-        private IEnumerable<ILowLevelInputDevice> GetGenericGamepads(IEnumerable<DeviceInstance> gamepads, SharpDX.DirectInput.DirectInput directInput)
+        private IEnumerable<ILowLevelInputDevice> GetGenericGamepads(IEnumerable<DeviceInstance> gamepads,
+            SharpDX.DirectInput.DirectInput directInput)
         {
             var inputDevices = new List<ILowLevelInputDevice>();
             for (int i = 0; i < gamepads.Count(); i++)
@@ -91,7 +93,7 @@ namespace Snowflake.Plugin.InputManager.Win32
             var inputDevices = new List<ILowLevelInputDevice>();
             for (int i = 0; i < 4; i++)
             {
-                var xinput = new SharpDX.XInput.Controller((UserIndex)i);
+                var xinput = new SharpDX.XInput.Controller((UserIndex) i);
                 var device = new LowLevelInputDevice()
                 {
                     DiscoveryApi = InputApi.XInput,

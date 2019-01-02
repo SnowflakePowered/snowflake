@@ -5,13 +5,12 @@ using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
 using Snowflake.Execution.Saving;
-using Snowflake.Records.Game;
 
 namespace Snowflake.Support.Execution
 {
     public class SaveLocation : ISaveLocation
     {
-        internal SaveLocation(Guid gameRecordGuid, string saveFormat, 
+        internal SaveLocation(Guid gameRecordGuid, string saveFormat,
             DirectoryInfo locationRoot,
             Guid locationGuid, DateTimeOffset lastModified)
         {

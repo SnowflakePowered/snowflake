@@ -28,18 +28,18 @@ namespace Snowflake.Configuration.Input
         public T Template { get; }
 
         /// <inheritdoc/>
-        public IDictionary<string, ControllerElement> Values
+        public IReadOnlyDictionary<string, ControllerElement> Values
             => ImmutableDictionary.CreateRange(this.inputTemplateInterceptor.InputValues);
 
         /// <inheritdoc/>
-        IEnumerable<IInputOption> IInputTemplate.Options => ImmutableList.CreateRange(this._Options.Select(p => p.Value));
+        IEnumerable<IInputOption> IInputTemplate.Options =>
+            ImmutableList.CreateRange(this._Options.Select(p => p.Value));
 
         private IConfigurationSection<T> Configuration { get; }
 
         private IDictionary<string, IInputOption> _Options { get; }
 
         private readonly InputTemplateInterceptor<T> inputTemplateInterceptor;
-        private readonly IList<IConfigurationOptionDescriptor> configurationOptions;
 
         /// <inheritdoc/>
         public ControllerElement this[ControllerElement virtualElement]
@@ -47,11 +47,12 @@ namespace Snowflake.Configuration.Input
             get
             {
                 string optionKey = (from option in this._Options
-                                    where option.Value.TargetElement == virtualElement
-                                    select option.Key).FirstOrDefault();
+                    where option.Value.TargetElement == virtualElement
+                    select option.Key).FirstOrDefault();
                 if (optionKey == null)
                 {
-                    throw new KeyNotFoundException("This template does not support the target element or element type.");
+                    throw new KeyNotFoundException(
+                        "This template does not support the target element or element type.");
                 }
 
                 return this.inputTemplateInterceptor.InputValues[optionKey];
@@ -60,28 +61,30 @@ namespace Snowflake.Configuration.Input
             set
             {
                 string optionKey = (from option in this._Options
-                                    where option.Value.TargetElement == virtualElement
-                                    where option.Value.InputOptionType.HasFlag(InputOptionType.Keyboard) == value.IsKeyboardKey()
-                                    where option.Value.InputOptionType.HasFlag(InputOptionType.ControllerAxes) == value.IsAxis()
-                                    select option.Key).FirstOrDefault();
+                    where option.Value.TargetElement == virtualElement
+                    where option.Value.InputOptionType.HasFlag(InputOptionType.Keyboard) == value.IsKeyboardKey()
+                    where option.Value.InputOptionType.HasFlag(InputOptionType.ControllerAxes) == value.IsAxis()
+                    select option.Key).FirstOrDefault();
                 if (optionKey == null)
                 {
-                    throw new KeyNotFoundException("This template does not support the target element or element type.");
+                    throw new KeyNotFoundException(
+                        "This template does not support the target element or element type.");
                 }
 
                 this.inputTemplateInterceptor.InputValues[optionKey] = value;
             }
         }
 
-        public InputTemplate(IMappedControllerElementCollection mappedElements, int playerIndex = 0)
+        public InputTemplate(IControllerElementMappings mappedElements, int playerIndex = 0)
         {
             this.PlayerIndex = playerIndex;
             ProxyGenerator generator = new ProxyGenerator();
             this._Options = (from prop in typeof(T).GetProperties()
-                let inputOptionAttribute = prop.GetCustomAttribute<InputOptionAttribute>()
-                where inputOptionAttribute != null
-                let name = prop.Name
-                select new KeyValuePair<string, IInputOption>(name, new InputOption(inputOptionAttribute, name))).ToDictionary(o => o.Key,
+                    let inputOptionAttribute = prop.GetCustomAttribute<InputOptionAttribute>()
+                    where inputOptionAttribute != null
+                    let name = prop.Name
+                    select new KeyValuePair<string, IInputOption>(name, new InputOption(inputOptionAttribute, name)))
+                .ToDictionary(o => o.Key,
                     o => o.Value);
             var overrides = (from element in mappedElements
                 from key in this._Options.Keys
@@ -90,39 +93,40 @@ namespace Snowflake.Configuration.Input
                 where element.LayoutElement == target
                 where option.InputOptionType.HasFlag(InputOptionType.Keyboard) == element.DeviceElement.IsKeyboardKey()
                 where option.InputOptionType.HasFlag(InputOptionType.ControllerAxes) == element.DeviceElement.IsAxis()
-                select new { key, element.DeviceElement }).ToDictionary(d => d.key, d => d.DeviceElement);
+                select new {key, element.DeviceElement}).ToDictionary(d => d.key, d => d.DeviceElement);
             var map = from key in this._Options.Keys
                 let value = overrides.ContainsKey(key) ? overrides[key] : ControllerElement.NoElement
                 select new KeyValuePair<string, ControllerElement>(key, value);
-            this.configurationOptions = (from prop in typeof(T).GetProperties()
-                          let configAttribute = prop.GetCustomAttribute<ConfigurationOptionAttribute>()
-                          where configAttribute != null
-                          let name = prop.Name
-                          let metadata = prop.GetCustomAttributes<CustomMetadataAttribute>()
-                          select new ConfigurationOptionDescriptor(configAttribute, metadata, name) as IConfigurationOptionDescriptor).ToList();
+            //this.configurationOptions = (from prop in typeof(T).GetProperties()
+            //              let configAttribute = prop.GetCustomAttribute<ConfigurationOptionAttribute>()
+            //              where configAttribute != null
+            //              let name = prop.Name
+            //              let metadata = prop.GetCustomAttributes<CustomMetadataAttribute>()
+            //              select new ConfigurationOptionDescriptor(configAttribute, metadata, name) as IConfigurationOptionDescriptor).ToList();
 
-            var configOptionValues = new Dictionary<string, IConfigurationValue>();
-            foreach (var custom in this.configurationOptions)
-            {
-                configOptionValues[custom.OptionKey] = new ConfigurationValue(custom.Default);
-            }
+            this.ValueCollection = new ConfigurationValueCollection();
+
+            var configDescriptor = new ConfigurationSectionDescriptor<T>(typeof(T).Name);
+            ((ConfigurationValueCollection) this.ValueCollection).EnsureSectionDefaults(configDescriptor);
 
             var attr = typeof(T).GetTypeInfo().GetCustomAttribute<InputTemplateAttribute>();
 
-            this.inputTemplateInterceptor = new InputTemplateInterceptor<T>(map.ToDictionary(m => m.Key, m => m.Value), configOptionValues);
+            this.inputTemplateInterceptor = new InputTemplateInterceptor<T>(map.ToDictionary(m => m.Key, m => m.Value),
+                this.ValueCollection,
+                configDescriptor);
             var circular = new InputTemplateCircularInterceptor<T>(this);
             this.Configuration = new InputConfigurationSection<T>(circular, this.inputTemplateInterceptor);
             this.Template = generator.CreateInterfaceProxyWithoutTarget<T>(circular, this.inputTemplateInterceptor);
         }
 
         /// <inheritdoc/>
-        IDictionary<string, IConfigurationValue> IConfigurationSection.Values => this.Configuration.Values;
+        IReadOnlyDictionary<string, IConfigurationValue> IConfigurationSection.Values => this.Configuration.Values;
 
         /// <inheritdoc/>
         IConfigurationSectionDescriptor IConfigurationSection.Descriptor => this.Configuration.Descriptor;
 
         /// <inheritdoc/>
-        object IConfigurationSection.this[string key]
+        object? IConfigurationSection.this[string key]
         {
             get { return this.Configuration[key]; }
             set { this.Configuration[key] = value; }
@@ -130,6 +134,8 @@ namespace Snowflake.Configuration.Input
 
         /// <inheritdoc/>
         T IConfigurationSection<T>.Configuration => this.Configuration.Configuration;
+
+        public IConfigurationValueCollection ValueCollection { get; }
 
         /// <inheritdoc/>
         public IEnumerator<KeyValuePair<IConfigurationOptionDescriptor, IConfigurationValue>> GetEnumerator()

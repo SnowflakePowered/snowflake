@@ -11,6 +11,7 @@ namespace Snowflake.Support.ShiragameProvider
     internal class ShiragameProvider : IShiragameProvider
     {
         private readonly ISqlDatabase backingDatabase;
+
         public ShiragameProvider(ISqlDatabase backingDatabase)
         {
             this.backingDatabase = backingDatabase;
@@ -48,20 +49,21 @@ namespace Snowflake.Support.ShiragameProvider
         public ISerialInfo GetFromSerial(string platformId, string serial)
         {
             const string sql = @"SELECT * FROM serial WHERE serial LIKE @serial AND platformId = @platformId";
-            return this.backingDatabase.QueryFirstOrDefault<SerialInfo>(sql, new { serial = $"%{serial.Replace("-", string.Empty).Replace("_", string.Empty)}%", platformId });
+            return this.backingDatabase.QueryFirstOrDefault<SerialInfo>(sql,
+                new {serial = $"%{serial.Replace("-", string.Empty).Replace("_", string.Empty)}%", platformId});
         }
 
         /// <inheritdoc/>
         public bool IsMameRom(string filename)
         {
             const string sql = @"SELECT filename FROM mame WHERE filename = @filename";
-            return this.backingDatabase.Query<string>(sql, new { filename }).Any();
+            return this.backingDatabase.Query<string>(sql, new {filename}).Any();
         }
 
         private IRomInfo GetRomInfo(string column, string value)
         {
             string sql = $@"SELECT * FROM rom WHERE {column} = @value";
-            return this.backingDatabase.QueryFirstOrDefault<RomInfo>(sql, new { value });
+            return this.backingDatabase.QueryFirstOrDefault<RomInfo>(sql, new {value});
         }
     }
 }

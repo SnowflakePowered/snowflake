@@ -19,7 +19,8 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.InstallTask
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                return new DirectoryInfo(Path.Combine(Environment.ExpandEnvironmentVariables("%HOME%"), "Library", "Application Support"))
+                return new DirectoryInfo(Path.Combine(Environment.ExpandEnvironmentVariables("%HOME%"), "Library",
+                        "Application Support"))
                     .CreateSubdirectory("snowflake")
                     .CreateSubdirectory("modules");
             }

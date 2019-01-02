@@ -10,7 +10,6 @@ namespace Snowflake.Configuration.Tests
     [ConfigurationFile("#dolphin", "Dolphin.ini")]
     public interface ExampleConfigurationCollection : IConfigurationCollection<ExampleConfigurationCollection>
     {
-        [SerializableSection("#dolphin")]
-        ExampleConfigurationSection ExampleConfiguration { get; }
+        [SerializableSection("#dolphin")] ExampleConfigurationSection ExampleConfiguration { get; }
     }
 }

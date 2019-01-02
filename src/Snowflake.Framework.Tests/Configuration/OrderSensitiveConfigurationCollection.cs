@@ -11,12 +11,11 @@ namespace Snowflake.Configuration.Tests
 {
     [ConfigurationFile("#dolphin", "Dolphin.ini")]
     [ConfigurationFile("#retroarch", "retroarch.cfg")]
-    public interface OrderSensitiveConfigurationCollection : IConfigurationCollection<OrderSensitiveConfigurationCollection>
+    public interface
+        OrderSensitiveConfigurationCollection : IConfigurationCollection<OrderSensitiveConfigurationCollection>
     {
-        [SerializableSection("#dolphin")]
-        ExampleConfigurationSection ExampleConfiguration { get; set; }
+        [SerializableSection("#dolphin")] ExampleConfigurationSection ExampleConfiguration { get; set; }
 
-        [SerializableSection("#retroarch")]
-        IVideoConfiguration VideoConfiguration { get; set; }
+        [SerializableSection("#retroarch")] IVideoConfiguration VideoConfiguration { get; set; }
     }
 }

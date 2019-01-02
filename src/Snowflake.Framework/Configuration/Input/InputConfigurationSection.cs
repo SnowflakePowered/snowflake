@@ -18,37 +18,43 @@ namespace Snowflake.Configuration.Input
     {
         /// <inheritdoc/>
         public T Configuration { get; }
+
         public IEnumerable<IConfigurationOptionDescriptor> Options { get; }
 
         /// <inheritdoc/>
         public IConfigurationSectionDescriptor Descriptor { get; }
 
         /// <inheritdoc/>
-        public IDictionary<string, IConfigurationValue> Values
-            => ImmutableDictionary.CreateRange(this.configurationInterceptor.Values);
+        public IReadOnlyDictionary<string, IConfigurationValue> Values
+            => ImmutableDictionary.CreateRange(this.configurationInterceptor.Values[this.Descriptor]);
+
+        public IConfigurationValueCollection ValueCollection { get; }
 
         /// <inheritdoc/>
         public object this[string key]
         {
-            get { return configurationInterceptor.Values[key]; }
-            set { this.configurationInterceptor.Values[key].Value = value; }
+            get { return configurationInterceptor.Values[this.Descriptor, key]; }
+            set { this.configurationInterceptor.Values[this.Descriptor, key].Value = value; }
         }
 
         private readonly ConfigurationInterceptor configurationInterceptor;
 
-        internal InputConfigurationSection(InputTemplateCircularInterceptor<T> interceptor, InputTemplateInterceptor<T> inputTemplate)
+        internal InputConfigurationSection(InputTemplateCircularInterceptor<T> interceptor,
+            InputTemplateInterceptor<T> inputTemplate)
         {
-            this.Descriptor = new ConfigurationSectionDescriptor<T>();
+            this.Descriptor = new ConfigurationSectionDescriptor<T>(typeof(T).Name);
             ProxyGenerator generator = new ProxyGenerator();
             var options = from prop in typeof(T).GetProperties()
-                          let attr = prop.GetCustomAttribute<ConfigurationOptionAttribute>()
-                          where attr != null
-                          let name = prop.Name
-                          let metadata = prop.GetCustomAttributes<CustomMetadataAttribute>()
-                          select new ConfigurationOptionDescriptor(attr, metadata, name) as IConfigurationOptionDescriptor;
+                let attr = prop.GetCustomAttribute<ConfigurationOptionAttribute>()
+                where attr != null
+                let name = prop.Name
+                let metadata = prop.GetCustomAttributes<CustomMetadataAttribute>()
+                select new ConfigurationOptionDescriptor(attr, metadata, name) as IConfigurationOptionDescriptor;
 
             this.Options = options.ToList();
-            this.configurationInterceptor = new ConfigurationInterceptor(this.Descriptor);
+            // todo: fix this.
+            this.ValueCollection = new ConfigurationValueCollection();
+            this.configurationInterceptor = new ConfigurationInterceptor(this.Descriptor, this.ValueCollection);
             this.Configuration =
                 generator.CreateInterfaceProxyWithoutTarget<T>(interceptor,
                     configurationInterceptor, inputTemplate);

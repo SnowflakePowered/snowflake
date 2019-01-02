@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using Snowflake.Model.Game;
 using Snowflake.Platform;
 
-namespace Snowflake.Execution.SystemFIles
+namespace Snowflake.Execution.SystemFiles
 {
     /// <summary>
     /// Provides System and BIOS files for emulator adapters.

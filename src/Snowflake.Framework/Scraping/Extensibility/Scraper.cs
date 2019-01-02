@@ -12,8 +12,8 @@ namespace Snowflake.Scraping.Extensibility
     public abstract class Scraper : ProvisionedPlugin, IScraper
     {
         public Scraper(Type pluginType,
-                 AttachTarget target,
-                 string targetType)
+            AttachTarget target,
+            string targetType)
             : this(new StandalonePluginProvision(pluginType), target, targetType)
         {
         }

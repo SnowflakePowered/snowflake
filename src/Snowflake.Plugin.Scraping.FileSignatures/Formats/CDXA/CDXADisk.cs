@@ -11,7 +11,7 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Formats.CDXA
     {
         public const int BlockSize = 0x930;
         public const int BlockHeaderSize = 0x18;
-        public static readonly byte[] FileRecordDelimeter = { 0x8D, 0x55, 0x58, 0x41 };
+        public static readonly byte[] FileRecordDelimeter = {0x8D, 0x55, 0x58, 0x41};
         private readonly Stream diskStream;
         public string VolumeDescriptor { get; }
         public IDictionary<string, CDXAFile> Files;

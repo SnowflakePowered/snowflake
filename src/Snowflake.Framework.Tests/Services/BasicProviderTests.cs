@@ -7,7 +7,6 @@ using Moq;
 using Snowflake.Extensibility;
 using Snowflake.Services;
 using Snowflake.Services.Logging;
-using Snowflake.Services.Persistence;
 using Snowflake.Tests.Composable;
 using Xunit;
 
@@ -45,33 +44,15 @@ namespace Snowflake.Services.Tests
         }
 
         [Fact]
-        public void SqliteDatabaseProvider_Test()
-        {
-            DirectoryInfo dbRoot = new DirectoryInfo(Path.GetTempPath());
-            string fileName = Guid.NewGuid().ToString();
-            ISqliteDatabaseProvider dbProvider = new SqliteDatabaseProvider(dbRoot);
-            dbProvider.CreateDatabase(fileName);
-            Assert.True(File.Exists(Path.Combine(dbRoot.FullName, $"{fileName}.db")));
-        }
-
-        [Fact]
-        public void SqliteDatabaseProviderUniverse_Test()
-        {
-            DirectoryInfo dbRoot = new DirectoryInfo(Path.GetTempPath());
-            string fileName = Guid.NewGuid().ToString();
-            ISqliteDatabaseProvider dbProvider = new SqliteDatabaseProvider(dbRoot);
-            dbProvider.CreateDatabase("test", fileName);
-            Assert.True(File.Exists(Path.Combine(dbRoot.CreateSubdirectory("test").FullName, $"{fileName}.db")));
-        }
-
-        [Fact]
         public void ServiceRegistration_Test()
         {
             var coreService = new Mock<IServiceContainer>();
             IDictionary<Type, object> serviceContainer = new Dictionary<Type, object>();
-            coreService.Setup(c => c.RegisterService(It.IsAny<IDummyComposable>())).Callback<IDummyComposable>(d => serviceContainer
-                        .Add(typeof(IDummyComposable), d));
-            coreService.Setup(c => c.AvailableServices()).Returns(() => serviceContainer.Keys.Select(service => service.FullName));
+            coreService.Setup(c => c.RegisterService(It.IsAny<IDummyComposable>())).Callback<IDummyComposable>(d =>
+                serviceContainer
+                    .Add(typeof(IDummyComposable), d));
+            coreService.Setup(c => c.AvailableServices())
+                .Returns(() => serviceContainer.Keys.Select(service => service.FullName));
 
             var dummyService = new DummyService();
             var provider = new ServiceRegistrationProvider(coreService.Object);

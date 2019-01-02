@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using GraphQL.Types;
+using Snowflake.Model.Game;
 using Snowflake.Platform;
 
 namespace Snowflake.Support.Remoting.GraphQl.Types.PlatformInfo

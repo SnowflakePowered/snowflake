@@ -11,10 +11,13 @@ namespace Snowflake.Configuration.Tests
     {
         [SelectionOption("0", DisplayName = "Normal")]
         Normal,
+
         [SelectionOption("1", DisplayName = "90 Degrees")]
         NinetyDegrees,
+
         [SelectionOption("2", DisplayName = "180 Degrees")]
         OneEightyDegrees,
+
         [SelectionOption("3", DisplayName = "270 Degrees")]
         TwoSeventyDegrees,
     }

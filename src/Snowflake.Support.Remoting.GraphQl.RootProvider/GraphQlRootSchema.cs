@@ -7,7 +7,6 @@ using Snowflake.Configuration;
 using Snowflake.Framework.Remoting.GraphQl;
 using Snowflake.Framework.Remoting.GraphQl.Query;
 using Snowflake.Loader;
-using Snowflake.Records.Game;
 using Snowflake.Services;
 
 namespace Snowflake.Support.Remoting.GraphQl.RootProvider
@@ -23,9 +22,9 @@ namespace Snowflake.Support.Remoting.GraphQl.RootProvider
         /// <inheritdoc/>
         public void Register(QueryBuilder queries)
         {
-            queries.RegisterConnectionQueries((RootQuery)this.Query);
-            queries.RegisterFieldQueries((RootQuery)this.Query);
-            queries.RegisterMutationQueries((RootMutation)this.Mutation);
+            queries.RegisterConnectionQueries((RootQuery) this.Query);
+            queries.RegisterFieldQueries((RootQuery) this.Query);
+            queries.RegisterMutationQueries((RootMutation) this.Mutation);
         }
     }
 }

@@ -17,7 +17,8 @@ namespace Snowflake.Configuration.Tests
         [ConfigurationOption("video_crop_overscan", true, DisplayName = "Crop Overscan")]
         bool VideoCropOverscan { get; set; }
 
-        [ConfigurationOption("video_disable_composition", false, DisplayName = "Video Disable Composition", Private = true)]
+        [ConfigurationOption("video_disable_composition", false, DisplayName = "Video Disable Composition",
+            Private = true)]
         bool VideoDisableComposition { get; set; }
 
         [ConfigurationOption("video_driver", VideoDriver.Vulkan, DisplayName = "Video Driver")]
@@ -26,7 +27,8 @@ namespace Snowflake.Configuration.Tests
         [ConfigurationOption("video_filter", "", DisplayName = "Video Filter", Private = true, IsPath = true)]
         string VideoFilter { get; set; }
 
-        [ConfigurationOption("video_filter_dir", "default", DisplayName = "Video Filter Dir", IsPath = true, Private = true)]
+        [ConfigurationOption("video_filter_dir", "default", DisplayName = "Video Filter Dir", IsPath = true,
+            Private = true)]
         string VideoFilterDir { get; set; }
 
         [ConfigurationOption("video_font_enable", true, DisplayName = "Video Font Enable", Private = true)]
@@ -131,10 +133,12 @@ namespace Snowflake.Configuration.Tests
         int CustomViewportY { get; set; }
 
         // This will never be used because the config aspect ratio index is not accessible in the enum by design
-        [ConfigurationOption("video_aspect_ratio", -1.000000, DisplayName = "Video Aspect Ratio (deprecated)", Private = true)]
+        [ConfigurationOption("video_aspect_ratio", -1.000000, DisplayName = "Video Aspect Ratio (deprecated)",
+            Private = true)]
         double VideoAspectRatio { get; set; }
 
-        [ConfigurationOption("video_aspect_ratio_auto", false, DisplayName = "Video Aspect Ratio Auto (deprecated)", Private = true)]
+        [ConfigurationOption("video_aspect_ratio_auto", false, DisplayName = "Video Aspect Ratio Auto (deprecated)",
+            Private = true)]
         bool VideoAspectRatioAuto { get; set; }
 
         [ConfigurationOption("fps_show", false, DisplayName = "Show FPS Overlay", Simple = true)]

@@ -19,7 +19,7 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.InstallTask
                 throw new InvalidOperationException("Must specify a package to install.");
             }
 
-            DirectoryInfo moduleDirectory = arguments.ModuleDirectory != null 
+            DirectoryInfo moduleDirectory = arguments.ModuleDirectory != null
                 ? new DirectoryInfo(Path.GetFullPath(arguments.ModuleDirectory))
                 : PathUtility.GetDefaultModulePath();
             try
@@ -31,9 +31,11 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.InstallTask
                     bool package = await pkg.VerifyPackage();
                     if (!package)
                     {
-                        throw new InvalidOperationException($"Package failed to verify, use --noverify to install regardless.");
+                        throw new InvalidOperationException(
+                            $"Package failed to verify, use --noverify to install regardless.");
                     }
                 }
+
                 Console.WriteLine($"Installing package {arguments.PackagePath}...");
                 string installPath = await pkg.InstallPackage(moduleDirectory);
                 Console.WriteLine($"Installed {arguments.PackagePath} to {installPath}.");
@@ -42,6 +44,7 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.InstallTask
             {
                 throw new FileNotFoundException("The specified package was not found.");
             }
+
             return 0;
         }
     }

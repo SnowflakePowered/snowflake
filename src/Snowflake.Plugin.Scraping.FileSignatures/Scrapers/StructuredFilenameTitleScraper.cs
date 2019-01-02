@@ -18,6 +18,7 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Scrapers
     public class StructuredFilenameTitleScraper : Scraper
     {
         HashSet<string> MimeTypes { get; }
+
         public StructuredFilenameTitleScraper(IStoneProvider stoneProvider)
             : base(typeof(StructuredFilenameTitleScraper), AttachTarget.Root, "file")
         {
@@ -25,7 +26,9 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Scrapers
                 .Platforms.SelectMany(p => p.Value.FileTypes.Select(f => f.Value)).ToHashSet();
         }
 
-        public override async Task<IEnumerable<SeedTreeAwaitable>> ScrapeAsync(ISeed parent, ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds, ILookup<string, SeedContent> siblingSeeds)
+        public override async Task<IEnumerable<SeedTreeAwaitable>> ScrapeAsync(ISeed parent,
+            ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds,
+            ILookup<string, SeedContent> siblingSeeds)
         {
             if (!this.MimeTypes.Contains(childSeeds["mimetype"].First().Value))
             {

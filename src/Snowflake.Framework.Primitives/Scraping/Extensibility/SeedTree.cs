@@ -41,7 +41,7 @@ namespace Snowflake.Scraping.Extensibility
         /// </summary>
         /// <param name="seedContent">The <see cref="SeedContent"/> to coerce.</param>
         public static implicit operator SeedTree
-          ((string type, string value) seedContent)
+            ((string type, string value) seedContent)
         {
             return new SeedTree(seedContent);
         }

@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Snowflake.Tests;
 using Xunit;
+
 namespace Snowflake.Configuration.Tests
 {
     public class ConfigurationCollectionSerializerTests
@@ -16,7 +17,8 @@ namespace Snowflake.Configuration.Tests
         {
             JObject jobject =
                 JsonConvert.DeserializeObject<JObject>(
-                JsonConvert.SerializeObject(new ConfigurationCollection<ExampleConfigurationCollection>())).Children<JProperty>().First().Value as JObject;
+                        JsonConvert.SerializeObject(new ConfigurationCollection<ExampleConfigurationCollection>()))
+                    .Children<JProperty>().First().Value as JObject;
             Assert.Contains("Configuration", jobject.Properties().Select(k => k.Name));
             Assert.Contains("Descriptor", jobject.Properties().Select(k => k.Name));
         }

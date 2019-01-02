@@ -7,9 +7,10 @@ using Snowflake.Services;
 namespace Snowflake.Extensibility
 {
     public class PluginCollection<T> : IPluginCollection<T>
-        where T: IPlugin
+        where T : IPlugin
     {
         private IPluginManager PluginManager { get; }
+
         public PluginCollection(IPluginManager manager)
         {
             this.PluginManager = manager;

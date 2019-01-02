@@ -11,6 +11,7 @@ using Snowflake.Input.Controller.Mapped;
 using Snowflake.Services;
 using Snowflake.Tests;
 using Xunit;
+
 namespace Snowflake.Configuration.Tests
 {
     public class DynamicProxyInputTests
@@ -23,7 +24,7 @@ namespace Snowflake.Configuration.Tests
             var realmapping =
                 JsonConvert.DeserializeObject<ControllerLayout>(
                     TestUtilities.GetStringResource("InputMappings.keyboard_device.json"));
-            var mapcol = MappedControllerElementCollection.GetDefaultMappings(realmapping, testmappings);
+            var mapcol = ControllerElementMappings.GetDefaultMappings(realmapping, testmappings);
             var x = new InputTemplate<IRetroArchInput>(mapcol);
             x[ControllerElement.ButtonA] = ControllerElement.DirectionalS;
             Assert.Equal(ControllerElement.DirectionalS, x.Template.InputPlayerABtn);
@@ -38,7 +39,7 @@ namespace Snowflake.Configuration.Tests
             var realmapping =
                 JsonConvert.DeserializeObject<ControllerLayout>(
                     TestUtilities.GetStringResource("InputMappings.keyboard_device.json"));
-            var mapcol = MappedControllerElementCollection.GetDefaultMappings(realmapping, testmappings);
+            var mapcol = ControllerElementMappings.GetDefaultMappings(realmapping, testmappings);
             var x = new InputTemplate<IRetroArchInput>(mapcol);
             x[ControllerElement.ButtonA] = ControllerElement.DirectionalS;
             Assert.Equal(ControllerElement.DirectionalS, x.Template.InputPlayerABtn);
@@ -52,7 +53,7 @@ namespace Snowflake.Configuration.Tests
             var realmapping =
                 JsonConvert.DeserializeObject<ControllerLayout>(
                     TestUtilities.GetStringResource("InputMappings.keyboard_device.json"));
-            var mapcol = MappedControllerElementCollection.GetDefaultMappings(realmapping, testmappings);
+            var mapcol = ControllerElementMappings.GetDefaultMappings(realmapping, testmappings);
             var x = new InputTemplate<IRetroArchInput>(mapcol);
             x[ControllerElement.ButtonA] = ControllerElement.DirectionalS;
             Assert.Equal(ControllerElement.DirectionalS, x.Template.Configuration.InputPlayerABtn);
@@ -66,7 +67,7 @@ namespace Snowflake.Configuration.Tests
             var realmapping =
                 JsonConvert.DeserializeObject<ControllerLayout>(
                     TestUtilities.GetStringResource("InputMappings.keyboard_device.json"));
-            var mapcol = MappedControllerElementCollection.GetDefaultMappings(realmapping, testmappings);
+            var mapcol = ControllerElementMappings.GetDefaultMappings(realmapping, testmappings);
             var x = new InputTemplate<IRetroArchInput>(mapcol);
             x[ControllerElement.ButtonA] = ControllerElement.DirectionalS;
             var y = (x as IConfigurationSection<IRetroArchInput>).Configuration["InputDevice"] = 1;

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Newtonsoft.Json;
 using Snowflake.JsonConverters;
+using Snowflake.Model.Game;
 
 namespace Snowflake.Platform
 {
@@ -11,7 +11,7 @@ namespace Snowflake.Platform
         public PlatformInfo(string platformId, string name, IDictionary<string, string> metadata,
             IDictionary<string, string> fileTypes, IEnumerable<IBiosFile> biosFiles, int maximumInputs)
         {
-            this.PlatformID = platformId;
+            this.PlatformId = platformId;
             this.Metadata = metadata;
             this.FileTypes = fileTypes;
             this.BiosFiles = biosFiles;
@@ -23,7 +23,7 @@ namespace Snowflake.Platform
         public string FriendlyName { get; }
 
         /// <inheritdoc/>
-        public string PlatformID { get; }
+        public PlatformId PlatformId { get; }
 
         /// <inheritdoc/>
         public IDictionary<string, string> Metadata { get; set; }

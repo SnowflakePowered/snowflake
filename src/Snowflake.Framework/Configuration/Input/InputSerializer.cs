@@ -11,6 +11,7 @@ namespace Snowflake.Configuration.Input
     public class InputSerializer : IInputSerializer
     {
         protected IConfigurationSerializer ConfigurationSerializer { get; }
+
         public InputSerializer(IConfigurationSerializer configurationSerializer)
         {
             this.ConfigurationSerializer = configurationSerializer;
@@ -20,20 +21,26 @@ namespace Snowflake.Configuration.Input
         public virtual string Serialize(IInputTemplate inputTemplate, IInputMapping inputMapping)
         {
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.Append(this.ConfigurationSerializer.SerializeHeader(inputTemplate.Descriptor.SectionName.Replace("{N}", inputTemplate.PlayerIndex.ToString())));
+            stringBuilder.Append(this.ConfigurationSerializer.SerializeHeader(
+                inputTemplate.Descriptor.SectionName.Replace("{N}", inputTemplate.PlayerIndex.ToString())));
 
             IConfigurationSection inputOptions = inputTemplate;
             foreach (var config in inputOptions.Descriptor.Options)
             {
-                stringBuilder.AppendLine(this.ConfigurationSerializer.SerializeLine(config.OptionName.Replace("{N}", inputTemplate.PlayerIndex.ToString()), inputOptions.Values[config.OptionKey].Value));
+                stringBuilder.AppendLine(this.ConfigurationSerializer.SerializeLine(
+                    config.OptionName.Replace("{N}", inputTemplate.PlayerIndex.ToString()),
+                    inputOptions.Values[config.OptionKey].Value));
             }
 
             foreach (var input in inputTemplate.Options)
             {
-                stringBuilder.AppendLine(this.SerializeInput(input.OptionName.Replace("{N}", inputTemplate.PlayerIndex.ToString()), inputTemplate.Values[input.KeyName], inputMapping));
+                stringBuilder.AppendLine(this.SerializeInput(
+                    input.OptionName.Replace("{N}", inputTemplate.PlayerIndex.ToString()),
+                    inputTemplate.Values[input.KeyName], inputMapping));
             }
 
-            stringBuilder.Append(this.ConfigurationSerializer.SerializeFooter(inputTemplate.Descriptor.SectionName.Replace("{N}", inputTemplate.PlayerIndex.ToString())));
+            stringBuilder.Append(this.ConfigurationSerializer.SerializeFooter(
+                inputTemplate.Descriptor.SectionName.Replace("{N}", inputTemplate.PlayerIndex.ToString())));
 
             return stringBuilder.ToString();
         }
@@ -42,8 +49,10 @@ namespace Snowflake.Configuration.Input
         public virtual string SerializeInput(string key, ControllerElement element, IInputMapping inputMapping)
         {
             return
-                element == ControllerElement.NoElement ? this.ConfigurationSerializer.SerializeLine(key, this.ConfigurationSerializer.TypeMapper.ConvertValue((object)null))
-                : this.ConfigurationSerializer.SerializeLine(key, inputMapping[element]);
+                element == ControllerElement.NoElement
+                    ? this.ConfigurationSerializer.SerializeLine(key,
+                        this.ConfigurationSerializer.TypeMapper.ConvertValue((object?) null))
+                    : this.ConfigurationSerializer.SerializeLine(key, inputMapping[element]);
         }
     }
 }

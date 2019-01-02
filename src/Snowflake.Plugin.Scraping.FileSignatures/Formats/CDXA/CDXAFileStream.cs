@@ -12,6 +12,7 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Formats.CDXA
         private readonly Stream diskStream;
         public const int BlockLength = CDXADisk.BlockSize - CDXADisk.BlockHeaderSize;
         public const int DataBlockLength = 0x800;
+
         public CDXAFileStream(int lbaStart, long fileLength, Stream diskStream)
         {
             this.diskStream = diskStream;
@@ -35,6 +36,7 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Formats.CDXA
                     {
                         throw new IndexOutOfRangeException();
                     }
+
                     this.Position = offset;
                     break;
                 case SeekOrigin.End:
@@ -42,6 +44,7 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Formats.CDXA
                     {
                         throw new IndexOutOfRangeException();
                     }
+
                     this.Position = this.Length + offset;
                     break;
                 case SeekOrigin.Current:
@@ -49,6 +52,7 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Formats.CDXA
                     {
                         throw new IndexOutOfRangeException();
                     }
+
                     this.Position += offset;
                     break;
             }
@@ -65,27 +69,33 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Formats.CDXA
         /// <inheritdoc/>
         public sealed override int Read(byte[] buffer, int offset, int count)
         {
-            int bytesLeftToRead = (int)Math.Min(this.Length - this.Position, count);
+            int bytesLeftToRead = (int) Math.Min(this.Length - this.Position, count);
             long fullBlocksToSeek = this.Position / CDXAFileStream.DataBlockLength;
             long remainderBytesToSeek = this.Position % CDXAFileStream.DataBlockLength;
             int bytesUntilNextLba = CDXAFileStream.DataBlockLength;
             int totalBytesRead = 0;
             int byteArrayOffset = offset;
 
-            this.diskStream.Seek((CDXADisk.BlockSize * (this.LBA + fullBlocksToSeek)), SeekOrigin.Begin); // Seek to the beginning of the file.
-                                                                                                          // now at the beginning of a new LBA.
+            this.diskStream.Seek((CDXADisk.BlockSize * (this.LBA + fullBlocksToSeek)),
+                SeekOrigin.Begin); // Seek to the beginning of the file.
+            // now at the beginning of a new LBA.
 
-            this.diskStream.Seek(CDXADisk.BlockHeaderSize, SeekOrigin.Current); // Seek past the header of the first LBA.
+            this.diskStream.Seek(CDXADisk.BlockHeaderSize,
+                SeekOrigin.Current); // Seek past the header of the first LBA.
             if (remainderBytesToSeek != 0) // there are still bytes to seek the the position.
             {
                 this.diskStream.Seek(remainderBytesToSeek, SeekOrigin.Current); // seek to the bytes.
-                bytesUntilNextLba = CDXAFileStream.DataBlockLength - (int)remainderBytesToSeek; //bytes until we have to skip to the next LBA.
+                bytesUntilNextLba =
+                    CDXAFileStream.DataBlockLength -
+                    (int) remainderBytesToSeek; //bytes until we have to skip to the next LBA.
             }
 
             while (bytesLeftToRead > 0)
             {
-                int bytesRead = this.diskStream.Read(buffer, byteArrayOffset, Math.Min(bytesUntilNextLba, bytesLeftToRead));
-                this.diskStream.Seek(CDXAFileStream.BlockLength - CDXAFileStream.DataBlockLength, SeekOrigin.Current); // now at a new LBA
+                int bytesRead =
+                    this.diskStream.Read(buffer, byteArrayOffset, Math.Min(bytesUntilNextLba, bytesLeftToRead));
+                this.diskStream.Seek(CDXAFileStream.BlockLength - CDXAFileStream.DataBlockLength,
+                    SeekOrigin.Current); // now at a new LBA
                 this.diskStream.Seek(CDXADisk.BlockHeaderSize, SeekOrigin.Current); // Seek past the next header. 
                 bytesLeftToRead -= bytesRead;
                 totalBytesRead += bytesRead;
@@ -113,6 +123,7 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Formats.CDXA
 
         /// <inheritdoc/>
         public sealed override long Length { get; }
+
         public int LBA { get; }
 
         /// <inheritdoc/>

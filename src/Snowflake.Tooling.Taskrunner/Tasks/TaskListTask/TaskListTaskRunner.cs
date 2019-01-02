@@ -12,6 +12,7 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.TaskListTask
     public class TaskListTaskRunner : TaskRunner<EmptyArguments>
     {
         private TaskContainer Verbs { get; }
+
         public TaskListTaskRunner(TaskContainer container)
         {
             this.Verbs = container;
@@ -25,6 +26,7 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.TaskListTask
             {
                 Console.WriteLine($"{task.Name.PadLeft(task.Name.Length + 2).PadRight(20)} {task.Description}");
             }
+
             return 0;
         }
     }

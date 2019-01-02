@@ -10,6 +10,7 @@ namespace Snowflake.Support.Execution
     public class EmulatorExecutableLoader : IModuleLoader<IEmulatorExecutable>
     {
         private ILogger Logger { get; }
+
         public EmulatorExecutableLoader(ILogger logger)
         {
             this.Logger = logger;
@@ -23,7 +24,7 @@ namespace Snowflake.Support.Execution
                 throw new FileNotFoundException($"Emulator Entry {emulatorExecutable.FullName} does not exist!");
             }
 
-            this.Logger.Info($"Loading emulator { module.Name } {module.Version}");
+            this.Logger.Info($"Loading emulator {module.Name} {module.Version}");
             yield return new EmulatorExecutable(emulatorExecutable, module.Name, module.Version);
         }
     }

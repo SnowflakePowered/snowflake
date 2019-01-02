@@ -12,7 +12,8 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Adapters.Higan.Configuration
     [ConfigurationSection("bsnes", "BSNES Settings")]
     public interface BsnesCoreConfiguration : IConfigurationSection<BsnesCoreConfiguration>
     {
-        [ConfigurationOption("flag#performanceprofile", PerformanceProfile.Performance, DisplayName = "Performance Profile", Flag = true)]
+        [ConfigurationOption("flag#performanceprofile", PerformanceProfile.Performance,
+            DisplayName = "Performance Profile", Flag = true)]
         PerformanceProfile PerformanceProfile { get; set; }
     }
 }

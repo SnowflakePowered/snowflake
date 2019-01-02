@@ -14,6 +14,7 @@ namespace Snowflake.Tooling.Taskrunner.Framework.Executor
     {
         public TaskContainer Verbs { get; }
         public ArgumentParser Parser { get; }
+
         public TaskExecutor(TaskContainer verbContainer, ArgumentParser parser)
         {
             this.Verbs = verbContainer;
@@ -34,19 +35,18 @@ namespace Snowflake.Tooling.Taskrunner.Framework.Executor
             var posArgs = this.Parser.ParsePositionalArguments(args);
             var typedArguments = Instantiate.CreateInstance(task.ArgumentType);
 
-
             foreach (KeyValuePair<string, string> namedArg in namedArgs)
             {
                 foreach ((var prop, var converted) in from prop in task.ArgumentType.GetProperties()
-                                     let attr = prop.GetCustomAttribute<NamedArgumentAttribute>()
-                                     where attr != null
-                                     where attr.LongName.Equals(namedArg.Key, StringComparison.OrdinalIgnoreCase) 
-                                     || attr.ShortName.Equals(namedArg.Key, StringComparison.OrdinalIgnoreCase)
-                                     let converter = TypeDescriptor.GetConverter(prop.PropertyType)
-                                     where converter != null
-                                     let converted = converter.ConvertFromInvariantString(namedArg.Value)
-                                     select (prop, converted)
-                    )
+                    let attr = prop.GetCustomAttribute<NamedArgumentAttribute>()
+                    where attr != null
+                    where attr.LongName.Equals(namedArg.Key, StringComparison.OrdinalIgnoreCase)
+                          || attr.ShortName.Equals(namedArg.Key, StringComparison.OrdinalIgnoreCase)
+                    let converter = TypeDescriptor.GetConverter(prop.PropertyType)
+                    where converter != null
+                    let converted = converter.ConvertFromInvariantString(namedArg.Value)
+                    select (prop, converted)
+                )
                 {
                     prop.SetValue(typedArguments, converted);
                 }
@@ -55,14 +55,14 @@ namespace Snowflake.Tooling.Taskrunner.Framework.Executor
             foreach (KeyValuePair<int, string> posArg in posArgs)
             {
                 foreach ((var prop, var converted) in from prop in task.ArgumentType.GetProperties()
-                                                      let attr = prop.GetCustomAttribute<PositionalArgumentAttribute>()
-                                                      where attr != null
-                                                      where attr.Position == posArg.Key
-                                                      let converter = TypeDescriptor.GetConverter(prop.PropertyType)
-                                                      where converter != null
-                                                      let converted = converter.ConvertFromInvariantString(posArg.Value)
-                                                      select (prop, converted)
-                    )
+                    let attr = prop.GetCustomAttribute<PositionalArgumentAttribute>()
+                    where attr != null
+                    where attr.Position == posArg.Key
+                    let converter = TypeDescriptor.GetConverter(prop.PropertyType)
+                    where converter != null
+                    let converted = converter.ConvertFromInvariantString(posArg.Value)
+                    select (prop, converted)
+                )
                 {
                     prop.SetValue(typedArguments, converted);
                 }

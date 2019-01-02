@@ -24,10 +24,13 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi
         /// <param name="platform">Filters results by platform</param>
         /// <param name="genre">Filters results by genre</param>
         /// <returns>A collection of games that matched the search terms</returns>
-        public static async Task<ICollection<ApiGameSearchResult>> GetGames(string name, string platform = "", string genre = "")
+        public static async Task<ICollection<ApiGameSearchResult>> GetGames(string name, string platform = "",
+            string genre = "")
         {
             XmlDocument doc = new XmlDocument();
-            var docstring = await StaticWebClient.DownloadDataAsync(new Uri(@"http://thegamesdb.net/api/GetGamesList.php?name=" + name + @"&platform=" + platform + @"&genre=" + genre))
+            var docstring = await StaticWebClient.DownloadDataAsync(new Uri(
+                    @"http://thegamesdb.net/api/GetGamesList.php?name=" + name + @"&platform=" + platform + @"&genre=" +
+                    genre))
                 .ConfigureAwait(false);
             doc.Load(docstring);
 
@@ -41,13 +44,13 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi
             while (ienum.MoveNext())
             {
                 ApiGameSearchResult game = new ApiGameSearchResult();
-                gameNode = (XmlNode)ienum.Current;
+                gameNode = (XmlNode) ienum.Current;
 
                 IEnumerator ienumGame = gameNode.GetEnumerator();
                 XmlNode attributeNode;
                 while (ienumGame.MoveNext())
                 {
-                    attributeNode = (XmlNode)ienumGame.Current;
+                    attributeNode = (XmlNode) ienumGame.Current;
 
                     // Iterate through all game attributes
                     switch (attributeNode.Name)
@@ -82,7 +85,8 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi
         public static async Task<ICollection<int>> GetUpdatedGames(int time)
         {
             XmlDocument doc = new XmlDocument();
-            var docstring = await StaticWebClient.DownloadDataAsync(new Uri(@"http://thegamesdb.net/api/Updates.php?time=" + time))
+            var docstring = await StaticWebClient
+                .DownloadDataAsync(new Uri(@"http://thegamesdb.net/api/Updates.php?time=" + time))
                 .ConfigureAwait(false);
             doc.Load(docstring);
 
@@ -96,7 +100,7 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi
             XmlNode gameNode;
             while (ienum.MoveNext())
             {
-                gameNode = (XmlNode)ienum.Current;
+                gameNode = (XmlNode) ienum.Current;
 
                 int.TryParse(gameNode.InnerText, out int game);
 
@@ -114,7 +118,8 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi
         public static async Task<ApiGame> GetGame(int iD)
         {
             XmlDocument doc = new XmlDocument();
-            var docstring = await StaticWebClient.DownloadDataAsync(new Uri(@"http://thegamesdb.net/api/GetGame.php?id=" + iD))
+            var docstring = await StaticWebClient
+                .DownloadDataAsync(new Uri(@"http://thegamesdb.net/api/GetGame.php?id=" + iD))
                 .ConfigureAwait(false);
             doc.Load(docstring);
 
@@ -128,7 +133,7 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi
             XmlNode attributeNode;
             while (ienumGame.MoveNext())
             {
-                attributeNode = (XmlNode)ienumGame.Current;
+                attributeNode = (XmlNode) ienumGame.Current;
 
                 // Iterate through all platform attributes
                 switch (attributeNode.Name)
@@ -173,7 +178,7 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi
                         IEnumerator ienumAlternateTitles = attributeNode.GetEnumerator();
                         while (ienumAlternateTitles.MoveNext())
                         {
-                            apiGame.AlternateTitles.Add(((XmlNode)ienumAlternateTitles.Current).InnerText);
+                            apiGame.AlternateTitles.Add(((XmlNode) ienumAlternateTitles.Current).InnerText);
                         }
 
                         break;
@@ -181,7 +186,7 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi
                         IEnumerator ienumGenres = attributeNode.GetEnumerator();
                         while (ienumGenres.MoveNext())
                         {
-                            apiGame.Genres.Add(((XmlNode)ienumGenres.Current).InnerText);
+                            apiGame.Genres.Add(((XmlNode) ienumGenres.Current).InnerText);
                         }
 
                         break;
@@ -213,7 +218,8 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi
         {
             XmlDocument doc = new XmlDocument();
 
-            var docstring = await StaticWebClient.DownloadDataAsync(new Uri(@"http://thegamesdb.net/api/GetPlatformsList.php"))
+            var docstring = await StaticWebClient
+                .DownloadDataAsync(new Uri(@"http://thegamesdb.net/api/GetPlatformsList.php"))
                 .ConfigureAwait(false);
 
             doc.Load(docstring);
@@ -227,7 +233,7 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi
             XmlNode platformNode;
             while (ienum.MoveNext())
             {
-                platformNode = (XmlNode)ienum.Current;
+                platformNode = (XmlNode) ienum.Current;
 
                 ApiPlatformSearchResult platform = new ApiPlatformSearchResult();
 
@@ -235,7 +241,7 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi
                 XmlNode attributeNode;
                 while (ienumPlatform.MoveNext())
                 {
-                    attributeNode = (XmlNode)ienumPlatform.Current;
+                    attributeNode = (XmlNode) ienumPlatform.Current;
 
                     // Iterate through all platform attributes
                     switch (attributeNode.Name)
@@ -267,7 +273,8 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi
         public static async Task<ApiPlatform> GetPlatform(int iD)
         {
             XmlDocument doc = new XmlDocument();
-            var docstring = await StaticWebClient.DownloadDataAsync(new Uri(@"http://thegamesdb.net/api/GetPlatform.php?id=" + iD))
+            var docstring = await StaticWebClient
+                .DownloadDataAsync(new Uri(@"http://thegamesdb.net/api/GetPlatform.php?id=" + iD))
                 .ConfigureAwait(false);
             doc.Load(docstring);
 
@@ -281,7 +288,7 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi
             XmlNode attributeNode;
             while (ienumPlatform.MoveNext())
             {
-                attributeNode = (XmlNode)ienumPlatform.Current;
+                attributeNode = (XmlNode) ienumPlatform.Current;
 
                 // Iterate through all platform attributes
                 switch (attributeNode.Name)
@@ -355,7 +362,8 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi
         public static async Task<ICollection<ApiGameSearchResult>> GetPlatformGames(int iD)
         {
             XmlDocument doc = new XmlDocument();
-            var docstring = await StaticWebClient.DownloadDataAsync(new Uri(@"http://thegamesdb.net/api/GetPlatformGames.php?platform=" + iD))
+            var docstring = await StaticWebClient
+                .DownloadDataAsync(new Uri(@"http://thegamesdb.net/api/GetPlatformGames.php?platform=" + iD))
                 .ConfigureAwait(false);
             doc.Load(docstring);
 
@@ -369,13 +377,13 @@ namespace Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi
             while (ienum.MoveNext())
             {
                 ApiGameSearchResult game = new ApiGameSearchResult();
-                gameNode = (XmlNode)ienum.Current;
+                gameNode = (XmlNode) ienum.Current;
 
                 IEnumerator ienumGame = gameNode.GetEnumerator();
                 XmlNode attributeNode;
                 while (ienumGame.MoveNext())
                 {
-                    attributeNode = (XmlNode)ienumGame.Current;
+                    attributeNode = (XmlNode) ienumGame.Current;
 
                     // Iterate through all game attributes
                     switch (attributeNode.Name)

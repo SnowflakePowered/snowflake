@@ -18,9 +18,9 @@ namespace Snowflake.Execution.SystemFiles
         {
             var contentDirMock = new Mock<IContentDirectoryProvider>();
             contentDirMock.Setup(g => g.ApplicationData).Returns(new DirectoryInfo(Path.GetTempPath())
-                         .CreateSubdirectory(Path.GetFileNameWithoutExtension(Path.GetTempFileName())));
+                .CreateSubdirectory(Path.GetFileNameWithoutExtension(Path.GetTempFileName())));
             var sfp = new SystemFileProvider(contentDirMock.Object);
-            var testStream = new MemoryStream(new byte[] { 0, 1, 2, 3, 4 });
+            var testStream = new MemoryStream(new byte[] {0, 1, 2, 3, 4});
             var biosFile = new BiosFile("testFile", "testHash");
             sfp.AddSystemFile(biosFile, testStream);
             var newStream = sfp.GetSystemFile(biosFile);
@@ -32,9 +32,9 @@ namespace Snowflake.Execution.SystemFiles
         {
             var contentDirMock = new Mock<IContentDirectoryProvider>();
             contentDirMock.Setup(g => g.ApplicationData).Returns(new DirectoryInfo(Path.GetTempPath())
-                         .CreateSubdirectory(Path.GetFileNameWithoutExtension(Path.GetTempFileName())));
+                .CreateSubdirectory(Path.GetFileNameWithoutExtension(Path.GetTempFileName())));
             var sfp = new SystemFileProvider(contentDirMock.Object);
-            var testStream = new MemoryStream(new byte[] { 0, 1, 2, 3, 4 });
+            var testStream = new MemoryStream(new byte[] {0, 1, 2, 3, 4});
             var biosFile = new BiosFile("testFile", "testHash");
             await sfp.AddSystemFileAsync(biosFile, testStream);
             var newStream = sfp.GetSystemFile(biosFile);
@@ -46,7 +46,7 @@ namespace Snowflake.Execution.SystemFiles
         {
             var contentDirMock = new Mock<IContentDirectoryProvider>();
             contentDirMock.Setup(g => g.ApplicationData).Returns(new DirectoryInfo(Path.GetTempPath())
-                         .CreateSubdirectory(Path.GetFileNameWithoutExtension(Path.GetTempFileName())));
+                .CreateSubdirectory(Path.GetFileNameWithoutExtension(Path.GetTempFileName())));
             var sfp = new SystemFileProvider(contentDirMock.Object);
             var file = Path.GetTempFileName();
             var biosFile = new BiosFile("testFile", "testHash");
@@ -60,7 +60,7 @@ namespace Snowflake.Execution.SystemFiles
         {
             var contentDirMock = new Mock<IContentDirectoryProvider>();
             contentDirMock.Setup(g => g.ApplicationData).Returns(new DirectoryInfo(Path.GetTempPath())
-                         .CreateSubdirectory(Path.GetFileNameWithoutExtension(Path.GetTempFileName())));
+                .CreateSubdirectory(Path.GetFileNameWithoutExtension(Path.GetTempFileName())));
             var sfp = new SystemFileProvider(contentDirMock.Object);
             var file = Path.GetTempFileName();
             var biosFile = new BiosFile("testFile", "testHash");
@@ -72,7 +72,7 @@ namespace Snowflake.Execution.SystemFiles
         {
             var contentDirMock = new Mock<IContentDirectoryProvider>();
             contentDirMock.Setup(g => g.ApplicationData).Returns(new DirectoryInfo(Path.GetTempPath())
-                         .CreateSubdirectory(Path.GetFileNameWithoutExtension(Path.GetTempFileName())));
+                .CreateSubdirectory(Path.GetFileNameWithoutExtension(Path.GetTempFileName())));
             var sfp = new SystemFileProvider(contentDirMock.Object);
             var file = Path.GetTempFileName();
             var biosFile = new BiosFile("testFile", "testHash");

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Snowflake.Model.Game;
 
 namespace Snowflake.Platform
 {

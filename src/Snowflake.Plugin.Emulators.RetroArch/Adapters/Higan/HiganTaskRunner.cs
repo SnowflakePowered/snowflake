@@ -11,7 +11,7 @@ using Snowflake.Execution.Extensibility;
 using Snowflake.Execution.Process;
 using Snowflake.Extensibility.Provisioning;
 using Snowflake.Input.Device;
-using Snowflake.Records.File;
+using Snowflake.Model.Records.File;
 
 namespace Snowflake.Adapters.Higan
 {
@@ -21,6 +21,7 @@ namespace Snowflake.Adapters.Higan
         public IEmulatorTaskRootDirectoryProvider DirectoryProvider { get; }
         public DirectoryInfo CoreDirectory { get; }
         public IEmulatorProperties Properties { get; }
+
         public HiganTaskRunner(IEmulatorExecutable retroArchExecutable,
             IPluginProvision pluginProvision,
             IEmulatorProperties properties)
@@ -37,11 +38,12 @@ namespace Snowflake.Adapters.Higan
 
         public async Task<IEmulatorTaskResult> ExecuteEmulationAsync(IEmulatorTask task)
         {
-            IFileRecord fileToExecute = task.EmulatingGame.Files.FirstOrDefault(f => this.Properties.Mimetypes.Contains(f.MimeType));
-
+            // IFileRecord fileToExecute = task.EmulatingGame.WithFiles().FirstOrDefault(f => this.Properties.Mimetypes.Contains(f.MimeType));
+            IFileRecord fileToExecute = null;
             if (fileToExecute == null)
             {
-                throw new FileNotFoundException($"Unable to find a compatible ROM for game {task.EmulatingGame.Guid}.");
+                throw new FileNotFoundException(
+                    $"Unable to find a compatible ROM for game {task.EmulatingGame.RecordId}.");
             }
 
             IEmulatorTaskResult result = new RetroArchTaskResult(task.ProcessTaskRoot, task.GameSaveLocation);
@@ -49,8 +51,9 @@ namespace Snowflake.Adapters.Higan
             builder.WithArgument("--verbose")
                 .WithArgument("-s", task.ProcessTaskRoot.SaveDirectory.FullName)
                 .WithArgument("-c", Path.Combine(task.ProcessTaskRoot.ConfigurationDirectory.FullName, "retroarch.cfg"))
-                .WithArgument("-L", Path.Combine(this.CoreDirectory.FullName, task.Pragmas["retroarch_core"]))
-                .WithArgument(fileToExecute.FilePath);
+                .WithArgument("-L", Path.Combine(this.CoreDirectory.FullName, task.Pragmas["retroarch_core"]));
+
+            //  .WithArgument(fileToExecute.);
 
             foreach (var cfg in this.BuildConfiguration(task.EmulatorConfiguration, task.ControllerConfiguration))
             {
@@ -73,7 +76,8 @@ namespace Snowflake.Adapters.Higan
             {
                 var sectionBuilder = new StringBuilder();
                 var serializer = new KeyValuePairConfigurationSerializer(output.BooleanMapping, "nul", "=");
-                foreach (var section in configuration.Where(c => configuration.Descriptor.GetDestination(c.Key) == output.Key))
+                foreach (var section in configuration.Where(c =>
+                    configuration.Descriptor.GetDestination(c.Key) == output.Key))
                 {
                     sectionBuilder.Append(serializer.Serialize(section.Value));
                 }
@@ -81,7 +85,9 @@ namespace Snowflake.Adapters.Higan
                 configurations[output.Key] = sectionBuilder.ToString();
             }
 
-            var retroarchSerializer = new KeyValuePairConfigurationSerializer(configuration.Descriptor.Outputs["#retroarch"].BooleanMapping, "nul", "=");
+            var retroarchSerializer =
+                new KeyValuePairConfigurationSerializer(configuration.Descriptor.Outputs["#retroarch"].BooleanMapping,
+                    "nul", "=");
 
             IInputSerializer inputSerializer = new InputSerializer(retroarchSerializer);
 

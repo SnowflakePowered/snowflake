@@ -29,7 +29,7 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Formats.SFO
             this.keyTableLength++;
             while (tempByteArray1[0] != SfoKeyTableEntry.delimiterByte)
             {
-                sb.Append((char)tempByteArray1[0]);
+                sb.Append((char) tempByteArray1[0]);
                 fIn.Read(tempByteArray1, 0, 1);
                 this.keyTableLength++;
             }

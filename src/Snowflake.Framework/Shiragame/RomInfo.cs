@@ -46,7 +46,8 @@ namespace Snowflake.Shiragame
         /// </summary>
         public string Region { get; }
 
-        internal RomInfo(string platformId, string crc32, string md5, string sha1, string mimetype, string fileName, string region)
+        internal RomInfo(string platformId, string crc32, string md5, string sha1, string mimetype, string fileName,
+            string region)
         {
             this.PlatformId = platformId;
             this.CRC32 = crc32;

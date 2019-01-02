@@ -124,12 +124,12 @@ namespace Snowflake.Plugin.Scraping.FileSignatures.Formats.SFO
             StringBuilder sb = new StringBuilder();
 
             sb.Append("== SFO IndexTable Entry ==\n")
-            .Append("offsetKeyNameInKeyTable:    ").Append(this.offsetKeyNameInKeyTable).Append("\n")
-            .Append("dataAlignmentRequirements:  ").Append(this.dataAlignmentRequirements).Append("\n")
-            .Append("dataTypeValue:              ").Append(this.dataTypeValue).Append("\n")
-            .Append("sizeValueData:              ").Append(this.sizeValueData).Append("\n")
-            .Append("sizeValueDataAndPadding:    ").Append(this.sizeValueDataAndPadding).Append("\n")
-            .Append("offsetDataValueInDataTable: ").Append(this.offsetDataValueInDataTable).Append("\n");
+                .Append("offsetKeyNameInKeyTable:    ").Append(this.offsetKeyNameInKeyTable).Append("\n")
+                .Append("dataAlignmentRequirements:  ").Append(this.dataAlignmentRequirements).Append("\n")
+                .Append("dataTypeValue:              ").Append(this.dataTypeValue).Append("\n")
+                .Append("sizeValueData:              ").Append(this.sizeValueData).Append("\n")
+                .Append("sizeValueDataAndPadding:    ").Append(this.sizeValueDataAndPadding).Append("\n")
+                .Append("offsetDataValueInDataTable: ").Append(this.offsetDataValueInDataTable).Append("\n");
 
             return sb.ToString();
         }

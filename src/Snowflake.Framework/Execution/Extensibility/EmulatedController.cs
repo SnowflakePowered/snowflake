@@ -12,7 +12,7 @@ namespace Snowflake.Execution.Extensibility
         public EmulatedController(int portIndex,
             IInputDevice physicalDevice,
             IControllerLayout targetLayout,
-            IMappedControllerElementCollection layoutMapping)
+            IControllerElementMappings layoutMapping)
         {
             this.PortIndex = portIndex;
             this.PhysicalDevice = physicalDevice;
@@ -26,6 +26,6 @@ namespace Snowflake.Execution.Extensibility
 
         public IControllerLayout TargetLayout { get; }
 
-        public IMappedControllerElementCollection LayoutMapping { get; }
+        public IControllerElementMappings LayoutMapping { get; }
     }
 }

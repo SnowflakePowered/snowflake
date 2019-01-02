@@ -6,7 +6,7 @@ using Snowflake.Configuration;
 using Snowflake.Configuration.Input;
 using Snowflake.Execution.Process;
 using Snowflake.Execution.Saving;
-using Snowflake.Records.Game;
+using Snowflake.Model.Records.Game;
 
 namespace Snowflake.Execution.Extensibility
 {
