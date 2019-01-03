@@ -10,7 +10,7 @@ namespace Snowflake.Model.Game
 
         public PlatformId(string id)
         {
-            this.PlatformIdString = id.ToUpperInvariant();
+            this.PlatformIdString = id?.ToUpperInvariant() ?? "NULL_PLATFORM";
         }
 
         public bool Equals(PlatformId other)

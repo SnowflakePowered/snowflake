@@ -20,16 +20,24 @@ namespace Snowflake.Model.Tests
             var layout = (ControllerId)"SOME_LAYOUT";
             var layout2 = (ControllerId)"Some_layout";
             Assert.Equal(layout, layout2);
-
+            Assert.Equal(layout, (object)layout2);
+            Assert.Equal(layout, (object)layout2.ToString());
+    
             var controller = (ControllerId)"SOME_CONTROLLER";
             var controller2 = (ControllerId)"some_controller";
             Assert.Equal(controller, controller2);
+
+            Assert.NotEqual(controller, device);
+            Assert.NotEqual(controller, (object)device);
+            Assert.NotEqual(controller, (object)new { });
 
             Assert.NotEqual(controller, device);
             Assert.True(controller != device2);
             Assert.True(controller != "not_ok");
 
             Assert.Throws<InvalidControllerIdException>(() => (ControllerId)"NOT_OK");
+            Assert.Throws<InvalidControllerIdException>(() => (ControllerId)null);
+
         }
 
 
@@ -47,13 +55,18 @@ namespace Snowflake.Model.Tests
 
             var layout = (PlatformId)"SOME_LAYOUT";
             var layout2 = (PlatformId)"Some_layout";
-            Assert.Equal(layout, layout2);
+            Assert.Equal(layout, (object)layout2);
+            Assert.Equal(layout, (object)layout2.ToString());
 
             var controller = (PlatformId)"SOME_CONTROLLER";
             var controller2 = (PlatformId)"some_controller";
             Assert.Equal(controller, controller2);
 
             Assert.NotEqual(controller, device);
+            Assert.NotEqual(controller, (object)device);
+            Assert.NotEqual(controller, (object)new { });
+            Assert.NotEqual(null, controller);
+
             Assert.True(controller != device2);
             Assert.True(controller != "device_2");
 
