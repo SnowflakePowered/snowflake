@@ -8,7 +8,7 @@ using GraphQL.Types.Relay;
 using GraphQL.Types.Relay.DataObjects;
 using Snowflake.Platform;
 
-namespace Snowflake.Support.Remoting.GraphQl.Types.PlatformInfo
+namespace Snowflake.Support.Remoting.GraphQL.Types.PlatformInfo
 {
     public class PlatformInfoGraphType : ObjectGraphType<IPlatformInfo>
     {

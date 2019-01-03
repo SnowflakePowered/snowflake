@@ -4,7 +4,7 @@ using System.Text;
 using GraphQL.Types;
 using Snowflake.Scraping.Extensibility;
 
-namespace Snowflake.Support.Remoting.GraphQl.Types.Plugin
+namespace Snowflake.Support.Remoting.GraphQL.Types.Plugin
 {
     public class ScraperGraphType : ObjectGraphType<IScraper>
     {

@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using GraphQL.Types;
 using GraphQL.Types.Relay.DataObjects;
-using Snowflake.Framework.Remoting.GraphQl.Attributes;
-using Snowflake.Framework.Remoting.GraphQl.Query;
+using Snowflake.Framework.Remoting.GraphQL.Attributes;
+using Snowflake.Framework.Remoting.GraphQL.Query;
 using Snowflake.Services.Logging;
-using Snowflake.Support.Remoting.GraphQl.RootProvider;
-using Snowflake.Support.Remoting.GraphQl.Servers;
+using Snowflake.Support.Remoting.GraphQL.RootProvider;
+using Snowflake.Support.Remoting.GraphQL.Servers;
 using Xunit;
 
 namespace Snowflake.GraphQl

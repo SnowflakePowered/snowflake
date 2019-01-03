@@ -6,7 +6,7 @@ using GraphQL.Types;
 using Snowflake.Model.Game;
 using Snowflake.Platform;
 
-namespace Snowflake.Support.Remoting.GraphQl.Types.PlatformInfo
+namespace Snowflake.Support.Remoting.GraphQL.Types.PlatformInfo
 {
     internal class BiosFilesGraphType : ObjectGraphType<IBiosFile>
     {

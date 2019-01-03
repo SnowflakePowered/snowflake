@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using GraphQL.Types;
 using Snowflake.Execution.Extensibility;
-using Snowflake.Support.Remoting.GraphQl.Types.ControllerLayout;
-using Snowflake.Support.Remoting.GraphQl.Types.InputDevice;
-using Snowflake.Support.Remoting.GraphQl.Types.InputDevice.Mapped;
+using Snowflake.Support.Remoting.GraphQL.Types.ControllerLayout;
+using Snowflake.Support.Remoting.GraphQL.Types.InputDevice;
+using Snowflake.Support.Remoting.GraphQL.Types.InputDevice.Mapped;
 
-namespace Snowflake.Support.Remoting.GraphQl.Types.Execution
+namespace Snowflake.Support.Remoting.GraphQL.Types.Execution
 {
     public class EmulatedControllerGraphType : ObjectGraphType<IEmulatedController>
     {

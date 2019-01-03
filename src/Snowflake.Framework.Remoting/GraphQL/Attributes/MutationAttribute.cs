@@ -4,16 +4,16 @@ using System.Linq;
 using System.Text;
 using GraphQL.Types;
 
-namespace Snowflake.Framework.Remoting.GraphQl.Attributes
+namespace Snowflake.Framework.Remoting.GraphQL.Attributes
 {
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
-    public sealed class ConnectionAttribute : Attribute
+    public sealed class MutationAttribute : Attribute
     {
         public Type GraphType { get; }
         public string FieldName { get; }
         public string Description { get; }
 
-        public ConnectionAttribute(string fieldName, string description, Type graphType)
+        public MutationAttribute(string fieldName, string description, Type graphType)
         {
             this.GraphType = graphType;
             this.FieldName = fieldName;

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using GraphQL.Types;
-using Snowflake.Support.Remoting.GraphQl.Inputs.RecordMetadata;
+using Snowflake.Support.Remoting.GraphQL.Inputs.RecordMetadata;
 
-namespace Snowflake.Support.Remoting.GraphQl.Inputs.GameRecord
+namespace Snowflake.Support.Remoting.GraphQL.Inputs.GameRecord
 {
     public class GameRecordInputType : InputObjectGraphType<GameRecordInputObject>
     {

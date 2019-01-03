@@ -7,14 +7,14 @@ using GraphQL.Types;
 using Snowflake.Execution.Extensibility;
 using Snowflake.Execution.Saving;
 using Snowflake.Extensibility;
-using Snowflake.Framework.Remoting.GraphQl.Attributes;
-using Snowflake.Framework.Remoting.GraphQl.Query;
+using Snowflake.Framework.Remoting.GraphQL.Attributes;
+using Snowflake.Framework.Remoting.GraphQL.Query;
 using Snowflake.Model.Game;
 using Snowflake.Services;
-using Snowflake.Support.Remoting.GraphQl.Inputs.EmulatedController;
-using Snowflake.Support.Remoting.GraphQl.Types.Execution;
+using Snowflake.Support.Remoting.GraphQL.Inputs.EmulatedController;
+using Snowflake.Support.Remoting.GraphQL.Types.Execution;
 
-namespace Snowflake.Support.Remoting.GraphQl.Queries
+namespace Snowflake.Support.Remoting.GraphQL.Queries
 {
     public class EmulationQueryBuilder : QueryBuilder
     {

@@ -5,15 +5,15 @@ using System.Text;
 using GraphQL.Types;
 using Snowflake.Execution.Extensibility;
 using Snowflake.Extensibility;
-using Snowflake.Framework.Remoting.GraphQl.Attributes;
-using Snowflake.Framework.Remoting.GraphQl.Query;
+using Snowflake.Framework.Remoting.GraphQL.Attributes;
+using Snowflake.Framework.Remoting.GraphQL.Query;
 using Snowflake.Loader;
 using Snowflake.Scraping.Extensibility;
 using Snowflake.Services;
-using Snowflake.Support.Remoting.GraphQl.Types.Module;
-using Snowflake.Support.Remoting.GraphQl.Types.Plugin;
+using Snowflake.Support.Remoting.GraphQL.Types.Module;
+using Snowflake.Support.Remoting.GraphQL.Types.Plugin;
 
-namespace Snowflake.Support.Remoting.GraphQl.Queries
+namespace Snowflake.Support.Remoting.GraphQL.Queries
 {
     public class ExtensibilityQueryBuilder : QueryBuilder
     {

@@ -4,9 +4,9 @@ using System.Reflection;
 using System.Text;
 using GraphQL.Types;
 using Snowflake.Configuration;
-using Snowflake.Support.Remoting.GraphQl.Types.Values;
+using Snowflake.Support.Remoting.GraphQL.Types.Values;
 
-namespace Snowflake.Support.Remoting.GraphQl.Types.Configuration
+namespace Snowflake.Support.Remoting.GraphQL.Types.Configuration
 {
     public class ConfigurationOptionDescriptorGraphType : ObjectGraphType<IConfigurationOptionDescriptor>
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using GraphQL.Types;
 
-namespace Snowflake.Support.Remoting.GraphQl.Types.PlatformInfo
+namespace Snowflake.Support.Remoting.GraphQL.Types.PlatformInfo
 {
     internal class MetadataGraphType : ObjectGraphType<KeyValuePair<string, string>>
     {

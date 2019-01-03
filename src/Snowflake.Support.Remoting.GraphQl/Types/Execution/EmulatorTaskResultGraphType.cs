@@ -4,7 +4,7 @@ using System.Text;
 using GraphQL.Types;
 using Snowflake.Execution.Extensibility;
 
-namespace Snowflake.Support.Remoting.GraphQl.Types.Execution
+namespace Snowflake.Support.Remoting.GraphQL.Types.Execution
 {
     public class EmulatorTaskResultGraphType : ObjectGraphType<IEmulatorTaskResult>
     {

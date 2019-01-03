@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Snowflake.Input.Device;
 
-namespace Snowflake.Support.Remoting.GraphQl.Inputs.InputDevice
+namespace Snowflake.Support.Remoting.GraphQL.Inputs.InputDevice
 {
     public class InputDeviceInputObject
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using GraphQL.Types;
 using Snowflake.Model.Records;
 
-namespace Snowflake.Support.Remoting.GraphQl.Types.Model
+namespace Snowflake.Support.Remoting.GraphQL.Types.Model
 {
     public class RecordInterface : InterfaceGraphType<IRecord>
     {

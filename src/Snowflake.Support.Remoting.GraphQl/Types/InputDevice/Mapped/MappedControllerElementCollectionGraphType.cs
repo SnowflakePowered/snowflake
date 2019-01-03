@@ -4,7 +4,7 @@ using System.Text;
 using GraphQL.Types;
 using Snowflake.Input.Controller.Mapped;
 
-namespace Snowflake.Support.Remoting.GraphQl.Types.InputDevice.Mapped
+namespace Snowflake.Support.Remoting.GraphQL.Types.InputDevice.Mapped
 {
     public class MappedControllerElementCollectionGraphType : ObjectGraphType<IControllerElementMappings>
     {

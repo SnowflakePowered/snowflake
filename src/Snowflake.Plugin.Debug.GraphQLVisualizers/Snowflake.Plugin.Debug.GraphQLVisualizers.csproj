@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
@@ -6,13 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EmbedIO" Version="2.1.1" />
-    <PackageReference Include="GraphQL" Version="2.4.0" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\Snowflake.Framework\Snowflake.Framework.csproj" />
     <ProjectReference Include="..\Snowflake.Framework.Primitives\Snowflake.Framework.Primitives.csproj" />
-    <ProjectReference Include="..\Snowflake.Framework.Remoting.GraphQl\Snowflake.Framework.Remoting.GraphQl.csproj" />
+    <ProjectReference Include="..\Snowflake.Framework.Remoting\Snowflake.Framework.Remoting.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,7 +22,12 @@
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json" />
-
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="GraphQL.Server.Ui.GraphiQL" Version="3.2.0" />
+    <PackageReference Include="GraphQL.Server.Ui.Playground" Version="3.2.0" />
+    <PackageReference Include="GraphQL.Server.Ui.Voyager" Version="3.2.0" />
   </ItemGroup>
 
   <PropertyGroup>

@@ -2,7 +2,7 @@
 using Snowflake.Configuration;
 using Snowflake.Execution.Extensibility;
 using Snowflake.Execution.Saving;
-using Snowflake.Framework.Remoting.GraphQl;
+using Snowflake.Framework.Remoting.GraphQL;
 using Snowflake.Input;
 using Snowflake.Input.Controller.Mapped;
 using Snowflake.Input.Device;
@@ -11,9 +11,9 @@ using Snowflake.Model.Game;
 using Snowflake.Scraping;
 using Snowflake.Scraping.Extensibility;
 using Snowflake.Services;
-using Snowflake.Support.Remoting.GraphQl.Queries;
+using Snowflake.Support.Remoting.GraphQL.Queries;
 
-namespace Snowflake.Support.Remoting.GraphQl.Containers
+namespace Snowflake.Support.Remoting.GraphQL.Containers
 {
     public class EmulationQueryContainer : IComposable
     {
@@ -23,7 +23,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Containers
         [ImportService(typeof(IPluginManager))]
         [ImportService(typeof(IControllerElementMappingsStore))]
         [ImportService(typeof(ISaveLocationProvider))]
-        [ImportService(typeof(IGraphQlRootSchema))]
+        [ImportService(typeof(IGraphQLService))]
         [ImportService(typeof(ILogProvider))]
         [ImportService(typeof(IGameLibrary))]
         public void Compose(IModule module, IServiceRepository coreInstance)
@@ -35,7 +35,7 @@ namespace Snowflake.Support.Remoting.GraphQl.Containers
             var saves = coreInstance.Get<ISaveLocationProvider>();
             var gameLib = coreInstance.Get<IGameLibrary>();
 
-            var rootSchema = coreInstance.Get<IGraphQlRootSchema>();
+            var rootSchema = coreInstance.Get<IGraphQLService>();
             var inputQuery = new InputQueryBuilder(input, plugin, mappedController, stone);
             var controllerQueries = new ControllerLayoutQueryBuilder(stone);
             var emuQuery = new EmulationQueryBuilder(plugin.GetCollection<IEmulator>(), stone, gameLib, saves,

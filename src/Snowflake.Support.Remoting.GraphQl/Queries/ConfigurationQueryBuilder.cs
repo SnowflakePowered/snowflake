@@ -7,13 +7,13 @@ using Snowflake.Configuration;
 using Snowflake.Execution.Extensibility;
 using Snowflake.Extensibility;
 using Snowflake.Extensibility.Configuration;
-using Snowflake.Framework.Remoting.GraphQl.Attributes;
-using Snowflake.Framework.Remoting.GraphQl.Query;
+using Snowflake.Framework.Remoting.GraphQL.Attributes;
+using Snowflake.Framework.Remoting.GraphQL.Query;
 using Snowflake.Services;
-using Snowflake.Support.Remoting.GraphQl.Inputs.Configuration;
-using Snowflake.Support.Remoting.GraphQl.Types.Configuration;
+using Snowflake.Support.Remoting.GraphQL.Inputs.Configuration;
+using Snowflake.Support.Remoting.GraphQL.Types.Configuration;
 
-namespace Snowflake.Support.Remoting.GraphQl.Queries
+namespace Snowflake.Support.Remoting.GraphQL.Queries
 {
     public class ConfigurationQueryBuilder : QueryBuilder
     {

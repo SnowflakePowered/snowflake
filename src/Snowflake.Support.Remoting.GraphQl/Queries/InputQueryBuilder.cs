@@ -4,18 +4,18 @@ using System.Linq;
 using System.Text;
 using GraphQL.Types;
 using Snowflake.Configuration;
-using Snowflake.Framework.Remoting.GraphQl.Attributes;
-using Snowflake.Framework.Remoting.GraphQl.Query;
+using Snowflake.Framework.Remoting.GraphQL.Attributes;
+using Snowflake.Framework.Remoting.GraphQL.Query;
 using Snowflake.Input;
 using Snowflake.Input.Controller.Mapped;
 using Snowflake.Input.Device;
 using Snowflake.Services;
-using Snowflake.Support.Remoting.GraphQl.Inputs.MappedControllerElement;
-using Snowflake.Support.Remoting.GraphQl.Types.Configuration;
-using Snowflake.Support.Remoting.GraphQl.Types.InputDevice;
-using Snowflake.Support.Remoting.GraphQl.Types.InputDevice.Mapped;
+using Snowflake.Support.Remoting.GraphQL.Inputs.MappedControllerElement;
+using Snowflake.Support.Remoting.GraphQL.Types.Configuration;
+using Snowflake.Support.Remoting.GraphQL.Types.InputDevice;
+using Snowflake.Support.Remoting.GraphQL.Types.InputDevice.Mapped;
 
-namespace Snowflake.Support.Remoting.GraphQl.Queries
+namespace Snowflake.Support.Remoting.GraphQL.Queries
 {
     public class InputQueryBuilder : QueryBuilder
     {

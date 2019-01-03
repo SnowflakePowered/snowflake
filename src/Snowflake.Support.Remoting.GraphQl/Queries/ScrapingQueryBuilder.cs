@@ -5,17 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 using GraphQL.Types;
 using Snowflake.Extensibility;
-using Snowflake.Framework.Remoting.GraphQl.Attributes;
-using Snowflake.Framework.Remoting.GraphQl.Query;
+using Snowflake.Framework.Remoting.GraphQL.Attributes;
+using Snowflake.Framework.Remoting.GraphQL.Query;
 using Snowflake.Model.Records.Game;
 using Snowflake.Scraping;
 using Snowflake.Scraping.Extensibility;
-using Snowflake.Support.Remoting.GraphQl.Inputs.Scraping;
-using Snowflake.Support.Remoting.GraphQl.Types.Model;
-using Snowflake.Support.Remoting.GraphQl.Types.Scraping;
+using Snowflake.Support.Remoting.GraphQL.Inputs.Scraping;
+using Snowflake.Support.Remoting.GraphQL.Types.Model;
+using Snowflake.Support.Remoting.GraphQL.Types.Scraping;
 using static Snowflake.Scraping.Extensibility.SeedBuilder;
 
-namespace Snowflake.Support.Remoting.GraphQl.Queries
+namespace Snowflake.Support.Remoting.GraphQL.Queries
 {
     public class ScrapingQueryBuilder : QueryBuilder
     {

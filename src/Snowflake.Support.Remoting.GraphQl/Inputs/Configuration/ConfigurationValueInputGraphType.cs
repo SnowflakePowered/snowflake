@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using GraphQL.Types;
 using Snowflake.Configuration;
-using Snowflake.Support.Remoting.GraphQl.Types.Values;
+using Snowflake.Support.Remoting.GraphQL.Types.Values;
 
-namespace Snowflake.Support.Remoting.GraphQl.Inputs.Configuration
+namespace Snowflake.Support.Remoting.GraphQL.Inputs.Configuration
 {
     public class ConfigurationValueInputGraphType : ObjectGraphType<IConfigurationValue>
     {

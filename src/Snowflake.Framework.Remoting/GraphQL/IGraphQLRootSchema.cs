@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 using GraphQL.Types;
-using Snowflake.Framework.Remoting.GraphQl.Query;
+using Snowflake.Framework.Remoting.GraphQL.Query;
 
-namespace Snowflake.Framework.Remoting.GraphQl
+namespace Snowflake.Framework.Remoting.GraphQL
 {
-    public interface IGraphQlRootSchema
+    public interface IGraphQLService
     {
         void Register(QueryBuilder queries);
     }

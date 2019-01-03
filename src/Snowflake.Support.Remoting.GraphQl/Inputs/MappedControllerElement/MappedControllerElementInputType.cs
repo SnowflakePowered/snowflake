@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using GraphQL.Types;
-using Snowflake.Support.Remoting.GraphQl.Types.ControllerLayout;
+using Snowflake.Support.Remoting.GraphQL.Types.ControllerLayout;
 
-namespace Snowflake.Support.Remoting.GraphQl.Inputs.MappedControllerElement
+namespace Snowflake.Support.Remoting.GraphQL.Inputs.MappedControllerElement
 {
     public class MappedControllerElementInputType : InputObjectGraphType<MappedControllerElementInputObject>
     {

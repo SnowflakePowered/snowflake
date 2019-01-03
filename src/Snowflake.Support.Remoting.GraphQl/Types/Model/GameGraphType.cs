@@ -7,7 +7,7 @@ using Snowflake.Model.Game;
 using Snowflake.Model.Game.LibraryExtensions;
 using Snowflake.Model.Records.Game;
 
-namespace Snowflake.Support.Remoting.GraphQl.Types.Model
+namespace Snowflake.Support.Remoting.GraphQL.Types.Model
 {
     public class GameGraphType : ObjectGraphType<IGame>
     {

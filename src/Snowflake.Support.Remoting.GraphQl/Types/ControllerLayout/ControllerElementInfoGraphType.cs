@@ -4,7 +4,7 @@ using System.Text;
 using GraphQL.Types;
 using Snowflake.Input.Controller;
 
-namespace Snowflake.Support.Remoting.GraphQl.Types.ControllerLayout
+namespace Snowflake.Support.Remoting.GraphQL.Types.ControllerLayout
 {
     public class
         ControllerElementInfoGraphType : ObjectGraphType<KeyValuePair<ControllerElement, IControllerElementInfo>>

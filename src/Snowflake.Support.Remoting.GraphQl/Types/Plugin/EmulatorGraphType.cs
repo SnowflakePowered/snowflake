@@ -5,7 +5,7 @@ using GraphQL.Types;
 using Snowflake.Execution.Extensibility;
 using Snowflake.Scraping.Extensibility;
 
-namespace Snowflake.Support.Remoting.GraphQl.Types.Plugin
+namespace Snowflake.Support.Remoting.GraphQL.Types.Plugin
 {
     public class EmulatorGraphType : ObjectGraphType<IEmulator>
     {

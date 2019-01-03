@@ -5,21 +5,21 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using GraphQL.Types;
-using Snowflake.Framework.Remoting.GraphQl.Attributes;
-using Snowflake.Framework.Remoting.GraphQl.Query;
+using Snowflake.Framework.Remoting.GraphQL.Attributes;
+using Snowflake.Framework.Remoting.GraphQL.Query;
 using Snowflake.Input.Controller;
 using Snowflake.Model.Game;
 using Snowflake.Model.Records.Game;
 using Snowflake.Platform;
 using Snowflake.Services;
-using Snowflake.Support.Remoting.GraphQl.Inputs.FileRecord;
-using Snowflake.Support.Remoting.GraphQl.Inputs.GameRecord;
-using Snowflake.Support.Remoting.GraphQl.Inputs.RecordMetadata;
-using Snowflake.Support.Remoting.GraphQl.Types.ControllerLayout;
-using Snowflake.Support.Remoting.GraphQl.Types.PlatformInfo;
-using Snowflake.Support.Remoting.GraphQl.Types.Model;
+using Snowflake.Support.Remoting.GraphQL.Inputs.FileRecord;
+using Snowflake.Support.Remoting.GraphQL.Inputs.GameRecord;
+using Snowflake.Support.Remoting.GraphQL.Inputs.RecordMetadata;
+using Snowflake.Support.Remoting.GraphQL.Types.ControllerLayout;
+using Snowflake.Support.Remoting.GraphQL.Types.PlatformInfo;
+using Snowflake.Support.Remoting.GraphQL.Types.Model;
 
-namespace Snowflake.Support.Remoting.GraphQl.Queries
+namespace Snowflake.Support.Remoting.GraphQL.Queries
 {
     public class RecordQueryBuilder : QueryBuilder
     {

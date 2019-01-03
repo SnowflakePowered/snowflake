@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Snowflake.Support.Remoting.GraphQl.Inputs.Scraping
+namespace Snowflake.Support.Remoting.GraphQL.Inputs.Scraping
 {
     public class SeedTreeInputObject
     {

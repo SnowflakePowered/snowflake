@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Snowflake.Support.Remoting.GraphQl.Inputs.RecordMetadata;
+using Snowflake.Support.Remoting.GraphQL.Inputs.RecordMetadata;
 
-namespace Snowflake.Support.Remoting.GraphQl.Inputs.FileRecord
+namespace Snowflake.Support.Remoting.GraphQL.Inputs.FileRecord
 {
     public class FileRecordInputObject
     {

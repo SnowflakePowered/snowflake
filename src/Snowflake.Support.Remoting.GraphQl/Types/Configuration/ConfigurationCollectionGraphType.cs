@@ -5,7 +5,7 @@ using System.Text;
 using GraphQL.Types;
 using Snowflake.Configuration;
 
-namespace Snowflake.Support.Remoting.GraphQl.Types.Configuration
+namespace Snowflake.Support.Remoting.GraphQL.Types.Configuration
 {
     public class ConfigurationCollectionGraphType : ObjectGraphType<IConfigurationCollection>
     {

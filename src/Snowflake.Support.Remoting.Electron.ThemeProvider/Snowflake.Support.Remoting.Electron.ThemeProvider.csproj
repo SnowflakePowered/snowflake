@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
@@ -11,8 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Snowflake.Framework.Primitives\Snowflake.Framework.Primitives.csproj" />
-    <ProjectReference Include="..\Snowflake.Framework.Remoting.Electron\Snowflake.Framework.Remoting.Electron.csproj" />
-    <ProjectReference Include="..\Snowflake.Framework.Remoting.GraphQl\Snowflake.Framework.Remoting.GraphQl.csproj" />
+    <ProjectReference Include="..\Snowflake.Framework.Remoting\Snowflake.Framework.Remoting.csproj" />
   </ItemGroup>
 
   <ItemGroup>

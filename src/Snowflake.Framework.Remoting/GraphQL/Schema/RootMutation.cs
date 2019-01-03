@@ -4,9 +4,8 @@ using System.Text;
 using GraphQL.Relay.Types;
 using GraphQL.Types;
 using GraphQL.Types.Relay;
-using Snowflake.Services;
 
-namespace Snowflake.Support.Remoting.GraphQl.RootProvider
+namespace Snowflake.Support.Remoting.GraphQL.RootProvider
 {
     internal class RootMutation : ObjectGraphType<object>
     {

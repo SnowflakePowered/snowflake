@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using GraphQL.Types;
 
-namespace Snowflake.Framework.Remoting.GraphQl.Attributes
+namespace Snowflake.Framework.Remoting.GraphQL.Attributes
 {
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
     public sealed class ParameterAttribute : Attribute

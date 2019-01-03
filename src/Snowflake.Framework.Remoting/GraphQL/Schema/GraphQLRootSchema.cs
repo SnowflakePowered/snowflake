@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using System.Text;
 using GraphQL;
 using GraphQL.Types;
-using Snowflake.Configuration;
-using Snowflake.Framework.Remoting.GraphQl;
-using Snowflake.Framework.Remoting.GraphQl.Query;
-using Snowflake.Loader;
-using Snowflake.Services;
+using Snowflake.Framework.Remoting.GraphQL;
+using Snowflake.Framework.Remoting.GraphQL.Query;
 
-namespace Snowflake.Support.Remoting.GraphQl.RootProvider
+
+namespace Snowflake.Support.Remoting.GraphQL.RootProvider
 {
-    class GraphQlRootSchema : Schema, IGraphQlRootSchema
+    class GraphQlRootSchema : Schema, IGraphQLService
     {
         public GraphQlRootSchema(RootQuery query, RootMutation mutation)
         {

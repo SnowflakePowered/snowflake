@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 using GraphQL.Types;
-using Snowflake.Framework.Remoting.GraphQl.Attributes;
-using Snowflake.Framework.Remoting.GraphQl.Query;
+using Snowflake.Framework.Remoting.GraphQL.Attributes;
+using Snowflake.Framework.Remoting.GraphQL.Query;
 using Snowflake.Platform;
 using Snowflake.Services;
-using Snowflake.Support.Remoting.GraphQl.Types.PlatformInfo;
+using Snowflake.Support.Remoting.GraphQL.Types.PlatformInfo;
 
-namespace Snowflake.Support.Remoting.GraphQl.Queries
+namespace Snowflake.Support.Remoting.GraphQL.Queries
 {
     public class PlatformInfoQueryBuilder : QueryBuilder
     {

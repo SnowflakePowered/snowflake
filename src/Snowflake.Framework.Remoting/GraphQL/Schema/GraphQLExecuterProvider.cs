@@ -6,7 +6,7 @@ using GraphQL;
 using GraphQL.Http;
 using GraphQL.Types;
 
-namespace Snowflake.Support.Remoting.GraphQl.RootProvider
+namespace Snowflake.Support.Remoting.GraphQL.RootProvider
 {
     internal class GraphQlExecuterProvider
     {

@@ -4,7 +4,7 @@ using System.Text;
 using GraphQL.Types;
 using Snowflake.Input.Device;
 
-namespace Snowflake.Support.Remoting.GraphQl.Types.InputDevice
+namespace Snowflake.Support.Remoting.GraphQL.Types.InputDevice
 {
     public class InputApiEnum : EnumerationGraphType<InputApi>
     {
