@@ -65,7 +65,6 @@ namespace Snowflake.Framework.Remoting.Kestrel
 
         private void Configure(IApplicationBuilder app)
         {
-            app.UseWebSockets();
             app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             app.UseResponseCompression();
 

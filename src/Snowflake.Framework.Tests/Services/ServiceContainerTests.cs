@@ -27,6 +27,7 @@ namespace Snowflake.Services.Tests
             Assert.NotNull(container.Get<IServiceRegistrationProvider>());
             Assert.NotNull(container.Get<IContentDirectoryProvider>());
             Assert.NotNull(container.Get<ILogProvider>());
+            container.Get<ILogProvider>().GetLogger("Test").Info("Test");
             Assert.NotNull(container.Get<IModuleEnumerator>());
         }
 

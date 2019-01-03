@@ -1,3 +1,10 @@
 ﻿<Project ToolsVersion="15.0">
-  <Import Sdk="Snowflake.Framework.Dependencies.Sdk" Project="Sdk.targets" />
+  <Import Sdk="Microsoft.NET.Sdk" Project="Sdk.targets" />
+ 
+  <Target Name="EnsureTFMCompatibility" BeforeTargets="_CheckForInvalidConfigurationAndPlatform">
+    <Error
+      Text="This version of Snowflake.Framework.Library is only compatible with the netcoreapp2.2 target framework. Please target netcoreapp2.2."
+      Condition="'$(TargetFramework)' != 'netcoreapp2.2'"/>
+  </Target>
+
 </Project>
