@@ -16,7 +16,6 @@ namespace Snowflake.Model.Database.Models
         {
             modelBuilder.Entity<GameRecordModel>()
                 .Property(r => r.Platform)
-               
                 .IsRequired();
         }
     }
