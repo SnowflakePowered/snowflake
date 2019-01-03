@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Snowflake.Model.FileSystem
+namespace Snowflake.Filesystem
 {
     public interface IDirectoryRoot
     {

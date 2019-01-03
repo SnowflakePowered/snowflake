@@ -6,7 +6,7 @@ using System.Text;
 using Xunit;
 using Zio;
 using Zio.FileSystems;
-using FS = Snowflake.Model.FileSystem;
+using FS = Snowflake.Filesystem;
 
 namespace Snowflake.FileSystem
 {

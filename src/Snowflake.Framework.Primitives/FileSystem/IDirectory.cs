@@ -5,7 +5,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Threading;
 
-namespace Snowflake.Model.FileSystem
+namespace Snowflake.Filesystem
 {
     /// <summary>
     /// Represents the root of a Directory, where each file that is access through a directory is

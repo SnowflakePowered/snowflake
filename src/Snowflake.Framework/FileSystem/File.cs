@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 using Zio;
 
-namespace Snowflake.Model.FileSystem
+namespace Snowflake.Filesystem
 {
     internal sealed class File : IFile
     {
