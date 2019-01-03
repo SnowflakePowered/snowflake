@@ -8,17 +8,17 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Snowflake.Input.Controller;
-using Snowflake.Platform;
+using Snowflake.Model.Game;
 
 namespace Snowflake.Services
 {
     public class StoneProvider : IStoneProvider
     {
         /// <inheritdoc/>
-        public IDictionary<string, IPlatformInfo> Platforms { get; }
+        public IDictionary<PlatformId, IPlatformInfo> Platforms { get; }
 
         /// <inheritdoc/>
-        public IDictionary<string, IControllerLayout> Controllers { get; }
+        public IDictionary<ControllerId, IControllerLayout> Controllers { get; }
 
         /// <inheritdoc/>
         public Version StoneVersion { get; }
@@ -29,8 +29,8 @@ namespace Snowflake.Services
             var stone = JsonConvert.DeserializeAnonymousType(stoneData,
                 new
                 {
-                    Controllers = new Dictionary<string, ControllerLayout>(),
-                    Platforms = new Dictionary<string, PlatformInfo>(),
+                    Controllers = new Dictionary<ControllerId, ControllerLayout>(),
+                    Platforms = new Dictionary<PlatformId, PlatformInfo>(),
                     version = string.Empty,
                 });
             this.Platforms = stone.Platforms.ToDictionary(kvp => kvp.Key, kvp => kvp.Value as IPlatformInfo);

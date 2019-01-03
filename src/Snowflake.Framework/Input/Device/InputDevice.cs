@@ -29,7 +29,7 @@ namespace Snowflake.Input.Device
 
         public InputDevice(InputApi deviceApi, ILowLevelInputDevice deviceInfo, IControllerLayout deviceLayout)
         {
-            this.DeviceId = deviceLayout.LayoutID;
+            this.DeviceId = deviceLayout.LayoutId;
             this.ControllerName = deviceLayout.FriendlyName;
             this.DeviceApi = deviceApi;
             this.DeviceInfo = deviceInfo;

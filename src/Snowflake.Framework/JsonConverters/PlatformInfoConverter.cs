@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using Snowflake.Input.Controller;
 using Snowflake.Model.Game;
-using Snowflake.Platform;
-using IPlatformInfo = Snowflake.Platform.IPlatformInfo;
+using IPlatformInfo = Snowflake.Model.Game.IPlatformInfo;
 
 namespace Snowflake.JsonConverters
 {
@@ -16,7 +15,7 @@ namespace Snowflake.JsonConverters
         /// <inheritdoc/>
         protected override IPlatformInfo Create(Type objectType, JObject jObject)
         {
-            string platformId = jObject.Value<string>("PlatformId");
+            string platformId = jObject.Value<string>("PlatformID");
             string friendlyName = jObject.Value<string>("FriendlyName");
             IDictionary<string, string> metadata =
                 jObject.Value<JToken>("Metadata").ToObject<IDictionary<string, string>>();

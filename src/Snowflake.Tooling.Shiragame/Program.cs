@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using Shiragame.Builder.Parser;
 using Snowflake.Persistence;
-using Snowflake.Platform;
+using Snowflake.Model.Game;
 using Snowflake.Services;
 
 namespace Shiragame.Builder

@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Moq;
-using Snowflake.Platform;
+using Snowflake.Model.Game;
 using Snowflake.Services;
 using Snowflake.Support.Execution;
 using Xunit;

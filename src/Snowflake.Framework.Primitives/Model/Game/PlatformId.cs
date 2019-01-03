@@ -15,6 +15,7 @@ namespace Snowflake.Model.Game
 
         public bool Equals(PlatformId other)
         {
+            if (other.PlatformIdString == null) return false;
             return other.PlatformIdString.Equals(this.PlatformIdString);
         }
 

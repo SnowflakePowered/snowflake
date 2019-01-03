@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using GraphQL.Types;
 using Snowflake.Model.Game;
-using Snowflake.Platform;
 
 namespace Snowflake.Support.Remoting.GraphQL.Types.PlatformInfo
 {

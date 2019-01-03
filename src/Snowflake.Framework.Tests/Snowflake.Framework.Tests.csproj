@@ -35,6 +35,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Snowflake.Framework.Remoting\Snowflake.Framework.Remoting.csproj" />
     <ProjectReference Include="..\Snowflake.Framework.Tests.DummyComposableInterface\Snowflake.Framework.Tests.DummyComposableInterface.csproj" />
     <ProjectReference Include="..\Snowflake.Framework.Tests.InvalidComposable\Snowflake.Framework.Tests.InvalidComposable.csproj" />
     <ProjectReference Include="..\Snowflake.Framework.Primitives\Snowflake.Framework.Primitives.csproj" />

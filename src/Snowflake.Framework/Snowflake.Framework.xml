@@ -807,7 +807,7 @@
         <member name="P:Snowflake.Input.Controller.ControllerElementInfo.Type">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Input.Controller.ControllerLayout.LayoutID">
+        <member name="P:Snowflake.Input.Controller.ControllerLayout.LayoutId">
             <inheritdoc/>
         </member>
         <member name="P:Snowflake.Input.Controller.ControllerLayout.FriendlyName">
@@ -975,6 +975,24 @@
             <inheritdoc/>
         </member>
         <member name="M:Snowflake.Loader.ServiceProvider.Get``1">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Model.Game.PlatformInfo.FriendlyName">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Model.Game.PlatformInfo.PlatformId">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Model.Game.PlatformInfo.Metadata">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Model.Game.PlatformInfo.FileTypes">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Model.Game.PlatformInfo.BiosFiles">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Model.Game.PlatformInfo.MaximumInputs">
             <inheritdoc/>
         </member>
         <member name="P:Snowflake.Model.Records.FileRecord.Metadata">
@@ -1184,24 +1202,6 @@
             Loads from a disk database to this in-memory database
             </summary>
             <param name="database">The database to load from</param>
-        </member>
-        <member name="P:Snowflake.Platform.PlatformInfo.FriendlyName">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Platform.PlatformInfo.PlatformId">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Platform.PlatformInfo.Metadata">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Platform.PlatformInfo.FileTypes">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Platform.PlatformInfo.BiosFiles">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Platform.PlatformInfo.MaximumInputs">
-            <inheritdoc/>
         </member>
         <member name="P:Snowflake.Romfile.RomFileInfo.Mimetype">
             <inheritdoc/>

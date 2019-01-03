@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Model.Game;
 using Snowflake.Model.Records.Game;
-using Snowflake.Platform;
 
 namespace Snowflake.Model.Records
 {

@@ -6,16 +6,16 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Snowflake.JsonConverters;
-using Snowflake.Platform;
+using Snowflake.Model.Game;
 
 namespace Snowflake.Input.Controller
 {
     // should support everything including numeric keypads. buttons are for generic use, such as shaking actions
     [JsonConverter(typeof(ControllerLayoutConverter))]
-    public class ControllerLayout : IControllerLayout
+    internal class ControllerLayout : IControllerLayout
     {
         /// <inheritdoc/>
-        public string LayoutID { get; }
+        public ControllerId LayoutId { get; }
 
         /// <inheritdoc/>
         public string FriendlyName { get; }
@@ -24,15 +24,15 @@ namespace Snowflake.Input.Controller
         public bool IsRealDevice { get; }
 
         /// <inheritdoc/>
-        public IEnumerable<string> Platforms { get; }
+        public IEnumerable<PlatformId> Platforms { get; }
 
         /// <inheritdoc/>
         public IControllerElementCollection Layout { get; }
 
-        public ControllerLayout(string layoutId, IEnumerable<string> platforms, string friendlyName,
+        internal ControllerLayout(ControllerId layoutId, IEnumerable<PlatformId> platforms, string friendlyName,
             IControllerElementCollection layout, bool isRealDevice = false)
         {
-            this.LayoutID = layoutId;
+            this.LayoutId = layoutId;
             this.FriendlyName = friendlyName;
             this.IsRealDevice = isRealDevice;
             this.Platforms = platforms;

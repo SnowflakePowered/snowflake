@@ -5,7 +5,6 @@ using GraphQL.Types;
 using Snowflake.Framework.Remoting.GraphQL.Attributes;
 using Snowflake.Framework.Remoting.GraphQL.Query;
 using Snowflake.Input.Controller;
-using Snowflake.Platform;
 using Snowflake.Services;
 using Snowflake.Support.Remoting.GraphQL.Types.ControllerLayout;
 using Snowflake.Support.Remoting.GraphQL.Types.PlatformInfo;

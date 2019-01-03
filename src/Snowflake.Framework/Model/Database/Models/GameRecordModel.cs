@@ -8,7 +8,7 @@ namespace Snowflake.Model.Database.Models
 {
     internal class GameRecordModel : RecordModel
     {
-        public PlatformId Platform { get; set; }
+        public string Platform { get; set; }
 
         public List<GameRecordConfigurationProfileModel> ConfigurationProfiles { get; set; }
 
@@ -16,8 +16,7 @@ namespace Snowflake.Model.Database.Models
         {
             modelBuilder.Entity<GameRecordModel>()
                 .Property(r => r.Platform)
-                .HasConversion(p => p.ToString(),
-                    p => new PlatformId(p))
+               
                 .IsRequired();
         }
     }
