@@ -1,4 +1,4 @@
-﻿using Snowflake.Model.FileSystem;
+﻿using Snowflake.Filesystem;
 
 namespace Snowflake.Model.Records.File
 {

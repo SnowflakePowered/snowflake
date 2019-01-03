@@ -13,23 +13,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Execution\Process\**" />
-    <EmbeddedResource Remove="Execution\Process\**" />
-    <None Remove="Execution\Process\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="Scraping\ReturnSeedContent - Copy.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Castle.Core" Version="4.3.1" />
-    <PackageReference Include="Dapper" Version="1.50.5" />
-    <PackageReference Include="Enums.NET" Version="2.3.2" />
+    <PackageReference Include="Castle.Core" Version="4.3.1" PrivateAssets="Compile"/>
+    <PackageReference Include="Dapper" Version="1.50.5" PrivateAssets="Compile"/>
+    <PackageReference Include="Enums.NET" Version="2.3.2" PrivateAssets="Compile"/>
     <PackageReference Include="Microsoft.Data.Sqlite" Version="2.2.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.0" />
-    <PackageReference Include="Zio" Version="0.7.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.0" PrivateAssets="Compile"/>
+    <PackageReference Include="Zio" Version="0.7.2"/>
   </ItemGroup>
 
   <ItemGroup>

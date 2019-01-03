@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 using Snowflake.Model.Records.File;
 
-namespace Snowflake.Model.FileSystem
+namespace Snowflake.Filesystem
 {
     public interface IFile
     {

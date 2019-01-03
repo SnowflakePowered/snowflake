@@ -22,6 +22,7 @@ namespace Snowflake.Services
 
         public void Configure(IApplicationBuilder app)
         {
+            app.UseWebSockets();
             app.UseGraphQLWebSockets<GraphQLRootSchema>("/graphql");           
             app.UseGraphQL<GraphQLRootSchema>("/graphql");
         }

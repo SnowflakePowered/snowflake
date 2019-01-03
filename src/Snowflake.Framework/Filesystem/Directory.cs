@@ -12,7 +12,7 @@ using System.Collections.Immutable;
 using Snowflake.Persistence;
 using Dapper;
 
-namespace Snowflake.Model.FileSystem
+namespace Snowflake.Filesystem
 {
     internal sealed class Directory : IDirectory
     {

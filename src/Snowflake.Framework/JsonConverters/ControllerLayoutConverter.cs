@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using EnumsNET;
 using Newtonsoft.Json.Linq;
 using Snowflake.Input.Controller;
+using Snowflake.Model.Game;
 
 namespace Snowflake.JsonConverters
 {
@@ -32,7 +33,7 @@ namespace Snowflake.JsonConverters
                 layout.Add(controllerElement.elementKey, controllerElement.elementInfo);
             }
 
-            return new ControllerLayout(layoutName, platformsWhitelist, friendlyName, layout, isDevice);
+            return new ControllerLayout(new ControllerId(layoutName), platformsWhitelist.Cast<PlatformId>(), friendlyName, layout, isDevice);
         }
     }
 }

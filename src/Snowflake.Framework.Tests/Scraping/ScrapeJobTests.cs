@@ -1,5 +1,5 @@
 ﻿using Moq;
-using Snowflake.Platform;
+using Snowflake.Model.Game;
 using Snowflake.Scraping.Extensibility;
 using Snowflake.Services;
 using System;

@@ -4,7 +4,7 @@ using System.Text;
 using GraphQL.Types;
 using Snowflake.Framework.Remoting.GraphQL.Attributes;
 using Snowflake.Framework.Remoting.GraphQL.Query;
-using Snowflake.Platform;
+using Snowflake.Model.Game;
 using Snowflake.Services;
 using Snowflake.Support.Remoting.GraphQL.Types.PlatformInfo;
 

@@ -3,12 +3,12 @@ using Newtonsoft.Json;
 using Snowflake.JsonConverters;
 using Snowflake.Model.Game;
 
-namespace Snowflake.Platform
+namespace Snowflake.Model.Game
 {
     [JsonConverter(typeof(PlatformInfoConverter))]
-    public class PlatformInfo : IPlatformInfo
+    internal class PlatformInfo : IPlatformInfo
     {
-        public PlatformInfo(string platformId, string name, IDictionary<string, string> metadata,
+        internal PlatformInfo(string platformId, string name, IDictionary<string, string> metadata,
             IDictionary<string, string> fileTypes, IEnumerable<IBiosFile> biosFiles, int maximumInputs)
         {
             this.PlatformId = platformId;

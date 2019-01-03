@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Snowflake.Model.Game;
 
 namespace Snowflake.Input.Controller
 {
@@ -14,7 +15,7 @@ namespace Snowflake.Input.Controller
         /// <summary>
         /// Gets the identifier or name of the layout.
         /// </summary>
-        string LayoutID { get; }
+        ControllerId LayoutId { get; }
 
         /// <summary>
         /// Gets the friendly name of this layout
@@ -29,7 +30,7 @@ namespace Snowflake.Input.Controller
         /// <summary>
         /// Gets the platforms this controller supports.
         /// </summary>
-        IEnumerable<string> Platforms { get; }
+        IEnumerable<PlatformId> Platforms { get; }
 
         /// <summary>
         /// Gets the actual collection of layout elements

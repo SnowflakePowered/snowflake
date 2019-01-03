@@ -1,5 +1,5 @@
 ﻿using System;
-using Snowflake.Model.FileSystem;
+using Snowflake.Filesystem;
 using Snowflake.Model.Records.File;
 
 namespace Snowflake.Model.Records

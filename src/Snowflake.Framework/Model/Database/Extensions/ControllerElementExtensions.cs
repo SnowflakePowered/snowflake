@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Snowflake.Input.Controller;
 using Snowflake.Input.Controller.Mapped;
 using Snowflake.Model.Database.Models;
 
@@ -21,7 +22,7 @@ namespace Snowflake.Model.Database.Extensions
         }
 
         private static MappedControllerElementModel AsModel(this IMappedControllerElement @this,
-            string controllerId,
+            ControllerId controllerId,
             string deviceId,
             string profileName)
         {

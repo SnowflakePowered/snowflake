@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using GraphQL.Types;
-using Snowflake.Model.FileSystem;
+using Snowflake.Filesystem;
 
 namespace Snowflake.Support.Remoting.GraphQL.Types.Model
 {

@@ -62,7 +62,7 @@ namespace Snowflake.Input.Controller.Mapped
         public string DeviceId { get; }
 
         /// <inheritdoc/>
-        public string ControllerId { get; }
+        public ControllerId ControllerId { get; }
 
         public ControllerElement this[ControllerElement layoutElement]
         {
@@ -114,7 +114,7 @@ namespace Snowflake.Input.Controller.Mapped
                     ControllerElementMappings.DefaultKeyboardMappings.ContainsKey(element.Key)
                         ? ControllerElementMappings.DefaultKeyboardMappings[element.Key]
                         : ControllerElement.KeyNone);
-            var elementCollection = new ControllerElementMappings(realKeyboard.LayoutID, virtualDevice.LayoutID);
+            var elementCollection = new ControllerElementMappings(realKeyboard.LayoutId, virtualDevice.LayoutId);
             foreach (var element in mappedElements)
             {
                 elementCollection.Add(element);
@@ -130,7 +130,7 @@ namespace Snowflake.Input.Controller.Mapped
                 select new MappedControllerElement(element.Key,
                     realDevice.Layout[element.Key] != null ? element.Key : ControllerElement.NoElement);
 
-            var elementCollection = new ControllerElementMappings(realDevice.LayoutID, virtualDevice.LayoutID);
+            var elementCollection = new ControllerElementMappings(realDevice.LayoutId, virtualDevice.LayoutId);
 
             foreach (var element in mappedElements)
             {

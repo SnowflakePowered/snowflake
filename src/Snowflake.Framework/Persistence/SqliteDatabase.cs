@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using Dapper;
 using Microsoft.Data.Sqlite;
-using Snowflake.Model.FileSystem;
+using Snowflake.Filesystem;
 
 namespace Snowflake.Persistence
 {

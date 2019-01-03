@@ -1,7 +1,7 @@
 ﻿using System;
 using Snowflake.Extensibility;
 using Snowflake.Loader;
-using Snowflake.Platform;
+using Snowflake.Model.Game;
 using Snowflake.Services;
 
 namespace Snowflake.Tooling.HelloWorldContainer

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Input.Controller;
-using Snowflake.Platform;
+using Snowflake.Model.Game;
 
 namespace Snowflake.Services
 {
@@ -16,12 +16,12 @@ namespace Snowflake.Services
         /// <summary>
         /// Gets the list of platforms loaded for this core service
         /// </summary>
-        IDictionary<string, IPlatformInfo> Platforms { get; }
+        IDictionary<PlatformId, IPlatformInfo> Platforms { get; }
 
         /// <summary>
         /// Gets the list of controllers loaded for this core service
         /// </summary>
-        IDictionary<string, IControllerLayout> Controllers { get; }
+        IDictionary<ControllerId, IControllerLayout> Controllers { get; }
 
         /// <summary>
         /// Gets the version of stone definitions loaded

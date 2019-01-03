@@ -104,7 +104,7 @@ namespace Snowflake.Emulator.Execution
             var template = new InputTemplate<IRetroArchInput>(emulatedDevice.LayoutMapping, emulatedDevice.PortIndex);
             var mapping = (from inputMappings in this.InputMappings
                 where inputMappings.InputApi == InputApi.DirectInput
-                where inputMappings.DeviceLayouts.Contains(emulatedDevice.PhysicalDevice.DeviceLayout.LayoutID)
+                where inputMappings.DeviceLayouts.Contains(emulatedDevice.PhysicalDevice.DeviceLayout.LayoutId.ToString())
                 select inputMappings).FirstOrDefault();
 
             return (template, mapping);

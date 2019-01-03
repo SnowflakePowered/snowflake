@@ -6,7 +6,7 @@ using GraphQL.Builders;
 using GraphQL.Types;
 using GraphQL.Types.Relay;
 using GraphQL.Types.Relay.DataObjects;
-using Snowflake.Platform;
+using Snowflake.Model.Game;
 
 namespace Snowflake.Support.Remoting.GraphQL.Types.PlatformInfo
 {

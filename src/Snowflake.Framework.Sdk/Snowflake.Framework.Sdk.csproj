@@ -1,12 +1,20 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <LangVersion>8.0</LangVersion>
+    <Version>1.0.0</Version>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <IncludeSymbols>false</IncludeSymbols>
+    <PackageTags>snowflake</PackageTags>
+    <Description>Snowflake.Framework.Sdk</Description>
+
+    <NuspecFile>$(MSBuildProjectName).nuspec</NuspecFile>
+
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Snowflake.Framework.Primitives" Version="1.0.0-alpha.1363" />
+    <Content Include="Sdk\*.props" PackagePath="%(Identity)" />
+    <Content Include="Sdk\*.targets" PackagePath="%(Identity)" />
   </ItemGroup>
-
 </Project>

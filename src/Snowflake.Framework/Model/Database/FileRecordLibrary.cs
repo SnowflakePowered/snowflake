@@ -4,7 +4,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Snowflake.Model.Database.Extensions;
 using Snowflake.Model.Database.Models;
-using Snowflake.Model.FileSystem;
+using Snowflake.Filesystem;
 using Snowflake.Model.Records;
 using Snowflake.Model.Records.File;
 

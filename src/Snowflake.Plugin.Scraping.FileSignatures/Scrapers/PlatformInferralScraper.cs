@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MimeMapping;
 using Snowflake.Extensibility;
-using Snowflake.Platform;
+using Snowflake.Model.Game;
 using Snowflake.Plugin.Scraping.FileSignatures.Composers;
 using Snowflake.Romfile;
 using Snowflake.Scraping;

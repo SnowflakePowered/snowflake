@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Snowflake.Framework.Sdk</id>
+    <version>1.0.0</version>
+    <authors>Snowflake Developers</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MPL-2.0</license>
+    <projectUrl>https://snowflakepowe.red</projectUrl>
+    <!--
+    <iconUrl>$iconUrl$</iconUrl>-->
+    <description>Snowflake Framework SDK Targets</description>
+    <copyright>Snowflake Developers</copyright>
+    <tags>Snowflake</tags>
+    <repository type="git" url="https://github.com/SnowflakePowered/snowflake" />
+  </metadata>
+
+  <files>
+    <file src="Sdk\*" target="Sdk" />
+    <file src="$outputpath$\**" target="\" />
+  </files>
+</package>
