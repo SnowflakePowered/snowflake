@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Snowflake.Framework.Remoting.Electron;
-using Snowflake.Framework.Remoting.GraphQl.Attributes;
-using Snowflake.Framework.Remoting.GraphQl.Query;
+
+using Snowflake.Framework.Remoting.GraphQL.Attributes;
+using Snowflake.Framework.Remoting.GraphQL.Query;
 using Snowflake.Support.Remoting.Electron.ThemeProvider.GraphQl.Types;
 
 namespace Snowflake.Support.Remoting.Electron.ThemeProvider.GraphQl

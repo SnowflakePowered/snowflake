@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Snowflake.Extensibility;
+using Snowflake.Framework.Remoting.Kestrel;
 using Snowflake.Loader;
 using Snowflake.Services.AssemblyLoader.Extensions;
 using Snowflake.Services.Logging;
@@ -87,6 +88,8 @@ namespace Snowflake.Services.AssemblyLoader
                     break; // no change
                 }
             }
+
+            (this.coreService.Get<IKestrelWebServerService>() as KestrelServerService).Start();
         }
 
         private void ComposeContainer(IModule module, IComposable moduleComposable, IList<string> services)

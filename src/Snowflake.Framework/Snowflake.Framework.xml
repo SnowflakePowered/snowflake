@@ -1,1490 +1,1430 @@
 <?xml version="1.0"?>
-
 <doc>
-  <assembly>
-    <name>Snowflake.Framework</name>
-  </assembly>
-  <members>
-    <member name="T:Snowflake.Configuration.BooleanMapping">
-      <summary>
-        Default implementation for <see cref="T:Snowflake.Configuration.IBooleanMapping" />
-      </summary>
-    </member>
-    <member name="P:Snowflake.Configuration.BooleanMapping.True">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.BooleanMapping.False">
-      <inheritdoc />
-    </member>
-    <member name="M:Snowflake.Configuration.BooleanMapping.FromBool(System.Boolean)">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.BooleanMapping.TitlecaseBooleanMapping">
-      <summary>
-        Gets boolean mapping where
-
-        True: "True"
-        False: "False
-      </summary>
-    </member>
-    <member name="P:Snowflake.Configuration.BooleanMapping.LowercaseBooleanMapping">
-      <summary>
-        Gets boolean mapping where
-
-        True: "true"
-        False: "false"
-      </summary>
-    </member>
-    <member name="P:Snowflake.Configuration.BooleanMapping.UppercaseBooleanMapping">
-      <summary>
-        Gets boolean mapping where
-
-        True: "TRUE"
-        False: "FALSE"
-      </summary>
-    </member>
-    <member name="P:Snowflake.Configuration.BooleanMapping.BinaryBooleanMapping">
-      <summary>
-        Gets boolean mapping where
-
-        True: "1"
-        False : "0"
-      </summary>
-    </member>
-    <member name="P:Snowflake.Configuration.BooleanMapping.TitlecaseYesNoBooleanMapping">
-      <summary>
-        Gets boolean mapping where
-
-        True: "Yes"
-        False: "No"
-      </summary>
-    </member>
-    <member name="P:Snowflake.Configuration.BooleanMapping.LowercaseYesNoBooleanMapping">
-      <summary>
-        Gets boolean mapping where
-
-        True: "yes"
-        False: "no"
-      </summary>
-    </member>
-    <member name="P:Snowflake.Configuration.BooleanMapping.UppercaseYesNoBooleanMapping">
-      <summary>
-        Gets boolean mapping where
-
-        True: "YES"
-        False: "NO"
-      </summary>
-    </member>
-    <member name="P:Snowflake.Configuration.ConfigurationCollection`1.Configuration">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.ConfigurationCollection`1.Descriptor">
-      <inheritdoc />
-    </member>
-    <member name="M:Snowflake.Configuration.ConfigurationCollection`1.GetEnumerator">
-      <inheritdoc />
-    </member>
-    <member name="M:Snowflake.Configuration.ConfigurationCollection`1.System#Collections#IEnumerable#GetEnumerator">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.ConfigurationCollection`1.Item(System.String)">
-      <inheritdoc />
-    </member>
-    <member name="M:Snowflake.Configuration.CollectionCircularInterceptor`1.Intercept(Castle.DynamicProxy.IInvocation)">
-      <inheritdoc />
-    </member>
-    <member name="M:Snowflake.Configuration.CollectionInterceptor`1.Intercept(Castle.DynamicProxy.IInvocation)">
-      <inheritdoc />
-    </member>
-    <member name="T:Snowflake.Configuration.ConfigurationCollectionDescriptor`1">
-      <summary>
-        Default implementation for <see cref="T:Snowflake.Configuration.IConfigurationCollectionDescriptor" />
-      </summary>
-      <typeparam name="T">The type of the configuration collection</typeparam>
-    </member>
-    <member name="P:Snowflake.Configuration.ConfigurationCollectionDescriptor`1.Outputs">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.ConfigurationCollectionDescriptor`1.SectionKeys">
-      <inheritdoc />
-    </member>
-    <member name="M:Snowflake.Configuration.ConfigurationCollectionDescriptor`1.GetDestination(System.String)">
-      <inheritdoc />
-    </member>
-    <member name="T:Snowflake.Configuration.ConfigurationDescriptorCache">
-      <summary>
-        Provides a thread-safe cache for collection descriptors.
-        Since descriptors use heavy attribute access, the descriptor cache caches
-        the attributes for types that will not change throughout the
-        lifetime of the application.
-      </summary>
-    </member>
-    <member name="M:Snowflake.Configuration.ConfigurationDescriptorCache.GetProxyGenerator">
-      <summary>
-        Gets a reused proxy generator that survives for the lifetime of the application.
-      </summary>
-    </member>
-    <member name="M:Snowflake.Configuration.ConfigurationDescriptorCache.GetSectionDescriptor``1(System.String)">
-      <summary>
-        Gets a new or existing section descriptor
-      </summary>
-      <typeparam name="T">The type of the configuration section</typeparam>
-      <returns>The section descriptor for <see cref="T:self" /></returns>
-    </member>
-    <member name="M:Snowflake.Configuration.ConfigurationDescriptorCache.GetCollectionDescriptor``1">
-      <summary>
-        Gets a new or existing collection descriptor
-      </summary>
-      <typeparam name="T">The type of the configuration collection</typeparam>
-      <returns>The collection descriptor for <see cref="T:self" /></returns>
-    </member>
-    <member name="P:Snowflake.Configuration.ConfigurationFile.BooleanMapping">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.ConfigurationFile.Destination">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.ConfigurationFile.Key">
-      <inheritdoc />
-    </member>
-    <member name="T:Snowflake.Configuration.ConfigurationOptionDescriptor">
-      <summary>
-        Default constructor for <see cref="T:Snowflake.Configuration.IConfigurationOptionDescriptor" />
-      </summary>
-    </member>
-    <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.DisplayName">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.Description">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.Simple">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.Private">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.Flag">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.Max">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.Min">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.Increment">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.IsPath">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.OptionName">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.OptionKey">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.Default">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.IsSelection">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.Type">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.CustomMetadata">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.OptionType">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.SelectionOptions">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.ConfigurationSection`1.Configuration">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.ConfigurationSection`1.Descriptor">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.ConfigurationSection`1.Values">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.ConfigurationSection`1.Item(System.String)">
-      <inheritdoc />
-    </member>
-    <member name="M:Snowflake.Configuration.ConfigurationSection`1.GetEnumerator">
-      <inheritdoc />
-    </member>
-    <member name="M:Snowflake.Configuration.ConfigurationSection`1.System#Collections#IEnumerable#GetEnumerator">
-      <inheritdoc />
-    </member>
-    <member name="T:Snowflake.Configuration.ConfigurationSectionDescriptor`1">
-      <summary>
-        Default constructor for <see cref="T:Snowflake.Configuration.IConfigurationSectionDescriptor" />
-      </summary>
-      <typeparam name="T">The type of the configuration.</typeparam>
-    </member>
-    <member name="P:Snowflake.Configuration.ConfigurationSectionDescriptor`1.Description">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.ConfigurationSectionDescriptor`1.DisplayName">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.ConfigurationSectionDescriptor`1.SectionName">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.ConfigurationSectionDescriptor`1.SectionKey">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.ConfigurationSectionDescriptor`1.Options">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.ConfigurationSectionDescriptor`1.Item(System.String)">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.ConfigurationSerializer.TypeMapper">
-      <inheritdoc />
-    </member>
-    <member name="M:Snowflake.Configuration.ConfigurationSerializer.SerializeLine``1(System.String,``0)">
-      <inheritdoc />
-    </member>
-    <member name="M:Snowflake.Configuration.ConfigurationSerializer.SerializeValue(System.Object)">
-      <inheritdoc />
-    </member>
-    <member name="M:Snowflake.Configuration.ConfigurationSerializer.SerializeHeader(System.String)">
-      <inheritdoc />
-    </member>
-    <member name="M:Snowflake.Configuration.ConfigurationSerializer.SerializeFooter(System.String)">
-      <inheritdoc />
-    </member>
-    <member
-      name="M:Snowflake.Configuration.ConfigurationSerializer.Serialize(Snowflake.Configuration.IConfigurationSection)">
-      <inheritdoc />
-    </member>
-    <member name="M:Snowflake.Configuration.ConfigurationTypeMapper.Add``1(System.Func{``0,System.String})">
-      <inheritdoc />
-    </member>
-    <member name="M:Snowflake.Configuration.ConfigurationTypeMapper.ConvertValue``1(``0)">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.ConfigurationTypeMapper.Item(System.Type,System.Object)">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.ConfigurationValue.Value">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.ConfigurationValue.Guid">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.ConfigurationValueCollection.EnsuredDescriptors">
-      <summary>
-        Cache of ensured descriptors
-      </summary>
-    </member>
-    <member name="T:Snowflake.Configuration.IniConfigurationSerializer">
-      <summary>
-        A configuration serializer that uses INI format
-
-        [Header]
-        Key = Value
-      </summary>
-    </member>
-    <member name="M:Snowflake.Configuration.IniConfigurationSerializer.SerializeLine``1(System.String,``0)">
-      <inheritdoc />
-    </member>
-    <member name="M:Snowflake.Configuration.IniConfigurationSerializer.SerializeHeader(System.String)">
-      <inheritdoc />
-    </member>
-    <member
-      name="M:Snowflake.Configuration.IniConfigurationSerializer.Serialize(Snowflake.Configuration.IConfigurationSection)">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.Input.InputConfigurationSection`1.Configuration">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.Input.InputConfigurationSection`1.Descriptor">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.Input.InputConfigurationSection`1.Values">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.Input.InputConfigurationSection`1.Item(System.String)">
-      <inheritdoc />
-    </member>
-    <member name="M:Snowflake.Configuration.Input.InputConfigurationSection`1.GetEnumerator">
-      <inheritdoc />
-    </member>
-    <member
-      name="M:Snowflake.Configuration.Input.InputConfigurationSection`1.System#Collections#IEnumerable#GetEnumerator">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.Input.InputMapping.Item(Snowflake.Input.Controller.ControllerElement)">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.Input.InputMapping.InputApi">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.Input.InputMapping.DeviceLayouts">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.Input.InputOption.InputOptionType">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.Input.InputOption.TargetElement">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.Input.InputOption.OptionName">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.Input.InputOption.KeyName">
-      <inheritdoc />
-    </member>
-    <member
-      name="M:Snowflake.Configuration.Input.InputSerializer.Serialize(Snowflake.Configuration.Input.IInputTemplate,Snowflake.Configuration.Input.IInputMapping)">
-      <inheritdoc />
-    </member>
-    <member
-      name="M:Snowflake.Configuration.Input.InputSerializer.SerializeInput(System.String,Snowflake.Input.Controller.ControllerElement,Snowflake.Configuration.Input.IInputMapping)">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.Input.InputTemplate`1.PlayerIndex">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.Input.InputTemplate`1.Template">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.Input.InputTemplate`1.Values">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.Input.InputTemplate`1.Snowflake#Configuration#Input#IInputTemplate#Options">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.Input.InputTemplate`1.Item(Snowflake.Input.Controller.ControllerElement)">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.Input.InputTemplate`1.Snowflake#Configuration#IConfigurationSection#Values">
-      <inheritdoc />
-    </member>
-    <member
-      name="P:Snowflake.Configuration.Input.InputTemplate`1.Snowflake#Configuration#IConfigurationSection#Descriptor">
-      <inheritdoc />
-    </member>
-    <member
-      name="P:Snowflake.Configuration.Input.InputTemplate`1.Snowflake#Configuration#IConfigurationSection#Item(System.String)">
-      <inheritdoc />
-    </member>
-    <member
-      name="P:Snowflake.Configuration.Input.InputTemplate`1.Snowflake#Configuration#IConfigurationSection{T}#Configuration">
-      <inheritdoc />
-    </member>
-    <member name="M:Snowflake.Configuration.Input.InputTemplate`1.GetEnumerator">
-      <inheritdoc />
-    </member>
-    <member name="M:Snowflake.Configuration.Input.InputTemplate`1.System#Collections#IEnumerable#GetEnumerator">
-      <inheritdoc />
-    </member>
-    <member name="T:Snowflake.Configuration.Interceptors.ConfigurationCircularInterceptor`1">
-      <summary>
-        Interceptor to allow circular reference within <see cref="T:Snowflake.Configuration.ConfigurationSection`1" />
-      </summary>
-      <typeparam name="T"></typeparam>
-    </member>
-    <member
-      name="M:Snowflake.Configuration.Interceptors.ConfigurationCircularInterceptor`1.Intercept(Castle.DynamicProxy.IInvocation)">
-      <inheritdoc />
-    </member>
-    <member
-      name="M:Snowflake.Configuration.Interceptors.ConfigurationInterceptor.Intercept(Castle.DynamicProxy.IInvocation)">
-      <inheritdoc />
-    </member>
-    <member
-      name="M:Snowflake.Configuration.Interceptors.InputTemplateCircularInterceptor`1.Intercept(Castle.DynamicProxy.IInvocation)">
-      <inheritdoc />
-    </member>
-    <member
-      name="M:Snowflake.Configuration.Interceptors.InputTemplateInterceptor`1.Intercept(Castle.DynamicProxy.IInvocation)">
-      <inheritdoc />
-    </member>
-    <member name="T:Snowflake.Configuration.KeyValuePairConfigurationSerializer">
-      <summary>
-        Provides a generic key value pair serializer with a
-        configuration separator:
-
-        key separator value
-      </summary>
-    </member>
-    <member name="M:Snowflake.Configuration.KeyValuePairConfigurationSerializer.SerializeLine``1(System.String,``0)">
-      <inheritdoc />
-    </member>
-    <member
-      name="M:Snowflake.Configuration.KeyValuePairConfigurationSerializer.Serialize(Snowflake.Configuration.IConfigurationSection)">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.SelectionOptionDescriptor.DisplayName">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.SelectionOptionDescriptor.Private">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.SelectionOptionDescriptor.SerializeAs">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.SelectionOptionDescriptor.NumericValue">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.SelectionOptionDescriptor.EnumName">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Configuration.SelectionOptionDescriptor.EnumType">
-      <inheritdoc />
-    </member>
-    <member name="T:Snowflake.Execution.Extensibility.EmulatorTask">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Execution.Extensibility.EmulatorTask.EmulatorConfiguration">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Execution.Extensibility.EmulatorTask.ControllerConfiguration">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Execution.Extensibility.EmulatorTask.EmulatingGame">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Execution.Extensibility.EmulatorTask.GameSaveLocation">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Execution.Extensibility.EmulatorTask.Pragmas">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Execution.Extensibility.EmulatorTask.ProcessTaskRoot">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Execution.Extensibility.EmulatorTask.TaskIdentifier">
-      <inheritdoc />
-    </member>
-    <member name="M:Snowflake.Execution.Extensibility.EmulatorTask.AddPragma(System.String,System.String)">
-      <summary>
-        Add a pragma to the task.
-      </summary>
-      <param name="pragmaKey">The key of the pragma.</param>
-      <param name="pragmaValue">The value of the pragma.</param>
-    </member>
-    <member name="T:Snowflake.Execution.Extensibility.EmulatorTaskResult">
-      <inheritdoc />s
-    </member>
-    <member name="P:Snowflake.Execution.Extensibility.EmulatorTaskResult.EmulatorName">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Execution.Extensibility.EmulatorTaskResult.StartTime">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Execution.Extensibility.EmulatorTaskResult.IsRunning">
-      <inheritdoc />
-    </member>
-    <member name="M:Snowflake.Execution.Extensibility.EmulatorTaskResult.Closed">
-      <inheritdoc />
-    </member>
-    <member name="T:Snowflake.Execution.Extensibility.ExternalEmulator">
-      <summary>
-        Represents a <see cref="T:Snowflake.Execution.Extensibility.IEmulator" /> that wraps an external emulator.
-      </summary>
-    </member>
-    <member name="P:Snowflake.Execution.Extensibility.ExternalEmulator.StoneProvider">
-      <summary>
-        Gets a <see cref="T:Snowflake.Services.IStoneProvider" />. We noticed that many emulator wrappers require
-        access to platform and controller information through Stone.
-      </summary>
-    </member>
-    <member name="P:Snowflake.Execution.Extensibility.ExternalEmulator.Runner">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Execution.Extensibility.ExternalEmulator.Properties">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Execution.Extensibility.ExternalEmulator.ConfigurationFactory">
-      <inheritdoc />
-    </member>
-    <member
-      name="M:Snowflake.Execution.Extensibility.ExternalEmulator.CreateTask(Snowflake.Model.Records.Game.IGameRecord,Snowflake.Execution.Saving.ISaveLocation,System.Collections.Generic.IList{Snowflake.Execution.Extensibility.IEmulatedController},System.String)">
-      <inheritdoc />
-    </member>
-    <member name="F:Snowflake.Extensibility.EmptyPluginConfiguration.EmptyConfiguration">
-      <summary>
-        The empty plugin configuration.
-      </summary>
-    </member>
-    <member name="P:Snowflake.Extensibility.Provisioning.JsonPluginProperties.PropertyKeys">
-      <inheritdoc />
-    </member>
-    <member name="M:Snowflake.Extensibility.Provisioning.JsonPluginProperties.Get(System.String)">
-      <inheritdoc />
-    </member>
-    <member name="M:Snowflake.Extensibility.Provisioning.JsonPluginProperties.GetEnumerable(System.String)">
-      <inheritdoc />
-    </member>
-    <member name="M:Snowflake.Extensibility.Provisioning.JsonPluginProperties.GetDictionary(System.String)">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Extensibility.Provisioning.PluginProvision.Logger">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Extensibility.Provisioning.PluginProvision.Properties">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Extensibility.Provisioning.PluginProvision.Name">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Extensibility.Provisioning.PluginProvision.Description">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Extensibility.Provisioning.PluginProvision.Author">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Extensibility.Provisioning.PluginProvision.Version">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Extensibility.Provisioning.PluginProvision.ContentDirectory">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Extensibility.Provisioning.PluginProvision.ResourceDirectory">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Extensibility.Provisioning.PluginProvision.CommonResourceDirectory">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Extensibility.Provisioning.PluginProvision.ConfigurationStore">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Extensibility.Provisioning.ProvisionedPlugin.Provision">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Extensibility.Provisioning.ProvisionedPlugin.Name">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Extensibility.Provisioning.ProvisionedPlugin.Author">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Extensibility.Provisioning.ProvisionedPlugin.Description">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Extensibility.Provisioning.ProvisionedPlugin.Version">
-      <inheritdoc />
-    </member>
-    <member name="M:Snowflake.Extensibility.Provisioning.ProvisionedPlugin.GetPluginConfiguration">
-      <inheritdoc />
-    </member>
-    <member name="M:Snowflake.Extensibility.Provisioning.ProvisionedPlugin.Dispose">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.ButtonA">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.ButtonB">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.ButtonC">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.ButtonX">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.ButtonY">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.ButtonZ">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.ButtonL">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.ButtonR">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.ButtonStart">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.ButtonSelect">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.ButtonGuide">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.ButtonClickL">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.ButtonClickR">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button0">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button1">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button2">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button3">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button4">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button5">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button6">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button7">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button8">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button9">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button10">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button11">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button12">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button13">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button14">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button15">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button16">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button17">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button18">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button19">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button20">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button21">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button22">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button23">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button24">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button25">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button26">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button27">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button28">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button29">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button30">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button31">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.DirectionalN">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.DirectionalE">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.DirectionalS">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.DirectionalW">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.DirectionalNE">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.DirectionalNW">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.DirectionalSE">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.DirectionalSW">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.TriggerLeft">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.TriggerRight">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.AxisLeftAnalogPositiveX">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.AxisLeftAnalogNegativeX">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.AxisLeftAnalogPositiveY">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.AxisLeftAnalogNegativeY">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.AxisRightAnalogPositiveX">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.AxisRightAnalogNegativeX">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.AxisRightAnalogPositiveY">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.AxisRightAnalogNegativeY">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.RumbleBig">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.RumbleSmall">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Pointer2D">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Pointer3D">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.PointerAxisPositiveX">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.PointerAxisNegativeX">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.PointerAxisPositiveY">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.PointerAxisNegativeY">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.PointerAxisPositiveZ">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.PointerAxisNegativeZ">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Keyboard">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Touchscreen">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Gyroscope">
-      <inheritdoc />
-    </member>
-    <member
-      name="P:Snowflake.Input.Controller.ControllerElementCollection.Item(Snowflake.Input.Controller.ControllerElement)">
-      <inheritdoc />
-    </member>
-    <member name="M:Snowflake.Input.Controller.ControllerElementCollection.GetEnumerator">
-      <inheritdoc />
-    </member>
-    <member
-      name="M:Snowflake.Input.Controller.ControllerElementCollection.System#Collections#IEnumerable#GetEnumerator">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementInfo.Label">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerElementInfo.Type">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerLayout.LayoutID">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerLayout.FriendlyName">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerLayout.IsRealDevice">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerLayout.Platforms">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.ControllerLayout.Layout">
-      <inheritdoc />
-    </member>
-    <member name="T:Snowflake.Input.Controller.Extensions.ControllerElementExtensions">
-      <summary>
-        Controller element extensions.
-      </summary>
-    </member>
-    <member
-      name="M:Snowflake.Input.Controller.Extensions.ControllerElementExtensions.IsKeyboardKey(Snowflake.Input.Controller.ControllerElement)">
-      <summary>
-        Checks if the element is a keyboard key element.
-      </summary>
-      <param name="element">The controller element to check.</param>
-      <returns>Whether the element is a keyboard key element</returns>
-    </member>
-    <member
-      name="M:Snowflake.Input.Controller.Extensions.ControllerElementExtensions.IsAxis(Snowflake.Input.Controller.ControllerElement)">
-      <summary>
-        Checks if the element is an axis element
-      </summary>
-      <param name="element">The controller element to check.</param>
-      <returns>Whether the element is a keyboard key element</returns>
-    </member>
-    <member name="M:Snowflake.Input.Controller.Mapped.ControllerElementMappings.GetEnumerator">
-      <inheritdoc />
-    </member>
-    <member
-      name="M:Snowflake.Input.Controller.Mapped.ControllerElementMappings.System#Collections#IEnumerable#GetEnumerator">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.Mapped.ControllerElementMappings.DeviceId">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.Mapped.ControllerElementMappings.ControllerId">
-      <inheritdoc />
-    </member>
-    <member
-      name="M:Snowflake.Input.Controller.Mapped.ControllerElementMappings.GetDefaultMappings(Snowflake.Input.Controller.IControllerLayout,Snowflake.Input.Controller.IControllerLayout)">
-      <summary>
-        Gets default mappings for a real device to a virtual device
-      </summary>
-      <param name="realDevice">The button layout of the real controller device</param>
-      <param name="virtualDevice">The button layout of the defined controller device</param>
-      <returns></returns>
-    </member>
-    <member name="P:Snowflake.Input.Controller.Mapped.MappedControllerElement.LayoutElement">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Controller.Mapped.MappedControllerElement.DeviceElement">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Device.InputDevice.DeviceId">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Device.InputDevice.DeviceInfo">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Device.InputDevice.DeviceIndex">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Device.InputDevice.ControllerName">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Device.InputDevice.DeviceApi">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Device.InputDevice.DeviceLayout">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Input.Device.InputEnumerator.ControllerLayout">
-      <inheritdoc />
-    </member>
-    <member name="M:Snowflake.Input.Device.InputEnumerator.GetConnectedDevices">
-      <inheritdoc />
-    </member>
-    <member
-      name="M:Snowflake.JsonConverters.ConfigurationCollectionSerializer.WriteJson(Newtonsoft.Json.JsonWriter,System.Object,Newtonsoft.Json.JsonSerializer)">
-      <inheritdoc />
-    </member>
-    <member
-      name="M:Snowflake.JsonConverters.ConfigurationCollectionSerializer.ReadJson(Newtonsoft.Json.JsonReader,System.Type,System.Object,Newtonsoft.Json.JsonSerializer)">
-      <inheritdoc />
-    </member>
-    <member name="M:Snowflake.JsonConverters.ConfigurationCollectionSerializer.CanConvert(System.Type)">
-      <inheritdoc />
-    </member>
-    <member
-      name="M:Snowflake.JsonConverters.ControllerLayoutConverter.Create(System.Type,Newtonsoft.Json.Linq.JObject)">
-      <inheritdoc />
-    </member>
-    <member name="M:Snowflake.JsonConverters.InputMappingConverter.Create(System.Type,Newtonsoft.Json.Linq.JObject)">
-      <inheritdoc />
-    </member>
-    <member name="T:Snowflake.JsonConverters.JsonCreationConverter`1">
-      <summary>
-        Base Generic JSON Converter that can help quickly define converters for specific types by automatically
-        generating the CanConvert, ReadJson, and WriteJson methods, requiring the implementer only to define a strongly typed Create method.
-      </summary>
-    </member>
-    <member name="P:Snowflake.JsonConverters.JsonCreationConverter`1.CanWrite">
-      <inheritdoc />
-    </member>
-    <member name="M:Snowflake.JsonConverters.JsonCreationConverter`1.Create(System.Type,Newtonsoft.Json.Linq.JObject)">
-      <summary>Create an instance of objectType, based properties in the JSON object</summary>
-      <param name="objectType">type of object expected</param>
-      <param name="jObject">contents of JSON object that will be deserialized</param>
-    </member>
-    <member name="M:Snowflake.JsonConverters.JsonCreationConverter`1.Transform(`0)">
-      <summary>
-        Gives a chance to transform the object before being serialized
-      </summary>
-      <param name="value">The value to transform</param>
-      <returns>The transformed object graph to be serialized</returns>
-    </member>
-    <member name="M:Snowflake.JsonConverters.JsonCreationConverter`1.CanConvert(System.Type)">
-      <summary>Determines if this converted is designed to deserialization to objects of the specified type.</summary>
-      <param name="objectType">The target type for deserialization.</param>
-      <returns>True if the type is supported.</returns>
-    </member>
-    <member
-      name="M:Snowflake.JsonConverters.JsonCreationConverter`1.ReadJson(Newtonsoft.Json.JsonReader,System.Type,System.Object,Newtonsoft.Json.JsonSerializer)">
-      <summary>Parses the json to the specified type.</summary>
-      <param name="reader">Newtonsoft.Json.JsonReader</param>
-      <param name="objectType">Target type.</param>
-      <param name="existingValue">Ignored</param>
-      <param name="serializer">Newtonsoft.Json.JsonSerializer to use.</param>
-      <returns>Deserialized Object</returns>
-    </member>
-    <member
-      name="M:Snowflake.JsonConverters.JsonCreationConverter`1.WriteJson(Newtonsoft.Json.JsonWriter,System.Object,Newtonsoft.Json.JsonSerializer)">
-      <summary>Serializes to the specified type</summary>
-      <param name="writer">Newtonsoft.Json.JsonWriter</param>
-      <param name="value">Object to serialize.</param>
-      <param name="serializer">Newtonsoft.Json.JsonSerializer to use.</param>
-    </member>
-    <member name="M:Snowflake.JsonConverters.PlatformInfoConverter.Create(System.Type,Newtonsoft.Json.Linq.JObject)">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Loader.Module.Name">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Loader.Module.Entry">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Loader.Module.Loader">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Loader.Module.Author">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Loader.Module.ModuleDirectory">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Loader.Module.ContentsDirectory">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Loader.Module.Version">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Loader.ModuleEnumerator.Modules">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Loader.ServiceProvider.Services">
-      <inheritdoc />
-    </member>
-    <member name="M:Snowflake.Loader.ServiceProvider.Get``1">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Model.Records.FileRecord.Metadata">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Model.Records.FileRecord.RecordId">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Model.Records.FileRecord.MimeType">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Model.Records.MetadataCollection.Item(System.Guid)">
-      <inheritdoc />
-    </member>
-    <member
-      name="M:Snowflake.Model.Records.MetadataCollection.Add(System.Collections.Generic.IDictionary{System.String,Snowflake.Model.Records.IRecordMetadata})">
-      <inheritdoc />
-    </member>
-    <member
-      name="P:Snowflake.Model.Records.MetadataCollection.Snowflake#Model#Records#IMetadataCollection#Item(System.String)">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Model.Records.MetadataCollection.Record">
-      <inheritdoc />
-    </member>
-    <member name="M:Snowflake.Model.Records.MetadataCollection.Add(Snowflake.Model.Records.IRecordMetadata)">
-      <inheritdoc />
-    </member>
-    <member name="M:Snowflake.Model.Records.MetadataCollection.Add(System.String,System.String)">
-      <inheritdoc />
-    </member>
-    <member name="T:Snowflake.Model.Records.RecordMetadata">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Model.Records.RecordMetadata.Key">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Model.Records.RecordMetadata.Value">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Model.Records.RecordMetadata.Guid">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Model.Records.RecordMetadata.Record">
-      <inheritdoc />
-    </member>
-    <member name="M:Snowflake.Model.Records.RecordMetadata.GetHashCode">
-      <inheritdoc />
-    </member>
-    <member name="M:Snowflake.Model.Records.RecordMetadata.Equals(System.Object)">
-      <inheritdoc />
-    </member>
-    <member name="T:Snowflake.Model.Records.Utility.GuidCreator">
-      <summary>
-        Helper methods for working with <see cref="T:System.Guid" />.
-      </summary>
-    </member>
-    <member name="M:Snowflake.Model.Records.Utility.GuidCreator.Create(System.Guid,System.String)">
-      <summary>
-        Creates a name-based UUID using the algorithm from RFC 4122 §4.3.
-      </summary>
-      <param name="namespaceId">The ID of the namespace.</param>
-      <param name="name">The name (within that namespace).</param>
-      <returns>A UUID derived from the namespace and name.</returns>
-      <remarks>
-        See
-        <a href="http://code.logos.com/blog/2011/04/generating_a_deterministic_guid.html">Generating a deterministic GUID</a>
-        .
-      </remarks>
-    </member>
-    <member name="M:Snowflake.Model.Records.Utility.GuidCreator.Create(System.Guid,System.String,System.Int32)">
-      <summary>
-        Creates a name-based UUID using the algorithm from RFC 4122 §4.3.
-      </summary>
-      <param name="namespaceId">The ID of the namespace.</param>
-      <param name="name">The name (within that namespace).</param>
-      <param name="version">
-        The version number of the UUID to create; this value must be either
-        3 (for MD5 hashing) or 5 (for SHA-1 hashing).
-      </param>
-      <returns>A UUID derived from the namespace and name.</returns>
-      <remarks>
-        See
-        <a href="http://code.logos.com/blog/2011/04/generating_a_deterministic_guid.html">Generating a deterministic GUID</a>
-        .
-      </remarks>
-    </member>
-    <member name="F:Snowflake.Model.Records.Utility.GuidCreator.DnsNamespace">
-      <summary>
-        The namespace for fully-qualified domain names (from RFC 4122, Appendix C).
-      </summary>
-    </member>
-    <member name="F:Snowflake.Model.Records.Utility.GuidCreator.UrlNamespace">
-      <summary>
-        The namespace for URLs (from RFC 4122, Appendix C).
-      </summary>
-    </member>
-    <member name="F:Snowflake.Model.Records.Utility.GuidCreator.IsoOidNamespace">
-      <summary>
-        The namespace for ISO OIDs (from RFC 4122, Appendix C).
-      </summary>
-    </member>
-    <member name="P:Snowflake.Persistence.SqliteDatabase.DatabaseName">
-      <inheritdoc />
-    </member>
-    <member name="M:Snowflake.Persistence.SqliteDatabase.GetConnection">
-      <inheritdoc />
-    </member>
-    <member name="M:Snowflake.Persistence.SqliteDatabase.Query``1(System.Func{System.Data.IDbConnection,``0})">
-      <summary>
-        Queries on a new connection to the database.
-        The connection will be safely closed after the operation.
-      </summary>
-      <typeparam name="T">The type the query will return</typeparam>
-      <param name="queryFunction">A function to query the database using the opened connection</param>
-      <returns>The requested data.</returns>
-    </member>
-    <member name="M:Snowflake.Persistence.SqliteDatabase.Execute(System.Action{System.Data.IDbConnection})">
-      <summary>
-        Executes on a new connection to the database.
-        The connection will be safely closed after the operation.
-      </summary>
-      <param name="queryFunction">A function to query the database using the opened connection</param>
-    </member>
-    <member name="M:Snowflake.Persistence.SqliteDatabase.Query``1(System.String,System.Object)">
-      <summary>
-        Queries on a new connection to the database.
-        The connection will be safely closed after the operation.
-      </summary>
-      <typeparam name="T">The type the query will return</typeparam>
-      <param name="query">The SQL query to execute</param>
-      <param name="param">The query parameters</param>
-      <returns>The requested data.</returns>
-    </member>
-    <member name="M:Snowflake.Persistence.SqliteDatabase.Execute(System.String,System.Object)">
-      <summary>
-        Executes on a new connection to the database.
-        The connection will be safely closed after the operation.
-      </summary>
-      <param name="query">The SQL query to execute</param>
-      <param name="param">The query parameters</param>
-    </member>
-    <member name="M:Snowflake.Persistence.SqliteDatabase.QueryFirstOrDefault``1(System.String,System.Object)">
-      <summary>
-        Executes a single row query
-        The connection will be safely closed after the operation.
-      </summary>
-      <typeparam name="T">The type the query will return</typeparam>
-      <param name="query">The SQL query to execute</param>
-      <param name="param">The query parameters</param>
-      <returns>The requested data, or null if not present.</returns>
-    </member>
-    <member name="M:Snowflake.Persistence.SqliteDatabase.CreateTable(System.String,System.String[])">
-      <summary>
-        Creates a table in the database
-      </summary>
-      <param name="tableName">The name of the table to create</param>
-      <param name="columns">The names of the columns to create</param>
-    </member>
-    <member
-      name="M:Snowflake.Persistence.SqliteMemoryDatabase.Query``1(System.Func{System.Data.Common.DbConnection,``0})">
-      <summary>
-        Queries on a new connection to the database.
-        The connection will be safely closed after the operation.
-      </summary>
-      <typeparam name="T">The type the query will return</typeparam>
-      <param name="queryFunction">A function to query the database using the opened connection</param>
-      <returns>The requested data.</returns>
-    </member>
-    <member name="M:Snowflake.Persistence.SqliteMemoryDatabase.Execute(System.Action{System.Data.Common.DbConnection})">
-      <summary>
-        Executes on a new connection to the database.
-        The connection will be safely closed after the operation.
-      </summary>
-      <param name="queryFunction">A function to query the database using the opened connection</param>
-    </member>
-    <member name="M:Snowflake.Persistence.SqliteMemoryDatabase.Query``1(System.String,System.Object)">
-      <summary>
-        Queries on a new connection to the database.
-        The connection will be safely closed after the operation.
-      </summary>
-      <typeparam name="T">The type the query will return</typeparam>
-      <param name="query">The SQL query to execute</param>
-      <param name="param">The query parameters</param>
-      <returns>The requested data.</returns>
-    </member>
-    <member name="M:Snowflake.Persistence.SqliteMemoryDatabase.Execute(System.String,System.Object)">
-      <summary>
-        Executes on a new connection to the database.
-        The connection will be safely closed after the operation.
-      </summary>
-      <param name="query">The SQL query to execute</param>
-      <param name="param">The query parameters</param>
-    </member>
-    <member name="M:Snowflake.Persistence.SqliteMemoryDatabase.QueryFirstOrDefault``1(System.String,System.Object)">
-      <summary>
-        Executes a single row query
-        The connection will be safely closed after the operation.
-      </summary>
-      <typeparam name="T">The type the query will return</typeparam>
-      <param name="query">The SQL query to execute</param>
-      <param name="param">The query parameters</param>
-      <returns>The requested data, or null if not present.</returns>
-    </member>
-    <member name="M:Snowflake.Persistence.SqliteMemoryDatabase.CreateTable(System.String,System.String[])">
-      <summary>
-        Creates a table in the database
-      </summary>
-      <param name="tableName">The name of the table to create</param>
-      <param name="columns">The names of the columns to create</param>
-    </member>
-    <member name="M:Snowflake.Persistence.SqliteMemoryDatabase.SaveTo(Snowflake.Persistence.SqliteDatabase)">
-      <summary>
-        Saves the in-memory databse to a real database
-      </summary>
-      <param name="database">The real database to back up to</param>
-    </member>
-    <member name="M:Snowflake.Persistence.SqliteMemoryDatabase.LoadFrom(Snowflake.Persistence.SqliteDatabase)">
-      <summary>
-        Loads from a disk database to this in-memory database
-      </summary>
-      <param name="database">The database to load from</param>
-    </member>
-    <member name="P:Snowflake.Platform.PlatformInfo.FriendlyName">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Platform.PlatformInfo.PlatformId">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Platform.PlatformInfo.Metadata">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Platform.PlatformInfo.FileTypes">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Platform.PlatformInfo.BiosFiles">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Platform.PlatformInfo.MaximumInputs">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Romfile.RomFileInfo.Mimetype">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Romfile.RomFileInfo.Serial">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Romfile.RomFileInfo.InternalName">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Romfile.StructuredFilename.NamingConvention">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Romfile.StructuredFilename.RegionCode">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Romfile.StructuredFilename.Title">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Romfile.StructuredFilename.Year">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Romfile.StructuredFilename.OriginalFilename">
-      <inheritdoc />
-    </member>
-    <member
-      name="M:Snowflake.Romfile.Tokenizer.GoodToolsTokenClassifier.ClassifyBracketsTokens(System.Collections.Generic.IEnumerable{System.ValueTuple{System.String,System.Int32}})">
-      <inheritdoc />
-    </member>
-    <member
-      name="M:Snowflake.Romfile.Tokenizer.GoodToolsTokenClassifier.ClassifyParensTokens(System.Collections.Generic.IEnumerable{System.ValueTuple{System.String,System.Int32}})">
-      <inheritdoc />
-    </member>
-    <member name="M:Snowflake.Romfile.Tokenizer.GoodToolsTokenClassifier.ExtractTitleTokens(System.String)">
-      <inheritdoc />
-    </member>
-    <member
-      name="M:Snowflake.Romfile.Tokenizer.NoIntroTokenClassifier.ClassifyBracketsTokens(System.Collections.Generic.IEnumerable{System.ValueTuple{System.String,System.Int32}})">
-      <inheritdoc />
-    </member>
-    <member
-      name="M:Snowflake.Romfile.Tokenizer.NoIntroTokenClassifier.ClassifyParensTokens(System.Collections.Generic.IEnumerable{System.ValueTuple{System.String,System.Int32}})">
-      <inheritdoc />
-    </member>
-    <member name="M:Snowflake.Romfile.Tokenizer.NoIntroTokenClassifier.ExtractTitleTokens(System.String)">
-      <inheritdoc />
-    </member>
-    <member
-      name="M:Snowflake.Romfile.Tokenizer.TosecTokenClassifier.ClassifyParensTokens(System.Collections.Generic.IEnumerable{System.ValueTuple{System.String,System.Int32}})">
-      <inheritdoc />
-    </member>
-    <member
-      name="M:Snowflake.Romfile.Tokenizer.TosecTokenClassifier.ClassifyBracketsTokens(System.Collections.Generic.IEnumerable{System.ValueTuple{System.String,System.Int32}})">
-      <inheritdoc />
-    </member>
-    <member name="M:Snowflake.Romfile.Tokenizer.TosecTokenClassifier.ExtractTitleTokens(System.String)">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Scraping.Extensibility.Culler.TargetType">
-      <inheritdoc />
-    </member>
-    <member
-      name="M:Snowflake.Scraping.Extensibility.Culler.Filter(System.Collections.Generic.IEnumerable{Snowflake.Scraping.ISeed},Snowflake.Scraping.ISeedRootContext)">
-      <inheritdoc />
-    </member>
-    <member name="T:Snowflake.Scraping.Extensibility.SeedBuilder">
-      <summary>
-        <para>
-          Provides helper methods for building <see cref="T:Snowflake.Scraping.Extensibility.SeedTree" /> and
-          <see cref="T:Snowflake.Scraping.Extensibility.SeedTreeAwaitable" />
-          for use in <see cref="T:Snowflake.Scraping.Extensibility.IScraper" /> implementations.
-        </para>
-        <para>
-          Enables use of underscore methods for "SeedBuilder syntax".
-          Import this class with a <code>using static</code> directive.
-        </para>
-        <para>
-          Use
-          <seealso
-            cref="M:Snowflake.Scraping.Extensibility.SeedBuilder._(Snowflake.Scraping.Extensibility.SeedTreeAwaitable[])" />
-          to begin a seed tree, and
-          <seealso
-            cref="M:Snowflake.Scraping.Extensibility.SeedBuilder.__(Snowflake.Scraping.Extensibility.SeedTree[])" />
-          to continue for nested seeds.
-        </para>
-        <para>
-          Remember that top-level seeds can be <seealso cref="T:System.Threading.Tasks.Task`1" /> and other awaitables.
-        </para>
-      </summary>
-    </member>
-    <member
-      name="M:Snowflake.Scraping.Extensibility.SeedBuilder.AwaitableSeeds(Snowflake.Scraping.Extensibility.SeedTreeAwaitable[])">
-      <summary>
-        Begins a seed tree result with multiple top-level results.
-        Top-level seeds can be awaitable.
-        Use Seed Builder Syntax rather than the full call.
-        <see
-          cref="M:Snowflake.Scraping.Extensibility.SeedBuilder._(Snowflake.Scraping.Extensibility.SeedTreeAwaitable[])" />
-      </summary>
-      <param name="children">The list of seed results to return</param>
-      <returns>A seed tree result.</returns>
-    </member>
-    <member
-      name="M:Snowflake.Scraping.Extensibility.SeedBuilder.WithSeeds(Snowflake.Scraping.Extensibility.SeedTree[])">
-      <summary>
-        Continues a seed tree result with a list of nested results.
-        Nested seeds can not be awaitable, but can be returned from an asynchronous context.
-        Use Seed Builder Syntax rather than the full call.
-      </summary>
-      <param name="children">The list of seed results to return</param>
-      <returns>The nested portion of a seed tree result.</returns>
-    </member>
-    <member
-      name="M:Snowflake.Scraping.Extensibility.SeedBuilder._(Snowflake.Scraping.Extensibility.SeedTreeAwaitable[])">
-      <summary>
-        Begins a seed tree result with multiple top-level results.
-        Top-level seeds can be awaitable.
-      </summary>
-      <param name="children">The list of seed results to return</param>
-      <returns>A seed tree result.</returns>
-    </member>
-    <member name="M:Snowflake.Scraping.Extensibility.SeedBuilder.__(Snowflake.Scraping.Extensibility.SeedTree[])">
-      <summary>
-        Continues a seed tree result with multiple nested seeds.
-      </summary>
-      <param name="children">The list of seed results to return</param>
-      <returns>The nested portion of a seed tree result.</returns>
-    </member>
-    <member
-      name="M:Snowflake.Scraping.Extensibility.SeedBuilder._(System.String,System.String,System.Collections.Generic.IEnumerable{Snowflake.Scraping.Extensibility.SeedTree})">
-      <summary>
-        Begins a seed tree result with a single top level seed.
-        Top-level seeds can be awaitable.
-      </summary>
-      <param name="type">The type of the seed.</param>
-      <param name="value">The value of the seed.</param>
-      <param name="children">The list of seed results to return</param>
-      <returns>A seed tree result.</returns>
-    </member>
-    <member name="M:Snowflake.Scraping.Extensibility.SeedBuilder._(System.String,System.String)">
-      <summary>
-        Returns a single seed result.
-      </summary>
-      <param name="type">The type of the seed.</param>
-      <param name="value">The value of the seed.</param>
-      <returns>A single seed result.</returns>
-    </member>
-    <member
-      name="M:Snowflake.Scraping.Extensibility.SeedBuilder.__(System.String,System.String,System.Collections.Generic.IEnumerable{Snowflake.Scraping.Extensibility.SeedTree})">
-      <summary>
-        Continues a seed tree result with a single nested seed.
-        Nested seeds must not be awaitable, but can be returned from an asynchronous context.
-      </summary>
-      <param name="type">The type of the seed.</param>
-      <param name="value">The value of the seed.</param>
-      <param name="children">The list of seed results to return</param>
-      <returns>A seed tree result.</returns>
-    </member>
-    <member name="F:Snowflake.Scraping.ScrapeJob.ClientSeedSource">
-      <summary>
-        The default source for a Client-provided seed.
-      </summary>
-    </member>
-    <member name="P:Snowflake.Scraping.ScrapeJob.Scrapers">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Scraping.ScrapeJob.Context">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Scraping.ScrapeJob.Visited">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Scraping.ScrapeJob.JobGuid">
-      <inheritdoc />
-    </member>
-    <member name="P:Snowflake.Scraping.ScrapeJob.Cullers">
-      <inheritdoc />
-    </member>
-    <member name="T:Snowflake.Shiragame.RomInfo">
-      <summary>
-        Represents a file datum in a ClrMamePro or Logiqix XML Dat File
-      </summary>
-    </member>
-    <member name="P:Snowflake.Shiragame.RomInfo.PlatformId">
-      <summary>
-        Gets the Stone platform ID
-      </summary>
-    </member>
-    <member name="P:Snowflake.Shiragame.RomInfo.CRC32">
-      <summary>
-        Gets the canonical CRC32 from the dat file
-      </summary>
-    </member>
-    <member name="P:Snowflake.Shiragame.RomInfo.MD5">
-      <summary>
-        Gets the canonical MD5 from the dat file
-      </summary>
-    </member>
-    <member name="P:Snowflake.Shiragame.RomInfo.SHA1">
-      <summary>
-        Gets the canonical SHA1 from the dat file
-      </summary>
-    </member>
-    <member name="P:Snowflake.Shiragame.RomInfo.MimeType">
-      <summary>
-        Gets the mimetype of the file
-      </summary>
-    </member>
-    <member name="P:Snowflake.Shiragame.RomInfo.FileName">
-      <summary>
-        Gets the canonical filename from the dat file
-      </summary>
-    </member>
-    <member name="P:Snowflake.Shiragame.RomInfo.Region">
-      <summary>
-        Gets the ISO 3166-1 alpha-2 region code for this rom
-      </summary>
-    </member>
-    <member name="T:Snowflake.Shiragame.SerialInfo">
-      <summary>
-        Represents a datum matching a serial number to a game name
-      </summary>
-    </member>
-    <member name="P:Snowflake.Shiragame.SerialInfo.PlatformId">
-      <summary>
-        Gets the Stone platform ID
-      </summary>
-    </member>
-    <member name="P:Snowflake.Shiragame.SerialInfo.Title">
-      <summary>
-        Gets the canonical game name
-      </summary>
-    </member>
-    <member name="P:Snowflake.Shiragame.SerialInfo.Region">
-      <summary>
-        Gets the region code
-      </summary>
-    </member>
-    <member name="P:Snowflake.Shiragame.SerialInfo.Serial">
-      <summary>
-        Gets the game serials
-      </summary>
-    </member>
-  </members>
+    <assembly>
+        <name>Snowflake.Framework</name>
+    </assembly>
+    <members>
+        <member name="T:Snowflake.Configuration.BooleanMapping">
+            <summary>
+            Default implementation for <see cref="T:Snowflake.Configuration.IBooleanMapping"/>
+            </summary>
+        </member>
+        <member name="P:Snowflake.Configuration.BooleanMapping.True">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.BooleanMapping.False">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Configuration.BooleanMapping.FromBool(System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.BooleanMapping.TitlecaseBooleanMapping">
+             <summary>
+             Gets boolean mapping where
+            
+             True: "True"
+             False: "False
+             </summary>
+        </member>
+        <member name="P:Snowflake.Configuration.BooleanMapping.LowercaseBooleanMapping">
+             <summary>
+             Gets boolean mapping where
+            
+             True: "true"
+             False: "false"
+             </summary>
+        </member>
+        <member name="P:Snowflake.Configuration.BooleanMapping.UppercaseBooleanMapping">
+             <summary>
+             Gets boolean mapping where
+            
+             True: "TRUE"
+             False: "FALSE"
+             </summary>
+        </member>
+        <member name="P:Snowflake.Configuration.BooleanMapping.BinaryBooleanMapping">
+             <summary>
+             Gets boolean mapping where
+            
+             True: "1"
+             False : "0"
+             </summary>
+        </member>
+        <member name="P:Snowflake.Configuration.BooleanMapping.TitlecaseYesNoBooleanMapping">
+             <summary>
+             Gets boolean mapping where
+            
+             True: "Yes"
+             False: "No"
+             </summary>
+        </member>
+        <member name="P:Snowflake.Configuration.BooleanMapping.LowercaseYesNoBooleanMapping">
+             <summary>
+             Gets boolean mapping where
+            
+             True: "yes"
+             False: "no"
+             </summary>
+        </member>
+        <member name="P:Snowflake.Configuration.BooleanMapping.UppercaseYesNoBooleanMapping">
+             <summary>
+             Gets boolean mapping where
+            
+             True: "YES"
+             False: "NO"
+             </summary>
+        </member>
+        <member name="P:Snowflake.Configuration.ConfigurationCollection`1.Configuration">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.ConfigurationCollection`1.Descriptor">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Configuration.ConfigurationCollection`1.GetEnumerator">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Configuration.ConfigurationCollection`1.System#Collections#IEnumerable#GetEnumerator">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.ConfigurationCollection`1.Item(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Configuration.CollectionCircularInterceptor`1.Intercept(Castle.DynamicProxy.IInvocation)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Configuration.CollectionInterceptor`1.Intercept(Castle.DynamicProxy.IInvocation)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Snowflake.Configuration.ConfigurationCollectionDescriptor`1">
+            <summary>
+            Default implementation for <see cref="T:Snowflake.Configuration.IConfigurationCollectionDescriptor"/>
+            </summary>
+            <typeparam name="T">The type of the configuration collection</typeparam>
+        </member>
+        <member name="P:Snowflake.Configuration.ConfigurationCollectionDescriptor`1.Outputs">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.ConfigurationCollectionDescriptor`1.SectionKeys">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Configuration.ConfigurationCollectionDescriptor`1.GetDestination(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Snowflake.Configuration.ConfigurationDescriptorCache">
+            <summary>
+            Provides a thread-safe cache for collection descriptors.
+            Since descriptors use heavy attribute access, the descriptor cache caches
+            the attributes for types that will not change throughout the
+            lifetime of the application.
+            </summary>
+        </member>
+        <member name="M:Snowflake.Configuration.ConfigurationDescriptorCache.GetProxyGenerator">
+            <summary>
+            Gets a reused proxy generator that survives for the lifetime of the application.
+            </summary>
+        </member>
+        <member name="M:Snowflake.Configuration.ConfigurationDescriptorCache.GetSectionDescriptor``1(System.String)">
+            <summary>
+            Gets a new or existing section descriptor
+            </summary>
+            <typeparam name="T">The type of the configuration section</typeparam>
+            <returns>The section descriptor for <see cref="T:self"/></returns>
+        </member>
+        <member name="M:Snowflake.Configuration.ConfigurationDescriptorCache.GetCollectionDescriptor``1">
+            <summary>
+            Gets a new or existing collection descriptor
+            </summary>
+            <typeparam name="T">The type of the configuration collection</typeparam>
+            <returns>The collection descriptor for <see cref="T:self"/></returns>
+        </member>
+        <member name="P:Snowflake.Configuration.ConfigurationFile.BooleanMapping">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.ConfigurationFile.Destination">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.ConfigurationFile.Key">
+            <inheritdoc/>
+        </member>
+        <member name="T:Snowflake.Configuration.ConfigurationOptionDescriptor">
+            <summary>
+            Default constructor for <see cref="T:Snowflake.Configuration.IConfigurationOptionDescriptor"/>
+            </summary>
+        </member>
+        <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.DisplayName">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.Description">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.Simple">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.Private">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.Flag">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.Max">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.Min">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.Increment">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.IsPath">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.OptionName">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.OptionKey">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.Default">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.IsSelection">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.Type">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.CustomMetadata">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.OptionType">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.SelectionOptions">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.ConfigurationSection`1.Configuration">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.ConfigurationSection`1.Descriptor">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.ConfigurationSection`1.Values">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.ConfigurationSection`1.Item(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Configuration.ConfigurationSection`1.GetEnumerator">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Configuration.ConfigurationSection`1.System#Collections#IEnumerable#GetEnumerator">
+            <inheritdoc/>
+        </member>
+        <member name="T:Snowflake.Configuration.ConfigurationSectionDescriptor`1">
+            <summary>
+            Default constructor for <see cref="T:Snowflake.Configuration.IConfigurationSectionDescriptor"/>
+            </summary>
+            <typeparam name="T">The type of the configuration.</typeparam>
+        </member>
+        <member name="P:Snowflake.Configuration.ConfigurationSectionDescriptor`1.Description">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.ConfigurationSectionDescriptor`1.DisplayName">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.ConfigurationSectionDescriptor`1.SectionName">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.ConfigurationSectionDescriptor`1.SectionKey">
+            <inheritdoc />
+        </member>
+        <member name="P:Snowflake.Configuration.ConfigurationSectionDescriptor`1.Options">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.ConfigurationSectionDescriptor`1.Item(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.ConfigurationSerializer.TypeMapper">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Configuration.ConfigurationSerializer.SerializeLine``1(System.String,``0)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Configuration.ConfigurationSerializer.SerializeValue(System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Configuration.ConfigurationSerializer.SerializeHeader(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Configuration.ConfigurationSerializer.SerializeFooter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Configuration.ConfigurationSerializer.Serialize(Snowflake.Configuration.IConfigurationSection)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Configuration.ConfigurationTypeMapper.Add``1(System.Func{``0,System.String})">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Configuration.ConfigurationTypeMapper.ConvertValue``1(``0)">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.ConfigurationTypeMapper.Item(System.Type,System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.ConfigurationValue.Value">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.ConfigurationValue.Guid">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.ConfigurationValueCollection.EnsuredDescriptors">
+            <summary>
+            Cache of ensured descriptors
+            </summary>
+        </member>
+        <member name="T:Snowflake.Configuration.IniConfigurationSerializer">
+             <summary>
+             A configuration serializer that uses INI format
+            
+             [Header]
+             Key = Value
+             </summary>
+        </member>
+        <member name="M:Snowflake.Configuration.IniConfigurationSerializer.SerializeLine``1(System.String,``0)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Configuration.IniConfigurationSerializer.SerializeHeader(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Configuration.IniConfigurationSerializer.Serialize(Snowflake.Configuration.IConfigurationSection)">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.Input.InputConfigurationSection`1.Configuration">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.Input.InputConfigurationSection`1.Descriptor">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.Input.InputConfigurationSection`1.Values">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.Input.InputConfigurationSection`1.Item(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Configuration.Input.InputConfigurationSection`1.GetEnumerator">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Configuration.Input.InputConfigurationSection`1.System#Collections#IEnumerable#GetEnumerator">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.Input.InputMapping.Item(Snowflake.Input.Controller.ControllerElement)">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.Input.InputMapping.InputApi">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.Input.InputMapping.DeviceLayouts">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.Input.InputOption.InputOptionType">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.Input.InputOption.TargetElement">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.Input.InputOption.OptionName">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.Input.InputOption.KeyName">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Configuration.Input.InputSerializer.Serialize(Snowflake.Configuration.Input.IInputTemplate,Snowflake.Configuration.Input.IInputMapping)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Configuration.Input.InputSerializer.SerializeInput(System.String,Snowflake.Input.Controller.ControllerElement,Snowflake.Configuration.Input.IInputMapping)">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.Input.InputTemplate`1.PlayerIndex">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.Input.InputTemplate`1.Template">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.Input.InputTemplate`1.Values">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.Input.InputTemplate`1.Snowflake#Configuration#Input#IInputTemplate#Options">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.Input.InputTemplate`1.Item(Snowflake.Input.Controller.ControllerElement)">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.Input.InputTemplate`1.Snowflake#Configuration#IConfigurationSection#Values">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.Input.InputTemplate`1.Snowflake#Configuration#IConfigurationSection#Descriptor">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.Input.InputTemplate`1.Snowflake#Configuration#IConfigurationSection#Item(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.Input.InputTemplate`1.Snowflake#Configuration#IConfigurationSection{T}#Configuration">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Configuration.Input.InputTemplate`1.GetEnumerator">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Configuration.Input.InputTemplate`1.System#Collections#IEnumerable#GetEnumerator">
+            <inheritdoc/>
+        </member>
+        <member name="T:Snowflake.Configuration.Interceptors.ConfigurationCircularInterceptor`1">
+            <summary>
+            Interceptor to allow circular reference within <see cref="T:Snowflake.Configuration.ConfigurationSection`1"/>
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Snowflake.Configuration.Interceptors.ConfigurationCircularInterceptor`1.Intercept(Castle.DynamicProxy.IInvocation)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Configuration.Interceptors.ConfigurationInterceptor.Intercept(Castle.DynamicProxy.IInvocation)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Configuration.Interceptors.InputTemplateCircularInterceptor`1.Intercept(Castle.DynamicProxy.IInvocation)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Configuration.Interceptors.InputTemplateInterceptor`1.Intercept(Castle.DynamicProxy.IInvocation)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Snowflake.Configuration.KeyValuePairConfigurationSerializer">
+             <summary>
+             Provides a generic key value pair serializer with a
+             configuration separator:
+            
+             key separator value
+             </summary>
+        </member>
+        <member name="M:Snowflake.Configuration.KeyValuePairConfigurationSerializer.SerializeLine``1(System.String,``0)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Configuration.KeyValuePairConfigurationSerializer.Serialize(Snowflake.Configuration.IConfigurationSection)">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.SelectionOptionDescriptor.DisplayName">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.SelectionOptionDescriptor.Private">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.SelectionOptionDescriptor.SerializeAs">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.SelectionOptionDescriptor.NumericValue">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.SelectionOptionDescriptor.EnumName">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.SelectionOptionDescriptor.EnumType">
+            <inheritdoc/>
+        </member>
+        <member name="T:Snowflake.Execution.Extensibility.EmulatorTask">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Execution.Extensibility.EmulatorTask.EmulatorConfiguration">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Execution.Extensibility.EmulatorTask.ControllerConfiguration">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Execution.Extensibility.EmulatorTask.EmulatingGame">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Execution.Extensibility.EmulatorTask.GameSaveLocation">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Execution.Extensibility.EmulatorTask.Pragmas">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Execution.Extensibility.EmulatorTask.ProcessTaskRoot">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Execution.Extensibility.EmulatorTask.TaskIdentifier">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Execution.Extensibility.EmulatorTask.AddPragma(System.String,System.String)">
+            <summary>
+            Add a pragma to the task.
+            </summary>
+            <param name="pragmaKey">The key of the pragma.</param>
+            <param name="pragmaValue">The value of the pragma.</param>
+        </member>
+        <member name="T:Snowflake.Execution.Extensibility.EmulatorTaskResult">
+            <inheritdoc/>s
+        </member>
+        <member name="P:Snowflake.Execution.Extensibility.EmulatorTaskResult.EmulatorName">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Execution.Extensibility.EmulatorTaskResult.StartTime">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Execution.Extensibility.EmulatorTaskResult.IsRunning">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Execution.Extensibility.EmulatorTaskResult.Closed">
+            <inheritdoc/>
+        </member>
+        <member name="T:Snowflake.Execution.Extensibility.ExternalEmulator">
+            <summary>
+            Represents a <see cref="T:Snowflake.Execution.Extensibility.IEmulator"/> that wraps an external emulator.
+            </summary>
+        </member>
+        <member name="P:Snowflake.Execution.Extensibility.ExternalEmulator.StoneProvider">
+            <summary>
+            Gets a <see cref="T:Snowflake.Services.IStoneProvider"/>. We noticed that many emulator wrappers require
+            access to platform and controller information through Stone.
+            </summary>
+        </member>
+        <member name="P:Snowflake.Execution.Extensibility.ExternalEmulator.Runner">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Execution.Extensibility.ExternalEmulator.Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Execution.Extensibility.ExternalEmulator.ConfigurationFactory">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Execution.Extensibility.ExternalEmulator.CreateTask(Snowflake.Model.Records.Game.IGameRecord,Snowflake.Execution.Saving.ISaveLocation,System.Collections.Generic.IList{Snowflake.Execution.Extensibility.IEmulatedController},System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Snowflake.Extensibility.EmptyPluginConfiguration.EmptyConfiguration">
+            <summary>
+            The empty plugin configuration.
+            </summary>
+        </member>
+        <member name="P:Snowflake.Extensibility.Provisioning.JsonPluginProperties.PropertyKeys">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Extensibility.Provisioning.JsonPluginProperties.Get(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Extensibility.Provisioning.JsonPluginProperties.GetEnumerable(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Extensibility.Provisioning.JsonPluginProperties.GetDictionary(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Extensibility.Provisioning.PluginProvision.Logger">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Extensibility.Provisioning.PluginProvision.Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Extensibility.Provisioning.PluginProvision.Name">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Extensibility.Provisioning.PluginProvision.Description">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Extensibility.Provisioning.PluginProvision.Author">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Extensibility.Provisioning.PluginProvision.Version">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Extensibility.Provisioning.PluginProvision.ContentDirectory">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Extensibility.Provisioning.PluginProvision.ResourceDirectory">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Extensibility.Provisioning.PluginProvision.CommonResourceDirectory">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Extensibility.Provisioning.PluginProvision.ConfigurationStore">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Extensibility.Provisioning.ProvisionedPlugin.Provision">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Extensibility.Provisioning.ProvisionedPlugin.Name">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Extensibility.Provisioning.ProvisionedPlugin.Author">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Extensibility.Provisioning.ProvisionedPlugin.Description">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Extensibility.Provisioning.ProvisionedPlugin.Version">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Extensibility.Provisioning.ProvisionedPlugin.GetPluginConfiguration">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Extensibility.Provisioning.ProvisionedPlugin.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.ButtonA">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.ButtonB">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.ButtonC">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.ButtonX">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.ButtonY">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.ButtonZ">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.ButtonL">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.ButtonR">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.ButtonStart">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.ButtonSelect">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.ButtonGuide">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.ButtonClickL">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.ButtonClickR">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button0">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button1">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button2">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button3">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button4">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button5">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button6">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button7">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button8">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button9">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button10">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button11">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button12">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button13">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button14">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button15">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button16">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button17">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button18">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button19">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button20">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button21">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button22">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button23">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button24">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button25">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button26">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button27">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button28">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button29">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button30">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Button31">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.DirectionalN">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.DirectionalE">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.DirectionalS">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.DirectionalW">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.DirectionalNE">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.DirectionalNW">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.DirectionalSE">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.DirectionalSW">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.TriggerLeft">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.TriggerRight">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.AxisLeftAnalogPositiveX">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.AxisLeftAnalogNegativeX">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.AxisLeftAnalogPositiveY">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.AxisLeftAnalogNegativeY">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.AxisRightAnalogPositiveX">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.AxisRightAnalogNegativeX">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.AxisRightAnalogPositiveY">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.AxisRightAnalogNegativeY">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.RumbleBig">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.RumbleSmall">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Pointer2D">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Pointer3D">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.PointerAxisPositiveX">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.PointerAxisNegativeX">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.PointerAxisPositiveY">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.PointerAxisNegativeY">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.PointerAxisPositiveZ">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.PointerAxisNegativeZ">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Keyboard">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Touchscreen">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Gyroscope">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementCollection.Item(Snowflake.Input.Controller.ControllerElement)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Input.Controller.ControllerElementCollection.GetEnumerator">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Input.Controller.ControllerElementCollection.System#Collections#IEnumerable#GetEnumerator">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementInfo.Label">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerElementInfo.Type">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerLayout.LayoutID">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerLayout.FriendlyName">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerLayout.IsRealDevice">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerLayout.Platforms">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.ControllerLayout.Layout">
+            <inheritdoc/>
+        </member>
+        <member name="T:Snowflake.Input.Controller.Extensions.ControllerElementExtensions">
+            <summary>
+            Controller element extensions.
+            </summary>
+        </member>
+        <member name="M:Snowflake.Input.Controller.Extensions.ControllerElementExtensions.IsKeyboardKey(Snowflake.Input.Controller.ControllerElement)">
+            <summary>
+            Checks if the element is a keyboard key element.
+            </summary>
+            <param name="element">The controller element to check.</param>
+            <returns>Whether the element is a keyboard key element</returns>
+        </member>
+        <member name="M:Snowflake.Input.Controller.Extensions.ControllerElementExtensions.IsAxis(Snowflake.Input.Controller.ControllerElement)">
+            <summary>
+            Checks if the element is an axis element
+            </summary>
+            <param name="element">The controller element to check.</param>
+            <returns>Whether the element is a keyboard key element</returns>
+        </member>
+        <member name="M:Snowflake.Input.Controller.Mapped.ControllerElementMappings.GetEnumerator">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Input.Controller.Mapped.ControllerElementMappings.System#Collections#IEnumerable#GetEnumerator">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.Mapped.ControllerElementMappings.DeviceId">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.Mapped.ControllerElementMappings.ControllerId">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Input.Controller.Mapped.ControllerElementMappings.GetDefaultMappings(Snowflake.Input.Controller.IControllerLayout,Snowflake.Input.Controller.IControllerLayout)">
+            <summary>
+            Gets default mappings for a real device to a virtual device
+            </summary>
+            <param name="realDevice">The button layout of the real controller device</param>
+            <param name="virtualDevice">The button layout of the defined controller device</param>
+            <returns></returns>
+        </member>
+        <member name="P:Snowflake.Input.Controller.Mapped.MappedControllerElement.LayoutElement">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Controller.Mapped.MappedControllerElement.DeviceElement">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Device.InputDevice.DeviceId">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Device.InputDevice.DeviceInfo">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Device.InputDevice.DeviceIndex">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Device.InputDevice.ControllerName">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Device.InputDevice.DeviceApi">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Device.InputDevice.DeviceLayout">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Input.Device.InputEnumerator.ControllerLayout">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Input.Device.InputEnumerator.GetConnectedDevices">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.JsonConverters.ConfigurationCollectionSerializer.WriteJson(Newtonsoft.Json.JsonWriter,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.JsonConverters.ConfigurationCollectionSerializer.ReadJson(Newtonsoft.Json.JsonReader,System.Type,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.JsonConverters.ConfigurationCollectionSerializer.CanConvert(System.Type)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.JsonConverters.ControllerLayoutConverter.Create(System.Type,Newtonsoft.Json.Linq.JObject)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.JsonConverters.InputMappingConverter.Create(System.Type,Newtonsoft.Json.Linq.JObject)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Snowflake.JsonConverters.JsonCreationConverter`1">
+            <summary>Base Generic JSON Converter that can help quickly define converters for specific types by automatically
+            generating the CanConvert, ReadJson, and WriteJson methods, requiring the implementer only to define a strongly typed Create method.</summary>
+        </member>
+        <member name="P:Snowflake.JsonConverters.JsonCreationConverter`1.CanWrite">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.JsonConverters.JsonCreationConverter`1.Create(System.Type,Newtonsoft.Json.Linq.JObject)">
+            <summary>Create an instance of objectType, based properties in the JSON object</summary>
+            <param name="objectType">type of object expected</param>
+            <param name="jObject">contents of JSON object that will be deserialized</param>
+        </member>
+        <member name="M:Snowflake.JsonConverters.JsonCreationConverter`1.Transform(`0)">
+            <summary>
+            Gives a chance to transform the object before being serialized
+            </summary>
+            <param name="value">The value to transform</param>
+            <returns>The transformed object graph to be serialized</returns>
+        </member>
+        <member name="M:Snowflake.JsonConverters.JsonCreationConverter`1.CanConvert(System.Type)">
+            <summary>Determines if this converted is designed to deserialization to objects of the specified type.</summary>
+            <param name="objectType">The target type for deserialization.</param>
+            <returns>True if the type is supported.</returns>
+        </member>
+        <member name="M:Snowflake.JsonConverters.JsonCreationConverter`1.ReadJson(Newtonsoft.Json.JsonReader,System.Type,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <summary>Parses the json to the specified type.</summary>
+            <param name="reader">Newtonsoft.Json.JsonReader</param>
+            <param name="objectType">Target type.</param>
+            <param name="existingValue">Ignored</param>
+            <param name="serializer">Newtonsoft.Json.JsonSerializer to use.</param>
+            <returns>Deserialized Object</returns>
+        </member>
+        <member name="M:Snowflake.JsonConverters.JsonCreationConverter`1.WriteJson(Newtonsoft.Json.JsonWriter,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <summary>Serializes to the specified type</summary>
+            <param name="writer">Newtonsoft.Json.JsonWriter</param>
+            <param name="value">Object to serialize.</param>
+            <param name="serializer">Newtonsoft.Json.JsonSerializer to use.</param>
+        </member>
+        <member name="M:Snowflake.JsonConverters.PlatformInfoConverter.Create(System.Type,Newtonsoft.Json.Linq.JObject)">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Loader.Module.Name">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Loader.Module.Entry">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Loader.Module.Loader">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Loader.Module.Author">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Loader.Module.ModuleDirectory">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Loader.Module.ContentsDirectory">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Loader.Module.Version">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Loader.ModuleEnumerator.Modules">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Loader.ServiceProvider.Services">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Loader.ServiceProvider.Get``1">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Model.Records.FileRecord.Metadata">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Model.Records.FileRecord.RecordId">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Model.Records.FileRecord.MimeType">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Model.Records.MetadataCollection.Item(System.Guid)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Model.Records.MetadataCollection.Add(System.Collections.Generic.IDictionary{System.String,Snowflake.Model.Records.IRecordMetadata})">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Model.Records.MetadataCollection.Snowflake#Model#Records#IMetadataCollection#Item(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Model.Records.MetadataCollection.Record">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Model.Records.MetadataCollection.Add(Snowflake.Model.Records.IRecordMetadata)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Model.Records.MetadataCollection.Add(System.String,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Snowflake.Model.Records.RecordMetadata">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Model.Records.RecordMetadata.Key">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Model.Records.RecordMetadata.Value">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Model.Records.RecordMetadata.Guid">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Model.Records.RecordMetadata.Record">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Model.Records.RecordMetadata.GetHashCode">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Model.Records.RecordMetadata.Equals(System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Snowflake.Model.Records.Utility.GuidCreator">
+            <summary>
+            Helper methods for working with <see cref="T:System.Guid"/>.
+            </summary>
+        </member>
+        <member name="M:Snowflake.Model.Records.Utility.GuidCreator.Create(System.Guid,System.String)">
+            <summary>
+            Creates a name-based UUID using the algorithm from RFC 4122 §4.3.
+            </summary>
+            <param name="namespaceId">The ID of the namespace.</param>
+            <param name="name">The name (within that namespace).</param>
+            <returns>A UUID derived from the namespace and name.</returns>
+            <remarks>See <a href="http://code.logos.com/blog/2011/04/generating_a_deterministic_guid.html">Generating a deterministic GUID</a>.</remarks>
+        </member>
+        <member name="M:Snowflake.Model.Records.Utility.GuidCreator.Create(System.Guid,System.String,System.Int32)">
+            <summary>
+            Creates a name-based UUID using the algorithm from RFC 4122 §4.3.
+            </summary>
+            <param name="namespaceId">The ID of the namespace.</param>
+            <param name="name">The name (within that namespace).</param>
+            <param name="version">The version number of the UUID to create; this value must be either
+            3 (for MD5 hashing) or 5 (for SHA-1 hashing).</param>
+            <returns>A UUID derived from the namespace and name.</returns>
+            <remarks>See <a href="http://code.logos.com/blog/2011/04/generating_a_deterministic_guid.html">Generating a deterministic GUID</a>.</remarks>
+        </member>
+        <member name="F:Snowflake.Model.Records.Utility.GuidCreator.DnsNamespace">
+            <summary>
+            The namespace for fully-qualified domain names (from RFC 4122, Appendix C).
+            </summary>
+        </member>
+        <member name="F:Snowflake.Model.Records.Utility.GuidCreator.UrlNamespace">
+            <summary>
+            The namespace for URLs (from RFC 4122, Appendix C).
+            </summary>
+        </member>
+        <member name="F:Snowflake.Model.Records.Utility.GuidCreator.IsoOidNamespace">
+            <summary>
+            The namespace for ISO OIDs (from RFC 4122, Appendix C).
+            </summary>
+        </member>
+        <member name="P:Snowflake.Persistence.SqliteDatabase.DatabaseName">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Persistence.SqliteDatabase.GetConnection">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Persistence.SqliteDatabase.Query``1(System.Func{System.Data.IDbConnection,``0})">
+            <summary>
+            Queries on a new connection to the database.
+            The connection will be safely closed after the operation.
+            </summary>
+            <typeparam name="T">The type the query will return</typeparam>
+            <param name="queryFunction">A function to query the database using the opened connection</param>
+            <returns>The requested data.</returns>
+        </member>
+        <member name="M:Snowflake.Persistence.SqliteDatabase.Execute(System.Action{System.Data.IDbConnection})">
+            <summary>
+            Executes on a new connection to the database.
+            The connection will be safely closed after the operation.
+            </summary>
+            <param name="queryFunction">A function to query the database using the opened connection</param>
+        </member>
+        <member name="M:Snowflake.Persistence.SqliteDatabase.Query``1(System.String,System.Object)">
+            <summary>
+            Queries on a new connection to the database.
+            The connection will be safely closed after the operation.
+            </summary>
+            <typeparam name="T">The type the query will return</typeparam>
+            <param name="query">The SQL query to execute</param>
+            <param name="param">The query parameters</param>
+            <returns>The requested data.</returns>
+        </member>
+        <member name="M:Snowflake.Persistence.SqliteDatabase.Execute(System.String,System.Object)">
+            <summary>
+            Executes on a new connection to the database.
+            The connection will be safely closed after the operation.
+            </summary>
+            <param name="query">The SQL query to execute</param>
+            <param name="param">The query parameters</param>
+        </member>
+        <member name="M:Snowflake.Persistence.SqliteDatabase.QueryFirstOrDefault``1(System.String,System.Object)">
+            <summary>
+            Executes a single row query
+            The connection will be safely closed after the operation.
+            </summary>
+            <typeparam name="T">The type the query will return</typeparam>
+            <param name="query">The SQL query to execute</param>
+            <param name="param">The query parameters</param>
+            <returns>The requested data, or null if not present.</returns>
+        </member>
+        <member name="M:Snowflake.Persistence.SqliteDatabase.CreateTable(System.String,System.String[])">
+            <summary>
+            Creates a table in the database
+            </summary>
+            <param name="tableName">The name of the table to create</param>
+            <param name="columns">The names of the columns to create</param>
+        </member>
+        <member name="M:Snowflake.Persistence.SqliteMemoryDatabase.Query``1(System.Func{System.Data.Common.DbConnection,``0})">
+            <summary>
+            Queries on a new connection to the database.
+            The connection will be safely closed after the operation.
+            </summary>
+            <typeparam name="T">The type the query will return</typeparam>
+            <param name="queryFunction">A function to query the database using the opened connection</param>
+            <returns>The requested data.</returns>
+        </member>
+        <member name="M:Snowflake.Persistence.SqliteMemoryDatabase.Execute(System.Action{System.Data.Common.DbConnection})">
+            <summary>
+            Executes on a new connection to the database.
+            The connection will be safely closed after the operation.
+            </summary>
+            <param name="queryFunction">A function to query the database using the opened connection</param>
+        </member>
+        <member name="M:Snowflake.Persistence.SqliteMemoryDatabase.Query``1(System.String,System.Object)">
+            <summary>
+            Queries on a new connection to the database.
+            The connection will be safely closed after the operation.
+            </summary>
+            <typeparam name="T">The type the query will return</typeparam>
+            <param name="query">The SQL query to execute</param>
+            <param name="param">The query parameters</param>
+            <returns>The requested data.</returns>
+        </member>
+        <member name="M:Snowflake.Persistence.SqliteMemoryDatabase.Execute(System.String,System.Object)">
+            <summary>
+            Executes on a new connection to the database.
+            The connection will be safely closed after the operation.
+            </summary>
+            <param name="query">The SQL query to execute</param>
+            <param name="param">The query parameters</param>
+        </member>
+        <member name="M:Snowflake.Persistence.SqliteMemoryDatabase.QueryFirstOrDefault``1(System.String,System.Object)">
+            <summary>
+            Executes a single row query
+            The connection will be safely closed after the operation.
+            </summary>
+            <typeparam name="T">The type the query will return</typeparam>
+            <param name="query">The SQL query to execute</param>
+            <param name="param">The query parameters</param>
+            <returns>The requested data, or null if not present.</returns>
+        </member>
+        <member name="M:Snowflake.Persistence.SqliteMemoryDatabase.CreateTable(System.String,System.String[])">
+            <summary>
+            Creates a table in the database
+            </summary>
+            <param name="tableName">The name of the table to create</param>
+            <param name="columns">The names of the columns to create</param>
+        </member>
+        <member name="M:Snowflake.Persistence.SqliteMemoryDatabase.SaveTo(Snowflake.Persistence.SqliteDatabase)">
+            <summary>
+            Saves the in-memory databse to a real database
+            </summary>
+            <param name="database">The real database to back up to</param>
+        </member>
+        <member name="M:Snowflake.Persistence.SqliteMemoryDatabase.LoadFrom(Snowflake.Persistence.SqliteDatabase)">
+            <summary>
+            Loads from a disk database to this in-memory database
+            </summary>
+            <param name="database">The database to load from</param>
+        </member>
+        <member name="P:Snowflake.Platform.PlatformInfo.FriendlyName">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Platform.PlatformInfo.PlatformId">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Platform.PlatformInfo.Metadata">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Platform.PlatformInfo.FileTypes">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Platform.PlatformInfo.BiosFiles">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Platform.PlatformInfo.MaximumInputs">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Romfile.RomFileInfo.Mimetype">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Romfile.RomFileInfo.Serial">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Romfile.RomFileInfo.InternalName">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Romfile.StructuredFilename.NamingConvention">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Romfile.StructuredFilename.RegionCode">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Romfile.StructuredFilename.Title">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Romfile.StructuredFilename.Year">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Romfile.StructuredFilename.OriginalFilename">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Romfile.Tokenizer.GoodToolsTokenClassifier.ClassifyBracketsTokens(System.Collections.Generic.IEnumerable{System.ValueTuple{System.String,System.Int32}})">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Romfile.Tokenizer.GoodToolsTokenClassifier.ClassifyParensTokens(System.Collections.Generic.IEnumerable{System.ValueTuple{System.String,System.Int32}})">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Romfile.Tokenizer.GoodToolsTokenClassifier.ExtractTitleTokens(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Romfile.Tokenizer.NoIntroTokenClassifier.ClassifyBracketsTokens(System.Collections.Generic.IEnumerable{System.ValueTuple{System.String,System.Int32}})">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Romfile.Tokenizer.NoIntroTokenClassifier.ClassifyParensTokens(System.Collections.Generic.IEnumerable{System.ValueTuple{System.String,System.Int32}})">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Romfile.Tokenizer.NoIntroTokenClassifier.ExtractTitleTokens(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Romfile.Tokenizer.TosecTokenClassifier.ClassifyParensTokens(System.Collections.Generic.IEnumerable{System.ValueTuple{System.String,System.Int32}})">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Romfile.Tokenizer.TosecTokenClassifier.ClassifyBracketsTokens(System.Collections.Generic.IEnumerable{System.ValueTuple{System.String,System.Int32}})">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Romfile.Tokenizer.TosecTokenClassifier.ExtractTitleTokens(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Scraping.Extensibility.Culler.TargetType">
+            <inheritdoc />
+        </member>
+        <member name="M:Snowflake.Scraping.Extensibility.Culler.Filter(System.Collections.Generic.IEnumerable{Snowflake.Scraping.ISeed},Snowflake.Scraping.ISeedRootContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:Snowflake.Scraping.Extensibility.SeedBuilder">
+            <summary>
+            <para>
+            Provides helper methods for building <see cref="T:Snowflake.Scraping.Extensibility.SeedTree"/> and <see cref="T:Snowflake.Scraping.Extensibility.SeedTreeAwaitable"/>
+            for use in <see cref="T:Snowflake.Scraping.Extensibility.IScraper"/> implementations.
+            </para>
+            <para>
+            Enables use of underscore methods for "SeedBuilder syntax".
+            Import this class with a <code>using static</code> directive.
+            </para>
+            <para>
+            Use <seealso cref="M:Snowflake.Scraping.Extensibility.SeedBuilder._(Snowflake.Scraping.Extensibility.SeedTreeAwaitable[])"/> to begin a seed tree, and
+            <seealso cref="M:Snowflake.Scraping.Extensibility.SeedBuilder.__(Snowflake.Scraping.Extensibility.SeedTree[])"/> to continue for nested seeds.
+            </para>
+            <para>
+            Remember that top-level seeds can be <seealso cref="T:System.Threading.Tasks.Task`1"/> and other awaitables.
+            </para>
+            </summary>
+        </member>
+        <member name="M:Snowflake.Scraping.Extensibility.SeedBuilder.AwaitableSeeds(Snowflake.Scraping.Extensibility.SeedTreeAwaitable[])">
+            <summary>
+            Begins a seed tree result with multiple top-level results.
+            Top-level seeds can be awaitable.
+            Use Seed Builder Syntax rather than the full call.
+            <see cref="M:Snowflake.Scraping.Extensibility.SeedBuilder._(Snowflake.Scraping.Extensibility.SeedTreeAwaitable[])"/>
+            </summary>
+            <param name="children">The list of seed results to return</param>
+            <returns>A seed tree result.</returns>
+        </member>
+        <member name="M:Snowflake.Scraping.Extensibility.SeedBuilder.WithSeeds(Snowflake.Scraping.Extensibility.SeedTree[])">
+            <summary>
+            Continues a seed tree result with a list of nested results.
+            Nested seeds can not be awaitable, but can be returned from an asynchronous context.
+            Use Seed Builder Syntax rather than the full call.
+            </summary>
+            <param name="children">The list of seed results to return</param>
+            <returns>The nested portion of a seed tree result.</returns>
+        </member>
+        <member name="M:Snowflake.Scraping.Extensibility.SeedBuilder._(Snowflake.Scraping.Extensibility.SeedTreeAwaitable[])">
+            <summary>
+            Begins a seed tree result with multiple top-level results.
+            Top-level seeds can be awaitable.
+            </summary>
+            <param name="children">The list of seed results to return</param>
+            <returns>A seed tree result.</returns>
+        </member>
+        <member name="M:Snowflake.Scraping.Extensibility.SeedBuilder.__(Snowflake.Scraping.Extensibility.SeedTree[])">
+            <summary>
+            Continues a seed tree result with multiple nested seeds.
+            </summary>
+            <param name="children">The list of seed results to return</param>
+            <returns>The nested portion of a seed tree result.</returns>
+        </member>
+        <member name="M:Snowflake.Scraping.Extensibility.SeedBuilder._(System.String,System.String,System.Collections.Generic.IEnumerable{Snowflake.Scraping.Extensibility.SeedTree})">
+            <summary>
+            Begins a seed tree result with a single top level seed.
+            Top-level seeds can be awaitable.
+            </summary>
+            <param name="type">The type of the seed.</param>
+            <param name="value">The value of the seed.</param>
+            <param name="children">The list of seed results to return</param>
+            <returns>A seed tree result.</returns>
+        </member>
+        <member name="M:Snowflake.Scraping.Extensibility.SeedBuilder._(System.String,System.String)">
+            <summary>
+            Returns a single seed result.
+            </summary>
+            <param name="type">The type of the seed.</param>
+            <param name="value">The value of the seed.</param>
+            <returns>A single seed result.</returns>
+        </member>
+        <member name="M:Snowflake.Scraping.Extensibility.SeedBuilder.__(System.String,System.String,System.Collections.Generic.IEnumerable{Snowflake.Scraping.Extensibility.SeedTree})">
+            <summary>
+            Continues a seed tree result with a single nested seed.
+            Nested seeds must not be awaitable, but can be returned from an asynchronous context.
+            </summary>
+            <param name="type">The type of the seed.</param>
+            <param name="value">The value of the seed.</param>
+            <param name="children">The list of seed results to return</param>
+            <returns>A seed tree result.</returns>
+        </member>
+        <member name="F:Snowflake.Scraping.ScrapeJob.ClientSeedSource">
+            <summary>
+             The default source for a Client-provided seed.
+            </summary>
+        </member>
+        <member name="P:Snowflake.Scraping.ScrapeJob.Scrapers">
+            <inheritdoc />
+        </member>
+        <member name="P:Snowflake.Scraping.ScrapeJob.Context">
+            <inheritdoc />
+        </member>
+        <member name="P:Snowflake.Scraping.ScrapeJob.Visited">
+            <inheritdoc />
+        </member>
+        <member name="P:Snowflake.Scraping.ScrapeJob.JobGuid">
+            <inheritdoc />
+        </member>
+        <member name="P:Snowflake.Scraping.ScrapeJob.Cullers">
+            <inheritdoc />
+        </member>
+        <member name="T:Snowflake.Shiragame.RomInfo">
+            <summary>
+            Represents a file datum in a ClrMamePro or Logiqix XML Dat File
+            </summary>
+        </member>
+        <member name="P:Snowflake.Shiragame.RomInfo.PlatformId">
+            <summary>
+            Gets the Stone platform ID
+            </summary>
+        </member>
+        <member name="P:Snowflake.Shiragame.RomInfo.CRC32">
+            <summary>
+            Gets the canonical CRC32 from the dat file
+            </summary>
+        </member>
+        <member name="P:Snowflake.Shiragame.RomInfo.MD5">
+            <summary>
+            Gets the canonical MD5 from the dat file
+            </summary>
+        </member>
+        <member name="P:Snowflake.Shiragame.RomInfo.SHA1">
+            <summary>
+            Gets the canonical SHA1 from the dat file
+            </summary>
+        </member>
+        <member name="P:Snowflake.Shiragame.RomInfo.MimeType">
+            <summary>
+            Gets the mimetype of the file
+            </summary>
+        </member>
+        <member name="P:Snowflake.Shiragame.RomInfo.FileName">
+            <summary>
+            Gets the canonical filename from the dat file
+            </summary>
+        </member>
+        <member name="P:Snowflake.Shiragame.RomInfo.Region">
+            <summary>
+            Gets the ISO 3166-1 alpha-2 region code for this rom
+            </summary>
+        </member>
+        <member name="T:Snowflake.Shiragame.SerialInfo">
+            <summary>
+            Represents a datum matching a serial number to a game name
+            </summary>
+        </member>
+        <member name="P:Snowflake.Shiragame.SerialInfo.PlatformId">
+            <summary>
+            Gets the Stone platform ID
+            </summary>
+        </member>
+        <member name="P:Snowflake.Shiragame.SerialInfo.Title">
+            <summary>
+            Gets the canonical game name
+            </summary>
+        </member>
+        <member name="P:Snowflake.Shiragame.SerialInfo.Region">
+            <summary>
+            Gets the region code
+            </summary>
+        </member>
+        <member name="P:Snowflake.Shiragame.SerialInfo.Serial">
+            <summary>
+            Gets the game serials
+            </summary>
+        </member>
+    </members>
 </doc>

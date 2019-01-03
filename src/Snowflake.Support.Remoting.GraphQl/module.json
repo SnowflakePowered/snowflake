@@ -1,8 +1,0 @@
-﻿{
-  "entry": "Snowflake.Support.Remoting.GraphQl.dll",
-  "loader": "assembly",
-  "frameworkVersion": "1.0.0",
-  "version": "1.0.0",
-  "author": "Snowflake",
-  "name": "Snowflake GraphQL Endpoint"
-}

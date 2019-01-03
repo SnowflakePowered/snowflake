@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Snowflake.Configuration;
+using Snowflake.Framework.Remoting.GraphQL;
+using Snowflake.Framework.Remoting.Kestrel;
 using Snowflake.Input;
 using Snowflake.Input.Controller.Mapped;
 using Snowflake.Loader;
@@ -31,11 +33,17 @@ namespace Snowflake.Services
             this.AppDataDirectory = appDataDirectory;
             var directoryProvider = new ContentDirectoryProvider(this.AppDataDirectory);
             this.serviceContainer = new ConcurrentDictionary<Type, object>();
+
             this.RegisterService<ILogProvider>(new LogProvider());
             this.RegisterService<IModuleEnumerator>(new ModuleEnumerator(appDataDirectory));
+            this.RegisterService<IKestrelWebServerService>(new KestrelServerService(appDataDirectory, 
+                this.Get<ILogProvider>().GetLogger("kestrel")));
+            this.RegisterService<IGraphQLService>(new GraphQLRootSchema(this));
+
             this.RegisterService<IContentDirectoryProvider>(directoryProvider);
             this.RegisterService<IServiceRegistrationProvider>(new ServiceRegistrationProvider(this));
             this.RegisterService<IServiceEnumerator>(new ServiceEnumerator(this));
+
         }
 
         /// <inheritdoc/>

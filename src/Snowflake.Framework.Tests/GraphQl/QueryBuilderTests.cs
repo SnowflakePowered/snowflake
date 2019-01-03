@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using GraphQL.Types;
 using GraphQL.Types.Relay.DataObjects;
-using Snowflake.Framework.Remoting.GraphQl.Attributes;
-using Snowflake.Framework.Remoting.GraphQl.Query;
+using Snowflake.Framework.Remoting.GraphQL.Attributes;
+using Snowflake.Framework.Remoting.GraphQL.Query;
 using Snowflake.Services.Logging;
-using Snowflake.Support.Remoting.GraphQl.RootProvider;
-using Snowflake.Support.Remoting.GraphQl.Servers;
+using Snowflake.Support.Remoting.GraphQL.RootProvider;
 using Xunit;
 
 namespace Snowflake.GraphQl
@@ -152,19 +151,6 @@ namespace Snowflake.GraphQl
                     },
                 });
             Assert.Equal("Hello World", actual);
-        }
-
-        [Fact]
-        public void WebServer_Test()
-        {
-            var root = new RootQuery();
-            var mutation = new RootMutation();
-            var schema = new GraphQlRootSchema(root, mutation);
-            var queryBuilder = new BasicQueryBuilder();
-            var logger = new NlogLogger("GraphQL");
-            schema.Register(queryBuilder);
-            var webServer = new GraphQlServerWrapper(new GraphQlServer(new GraphQlExecuterProvider(schema), logger));
-            webServer.Start();
         }
 
         [Fact]

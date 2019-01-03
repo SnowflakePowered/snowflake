@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Snowflake.Framework.Remoting.Electron;
-using Snowflake.Framework.Remoting.GraphQl;
+using Snowflake.Framework.Remoting.GraphQL;
 using Snowflake.Loader;
 using Snowflake.Services;
 using Snowflake.Support.Remoting.Electron.ThemeProvider.GraphQl;
@@ -13,14 +13,14 @@ namespace Snowflake.Support.Remoting.Electron.ThemeProvider
     {
         [ImportService(typeof(IModuleEnumerator))]
         [ImportService(typeof(IServiceRegistrationProvider))]
-        [ImportService(typeof(IGraphQlRootSchema))]
+        [ImportService(typeof(IGraphQLService))]
         [ImportService(typeof(ILogProvider))]
         public void Compose(IModule composableModule, IServiceRepository serviceContainer)
         {
             var modules = serviceContainer.Get<IModuleEnumerator>();
             var log = serviceContainer.Get<ILogProvider>().GetLogger("electrontheme");
             var registry = serviceContainer.Get<IServiceRegistrationProvider>();
-            var queryEndpoint = serviceContainer.Get<IGraphQlRootSchema>();
+            var queryEndpoint = serviceContainer.Get<IGraphQLService>();
 
             var packageProvider = new ElectronPackageProvider(log, modules);
             var endpoint = new ElectronPackageQueries(packageProvider);
