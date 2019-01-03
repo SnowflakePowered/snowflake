@@ -37,7 +37,6 @@ namespace Snowflake.Plugin.Debug.GraphQLVisualizers
 
         public void ConfigureServices(IServiceCollection services)
         {
-            
         }
     }
 }
