@@ -51,7 +51,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{16BB
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Framework.Tests.InvalidComposable", "Snowflake.Framework.Tests.InvalidComposable\Snowflake.Framework.Tests.InvalidComposable.csproj", "{89242BED-0913-4B7A-8C3A-8333B01EE9E9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Support.Remoting.GraphQL", "Snowflake.Support.Remoting.GraphQl\Snowflake.Support.Remoting.GraphQL.csproj", "{3910B1F9-7346-46B4-BDF5-6750F148CB53}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Support.Remoting.GraphQL", "Snowflake.Support.Remoting.GraphQL\Snowflake.Support.Remoting.GraphQL.csproj", "{3910B1F9-7346-46B4-BDF5-6750F148CB53}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Support.Scraping.RecordScrapeEngine", "Snowflake.Support.Scraping.RecordScrapeEngine\Snowflake.Support.Scraping.RecordScrapeEngine.csproj", "{4573C1CB-E648-4DAD-A055-444B43754247}"
 EndProject
