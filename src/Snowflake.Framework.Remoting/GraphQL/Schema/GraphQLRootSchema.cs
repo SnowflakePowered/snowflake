@@ -6,7 +6,6 @@ using GraphQL.Types;
 using Snowflake.Framework.Remoting.GraphQL;
 using Snowflake.Framework.Remoting.GraphQL.Query;
 
-
 namespace Snowflake.Support.Remoting.GraphQL.RootProvider
 {
     class GraphQlRootSchema : Schema, IGraphQLService
