@@ -53,12 +53,13 @@ namespace Snowflake.Framework.Remoting.Kestrel
             this.Providers.TryAdd(typeof(T), kestrelServerMiddleware);
         }
 
-        private void ConfigureServices(IServiceCollection configureServices)
+        private void ConfigureServices(IServiceCollection services)
         {
-            configureServices.AddCors();
+            services.AddCors();
+            services.AddResponseCompression();
             foreach (var provider in this.Providers.Values)
             {
-                provider.ConfigureServices(configureServices);
+                provider.ConfigureServices(services);
             }
         }
 
@@ -66,6 +67,8 @@ namespace Snowflake.Framework.Remoting.Kestrel
         {
             app.UseWebSockets();
             app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+            app.UseResponseCompression();
+
             foreach (var provider in this.Providers.Values)
             {
                 provider.Configure(app);
