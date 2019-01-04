@@ -1,16 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Snowflake.Framework.Sdk/1.0.0">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Snowflake.Framework.Primitives\Snowflake.Framework.Primitives.csproj" />
     <ProjectReference Include="..\Snowflake.Framework.Tests.DummyComposableInterface\Snowflake.Framework.Tests.DummyComposableInterface.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <DotNetCliToolReference Include="dotnet-snowflake" Version="1.5.1" />
   </ItemGroup>
 
   <ItemGroup>

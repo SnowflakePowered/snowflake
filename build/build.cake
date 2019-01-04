@@ -51,7 +51,7 @@ Task("PackModules")
   .DoesForEach(ParseSolution(new FilePath("../src/Snowflake.sln"))
                .GetProjects(), project => {
     var projectProps = ParseProject(project.Path, "debug");
-    if (projectProps.NetCore?.DotNetCliToolReferences?.Any(r => r.Name == "dotnet-snowflake") == true) {
+    if (projectProps.NetCore?.Sdk.StartsWith("Snowflake.Framework.Sdk/") == true && FileExists(project.Path.GetDirectory().CombineWithFilePath("module.json"))) {
         Information($"Building {projectProps.AssemblyName}");
         DotNetCoreTool(project.Path, "snowflake", "build");
         Information($"Packing module..");
@@ -118,6 +118,7 @@ Task("Codecov")
 
 Task("Bootstrap")
   .IsDependentOn("PackModules")
+  .IsDependentOn("BuildTooling")
   .Does(() => {
     DotNetCoreExecute("./snowflake-cli/dotnet-snowflake.dll", $"install-all -d ./out");
   });

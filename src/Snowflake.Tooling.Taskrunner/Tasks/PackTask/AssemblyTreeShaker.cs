@@ -28,13 +28,17 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.PackTask
                     .SelectMany(l => l.Dependencies);
 
             var dependencyTree = this.ResolveDependencyTree(dependencyContext, frameworkDependencies);
-            var nativeDlls = frameworkDependencies.Concat(dependencyTree).Distinct()
+
+            var nativeDlls = frameworkDependencies.Concat(dependencyTree)
+                
                 .Select(p => dependencyContext.RuntimeLibraries.FirstOrDefault(l => l.Name == p.Name))
                 .SelectMany(p => p.NativeLibraryGroups)
                 .SelectMany(p => p.AssetPaths)
                 .Select(p => Path.GetFileName(p));
+
             var frameworkDlls = dependencyContext.RuntimeLibraries.Where(l => l.Name.StartsWith("Snowflake.Framework"))
                 .Select(l => l.Name + ".dll");
+
             var dependencyDlls = dependencyTree.Select(d => d.Name + ".dll");
             return nativeDlls.Concat(dependencyDlls).Concat(frameworkDlls).Distinct().ToList();
         }
