@@ -14,11 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="module.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json" />
   </ItemGroup>
   <PropertyGroup>

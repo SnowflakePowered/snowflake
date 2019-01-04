@@ -6,7 +6,7 @@
   <PropertyGroup>
     <_SnowflakeUseDevelopmentSDK>false</_SnowflakeUseDevelopmentSDK>
     <SnowflakeSDKAssembliesVersion>1.0.0-alpha.*</SnowflakeSDKAssembliesVersion>
-    <SnowflakeSDKToolingVersion>1.5.1</SnowflakeSDKToolingVersion>
+    <SnowflakeSDKToolingVersion>1.6.0</SnowflakeSDKToolingVersion>
   </PropertyGroup>
 
   <ItemGroup Condition=" '$(_SnowflakeUseDevelopmentSDK)' == 'false' ">
@@ -25,6 +25,13 @@
 
    <ItemGroup>
     <DotNetCliToolReference Include="dotnet-snowflake" Version="$(SnowflakeSDKToolingVersion)" />
+  </ItemGroup>
+
+
+  <ItemGroup Condition="Exists('module.json')">
+    <None Update="module.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
