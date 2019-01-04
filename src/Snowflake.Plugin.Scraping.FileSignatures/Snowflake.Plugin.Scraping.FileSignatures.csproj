@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Snowflake.Framework.Sdk/1.0.0">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
@@ -14,23 +14,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Snowflake.Framework.Primitives\Snowflake.Framework.Primitives.csproj" />
-    <ProjectReference Include="..\Snowflake.Framework\Snowflake.Framework.csproj" />
-  </ItemGroup>
-  <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json" />
-
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="module.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <DotNetCliToolReference Include="dotnet-snowflake" Version="1.5.1" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="DiscUtils.Core" Version="0.14.0-alpha234" />

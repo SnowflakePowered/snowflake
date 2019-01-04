@@ -14,7 +14,9 @@ namespace Snowflake.Support.Remoting.GraphQL.Types.ControllerLayout
             Name = "ControllerLayout";
             Description = "A Stone Controller Layout";
             Field(c => c.FriendlyName).Description("The Friendly Name of this controller layout");
-            Field<StringGraphType>("layoutId", resolve: c => c.Source.LayoutId, description: "The Stone Layout ID for this controller layout");
+            Field<StringGraphType>("layoutId", 
+                resolve: c => (string)c.Source.LayoutId, 
+                description: "The Stone Layout ID for this controller layout");
             Field<ListGraphType<StringGraphType>>(
                 "platforms",
                 description: "The platforms this controller supports.",

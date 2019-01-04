@@ -15,9 +15,6 @@
     <AdditionalFiles Include="..\stylecop.json" />
 
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Data.SQLite" Version="2.2.0" />
-  </ItemGroup>
 
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\Snowflake.ruleset</CodeAnalysisRuleSet>

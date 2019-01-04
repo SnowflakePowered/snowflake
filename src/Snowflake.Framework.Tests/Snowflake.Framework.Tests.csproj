@@ -50,7 +50,6 @@
     <ProjectReference Include="..\Snowflake.Support.PluginManager\Snowflake.Support.PluginManager.csproj" />
     <ProjectReference Include="..\Snowflake.Support.ShiragameProvider\Snowflake.Support.ShiragameProvider.csproj" />
     <ProjectReference Include="..\Snowflake.Support.StoneProvider\Snowflake.Support.StoneProvider.csproj" />
-    <ProjectReference Include="..\Snowflake.Support.StoreProviders\Snowflake.Support.StoreProviders.csproj" />
   </ItemGroup>
 
   <ItemGroup>
