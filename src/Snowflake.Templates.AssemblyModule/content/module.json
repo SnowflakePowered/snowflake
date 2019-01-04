@@ -1,0 +1,8 @@
+﻿{
+  "entry": "Snowflake.Templates.AssemblyModule.dll",
+  "loader": "$loader",
+  "frameworkVersion": "1.0.0",
+  "version": "1.0.0",
+  "author": "$author",
+  "name": "$composablename"
+}
