@@ -13,8 +13,6 @@
     <PackageReference Include="SharpDX.XInput" Version="4.2.0" />
   </ItemGroup>
 
-  
-
 
   <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json" />

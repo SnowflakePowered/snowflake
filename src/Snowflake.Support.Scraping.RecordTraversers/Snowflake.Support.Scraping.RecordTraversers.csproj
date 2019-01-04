@@ -9,8 +9,5 @@
     <ProjectReference Include="..\Snowflake.Framework.Primitives\Snowflake.Framework.Primitives.csproj" />
     <ProjectReference Include="..\Snowflake.Framework\Snowflake.Framework.csproj" />
   </ItemGroup>
-  
-  
-
 
 </Project>

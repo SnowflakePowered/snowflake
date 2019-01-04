@@ -17,8 +17,6 @@
     <AdditionalFiles Include="..\stylecop.json" />
   </ItemGroup>
 
-  
-
 
   <ItemGroup>
     <PackageReference Include="DiscUtils.Core" Version="0.14.0-alpha234" />
