@@ -4,6 +4,7 @@
   <Import Sdk="Microsoft.NET.Sdk" Project="Sdk.props" />
  
   <PropertyGroup>
+    <_SnowflakeUseDevelopmentSDK>false</_SnowflakeUseDevelopmentSDK>
     <SnowflakeSDKAssembliesVersion>1.0.0-alpha.*</SnowflakeSDKAssembliesVersion>
     <SnowflakeSDKToolingVersion>1.5.1</SnowflakeSDKToolingVersion>
   </PropertyGroup>
