@@ -17,7 +17,7 @@
     <PackageReference Include="Dapper" Version="1.50.5" PrivateAssets="Compile" />
     <PackageReference Include="Enums.NET" Version="2.3.2" PrivateAssets="Compile" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="2.2.1" PrivateAssets="Compile"/>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.0" PrivateAssets="Compile" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.1" PrivateAssets="Compile" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.1" />
     <PackageReference Include="Zio" Version="0.7.2" />
   </ItemGroup>
