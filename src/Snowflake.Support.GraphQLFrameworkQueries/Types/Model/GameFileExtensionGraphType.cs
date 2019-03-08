@@ -13,12 +13,12 @@ namespace Snowflake.Support.Remoting.GraphQL.Types.Model
             Name = "GameFiles";
             Description = "The files of a game";
 
-            Field<FileRecordGraphType>("files",
+            Field<ListGraphType<FileRecordGraphType>>("fileRecords",
                 description: "The files for which have metadata and are installed, not all files.",
                 resolve: context => context.Source.Files);
 
             Field<ListGraphType<FileGraphType>>("programFiles",
-                description: "The files for which have metadata and are installed ",
+                description: "All files inside the program files folder for this game.",
                 arguments: new QueryArguments(new QueryArgument<BooleanGraphType>
                     {Name = "recursive", DefaultValue = false,}),
                 resolve: context => context.GetArgument("recursive", false)
