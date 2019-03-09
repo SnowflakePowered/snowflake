@@ -1,6 +1,6 @@
-﻿<Project Sdk="Snowflake.Framework.Sdk/1.0.0">
+﻿<Project Sdk="Snowflake.Framework.Sdk/2.0.0">
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
   
 </Project>

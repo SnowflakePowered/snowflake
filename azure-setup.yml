@@ -21,6 +21,7 @@ steps:
     lfs: false
 
   - script: |
+      nuget locals all -clear
       dotnet run --project build -- ContinuousIntegration
     displayName: Build and package framework and modules.
 
