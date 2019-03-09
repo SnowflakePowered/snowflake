@@ -22,7 +22,9 @@ steps:
 
 - task: NuGetToolInstaller@0
 
-- task: ShellScript@2
+- task: PowerShell@2
   inputs:
-    scriptPath: "./build/build.sh"
-    args: "-Script build\build.cake -Target Appveyor"
+    targetType: "filePath"
+    filePath: "build/build.sh"
+    arguments: "-Script build/build.cake -Target Appveyor"
+    pwsh: true
