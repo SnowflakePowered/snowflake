@@ -15,6 +15,7 @@ variables:
 
 jobs:
 - job: Linux
+  condition: and(succeeded(), eq(variables.os, 'Linux'))
   pool:
     vmImage: 'ubuntu-16.04'
   steps:
@@ -32,12 +33,16 @@ jobs:
   #    sudo apt-get install dotnet-sdk-2.1
   #   displayName: Manually install .NET Core 2.2 SDK
   - template: azure-setup.yml  # Template referenc
-
+    parameters:
+      os: Linux
 - job: Windows
   pool:
     vmImage: 'windows-2019'
+  condition: and(succeeded(), eq(variables.os, 'Windows_NT'))
   steps:
   - template: azure-setup.yml  # Template reference
+    parameters:
+      os: Windows_NT
   - template: azure-codecov.yml
  
   - task: PublishCodeCoverageResults@1
