@@ -11,6 +11,7 @@ trigger:
 variables:
   BUILD_NUMBER: '$(Build.BuildNumber)'
   STAGING: '$(Build.ArtifactStagingDirectory)'
+  DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
 jobs:
 - job: Linux
