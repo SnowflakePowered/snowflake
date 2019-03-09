@@ -18,7 +18,7 @@ variables:
 
 steps:
 - task: DotNetCoreInstaller@0
-  displayName: Installing .NET Core CLI
+  displayName: Installing .NET Core SDK
   inputs:
     packageType: 'sdk' # Options: runtime, sdk
     version: '3.0.100-preview3-010431' 
@@ -37,7 +37,7 @@ steps:
 - script: |
     nuke ContinuousIntegration
   displayName: Build and package framework and modules.
-
+  workingDirectory: $(Agent.BuildDirectory)
       
 - task: VSTest@2
   displayName: Testing for Azure Test Coverage
