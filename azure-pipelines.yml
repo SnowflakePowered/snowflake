@@ -13,6 +13,8 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
+  BUILD_NUMBER: '$(Build.BuildNumber)'
+  STAGING: '$(Build.ArtifactStagingDirectory)'
 
 steps:
 - task: DotNetCoreInstaller@0
@@ -34,10 +36,7 @@ steps:
     scriptPath: "./build.ps1"
     args: "ContinuousIntegration"
     pwsh: true
-    env: 
-      BUILD_NUMBER: '$(Build.BuildNumber)'
-      STAGING: '$(Build.ArtifactStagingDirectory)'
-
+      
 - task: VSTest@2
   inputs:
     testSelector: 'testAssemblies' # Options: testAssemblies, testPlan, testRun
