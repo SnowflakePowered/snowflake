@@ -1,11 +1,5 @@
 steps:
   - task: DotNetCoreInstaller@0
-    displayName: Installing .NET Core 2 SDK
-    inputs:
-      packageType: 'sdk' # Options: runtime, sdk
-      version: '2.2.104' 
-
-  - task: DotNetCoreInstaller@0
     displayName: Installing .NET Core 3 SDK
     inputs:
       packageType: 'sdk' # Options: runtime, sdk
@@ -21,7 +15,7 @@ steps:
   - script: |
       dotnet tool install Nuke.GlobalTool --global
     displayName: Install NUKE CLI
-    
+
   - checkout: self
     persistCredentials: true
     submodules: "recursive"
