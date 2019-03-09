@@ -90,6 +90,7 @@ class Build : NukeBuild
 
     Target PackModules => _ => _
         .DependsOn(Compile)
+        .DependsOn(BuildTooling)
         .Executes(() =>
         {
             EnsureExistingDirectory(OutputDirectory);
