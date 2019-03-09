@@ -2,11 +2,12 @@ steps:
   - task: UsePythonVersion@0
     displayName: Install Python for Codecov
     inputs:
-      versionSpec: '3.4'
+      versionSpec: '3.6'
       architecture: 'x64'
   - script: |
-      pip install --user codecov
+      pip install codecov
     displayName: Install Codecov
   - script: |
+      SET PATH=C:\\Python36;C:\\Python36\\Scripts;%PATH%
       codecov -f "$(System.DefaultWorkingDirectory)/src/Snowflake.Framework.Tests/coverage.opencover.xml" -t 82f2a4f6-6167-45f5-bc8b-8b10f601dab4 --sha $(Build.SourceVersion) --build $(Build.BuildNumber)
     displayName: Publishing test coverage to Codecov 
