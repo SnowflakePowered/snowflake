@@ -26,6 +26,7 @@ steps:
     displayName: Build and package framework and modules.
 
   - task: PublishTestResults@2
+    displayName: Publish test results to Azure
     inputs:
       testResultsFormat: 'VSTest' # Options: JUnit, NUnit, VSTest, xUnit, cTest
       testResultsFiles: '*.trx' 
