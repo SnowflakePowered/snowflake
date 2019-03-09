@@ -30,7 +30,7 @@ steps:
     dotnet tool install --global Codecov.Tool --version 1.3.0	
   displayName: Install Codecov Tool
 
-- task: PowershellScript@2
+- task: Powershell@2
   displayName: Building and packaging framework and modules
   inputs:
     scriptPath: "./build.ps1"
