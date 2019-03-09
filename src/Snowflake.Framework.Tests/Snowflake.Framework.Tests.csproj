@@ -77,7 +77,7 @@
   <PropertyGroup>
     <CoverletOutputFormat>opencover,cobertura</CoverletOutputFormat>
     <Include>[Snowflake.Framework*]*,[Snowflake.Support*]*,[Snowflake.Support.*]*</Include>
-    <Exclude>[Snowflake.Framework.Tests*]*,[Snowflake.Support.FileSignatures]*</Exclude>
+    <Exclude>[Snowflake.Framework.Tests]*,[Snowflake.Support.FileSignatures]*</Exclude>
     <CollectCoverage>true</CollectCoverage>
   </PropertyGroup>
 </Project>
