@@ -6,58 +6,40 @@
 trigger:
 - master
 
-pool:
-  vmImage: 'windows-2019'
-
 variables:
   BUILD_NUMBER: '$(Build.BuildNumber)'
   STAGING: '$(Build.ArtifactStagingDirectory)'
 
-steps:
-- checkout: self
-  persistCredentials: true
-  submodules: "recursive"
-  lfs: false
+jobs:
+- job: Linux
+  pool:
+    vmImage: 'ubuntu-16.04'
+  steps:
+  - template: azure-setup.yml  # Template reference
 
-- task: DotNetCoreInstaller@0
-  displayName: Installing .NET Core SDK
-  inputs:
-    packageType: 'sdk' # Options: runtime, sdk
-    version: '3.0.100-preview3-010431' 
+- job: Windows
+  pool:
+    vmImage: 'windows-2019'
+  steps:
+  - template: azure-setup.yml # Template reference
+  - task: VSTest@2
+    displayName: Testing for Azure Test Coverage
+    inputs:
+      testSelector: 'testAssemblies' # Options: testAssemblies, testPlan, testRun
+      testAssemblyVer2: '**\Snowflake.Framework.Tests.dll!**\obj\**!**\xunit.runner.visualstudio.testadapter.dll!**\xunit.runner.visualstudio.dotnetcore.testadapter.dll'
 
-- task: NuGetToolInstaller@0
-  displayName: Installing NuGet CLI
+  - script: |
+      codecov.exe -f "$(System.DefaultWorkingDirectory)/src/Snowflake.Framework.Tests/coverage.opencover.xml" -t $(codecov.secretToken)
+    displayName: Publishing test coverage to Codecov 
 
-- script: |
-    dotnet tool install --global Codecov.Tool --version 1.3.0	
-  displayName: Install Codecov Tool
+  - task: PublishCodeCoverageResults@1
+    displayName: Publshing test coverage to Azure
+    inputs:
+      codeCoverageTool: 'cobertura' # Options: cobertura, jaCoCo
+      summaryFileLocation: $(System.DefaultWorkingDirectory)/src/Snowflake.Framework.Tests/coverage.cobertura.xml
 
-- script: |
-    dotnet tool install Nuke.GlobalTool --global
-  displayName: Install NUKE CLI
-
-- script: |
-    nuke ContinuousIntegration
-  displayName: Build and package framework and modules.
-      
-- task: VSTest@2
-  displayName: Testing for Azure Test Coverage
-  inputs:
-    testSelector: 'testAssemblies' # Options: testAssemblies, testPlan, testRun
-    testAssemblyVer2: '**\Snowflake.Framework.Tests.dll!**\obj\**!**\xunit.runner.visualstudio.testadapter.dll!**\xunit.runner.visualstudio.dotnetcore.testadapter.dll'
-
-- script: |
-    codecov.exe -f "$(System.DefaultWorkingDirectory)/src/Snowflake.Framework.Tests/coverage.opencover.xml" -t $(codecov.secretToken)
-  displayName: Publishing test coverage to Codecov 
-
-- task: PublishCodeCoverageResults@1
-  displayName: Publshing test coverage to Azure
-  inputs:
-    codeCoverageTool: 'cobertura' # Options: cobertura, jaCoCo
-    summaryFileLocation: $(System.DefaultWorkingDirectory)/src/Snowflake.Framework.Tests/coverage.cobertura.xml
-
-- task: PublishBuildArtifacts@1
-  displayName: Publishing build artifacts
-  inputs:
-    pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
-    artifactName: 'drop'
+  - task: PublishBuildArtifacts@1
+    displayName: Publishing build artifacts
+    inputs:
+      pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
+      artifactName: 'drop'
