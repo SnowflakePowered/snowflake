@@ -38,7 +38,7 @@ jobs:
   steps:
   - template: azure-setup.yml  # Template reference
   - script: |
-      codecov -f "$(System.DefaultWorkingDirectory)/src/Snowflake.Framework.Tests/coverage.opencover.xml" -t $(CODECOV_TOKEN) --sha $(Build.SourceVersion) --build $(Build.BuildNumber)
+      codecov -f "$(System.DefaultWorkingDirectory)/src/Snowflake.Framework.Tests/coverage.opencover.xml" -t 82f2a4f6-6167-45f5-bc8b-8b10f601dab4 --sha $(Build.SourceVersion) --build $(Build.BuildNumber)
     displayName: Publishing test coverage to Codecov 
 
   - task: PublishCodeCoverageResults@1
