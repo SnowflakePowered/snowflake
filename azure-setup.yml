@@ -5,10 +5,16 @@ steps:
     lfs: false
 
   - task: DotNetCoreInstaller@0
-    displayName: Installing .NET Core SDK
+    displayName: Installing .NET Core SDK 3.0.100
     inputs:
       packageType: 'sdk' # Options: runtime, sdk
       version: '3.0.100-preview3-010431' 
+  
+  - task: DotNetCoreInstaller@0
+    displayName: Installing .NET Core SDK 2.1.0
+    inputs:
+      packageType: 'sdk' # Options: runtime, sdk
+      version: '2.1.0' 
 
   - task: NuGetToolInstaller@0
     displayName: Installing NuGet CLI
