@@ -102,6 +102,14 @@ class Build : NukeBuild
             }
         });
 
+    Target Bootstrap => _ => _
+        .DependsOn(PackModules)
+        .DependsOn(BuildTooling)
+        .Executes(() =>
+        {
+            DotNet($"{ToolingDirectory / "dotnet-snowflake.dll"} install-all -d {OutputDirectory}");
+        });
+
     static string GetSdkVersion(Project p)
     {
         using (XmlReader reader = XmlReader.Create(p.Path))
