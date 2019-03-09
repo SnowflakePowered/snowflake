@@ -26,7 +26,7 @@ Task("CreateArtifactsOutputDirectory")
 Task("PackFrameworkNuget")
   .IsDependentOn("Default")
   .DoesForEach(ParseSolution(new FilePath("../src/Snowflake.sln"))
-               .GetProjects()
+               .Projects
                .Where(p => p.Name.StartsWith("Snowflake.Framework")), project => {
     DotNetCorePack(project.Path.FullPath, new DotNetCorePackSettings() {
       OutputDirectory = "out",
@@ -37,7 +37,7 @@ Task("PackFrameworkNuget")
 Task("PackFrameworkNugetAppveyor")
   .IsDependentOn("Default")
   .DoesForEach(ParseSolution(new FilePath("../src/Snowflake.sln"))
-               .GetProjects()
+               .Projects
                .Where(p => p.Name.StartsWith("Snowflake.Framework")), project => {
     DotNetCorePack(project.Path.FullPath, new DotNetCorePackSettings() {
       OutputDirectory = "out",
@@ -49,7 +49,7 @@ Task("PackModules")
   .IsDependentOn("Default")
   .IsDependentOn("CreateArtifactsOutputDirectory")
   .DoesForEach(ParseSolution(new FilePath("../src/Snowflake.sln"))
-               .GetProjects(), project => {
+               .Projects, project => {
     var projectProps = ParseProject(project.Path, "debug");
     if (projectProps.NetCore?.Sdk.StartsWith("Snowflake.Framework.Sdk/") == true && FileExists(project.Path.GetDirectory().CombineWithFilePath("module.json"))) {
         Information($"Building {projectProps.AssemblyName}");
