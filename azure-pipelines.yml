@@ -17,9 +17,7 @@ variables:
 steps:
 - checkout: self
   persistCredentials: true
-  submodules: true
-  clean: true
-  fetchDepth: 3
+  submodules: "recursive"
   lfs: false
 
 - task: DotNetCoreInstaller@0
