@@ -1,31 +1,32 @@
-- checkout: self
-  persistCredentials: true
-  submodules: "recursive"
-  lfs: false
+steps:
+  - checkout: self
+    persistCredentials: true
+    submodules: "recursive"
+    lfs: false
 
-- task: DotNetCoreInstaller@0
-  displayName: Installing .NET Core SDK
-  inputs:
-    packageType: 'sdk' # Options: runtime, sdk
-    version: '3.0.100-preview3-010431' 
+  - task: DotNetCoreInstaller@0
+    displayName: Installing .NET Core SDK
+    inputs:
+      packageType: 'sdk' # Options: runtime, sdk
+      version: '3.0.100-preview3-010431' 
 
-- task: NuGetToolInstaller@0
-  displayName: Installing NuGet CLI
+  - task: NuGetToolInstaller@0
+    displayName: Installing NuGet CLI
 
-- script: |
-    dotnet tool install --global Codecov.Tool --version 1.3.0	
-  displayName: Install Codecov Tool
+  - script: |
+      dotnet tool install --global Codecov.Tool --version 1.3.0	
+    displayName: Install Codecov Tool
 
-- script: |
-    dotnet tool install Nuke.GlobalTool --global
-  displayName: Install NUKE CLI
+  - script: |
+      dotnet tool install Nuke.GlobalTool --global
+    displayName: Install NUKE CLI
 
-- script: |
-    nuke ContinuousIntegration
-  displayName: Build and package framework and modules.
+  - script: |
+      nuke ContinuousIntegration
+    displayName: Build and package framework and modules.
 
-- task: PublishTestResults@2
-  inputs:
-    testResultsFormat: 'VSTest' # Options: JUnit, NUnit, VSTest, xUnit, cTest
-    testResultsFiles: '*.trx' 
-    searchFolder: '$(System.DefaultWorkingDirectory)/src/Snowflake.Framework.Tests/TestResults' # Optional
+  - task: PublishTestResults@2
+    inputs:
+      testResultsFormat: 'VSTest' # Options: JUnit, NUnit, VSTest, xUnit, cTest
+      testResultsFiles: '*.trx' 
+      searchFolder: '$(System.DefaultWorkingDirectory)/src/Snowflake.Framework.Tests/TestResults' # Optional

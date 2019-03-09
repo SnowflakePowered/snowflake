@@ -22,7 +22,6 @@ jobs:
     vmImage: 'windows-2019'
   steps:
   - template: azure-setup.yml # Template reference
-  
   - script: |
       codecov.exe -f "$(System.DefaultWorkingDirectory)/src/Snowflake.Framework.Tests/coverage.opencover.xml" -t $(CODECOV_TOKEN)
     workingDirectory: "$(System.DefaultWorkingDirectory)"
