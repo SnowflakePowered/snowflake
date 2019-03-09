@@ -22,14 +22,10 @@ jobs:
     vmImage: 'windows-2019'
   steps:
   - template: azure-setup.yml # Template reference
-  - task: VSTest@2
-    displayName: Testing for Azure Test Coverage
-    inputs:
-      testSelector: 'testAssemblies' # Options: testAssemblies, testPlan, testRun
-      testAssemblyVer2: '**\Snowflake.Framework.Tests.dll!**\obj\**!**\xunit.runner.visualstudio.testadapter.dll!**\xunit.runner.visualstudio.dotnetcore.testadapter.dll'
-
+  
   - script: |
-      codecov.exe -f "$(System.DefaultWorkingDirectory)/src/Snowflake.Framework.Tests/coverage.opencover.xml" -t $(codecov.secretToken)
+      codecov.exe -f "$(System.DefaultWorkingDirectory)/src/Snowflake.Framework.Tests/coverage.opencover.xml" -t $(CODECOV_TOKEN)
+    workingDirectory: "$(System.DefaultWorkingDirectory)"
     displayName: Publishing test coverage to Codecov 
 
   - task: PublishCodeCoverageResults@1

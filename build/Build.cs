@@ -84,7 +84,8 @@ class Build : NukeBuild
         .Executes(() =>
         {
             DotNetTest(s => s
-                .SetProjectFile(Tests));
+                .SetProjectFile(Tests)
+                .SetLogger("trx"));
         });
 
     Target PackModules => _ => _
