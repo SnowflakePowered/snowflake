@@ -29,14 +29,14 @@ steps:
   displayName: Install Codecov Tool
 
 - task: PowershellScript@2
-  pwsh: true
   displayName: Building and packaging framework and modules
-  env: 
-    BUILD_NUMBER: '$(Build.BuildNumber)'
-    STAGING: '$(Build.ArtifactStagingDirectory)'
   inputs:
     scriptPath: "./build.ps1"
     args: "ContinuousIntegration"
+    pwsh: true
+    env: 
+      BUILD_NUMBER: '$(Build.BuildNumber)'
+      STAGING: '$(Build.ArtifactStagingDirectory)'
 
 - task: VSTest@2
   inputs:
