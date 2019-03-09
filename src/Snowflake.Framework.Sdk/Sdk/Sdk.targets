@@ -3,8 +3,8 @@
  
   <Target Name="EnsureTFMCompatibility" BeforeTargets="_CheckForInvalidConfigurationAndPlatform">
     <Error
-      Text="This version of Snowflake.Framework.Library is only compatible with the netcoreapp2.2 target framework. Please target netcoreapp2.2."
-      Condition="'$(TargetFramework)' != 'netcoreapp2.2'"/>
+      Text="This version of Snowflake.Framework.Library is only compatible with the netcoreapp3.0 target framework. Please target netcoreapp3.0."
+      Condition="'$(TargetFramework)' != 'netcoreapp3.0'"/>
   </Target>
 
 </Project>
