@@ -25,6 +25,6 @@ steps:
 - task: PowerShell@2
   inputs:
     targetType: "filePath"
-    filePath: "build/build.sh"
+    filePath: "build/build.ps1"
     arguments: "-Script build/build.cake -Target Appveyor"
     pwsh: true
