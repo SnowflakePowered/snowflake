@@ -56,7 +56,6 @@ jobs:
   - template: azure-setup.yml # Template reference
   
   - script: |
-      export PATH=$HOME/.dotnet/tools:$PATH
       nuke ContinuousIntegration
     displayName: Build and package framework and modules.
     
