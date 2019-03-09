@@ -54,7 +54,7 @@ jobs:
       pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
       artifactName: 'drop'
   - task: NuGetCommand@2
-    displayName: 'Publish framework packages'
+    displayName: 'Publish framework packages to snowflake-nightly'
     inputs:
       command: push
       nuGetFeedType: external
