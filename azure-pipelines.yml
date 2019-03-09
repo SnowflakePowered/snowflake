@@ -22,10 +22,12 @@ jobs:
     vmImage: 'windows-2019'
   steps:
   - template: azure-setup.yml # Template reference
-  - script: |
-      codecov.exe -f "$(System.DefaultWorkingDirectory)/src/Snowflake.Framework.Tests/coverage.opencover.xml" -t $(CODECOV_TOKEN)
+  - pwsh: |
+      codecov -f "$(System.DefaultWorkingDirectory)/src/Snowflake.Framework.Tests/coverage.opencover.xml" -t $env:CODECOV_TOKEN -sha $(Build.SourceVersion)
     workingDirectory: "$(System.DefaultWorkingDirectory)"
     displayName: Publishing test coverage to Codecov 
+    env:
+      CODECOV_TOKEN: $(codecov.secretToken)
 
   - task: PublishCodeCoverageResults@1
     displayName: Publshing test coverage to Azure
