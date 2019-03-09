@@ -1,4 +1,10 @@
 steps:
+  - task: DotNetCoreInstaller@0
+    displayName: Installing .NET Core 3 SDK
+    inputs:
+      packageType: 'sdk' # Options: runtime, sdk
+      version: '3.0.100-preview3-010431' 
+      
   - task: NuGetToolInstaller@0
     displayName: Installing NuGet CLI
 
@@ -14,3 +20,14 @@ steps:
     persistCredentials: true
     submodules: "recursive"
     lfs: false
+
+  - script: |
+      nuke ContinuousIntegration
+    displayName: Build and package framework and modules.
+
+  - task: PublishTestResults@2
+    displayName: Publish test results to Azure
+    inputs:
+      testResultsFormat: 'VSTest' # Options: JUnit, NUnit, VSTest, xUnit, cTest
+      testResultsFiles: '*.trx' 
+      searchFolder: '$(System.DefaultWorkingDirectory)/src/Snowflake.Framework.Tests/TestResults' # Optional
