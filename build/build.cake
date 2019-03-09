@@ -1,7 +1,7 @@
 #addin "Cake.Incubator"
-#tool nuget:?package=JetBrains.dotCover.CommandLineTools&version=2018.3
-#tool nuget:?package=Codecov
-#addin nuget:?package=Cake.Codecov
+#tool nuget:?package=JetBrains.dotCover.CommandLineTools&version=2018.3.4
+#tool nuget:?package=Codecov&version=1.3.0
+#addin nuget:?package=Cake.Codecov&version=0.5.0
 var target = Argument("target", "Default");
 
 Task("Default")
