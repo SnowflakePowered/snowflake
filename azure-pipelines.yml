@@ -10,9 +10,6 @@ pool:
   vmImage: 'windows-2019'
 
 variables:
-  solution: '**/*.sln'
-  buildPlatform: 'Any CPU'
-  buildConfiguration: 'Release'
   BUILD_NUMBER: '$(Build.BuildNumber)'
   STAGING: '$(Build.ArtifactStagingDirectory)'
 
@@ -37,7 +34,6 @@ steps:
 - script: |
     nuke ContinuousIntegration
   displayName: Build and package framework and modules.
-  workingDirectory: $(Agent.BuildDirectory)
       
 - task: VSTest@2
   displayName: Testing for Azure Test Coverage
