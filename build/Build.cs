@@ -14,8 +14,6 @@ using static Nuke.Common.EnvironmentInfo;
 using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.IO.PathConstruction;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
-using Nuke.Common.Tools.DotCover;
-using static Nuke.Common.Tools.DotCover.DotCoverTasks;
 
 [CheckBuildProjectConfigurations]
 [UnsetVisualStudioEnvironmentVariables]
@@ -36,7 +34,7 @@ class Build : NukeBuild
     [GitRepository] readonly GitRepository GitRepository;
 
     AbsolutePath SourceDirectory => RootDirectory / "src";
-    AbsolutePath OutputDirectory => RootDirectory / "out";
+    AbsolutePath OutputDirectory => GetOutDirectory();
 
     AbsolutePath Tooling => SourceDirectory / "Snowflake.Tooling.Taskrunner";
     AbsolutePath Tests => SourceDirectory / "Snowflake.Framework.Tests";
@@ -71,6 +69,7 @@ class Build : NukeBuild
                 .SetConfiguration(Configuration)
                 .EnableNoRestore());
         });
+
     Target BuildTooling => _ => _
        .DependsOn(Restore)
        .Executes(() =>
@@ -140,6 +139,17 @@ class Build : NukeBuild
         }
         return buildNumber;
     }
+
+    static AbsolutePath GetOutDirectory()
+    {
+        string staging = EnvironmentInfo.Variable("STAGING");
+        if (String.IsNullOrWhiteSpace(staging))
+        {
+            return RootDirectory / "out";
+        }
+        return (AbsolutePath)staging;
+    }
+
     static string GetSdkVersion(Project p)
     {
         using (XmlReader reader = XmlReader.Create(p.Path))

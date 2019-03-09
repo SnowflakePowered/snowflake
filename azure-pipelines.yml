@@ -16,13 +16,43 @@ variables:
 
 steps:
 - task: DotNetCoreInstaller@0
+  displayName: Installing .NET Core CLI
   inputs:
     packageType: 'sdk' # Options: runtime, sdk
     version: '3.0.100-preview3-010431' 
 
 - task: NuGetToolInstaller@0
+  displayName: Installing NuGet CLI
 
-- task: ShellScript@2
+- script: |
+    dotnet tool install --global Codecov.Tool --version 1.3.0	
+  displayName: Install Codecov Tool
+
+- task: PowershellScript@2
+  pwsh: true
+  displayName: Building and packaging framework and modules
+  env: 
+    BUILD_NUMBER: '$(Build.BuildNumber)'
+    STAGING: '$(Build.ArtifactStagingDirectory)'
   inputs:
-    scriptPath: "./build/build.sh"
-    args: "-Script build\build.cake -Target Appveyor"
+    scriptPath: "./build.ps1"
+    args: "ContinuousIntegration"
+
+- task: VSTest@2
+  inputs:
+    testSelector: 'testAssemblies' # Options: testAssemblies, testPlan, testRun
+    testAssemblyVer2: '**\Snowflake.Framework.Tests.dll!**\obj\**!**\xunit.runner.visualstudio.testadapter.dll!**\xunit.runner.visualstudio.dotnetcore.testadapter.dll'
+
+- script: |
+    codecov.exe -f "$(System.DefaultWorkingDirectory)/src/Snowflake.Framework.Tests/coverage.opencover.xml" -t $(codecov.secretToken)
+  displayName: Uploading test coverage to Codecov 
+
+- task: PublishCodeCoverageResults@1
+  inputs:
+    codeCoverageTool: 'cobertura' # Options: cobertura, jaCoCo
+    summaryFileLocation: $(System.DefaultWorkingDirectory)/src/Snowflake.Framework.Tests/coverage.cobertura.xml
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
+    artifactName: 'drop'
