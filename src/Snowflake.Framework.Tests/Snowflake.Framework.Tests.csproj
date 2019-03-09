@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="coverlet.msbuild" Version="2.6.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.2" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
@@ -50,6 +54,7 @@
     <ProjectReference Include="..\Snowflake.Support.PluginManager\Snowflake.Support.PluginManager.csproj" />
     <ProjectReference Include="..\Snowflake.Support.ShiragameProvider\Snowflake.Support.ShiragameProvider.csproj" />
     <ProjectReference Include="..\Snowflake.Support.StoneProvider\Snowflake.Support.StoneProvider.csproj" />
+
   </ItemGroup>
 
   <ItemGroup>
@@ -67,5 +72,13 @@
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\Snowflake.ruleset</CodeAnalysisRuleSet>
     <LangVersion>8.0</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <CoverletOutputFormat>opencover</CoverletOutputFormat>
+    <Include>[Snowflake.Framework*]*,[Snowflake.Support*]*</Include>
+    <Exclude>[Snowflake.Framework.Tests*]*,[Snowflake.Support.FileSignatures]*</Exclude>
+    <CollectCoverage>true</CollectCoverage>
+    <CoverletOutput>coverage.xml</CoverletOutput>
   </PropertyGroup>
 </Project>

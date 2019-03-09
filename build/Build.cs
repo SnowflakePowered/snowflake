@@ -14,8 +14,8 @@ using static Nuke.Common.EnvironmentInfo;
 using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.IO.PathConstruction;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
-using SDKOptions = Microsoft.Build.Definition.ProjectOptions;
-using SDKProject = Microsoft.Build.Evaluation.Project;
+using Nuke.Common.Tools.DotCover;
+using static Nuke.Common.Tools.DotCover.DotCoverTasks;
 
 [CheckBuildProjectConfigurations]
 [UnsetVisualStudioEnvironmentVariables]
@@ -27,7 +27,7 @@ class Build : NukeBuild
     ///   - Microsoft VisualStudio     https://nuke.build/visualstudio
     ///   - Microsoft VSCode           https://nuke.build/vscode
 
-    public static int Main () => Execute<Build>(x => x.Compile);
+    public static int Main() => Execute<Build>(x => x.Compile);
 
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
     readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
@@ -37,12 +37,14 @@ class Build : NukeBuild
 
     AbsolutePath SourceDirectory => RootDirectory / "src";
     AbsolutePath OutputDirectory => RootDirectory / "out";
+
     AbsolutePath Tooling => SourceDirectory / "Snowflake.Tooling.Taskrunner";
     AbsolutePath Tests => SourceDirectory / "Snowflake.Framework.Tests";
 
     AbsolutePath BuildDirectory => RootDirectory / "build";
+    AbsolutePath CoveragePath => BuildDirectory / "coverage";
 
-    AbsolutePath ToolingDirectory =>  BuildDirectory / "snowflake-cli";
+    AbsolutePath ToolingDirectory => BuildDirectory / "snowflake-cli";
 
     Target Clean => _ => _
         .Before(Restore)
@@ -102,6 +104,20 @@ class Build : NukeBuild
             }
         });
 
+    Target PackFramework => _ => _
+        .DependsOn(Compile)
+        .Executes(() =>
+        {
+            EnsureExistingDirectory(OutputDirectory);
+            foreach (Project p in Solution.GetProjects("Snowflake.Framework*"))
+            {
+                DotNetPack(s => s
+                    .SetProject(p.Path)
+                    .SetOutputDirectory(OutputDirectory)
+                    .SetVersionSuffix($"alpha.{GetBuildNumber()}"));
+            }
+        });
+
     Target Bootstrap => _ => _
         .DependsOn(PackModules)
         .DependsOn(BuildTooling)
@@ -110,6 +126,20 @@ class Build : NukeBuild
             DotNet($"{ToolingDirectory / "dotnet-snowflake.dll"} install-all -d {OutputDirectory}");
         });
 
+    Target ContinuousIntegration => _ => _
+        .DependsOn(Test)
+        .DependsOn(PackModules)
+        .DependsOn(PackFramework);
+
+    static string GetBuildNumber()
+    {
+        string buildNumber = EnvironmentInfo.Variable("BUILD_NUMBER");
+        if (String.IsNullOrWhiteSpace(buildNumber))
+        {
+            return "dirty";
+        }
+        return buildNumber;
+    }
     static string GetSdkVersion(Project p)
     {
         using (XmlReader reader = XmlReader.Create(p.Path))
