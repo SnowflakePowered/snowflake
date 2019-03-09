@@ -41,7 +41,7 @@ jobs:
       codecov -f "$(System.DefaultWorkingDirectory)/src/Snowflake.Framework.Tests/coverage.opencover.xml" -t $(CODECOV_TOKEN) --sha $(Build.SourceVersion) --build $(Build.BuildNumber)
     workingDirectory: "$(System.DefaultWorkingDirectory)"
     displayName: Publishing test coverage to Codecov 
-    
+
   - task: PublishCodeCoverageResults@1
     displayName: Publshing test coverage to Azure
     inputs:
@@ -53,3 +53,10 @@ jobs:
     inputs:
       pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
       artifactName: 'drop'
+  - task: NuGetCommand@2
+    displayName: 'Publish framework packages'
+    inputs:
+      command: push
+      nuGetFeedType: external
+      publishFeedCredentials: 'snowflake-nightly'
+      packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
