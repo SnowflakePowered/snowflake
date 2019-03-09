@@ -33,25 +33,28 @@ steps:
 - task: Powershell@2
   displayName: Building and packaging framework and modules
   inputs:
-    scriptPath: "./build.ps1"
+    filePath: "./build.ps1"
     args: "ContinuousIntegration"
     pwsh: true
       
 - task: VSTest@2
+  displayName: Testing for Azure Test Coverage
   inputs:
     testSelector: 'testAssemblies' # Options: testAssemblies, testPlan, testRun
     testAssemblyVer2: '**\Snowflake.Framework.Tests.dll!**\obj\**!**\xunit.runner.visualstudio.testadapter.dll!**\xunit.runner.visualstudio.dotnetcore.testadapter.dll'
 
 - script: |
     codecov.exe -f "$(System.DefaultWorkingDirectory)/src/Snowflake.Framework.Tests/coverage.opencover.xml" -t $(codecov.secretToken)
-  displayName: Uploading test coverage to Codecov 
+  displayName: Publishing test coverage to Codecov 
 
 - task: PublishCodeCoverageResults@1
+  displayName: Publshing test coverage to Azure
   inputs:
     codeCoverageTool: 'cobertura' # Options: cobertura, jaCoCo
     summaryFileLocation: $(System.DefaultWorkingDirectory)/src/Snowflake.Framework.Tests/coverage.cobertura.xml
 
 - task: PublishBuildArtifacts@1
+  displayName: Publishing build artifacts
   inputs:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
     artifactName: 'drop'
