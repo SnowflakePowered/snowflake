@@ -30,11 +30,6 @@ steps:
     dotnet tool install --global Codecov.Tool --version 1.3.0	
   displayName: Install Codecov Tool
 
-
-- script: |
-    dotnet tool install --global Codecov.Tool --version 1.3.0	
-  displayName: Install Codecov Tool
-
 - script: |
     dotnet tool install Nuke.GlobalTool --global
   displayName: Install NUKE CLI
