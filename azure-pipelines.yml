@@ -17,19 +17,19 @@ jobs:
   pool:
     vmImage: 'ubuntu-16.04'
   steps:
-  - task: DotNetCoreInstaller@0
-    displayName: Installing .NET Core 3 SDK
-    inputs:
-      packageType: 'sdk' # Options: runtime, sdk
-      version: '3.0.100-preview3-010431' 
-  - bash: |
-     wget -q https://packages.microsoft.com/config/ubuntu/16.04/packages-microsoft-prod.deb
-     sudo dpkg -i packages-microsoft-prod.deb
-     sudo apt-get install apt-transport-https
-     sudo apt-get update
-     sudo apt-get install dotnet-sdk-2.2
-     sudo apt-get install dotnet-sdk-2.1
-    displayName: Manually install .NET Core 2.2 SDK
+  # - task: DotNetCoreInstaller@0
+  #   displayName: Installing .NET Core 3 SDK
+  #   inputs:
+  #     packageType: 'sdk' # Options: runtime, sdk
+  #     version: '3.0.100-preview3-010431' 
+  # - bash: |
+  #    wget -q https://packages.microsoft.com/config/ubuntu/16.04/packages-microsoft-prod.deb
+  #    sudo dpkg -i packages-microsoft-prod.deb
+  #    sudo apt-get install apt-transport-https
+  #    sudo apt-get update
+  #    sudo apt-get install dotnet-sdk-2.2
+  #    sudo apt-get install dotnet-sdk-2.1
+  #   displayName: Manually install .NET Core 2.2 SDK
   - template: azure-setup.yml  # Template reference
 
 - job: Windows
