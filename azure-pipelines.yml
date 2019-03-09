@@ -32,6 +32,18 @@ jobs:
   #   displayName: Manually install .NET Core 2.2 SDK
   - template: azure-setup.yml  # Template reference
 
+  - script: |
+      export PATH=$HOME/.dotnet/tools:$PATH
+      nuke ContinuousIntegration
+    displayName: Build and package framework and modules.
+  
+ - task: PublishTestResults@2
+    displayName: Publish test results to Azure
+    inputs:
+      testResultsFormat: 'VSTest' 
+      testResultsFiles: '*.trx' 
+      searchFolder: '$(System.DefaultWorkingDirectory)/src/Snowflake.Framework.Tests/TestResults'
+
 - job: Windows
   pool:
     vmImage: 'windows-2019'
@@ -42,6 +54,19 @@ jobs:
       packageType: 'sdk' # Options: runtime, sdk
       version: '3.0.100-preview3-010431' 
   - template: azure-setup.yml # Template reference
+  
+  - script: |
+      export PATH=$HOME/.dotnet/tools:$PATH
+      nuke ContinuousIntegration
+    displayName: Build and package framework and modules.
+    
+  - task: PublishTestResults@2
+    displayName: Publish test results to Azure
+    inputs:
+      testResultsFormat: 'VSTest' 
+      testResultsFiles: '*.trx' 
+      searchFolder: '$(System.DefaultWorkingDirectory)/src/Snowflake.Framework.Tests/TestResults'
+
   - pwsh: |
       codecov -f "$(System.DefaultWorkingDirectory)/src/Snowflake.Framework.Tests/coverage.opencover.xml" -t $(CODECOV_TOKEN) --sha $(Build.SourceVersion) --build $(Build.BuildNumber)
     workingDirectory: "$(System.DefaultWorkingDirectory)"
