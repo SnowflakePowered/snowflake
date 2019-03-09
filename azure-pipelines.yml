@@ -14,6 +14,11 @@ variables:
   STAGING: '$(Build.ArtifactStagingDirectory)'
 
 steps:
+- checkout: self
+  persistCredentials: true
+  submodules: "recursive"
+  lfs: false
+
 - task: DotNetCoreInstaller@0
   displayName: Installing .NET Core SDK
   inputs:
