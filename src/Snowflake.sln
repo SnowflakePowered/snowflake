@@ -85,6 +85,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Support.GraphQLFr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Support.StoreProviders", "Snowflake.Support.StoreProviders\Snowflake.Support.StoreProviders.csproj", "{90F3AA90-3C48-4C01-9E4D-E58BA5E78AC7}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Tooling.BuildScript", "..\build\Snowflake.Tooling.BuildScript.csproj", "{8C70CDAD-B234-4868-BC36-831A0E48EC04}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -95,6 +97,8 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8C70CDAD-B234-4868-BC36-831A0E48EC04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C70CDAD-B234-4868-BC36-831A0E48EC04}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D51AAF5A-7429-4A04-BDC7-255DEF9FE366}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D51AAF5A-7429-4A04-BDC7-255DEF9FE366}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D51AAF5A-7429-4A04-BDC7-255DEF9FE366}.Debug|x64.ActiveCfg = Debug|Any CPU
