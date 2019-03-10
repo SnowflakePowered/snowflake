@@ -30,3 +30,10 @@ steps:
       testResultsFormat: 'VSTest' # Options: JUnit, NUnit, VSTest, xUnit, cTest
       testResultsFiles: '*.trx' 
       searchFolder: '$(System.DefaultWorkingDirectory)/src/Snowflake.Framework.Tests/TestResults' # Optional
+
+  - task: PublishCodeCoverageResults@1
+    displayName: Publshing test coverage to Azure
+    inputs:
+      codeCoverageTool: 'cobertura' # Options: cobertura, jaCoCo
+      summaryFileLocation: $(System.DefaultWorkingDirectory)/src/Snowflake.Framework.Tests/coverage.cobertura.xml
+      reportDirectory: '$(System.DefaultWorkingDirectory)/src/Snowflake.Framework.Tests/htmlcov'

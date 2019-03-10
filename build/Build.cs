@@ -88,6 +88,15 @@ class Build : NukeBuild
                 .SetLogger("trx"));
         });
 
+// //dotnet reportgenerator
+// "-reports:coverage.opencover.xml"
+// "-targetdir:htmlcov"
+    Target GenerateHtmlCoverage => _ => _
+        .DependsOn(Test)
+        .Executes(() => {
+            DotNet("reportgenerator -reports:coverage.opencover.xml -targetdir:htmlcov", Tests);
+        });
+
     Target PackModules => _ => _
         .DependsOn(Compile)
         .DependsOn(BuildTooling)
