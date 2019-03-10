@@ -21,7 +21,7 @@ steps:
     lfs: false
 
   - script: |
-    dotnet run --project build -- ContinuousIntegration
+      dotnet run --project build -- ContinuousIntegration
     displayName: Build and package framework and modules.
 
   - task: PublishTestResults@2
