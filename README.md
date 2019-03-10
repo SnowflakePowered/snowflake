@@ -39,22 +39,12 @@ Getting Started
 ---------------
 
 Snowflake does not currently have a well defined install process for end-users, but it is easy to set up a development environment. 
-You will need the [.NET Core SDK 2.1](https://www.microsoft.com/net/download/) to get started. 
+You will need the [.NET Core SDK 3.0](https://www.microsoft.com/net/download/) to get started. 
 
-**Windows**
-```cli
-> git clone --recursive https://github.com/SnowflakePowered/snowflake/
-> cd snowflake
-> cd build
-> .\build.ps1 -Target Bootstrap
-```
-
-**Linux**
 ```cli
 $ git clone --recursive https://github.com/SnowflakePowered/snowflake/
 $ cd snowflake
-$ cd build
-$ ./build.sh -target=Bootstrap
+$ dotnet run --project build -- Bootstrap
 ```
 
 This command will build and install all support modules required for Snowflake to be functional to your application data directory (`%appdata%\snowflake\modules` or `~/.snowflake/snowflake/modules` on Linux). Note that you may have to delete the installed module `assembly.Snowflake.Framework.Test.InvalidComposable`, which is designed deliberately to error on load, however this is not necessary.
