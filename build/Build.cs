@@ -88,9 +88,6 @@ class Build : NukeBuild
                 .SetLogger("trx"));
         });
 
-// //dotnet reportgenerator
-// "-reports:coverage.opencover.xml"
-// "-targetdir:htmlcov"
     Target GenerateHtmlCoverage => _ => _
         .DependsOn(Test)
         .Executes(() => {
@@ -128,6 +125,9 @@ class Build : NukeBuild
             }
         });
 
+    /// <summary>
+    /// Call this to bootstrap a working Snowflake environment.
+    /// </summary>
     Target Bootstrap => _ => _
         .DependsOn(PackModules)
         .DependsOn(BuildTooling)
@@ -136,8 +136,11 @@ class Build : NukeBuild
             DotNet($"{ToolingDirectory / "dotnet-snowflake.dll"} install-all -d {OutputDirectory}");
         });
 
+    /// <summary>
+    /// Called in continuous integration environments.
+    /// </summary>
     Target ContinuousIntegration => _ => _
-        .DependsOn(Test)
+        .DependsOn(GenerateHtmlCoverage)
         .DependsOn(PackModules)
         .DependsOn(PackFramework);
 
