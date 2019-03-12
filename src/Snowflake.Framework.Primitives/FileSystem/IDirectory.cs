@@ -23,7 +23,7 @@ namespace Snowflake.Filesystem
 
         /// <summary>
         /// Opens an existing child directory with the given name.
-        /// If the directory does not exist, returns null.
+        /// If the directory does not exist, creates the directory.
         /// </summary>
         /// <param name="name">The name of the existing directory</param>
         /// <returns>The directory if it exists, or null if it does not.</returns>
