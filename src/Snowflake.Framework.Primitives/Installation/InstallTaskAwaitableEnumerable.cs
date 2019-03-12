@@ -5,13 +5,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using static Snowflake.Installation.TaskResult;
 
-namespace Snowflake.Installation.Tasks
+namespace Snowflake.Installation
 {
     public abstract class InstallTaskAwaitableEnumerable<T>
     {
         private IAsyncEnumerable<TaskResult<T>> BaseTask => this.WrapEnumerator();
 
-        protected abstract IAsyncEnumerable<T> Execute();
+        protected abstract IAsyncEnumerable<T> ExecuteOnce();
 
         protected abstract string TaskName { get; }
 
@@ -22,7 +22,7 @@ namespace Snowflake.Installation.Tasks
 
         private async IAsyncEnumerable<TaskResult<T>> WrapEnumerator()
         {
-            await using var enumerator = this.Execute().GetAsyncEnumerator();
+            await using var enumerator = this.ExecuteOnce().GetAsyncEnumerator();
           
             // Nasty hack to wrap our enumerator into TaskResults.
             while (true)

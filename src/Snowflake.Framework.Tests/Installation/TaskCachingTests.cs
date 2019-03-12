@@ -1,0 +1,123 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+using Xunit;
+
+namespace Snowflake.Installation
+{
+    public class TaskCachingTests
+    {
+        [Fact]
+        public async Task TaskCaching_Test()
+        {
+            var task = new TrivialCounterTask();
+            await foreach(var i in  EmitCounter(task));
+            Assert.Equal(1, task.Counter);
+        }
+
+        [Fact]
+        public async Task TaskEnumerableCaching_Test()
+        {
+            var task = new TrivialCounterEnumerableTask();
+            await foreach (var i in EmitCounter(task)) ;
+            Assert.Equal(2, task.Counter);
+        }
+
+        public async IAsyncEnumerable<TaskResult> EmitCounter(TrivialCounterTask t)
+        {            
+            yield return await t;
+            yield return await new TrivialCounterSubTask(t);
+        }
+
+        public async IAsyncEnumerable<TaskResult> EmitCounter(TrivialCounterEnumerableTask t)
+        {
+            await foreach (var i in t)
+            {
+                yield return i;
+            }
+            yield return await new TrivialCounterEnumerableSubTask(t);
+        }
+
+    }
+
+    public sealed class TrivialCounterTask : InstallTaskAwaitable<int>
+    {
+        public TrivialCounterTask()
+        {
+            this.Counter = 0;
+        }
+
+        public int Counter { get; set; }
+
+        protected override string TaskName => "Test";
+
+        protected override Task<int> ExecuteOnce()
+        {
+            return Task.Run(() => this.Counter++);
+        }
+    }
+
+    public sealed class TrivialCounterSubTask : InstallTaskAwaitable<int>
+    {
+        public TrivialCounterSubTask(TrivialCounterTask t)
+        {
+            this.Counter = 0;
+            T = t;
+        }
+
+        public int Counter { get; set; }
+        public TrivialCounterTask T { get; }
+
+        protected override string TaskName => "Test";
+
+        protected async override Task<int> ExecuteOnce()
+        {
+            this.Counter = await await this.T;
+            return this.Counter;
+        }
+    }
+
+    public sealed class TrivialCounterEnumerableTask : InstallTaskAwaitableEnumerable<int>
+    {
+        public TrivialCounterEnumerableTask()
+        {
+            this.Counter = 0;
+        }
+
+        public int Counter { get; set; }
+
+        protected override string TaskName => "Test";
+
+        protected override async IAsyncEnumerable<int> ExecuteOnce()
+        {
+            yield return await Task.Run(() => this.Counter++);
+            yield return await Task.Run(() => this.Counter++);
+
+        }
+    }
+
+
+    public sealed class TrivialCounterEnumerableSubTask : InstallTaskAwaitable<int>
+    {
+        public TrivialCounterEnumerableSubTask(TrivialCounterEnumerableTask t)
+        {
+            this.Counter = 0;
+            T = t;
+        }
+
+        public int Counter { get; set; }
+        public TrivialCounterEnumerableTask T { get; }
+
+        protected override string TaskName => "Test";
+
+        protected async override Task<int> ExecuteOnce()
+        {
+            await foreach (var x in this.T)
+            {
+                this.Counter = await x;
+            }
+            return this.Counter;
+        }
+    }
+}

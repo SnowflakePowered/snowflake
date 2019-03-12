@@ -21,7 +21,7 @@ namespace Snowflake.Installation.Tasks
 
         protected override string TaskName => "Copy";
 
-        protected override async Task<IFile?> Execute()
+        protected override async Task<IFile?> ExecuteOnce()
         {
             return await this.Destination.CopyFromAsync(this.Source);
         }
