@@ -27,7 +27,7 @@ namespace Snowflake.Installation
         public async IAsyncEnumerable<TaskResult> EmitCounter(TrivialCounterTask t)
         {            
             yield return await t;
-            yield return await new TrivialCounterSubTask(t);
+            yield return await new TrivialCounterSubTask(await t);
         }
 
         public async IAsyncEnumerable<TaskResult> EmitCounter(TrivialCounterEnumerableTask t)
@@ -35,8 +35,9 @@ namespace Snowflake.Installation
             await foreach (var i in t)
             {
                 yield return i;
+                yield return await new TrivialCounterSubTask(i);
+
             }
-            yield return await new TrivialCounterEnumerableSubTask(t);
         }
 
     }
@@ -55,26 +56,6 @@ namespace Snowflake.Installation
         protected override Task<int> ExecuteOnce()
         {
             return Task.Run(() => this.Counter++);
-        }
-    }
-
-    public sealed class TrivialCounterSubTask : InstallTaskAwaitable<int>
-    {
-        public TrivialCounterSubTask(TrivialCounterTask t)
-        {
-            this.Counter = 0;
-            T = t;
-        }
-
-        public int Counter { get; set; }
-        public TrivialCounterTask T { get; }
-
-        protected override string TaskName => "Test";
-
-        protected async override Task<int> ExecuteOnce()
-        {
-            this.Counter = await await this.T;
-            return this.Counter;
         }
     }
 
@@ -97,26 +78,22 @@ namespace Snowflake.Installation
         }
     }
 
-
-    public sealed class TrivialCounterEnumerableSubTask : InstallTaskAwaitable<int>
+    public sealed class TrivialCounterSubTask : InstallTaskAwaitable<int>
     {
-        public TrivialCounterEnumerableSubTask(TrivialCounterEnumerableTask t)
+        public TrivialCounterSubTask(TaskResult<int> t)
         {
             this.Counter = 0;
             T = t;
         }
 
         public int Counter { get; set; }
-        public TrivialCounterEnumerableTask T { get; }
+        public TaskResult<int> T { get; }
 
         protected override string TaskName => "Test";
 
         protected async override Task<int> ExecuteOnce()
         {
-            await foreach (var x in this.T)
-            {
-                this.Counter = await x;
-            }
+            this.Counter = await T;
             return this.Counter;
         }
     }

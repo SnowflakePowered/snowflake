@@ -9,12 +9,14 @@ namespace Snowflake.Installation
     public class TaskResult<T>
            : TaskResult
     {
-        private ValueTask<T> Result { get; }
+        private ValueTask<T> Result => CachedResult.Value;
+
+        private readonly Lazy<ValueTask<T>> CachedResult;
 
         internal TaskResult(string name, ValueTask<T> result, Exception? error)
         {
             this.Name = name;
-            this.Result = result;
+            this.CachedResult = new Lazy<ValueTask<T>>(result);
             this.Error = error;
         }
         public ConfiguredValueTaskAwaitable<T>.ConfiguredValueTaskAwaiter GetAwaiter()
