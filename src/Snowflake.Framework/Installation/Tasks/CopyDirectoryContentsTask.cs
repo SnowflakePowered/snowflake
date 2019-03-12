@@ -21,7 +21,7 @@ namespace Snowflake.Installation.Tasks
             this.Destination = destinationDirectory;
         }
 
-        protected override async IAsyncEnumerable<IFile?> Execute()
+        protected override async IAsyncEnumerable<IFile?> ExecuteOnce()
         {
 
             // Do the parent directory
