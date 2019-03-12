@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,14 +9,19 @@ namespace Snowflake.Installation
     public class TaskResult<T>
            : TaskResult
     {
-        public ValueTask<T> Result { get; }
-      
+        private ValueTask<T> Result { get; }
+
         internal TaskResult(string name, ValueTask<T> result, Exception? error)
         {
             this.Name = name;
             this.Result = result;
             this.Error = error;
         }
+        public ConfiguredValueTaskAwaitable<T>.ConfiguredValueTaskAwaiter GetAwaiter()
+        {
+            return this.Result.ConfigureAwait(false).GetAwaiter();
+        }
+
     }
 
     public abstract class TaskResult
@@ -43,6 +49,5 @@ namespace Snowflake.Installation
             return new TaskResult<TResult>(name, result, ex);
 
         }
-
     }
 }
