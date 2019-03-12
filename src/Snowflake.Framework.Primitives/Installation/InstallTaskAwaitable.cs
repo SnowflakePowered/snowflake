@@ -10,7 +10,6 @@ namespace Snowflake.Installation
     public abstract class InstallTaskAwaitable<T>
     {
         private Task<T> BaseTask => CachedTask.Value;
-
         private Lazy<Task<T>> CachedTask { get; }
 
         protected InstallTaskAwaitable() => this.CachedTask = new Lazy<Task<T>>(() => this.ExecuteOnce());
