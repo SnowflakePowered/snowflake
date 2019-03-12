@@ -7,7 +7,7 @@ using Snowflake.Filesystem;
 
 namespace Snowflake.Installation.Tasks
 {
-    public sealed class CopyDirectoryTask : InstallTaskAwaitableEnumerable<IFile?>
+    public sealed class CopyDirectoryContentsTask : InstallTaskAwaitableEnumerable<IFile?>
     {
         protected override string TaskName => "Copy";
 
@@ -15,7 +15,7 @@ namespace Snowflake.Installation.Tasks
         private IDirectory Destination { get; }
       
 
-        public CopyDirectoryTask(DirectoryInfo source, IDirectory destinationDirectory)
+        public CopyDirectoryContentsTask(DirectoryInfo source, IDirectory destinationDirectory)
         {
             this.Source =  source;
             this.Destination = destinationDirectory;

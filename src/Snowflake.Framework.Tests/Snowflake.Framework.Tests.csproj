@@ -80,4 +80,14 @@
     <Exclude>[Snowflake.Framework.Tests]*,[Snowflake.Support.FileSignatures]*,[Snowflake.Framework.Library]*,[Snowflake.Framework.Dependencies]*</Exclude>
     <CollectCoverage>true</CollectCoverage>
   </PropertyGroup>
+
+  <Target Name="AddAssemblyAliasToReactiveAsync"
+          AfterTargets="ResolveAssemblyReferences"
+          Condition=" '$(TargetFramework)' != '' AND ( '$(TargetFramework)' == 'netcoreapp3.0' OR '$(TargetFramework)' == 'netstandard2.1' ) ">
+    <ItemGroup>
+      <ReferencePath Condition=" '%(FileName)' == 'System.Interactive.Async' ">
+        <Aliases>reactive</Aliases>
+      </ReferencePath>
+    </ItemGroup>
+  </Target>
 </Project>

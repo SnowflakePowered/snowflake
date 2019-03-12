@@ -15,7 +15,7 @@ namespace Snowflake.Installation.Tasks
 
         protected abstract string TaskName { get; }
 
-        public IAsyncEnumerator<TaskResult<T>> GetAsyncEnumerator(CancellationToken cancellationToken)
+        public IAsyncEnumerator<TaskResult<T>> GetAsyncEnumerator(CancellationToken cancellationToken = default)
         {
             return this.BaseTask.GetAsyncEnumerator();
         }
