@@ -11,11 +11,11 @@ namespace Snowflake.Installation.Tasks
     {
         protected override string TaskName => "Copy";
 
-        private DirectoryInfo Source { get; }
+        private TaskResult<DirectoryInfo> Source { get; }
         private IDirectory Destination { get; }
       
 
-        public CopyDirectoryContentsTask(DirectoryInfo source, IDirectory destinationDirectory)
+        public CopyDirectoryContentsTask(TaskResult<DirectoryInfo> source, IDirectory destinationDirectory)
         {
             this.Source =  source;
             this.Destination = destinationDirectory;
@@ -25,13 +25,13 @@ namespace Snowflake.Installation.Tasks
         {
 
             // Do the parent directory
-            foreach (var f in this.Source.EnumerateFiles())
+            foreach (var f in (await this.Source).EnumerateFiles())
             {
                 yield return await this.Destination.CopyFromAsync(f);
             }
 
             var queuedDirs =
-                this.Source.EnumerateDirectories()
+                (await this.Source).EnumerateDirectories()
                 .Select(d => (this.Destination, d)).ToList();
 
             // BFS over all the children.

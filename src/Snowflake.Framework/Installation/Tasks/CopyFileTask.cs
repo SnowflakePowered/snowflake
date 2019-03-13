@@ -11,19 +11,19 @@ namespace Snowflake.Installation.Tasks
 {
     public sealed class CopyFileTask : InstallTaskAwaitable<IFile?>
     {
-        public CopyFileTask(FileInfo source, IDirectory destinationDirectory)
+        public CopyFileTask(TaskResult<FileInfo> source, IDirectory destinationDirectory)
         {
             this.Source = source;
             this.Destination = destinationDirectory;
         }
-        private FileInfo Source { get; }
+        private TaskResult<FileInfo> Source { get; }
         private IDirectory Destination { get; }
 
         protected override string TaskName => "Copy";
 
         protected override async Task<IFile?> ExecuteOnce()
         {
-            return await this.Destination.CopyFromAsync(this.Source);
+            return await this.Destination.CopyFromAsync(await this.Source);
         }
     }
 }

@@ -7,9 +7,14 @@ using System.Threading.Tasks;
 namespace Snowflake.Installation
 {
     public class TaskResult<T>
-           : TaskResult
+           : ITaskResult
     {
         private ValueTask<T> Result => CachedResult.Value;
+
+        public string Name { get; } = "Unknown";
+
+        public Exception? Error { get; } = null;
+
 
         private readonly Lazy<ValueTask<T>> CachedResult;
 
@@ -19,18 +24,33 @@ namespace Snowflake.Installation
             this.CachedResult = new Lazy<ValueTask<T>>(result);
             this.Error = error;
         }
+
         public ConfiguredValueTaskAwaitable<T>.ConfiguredValueTaskAwaiter GetAwaiter()
         {
             return this.Result.ConfigureAwait(false).GetAwaiter();
         }
 
+        ConfiguredTaskAwaitable<object?>.ConfiguredTaskAwaiter ITaskResult.GetAwaiter()
+        {
+            return this.Result.AsTask().FromDerived<object?, T>().ConfigureAwait(false).GetAwaiter();
+        }
+
+        public static implicit operator TaskResult<T>(T t)
+        {
+            return new TaskResult<T>("Value", new ValueTask<T>(t), null);
+        }
     }
 
-    public abstract class TaskResult
+    public interface ITaskResult
     {
-        public string Name { get; protected set; } = "Unknown";
-        public Exception? Error { get; protected set; }
+        string Name { get; }
+        Exception? Error { get;}
 
+        ConfiguredTaskAwaitable<object?>.ConfiguredTaskAwaiter GetAwaiter();
+    }
+
+    public static class TaskResult
+    {
         public static TaskResult<TResult> Success<TResult>(string name, Task<TResult> result)
         {
             return new TaskResult<TResult>(name, new ValueTask<TResult>(result), null);
@@ -50,6 +70,16 @@ namespace Snowflake.Installation
         {
             return new TaskResult<TResult>(name, result, ex);
 
+        }
+        internal static Task<TBase> FromDerived<TBase, TDerived>(this Task<TDerived> task) where TDerived : TBase
+        {
+            var tcs = new TaskCompletionSource<TBase>();
+
+            task.ContinueWith(t => tcs.SetResult(t.Result), TaskContinuationOptions.OnlyOnRanToCompletion);
+            task.ContinueWith(t => tcs.SetException(t.Exception.InnerExceptions), TaskContinuationOptions.OnlyOnFaulted);
+            task.ContinueWith(t => tcs.SetCanceled(), TaskContinuationOptions.OnlyOnCanceled);
+
+            return tcs.Task;
         }
     }
 }

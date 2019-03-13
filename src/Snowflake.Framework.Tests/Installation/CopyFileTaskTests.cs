@@ -57,12 +57,12 @@ namespace Snowflake.Installation.Tests
         }
 
 
-        public async IAsyncEnumerable<TaskResult> EmitCopyResult(string tempFile, IDirectory dir)
+        public async IAsyncEnumerable<ITaskResult> EmitCopyResult(string tempFile, IDirectory dir)
         {
             yield return await new CopyFileTask(new FileInfo(tempFile), dir);
         }
 
-        public async IAsyncEnumerable<TaskResult> EmitCopyDirResult(DirectoryInfo tempdir, IDirectory dir)
+        public async IAsyncEnumerable<ITaskResult> EmitCopyDirResult(DirectoryInfo tempdir, IDirectory dir)
         {
             await foreach (var tr in new CopyDirectoryContentsTask(tempdir, dir)) {
                 yield return tr;

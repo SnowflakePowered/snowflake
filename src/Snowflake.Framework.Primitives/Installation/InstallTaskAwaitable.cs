@@ -26,6 +26,5 @@ namespace Snowflake.Installation
                 .ConfigureAwait(false)
                 .GetAwaiter();
         }
-
     }
 }

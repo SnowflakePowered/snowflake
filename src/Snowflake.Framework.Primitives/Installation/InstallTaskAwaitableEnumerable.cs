@@ -44,6 +44,4 @@ namespace Snowflake.Installation
             yield break;
         }
     }
-
-
 }
