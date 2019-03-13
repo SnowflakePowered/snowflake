@@ -24,16 +24,19 @@ namespace Snowflake.Installation
             Assert.Equal(2, task.Counter);
         }
 
-        public async IAsyncEnumerable<TaskResult> EmitCounter(TrivialCounterTask t)
+        public async IAsyncEnumerable<ITaskResult> EmitCounter(TrivialCounterTask t)
         {            
+            yield return await t;
             yield return await t;
             yield return await new TrivialCounterSubTask(await t);
         }
 
-        public async IAsyncEnumerable<TaskResult> EmitCounter(TrivialCounterEnumerableTask t)
+        public async IAsyncEnumerable<ITaskResult> EmitCounter(TrivialCounterEnumerableTask t)
         {
             await foreach (var i in t)
             {
+                yield return i;
+                yield return i;
                 yield return i;
                 yield return await new TrivialCounterSubTask(i);
 
