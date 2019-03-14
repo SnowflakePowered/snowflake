@@ -24,7 +24,7 @@ namespace Snowflake.Model.Game.LibraryExtensions
 
         IFileRecord? GetFileInfo(IFile file);
 
-        IFileRecord RegisterFile(IFile file, string v);
+        IFileRecord RegisterFile(IFile file, string mimetype);
 
         IDirectory GetSavesLocation(string saveType);
 

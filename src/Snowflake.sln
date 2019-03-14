@@ -87,6 +87,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Support.StoreProv
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Tooling.BuildScript", "..\build\Snowflake.Tooling.BuildScript.csproj", "{8C70CDAD-B234-4868-BC36-831A0E48EC04}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Installation", "Installation", "{047459AC-E2D8-44D5-8BBB-45116E71FEA4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Plugin.Installation.BasicInstallers", "Snowflake.Plugin.Installation.BasicInstallers\Snowflake.Plugin.Installation.BasicInstallers.csproj", "{952EB45A-D03D-482B-9C04-871A6AC1CD7F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -467,6 +471,18 @@ Global
 		{8C70CDAD-B234-4868-BC36-831A0E48EC04}.Release|x64.Build.0 = Release|Any CPU
 		{8C70CDAD-B234-4868-BC36-831A0E48EC04}.Release|x86.ActiveCfg = Release|Any CPU
 		{8C70CDAD-B234-4868-BC36-831A0E48EC04}.Release|x86.Build.0 = Release|Any CPU
+		{952EB45A-D03D-482B-9C04-871A6AC1CD7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{952EB45A-D03D-482B-9C04-871A6AC1CD7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{952EB45A-D03D-482B-9C04-871A6AC1CD7F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{952EB45A-D03D-482B-9C04-871A6AC1CD7F}.Debug|x64.Build.0 = Debug|Any CPU
+		{952EB45A-D03D-482B-9C04-871A6AC1CD7F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{952EB45A-D03D-482B-9C04-871A6AC1CD7F}.Debug|x86.Build.0 = Debug|Any CPU
+		{952EB45A-D03D-482B-9C04-871A6AC1CD7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{952EB45A-D03D-482B-9C04-871A6AC1CD7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{952EB45A-D03D-482B-9C04-871A6AC1CD7F}.Release|x64.ActiveCfg = Release|Any CPU
+		{952EB45A-D03D-482B-9C04-871A6AC1CD7F}.Release|x64.Build.0 = Release|Any CPU
+		{952EB45A-D03D-482B-9C04-871A6AC1CD7F}.Release|x86.ActiveCfg = Release|Any CPU
+		{952EB45A-D03D-482B-9C04-871A6AC1CD7F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -506,6 +522,8 @@ Global
 		{81A053BD-9BFF-4BCC-99EE-2A5B742FD370} = {FBD15674-246A-4C57-B865-07214D8BB9A1}
 		{90F3AA90-3C48-4C01-9E4D-E58BA5E78AC7} = {FBD15674-246A-4C57-B865-07214D8BB9A1}
 		{8C70CDAD-B234-4868-BC36-831A0E48EC04} = {8E178A6E-EAA5-413A-9EBE-36557DFF288E}
+		{047459AC-E2D8-44D5-8BBB-45116E71FEA4} = {4D861CF0-7989-4E65-8F7C-B802B5D1AD86}
+		{952EB45A-D03D-482B-9C04-871A6AC1CD7F} = {047459AC-E2D8-44D5-8BBB-45116E71FEA4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {532F5D25-2D82-45B3-BF60-DDA40A0FB795}
