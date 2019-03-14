@@ -49,6 +49,7 @@
     <ProjectReference Include="..\Snowflake.Framework.Services\Snowflake.Framework.Services.csproj" />
     <ProjectReference Include="..\Snowflake.Framework\Snowflake.Framework.csproj" />
     <ProjectReference Include="..\Snowflake.Plugin.Emulators.RetroArch\Snowflake.Plugin.Emulators.RetroArch.csproj" />
+    <ProjectReference Include="..\Snowflake.Plugin.Installation.BasicInstallers\Snowflake.Plugin.Installation.BasicInstallers.csproj" />
     <ProjectReference Include="..\Snowflake.Plugin.Scraping.TheGamesDb\Snowflake.Plugin.Scraping.TheGamesDb.csproj" />
     <ProjectReference Include="..\Snowflake.Support.Execution.Providers\Snowflake.Support.Execution.Providers.csproj" />
     <ProjectReference Include="..\Snowflake.Support.PluginManager\Snowflake.Support.PluginManager.csproj" />
@@ -81,9 +82,7 @@
     <CollectCoverage>true</CollectCoverage>
   </PropertyGroup>
 
-  <Target Name="AddAssemblyAliasToReactiveAsync"
-          AfterTargets="ResolveAssemblyReferences"
-          Condition=" '$(TargetFramework)' != '' AND ( '$(TargetFramework)' == 'netcoreapp3.0' OR '$(TargetFramework)' == 'netstandard2.1' ) ">
+  <Target Name="AddAssemblyAliasToReactiveAsync" AfterTargets="ResolveAssemblyReferences" Condition=" '$(TargetFramework)' != '' AND ( '$(TargetFramework)' == 'netcoreapp3.0' OR '$(TargetFramework)' == 'netstandard2.1' ) ">
     <ItemGroup>
       <ReferencePath Condition=" '%(FileName)' == 'System.Interactive.Async' ">
         <Aliases>reactive</Aliases>

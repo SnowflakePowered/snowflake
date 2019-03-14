@@ -56,13 +56,5 @@ namespace Snowflake.Installation.Tasks
                 }
             }
         }
-
-        private void CreateDirectoryTreeRecursive(IDirectory parent, DirectoryInfo sourceparent)
-        {
-            foreach (DirectoryInfo d in sourceparent.EnumerateDirectories())
-            {
-                CreateDirectoryTreeRecursive(parent.OpenDirectory(d.Name), d);
-            }
-        }
     }
 }

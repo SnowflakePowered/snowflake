@@ -5,8 +5,15 @@
     <RootNamespace>Snowflake</RootNamespace>
     <AssemblyName>Snowflake.Support.StoneProvider</AssemblyName>
     <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
+    <_SnowflakeUseDevelopmentSDK>true</_SnowflakeUseDevelopmentSDK>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="DiscUtils.Core" Version="0.14.2-alpha" />
+    <PackageReference Include="DiscUtils.Iso9660" Version="0.14.2-alpha" />
+    <PackageReference Include="MimeMapping" Version="1.0.1.12" />
+  </ItemGroup>
+  
   <ItemGroup>
     <EmbeddedResource Include="..\..\stone\dist\stone.dist.json" Link="stone.dist.json" />
   </ItemGroup>
