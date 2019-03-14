@@ -97,7 +97,7 @@ class Build : NukeBuild
 
             foreach (Project p in Solution.GetProjects("Snowflake.*"))
             {
-                if (!GetSdkVersion(p).StartsWith("Snowflake.Framework.Sdk/")) continue;
+                if (!GetSdkVersion(p).StartsWith("Snowflake.Framework.Sdk")) continue;
                 if (!File.Exists((p.Directory / "module.json"))) continue;
 
                 DotNet("snowflake build", p.Directory);
