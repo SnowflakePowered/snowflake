@@ -29,7 +29,7 @@ namespace Snowflake.Stone.FileSignatures.Nintendo
         public bool HeaderSignatureMatches(Stream fileContents)
         {
             fileContents.Seek(0, SeekOrigin.Begin);
-            BinaryReader reader = new BinaryReader(new Int32SwapStream(fileContents)); // always read from a 32swapped
+            using BinaryReader reader = new BinaryReader(new Int32SwapStream(fileContents)); // always read from a 32swapped
             return reader.ReadUInt32() == this.formatByte;
         }
 

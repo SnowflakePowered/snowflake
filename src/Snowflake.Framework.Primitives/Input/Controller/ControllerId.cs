@@ -49,6 +49,11 @@ namespace Snowflake.Input.Controller
             return this.ControllerIdString;
         }
 
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(ControllerIdString);
+        }
+
         public static bool operator ==(ControllerId x, ControllerId y) => x.ControllerIdString == y.ControllerIdString;
         public static bool operator !=(ControllerId x, ControllerId y) => x.ControllerIdString != y.ControllerIdString;
 

@@ -10,7 +10,7 @@ namespace Snowflake.Model.Database.Models
     {
         public string MimeType { get; set; } = "application/octet-stream";
 
-        internal static void SetupModel(ModelBuilder modelBuilder)
+        internal static new void SetupModel(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<FileRecordModel>()
                 .Property(r => r.MimeType)

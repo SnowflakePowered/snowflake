@@ -8,7 +8,7 @@ namespace Snowflake.Model.Game.LibraryExtensions
     public interface IGameExtensionProvider<out TExtension> : IGameExtensionProvider
         where TExtension : class, IGameExtension
     {
-        TExtension MakeExtension(IGameRecord record);
+        new TExtension MakeExtension(IGameRecord record);
     }
 
     public interface IGameExtensionProvider

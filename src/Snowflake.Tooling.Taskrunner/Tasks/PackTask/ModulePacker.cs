@@ -54,7 +54,7 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.PackTask
                 packageContents.Position = 0;
                 await packageContents.CopyToAsync(snowballArchive, 4096).ConfigureAwait(false);
                 snowballArchive.CloseEntry();
-
+               
                 Console.WriteLine($"Signing package...");
 
                 using (MemoryStream streamReader = new MemoryStream(signedSha512))
@@ -87,7 +87,7 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.PackTask
                     .GetFrameworkDependencies(this.ModuleDirectory, this.ModuleDefinition);
 
             FileStream archiveStream = File.Create(fileName, 4096, FileOptions.DeleteOnClose);
-            RSA rsa = RSA.Create();
+            using RSA rsa = RSA.Create();
             rsa.KeySize = 2048;
             using (ZipOutputStream zipStream = new ZipOutputStream(archiveStream))
             {

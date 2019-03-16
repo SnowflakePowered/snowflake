@@ -20,7 +20,8 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.PackTask
                 .EnumerateFiles(Path.GetFileNameWithoutExtension(packageModule.Entry) + ".deps.json").FirstOrDefault();
             if (deps == null) return Enumerable.Empty<string>();
 
-            var dependencyContext = new DependencyContextJsonReader().Read(deps.OpenRead());
+            using var reader = new DependencyContextJsonReader();
+            var dependencyContext = reader.Read(deps.OpenRead());
 
             Console.WriteLine(dependencyContext.RuntimeGraph.Select(p => p.Runtime).Count());
             IEnumerable<Dependency> frameworkDependencies =
