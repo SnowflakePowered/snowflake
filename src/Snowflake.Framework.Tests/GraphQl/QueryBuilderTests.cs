@@ -11,7 +11,7 @@ using Snowflake.Services.Logging;
 using Snowflake.Support.Remoting.GraphQL.RootProvider;
 using Xunit;
 
-namespace Snowflake.GraphQl
+namespace Snowflake.GraphQl.Tests
 {
     public class QueryBuilderTests
     {
@@ -161,7 +161,7 @@ namespace Snowflake.GraphQl
             var mutation = new RootMutation();
             var schema = new GraphQlRootSchema(root, mutation);
             var queryBuilder = new BasicQueryBuilder();
-            var executor = new GraphQlExecuterProvider(schema);
+            var executor = new GraphQlTestExecuterProvider(schema);
             schema.Register(queryBuilder);
             var result = await executor.ExecuteRequestAsync(new GraphQlRequest()
             {
