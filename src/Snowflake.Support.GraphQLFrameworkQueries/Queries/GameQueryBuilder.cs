@@ -66,7 +66,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
             var game = this.GameLibrary.CreateGame(platform);
 
             var installer = this.Installers.FirstOrDefault(p => p.SupportedPlatforms.Contains(platform));
-            return this.InstallQueue.QueueJob(installer.Install(game, filesysinfo), game.Record.RecordId));
+            return this.InstallQueue.QueueJob(installer.Install(game, filesysinfo), game.Record.RecordId);
         }
     }
 }
