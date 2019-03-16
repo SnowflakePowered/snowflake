@@ -5,19 +5,18 @@ using System.Threading.Tasks;
 using GraphQL;
 using GraphQL.Http;
 using GraphQL.Types;
+using Snowflake.Support.Remoting.GraphQL.RootProvider;
 
-namespace Snowflake.Support.Remoting.GraphQL.RootProvider
+namespace Snowflake.GraphQl.Tests
 {
-    internal class GraphQlExecuterProvider
+    internal class GraphQlTestExecuterProvider
     {
         private IDocumentExecuter Executer { get; }
-        private IDocumentWriter Writer { get; }
         private Schema RootSchema { get; }
 
-        public GraphQlExecuterProvider(Schema schema)
+        public GraphQlTestExecuterProvider(Schema schema)
         {
             this.Executer = new DocumentExecuter();
-            this.Writer = new DocumentWriter();
             this.RootSchema = schema;
         }
 
