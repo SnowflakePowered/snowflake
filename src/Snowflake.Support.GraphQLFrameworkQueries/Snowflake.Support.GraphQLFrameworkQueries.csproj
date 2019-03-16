@@ -1,8 +1,9 @@
-<Project Sdk="Snowflake.Framework.Sdk">
+﻿<Project Sdk="Snowflake.Framework.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
+    <_SnowflakeUseDevelopmentSDK>true</_SnowflakeUseDevelopmentSDK>
   </PropertyGroup>
 
   <ItemGroup>
