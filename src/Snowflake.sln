@@ -61,8 +61,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Tooling.Taskrunne
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1694A898-A257-4E2F-BCEF-FC8EBD109D22}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Plugin.Scraping.FileSignatures", "Snowflake.Plugin.Scraping.FileSignatures\Snowflake.Plugin.Scraping.FileSignatures.csproj", "{4D54E42D-4D1A-4627-9245-D8A46620F8DB}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Support.Remoting.Electron.ThemeProvider", "Snowflake.Support.Remoting.Electron.ThemeProvider\Snowflake.Support.Remoting.Electron.ThemeProvider.csproj", "{FDA33F17-5D5F-4651-917A-19E6CD804AB2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Framework.Sdk", "Snowflake.Framework.Sdk\Snowflake.Framework.Sdk.csproj", "{0F8B225E-BAE3-4094-851C-378D0397DACE}"
@@ -89,7 +87,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Tooling.BuildScri
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Installation", "Installation", "{047459AC-E2D8-44D5-8BBB-45116E71FEA4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Plugin.Installation.BasicInstallers", "Snowflake.Plugin.Installation.BasicInstallers\Snowflake.Plugin.Installation.BasicInstallers.csproj", "{952EB45A-D03D-482B-9C04-871A6AC1CD7F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Plugin.Installation.BasicInstallers", "Snowflake.Plugin.Installation.BasicInstallers\Snowflake.Plugin.Installation.BasicInstallers.csproj", "{952EB45A-D03D-482B-9C04-871A6AC1CD7F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -341,18 +339,6 @@ Global
 		{68750828-29F8-4CB4-AF7B-0F48305FA06D}.Release|x64.Build.0 = Release|Any CPU
 		{68750828-29F8-4CB4-AF7B-0F48305FA06D}.Release|x86.ActiveCfg = Release|Any CPU
 		{68750828-29F8-4CB4-AF7B-0F48305FA06D}.Release|x86.Build.0 = Release|Any CPU
-		{4D54E42D-4D1A-4627-9245-D8A46620F8DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4D54E42D-4D1A-4627-9245-D8A46620F8DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4D54E42D-4D1A-4627-9245-D8A46620F8DB}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{4D54E42D-4D1A-4627-9245-D8A46620F8DB}.Debug|x64.Build.0 = Debug|Any CPU
-		{4D54E42D-4D1A-4627-9245-D8A46620F8DB}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{4D54E42D-4D1A-4627-9245-D8A46620F8DB}.Debug|x86.Build.0 = Debug|Any CPU
-		{4D54E42D-4D1A-4627-9245-D8A46620F8DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4D54E42D-4D1A-4627-9245-D8A46620F8DB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4D54E42D-4D1A-4627-9245-D8A46620F8DB}.Release|x64.ActiveCfg = Release|Any CPU
-		{4D54E42D-4D1A-4627-9245-D8A46620F8DB}.Release|x64.Build.0 = Release|Any CPU
-		{4D54E42D-4D1A-4627-9245-D8A46620F8DB}.Release|x86.ActiveCfg = Release|Any CPU
-		{4D54E42D-4D1A-4627-9245-D8A46620F8DB}.Release|x86.Build.0 = Release|Any CPU
 		{FDA33F17-5D5F-4651-917A-19E6CD804AB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FDA33F17-5D5F-4651-917A-19E6CD804AB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FDA33F17-5D5F-4651-917A-19E6CD804AB2}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -510,7 +496,6 @@ Global
 		{48700C7A-7410-46B3-9F55-42AA02F53FEA} = {86D5767F-B32D-4E1B-BBA2-B87A0DEC6C6F}
 		{A3EC6024-6CDA-4C65-9A48-113D84E0E616} = {FBD15674-246A-4C57-B865-07214D8BB9A1}
 		{68750828-29F8-4CB4-AF7B-0F48305FA06D} = {8E178A6E-EAA5-413A-9EBE-36557DFF288E}
-		{4D54E42D-4D1A-4627-9245-D8A46620F8DB} = {86D5767F-B32D-4E1B-BBA2-B87A0DEC6C6F}
 		{FDA33F17-5D5F-4651-917A-19E6CD804AB2} = {FBD15674-246A-4C57-B865-07214D8BB9A1}
 		{0F8B225E-BAE3-4094-851C-378D0397DACE} = {FD0D8E05-2E14-4898-ACBC-665F0DDFF328}
 		{C044AEDA-BE98-46A0-8357-EA06B7776C19} = {FD0D8E05-2E14-4898-ACBC-665F0DDFF328}

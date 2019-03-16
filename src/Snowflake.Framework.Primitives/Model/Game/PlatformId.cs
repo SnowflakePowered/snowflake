@@ -45,6 +45,11 @@ namespace Snowflake.Model.Game
             return this.PlatformIdString;
         }
 
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(PlatformIdString);
+        }
+
         public static bool operator ==(PlatformId x, PlatformId y) => x.PlatformIdString == y.PlatformIdString;
         public static bool operator !=(PlatformId x, PlatformId y) => x.PlatformIdString != y.PlatformIdString;
 

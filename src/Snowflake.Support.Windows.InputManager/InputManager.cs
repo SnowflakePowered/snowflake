@@ -14,7 +14,7 @@ namespace Snowflake.Plugin.InputManager.Win32
         /// <inheritdoc/>
         public IEnumerable<ILowLevelInputDevice> GetAllDevices()
         {
-            var directInput = new SharpDX.DirectInput.DirectInput();
+            using var directInput = new SharpDX.DirectInput.DirectInput();
             var devices = directInput.GetDevices(DeviceClass.All, DeviceEnumerationFlags.AttachedOnly);
 
             var directInputGamepads =
@@ -54,7 +54,7 @@ namespace Snowflake.Plugin.InputManager.Win32
             for (int i = 0; i < gamepads.Count(); i++)
             {
                 DeviceInstance deviceInstance = gamepads.ElementAt(i);
-                SharpDX.DirectInput.Device device = new Joystick(directInput, deviceInstance.InstanceGuid);
+                using SharpDX.DirectInput.Device device = new Joystick(directInput, deviceInstance.InstanceGuid);
 
                 var inputDevice = new LowLevelInputDevice()
                 {

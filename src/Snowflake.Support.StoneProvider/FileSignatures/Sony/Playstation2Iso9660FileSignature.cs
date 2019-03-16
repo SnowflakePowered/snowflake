@@ -15,18 +15,21 @@ namespace Snowflake.Stone.FileSignatures.Sony
         public bool HeaderSignatureMatches(Stream romStream)
         {
             romStream.Seek(0, SeekOrigin.Begin);
-            var reader = new CDReader(romStream, true);
-            var system = reader.OpenFile("SYSTEM.CNF", FileMode.Open);
-            return new StreamReader(system).ReadToEnd().Contains("BOOT2");
+            using var reader = new CDReader(romStream, true);
+            using var system = reader.OpenFile("SYSTEM.CNF", FileMode.Open);
+            using var streamReader = new StreamReader(system);
+
+            return streamReader.ReadToEnd().Contains("BOOT2");
         }
 
         /// <inheritdoc/>
         public string GetSerial(Stream romStream)
         {
             romStream.Seek(0, SeekOrigin.Begin);
-            var reader = new CDReader(romStream, true);
-            var system = reader.OpenFile("SYSTEM.CNF", FileMode.Open);
-            return Regex.Match(new StreamReader(system).ReadToEnd(), "[A-Z]+_[0-9][0-9][0-9].[0-9][0-9]",
+            using var reader = new CDReader(romStream, true);
+            using var system = reader.OpenFile("SYSTEM.CNF", FileMode.Open);
+            using var streamReader = new StreamReader(system);
+            return Regex.Match(streamReader.ReadToEnd(), "[A-Z]+_[0-9][0-9][0-9].[0-9][0-9]",
                 RegexOptions.IgnoreCase).Value.Replace(".", string.Empty).Replace("_", "-");
         }
 

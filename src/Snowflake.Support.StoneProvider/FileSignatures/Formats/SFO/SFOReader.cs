@@ -11,11 +11,6 @@ namespace Snowflake.Stone.FileSignatures.Formats.SFO
         public IDictionary<string, string> KeyValues { get; }
         public IList<SFOIndexTableEntry> IndexTableEntries { get; }
 
-        public SFOReader(string sfoFile)
-            : this(new FileStream(sfoFile, FileMode.Open, FileAccess.Read))
-        {
-        }
-
         public SFOReader(Stream sfoFile)
         {
             this.KeyValues = new Dictionary<string, string>();
