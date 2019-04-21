@@ -10,7 +10,8 @@ steps:
 
   - task: NuGetToolInstaller@0
     displayName: Installing NuGet CLI
-
+    versionSpec: '5.x' 
+    checkLatest: true
   # - script: |
   #     dotnet tool install Nuke.GlobalTool --global
   #   displayName: Install NUKE CLI
