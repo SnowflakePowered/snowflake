@@ -96,7 +96,11 @@ namespace Snowflake.Model.Tests
                         mapcol.First(x => x.LayoutElement == element.LayoutElement).DeviceElement);
                 }
 
-                Assert.Equal(ControllerElement.ButtonB, retStore[ControllerElement.ButtonA]);
+                // Switch left joycon has no A button 
+                if (testmappings.Layout[ControllerElement.ButtonA] != null)
+                {
+                    Assert.Equal(ControllerElement.ButtonB, retStore[ControllerElement.ButtonA]);
+                }
             }
         }
 
