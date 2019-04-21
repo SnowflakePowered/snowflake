@@ -20,12 +20,12 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.HelpTask
             this.Verbs = container;
         }
 
-        public override async Task<int> Execute(HelpTaskArguments arguments, string[] args)
+        public override Task<int> Execute(HelpTaskArguments arguments, string[] args)
         {
             if (!this.Verbs.Contains(arguments.Task))
             {
                 Console.WriteLine($"Unknown task '{arguments.Task}'.");
-                return 1;
+                return Task.FromResult(1);
             }
 
             var taskArgType = this.Verbs[arguments.Task].ArgumentType;
@@ -84,7 +84,7 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.HelpTask
                 }
             }
 
-            return 0;
+            return Task.FromResult(0);
         }
     }
 }

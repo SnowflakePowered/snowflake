@@ -11,7 +11,7 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.ArgumentDisplayTask
     [Task("display", "[Debug] Displays the parsed arguments using the argument parser.")]
     public class ArgumentDisplayTaskRunner : TaskRunner<EmptyArguments>
     {
-        public override async Task<int> Execute(EmptyArguments arguments, string[] args)
+        public override Task<int> Execute(EmptyArguments arguments, string[] args)
         {
             var parser = new ArgumentParser();
             var posArgs = parser.ParsePositionalArguments(args);
@@ -28,7 +28,7 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.ArgumentDisplayTask
                 Console.WriteLine($"{posArg.Key}: {posArg.Value}");
             }
 
-            return 0;
+            return Task.FromResult(0);
         }
     }
 }
