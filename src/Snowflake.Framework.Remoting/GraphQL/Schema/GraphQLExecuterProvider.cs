@@ -31,10 +31,5 @@ namespace Snowflake.Support.Remoting.GraphQL.RootProvider
                 _.Inputs = request.Variables.ToInputs();
             });
         }
-
-        public string Write(ExecutionResult result)
-        {
-            return this.Writer.Write(result);
-        }
     }
 }
