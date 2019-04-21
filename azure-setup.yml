@@ -18,6 +18,7 @@ steps:
   - checkout: self
     persistCredentials: true
     submodules: "recursive"
+    fetchDepth: 1
     lfs: false
 
   - script: |
