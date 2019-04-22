@@ -165,14 +165,14 @@ namespace Snowflake.GraphQl
             schema.Register(queryBuilder);
             var result = await executor.ExecuteRequestAsync(new GraphQlRequest()
             {
-                Query = @"query {
-                            defaultTest(returnOne: ""Hello"", returnTwo: ""World"")
-                        }",
+                Query = @"query {defaultTest(returnOne: ""Hello"", returnTwo: ""World"")}",
             });
 
-            Assert.Equal("HelloWorld", ((dynamic) result.Data)["defaultTest"]);
+            Assert.Equal("HelloWorld", ((Dictionary<string, object>) result.Data)["defaultTest"]);
         }
     }
+
+
 
     public class BrokenQueryBuilder : QueryBuilder
     {
