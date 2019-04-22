@@ -163,12 +163,13 @@ namespace Snowflake.GraphQl.Tests
             var queryBuilder = new BasicQueryBuilder();
             var executor = new GraphQlTestExecuterProvider(schema);
             schema.Register(queryBuilder);
+            Assert.True(schema.Query.HasField("defaultTest"));
             var result = await executor.ExecuteRequestAsync(new GraphQlRequest()
             {
-                Query = @"query {defaultTest(returnOne: ""Hello"", returnTwo: ""World"")}",
+                Query = "{ defaultTest(returnOne: \"Hello\", returnTwo: \"World\") }",
             });
 
-            Assert.Equal("HelloWorld", ((Dictionary<string, object>) result.Data)["defaultTest"]);
+            Assert.Equal("HelloWorld", ((Dictionary<string, object>) result?.Data)["defaultTest"]);
         }
     }
 
