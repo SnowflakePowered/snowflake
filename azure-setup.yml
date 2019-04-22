@@ -33,7 +33,12 @@ steps:
         dotnet run --project build -- ContinuousIntegration
     displayName: Build and package framework and modules.
 
+  - script: |
+        dotnet run --project build -- Test
+    displayName: Test package framework
+
   - task: PublishTestResults@2
+    condition: always()
     displayName: Publish test results to Azure
     inputs:
       testResultsFormat: 'VSTest' # Options: JUnit, NUnit, VSTest, xUnit, cTest
