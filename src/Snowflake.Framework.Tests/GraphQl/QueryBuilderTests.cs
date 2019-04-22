@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using GraphQL.Types;
 using GraphQL.Types.Relay.DataObjects;
 using Snowflake.Framework.Remoting.GraphQL.Attributes;
@@ -154,7 +155,7 @@ namespace Snowflake.GraphQl
         }
 
         [Fact]
-        public void GraphQLFieldQuery_Test()
+        public async Task GraphQLFieldQuery_Test()
         {
             var root = new RootQuery();
             var mutation = new RootMutation();
@@ -162,12 +163,12 @@ namespace Snowflake.GraphQl
             var queryBuilder = new BasicQueryBuilder();
             var executor = new GraphQlExecuterProvider(schema);
             schema.Register(queryBuilder);
-            var result = executor.ExecuteRequestAsync(new GraphQlRequest()
+            var result = await executor.ExecuteRequestAsync(new GraphQlRequest()
             {
                 Query = @"query {
                             defaultTest(returnOne: ""Hello"", returnTwo: ""World"")
                         }",
-            }).Result;
+            });
 
             Assert.Equal("HelloWorld", ((dynamic) result.Data)["defaultTest"]);
         }
