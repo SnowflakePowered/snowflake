@@ -128,7 +128,7 @@ class Build : NukeBuild
         });
 
     Target ContinuousIntegration => _ => _
-        .DependsOn(Test)
+        // .DependsOn(Test)
         .DependsOn(PackModules)
         .DependsOn(PackFramework);
 

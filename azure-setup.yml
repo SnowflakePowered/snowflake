@@ -2,15 +2,23 @@ parameters:
   os: ''
 
 steps:
-  - task: DotNetCoreInstaller@0
-    displayName: Installing .NET Core 3 SDK
+  - task: DotNetCoreInstaller@1
+    displayName: Installing .NET Core 2.2 SDK
     inputs:
+      includePreviewVersions: false
       packageType: 'sdk' # Options: runtime, sdk
-      version: '3.0.100-preview3-010431' 
-
+      version: '2.2.x'    
+  - task: DotNetCoreInstaller@1
+    displayName: Installing .NET Core 3.0 SDK
+    inputs:
+      includePreviewVersions: true
+      packageType: 'sdk' # Options: runtime, sdk
+      version: '3.0.100-preview4-011223' 
   - task: NuGetToolInstaller@0
     displayName: Installing NuGet CLI
-
+    inputs:
+      versionSpec: '5.x'
+      checkLatest: true
   # - script: |
   #     dotnet tool install Nuke.GlobalTool --global
   #   displayName: Install NUKE CLI
@@ -18,13 +26,19 @@ steps:
   - checkout: self
     persistCredentials: true
     submodules: "recursive"
+    fetchDepth: 1
     lfs: false
 
   - script: |
         dotnet run --project build -- ContinuousIntegration
     displayName: Build and package framework and modules.
 
+  - script: |
+        dotnet run --project build -- Test
+    displayName: Test package framework
+
   - task: PublishTestResults@2
+    condition: always()
     displayName: Publish test results to Azure
     inputs:
       testResultsFormat: 'VSTest' # Options: JUnit, NUnit, VSTest, xUnit, cTest

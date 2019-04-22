@@ -18,7 +18,7 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.TaskListTask
             this.Verbs = container;
         }
 
-        public override async Task<int> Execute(EmptyArguments arguments, string[] args)
+        public override Task<int> Execute(EmptyArguments arguments, string[] args)
         {
             Console.WriteLine("The following tasks are available.");
             Console.WriteLine("Tasks:");
@@ -27,7 +27,7 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.TaskListTask
                 Console.WriteLine($"{task.Name.PadLeft(task.Name.Length + 2).PadRight(20)} {task.Description}");
             }
 
-            return 0;
+            return Task.FromResult(0);
         }
     }
 }
