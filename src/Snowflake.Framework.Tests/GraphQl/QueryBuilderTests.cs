@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GraphQL;
 using GraphQL.Types;
 using GraphQL.Types.Relay.DataObjects;
 using Snowflake.Framework.Remoting.GraphQL.Attributes;
@@ -161,14 +162,21 @@ namespace Snowflake.GraphQl.Tests
             var mutation = new RootMutation();
             var schema = new GraphQlRootSchema(root, mutation);
             var queryBuilder = new BasicQueryBuilder();
-            var executor = new GraphQlTestExecuterProvider(schema);
+            var executor = new DocumentExecuter();
+
+   
             schema.Register(queryBuilder);
             Assert.True(schema.Query.HasField("defaultTest"));
-            var result = await executor.ExecuteRequestAsync(new GraphQlRequest()
+
+            var result = await executor.ExecuteAsync(new ExecutionOptions()
             {
-                Query = "{ defaultTest(returnOne: \"Hello\", returnTwo: \"World\") }",
+                Schema = schema,
+                Query = "query TestQuery { defaultTest(returnOne: \"Hello\", returnTwo: \"World\") }",
+                OperationName = "TestQuery"
             });
 
+            Assert.NotNull(result);
+            Assert.NotNull(result?.Data);
             Assert.Equal("HelloWorld", ((Dictionary<string, object>) result?.Data)["defaultTest"]);
         }
     }
