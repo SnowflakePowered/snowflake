@@ -33,12 +33,14 @@ jobs:
   - template: azure-codecov.yml
  
   - task: PublishCodeCoverageResults@1
+    condition: always()
     displayName: Publshing test coverage to Azure
     inputs:
       codeCoverageTool: 'cobertura' # Options: cobertura, jaCoCo
       summaryFileLocation: $(System.DefaultWorkingDirectory)/src/Snowflake.Framework.Tests/coverage.cobertura.xml
 
   - task: PublishBuildArtifacts@1
+    condition: always()
     displayName: Publishing build artifacts
     inputs:
       pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
