@@ -1,5 +1,5 @@
 {
-  "contributors": [],
+  "contributors": ["chyyran"],
   "message": "Thank you for contributing to Snowflake. Please review the CLA found in CONTRIBUTING.md, and agree to it before we're able to merge your pull request.",
   "label": "cla-signed"
 }
