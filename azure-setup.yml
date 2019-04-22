@@ -36,9 +36,10 @@ steps:
   - script: |
         dotnet run --project build -- Test
     displayName: Test package framework
+    condition: 'not(build.skiptest)'
 
   - task: PublishTestResults@2
-    condition: always()
+    condition: 'not(build.skiptest)'
     displayName: Publish test results to Azure
     inputs:
       testResultsFormat: 'VSTest' # Options: JUnit, NUnit, VSTest, xUnit, cTest
