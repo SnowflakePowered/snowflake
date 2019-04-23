@@ -14,8 +14,21 @@ using Snowflake.Services;
 namespace Snowflake.Plugin.Installation.BasicInstallers
 {
     [Plugin("BasicCopyInstaller")]
+    [SupportedPlatform("ATARI_2600")]
+    [SupportedPlatform("ATARI_5200")]
+    [SupportedPlatform("ATARI_7800")]
+    [SupportedPlatform("NINTENDO_GB")]
+    [SupportedPlatform("NINTENDO_GBC")]
+    [SupportedPlatform("NINTENDO_GBA")]
+    [SupportedPlatform("NINTENDO_NDS")]
     [SupportedPlatform("NINTENDO_NES")]
+    [SupportedPlatform("NINTENDO_FDS")]
     [SupportedPlatform("NINTENDO_SNES")]
+    [SupportedPlatform("NINTENDO_N64")]
+    [SupportedPlatform("NINTENDO_N64DD")]
+    [SupportedPlatform("SEGA_GEN")]
+    [SupportedPlatform("SEGA_GG")]
+    [SupportedPlatform("SEGA_SMS")]
     public class SingleFileCopyInstaller
         : GameInstaller
     {

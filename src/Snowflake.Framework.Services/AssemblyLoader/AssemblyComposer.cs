@@ -88,8 +88,9 @@ namespace Snowflake.Services.AssemblyLoader
                     break; // no change
                 }
             }
-
+            logger.Info("Finished composing all plugins.");
             (this.coreService.Get<IKestrelWebServerService>() as KestrelServerService).Start();
+            logger.Info("Started Kestrel Server");
         }
 
         private void ComposeContainer(IModule module, IComposable moduleComposable, IList<string> services)
