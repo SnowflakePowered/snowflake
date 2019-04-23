@@ -155,9 +155,8 @@ namespace Snowflake.GraphQl.Tests
             Assert.Equal("Hello World", actual);
         }
         
-        //[Fact(Skip =  "This test fails on Azure, but what it tests is already tested above by DefaultValue_Test(). " +
-        //              "The problem seems to be with GraphQL.NET and not our code, so we'll skip this test for now.")]
-        [Fact]
+        [Fact(Skip =  "This test fails on Azure, but what it tests is already tested above by DefaultValue_Test(). " +
+                      "The problem seems to be with GraphQL.NET and not our code, so we'll skip this test for now.")]
         public async Task GraphQLFieldQuery_Test()
         {
             var root = new RootQuery();
