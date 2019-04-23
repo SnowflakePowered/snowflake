@@ -85,23 +85,23 @@ namespace Snowflake.GraphQl.Tests
                 {
                     Arguments = new Dictionary<string, object>()
                     {
-                        {"returnOne", "Foo Bar and Eggs"},
+                        {"returnOne", 1},
                     },
                 });
 
-            Assert.Equal("Foo Bar and EggsHello World", resolved);
+            Assert.Equal(2, resolved);
 
             var resolvedTwo = schema.Query.Fields.First(p => p.Name == "defaultTest").Resolver.Resolve(
                 new ResolveFieldContext()
                 {
                     Arguments = new Dictionary<string, object>()
                     {
-                        {"returnOne", "One"},
-                        {"returnTwo", "Two"},
+                        {"returnOne", 3},
+                        {"returnTwo", 7},
                     },
                 });
 
-            Assert.Equal("OneTwo", resolvedTwo);
+            Assert.Equal(10, resolvedTwo);
         }
 
         [Fact]
@@ -171,18 +171,17 @@ namespace Snowflake.GraphQl.Tests
             var result = await executor.ExecuteAsync(new ExecutionOptions()
             {
                 Schema = schema,
-                Query = "query TestQuery { defaultTest(returnOne: \"Hello\", returnTwo: \"World\") }",
+                Query = "query TestQuery { defaultTest(returnOne: 5, returnTwo: 5) }",
                 OperationName = "TestQuery"
-            });
+            }).ConfigureAwait(false);
 
             Assert.NotNull(result);
             Assert.NotNull(result?.Data);
-            Assert.Equal("HelloWorld", ((Dictionary<string, object>) result?.Data)["defaultTest"]);
+            Assert.Equal(10, ((Dictionary<string, object>) result?.Data)["defaultTest"]);
         }
     }
 
-
-
+    
     public class BrokenQueryBuilder : QueryBuilder
     {
         [Field("broken", "", typeof(StringGraphType))]
@@ -203,10 +202,10 @@ namespace Snowflake.GraphQl.Tests
             yield return returnTwo;
         }
 
-        [Field("defaultTest", "", typeof(StringGraphType))]
-        [Parameter(typeof(string), typeof(StringGraphType), "returnOne", "")]
-        [Parameter(typeof(string), typeof(StringGraphType), "returnTwo", "")]
-        public string DefaultTest(string returnOne, string returnTwo = "Hello World")
+        [Field("defaultTest", "", typeof(IntGraphType))]
+        [Parameter(typeof(int), typeof(IntGraphType), "returnOne", "")]
+        [Parameter(typeof(int), typeof(IntGraphType), "returnTwo", "")]
+        public int DefaultTest(int returnOne, int returnTwo = 1)
         {
             return returnOne + returnTwo;
         }
