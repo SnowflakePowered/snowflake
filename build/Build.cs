@@ -85,7 +85,9 @@ class Build : NukeBuild
         {
             DotNetTest(s => s
                 .SetProjectFile(Tests)
-                .SetLogger("trx"));
+                .SetLogger("trx")
+                
+            );
         });
 
     Target PackModules => _ => _
@@ -127,11 +129,11 @@ class Build : NukeBuild
             DotNet($"{ToolingDirectory / "dotnet-snowflake.dll"} install-all -d {OutputDirectory}");
         });
 
-    Target ContinuousIntegration => _ => _
+    Target PackAll => _ => _
         // .DependsOn(Test)
         .DependsOn(PackModules)
         .DependsOn(PackFramework);
-
+    
     static string GetBuildNumber()
     {
         string buildNumber = EnvironmentInfo.Variable("BUILD_NUMBER");
