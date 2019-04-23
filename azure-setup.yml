@@ -8,20 +8,19 @@ steps:
       includePreviewVersions: false
       packageType: 'sdk' # Options: runtime, sdk
       version: '2.2.x'    
+
   - task: DotNetCoreInstaller@1
     displayName: Installing .NET Core 3.0 SDK
     inputs:
       includePreviewVersions: true
       packageType: 'sdk' # Options: runtime, sdk
       version: '3.0.100-preview4-011223' 
+
   - task: NuGetToolInstaller@0
     displayName: Installing NuGet CLI
     inputs:
       versionSpec: '5.x'
       checkLatest: true
-  # - script: |
-  #     dotnet tool install Nuke.GlobalTool --global
-  #   displayName: Install NUKE CLI
 
   - checkout: self
     persistCredentials: true
@@ -30,12 +29,8 @@ steps:
     lfs: false
 
   - script: |
-        dotnet run --project build -- ContinuousIntegration
-    displayName: Build and package framework and modules.
-
-  - script: |
         dotnet run --project build -- Test
-    displayName: Test package framework
+    displayName: Compile and test commit
     condition: not(variables['build.skiptest'])
 
   - task: PublishTestResults@2
@@ -44,4 +39,9 @@ steps:
     inputs:
       testResultsFormat: 'VSTest' # Options: JUnit, NUnit, VSTest, xUnit, cTest
       testResultsFiles: '*.trx' 
-      searchFolder: '$(System.DefaultWorkingDirectory)/src/Snowflake.Framework.Tests/TestResults' # Optional
+      searchFolder: '$(System.DefaultWorkingDirectory)/src/Snowflake.Framework.Tests/TestResults'
+
+  - script: |
+        dotnet run --project build -- PackAll
+    displayName: Package framework and modules
+    condition: not(variables['build.skippack'])
