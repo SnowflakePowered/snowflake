@@ -133,15 +133,15 @@ namespace Snowflake.Framework.Remoting.GraphQL.Query
                 GraphType = fieldAttr.GraphType,
                 Arguments = arguments.Count != 0 ? new QueryArguments(arguments) : null,
                 Resolver = resolver,
-                ItemsType = fieldMethod.ReturnType.GetGenericArguments()[0],
-                ReturnType = fieldMethod.ReturnType,
+                ElementType = fieldMethod.ReturnType.GetGenericArguments()[0],
+                CollectionType = fieldMethod.ReturnType,
             };
         }
 
         private Func<ResolveConnectionContext<object>, object>
             CreateConnectionResolver(ConnectionQuery query)
         {
-            var connectionBuildCall = QueryBuilder.ConnectionMaker.MakeGenericMethod(query.ItemsType, typeof(object));
+            var connectionBuildCall = QueryBuilder.ConnectionMaker.MakeGenericMethod(query.ElementType, typeof(object));
             ParameterExpression context = Expression.Parameter(typeof(ResolveConnectionContext<object>), "context");
             Expression<Func<ResolveFieldContext<object>, object>> resolvedValue = invokingContext =>
                 query.Resolver(invokingContext);
@@ -150,7 +150,7 @@ namespace Snowflake.Framework.Remoting.GraphQL.Query
                 Expression.Call(
                     null,
                     connectionBuildCall,
-                    Expression.Convert(Expression.Invoke(resolvedValue, context), query.ReturnType),
+                    Expression.Convert(Expression.Invoke(resolvedValue, context), query.CollectionType),
                     context), context);
             return executor.Compile();
         }

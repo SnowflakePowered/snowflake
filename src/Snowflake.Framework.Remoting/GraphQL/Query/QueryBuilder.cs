@@ -44,5 +44,10 @@ namespace Snowflake.Framework.Remoting.GraphQL.Query
                 this.RegisterQuery(madeQuery, root);
             }
         }
+
+        internal void RegisterSubscriptionQueries(ObjectGraphType<object> root)
+        {
+            
+        }
     }
 }

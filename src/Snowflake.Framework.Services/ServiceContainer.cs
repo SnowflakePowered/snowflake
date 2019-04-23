@@ -10,6 +10,7 @@ using Snowflake.Input;
 using Snowflake.Input.Controller.Mapped;
 using Snowflake.Loader;
 using Snowflake.Services.Logging;
+using Snowflake.Support.Remoting.GraphQL.RootProvider;
 
 namespace Snowflake.Services
 {
@@ -27,6 +28,7 @@ namespace Snowflake.Services
         // Flag: Has Dispose already been called?
         bool disposed;
 
+
         // Instantiate a SafeHandle instance.
         public ServiceContainer(string appDataDirectory)
         {
@@ -38,12 +40,21 @@ namespace Snowflake.Services
             this.RegisterService<IModuleEnumerator>(new ModuleEnumerator(appDataDirectory));
             this.RegisterService<IKestrelWebServerService>(new KestrelServerService(appDataDirectory, 
                 this.Get<ILogProvider>().GetLogger("kestrel")));
-            this.RegisterService<IGraphQLService>(new GraphQLRootSchema(this));
+
+            this.RegisterGraphQLRootSchema();
 
             this.RegisterService<IContentDirectoryProvider>(directoryProvider);
             this.RegisterService<IServiceRegistrationProvider>(new ServiceRegistrationProvider(this));
             this.RegisterService<IServiceEnumerator>(new ServiceEnumerator(this));
 
+        }
+
+        private void RegisterGraphQLRootSchema()
+        {
+            var schema = new GraphQLRootSchema();
+            this.RegisterService<IGraphQLService>(schema);
+            var kestrel = this.Get<IKestrelWebServerService>();
+            kestrel.AddService(new GraphQLKestrelIntegration(schema));
         }
 
         /// <inheritdoc/>

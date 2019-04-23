@@ -21,7 +21,7 @@ namespace Snowflake.GraphQl.Tests
         {
             var root = new RootQuery();
             var mutation = new RootMutation();
-            var schema = new GraphQlRootSchema(root, mutation);
+            var schema = new GraphQLRootSchema(root, mutation);
             var queryBuilder = new BasicQueryBuilder();
             queryBuilder.RegisterFieldQueries(root);
             Assert.True(schema.Query.HasField("defaultTest"));
@@ -32,7 +32,7 @@ namespace Snowflake.GraphQl.Tests
         {
             var root = new RootQuery();
             var mutation = new RootMutation();
-            var schema = new GraphQlRootSchema(root, mutation);
+            var schema = new GraphQLRootSchema(root, mutation);
             var queryBuilder = new BasicQueryBuilder();
             queryBuilder.RegisterConnectionQueries(root);
             Assert.True(schema.Query.HasField("connectionTest"));
@@ -43,7 +43,7 @@ namespace Snowflake.GraphQl.Tests
         {
             var root = new RootQuery();
             var mutation = new RootMutation();
-            var schema = new GraphQlRootSchema(root, mutation);
+            var schema = new GraphQLRootSchema(root, mutation);
             var queryBuilder = new BasicQueryBuilder();
             queryBuilder.RegisterMutationQueries(mutation);
             Assert.True(schema.Mutation.HasField("mutationTest"));
@@ -54,7 +54,7 @@ namespace Snowflake.GraphQl.Tests
         {
             var root = new RootQuery();
             var mutation = new RootMutation();
-            var schema = new GraphQlRootSchema(root, mutation);
+            var schema = new GraphQLRootSchema(root, mutation);
             var queryBuilder = new BasicQueryBuilder();
             schema.Register(queryBuilder);
             Assert.True(schema.Query.HasField("defaultTest"));
@@ -67,7 +67,7 @@ namespace Snowflake.GraphQl.Tests
         {
             var root = new RootQuery();
             var mutation = new RootMutation();
-            var schema = new GraphQlRootSchema(root, mutation);
+            var schema = new GraphQLRootSchema(root, mutation);
             var queryBuilder = new BrokenQueryBuilder();
             Assert.Throws<ArgumentOutOfRangeException>(() => schema.Register(queryBuilder));
         }
@@ -77,7 +77,7 @@ namespace Snowflake.GraphQl.Tests
         {
             var root = new RootQuery();
             var mutation = new RootMutation();
-            var schema = new GraphQlRootSchema(root, mutation);
+            var schema = new GraphQLRootSchema(root, mutation);
             var queryBuilder = new BasicQueryBuilder();
             schema.Register(queryBuilder);
             var resolved = schema.Query.Fields.First(p => p.Name == "defaultTest").Resolver.Resolve(
@@ -109,7 +109,7 @@ namespace Snowflake.GraphQl.Tests
         {
             var root = new RootQuery();
             var mutation = new RootMutation();
-            var schema = new GraphQlRootSchema(root, mutation);
+            var schema = new GraphQLRootSchema(root, mutation);
             var queryBuilder = new BasicQueryBuilder();
             schema.Register(queryBuilder);
             var actual = (Connection<string>) schema.Query.Fields.First(p => p.Name == "connectionTest").Resolver
@@ -136,7 +136,7 @@ namespace Snowflake.GraphQl.Tests
         {
             var root = new RootQuery();
             var mutation = new RootMutation();
-            var schema = new GraphQlRootSchema(root, mutation);
+            var schema = new GraphQLRootSchema(root, mutation);
             var queryBuilder = new BasicQueryBuilder();
             schema.Register(queryBuilder);
             var actual = schema.Mutation.Fields.First(p => p.Name == "mutationTest").Resolver.Resolve(
@@ -162,7 +162,7 @@ namespace Snowflake.GraphQl.Tests
         {
             var root = new RootQuery();
             var mutation = new RootMutation();
-            var schema = new GraphQlRootSchema(root, mutation);
+            var schema = new GraphQLRootSchema(root, mutation);
             var queryBuilder = new BasicQueryBuilder();
             var executor = new DocumentExecuter();
 
