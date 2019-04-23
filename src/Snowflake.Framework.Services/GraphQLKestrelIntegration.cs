@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Snowflake.Framework.Remoting.GraphQL;
 using Snowflake.Framework.Remoting.GraphQL.Query;
 using Snowflake.Framework.Remoting.Kestrel;
+using Snowflake.Support.Remoting.GraphQL.RootProvider;
 
 namespace Snowflake.Services
 {
@@ -39,43 +40,6 @@ namespace Snowflake.Services
             })
             .AddWebSockets() // Add required services for web socket support
             .AddDataLoader(); // Add required services for DataLoader support
-        }
-    }
-
-    internal class GraphQLRootSchema : Schema, IGraphQLService
-    {
-        public GraphQLRootSchema(IServiceContainer services)
-        {
-            this.Query = new RootQuery();
-            this.Mutation = new RootMutation();
-            services.Get<IKestrelWebServerService>()
-                .AddService(new GraphQLKestrelIntegration(this));
-        }
-
-        /// <inheritdoc/>
-        public void Register(QueryBuilder queries)
-        {
-            queries.RegisterConnectionQueries((RootQuery)this.Query);
-            queries.RegisterFieldQueries((RootQuery)this.Query);
-            queries.RegisterMutationQueries((RootMutation)this.Mutation);
-        }
-    }
-
-    internal class RootQuery : ObjectGraphType<object>
-    {
-        public RootQuery()
-        {
-            this.Name = "Query";
-            this.Description = "The query root of Snowflake's GraphQL interface";
-        }
-    }
-
-    internal class RootMutation : ObjectGraphType<object>
-    {
-        public RootMutation()
-        {
-            this.Name = "Mutation";
-            this.Description = "The mutation root of Snowflake's GraphQL interface";
         }
     }
 }
