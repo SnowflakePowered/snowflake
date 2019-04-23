@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GraphQL" Version="3.0.0-preview-1156" />
+    <PackageReference Include="GraphQL" Version="2.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" PrivateAssets="Compile" />
     <PackageReference Include="Microsoft.AspNetCore.ResponseCompression" Version="2.2.0" PrivateAssets="Compile" />
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.2.0" />
@@ -18,9 +18,7 @@
 
 
   <!--Hack to work around System.Collections.Generic.IAsyncEnumerable and System.Interactive.Async-->
-  <Target Name="AddAssemblyAliasToReactiveAsync"
-          AfterTargets="ResolveAssemblyReferences"
-          Condition=" '$(TargetFramework)' != '' AND ( '$(TargetFramework)' == 'netcoreapp3.0' OR '$(TargetFramework)' == 'netstandard2.1' ) ">
+  <Target Name="AddAssemblyAliasToReactiveAsync" AfterTargets="ResolveAssemblyReferences" Condition=" '$(TargetFramework)' != '' AND ( '$(TargetFramework)' == 'netcoreapp3.0' OR '$(TargetFramework)' == 'netstandard2.1' ) ">
     <ItemGroup>
       <ReferencePath Condition=" '%(FileName)' == 'System.Interactive.Async' ">
         <Aliases>reactive</Aliases>
