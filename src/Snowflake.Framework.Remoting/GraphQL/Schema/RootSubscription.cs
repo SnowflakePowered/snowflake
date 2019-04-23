@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using GraphQL.Resolvers;
 using GraphQL.Subscription;
@@ -10,12 +11,11 @@ namespace Snowflake.Support.Remoting.GraphQL.RootProvider
 {
     internal sealed class RootSubscription : ObjectGraphType<object>
     {
-        List<Message> Numbers { get; }
+        ISubject<Message> NumbersObv { get; } = new ReplaySubject<Message>(256);
         public RootSubscription()
         {
             this.Name = "Subscription";
             this.Description = "The subscription root of Snowflake's GraphQL interface";
-            this.Numbers = new List<Message>();
             AddField(new EventStreamFieldType
             {
                 Name = "exampleSubscription",
@@ -25,14 +25,14 @@ namespace Snowflake.Support.Remoting.GraphQL.RootProvider
                 
             });
 
-            this.Numbers.Add(new Message() { Hello = "Hello World!", World = 0 });
+            int count = 0;
             Task.Run( async () =>
             {
                 while (true)
                 {
                     await Task.Delay(1000);
                     Console.WriteLine("New Added!");
-                    this.Numbers.Add(new Message() { Hello = "Hello World!", World = this.Numbers.Count });
+                    this.NumbersObv.OnNext(new Message() { Hello = "Hello World!", World = count++ });
                 }
             }).ConfigureAwait(false);
         }
@@ -57,7 +57,7 @@ namespace Snowflake.Support.Remoting.GraphQL.RootProvider
         }
         private IObservable<Message> Subscribe(ResolveEventStreamContext<Message> context)
         {
-            return this.Numbers.ToObservable();
+            return this.NumbersObv.AsObservable();
         }
     }
 }
