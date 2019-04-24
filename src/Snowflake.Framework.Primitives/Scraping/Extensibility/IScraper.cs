@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Snowflake.Extensibility;
+using Snowflake.Installation;
 
 namespace Snowflake.Scraping.Extensibility
 {
@@ -46,7 +47,7 @@ namespace Snowflake.Scraping.Extensibility
         /// <param name="childSeeds">Any seeds, keyed on their type, that must exist as children of the target seed as specified in <see cref="Directives"/>.</param>
         /// <param name="siblingSeeds">Any seeds, keyed on their type, that must exist as siblings of the target seed as specified in <see cref="Directives"/></param>
         /// <returns>A tree of seeds based on information available in the given target. <seealso cref="SeedTreeAwaitable"/></returns>
-        Task<IEnumerable<SeedTreeAwaitable>> ScrapeAsync(ISeed target,
+        IAsyncEnumerable<SeedTree> ScrapeAsync(ISeed target,
             ILookup<string, SeedContent> rootSeeds,
             ILookup<string, SeedContent> childSeeds,
             ILookup<string, SeedContent> siblingSeeds);

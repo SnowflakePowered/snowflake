@@ -117,8 +117,7 @@ namespace Snowflake.Scraping
         /// <returns>The hashcode of this SeedContent.</returns>
         public override int GetHashCode()
         {
-            // todo: use System.HashCode when available.
-            return (this.Type, this.Value).GetHashCode();
+            return HashCode.Combine(this.Type, this.Value);
         }
     }
 }

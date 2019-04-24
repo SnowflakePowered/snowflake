@@ -17,15 +17,15 @@ namespace Snowflake.Scraping.Tests
         {
         }
 
-        public override async Task<IEnumerable<SeedTreeAwaitable>> ScrapeAsync(ISeed parent,
+        public override async IAsyncEnumerable<SeedTree> ScrapeAsync(ISeed parent,
             ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds,
             ILookup<string, SeedContent> siblingSeeds)
         {
-            return _("MyGroup", "Hello World",
-                __(
-                    ("Test", "Hello World"),
-                    ("TestTwo", "Foo Bar"))
-            );
+            yield return ("MyGroup", "Hello World",
+                _(("Test", "Hello World"),
+                  ("TestTwo", "Foo Bar")
+                 ));
+          
         }
     }
 }

@@ -86,9 +86,9 @@ namespace Snowflake.Scraping
             }
         }
 
-        public Task<bool> Proceed() => this.Proceed(Enumerable.Empty<SeedContent>());
+        public ValueTask<bool> Proceed() => this.Proceed(Enumerable.Empty<SeedContent>());
 
-        public async Task<bool> Proceed(IEnumerable<SeedContent> seedsToAdd)
+        public async ValueTask<bool> Proceed(IEnumerable<SeedContent> seedsToAdd)
         {
             // Add any client seeds.
             this.Context.AddRange(seedsToAdd.Select(p => (p, this.Context.Root)), ScrapeJob.ClientSeedSource);
@@ -160,12 +160,12 @@ namespace Snowflake.Scraping
                     var results = new List<SeedContent>();
                     var attachSeed = this.GetAttachTarget(scraper.AttachPoint, matchingSeed);
 
-                    foreach (var task in await scraper.ScrapeAsync(matchingSeed, requiredRoots, requiredChildren,
+                    await foreach (var task in scraper.ScrapeAsync(matchingSeed, requiredRoots, requiredChildren,
                         requiredSiblings))
                     {
                         try
                         {
-                            resultsToAppend.AddRange((await task).Collapse(attachSeed, scraper.Name));
+                            resultsToAppend.AddRange(task.Collapse(attachSeed, scraper.Name));
                         }
                         catch
                         {
