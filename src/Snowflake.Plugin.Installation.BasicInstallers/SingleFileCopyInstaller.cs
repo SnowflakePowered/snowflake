@@ -10,6 +10,7 @@ using Snowflake.Installation.Extensibility;
 using Snowflake.Extensibility.Provisioning;
 using Snowflake.Extensibility;
 using Snowflake.Services;
+using Snowflake.Filesystem;
 
 namespace Snowflake.Plugin.Installation.BasicInstallers
 {
@@ -44,7 +45,7 @@ namespace Snowflake.Plugin.Installation.BasicInstallers
 
         public IStoneProvider StoneProvider { get; }
 
-        public override async IAsyncEnumerable<ITaskResult> Install(IGame game, IEnumerable<FileSystemInfo> files)
+        public override async IAsyncEnumerable<TaskResult<IFile>> Install(IGame game, IEnumerable<FileSystemInfo> files)
         {
             var platform =  game.Record.PlatformId;
             foreach (var file in files.Select(f => f as FileInfo))

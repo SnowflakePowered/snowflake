@@ -10,8 +10,8 @@ namespace Snowflake.Framework.Scheduling
         IDictionary<Guid, IAsyncEnumerator<T>> Enumerators { get; }
         ValueTask<(T value, bool hasNext)> GetNext(Guid jobId);
         IAsyncEnumerator<T> GetEnumerator(Guid jobId);
-        Guid QueueJob(IAsyncEnumerable<T> asyncEnumerable);
-        Guid QueueJob(IAsyncEnumerable<T> asyncEnumerable, Guid guid);
+        Task<Guid> QueueJob(IAsyncEnumerable<T> asyncEnumerable);
+        Task<Guid> QueueJob(IAsyncEnumerable<T> asyncEnumerable, Guid guid);
 
     }
 }
