@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Extensibility.Provisioning;
 using Snowflake.Extensibility.Provisioning.Standalone;
+using Snowflake.Installation;
 
 namespace Snowflake.Scraping.Extensibility
 {
@@ -35,7 +36,7 @@ namespace Snowflake.Scraping.Extensibility
 
         public IEnumerable<IScraperDirective> Directives { get; }
 
-        public abstract Task<IEnumerable<SeedTreeAwaitable>> ScrapeAsync(ISeed parent,
+        public abstract IAsyncEnumerable<SeedTree> ScrapeAsync(ISeed parent,
             ILookup<string, SeedContent> rootSeeds,
             ILookup<string, SeedContent> childSeeds,
             ILookup<string, SeedContent> siblingSeeds);

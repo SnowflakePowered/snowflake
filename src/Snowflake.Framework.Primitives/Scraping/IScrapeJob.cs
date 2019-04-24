@@ -46,13 +46,13 @@ namespace Snowflake.Scraping
         /// Proceed with populating the seed tree using the given <see cref="Scrapers"/>.
         /// </summary>
         /// <returns>Whether or not all possible seeds have been added with the given <see cref="Scrapers"/></returns>
-        Task<bool> Proceed();
+        ValueTask<bool> Proceed();
 
         /// <summary>
         /// Proceed with populating the seed tree using the given <see cref="Scrapers"/>.
         /// </summary>
         /// <param name="seedsToAdd">Adds seeds to the root of the tree before running scrapers.</param>
         /// <returns>Whether or not all possible seeds have been added with the given <see cref="Scrapers"/></returns>
-        Task<bool> Proceed(IEnumerable<SeedContent> seedsToAdd);
+        ValueTask<bool> Proceed(IEnumerable<SeedContent> seedsToAdd);
     }
 }

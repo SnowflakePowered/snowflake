@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Snowflake.Extensibility;
+using Snowflake.Installation;
 using Snowflake.Plugin.Scrapers.TheGamesDb.TheGamesDbApi;
 using Snowflake.Scraping;
 using Snowflake.Scraping.Extensibility;
@@ -46,7 +47,7 @@ namespace Snowflake.Plugin.Scraping.TheGamesDb
         {
         }
 
-        public override async Task<IEnumerable<SeedTreeAwaitable>> ScrapeAsync(ISeed parent,
+        public override async IAsyncEnumerable<SeedTree> ScrapeAsync(ISeed parent,
             ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds,
             ILookup<string, SeedContent> siblingSeeds)
         {
@@ -55,19 +56,16 @@ namespace Snowflake.Plugin.Scraping.TheGamesDb
             var results = await ApiGamesDb.GetGames(parent.Content.Value, tgdbPlatform)
                 .ConfigureAwait(false);
 
-            return results.Where(r => r.Platform == tgdbPlatform)
-                .Select(r => (SeedTreeAwaitable) Task.Run(async () =>
-                {
-                    var details = await ApiGamesDb.GetGame(r)
-                        .ConfigureAwait(false);
-                    return
-                        ("result", r.Title, __(
-                            ("title", r.Title),
-                            ("description", details.Overview),
-                            ("publisher", details.Publisher),
-                            ("tgdb_id", details.ID.ToString())
-                        ));
-                }));
+            foreach (var r in results.Where(r => r.Platform == tgdbPlatform))
+            {
+                var details = await ApiGamesDb.GetGame(r).ConfigureAwait(false);
+                yield return ("result", r.Title, _(
+                        ("title", details.Title),
+                        ("description", details.Overview),
+                        ("publisher", details.Publisher),
+                        ("tgdb_id", details.ID.ToString())
+                ));
+            }
         }
     }
 }

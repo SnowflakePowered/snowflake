@@ -17,11 +17,11 @@ namespace Snowflake.Scraping.Tests
         {
         }
 
-        public override async Task<IEnumerable<SeedTreeAwaitable>> ScrapeAsync(ISeed parent,
+        public override async IAsyncEnumerable<SeedTree> ScrapeAsync(ISeed parent,
             ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds,
             ILookup<string, SeedContent> siblingSeeds)
         {
-            return _("Test", "Hello World");
+            yield return ("Test", "Hello World");
         }
     }
 
@@ -33,11 +33,11 @@ namespace Snowflake.Scraping.Tests
         {
         }
 
-        public override async Task<IEnumerable<SeedTreeAwaitable>> ScrapeAsync(ISeed parent,
+        public override async IAsyncEnumerable<SeedTree> ScrapeAsync(ISeed parent,
             ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds,
             ILookup<string, SeedContent> siblingSeeds)
         {
-            return _("Test", "Goodbye World");
+            yield return ("Test", "Goodbye World");
         }
     }
 }

@@ -1263,7 +1263,7 @@
         <member name="T:Snowflake.Scraping.Extensibility.SeedBuilder">
             <summary>
             <para>
-            Provides helper methods for building <see cref="T:Snowflake.Scraping.Extensibility.SeedTree"/> and <see cref="T:Snowflake.Scraping.Extensibility.SeedTreeAwaitable"/>
+            Provides helper methods for building <see cref="T:Snowflake.Scraping.Extensibility.SeedTree"/>
             for use in <see cref="T:Snowflake.Scraping.Extensibility.IScraper"/> implementations.
             </para>
             <para>
@@ -1271,23 +1271,12 @@
             Import this class with a <code>using static</code> directive.
             </para>
             <para>
-            Use <seealso cref="M:Snowflake.Scraping.Extensibility.SeedBuilder._(Snowflake.Scraping.Extensibility.SeedTreeAwaitable[])"/> to begin a seed tree, and
-            <seealso cref="M:Snowflake.Scraping.Extensibility.SeedBuilder.__(Snowflake.Scraping.Extensibility.SeedTree[])"/> to continue for nested seeds.
+            <seealso cref="M:Snowflake.Scraping.Extensibility.SeedBuilder._(Snowflake.Scraping.Extensibility.SeedTree[])"/> to continue for nested seeds.
             </para>
             <para>
             Remember that top-level seeds can be <seealso cref="T:System.Threading.Tasks.Task`1"/> and other awaitables.
             </para>
             </summary>
-        </member>
-        <member name="M:Snowflake.Scraping.Extensibility.SeedBuilder.AwaitableSeeds(Snowflake.Scraping.Extensibility.SeedTreeAwaitable[])">
-            <summary>
-            Begins a seed tree result with multiple top-level results.
-            Top-level seeds can be awaitable.
-            Use Seed Builder Syntax rather than the full call.
-            <see cref="M:Snowflake.Scraping.Extensibility.SeedBuilder._(Snowflake.Scraping.Extensibility.SeedTreeAwaitable[])"/>
-            </summary>
-            <param name="children">The list of seed results to return</param>
-            <returns>A seed tree result.</returns>
         </member>
         <member name="M:Snowflake.Scraping.Extensibility.SeedBuilder.WithSeeds(Snowflake.Scraping.Extensibility.SeedTree[])">
             <summary>
@@ -1298,15 +1287,7 @@
             <param name="children">The list of seed results to return</param>
             <returns>The nested portion of a seed tree result.</returns>
         </member>
-        <member name="M:Snowflake.Scraping.Extensibility.SeedBuilder._(Snowflake.Scraping.Extensibility.SeedTreeAwaitable[])">
-            <summary>
-            Begins a seed tree result with multiple top-level results.
-            Top-level seeds can be awaitable.
-            </summary>
-            <param name="children">The list of seed results to return</param>
-            <returns>A seed tree result.</returns>
-        </member>
-        <member name="M:Snowflake.Scraping.Extensibility.SeedBuilder.__(Snowflake.Scraping.Extensibility.SeedTree[])">
+        <member name="M:Snowflake.Scraping.Extensibility.SeedBuilder._(Snowflake.Scraping.Extensibility.SeedTree[])">
             <summary>
             Continues a seed tree result with multiple nested seeds.
             </summary>
@@ -1315,26 +1296,7 @@
         </member>
         <member name="M:Snowflake.Scraping.Extensibility.SeedBuilder._(System.String,System.String,System.Collections.Generic.IEnumerable{Snowflake.Scraping.Extensibility.SeedTree})">
             <summary>
-            Begins a seed tree result with a single top level seed.
-            Top-level seeds can be awaitable.
-            </summary>
-            <param name="type">The type of the seed.</param>
-            <param name="value">The value of the seed.</param>
-            <param name="children">The list of seed results to return</param>
-            <returns>A seed tree result.</returns>
-        </member>
-        <member name="M:Snowflake.Scraping.Extensibility.SeedBuilder._(System.String,System.String)">
-            <summary>
-            Returns a single seed result.
-            </summary>
-            <param name="type">The type of the seed.</param>
-            <param name="value">The value of the seed.</param>
-            <returns>A single seed result.</returns>
-        </member>
-        <member name="M:Snowflake.Scraping.Extensibility.SeedBuilder.__(System.String,System.String,System.Collections.Generic.IEnumerable{Snowflake.Scraping.Extensibility.SeedTree})">
-            <summary>
             Continues a seed tree result with a single nested seed.
-            Nested seeds must not be awaitable, but can be returned from an asynchronous context.
             </summary>
             <param name="type">The type of the seed.</param>
             <param name="value">The value of the seed.</param>
