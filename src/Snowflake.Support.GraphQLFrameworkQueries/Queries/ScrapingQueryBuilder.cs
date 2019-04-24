@@ -42,7 +42,7 @@ namespace Snowflake.Support.Remoting.GraphQL.Queries
         public async Task<IList<ISeed>> AutoScrape(string platform, string title,
             IEnumerable<string> scraperNames, IEnumerable<string> cullerNames)
         {
-            var job = this.ScrapeEngine.CreateJob(__(("platform", platform), ("search_title", title)),
+            var job = this.ScrapeEngine.CreateJob(_(("platform", platform), ("search_title", title)),
                 this.Scrapers.Where(s => scraperNames.Contains(s.Name, StringComparer.OrdinalIgnoreCase)),
                 this.Cullers.Where(s => cullerNames.Contains(s.Name, StringComparer.OrdinalIgnoreCase)));
             while (await this.ScrapeEngine.ProceedJob(job))
