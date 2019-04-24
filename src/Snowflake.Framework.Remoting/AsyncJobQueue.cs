@@ -32,7 +32,6 @@ namespace Snowflake.Framework.Remoting
         public async ValueTask<(T, bool)> GetNext(Guid jobId)
         {
             var enumerator = this.GetEnumerator(jobId);
-            
             var result =  (value: enumerator.Current, hasNext: await enumerator.MoveNextAsync());
             if (!result.hasNext)
             {
@@ -42,16 +41,20 @@ namespace Snowflake.Framework.Remoting
             return result;
         }
 
-        public Guid QueueJob(IAsyncEnumerable<T> asyncEnumerable)
+        public async Task<Guid> QueueJob(IAsyncEnumerable<T> asyncEnumerable)
         {
             var guid = Guid.NewGuid();
-            this.Enumerators.Add(guid, asyncEnumerable.GetAsyncEnumerator());
+            var enumerator = asyncEnumerable.GetAsyncEnumerator();
+            await enumerator.MoveNextAsync();
+            this.Enumerators.Add(guid, enumerator);
             return guid;
         }
 
-        public Guid QueueJob(IAsyncEnumerable<T> asyncEnumerable, Guid guid)
+        public async Task<Guid> QueueJob(IAsyncEnumerable<T> asyncEnumerable, Guid guid)
         {
-            this.Enumerators.Add(guid, asyncEnumerable.GetAsyncEnumerator());
+            var enumerator = asyncEnumerable.GetAsyncEnumerator();
+            await enumerator.MoveNextAsync();
+            this.Enumerators.Add(guid, enumerator);
             return guid;
         }
 

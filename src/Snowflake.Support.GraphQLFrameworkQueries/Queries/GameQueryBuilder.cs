@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+using GraphQL.Types;
 using Snowflake.Extensibility;
+using Snowflake.Filesystem;
 using Snowflake.Framework.Remoting.GraphQL.Attributes;
 using Snowflake.Framework.Remoting.GraphQL.Query;
 using Snowflake.Framework.Scheduling;
@@ -11,13 +14,14 @@ using Snowflake.Installation;
 using Snowflake.Installation.Extensibility;
 using Snowflake.Model.Game;
 using Snowflake.Services;
+using Snowflake.Support.Remoting.GraphQL.Types.Model;
 
 namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
 {
     public class GameQueryBuilder : QueryBuilder
     {
         public GameQueryBuilder(IPluginCollection<IGameInstaller> installers,
-            IStoneProvider stone, IAsyncJobQueue<ITaskResult> installQueue, IGameLibrary gameLibrary)
+            IStoneProvider stone, IAsyncJobQueue<TaskResult<IFile>> installQueue, IGameLibrary gameLibrary)
         {
             this.Installers = installers;
             this.Stone = stone;
@@ -27,8 +31,10 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
 
         IPluginCollection<IGameInstaller> Installers { get; }
         IStoneProvider Stone { get; }
-        IAsyncJobQueue<ITaskResult> InstallQueue { get; }
+        IAsyncJobQueue<TaskResult<IFile>> InstallQueue { get; }
         IGameLibrary GameLibrary { get; }
+
+
         //[Field("autoScrape", "Automatically results scrape to end.", typeof(ListGraphType<SeedGraphType>))]
         //[Parameter(typeof(string), typeof(StringGraphType), "platform", "platform")]
         //[Parameter(typeof(string), typeof(StringGraphType), "title", "title")]
@@ -48,8 +54,11 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
 
         //    return this.ScrapeEngine.GetJobState(job).ToList();
         //}
-
-        public Guid CreateGameInstallation(string platform, IEnumerable<string> files)
+        [Mutation("beginInstallGame", "Creates a game install job. Returns the UUID of the created game", typeof(GuidGraphType))]
+        [Parameter(typeof(string), typeof(StringGraphType), "platform", "The platform to install this game for", false)]
+        [Parameter(typeof(IEnumerable<string>), typeof(ListGraphType<StringGraphType>), "files",
+            "A list of filenames as part of the game", false)]
+        public async Task<Guid> CreateGameInstallation(string platform, IEnumerable<string> files)
         {
             var filesysinfo = files.Select<string, FileSystemInfo>(s =>
             {
@@ -66,7 +75,22 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
             var game = this.GameLibrary.CreateGame(platform);
 
             var installer = this.Installers.FirstOrDefault(p => p.SupportedPlatforms.Contains(platform));
-            return this.InstallQueue.QueueJob(installer.Install(game, filesysinfo), game.Record.RecordId);
+            if (installer == null) throw new KeyNotFoundException("Platform Not Found");
+            return await this.InstallQueue.QueueJob(installer.Install(game, filesysinfo), game.Record.RecordId);
         }
+
+        [Mutation("installNextStep", "Proceeds with the next step of the installation process", typeof(FileGraphType))]
+        [Parameter(typeof(Guid), typeof(GuidGraphType), "gameGuid","The GUID of the created game to proceed with.", false)]
+        public async Task<IFile> InstallNextStep(Guid gameGuid)
+        {
+            (var file, bool hasNext) = await this.InstallQueue.GetNext(gameGuid);
+            if (file.Error != null)
+            {
+                throw file.Error;
+            }
+            return await file;
+        }
+
+        
     }
 }

@@ -6,15 +6,14 @@ using System.Threading.Tasks;
 
 namespace Snowflake.Installation
 {
-    public class TaskResult<T>
+    public struct TaskResult<T>
            : ITaskResult
     {
         private ValueTask<T> Result => CachedResult.Value;
 
-        public string Name { get; } = "Unknown";
+        public string Name { get; }
 
-        public Exception? Error { get; } = null;
-
+        public Exception? Error { get; } 
 
         private readonly Lazy<ValueTask<T>> CachedResult;
 
@@ -39,13 +38,13 @@ namespace Snowflake.Installation
         {
             return new TaskResult<T>("Value", new ValueTask<T>(t), null);
         }
+
     }
 
     public interface ITaskResult
     {
         string Name { get; }
         Exception? Error { get;}
-
         ConfiguredTaskAwaitable<object?>.ConfiguredTaskAwaiter GetAwaiter();
     }
 

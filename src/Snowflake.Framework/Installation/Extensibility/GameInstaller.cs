@@ -7,6 +7,7 @@ using System.Linq;
 using Snowflake.Extensibility.Provisioning;
 using Snowflake.Extensibility.Provisioning.Standalone;
 using Snowflake.Model.Game;
+using Snowflake.Filesystem;
 
 namespace Snowflake.Installation.Extensibility
 {
@@ -27,6 +28,6 @@ namespace Snowflake.Installation.Extensibility
 
         public IEnumerable<PlatformId> SupportedPlatforms { get; }
 
-        public abstract IAsyncEnumerable<ITaskResult> Install(IGame game, IEnumerable<FileSystemInfo> files);
+        public abstract IAsyncEnumerable<TaskResult<IFile>> Install(IGame game, IEnumerable<FileSystemInfo> files);
     }
 }
