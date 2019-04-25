@@ -9,7 +9,7 @@ using A = System.Collections.Generic;
 
 namespace Snowflake.Installation.Tasks
 {
-    public sealed class CopyFileTask : InstallTaskAwaitable<IFile?>
+    public sealed class CopyFileTask : AsyncInstallTask<IFile?>
     {
         public CopyFileTask(TaskResult<FileInfo> source, IDirectory destinationDirectory)
         {

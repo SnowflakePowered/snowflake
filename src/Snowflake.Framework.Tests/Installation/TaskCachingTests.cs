@@ -45,7 +45,7 @@ namespace Snowflake.Installation
 
     }
 
-    public sealed class TrivialCounterTask : InstallTaskAwaitable<int>
+    public sealed class TrivialCounterTask : AsyncInstallTask<int>
     {
         public TrivialCounterTask()
         {
@@ -81,7 +81,7 @@ namespace Snowflake.Installation
         }
     }
 
-    public sealed class TrivialCounterSubTask : InstallTaskAwaitable<int>
+    public sealed class TrivialCounterSubTask : AsyncInstallTask<int>
     {
         public TrivialCounterSubTask(TaskResult<int> t)
         {

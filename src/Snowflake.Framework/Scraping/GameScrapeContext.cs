@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Snowflake.Scraping.Extensibility;
 using System.Reactive.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Snowflake.Scraping
 {
@@ -220,9 +221,21 @@ namespace Snowflake.Scraping
             }
         }
 
+        private async Task<IEnumerable<ISeed>> RunToEnd()
+        {
+            while (await this.Proceed()) { }
+            this.Cull();
+            return this.Context.GetUnculled();
+        }
+
         public IAsyncEnumerator<IEnumerable<ISeed>> GetAsyncEnumerator(CancellationToken cancellationToken = default)
         {
             return new GameScrapeContextAsyncEnumerator(this, cancellationToken);
+        }
+
+        public ConfiguredTaskAwaitable<IEnumerable<ISeed>>.ConfiguredTaskAwaiter GetAwaiter()
+        {
+            return this.RunToEnd().ConfigureAwait(false).GetAwaiter();
         }
     }
 }
