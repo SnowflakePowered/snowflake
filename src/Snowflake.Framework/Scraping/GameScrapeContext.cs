@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Snowflake.Scraping.Extensibility;
 
 namespace Snowflake.Scraping
 {
-    public class ScrapeJob : IScrapeJob
+    public class GameScrapeContext : IScrapeContext
     {
         /// <summary>
         ///  The default source for a Client-provided seed.
@@ -28,38 +29,38 @@ namespace Snowflake.Scraping
         /// <inheritdoc />
         public IEnumerable<ICuller> Cullers { get; }
 
-        public ScrapeJob(IEnumerable<IScraper> scrapers,
+        public GameScrapeContext(IEnumerable<IScraper> scrapers,
             IEnumerable<ICuller> cullers)
             : this(Enumerable.Empty<SeedContent>(), scrapers, cullers)
         {
         }
 
-        public ScrapeJob(IEnumerable<SeedContent> initialSeeds,
+        public GameScrapeContext(IEnumerable<SeedContent> initialSeeds,
             IEnumerable<IScraper> scrapers,
             IEnumerable<ICuller> cullers)
             : this(initialSeeds, scrapers, cullers, Guid.NewGuid())
         {
         }
 
-        public ScrapeJob(IEnumerable<SeedTree> initialSeeds,
+        public GameScrapeContext(IEnumerable<SeedTree> initialSeeds,
             IEnumerable<IScraper> scrapers,
             IEnumerable<ICuller> cullers)
             : this(initialSeeds, scrapers, cullers, Guid.NewGuid())
         {
         }
 
-        internal ScrapeJob(IEnumerable<SeedContent> initialSeeds,
+        internal GameScrapeContext(IEnumerable<SeedContent> initialSeeds,
             IEnumerable<IScraper> scrapers, IEnumerable<ICuller> cullers, Guid jobGuid)
         {
             this.Context = new SeedRootContext();
             this.Visited = new List<(string, Guid)>();
             this.Scrapers = scrapers;
             this.Cullers = cullers;
-            this.Context.AddRange(initialSeeds.Select(p => (p, this.Context.Root)), ScrapeJob.ClientSeedSource);
+            this.Context.AddRange(initialSeeds.Select(p => (p, this.Context.Root)), GameScrapeContext.ClientSeedSource);
             this.JobGuid = jobGuid;
         }
 
-        internal ScrapeJob(IEnumerable<SeedTree> initialSeeds,
+        internal GameScrapeContext(IEnumerable<SeedTree> initialSeeds,
             IEnumerable<IScraper> scrapers, IEnumerable<ICuller> cullers, Guid jobGuid)
         {
             this.Context = new SeedRootContext();
@@ -67,7 +68,7 @@ namespace Snowflake.Scraping
             this.Scrapers = scrapers;
             this.Cullers = cullers;
             this.Context.AddRange(
-                initialSeeds.SelectMany(s => s.Collapse(this.Context.Root, ScrapeJob.ClientSeedSource)));
+                initialSeeds.SelectMany(s => s.Collapse(this.Context.Root, GameScrapeContext.ClientSeedSource)));
             this.JobGuid = jobGuid;
         }
 
@@ -91,7 +92,7 @@ namespace Snowflake.Scraping
         public async ValueTask<bool> Proceed(IEnumerable<SeedContent> seedsToAdd)
         {
             // Add any client seeds.
-            this.Context.AddRange(seedsToAdd.Select(p => (p, this.Context.Root)), ScrapeJob.ClientSeedSource);
+            this.Context.AddRange(seedsToAdd.Select(p => (p, this.Context.Root)), GameScrapeContext.ClientSeedSource);
 
             // Keep track of previously visited seeds.
             int previousCount = this.Visited.Count;
@@ -205,5 +206,6 @@ namespace Snowflake.Scraping
                 }
             }
         }
+
     }
 }

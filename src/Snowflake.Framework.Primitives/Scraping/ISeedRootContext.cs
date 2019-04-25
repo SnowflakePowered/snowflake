@@ -34,7 +34,7 @@ namespace Snowflake.Scraping
         IEnumerable<ISeed> GetAll();
 
         /// <summary>
-        /// Gets eeds that have not been marked as culled in this context.
+        /// Gets seeds that have not been marked as culled in this context.
         /// </summary>
         /// <returns>All the seed in this context that have not been marked as culled.</returns>
         IEnumerable<ISeed> GetUnculled();

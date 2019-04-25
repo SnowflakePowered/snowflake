@@ -8,7 +8,7 @@ namespace Snowflake.Scraping
 {
     /// <summary>
     /// A <see cref="IScrapeEngine{T}"/> encapsulates the management of multiple
-    /// <see cref="IScrapeJob"/> and traversal over the resultant tree to produce
+    /// <see cref="IScrapeContext"/> and traversal over the resultant tree to produce
     /// a single object of type <see cref="T"/>.
     /// </summary>
     /// <typeparam name="T">The resultant of this <see cref="IScrapeEngine{T}"/></typeparam>
