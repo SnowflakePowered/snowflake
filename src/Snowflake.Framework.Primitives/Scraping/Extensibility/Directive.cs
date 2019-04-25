@@ -21,7 +21,11 @@ namespace Snowflake.Scraping.Extensibility
         /// Indicates that a child of the specified type on the specified <see cref="AttachTarget"/>
         /// MUST NOT exist before this scraper is run. Allows for fallbacks and exclusions on multiple but
         /// similar scrapers that can take advantage of pre-existing data.
-        /// Note that an exclusion applies once when all <see cref="Requires"/> have been fulfilled.
+        /// All scrapers are <em>eager</em> to run, and will run immediately after their <see cref="Requires"/>
+        /// are fulfilled. That means that exclusions apply only to seeds that exist on the previous seed state,
+        /// before this scraper is run. In order words, if the <see cref="Requires"/> of a scraper is fulfilled
+        /// before all possible <see cref="Excludes"/> may have appeared, the scraper will run regardless of any
+        /// <see cref="Excludes"/>.
         /// If the state of the seed tree excludes this scraper after it has already been run,
         /// the result will exist for the remainder of the <see cref="IScrapeContext"/> unless it is
         /// culled by an <see cref="ICuller"/>.

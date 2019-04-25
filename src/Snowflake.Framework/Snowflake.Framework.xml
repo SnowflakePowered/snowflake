@@ -1303,24 +1303,24 @@
             <param name="children">The list of seed results to return</param>
             <returns>A seed tree result.</returns>
         </member>
-        <member name="F:Snowflake.Scraping.ScrapeJob.ClientSeedSource">
+        <member name="F:Snowflake.Scraping.GameScrapeContext.ClientSeedSource">
             <summary>
              The default source for a Client-provided seed.
             </summary>
         </member>
-        <member name="P:Snowflake.Scraping.ScrapeJob.Scrapers">
+        <member name="P:Snowflake.Scraping.GameScrapeContext.Scrapers">
             <inheritdoc />
         </member>
-        <member name="P:Snowflake.Scraping.ScrapeJob.Context">
+        <member name="P:Snowflake.Scraping.GameScrapeContext.Context">
             <inheritdoc />
         </member>
-        <member name="P:Snowflake.Scraping.ScrapeJob.Visited">
+        <member name="P:Snowflake.Scraping.GameScrapeContext.Visited">
             <inheritdoc />
         </member>
-        <member name="P:Snowflake.Scraping.ScrapeJob.JobGuid">
+        <member name="P:Snowflake.Scraping.GameScrapeContext.JobGuid">
             <inheritdoc />
         </member>
-        <member name="P:Snowflake.Scraping.ScrapeJob.Cullers">
+        <member name="P:Snowflake.Scraping.GameScrapeContext.Cullers">
             <inheritdoc />
         </member>
         <member name="T:Snowflake.Shiragame.RomInfo">

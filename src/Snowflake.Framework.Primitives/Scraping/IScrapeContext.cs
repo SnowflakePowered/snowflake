@@ -9,7 +9,7 @@ namespace Snowflake.Scraping
     /// Represents a job to produce a seed tree that can be traversed to yield usable
     /// records or other metadata.
     /// </summary>
-    public interface IScrapeContext
+    public interface IScrapeContext : IAsyncEnumerable<IEnumerable<ISeed>>
     {
         /// <summary>
         /// Gets the seed root context local to this job.

@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <LangVersion>8.0</LangVersion>
   </PropertyGroup>
 
@@ -11,6 +11,6 @@
     <PackageReference Include="System.Collections.Immutable" Version="1.5.0" Publish="True" />
     <PackageReference Include="System.Dynamic.Runtime" Version="4.3.0" Publish="True" />
     <PackageReference Include="System.Linq.Parallel" Version="4.3.0" Publish="True" />
+    <PackageReference Include="System.Reactive" Version="4.1.5" />
   </ItemGroup>
-
 </Project>

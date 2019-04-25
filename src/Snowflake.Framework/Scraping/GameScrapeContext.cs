@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Snowflake.Scraping.Extensibility;
+using System.Reactive.Linq;
 
 namespace Snowflake.Scraping
 {
@@ -21,7 +22,7 @@ namespace Snowflake.Scraping
         public ISeedRootContext Context { get; }
 
         /// <inheritdoc />
-        private IList<(string, Guid)> Visited { get; }
+        private List<(string, Guid)> Visited { get; }
 
         /// <inheritdoc />
         public Guid JobGuid { get; }
@@ -96,12 +97,14 @@ namespace Snowflake.Scraping
 
             // Keep track of previously visited seeds.
             int previousCount = this.Visited.Count;
-            foreach (var scraper in this.Scrapers)
+            var results = await this.Scrapers.ToObservable().Select(async (scraper) =>
             {
                 var matchingSeeds = this.Context.GetAllOfType(scraper.TargetType)
                     .Where(s => !this.Visited.Contains((scraper.Name, s.Guid))).ToList();
 
-                // todo: Parallelize this.
+                var scraperResults = new List<ISeed>();
+                var scraperVisited = new List<(string, Guid)>();
+
                 foreach (var matchingSeed in matchingSeeds)
                 {
                     // todo: Refactor this out into child/sibling/root 
@@ -173,17 +176,25 @@ namespace Snowflake.Scraping
                             continue;
                         }
                     }
-
-                    this.Visited.Add((scraper.Name, matchingSeed.Guid)); // mark that matchingSeed was visited.
-
-                    // Attach the seeds.
-                    this.Context.AddRange(resultsToAppend);
+                    scraperResults.AddRange(resultsToAppend);
+                    scraperVisited.Add((scraper.Name, matchingSeed.Guid)); // mark that matchingSeed was visited.
+                                                                           // scraperResults.AddRange(resultsToAppend);
+                                                                           // Attach the seeds
                 }
+
+                return (scraperVisited, scraperResults);
+            }).ToList();
+
+            foreach (var result in results)
+            {
+                (var scraperVisited, var scraperResults) = await result;
+                this.Visited.AddRange(scraperVisited);
+                this.Context.AddRange(scraperResults);
             }
 
-            return
-                this.Visited.Count !=
-                previousCount; // if there are no new additions to the table, then we know to stop.
+            // if there are no new additions to the table, then we know to stop.
+
+            return this.Visited.Count != previousCount;
         }
 
         public void Cull() => this.Cull(Enumerable.Empty<Guid>());
@@ -207,5 +218,9 @@ namespace Snowflake.Scraping
             }
         }
 
+        public IAsyncEnumerator<IEnumerable<ISeed>> GetAsyncEnumerator(CancellationToken cancellationToken = default)
+        {
+            return new GameScrapeContextAsyncEnumerator(this, cancellationToken);
+        }
     }
 }
