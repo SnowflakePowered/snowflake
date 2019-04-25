@@ -113,6 +113,31 @@ namespace Snowflake.Scraping.Tests
         }
 
         [Fact]
+        public async Task Autoscrape_Test()
+        {
+            var scraper = new AsyncScraper();
+            var scrapeJob = new GameScrapeContext(new IScraper[] { scraper }, new ICuller[] { });
+
+            var results = await scrapeJob;
+
+            Assert.NotEmpty(results.Where(s => s.Content.Type == "TestAsync"));
+            Assert.NotEmpty(results.Where(s => s.Content.Type == "TestSync"));
+            Assert.NotEmpty(results.Where(s => s.Content.Type == "TestAsyncNested"));
+            Assert.NotEmpty(results.Where(s => s.Content.Type == "TestAsyncNestedTwo"));
+
+            Assert.NotEmpty(scrapeJob.Context.GetAllOfType("TestAsync"));
+            Assert.NotEmpty(scrapeJob.Context.GetAllOfType("TestSync"));
+            Assert.NotEmpty(scrapeJob.Context.GetAllOfType("TestAsyncNested"));
+            Assert.NotEmpty(scrapeJob.Context.GetAllOfType("TestAsyncNestedTwo"));
+            Assert.Equal("Nested Value Two",
+                scrapeJob.Context.GetAllOfType("TestAsyncNestedTwo").First().Content.Value);
+            Assert.Equal("Nested Value",
+                scrapeJob.Context.GetAllOfType("TestAsyncNested").First().Content.Value);
+        }
+
+
+
+        [Fact]
         public async Task Cull_Test()
         {
             var scraper = new TrivialScraper();
