@@ -206,15 +206,17 @@ namespace Snowflake.Scraping
                 this.Context.CullSeedTree(culledSeed);
             }
 
-            foreach (var culler in this.Cullers)
+            var seedsToCull = this.Cullers.ToObservable().SelectMany(culler =>
             {
                 var seedsToCull = this.Context.GetAllOfType(culler.TargetType);
                 var unculledSeeds = culler.Filter(seedsToCull, this.Context);
-                var unculledSeedsGuid = unculledSeeds.Select(p => p.Guid).ToList();
-                foreach (var culledSeed in seedsToCull.Where(s => !unculledSeedsGuid.Contains(s.Guid)))
-                {
-                    this.Context.CullSeedTree(culledSeed);
-                }
+                var unculledSeedsGuid = unculledSeeds.Select(p => p.Guid);
+                return seedsToCull.Where(s => !unculledSeedsGuid.Contains(s.Guid));
+            }).ToEnumerable();
+
+            foreach (var culledSeed in seedsToCull)
+            {
+                this.Context.CullSeedTree(culledSeed);
             }
         }
 
