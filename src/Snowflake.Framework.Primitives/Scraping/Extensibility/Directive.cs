@@ -23,7 +23,7 @@ namespace Snowflake.Scraping.Extensibility
         /// similar scrapers that can take advantage of pre-existing data.
         /// Note that an exclusion applies once when all <see cref="Requires"/> have been fulfilled.
         /// If the state of the seed tree excludes this scraper after it has already been run,
-        /// the result will exist for the remainder of the <see cref="IScrapeJob"/> unless it is
+        /// the result will exist for the remainder of the <see cref="IScrapeContext"/> unless it is
         /// culled by an <see cref="ICuller"/>.
         /// </summary>
         Excludes,

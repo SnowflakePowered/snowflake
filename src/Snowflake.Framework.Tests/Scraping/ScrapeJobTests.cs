@@ -17,7 +17,7 @@ namespace Snowflake.Scraping.Tests
         public async Task Trivial_Test()
         {
             var scraper = new TrivialScraper();
-            var scrapeJob = new ScrapeJob(new[] {scraper}, new ICuller[] { });
+            var scrapeJob = new GameScrapeContext(new[] {scraper}, new ICuller[] { });
             Assert.True(await scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
             Assert.NotEmpty(scrapeJob.Context.GetAllOfType("Test"));
             Assert.False(await scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
@@ -30,7 +30,7 @@ namespace Snowflake.Scraping.Tests
             var dependent = new DependentScraper();
             // we make dependent before scraper to allow scrapeJob to resolve
             // all items after 3 iterations.
-            var scrapeJob = new ScrapeJob(new IScraper[] {dependent, scraper}, new ICuller[] { });
+            var scrapeJob = new GameScrapeContext(new IScraper[] {dependent, scraper}, new ICuller[] { });
             Assert.True(await scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
             Assert.NotEmpty(scrapeJob.Context.GetAllOfType("Test"));
             Assert.True(await scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
@@ -42,7 +42,7 @@ namespace Snowflake.Scraping.Tests
         public async Task Group_Test()
         {
             var scraper = new GroupScraper();
-            var scrapeJob = new ScrapeJob(new IScraper[] {scraper}, new ICuller[] { });
+            var scrapeJob = new GameScrapeContext(new IScraper[] {scraper}, new ICuller[] { });
 
             Assert.True(await scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
             Assert.False(await scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
@@ -59,7 +59,7 @@ namespace Snowflake.Scraping.Tests
         {
             var scraper = new TrivialScraper();
             var exclude = new ExcludeScraper();
-            var scrapeJob = new ScrapeJob(new SeedContent[] {("ExcludeTest", "Test")},
+            var scrapeJob = new GameScrapeContext(new SeedContent[] {("ExcludeTest", "Test")},
                 new IScraper[] {scraper, exclude}, new ICuller[] { });
 
             Assert.True(await scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
@@ -74,7 +74,7 @@ namespace Snowflake.Scraping.Tests
         public async Task ExcludeRunsWhenExclusionNotPresent_Test()
         {
             var exclude = new ExcludeScraper();
-            var scrapeJob = new ScrapeJob(new SeedContent[] {("ExcludeTest", "Test")},
+            var scrapeJob = new GameScrapeContext(new SeedContent[] {("ExcludeTest", "Test")},
                 new IScraper[] {exclude}, new ICuller[] { });
             Assert.True(await scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
             Assert.False(await scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
@@ -85,7 +85,7 @@ namespace Snowflake.Scraping.Tests
         public async Task SimpleAsync_Test()
         {
             var scraper = new SimpleAsyncScraper();
-            var scrapeJob = new ScrapeJob(new IScraper[] {scraper}, new ICuller[] { });
+            var scrapeJob = new GameScrapeContext(new IScraper[] {scraper}, new ICuller[] { });
 
             Assert.True(await scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
             Assert.False(await scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
@@ -98,7 +98,7 @@ namespace Snowflake.Scraping.Tests
         public async Task Async_Test()
         {
             var scraper = new AsyncScraper();
-            var scrapeJob = new ScrapeJob(new IScraper[] {scraper}, new ICuller[] { });
+            var scrapeJob = new GameScrapeContext(new IScraper[] {scraper}, new ICuller[] { });
 
             Assert.True(await scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
             Assert.False(await scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
@@ -117,7 +117,7 @@ namespace Snowflake.Scraping.Tests
         {
             var scraper = new TrivialScraper();
             var scraperTwo = new TrivialScraperTwo();
-            var scrapeJob = new ScrapeJob(new IScraper[] {scraper, scraperTwo}, new ICuller[] {new TrivialCuller()});
+            var scrapeJob = new GameScrapeContext(new IScraper[] {scraper, scraperTwo}, new ICuller[] {new TrivialCuller()});
             Assert.True(await scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
             Assert.NotEmpty(scrapeJob.Context.GetAllOfType("Test"));
             Assert.False(await scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
@@ -132,7 +132,7 @@ namespace Snowflake.Scraping.Tests
         {
             var scraper = new TrivialScraper();
             var scraperTwo = new TrivialScraperTwo();
-            var scrapeJob = new ScrapeJob(new IScraper[] {scraper, scraperTwo}, new ICuller[] { });
+            var scrapeJob = new GameScrapeContext(new IScraper[] {scraper, scraperTwo}, new ICuller[] { });
             Assert.True(await scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
             Assert.NotEmpty(scrapeJob.Context.GetAllOfType("Test"));
             Assert.False(await scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
