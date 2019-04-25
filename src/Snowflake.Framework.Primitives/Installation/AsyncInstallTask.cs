@@ -7,12 +7,12 @@ using static Snowflake.Installation.TaskResult;
 
 namespace Snowflake.Installation
 {
-    public abstract class InstallTaskAwaitable<T>
+    public abstract class AsyncInstallTask<T>
     {
         private Task<T> BaseTask => CachedTask.Value;
         private Lazy<Task<T>> CachedTask { get; }
 
-        protected InstallTaskAwaitable() => this.CachedTask = new Lazy<Task<T>>(() => this.ExecuteOnce());
+        protected AsyncInstallTask() => this.CachedTask = new Lazy<Task<T>>(() => this.ExecuteOnce());
 
         protected abstract Task<T> ExecuteOnce();
 
