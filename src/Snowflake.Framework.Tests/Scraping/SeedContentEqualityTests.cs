@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace Snowflake.Scraping
+namespace Snowflake.Scraping.Tests
 {
     public class SeedContentEqualityTests
     {

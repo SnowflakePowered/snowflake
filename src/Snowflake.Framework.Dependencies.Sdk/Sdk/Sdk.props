@@ -3,6 +3,6 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Sdk="Microsoft.NET.Sdk" Project="Sdk.props" />
   <ItemGroup>
-    <PackageReference Include="Snowflake.Framework.Dependencies" Version="1.0.1" IsImplicitlyDefined="true" />
+    <PackageReference Include="Snowflake.Framework.Dependencies" Version="1.0.2" IsImplicitlyDefined="true" />
   </ItemGroup>
 </Project>

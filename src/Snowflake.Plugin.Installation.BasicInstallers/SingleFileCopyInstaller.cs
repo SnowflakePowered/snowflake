@@ -58,6 +58,7 @@ namespace Snowflake.Plugin.Installation.BasicInstallers
                 var copiedFile = await new CopyFileTask(file, game.WithFiles().ProgramRoot);
                 yield return copiedFile;
                 game.WithFiles().RegisterFile(await copiedFile, mimetype);
+                
             }
         }
     }

@@ -11,7 +11,7 @@ using Xunit;
 
 namespace Snowflake.Scraping.Tests
 {
-    public class ScrapeJobTests
+    public class ScrapeContextTests
     {
         [Fact]
         public async Task Trivial_Test()
@@ -59,11 +59,11 @@ namespace Snowflake.Scraping.Tests
         {
             var scraper = new TrivialScraper();
             var exclude = new ExcludeScraper();
-            var scrapeJob = new GameScrapeContext(new SeedContent[] {("ExcludeTest", "Test")},
+            var scrapeJob = new GameScrapeContext(new SeedContent[] {},
                 new IScraper[] {scraper, exclude}, new ICuller[] { });
 
             Assert.True(await scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
-            Assert.False(await scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
+            Assert.False(await scrapeJob.Proceed(new SeedContent[] { ("ExcludeTest", "Test") }));
             Assert.NotEmpty(scrapeJob.Context.GetAllOfType("Test"));
             Assert.Empty(scrapeJob.Context.GetAllOfType("ThisShouldNeverAppear"));
             Assert.Equal("Hello World",
