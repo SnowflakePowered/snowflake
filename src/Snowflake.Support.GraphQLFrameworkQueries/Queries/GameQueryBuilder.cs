@@ -34,26 +34,6 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
         IAsyncJobQueue<TaskResult<IFile>> InstallQueue { get; }
         IGameLibrary GameLibrary { get; }
 
-
-        //[Field("autoScrape", "Automatically results scrape to end.", typeof(ListGraphType<SeedGraphType>))]
-        //[Parameter(typeof(string), typeof(StringGraphType), "platform", "platform")]
-        //[Parameter(typeof(string), typeof(StringGraphType), "title", "title")]
-        //[Parameter(typeof(IEnumerable<string>), typeof(ListGraphType<StringGraphType>), "scraperNames",
-        //    "The scrapers to use for this job.")]
-        //[Parameter(typeof(IEnumerable<string>), typeof(ListGraphType<StringGraphType>), "cullerNames",
-        //    "The cullers to use for this job.")]
-        //public async Task<IList<ISeed>> AutoScrape(string platform, string title,
-        //    IEnumerable<string> scraperNames, IEnumerable<string> cullerNames)
-        //{
-        //    var job = this.ScrapeEngine.CreateJob(__(("platform", platform), ("search_title", title)),
-        //        this.Scrapers.Where(s => scraperNames.Contains(s.Name, StringComparer.OrdinalIgnoreCase)),
-        //        this.Cullers.Where(s => cullerNames.Contains(s.Name, StringComparer.OrdinalIgnoreCase)));
-        //    while (await this.ScrapeEngine.ProceedJob(job))
-        //    {
-        //    }
-
-        //    return this.ScrapeEngine.GetJobState(job).ToList();
-        //}
         [Mutation("beginInstallGame", "Creates a game install job. Returns the UUID of the created game", typeof(GuidGraphType))]
         [Parameter(typeof(string), typeof(StringGraphType), "platform", "The platform to install this game for", false)]
         [Parameter(typeof(IEnumerable<string>), typeof(ListGraphType<StringGraphType>), "files",

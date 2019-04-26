@@ -7,7 +7,7 @@ using static Snowflake.Installation.TaskResult;
 
 namespace Snowflake.Installation
 {
-    public abstract class InstallTaskAwaitableEnumerable<T>
+    public abstract class AsyncInstallTaskEnumerable<T>
     {
         private IAsyncEnumerable<TaskResult<T>> BaseTask => this.WrapEnumerator();
 

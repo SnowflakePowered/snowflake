@@ -17,7 +17,7 @@ namespace Snowflake.Support.Remoting.GraphQL.Types.Model
             //Field<ListGraphType<FileRecordGraphType>>(
             //    "files",
             //    description: "A list of files associated with this game.",
-            //    resolve: context => context.Source.WithFiles().Files);
+            //    resolve: context => context.Source.WithFiles().FileRecords);
 
             Field(g => g.Title, nullable: true).Description("The title of the game.");
 

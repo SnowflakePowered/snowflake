@@ -15,7 +15,7 @@ namespace Snowflake.Support.Remoting.GraphQL.Types.Model
 
             Field<ListGraphType<FileRecordGraphType>>("fileRecords",
                 description: "The files for which have metadata and are installed, not all files.",
-                resolve: context => context.Source.Files);
+                resolve: context => context.Source.FileRecords);
 
             Field<ListGraphType<FileGraphType>>("programFiles",
                 description: "All files inside the program files folder for this game.",
