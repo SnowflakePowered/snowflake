@@ -72,12 +72,11 @@ namespace Snowflake.Plugin.Scraping.GiantBomb
             bool platformSupported = platformMap.TryGetValue(platformId, out int giantBombPlatformId);
             if (!platformSupported) yield break;
             string searchQuery = parent.Content.Value;
-            var results = await this.GiantBombClient.GetListResourceAsync<GameResult>
-                ("games", 1, 100, null, null, new Dictionary<string, object> {
-                    { "platforms" , giantBombPlatformId} }).ConfigureAwait(false);
-            foreach (var result in results)
+            var results = (await this.GiantBombClient.SearchForGamesAsync(searchQuery).ConfigureAwait(false)) ?? Enumerable.Empty<GameResult>();
+
+
+            foreach (var result in results.Where(r => r.Platforms?.Select(p => p.Id).Contains(giantBombPlatformId) ?? false))
             {
-               
                 yield return ("result", result.Name, _(
                     ("title", result?.Name ?? ""),
                     ("description", result?.Deck ?? ""),

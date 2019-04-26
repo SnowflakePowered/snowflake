@@ -17,7 +17,7 @@ namespace Snowflake.Scraping
         /// <summary>
         ///  The default source for a Client-provided seed.
         /// </summary>
-        public const string ClientSeedSource = "__client";
+        public static readonly string ClientSeedSource = "__client";
 
         /// <inheritdoc />
         public IEnumerable<IScraper> Scrapers { get; }
@@ -242,8 +242,8 @@ namespace Snowflake.Scraping
             var seedsToCull = this.Cullers.ToObservable().SelectMany(culler =>
             {
                 var seedsToCull = this.Context.GetAllOfType(culler.TargetType);
-                var unculledSeeds = culler.Filter(seedsToCull, this.Context);
-                var unculledSeedsGuid = unculledSeeds.Select(p => p.Guid);
+                var unculledSeeds = culler.Filter(seedsToCull, this.Context).ToList(); // Prevent the enumerator from running three times.
+                var unculledSeedsGuid = unculledSeeds.Where(p => p != null).Select(p => p.Guid);
                 return seedsToCull.Where(s => !unculledSeedsGuid.Contains(s.Guid));
             }).ToEnumerable();
 

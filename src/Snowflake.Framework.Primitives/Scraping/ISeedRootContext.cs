@@ -52,7 +52,7 @@ namespace Snowflake.Scraping
         /// </summary>
         /// <param name="seed">The seed of which whose children are returned.</param>
         /// <returns>All the children of the given seed relative to this context.</returns>
-        IEnumerable<ISeed> GetChildren(ISeed seed);
+        IEnumerable<ISeed> GetChildren(ISeed? seed);
 
         /// <summary>
         /// Gets all the siblings of the given seed relative to this context,
@@ -60,7 +60,7 @@ namespace Snowflake.Scraping
         /// </summary>
         /// <param name="seed">The seed of which whose siblings are returned.</param>
         /// <returns>All the siblings of the given seed relative to this context.</returns>
-        IEnumerable<ISeed> GetSiblings(ISeed seed);
+        IEnumerable<ISeed> GetSiblings(ISeed? seed);
 
         /// <summary>
         /// Gets all the children of the root.
@@ -73,7 +73,7 @@ namespace Snowflake.Scraping
         /// </summary>
         /// <param name="seed">The seed whose descendants are returned.</param>
         /// <returns>All the descendants of the given seed.</returns>
-        IEnumerable<ISeed> GetDescendants(ISeed seed);
+        IEnumerable<ISeed> GetDescendants(ISeed? seed);
 
         /// <summary>
         /// Adds a seed to the context.
@@ -88,19 +88,19 @@ namespace Snowflake.Scraping
         /// Culls the given seed and all of its descendants.
         /// </summary>
         /// <param name="seed">The seed to cull.</param>
-        void CullSeedTree(ISeed seed);
+        void CullSeedTree(ISeed? seed);
 
         /// <summary>
         /// Adds a seed directly to the context.
         /// </summary>
         /// <param name="seed">The seed to add to the context.</param>
-        void Add(ISeed seed);
+        void Add(ISeed? seed);
 
         /// <summary>
         /// Adds multiple seeds directly to the context. 
         /// </summary>
         /// <param name="seeds">The seeds to add directly to the context.</param>
-        void AddRange(IEnumerable<ISeed> seeds);
+        void AddRange(IEnumerable<ISeed?> seeds);
 
         /// <summary>
         /// Adds multiple seeds to the context.

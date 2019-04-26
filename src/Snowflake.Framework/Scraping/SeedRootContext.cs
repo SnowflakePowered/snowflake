@@ -47,22 +47,26 @@ namespace Snowflake.Scraping
             return this.GetUnculled().Where(s => s.Content.Type == type);
         }
 
-        public IEnumerable<ISeed> GetChildren(ISeed seed)
+        public IEnumerable<ISeed> GetChildren(ISeed? seed)
         {
+            if (seed == null) return Enumerable.Empty<ISeed>();
             return this.GetUnculled().Where(p => p.Parent == seed.Guid);
         }
 
-        public IEnumerable<ISeed> GetSiblings(ISeed seed)
+        public IEnumerable<ISeed> GetSiblings(ISeed? seed)
         {
+            if (seed == null) return Enumerable.Empty<ISeed>();
             return this.GetUnculled().Where(s => s.Parent == seed.Parent && s.Guid != seed.Guid);
         }
 
-        public IEnumerable<ISeed> GetDescendants(ISeed seed)
+        public IEnumerable<ISeed> GetDescendants(ISeed? seed)
         {
+            if (seed == null) return Enumerable.Empty<ISeed>();
             IEnumerable<ISeed> descendants = this.GetChildren(seed);
             foreach (var child in this.GetChildren(seed))
             {
-                descendants = descendants.Concat(this.GetChildren(child)); // please don't overflow...
+                // todo: replace with a queue
+                descendants = descendants.Concat(this.GetChildren(child)); 
             }
 
             return descendants;
@@ -70,7 +74,7 @@ namespace Snowflake.Scraping
 
         public IEnumerable<ISeed> GetRootSeeds() => this.GetChildren(this.Root);
 
-        public void CullSeedTree(ISeed seed)
+        public void CullSeedTree(ISeed? seed)
         {
             this.CullSeed(seed);
             foreach (var child in this.GetDescendants(seed))
@@ -79,19 +83,22 @@ namespace Snowflake.Scraping
             }
         }
 
-        private void CullSeed(ISeed seed)
+        private void CullSeed(ISeed? seed)
         {
+            if (seed == null) return;
             this.Culled = this.Culled.Add(seed.Guid);
+            
         }
 
-        public void Add(ISeed seed)
+        public void Add(ISeed? seed)
         {
+            if (seed == null) return;
             this.Seeds = this.Seeds.Add(seed);
         }
 
-        public void AddRange(IEnumerable<ISeed> seeds)
+        public void AddRange(IEnumerable<ISeed?> seeds)
         {
-            this.Seeds = this.Seeds.AddRange(seeds);
+            this.Seeds = this.Seeds.AddRange(seeds.Where(s => s != null)!);
         }
 
         public IEnumerable<ISeed> AddRange(IEnumerable<(SeedContent value, ISeed parent)> seeds, string source)
