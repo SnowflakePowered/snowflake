@@ -15,7 +15,7 @@ namespace Snowflake.Loader
         /// In this method, initialize your plugin objects and register them to the plugin manager to expose access to Snowflake.
         /// </summary>
         /// <param name="composableModule">The module metadata of the loading module.</param>
-        /// <param name="serviceContainer">The core instance that is injected by the plugin manager</param>
+        /// <param name="serviceContainer">The service container that is injected by the plugin manager.</param>
         /// <see cref="IPluginManager.Register{T}(T)"/>
         void Compose(IModule composableModule, IServiceRepository serviceContainer);
     }
