@@ -5,21 +5,25 @@ using System.Text;
 using Snowflake.Extensibility;
 using Snowflake.Scraping;
 using Snowflake.Scraping.Extensibility;
-using Snowflake.Support.Scraping.RecordScrapeEngine.Utility;
+using Snowflake.Support.Scraping.Primitives.Utility;
+using F23.StringSimilarity;
 
-namespace Snowflake.Support.Scraping.RecordScrapeEngine
+namespace Snowflake.Support.Scraping.Primitives
 {
-    [Plugin("RecordScrapeEngine-ResultCuller")]
+    [Plugin("ScrapingPrimitives-Culler")]
     public class ResultCuller : Culler
     {
         public ResultCuller()
             : base(typeof(ResultCuller), "result")
         {
+            this.Comparator = new Jaccard(3);
         }
+
+        public Jaccard Comparator { get; }
 
         public override IEnumerable<ISeed> Filter(IEnumerable<ISeed> seedsToTrim, ISeedRootContext context)
         {
-            var clientResult = seedsToTrim.FirstOrDefault(s => s.Source == ScrapeJob.ClientSeedSource);
+            var clientResult = seedsToTrim.FirstOrDefault(s => s.Source == GameScrapeContext.ClientSeedSource);
             if (clientResult != null)
             {
                 yield return clientResult;
@@ -36,12 +40,12 @@ namespace Snowflake.Support.Scraping.RecordScrapeEngine
                 let title = context.GetChildren(seed).FirstOrDefault(s => s.Content.Type == "title")
                 where title != null
                 let r = title.Content.Value
-                let distance = r.CompareTitle(parent.Content.Value)
-                orderby distance, context.GetChildren(seed).Count()
+                let distance = this.Comparator.Distance(r.NormalizeTitle(), parent.Content.Value.NormalizeTitle())
+                orderby distance ascending, context.GetChildren(seed).Count() descending
                 select seed).FirstOrDefault();
 
             yield return (from seed in new[] {mostDetailedCrc32, mostDetailedTitle}
-                orderby context.GetChildren(seed).Count()
+                orderby context.GetChildren(seed).Count() descending
                 select seed).FirstOrDefault();
         }
     }
