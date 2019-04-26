@@ -1,0 +1,100 @@
+﻿3DO: 26
+Adventure Vision: 93
+Amiga: 1
+Amiga CD32: 39
+Amstrad CPC: 11
+Apple II: 12
+Apple IIgs: 38
+Aquarius: 100
+Arcade: 84
+Arcadia 2001: 99
+Atari 2600: 40
+Atari 5200: 67
+Atari 7800: 70
+Atari 8-bit: 24
+Atari Lynx: 7
+Atari ST: 13
+BBC Micro: 110
+CD-i: 27
+Channel F: 66
+ColecoVision: 47
+Commodore 128: 58
+Commodore 64: 14
+Commodore PET/CBM: 62
+Dragon 32/64: 61
+Dreamcast: 37
+DSiWare: 106
+Famicom Disk System: 91
+FM Towns: 108
+FM-7: 114
+Game Boy: 3
+Game Boy Advance: 4
+Game Boy Color: 57
+Game Gear: 5
+Game Wave: 105
+Game.Com: 77
+GameCube: 23
+Genesis: 6
+Gizmondo: 78
+HyperScan: 104
+Intellivision: 51
+iPhone: 96
+iPod: 72
+Jaguar: 28
+Leapster: 89
+Mac: 17
+Microvision: 90
+MSX: 15
+NEC PC-8801: 109
+NEC PC-9801: 112
+Neo Geo: 25
+Neo Geo CD: 59
+Neo Geo Pocket: 80
+Neo Geo Pocket Color: 81
+N-Gage: 34
+Nintendo 64: 43
+Nintendo 64DD: 101
+Nintendo DS: 52
+Nintendo Entertainment System: 21
+NUON: 85
+Odyssey: 74
+Odyssey 2: 60
+PC: 94
+PC-FX: 75
+Pinball: 83
+Pioneer LaserActive: 92
+Pippin: 102
+PLATO: 111
+PlayStation: 22
+PlayStation 2: 19
+PlayStation 3: 35
+PlayStation Network (PS3): 88
+PlayStation Portable: 18
+RDI Halcyon: 107
+R-Zone: 103
+Satellaview: 98
+Saturn: 42
+Sega 32X: 31
+Sega CD: 29
+Sega Master System: 8
+Sharp X1: 113
+Sharp X68000: 95
+Super Nintendo Entertainment System: 9
+TI-99/4A: 48
+TRS-80: 63
+TRS-80 CoCo: 68
+TurboGrafx-16: 55
+TurboGrafx-CD: 53
+V.Smile: 82
+Vectrex: 76
+VIC-20: 30
+Virtual Boy: 79
+Wii: 36
+Wii Shop: 87
+WonderSwan: 65
+WonderSwan Color: 54
+Xbox: 32
+Xbox 360: 20
+Xbox 360 Games Store: 86
+Zodiac: 64
+ZX Spectrum: 16

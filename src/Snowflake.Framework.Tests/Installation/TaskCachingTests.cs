@@ -62,7 +62,7 @@ namespace Snowflake.Installation
         }
     }
 
-    public sealed class TrivialCounterEnumerableTask : InstallTaskAwaitableEnumerable<int>
+    public sealed class TrivialCounterEnumerableTask : AsyncInstallTaskEnumerable<int>
     {
         public TrivialCounterEnumerableTask()
         {

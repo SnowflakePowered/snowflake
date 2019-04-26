@@ -39,7 +39,7 @@ namespace Snowflake.Model.Game.LibraryExtensions
 
         public IDirectory RuntimeRoot { get; }
 
-        public IEnumerable<IFileRecord> Files => this.FileRecordLibrary.GetFileRecords(this.Root);
+        public IEnumerable<IFileRecord> FileRecords => this.FileRecordLibrary.GetFileRecords(this.Root);
 
         public IDirectory GetRuntimeLocation()
         {

@@ -20,7 +20,7 @@ namespace Snowflake.Model.Game.LibraryExtensions
         IDirectory ResourceRoot { get; }
         IDirectory RuntimeRoot { get; }
 
-        IEnumerable<IFileRecord> Files { get; }
+        IEnumerable<IFileRecord> FileRecords { get; }
 
         IFileRecord? GetFileInfo(IFile file);
 

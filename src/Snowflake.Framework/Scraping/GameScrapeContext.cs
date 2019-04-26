@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using Snowflake.Scraping.Extensibility;
 using System.Reactive.Linq;
 using System.Runtime.CompilerServices;
+using Snowflake.Model.Game;
+using Snowflake.Model.Game.LibraryExtensions;
+using Snowflake.Romfile;
 
 namespace Snowflake.Scraping
 {
@@ -49,6 +52,35 @@ namespace Snowflake.Scraping
             IEnumerable<ICuller> cullers)
             : this(initialSeeds, scrapers, cullers, Guid.NewGuid())
         {
+        }
+
+        public GameScrapeContext(IGame game, IEnumerable<IScraper> scrapers,
+            IEnumerable<ICuller> cullers)
+            : this(GameScrapeContext.MakeGameSeeds(game), scrapers, cullers)
+        {
+
+        }
+
+        private static IEnumerable<SeedContent> MakeGameSeeds(IGame game)
+        {
+            yield return ("platform", game.Record.PlatformId);
+            if (game.Record.Title != null) {
+                yield return ("search_title", game.Record.Title);
+            }
+
+            foreach (var file in game.WithFiles().FileRecords)
+            {
+                if (file.Metadata.ContainsKey("hash_crc32"))
+                {
+                    yield return ("search_crc", file.Metadata["hash_crc32"]!);
+                }
+
+                if (file.MimeType.StartsWith("application/vnd.stone-romfile"))
+                {
+                    var structuredFileName = new StructuredFilename(file.File.Name);
+                    yield return ("search_title", structuredFileName.Title);
+                }
+            }
         }
 
         internal GameScrapeContext(IEnumerable<SeedContent> initialSeeds,

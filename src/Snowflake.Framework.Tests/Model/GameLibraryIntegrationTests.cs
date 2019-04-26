@@ -101,7 +101,7 @@ namespace Snowflake.Model.Tests
             gl.GetExtension<GameFileExtensionProvider>().UpdateFile(record);
 
             var newGame = gl.GetGame(game.Record.RecordId);
-            Assert.NotEmpty(newGame.WithFiles().Files);
+            Assert.NotEmpty(newGame.WithFiles().FileRecords);
         }
     }
 }

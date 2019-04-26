@@ -7,7 +7,7 @@ using Snowflake.Filesystem;
 
 namespace Snowflake.Installation.Tasks
 {
-    public sealed class ExtractZipTask : InstallTaskAwaitableEnumerable<IFile?>
+    public sealed class ExtractZipTask : AsyncInstallTaskEnumerable<IFile?>
     {
         public ExtractZipTask(TaskResult<FileInfo> fileInfo, IDirectory destination)
         {
