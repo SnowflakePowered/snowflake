@@ -33,6 +33,6 @@ namespace Snowflake.Configuration
         /// <param name="t">The type to convert</param>
         /// <param name="value">The value to convert</param>
         /// <returns>The converted value</returns>
-        string this[Type t, object value] { get; }
+        string this[Type t, object? value] { get; }
     }
 }

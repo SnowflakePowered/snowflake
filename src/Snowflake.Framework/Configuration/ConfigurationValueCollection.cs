@@ -63,7 +63,7 @@ namespace Snowflake.Configuration
                 var descriptor = Instantiate.CreateInstance(sectionDescType,
                     new[] {typeof(string)},
                     Expression.Constant(section.name)) as IConfigurationSectionDescriptor;
-                foreach (var tuple in values.Where(s => s.section == descriptor.SectionKey))
+                foreach (var tuple in values.Where(s => s.section == descriptor?.SectionKey))
                 {
                     Type? t = descriptor?[tuple.option]?.Type;
                     typedValues.Add((tuple.section, tuple.option,

@@ -53,7 +53,7 @@ namespace Snowflake.JsonConverters
         /// <param name="existingValue">Ignored</param>
         /// <param name="serializer">Newtonsoft.Json.JsonSerializer to use.</param>
         /// <returns>Deserialized Object</returns>
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
+        public override object? ReadJson(JsonReader reader, Type objectType, object existingValue,
             JsonSerializer serializer)
         {
             if (reader.TokenType == JsonToken.Null)

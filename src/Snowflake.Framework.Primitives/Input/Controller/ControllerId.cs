@@ -11,9 +11,9 @@ namespace Snowflake.Input.Controller
 
         private static Regex ControllerIdRegex = new Regex("^[A-Z0-9_]+(_CONTROLLER|_DEVICE|_LAYOUT)$",
             RegexOptions.Compiled);
-        public ControllerId(string id)
+        private ControllerId(string id)
         {
-            this.ControllerIdString = id?.ToUpperInvariant();
+            this.ControllerIdString = id.ToUpperInvariant();
             if (this.ControllerIdString == null || !ControllerIdRegex.IsMatch(this.ControllerIdString)) throw new InvalidControllerIdException(id);
         }
 

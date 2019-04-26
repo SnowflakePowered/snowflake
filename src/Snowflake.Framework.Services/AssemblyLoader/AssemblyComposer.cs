@@ -10,7 +10,7 @@ using Snowflake.Services.Logging;
 
 namespace Snowflake.Services.AssemblyLoader
 {
-    public class AssemblyComposer
+    internal class AssemblyComposer
     {
         private readonly IList<IModule> modules;
         private readonly IList<(IModule Module, IComposable Composable)> moduleComposables;

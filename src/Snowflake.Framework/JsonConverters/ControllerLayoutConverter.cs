@@ -33,7 +33,7 @@ namespace Snowflake.JsonConverters
                 layout.Add(controllerElement.elementKey, controllerElement.elementInfo);
             }
 
-            return new ControllerLayout(new ControllerId(layoutName), platformsWhitelist.Cast<PlatformId>(), friendlyName, layout, isDevice);
+            return new ControllerLayout(layoutName, platformsWhitelist.Cast<PlatformId>(), friendlyName, layout, isDevice);
         }
     }
 }

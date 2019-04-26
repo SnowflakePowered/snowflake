@@ -31,10 +31,10 @@ namespace Snowflake.Configuration.Input
         public IConfigurationValueCollection ValueCollection { get; }
 
         /// <inheritdoc/>
-        public object this[string key]
+        public object? this[string key]
         {
-            get { return configurationInterceptor.Values[this.Descriptor, key]; }
-            set { this.configurationInterceptor.Values[this.Descriptor, key].Value = value; }
+            get => configurationInterceptor.Values[this.Descriptor, key]; 
+            set => this.configurationInterceptor.Values[this.Descriptor, key].Value = value;
         }
 
         private readonly ConfigurationInterceptor configurationInterceptor;
