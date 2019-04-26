@@ -50,7 +50,7 @@ namespace Snowflake.Persistence
         /// <param name="query">The SQL query to execute</param>
         /// <param name="param">The query parameters</param>
         /// <returns>The requested data.</returns>
-        public IEnumerable<T> Query<T>(string query, object param = null)
+        public IEnumerable<T> Query<T>(string query, object? param = null)
         {
             return this.Query(connection => connection.Query<T>(query, param));
         }
@@ -61,7 +61,7 @@ namespace Snowflake.Persistence
         /// </summary>
         /// <param name="query">The SQL query to execute</param>
         /// <param name="param">The query parameters</param>
-        public void Execute(string query, object param = null)
+        public void Execute(string query, object? param = null)
         {
             this.Execute(connection => connection.Execute(query, param));
         }

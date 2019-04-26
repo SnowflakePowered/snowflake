@@ -29,7 +29,7 @@ namespace Snowflake.JsonConverters
                     from hash in property?.Values<JToken>().Values<string>().DefaultIfEmpty(string.Empty)
                     select new {FileName = property?.Name, Hash = hash})?
                 .Select(p => new BiosFile(p.FileName, p.Hash))
-                .ToList()
+                .ToList() ?? Enumerable.Empty<IBiosFile>()
                 : Enumerable.Empty<IBiosFile>();
 
             return new PlatformInfo(platformId, friendlyName, metadata, fileTypes, biosFiles, maximumInputs);

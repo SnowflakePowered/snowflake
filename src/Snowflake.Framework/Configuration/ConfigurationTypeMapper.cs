@@ -23,7 +23,7 @@ namespace Snowflake.Configuration
         /// <inheritdoc/>
         public void Add<T>(Func<T, string> converter)
         {
-            this.typeMappers.Add(typeof(T), value => converter.Invoke((T) value));
+            this.typeMappers.Add(typeof(T), value => converter.Invoke((T) value!));
         }
 
         /// <inheritdoc/>

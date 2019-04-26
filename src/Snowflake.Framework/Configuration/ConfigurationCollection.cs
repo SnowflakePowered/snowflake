@@ -49,9 +49,9 @@ namespace Snowflake.Configuration
         /// <inheritdoc/>
         public IEnumerator<KeyValuePair<string, IConfigurationSection>> GetEnumerator()
         {
-            return this.Descriptor.SectionKeys.Select(k => new KeyValuePair<string, IConfigurationSection>(
-                    k, this.collectionInterceptor.Values[k] as IConfigurationSection))
-                .GetEnumerator(); // ensure order
+            return this.Descriptor.SectionKeys.Select(k => new KeyValuePair<string, IConfigurationSection?>(
+                    k, this.collectionInterceptor.Values[k] as IConfigurationSection))?
+                .GetEnumerator() ?? Enumerable.Empty<KeyValuePair<string, IConfigurationSection>>().GetEnumerator(); // ensure order
         }
 
         /// <inheritdoc/>

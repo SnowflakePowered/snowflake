@@ -18,7 +18,7 @@ namespace Snowflake.Model.Database.Models
         {
             modelBuilder.Entity<RecordMetadataModel>()
                 .HasOne(r => r.Record)
-                .WithMany(r => r.Metadata)
+                .WithMany(r => r!.Metadata)
                 .HasForeignKey(r => r.RecordID)
                 .IsRequired();
 

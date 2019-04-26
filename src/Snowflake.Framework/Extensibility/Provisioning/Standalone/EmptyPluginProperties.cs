@@ -13,9 +13,9 @@ namespace Snowflake.Extensibility.Provisioning.Standalone
 
         public IEnumerable<string> PropertyKeys => Enumerable.Empty<string>();
 
-        public string? Get(string key)
+        public string Get(string key)
         {
-            return null;
+            return String.Empty;
         }
 
         public IDictionary<string, string> GetDictionary(string key)

@@ -17,7 +17,7 @@ namespace Snowflake.Extensibility.Provisioning
         IEnumerable<string> PropertyKeys { get; }
 
         /// <summary>
-        /// Gets a single property
+        /// Gets a single property. If it does not exists, returns the empty string.
         /// </summary>
         /// <param name="key">The key of the property</param>
         /// <returns>The property to get</returns>
