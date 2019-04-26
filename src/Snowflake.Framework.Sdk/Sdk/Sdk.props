@@ -27,7 +27,6 @@
     <DotNetCliToolReference Include="dotnet-snowflake" Version="$(SnowflakeSDKToolingVersion)" />
   </ItemGroup>
 
-
   <ItemGroup Condition="Exists('module.json')">
     <None Update="module.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
