@@ -29,7 +29,7 @@ namespace Snowflake.Stone.FileSignatures.Nintendo
         public bool HeaderSignatureMatches(Stream fileContents)
         {
             fileContents.Seek(0, SeekOrigin.Begin);
-            using BinaryReader reader = new BinaryReader(new Int32SwapStream(fileContents)); // always read from a 32swapped
+            using BinaryReader reader = new BinaryReader(new Int32SwapStream(fileContents)); // always read from as 32swapped
             return reader.ReadUInt32() == this.formatByte;
         }
 
@@ -40,7 +40,7 @@ namespace Snowflake.Stone.FileSignatures.Nintendo
             byte[] buffer = new byte[8];
             swappedRomStream.Seek(0x38, SeekOrigin.Begin);
             swappedRomStream.Read(buffer, 0, buffer.Length);
-            string code = Encoding.UTF8.GetString(buffer).Trim('\0');
+            string code = Encoding.UTF8.GetString(buffer).Trim('\0').Trim();
             return code;
         }
 
@@ -51,7 +51,7 @@ namespace Snowflake.Stone.FileSignatures.Nintendo
             byte[] buffer = new byte[20];
             swappedRomStream.Seek(0x20, SeekOrigin.Begin);
             swappedRomStream.Read(buffer, 0, buffer.Length);
-            string code = Encoding.UTF8.GetString(buffer).Trim('\0');
+            string code = Encoding.UTF8.GetString(buffer).Trim('\0').Trim();
             return code;
         }
     }
