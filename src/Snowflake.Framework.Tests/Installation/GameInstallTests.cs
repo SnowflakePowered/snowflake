@@ -15,7 +15,7 @@ using Xunit;
 using Zio;
 using Zio.FileSystems;
 
-namespace Snowflake.Installation
+namespace Snowflake.Installation.Tests
 {
     public class GameInstallTests
     {

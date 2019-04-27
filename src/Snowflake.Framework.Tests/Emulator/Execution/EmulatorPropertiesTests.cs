@@ -8,7 +8,7 @@ using Snowflake.Extensibility.Provisioning;
 using Snowflake.Services;
 using Xunit;
 
-namespace Snowflake.Emulator.Execution
+namespace Snowflake.Emulator.Execution.Tests
 {
     public class EmulatorPropertiesTests
     {

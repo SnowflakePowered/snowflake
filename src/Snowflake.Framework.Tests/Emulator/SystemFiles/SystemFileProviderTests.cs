@@ -9,7 +9,7 @@ using Snowflake.Services;
 using Snowflake.Support.Execution;
 using Xunit;
 
-namespace Snowflake.Execution.SystemFiles
+namespace Snowflake.Execution.SystemFiles.Tests
 {
     public class SystemFileProviderTests
     {
