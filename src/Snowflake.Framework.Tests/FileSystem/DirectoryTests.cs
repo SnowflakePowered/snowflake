@@ -8,7 +8,7 @@ using Zio;
 using Zio.FileSystems;
 using FS = Snowflake.Filesystem;
 
-namespace Snowflake.FileSystem
+namespace Snowflake.FileSystem.Tests
 {
     public class DirectoryTests
     {

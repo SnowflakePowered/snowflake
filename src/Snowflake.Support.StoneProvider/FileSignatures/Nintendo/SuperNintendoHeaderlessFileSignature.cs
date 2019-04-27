@@ -11,12 +11,11 @@ namespace Snowflake.Stone.FileSignatures.Nintendo
     public class SuperNintendoHeaderlessFileSignature : IFileSignature
     {
         /// <inheritdoc/>
-        public byte[] HeaderSignature => new byte[7] {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+        public byte[] HeaderSignature => new byte[] { };
 
         /// <inheritdoc/>
         public bool HeaderSignatureMatches(Stream romStream)
         {
-            byte[] buffer = new byte[7];
             int offset = 0;
             if (romStream.Length % 1024 == 0x200)
             {
@@ -27,28 +26,31 @@ namespace Snowflake.Stone.FileSignatures.Nintendo
             {
                 return false;
             }
-
+           
             romStream.Seek(0xFFD5 + offset, SeekOrigin.Begin);
             int hiRom = romStream.ReadByte();
             romStream.Seek(0x7FD5 + offset, SeekOrigin.Begin);
             int loRom = romStream.ReadByte();
-            if (Enumerable.Range(0x20, 0x35).Contains(hiRom))
+
+            // 0x21 = HiROM, 0x23 = SA-1 ROM, 0x31 = HiROM + FastROM, 0x35 = ExHiROM
+            // 0x20 = LoROM, 0x30 = LoROM + FastROM, 0x32 = ExLoROM
+            bool isHiRom = (hiRom == 0x21 || hiRom == 0x23 || hiRom == 0x31 || hiRom == 0x35);
+            bool isLoRom = (loRom == 0x20 || loRom == 0x30 || loRom == 0x32);
+
+            if (isHiRom)
             {
-                offset += 0x8000; // 0x7fff + 0x8000 = 0xffff
+                offset += 0x8000;
             }
 
-            if (!Enumerable.Range(0x20, 0x35).Contains(hiRom) && !Enumerable.Range(0x20, 0x35).Contains(loRom))
-            {
-                return false;
-            }
+            // Neither HiROM nor LoROM
+            if (!isHiRom && !isLoRom) return false;
 
-            romStream.Seek(0x7FB6 + offset, SeekOrigin.Begin);
-            romStream.Read(buffer, 0, buffer.Length);
-            romStream.Seek(0x7FDA + offset, SeekOrigin.Begin);
-            int fixedByte = romStream.ReadByte();
-            return buffer.SequenceEqual(this.HeaderSignature) && fixedByte == 0x33;
+            byte[] checksumBuf = new byte[4];
+            romStream.Seek(0x7FDC + offset, SeekOrigin.Begin);
+            romStream.Read(checksumBuf, 0, 4);
 
-            // this should equal to 7 bytes of 0 starting from 0x7FB6 (+ 0x200 if HiRom)
+            // Sum of checksum bytes should be 0x1FE
+            return checksumBuf[0] + checksumBuf[1] + checksumBuf[2] + checksumBuf[3] == 0x1FE;
         }
 
         /// <inheritdoc/>
@@ -68,14 +70,21 @@ namespace Snowflake.Stone.FileSignatures.Nintendo
 
             romStream.Seek(0xFFD5 + offset, SeekOrigin.Begin);
             int hiRom = romStream.ReadByte();
-            if (Enumerable.Range(0x20, 0x35).Contains(hiRom))
+
+            // 0x21 = HiROM, 0x23 = SA-1 ROM, 0x31 = HiROM + FastROM, 0x35 = ExHiROM
+            // 0x20 = LoROM, 0x30 = LoROM + FastROM, 0x32 = ExLoROM
+            bool isHiRom = (hiRom == 0x21 || hiRom == 0x23 || hiRom == 0x31 || hiRom == 0x35);
+
+            if (isHiRom)
             {
-                offset += 0x8000; // 0x7fff + 0x8000 = 0xffff
+                offset += 0x8000;
             }
 
             romStream.Seek(0x7FB2 + offset, SeekOrigin.Begin);
             romStream.Read(buffer, 0, buffer.Length);
-            string code = Encoding.UTF8.GetString(buffer).Trim('\0');
+            if (BitConverter.ToUInt32(buffer, 0) == 0xFFFFFFFF) return String.Empty;
+
+            string code = Encoding.UTF8.GetString(buffer).Trim('\0').Trim();
             return code;
         }
 
@@ -96,14 +105,19 @@ namespace Snowflake.Stone.FileSignatures.Nintendo
 
             romStream.Seek(0xFFD5 + offset, SeekOrigin.Begin);
             int hiRom = romStream.ReadByte();
-            if (Enumerable.Range(0x20, 0x35).Contains(hiRom))
+
+            // 0x21 = HiROM, 0x23 = SA-1 ROM, 0x31 = HiROM + FastROM, 0x35 = ExHiROM
+            // 0x20 = LoROM, 0x30 = LoROM + FastROM, 0x32 = ExLoROM
+            bool isHiRom = (hiRom == 0x21 || hiRom == 0x23 || hiRom == 0x31 || hiRom == 0x35);
+
+            if (isHiRom)
             {
-                offset += 0x8000; // 0x7fff + 0x8000 = 0xffff
+                offset += 0x8000;
             }
 
             romStream.Seek(0x7FC0 + offset, SeekOrigin.Begin);
             romStream.Read(buffer, 0, buffer.Length);
-            string code = Encoding.UTF8.GetString(buffer).Trim('\0');
+            string code = Encoding.UTF8.GetString(buffer).Trim('\0').Trim();
             return code;
         }
     }

@@ -15,7 +15,7 @@ using Snowflake.Input.Device;
 using Snowflake.Tests;
 using Xunit;
 
-namespace Snowflake.Emulator.Execution
+namespace Snowflake.Emulator.Execution.Tests
 {
     public class ConfigurationFactoryTests
     {

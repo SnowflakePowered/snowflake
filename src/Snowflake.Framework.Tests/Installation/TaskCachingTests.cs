@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Snowflake.Installation
+namespace Snowflake.Installation.Tests
 {
     public class TaskCachingTests
     {

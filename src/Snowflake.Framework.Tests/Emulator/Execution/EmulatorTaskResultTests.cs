@@ -4,7 +4,7 @@ using System.Text;
 using Snowflake.Execution.Extensibility;
 using Xunit;
 
-namespace Snowflake.Emulator.Execution
+namespace Snowflake.Emulator.Execution.Tests
 {
     public class EmulatorTaskResultTests
     {

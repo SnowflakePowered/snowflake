@@ -9,7 +9,7 @@ using Snowflake.Services;
 using Snowflake.Support.Execution;
 using Xunit;
 
-namespace Snowflake.Execution.Saving
+namespace Snowflake.Execution.Saving.Tests
 {
     public class SaveLocationProviderTests
     {
