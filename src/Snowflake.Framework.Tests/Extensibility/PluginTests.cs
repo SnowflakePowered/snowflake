@@ -73,7 +73,7 @@ namespace Snowflake.Extensibility.Tests
         public void EmptyPluginProps_Test()
         {
             var props = EmptyPluginProperties.EmptyProperties;
-            Assert.Null(props.Get(string.Empty));
+            Assert.Equal(String.Empty, props.Get(string.Empty));
             Assert.Empty(props.PropertyKeys);
             Assert.Empty(props.GetEnumerable(string.Empty));
             Assert.Empty(props.GetDictionary(string.Empty));

@@ -13,8 +13,8 @@ namespace Snowflake.Input.Controller
             RegexOptions.Compiled);
         private ControllerId(string id)
         {
-            this.ControllerIdString = id.ToUpperInvariant();
-            if (this.ControllerIdString == null || !ControllerIdRegex.IsMatch(this.ControllerIdString)) throw new InvalidControllerIdException(id);
+            this.ControllerIdString = id?.ToUpperInvariant() ?? "CONTROLLER_UNKNOWN";
+            if (!ControllerIdRegex.IsMatch(this.ControllerIdString)) throw new InvalidControllerIdException(id);
         }
 
         public bool Equals(ControllerId other)

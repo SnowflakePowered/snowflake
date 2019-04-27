@@ -30,7 +30,7 @@ namespace Snowflake.Extensibility.Tests
             var propRoot =
                 JsonConvert.DeserializeObject<JObject>(TestUtilities.GetStringResource("Loader.plugin.json"));
             IPluginProperties properties = new JsonPluginProperties(propRoot);
-            Assert.Null(properties.Get("notInObject"));
+            Assert.Equal(String.Empty, properties.Get("notInObject"));
             Assert.Empty(properties.GetEnumerable("notInObject"));
             Assert.Empty(properties.GetDictionary("notInObject"));
         }
