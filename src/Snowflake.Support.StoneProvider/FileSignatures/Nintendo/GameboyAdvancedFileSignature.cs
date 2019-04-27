@@ -44,7 +44,7 @@ namespace Snowflake.Stone.FileSignatures.Nintendo
             byte[] buffer = new byte[12]; // read 12 bytes
             romStream.Seek(0xA0, SeekOrigin.Begin);
             romStream.Read(buffer, 0, buffer.Length);
-            string name = Encoding.UTF8.GetString(buffer).Trim('\0');
+            string name = Encoding.UTF8.GetString(buffer).Trim('\0').Trim();
             return name;
         }
     }

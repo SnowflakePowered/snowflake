@@ -15,10 +15,11 @@ namespace Snowflake.Stone.FileSignatures.Nintendo
         public bool HeaderSignatureMatches(Stream romStream)
         {
             byte[] buffer = new byte[8]; // read the 8 bytes
-            romStream.Seek(0x104, SeekOrigin.Begin); // seek to nntendo logo
+            romStream.Seek(0x104, SeekOrigin.Begin); // seek to nintendo logo
             romStream.Read(buffer, 0, buffer.Length);
             romStream.Seek(0x143, SeekOrigin.Begin);
-            return buffer.SequenceEqual(this.HeaderSignature);
+            int cgbMagic = romStream.ReadByte();
+            return buffer.SequenceEqual(this.HeaderSignature) && (cgbMagic != 0xC0 && cgbMagic != 0x80);
         }
 
         /// <inheritdoc/>
@@ -27,7 +28,7 @@ namespace Snowflake.Stone.FileSignatures.Nintendo
             byte[] buffer = new byte[16]; // gb internal names are 16 bytes long
             romStream.Seek(0x134, SeekOrigin.Begin);
             romStream.Read(buffer, 0, buffer.Length);
-            string code = Encoding.UTF8.GetString(buffer).Trim('\0');
+            string code = Encoding.UTF8.GetString(buffer).Trim('\0').Trim();
             return code;
         }
 
