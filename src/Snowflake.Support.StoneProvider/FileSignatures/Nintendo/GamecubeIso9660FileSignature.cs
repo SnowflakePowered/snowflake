@@ -24,7 +24,7 @@ namespace Snowflake.Stone.FileSignatures.Nintendo
         public string GetSerial(Stream romStream)
         {
             romStream.Seek(0, SeekOrigin.Begin);
-            byte[] buffer = new byte[5]; // game ids are 5 bytes long
+            byte[] buffer = new byte[6]; // game ids are 6 bytes long
             romStream.Read(buffer, 0, buffer.Length);
             string code = Encoding.UTF8.GetString(buffer);
             return code;

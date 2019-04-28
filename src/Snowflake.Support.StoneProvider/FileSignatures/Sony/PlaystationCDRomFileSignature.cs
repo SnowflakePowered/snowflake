@@ -9,7 +9,7 @@ using Snowflake.Romfile;
 
 namespace Snowflake.Stone.FileSignatures.Sony
 {
-    public sealed class PlaystationRawDiscFileSignature : IFileSignature
+    public sealed class PlaystationCDRomFileSignature : IFileSignature
     {
         /// <inheritdoc/>
         public byte[] HeaderSignature => Encoding.UTF8.GetBytes("PLAYSTATION");

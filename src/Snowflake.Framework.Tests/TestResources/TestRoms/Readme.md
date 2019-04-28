@@ -26,6 +26,23 @@ The ROMs contained here for testing purposes were ascertained to be freely distr
   * [PeterLemon/N64](https://github.com/PeterLemon/N64)
 * `rxmm64.v64`
   * [NESWorld](http://www.nesworld.com/article.php?system=n64&data=n64homebrew)
+* `guitarfun.bin`
+  * [PSXPlace](https://www.psx-place.com/resources/guitar-fun.558/)
+  * Generated using cdgenPS2
 # ROM Headers
+The following files were created from legal backups of commercially available ROM files with all non header data removed from the ROM. 
 
-The following files were created from legal backups of commercially available ROM files with all non header data removed from the ROM. T
+* `psptest.iso`, `psptest.cso`
+  * Originally from a dump of **Everyday Shooter (USA)**.
+  * All files except header files were deleted from the dump.
+  * BOOT.BIN, EBOOT.BIN were zeroed out.
+  * ICON0.PNG, PIC0.PNG, PIC1PNG were left untouched.
+* `gctest.iso`
+  * Originally from a dump of **Taxi 3 (France)**
+  * Extracted the boot.bin, renamed to gctest.iso.
+  * ID6 was modified to be ZZZZ00
+  * Game title was modified to be GAMECUBE
+* `psxtest.bin`
+  * Originally from a dump of the first disk of **Valkyrie Profile (USA)**
+  * `SLUS_011.56` was zeroed out
+  * `SLUS_011.56` and `SYSTEM.CNF` were extracted, then rebuilt using PSx CD-Gen, then patched with Disc Patcher
