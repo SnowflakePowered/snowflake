@@ -26,7 +26,17 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDXA
                 block.Read(buf, 0, buf.Length);
             }
 
-            return Encoding.UTF8.GetString(buf).Contains("Sony Computer Entertainment");
+            bool psHeader = Encoding.UTF8.GetString(buf).Contains("Sony Computer Entertainment");
+            string syscnf = this.GetSystemCnf();
+            if (syscnf == null) return false;
+            string exe = syscnf.Substring(14, 11);
+            if (!this.disk.Files.ContainsKey(exe)) return false;
+            var file = this.disk.Files[exe];
+            byte[] exebuf = new byte[8];
+            using var exeFile = file.OpenFile();
+            exeFile.Read(exebuf, 0, 8);
+            string exeHeader = Encoding.UTF8.GetString(exebuf);
+            return psHeader && (exeHeader == "PS-X EXE" || exeHeader == "CPE");
         }
 
         public string GetSystemCnf()
