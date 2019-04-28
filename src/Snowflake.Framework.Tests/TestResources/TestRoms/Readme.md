@@ -77,3 +77,6 @@ The following files were created from backups of commercially available ROM file
   * Originally from a dump of **Sonic The Hedgehog (USA)**
   * All data except `0x7FF0-0x7FFF` was filled with padding bytes `0xFF`.
   * Checksum is no longer valid.
+* `dctest.bin`
+  * Originally from a dump of **Crazy Taxi (USA)**
+  * All data past `0x10F` was deleted.

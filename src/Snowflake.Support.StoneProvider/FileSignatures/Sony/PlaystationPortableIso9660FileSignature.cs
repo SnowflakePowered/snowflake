@@ -16,7 +16,7 @@ namespace Snowflake.Stone.FileSignatures.Sony
         {
             romStream.Seek(0, SeekOrigin.Begin);
             using CDReader reader = new CDReader(romStream, true);
-            return reader.DirectoryExists(Encoding.UTF8.GetString(this.HeaderSignature));
+            return reader.DirectoryExists("PSP_GAME");
         }
 
         /// <inheritdoc/>
