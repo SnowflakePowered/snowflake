@@ -4,7 +4,7 @@ using Snowflake.Romfile;
 
 namespace Snowflake.Stone.FileSignatures.Sega
 {
-    public sealed class SegaGameGearFileSignature : IFileSignature
+    public sealed class SegaMasterSystemFileSignature : IFileSignature
     {
         /// <inheritdoc/>
         public byte[] HeaderSignature => new byte[8] {0x54, 0x4D, 0x52, 0x20, 0x53, 0x45, 0x47, 0x41}; // 'TMR SEGA'
@@ -17,7 +17,7 @@ namespace Snowflake.Stone.FileSignatures.Sega
             romStream.Read(buffer, 0, buffer.Length);
             romStream.Seek(0x7FFF, SeekOrigin.Begin);
             int regionCode = romStream.ReadByte() >> 4;
-            return buffer.SequenceEqual(this.HeaderSignature) && (regionCode == 5 || regionCode == 6 || regionCode == 7);
+            return buffer.SequenceEqual(this.HeaderSignature) && (regionCode == 3 || regionCode == 4);
         }
 
         /// <inheritdoc/>
@@ -28,8 +28,7 @@ namespace Snowflake.Stone.FileSignatures.Sega
             romStream.Read(buffer, 0, buffer.Length);
             string part1 = ((int) buffer[0]).ToString("X");
             string part2 = ((int) buffer[1]).ToString("X");
-            string part3 = ((int) buffer[2]).ToString();
-            part3 = part3.Remove(part3.Length - 1);
+            string part3 = (((int) buffer[2] >> 4)).ToString();
             if (part1.Length == 1)
             {
                 part1 = "0" + part1;

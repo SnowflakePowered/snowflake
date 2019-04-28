@@ -19,6 +19,7 @@ namespace Snowflake.Stone.FileSignatures.Sony
         {
             romStream.Seek(0, SeekOrigin.Begin);
             var disk = new PlaystationDisk(new CDXADisk(romStream));
+            
             return disk.IsPlaystation();
         }
 

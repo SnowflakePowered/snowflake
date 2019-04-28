@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Text;
 using Snowflake.Romfile;
 using Snowflake.Stone.FileSignatures.Nintendo;
+using Snowflake.Stone.FileSignatures.Sega;
 using Snowflake.Stone.FileSignatures.Sony;
 using Snowflake.Tests;
 using Xunit;
 
-namespace Snowflake.FileSignatures.Tests
+namespace Snowflake.Stone.FileSignatures.Tests
 {
     public class FileSignatureTests
     {
@@ -28,6 +29,13 @@ namespace Snowflake.FileSignatures.Tests
         [InlineData(typeof(Playstation2CDRomFileSignature), "guitarfun.bin")]
         [InlineData(typeof(PlaystationCDRomFileSignature), "psxtest.bin", typeof(Playstation2CDRomFileSignature))]
         [InlineData(typeof(Playstation2Iso9660FileSignature), "ps2test.iso", typeof(Playstation2CDRomFileSignature))]
+        [InlineData(typeof(SegaGenesisFileSignature), "SpriteMaskingTestRom.gen", typeof(Sega32XFileSignature))]
+        [InlineData(typeof(Sega32XFileSignature), "devstertest12.32X", typeof(SegaGenesisFileSignature))]
+        [InlineData(typeof(SegaGameGearFileSignature), "jptest.gg", typeof(SegaMasterSystemFileSignature))]
+        [InlineData(typeof(SegaGameGearFileSignature), "exporttest.gg", typeof(SegaMasterSystemFileSignature))]
+        [InlineData(typeof(SegaMasterSystemFileSignature), "exporttest.sms", typeof(SegaGameGearFileSignature))]
+        [InlineData(typeof(SegaMasterSystemFileSignature), "exporttest2.sms", typeof(SegaGameGearFileSignature))]
+        [InlineData(typeof(SegaGameGearFileSignature), "jptest2.gg", typeof(SegaMasterSystemFileSignature))]
 
         public void Verify_Test(Type fileSignature, string filename, Type exclusionFs = null)
         {
@@ -59,6 +67,13 @@ namespace Snowflake.FileSignatures.Tests
         [InlineData(typeof(Playstation2CDRomFileSignature), "guitarfun.bin", "")]
         [InlineData(typeof(PlaystationCDRomFileSignature), "psxtest.bin", "SLUS-01156")]
         [InlineData(typeof(Playstation2Iso9660FileSignature), "ps2test.iso", "SLUS-21008")]
+        [InlineData(typeof(SegaGenesisFileSignature), "SpriteMaskingTestRom.gen", "T-XXXXX")]
+        [InlineData(typeof(SegaGameGearFileSignature), "jptest.gg", "3204")]
+        [InlineData(typeof(SegaGameGearFileSignature), "exporttest.gg", "2408")]
+        [InlineData(typeof(SegaMasterSystemFileSignature), "exporttest.sms", "7076")]
+        [InlineData(typeof(SegaMasterSystemFileSignature), "exporttest2.sms", "27047")]
+        [InlineData(typeof(SegaGameGearFileSignature), "jptest2.gg", "3336")]
+        [InlineData(typeof(Sega32XFileSignature), "devstertest12.32X", "MK-0000 -00")]
 
         public void Verify_Serial(Type fileSignature, string filename, string expected)
         {
@@ -86,6 +101,13 @@ namespace Snowflake.FileSignatures.Tests
         [InlineData(typeof(Playstation2CDRomFileSignature), "guitarfun.bin", "PS2TEST")]
         [InlineData(typeof(PlaystationCDRomFileSignature), "psxtest.bin", "VALKYRIE")]
         [InlineData(typeof(Playstation2Iso9660FileSignature), "ps2test.iso", "KATAMARI")]
+        [InlineData(typeof(SegaGenesisFileSignature), "SpriteMaskingTestRom.gen", "Sprite Masking Test ROM")]
+        [InlineData(typeof(SegaGameGearFileSignature), "jptest.gg", null)]
+        [InlineData(typeof(SegaGameGearFileSignature), "exporttest.gg", null)]
+        [InlineData(typeof(SegaMasterSystemFileSignature), "exporttest.sms", null)]
+        [InlineData(typeof(SegaGameGearFileSignature), "jptest2.gg", null)]
+        [InlineData(typeof(SegaMasterSystemFileSignature), "exporttest2.sms", null)]
+        [InlineData(typeof(Sega32XFileSignature), "devstertest12.32X", "32X GAME")]
 
         public void Verify_InternalName(Type fileSignature, string filename, string expected)
         {

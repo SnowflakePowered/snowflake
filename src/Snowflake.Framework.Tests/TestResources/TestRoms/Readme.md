@@ -1,4 +1,4 @@
-# Test Roms
+# Test ROMs
 
 The ROMs contained here for testing purposes were ascertained to be freely distributable but not necessarily open source. Regardless, efforts have been made to ensure that they are non-commercial or otherwise distributable without liability. If you wish for a file to be removed from the repository, please file an issue and it will be taken care of as soon as possible.
 
@@ -29,8 +29,15 @@ The ROMs contained here for testing purposes were ascertained to be freely distr
 * `guitarfun.bin`
   * [PSXPlace](https://www.psx-place.com/resources/guitar-fun.558/)
   * Generated using cdgenPS2
+* `SpriteMaskingTestRom.gen`
+  * [SegaRetro](https://segaretro.org/Sprite_Masking_and_Overflow_Test_ROM)
+* `devstertest12.32X`
+  * [devster](http://devster.monkeeh.com/segapage.html)
+* `240psuite.cdi`
+  * [JunkerHq](http://junkerhq.net/xrgb/index.php?title=240p_test_suite)
+
 # ROM Headers
-The following files were created from legal backups of commercially available ROM files with all non header data removed from the ROM. 
+The following files were created from backups of commercially available ROM files with all non header data removed from the ROM. Since little if any copyrighted game data still exists in these files, they are redistributed here for testing purposes. Obviously, none of these ROM files will run in any emulator or hardware, since all game data has been removed. This was only used as a final resort when freely available homebrew ROMs were not suitable for header confirmation purposes.
 
 * `psptest.iso`, `psptest.cso`
   * Originally from a dump of **Everyday Shooter (USA)**.
@@ -46,3 +53,27 @@ The following files were created from legal backups of commercially available RO
   * Originally from a dump of the first disk of **Valkyrie Profile (USA)**
   * `SLUS_011.56` was zeroed out
   * `SLUS_011.56` and `SYSTEM.CNF` were extracted, then rebuilt using PSx CD-Gen, then patched with Disc Patcher
+* `ps2test.iso`
+  * Originally from a dump of **Katamari Damacy (USA)**
+  * `SLUS_210.08` was zeroed out
+  * Files besides `SLUS_210.08` and `SYSTEM.CNF` were removed from the ISO
+* `jptest.gg`
+  * Originally from a dump of **G-LOC Air Battle** for the Game Gear
+  * All data except `0x7FF0-0x7FFF` was filled with padding bytes `0xFF`.
+  * Checksum is no longer valid.
+* `exporttest.sms`
+  * Originally from a dump of **Sonic The Hedgehog (USA)**
+  * All data except `0x7FF0-0x7FFF` was filled with padding bytes `0xFF`.
+  * Checksum is no longer valid.
+* `exporttest2.sms`
+  * Originally from a dump of **Predator 2 (Europe)**
+  * All data except `0x7FF0-0x7FFF` was filled with padding bytes `0xFF`.
+  * Checksum is no longer valid.
+* `jptest2.gg`
+  * Originally from a dump of **Aladdin** for the Game Gear
+  * All data except `0x7FF0-0x7FFF` was filled with padding bytes `0xFF`.
+  * Checksum is no longer valid.
+* `exporttest.gg`
+  * Originally from a dump of **Sonic The Hedgehog (USA)**
+  * All data except `0x7FF0-0x7FFF` was filled with padding bytes `0xFF`.
+  * Checksum is no longer valid.

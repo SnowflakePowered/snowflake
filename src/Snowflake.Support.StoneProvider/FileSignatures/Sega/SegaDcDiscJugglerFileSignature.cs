@@ -9,7 +9,7 @@ using Snowflake.Services;
 
 namespace Snowflake.Stone.FileSignatures.Sega
 {
-    public sealed class SegaDcRawImageFileSignature : IFileSignature
+    public sealed class SegaDcDiscJugglerFileSignature : IFileSignature
     {
         /// <inheritdoc/>
         public byte[] HeaderSignature => new byte[15]
