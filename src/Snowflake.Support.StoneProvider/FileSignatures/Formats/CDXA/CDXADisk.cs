@@ -43,7 +43,7 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDXA
                     s.Seek(0x20, SeekOrigin.Begin);
                     int filenameLength = reader.ReadByte();
                     string fileName = Encoding.UTF8.GetString(reader.ReadBytes(filenameLength)).Split(';')[0];
-                    if (attr == 1)
+                    if (attr == 1 || attr == 0)
                     {
                         records.Add(new CDXARecord(lba, length, $@"{parentDir}{fileName}"));
                     }

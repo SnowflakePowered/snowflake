@@ -45,7 +45,7 @@ namespace Snowflake.Services
 
             this.FileSignatures = new Dictionary<string, IFileSignature>()
             {
-                {"application/vnd.stone-romfile.sony.psx-discimage", new PlaystationRawDiscFileSignature()},
+                {"application/vnd.stone-romfile.sony.psx-discimage", new PlaystationCDRomFileSignature()},
                 {"application/vnd.stone-romfile.sony.ps2-discimage", new Playstation2Iso9660FileSignature()},
                 {"application/vnd.stone-romfile.sony.psp-discimage", new PlaystationPortableIso9660FileSignature()},
                 {"application/vnd.stone-romfile.nintendo.wii-wbfs", new WiiWbfsFileSignature()},

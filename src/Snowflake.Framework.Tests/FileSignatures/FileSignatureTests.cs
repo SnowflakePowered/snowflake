@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Snowflake.Romfile;
 using Snowflake.Stone.FileSignatures.Nintendo;
+using Snowflake.Stone.FileSignatures.Sony;
 using Snowflake.Tests;
 using Xunit;
 
@@ -22,6 +23,11 @@ namespace Snowflake.FileSignatures.Tests
         [InlineData(typeof(Nintendo64ByteswappedFileSignature), "rx-mm64.v64", typeof(Nintendo64BigEndianFileSignature))]
         [InlineData(typeof(Nintendo64LittleEndianFileSignature), "rx-mm64.n64", typeof(Nintendo64ByteswappedFileSignature))]
         [InlineData(typeof(Nintendo64BigEndianFileSignature), "setscreenntsc.z64", typeof(Nintendo64LittleEndianFileSignature))]
+        [InlineData(typeof(GamecubeIso9660FileSignature), "gctest.iso", typeof(WiiIso9660FileSignature))]
+        [InlineData(typeof(PlaystationPortableIso9660FileSignature), "psptest.iso")]
+        [InlineData(typeof(Playstation2CDRomFileSignature), "guitarfun.bin")]
+        [InlineData(typeof(PlaystationCDRomFileSignature), "psxtest.bin", typeof(Playstation2CDRomFileSignature))]
+        [InlineData(typeof(Playstation2Iso9660FileSignature), "ps2test.iso", typeof(Playstation2CDRomFileSignature))]
 
         public void Verify_Test(Type fileSignature, string filename, Type exclusionFs = null)
         {
@@ -48,7 +54,11 @@ namespace Snowflake.FileSignatures.Tests
         [InlineData(typeof(Nintendo64ByteswappedFileSignature), "rx-mm64.v64", "NMME")]
         [InlineData(typeof(Nintendo64LittleEndianFileSignature), "rx-mm64.n64", "NMME")]
         [InlineData(typeof(Nintendo64BigEndianFileSignature), "setscreenntsc.z64", "")]
-
+        [InlineData(typeof(GamecubeIso9660FileSignature), "gctest.iso", "ZZZZ00")]
+        [InlineData(typeof(PlaystationPortableIso9660FileSignature), "psptest.iso", "NPUG80224")]
+        [InlineData(typeof(Playstation2CDRomFileSignature), "guitarfun.bin", "")]
+        [InlineData(typeof(PlaystationCDRomFileSignature), "psxtest.bin", "SLUS-01156")]
+        [InlineData(typeof(Playstation2Iso9660FileSignature), "ps2test.iso", "SLUS-21008")]
 
         public void Verify_Serial(Type fileSignature, string filename, string expected)
         {
@@ -70,8 +80,13 @@ namespace Snowflake.FileSignatures.Tests
         [InlineData(typeof(GameboyColorFileSignature), "infinity.gbc", "INFINITY")]
         [InlineData(typeof(Nintendo64ByteswappedFileSignature), "rx-mm64.v64", "Manic Miner 64")]
         [InlineData(typeof(Nintendo64LittleEndianFileSignature), "rx-mm64.n64", "Manic Miner 64")]
-
         [InlineData(typeof(Nintendo64BigEndianFileSignature), "setscreenntsc.z64", "N64 PROGRAM TITLE")]
+        [InlineData(typeof(PlaystationPortableIso9660FileSignature), "psptest.iso", "Everyday Shooter")]
+        [InlineData(typeof(GamecubeIso9660FileSignature), "gctest.iso", "GAMECUBE")]
+        [InlineData(typeof(Playstation2CDRomFileSignature), "guitarfun.bin", "PS2TEST")]
+        [InlineData(typeof(PlaystationCDRomFileSignature), "psxtest.bin", "VALKYRIE")]
+        [InlineData(typeof(Playstation2Iso9660FileSignature), "ps2test.iso", "KATAMARI")]
+
         public void Verify_InternalName(Type fileSignature, string filename, string expected)
         {
             using var testStream = TestUtilities.GetResource($"TestRoms.{filename}");

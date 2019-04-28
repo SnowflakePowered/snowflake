@@ -31,6 +31,7 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDXA
 
         public string GetSystemCnf()
         {
+            if (!this.disk.Files.ContainsKey("SYSTEM.CNF")) return null;
             var file = this.disk.Files["SYSTEM.CNF"];
             byte[] buf = new byte[file.Length];
 
