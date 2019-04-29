@@ -6,6 +6,7 @@ using System.Text;
 using Snowflake.Extensibility;
 using Snowflake.Romfile;
 using Snowflake.Services;
+using Snowflake.Stone.FileSignatures.Formats.CDI;
 
 namespace Snowflake.Stone.FileSignatures.Sega
 {
@@ -13,56 +14,6 @@ namespace Snowflake.Stone.FileSignatures.Sega
     {
         /// <inheritdoc/>
         public byte[] HeaderSignature => Encoding.UTF8.GetBytes("SEGA SEGAKATANA SEGA ENTERPRISES");
-
-        // adapted from http://stackoverflow.com/posts/332667
-        private List<int> IndexOfSequence(byte[] buffer, byte[] pattern, int startIndex)
-        {
-            List<int> positions = new List<int>();
-            int i = Array.IndexOf<byte>(buffer, pattern[0], startIndex);
-            while (i >= 0 && i <= buffer.Length - pattern.Length)
-            {
-                byte[] segment = new byte[pattern.Length];
-                Buffer.BlockCopy(buffer, i, segment, 0, pattern.Length);
-                if (segment.SequenceEqual<byte>(pattern))
-                {
-                    positions.Add(i);
-                }
-
-                i = Array.IndexOf<byte>(buffer, pattern[0], i + pattern.Length);
-            }
-
-            return positions;
-        }
-
-        private long GetHeaderOffset(Stream stream)
-        {
-            byte[] buffer = new byte[1024 * 1024]; // read a MiB at a time
-
-            for (int i = 1; i < stream.Length / 1024; i++)
-            {
-                long streamPos =
-                    stream.Length -
-                    (i * buffer.Length); // read 1MiB chunks from the end, as the IP.BIN file is near the end of the ISO file.
-                if (streamPos < 0)
-                {
-                    break;
-                }
-
-                stream.Position = streamPos;
-                stream.Read(buffer, 0, buffer.Length);
-                var index = this.IndexOfSequence(buffer, this.HeaderSignature, 0);
-                if (index.Count <= 0)
-                {
-                    continue;
-                }
-
-                int bufferIndex = index[0];
-                long streamIndex = streamPos + bufferIndex;
-                return streamIndex;
-            }
-
-            return 0;
-        }
 
         /// <inheritdoc/>
         public bool HeaderSignatureMatches(Stream romStream)
@@ -92,45 +43,34 @@ namespace Snowflake.Stone.FileSignatures.Sega
             // Too many tracks
             if (descriptor[2] > 99) return false;
 
-            // Finally, look for IP.BIN
-            long headerPos = this.GetHeaderOffset(romStream);
-            return headerPos != 0;
+            romStream.Seek(0, SeekOrigin.Begin);
+            CdiDreamcastDisc disc = new CdiDreamcastDisc(new DiscJugglerDisc(romStream));
+            return disc.GetMeta().StartsWith("SEGA SEGAKATANA SEGA ENTERPRISES");
+            
         }
 
         /// <inheritdoc/>
         public string GetSerial(Stream romStream)
         {
-            long headerPos = this.GetHeaderOffset(romStream);
-            romStream.Seek(headerPos, SeekOrigin.Begin);
-            byte[] buffer = new byte[0x100];
-            byte[] data = new byte[10];
-            romStream.Read(buffer, 0, buffer.Length);
-            Array.Copy(buffer, 0x40, data, 0, data.Length);
+            CdiDreamcastDisc disc = new CdiDreamcastDisc(new DiscJugglerDisc(romStream));
+            return disc.GetMeta().Substring(0x40, 10).Trim();
             /*
             header = 0x0 SEGA SEGAKATANA for 0x10 bytes (0xF bytes without 0x20 space)
             internal name = 0x80 for 0x80 bytes
             serial number (id) = 0x40 for 10 bytes
             */
-
-            return Encoding.UTF8.GetString(data).Trim();
         }
 
         /// <inheritdoc/>
         public string GetInternalName(Stream romStream)
         {
-            long headerPos = this.GetHeaderOffset(romStream);
-            romStream.Seek(headerPos, SeekOrigin.Begin);
-            byte[] buffer = new byte[0x100];
-            byte[] data = new byte[0x7f];
-            romStream.Read(buffer, 0, buffer.Length);
-            Array.Copy(buffer, 0x7f, data, 0, data.Length);
+            CdiDreamcastDisc disc = new CdiDreamcastDisc(new DiscJugglerDisc(romStream));
+            return disc.GetMeta().Substring(0x80, 0x7f).Trim();
             /*
             header = 0x0 SEGA SEGAKATANA for 0x10 bytes (0xF bytes without 0x20 space)
             internal name = 0x80 for 0x80 bytes
             serial number (id) = 0x40 for 9 bytes
             */
-
-            return Encoding.UTF8.GetString(data).Trim();
         }
     }
 }

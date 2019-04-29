@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Snowflake.Romfile;
+using Snowflake.Stone.FileSignatures.Formats.CDI;
 using Snowflake.Stone.FileSignatures.Nintendo;
 using Snowflake.Stone.FileSignatures.Sega;
 using Snowflake.Stone.FileSignatures.Sony;

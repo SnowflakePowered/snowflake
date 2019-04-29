@@ -16,8 +16,8 @@ namespace Snowflake.Stone.FileSignatures.Sony
         public bool HeaderSignatureMatches(Stream romStream)
         {
             romStream.Seek(0, SeekOrigin.Begin);
-            var reader = new PlaystationDisk(new CDXADisk(romStream));
-            string systemcnf = reader.GetSystemCnf();
+            var reader = new PlaystationDisc(new CDXADisc(romStream));
+            string systemcnf = reader.GetMeta();
             return systemcnf?.Contains("BOOT2") ?? false;
         }
 
@@ -25,8 +25,8 @@ namespace Snowflake.Stone.FileSignatures.Sony
         public string GetSerial(Stream romStream)
         {
             romStream.Seek(0, SeekOrigin.Begin);
-            var reader = new PlaystationDisk(new CDXADisk(romStream));
-            string systemcnf = reader.GetSystemCnf();
+            var reader = new PlaystationDisc(new CDXADisc(romStream));
+            string systemcnf = reader.GetMeta();
             if (systemcnf == null) return null;
             return Regex.Match(systemcnf, "[A-Z]+_[0-9][0-9][0-9].[0-9][0-9]",
                 RegexOptions.IgnoreCase).Value.Replace(".", string.Empty).Replace("_", "-");
@@ -36,7 +36,7 @@ namespace Snowflake.Stone.FileSignatures.Sony
         public string GetInternalName(Stream romStream)
         {
             romStream.Seek(0, SeekOrigin.Begin);
-            var disk = new PlaystationDisk(new CDXADisk(romStream));
+            var disk = new PlaystationDisc(new CDXADisc(romStream));
             return disk.InternalName;
         }
     }
