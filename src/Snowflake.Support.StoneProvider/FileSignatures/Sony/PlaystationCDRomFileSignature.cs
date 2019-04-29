@@ -18,7 +18,7 @@ namespace Snowflake.Stone.FileSignatures.Sony
         public bool HeaderSignatureMatches(Stream romStream)
         {
             romStream.Seek(0, SeekOrigin.Begin);
-            var disk = new PlaystationDisk(new CDXADisk(romStream));
+            var disk = new PlaystationDisc(new CDXADisc(romStream));
             
             return disk.IsPlaystation();
         }
@@ -27,8 +27,8 @@ namespace Snowflake.Stone.FileSignatures.Sony
         public string GetSerial(Stream romStream)
         {
             romStream.Seek(0, SeekOrigin.Begin);
-            var disk = new PlaystationDisk(new CDXADisk(romStream));
-            string syscnf = disk.GetSystemCnf();
+            var disk = new PlaystationDisc(new CDXADisc(romStream));
+            string syscnf = disk.GetMeta();
             string exe = syscnf.Substring(14, 11);
             return exe.Replace(".", string.Empty).Replace("_", "-");
         }
@@ -37,7 +37,7 @@ namespace Snowflake.Stone.FileSignatures.Sony
         public string GetInternalName(Stream romStream)
         {
             romStream.Seek(0, SeekOrigin.Begin);
-            var disk = new PlaystationDisk(new CDXADisk(romStream));
+            var disk = new PlaystationDisc(new CDXADisc(romStream));
             return disk.InternalName;
         }
     }

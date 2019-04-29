@@ -4,19 +4,20 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Snowflake.Stone.FileSignatures.Formats.CDI.DiscJugglerDisc;
 
-namespace Snowflake.Stone.FileSignatures.Formats.CDXA
+namespace Snowflake.Stone.FileSignatures.Formats.CDI
 {
-    internal class CDXABlockStream : Stream
+    internal class DiscJugglerBlockStream : Stream
     {
         private readonly Stream diskStream;
-        public const long BlockLength = CDXADisc.BlockSize - CDXADisc.BlockHeaderSize;
 
-        public CDXABlockStream(int lba, Stream diskStream)
+        internal DiscJugglerBlockStream(int lba, Track track, Stream diskStream)
         {
             this.diskStream = diskStream;
             this.LBA = lba;
-            this.Length = CDXABlockStream.BlockLength;
+            this.Track = track;
+            this.Length = this.Track.DataSize;
         }
 
         /// <inheritdoc/>
@@ -53,12 +54,22 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDXA
         /// <inheritdoc/>
         /// <remarks>
         /// Does not protect against out of bounds reading.
-        /// To access file contents, use the much safer <see cref="CDXAFile.OpenFile"/>
+        /// To access file contents, use the much safer <see cref="DiscJugglerDisc.OpenFile"/>
         /// </remarks>
         public sealed override int Read(byte[] buffer, int offset, int count)
         {
-            this.diskStream.Seek((CDXADisc.BlockSize * this.LBA) + CDXADisc.BlockHeaderSize + this.Position,
-                SeekOrigin.Begin);
+            //long offset = track.file_offset + frameAddr * track.SectorSize;
+            //using var reader = new BinaryReader(this.ImageStream, Encoding.UTF8, true);
+            //this.ImageStream.Seek(offset, SeekOrigin.Begin);
+            //this.ImageStream.Seek(track.HeaderSize, SeekOrigin.Current);
+            //return reader.ReadBytes(track.DataSize);
+
+            long baseoffset = this.Track.file_offset + (this.Track.FrameAddr + this.LBA) * this.Track.SectorSize;
+
+            this.diskStream.Seek(baseoffset, SeekOrigin.Begin);
+            this.diskStream.Seek(this.Track.HeaderSize, SeekOrigin.Current);
+            this.diskStream.Seek(this.Position, SeekOrigin.Current);
+            
             this.Position += count;
             return this.diskStream.Read(buffer, offset, count);
         }
@@ -82,6 +93,7 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDXA
         public sealed override long Length { get; }
 
         public int LBA { get; }
+        private Track Track { get; }
 
         /// <inheritdoc/>
         public sealed override long Position { get; set; }

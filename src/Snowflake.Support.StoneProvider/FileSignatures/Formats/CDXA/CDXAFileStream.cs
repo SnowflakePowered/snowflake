@@ -10,7 +10,7 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDXA
     public class CDXAFileStream : Stream
     {
         private readonly Stream diskStream;
-        public const int BlockLength = CDXADisk.BlockSize - CDXADisk.BlockHeaderSize;
+        public const int BlockLength = CDXADisc.BlockSize - CDXADisc.BlockHeaderSize;
         public const int DataBlockLength = 0x800;
 
         public CDXAFileStream(int lbaStart, long fileLength, Stream diskStream)
@@ -76,11 +76,11 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDXA
             int totalBytesRead = 0;
             int byteArrayOffset = offset;
 
-            this.diskStream.Seek((CDXADisk.BlockSize * (this.LBA + fullBlocksToSeek)),
+            this.diskStream.Seek((CDXADisc.BlockSize * (this.LBA + fullBlocksToSeek)),
                 SeekOrigin.Begin); // Seek to the beginning of the file.
             // now at the beginning of a new LBA.
 
-            this.diskStream.Seek(CDXADisk.BlockHeaderSize,
+            this.diskStream.Seek(CDXADisc.BlockHeaderSize,
                 SeekOrigin.Current); // Seek past the header of the first LBA.
             if (remainderBytesToSeek != 0) // there are still bytes to seek the the position.
             {
@@ -96,7 +96,7 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDXA
                     this.diskStream.Read(buffer, byteArrayOffset, Math.Min(bytesUntilNextLba, bytesLeftToRead));
                 this.diskStream.Seek(CDXAFileStream.BlockLength - CDXAFileStream.DataBlockLength,
                     SeekOrigin.Current); // now at a new LBA
-                this.diskStream.Seek(CDXADisk.BlockHeaderSize, SeekOrigin.Current); // Seek past the next header. 
+                this.diskStream.Seek(CDXADisc.BlockHeaderSize, SeekOrigin.Current); // Seek past the next header. 
                 bytesLeftToRead -= bytesRead;
                 totalBytesRead += bytesRead;
                 byteArrayOffset += bytesRead;

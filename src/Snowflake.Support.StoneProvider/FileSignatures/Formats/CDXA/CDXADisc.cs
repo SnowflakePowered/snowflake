@@ -7,21 +7,27 @@ using System.Threading.Tasks;
 
 namespace Snowflake.Stone.FileSignatures.Formats.CDXA
 {
-    public class CDXADisk
+    public class CDXADisc : IDiscReader
     {
         public const int BlockSize = 0x930;
         public const int BlockHeaderSize = 0x18;
         public static readonly byte[] FileRecordDelimeter = {0x8D, 0x55, 0x58, 0x41};
         private readonly Stream diskStream;
         public string VolumeDescriptor { get; }
-        public IDictionary<string, CDXAFile> Files;
+        public IReadOnlyDictionary<string, CDXAFile> Files { get; }
 
-        public CDXADisk(Stream diskStream)
+        public CDXADisc(Stream diskStream)
         {
             this.diskStream = diskStream;
             this.VolumeDescriptor = this.GetVolumeDescriptor();
             this.Files = this.GetRecords(string.Empty, 22)
                 .ToDictionary(f => f.Path, f => new CDXAFile(this.diskStream, f.LBAStart, f.Path, f.Length));
+        }
+
+        public Stream? OpenFile(string fileName)
+        {
+            if (!this.Files.ContainsKey(fileName)) return null;
+            return this.Files[fileName].OpenFile();
         }
 
         private IList<CDXARecord> GetRecords(string parentDir, int lbaStart)
