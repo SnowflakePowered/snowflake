@@ -40,40 +40,39 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.PackTask
         {
             (FileStream packageContents, RSA rsa) = await this.CreateArchive(noTreeShaking);
 
-            using (FileStream snowballArchiveStream =
-                File.Create(Path.Combine(outputDirectory.FullName, $"{this.GetPackageName()}.snowpkg")))
-            using (ZipOutputStream snowballArchive = new ZipOutputStream(snowballArchiveStream))
-            {
-                byte[] sha512 = this.GetSHA512(packageContents);
-                byte[] signedSha512 = rsa.SignHash(sha512, HashAlgorithmName.SHA512, RSASignaturePadding.Pss);
+            using FileStream snowballArchiveStream =
+                File.Create(Path.Combine(outputDirectory.FullName, $"{this.GetPackageName()}.snowpkg"));
 
-                snowballArchive.SetLevel(5);
-                snowballArchive.UseZip64 = UseZip64.On;
-                var contentEntry = new ZipEntry("contents");
-                snowballArchive.PutNextEntry(contentEntry);
-                packageContents.Position = 0;
-                await packageContents.CopyToAsync(snowballArchive, 4096).ConfigureAwait(false);
-                snowballArchive.CloseEntry();
-               
-                Console.WriteLine($"Signing package...");
+            using ZipOutputStream snowballArchive = new ZipOutputStream(snowballArchiveStream);
 
-                using (MemoryStream streamReader = new MemoryStream(signedSha512))
-                {
-                    snowballArchive.PutNextEntry(new ZipEntry("signature"));
-                    streamReader.Position = 0;
-                    await streamReader.CopyToAsync(snowballArchive, 1024).ConfigureAwait(false);
-                    snowballArchive.CloseEntry();
-                }
+            byte[] sha512 = this.GetSHA512(packageContents);
+            byte[] signedSha512 = rsa.SignHash(sha512, HashAlgorithmName.SHA512, RSASignaturePadding.Pss);
 
-                using (MemoryStream streamReader =
-                    new MemoryStream(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(this.ModuleDefinition))))
-                {
-                    snowballArchive.PutNextEntry(new ZipEntry("module"));
-                    streamReader.Position = 0;
-                    await streamReader.CopyToAsync(snowballArchive, 1024).ConfigureAwait(false);
-                    snowballArchive.CloseEntry();
-                }
-            }
+            snowballArchive.SetLevel(5);
+            snowballArchive.UseZip64 = UseZip64.On;
+            var contentEntry = new ZipEntry("contents");
+            snowballArchive.PutNextEntry(contentEntry);
+            packageContents.Position = 0;
+            await packageContents.CopyToAsync(snowballArchive, 4096).ConfigureAwait(false);
+            snowballArchive.CloseEntry();
+
+            Console.WriteLine($"Signing package...");
+
+            using MemoryStream sigReader = new MemoryStream(signedSha512);
+
+            snowballArchive.PutNextEntry(new ZipEntry("signature"));
+            sigReader.Position = 0;
+            await sigReader.CopyToAsync(snowballArchive, 1024).ConfigureAwait(false);
+            snowballArchive.CloseEntry();
+
+
+            using MemoryStream defReader =
+                new MemoryStream(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(this.ModuleDefinition)));
+
+            snowballArchive.PutNextEntry(new ZipEntry("module"));
+            defReader.Position = 0;
+            await defReader.CopyToAsync(snowballArchive, 1024).ConfigureAwait(false);
+            snowballArchive.CloseEntry();
 
             return Path.Combine(outputDirectory.FullName, $"{this.GetPackageName()}.snowpkg");
         }
@@ -89,48 +88,39 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.PackTask
             FileStream archiveStream = File.Create(fileName, 4096, FileOptions.DeleteOnClose);
             using RSA rsa = RSA.Create();
             rsa.KeySize = 2048;
-            using (ZipOutputStream zipStream = new ZipOutputStream(archiveStream))
+            using ZipOutputStream zipStream = new ZipOutputStream(archiveStream);
+
+            zipStream.SetLevel(1);
+            zipStream.UseZip64 = UseZip64.On;
+            zipStream.IsStreamOwner = false;
+            foreach (var file in this.ModuleDirectory.EnumerateFiles("*", SearchOption.AllDirectories)
+                .Where(f => !treeShaker.Contains(Path.GetFileName(f.Name))))
             {
-                zipStream.SetLevel(1);
-                zipStream.UseZip64 = UseZip64.On;
-                zipStream.IsStreamOwner = false;
-                foreach (var file in this.ModuleDirectory.EnumerateFiles("*", SearchOption.AllDirectories)
-                    .Where(f => !treeShaker.Contains(Path.GetFileName(f.Name))))
-                {
-                    Console.WriteLine($"Packing {file.Name}...");
-                    var entry = new ZipEntry(ZipEntry.CleanName(Path.Combine($"{this.GetPackageName()}",
-                        file.GetRelativePathFrom(this.ModuleDirectory))));
-                    entry.DateTime = file.LastWriteTime;
-                    zipStream.PutNextEntry(entry);
-                    using (FileStream streamReader = file.OpenRead())
-                    {
-                        streamReader.Position = 0;
-                        await streamReader.CopyToAsync(zipStream, 4096).ConfigureAwait(false);
-                    }
-
-                    zipStream.CloseEntry();
-                }
-
-                string rsaParameters = JsonConvert.SerializeObject(rsa.ExportParameters(false));
-
-                zipStream.PutNextEntry(new ZipEntry(Path.Combine("manifest", "key")));
-                using (MemoryStream keySig = new MemoryStream(Encoding.UTF8.GetBytes(rsaParameters)))
-                {
-                    keySig.Position = 0;
-                    await keySig.CopyToAsync(zipStream, 4096).ConfigureAwait(false);
-                }
-
+                Console.WriteLine($"Packing {file.Name}...");
+                var entry = new ZipEntry(ZipEntry.CleanName(Path.Combine($"{this.GetPackageName()}",
+                    file.GetRelativePathFrom(this.ModuleDirectory))));
+                entry.DateTime = file.LastWriteTime;
+                zipStream.PutNextEntry(entry);
+                using FileStream streamReader = file.OpenRead();
+                streamReader.Position = 0;
+                await streamReader.CopyToAsync(zipStream, 4096).ConfigureAwait(false);
                 zipStream.CloseEntry();
-
-                zipStream.PutNextEntry(new ZipEntry(Path.Combine("manifest", "package")));
-                using (MemoryStream keySig = new MemoryStream(Encoding.UTF8.GetBytes(this.GetPackageName())))
-                {
-                    keySig.Position = 0;
-                    await keySig.CopyToAsync(zipStream, 4096).ConfigureAwait(false);
-                }
-
-                zipStream.CloseEntry();
+                
             }
+
+            string rsaParameters = JsonConvert.SerializeObject(rsa.ExportParameters(false));
+
+            zipStream.PutNextEntry(new ZipEntry(Path.Combine("manifest", "key")));
+            using MemoryStream keySig = new MemoryStream(Encoding.UTF8.GetBytes(rsaParameters));
+            keySig.Position = 0;
+            await keySig.CopyToAsync(zipStream, 4096).ConfigureAwait(false);
+            zipStream.CloseEntry();
+
+            zipStream.PutNextEntry(new ZipEntry(Path.Combine("manifest", "package")));
+            using MemoryStream packageName = new MemoryStream(Encoding.UTF8.GetBytes(this.GetPackageName()));
+            packageName.Position = 0;
+            await packageName.CopyToAsync(zipStream, 4096).ConfigureAwait(false);
+            zipStream.CloseEntry();
 
             return (archiveStream, rsa);
         }
