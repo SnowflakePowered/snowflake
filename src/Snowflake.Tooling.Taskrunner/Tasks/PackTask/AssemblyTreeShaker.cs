@@ -23,31 +23,39 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.PackTask
             var dependencyContext = reader.Read(deps.OpenRead());
 
             Console.WriteLine("Counted " + dependencyContext.RuntimeGraph.Select(p => p.Runtime).Count() + " runtime dependencies");
-            IEnumerable<Dependency> frameworkDependencies =
-                dependencyContext.RuntimeLibraries.Where(l => l.Name.StartsWith("Snowflake.Framework"))
-                    .SelectMany(l => l.Dependencies);
+            var frameworkDependencies =
+                dependencyContext.RuntimeLibraries.AsParallel().Where(l => l.Name.StartsWith("Snowflake.Framework"))
+                    .SelectMany(l => l.Dependencies).ToList();
 
-            var dependencyTree = this.ResolveDependencyTree(dependencyContext, frameworkDependencies);
+            Console.WriteLine($"Counted { frameworkDependencies.Count()} Snowflake framework dependencies.");
+
+            var dependencyTree = this.ResolveDependencyTree(dependencyContext, frameworkDependencies).ToList();
             var nativeDlls = frameworkDependencies.Concat(dependencyTree).Distinct()
                 .Select(p => dependencyContext.RuntimeLibraries.FirstOrDefault(l => l.Name == p.Name))
                 .SelectMany(p => p.NativeLibraryGroups.Concat(p.RuntimeAssemblyGroups))
                 .SelectMany(p => p.AssetPaths)
-                .Select(p => Path.GetFileName(p));
+                .Select(p => Path.GetFileName(p)).ToList();
+            Console.WriteLine($"Counted { nativeDlls.Count } native dependencies.");
+
             var frameworkDlls = dependencyContext.RuntimeLibraries.Where(l => l.Name.StartsWith("Snowflake.Framework"))
-                .Select(l => l.Name + ".dll");
-            var dependencyDlls = dependencyTree.Select(d => d.Name + ".dll");
-            return nativeDlls.Concat(dependencyDlls).Concat(frameworkDlls).Distinct().ToList();
+                .Select(l => l.Name + ".dll").ToList();
+            Console.WriteLine($"Counted { frameworkDlls.Count } managed dependencies.");
+
+            var dependencyDlls = dependencyTree.Select(d => d.Name + ".dll").ToList();
+
+            var shakenDlls = nativeDlls.Concat(dependencyDlls).Concat(frameworkDlls).Distinct().ToList();
+            Console.WriteLine($"Excluding {shakenDlls.Count} dependencies after tree shaking.");
+            return shakenDlls;
         }
 
         internal IEnumerable<Dependency> ResolveDependencyTree(DependencyContext context, IEnumerable<Dependency> tree)
         {
             var frameworkDependencyDependencies =
-                context.RuntimeLibraries.AsParallel()
+                context.RuntimeLibraries
                     .Where(l => tree.Select(t => t.Name).Contains(l.Name))
                     .Select(l => l.Dependencies)
                     .SelectMany(l => this.ResolveDependencyTree(context, l));
-
-            return tree.Concat(frameworkDependencyDependencies);
+            return tree.Concat(frameworkDependencyDependencies).ToList();
         }
     }
 }
