@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Snowflake.Tooling.Taskrunner.Framework.Attributes;
 using Snowflake.Tooling.Taskrunner.Framework.Tasks;
-using Snowflake.Tooling.Taskrunner.Tasks.AssemlyModuleBuilderTask;
+using Snowflake.Tooling.Taskrunner.Tasks.AssemblyModuleBuilderTask;
+using Snowflake.Tooling.Taskrunner.Tasks.AssemblyModuleBuilderTasks;
 
 namespace Snowflake.Tooling.Taskrunner.Tasks.PackTask
 {
@@ -20,7 +22,14 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.PackTask
 
             if (arguments.ModuleDirectory == null)
             {
-                throw new InvalidOperationException("Must specify a module to pack.");
+                (FileInfo Project, FileInfo Module) = DirectoryProvider.GetProjectFiles(DirectoryProvider.WorkingDirectory);
+                if (!Project.Exists || !Module.Exists) throw new InvalidOperationException("Must specify a module to pack.");
+
+                var currentModuleDir = DirectoryProvider.WorkingDirectory
+                    .CreateSubdirectory("bin")
+                    .CreateSubdirectory("module")
+                    .CreateSubdirectory(Path.GetFileNameWithoutExtension(Project.Name));
+                arguments.ModuleDirectory = currentModuleDir.FullName;
             }
 
             Console.WriteLine($"Packing {arguments.ModuleDirectory}...");
@@ -28,7 +37,8 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.PackTask
             if (!DirectoryProvider.IsModuleDirectory(moduleDirectory))
             {
                 throw new InvalidDataException(
-                    "Error! No valid module.json  or contents found. Check for JSON errors or missing file.");
+                    "Error! No valid module.json or contents found. Check for JSON errors or missing file. " +
+                    "If the supplied argument is a project folder, run pack without arguments to pack the current project.");
             }
 
             var moduleFile = DirectoryProvider.GetModule(moduleDirectory);

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace Snowflake.Tooling.Taskrunner.Tasks.AssemlyModuleBuilderTask
+namespace Snowflake.Tooling.Taskrunner.Tasks.AssemblyModuleBuilderTasks
 {
     internal class ModuleDefinition
     {

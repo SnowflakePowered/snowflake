@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Snowflake.Tooling.Taskrunner.Tasks.AssemlyModuleBuilderTask
+namespace Snowflake.Tooling.Taskrunner.Tasks.AssemblyModuleBuilderTasks
 {
     internal class DotNetBuilder
     {

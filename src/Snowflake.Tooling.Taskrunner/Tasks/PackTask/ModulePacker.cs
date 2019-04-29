@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using ICSharpCode.SharpZipLib.Core;
 using ICSharpCode.SharpZipLib.Zip;
 using Newtonsoft.Json;
-using Snowflake.Tooling.Taskrunner.Tasks.AssemlyModuleBuilderTask;
+using Snowflake.Tooling.Taskrunner.Tasks.AssemblyModuleBuilderTasks;
 
 namespace Snowflake.Tooling.Taskrunner.Tasks.PackTask
 {

@@ -9,7 +9,7 @@ using System.Xml.Linq;
 using Newtonsoft.Json;
 using Snowflake.Tooling.Taskrunner.Framework.Attributes;
 using Snowflake.Tooling.Taskrunner.Framework.Tasks;
-using Snowflake.Tooling.Taskrunner.Tasks.AssemlyModuleBuilderTask;
+using Snowflake.Tooling.Taskrunner.Tasks.AssemblyModuleBuilderTasks;
 
 namespace Snowflake.Tooling.Taskrunner.Tasks.AssemblyModuleBuilderTask
 {
