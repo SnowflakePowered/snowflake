@@ -19,7 +19,7 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.AssemblyModuleBuilderTask
         private static FileInfo GetProject(DirectoryInfo directory) =>
             directory.EnumerateFiles().FirstOrDefault(p => p.Extension.ToLower() == ".csproj");
 
-        private static FileInfo GetModule(DirectoryInfo directory) =>
+        public static FileInfo GetModule(DirectoryInfo directory) =>
             directory.EnumerateFiles().FirstOrDefault(p => p.Name == "module.json");
 
         public static (FileInfo Project, FileInfo Module) GetProjectFiles(DirectoryInfo directory) => (

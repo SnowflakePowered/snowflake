@@ -6,7 +6,7 @@
   <PropertyGroup>
     <_SnowflakeUseDevelopmentSDK>false</_SnowflakeUseDevelopmentSDK>
     <SnowflakeSDKAssembliesVersion>1.0.0-alpha.*</SnowflakeSDKAssembliesVersion>
-    <SnowflakeSDKToolingVersion>2.0.0</SnowflakeSDKToolingVersion>
+    <SnowflakeSDKToolingVersion>2.*</SnowflakeSDKToolingVersion>
   </PropertyGroup>
 
   <ItemGroup Condition=" '$(_SnowflakeUseDevelopmentSDK)' == 'false' ">

@@ -20,9 +20,16 @@
   </PropertyGroup>
   
   <ItemGroup>
+    <Compile Remove="Tasks\InstallProjectTask\**" />
+    <EmbeddedResource Remove="Tasks\InstallProjectTask\**" />
+    <None Remove="Tasks\InstallProjectTask\**" />
+  </ItemGroup>
+  
+  <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="2.1.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
     <PackageReference Include="SharpZipLib" Version="1.1.0" />
+    <PackageReference Include="System.Interactive" Version="3.2.0" />
   </ItemGroup>
 
 </Project>

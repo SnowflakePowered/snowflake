@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Tooling.Taskrunner.Framework.Attributes;
 using Snowflake.Tooling.Taskrunner.Framework.Tasks;
+using Snowflake.Tooling.Taskrunner.Tasks.AssemblyModuleBuilderTask;
 using Snowflake.Tooling.Taskrunner.Tasks.InstallTask;
 using Snowflake.Tooling.Taskrunner.Tasks.PackTask;
 

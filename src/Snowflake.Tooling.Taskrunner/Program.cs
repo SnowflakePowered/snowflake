@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Timers;
 using System.Threading.Tasks;
 using Snowflake.Tooling.Taskrunner.Framework;
 using Snowflake.Tooling.Taskrunner.Framework.Executor;
@@ -12,6 +13,7 @@ using Snowflake.Tooling.Taskrunner.Tasks.InstallAllTask;
 using Snowflake.Tooling.Taskrunner.Tasks.InstallTask;
 using Snowflake.Tooling.Taskrunner.Tasks.PackTask;
 using Snowflake.Tooling.Taskrunner.Tasks.TaskListTask;
+using System.Diagnostics;
 
 namespace Snowflake.Tooling.Taskrunner
 {
@@ -30,6 +32,8 @@ namespace Snowflake.Tooling.Taskrunner
             container.Add(new InstallTaskRunner());
             container.Add(new InstallAllTaskRunner());
 
+            Stopwatch timer = new Stopwatch();
+            timer.Start();
             if (args.Length == 0)
             {
                 executor.ExecuteTask("list", args);
@@ -42,6 +46,8 @@ namespace Snowflake.Tooling.Taskrunner
                 Console.WriteLine(exception.Message);
             }
 
+            timer.Stop();
+            Console.WriteLine($"Completed in {timer.Elapsed.ToString("c")}.");
             Environment.Exit(result.ExitCode);
         }
     }
