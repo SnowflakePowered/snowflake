@@ -41,7 +41,22 @@ steps:
       testResultsFiles: '*.trx' 
       searchFolder: '$(System.DefaultWorkingDirectory)/src/Snowflake.Framework.Tests/TestResults'
 
+  - task: PublishCodeCoverageResults@1
+    condition: not(variables['build.skiptest'])
+    displayName: Publish test coverage to Azure
+    inputs:
+      codeCoverageTool: 'cobertura' # Options: cobertura, jaCoCo
+      summaryFileLocation: $(System.DefaultWorkingDirectory)/src/Snowflake.Framework.Tests/coverage.cobertura.xml
+
   - script: |
         dotnet run --project build -- PackAll
     displayName: Package framework and modules
     condition: not(variables['build.skippack'])
+
+  - task: PublishBuildArtifacts@1
+    condition: not(variables['build.skippack'])
+    displayName: Publishing build artifacts
+    inputs:
+      pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
+      artifactName: 'drop'
+
