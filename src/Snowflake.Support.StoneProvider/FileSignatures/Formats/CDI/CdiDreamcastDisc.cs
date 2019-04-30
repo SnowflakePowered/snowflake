@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -18,8 +19,10 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDI
         private DiscJugglerDisc Disc { get; }
         public string GetMeta()
         {
-            string meta = Encoding.UTF8.GetString(this.Disc.ReadSectors(this.Disc.Sessions[1], 1));
-            return meta.Trim('\0').Trim();
+            byte[] array = new byte[0xff];
+            this.Disc.OpenBlock(0).Read(array, 0, 0xff);
+            string meta = Encoding.UTF8.GetString(array);
+            return meta.Trim('\0');
         }
 
     }

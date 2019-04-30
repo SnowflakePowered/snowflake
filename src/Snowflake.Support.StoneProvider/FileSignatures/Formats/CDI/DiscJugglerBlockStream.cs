@@ -12,7 +12,7 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDI
     {
         private readonly Stream diskStream;
 
-        internal DiscJugglerBlockStream(int lba, Track track, Stream diskStream)
+        internal DiscJugglerBlockStream(uint lba, Track track, Stream diskStream)
         {
             this.diskStream = diskStream;
             this.LBA = lba;
@@ -64,7 +64,7 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDI
             //this.ImageStream.Seek(track.HeaderSize, SeekOrigin.Current);
             //return reader.ReadBytes(track.DataSize);
 
-            long baseoffset = this.Track.file_offset + (this.Track.FrameAddr + this.LBA) * this.Track.SectorSize;
+            long baseoffset = this.Track.Position + (this.Track.BeginFrameAddr + this.LBA) * this.Track.SectorSize;
 
             this.diskStream.Seek(baseoffset, SeekOrigin.Begin);
             this.diskStream.Seek(this.Track.HeaderSize, SeekOrigin.Current);
@@ -92,7 +92,7 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDI
         /// <inheritdoc/>
         public sealed override long Length { get; }
 
-        public int LBA { get; }
+        public uint LBA { get; }
         private Track Track { get; }
 
         /// <inheritdoc/>

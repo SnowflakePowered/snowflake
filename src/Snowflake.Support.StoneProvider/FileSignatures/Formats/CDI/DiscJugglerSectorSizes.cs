@@ -8,7 +8,8 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDI
     {
         Sector2048 = 0,
         Sector2336 = 1, 
-        Sector2352 = 2  
+        Sector2352 = 2,
+        Sector2448 = 4
     }
 
     internal static class DiscJugglerSectorSizeExtensions {
@@ -23,6 +24,8 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDI
                     return 2336;
                 case DiscJugglerSectorSizes.Sector2352:
                     return 2352;
+                case DiscJugglerSectorSizes.Sector2448:
+                    return 2448;
                 default:
                     return 0;
             }

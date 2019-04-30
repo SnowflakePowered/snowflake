@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Snowflake.Stone.FileSignatures.Formats.CDXA;
+using Snowflake.Stone.FileSignatures.Formats.ISO9660;
 
 /// <summary>
 /// Implementation based off
@@ -27,10 +29,9 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDI
         public string VolumeDescriptor { get; }
         private uint HeaderOffset { get; }
         private Stream ImageStream { get; }
-
         private List<Session> _sessions { get; }
         private List<Track> _tracks { get; }
-
+        private IList<CDXARecord> _fileRecords { get; }
         internal IEnumerable<Track> Tracks => _tracks.AsEnumerable();
 
         public IReadOnlyList<Session> Sessions => _sessions.AsReadOnly();
@@ -42,7 +43,17 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDI
             this._tracks = new List<Track>();
             this._sessions = this.ParseSessions().ToList();
             this.VolumeDescriptor = this.GetVolumeDescriptor();
+
+            uint lba = this.GetISOPVD().RootDirectoryLBA;
+         //   this._fileRecords = this.GetRecords("", lba);
         }
+
+
+        public ISOPrimaryVolumeDescriptor GetISOPVD()
+        {
+            return new ISOPrimaryVolumeDescriptor(this.OpenBlock(16));
+        }
+
 
         #region Parse 
         private IEnumerable<Session> ParseSessions()
@@ -59,11 +70,12 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDI
             }
 
             ushort numSessions = reader.ReadUInt16();
-            long trackOffset = 0;
+            long trackOffset = 8;
+            IList<Session> sessions = new List<Session>();
             for (int i = 0; i < numSessions; i++)
             {
                 var session = this.ParseSingleSession(reader, ref trackOffset);
-                yield return session;
+                sessions.Add(session);
                 /* seek to the next session */
                 int offset = 4 + 8;
                 if (this.DiscJugglerVersion != DiscJugglerVersions.Version2)
@@ -72,6 +84,8 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDI
                 }
                 this.ImageStream.Seek(offset, SeekOrigin.Current);
             }
+
+            return sessions;
         }
 
         private Session ParseSingleSession(BinaryReader reader, ref long trackOffset)
@@ -81,7 +95,6 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDI
             int firstTrack = this._tracks.Count;
 
             if (numTracks == 0) throw new DiscJugglerParseException("Session contains no tracks!");
-
             for (int i = 0; i < numTracks; i++)
             {
                 var track = this.ParseTrack(reader, ref trackOffset);
@@ -105,8 +118,8 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDI
 
             int lastTrack = this._tracks.Count - 1;
 
-            return new Session(this, this._tracks[firstTrack].FrameAddr,
-                this._tracks.Last().FrameAddr + this._tracks.Last().TrackLength, 
+            return new Session(this, this._tracks[firstTrack].BeginFrameAddr,
+                this._tracks.Last().BeginFrameAddr + this._tracks.Last().Length, 
                 firstTrack, lastTrack);
            
         }
@@ -136,7 +149,7 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDI
             tmp = reader.ReadUInt32();
             if (tmp == 0x80000000)
             {
-                this.ImageStream.Seek(8, SeekOrigin.Current);
+                this.ImageStream.Seek(8, SeekOrigin.Current); //DJ4
             }
             this.ImageStream.Seek(2, SeekOrigin.Current);
 
@@ -161,19 +174,23 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDI
             }
 
             int sectorSize = ((DiscJugglerSectorSizes)sectorType).GetSectorSize();
+
             long dataOffset = trackOffset + pregapLength * sectorSize;
 
+            //	t.file = new RawTrackFile(core_fopen(file),track.position + track.pregap_length * track.sector_size,t.StartFAD,track.sector_size);
+            // n                Position = dataOffset - fad * sectorSize,
 
             long fad = pregapLength + lba;
 
             Track t = new Track
             {
-                FrameAddr = fad,
+                BeginFrameAddr = lba + pregapLength,
+                EndFrameAddr = (lba + pregapLength) + trackLength - 1,
                 adr = 0,
                 ctrl = sectorMode == 0 ? 0 : 4,
                 FileName = fileName,
-                file_offset = dataOffset - fad * sectorSize,
-                TrackLength = trackLength,
+                Position = dataOffset - fad * sectorSize,
+                Length = trackLength,
                 PregapLength = pregapLength,
                 TotalLength = totalLength,
                 SectorSize = sectorSize,
@@ -194,18 +211,17 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDI
             GetTrackLayout(uint sectorMode, int sectorSize)
         {
 
-            if (sectorMode == 0 && sectorSize == 2352)
+            if (sectorMode == 0 && sectorSize == 2352) // Full Sector
             {
                 return (GDRomSectorFormats.CDDA, 0, 0, 2352);
             }
-            else if (sectorMode == 1 && sectorSize == 2048)
+            else if (sectorMode == 1 && sectorSize == 2048) // Mode 1 2018
             {
-
                 return (GDRomSectorFormats.Mode1, 0, 0, 2048);
             }
-            else if (sectorMode == 1 && sectorSize == 2352)
+            else if (sectorMode == 1 && sectorSize == 2352) // Mode 1 2352
             {
-                return (GDRomSectorFormats.Mode1, 16, 288, 2048);
+                return (GDRomSectorFormats.Mode1, 16, 288, 2048); // SYNC(12) + HEAD(4) + DATA(2048) + (EDC(4)+SPACE(8)+ECC(276) = ERR(288))
             }
             else if (sectorMode == 1 && sectorSize == 2336)
             {
@@ -221,7 +237,12 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDI
             }
             else if (sectorMode == 2 && sectorSize == 2336)
             {
-                return (GDRomSectorFormats.Mode1, 0, 280, 2048);
+                return (GDRomSectorFormats.Mode2Form1, 0, 280, 2048);
+            } else if (sectorMode == 2 && sectorSize == 2448)
+            {
+                // Pier Solar?
+                // https://github.com/reicast/reicast-emulator/blob/ce90d43c344f19fdce915deef636ded933bc0d08/core/imgread/common.h
+                return (GDRomSectorFormats.Mode2Form2, 24, 2048, 376);
             }
 
             throw new DiscJugglerParseException("Unsupported GD-ROM mode.");
@@ -255,16 +276,17 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDI
         }
         #endregion
 
+        /*
         private byte[] ReadSector(Track track, long frameAddr)
         {
-            long offset = track.file_offset + frameAddr * track.SectorSize;
+            long offset = track.Position + frameAddr * track.SectorSize;
             using var reader = new BinaryReader(this.ImageStream, Encoding.UTF8, true);
             this.ImageStream.Seek(offset, SeekOrigin.Begin);
             this.ImageStream.Seek(track.HeaderSize, SeekOrigin.Current);
             return reader.ReadBytes(track.DataSize);
         }
 
-        /*
+        
         private Stream ReadBytes(long frameAddr, long len)
         {
             using MemoryStream writeStream = new MemoryStream();
@@ -288,7 +310,7 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDI
         /// </summary>
         /// <param name="lba">The block index to open from</param>
         /// <returns></returns>
-        public Stream OpenBlock(int lba)
+        public Stream OpenBlock(uint lba)
         {
             var session = this.Sessions[1]; // get data session
             var track = session.Tracks.First();
@@ -305,32 +327,60 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDI
                 return Encoding.UTF8.GetString(buf).Trim();
             }
         }
-
         /*
-        private IEnumerable<ISODirectoryRecord> GetDirectoryRecords()
+        private IList<CDXARecord> GetRecords(string parentDir, uint lbaStart)
         {
-            var bytes = this.ReadSectors(this.Sessions[1].Tracks.First().FrameAddr + 16, 1);
-            using var isoBlock = new MemoryStream(bytes);
-            var pvd = new ISOPrimaryVolumeDescriptor(isoBlock);
-            var rootDir = new ISODirectoryRecord(pvd.RootDirectoryEntryBytes);
-            yield return rootDir;
-            int rootLength = rootDir.DataSize;
-            int rootFad = GDROM_PREGAP + rootDir.Extent;
-            using var rootBlock = this.ReadBytes(rootFad, rootLength);
-            using var binaryReader = new BinaryReader(rootBlock);
-            
-            long readBytes = 0;
-            while (readBytes < rootLength)
-            {
-                rootBlock.Seek(readBytes, SeekOrigin.Begin);
-                var dir = new ISODirectoryRecord(rootBlock);
-                string fname = binaryReader.ReadString(dir.FileNameLength);
-                dir.FileName = fname;
-                yield return dir;
-                readBytes += dir.Length;
-            }
-        } */
+            List<CDXARecord> records = new List<CDXARecord>();
 
+            // http://wiki.osdev.org/ISO_9660#Volume_Descriptor_Set_Terminator
+            foreach (byte[] entry in this.GetDirectoryRecordEntries(lbaStart))
+            {
+                using (Stream s = new MemoryStream(entry))
+                using (BinaryReader reader = new BinaryReader(s))
+                {
+                    s.Seek(2, SeekOrigin.Begin);
+                    uint lba = reader.ReadUInt32();
+                    s.Seek(10, SeekOrigin.Begin);
+                    long length = reader.ReadUInt32();
+                    s.Seek(25, SeekOrigin.Begin);
+                    byte attr = reader.ReadByte(); // 3 - subdirectory, 2 - root, 1 - file
+                    s.Seek(0x20, SeekOrigin.Begin);
+                    int filenameLength = reader.ReadByte();
+                    string fileName = Encoding.UTF8.GetString(reader.ReadBytes(filenameLength)).Split(';')[0];
+                    if (attr == 1 || attr == 0)
+                    {
+                        records.Add(new CDXARecord(lba, length, $@"{parentDir}{fileName}"));
+                    }
+                    else if (attr == 3 && fileName != "\0")
+                    {
+                        records.AddRange(this.GetRecords($@"{fileName}\", lba));
+                    }
+                }
+            }
+
+            return records;
+        }
+
+        public IEnumerable<byte[]> GetDirectoryRecordEntries(uint lba)
+        {
+            using (var block = this.OpenBlock(lba))
+            {
+                byte[] buf = new byte[0x800];
+                block.Read(buf, 0, 0x800);
+                int pos = 0;
+                while (pos < buf.Length && buf[pos] != 0)
+                {
+                    int recordLength = buf[pos];
+                    if (recordLength >= 34)
+                    {
+                        yield return buf.Skip(pos).Take(recordLength).ToArray();
+                    }
+                    pos += recordLength;
+                }
+            }
+        }
+        */
+        /*
         public byte[] ReadSectors(Session session, int sectorsToRead) => this.ReadSectors(session.LeadInFrameAddr, sectorsToRead);
 
         public byte[] ReadSectors(long frameAddr, int sectorsToRead)
@@ -352,20 +402,21 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDI
             int numTracks = this._tracks.Count;
             for (int i = 0; i < numTracks; i++)
             {
-                if (frameAddr < _tracks[i].FrameAddr) continue;
-                if ((i < numTracks - 1) && (frameAddr >= _tracks[i + 1].FrameAddr)) continue;
+                if (frameAddr < _tracks[i].BeginFrameAddr) continue;
+                if ((i < numTracks - 1) && (frameAddr >= _tracks[i + 1].BeginFrameAddr)) continue;
                 return _tracks[i];
             }
 
             // todo: check if foreach loop works here?
             return null;
-        }
+        }*/
 
         public class Track
         {
             /* frame adddress, equal to lba + 150 */
-            public long FrameAddr { get; set; }
-            public long TrackLength { get; set; }
+            public long BeginFrameAddr { get; set; }
+            public long EndFrameAddr { get; set; }
+            public long Length { get; set; }
             public long PregapLength { get; set; }
 
             public long TotalLength { get; set; }
@@ -382,7 +433,7 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDI
             public int ErrorSize { get; set; }
             public int DataSize { get; set; }
             /* backing file */
-            public long file_offset { get; set; }
+            public long Position { get; set; }
         };
 
         public class Session
