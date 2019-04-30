@@ -1,9 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Snowflake.Stone.FileSignatures.Formats.ISO9660;
 
 namespace Snowflake.Stone.FileSignatures.Formats.CDXA
 {
@@ -20,8 +22,15 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDXA
         {
             this.diskStream = diskStream;
             this.VolumeDescriptor = this.GetVolumeDescriptor();
-            this.Files = this.GetRecords(string.Empty, 22)
+
+            uint lba = BitConverter.ToUInt32(this.GetISOPVD().RootDirectoryEntryBytes, 2);
+            this.Files = this.GetRecords(string.Empty, lba)
                 .ToDictionary(f => f.Path, f => new CDXAFile(this.diskStream, f.LBAStart, f.Path, f.Length));
+        }
+
+        public ISOPrimaryVolumeDescriptor GetISOPVD()
+        {
+            return new ISOPrimaryVolumeDescriptor(this.OpenBlock(16));
         }
 
         public Stream? OpenFile(string fileName)
@@ -30,20 +39,20 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDXA
             return this.Files[fileName].OpenFile();
         }
 
-        private IList<CDXARecord> GetRecords(string parentDir, int lbaStart)
+        private IList<CDXARecord> GetRecords(string parentDir, uint lbaStart)
         {
             List<CDXARecord> records = new List<CDXARecord>();
 
             // http://wiki.osdev.org/ISO_9660#Volume_Descriptor_Set_Terminator
-            foreach (byte[] entry in this.GetPathTableEntries(lbaStart))
+            foreach (byte[] entry in this.GetDirectoryRecordEntries(lbaStart))
             {
                 using (Stream s = new MemoryStream(entry))
                 using (BinaryReader reader = new BinaryReader(s))
                 {
                     s.Seek(2, SeekOrigin.Begin);
-                    int lba = reader.ReadInt32();
+                    uint lba = reader.ReadUInt32();
                     s.Seek(10, SeekOrigin.Begin);
-                    long length = reader.ReadInt32();
+                    long length = reader.ReadUInt32();
                     s.Seek(25, SeekOrigin.Begin);
                     byte attr = reader.ReadByte(); // 3 - subdirectory, 2 - root, 1 - file
                     s.Seek(0x20, SeekOrigin.Begin);
@@ -63,7 +72,7 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDXA
             return records;
         }
 
-        private IEnumerable<byte[]> GetPathTableEntries(int lba)
+        private IEnumerable<byte[]> GetDirectoryRecordEntries(uint lba)
         {
             using (var block = this.OpenBlock(lba))
             {
@@ -73,6 +82,7 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDXA
                 while (pos < buf.Length && buf[pos] != 0)
                 {
                     int recordLength = buf[pos];
+                    if (recordLength < 34) throw new InvalidDataException("Unable to resolve directory records.");
                     yield return buf.Skip(pos).Take(recordLength).ToArray();
                     pos += recordLength;
                 }
@@ -98,7 +108,7 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDXA
         /// </summary>
         /// <param name="lba">The LBA to open.</param>
         /// <returns>The LBA block as a Stream.</returns>
-        public Stream OpenBlock(int lba)
+        public Stream OpenBlock(uint lba)
         {
             return new CDXABlockStream(lba, this.diskStream);
         }

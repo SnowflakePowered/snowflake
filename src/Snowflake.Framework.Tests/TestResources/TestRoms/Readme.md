@@ -35,15 +35,19 @@ The ROMs contained here for testing purposes were ascertained to be freely distr
   * [devster](http://devster.monkeeh.com/segapage.html)
 * `240psuite.cdi`
   * [JunkerHq](http://junkerhq.net/xrgb/index.php?title=240p_test_suite)
-
+* `blackjackcd.iso`
+  * [Sebastian Mihai](http://sebastianmihai.com/main.php?t=116&n=Sega-CD-development-Blackjack-CD)
+* `sl_coff.iso`
+  * [jo-engine](https://github.com/johannes-fetz/joengine)
+  * The `printf` demo was compiled.
 # ROM Headers
-The following files were created from backups of commercially available ROM files with all non header data removed from the ROM. Since little if any copyrighted game data still exists in these files, they are redistributed here for testing purposes. Obviously, none of these ROM files will run in any emulator or hardware, since all game data has been removed. This was only used as a final resort when freely available homebrew ROMs were not suitable for header confirmation purposes.
+The following files were created from backups of commercially available ROM files with all non header data removed from the ROM. Since little if any copyrighted game data still exists in these files, they are redistributed here for testing purposes. Obviously, none of these ROM files will run in any emulator or hardware, since all game data has been removed. This was only used as a final resort when freely available homebrew ROMs were not suitable for header confirmation purposes. These files contain **no** non-redistributable data, only serials, hashes, and titles that were part of the ROM header; no ROM data is included.
 
 * `psptest.iso`, `psptest.cso`
   * Originally from a dump of **Everyday Shooter (USA)**.
   * All files except header files were deleted from the dump.
   * BOOT.BIN, EBOOT.BIN were zeroed out.
-  * ICON0.PNG, PIC0.PNG, PIC1PNG were left untouched.
+  * ICON0.PNG, PIC0.PNG, PIC1.PNG were left untouched.
 * `gctest.iso`
   * Originally from a dump of **Taxi 3 (France)**
   * Extracted the boot.bin, renamed to gctest.iso.
@@ -80,3 +84,12 @@ The following files were created from backups of commercially available ROM file
 * `dctest.bin`
   * Originally from a dump of **Crazy Taxi (USA)**
   * All data past `0x10F` was deleted.
+* `wiitest.wbfs`
+  * Originally from a dump of **Rodea the Sky Soldier (USA)**
+  * All data past `0x24FFF` was deleted.
+  * WBFS sector struct is no longer valid.
+* `wiitest.iso`
+  * Originally from a dump of **Wii Play (USA)**
+* `sattest.bin`
+  * Originally from a dump of **Christmas NiGHTS Into Dreams**
+  * All data past `0xFF` was deleted.

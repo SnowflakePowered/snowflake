@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Snowflake.Stone.FileSignatures.Formats.CDXA
 {
-    internal class CDXARecord
+    public class CDXARecord
     {
-        public int LBAStart { get; }
+        public uint LBAStart { get; }
         public long Length { get; }
         public string Path { get; }
 
-        public CDXARecord(int lba, long length, string path)
+        public CDXARecord(uint lba, long length, string path)
         {
             this.LBAStart = lba;
             this.Length = length;

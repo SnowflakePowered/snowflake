@@ -10,11 +10,11 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDXA
     public class CDXAFile
     {
         private readonly Stream diskStream;
-        public int LBAStart { get; }
+        public uint LBAStart { get; }
         public string Path { get; }
         public long Length { get; }
 
-        public CDXAFile(Stream diskStream, int lba, string path, long length)
+        public CDXAFile(Stream diskStream, uint lba, string path, long length)
         {
             this.diskStream = diskStream;
             this.LBAStart = lba;

@@ -39,6 +39,12 @@ namespace Snowflake.Stone.FileSignatures.Tests
         [InlineData(typeof(SegaGameGearFileSignature), "jptest2.gg", typeof(SegaMasterSystemFileSignature))]
         [InlineData(typeof(SegaDreamcastRawDiscFileSignature), "dctest.bin", typeof(SegaDreamcastDiscJugglerFileSignature))]
         [InlineData(typeof(SegaDreamcastDiscJugglerFileSignature), "240pSuite.cdi", typeof(SegaDreamcastRawDiscFileSignature))]
+        [InlineData(typeof(SegaCdRawImageFileSignature), "blackjackcd.iso", typeof(Sega32XCdRawImageFileSignature))]
+        [InlineData(typeof(SegaSaturnFileSignature), "sl_coff.iso", typeof(SegaCdRawImageFileSignature))]
+        [InlineData(typeof(SegaSaturnFileSignature), "sattest.bin", typeof(SegaCdRawImageFileSignature))]
+
+        [InlineData(typeof(WiiWbfsFileSignature), "wiitest.wbfs", typeof(WiiIso9660FileSignature))]
+        [InlineData(typeof(WiiIso9660FileSignature), "wiitest.iso", typeof(WiiWbfsFileSignature))]
 
         public void Verify_Test(Type fileSignature, string filename, Type exclusionFs = null)
         {
@@ -76,9 +82,15 @@ namespace Snowflake.Stone.FileSignatures.Tests
         [InlineData(typeof(SegaMasterSystemFileSignature), "exporttest.sms", "7076")]
         [InlineData(typeof(SegaMasterSystemFileSignature), "exporttest2.sms", "27047")]
         [InlineData(typeof(SegaGameGearFileSignature), "jptest2.gg", "3336")]
-        [InlineData(typeof(Sega32XFileSignature), "devstertest12.32X", "MK-0000 -00")]
+        [InlineData(typeof(Sega32XFileSignature), "devstertest12.32X", "GM MK-0000 -00")]
         [InlineData(typeof(SegaDreamcastRawDiscFileSignature), "dctest.bin", "MK-51035")]
         [InlineData(typeof(SegaDreamcastDiscJugglerFileSignature), "240pSuite.cdi", "T0001")]
+        [InlineData(typeof(SegaCdRawImageFileSignature), "blackjackcd.iso", "GM MK-4407 -00")]
+        [InlineData(typeof(SegaSaturnFileSignature), "sl_coff.iso", "")]
+        [InlineData(typeof(SegaSaturnFileSignature), "sattest.bin", "MK-81067")]
+
+        [InlineData(typeof(WiiWbfsFileSignature), "wiitest.wbfs", "SROENS")]
+        [InlineData(typeof(WiiIso9660FileSignature), "wiitest.iso", "RHAE01")]
 
         public void Verify_Serial(Type fileSignature, string filename, string expected)
         {
@@ -115,6 +127,12 @@ namespace Snowflake.Stone.FileSignatures.Tests
         [InlineData(typeof(Sega32XFileSignature), "devstertest12.32X", "32X GAME")]
         [InlineData(typeof(SegaDreamcastRawDiscFileSignature), "dctest.bin", "CRAZY TAXI")]
         [InlineData(typeof(SegaDreamcastDiscJugglerFileSignature), "240pSuite.cdi", "240P TEST SUITE")]
+        [InlineData(typeof(SegaCdRawImageFileSignature), "blackjackcd.iso", "BasiEgaXorz Game")]
+        [InlineData(typeof(SegaSaturnFileSignature), "sl_coff.iso", "JO ENGINE")]
+        [InlineData(typeof(SegaSaturnFileSignature), "sattest.bin", "Christmas NiGHTS")]
+
+        [InlineData(typeof(WiiWbfsFileSignature), "wiitest.wbfs", "Rodea")]
+        [InlineData(typeof(WiiIso9660FileSignature), "wiitest.iso", "PARTY PACK for REVOLUTION")]
 
         public void Verify_InternalName(Type fileSignature, string filename, string expected)
         {

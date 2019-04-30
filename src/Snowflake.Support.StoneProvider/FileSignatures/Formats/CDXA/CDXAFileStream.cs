@@ -13,7 +13,7 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDXA
         public const int BlockLength = CDXADisc.BlockSize - CDXADisc.BlockHeaderSize;
         public const int DataBlockLength = 0x800;
 
-        public CDXAFileStream(int lbaStart, long fileLength, Stream diskStream)
+        public CDXAFileStream(uint lbaStart, long fileLength, Stream diskStream)
         {
             this.diskStream = diskStream;
             this.LBA = lbaStart;
@@ -124,7 +124,7 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDXA
         /// <inheritdoc/>
         public sealed override long Length { get; }
 
-        public int LBA { get; }
+        public uint LBA { get; }
 
         /// <inheritdoc/>
         public sealed override long Position { get; set; }

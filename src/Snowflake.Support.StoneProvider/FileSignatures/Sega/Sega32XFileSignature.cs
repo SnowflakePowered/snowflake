@@ -32,8 +32,8 @@ namespace Snowflake.Stone.FileSignatures.Sega
         /// <inheritdoc/>
         public string GetSerial(Stream romStream)
         {
-            romStream.Seek(0x183, SeekOrigin.Begin);
-            byte[] buffer = new byte[0xB]; // 32X serials are 0xB long instead of 0x7
+            romStream.Seek(0x180, SeekOrigin.Begin);
+            byte[] buffer = new byte[0xF]; // 32X serials are 0xF
             romStream.Read(buffer, 0, buffer.Length);
             return Encoding.UTF8.GetString(buffer).Trim('\0').Trim();
         }
