@@ -19,9 +19,10 @@ jobs:
   pool:
     vmImage: 'ubuntu-16.04'
   steps:
-  - template: azure-setup.yml  # Template referenc
+  - template: azure-setup.yml  # Template reference
     parameters:
       os: Linux
+
 - job: Windows
   pool:
     vmImage: 'windows-2019'
@@ -31,20 +32,6 @@ jobs:
     parameters:
       os: Windows_NT
   - template: azure-codecov.yml
- 
-  - task: PublishCodeCoverageResults@1
-    condition: not(variables['build.skiptest'])
-    displayName: Publish test coverage to Azure
-    inputs:
-      codeCoverageTool: 'cobertura' # Options: cobertura, jaCoCo
-      summaryFileLocation: $(System.DefaultWorkingDirectory)/src/Snowflake.Framework.Tests/coverage.cobertura.xml
-
-  - task: PublishBuildArtifacts@1
-    condition: not(variables['build.skippack'])
-    displayName: Publishing build artifacts
-    inputs:
-      pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
-      artifactName: 'drop'
 
   - task: NuGetCommand@2
     displayName: 'Publish framework packages to snowflake-nightly'
