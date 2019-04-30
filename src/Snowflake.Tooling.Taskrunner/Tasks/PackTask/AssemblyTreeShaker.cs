@@ -11,14 +11,18 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.PackTask
 {
     public class AssemblyTreeShaker
     {
-        internal IEnumerable<string> GetFrameworkDependencies(DirectoryInfo moduleDirectory,
+        internal IList<string> GetFrameworkDependencies(DirectoryInfo moduleDirectory,
             ModuleDefinition packageModule)
         {
-            if (packageModule.Loader != "assembly") return Enumerable.Empty<string>();
-            Console.WriteLine("Resolving dependencies from " + Path.GetFileNameWithoutExtension(packageModule.Entry) + ".deps.json");
-            var deps = moduleDirectory.CreateSubdirectory("contents")
-                .EnumerateFiles(Path.GetFileNameWithoutExtension(packageModule.Entry) + ".deps.json").FirstOrDefault();
-            if (deps == null) return Enumerable.Empty<string>();
+            if (packageModule.Loader != "assembly") return Enumerable.Empty<string>().ToList();
+            string depsFileName = Path.GetFileNameWithoutExtension(packageModule.Entry) + ".deps.json";
+            var deps = moduleDirectory.CreateSubdirectory("contents").GetFiles()
+                .FirstOrDefault(f => String.Equals(f.Name, depsFileName, StringComparison.InvariantCultureIgnoreCase));
+            Console.WriteLine($"Resolving dependencies from {depsFileName}");
+
+            if (deps == null) throw new FileNotFoundException($"Error! Dependency context file {depsFileName}" +
+                                                              $" was not present in module directory. Check to ensure that " +
+                                                              $"the plugin is built and present in the bin/modules folder.");
 
             using var reader = new DependencyContextJsonReader();
             var dependencyContext = reader.Read(deps.OpenRead());

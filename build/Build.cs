@@ -92,7 +92,6 @@ class Build : NukeBuild
 
     Target PackModules => _ => _
         .DependsOn(Compile)
-        .DependsOn(BuildTooling)
         .Executes(() =>
         {
             EnsureExistingDirectory(OutputDirectory);
@@ -103,7 +102,7 @@ class Build : NukeBuild
                 if (!File.Exists((p.Directory / "module.json"))) continue;
 
                 DotNet("snowflake build", p.Directory);
-                DotNet($"snowflake pack \"./bin/module/{p.Name}\" -o \"{OutputDirectory}\"", p.Directory);
+                DotNet($"snowflake pack -o \"{OutputDirectory}\"", p.Directory);
             }
         });
 
