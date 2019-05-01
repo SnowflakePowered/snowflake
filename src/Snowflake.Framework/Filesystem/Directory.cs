@@ -96,9 +96,14 @@ namespace Snowflake.Filesystem
 
         public IDirectory OpenDirectory(string name)
         {
-            return new Directory(name,
-                this.RootFileSystem,
-                this.ThisDirectory);
+            var directoryStrings = ((UPath)name).Split();
+
+            Directory currentDirectory = this;
+            foreach (string directoryString in directoryStrings)
+            {
+                currentDirectory = new Directory(directoryString, this.RootFileSystem, currentDirectory.ThisDirectory);
+            }
+            return currentDirectory;
         }
 
         public IEnumerable<IDirectory> EnumerateDirectories()

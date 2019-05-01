@@ -14,7 +14,6 @@ namespace Snowflake.Installation.Tasks
         private TaskResult<DirectoryInfo> Source { get; }
         private IDirectory Destination { get; }
       
-
         public CopyDirectoryContentsTask(TaskResult<DirectoryInfo> source, IDirectory destinationDirectory)
         {
             this.Source =  source;
@@ -23,7 +22,6 @@ namespace Snowflake.Installation.Tasks
 
         protected override async IAsyncEnumerable<IFile?> ExecuteOnce()
         {
-
             // Do the parent directory
             foreach (var f in (await this.Source).EnumerateFiles())
             {

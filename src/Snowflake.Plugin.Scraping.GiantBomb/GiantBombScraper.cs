@@ -13,13 +13,12 @@ using GameResult = GiantBomb.Api.Model.Game;
 namespace Snowflake.Plugin.Scraping.GiantBomb
 {
     [Directive(AttachTarget.Root, Directive.Requires, "platform")]
-    [Plugin("ScraperGiantBomb")]
+    [Plugin("Scraper-GiantBomb")]
     public class GiantBombScraper : Scraper
     {
         private static IDictionary<PlatformId, int> platformMap = new Dictionary<PlatformId, int>
         {
-         
-            {"ARCADE_MAME" , 84},
+            { "ARCADE_MAME" , 84},
             {"PANASONIC_3DO", 26},
             {"ATARI_2600",  40},
             {"ATARI_5200", 67},
@@ -61,7 +60,6 @@ namespace Snowflake.Plugin.Scraping.GiantBomb
             this.GiantBombClient = new GiantBombRestClient("3d5cf51486f91a7e30318e03d06984dfb6e4930a"); 
         }
 
-        
         public GiantBombRestClient GiantBombClient { get; }
 
         public override async IAsyncEnumerable<SeedTree> ScrapeAsync(ISeed parent,
@@ -73,8 +71,6 @@ namespace Snowflake.Plugin.Scraping.GiantBomb
             if (!platformSupported) yield break;
             string searchQuery = parent.Content.Value;
             var results = (await this.GiantBombClient.SearchForGamesAsync(searchQuery).ConfigureAwait(false)) ?? Enumerable.Empty<GameResult>();
-
-
             foreach (var result in results.Where(r => r.Platforms?.Select(p => p.Id).Contains(giantBombPlatformId) ?? false))
             {
                 yield return ("result", result.Name, _(
