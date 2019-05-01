@@ -56,6 +56,21 @@ namespace Snowflake.FileSystem.Tests
         }
 
         [Fact]
+        public void DirectoryDeepCreatePath_Test()
+        {
+            var fs = new PhysicalFileSystem();
+            var temp = Path.GetTempPath();
+            var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
+            var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
+
+            var deep = dir.OpenDirectory("test/test");
+
+            Assert.Equal(NormalizePath(deep.GetPath().FullName),
+               NormalizePath(Path.Combine(temp, "test", "test", "test")));
+        }
+
+
+        [Fact]
         public void DirectoryManifestCreated_Test()
         {
             var fs = new PhysicalFileSystem();

@@ -18,7 +18,6 @@ namespace Snowflake.Stone.FileSignatures.Sega
         /// <inheritdoc/>
         public bool HeaderSignatureMatches(Stream romStream)
         {
-
             // https://github.com/discimagechef/DiscImageChef/blob/master/DiscImageChef.DiscImages/DiscJuggler/Identify.cs#L46
             romStream.Seek(-4, SeekOrigin.End);
             byte[] cdiDescriptorLength = new byte[4];
@@ -46,7 +45,6 @@ namespace Snowflake.Stone.FileSignatures.Sega
             romStream.Seek(0, SeekOrigin.Begin);
             CdiDreamcastDisc disc = new CdiDreamcastDisc(new DiscJugglerDisc(romStream));
             return disc.GetMeta().StartsWith("SEGA SEGAKATANA SEGA ENTERPRISES");
-            
         }
 
         /// <inheritdoc/>

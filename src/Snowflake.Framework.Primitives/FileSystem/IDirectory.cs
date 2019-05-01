@@ -22,8 +22,10 @@ namespace Snowflake.Filesystem
         string Name { get; }
 
         /// <summary>
-        /// Opens an existing child directory with the given name.
+        /// Opens an existing descendant directory with the given name.
         /// If the directory does not exist, creates the directory.
+        /// You can open a nested directory using '/' as the path separator, and it 
+        /// will be created relative to this current directory.
         /// </summary>
         /// <param name="name">The name of the existing directory</param>
         /// <returns>The directory if it exists, or null if it does not.</returns>

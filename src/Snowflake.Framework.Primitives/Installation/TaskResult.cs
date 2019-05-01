@@ -38,13 +38,12 @@ namespace Snowflake.Installation
         {
             return new TaskResult<T>("Value", new ValueTask<T>(t), null);
         }
-
     }
 
     public interface ITaskResult
     {
         string Name { get; }
-        Exception? Error { get;}
+        Exception? Error { get; }
         ConfiguredTaskAwaitable<object?>.ConfiguredTaskAwaiter GetAwaiter();
     }
 
@@ -68,8 +67,8 @@ namespace Snowflake.Installation
         public static TaskResult<TResult> Failure<TResult>(string name, ValueTask<TResult> result, Exception ex)
         {
             return new TaskResult<TResult>(name, result, ex);
-
         }
+
         internal static Task<TBase> FromDerived<TBase, TDerived>(this Task<TDerived> task) where TDerived : TBase
         {
             var tcs = new TaskCompletionSource<TBase>();
@@ -77,7 +76,6 @@ namespace Snowflake.Installation
             task.ContinueWith(t => tcs.SetResult(t.Result), TaskContinuationOptions.OnlyOnRanToCompletion);
             task.ContinueWith(t => tcs.SetException(t.Exception.InnerExceptions), TaskContinuationOptions.OnlyOnFaulted);
             task.ContinueWith(t => tcs.SetCanceled(), TaskContinuationOptions.OnlyOnCanceled);
-
             return tcs.Task;
         }
     }
