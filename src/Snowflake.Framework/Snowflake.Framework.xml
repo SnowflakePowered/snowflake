@@ -1294,15 +1294,6 @@
             <param name="children">The list of seed results to return</param>
             <returns>The nested portion of a seed tree result.</returns>
         </member>
-        <member name="M:Snowflake.Scraping.Extensibility.SeedBuilder._(System.String,System.String,System.Collections.Generic.IEnumerable{Snowflake.Scraping.Extensibility.SeedTree})">
-            <summary>
-            Continues a seed tree result with a single nested seed.
-            </summary>
-            <param name="type">The type of the seed.</param>
-            <param name="value">The value of the seed.</param>
-            <param name="children">The list of seed results to return</param>
-            <returns>A seed tree result.</returns>
-        </member>
         <member name="F:Snowflake.Scraping.GameScrapeContext.ClientSeedSource">
             <summary>
              The default source for a Client-provided seed.
