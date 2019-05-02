@@ -34,7 +34,8 @@ namespace Snowflake.Installation.Tasks
                 var file = extractDest.OpenFile(entries.Name);
                 using var fileStream = file.OpenStream();
                 using var zipStream = entries.Open();
-                await zipStream.CopyToAsync(fileStream);
+                await zipStream.CopyToAsync(fileStream).ConfigureAwait(false);
+                await fileStream.FlushAsync().ConfigureAwait(false);
                 yield return file;
             }
         }
