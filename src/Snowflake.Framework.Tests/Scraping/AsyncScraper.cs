@@ -28,7 +28,7 @@ namespace Snowflake.Scraping.Tests
                     ("TestAsyncNested", nestedValue, _(
                         ("TestAsyncNestedTwo", await Task.FromResult("Nested Value Two"))))));
             });
-            yield return ("TestSync", "Synchronous and Async");  
+            yield return ("TestSync", "Synchronous and Async");
         }
     }
 }

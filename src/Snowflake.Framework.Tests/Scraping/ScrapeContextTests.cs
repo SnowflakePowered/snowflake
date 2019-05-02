@@ -1,5 +1,7 @@
 ﻿using Moq;
 using Snowflake.Model.Game;
+using Snowflake.Model.Game.LibraryExtensions;
+using Snowflake.Model.Records.File;
 using Snowflake.Scraping.Extensibility;
 using Snowflake.Services;
 using System;
@@ -164,6 +166,31 @@ namespace Snowflake.Scraping.Tests
             Assert.Equal(2, scrapeJob.Context.GetAllOfType("Test").Count());
             scrapeJob.Cull(new[] {scrapeJob.Context.GetAllOfType("Test").First().Guid});
             Assert.Single(scrapeJob.Context.GetAllOfType("Test"));
+        }
+
+        [Fact]
+        public void GameSeedCreation_Test()
+        {
+            var game = new Mock<IGame>();
+            game.SetupGet(g => g.Record.PlatformId).Returns("TEST_PLATFORM");
+            game.SetupGet(g => g.Record.Title).Returns("Test Title");
+
+            var file = new Mock<IFileRecord>();
+            file.SetupGet(f => f.MimeType).Returns("application/vnd.stone-romfile-test");
+            file.SetupGet(f => f.File.Name).Returns("TestFile.test");
+            file.SetupGet(f => f.Metadata["hash_crc32"]).Returns("HASHCRC32");
+            file.Setup(f => f.Metadata.ContainsKey("hash_crc32")).Returns(true);
+            var ext = new Mock<IGameFileExtension>();
+            game.Setup(g => g.GetExtension<IGameFileExtension>()).Returns(ext.Object);
+
+            ext.SetupGet(e => e.FileRecords).Returns(new IFileRecord[] { file.Object }); 
+            var context = new GameScrapeContext(game.Object, Enumerable.Empty<IScraper>(), Enumerable.Empty<ICuller>());
+
+            var seeds = context.Context.GetUnculled().Select(s => s.Content).ToList();
+
+            Assert.Contains(("platform", "TEST_PLATFORM"), seeds);
+            Assert.Contains(("search_title", "TestFile"), seeds);
+            Assert.Contains(("search_crc", "HASHCRC32"), seeds);
         }
     }
 }

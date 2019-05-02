@@ -40,16 +40,5 @@ namespace Snowflake.Scraping.Extensibility
         /// <param name="children">The list of seed results to return</param>
         /// <returns>The nested portion of a seed tree result.</returns>
         public static IEnumerable<SeedTree> _(params SeedTree[] children) => WithSeeds(children);
-
-      
-        /// <summary>
-        /// Continues a seed tree result with a single nested seed.
-        /// </summary>
-        /// <param name="type">The type of the seed.</param>
-        /// <param name="value">The value of the seed.</param>
-        /// <param name="children">The list of seed results to return</param>
-        /// <returns>A seed tree result.</returns>
-        public static IEnumerable<SeedTree> _(string type, string value, IEnumerable<SeedTree> children)
-            => _((type, value, children));
     }
 }
