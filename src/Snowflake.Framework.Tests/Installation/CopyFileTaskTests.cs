@@ -64,7 +64,6 @@ namespace Snowflake.Installation.Tests
                 file.Close();
             }
 
-
             var subSubDirToCopy = subDirToCopy
                 .CreateSubdirectory(Path.GetRandomFileName());
 

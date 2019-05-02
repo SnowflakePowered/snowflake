@@ -7,7 +7,6 @@ using GraphQL.Types;
 using Snowflake.Extensibility;
 using Snowflake.Framework.Remoting.GraphQL.Attributes;
 using Snowflake.Framework.Remoting.GraphQL.Query;
-using Snowflake.Framework.Scheduling;
 using Snowflake.Model.Game;
 using Snowflake.Model.Records.Game;
 using Snowflake.Scraping;
