@@ -101,7 +101,6 @@ namespace Snowflake.Installation.Tests
             {
                 fileName = Path.GetFileName(file.Name);
                 await file.WriteAsync(Data, 0, Data.Length);
-                file.Close();
             }
 
             var subSubDirToCopy = subDirToCopy
@@ -112,7 +111,11 @@ namespace Snowflake.Installation.Tests
             ZipFile.CreateFromDirectory(dirToCopy.FullName, zipFile, CompressionLevel.Fastest, true);
 
             // Execute the results.
-            await foreach (var res in EmitZipResult(zipFile, dir)) ;
+            await foreach (var res in EmitZipResult(zipFile, dir))
+            {
+                var val = await res;
+                if (res.Error != null) throw res.Error.InnerException;
+            }
 
             Assert.True(dir.ContainsDirectory(dirToCopy.Name), "Did not extract parent successfully");
             Assert.True(dir.OpenDirectory(dirToCopy.Name).OpenDirectory(subDirToCopy.Name).ContainsFile(fileName), "Did not copy file successfully");

@@ -32,11 +32,14 @@ namespace Snowflake.Installation.Tasks
                 var extractDest = this.Destination.OpenDirectory(directoryName);
                 // todo: this should recursively create folders instead of dumping it all in front...
                 var file = extractDest.OpenFile(entries.Name);
-                using var fileStream = file.OpenStream();
-                using var zipStream = entries.Open();
-                await zipStream.CopyToAsync(fileStream).ConfigureAwait(false);
-                await fileStream.FlushAsync().ConfigureAwait(false);
-                yield return file;
+                if (String.IsNullOrWhiteSpace(entries.Name)) continue;
+                using (var zipStream = entries.Open())
+                using (var fileStream = file.OpenStream())
+                {
+                    await zipStream.CopyToAsync(fileStream).ConfigureAwait(false);
+                    await fileStream.FlushAsync().ConfigureAwait(false);
+                    yield return file;
+                }
             }
         }
     }
