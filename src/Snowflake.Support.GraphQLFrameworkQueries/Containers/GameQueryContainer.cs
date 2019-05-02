@@ -4,7 +4,7 @@ using Snowflake.Execution.Extensibility;
 using Snowflake.Execution.Saving;
 using Snowflake.Extensibility.Configuration;
 using Snowflake.Filesystem;
-using Snowflake.Framework.Remoting;
+using Snowflake.Framework.Extensibility;
 using Snowflake.Framework.Remoting.GraphQL;
 using Snowflake.Input;
 using Snowflake.Input.Device;
