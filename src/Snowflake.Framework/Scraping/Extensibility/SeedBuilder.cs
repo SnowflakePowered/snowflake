@@ -24,7 +24,6 @@ namespace Snowflake.Scraping.Extensibility
     /// </summary>
     public static class SeedBuilder
     {
-        
         /// <summary>
         /// Continues a seed tree result with a list of nested results.
         /// Nested seeds can not be awaitable, but can be returned from an asynchronous context.

@@ -12,8 +12,8 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDI
         Sector2448 = 4
     }
 
-    internal static class DiscJugglerSectorSizeExtensions {
-
+    internal static class DiscJugglerSectorSizeExtensions
+    {
         public static int GetSectorSize(this DiscJugglerSectorSizes @this)
         {
             switch(@this)

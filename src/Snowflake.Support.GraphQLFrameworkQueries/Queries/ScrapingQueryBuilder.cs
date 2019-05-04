@@ -24,7 +24,6 @@ namespace Snowflake.Support.Remoting.GraphQL.Queries
         private IPluginCollection<IScraper> Scrapers { get; }
         private IPluginCollection<ICuller> Cullers { get; }
         
-
         public ScrapingQueryBuilder(IGameLibrary gameLibrary,
             IPluginCollection<IScraper> scrapers,
             IPluginCollection<ICuller> cullers)

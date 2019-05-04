@@ -17,7 +17,6 @@ namespace Snowflake.Scraping.Extensibility
     /// </summary>
     /// <typeparam name="TProducts">The type of record or object this traverser produces.</typeparam>
     /// <typeparam name="TEffectTarget">The type of object this traverser is allowed to mutate.</typeparam>
-
     public interface ITraverser<TProducts, TEffectTarget>
     {
         /// <summary>
@@ -46,5 +45,4 @@ namespace Snowflake.Scraping.Extensibility
     /// such as images and videos, yielding them much in the same way as <see cref="IGameInstaller"/>.
     /// </summary>
     public interface IFileInstallationTraverser : ITraverser<TaskResult<IFile>, IGame> { }
-
 }

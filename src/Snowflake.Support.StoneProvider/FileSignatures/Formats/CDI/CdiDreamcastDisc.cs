@@ -24,6 +24,5 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDI
             string meta = Encoding.UTF8.GetString(array);
             return meta.Trim('\0');
         }
-
     }
 }
