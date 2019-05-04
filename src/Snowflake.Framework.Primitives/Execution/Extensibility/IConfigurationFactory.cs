@@ -27,7 +27,6 @@ namespace Snowflake.Execution.Extensibility
         /// <summary>
         /// Gets the valid set of configuration required to launch this emulator for a given game record.
         /// </summary>
-        /// <seealso cref="IConfigurationCollectionStore"/>
         /// <param name="gameRecord">The GUID of the game that is associated with this set of configuration collections</param>
         /// <param name="profileName">The profile name to get configuration for. By default, the profile name must be 'default'</param>
         /// <returns>A set of configuration collection keyed on the expected file names of the configuration files.</returns>
@@ -59,7 +58,6 @@ namespace Snowflake.Execution.Extensibility
         /// <summary>
         /// Gets the valid set of configuration required to launch this emulator for a given game record.
         /// </summary>
-        /// <seealso cref="IConfigurationCollectionStore"/>
         /// <param name="gameRecord">The GUID of the game that is associated with this set of configuration collections</param>
         /// <param name="profileName">The profile name to get configuration for. By default, the profile name must be 'default'</param>
         /// <returns>A set of configuration collection keyed on the expected file names of the configuration files.</returns>

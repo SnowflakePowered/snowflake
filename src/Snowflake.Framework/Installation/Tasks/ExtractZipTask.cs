@@ -8,8 +8,16 @@ using Snowflake.Filesystem;
 
 namespace Snowflake.Installation.Tasks
 {
+    /// <summary>
+    /// Extracts a ZIP file into a target directory.
+    /// </summary>
     public sealed class ExtractZipTask : AsyncInstallTaskEnumerable<IFile?>
     {
+        /// <summary>
+        /// Describes an extraction of a ZIP file into a target directory.
+        /// </summary>
+        /// <param name="fileInfo">The ZIP file source.</param>
+        /// <param name="destination">The destination directory.</param>
         public ExtractZipTask(TaskResult<FileInfo> fileInfo, IDirectory destination)
         {
             this.FileInfo = fileInfo;
@@ -29,8 +37,8 @@ namespace Snowflake.Installation.Tasks
             foreach (var entries in archive.Entries)
             {
                 string directoryName = Path.GetDirectoryName(entries.FullName);
+                // create the destination subdirectory.
                 var extractDest = this.Destination.OpenDirectory(directoryName);
-                // todo: this should recursively create folders instead of dumping it all in front...
                 var file = extractDest.OpenFile(entries.Name);
                 if (String.IsNullOrWhiteSpace(entries.Name)) continue;
                 using (var zipStream = entries.Open())
