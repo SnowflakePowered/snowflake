@@ -29,28 +29,8 @@ steps:
     lfs: false
 
   - script: |
-        dotnet run --project build -- Test
-    displayName: Compile and test commit
-    condition: not(variables['build.skiptest'])
-
-  - task: PublishTestResults@2
-    condition: not(variables['build.skiptest'])
-    displayName: Publish test results to Azure
-    inputs:
-      testResultsFormat: 'VSTest' # Options: JUnit, NUnit, VSTest, xUnit, cTest
-      testResultsFiles: '*.trx' 
-      searchFolder: '$(System.DefaultWorkingDirectory)/src/Snowflake.Framework.Tests/TestResults'
-
-  - task: PublishCodeCoverageResults@1
-    condition: not(variables['build.skiptest'])
-    displayName: Publish test coverage to Azure
-    inputs:
-      codeCoverageTool: 'cobertura' # Options: cobertura, jaCoCo
-      summaryFileLocation: $(System.DefaultWorkingDirectory)/src/Snowflake.Framework.Tests/coverage.cobertura.xml
-
-  - script: |
-        dotnet run --project build -- PackModules
-    displayName: Package NuGet modules
+        dotnet run --project build -- PackAll
+    displayName: Package framework and modules
     condition: not(variables['build.skippack'])
 
   - task: PublishBuildArtifacts@1
@@ -58,5 +38,5 @@ steps:
     displayName: Publishing build artifacts
     inputs:
       pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
-      artifactName: 'nuget'
+      artifactName: 'binaries'
 
