@@ -17,7 +17,7 @@ namespace Snowflake.Filesystem
 
         public string Name => this.RawInfo.Name;
 
-        internal FileEntry RawInfo { get; }
+        internal FileEntry RawInfo { get; private set; }
 
         public long Length => this.RawInfo.Length;
 
@@ -41,6 +41,9 @@ namespace Snowflake.Filesystem
         public void Rename(string newName)
         {
             this.RawInfo.MoveTo(this.RawInfo.Parent.Path / Path.GetFileName(newName));
+            this._ParentDirectory.RemoveGuid(this.Name);
+            this.RawInfo = new FileEntry(this.RawInfo.FileSystem, this.RawInfo.Parent.Path / Path.GetFileName(newName));
+            this._ParentDirectory.AddGuid(this.Name, this.FileGuid);
         }
 
         public void Delete()

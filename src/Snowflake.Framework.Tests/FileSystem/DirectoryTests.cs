@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Xunit;
 using Zio;
 using Zio.FileSystems;
@@ -124,5 +125,143 @@ namespace Snowflake.FileSystem.Tests
             var iter = dir.EnumerateFilesRecursive();
             Assert.True(iter.Count() >= 2);
         }
+
+
+        [Fact]
+        public void DirectoryCopyFromFileInfo_Test()
+        {
+            var fs = new PhysicalFileSystem();
+            var temp = Path.GetTempPath();
+            var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
+            var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
+
+            var tempFile = Path.GetTempFileName();
+            var file = dir.OpenFile(tempFile);
+            Assert.True(dir.ContainsFile(".manifest"));
+            using (var str = file.OpenStream()) {
+                str.WriteByte(255);
+            }// safe the file
+
+            Assert.Throws<IOException>(() => dir.CopyFrom(new FileInfo(tempFile)));
+            Assert.Equal(0, dir.CopyFrom(new FileInfo(tempFile), true).Length);
+        }
+
+        [Fact]
+        public void DirectoryCopyFromManaged_Test()
+        {
+            var fs = new PhysicalFileSystem();
+            var fs2 = new PhysicalFileSystem();
+
+            var temp = Path.GetTempPath();
+            var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
+            var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
+            
+            var dir2 = new FS.Directory("test2", pfs, pfs.GetDirectoryEntry("/"));
+
+            var tempFile = Path.GetTempFileName();
+            var file = dir.OpenFile(tempFile);
+            Assert.True(dir.ContainsFile(".manifest"));
+            using (var str = file.OpenStream())
+            {
+                str.WriteByte(255);
+            }// safe the file
+
+            var file2 = dir2.CopyFrom(file);
+
+            Assert.Equal(file.FileGuid, file2.FileGuid);
+            Assert.Equal(1, file2.Length);
+
+            Assert.Throws<IOException>(() => dir2.CopyFrom(file));
+            Assert.Equal(1, dir2.CopyFrom(file, true).Length);
+        }
+
+        [Fact]
+        public async Task DirectoryCopyFromAsyncManaged_Test()
+        {
+            var fs = new PhysicalFileSystem();
+            var fs2 = new PhysicalFileSystem();
+
+            var temp = Path.GetTempPath();
+            var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
+            var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
+
+            var dir2 = new FS.Directory("test2", pfs, pfs.GetDirectoryEntry("/"));
+
+            var tempFile = Path.GetTempFileName();
+            var file = dir.OpenFile(tempFile);
+            Assert.True(dir.ContainsFile(".manifest"));
+            using (var str = file.OpenStream())
+            {
+                str.WriteByte(255);
+            }// safe the file
+            
+            var file2 = await dir2.CopyFromAsync(file);
+
+            Assert.Equal(file.FileGuid, file2.FileGuid);
+            Assert.True(file.Created);
+            Assert.Equal(1, file2.Length);
+
+            await Assert.ThrowsAsync<IOException>(async () => await dir2.CopyFromAsync(file));
+            Assert.Equal(1, (await dir2.CopyFromAsync(file, true)).Length);
+        }
+
+        [Fact]
+        public void DirectoryMoveFromManaged_Test()
+        {
+            var fs = new PhysicalFileSystem();
+            var fs2 = new PhysicalFileSystem();
+
+            var temp = Path.GetTempPath();
+            var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
+            var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
+
+            var dir2 = new FS.Directory("test2", pfs, pfs.GetDirectoryEntry("/"));
+
+            var tempFile = Path.GetTempFileName();
+            var file = dir.OpenFile(tempFile);
+            Guid oldGuid = file.FileGuid;
+            Assert.True(dir.ContainsFile(".manifest"));
+            using (var str = file.OpenStream())
+            {
+                str.WriteByte(255);
+            }// safe the file
+
+            var file2 = dir2.CopyFrom(file);
+
+            Assert.Throws<IOException>(() => dir2.MoveFrom(file));
+            Assert.Equal(1, dir2.MoveFrom(file, true).Length);
+
+            Assert.Equal(oldGuid, file2.FileGuid);
+            Assert.Equal(1, file2.Length);
+
+            Assert.False(file.Created);
+            Assert.False(dir.ContainsFile(file.Name));
+        }
+
+        [Fact]
+        public void FileRename_Test()
+        {
+            var fs = new PhysicalFileSystem();
+
+            var temp = Path.GetTempPath();
+            var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
+            var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
+
+            var tempFile = Path.GetTempFileName();
+            var tempFile2 = Path.GetTempFileName();
+
+            var file = dir.OpenFile(tempFile);
+            Guid oldGuid = file.FileGuid;
+            Assert.True(dir.ContainsFile(".manifest"));
+            using (var str = file.OpenStream())
+            {
+                str.WriteByte(255);
+            }// safe the file
+
+            file.Rename(tempFile2);
+            Assert.Equal(Path.GetFileName(tempFile2), file.Name);
+            Assert.Equal(file.FileGuid, dir.OpenFile(tempFile2).FileGuid);
+        }
+
     }
 }
