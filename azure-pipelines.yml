@@ -15,6 +15,7 @@ variables:
 
 jobs:
 - job: Linux
+  displayName: Test and run code coverage on Linux
   condition: and(succeeded(), eq(variables.os, 'Linux'), not(variables['build.skiptest']))
   pool:
     vmImage: 'ubuntu-16.04'
@@ -23,7 +24,8 @@ jobs:
     parameters:
       os: Linux
 
-- job: Linux Package
+- job: LinuxPackage
+  displayName: Build and package artifacts on Linux
   condition: and(succeeded(), eq(variables.os, 'Linux'), not(variables['build.skippack']))
   pool:
     vmImage: 'ubuntu-16.04'
@@ -33,6 +35,7 @@ jobs:
       os: Linux
 
 - job: Windows
+  displayName: Test and run code coverage on Windows
   pool:
     vmImage: 'windows-2019'
   condition: and(succeeded(), eq(variables.os, 'Windows_NT'), not(variables['build.skiptest']))
@@ -42,7 +45,8 @@ jobs:
       os: Windows_NT
   - template: azure-codecov.yml
 
-- job: Windows Package
+- job: WindowsPackage
+  displayName: Build and package artifacts on Windows
   pool:
     vmImage: 'windows-2019'
   condition: and(succeeded(), eq(variables.os, 'Windows_NT'), not(variables['build.skippack']))
