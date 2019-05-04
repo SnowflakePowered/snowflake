@@ -2,3 +2,4 @@
 	path = stone
 	url = https://github.com/SnowflakePowered/stone/
 	branch = master
+	shallow = true

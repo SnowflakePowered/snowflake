@@ -15,20 +15,39 @@ variables:
 
 jobs:
 - job: Linux
-  condition: and(succeeded(), eq(variables.os, 'Linux'))
+  condition: and(succeeded(), eq(variables.os, 'Linux'), not(variables['build.skiptest']))
   pool:
     vmImage: 'ubuntu-16.04'
   steps:
-  - template: azure-setup.yml  # Template reference
+  - template: azure-test.yml  # Template reference
+    parameters:
+      os: Linux
+
+- job: Linux Package
+  condition: and(succeeded(), eq(variables.os, 'Linux'), not(variables['build.skippack']))
+  pool:
+    vmImage: 'ubuntu-16.04'
+  steps:
+  - template: azure-pack.yml  # Template reference
     parameters:
       os: Linux
 
 - job: Windows
   pool:
     vmImage: 'windows-2019'
-  condition: and(succeeded(), eq(variables.os, 'Windows_NT'))
+  condition: and(succeeded(), eq(variables.os, 'Windows_NT'), not(variables['build.skiptest']))
   steps:
-  - template: azure-setup.yml  # Template reference
+  - template: azure-test.yml  # Template reference
+    parameters:
+      os: Windows_NT
+  - template: azure-codecov.yml
+
+- job: Windows Package
+  pool:
+    vmImage: 'windows-2019'
+  condition: and(succeeded(), eq(variables.os, 'Windows_NT'), not(variables['build.skippack']))
+  steps:
+  - template: azure-pack.yml  # Template reference
     parameters:
       os: Windows_NT
   - template: azure-codecov.yml
