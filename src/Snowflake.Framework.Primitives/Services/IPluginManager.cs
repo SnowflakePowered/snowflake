@@ -25,7 +25,6 @@ namespace Snowflake.Services
         /// </summary>
         /// <typeparam name="T">
         /// The plugin type category to register under.
-        /// Examples include <see cref="IEmulatorAdapter"/>
         /// </typeparam>
         /// <param name="plugin">The plugin instance</param>
         void Register<T>(T plugin)
@@ -77,7 +76,6 @@ namespace Snowflake.Services
         /// </summary>
         /// <typeparam name="T">
         /// The plugin type category to register under.
-        /// Examples include <see cref="IEmulatorAdapter"/>
         /// </typeparam>
         /// <param name="pluginName">The name of the plugin.</param>
         /// <returns>True if the plugin has been registered.</returns>

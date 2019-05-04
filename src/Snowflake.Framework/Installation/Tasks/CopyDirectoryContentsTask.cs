@@ -7,6 +7,10 @@ using Snowflake.Filesystem;
 
 namespace Snowflake.Installation.Tasks
 {
+    /// <summary>
+    /// Copies the descendant contents of the provided <see cref="DirectoryInfo"/> into
+    /// a desination <see cref="IDirectory"/>.
+    /// </summary>
     public sealed class CopyDirectoryContentsTask : AsyncInstallTaskEnumerable<IFile?>
     {
         protected override string TaskName => "Copy";
@@ -14,6 +18,15 @@ namespace Snowflake.Installation.Tasks
         private TaskResult<DirectoryInfo> Source { get; }
         private IDirectory Destination { get; }
       
+        /// <summary>
+        /// Describe a directory copy with the provided source and
+        /// destination directory.
+        /// </summary>
+        /// <param name="source">
+        /// A <see cref="DirectoryInfo"/> that may or may not be the result of a <see cref="AsyncInstallTask{T}"/> 
+        /// where T is <see cref="DirectoryInfo"/>.
+        /// </param>
+        /// <param name="destinationDirectory">The destination <see cref="IDirectory"/>.</param>
         public CopyDirectoryContentsTask(TaskResult<DirectoryInfo> source, IDirectory destinationDirectory)
         {
             this.Source =  source;

@@ -74,7 +74,7 @@ namespace Snowflake.Persistence
         /// <param name="query">The SQL query to execute</param>
         /// <param name="param">The query parameters</param>
         /// <returns>The requested data, or null if not present.</returns>
-        public T QueryFirstOrDefault<T>(string query, object param = null)
+        public T QueryFirstOrDefault<T>(string query, object? param = null)
         {
             return this.Query(connection => connection.QueryFirstOrDefault<T>(query, param));
         }
@@ -97,16 +97,9 @@ namespace Snowflake.Persistence
         {
             using (var conn = database.GetConnection())
             {
-#pragma warning disable S125 // Sections of code should not be "commented out"
-#pragma warning disable CS0162 // Unreachable code detected
                 conn.Open();
-                throw new NotImplementedException();
-
-                // todo: reimplement backup database this.dbConnection.BackupDatabase(conn, "main", "main", -1, null, 0);
-                // see: https://github.com/aspnet/Microsoft.Data.Sqlite/issues/17
+                this.dbConnection.BackupDatabase((SqliteConnection)conn);
                 conn.Close();
-#pragma warning restore S125 // Sections of code should not be "commented out"
-#pragma warning restore CS0162 // Unreachable code detected
             }
         }
 
@@ -119,9 +112,7 @@ namespace Snowflake.Persistence
             using (var conn = database.GetConnection())
             {
                 conn.Open();
-                throw new NotImplementedException();
-
-                // conn.BackupDatabase(this.dbConnection, "main", "main", -1, null, 0);
+                ((SqliteConnection)conn).BackupDatabase(this.dbConnection);
                 conn.Close();
             }
         }

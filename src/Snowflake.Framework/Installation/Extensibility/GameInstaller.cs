@@ -11,6 +11,7 @@ using Snowflake.Filesystem;
 
 namespace Snowflake.Installation.Extensibility
 {
+    /// <inheritdoc />
     public abstract class GameInstaller
          : ProvisionedPlugin, IGameInstaller
     {
@@ -19,6 +20,7 @@ namespace Snowflake.Installation.Extensibility
         {
         }
 
+        /// <inheritdoc />
         public GameInstaller(IPluginProvision provision)
             : base(provision)
         {
@@ -26,8 +28,10 @@ namespace Snowflake.Installation.Extensibility
                 .GetCustomAttributes<SupportedPlatformAttribute>().Select(p => p.PlatformId).ToList();
         }
 
+        /// <inheritdoc />
         public IEnumerable<PlatformId> SupportedPlatforms { get; }
 
+        /// <inheritdoc />
         public abstract IAsyncEnumerable<TaskResult<IFile>> Install(IGame game, IEnumerable<FileSystemInfo> files);
     }
 }
