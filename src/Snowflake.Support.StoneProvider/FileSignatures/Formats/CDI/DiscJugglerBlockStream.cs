@@ -64,7 +64,7 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDI
             //this.ImageStream.Seek(track.HeaderSize, SeekOrigin.Current);
             //return reader.ReadBytes(track.DataSize);
 
-            long baseoffset = this.Track.Position + (this.Track.BeginFrameAddr + this.LBA) * this.Track.SectorSize;
+            long baseoffset = this.Track.Position + ((this.Track.BeginFrameAddr + this.LBA) * this.Track.SectorSize);
 
             this.diskStream.Seek(baseoffset, SeekOrigin.Begin);
             this.diskStream.Seek(this.Track.HeaderSize, SeekOrigin.Current);

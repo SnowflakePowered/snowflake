@@ -63,6 +63,5 @@ namespace Snowflake.Scraping
         /// </summary>
         /// <returns>The final, automatically culled, flattened seed tree state.</returns>
         ConfiguredTaskAwaitable<IEnumerable<ISeed>>.ConfiguredTaskAwaiter GetAwaiter();
-
     }
 }
