@@ -17,10 +17,17 @@ namespace Snowflake.Stone.FileSignatures.Sony
         /// <inheritdoc/>
         public bool HeaderSignatureMatches(Stream romStream)
         {
-            romStream.Seek(0, SeekOrigin.Begin);
-            var disk = new PlaystationDisc(new CDXADisc(romStream));
-            
-            return disk.IsPlaystation();
+            try
+            {
+                romStream.Seek(0, SeekOrigin.Begin);
+                var disk = new PlaystationDisc(new CDXADisc(romStream));
+
+                return disk.IsPlaystation();
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         /// <inheritdoc/>

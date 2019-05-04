@@ -14,9 +14,16 @@ namespace Snowflake.Stone.FileSignatures.Sony
         /// <inheritdoc/>
         public bool HeaderSignatureMatches(Stream romStream)
         {
-            romStream.Seek(0, SeekOrigin.Begin);
-            using CDReader reader = new CDReader(romStream, true);
-            return reader.DirectoryExists("PSP_GAME");
+            try
+            {
+                romStream.Seek(0, SeekOrigin.Begin);
+                using CDReader reader = new CDReader(romStream, true);
+                return reader.DirectoryExists("PSP_GAME");
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         /// <inheritdoc/>

@@ -25,8 +25,8 @@ namespace Snowflake.Romfile
         /// To handle multiple types of ROMs, use a series of ifs or an switch.
         /// </summary>
         /// <remarks>
-        /// Never close <paramref name="fileContents"/>. Exceptions can be thrown freely without being handled,
-        /// and will be treated as an invalid result (false).
+        /// Never close <paramref name="fileContents"/>.
+        /// This method must never throw. Return false if an exception occurs.
         /// </remarks>
         /// <param name="fileContents">The contents of the ROM</param>
         /// <returns>If this ROM is executable data for this platform, it should return true.</returns>
@@ -37,8 +37,9 @@ namespace Snowflake.Romfile
         /// <param name="fileContents">The contents of the ROM</param>
         /// </summary>
         /// <remarks>
-        /// Never close <paramref name="fileContents"/>. Exceptions can be thrown freely without being handled,
-        /// and will be treated as an invalid result (null).
+        /// Never close <paramref name="fileContents"/>.
+        /// 
+        /// This method may not throw if <see cref="HeaderSignatureMatches(Stream)"/> is true.
         /// </remarks>
         string GetSerial(Stream fileContents);
 
@@ -47,8 +48,9 @@ namespace Snowflake.Romfile
         /// <param name="fileContents">The contents of the ROM</param>
         /// </summary>
         /// <remarks>
-        /// Never close <paramref name="fileContents"/>. Exceptions can be thrown freely without being handled,
-        /// and will be treated as an invalid result (null).
+        /// Never close <paramref name="fileContents"/>. 
+        /// 
+        /// This method may not throw if <see cref="HeaderSignatureMatches(Stream)"/> is true.
         /// </remarks>
         string GetInternalName(Stream fileContents);
     }
