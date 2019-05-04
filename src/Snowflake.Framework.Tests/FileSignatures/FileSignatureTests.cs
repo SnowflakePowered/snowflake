@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text;
 using Snowflake.Romfile;
+using Snowflake.Services;
 using Snowflake.Stone.FileSignatures.Formats.CDI;
 using Snowflake.Stone.FileSignatures.Nintendo;
 using Snowflake.Stone.FileSignatures.Sega;
@@ -139,6 +142,53 @@ namespace Snowflake.Stone.FileSignatures.Tests
             using var testStream = TestUtilities.GetResource($"TestRoms.{filename}");
             IFileSignature signature = (IFileSignature)Activator.CreateInstance(fileSignature);
             Assert.Equal(expected, signature.GetInternalName(testStream));
+        }
+
+        [Theory]
+        [InlineData(typeof(NintendoEntertainmentSystemiNesFileSignature), "test.nes")]
+        [InlineData(typeof(NintendoEntertainmentSystemUnifFileSignature), "scanline.unif")]
+        [InlineData(typeof(SuperNintendoHeaderlessFileSignature), "bsnesdemo_v1.sfc")]
+        [InlineData(typeof(SuperNintendoSmcHeaderFileSignature), "bsnesdemo_v1.smc")]
+        [InlineData(typeof(GameboyAdvancedFileSignature), "suite.gba")]
+        [InlineData(typeof(NintendoDSFileSignature), "slot1launch.nds")]
+        [InlineData(typeof(GameboyFileSignature), "flappyboy.gb")]
+        [InlineData(typeof(GameboyColorFileSignature), "infinity.gbc")]
+        [InlineData(typeof(Nintendo64ByteswappedFileSignature), "rx-mm64.v64")]
+        [InlineData(typeof(Nintendo64LittleEndianFileSignature), "rx-mm64.n64")]
+        [InlineData(typeof(Nintendo64BigEndianFileSignature), "setscreenntsc.z64")]
+        [InlineData(typeof(GamecubeIso9660FileSignature), "gctest.iso")]
+        [InlineData(typeof(PlaystationPortableIso9660FileSignature), "psptest.iso")]
+        [InlineData(typeof(Playstation2CDRomFileSignature), "guitarfun.bin")]
+        [InlineData(typeof(PlaystationCDRomFileSignature), "psxtest.bin")]
+        [InlineData(typeof(Playstation2Iso9660FileSignature), "ps2test.iso")]
+        [InlineData(typeof(SegaGenesisFileSignature), "SpriteMaskingTestRom.gen")]
+        [InlineData(typeof(Sega32XFileSignature), "devstertest12.32X")]
+        [InlineData(typeof(SegaGameGearFileSignature), "jptest.gg")]
+        [InlineData(typeof(SegaGameGearFileSignature), "exporttest.gg")]
+        [InlineData(typeof(SegaMasterSystemFileSignature), "exporttest.sms")]
+        [InlineData(typeof(SegaMasterSystemFileSignature), "exporttest2.sms")]
+        [InlineData(typeof(SegaGameGearFileSignature), "jptest2.gg")]
+        [InlineData(typeof(SegaDreamcastRawDiscFileSignature), "dctest.bin")]
+        [InlineData(typeof(SegaDreamcastDiscJugglerFileSignature), "240pSuite.cdi")]
+        [InlineData(typeof(SegaCdRawImageFileSignature), "blackjackcd.iso")]
+        [InlineData(typeof(SegaSaturnFileSignature), "sl_coff.iso")]
+        [InlineData(typeof(SegaSaturnFileSignature), "sattest.bin")]
+        [InlineData(typeof(WiiWbfsFileSignature), "wiitest.wbfs")]
+        [InlineData(typeof(WiiIso9660FileSignature), "wiitest.iso")]
+
+        public void VerifyStoneProvider_Test(Type fileSignature, string filename)
+        {
+            using var testStream = TestUtilities.GetResource($"TestRoms.{filename}");
+            IFileSignature signature = (IFileSignature)Activator.CreateInstance(fileSignature);
+            Assert.True(signature.HeaderSignatureMatches(testStream));
+
+            IStoneProvider stone = new StoneProvider();
+            testStream.Seek(0, SeekOrigin.Begin);
+            string mimetype = stone.GetStoneMimetype(testStream);
+            Assert.NotEqual(String.Empty, mimetype);
+
+            var stoneSigs = stone.GetSignatures(mimetype);
+            Assert.Contains(stoneSigs, s => s.HeaderSignatureMatches(testStream));
         }
     }
 }

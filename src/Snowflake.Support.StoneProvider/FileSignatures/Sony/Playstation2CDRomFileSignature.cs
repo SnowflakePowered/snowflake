@@ -15,10 +15,17 @@ namespace Snowflake.Stone.FileSignatures.Sony
         /// <inheritdoc/>
         public bool HeaderSignatureMatches(Stream romStream)
         {
-            romStream.Seek(0, SeekOrigin.Begin);
-            var reader = new PlaystationDisc(new CDXADisc(romStream));
-            string systemcnf = reader.GetMeta();
-            return systemcnf?.Contains("BOOT2") ?? false;
+            try
+            {
+                romStream.Seek(0, SeekOrigin.Begin);
+                var reader = new PlaystationDisc(new CDXADisc(romStream));
+                string systemcnf = reader.GetMeta();
+                return systemcnf?.Contains("BOOT2") ?? false;
+            }
+            catch 
+            {
+                return false;
+            }
         }
 
         /// <inheritdoc/>

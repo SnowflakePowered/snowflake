@@ -14,12 +14,19 @@ namespace Snowflake.Stone.FileSignatures.Sony
         /// <inheritdoc/>
         public bool HeaderSignatureMatches(Stream romStream)
         {
-            romStream.Seek(0, SeekOrigin.Begin);
-            using var reader = new CDReader(romStream, true);
-            using var system = reader.OpenFile("SYSTEM.CNF", FileMode.Open);
-            using var streamReader = new StreamReader(system);
+            try
+            {
+                romStream.Seek(0, SeekOrigin.Begin);
+                using var reader = new CDReader(romStream, true);
+                using var system = reader.OpenFile("SYSTEM.CNF", FileMode.Open);
+                using var streamReader = new StreamReader(system);
 
-            return streamReader.ReadToEnd().Contains("BOOT2");
+                return streamReader.ReadToEnd().Contains("BOOT2");
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         /// <inheritdoc/>

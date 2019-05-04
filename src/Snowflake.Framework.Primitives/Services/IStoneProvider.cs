@@ -56,7 +56,7 @@ namespace Snowflake.Services
         /// </summary>
         /// <param name="mimetype">A stone mimetype</param>
         /// <returns></returns>
-        IFileSignature? GetSignature(string mimetype);
+        IEnumerable<IFileSignature> GetSignatures(string mimetype);
 
         /// <summary>
         /// Gets the version of stone definitions loaded
