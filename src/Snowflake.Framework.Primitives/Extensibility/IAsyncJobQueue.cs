@@ -68,6 +68,5 @@ namespace Snowflake.Framework.Extensibility
         /// and <see cref="AsEnumerable(Guid)"/>.</param>
         /// <returns>The <see cref="Guid"/> token you passed in <paramref name="guid"/>.</returns>
         Task<Guid> QueueJob(IAsyncEnumerable<T> asyncEnumerable, Guid guid, CancellationToken token = default);
-
     }
 }

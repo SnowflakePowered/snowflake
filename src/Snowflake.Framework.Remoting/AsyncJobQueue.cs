@@ -46,7 +46,6 @@ namespace Snowflake.Framework.Extensibility
                 (T val, bool hasNext) = await this.Queue.GetNext(JobId);
                 this.Current = val;
                 return hasNext;
-
             }
         }
 
@@ -99,7 +98,6 @@ namespace Snowflake.Framework.Extensibility
             this.Enumerators.Add(guid, enumerator);
             return guid;
         }
-
 
         public async Task<Guid> QueueJob(IAsyncEnumerable<T> asyncEnumerable, Guid guid, CancellationToken token = default)
         {
