@@ -7,14 +7,14 @@ steps:
     inputs:
       includePreviewVersions: false
       packageType: 'sdk' # Options: runtime, sdk
-      version: '2.2.x'    
+      version: '2.2.x'
 
   - task: DotNetCoreInstaller@1
     displayName: Installing .NET Core 3.0 SDK
     inputs:
       includePreviewVersions: true
       packageType: 'sdk' # Options: runtime, sdk
-      version: '3.0.100-preview4-011223' 
+      version: '3.0.100-preview4-011223'
 
   - task: NuGetToolInstaller@0
     displayName: Installing NuGet CLI
@@ -38,7 +38,7 @@ steps:
     displayName: Publish test results to Azure
     inputs:
       testResultsFormat: 'VSTest' # Options: JUnit, NUnit, VSTest, xUnit, cTest
-      testResultsFiles: '*.trx' 
+      testResultsFiles: '*.trx'
       searchFolder: '$(System.DefaultWorkingDirectory)/src/Snowflake.Framework.Tests/TestResults'
 
   - task: PublishCodeCoverageResults@1

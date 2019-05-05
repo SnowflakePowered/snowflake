@@ -891,6 +891,60 @@
         <member name="M:Snowflake.Input.Device.InputEnumerator.GetConnectedDevices">
             <inheritdoc/>
         </member>
+        <member name="T:Snowflake.Installation.Extensibility.GameInstaller">
+            <inheritdoc />
+        </member>
+        <member name="M:Snowflake.Installation.Extensibility.GameInstaller.#ctor(Snowflake.Extensibility.Provisioning.IPluginProvision)">
+            <inheritdoc />
+        </member>
+        <member name="P:Snowflake.Installation.Extensibility.GameInstaller.SupportedPlatforms">
+            <inheritdoc />
+        </member>
+        <member name="M:Snowflake.Installation.Extensibility.GameInstaller.Install(Snowflake.Model.Game.IGame,System.Collections.Generic.IEnumerable{System.IO.FileSystemInfo})">
+            <inheritdoc />
+        </member>
+        <member name="T:Snowflake.Installation.Tasks.CopyDirectoryContentsTask">
+            <summary>
+            Copies the descendant contents of the provided <see cref="T:System.IO.DirectoryInfo"/> into
+            a desination <see cref="T:Snowflake.Filesystem.IDirectory"/>.
+            </summary>
+        </member>
+        <member name="M:Snowflake.Installation.Tasks.CopyDirectoryContentsTask.#ctor(Snowflake.Installation.TaskResult{System.IO.DirectoryInfo},Snowflake.Filesystem.IDirectory)">
+            <summary>
+            Describe a directory copy with the provided source and
+            destination directory.
+            </summary>
+            <param name="source">
+            A <see cref="T:System.IO.DirectoryInfo"/> that may or may not be the result of a <see cref="T:Snowflake.Installation.AsyncInstallTask`1"/> 
+            where T is <see cref="T:System.IO.DirectoryInfo"/>.
+            </param>
+            <param name="destinationDirectory">The destination <see cref="T:Snowflake.Filesystem.IDirectory"/>.</param>
+        </member>
+        <member name="T:Snowflake.Installation.Tasks.CopyFileTask">
+            <summary>
+            Copies a file into an <see cref="T:Snowflake.Filesystem.IDirectory"/>
+            </summary>
+        </member>
+        <member name="M:Snowflake.Installation.Tasks.CopyFileTask.#ctor(Snowflake.Installation.TaskResult{System.IO.FileInfo},Snowflake.Filesystem.IDirectory)">
+            <summary>
+            Describe a file copy with the given source file and the target directory.
+            The resultant file will have the same file name as the source.
+            </summary>
+            <param name="source">The source file.</param>
+            <param name="destinationDirectory">The target directory.</param>
+        </member>
+        <member name="T:Snowflake.Installation.Tasks.ExtractZipTask">
+            <summary>
+            Extracts a ZIP file into a target directory.
+            </summary>
+        </member>
+        <member name="M:Snowflake.Installation.Tasks.ExtractZipTask.#ctor(Snowflake.Installation.TaskResult{System.IO.FileInfo},Snowflake.Filesystem.IDirectory)">
+            <summary>
+            Describes an extraction of a ZIP file into a target directory.
+            </summary>
+            <param name="fileInfo">The ZIP file source.</param>
+            <param name="destination">The destination directory.</param>
+        </member>
         <member name="M:Snowflake.JsonConverters.ConfigurationCollectionSerializer.WriteJson(Newtonsoft.Json.JsonWriter,System.Object,Newtonsoft.Json.JsonSerializer)">
             <inheritdoc/>
         </member>
@@ -1306,9 +1360,6 @@
             <inheritdoc />
         </member>
         <member name="P:Snowflake.Scraping.GameScrapeContext.Visited">
-            <inheritdoc />
-        </member>
-        <member name="P:Snowflake.Scraping.GameScrapeContext.JobGuid">
             <inheritdoc />
         </member>
         <member name="P:Snowflake.Scraping.GameScrapeContext.Cullers">

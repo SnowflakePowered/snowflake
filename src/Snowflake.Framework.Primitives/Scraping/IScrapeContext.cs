@@ -23,11 +23,6 @@ namespace Snowflake.Scraping
         IEnumerable<ICuller> Cullers { get; }
 
         /// <summary>
-        /// Gets the unique ID identifying this job.
-        /// </summary>
-        Guid JobGuid { get; }
-
-        /// <summary>
         /// Gets the list of <see cref="IScraper"/> that will be used to produce the resultant seed tree.
         /// </summary>s
         IEnumerable<IScraper> Scrapers { get; }

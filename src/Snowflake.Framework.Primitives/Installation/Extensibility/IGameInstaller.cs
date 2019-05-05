@@ -9,7 +9,6 @@ using Snowflake.Model.Game;
 
 namespace Snowflake.Installation.Extensibility
 {
-
     /// <summary>
     /// Installs files to an <see cref="IGame"/> by yielding <see cref="TaskResult{IFile}"/>.
     /// </summary>
