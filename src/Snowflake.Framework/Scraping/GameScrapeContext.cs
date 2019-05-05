@@ -29,28 +29,11 @@ namespace Snowflake.Scraping
         private List<(string, Guid)> Visited { get; }
 
         /// <inheritdoc />
-        public Guid JobGuid { get; }
-
-        /// <inheritdoc />
         public IEnumerable<ICuller> Cullers { get; }
 
         public GameScrapeContext(IEnumerable<IScraper> scrapers,
             IEnumerable<ICuller> cullers)
             : this(Enumerable.Empty<SeedContent>(), scrapers, cullers)
-        {
-        }
-
-        public GameScrapeContext(IEnumerable<SeedContent> initialSeeds,
-            IEnumerable<IScraper> scrapers,
-            IEnumerable<ICuller> cullers)
-            : this(initialSeeds, scrapers, cullers, Guid.NewGuid())
-        {
-        }
-
-        public GameScrapeContext(IEnumerable<SeedTree> initialSeeds,
-            IEnumerable<IScraper> scrapers,
-            IEnumerable<ICuller> cullers)
-            : this(initialSeeds, scrapers, cullers, Guid.NewGuid())
         {
         }
 
@@ -84,18 +67,17 @@ namespace Snowflake.Scraping
         }
 
         internal GameScrapeContext(IEnumerable<SeedContent> initialSeeds,
-            IEnumerable<IScraper> scrapers, IEnumerable<ICuller> cullers, Guid jobGuid)
+            IEnumerable<IScraper> scrapers, IEnumerable<ICuller> cullers)
         {
             this.Context = new SeedRootContext();
             this.Visited = new List<(string, Guid)>();
             this.Scrapers = scrapers;
             this.Cullers = cullers;
             this.Context.AddRange(initialSeeds.Select(p => (p, this.Context.Root)), GameScrapeContext.ClientSeedSource);
-            this.JobGuid = jobGuid;
         }
 
         internal GameScrapeContext(IEnumerable<SeedTree> initialSeeds,
-            IEnumerable<IScraper> scrapers, IEnumerable<ICuller> cullers, Guid jobGuid)
+            IEnumerable<IScraper> scrapers, IEnumerable<ICuller> cullers)
         {
             this.Context = new SeedRootContext();
             this.Visited = new List<(string, Guid)>();
@@ -103,7 +85,6 @@ namespace Snowflake.Scraping
             this.Cullers = cullers;
             this.Context.AddRange(
                 initialSeeds.SelectMany(s => s.Collapse(this.Context.Root, GameScrapeContext.ClientSeedSource)));
-            this.JobGuid = jobGuid;
         }
 
         private ISeed GetAttachTarget(AttachTarget t, ISeed matchingSeed)

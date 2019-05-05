@@ -10,11 +10,11 @@ namespace Snowflake.Framework.Extensibility
 {
     public sealed class AsyncJobQueue<T> : IAsyncJobQueue<T>
     {
-        private sealed class AsyncJobQueueEnumerable<T> : IAsyncEnumerable<T>
+        private sealed class AsyncJobQueueEnumerable : IAsyncEnumerable<T>
         {
             public AsyncJobQueueEnumerable(AsyncJobQueue<T> queue, Guid job)
             {
-                this.Enumerator = new AsyncJobQueueWrappingEnumerator<T>(queue, job);
+                this.Enumerator = new AsyncJobQueueWrappingEnumerator(queue, job);
             }
 
             public IAsyncEnumerator<T> Enumerator { get; }
@@ -25,7 +25,7 @@ namespace Snowflake.Framework.Extensibility
             }
         }
 
-        private sealed class AsyncJobQueueWrappingEnumerator<T> : IAsyncEnumerator<T>
+        private sealed class AsyncJobQueueWrappingEnumerator : IAsyncEnumerator<T>
         {
             public AsyncJobQueueWrappingEnumerator(AsyncJobQueue<T> queue, Guid job)
             {
@@ -50,12 +50,20 @@ namespace Snowflake.Framework.Extensibility
             }
         }
 
-        public AsyncJobQueue()
+        /// <summary>
+        /// Creates a new asynchronous job queue.
+        /// </summary>
+        /// <param name="disposeEnumerable">If false, will not automatically remove the enumerable once the job is complete.</param>
+        public AsyncJobQueue(bool disposeEnumerable = true)
         {
+            this.Enumerables = new ConcurrentDictionary<Guid, IAsyncEnumerable<T>>();
             this.Enumerators = new ConcurrentDictionary<Guid, IAsyncEnumerator<T>>();
+            this.DisposeEnumerable = disposeEnumerable;
         }
 
+        private IDictionary<Guid, IAsyncEnumerable<T>> Enumerables { get; }
         private IDictionary<Guid, IAsyncEnumerator<T>> Enumerators { get; }
+        private bool DisposeEnumerable { get; }
 
         private IAsyncEnumerator<T> GetEnumerator(Guid jobId)
         {
@@ -77,6 +85,7 @@ namespace Snowflake.Framework.Extensibility
             {
                 await enumerator.DisposeAsync();
                 this.Enumerators.Remove(jobId);
+                if (this.DisposeEnumerable) this.TryRemoveSource(jobId, out var _);
             }
             return result;
         }
@@ -85,6 +94,7 @@ namespace Snowflake.Framework.Extensibility
         {
             var guid = Guid.NewGuid();
             var enumerator = asyncEnumerable.GetAsyncEnumerator(token);
+            this.Enumerables.Add(guid, asyncEnumerable);
             await enumerator.MoveNextAsync();
             this.Enumerators.Add(guid, enumerator);
             return guid;
@@ -99,15 +109,36 @@ namespace Snowflake.Framework.Extensibility
                 this.Enumerators.Remove(guid);
             }
 
+            if (this.Enumerables.TryGetValue(guid, out var _))
+            {
+                this.Enumerables.Remove(guid);
+            }
+
             var enumerator = asyncEnumerable.GetAsyncEnumerator(token);
             await enumerator.MoveNextAsync();
             this.Enumerators.Add(guid, enumerator);
+            this.Enumerables.Add(guid, asyncEnumerable);
             return guid;
         }
 
-        public IAsyncEnumerable<T> GetEnumerable(Guid jobId)
+        public IAsyncEnumerable<T> AsEnumerable(Guid jobId)
         {
-            return new AsyncJobQueueEnumerable<T>(this, jobId);
+            return new AsyncJobQueueEnumerable(this, jobId);
+        }
+
+        public IAsyncEnumerable<T> GetSource(Guid jobId)
+        {
+            this.Enumerables.TryGetValue(jobId, out var enumerable);
+            return enumerable;
+        }
+
+        public bool TryRemoveSource(Guid jobId, out IAsyncEnumerable<T> asyncEnumerable)
+        {
+            asyncEnumerable = Empty();
+            if (this.Enumerators.ContainsKey(jobId)) return false;
+            bool result = this.Enumerables.TryGetValue(jobId, out asyncEnumerable);
+            this.Enumerables.Remove(jobId);
+            return result;
         }
     }
 }

@@ -7,14 +7,14 @@ steps:
     inputs:
       includePreviewVersions: false
       packageType: 'sdk' # Options: runtime, sdk
-      version: '2.2.x'    
+      version: '2.2.x'
 
   - task: DotNetCoreInstaller@1
     displayName: Installing .NET Core 3.0 SDK
     inputs:
       includePreviewVersions: true
       packageType: 'sdk' # Options: runtime, sdk
-      version: '3.0.100-preview4-011223' 
+      version: '3.0.100-preview4-011223'
 
   - task: NuGetToolInstaller@0
     displayName: Installing NuGet CLI
@@ -37,6 +37,5 @@ steps:
     condition: not(variables['build.skippack'])
     displayName: Publishing build artifacts
     inputs:
-      pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
+      pathtoPublish: '$(Build.ArtifactStagingDirectory)'
       artifactName: 'binaries'
-
