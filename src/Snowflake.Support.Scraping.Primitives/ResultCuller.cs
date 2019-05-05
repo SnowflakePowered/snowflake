@@ -40,7 +40,7 @@ namespace Snowflake.Support.Scraping.Primitives
                 let title = context.GetChildren(seed).FirstOrDefault(s => s.Content.Type == "title")
                 where title != null
                 let r = title.Content.Value
-                let distance = this.Comparator.Distance(r.NormalizeTitle(), parent.Content.Value.NormalizeTitle())
+                let distance = this.Comparator.Distance(r.NormalizeTitle(), parent?.Content.Value.NormalizeTitle())
                 orderby distance ascending, context.GetChildren(seed).Count() descending
                 select seed).FirstOrDefault();
 
