@@ -9,6 +9,16 @@ namespace Snowflake.Romfile.Tests
     public class StructuredFilenameTests
     {
         [Theory]
+        [InlineData(".hack G.U. Last Recode", ".hack G.U. Last Recode", NamingConvention.GoodTools, "ZZ")]
+        [InlineData("Super Mario Bros. 2 (USA).nes", "Super Mario Bros. 2", NamingConvention.NoIntro, "US")]
+        [InlineData("Super Mario Bros. 2 (USA)", "Super Mario Bros. 2", NamingConvention.NoIntro, "US")]
+        [InlineData("Super Mario Bros. (USA)", "Super Mario Bros.", NamingConvention.NoIntro, "US")]
+        [InlineData("Super Mario Bros.", "Super Mario Bros.", NamingConvention.GoodTools, "ZZ")]
+        [InlineData(".hack_G.U. Last Recode.iso", ".hack_G.U. Last Recode", NamingConvention.GoodTools, "ZZ")]
+
+        [InlineData("Super Mario Bros. (USA).nes", "Super Mario Bros.", NamingConvention.NoIntro, "US")]
+        [InlineData("Super Mario Bros..nes", "Super Mario Bros.", NamingConvention.GoodTools, "ZZ")]
+
         [InlineData("RPG Maker Fes (Europe) (En,Fr,De,Es,It)", "RPG Maker Fes", NamingConvention.NoIntro, "EU")]
         [InlineData("Seisen Chronicle (Japan) (eShop) [b]", "Seisen Chronicle", NamingConvention.NoIntro, "JP")]
         [InlineData("Pachio-kun 3 (Japan) (Rev A)", "Pachio-kun 3", NamingConvention.NoIntro, "JP")]

@@ -35,9 +35,7 @@ namespace Snowflake.Romfile
 
             // todo: expose tokens to api
             (NamingConvention namingConvention, IEnumerable<StructuredFilenameToken> tokens) = GetBestMatch();
-            this.Title = Path.GetFileNameWithoutExtension(StructuredFilename.ParseTitle(
-                tokens.FirstOrDefault(t => t.Type ==
-                                           FieldType.Title)?.Value ?? "Unknown??!?"));
+            this.Title = StructuredFilename.ParseTitle(tokens.FirstOrDefault(t => t.Type == FieldType.Title)?.Value ?? "Unknown??!?");
             this.NamingConvention = namingConvention;
             this.RegionCode = string.Join('-', tokens.Where(t => t.Type == FieldType.Country).Select(t => t.Value));
             if (string.IsNullOrEmpty(this.RegionCode))
