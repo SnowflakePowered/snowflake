@@ -17,7 +17,7 @@ namespace Snowflake.Scraping
         ISeed this[Guid seedGuid] { get; }
 
         /// <summary>
-        /// Gets the root of the context where all seeds are attached tho
+        /// Gets the root of the context where all seeds are attached to
         /// </summary>
         ISeed Root { get; }
 

@@ -26,6 +26,8 @@ namespace Snowflake.Support.Remoting.GraphQL.Queries
         private IPluginCollection<IScraper> Scrapers { get; }
         private IPluginCollection<ICuller> Cullers { get; }
         private IAsyncJobQueue<IEnumerable<ISeed>> GameScrapeContextJobQueue { get; }
+        private IGameMetadataTraverser GameMetadataTraverser { get; }
+        private IFileInstallationTraverser FileMetadataTraverser { get; }
 
         public ScrapingQueryBuilder(IGameLibrary gameLibrary,
             IPluginCollection<IScraper> scrapers,
@@ -77,6 +79,41 @@ namespace Snowflake.Support.Remoting.GraphQL.Queries
         public async Task<IEnumerable<ISeed>> ScrapeAllSteps(Guid jobGuid)
         {
             return await ((GameScrapeContext)this.GameScrapeContextJobQueue.GetSource(jobGuid));
+        }
+
+        [Field("discardScrapeResults", "Discards the completed scrape results.", typeof(ListGraphType<SeedGraphType>))]
+        [Parameter(typeof(Guid), typeof(GuidGraphType), "jobGuid", "The GUID of the created scraping context to proceed with.", false)]
+        public async Task<IEnumerable<ISeed>> DiscardScrapeResults(Guid jobGuid)
+        {
+            var returnVal =  await ((GameScrapeContext)this.GameScrapeContextJobQueue.GetSource(jobGuid));
+            this.GameScrapeContextJobQueue.TryRemoveSource(jobGuid, out var _);
+            return returnVal;
+        }
+
+        [Mutation("applyScrapeResults", "Saves the scrape result as metadata of the game.", typeof(GameGraphType))]
+        [Parameter(typeof(Guid), typeof(GuidGraphType), "gameGuid", "The GUID of the game.", false)]
+        [Parameter(typeof(Guid), typeof(GuidGraphType), "jobGuid", "The GUID of the created scraping context to proceed with.", false)]
+        public async Task<IGame> ApplyScrapeResults(Guid gameGuid, Guid jobGuid)
+        {
+            // todo throw if source is gone.
+            var game = this.GameLibrary.GetGame(gameGuid);
+            if (game == null) throw new KeyNotFoundException("Game with the given GUID was not found.");
+
+            var context = (GameScrapeContext)this.GameScrapeContextJobQueue.GetSource(jobGuid);
+            await context; // force it to result seeds.
+
+            await foreach (var metadata in this.GameMetadataTraverser.Traverse(game, context.Context.Root, context.Context))
+            {
+                // empty for loop to apply all side effects.
+            }
+
+            await foreach (var metadata in this.FileMetadataTraverser.Traverse(game, context.Context.Root, context.Context))
+            {
+                // empty for loop to apply all side effects.
+            }
+
+            this.GameScrapeContextJobQueue.TryRemoveSource(jobGuid, out var _);
+            return game;
         }
     }
 }

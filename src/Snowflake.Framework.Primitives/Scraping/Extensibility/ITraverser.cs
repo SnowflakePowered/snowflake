@@ -6,6 +6,7 @@ using Snowflake.Installation;
 using Snowflake.Installation.Extensibility;
 using Snowflake.Model.Game;
 using Snowflake.Model.Records;
+using Snowflake.Model.Records.File;
 
 namespace Snowflake.Scraping.Extensibility
 {
@@ -14,17 +15,21 @@ namespace Snowflake.Scraping.Extensibility
     /// or rather sub-trees relative to a given seed in the context, and applies side effects
     /// according to the final seed tree, producing a list of <see cref="T"/> given the 
     /// information available in the seed tree.
+    /// 
     /// </summary>
     /// <typeparam name="TProducts">The type of record or object this traverser produces.</typeparam>
     /// <typeparam name="TEffectTarget">The type of object this traverser is allowed to mutate.</typeparam>
     public interface ITraverser<TProducts, TEffectTarget>
     {
         /// <summary>
-        /// Traverses the seed tree to yield objects of type <see cref="T"/>
+        /// Traverses the seed tree to yield objects of type <typeparamref name="TProducts"/>,
+        /// which, while being enumerated, may cause side effects to the provided <paramref name="sideEffectContext"/>.
+        /// 
+        /// This may mean that the provided products are already applied to the <paramref name="sideEffectContext"/>,
+        /// and should not be reapplied as enumerated.
         /// <para>
-        /// While the full seed root context is given, it is best practice for traversers to
-        /// treat the given relative root as the root of the entire seed tree rather than the true
-        /// root of the context.
+        /// Although the full seed root context is provied, it is best practice for traversers to
+        /// traverse relative to the given <paramref name="relativeRoot"/>.
         /// </para>
         /// </summary>
         /// <param name="sideEffectContext">The mutable object onto which side effects may be applied</param>
@@ -44,5 +49,5 @@ namespace Snowflake.Scraping.Extensibility
     /// A FileInstallationTraverser is a specialized traverser that installs additional files to a game,
     /// such as images and videos, yielding them much in the same way as <see cref="IGameInstaller"/>.
     /// </summary>
-    public interface IFileInstallationTraverser : ITraverser<TaskResult<IFile>, IGame> { }
+    public interface IFileInstallationTraverser : ITraverser<TaskResult<IFileRecord>, IGame> { }
 }
