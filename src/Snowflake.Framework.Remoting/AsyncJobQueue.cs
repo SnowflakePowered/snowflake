@@ -79,7 +79,9 @@ namespace Snowflake.Framework.Extensibility
         public async ValueTask<(T, bool)> GetNext(Guid jobId)
         {
             var enumerator = this.GetEnumerator(jobId);
-            var result = (value: enumerator.Current, hasNext: await enumerator.MoveNextAsync());
+            bool hasNext = await enumerator.MoveNextAsync();
+
+            var result = (value: enumerator.Current, hasNext);
             if (!result.hasNext)
             {
                 await enumerator.DisposeAsync();
@@ -89,17 +91,16 @@ namespace Snowflake.Framework.Extensibility
             return result;
         }
 
-        public async Task<Guid> QueueJob(IAsyncEnumerable<T> asyncEnumerable, CancellationToken token = default)
+        public ValueTask<Guid> QueueJob(IAsyncEnumerable<T> asyncEnumerable, CancellationToken token = default)
         {
             var guid = Guid.NewGuid();
             var enumerator = asyncEnumerable.GetAsyncEnumerator(token);
             this.Enumerables.Add(guid, asyncEnumerable);
-            await enumerator.MoveNextAsync();
             this.Enumerators.Add(guid, enumerator);
-            return guid;
+            return new ValueTask<Guid>(guid);
         }
 
-        public async Task<Guid> QueueJob(IAsyncEnumerable<T> asyncEnumerable, Guid guid, CancellationToken token = default)
+        public async ValueTask<Guid> QueueJob(IAsyncEnumerable<T> asyncEnumerable, Guid guid, CancellationToken token = default)
         {
             if (this.Enumerators.TryGetValue(guid, out IAsyncEnumerator<T> old))
             {
@@ -113,7 +114,6 @@ namespace Snowflake.Framework.Extensibility
             }
 
             var enumerator = asyncEnumerable.GetAsyncEnumerator(token);
-            await enumerator.MoveNextAsync();
             this.Enumerators.Add(guid, enumerator);
             this.Enumerables.Add(guid, asyncEnumerable);
             return guid;

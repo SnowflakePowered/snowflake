@@ -18,7 +18,10 @@ namespace Snowflake.Framework.Remoting.Tests
             Assert.Equal("Hello World", val);
             Assert.True(next);
             (_, next) = await tq.GetNext(token);
+            Assert.True(next);
+            (val, next) = await tq.GetNext(token);
             Assert.False(next);
+            Assert.Equal("Goodbye World", val);
             (val, next) = await tq.GetNext(token);
             Assert.False(next);
             Assert.Null(val);
@@ -32,10 +35,15 @@ namespace Snowflake.Framework.Remoting.Tests
             Assert.Equal(token, await tq.QueueJob(EmitStrings(), token));
 
             (string val, bool next) = await tq.GetNext(token);
+            Assert.Equal("Hello World", val);
+
             Assert.True(next);
             (_, next) = await tq.GetNext(token);
             Assert.Equal("Hello World", val);
+            Assert.True(next);
+            (val, next) = await tq.GetNext(token);
             Assert.False(next);
+            Assert.Equal("Goodbye World", val);
             (val, next) = await tq.GetNext(token);
             Assert.False(next);
             Assert.Null(val);

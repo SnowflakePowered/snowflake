@@ -56,7 +56,7 @@ namespace Snowflake.Framework.Extensibility
         /// <param name="token">A <see cref="CancellationToken"/> that will be passed to the enumerator used in <see cref="GetNext(Guid)"/>
         /// and <see cref="AsEnumerable(Guid)"/>.</param>
         /// <returns>A unique job token that can be used to modify the job at a later time.</returns>
-        Task<Guid> QueueJob(IAsyncEnumerable<T> asyncEnumerable, CancellationToken token = default);
+        ValueTask<Guid> QueueJob(IAsyncEnumerable<T> asyncEnumerable, CancellationToken token = default);
 
         /// <summary>
         /// Queues an <see cref="IAsyncEnumerable{T}"/> into the job queue with your own job token.
@@ -67,6 +67,6 @@ namespace Snowflake.Framework.Extensibility
         /// <param name="token">A <see cref="CancellationToken"/> that will be passed to the enumerator used in <see cref="GetNext(Guid)"/>
         /// and <see cref="AsEnumerable(Guid)"/>.</param>
         /// <returns>The <see cref="Guid"/> token you passed in <paramref name="guid"/>.</returns>
-        Task<Guid> QueueJob(IAsyncEnumerable<T> asyncEnumerable, Guid guid, CancellationToken token = default);
+        ValueTask<Guid> QueueJob(IAsyncEnumerable<T> asyncEnumerable, Guid guid, CancellationToken token = default);
     }
 }
