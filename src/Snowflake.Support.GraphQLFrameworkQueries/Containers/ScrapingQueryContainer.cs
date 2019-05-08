@@ -26,8 +26,11 @@ namespace Snowflake.Support.Remoting.GraphQL.Containers
             var plugin = coreInstance.Get<IPluginManager>();
             var lib = coreInstance.Get<IGameLibrary>();
             var rootSchema = coreInstance.Get<IGraphQLService>();
-            var scrapeQuery = new ScrapingQueryBuilder(lib, plugin.GetCollection<IScraper>(),
-                plugin.GetCollection<ICuller>());
+            var scrapeQuery = new ScrapingQueryBuilder(lib, 
+                plugin.GetCollection<IScraper>(),
+                plugin.GetCollection<ICuller>(),
+                plugin.GetCollection<IGameMetadataTraverser>(),
+                plugin.GetCollection<IFileInstallationTraverser>());
             rootSchema.Register(scrapeQuery);
             var logger = coreInstance.Get<ILogProvider>().GetLogger("graphql");
             logger.Info("Registered Scraping GraphQL Queries.");

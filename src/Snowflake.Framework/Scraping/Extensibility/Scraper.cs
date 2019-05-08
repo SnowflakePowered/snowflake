@@ -12,14 +12,14 @@ namespace Snowflake.Scraping.Extensibility
 {
     public abstract class Scraper : ProvisionedPlugin, IScraper
     {
-        public Scraper(Type pluginType,
+        protected Scraper(Type pluginType,
             AttachTarget target,
             string targetType)
             : this(new StandalonePluginProvision(pluginType), target, targetType)
         {
         }
 
-        public Scraper(IPluginProvision provision,
+        protected Scraper(IPluginProvision provision,
             AttachTarget target,
             string targetType)
             : base(provision)

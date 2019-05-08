@@ -14,7 +14,7 @@ namespace Snowflake.Support.Scraping.Primitives
         public void Compose(IModule composableModule, IServiceRepository serviceContainer)
         {
             serviceContainer.Get<IPluginManager>().Register<ICuller>(new ResultCuller());
-            serviceContainer.Get<IServiceRegistrationProvider>().RegisterService<IGameMetadataTraverser>(new GameMetadataTraverser());
+            serviceContainer.Get<IPluginManager>().Register<IGameMetadataTraverser>(new GameMetadataTraverser());
         }
     }
 }

@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading.Tasks;
+using Snowflake.Extensibility;
 using Snowflake.Filesystem;
 using Snowflake.Installation;
 using Snowflake.Installation.Extensibility;
 using Snowflake.Model.Game;
 using Snowflake.Model.Records;
 using Snowflake.Model.Records.File;
+using static System.Runtime.CompilerServices.ConfiguredTaskAwaitable;
 
 namespace Snowflake.Scraping.Extensibility
 {
@@ -20,7 +24,18 @@ namespace Snowflake.Scraping.Extensibility
     /// <typeparam name="TProducts">The type of record or object this traverser produces.</typeparam>
     /// <typeparam name="TEffectTarget">The type of object this traverser is allowed to mutate.</typeparam>
     public interface ITraverser<TProducts, TEffectTarget>
+        : IPlugin
     {
+        /// <summary>
+        /// Gets the task awaiter for traversers.
+        /// Traversers must be awaited context free and thus is always configured to not continue
+        /// on captured context.
+        /// </summary>
+        /// <param name="sideEffectContext">The mutable object onto which side effects may be applied</param>
+        /// <param name="relativeRoot">The seed to begin traversing from.</param>
+        /// <param name="context">The seed context within where the seeds can be traversed.</param>
+        /// <returns>Objects based on values found in the tree.</returns>
+        Task<IEnumerable<TProducts>> TraverseAll(TEffectTarget sideEffectContext, ISeed relativeRoot, ISeedRootContext context);
         /// <summary>
         /// Traverses the seed tree to yield objects of type <typeparamref name="TProducts"/>,
         /// which, while being enumerated, may cause side effects to the provided <paramref name="sideEffectContext"/>.
