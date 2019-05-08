@@ -15,13 +15,13 @@ namespace Snowflake.Installation.Extensibility
     public abstract class GameInstaller
          : ProvisionedPlugin, IGameInstaller
     {
-        public GameInstaller(Type pluginType)
+        protected GameInstaller(Type pluginType)
            : this(new StandalonePluginProvision(pluginType))
         {
         }
 
         /// <inheritdoc />
-        public GameInstaller(IPluginProvision provision)
+        protected GameInstaller(IPluginProvision provision)
             : base(provision)
         {
             this.SupportedPlatforms  = this.GetType()

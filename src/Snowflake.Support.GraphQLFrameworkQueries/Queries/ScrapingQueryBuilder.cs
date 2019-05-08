@@ -25,17 +25,22 @@ namespace Snowflake.Support.Remoting.GraphQL.Queries
         public IGameLibrary GameLibrary { get; }
         private IPluginCollection<IScraper> Scrapers { get; }
         private IPluginCollection<ICuller> Cullers { get; }
+        private IPluginCollection<IGameMetadataTraverser> GameTraversers { get; }
+        private IPluginCollection<IFileInstallationTraverser> FileTraversers { get; }
+
         private IAsyncJobQueue<IEnumerable<ISeed>> GameScrapeContextJobQueue { get; }
-        private IGameMetadataTraverser GameMetadataTraverser { get; }
-        private IFileInstallationTraverser FileMetadataTraverser { get; }
 
         public ScrapingQueryBuilder(IGameLibrary gameLibrary,
             IPluginCollection<IScraper> scrapers,
-            IPluginCollection<ICuller> cullers)
+            IPluginCollection<ICuller> cullers,
+            IPluginCollection<IGameMetadataTraverser> gameTraversers,
+            IPluginCollection<IFileInstallationTraverser> fileTraversers)
         {
             this.GameLibrary = gameLibrary;
             this.Scrapers = scrapers;
             this.Cullers = cullers;
+            this.GameTraversers = gameTraversers;
+            this.FileTraversers = fileTraversers;
             this.GameScrapeContextJobQueue = new AsyncJobQueue<IEnumerable<ISeed>>(false);
         }
 
@@ -102,14 +107,13 @@ namespace Snowflake.Support.Remoting.GraphQL.Queries
             var context = (GameScrapeContext)this.GameScrapeContextJobQueue.GetSource(jobGuid);
             await context; // force it to result seeds.
 
-            await foreach (var metadata in this.GameMetadataTraverser.Traverse(game, context.Context.Root, context.Context))
-            {
-                // empty for loop to apply all side effects.
+            foreach (var traverser in this.GameTraversers) {
+                await traverser.TraverseAll(game, context.Context.Root, context.Context);
             }
 
-            await foreach (var metadata in this.FileMetadataTraverser.Traverse(game, context.Context.Root, context.Context))
+            foreach (var traverser in this.FileTraversers)
             {
-                // empty for loop to apply all side effects.
+                await traverser.TraverseAll(game, context.Context.Root, context.Context);
             }
 
             this.GameScrapeContextJobQueue.TryRemoveSource(jobGuid, out var _);

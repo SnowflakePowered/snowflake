@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Snowflake.Extensibility;
+using Snowflake.Extensibility.Provisioning;
 using Snowflake.Model.Game;
 using Snowflake.Model.Records;
 using Snowflake.Scraping;
@@ -9,9 +11,15 @@ using Snowflake.Scraping.Extensibility;
 
 namespace Snowflake.Support.Scraping.Primitives
 {
-    public class GameMetadataTraverser : IGameMetadataTraverser
+    [Plugin("Traverser-GameMetadataDefault")]
+    public sealed class GameMetadataTraverser : GameMetadataTraverserBase
     {
-        public async IAsyncEnumerable<IRecordMetadata> Traverse(IGame game, ISeed relativeRoot, ISeedRootContext context)
+        public GameMetadataTraverser() 
+            : base(typeof(GameMetadataTraverser))
+        {
+        }
+
+        public override async IAsyncEnumerable<IRecordMetadata> Traverse(IGame game, ISeed relativeRoot, ISeedRootContext context)
         {
             foreach (var result in context.GetAllOfType("result").SelectMany(s => context.GetChildren(s).Distinct()))
             {
