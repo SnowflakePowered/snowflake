@@ -14,12 +14,14 @@ namespace Snowflake.Scraping
             this.Current = Enumerable.Empty<ISeed>();
             this.Context = context;
             this.Token = token;
+            this.CullersRun = false;
         }
 
         public IEnumerable<ISeed> Current { get; private set; }
 
         private GameScrapeContext Context { get; }
         public CancellationToken Token { get; }
+        private bool CullersRun { get; set; }
 
         public ValueTask DisposeAsync()
         {
@@ -34,6 +36,13 @@ namespace Snowflake.Scraping
             
             bool retVal = await this.Context.Proceed();
             this.Current = this.Context.Context.GetUnculled();
+
+            if (!retVal && !this.CullersRun)
+            {
+                this.Context.Cull();
+                this.CullersRun = true;
+                return true;
+            }
             return retVal;
         }
     }
