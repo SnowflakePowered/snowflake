@@ -80,8 +80,12 @@ namespace Snowflake.Framework.Extensibility
         {
             var enumerator = this.GetEnumerator(jobId);
             bool hasNext = await enumerator.MoveNextAsync();
-
-            var result = (value: enumerator.Current, hasNext);
+            
+            // hack to ensure that the last value is not duplicated.
+            // the expected behavior is to return null after the enumerable is exhausted.
+            // this differs from regular direct IAsyncEnumerator access, where
+            // current is never updated when hasnext turns false.
+            var result = (value: hasNext ? enumerator.Current : default, hasNext);
             if (!result.hasNext)
             {
                 await enumerator.DisposeAsync();
