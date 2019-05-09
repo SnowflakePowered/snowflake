@@ -14,11 +14,12 @@ namespace Snowflake.Framework.Extensibility
     {
         /// <summary>
         /// Retrieves the next value in the enumerator and whether or not the enumerator is exhausted.
-        /// Once the enumerator is exhausted, the value field will always be default(<typeparamref name="T"/>).
+        /// Once the enumerator is exhausted, the value field will always be default(<typeparamref name="T"/>),
+        /// and hasNext will be false.
         /// </summary>
         /// <param name="jobId">The job token that was returned by <see cref="QueueJob(IAsyncEnumerable{T}, CancellationToken)"/></param>
         /// <returns>
-        /// The next value and whether or not there is a value after. 
+        /// The next value and whether or not to continue iterating.
         /// </returns>
         ValueTask<(T value, bool hasNext)> GetNext(Guid jobId);
 

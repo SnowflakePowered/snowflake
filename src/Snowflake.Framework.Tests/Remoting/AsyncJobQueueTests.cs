@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Snowflake.Framework.Remoting.Tests
+namespace Snowflake.Remoting.Tests
 {
     public class AsyncJobQueueTests
     {
@@ -17,11 +17,12 @@ namespace Snowflake.Framework.Remoting.Tests
             (string val, bool next) = await tq.GetNext(token);
             Assert.Equal("Hello World", val);
             Assert.True(next);
-            (_, next) = await tq.GetNext(token);
+            (val, next) = await tq.GetNext(token);
             Assert.True(next);
+            Assert.Equal("Goodbye World", val);
             (val, next) = await tq.GetNext(token);
             Assert.False(next);
-            Assert.Equal("Goodbye World", val);
+            Assert.Null(val);
             (val, next) = await tq.GetNext(token);
             Assert.False(next);
             Assert.Null(val);
@@ -38,12 +39,9 @@ namespace Snowflake.Framework.Remoting.Tests
             Assert.Equal("Hello World", val);
 
             Assert.True(next);
-            (_, next) = await tq.GetNext(token);
-            Assert.Equal("Hello World", val);
-            Assert.True(next);
             (val, next) = await tq.GetNext(token);
-            Assert.False(next);
             Assert.Equal("Goodbye World", val);
+            Assert.True(next);
             (val, next) = await tq.GetNext(token);
             Assert.False(next);
             Assert.Null(val);
@@ -57,14 +55,29 @@ namespace Snowflake.Framework.Remoting.Tests
             (string val, bool next) = await tq.GetNext(token);
             Assert.Equal("Hello World", val);
 
+            int count = 0;
+
             await foreach (string nextval in tq.AsEnumerable(token))
             {
                 Assert.Equal("Goodbye World", nextval);
+                count++;
             }
 
             (val, next) = await tq.GetNext(token);
             Assert.False(next);
             Assert.Null(val);
+            Assert.Equal(1, count);
+
+            var token2 = await tq.QueueJob(EmitStrings());
+
+            count = 0;
+            await foreach (string nextval in tq.AsEnumerable(token2))
+            {
+                count++;
+            }
+
+            Assert.Equal(2, count);
+
         }
 
         [Fact]
