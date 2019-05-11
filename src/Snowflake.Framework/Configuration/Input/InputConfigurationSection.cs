@@ -33,8 +33,15 @@ namespace Snowflake.Configuration.Input
         /// <inheritdoc/>
         public object? this[string key]
         {
-            get => configurationInterceptor.Values[this.Descriptor, key]; 
-            set => this.configurationInterceptor.Values[this.Descriptor, key].Value = value;
+            get => configurationInterceptor.Values[this.Descriptor, key];
+            set
+            {
+                var val = this.configurationInterceptor.Values[this.Descriptor, key];
+                if (val != null)
+                {
+                    val.Value = value;
+                }
+            }
         }
 
         private readonly ConfigurationInterceptor configurationInterceptor;

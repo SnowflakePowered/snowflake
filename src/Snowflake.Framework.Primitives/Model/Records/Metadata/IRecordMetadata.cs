@@ -20,7 +20,7 @@ namespace Snowflake.Model.Records
         /// <summary>
         /// Gets the value of the metadata
         /// </summary>
-        string Value { get; }
+        string? Value { get; }
 
         /// <summary>
         /// Gets the guid of the metadata.

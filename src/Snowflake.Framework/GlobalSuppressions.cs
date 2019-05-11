@@ -16,3 +16,10 @@
 [assembly:
     System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.‌​Usage", "CS1591", Justification =
         "Rarely will one directly use the framework, documentation is provided for all public types in Snowflake.Framework.Primitives.")]
+
+[assembly:
+    System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.‌​Usage", "CS8618",
+    Justification =
+        "EF Model Classes are considered private",
+    Scope = "namespaceanddescendants",
+    Target = "Snowflake.Model.Database.Models")]

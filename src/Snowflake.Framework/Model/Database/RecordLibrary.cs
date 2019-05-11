@@ -16,57 +16,49 @@ namespace Snowflake.Model.Database
         protected RecordLibrary(DbContextOptionsBuilder<DatabaseContext> options)
         {
             this.Options = options;
-            using (var context = new DatabaseContext(options.Options))
-            {
-                context.Database.EnsureCreated();
-            }
+            using var context = new DatabaseContext(options.Options);
+            context.Database.EnsureCreated();
         }
 
         public void DeleteRecord(TRecord record)
         {
-            using (var context = new DatabaseContext(this.Options.Options))
-            {
-                var recordToDelete = context.Records.SingleOrDefault(r => r.RecordID == record.RecordId);
-                if (record == null) return;
-                context.Entry(recordToDelete).State = EntityState.Deleted;
-                context.SaveChanges();
-            }
+            using var context = new DatabaseContext(this.Options.Options);
+            var recordToDelete = context.Records.SingleOrDefault(r => r.RecordID == record.RecordId);
+            if (record == null) return;
+            context.Entry(recordToDelete).State = EntityState.Deleted;
+            context.SaveChanges();
         }
 
         public void UpdateRecord(TRecord record)
         {
-            using (var context = new DatabaseContext(this.Options.Options))
+            using var context = new DatabaseContext(this.Options.Options);
+            foreach (var metadata in context.Metadata.Where(m => m.RecordID == record.RecordId))
             {
-                foreach
-                (var metadata in
-                    context.Metadata.Where(m => m.RecordID == record.RecordId))
+                if (!record.Metadata.ContainsKey(metadata.MetadataKey))
                 {
-                    if (!record.Metadata.ContainsKey(metadata.MetadataKey))
-                    {
-                        context.Entry(metadata).State = EntityState.Deleted;
-                    }
-                    else if (record.Metadata[metadata.MetadataKey] != metadata.MetadataValue)
-                    {
-                        metadata.MetadataValue = record.Metadata[metadata.MetadataKey];
-                        context.Entry(metadata).State = EntityState.Modified;
-                    }
+                    context.Entry(metadata).State = EntityState.Deleted;
                 }
-
-                foreach (var metadata in record.Metadata.Values)
+                else if (record.Metadata[metadata.MetadataKey] != metadata.MetadataValue)
                 {
-                    var model = context.Metadata?.Find(metadata.Guid);
-                    if (model != null) continue;
-                    context.Metadata!.Add(new RecordMetadataModel()
-                    {
-                        RecordID = metadata.Record,
-                        RecordMetadataID = metadata.Guid,
-                        MetadataValue = metadata.Value,
-                        MetadataKey = metadata.Key
-                    });
+                    metadata.MetadataValue = record.Metadata[metadata.MetadataKey];
+                    context.Entry(metadata).State = EntityState.Modified;
                 }
-
-                context.SaveChanges();
             }
+
+            foreach (var metadata in record.Metadata.Values)
+            {
+                var model = context.Metadata?.Find(metadata.Guid);
+                if (model != null) continue;
+                context.Metadata!.Add(new RecordMetadataModel()
+                {
+                    RecordID = metadata.Record,
+                    RecordMetadataID = metadata.Guid,
+                    MetadataValue = metadata.Value,
+                    MetadataKey = metadata.Key
+                });
+            }
+
+            context.SaveChanges();
         }
     }
 }

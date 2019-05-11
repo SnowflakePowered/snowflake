@@ -34,17 +34,17 @@ namespace Snowflake.Configuration
         {
         }
 
-        private static object FromString(string strValue, Type optionType)
+        private static object? FromString(string? strValue, Type? optionType)
         {
             return optionType == typeof(string)
                 ? strValue // return string value if string
-                : optionType.GetTypeInfo().IsEnum
+                : optionType?.GetTypeInfo()?.IsEnum ?? false
                     ? NonGenericEnums.Parse(optionType, strValue) // return parsed enum if enum
                     : TypeDescriptor.GetConverter(optionType).ConvertFromInvariantString(strValue);
         }
 
         public static IConfigurationValueCollection MakeExistingValueCollection<T>
-        (IEnumerable<(string section, string option, (string stringValue, Guid guid) value)> values,
+        (IEnumerable<(string section, string option, (string? stringValue, Guid guid) value)> values,
             Guid collectionGuid)
             where T : class, IConfigurationCollection, IConfigurationCollection<T>
         {
@@ -75,7 +75,7 @@ namespace Snowflake.Configuration
         }
 
         public static IConfigurationValueCollection MakeExistingValueCollection<T>
-        (IEnumerable<(string option, (string stringValue, Guid guid) value)> values,
+        (IEnumerable<(string option, (string? stringValue, Guid guid) value)> values,
             string sectionName,
             Guid collectionGuid)
             where T : class, IConfigurationSection<T>
@@ -86,11 +86,11 @@ namespace Snowflake.Configuration
             var descriptor = Instantiate.CreateInstance(sectionDescType,
                 new[] {typeof(string)},
                 Expression.Constant(sectionName)) as IConfigurationSectionDescriptor;
-            foreach (var tuple in values)
+            foreach (var (option, value) in values)
             {
-                Type? t = descriptor?[tuple.option]?.Type;
-                typedValues.Add((sectionName, tuple.option,
-                    new ConfigurationValue(FromString(tuple.value.stringValue, t), tuple.value.guid)));
+                Type? t = descriptor?[option]?.Type;
+                typedValues.Add((sectionName, option,
+                    new ConfigurationValue(FromString(value.stringValue, t), value.guid)));
             }
 
             return new ConfigurationValueCollection(typedValues, collectionGuid);

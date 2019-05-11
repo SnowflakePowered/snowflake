@@ -35,8 +35,10 @@ namespace Snowflake.Model.Database.Extensions
             };
         }
 
-        public static string AsConfigurationStringValue(this object @this)
+        public static string? AsConfigurationStringValue(this object? @this)
         {
+            if (@this == null) return null;
+
             return @this.GetType().GetTypeInfo().IsEnum
                 ? NonGenericEnums.GetName(@this.GetType(), @this)
                 : // optimized path for enums

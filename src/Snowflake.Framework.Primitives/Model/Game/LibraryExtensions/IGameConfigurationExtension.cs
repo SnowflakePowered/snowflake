@@ -128,7 +128,7 @@ namespace Snowflake.Model.Game.LibraryExtensions
         public static IGameConfigurationExtensionProvider
             WithConfigurationLibrary(this IGameLibrary @this)
         {
-            return @this.GetExtension<IGameConfigurationExtensionProvider>();
+            return @this.GetExtension<IGameConfigurationExtensionProvider>()!;
         }
     }
 }

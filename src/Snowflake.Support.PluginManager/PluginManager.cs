@@ -25,6 +25,12 @@ namespace Snowflake.Support.PluginManager
         private readonly IDictionary<Type, IImmutableList<IPlugin>> loadedPlugins;
         private readonly IPluginConfigurationStore configurationStore;
 
+        /// <summary>
+        /// Initializes the default plugin manager.
+        /// </summary>
+        /// <param name="logProvider">The logging provider.</param>
+        /// <param name="contentDirectory">The content directory provider.</param>
+        /// <param name="databaseProvider">The plugin configuration store.</param>
         public PluginManager(ILogProvider logProvider,
             IContentDirectoryProvider contentDirectory,
             IPluginConfigurationStore databaseProvider)
@@ -180,6 +186,7 @@ namespace Snowflake.Support.PluginManager
 
         #region IEnumerable Support
 
+        /// <inheritdoc />
         public IEnumerator<IPlugin> GetEnumerator()
         {
             return this.loadedPlugins.SelectMany(p => p.Value).GetEnumerator();

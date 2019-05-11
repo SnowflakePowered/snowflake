@@ -11,11 +11,6 @@ namespace Snowflake.Configuration.Interceptors
         internal IConfigurationValueCollection Values { get; }
         private IConfigurationSectionDescriptor Descriptor { get; }
 
-        //public ConfigurationInterceptor(IConfigurationSectionDescriptor descriptor)
-        //{
-        //    this.Values = descriptor.Options.ToDictionary(p => p.OptionKey, p => new ConfigurationValue(p.Default) as IConfigurationValue);
-        //}
-
         public ConfigurationInterceptor(IConfigurationSectionDescriptor descriptor,
             IConfigurationValueCollection values)
         {
@@ -35,12 +30,17 @@ namespace Snowflake.Configuration.Interceptors
             {
                 if (invocation.Method.Name.StartsWith("get_"))
                 {
-                    invocation.ReturnValue = this.Values[this.Descriptor, propertyName].Value;
+                    invocation.ReturnValue = this.Values[this.Descriptor, propertyName]?.Value;
                 }
 
                 if (invocation.Method.Name.StartsWith("set_"))
                 {
-                    this.Values[this.Descriptor, propertyName].Value = invocation.Arguments[0];
+                    // this should never be null here.
+                    var value = this.Values[this.Descriptor, propertyName];
+                    if (value != null)
+                    {
+                        value.Value = invocation.Arguments[0];
+                    }
                 }
             }
         }

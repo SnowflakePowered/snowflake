@@ -110,7 +110,7 @@ namespace Snowflake.Romfile.Tokenizer
                 }
 
                 if (tokenValue.EndsWith("k") && tokenValue.Length == 3 &&
-                    int.TryParse(tokenValue.Substring(0, tokenValue.Length - 2), out _))
+                    int.TryParse(tokenValue[0..^2], out _))
                 {
                     yield return new StructuredFilenameToken(tokenValue,
                         FieldType.DumpInfo,
@@ -128,7 +128,7 @@ namespace Snowflake.Romfile.Tokenizer
             yield return new StructuredFilenameToken(title, FieldType.Title, NamingConvention.GoodTools);
         }
 
-        private static IList<string> goodToolsDumpFlags = new List<string>()
+        private static readonly IList<string> goodToolsDumpFlags = new List<string>()
         {
             {"a"},
             {"b"},

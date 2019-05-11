@@ -32,7 +32,7 @@ namespace Snowflake.Model.Database.Models
 
             modelBuilder.Entity<MappedControllerElementModel>()
                 .HasOne(e => e.Collection)
-                .WithMany(e => e.MappedElements)
+                .WithMany(e => e!.MappedElements)
                 .HasForeignKey(p => new {p.ControllerID, p.DeviceID, p.ProfileName});
 
             modelBuilder.Entity<MappedControllerElementModel>()
