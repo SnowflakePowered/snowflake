@@ -1,0 +1,11 @@
+{
+    "isRoot": true,
+    "tools": {
+        "Snowflake.Tooling.Cli": {
+            "version": "2.0.0",
+            "commands": [
+                "snowflake"
+            ]
+        }
+    }
+}
