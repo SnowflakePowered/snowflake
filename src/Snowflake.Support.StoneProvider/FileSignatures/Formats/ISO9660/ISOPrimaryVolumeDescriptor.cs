@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Snowflake.Stone.FileSignatures.Formats.ISO9660
 {
-    public class ISOPrimaryVolumeDescriptor
+    internal class ISOPrimaryVolumeDescriptor
     {
         public ISOPrimaryVolumeDescriptor(Stream pvdBlock)
         {

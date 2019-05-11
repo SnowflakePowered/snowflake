@@ -7,7 +7,7 @@ using Snowflake.Stone.FileSignatures.Formats.CDXA;
 
 namespace Snowflake.Stone.FileSignatures.Sony
 {
-    public sealed class Playstation2CDRomFileSignature : IFileSignature
+    internal sealed class Playstation2CDRomFileSignature : IFileSignature
     {
         /// <inheritdoc/>
         public byte[] HeaderSignature => Encoding.UTF8.GetBytes("BOOT2");

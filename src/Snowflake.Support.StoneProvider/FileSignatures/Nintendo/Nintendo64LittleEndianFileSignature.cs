@@ -10,7 +10,7 @@ using Snowflake.Stone.FileSignatures.Formats.N64;
 namespace Snowflake.Stone.FileSignatures.Nintendo
 {
     // .n64
-    public class Nintendo64LittleEndianFileSignature : Nintendo64FileSignature<Int32SwapStream>
+    internal class Nintendo64LittleEndianFileSignature : Nintendo64FileSignature<Int32SwapStream>
     {
         public Nintendo64LittleEndianFileSignature()
             : base(0x40123780, s => new Int32SwapStream(s))

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Snowflake.Stone.FileSignatures.Formats.CDI
 {
-    public enum GDRomSectorFormats
+    internal enum GDRomSectorFormats
     {
         CDDA,
         Mode1,

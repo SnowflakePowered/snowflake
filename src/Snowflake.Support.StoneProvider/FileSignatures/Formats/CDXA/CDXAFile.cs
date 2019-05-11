@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Snowflake.Stone.FileSignatures.Formats.CDXA
 {
-    public class CDXAFile
+    internal class CDXAFile
     {
         private readonly Stream diskStream;
         public uint LBAStart { get; }

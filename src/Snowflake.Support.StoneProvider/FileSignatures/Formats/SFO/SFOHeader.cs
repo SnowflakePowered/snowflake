@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Snowflake.Stone.FileSignatures.Formats.SFO
 {
-    public class SFOHeader
+    internal class SFOHeader
     {
         private string fileType;
         private string sfoVersion;
@@ -75,7 +75,7 @@ namespace Snowflake.Stone.FileSignatures.Formats.SFO
             return this.offsetValueTable;
         }
 
-        public void SetOffsetValueTable(int offsetValueTable)
+        private void SetOffsetValueTable(int offsetValueTable)
         {
             this.offsetValueTable = offsetValueTable;
         }
@@ -85,7 +85,7 @@ namespace Snowflake.Stone.FileSignatures.Formats.SFO
             return this.numberDataItems;
         }
 
-        public void SetNumberDataItems(int numberDataItems)
+        private void SetNumberDataItems(int numberDataItems)
         {
             this.numberDataItems = numberDataItems;
         }

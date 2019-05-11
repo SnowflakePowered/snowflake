@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Snowflake.Stone.FileSignatures.Formats.CDI
 {
-    public enum DiscJugglerVersions : uint
+    internal enum DiscJugglerVersions : uint
     {
         /// <summary>
         /// Unknown version, use <see cref="DiscJugglerDisc.DiscJugglerRawVersion"/> to 

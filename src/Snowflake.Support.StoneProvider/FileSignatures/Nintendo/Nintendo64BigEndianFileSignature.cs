@@ -9,7 +9,7 @@ using Snowflake.Stone.FileSignatures;
 namespace Snowflake.Stone.FileSignatures.Nintendo
 {
     // .z64
-    public sealed class Nintendo64BigEndianFileSignature : Nintendo64FileSignature<Stream>
+    internal sealed class Nintendo64BigEndianFileSignature : Nintendo64FileSignature<Stream>
     {
         public Nintendo64BigEndianFileSignature()
             : base(0x80371240, s => s)

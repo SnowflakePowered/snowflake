@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Snowflake.Stone.FileSignatures.Formats.CDXA
 {
-    public class CDXAFileStream : Stream
+    internal class CDXAFileStream : Stream
     {
         private readonly Stream diskStream;
         public const int BlockLength = CDXADisc.BlockSize - CDXADisc.BlockHeaderSize;
