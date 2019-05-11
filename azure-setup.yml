@@ -3,13 +3,6 @@ parameters:
 
 steps:
   - task: DotNetCoreInstaller@1
-    displayName: Installing .NET Core 2.2 SDK
-    inputs:
-      includePreviewVersions: false
-      packageType: 'sdk' # Options: runtime, sdk
-      version: '2.2.x'    
-
-  - task: DotNetCoreInstaller@1
     displayName: Installing .NET Core 3.0 SDK
     inputs:
       includePreviewVersions: true

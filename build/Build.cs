@@ -44,6 +44,15 @@ class Build : NukeBuild
 
     AbsolutePath ToolingDirectory => BuildDirectory / "snowflake-cli";
 
+    Target RestoreTooling => _ => _
+        .Before(Restore)
+        .Executes(() =>
+        {
+            DotNetToolUpdate(s => s
+                .SetPackageName("Snowflake.Tooling.Cli")
+            );
+        });
+
     Target Clean => _ => _
         .Before(Restore)
         .Executes(() =>
@@ -91,6 +100,7 @@ class Build : NukeBuild
         });
 
     Target PackModules => _ => _
+        .DependsOn(RestoreTooling)
         .DependsOn(Compile)
         .Executes(() =>
         {
@@ -121,11 +131,11 @@ class Build : NukeBuild
         });
 
     Target Bootstrap => _ => _
+        .DependsOn(RestoreTooling)
         .DependsOn(PackModules)
-        .DependsOn(BuildTooling)
         .Executes(() =>
         {
-            DotNet($"{ToolingDirectory / "dotnet-snowflake.dll"} install-all -d {OutputDirectory}");
+            DotNet($"snowflake install-all -d {OutputDirectory}");
         });
 
     Target PackAll => _ => _
