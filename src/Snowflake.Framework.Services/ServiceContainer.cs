@@ -14,6 +14,7 @@ using Snowflake.Support.Remoting.GraphQL.RootProvider;
 
 namespace Snowflake.Services
 {
+    /// <inheritdoc />
     public class ServiceContainer : IServiceContainer
     {
         #region Loaded Objects
@@ -28,8 +29,7 @@ namespace Snowflake.Services
         // Flag: Has Dispose already been called?
         bool disposed;
 
-
-        // Instantiate a SafeHandle instance.
+        /// <inheritdoc />
         public ServiceContainer(string appDataDirectory)
         {
             this.AppDataDirectory = appDataDirectory;
@@ -89,8 +89,7 @@ namespace Snowflake.Services
             GC.SuppressFinalize(this);
         }
 
-        // Protected implementation of Dispose pattern.
-        protected virtual void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             if (this.disposed)
             {
