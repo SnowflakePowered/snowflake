@@ -18,91 +18,81 @@ namespace Snowflake.Model.Database
         public PluginConfigurationStore(DbContextOptionsBuilder<DatabaseContext> options)
         {
             this.Options = options;
-            using (var context = new DatabaseContext(Options.Options))
-            {
-                context.Database.EnsureCreated();
-            }
+            using var context = new DatabaseContext(Options.Options);
+            context.Database.EnsureCreated();
         }
 
         public void Set(IConfigurationValue value)
         {
-            using (var context = new DatabaseContext(Options.Options))
-            {
-                var entity = context.ConfigurationValues
-                    .SingleOrDefault(v => v.Guid == value.Guid);
-                if (entity == null) return;
-                entity.Value = value.Value.AsConfigurationStringValue();
-                context.Entry(entity).State = EntityState.Modified;
-                context.SaveChanges();
-            }
+            using var context = new DatabaseContext(Options.Options);
+            var entity = context.ConfigurationValues
+                .SingleOrDefault(v => v.Guid == value.Guid);
+            if (entity == null) return;
+            entity.Value = value.Value.AsConfigurationStringValue();
+            context.Entry(entity).State = EntityState.Modified;
+            context.SaveChanges();
         }
 
         public void Set(IEnumerable<IConfigurationValue> values)
         {
-            using (var context = new DatabaseContext(Options.Options))
+            using var context = new DatabaseContext(Options.Options);
+            foreach (var value in values)
             {
-                foreach (var value in values)
-                {
-                    var entity = context.ConfigurationValues.Find(value.Guid);
-                    if (entity == null) continue;
-                    entity.Value = value.Value.AsConfigurationStringValue();
-                    context.Entry(entity).State = EntityState.Modified;
-                }
-
-                context.SaveChanges();
+                var entity = context.ConfigurationValues.Find(value.Guid);
+                if (entity == null) continue;
+                entity.Value = value.Value.AsConfigurationStringValue();
+                context.Entry(entity).State = EntityState.Modified;
             }
+
+            context.SaveChanges();
         }
 
         public IConfigurationSection<T> Get<T>()
             where T : class, IConfigurationSection<T>
         {
-            using (var context = new DatabaseContext(Options.Options))
-            {
-                var entity = context.ConfigurationProfiles
-                    .Include(p => p.Values)
-                    .SingleOrDefault(p => p.ConfigurationSource == $"plugin:{typeof(T).Name}");
+            using var context = new DatabaseContext(Options.Options);
+            var entity = context.ConfigurationProfiles
+                .Include(p => p.Values)
+                .SingleOrDefault(p => p.ConfigurationSource == $"plugin:{typeof(T).Name}");
 
-                if (entity != null) return entity.AsConfigurationSection<T>();
+            if (entity != null) return entity.AsConfigurationSection<T>();
 
-                var defaults = new ConfigurationSection<T>
-                    (new ConfigurationValueCollection(), typeof(T).Name);
-                context.ConfigurationProfiles.Add(defaults.AsModel($"plugin:{typeof(T).Name}"));
-                context.SaveChanges();
-                return defaults;
-            }
+            var defaults = new ConfigurationSection<T>
+                (new ConfigurationValueCollection(), typeof(T).Name);
+            context.ConfigurationProfiles.Add(defaults.AsModel($"plugin:{typeof(T).Name}"));
+            context.SaveChanges();
+            return defaults;
         }
 
         public void Set<T>(IConfigurationSection<T> configuration)
             where T : class, IConfigurationSection<T>
         {
-            using (var context = new DatabaseContext(Options.Options))
-            {
-                var entity = context.ConfigurationProfiles
-                    .Include(p => p.Values)
-                    .SingleOrDefault(p => p.ConfigurationSource == $"plugin:{typeof(T).Name}");
+            using var context = new DatabaseContext(Options.Options);
+            var entity = context.ConfigurationProfiles
+                .Include(p => p.Values)
+                .SingleOrDefault(p => p.ConfigurationSource == $"plugin:{typeof(T).Name}");
 
-                if (entity == null)
+            if (entity == null)
+            {
+                var defaults = new ConfigurationSection<T>
+                    (new ConfigurationValueCollection(), typeof(T).Name);
+                context.ConfigurationProfiles.Add(defaults.AsModel($"plugin:{typeof(T).Name}"));
+            }
+            else
+            {
+                foreach (var value in entity.Values)
                 {
-                    var defaults = new ConfigurationSection<T>
-                        (new ConfigurationValueCollection(), typeof(T).Name);
-                    context.ConfigurationProfiles.Add(defaults.AsModel($"plugin:{typeof(T).Name}"));
-                }
-                else
-                {
-                    foreach (var value in entity.Values)
+                    string? newValue = configuration
+                        .Values[value.OptionKey].Value.AsConfigurationStringValue();
+                    if (newValue != value.Value)
                     {
-                        string newValue = configuration
-                            .Values[value.OptionKey].Value.AsConfigurationStringValue();
-                        if (newValue != value.Value)
-                        {
-                            value.Value = newValue;
-                            context.Entry(value).State = EntityState.Modified;
-                        }
+                        value.Value = newValue;
+                        context.Entry(value).State = EntityState.Modified;
                     }
                 }
-
-                context.SaveChanges();
             }
+
+            context.SaveChanges();
         }
     }
 }

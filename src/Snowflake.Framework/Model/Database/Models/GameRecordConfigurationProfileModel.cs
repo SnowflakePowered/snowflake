@@ -23,7 +23,7 @@ namespace Snowflake.Model.Database.Models
 
             modelBuilder.Entity<GameRecordConfigurationProfileModel>()
                 .HasOne(p => p.Game)
-                .WithMany(p => p.ConfigurationProfiles)
+                .WithMany(p => p!.ConfigurationProfiles)
                 .HasForeignKey(p => p.GameID)
                 .OnDelete(DeleteBehavior.Cascade);
 

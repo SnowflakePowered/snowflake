@@ -116,7 +116,7 @@ namespace Snowflake.Model.Game.LibraryExtensions
         /// <returns>An accessor for files for this <see cref="IGame"/>.</returns>
         public static IGameFileExtensionProvider WithFileLibrary(this IGameLibrary @this)
         {
-            return @this.GetExtension<IGameFileExtensionProvider>();
+            return @this.GetExtension<IGameFileExtensionProvider>()!;
         }
     }
 }

@@ -47,7 +47,7 @@ namespace Snowflake.Input.Controller.Mapped
         /// <param name="deviceId">The device ID that maps from the spec controller.</param>
         /// <param name="profileName">The name of the mapping profile.</param>
         /// <returns>The saved mapping profile from the provided controller ID to device ID.</returns>
-        IControllerElementMappings GetMappings(ControllerId controllerId, string deviceId, string profileName);
+        IControllerElementMappings? GetMappings(ControllerId controllerId, string deviceId, string profileName);
         
         /// <summary>
         /// Updates the specific mapping profile with the given profile name.

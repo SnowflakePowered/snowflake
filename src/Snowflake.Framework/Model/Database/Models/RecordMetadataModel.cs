@@ -12,7 +12,7 @@ namespace Snowflake.Model.Database.Models
         public RecordModel? Record { get; set; }
 
         public string MetadataKey { get; set; }
-        public string MetadataValue { get; set; } = "";
+        public string? MetadataValue { get; set; } = "";
 
         internal static void SetupModel(ModelBuilder modelBuilder)
         {

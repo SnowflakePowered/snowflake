@@ -45,7 +45,7 @@ namespace Snowflake.Model.Records
         /// </summary>
         /// <param name="key">The key of the metadata</param>
         /// <param name="value">The value of the metadata</param>
-        void Add(string key, string value);
+        void Add(string key, string? value);
 
         /// <summary>
         /// Copy the metadata of one collection to another, changing the guid of the metadata.

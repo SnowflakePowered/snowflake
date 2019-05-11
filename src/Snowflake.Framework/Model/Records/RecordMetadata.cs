@@ -10,7 +10,7 @@ namespace Snowflake.Model.Records
         public string Key { get; }
 
         /// <inheritdoc/>
-        public string Value { get; }
+        public string? Value { get; }
 
         /// <inheritdoc/>
         public Guid Guid { get; }
@@ -18,7 +18,7 @@ namespace Snowflake.Model.Records
         /// <inheritdoc/>
         public Guid Record { get; }
 
-        public RecordMetadata(string key, string value, Guid record)
+        public RecordMetadata(string key, string? value, Guid record)
         {
             this.Key = key;
             this.Value = value;

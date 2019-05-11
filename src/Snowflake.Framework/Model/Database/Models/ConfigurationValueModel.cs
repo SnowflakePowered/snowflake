@@ -10,7 +10,7 @@ namespace Snowflake.Model.Database.Models
     internal class ConfigurationValueModel
     {
         public Guid Guid { get; set; }
-        public string Value { get; set; }
+        public string? Value { get; set; }
 
         public string SectionKey { get; set; }
         public string OptionKey { get; set; }
@@ -22,7 +22,7 @@ namespace Snowflake.Model.Database.Models
         {
             modelBuilder.Entity<ConfigurationValueModel>()
                 .HasOne(p => p.Profile)
-                .WithMany(p => p.Values)
+                .WithMany(p => p!.Values)
                 .HasForeignKey(p => p.ValueCollectionGuid)
                 .IsRequired();
 

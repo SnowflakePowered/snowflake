@@ -58,7 +58,7 @@ namespace Snowflake.Model.Records
         }
 
         /// <inheritdoc/>
-        public void Add(string key, string value)
+        public void Add(string key, string? value)
         {
             this.Add(new RecordMetadata(key, value, this.Record));
         }

@@ -31,7 +31,8 @@ namespace Snowflake.Model.Database
                 .Include(g => g.ConfigurationProfiles)
                 .SingleOrDefault(g => g.RecordID == gameRecord.RecordId)?
                 .ConfigurationProfiles
-                .GroupBy(p => p.ConfigurationSource, p => p.ProfileName);
+                .GroupBy(p => p.ConfigurationSource, p => p.ProfileName) ??
+                Enumerable.Empty<IGrouping<string, string>>();
         }
 
         public IConfigurationCollection<T> CreateConfiguration<T>(string sourceName)
@@ -121,7 +122,7 @@ namespace Snowflake.Model.Database
                 context.Entry(value).State = EntityState.Modified;
             }
 
-            foreach (var (section, option, configurationValue) in configurationCollection.ValueCollection)
+            foreach ((string section, string option, IConfigurationValue configurationValue) in configurationCollection.ValueCollection)
             {
                 var value = context.ConfigurationValues.Find(configurationValue.Guid);
                 if (value != null) continue;
@@ -170,7 +171,7 @@ namespace Snowflake.Model.Database
 
         public void UpdateValue(IConfigurationValue value) => this.UpdateValue(value.Guid, value.Value);
 
-        public void UpdateValue(Guid valueGuid, object value)
+        public void UpdateValue(Guid valueGuid, object? value)
         {
             using var context = new DatabaseContext(this.Options.Options);
             var entityValue = context.ConfigurationValues.Find(valueGuid);

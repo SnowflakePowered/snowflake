@@ -65,7 +65,6 @@ namespace Snowflake.Model.Tests
             Assert.NotEqual(controller, device);
             Assert.NotEqual(controller, (object)device);
             Assert.NotEqual(controller, (object)new { });
-            Assert.NotNull(controller);
 
             Assert.True(controller != device2);
             Assert.True(controller != "device_2");
