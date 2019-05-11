@@ -5,11 +5,11 @@ namespace Snowflake.Stone.FileSignatures.Formats.SFO
 {
     internal class SFOHeader
     {
-        private string fileType;
-        private string sfoVersion;
-        private int offsetKeyTable;
-        private int offsetValueTable;
-        private int numberDataItems;
+        public string FileType { get; set; }
+        public string SfoVersion { get; set; }
+        public int OffsetKeyTable { get; set; }
+        public int OffsetValueTable { get; set; }
+        public int NumberDataItems { get; set; }
 
         public static SFOHeader Read(Stream fIn)
         {
@@ -19,90 +19,25 @@ namespace Snowflake.Stone.FileSignatures.Formats.SFO
 
             // read FileType
             fIn.Read(tempByteArray, 0, 4);
-            sfoHeader.SetFileType(SFOReaderUtilities.ByteArrayToString(tempByteArray));
+            sfoHeader.FileType = SFOReaderUtilities.ByteArrayToString(tempByteArray);
 
             // read sfoVerion
             fIn.Read(tempByteArray, 0, 4);
-            sfoHeader.SetSfoVersion(SFOReaderUtilities.ByteArrayToString(tempByteArray));
+            sfoHeader.SfoVersion = SFOReaderUtilities.ByteArrayToString(tempByteArray);
 
             // read offsetKeyTable
             fIn.Read(tempByteArray, 0, 4);
-            sfoHeader.SetOffsetKeyTable(SFOReaderUtilities.ByteArrayReverseToInt(tempByteArray));
+            sfoHeader.OffsetKeyTable = SFOReaderUtilities.ByteArrayReverseToInt(tempByteArray);
 
             // read offsetValueTable
             fIn.Read(tempByteArray, 0, 4);
-            sfoHeader.SetOffsetValueTable(SFOReaderUtilities.ByteArrayReverseToInt(tempByteArray));
+            sfoHeader.OffsetValueTable = SFOReaderUtilities.ByteArrayReverseToInt(tempByteArray);
 
             // read numberDataItem
             fIn.Read(tempByteArray, 0, 4);
-            sfoHeader.SetNumberDataItems(SFOReaderUtilities.ByteArrayReverseToInt(tempByteArray));
+            sfoHeader.NumberDataItems = SFOReaderUtilities.ByteArrayReverseToInt(tempByteArray);
 
             return sfoHeader;
-        }
-
-        public string GetFileType()
-        {
-            return this.fileType;
-        }
-
-        public void SetFileType(string fileType)
-        {
-            this.fileType = fileType;
-        }
-
-        public string GetSfoVersion()
-        {
-            return this.sfoVersion;
-        }
-
-        public void SetSfoVersion(string sfoVersion)
-        {
-            this.sfoVersion = sfoVersion;
-        }
-
-        public int GetOffsetKeyTable()
-        {
-            return this.offsetKeyTable;
-        }
-
-        public void SetOffsetKeyTable(int offsetKeyTable)
-        {
-            this.offsetKeyTable = offsetKeyTable;
-        }
-
-        public int GetOffsetValueTable()
-        {
-            return this.offsetValueTable;
-        }
-
-        private void SetOffsetValueTable(int offsetValueTable)
-        {
-            this.offsetValueTable = offsetValueTable;
-        }
-
-        public int GetNumberDataItems()
-        {
-            return this.numberDataItems;
-        }
-
-        private void SetNumberDataItems(int numberDataItems)
-        {
-            this.numberDataItems = numberDataItems;
-        }
-
-        /// <inheritdoc/>
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-
-            sb.Append("== SFO Header Data ==\n")
-                .Append("fileType:         ").Append(this.fileType).Append("\n")
-                .Append("sfoVersion:       ").Append(this.sfoVersion).Append("\n")
-                .Append("offsetKeyTable:   ").Append(this.offsetKeyTable).Append("\n")
-                .Append("offsetValueTable: ").Append(this.offsetValueTable).Append("\n")
-                .Append("numberDataItems:  ").Append(this.numberDataItems).Append("\n");
-
-            return sb.ToString();
         }
     }
 }

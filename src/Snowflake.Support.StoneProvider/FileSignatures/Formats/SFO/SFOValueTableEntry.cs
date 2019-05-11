@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Snowflake.Stone.FileSignatures.Formats.SFO
 {
-    class SFOValueTableEntry
+    internal class SFOValueTableEntry
     {
         private int valueBytesReaded;
 
@@ -22,13 +22,13 @@ namespace Snowflake.Stone.FileSignatures.Formats.SFO
          */
         public string ReadEntry(Stream sfoFile, SFOIndexTableEntry sfoIndexTableEntry)
         {
-            byte[] entryByteArray = new byte[sfoIndexTableEntry.GetSizeValueData()];
+            byte[] entryByteArray = new byte[sfoIndexTableEntry.SizeValueData];
 
-            sfoFile.Read(entryByteArray, 0, sfoIndexTableEntry.GetSizeValueData());
-            this.valueBytesReaded += sfoIndexTableEntry.GetSizeValueData();
+            sfoFile.Read(entryByteArray, 0, sfoIndexTableEntry.SizeValueData);
+            this.valueBytesReaded += sfoIndexTableEntry.SizeValueData;
 
-            long offsetNextValue = sfoIndexTableEntry.GetOffsetDataValueInDataTable() +
-                                   sfoIndexTableEntry.GetSizeValueDataAndPadding(); // korrekt!
+            long offsetNextValue = sfoIndexTableEntry.OffsetDataValueInDataTable +
+                                   sfoIndexTableEntry.SizeValueDataAndPadding; // korrekt!
             long skipBytes = offsetNextValue - this.valueBytesReaded;
             sfoFile.Seek(skipBytes, SeekOrigin.Current);
             this.valueBytesReaded += Convert.ToInt32(skipBytes);
