@@ -1,8 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
     <AssemblyName>dotnet-snowflake</AssemblyName>
+    <PackageId>Snowflake.Tooling.Cli</PackageId>
     <RootNamespace>Snowflake.Tooling.Taskrunner</RootNamespace>
     <OutputType>Exe</OutputType>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -13,9 +14,10 @@
   
   <PropertyGroup>
     <Authors>Snowflake Developers</Authors>
-    <Title>Snowflake .NET Tooling CLI</Title>
+    <Title>Snowflake .NET Tooling Global CLI Tool</Title>
     <Description>CLI Tooling for Snowflake .NET development.</Description>
-    <PackageType>DotNetCliTool</PackageType>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>snowflake</ToolCommandName>
     <PackageIconUrl>https://raw.githubusercontent.com/SnowflakePowered/snowflake/master/branding/horizon/snowflake/exports/Logo-Badge%40500px.png</PackageIconUrl>
   </PropertyGroup>
   
