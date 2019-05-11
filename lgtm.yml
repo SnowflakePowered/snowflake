@@ -4,11 +4,16 @@ path_classifiers:
     - "scripts/**/*"
 extraction:
   csharp:
+    after_prepare:
+      - cd /tmp
+      - curl -sO https://dot.net/v1/dotnet-install.sh
+      - chmod u+x dotnet-install.sh
+      - ./dotnet-install.sh --channel release --version 2.2.203 --install-dir /opt/src/.dotnet
+      - ./dotnet-install.sh --channel release --version 3.0.100-preview5-011568 --install-dir /opt/src/.dotnet
+      - cd /opt/src
     index:
-      solution: src/Snowflake.sln
-      vstools_version: 15
-      dotnet:
-        version: 3.0.100-preview3-010431
+      build_command:
+        - dotnet run --project build -- Test
   python:
     python_setup: 
       version: 3
