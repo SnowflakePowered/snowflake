@@ -17,6 +17,7 @@ using Snowflake.Services;
 
 namespace Snowflake.Support.PluginManager
 {
+    /// <inheritdoc />
     public class PluginManager : IPluginManager
     {
         private readonly ILogProvider logProvider;

@@ -1,4 +1,4 @@
-<Project Sdk="Snowflake.Framework.Sdk">
+﻿<Project Sdk="Snowflake.Framework.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
@@ -16,5 +16,6 @@
   </ItemGroup>
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\Snowflake.ruleset</CodeAnalysisRuleSet>
+    <NoWarn>1701;1702;1591;</NoWarn>
   </PropertyGroup>
 </Project>
