@@ -5,6 +5,9 @@ using Snowflake.Model.Game;
 
 namespace Snowflake.Execution.Extensibility
 {
+    /// <summary>
+    /// Plugin properties that must be configured for emulator plugins.
+    /// </summary>
     public interface IEmulatorProperties
     {
         /// <summary>
@@ -34,7 +37,7 @@ namespace Snowflake.Execution.Extensibility
         IEnumerable<IBiosFile> OptionalSystemFiles { get; }
 
         /// <summary>
-        /// Gets a list of emulator special capabiities strings under the capabilities metadata key.
+        /// Gets a list of emulator special capabilities strings under the capabilities metadata key.
         /// This key is optional, and there is no formal specification for these capabilities,
         /// which may include ingame overlays, cloud saves, etc. It is used to indicate to clients
         /// that your emulator supports these capabilities upon a formally agreed upon API.

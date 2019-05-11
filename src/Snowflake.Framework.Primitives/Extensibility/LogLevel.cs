@@ -1,5 +1,8 @@
 ﻿namespace Snowflake.Extensibility
 {
+    /// <summary>
+    /// Describes the severity of a logging message.
+    /// </summary>
     public enum LogLevel
     {
         /// <summary>

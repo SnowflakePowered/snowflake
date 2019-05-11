@@ -31,7 +31,7 @@ namespace Snowflake.Framework.Extensibility
         /// enumerating the returned enumerable here will never return results.
         /// </summary>
         /// <param name="jobId">The job token that was returned by <see cref="QueueJob(IAsyncEnumerable{T}, CancellationToken)"/></param>
-        /// <returns>The remaining values in the enumerator as an <see cref="IAsyncEnumerable{T}"</returns>
+        /// <returns>The remaining values in the enumerator as an <see cref="IAsyncEnumerable{T}"/></returns>
         IAsyncEnumerable<T> AsEnumerable(Guid jobId);
 
         /// <summary>

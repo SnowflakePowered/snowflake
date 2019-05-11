@@ -26,10 +26,20 @@ namespace Snowflake.Scraping.Extensibility
         public Directive Directive { get; }
 
         /// <summary>
-        /// Gets the child type to evaluate this directive on
+        /// Gets the child type to evaluate this directive on.
         /// </summary>
         public string Type { get; }
 
+        /// <summary>
+        /// Specifies a directive on a <see cref="IScraper"/> that determines
+        /// when and what information it must have access to before it is run.
+        /// </summary>
+        /// <param name="target">All seeds of this type are examined when evaluating the directive.</param>
+        /// <param name="directive">The directive action, whether or not this directive means to run
+        /// the <see cref="IScraper"/> if the specified child type is available on
+        /// the <see cref="Target"/>, or whether not exclude and not run if the specified
+        /// child type exists on the target.</param>
+        /// <param name="type"> The child type to evaluate this directive on.</param>
         public DirectiveAttribute(AttachTarget target, Directive directive, string type)
         {
             this.Target = target;

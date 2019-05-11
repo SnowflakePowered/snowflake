@@ -11,7 +11,7 @@ using Snowflake.Filesystem;
 
 namespace Snowflake.Installation.Extensibility
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="IGameInstaller" />
     public abstract class GameInstaller
          : ProvisionedPlugin, IGameInstaller
     {

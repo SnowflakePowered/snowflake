@@ -8,8 +8,9 @@ using Snowflake.Model.Records.Game;
 namespace Snowflake.Execution.Saving
 {
     /// <summary>
-    /// Provides and manages <see cref="ISaveLocation"s/>
+    /// Provides and manages <see cref="ISaveLocation"/>
     /// </summary>
+    [Obsolete("Use Game Filesystem API")]
     public interface ISaveLocationProvider
     {
         /// <summary>

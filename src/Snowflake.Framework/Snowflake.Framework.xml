@@ -892,7 +892,7 @@
             <inheritdoc/>
         </member>
         <member name="T:Snowflake.Installation.Extensibility.GameInstaller">
-            <inheritdoc />
+            <inheritdoc cref="T:Snowflake.Installation.Extensibility.IGameInstaller" />
         </member>
         <member name="M:Snowflake.Installation.Extensibility.GameInstaller.#ctor(Snowflake.Extensibility.Provisioning.IPluginProvision)">
             <inheritdoc />
@@ -1357,9 +1357,6 @@
             <inheritdoc />
         </member>
         <member name="P:Snowflake.Scraping.GameScrapeContext.Context">
-            <inheritdoc />
-        </member>
-        <member name="P:Snowflake.Scraping.GameScrapeContext.Visited">
             <inheritdoc />
         </member>
         <member name="P:Snowflake.Scraping.GameScrapeContext.Cullers">

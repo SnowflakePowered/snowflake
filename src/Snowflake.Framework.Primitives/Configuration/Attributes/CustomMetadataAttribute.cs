@@ -22,6 +22,13 @@ namespace Snowflake.Configuration.Attributes
         /// </summary>
         public object Value { get; }
 
+        /// <summary>
+        /// Mark a selection option or configuration property as custom metadata.
+        /// Custom metadata is never serialized to file, and is only readable
+        /// by the emulator bridge plugin.
+        /// </summary>
+        /// <param name="metadataKey">The key of the metadata.</param>
+        /// <param name="value">The metadata value.</param>
         public CustomMetadataAttribute(string metadataKey, object value)
         {
             this.Key = metadataKey;

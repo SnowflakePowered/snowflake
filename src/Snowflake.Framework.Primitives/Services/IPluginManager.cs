@@ -35,7 +35,6 @@ namespace Snowflake.Services
         /// </summary>
         /// <typeparam name="T">
         /// The plugin type category to register under.
-        /// Examples include <see cref="IEmulatorAdapter"/>
         /// </typeparam>
         /// <returns>All plugins registered under a specific category.</returns>
         IEnumerable<T> Get<T>()
@@ -46,7 +45,6 @@ namespace Snowflake.Services
         /// </summary>
         /// <typeparam name="T">
         /// The plugin type category to register under.
-        /// Examples include <see cref="IEmulatorAdapter"/>
         /// </typeparam>
         /// <returns>All plugins registered under a specific category.</returns>
         IPluginCollection<T> GetCollection<T>()
@@ -57,7 +55,6 @@ namespace Snowflake.Services
         /// </summary>
         /// <typeparam name="T">
         /// The plugin type category to register under.
-        /// Examples include <see cref="IEmulatorAdapter"/>
         /// </typeparam>
         /// <param name="pluginName">The name of the plugin.</param>
         /// <returns>The given plugin if it exists, null if it does not.</returns>

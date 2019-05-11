@@ -83,6 +83,7 @@ namespace Snowflake.Filesystem
         /// <exception cref="IOException">If a file with the same name exists in the target destination.</exception>
         /// <exception cref="FileNotFoundException">If the source file can not be found.</exception>
         /// <param name="source">The <see cref="FileInfo"/></param>
+        /// <param name="cancellation">A cancellation token that is forwarded to the underlying <see cref="Task{TResult}"/>.</param>
         /// <returns>The <see cref="IFile"/> that describes the file in the current <see cref="IDirectory"/>.</returns>
         Task<IFile> CopyFromAsync(FileInfo source, CancellationToken cancellation = default);
 
@@ -96,6 +97,7 @@ namespace Snowflake.Filesystem
         /// <exception cref="FileNotFoundException">If the source file can not be found.</exception>
         /// <param name="source">The <see cref="FileInfo"/></param>
         /// <param name="overwrite">Overwrite the file if it already exists in this <see cref="IDirectory"/></param>
+        /// <param name="cancellation">A cancellation token that is forwarded to the underlying <see cref="Task{TResult}"/>.</param>
         /// <returns>The <see cref="IFile"/> that describes the file in the current <see cref="IDirectory"/>.</returns>
         Task<IFile> CopyFromAsync(FileInfo source, bool overwrite, CancellationToken cancellation = default);
 
