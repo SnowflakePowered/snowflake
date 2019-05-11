@@ -6,7 +6,7 @@ using Snowflake.Services;
 
 namespace Snowflake.Stone.FileSignatures.Sega
 {
-    public sealed class Sega32XFileSignature : IFileSignature
+    internal sealed class Sega32XFileSignature : IFileSignature
     {
         /// <inheritdoc/>
         public byte[] HeaderSignature => new byte[] {

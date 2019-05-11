@@ -22,7 +22,7 @@ using System.IO;
 
 namespace Snowflake.Stone.FileSignatures.Formats.N64
 {
-    public sealed class Int64SwapStream : ByteSwapStream
+    internal sealed class Int64SwapStream : ByteSwapStream
     {
         public Int64SwapStream(Stream baseStream)
             : base(baseStream)

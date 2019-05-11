@@ -6,7 +6,7 @@ using Snowflake.Romfile;
 
 namespace Snowflake.Stone.FileSignatures.Sony
 {
-    public sealed class Playstation2Iso9660FileSignature : IFileSignature
+    internal sealed class Playstation2Iso9660FileSignature : IFileSignature
     {
         /// <inheritdoc/>
         public byte[] HeaderSignature => Encoding.UTF8.GetBytes("BOOT2");

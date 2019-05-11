@@ -10,7 +10,7 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDXA
     /// <summary>
     /// Represents a Playstation Disc from a raw CDXA image.
     /// </summary>
-    public class PlaystationDisc
+    internal class PlaystationDisc
     {
         private readonly CDXADisc disk;
 
@@ -56,18 +56,16 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDXA
         /// Gets the SYSTEM.CNF file from the disc if it exists.
         /// </summary>
         /// <returns>Returns the contents of the SYSTEM.CNF file if it exists, or null otherwise.</returns>
-        public string? GetMeta()
+        public string GetMeta()
         {
             if (!this.disk.Files.ContainsKey("SYSTEM.CNF")) return null;
             var file = this.disk.Files["SYSTEM.CNF"];
             byte[] buf = new byte[file.Length];
 
-            using (Stream block = file.OpenFile())
-            using (MemoryStream cnfMemory = new MemoryStream())
-            {
-                block.CopyTo(cnfMemory);
-                return Encoding.UTF8.GetString(cnfMemory.ToArray());
-            }
+            using Stream block = file.OpenFile();
+            using MemoryStream cnfMemory = new MemoryStream();
+            block.CopyTo(cnfMemory);
+            return Encoding.UTF8.GetString(cnfMemory.ToArray());
         }
     }
 }

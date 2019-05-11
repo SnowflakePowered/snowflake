@@ -5,7 +5,7 @@ using Snowflake.Romfile;
 
 namespace Snowflake.Stone.FileSignatures.Sega
 {
-    public sealed class SegaCdRawImageFileSignature : IFileSignature
+    internal sealed class SegaCdRawImageFileSignature : IFileSignature
     {
         /// <inheritdoc/>
         public byte[] HeaderSignature => Encoding.UTF8.GetBytes("SEGADISCSYSTEM");

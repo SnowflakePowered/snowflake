@@ -22,18 +22,13 @@ using System.IO;
 
 namespace Snowflake.Stone.FileSignatures.Formats.N64
 {
-    public abstract class ByteSwapStream : Stream
+    internal abstract class ByteSwapStream : Stream
     {
-        private Stream baseStream;
+        private readonly Stream baseStream;
 
         protected ByteSwapStream(Stream baseStream)
         {
-            if (baseStream == null)
-            {
-                throw new ArgumentNullException("baseStream");
-            }
-
-            this.baseStream = baseStream;
+            this.baseStream = baseStream ?? throw new ArgumentNullException("baseStream");
         }
 
         /// <inheritdoc/>

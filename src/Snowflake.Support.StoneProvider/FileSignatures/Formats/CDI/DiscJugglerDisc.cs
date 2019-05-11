@@ -6,20 +6,20 @@ using System.Text;
 using Snowflake.Stone.FileSignatures.Formats.CDXA;
 using Snowflake.Stone.FileSignatures.Formats.ISO9660;
 
-/// <summary>
-/// Implementation based off
-/// https://github.com/inolen/redream
-/// 
-/// Licensed under GPLv3
-/// 
-/// This is very slightly off for some reason, but it seems to work well enough for 
-/// just getting lba block 1 so...
-/// 
-/// May fix in a later version.
-/// </summary>
+// <summary>
+// Implementation based off
+// https://github.com/inolen/redream
+// 
+// Licensed under GPLv3
+// 
+// This is very slightly off for some reason, but it seems to work well enough for 
+// just getting lba block 1 so...
+// 
+// May fix in a later version.
+// </summary>
 namespace Snowflake.Stone.FileSignatures.Formats.CDI
 {
-    public class DiscJugglerDisc : IDiscReader
+    internal class DiscJugglerDisc : IDiscReader
     {
         private const int GDROM_PREGAP = 150;
         private static readonly byte[] TrackStartMarker = new byte[] { 0, 0, 1, 0, 0, 0, 255, 255, 255, 255 };
@@ -306,7 +306,6 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDI
         /// 
         /// The returned Stream acts simply as a pointer to the LBA and does not protect
         /// against out of bounds reads. In order to read file data, use the much safer
-        /// <see cref="DiscJugglerDisc.OpenFile"/>.
         /// </summary>
         /// <param name="lba">The block index to open from</param>
         /// <returns></returns>

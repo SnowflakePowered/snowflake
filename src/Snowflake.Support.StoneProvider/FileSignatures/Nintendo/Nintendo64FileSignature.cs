@@ -10,7 +10,7 @@ using Snowflake.Romfile;
 
 namespace Snowflake.Stone.FileSignatures.Nintendo
 {
-    public abstract class Nintendo64FileSignature<T> : IFileSignature
+    internal abstract class Nintendo64FileSignature<T> : IFileSignature
         where T : Stream
     {
         private readonly Func<Stream, T> streamConverter;

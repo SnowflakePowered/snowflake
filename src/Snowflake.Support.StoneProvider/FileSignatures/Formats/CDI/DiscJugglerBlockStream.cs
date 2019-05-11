@@ -54,7 +54,6 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDI
         /// <inheritdoc/>
         /// <remarks>
         /// Does not protect against out of bounds reading.
-        /// To access file contents, use the much safer <see cref="DiscJugglerDisc.OpenFile"/>
         /// </remarks>
         public sealed override int Read(byte[] buffer, int offset, int count)
         {

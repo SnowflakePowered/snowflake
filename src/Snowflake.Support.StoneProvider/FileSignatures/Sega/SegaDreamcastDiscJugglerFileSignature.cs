@@ -10,7 +10,7 @@ using Snowflake.Stone.FileSignatures.Formats.CDI;
 
 namespace Snowflake.Stone.FileSignatures.Sega
 {
-    public sealed class SegaDreamcastDiscJugglerFileSignature : IFileSignature
+    internal sealed class SegaDreamcastDiscJugglerFileSignature : IFileSignature
     {
         /// <inheritdoc/>
         public byte[] HeaderSignature => Encoding.UTF8.GetBytes("SEGA SEGAKATANA SEGA ENTERPRISES");

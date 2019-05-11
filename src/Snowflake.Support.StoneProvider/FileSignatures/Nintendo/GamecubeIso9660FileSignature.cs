@@ -5,7 +5,7 @@ using Snowflake.Romfile;
 
 namespace Snowflake.Stone.FileSignatures.Nintendo
 {
-    public sealed class GamecubeIso9660FileSignature : IFileSignature
+    internal sealed class GamecubeIso9660FileSignature : IFileSignature
     {
         /// <inheritdoc/>
         public byte[] HeaderSignature => new byte[4] {0xC2, 0x33, 0x9F, 0x3D}; // gamecube magic word

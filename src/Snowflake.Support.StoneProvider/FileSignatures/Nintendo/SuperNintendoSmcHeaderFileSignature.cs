@@ -8,7 +8,7 @@ using Snowflake.Romfile;
 
 namespace Snowflake.Stone.FileSignatures.Nintendo
 {
-    public class SuperNintendoSmcHeaderFileSignature : IFileSignature
+    internal sealed class SuperNintendoSmcHeaderFileSignature : IFileSignature
     {
         /// <inheritdoc/>
         public byte[] HeaderSignature => new byte[7] {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};

@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Snowflake.Stone.FileSignatures.Formats.SFO
 {
-    public sealed class SfoKeyTableEntry
+    internal sealed class SfoKeyTableEntry
     {
         public const byte delimiterByte = 0;
         private int keyTableLength;

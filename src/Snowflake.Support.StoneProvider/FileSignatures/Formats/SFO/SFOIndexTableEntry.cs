@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Snowflake.Stone.FileSignatures.Formats.SFO
 {
-    public sealed class SFOIndexTableEntry
+    internal sealed class SFOIndexTableEntry
     {
         /// <summary>
         /// The length of an entry in an SFO Index Table

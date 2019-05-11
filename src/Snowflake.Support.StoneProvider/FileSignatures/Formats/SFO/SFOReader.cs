@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Snowflake.Stone.FileSignatures.Formats.SFO
 {
-    public class SFOReader
+    internal class SFOReader
     {
         internal const int headerSize = 20;
 

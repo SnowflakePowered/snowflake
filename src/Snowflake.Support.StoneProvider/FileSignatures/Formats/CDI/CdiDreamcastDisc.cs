@@ -9,7 +9,7 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDI
     /// <summary>
     /// Represents a Dreamcast Disc from a DiscJuggler CDI Image
     /// </summary>
-    public class CdiDreamcastDisc
+    internal class CdiDreamcastDisc
     {
         public CdiDreamcastDisc(DiscJugglerDisc cdiDisc)
         {

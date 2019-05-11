@@ -9,7 +9,7 @@ using Snowflake.Stone.FileSignatures.Formats.ISO9660;
 
 namespace Snowflake.Stone.FileSignatures.Formats.CDXA
 {
-    public class CDXADisc : IDiscReader
+    internal class CDXADisc : IDiscReader
     {
         public const int BlockSize = 0x930;
         public const int BlockHeaderSize = 0x18;
@@ -33,7 +33,7 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDXA
             return new ISOPrimaryVolumeDescriptor(this.OpenBlock(16));
         }
 
-        public Stream? OpenFile(string fileName)
+        public Stream OpenFile(string fileName)
         {
             if (!this.Files.ContainsKey(fileName)) return null;
             return this.Files[fileName].OpenFile();
@@ -46,26 +46,25 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDXA
             // http://wiki.osdev.org/ISO_9660#Volume_Descriptor_Set_Terminator
             foreach (byte[] entry in this.GetDirectoryRecordEntries(lbaStart))
             {
-                using (Stream s = new MemoryStream(entry))
-                using (BinaryReader reader = new BinaryReader(s))
+                using Stream s = new MemoryStream(entry);
+                using BinaryReader reader = new BinaryReader(s);
+                s.Seek(2, SeekOrigin.Begin);
+                uint lba = reader.ReadUInt32();
+                s.Seek(10, SeekOrigin.Begin);
+                long length = reader.ReadUInt32();
+                s.Seek(25, SeekOrigin.Begin);
+                byte attr = reader.ReadByte(); // 3 - subdirectory, 2 - root, 1 - file
+                s.Seek(0x20, SeekOrigin.Begin);
+                int filenameLength = reader.ReadByte();
+                string fileName = Encoding.UTF8.GetString(reader.ReadBytes(filenameLength)).Split(';')[0];
+                
+                if (attr == 1 || attr == 0)
                 {
-                    s.Seek(2, SeekOrigin.Begin);
-                    uint lba = reader.ReadUInt32();
-                    s.Seek(10, SeekOrigin.Begin);
-                    long length = reader.ReadUInt32();
-                    s.Seek(25, SeekOrigin.Begin);
-                    byte attr = reader.ReadByte(); // 3 - subdirectory, 2 - root, 1 - file
-                    s.Seek(0x20, SeekOrigin.Begin);
-                    int filenameLength = reader.ReadByte();
-                    string fileName = Encoding.UTF8.GetString(reader.ReadBytes(filenameLength)).Split(';')[0];
-                    if (attr == 1 || attr == 0)
-                    {
-                        records.Add(new CDXARecord(lba, length, $@"{parentDir}{fileName}"));
-                    }
-                    else if (attr == 3 && fileName != "\0")
-                    {
-                        records.AddRange(this.GetRecords($@"{fileName}\", lba));
-                    }
+                    records.Add(new CDXARecord(lba, length, $@"{parentDir}{fileName}"));
+                }
+                else if (attr == 3 && fileName != "\0")
+                {
+                    records.AddRange(this.GetRecords($@"{fileName}\", lba));
                 }
             }
 

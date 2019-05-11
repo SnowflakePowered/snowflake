@@ -7,7 +7,7 @@ using Snowflake.Services;
 
 namespace Snowflake.Stone.FileSignatures.Nintendo
 {
-    public sealed class NintendoDSFileSignature : IFileSignature
+    internal sealed class NintendoDSFileSignature : IFileSignature
     {
         /// <inheritdoc/>
         public byte[] HeaderSignature =>

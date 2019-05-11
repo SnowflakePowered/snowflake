@@ -7,7 +7,7 @@ using Snowflake.Services;
 
 namespace Snowflake.Stone.FileSignatures.Sega
 {
-    public sealed class SegaDreamcastRawDiscFileSignature : IFileSignature
+    internal sealed class SegaDreamcastRawDiscFileSignature : IFileSignature
     {
         /// <inheritdoc/>
         public byte[] HeaderSignature => Encoding.UTF8.GetBytes("SEGA SEGAKATANA SEGA ENTERPRISES");
