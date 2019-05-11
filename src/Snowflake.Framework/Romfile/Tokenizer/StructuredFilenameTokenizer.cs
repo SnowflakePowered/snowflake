@@ -25,12 +25,12 @@ namespace Snowflake.Romfile.Tokenizer
         {
             int index = rawTitle.LastIndexOf('.');
             if (index < 0) return rawTitle;
-            string ext = rawTitle.Substring(index + 1..);
+            string ext = rawTitle[index + 1..];
             if (String.IsNullOrWhiteSpace(ext)) return rawTitle; // if whats after the period is whitespace
             if (ext.StartsWith(' ')) return rawTitle; // if whats after the period is a space
             if (!Regex.IsMatch(ext, "^[a-zA-Z0-9]*$")) return rawTitle; // if the extension is not alphanumeric
             if (ext.Contains(' ')) return rawTitle; // if there is whitespace after the period
-            return rawTitle.Substring(0..index);
+            return rawTitle[0..index];
         }
 
         public IEnumerable<(string tokenValue, int tokenPosition)> GetParensTokens()
