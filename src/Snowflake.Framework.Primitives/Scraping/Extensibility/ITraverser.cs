@@ -17,13 +17,13 @@ namespace Snowflake.Scraping.Extensibility
     /// <summary>
     /// A traverser traverses the resultant <see cref="ISeedRootContext"/>,
     /// or rather sub-trees relative to a given seed in the context, and applies side effects
-    /// according to the final seed tree, producing a list of <see cref="T"/> given the 
+    /// according to the final seed tree, producing a list of <typeparamref name="TProducts"/> given the 
     /// information available in the seed tree.
     /// 
     /// </summary>
     /// <typeparam name="TProducts">The type of record or object this traverser produces.</typeparam>
     /// <typeparam name="TEffectTarget">The type of object this traverser is allowed to mutate.</typeparam>
-    public interface ITraverser<TProducts, TEffectTarget>
+    public interface ITraverser<TProducts, in TEffectTarget>
         : IPlugin
     {
         /// <summary>

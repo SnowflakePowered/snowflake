@@ -4,6 +4,10 @@ using System.Text;
 
 namespace Snowflake.Configuration
 {
+    /// <summary>
+    /// An option descriptor for options with type <see cref="ConfigurationOptionType.Selection"/>
+    /// Describes the available options by introspecting the backing <see cref="EnumType"/>.
+    /// </summary>
     public interface ISelectionOptionDescriptor
     {
         /// <summary>

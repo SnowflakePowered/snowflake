@@ -51,12 +51,7 @@ namespace Snowflake.Model.Records.File
         /// The canonical title of a ROM from the shiragame database
         /// </summary>
         public const string RomCanonicalTitle = "rom_canonical_title";
-
-        /// <summary>
-        /// The ROM was not determined for sure by a <see cref="IScrapeEngine"/>
-        /// </summary>
-        public const string RomIsAmbiguousIdentification = "rom_is_ambiguous_identification";
-
+        
         /// <summary>
         /// The filename of the runnable binary in a zip file.
         /// </summary>

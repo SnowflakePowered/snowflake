@@ -25,7 +25,7 @@ namespace Snowflake.Model.Game.LibraryExtensions
 
         private IDirectory Root { get; }
 
-        internal FileRecordLibrary FileRecordLibrary { get; }
+        private FileRecordLibrary FileRecordLibrary { get; }
 
         public IDirectory SavesRoot { get; }
 
@@ -48,7 +48,8 @@ namespace Snowflake.Model.Game.LibraryExtensions
 
         public IDirectory GetSavesLocation(string saveType)
         {
-            throw new NotImplementedException();
+            //todo: sanitize savetype.
+            return this.SavesRoot.OpenDirectory(saveType);
         }
 
         public IFileRecord? GetFileInfo(IFile file) => this.FileRecordLibrary.GetRecord(file);

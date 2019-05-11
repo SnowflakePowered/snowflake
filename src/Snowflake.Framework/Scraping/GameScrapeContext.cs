@@ -24,8 +24,7 @@ namespace Snowflake.Scraping
 
         /// <inheritdoc />
         public ISeedRootContext Context { get; }
-
-        /// <inheritdoc />
+        
         private List<(string, Guid)> Visited { get; }
 
         /// <inheritdoc />

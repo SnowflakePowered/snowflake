@@ -77,7 +77,7 @@ namespace Snowflake.Configuration.Attributes
         /// <summary>
         /// Gets the CLR type of this option.
         /// </summary>
-        internal Type Type { get; }
+        private Type Type { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfigurationOptionAttribute"/> class.
@@ -132,7 +132,7 @@ namespace Snowflake.Configuration.Attributes
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ConfigurationOptionAttribute"/> class.
+        /// Initializes a new <see cref="ConfigurationOptionAttribute"/>.
         /// Represents one option in an emulator configuration inside a configuration section.
         /// Typically configuration options must be a double, bool, integer or an enum value in order to be safe,
         /// type information may be lost when serializing into a wire format.
@@ -143,13 +143,7 @@ namespace Snowflake.Configuration.Attributes
             : this(optionName, @default, typeof(string))
         {
         }
-
-        public ConfigurationOptionAttribute(string optionName, string @default, string fileSystemRoot)
-            : this(optionName, @default, typeof(string))
-        {
-            this.IsPath = true;
-        }
-
+        
         private ConfigurationOptionAttribute(string optionName, object @default, Type valueType)
         {
             this.OptionName = optionName;

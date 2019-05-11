@@ -110,7 +110,7 @@ namespace Snowflake.Persistence
         /// </summary>
         /// <param name="query">The SQL query to execute</param>
         /// <param name="param">The query parameters</param>
-        public void Execute(string query, object param = null)
+        public void Execute(string query, object? param = null)
         {
             this.Execute(dbConnection => dbConnection.Execute(query, param));
         }

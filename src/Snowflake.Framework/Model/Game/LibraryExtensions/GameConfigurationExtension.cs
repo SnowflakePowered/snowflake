@@ -10,8 +10,8 @@ namespace Snowflake.Model.Game.LibraryExtensions
 {
     internal class GameConfigurationExtension : IGameConfigurationExtension
     {
-        public IGameRecord GameRecord { get; }
-        public ConfigurationCollectionStore ConfigurationStore { get; }
+        private IGameRecord GameRecord { get; }
+        private ConfigurationCollectionStore ConfigurationStore { get; }
 
         public GameConfigurationExtension(IGameRecord gameRecord,
             ConfigurationCollectionStore collectionStore)

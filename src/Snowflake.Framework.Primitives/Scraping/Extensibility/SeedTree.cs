@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+// We abuse XMLDoc syntax here..
+#pragma warning disable 1584
+#pragma warning disable 1658
+#pragma warning disable 0081
 
 namespace Snowflake.Scraping.Extensibility
 {
