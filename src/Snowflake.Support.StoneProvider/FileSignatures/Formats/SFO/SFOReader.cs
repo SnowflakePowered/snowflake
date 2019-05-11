@@ -23,34 +23,34 @@ namespace Snowflake.Stone.FileSignatures.Formats.SFO
             // sfoHeader lesen
             this.sfoHeader = SFOHeader.Read(sfoFile);
 
-            for (int i = 0; i < this.sfoHeader.GetNumberDataItems(); i++)
+            for (int i = 0; i < this.sfoHeader.NumberDataItems; i++)
             {
                 this.IndexTableEntries.Add(SFOIndexTableEntry.ReadEntry(sfoFile));
             }
 
             // Zum KeyTable Anfang springen
             // (offset der KeyTabelle - Header-Lהnge - Anzahl * IndexEntry Lהnge = restl. zu ignorierende Bytes)
-            int skipBytesToKeyTable = this.sfoHeader.GetOffsetKeyTable() - SFOReader.headerSize -
-                                      (this.sfoHeader.GetNumberDataItems() * SFOIndexTableEntry.IndexTableEntryLength);
+            int skipBytesToKeyTable = this.sfoHeader.OffsetKeyTable - SFOReader.headerSize -
+                                      (this.sfoHeader.NumberDataItems * SFOIndexTableEntry.IndexTableEntryLength);
             sfoFile.Seek(skipBytesToKeyTable, SeekOrigin.Current);
 
             // read KeyTable
-            var sfoKeyTableEntry = new SfoKeyTableEntry();
+            var sfoKeyTableEntry = new SFOKeyTableEntry();
             var keyTableEntries = new List<string>();
-            for (int i = 0; i < this.sfoHeader.GetNumberDataItems(); i++)
+            for (int i = 0; i < this.sfoHeader.NumberDataItems; i++)
             {
                 keyTableEntries.Add(sfoKeyTableEntry.ReadEntry(sfoFile));
             }
 
-            long skipBytesToValueTable = this.sfoHeader.GetOffsetValueTable() - this.sfoHeader.GetOffsetKeyTable() -
-                                         sfoKeyTableEntry.GetKeyTableLength();
+            long skipBytesToValueTable = this.sfoHeader.OffsetValueTable - this.sfoHeader.OffsetKeyTable -
+                                         sfoKeyTableEntry.KeyTableLength;
             sfoFile.Seek(skipBytesToValueTable, SeekOrigin.Current);
 
             // read ValueTable
             SFOValueTableEntry sfoValueTableEntry = new SFOValueTableEntry();
             var valueTableEntries = new List<string>();
 
-            for (int i = 0; i < this.sfoHeader.GetNumberDataItems(); i++)
+            for (int i = 0; i < this.sfoHeader.NumberDataItems; i++)
             {
                 valueTableEntries.Add(sfoValueTableEntry.ReadEntry(sfoFile, this.IndexTableEntries[i])
                     .Replace("\0", string.Empty));

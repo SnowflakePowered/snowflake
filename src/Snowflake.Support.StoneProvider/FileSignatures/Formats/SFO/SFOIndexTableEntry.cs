@@ -10,12 +10,12 @@ namespace Snowflake.Stone.FileSignatures.Formats.SFO
         /// </summary>
         public const int IndexTableEntryLength = 16;
 
-        private byte[] offsetKeyNameInKeyTable;
-        private byte dataAlignmentRequirements;
-        private byte dataTypeValue;
-        private int sizeValueData;
-        private int sizeValueDataAndPadding;
-        private int offsetDataValueInDataTable;
+        public byte[] OffsetKeyNameInKeyTable { get; set; }
+        public byte DataAlignmentRequirements { get; set; }
+        public byte DataTypeValue { get; set; }
+        public int SizeValueData { get; set; }
+        public int SizeValueDataAndPadding { get; set; }
+        public int OffsetDataValueInDataTable { get; set; }
 
         /**
          * Reads one entry of the indexTable and return it's values in a SFOIndexTableEntry-object
@@ -33,89 +33,29 @@ namespace Snowflake.Stone.FileSignatures.Formats.SFO
 
             // read offsetKeyNameInKeyTable
             fIn.Read(tempByteArray2, 0, 2);
-            sfoIndexTableEntry.SetOffsetKeyNameInKeyTable(tempByteArray2);
+            sfoIndexTableEntry.OffsetKeyNameInKeyTable = tempByteArray2;
 
             // read dataAlignmentRequirements
             fIn.Read(tempByteArray1, 0, 1);
-            sfoIndexTableEntry.SetDataAlignmentRequirements(tempByteArray1[0]);
+            sfoIndexTableEntry.DataAlignmentRequirements = tempByteArray1[0];
 
             // read dataTypeValue
             fIn.Read(tempByteArray1, 0, 1);
-            sfoIndexTableEntry.SetDataTypeValue(tempByteArray1[0]);
+            sfoIndexTableEntry.DataTypeValue = tempByteArray1[0];
 
             // read sizeValueData
             fIn.Read(tempByteArray4, 0, 4);
-            sfoIndexTableEntry.SetSizeValueData(SFOReaderUtilities.ByteArrayReverseToInt(tempByteArray4));
+            sfoIndexTableEntry.SizeValueData = SFOReaderUtilities.ByteArrayReverseToInt(tempByteArray4);
 
             // read sizeValueDataAndPadding
             fIn.Read(tempByteArray4, 0, 4);
-            sfoIndexTableEntry.SetSizeValueDataAndPadding(SFOReaderUtilities.ByteArrayReverseToInt(tempByteArray4));
+            sfoIndexTableEntry.SizeValueDataAndPadding = SFOReaderUtilities.ByteArrayReverseToInt(tempByteArray4);
 
             // read offsetDataValueInDataTable
             fIn.Read(tempByteArray4, 0, 4);
-            sfoIndexTableEntry.SetOffsetDataValueInDataTable(SFOReaderUtilities.ByteArrayReverseToInt(tempByteArray4));
+            sfoIndexTableEntry.OffsetDataValueInDataTable = SFOReaderUtilities.ByteArrayReverseToInt(tempByteArray4);
 
             return sfoIndexTableEntry;
-        }
-
-        public byte[] GetOffsetKeyNameInKeyTable()
-        {
-            return this.offsetKeyNameInKeyTable;
-        }
-
-        public void SetOffsetKeyNameInKeyTable(byte[] offsetKeyNameInKeyTable)
-        {
-            this.offsetKeyNameInKeyTable = offsetKeyNameInKeyTable;
-        }
-
-        public byte GetDataAlignmentRequirements()
-        {
-            return this.dataAlignmentRequirements;
-        }
-
-        public void SetDataAlignmentRequirements(byte dataAlignmentRequirements)
-        {
-            this.dataAlignmentRequirements = dataAlignmentRequirements;
-        }
-
-        public byte GetDataTypeValue()
-        {
-            return this.dataTypeValue;
-        }
-
-        public void SetDataTypeValue(byte dataTypeValue)
-        {
-            this.dataTypeValue = dataTypeValue;
-        }
-
-        public int GetSizeValueData()
-        {
-            return this.sizeValueData;
-        }
-
-        public void SetSizeValueData(int sizeValueData)
-        {
-            this.sizeValueData = sizeValueData;
-        }
-
-        public int GetSizeValueDataAndPadding()
-        {
-            return this.sizeValueDataAndPadding;
-        }
-
-        public void SetSizeValueDataAndPadding(int sizeValueDataAndPadding)
-        {
-            this.sizeValueDataAndPadding = sizeValueDataAndPadding;
-        }
-
-        public int GetOffsetDataValueInDataTable()
-        {
-            return this.offsetDataValueInDataTable;
-        }
-
-        public void SetOffsetDataValueInDataTable(int offsetDataValueInDataTable)
-        {
-            this.offsetDataValueInDataTable = offsetDataValueInDataTable;
         }
 
         /// <inheritdoc/>
@@ -124,12 +64,12 @@ namespace Snowflake.Stone.FileSignatures.Formats.SFO
             StringBuilder sb = new StringBuilder();
 
             sb.Append("== SFO IndexTable Entry ==\n")
-                .Append("offsetKeyNameInKeyTable:    ").Append(this.offsetKeyNameInKeyTable).Append("\n")
-                .Append("dataAlignmentRequirements:  ").Append(this.dataAlignmentRequirements).Append("\n")
-                .Append("dataTypeValue:              ").Append(this.dataTypeValue).Append("\n")
-                .Append("sizeValueData:              ").Append(this.sizeValueData).Append("\n")
-                .Append("sizeValueDataAndPadding:    ").Append(this.sizeValueDataAndPadding).Append("\n")
-                .Append("offsetDataValueInDataTable: ").Append(this.offsetDataValueInDataTable).Append("\n");
+                .Append("offsetKeyNameInKeyTable:    ").Append(this.OffsetKeyNameInKeyTable).Append("\n")
+                .Append("dataAlignmentRequirements:  ").Append(this.DataAlignmentRequirements).Append("\n")
+                .Append("dataTypeValue:              ").Append(this.DataTypeValue).Append("\n")
+                .Append("sizeValueData:              ").Append(this.SizeValueData).Append("\n")
+                .Append("sizeValueDataAndPadding:    ").Append(this.SizeValueDataAndPadding).Append("\n")
+                .Append("offsetDataValueInDataTable: ").Append(this.OffsetDataValueInDataTable).Append("\n");
 
             return sb.ToString();
         }
