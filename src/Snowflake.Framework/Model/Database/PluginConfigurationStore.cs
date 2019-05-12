@@ -19,7 +19,7 @@ namespace Snowflake.Model.Database
         {
             this.Options = options;
             using var context = new DatabaseContext(Options.Options);
-            context.Database.EnsureCreated();
+            context.Database.Migrate();
         }
 
         public void Set(IConfigurationValue value)

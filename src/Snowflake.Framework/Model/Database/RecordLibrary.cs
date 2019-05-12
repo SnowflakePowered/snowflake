@@ -17,7 +17,7 @@ namespace Snowflake.Model.Database
         {
             this.Options = options;
             using var context = new DatabaseContext(options.Options);
-            context.Database.EnsureCreated();
+            context.Database.Migrate();
         }
 
         public void DeleteRecord(TRecord record)
