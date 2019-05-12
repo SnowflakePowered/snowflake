@@ -20,7 +20,7 @@ namespace Snowflake.Model.Database
         {
             this.Options = options;
             using var context = new DatabaseContext(this.Options.Options);
-            context.Database.EnsureCreated();
+            context.Database.Migrate();
         }
 
         public IEnumerable<IGrouping<string, string>>
