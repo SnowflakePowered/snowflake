@@ -29,3 +29,6 @@ comment:
 
 codecov:
   token: 82f2a4f6-6167-45f5-bc8b-8b10f601dab4
+
+ignore:
+  - 'src/Snowflake.Framework/Model/Database/Migrations'
