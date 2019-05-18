@@ -51,7 +51,7 @@ namespace Snowflake.Services
 
             this.FileSignatures = new Dictionary<string, IList<IFileSignature>>()
             {
-                {"application/vnd.stone-romfile.sony.psx-discimage", new List<IFileSignature>() { new PlaystationCDRomFileSignature() } },
+                {"application/vnd.stone-romfile.sony.psx-disctrack", new List<IFileSignature>() { new PlaystationCDRomFileSignature() } },
                 {"application/vnd.stone-romfile.sony.ps2-discimage", new List<IFileSignature>() { new Playstation2Iso9660FileSignature(), new Playstation2CDRomFileSignature() } },
                 {"application/vnd.stone-romfile.sony.psp-discimage", new List<IFileSignature>() { new PlaystationPortableIso9660FileSignature() } },
                 {"application/vnd.stone-romfile.nintendo.wii-wbfs", new List<IFileSignature>() { new WiiWbfsFileSignature() } },
@@ -69,14 +69,14 @@ namespace Snowflake.Services
                 {"application/vnd.stone-romfile.nintendo.n64-byteswapped", new List<IFileSignature>() { new Nintendo64ByteswappedFileSignature() } },
                 {"application/vnd.stone-romfile.nintendo.n64-bigendian", new List<IFileSignature>() { new Nintendo64BigEndianFileSignature() } },
                 {"application/vnd.stone-romfile.sega.32x", new List<IFileSignature>() { new Sega32XFileSignature() } },
-                {"application/vnd.stone-romfile.sega.scd-discimage", new List<IFileSignature>() { new SegaCdRawImageFileSignature() } },
+                {"application/vnd.stone-romfile.sega.scd-disctrack", new List<IFileSignature>() { new SegaCdRawImageFileSignature() } },
                 {"application/vnd.stone-romfile.sega.dc-discjuggler", new List<IFileSignature>() { new SegaDreamcastDiscJugglerFileSignature() } },
-                {"application/vnd.stone-romfile.sega.dc-discimage", new List<IFileSignature>() { new SegaDreamcastRawDiscFileSignature() } },
+                {"application/vnd.stone-romfile.sega.dc-disctrack", new List<IFileSignature>() { new SegaDreamcastRawDiscFileSignature() } },
                 {"application/vnd.stone-romfile.sega.sms",new List<IFileSignature>() { new SegaMasterSystemFileSignature() } },
                 {"application/vnd.stone-romfile.sega.gen", new List<IFileSignature>() { new SegaGenesisFileSignature() } },
                 {"application/vnd.stone-romfile.sega.gg", new List<IFileSignature>() { new SegaGameGearFileSignature() } },
-                {"application/vnd.stone-romfile.sega.sat-discimage", new List<IFileSignature>() { new SegaSaturnFileSignature() } },
-                {"application/vnd.stone-romfile.sega.32xcd-discimage", new List<IFileSignature>() { new Sega32XCdRawImageFileSignature() } },
+                {"application/vnd.stone-romfile.sega.sat-disctrack", new List<IFileSignature>() { new SegaSaturnFileSignature() } },
+                {"application/vnd.stone-romfile.sega.32xcd-disctrack", new List<IFileSignature>() { new Sega32XCdRawImageFileSignature() } },
             };
         }
 
