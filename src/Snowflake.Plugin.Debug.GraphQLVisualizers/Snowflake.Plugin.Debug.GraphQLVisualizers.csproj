@@ -14,7 +14,7 @@
   <ItemGroup>
     <PackageReference Include="GraphQL.Server.Ui.GraphiQL" Version="3.5.0-alpha0005" />
     <PackageReference Include="GraphQL.Server.Ui.Playground" Version="3.5.0-alpha0005" />
-    <PackageReference Include="GraphQL.Server.Ui.Voyager" Version="3.5.0-alpha0005" />
+    <PackageReference Include="GraphQL.Server.Ui.Voyager" Version="3.5.0-alpha0006" />
   </ItemGroup>
 
   <PropertyGroup>
