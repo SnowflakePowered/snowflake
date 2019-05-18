@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <LangVersion>8.0</LangVersion>
-    <_SnowflakeSDKDependenciesVersion>1.0.1</_SnowflakeSDKDependenciesVersion>
+    <_SnowflakeSDKDependenciesVersion>1.0.2</_SnowflakeSDKDependenciesVersion>
     <_SnowflakeSDKAssembliesVersion>1.0.0-alpha.*</_SnowflakeSDKAssembliesVersion>
   </PropertyGroup>
 
