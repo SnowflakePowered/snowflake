@@ -10,6 +10,7 @@ namespace Snowflake.Configuration.Attributes
     /// Marks a configuration section property as serializable to configuration
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
+    [Obsolete("Use ConfigurationTargetMemberAttribute")]
     public class SerializableSectionAttribute : Attribute
     {
         /// <summary>
