@@ -178,6 +178,9 @@
         <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.IsPath">
             <inheritdoc/>
         </member>
+        <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.PathType">
+            <inheritdoc/>
+        </member>
         <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.OptionName">
             <inheritdoc/>
         </member>

@@ -41,7 +41,7 @@ namespace Snowflake.Configuration
         [ConfigurationOption("RenderWindowHeight", 480)]
         int RenderWindowHeight { get; set; }
 
-        [ConfigurationOption("ISOPath0", @"C:\Dumps\Wii\RMGE01.wbfs", IsPath = true)]
+        [ConfigurationOption("ISOPath0", @"C:\Dumps\Wii\RMGE01.wbfs", PathType.File)]
         string ISOPath0 { get; set; }
     }
 
