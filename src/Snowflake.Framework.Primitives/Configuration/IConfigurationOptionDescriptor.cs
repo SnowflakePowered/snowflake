@@ -57,6 +57,11 @@ namespace Snowflake.Configuration
         bool IsPath { get; }
 
         /// <summary>
+        /// If <see cref="IsPath"/> is true, the type of the path.
+        /// </summary>
+        PathType PathType { get; }
+
+        /// <summary>
         /// Gets the name of the option as it appears inside the emulator configuration
         /// </summary>
         string OptionName { get; }

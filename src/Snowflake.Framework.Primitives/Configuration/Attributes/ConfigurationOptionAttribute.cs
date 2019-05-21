@@ -60,9 +60,9 @@ namespace Snowflake.Configuration.Attributes
         public double Increment { get; set; } = 1;
 
         /// <summary>
-        /// Gets or sets a value indicating whether whether or not this string is a file path.
+        /// If <see cref="IsPath"/> is true, specifies the type of the path.
         /// </summary>
-        public bool IsPath { get; set; } = false;
+        public PathType PathType { get; } = PathType.NotPath;
 
         /// <summary>
         /// Gets the name of the option as it appears inside the emulator configuration
@@ -143,7 +143,23 @@ namespace Snowflake.Configuration.Attributes
             : this(optionName, @default, typeof(string))
         {
         }
-        
+
+        /// <summary>
+        /// Initializes a new <see cref="ConfigurationOptionAttribute"/> that represents a path.
+        /// Represents one option in an emulator configuration inside a configuration section.
+        /// Typically configuration options must be a double, bool, integer or an enum value in order to be safe,
+        /// type information may be lost when serializing into a wire format.
+        /// </summary>
+        /// <param name="optionName">The name of the option</param>
+        /// <param name="default">The default value of the option. Note that only strings, enums and primitive types are supported.</param>
+        /// <param name="pathType">The type of the path this points to.</param>
+        public ConfigurationOptionAttribute(string optionName, string @default, PathType pathType)
+            : this(optionName, @default, typeof(string))
+        {
+            this.PathType = pathType;
+        }
+
+
         private ConfigurationOptionAttribute(string optionName, object @default, Type valueType)
         {
             this.OptionName = optionName;

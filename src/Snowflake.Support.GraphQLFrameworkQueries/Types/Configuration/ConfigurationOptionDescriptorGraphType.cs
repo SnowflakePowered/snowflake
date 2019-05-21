@@ -29,6 +29,9 @@ namespace Snowflake.Support.Remoting.GraphQL.Types.Configuration
             Field<ConfigurationOptionTypeEnum>("type",
                 description: "The option value type",
                 resolve: context => context.Source.OptionType);
+            Field<ConfigurationOptionPathTypeEnum>("pathType",
+              description: "The path type if isPath is true.",
+              resolve: context => context.Source.PathType);
             Field<ListGraphType<CustomMetadataType>>("customMetadata",
                 description: "Any custom metadata this option may have.",
                 resolve: context => context.Source.CustomMetadata);

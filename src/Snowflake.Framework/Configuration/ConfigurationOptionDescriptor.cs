@@ -41,7 +41,10 @@ namespace Snowflake.Configuration
         public double Increment { get; }
 
         /// <inheritdoc/>
-        public bool IsPath { get; }
+        public bool IsPath => this.PathType != PathType.NotPath;
+
+        /// <inheritdoc/>
+        public PathType PathType { get; }
 
         /// <inheritdoc/>
         public string OptionName { get; }
@@ -74,7 +77,7 @@ namespace Snowflake.Configuration
             this.Type = configOption.Default.GetType();
             this.DisplayName = configOption.DisplayName;
             this.Description = configOption.Description;
-            this.IsPath = configOption.IsPath;
+            this.PathType = configOption.PathType;
             this.Simple = configOption.Simple;
             this.Private = configOption.Private;
             this.Flag = configOption.Flag;

@@ -7,12 +7,12 @@ using Snowflake.Configuration;
 
 namespace Snowflake.Support.Remoting.GraphQL.Types.Configuration
 {
-    public class ConfigurationOptionTypeEnum : EnumerationGraphType<ConfigurationOptionType>
+    public class ConfigurationOptionPathTypeEnum : EnumerationGraphType<PathType>
     {
-        public ConfigurationOptionTypeEnum()
+        public ConfigurationOptionPathTypeEnum()
         {
-            Name = "ConfigurationOptionTypeEnum";
-            Description = "The valid types of configuration values";
+            Name = "ConfigurationOptionPathTypeEnum";
+            Description = "The type of the path this path points to.";
         }
     }
 }
