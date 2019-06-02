@@ -101,13 +101,7 @@
             </summary>
             <typeparam name="T">The type of the configuration collection</typeparam>
         </member>
-        <member name="P:Snowflake.Configuration.ConfigurationCollectionDescriptor`1.Outputs">
-            <inheritdoc/>
-        </member>
         <member name="P:Snowflake.Configuration.ConfigurationCollectionDescriptor`1.SectionKeys">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Configuration.ConfigurationCollectionDescriptor`1.GetDestination(System.String)">
             <inheritdoc/>
         </member>
         <member name="T:Snowflake.Configuration.ConfigurationDescriptorCache">

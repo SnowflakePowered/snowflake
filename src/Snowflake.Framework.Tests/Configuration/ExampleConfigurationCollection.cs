@@ -8,8 +8,11 @@ using Snowflake.Configuration.Attributes;
 namespace Snowflake.Configuration.Tests
 {
     [ConfigurationFile("#dolphin", "Dolphin.ini")]
+    [ConfigurationTarget("#dolphin", typeof(object))]
     public interface ExampleConfigurationCollection : IConfigurationCollection<ExampleConfigurationCollection>
     {
-        [SerializableSection("#dolphin")] ExampleConfigurationSection ExampleConfiguration { get; }
+        [SerializableSection("#dolphin")]
+        [ConfigurationTargetMember("#dolphin")]
+        ExampleConfigurationSection ExampleConfiguration { get; }
     }
 }

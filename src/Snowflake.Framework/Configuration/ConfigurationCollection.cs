@@ -111,14 +111,9 @@ namespace Snowflake.Configuration
         {
             this.Values = new Dictionary<string, dynamic>();
             foreach (var section in from props in typeof(T).GetPublicProperties()
-                let sectionAttr = props.GetAttributes<SerializableSectionAttribute>().FirstOrDefault()
-                where sectionAttr != null
-                select new
-                {
-                    sectionAttr,
-                    type = props.PropertyType,
-                    name = props.Name
-                })
+                     where props.GetIndexParameters().Length == 0
+                        && props.PropertyType.GetInterfaces().Contains(typeof(IConfigurationSection))
+                select (type: props.PropertyType, name: props.Name))
             {
                 var sectionDescType = typeof(ConfigurationSectionDescriptor<>).MakeGenericType(section.type);
                 var descriptor = Instantiate.CreateInstance(sectionDescType,
@@ -133,13 +128,13 @@ namespace Snowflake.Configuration
 
             // public ConfigurationSection(IDictionary<string, IConfigurationValue> values)
             foreach (var section in from props in typeof(T).GetPublicProperties()
-                let sectionAttr = props.GetAttributes<SerializableSectionAttribute>().FirstOrDefault()
-                where sectionAttr != null
-                select new {sectionAttr, type = props.PropertyType, name = props.Name})
+                     where props.GetIndexParameters().Length == 0 
+                        && props.PropertyType.GetInterfaces().Contains(typeof(IConfigurationSection))
+                     select (type: props.PropertyType, name: props.Name))
             {
                 var sectionType = typeof(ConfigurationSection<>).MakeGenericType(section.type);
 
-                if (section?.name != null)
+                if (section.name != null)
                 {
                     this.Values.Add(section.name,
                         Instantiate.CreateInstance(sectionType,
