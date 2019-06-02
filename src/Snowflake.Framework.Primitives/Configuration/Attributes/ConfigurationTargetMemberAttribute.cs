@@ -7,8 +7,8 @@ namespace Snowflake.Configuration.Attributes
     /// <summary>
     /// Defines a target context to create a read-only AST
     /// </summary>
-    [AttributeUsage(AttributeTargets.Property)]
-    public class ConfigurationTargetMemberAttribute : Attribute
+    [AttributeUsage(AttributeTargets.Property, Inherited = true)]
+    public sealed class ConfigurationTargetMemberAttribute : Attribute
     {
         /// <summary>
         /// Marks a configuration section as a member of the given target.

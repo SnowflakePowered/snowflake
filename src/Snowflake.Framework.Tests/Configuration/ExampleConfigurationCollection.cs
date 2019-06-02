@@ -9,9 +9,12 @@ namespace Snowflake.Configuration.Tests
 {
     [ConfigurationFile("#dolphin", "Dolphin.ini")]
     [ConfigurationTarget("#dolphin", typeof(object))]
+    [ConfigurationTarget("#regularroot", typeof(int))]
+    [ConfigurationTarget("TestNestedSection", "#dolphin")]
+    [ConfigurationTarget("TestNestedNestedSection", "TestNestedSection")]
+
     public interface ExampleConfigurationCollection : IConfigurationCollection<ExampleConfigurationCollection>
     {
-        [SerializableSection("#dolphin")]
         [ConfigurationTargetMember("#dolphin")]
         ExampleConfigurationSection ExampleConfiguration { get; }
     }

@@ -44,7 +44,7 @@ namespace Snowflake.Configuration.Serialization
             configuration.Configuration.ExampleConfiguration.FullscreenResolution = FullscreenResolution.Resolution1152X648;
             var context = new ConfigurationTraversalContext(dir);
 
-            var list = context.TraverseCollection(configuration);
+            var list = context.TraverseCollection(configuration.Configuration);
         }
     }
 }
