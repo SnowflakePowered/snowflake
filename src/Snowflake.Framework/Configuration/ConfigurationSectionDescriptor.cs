@@ -29,7 +29,7 @@ namespace Snowflake.Configuration
         /// <inheritdoc />
         public string SectionKey { get; }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public IEnumerable<IConfigurationOptionDescriptor> Options { get; }
 
         /// <inheritdoc/>

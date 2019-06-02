@@ -7,7 +7,6 @@ using System.Collections.Immutable;
 using Snowflake.Configuration.Utility;
 using System.Linq.Expressions;
 using Snowflake.Configuration.Extensions;
-using Snowflake.Configuration.Attributes;
 using Castle.Core.Internal;
 using System.Reflection;
 using EnumsNET.NonGeneric;
@@ -49,25 +48,23 @@ namespace Snowflake.Configuration
             where T : class, IConfigurationCollection, IConfigurationCollection<T>
         {
             var typedValues = new List<(string, string, IConfigurationValue)>();
-            foreach (var section in from props in typeof(T).GetPublicProperties()
-                let sectionAttr = props.GetAttributes<SerializableSectionAttribute>().FirstOrDefault()
-                where sectionAttr != null
-                select new
-                {
-                    sectionAttr,
-                    type = props.PropertyType,
-                    name = props.Name
-                })
+            foreach (var (type, name) in from props in typeof(T).GetPublicProperties()
+                     where props.GetIndexParameters().Length == 0
+                        && props.PropertyType.GetInterfaces().Contains(typeof(IConfigurationSection))
+                select (
+                    type: props.PropertyType,
+                    name: props.Name)
+                )
             {
-                var sectionDescType = typeof(ConfigurationSectionDescriptor<>).MakeGenericType(section.type);
+                var sectionDescType = typeof(ConfigurationSectionDescriptor<>).MakeGenericType(type);
                 var descriptor = Instantiate.CreateInstance(sectionDescType,
                     new[] {typeof(string)},
-                    Expression.Constant(section.name)) as IConfigurationSectionDescriptor;
-                foreach (var tuple in values.Where(s => s.section == descriptor?.SectionKey))
+                    Expression.Constant(name)) as IConfigurationSectionDescriptor;
+                foreach (var (section, option, value) in values.Where(s => s.section == descriptor?.SectionKey))
                 {
-                    Type? t = descriptor?[tuple.option]?.Type;
-                    typedValues.Add((tuple.section, tuple.option,
-                        new ConfigurationValue(FromString(tuple.value.stringValue, t), tuple.value.guid)));
+                    Type? t = descriptor?[option]?.Type;
+                    typedValues.Add((section, option,
+                        new ConfigurationValue(FromString(value.stringValue, t), value.guid)));
                 }
             }
 

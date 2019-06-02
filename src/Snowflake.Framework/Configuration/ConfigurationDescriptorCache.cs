@@ -22,7 +22,7 @@ namespace Snowflake.Configuration
         private static IImmutableDictionary<Type, IConfigurationCollectionDescriptor> collectionDescriptors =
             ImmutableDictionary<Type, IConfigurationCollectionDescriptor>.Empty;
 
-        private static ProxyGenerator proxyGenerator = new ProxyGenerator();
+        private static readonly ProxyGenerator proxyGenerator = new ProxyGenerator();
 
         /// <summary>
         /// Gets a reused proxy generator that survives for the lifetime of the application.

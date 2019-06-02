@@ -107,39 +107,24 @@ namespace Snowflake.Configuration
         // IDictionary<string, IConfigurationSection<T>>
         internal IDictionary<string, dynamic> Values;
 
-        internal CollectionInterceptor(IEnumerable<(string section, string key, (string, Guid) strvalue)> values)
-        {
-            this.Values = new Dictionary<string, dynamic>();
-            foreach (var section in from props in typeof(T).GetPublicProperties()
-                     where props.GetIndexParameters().Length == 0
-                        && props.PropertyType.GetInterfaces().Contains(typeof(IConfigurationSection))
-                select (type: props.PropertyType, name: props.Name))
-            {
-                var sectionDescType = typeof(ConfigurationSectionDescriptor<>).MakeGenericType(section.type);
-                var descriptor = Instantiate.CreateInstance(sectionDescType,
-                    new[] {typeof(string)},
-                    Expression.Constant(section.name));
-            }
-        }
-
         internal CollectionInterceptor(IConfigurationValueCollection defaults)
         {
             this.Values = new Dictionary<string, dynamic>();
 
-            // public ConfigurationSection(IDictionary<string, IConfigurationValue> values)
-            foreach (var section in from props in typeof(T).GetPublicProperties()
+            foreach (var (type, name) in from props in typeof(T).GetPublicProperties()
                      where props.GetIndexParameters().Length == 0 
                         && props.PropertyType.GetInterfaces().Contains(typeof(IConfigurationSection))
                      select (type: props.PropertyType, name: props.Name))
             {
-                var sectionType = typeof(ConfigurationSection<>).MakeGenericType(section.type);
+                var sectionType = typeof(ConfigurationSection<>).MakeGenericType(type);
 
-                if (section.name != null)
+                if (name != null)
                 {
-                    this.Values.Add(section.name,
+                    this.Values.Add(name,
                         Instantiate.CreateInstance(sectionType,
                             new Type[] {typeof(IConfigurationValueCollection), typeof(string)},
-                            Expression.Constant(defaults), Expression.Constant(section.name)));
+                                Expression.Constant(defaults), 
+                                Expression.Constant(name)));
                 }
             }
         }
