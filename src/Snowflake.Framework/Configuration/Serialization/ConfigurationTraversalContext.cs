@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using EnumsNET.NonGeneric;
 using Snowflake.Filesystem;
 
 namespace Snowflake.Configuration.Serialization
@@ -14,6 +15,17 @@ namespace Snowflake.Configuration.Serialization
         }
 
         public IDirectory PathResolutionContext { get; }
+
+        public IReadOnlyList<IAbstractConfigurationNode> TraverseCollection(IConfigurationCollection collection)
+        {
+            var nodes = new List<IAbstractConfigurationNode>();
+            foreach (var (key, value) in collection)
+            {
+                var sectionNodes = this.TraverseSection(value);
+                nodes.Add(new ListConfigurationNode(key, sectionNodes));
+            }
+            return nodes.AsReadOnly();
+        }
 
         public IReadOnlyList<IAbstractConfigurationNode> TraverseSection(IConfigurationSection section)
         {
@@ -36,8 +48,8 @@ namespace Snowflake.Configuration.Serialization
                         PathType.File => new StringConfigurationNode(serializedKey, file.GetFilePath().FullName),
                         PathType.Either => file.Created ? new StringConfigurationNode(serializedKey, file.GetFilePath().FullName) :
                             new StringConfigurationNode(serializedKey, directory.GetPath().FullName),
-                        _ => new StringConfigurationNode(serializedKey, directory.GetPath().FullName) // should never happen.
 #pragma warning restore CS0618 // Type or member is obsolete
+                        _ => new StringConfigurationNode(serializedKey, path) // should never happen.
                     };
                     nodes.Add(pathNode);
                     continue;
@@ -63,7 +75,9 @@ namespace Snowflake.Configuration.Serialization
                     string rawVal => new StringConfigurationNode(serializedKey, rawVal),
                     char rawVal => new StringConfigurationNode(serializedKey, rawVal.ToString()),
 
-                    _ => new UnknownConfigurationNode(serializedKey, value) 
+                    Enum rawVal => new EnumConfigurationNode(serializedKey, rawVal, rawVal.GetType()),
+
+                    _ => new UnknownConfigurationNode(serializedKey, value.Value) 
                         as IAbstractConfigurationNode, // hack to allow type inference
                 };
                 nodes.Add(node);

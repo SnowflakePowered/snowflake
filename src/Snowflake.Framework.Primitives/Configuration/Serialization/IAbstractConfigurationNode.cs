@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Snowflake.Configuration.Serialization
 {
+    /// <summary>
+    /// Represents a configuration node with a key and a value
+    /// </summary>
     public interface IAbstractConfigurationNode
     {
         string Key { get; }
