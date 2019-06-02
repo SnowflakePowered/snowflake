@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Snowflake.Configuration.Serialization;
 
 namespace Snowflake.Configuration.Attributes
 {
@@ -23,6 +24,8 @@ namespace Snowflake.Configuration.Attributes
 
         /// <summary>
         /// Define a child target with the following name and parent target.
+        /// Each target name must be unique, and targets that do not lead back to a root target will
+        /// be discarded. This ensures that no cycles are created when evaluating the target tree.
         /// </summary>
         /// <param name="targetName">The name of the target.</param>
         /// <param name="parentTarget">The name of the parent target from which this members' AST will be inserted into.s</param>
@@ -51,6 +54,6 @@ namespace Snowflake.Configuration.Attributes
         /// <summary>
         /// Whether or not this target is a root target that will evaluate an AST to a stream.
         /// </summary>
-        public bool IsRoot => this.TargetTransformer == null;
+        public bool IsRoot => this.ParentTarget == null;
     }
 }

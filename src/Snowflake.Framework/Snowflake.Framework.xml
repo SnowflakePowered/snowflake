@@ -424,6 +424,11 @@
         <member name="P:Snowflake.Configuration.SelectionOptionDescriptor.EnumType">
             <inheritdoc/>
         </member>
+        <member name="F:Snowflake.Configuration.Serialization.ConfigurationTraversalContext.NullTarget">
+            <summary>
+            Special string for the null target that is never serialized.
+            </summary>
+        </member>
         <member name="T:Snowflake.Execution.Extensibility.EmulatorTask">
             <inheritdoc/>
         </member>

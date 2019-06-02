@@ -27,14 +27,11 @@ namespace Snowflake.Configuration.Extensions
         {
             var typeInfo = type.GetTypeInfo();
 
-            if (!typeInfo.IsInterface)
-            {
-                return typeInfo.GetCustomAttributes<T>();
-            }
-
             return type.GetInterfaces()
                 .Concat(new Type[] {type})
-                .SelectMany(i => i.GetTypeInfo().GetCustomAttributes<T>());
+                .SelectMany(i => i.GetTypeInfo().GetCustomAttributes<T>())
+                .Concat(typeInfo.GetCustomAttributes<T>())
+                .Distinct();
         }
     }
 }
