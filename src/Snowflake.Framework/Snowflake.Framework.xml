@@ -236,7 +236,7 @@
             <inheritdoc />
         </member>
         <member name="P:Snowflake.Configuration.ConfigurationSectionDescriptor`1.Options">
-            <inheritdoc/>
+            <inheritdoc />
         </member>
         <member name="P:Snowflake.Configuration.ConfigurationSectionDescriptor`1.Item(System.String)">
             <inheritdoc/>
