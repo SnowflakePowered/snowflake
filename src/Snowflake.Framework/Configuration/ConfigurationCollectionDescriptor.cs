@@ -20,34 +20,16 @@ namespace Snowflake.Configuration
         where T : class, IConfigurationCollection
     {
         /// <inheritdoc/>
-        public IDictionary<string, IConfigurationFile> Outputs { get; }
-
-        /// <inheritdoc/>
         public IEnumerable<string> SectionKeys { get; }
-
-        private IDictionary<string, string> DestinationMappings { get; }
 
         internal ConfigurationCollectionDescriptor()
         {
-            this.Outputs = ImmutableDictionary.CreateRange(typeof(T).GetPublicAttributes<ConfigurationFileAttribute>()
-                .ToDictionary(f => f.Key,
-                    f => new ConfigurationFile(f.FileName, f.Key, new BooleanMapping(f.TrueMapping, f.FalseMapping)) as
-                        IConfigurationFile));
             var sections =
                 (from props in typeof(T).GetPublicProperties()
-                    where props.IsDefined(typeof(SerializableSectionAttribute))
+                    where props.GetIndexParameters().Length == 0 
+                        && props.PropertyType.GetInterfaces().Contains(typeof(IConfigurationSection))
                     select props).ToImmutableList();
             this.SectionKeys = ImmutableList.CreateRange(from props in sections select props.Name);
-
-            this.DestinationMappings = ImmutableDictionary.CreateRange(from props in sections
-                let destination = props.GetAttribute<SerializableSectionAttribute>().Destination
-                select new KeyValuePair<string, string>(props.Name, destination));
-        }
-
-        /// <inheritdoc/>
-        public string GetDestination(string sectionKey)
-        {
-            return this.DestinationMappings.ContainsKey(sectionKey) ? this.DestinationMappings[sectionKey] : "#null";
         }
     }
 }

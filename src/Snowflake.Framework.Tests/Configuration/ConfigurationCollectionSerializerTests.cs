@@ -15,9 +15,10 @@ namespace Snowflake.Configuration.Tests
         [Fact]
         public void JsonSerialization_Test()
         {
+            string jsonSerialized = JsonConvert.SerializeObject(new ConfigurationCollection<ExampleConfigurationCollection>());
             JObject jobject =
                 JsonConvert.DeserializeObject<JObject>(
-                        JsonConvert.SerializeObject(new ConfigurationCollection<ExampleConfigurationCollection>()))
+                        jsonSerialized)
                     .Children<JProperty>().First().Value as JObject;
             Assert.Contains("Configuration", jobject.Properties().Select(k => k.Name));
             Assert.Contains("Descriptor", jobject.Properties().Select(k => k.Name));
