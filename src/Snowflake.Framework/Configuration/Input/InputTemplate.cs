@@ -97,6 +97,7 @@ namespace Snowflake.Configuration.Input
             var map = from key in this._Options.Keys
                 let value = overrides.ContainsKey(key) ? overrides[key] : ControllerElement.NoElement
                 select new KeyValuePair<string, ControllerElement>(key, value);
+           
             //this.configurationOptions = (from prop in typeof(T).GetProperties()
             //              let configAttribute = prop.GetCustomAttribute<ConfigurationOptionAttribute>()
             //              where configAttribute != null
@@ -108,9 +109,7 @@ namespace Snowflake.Configuration.Input
 
             var configDescriptor = new ConfigurationSectionDescriptor<T>(typeof(T).Name);
             ((ConfigurationValueCollection) this.ValueCollection).EnsureSectionDefaults(configDescriptor);
-
-            var attr = typeof(T).GetTypeInfo().GetCustomAttribute<InputTemplateAttribute>();
-
+            
             this.inputTemplateInterceptor = new InputTemplateInterceptor<T>(map.ToDictionary(m => m.Key, m => m.Value),
                 this.ValueCollection,
                 configDescriptor);

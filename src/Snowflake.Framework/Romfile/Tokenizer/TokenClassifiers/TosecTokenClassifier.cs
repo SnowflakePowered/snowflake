@@ -12,7 +12,6 @@ namespace Snowflake.Romfile.Tokenizer
             IEnumerable<(string tokenValue, int tokenPosition)> tokens)
         {
             bool hasDemo = false;
-            int lastTokenIndex = tokens.Count() - 1;
             foreach ((string tokenValue, int tokenPosition) in tokens)
             {
                 if (tokenValue.StartsWith("demo") && tokenPosition == 0)

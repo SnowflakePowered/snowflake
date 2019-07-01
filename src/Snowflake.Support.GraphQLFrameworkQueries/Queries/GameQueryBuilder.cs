@@ -63,7 +63,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
         [Parameter(typeof(Guid), typeof(GuidGraphType), "gameGuid","The GUID of the created game to proceed with.", false)]
         public async Task<IFile> InstallNextStep(Guid gameGuid)
         {
-            (var file, bool hasNext) = await this.InstallQueue.GetNext(gameGuid);
+            (var file, bool _) = await this.InstallQueue.GetNext(gameGuid);
             if (file.Error != null)
             {
                 throw file.Error;

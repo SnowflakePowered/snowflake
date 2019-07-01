@@ -44,8 +44,8 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDI
             this._sessions = this.ParseSessions().ToList();
             this.VolumeDescriptor = this.GetVolumeDescriptor();
 
-            uint lba = this.GetISOPVD().RootDirectoryLBA;
-         //   this._fileRecords = this.GetRecords("", lba);
+            // uint lba = this.GetISOPVD().RootDirectoryLBA;
+            // this._fileRecords = this.GetRecords("", lba);
         }
 
 
