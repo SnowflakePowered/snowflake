@@ -36,7 +36,11 @@ namespace Snowflake.Model.Game
         public T GetExtension<T>()
             where T : class, IGameExtensionProvider
         {
-            return this.Extensions[typeof(T)].extension as T;
+            if (this.Extensions.TryGetValue(typeof(T), out var ext))
+            {
+                return (T)ext.extension;
+            }
+            throw new KeyNotFoundException($"Unable to find extension of type {typeof(T).Name}");
         }
 
         private GameRecordLibrary GameRecordLibrary { get; }

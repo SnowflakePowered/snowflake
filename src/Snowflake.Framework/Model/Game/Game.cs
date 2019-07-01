@@ -24,8 +24,11 @@ namespace Snowflake.Model.Game
 
         public TExtension GetExtension<TExtension>() where TExtension : class, IGameExtension
         {
-            this.Extensions.TryGetValue(typeof(TExtension), out IGameExtension t);
-            return t as TExtension;
+            if (this.Extensions.TryGetValue(typeof(TExtension), out IGameExtension t))
+            {
+                return (TExtension)t;
+            }
+            throw new KeyNotFoundException($"Unable to find extension of type {typeof(TExtension).Name}");
         }
     }
 }

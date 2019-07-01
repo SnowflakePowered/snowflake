@@ -73,6 +73,25 @@ namespace Snowflake.Model.Tests
         }
 
         [Fact]
+        public void GameLibraryUnknownExtension_Test()
+        {
+            var path = new DirectoryInfo(Path.GetTempPath())
+                .CreateSubdirectory(Path.GetFileNameWithoutExtension(Path.GetTempFileName()));
+            var fs = new PhysicalFileSystem();
+            var gfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(path.FullName));
+
+            var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
+            optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
+            var glib = new GameRecordLibrary(optionsBuilder);
+            var ccs = new ConfigurationCollectionStore(optionsBuilder);
+
+            var gl = new GameLibrary(glib);
+            Assert.Throws<KeyNotFoundException>(() => gl.GetExtension<IGameConfigurationExtensionProvider>());
+            var game = gl.CreateGame("NINTENDO_NES");
+            Assert.Throws<KeyNotFoundException>(() => game.GetExtension<IGameConfigurationExtension>());
+        }
+
+        [Fact]
         public void GameLibraryIntegrationUpdate_Test()
         {
             var path = new DirectoryInfo(Path.GetTempPath())
