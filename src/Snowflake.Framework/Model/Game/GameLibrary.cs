@@ -33,7 +33,7 @@ namespace Snowflake.Model.Game
             this.Extensions.Add(typeof(TExtensionMaker), (typeof(TExtension), extension));
         }
 
-        public T? GetExtension<T>()
+        public T GetExtension<T>()
             where T : class, IGameExtensionProvider
         {
             return this.Extensions[typeof(T)].extension as T;

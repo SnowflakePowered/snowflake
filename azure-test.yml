@@ -7,7 +7,7 @@ steps:
     inputs:
       includePreviewVersions: true
       packageType: 'sdk' # Options: runtime, sdk
-      version: '3.0.100-preview5-011568'
+      version: '3.0.100-preview6-012264'
 
   - task: NuGetToolInstaller@0
     displayName: Installing NuGet CLI
