@@ -46,7 +46,7 @@ namespace Snowflake.Model.Game
         /// </summary>
         /// <typeparam name="T">The type of the extension provider.</typeparam>
         /// <returns>The regsitered instance of the requested extension provider. </returns>
-        T? GetExtension<T>() where T : class, IGameExtensionProvider;
+        T GetExtension<T>() where T : class, IGameExtensionProvider;
 
         /// <summary>
         /// Gets a game that was created in the library by its unique GUID.

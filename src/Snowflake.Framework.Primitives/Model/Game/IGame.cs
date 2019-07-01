@@ -24,6 +24,6 @@ namespace Snowflake.Model.Game
         /// </summary>
         /// <typeparam name="TExtension">The type of the extension.</typeparam>
         /// <returns>The extension instance.</returns>
-        TExtension? GetExtension<TExtension>() where TExtension : class, IGameExtension;
+        TExtension GetExtension<TExtension>() where TExtension : class, IGameExtension;
     }
 }
