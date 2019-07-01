@@ -28,7 +28,7 @@ namespace Snowflake.Configuration.Attributes
         /// be discarded. This ensures that no cycles are created when evaluating the target tree.
         /// </summary>
         /// <param name="targetName">The name of the target.</param>
-        /// <param name="parentTarget">The name of the parent target from which this members' AST will be inserted into.s</param>
+        /// <param name="parentTarget">The name of the parent target from which this members' AST will be inserted into.</param>
         public ConfigurationTargetAttribute(string targetName, string parentTarget)
         {
             this.TargetName = targetName;

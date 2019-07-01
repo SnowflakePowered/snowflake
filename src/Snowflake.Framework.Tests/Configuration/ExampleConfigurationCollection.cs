@@ -13,6 +13,8 @@ namespace Snowflake.Configuration.Tests
     [ConfigurationTarget("TestNestedSection", "#dolphin")]
     [ConfigurationTarget("TestNestedNestedSection", "TestNestedSection")]
 
+    [ConfigurationTarget("TestCycle1", "TestCycle2")]
+    [ConfigurationTarget("TestCycle2", "TestCycle1")]
     public interface ExampleConfigurationCollection : IConfigurationCollection<ExampleConfigurationCollection>
     {
         [ConfigurationTargetMember("#dolphin")]
