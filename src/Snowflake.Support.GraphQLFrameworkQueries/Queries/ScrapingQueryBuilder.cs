@@ -75,7 +75,7 @@ namespace Snowflake.Support.Remoting.GraphQL.Queries
         [Parameter(typeof(Guid), typeof(GuidGraphType), "jobGuid", "The GUID of the created scraping context to proceed with.", false)]
         public async Task<IEnumerable<ISeed>> ScrapeNextStep(Guid jobGuid)
         {
-            (var seeds, bool hasNext) = await this.GameScrapeContextJobQueue.GetNext(jobGuid);
+            (var seeds, bool _) = await this.GameScrapeContextJobQueue.GetNext(jobGuid);
             return seeds;
         }
 

@@ -100,7 +100,6 @@ namespace Snowflake.Configuration.Serialization
             }
 
             var targets = ConfigurationTraversalContext.ResolveConfigurationTargets(collection);
-            IDictionary<string, List<IAbstractConfigurationNode>> configurationNodes = new Dictionary<string, List<IAbstractConfigurationNode>>();
 
             Dictionary<string, IReadOnlyList<IAbstractConfigurationNode>> rootNodes = new Dictionary<string, IReadOnlyList<IAbstractConfigurationNode>>();
 

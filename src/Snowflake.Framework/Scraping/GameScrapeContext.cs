@@ -174,7 +174,6 @@ namespace Snowflake.Scraping
                     var resultsToAppend = new List<ISeed>();
 
                     // Collect the results.
-                    var results = new List<SeedContent>();
                     var attachSeed = this.GetAttachTarget(scraper.AttachPoint, matchingSeed);
 
                     await foreach (var task in scraper.ScrapeAsync(matchingSeed, requiredRoots, requiredChildren,

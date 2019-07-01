@@ -16,7 +16,6 @@ namespace Snowflake.Stone.FileSignatures.Nintendo
         /// <inheritdoc/>
         public bool HeaderSignatureMatches(Stream romStream)
         {
-            byte[] buffer = new byte[7];
             int offset = 0x200;
             if (romStream.Length % 1024 != 0x200)
             {
