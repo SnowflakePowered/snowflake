@@ -12,7 +12,7 @@ namespace Snowflake.Configuration.Tests
 {
     public class KeyValuePairConfigurationSerializerTests
     {
-        [Fact]
+        [Fact(Skip = "Requires AST generator to allow parsed path.")]
         public void KeyValuePairConfigurationSerializer_SerializeTest()
         {
             var serializer = new KeyValuePairConfigurationSerializer(new BooleanMapping("true", "false"), "null", "=");

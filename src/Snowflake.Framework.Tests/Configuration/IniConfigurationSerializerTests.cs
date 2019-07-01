@@ -12,7 +12,7 @@ namespace Snowflake.Configuration.Tests
 {
     public class IniConfigurationSerializerTests
     {
-        [Fact]
+        [Fact(Skip = "Requires AST generator to allow parsed path.")]
         public void IniConfigurationSerializer_SerializeTest()
         {
             var serializer = new IniConfigurationSerializer(new BooleanMapping("true", "false"), "null");
