@@ -13,7 +13,7 @@ namespace Snowflake.Configuration.Serialization.Serializers.Implementations
 
         public override void SerializeBlockBegin(IConfigurationSerializationContext<string> context)
         {
-            context.AppendLine($"# {context.GetFullScope()}");
+            context.AppendLine($"# {String.Join('.', context.GetFullScope())}");
         }
         public override void SerializeBlockEnd(IConfigurationSerializationContext<string> context)
         {

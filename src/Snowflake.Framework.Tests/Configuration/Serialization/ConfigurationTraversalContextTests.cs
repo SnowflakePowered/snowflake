@@ -67,12 +67,12 @@ namespace Snowflake.Configuration.Serialization
 
             var list = context.TraverseCollection(configuration.Configuration);
             Assert.Equal(2, list.Count);
-            Assert.Equal(2, list["#dolphin"].Count);
+            Assert.Equal(2, list["#dolphin"].Value.Count);
             Assert.DoesNotContain("TestCycle1", list.Keys);
             Assert.DoesNotContain("TestCycle2", list.Keys);
 
             var dolphinList = list["#dolphin"];
-            foreach (var node in dolphinList)
+            foreach (var node in dolphinList.Value)
             {
                 if (node.Key == "Display")
                 {

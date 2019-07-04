@@ -69,7 +69,7 @@ namespace Snowflake.Configuration.Serialization
             return new ListConfigurationNode(target.TargetName, targetNodes.AsReadOnly());
         }
 
-        public IReadOnlyDictionary<string, IReadOnlyList<IAbstractConfigurationNode>> TraverseCollection(IConfigurationCollection collection)
+        public IReadOnlyDictionary<string, IAbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>>> TraverseCollection(IConfigurationCollection collection)
         {
             if (collection.GetType().IsGenericType 
                 && collection.GetType().GetGenericTypeDefinition() == typeof(ConfigurationCollection<>))
@@ -87,7 +87,7 @@ namespace Snowflake.Configuration.Serialization
                 .ToDictionary(p => p.Name, p => p.GetAttribute<ConfigurationTargetMemberAttribute>()?.TargetName ?? NullTarget);
 
             // If there are no targets, then there is nothing to do.
-            if (targetMappings == null) return new Dictionary<string, IReadOnlyList<IAbstractConfigurationNode>>();
+            if (targetMappings == null) return new Dictionary<string, IAbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>>>();
 
             var flatTargets = collection.GetType().GetPublicAttributes<ConfigurationTargetAttribute>()
                 .ToDictionary(t => t.TargetName, t => (target: t, nodes: new List<IAbstractConfigurationNode>()));
@@ -101,16 +101,15 @@ namespace Snowflake.Configuration.Serialization
 
             var targets = ConfigurationTraversalContext.ResolveConfigurationTargets(collection);
 
-            Dictionary<string, IReadOnlyList<IAbstractConfigurationNode>> rootNodes = new Dictionary<string, IReadOnlyList<IAbstractConfigurationNode>>();
+            Dictionary<string, IAbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>>> rootNodes = new Dictionary<string, IAbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>>>();
 
             foreach (var rootTarget in targets)
             {
                 var node = ConfigurationTraversalContext.BuildConfigNode(rootTarget, flatTargets);
-                rootNodes.Add(node.Key, node.Value);
+                rootNodes.Add(node.Key, node);
             }
 
             return rootNodes;
-        
         }
 
         internal IReadOnlyList<IAbstractConfigurationNode> TraverseSection(IConfigurationSection section)

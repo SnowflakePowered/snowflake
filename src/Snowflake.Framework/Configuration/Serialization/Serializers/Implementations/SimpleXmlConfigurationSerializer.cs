@@ -7,9 +7,23 @@ namespace Snowflake.Configuration.Serialization.Serializers.Implementations
     public class SimpleXmlConfigurationSerializer
         : AbstractStringConfigurationSerializer
     {
-        public SimpleXmlConfigurationSerializer()
+        public SimpleXmlConfigurationSerializer(string rootElementName)
         {
+            this.RootElementName = rootElementName;
         }
+
+        private string RootElementName { get; }
+
+        public override void SerializeHeader(IConfigurationSerializationContext<string> context)
+        {
+            context.AppendLine($"<{this.RootElementName}>");
+        }
+
+        public override void SerializeFooter(IConfigurationSerializationContext<string> context)
+        {
+            context.AppendLine($"</{this.RootElementName}>");
+        }
+
         public override void SerializeBlockBegin(IConfigurationSerializationContext<string> context)
         {
             // todo: sanitize
