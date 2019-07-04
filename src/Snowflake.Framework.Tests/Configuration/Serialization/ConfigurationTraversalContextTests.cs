@@ -31,24 +31,24 @@ namespace Snowflake.Configuration.Serialization
 
             Assert.Equal(6, list.Count);
             Assert.Equal("FullscreenResolution", list[0].Key);
-            Assert.IsAssignableFrom<IEnumConfigurationNode>(list[0]);
+            Assert.IsType<EnumConfigurationNode>(list[0]);
             Assert.Equal("1152x648", ((EnumConfigurationNode)list[0]).Value);
             Assert.Equal(FullscreenResolution.Resolution1152X648, list[0].Value);
 
             Assert.Equal("Fullscreen", list[1].Key);
-            Assert.IsAssignableFrom<IBooleanConfigurationNode>(list[1]);
+            Assert.IsType<BooleanConfigurationNode>(list[1]);
 
             Assert.Equal("RenderToMain", list[2].Key);
-            Assert.IsAssignableFrom<IBooleanConfigurationNode>(list[2]);
+            Assert.IsType<BooleanConfigurationNode>(list[2]);
 
             Assert.Equal("RenderWindowWidth", list[3].Key);
-            Assert.IsAssignableFrom<IIntegralConfigurationNode>(list[3]);
+            Assert.IsType<IntegralConfigurationNode>(list[3]);
 
             Assert.Equal("RenderWindowHeight", list[4].Key);
-            Assert.IsAssignableFrom<IIntegralConfigurationNode>(list[4]);
+            Assert.IsType<IntegralConfigurationNode>(list[4]);
 
             Assert.Equal("ISOPath0", list[5].Key);
-            Assert.IsAssignableFrom<IStringConfigurationNode>(list[5]);
+            Assert.IsType<StringConfigurationNode>(list[5]);
         }
 
         [Fact]
@@ -79,32 +79,31 @@ namespace Snowflake.Configuration.Serialization
                     var confList = (node as ListConfigurationNode).Value;
                     Assert.Equal(6, confList.Count);
                     Assert.Equal("FullscreenResolution", confList[0].Key);
-                    Assert.IsAssignableFrom<IEnumConfigurationNode>(confList[0]);
-                    Assert.Equal("1152x648", ((IEnumConfigurationNode)confList[0]).Value);
+                    Assert.IsType<EnumConfigurationNode>(confList[0]);
+                    Assert.Equal("1152x648", ((EnumConfigurationNode)confList[0]).Value);
                     Assert.Equal(FullscreenResolution.Resolution1152X648, confList[0].Value);
 
                     Assert.Equal("Fullscreen", confList[1].Key);
-                    Assert.IsAssignableFrom<IBooleanConfigurationNode>(confList[1]);
+                    Assert.IsType<BooleanConfigurationNode>(confList[1]);
 
                     Assert.Equal("RenderToMain", confList[2].Key);
-                    Assert.IsAssignableFrom<IBooleanConfigurationNode>(confList[2]);
+                    Assert.IsType<BooleanConfigurationNode>(confList[2]);
 
                     Assert.Equal("RenderWindowWidth", confList[3].Key);
-                    Assert.IsAssignableFrom<IIntegralConfigurationNode>(confList[3]);
+                    Assert.IsType<IntegralConfigurationNode>(confList[3]);
 
                     Assert.Equal("RenderWindowHeight", confList[4].Key);
-                    Assert.IsAssignableFrom<IIntegralConfigurationNode>(confList[4]);
+                    Assert.IsType<IntegralConfigurationNode>(confList[4]);
 
                     Assert.Equal("ISOPath0", confList[5].Key);
-                    Assert.IsAssignableFrom<IStringConfigurationNode>(confList[5]);
+                    Assert.IsType<StringConfigurationNode>(confList[5]);
                 }
 
                 if (node.Key == "TestNestedSection")
                 {
-                    Assert.Equal("TestNestedNestedSection", (node as IListConfigurationNode).Value[0].Key);
+                    Assert.Equal("TestNestedNestedSection", (node as ListConfigurationNode).Value[0].Key);
                 }
             }
-           
         }
     }
 }

@@ -7,8 +7,8 @@ using Snowflake.Configuration.Attributes;
 
 namespace Snowflake.Configuration.Serialization
 {
-    internal sealed class EnumConfigurationNode
-        : AbstractConfigurationNode<Enum>, IEnumConfigurationNode
+    public sealed class EnumConfigurationNode
+        : AbstractConfigurationNode<Enum>
     {
         internal EnumConfigurationNode(string key, Enum value, Type enumType) : base(key, value)
         {
