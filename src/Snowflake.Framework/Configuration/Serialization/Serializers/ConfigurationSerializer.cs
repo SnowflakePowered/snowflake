@@ -51,14 +51,23 @@ namespace Snowflake.Configuration.Serialization.Serializers
         public abstract void SerializeBlockEnd(IConfigurationSerializationContext<T> context);
         protected void SerializeNode(ListConfigurationNode node, IConfigurationSerializationContext<T> context)
         {
-            context.EnterScope(node.Key);
-            this.SerializeBlockBegin(context);
+            // Ignore pseudo-targets
+            if (!node.Key.StartsWith("#"))
+            {
+                context.EnterScope(node.Key);
+                this.SerializeBlockBegin(context);
+            }
+
             foreach (var childNode in node.Value)
             {
                 this.SerializeNode(childNode, context);
             }
-            this.SerializeBlockEnd(context);
-            context.ExitScope();
+
+            if (!node.Key.StartsWith("#"))
+            {
+                this.SerializeBlockEnd(context);
+                context.ExitScope();
+            }
         }
         protected void SerializeNode(StringConfigurationNode node, IConfigurationSerializationContext<T> context)
         {

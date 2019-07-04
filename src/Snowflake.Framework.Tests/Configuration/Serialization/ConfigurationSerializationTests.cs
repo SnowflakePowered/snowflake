@@ -28,20 +28,17 @@ namespace Snowflake.Configuration.Serialization
             var context = new ConfigurationTraversalContext(dir);
 
             var list = context.TraverseCollection(configuration.Configuration);
-            var dolphinList = list["#dolphin"];
+            IAbstractConfigurationNode dolphinList = list["#dolphin"];
 
             var iniSerializer = new SimpleIniConfigurationSerializer();
-            var xmlSerializer = new SimpleXmlConfigurationSerializer();
+            var xmlSerializer = new SimpleXmlConfigurationSerializer("Config");
             var cfgSerializer = new SimpleCfgConfigurationSerializer();
             var jsonSerializer = new SimpleJsonConfigurationSerializer();
 
-            foreach (var node in dolphinList)
-            {
-                string outputIni = iniSerializer.Serialize(node);
-                string outputXml = xmlSerializer.Serialize(node);
-                string outputJson = jsonSerializer.Serialize(node);
-                string outputCfg = cfgSerializer.Serialize(node);
-            }
+            string outputIni = iniSerializer.Serialize(dolphinList);
+            string outputXml = xmlSerializer.Serialize(dolphinList);
+            string outputJson = jsonSerializer.Serialize(dolphinList);
+            string outputCfg = cfgSerializer.Serialize(dolphinList);
         }
     }
 }
