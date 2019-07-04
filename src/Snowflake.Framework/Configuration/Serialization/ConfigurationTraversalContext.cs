@@ -144,7 +144,7 @@ namespace Snowflake.Configuration.Serialization
                 IAbstractConfigurationNode node = value.Value switch
                 {
                     null => new NullConfigurationNode(serializedKey),
-                    bool rawVal => new BoolConfigurationNode(serializedKey, rawVal),
+                    bool rawVal => new BooleanConfigurationNode(serializedKey, rawVal),
 
                     float rawVal => new DecimalConfigurationNode(serializedKey, rawVal),
                     double rawVal => new DecimalConfigurationNode(serializedKey, rawVal),

@@ -4,10 +4,10 @@ using System.Text;
 
 namespace Snowflake.Configuration.Serialization
 {
-    public sealed class UnknownConfigurationNode
-        : AbstractConfigurationNode<object>
+    internal sealed class UnknownConfigurationNode
+        : AbstractConfigurationNode<object>, IUnknownConfigurationNode
     {
-        public UnknownConfigurationNode(string key, object value) : base(key, value)
+        internal UnknownConfigurationNode(string key, object value) : base(key, value)
         {
         }
     }
