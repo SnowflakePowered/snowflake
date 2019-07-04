@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Snowflake.Configuration.Serialization
 {
-    public abstract class AbstractConfigurationNode<T>
+    internal abstract class AbstractConfigurationNode<T>
         : IAbstractConfigurationNode, IAbstractConfigurationNode<T>
     {
         private protected AbstractConfigurationNode(string key, T value)

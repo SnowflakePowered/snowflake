@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Snowflake.Configuration.Serialization
 {
-    public sealed class ListConfigurationNode
-        : AbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>>
+    internal sealed class ListConfigurationNode
+        : AbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>>, IListConfigurationNode
     {
-        public ListConfigurationNode(string key, IReadOnlyList<IAbstractConfigurationNode> value) 
+        internal ListConfigurationNode(string key, IReadOnlyList<IAbstractConfigurationNode> value) 
             : base(key, value)
         {
         }
