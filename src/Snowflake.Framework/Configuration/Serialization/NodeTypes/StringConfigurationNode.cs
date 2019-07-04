@@ -4,8 +4,8 @@ using System.Text;
 
 namespace Snowflake.Configuration.Serialization
 {
-    internal sealed class StringConfigurationNode
-        : AbstractConfigurationNode<string>, IStringConfigurationNode
+    public sealed class StringConfigurationNode
+        : AbstractConfigurationNode<string>
     {
         public StringConfigurationNode(string key, string value) : base(key, value)
         {

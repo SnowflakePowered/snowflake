@@ -4,16 +4,16 @@ using System.Text;
 
 namespace Snowflake.Configuration.Serialization.Serializers.Implementations
 {
-    public class SimpleIniConfigurationSerializer
+    public class SimpleCfgConfigurationSerializer
         : AbstractStringConfigurationSerializer
     {
-        public SimpleIniConfigurationSerializer()
+        public SimpleCfgConfigurationSerializer()
         {
         }
 
         public override void SerializeBlockBegin(IConfigurationSerializationContext<string> context)
         {
-            context.AppendLine($"[{String.Join('.', context.GetFullScope())}]");
+            context.AppendLine($"# {context.GetFullScope()}");
         }
         public override void SerializeBlockEnd(IConfigurationSerializationContext<string> context)
         {
@@ -22,32 +22,32 @@ namespace Snowflake.Configuration.Serialization.Serializers.Implementations
 
         public override void SerializeNodeValue(bool value, string key, IConfigurationSerializationContext<string> context)
         {
-            context.AppendLine($"{key}={value}");
+            context.AppendLine($@"{key}=""{value}""");
         }
 
         public override void SerializeNodeValue(double value, string key, IConfigurationSerializationContext<string> context)
         {
-            context.AppendLine($"{key}={value}");
+            context.AppendLine($@"{key}=""{value}""");
         }
 
         public override void SerializeNodeValue(Enum value, string enumValue, string key, IConfigurationSerializationContext<string> context)
         {
-            context.AppendLine($"{key}={enumValue}");
+            context.AppendLine($@"{key}=""{value}""");
         }
 
         public override void SerializeNodeValue(long value, string key, IConfigurationSerializationContext<string> context)
         {
-            context.AppendLine($"{key}={value}");
+            context.AppendLine($@"{key}=""{value}""");
         }
 
         public override void SerializeNodeValue(string value, string key, IConfigurationSerializationContext<string> context)
         {
-            context.AppendLine($"{key}={value}");
+            context.AppendLine($@"{key}=""{value}""");
         }
 
         public override void SerializeNodeValue(string key, IConfigurationSerializationContext<string> context)
         {
-            context.AppendLine($"{key}=");
+            context.AppendLine($@"{key}=");
         }
     }
 }

@@ -4,8 +4,8 @@ using System.Text;
 
 namespace Snowflake.Configuration.Serialization
 {
-    internal sealed class IntegralConfigurationNode
-        : AbstractConfigurationNode<long>, IIntegralConfigurationNode
+    public sealed class IntegralConfigurationNode
+        : AbstractConfigurationNode<long>
     {
         internal IntegralConfigurationNode(string key, long value) : base(key, value)
         {

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 namespace Snowflake.Configuration.Serialization
 {
-    internal sealed class ListConfigurationNode
-        : AbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>>, IListConfigurationNode
+    public sealed class ListConfigurationNode
+        : AbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>>
     {
         internal ListConfigurationNode(string key, IReadOnlyList<IAbstractConfigurationNode> value) 
             : base(key, value)

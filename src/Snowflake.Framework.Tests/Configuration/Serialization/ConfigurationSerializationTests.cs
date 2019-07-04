@@ -30,12 +30,18 @@ namespace Snowflake.Configuration.Serialization
             var list = context.TraverseCollection(configuration.Configuration);
             var dolphinList = list["#dolphin"];
 
-            var serializer = new SimpleIniSerializer();
+            var iniSerializer = new SimpleIniConfigurationSerializer();
+            var xmlSerializer = new SimpleXmlConfigurationSerializer();
+            var cfgSerializer = new SimpleCfgConfigurationSerializer();
+            var jsonSerializer = new SimpleJsonConfigurationSerializer();
+
             foreach (var node in dolphinList)
             {
-                string output = serializer.SerializeNode(node);
+                string outputIni = iniSerializer.Serialize(node);
+                string outputXml = xmlSerializer.Serialize(node);
+                string outputJson = jsonSerializer.Serialize(node);
+                string outputCfg = cfgSerializer.Serialize(node);
             }
-           
         }
     }
 }
