@@ -26,5 +26,13 @@ namespace Snowflake.Configuration
         /// This path points either a directory or a file.
         /// </summary>
         Either,
+        /// <summary>
+        /// This path is not virtualized and points to a path on the underlying filesystem.
+        /// No attempt will be made to resolve the path.
+        /// 
+        /// This is mostly useful for specifying paths to BIOS files or some other non-user
+        /// configurable path.
+        /// </summary>
+        Raw,
     }
 }
