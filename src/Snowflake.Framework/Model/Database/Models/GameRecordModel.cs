@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Snowflake.Model.Game;
 
+#nullable disable
 namespace Snowflake.Model.Database.Models
 {
     internal class GameRecordModel : RecordModel

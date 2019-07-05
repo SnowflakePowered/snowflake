@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 
+#nullable disable
 namespace Snowflake.Model.Database.Models
 {
     internal class ConfigurationProfileModel

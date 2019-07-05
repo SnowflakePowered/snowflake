@@ -5,6 +5,7 @@ using EnumsNET;
 using Microsoft.EntityFrameworkCore;
 using Snowflake.Input.Controller;
 
+#nullable disable
 namespace Snowflake.Model.Database.Models
 {
     internal class MappedControllerElementModel
@@ -16,7 +17,7 @@ namespace Snowflake.Model.Database.Models
         public string DeviceID { get; set; }
         public string ProfileName { get; set; }
 
-        public ControllerElementMappingsModel? Collection { get; set; }
+        public ControllerElementMappingsModel Collection { get; set; }
 
         internal static void SetupModel(ModelBuilder modelBuilder)
         {

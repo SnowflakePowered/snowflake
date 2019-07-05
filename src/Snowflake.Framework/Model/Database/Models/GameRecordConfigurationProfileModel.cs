@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 
+#nullable disable
 namespace Snowflake.Model.Database.Models
 {
     // Hackaround to allow a profile name for configurations.
@@ -12,7 +13,7 @@ namespace Snowflake.Model.Database.Models
     {
         public Guid ProfileID { get; set; }
         public Guid GameID { get; set; }
-        public GameRecordModel? Game { get; set; }
+        public GameRecordModel Game { get; set; }
         public ConfigurationProfileModel Profile { get; set; }
         public string ProfileName { get; set; }
         public string ConfigurationSource { get; set; }

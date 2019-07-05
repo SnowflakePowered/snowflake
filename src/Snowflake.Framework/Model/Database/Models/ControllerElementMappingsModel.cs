@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Snowflake.Input.Controller;
 
+#nullable disable
 namespace Snowflake.Model.Database.Models
 {
     internal class ControllerElementMappingsModel
