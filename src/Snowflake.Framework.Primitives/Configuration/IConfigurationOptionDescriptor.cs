@@ -101,5 +101,11 @@ namespace Snowflake.Configuration
         /// Gets a value indicating whether whether or not this option is an enum.
         /// </summary>
         bool IsSelection { get; }
+
+        /// <summary>
+        /// For string options, when the option is set to null, it is serialized as
+        /// this value.
+        /// </summary>
+        string Unset { get; }
     }
 }

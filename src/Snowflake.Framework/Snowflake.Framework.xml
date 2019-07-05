@@ -190,6 +190,9 @@
         <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.Type">
             <inheritdoc/>
         </member>
+        <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.Unset">
+            <inheritdoc/>
+        </member>
         <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.CustomMetadata">
             <inheritdoc/>
         </member>
