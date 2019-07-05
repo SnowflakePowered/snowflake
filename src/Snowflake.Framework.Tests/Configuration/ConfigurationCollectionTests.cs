@@ -90,7 +90,11 @@ namespace Snowflake.Configuration.Tests
         public void SetStringToNullDefault_Test()
         {
             var configuration = new ConfigurationCollection<NullDefaultConfigurationCollection>();
-            Assert.Equal(String.Empty, configuration.Configuration.NullConfiguration.NullDefault);
+            Assert.Equal("UNSET", configuration.Configuration.NullConfiguration.NullDefault);
+            configuration.Configuration.NullConfiguration.NullDefault = "NotUNSET";
+            Assert.Equal("NotUNSET", configuration.Configuration.NullConfiguration.NullDefault);
+            configuration.Configuration.NullConfiguration.NullDefault = null;
+            Assert.Equal("UNSET", configuration.Configuration.NullConfiguration.NullDefault);
         }
     }
 }

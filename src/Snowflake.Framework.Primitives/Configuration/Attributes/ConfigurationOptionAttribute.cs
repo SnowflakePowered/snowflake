@@ -75,6 +75,12 @@ namespace Snowflake.Configuration.Attributes
         public object Default { get; }
 
         /// <summary>
+        /// A serialization of the null string. If a string option type is set to null,
+        /// then when serialized will be set to this unset. 
+        /// </summary>
+        public string Unset { get; } = string.Empty;
+
+        /// <summary>
         /// Gets the CLR type of this option.
         /// </summary>
         private Type Type { get; }
@@ -140,8 +146,26 @@ namespace Snowflake.Configuration.Attributes
         /// <param name="optionName">The name of the option</param>
         /// <param name="default">The default value of the option. Note that only strings, enums and primitive types are supported.</param>
         public ConfigurationOptionAttribute(string optionName, string @default)
-            : this(optionName, @default ?? string.Empty, typeof(string))
+            : this(optionName, @default, typeof(string))
         {
+            if (@default == null) throw new ArgumentNullException("default", "You must set a non-default unset if the default value is null.");
+        }
+
+        /// <summary>
+        /// Initializes a new <see cref="ConfigurationOptionAttribute"/> with a non default unset.
+        /// This must be used if the default value is null.
+        /// 
+        /// Represents one option in an emulator configuration inside a configuration section.
+        /// Typically configuration options must be a double, bool, integer or an enum value in order to be safe,
+        /// type information may be lost when serializing into a wire format.
+        /// </summary>
+        /// <param name="optionName">The name of the option</param>
+        /// <param name="default">The default value of the option. Note that only strings, enums and primitive types are supported.</param>
+        /// <param name="unset"></param>
+        public ConfigurationOptionAttribute(string optionName, string @default, string unset)
+            : this(optionName, @default ?? unset, typeof(string))
+        {
+            this.Unset = unset;
         }
 
         /// <summary>
@@ -158,7 +182,6 @@ namespace Snowflake.Configuration.Attributes
         {
             this.PathType = pathType;
         }
-
 
         private ConfigurationOptionAttribute(string optionName, object @default, Type valueType)
         {

@@ -62,6 +62,9 @@ namespace Snowflake.Configuration
         public Type Type { get; }
 
         /// <inheritdoc/>
+        public string Unset { get; }
+
+        /// <inheritdoc/>
         public IDictionary<string, object> CustomMetadata { get; }
 
         /// <inheritdoc/>
@@ -75,6 +78,7 @@ namespace Snowflake.Configuration
         {
             this.Default = configOption.Default;
             this.Type = configOption.Default.GetType();
+            this.Unset = configOption.Unset;
             this.DisplayName = configOption.DisplayName;
             this.Description = configOption.Description;
             this.PathType = configOption.PathType;
