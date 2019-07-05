@@ -29,7 +29,7 @@ namespace Snowflake.Configuration.Serialization
 
             var list = context.TraverseSection(configuration.Configuration.ExampleConfiguration);
 
-            Assert.Equal(6, list.Count);
+            Assert.Equal(7, list.Count);
             Assert.Equal("FullscreenResolution", list[0].Key);
             Assert.IsType<EnumConfigurationNode>(list[0]);
             Assert.Equal("1152x648", ((EnumConfigurationNode)list[0]).Value);
@@ -49,6 +49,9 @@ namespace Snowflake.Configuration.Serialization
 
             Assert.Equal("ISOPath0", list[5].Key);
             Assert.IsType<StringConfigurationNode>(list[5]);
+
+            Assert.Equal("InternalCpuRatio", list[6].Key);
+            Assert.IsType<DecimalConfigurationNode>(list[6]);
         }
 
         [Fact]
@@ -77,7 +80,7 @@ namespace Snowflake.Configuration.Serialization
                 if (node.Key == "Display")
                 {
                     var confList = (node as ListConfigurationNode).Value;
-                    Assert.Equal(6, confList.Count);
+                    Assert.Equal(7, confList.Count);
                     Assert.Equal("FullscreenResolution", confList[0].Key);
                     Assert.IsType<EnumConfigurationNode>(confList[0]);
                     Assert.Equal("1152x648", ((EnumConfigurationNode)confList[0]).Value);
@@ -97,6 +100,9 @@ namespace Snowflake.Configuration.Serialization
 
                     Assert.Equal("ISOPath0", confList[5].Key);
                     Assert.IsType<StringConfigurationNode>(confList[5]);
+
+                    Assert.Equal("InternalCpuRatio", confList[6].Key);
+                    Assert.IsType<DecimalConfigurationNode>(confList[6]);
                 }
 
                 if (node.Key == "TestNestedSection")

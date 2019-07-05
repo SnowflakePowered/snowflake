@@ -88,17 +88,13 @@ namespace Snowflake.Scraping
 
         private ISeed GetAttachTarget(AttachTarget t, ISeed matchingSeed)
         {
-            switch (t)
+            return t switch
             {
-                case AttachTarget.Root:
-                    return this.Context.Root;
-                case AttachTarget.Target:
-                    return matchingSeed;
-                case AttachTarget.TargetParent:
-                    return this.Context[matchingSeed.Parent];
-                default:
-                    return this.Context.Root;
-            }
+                AttachTarget.Root => this.Context.Root,
+                AttachTarget.Target => matchingSeed,
+                AttachTarget.TargetParent => this.Context[matchingSeed.Parent],
+                _ => this.Context.Root,
+            };
         }
 
         public ValueTask<bool> Proceed() => this.Proceed(Enumerable.Empty<SeedContent>());

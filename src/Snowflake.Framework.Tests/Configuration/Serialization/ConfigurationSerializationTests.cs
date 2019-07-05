@@ -32,7 +32,7 @@ namespace Snowflake.Configuration.Serialization
 
             var iniSerializer = new SimpleIniConfigurationSerializer();
             string outputIni = iniSerializer.Serialize(dolphinList);
-          
+            
         }
 
         [Fact]
@@ -73,8 +73,8 @@ namespace Snowflake.Configuration.Serialization
             IAbstractConfigurationNode dolphinList = list["#dolphin"];
 
             var xmlSerializer = new SimpleXmlConfigurationSerializer("Config");
-           
             string outputXml = xmlSerializer.Serialize(dolphinList);
+            // todo: verify XML
         }
 
         [Fact]
