@@ -43,6 +43,9 @@ namespace Snowflake.Configuration
 
         [ConfigurationOption("ISOPath0", @"/program/RMGE01.wbfs", PathType.File)]
         string ISOPath0 { get; set; }
+
+        [ConfigurationOption("InternalCpuRatio", 1.0)]
+        double InternalCpuRatio { get; set; }
     }
 
     public enum FullscreenResolution
