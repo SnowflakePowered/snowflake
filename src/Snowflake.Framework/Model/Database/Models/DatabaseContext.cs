@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Snowflake.Model.Game;
 
+#nullable disable
 namespace Snowflake.Model.Database.Models
 {
     internal class DatabaseContext : DbContext
@@ -12,7 +13,7 @@ namespace Snowflake.Model.Database.Models
         public DbSet<FileRecordModel> FileRecords { get; set; }
 
         public DbSet<RecordModel> Records { get; set; }
-        public DbSet<RecordMetadataModel>? Metadata { get; set; }
+        public DbSet<RecordMetadataModel> Metadata { get; set; }
 
         public DbSet<ConfigurationProfileModel> ConfigurationProfiles { get; set; }
         public DbSet<ConfigurationValueModel> ConfigurationValues { get; set; }

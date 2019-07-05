@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 
+#nullable disable
 namespace Snowflake.Model.Database.Models
 {
     internal class RecordMetadataModel
     {
         public Guid RecordMetadataID { get; set; }
         public Guid RecordID { get; set; }
-        public RecordModel? Record { get; set; }
+        public RecordModel Record { get; set; }
 
         public string MetadataKey { get; set; }
-        public string? MetadataValue { get; set; } = "";
+        public string MetadataValue { get; set; } = "";
 
         internal static void SetupModel(ModelBuilder modelBuilder)
         {

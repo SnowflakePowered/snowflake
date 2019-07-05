@@ -5,18 +5,19 @@ using System.Text;
 using EnumsNET.NonGeneric;
 using Microsoft.EntityFrameworkCore;
 
+#nullable disable
 namespace Snowflake.Model.Database.Models
 {
     internal class ConfigurationValueModel
     {
         public Guid Guid { get; set; }
-        public string? Value { get; set; }
+        public string Value { get; set; }
 
         public string SectionKey { get; set; }
         public string OptionKey { get; set; }
 
         public Guid ValueCollectionGuid { get; set; }
-        public ConfigurationProfileModel? Profile { get; set; }
+        public ConfigurationProfileModel Profile { get; set; }
 
         internal static void SetupModel(ModelBuilder modelBuilder)
         {

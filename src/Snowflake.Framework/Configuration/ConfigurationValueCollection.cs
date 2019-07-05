@@ -43,7 +43,7 @@ namespace Snowflake.Configuration
         }
 
         public static IConfigurationValueCollection MakeExistingValueCollection<T>
-        (IEnumerable<(string section, string option, (string? stringValue, Guid guid) value)> values,
+        (IEnumerable<(string section, string option, (string stringValue, Guid guid) value)> values,
             Guid collectionGuid)
             where T : class, IConfigurationCollection, IConfigurationCollection<T>
         {
@@ -72,7 +72,7 @@ namespace Snowflake.Configuration
         }
 
         public static IConfigurationValueCollection MakeExistingValueCollection<T>
-        (IEnumerable<(string option, (string? stringValue, Guid guid) value)> values,
+        (IEnumerable<(string option, (string stringValue, Guid guid) value)> values,
             string sectionName,
             Guid collectionGuid)
             where T : class, IConfigurationSection<T>
