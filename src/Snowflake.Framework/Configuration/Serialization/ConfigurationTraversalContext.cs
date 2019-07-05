@@ -126,7 +126,7 @@ namespace Snowflake.Configuration.Serialization
                     var directory = (Filesystem.Directory)this.PathResolutionContext.OpenDirectory(directoryName);
                     var file = directory.OpenFile(path);
 
-                    StringConfigurationNode pathNode = key.PathType switch
+                    IAbstractConfigurationNode pathNode = key.PathType switch
                     {
                         PathType.Directory => new StringConfigurationNode(serializedKey, directory.GetPath().FullName),
 #pragma warning disable CS0618 // Type or member is obsolete
@@ -134,7 +134,10 @@ namespace Snowflake.Configuration.Serialization
                         PathType.Either => file.Created ? new StringConfigurationNode(serializedKey, file.GetFilePath().FullName) :
                             new StringConfigurationNode(serializedKey, directory.GetPath().FullName),
 #pragma warning restore CS0618 // Type or member is obsolete
-                        _ => new StringConfigurationNode(serializedKey, path) // should never happen.
+                        PathType.Raw => new StringConfigurationNode(serializedKey, path),
+                        // UnknownConfigurationNodes are ignored in most serializers.
+                        _ => new UnknownConfigurationNode(serializedKey, path) 
+                            as IAbstractConfigurationNode // hack to allow type inference,
                     };
                     nodes.Add(pathNode);
                     continue;
