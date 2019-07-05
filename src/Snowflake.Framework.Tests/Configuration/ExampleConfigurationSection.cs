@@ -46,6 +46,8 @@ namespace Snowflake.Configuration
 
         [ConfigurationOption("InternalCpuRatio", 1.0)]
         double InternalCpuRatio { get; set; }
+        [ConfigurationOption("SomeStringValue", null, PathType.File)]
+        string SomeStringValue { get; set; }
     }
 
     public enum FullscreenResolution

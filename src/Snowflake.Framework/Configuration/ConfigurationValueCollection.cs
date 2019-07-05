@@ -33,10 +33,10 @@ namespace Snowflake.Configuration
         {
         }
 
-        private static object FromString(string? strValue, Type? optionType)
+        private static object? FromString(string? strValue, Type? optionType)
         {
             return optionType == typeof(string)
-                ? strValue ?? string.Empty // return string value if string
+                ? strValue // return string value if string
                 : optionType?.GetTypeInfo()?.IsEnum ?? false
                     ? NonGenericEnums.Parse(optionType, strValue) // return parsed enum if enum
                     : TypeDescriptor.GetConverter(optionType).ConvertFromInvariantString(strValue);

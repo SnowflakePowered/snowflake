@@ -8,9 +8,9 @@ namespace Snowflake.Configuration
     public interface IConfigurationValue
     {
         /// <summary>
-        /// Gets or sets the value of the ConfigurationValue
+        /// Gets or sets the value of the vlaue
         /// </summary>
-        object Value { get; set; }
+        object? Value { get; set; }
 
         /// <summary>
         /// Gets the GUID record of the value.

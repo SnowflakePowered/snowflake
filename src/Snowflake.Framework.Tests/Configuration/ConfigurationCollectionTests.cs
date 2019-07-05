@@ -10,7 +10,7 @@ namespace Snowflake.Configuration.Tests
     public class ConfigurationCollectionTests
     {
         [Fact]
-        public void ValueInitialization_Tests()
+        public void ValueInitializationTests()
         {
             var values = new List<(string, string, IConfigurationValue)>()
             {
@@ -23,7 +23,7 @@ namespace Snowflake.Configuration.Tests
         }
 
         [Fact]
-        public void StringInitialization_Tests()
+        public void StringInitializationTests()
         {
             var values = new List<(string, string, (string, Guid))>()
             {
@@ -45,7 +45,7 @@ namespace Snowflake.Configuration.Tests
         }
 
         [Fact]
-        public void Defaults_Tests()
+        public void DefaultsTests()
         {
             var configuration = new ConfigurationCollection<ExampleConfigurationCollection>();
             Assert.Equal(configuration.Configuration.ExampleConfiguration.Descriptor["FullscreenResolution"].Default,
@@ -53,14 +53,14 @@ namespace Snowflake.Configuration.Tests
         }
 
         [Fact]
-        public void Descriptor_Tests()
+        public void DescriptorTests()
         {
             var configuration = new ConfigurationCollection<ExampleConfigurationCollection>();
             Assert.Equal("Display", configuration.Configuration.ExampleConfiguration.Descriptor.SectionName);
         }
 
         [Fact]
-        public void Nested_Test()
+        public void NestedTest()
         {
             var configuration = new ConfigurationCollection<ExampleConfigurationCollection>();
             Assert.Equal(configuration.Configuration.ExampleConfiguration.Descriptor["FullscreenResolution"].Default,
@@ -68,7 +68,7 @@ namespace Snowflake.Configuration.Tests
         }
 
         [Fact]
-        public void Order_Test()
+        public void OrderTest()
         {
             var configuration = new ConfigurationCollection<OrderSensitiveConfigurationCollection>();
             var enumerator = configuration.GetEnumerator();
@@ -76,21 +76,6 @@ namespace Snowflake.Configuration.Tests
             Assert.Equal("Display", enumerator.Current.Value.Descriptor.SectionName);
             enumerator.MoveNext();
             Assert.Equal("video", enumerator.Current.Value.Descriptor.SectionName);
-        }
-
-        [Fact]
-        public void SetStringToNull_Test()
-        {
-            var configuration = new ConfigurationCollection<ExampleConfigurationCollection>();
-            configuration.Configuration.ExampleConfiguration.ISOPath0 = null;
-            Assert.Equal(String.Empty, configuration.Configuration.ExampleConfiguration.ISOPath0);
-        }
-
-        [Fact]
-        public void SetStringToNullDefault_Test()
-        {
-            var configuration = new ConfigurationCollection<NullDefaultConfigurationCollection>();
-            Assert.Equal(String.Empty, configuration.Configuration.NullConfiguration.NullDefault);
         }
     }
 }

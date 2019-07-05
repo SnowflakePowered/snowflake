@@ -54,5 +54,9 @@ namespace Snowflake.Configuration.Serialization.Serializers.Implementations
         {
             context.AppendLine($"<{key}>{value}</{key}>");
         }
+        public override void SerializeNodeValue(string key,  IConfigurationSerializationContext<string> context, int index)
+        {
+            context.AppendLine($"<{key}></{key}>");
+        }
     }
 }
