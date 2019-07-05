@@ -9,6 +9,11 @@ using Zio;
 using Zio.FileSystems;
 using FS = Snowflake.Filesystem;
 
+using Newtonsoft.Json.Linq;
+using System.Xml.Linq;
+using System.Linq;
+using IniParser.Parser;
+
 namespace Snowflake.Configuration.Serialization
 {
     public class ConfigurationSerializationTests
@@ -32,7 +37,9 @@ namespace Snowflake.Configuration.Serialization
 
             var iniSerializer = new SimpleIniConfigurationSerializer();
             string outputIni = iniSerializer.Serialize(dolphinList);
-            
+            var parser = new IniDataParser();
+            var data = parser.Parse(outputIni);
+            Assert.NotEmpty(data.Sections);
         }
 
         [Fact]
@@ -54,6 +61,8 @@ namespace Snowflake.Configuration.Serialization
 
             var cfgSerializer = new SimpleCfgConfigurationSerializer();
             string outputCfg = cfgSerializer.Serialize(dolphinList);
+            Assert.NotEqual(string.Empty, outputCfg);
+            // todo: test cfg parse
         }
 
         [Fact]
@@ -74,6 +83,8 @@ namespace Snowflake.Configuration.Serialization
 
             var xmlSerializer = new SimpleXmlConfigurationSerializer("Config");
             string outputXml = xmlSerializer.Serialize(dolphinList);
+            XDocument doc = XDocument.Parse(outputXml);
+            Assert.NotEmpty(doc.Nodes());
             // todo: verify XML
         }
 
@@ -96,6 +107,8 @@ namespace Snowflake.Configuration.Serialization
 
             var jsonSerializer = new SimpleJsonConfigurationSerializer();
             string outputJson = jsonSerializer.Serialize(dolphinList);
+            var jtoken = JToken.Parse(outputJson);
+            Assert.True(jtoken.HasValues);
         }
     }
 }
