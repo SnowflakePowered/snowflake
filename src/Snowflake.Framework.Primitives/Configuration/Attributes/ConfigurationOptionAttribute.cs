@@ -140,7 +140,7 @@ namespace Snowflake.Configuration.Attributes
         /// <param name="optionName">The name of the option</param>
         /// <param name="default">The default value of the option. Note that only strings, enums and primitive types are supported.</param>
         public ConfigurationOptionAttribute(string optionName, string @default)
-            : this(optionName, @default, typeof(string))
+            : this(optionName, @default ?? string.Empty, typeof(string))
         {
         }
 
