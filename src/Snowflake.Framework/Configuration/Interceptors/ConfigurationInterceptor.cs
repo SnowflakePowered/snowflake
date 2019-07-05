@@ -44,7 +44,7 @@ namespace Snowflake.Configuration.Interceptors
                     if (value != null && invocation.Arguments[0] == null 
                         && this.Descriptor[propertyName].Type == typeof(string))
                     {
-                        value.Value = String.Empty;
+                        value.Value = string.Empty;
                     }
                 }
             }
