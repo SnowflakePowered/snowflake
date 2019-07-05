@@ -37,9 +37,6 @@ namespace Snowflake.Configuration.Serialization.Serializers
                 case DecimalConfigurationNode decNode:
                     this.SerializeNode(decNode, context, index);
                     break;
-                case NullConfigurationNode decNode:
-                    this.SerializeNode(decNode, context, index);
-                    break;
                 case EnumConfigurationNode enumNode:
                     this.SerializeNode(enumNode, context, index);
                     break;
@@ -91,16 +88,11 @@ namespace Snowflake.Configuration.Serialization.Serializers
         {
             this.SerializeNodeValue((node as AbstractConfigurationNode<Enum>).Value, node.Value, node.Key, context, index);
         }
-        protected void SerializeNode(NullConfigurationNode node, IConfigurationSerializationContext<T> context, int index)
-        {
-            this.SerializeNodeValue(node.Key, context, index);
-        }
 
         public abstract void SerializeNodeValue(bool value, string key, IConfigurationSerializationContext<T> context, int index);
         public abstract void SerializeNodeValue(double value, string key, IConfigurationSerializationContext<T> context, int index);
         public abstract void SerializeNodeValue(Enum value, string enumValue, string key, IConfigurationSerializationContext<T> context, int index);
         public abstract void SerializeNodeValue(long value, string key, IConfigurationSerializationContext<T> context, int index);
         public abstract void SerializeNodeValue(string value, string key, IConfigurationSerializationContext<T> context, int index);
-        public abstract void SerializeNodeValue(string key, IConfigurationSerializationContext<T> context, int index);
     }
 }

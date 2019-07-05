@@ -16,7 +16,7 @@ namespace Snowflake.Configuration.Tests
     }
 
     [ConfigurationSection("Null", "Null")]
-    public interface NullDefaultConfigurationSection : IConfigurationSection<ExampleConfigurationSection>
+    public interface NullDefaultConfigurationSection : IConfigurationSection<NullDefaultConfigurationSection>
     {
         [ConfigurationOption("NullDefault", null)]
         string NullDefault { get; set; }
