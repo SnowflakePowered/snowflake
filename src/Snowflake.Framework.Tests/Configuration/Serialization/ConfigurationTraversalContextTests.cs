@@ -29,7 +29,7 @@ namespace Snowflake.Configuration.Serialization
 
             var list = context.TraverseSection(configuration.Configuration.ExampleConfiguration);
 
-            Assert.Equal(7, list.Count);
+            Assert.Equal(8, list.Count);
             Assert.Equal("FullscreenResolution", list[0].Key);
             Assert.IsType<EnumConfigurationNode>(list[0]);
             Assert.Equal("1152x648", ((EnumConfigurationNode)list[0]).Value);
@@ -80,7 +80,7 @@ namespace Snowflake.Configuration.Serialization
                 if (node.Key == "Display")
                 {
                     var confList = (node as ListConfigurationNode).Value;
-                    Assert.Equal(7, confList.Count);
+                    Assert.Equal(8, confList.Count);
                     Assert.Equal("FullscreenResolution", confList[0].Key);
                     Assert.IsType<EnumConfigurationNode>(confList[0]);
                     Assert.Equal("1152x648", ((EnumConfigurationNode)confList[0]).Value);

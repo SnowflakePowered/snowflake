@@ -37,14 +37,9 @@ namespace Snowflake.Configuration.Interceptors
                 {
                     // this should never be null here.
                     var value = this.Values[this.Descriptor, propertyName];
-                    if (value != null && invocation.Arguments[0] != null)
+                    if (value != null)
                     {
                         value.Value = invocation.Arguments[0];
-                    }
-                    if (value != null && invocation.Arguments[0] == null 
-                        && this.Descriptor[propertyName].Type == typeof(string))
-                    {
-                        value.Value = string.Empty;
                     }
                 }
             }

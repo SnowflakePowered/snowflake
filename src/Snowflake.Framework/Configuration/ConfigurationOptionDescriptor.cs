@@ -74,7 +74,8 @@ namespace Snowflake.Configuration
             IEnumerable<CustomMetadataAttribute> customMetadata, string keyName)
         {
             this.Default = configOption.Default;
-            this.Type = configOption.Default.GetType();
+            // The only type allowed to have null values is string.
+            this.Type = configOption.Default?.GetType() ?? typeof(string);
             this.DisplayName = configOption.DisplayName;
             this.Description = configOption.Description;
             this.PathType = configOption.PathType;

@@ -142,6 +142,7 @@ namespace Snowflake.Configuration.Serialization
 
                 IAbstractConfigurationNode node = value.Value switch
                 {
+                    null => new NullConfigurationNode(serializedKey),
                     bool rawVal => new BooleanConfigurationNode(serializedKey, rawVal),
 
                     float rawVal => new DecimalConfigurationNode(serializedKey, rawVal),
@@ -161,7 +162,7 @@ namespace Snowflake.Configuration.Serialization
 
                     Enum rawVal => new EnumConfigurationNode(serializedKey, rawVal, rawVal.GetType()),
 
-                    _ => new UnknownConfigurationNode(serializedKey, value.Value)
+                    _ => new UnknownConfigurationNode(serializedKey, value.Value) 
                         as IAbstractConfigurationNode, // hack to allow type inference
                 };
                 nodes.Add(node);

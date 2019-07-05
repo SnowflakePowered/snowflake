@@ -59,6 +59,13 @@ namespace Snowflake.Configuration.Serialization.Serializers.Implementations
             if (index != 0) context.Append(",");
             context.Append($@"""{key}"":""{Sanitize(value)}""");
         }
+
+        public override void SerializeNodeValue(string key,  IConfigurationSerializationContext<string> context, int index)
+        {
+            if (index != 0) context.Append(",");
+            context.Append($@"""{key}"":null");
+        }
+
         private static string Sanitize(string original)
         {
             return original.Replace("\\", "\\\\");
