@@ -35,7 +35,7 @@ namespace Snowflake.Configuration.Serialization
             foreach (var rootTargetAttr in rootTargets)
             {
                 var rootTarget = new ConfigurationTarget(rootTargetAttr.TargetName, rootTargetAttr.TargetTransformer);
-           
+
                 Queue<ConfigurationTarget> targetsToProcess = new Queue<ConfigurationTarget>();
                 targetsToProcess.Enqueue(rootTarget);
 
@@ -70,12 +70,12 @@ namespace Snowflake.Configuration.Serialization
             return new ListConfigurationNode(target.TargetName, targetNodes.AsReadOnly());
         }
 
-        public IReadOnlyDictionary<string, IAbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>>> 
+        public IReadOnlyDictionary<string, IAbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>>>
             TraverseCollection(IConfigurationCollection collection)
         {
-            if (collection.GetType().IsGenericType 
+            if (collection.GetType().IsGenericType
                 && collection.GetType().GetGenericTypeDefinition() == typeof(ConfigurationCollection<>))
-                    throw new InvalidOperationException("Can not traverse on the wrapping type of ConfigurationCollection<T>, you must traverse on the Configuration property.");
+                throw new InvalidOperationException("Can not traverse on the wrapping type of ConfigurationCollection<T>, you must traverse on the Configuration property.");
 
             // Get each target for each section.
             var targetMappings = collection
@@ -84,7 +84,7 @@ namespace Snowflake.Configuration.Serialization
                 // This is a hack to get the declaring interface.
                 .FirstOrDefault(i => i.GetCustomAttributes<ConfigurationTargetAttribute>().Count() != 0)?
                 .GetPublicProperties()
-                .Where(props => props.GetIndexParameters().Length == 0 
+                .Where(props => props.GetIndexParameters().Length == 0
                         && props.PropertyType.GetInterfaces().Contains(typeof(IConfigurationSection)))
                 .ToDictionary(p => p.Name, p => p.GetAttribute<ConfigurationTargetMemberAttribute>()?.TargetName ?? NullTarget);
 
@@ -114,24 +114,33 @@ namespace Snowflake.Configuration.Serialization
             return rootNodes;
         }
 
-        public IAbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>> 
-            TraverseInputTemplate(IInputTemplate template)
+        public IAbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>>
+            TraverseInputTemplate(IInputTemplate template,
+            int index,
+            string indexer = "{N}")
         {
-            var configNodes = this.TraverseSection(template);
+            var configNodes = this.TraverseSection(template, true, indexer, index);
             foreach (var inputOption in template.Options)
             {
-                configNodes.Add(new ControllerElementConfigurationNode(inputOption.OptionName,
+                configNodes.Add(new ControllerElementConfigurationNode(
+                    inputOption.OptionName.Replace(indexer, Convert.ToString(index)),
                     inputOption.TargetElement, inputOption.DeviceType));
             }
-            return new ListConfigurationNode(template.Descriptor.SectionName, configNodes.AsReadOnly());
+            return new ListConfigurationNode(template.Descriptor.SectionName.Replace(indexer, 
+                Convert.ToString(index)),
+                configNodes.AsReadOnly());
         }
 
-        internal List<IAbstractConfigurationNode> TraverseSection(IConfigurationSection section)
+        private List<IAbstractConfigurationNode> TraverseSection(IConfigurationSection section,
+            bool useIndexer　= false,
+            string indexer = "{N}", 
+            int index = 0)
         {
             var nodes = new List<IAbstractConfigurationNode>();
             foreach (var (key, value) in section)
             {
                 string serializedKey = key.OptionName;
+                if (useIndexer) serializedKey = serializedKey.Replace(indexer, Convert.ToString(index));
                 if (key.Flag) continue;
 
                 if (key.IsPath && value.Value is string path)
