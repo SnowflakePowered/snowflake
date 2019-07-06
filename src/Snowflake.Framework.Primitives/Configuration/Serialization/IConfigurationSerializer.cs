@@ -1,6 +1,6 @@
 ﻿using Snowflake.Configuration.Serialization;
 using System;
-namespace Snowflake.Configuration.Serialization.Serializers
+namespace Snowflake.Configuration.Serialization
 {
     public interface IConfigurationSerializer<TOutput>
     {

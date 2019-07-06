@@ -9,7 +9,7 @@ using Snowflake.Configuration.Serialization.Serializers.Implementations;
 
 namespace Snowflake.Configuration.Tests
 {
-    [ConfigurationTarget("#retroarch", typeof(SimpleCfgConfigurationSerializer))]
+    [ConfigurationTarget("#retroarch")]
     public interface IRetroArchConfig : IConfigurationCollection<IRetroArchConfig>
     {
         [ConfigurationTargetMember("#retroarch")] IVideoConfiguration VideoConfiguration { get; set; }

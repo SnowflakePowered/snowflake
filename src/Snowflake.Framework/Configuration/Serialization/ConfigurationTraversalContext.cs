@@ -34,7 +34,7 @@ namespace Snowflake.Configuration.Serialization
 
             foreach (var rootTargetAttr in rootTargets)
             {
-                var rootTarget = new ConfigurationTarget(rootTargetAttr.TargetName, rootTargetAttr.TargetTransformer);
+                var rootTarget = new ConfigurationTarget(rootTargetAttr.TargetName);
 
                 Queue<ConfigurationTarget> targetsToProcess = new Queue<ConfigurationTarget>();
                 targetsToProcess.Enqueue(rootTarget);
@@ -43,7 +43,7 @@ namespace Snowflake.Configuration.Serialization
                 {
                     var target = targetsToProcess.Dequeue();
                     foreach (var childTargets in targets.Where(t => t.ParentTarget == target.TargetName)
-                        .Select(t => new ConfigurationTarget(t.TargetName, t.TargetTransformer)))
+                        .Select(t => new ConfigurationTarget(t.TargetName)))
                     {
                         if (target.ChildTargets.ContainsKey(childTargets.TargetName))
                             throw new ArgumentException("Target name already exists in the graph!");

@@ -4,6 +4,11 @@ using System.Text;
 
 namespace Snowflake.Configuration.Serialization
 {
+    /// <summary>
+    /// Defines a unit of a <see cref="IConfigurationCollection{T}"/> that will be
+    /// evaluated independently into a tree of <see cref="IAbstractConfigurationNode"/>
+    /// that will be evaluated and produce an output or side effects.
+    /// </summary>
     public interface IConfigurationTarget
     {
         /// <summary>
@@ -14,9 +19,5 @@ namespace Snowflake.Configuration.Serialization
         /// The name of the target.
         /// </summary>
         string TargetName { get; }
-        /// <summary>
-        /// If not null, the type of the target transformer that will evaulate this target's resultant AST.
-        /// </summary>
-        Type? TargetTransformer { get; }
     }
 }
