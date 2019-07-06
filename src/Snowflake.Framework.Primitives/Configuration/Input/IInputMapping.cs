@@ -24,10 +24,15 @@ namespace Snowflake.Configuration.Input
         IEnumerable<string> DeviceLayouts { get; }
 
         /// <summary>
-        /// Gets the mapping for this controller element, or the null value if not present
+        /// Gets the mapping for this controller element. If the mapping does not exist,
+        /// it will try to fallback to the representation for <see cref="ControllerElement.KeyNone"/> if the given element
+        /// is a keyboard key element, or <see cref="ControllerElement.NoElement"/> if the given element is
+        /// not a keyboard key, or if there is no mapping for <see cref="ControllerElement.KeyNone"/>. If no mapping
+        /// is found for <see cref="ControllerElement.NoElement"/>, then the empty string is returned.
         /// </summary>
+        /// 
         /// <param name="element">The mapping for this controller element</param>
-        /// <returns></returns>
+        /// <returns>The string representation of the given element defined by this mapping.</returns>
         string this[ControllerElement element] { get; }
     }
 }

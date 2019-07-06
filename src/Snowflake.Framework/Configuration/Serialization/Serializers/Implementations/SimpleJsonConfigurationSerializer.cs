@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Snowflake.Input.Controller;
 
 namespace Snowflake.Configuration.Serialization.Serializers.Implementations
 {
@@ -42,10 +43,10 @@ namespace Snowflake.Configuration.Serialization.Serializers.Implementations
             context.Append($@"""{key}"":{value}");
         }
 
-        public override void SerializeNodeValue(Enum value, string enumValue, string key,  IConfigurationSerializationContext<string> context, int index)
+        public override void SerializeNodeValue(Enum enumValue, string value, string key,  IConfigurationSerializationContext<string> context, int index)
         {
             if (index != 0) context.Append(",");
-            context.Append($@"""{key}"":""{enumValue}""");
+            context.Append($@"""{key}"":""{value}""");
         }
 
         public override void SerializeNodeValue(long value, string key,  IConfigurationSerializationContext<string> context, int index)
@@ -59,9 +60,17 @@ namespace Snowflake.Configuration.Serialization.Serializers.Implementations
             if (index != 0) context.Append(",");
             context.Append($@"""{key}"":""{Sanitize(value)}""");
         }
+ 
+        public override void SerializerNodeValue(ControllerElement controllerElementValue, string value, string key, IConfigurationSerializationContext<string> context, int index)
+        {
+            if (index != 0) context.Append(",");
+            context.Append($@"""{key}"":""{value}""");
+        }
+
         private static string Sanitize(string original)
         {
             return original.Replace("\\", "\\\\");
         }
+
     }
 }

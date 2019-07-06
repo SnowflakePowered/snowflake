@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Snowflake.Configuration.Serialization;
+using Snowflake.Input.Controller;
 
 namespace Snowflake.Configuration.Serialization.Serializers
 {
@@ -18,7 +19,8 @@ namespace Snowflake.Configuration.Serialization.Serializers
             return;
         }
 
-        public void SerializeNode(IAbstractConfigurationNode node, IConfigurationSerializationContext<T> context, int index = 0)
+        public void SerializeNode(IAbstractConfigurationNode node,
+            IConfigurationSerializationContext<T> context, int index = 0)
         {
             switch (node)
             {
@@ -36,6 +38,9 @@ namespace Snowflake.Configuration.Serialization.Serializers
                     break;
                 case DecimalConfigurationNode decNode:
                     this.SerializeNode(decNode, context, index);
+                    break;
+                case ControllerElementConfigurationNode ctrlNode:
+                    this.SerializeNode(ctrlNode, context, index);
                     break;
                 case EnumConfigurationNode enumNode:
                     this.SerializeNode(enumNode, context, index);
@@ -89,10 +94,16 @@ namespace Snowflake.Configuration.Serialization.Serializers
             this.SerializeNodeValue((node as AbstractConfigurationNode<Enum>).Value, node.Value, node.Key, context, index);
         }
 
+        protected void SerializeNode(ControllerElementConfigurationNode node, IConfigurationSerializationContext<T> context, int index)
+        {
+            this.SerializeNodeValue((node as AbstractConfigurationNode<ControllerElement>).Value, node.Value, node.Key, context, index);
+        }
+
         public abstract void SerializeNodeValue(bool value, string key, IConfigurationSerializationContext<T> context, int index);
         public abstract void SerializeNodeValue(double value, string key, IConfigurationSerializationContext<T> context, int index);
-        public abstract void SerializeNodeValue(Enum value, string enumValue, string key, IConfigurationSerializationContext<T> context, int index);
+        public abstract void SerializeNodeValue(Enum enumValue, string value, string key, IConfigurationSerializationContext<T> context, int index);
         public abstract void SerializeNodeValue(long value, string key, IConfigurationSerializationContext<T> context, int index);
         public abstract void SerializeNodeValue(string value, string key, IConfigurationSerializationContext<T> context, int index);
+        public abstract void SerializerNodeValue(ControllerElement controllerElementValue, string value, string key, IConfigurationSerializationContext<T> context, int index);
     }
 }

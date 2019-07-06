@@ -3,7 +3,6 @@
   "DeviceLayouts": [
     "KEYBOARD_DEVICE"
   ],
-  "NullMapping": "nul",
   "Keyboard": {
     "KeyNone": "nul",
     "KeyA": "a",

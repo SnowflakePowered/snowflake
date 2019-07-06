@@ -3,9 +3,9 @@
   "DeviceLayouts": [
     "XINPUT_DEVICE"
   ],
-  "NullMapping": "nul",
   "Keyboard": {},
   "Controller": {
+    "NoElement": "nul",
     "ButtonA": "0",
     "ButtonB": "1",
     "ButtonX": "2",

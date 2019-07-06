@@ -26,7 +26,8 @@ namespace Snowflake.Configuration.Serialization
                 JsonConvert.DeserializeObject<ControllerLayout>(
                     TestUtilities.GetStringResource("InputMappings.xinput_device.json"));
             var mapcol = ControllerElementMappings.GetDefaultMappings(realmapping, testmappings);
-
+            string _mapping = TestUtilities.GetStringResource("InputMappings.DirectInput.XINPUT_DEVICE.json");
+            IInputMapping mapping = JsonConvert.DeserializeObject<InputMapping>(_mapping);
             var input =
              new InputTemplate<IRetroArchInput>(mapcol).Template;
 
@@ -36,7 +37,7 @@ namespace Snowflake.Configuration.Serialization
             var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
 
             var context = new ConfigurationTraversalContext(dir);
-            var node = context.TraverseInputTemplate(input, 0);
+            var node = context.TraverseInputTemplate(input, mapping, 0);
         }
 
         [Fact]

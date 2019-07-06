@@ -27,8 +27,7 @@ namespace Snowflake.JsonConverters
 
             IEnumerable<string> deviceLayouts = jObject.Value<JArray>("DeviceLayouts").Values<string>();
             InputApi inputApi = Enums.Parse<InputApi>(jObject.Value<string>("InputApi"));
-            string nullMapping = jObject.Value<string>("NullMapping");
-            return new InputMapping(controllerElements, nullMapping, inputApi, deviceLayouts);
+            return new InputMapping(controllerElements, inputApi, deviceLayouts);
         }
     }
 }

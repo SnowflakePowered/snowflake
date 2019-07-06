@@ -116,6 +116,7 @@ namespace Snowflake.Configuration.Serialization
 
         public IAbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>>
             TraverseInputTemplate(IInputTemplate template,
+            IInputMapping mapping,
             int index,
             string indexer = "{N}")
         {
@@ -124,7 +125,9 @@ namespace Snowflake.Configuration.Serialization
             {
                 configNodes.Add(new ControllerElementConfigurationNode(
                     inputOption.OptionName.Replace(indexer, Convert.ToString(index)),
-                    inputOption.TargetElement, inputOption.DeviceType));
+                    inputOption.TargetElement, 
+                    mapping[inputOption.TargetElement],
+                    inputOption.DeviceType));
             }
             return new ListConfigurationNode(template.Descriptor.SectionName.Replace(indexer, 
                 Convert.ToString(index)),
