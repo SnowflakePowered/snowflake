@@ -326,7 +326,7 @@
         <member name="P:Snowflake.Configuration.Input.InputMapping.DeviceLayouts">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Configuration.Input.InputOption.InputOptionType">
+        <member name="P:Snowflake.Configuration.Input.InputOption.DeviceType">
             <inheritdoc/>
         </member>
         <member name="P:Snowflake.Configuration.Input.InputOption.TargetElement">

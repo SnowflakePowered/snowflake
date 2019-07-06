@@ -82,10 +82,10 @@ namespace Snowflake.Configuration.Serialization
             IAbstractConfigurationNode dolphinList = list["#dolphin"];
 
             var xmlSerializer = new SimpleXmlConfigurationSerializer("Config");
+           
             string outputXml = xmlSerializer.Serialize(dolphinList);
             XDocument doc = XDocument.Parse(outputXml);
             Assert.NotEmpty(doc.Nodes());
-            // todo: verify XML
         }
 
         [Fact]

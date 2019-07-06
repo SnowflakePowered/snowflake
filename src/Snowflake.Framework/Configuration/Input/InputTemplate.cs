@@ -55,15 +55,20 @@ namespace Snowflake.Configuration.Input
                         "This template does not support the target element or element type.");
                 }
 
-                return this.inputTemplateInterceptor.InputValues[optionKey];
+                if (this.inputTemplateInterceptor.InputValues.TryGetValue(optionKey, out ControllerElement controllerElem))
+                {
+                    return controllerElem;
+                };
+
+                return ControllerElement.NoElement;
             }
 
             set
             {
                 string optionKey = (from option in this._Options
                     where option.Value.TargetElement == virtualElement
-                    where option.Value.InputOptionType.HasFlag(InputOptionType.Keyboard) == value.IsKeyboardKey()
-                    where option.Value.InputOptionType.HasFlag(InputOptionType.ControllerAxes) == value.IsAxis()
+                    where option.Value.DeviceType.HasFlag(InputOptionDeviceType.Keyboard) == value.IsKeyboardKey()
+                    where option.Value.DeviceType.HasFlag(InputOptionDeviceType.ControllerAxes) == value.IsAxis()
                     select option.Key).FirstOrDefault();
                 if (optionKey == null)
                 {
@@ -91,8 +96,8 @@ namespace Snowflake.Configuration.Input
                 let option = this._Options[key]
                 let target = option.TargetElement
                 where element.LayoutElement == target
-                where option.InputOptionType.HasFlag(InputOptionType.Keyboard) == element.DeviceElement.IsKeyboardKey()
-                where option.InputOptionType.HasFlag(InputOptionType.ControllerAxes) == element.DeviceElement.IsAxis()
+                where option.DeviceType.HasFlag(InputOptionDeviceType.Keyboard) == element.DeviceElement.IsKeyboardKey()
+                where option.DeviceType.HasFlag(InputOptionDeviceType.ControllerAxes) == element.DeviceElement.IsAxis()
                 select new {key, element.DeviceElement}).ToDictionary(d => d.key, d => d.DeviceElement);
             var map = from key in this._Options.Keys
                 let value = overrides.ContainsKey(key) ? overrides[key] : ControllerElement.NoElement

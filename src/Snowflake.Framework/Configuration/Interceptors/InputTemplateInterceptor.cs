@@ -30,7 +30,14 @@ namespace Snowflake.Configuration.Interceptors
             {
                 if (invocation.Method.Name.StartsWith("get_"))
                 {
-                    invocation.ReturnValue = InputValues[propertyName]; // type is IConfigurationSection<T>
+                    if (this.InputValues.TryGetValue(propertyName, out ControllerElement value))
+                    {
+                        invocation.ReturnValue = value; // type is IConfigurationSection<T>
+                    }
+                    else
+                    {
+                        invocation.ReturnValue = ControllerElement.NoElement;
+                    }
                 }
             }
             else if (this.ConfigValues[this.Descriptor].ContainsKey(propertyName))

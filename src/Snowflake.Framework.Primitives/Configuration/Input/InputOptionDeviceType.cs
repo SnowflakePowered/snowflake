@@ -10,7 +10,7 @@ namespace Snowflake.Configuration.Input
     /// The type of input the option accepts
     /// </summary>
     [Flags]
-    public enum InputOptionType
+    public enum InputOptionDeviceType
     {
         /// <summary>
         /// This input option accepts only controller element mappings.

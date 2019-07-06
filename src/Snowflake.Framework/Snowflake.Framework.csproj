@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <None Remove="Configuration\Interceptors\ConfigurationInterceptor.cs~RF199716.TMP" />
+    <None Remove="Configuration\Serialization\ConfigurationTraversalContext.cs~RF1d4d95c3.TMP" />
   </ItemGroup>
 
   <ItemGroup>

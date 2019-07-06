@@ -8,9 +8,9 @@ namespace Snowflake.Configuration.Input
     public interface IInputOption
     {
         /// <summary>
-        /// Gets the type of value the input option accepts
+        /// Gets the type of device the input option accepts
         /// </summary>
-        InputOptionType InputOptionType { get; }
+        InputOptionDeviceType DeviceType { get; }
 
         /// <summary>
         /// Gets the mapped element to the input option.
