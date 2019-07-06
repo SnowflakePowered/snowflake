@@ -151,10 +151,9 @@ namespace Snowflake.Configuration.Input
                 .GetEnumerator();
         }
 
-        /// <inheritdoc/>
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetEnumerator();
+            return this.GetEnumerator();
         }
     }
 }

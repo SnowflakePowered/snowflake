@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Snowflake.Input.Controller;
 
 namespace Snowflake.Configuration.Serialization.Serializers.Implementations
 {
@@ -42,15 +43,20 @@ namespace Snowflake.Configuration.Serialization.Serializers.Implementations
         {
             context.AppendLine($"<{key}>{value}</{key}>");
         }
-        public override void SerializeNodeValue(Enum value, string enumValue, string key,  IConfigurationSerializationContext<string> context, int index)
+        public override void SerializeNodeValue(Enum enumValue, string value, string key,  IConfigurationSerializationContext<string> context, int index)
         {
-            context.AppendLine($"<{key}>{enumValue}</{key}>");
+            context.AppendLine($"<{key}>{value}</{key}>");
         }
         public override void SerializeNodeValue(long value, string key,  IConfigurationSerializationContext<string> context, int index)
         {
             context.AppendLine($"<{key}>{value}</{key}>");
         }
         public override void SerializeNodeValue(string value, string key,  IConfigurationSerializationContext<string> context, int index)
+        {
+            context.AppendLine($"<{key}>{value}</{key}>");
+        }
+
+        public override void SerializerNodeValue(ControllerElement controllerElementValue, string value, string key, IConfigurationSerializationContext<string> context, int index)
         {
             context.AppendLine($"<{key}>{value}</{key}>");
         }
