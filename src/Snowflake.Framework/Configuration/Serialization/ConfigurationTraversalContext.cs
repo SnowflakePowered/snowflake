@@ -8,6 +8,7 @@ using Snowflake.Configuration.Attributes;
 using Snowflake.Filesystem;
 using Snowflake.Configuration.Extensions;
 using Castle.Core.Internal;
+using Snowflake.Configuration.Input;
 
 namespace Snowflake.Configuration.Serialization
 {
@@ -69,7 +70,8 @@ namespace Snowflake.Configuration.Serialization
             return new ListConfigurationNode(target.TargetName, targetNodes.AsReadOnly());
         }
 
-        public IReadOnlyDictionary<string, IAbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>>> TraverseCollection(IConfigurationCollection collection)
+        public IReadOnlyDictionary<string, IAbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>>> 
+            TraverseCollection(IConfigurationCollection collection)
         {
             if (collection.GetType().IsGenericType 
                 && collection.GetType().GetGenericTypeDefinition() == typeof(ConfigurationCollection<>))
@@ -96,7 +98,7 @@ namespace Snowflake.Configuration.Serialization
             {
                 string targetName = targetMappings[key];
                 if (!flatTargets.ContainsKey(targetName) || targetName == ConfigurationTraversalContext.NullTarget) continue;
-                flatTargets[targetName].nodes.Add(new ListConfigurationNode(value.Descriptor.SectionName, this.TraverseSection(value)));
+                flatTargets[targetName].nodes.Add(new ListConfigurationNode(value.Descriptor.SectionName, this.TraverseSection(value).AsReadOnly()));
             }
 
             var targets = ConfigurationTraversalContext.ResolveConfigurationTargets(collection);
@@ -112,7 +114,19 @@ namespace Snowflake.Configuration.Serialization
             return rootNodes;
         }
 
-        internal IReadOnlyList<IAbstractConfigurationNode> TraverseSection(IConfigurationSection section)
+        public IAbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>> 
+            TraverseInputTemplate(IInputTemplate template)
+        {
+            var configNodes = this.TraverseSection(template);
+            foreach (var inputOption in template.Options)
+            {
+                configNodes.Add(new ControllerElementConfigurationNode(inputOption.OptionName,
+                    inputOption.TargetElement, inputOption.DeviceType));
+            }
+            return new ListConfigurationNode(template.Descriptor.SectionName, configNodes.AsReadOnly());
+        }
+
+        internal List<IAbstractConfigurationNode> TraverseSection(IConfigurationSection section)
         {
             var nodes = new List<IAbstractConfigurationNode>();
             foreach (var (key, value) in section)
@@ -170,7 +184,7 @@ namespace Snowflake.Configuration.Serialization
                 nodes.Add(node);
             }
 
-            return nodes.AsReadOnly();
+            return nodes;
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Snowflake.Configuration.Input
         /// Initializes a new instance of the <see cref="InputOptionAttribute"/> class.
         /// Marks an attribute as an input option
         /// </summary>
-        public InputOptionAttribute(string optionName, InputOptionType inputOptionType, ControllerElement targetElement)
+        public InputOptionAttribute(string optionName, InputOptionDeviceType inputOptionType, ControllerElement targetElement)
         {
             this.OptionName = optionName;
             this.InputOptionType = inputOptionType;
@@ -28,7 +28,7 @@ namespace Snowflake.Configuration.Input
         /// Gets the type of this input option, whether it accepts
         /// keyboard only mappings, controller button mappings, or any type of mapping
         /// </summary>
-        public InputOptionType InputOptionType { get; }
+        public InputOptionDeviceType InputOptionType { get; }
 
         /// <summary>
         /// Gets the target controller element; the button on the virtual controller that maps to this input option
