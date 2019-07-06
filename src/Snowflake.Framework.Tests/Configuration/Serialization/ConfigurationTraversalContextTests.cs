@@ -2,7 +2,13 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Newtonsoft.Json;
+using Snowflake.Configuration.Input;
 using Snowflake.Configuration.Tests;
+using Snowflake.Input.Controller;
+using Snowflake.Input.Controller.Mapped;
+using Snowflake.Services;
+using Snowflake.Tests;
 using Xunit;
 using Zio;
 using Zio.FileSystems;
@@ -12,46 +18,25 @@ namespace Snowflake.Configuration.Serialization
 {
     public class ConfigurationTraversalContextTests
     {
-
         [Fact]
-        public void SectionToAbstractConfigurationNode_Test()
+        public void InputTemplateToAbstractConfigurationNode_Test()
         {
-            var configuration =
-              new ConfigurationCollection<ExampleConfigurationCollection>(new ConfigurationValueCollection());
+            var testmappings = new StoneProvider().Controllers["XBOX_CONTROLLER"];
+            var realmapping =
+                JsonConvert.DeserializeObject<ControllerLayout>(
+                    TestUtilities.GetStringResource("InputMappings.xinput_device.json"));
+            var mapcol = ControllerElementMappings.GetDefaultMappings(realmapping, testmappings);
+
+            var input =
+             new InputTemplate<IRetroArchInput>(mapcol).Template;
 
             var fs = new PhysicalFileSystem();
             var temp = Path.GetTempPath();
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
             var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
 
-            configuration.Configuration.ExampleConfiguration.FullscreenResolution = FullscreenResolution.Resolution1152X648;
             var context = new ConfigurationTraversalContext(dir);
-
-            var list = context.TraverseSection(configuration.Configuration.ExampleConfiguration);
-
-            Assert.Equal(7, list.Count);
-            Assert.Equal("FullscreenResolution", list[0].Key);
-            Assert.IsType<EnumConfigurationNode>(list[0]);
-            Assert.Equal("1152x648", ((EnumConfigurationNode)list[0]).Value);
-            Assert.Equal(FullscreenResolution.Resolution1152X648, list[0].Value);
-
-            Assert.Equal("Fullscreen", list[1].Key);
-            Assert.IsType<BooleanConfigurationNode>(list[1]);
-
-            Assert.Equal("RenderToMain", list[2].Key);
-            Assert.IsType<BooleanConfigurationNode>(list[2]);
-
-            Assert.Equal("RenderWindowWidth", list[3].Key);
-            Assert.IsType<IntegralConfigurationNode>(list[3]);
-
-            Assert.Equal("RenderWindowHeight", list[4].Key);
-            Assert.IsType<IntegralConfigurationNode>(list[4]);
-
-            Assert.Equal("ISOPath0", list[5].Key);
-            Assert.IsType<StringConfigurationNode>(list[5]);
-
-            Assert.Equal("InternalCpuRatio", list[6].Key);
-            Assert.IsType<DecimalConfigurationNode>(list[6]);
+            var node = context.TraverseInputTemplate(input, 0);
         }
 
         [Fact]
