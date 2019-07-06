@@ -5,12 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
 using Snowflake.Configuration.Attributes;
+using Snowflake.Configuration.Serialization.Serializers.Implementations;
 
 namespace Snowflake.Configuration.Tests
 {
-    [ConfigurationFile("#retroarch", "retroarch.cfg")]
+    [ConfigurationTarget("#retroarch", typeof(SimpleCfgConfigurationSerializer))]
     public interface IRetroArchConfig : IConfigurationCollection<IRetroArchConfig>
     {
-        [SerializableSection("#retroarch")] IVideoConfiguration VideoConfiguration { get; set; }
+        [ConfigurationTargetMember("#retroarch")] IVideoConfiguration VideoConfiguration { get; set; }
     }
 }

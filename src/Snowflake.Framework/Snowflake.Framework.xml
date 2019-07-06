@@ -4,76 +4,6 @@
         <name>Snowflake.Framework</name>
     </assembly>
     <members>
-        <member name="T:Snowflake.Configuration.BooleanMapping">
-            <summary>
-            Default implementation for <see cref="T:Snowflake.Configuration.IBooleanMapping"/>
-            </summary>
-        </member>
-        <member name="P:Snowflake.Configuration.BooleanMapping.True">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Configuration.BooleanMapping.False">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Configuration.BooleanMapping.FromBool(System.Boolean)">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Configuration.BooleanMapping.TitlecaseBooleanMapping">
-             <summary>
-             Gets boolean mapping where
-            
-             True: "True"
-             False: "False
-             </summary>
-        </member>
-        <member name="P:Snowflake.Configuration.BooleanMapping.LowercaseBooleanMapping">
-             <summary>
-             Gets boolean mapping where
-            
-             True: "true"
-             False: "false"
-             </summary>
-        </member>
-        <member name="P:Snowflake.Configuration.BooleanMapping.UppercaseBooleanMapping">
-             <summary>
-             Gets boolean mapping where
-            
-             True: "TRUE"
-             False: "FALSE"
-             </summary>
-        </member>
-        <member name="P:Snowflake.Configuration.BooleanMapping.BinaryBooleanMapping">
-             <summary>
-             Gets boolean mapping where
-            
-             True: "1"
-             False : "0"
-             </summary>
-        </member>
-        <member name="P:Snowflake.Configuration.BooleanMapping.TitlecaseYesNoBooleanMapping">
-             <summary>
-             Gets boolean mapping where
-            
-             True: "Yes"
-             False: "No"
-             </summary>
-        </member>
-        <member name="P:Snowflake.Configuration.BooleanMapping.LowercaseYesNoBooleanMapping">
-             <summary>
-             Gets boolean mapping where
-            
-             True: "yes"
-             False: "no"
-             </summary>
-        </member>
-        <member name="P:Snowflake.Configuration.BooleanMapping.UppercaseYesNoBooleanMapping">
-             <summary>
-             Gets boolean mapping where
-            
-             True: "YES"
-             False: "NO"
-             </summary>
-        </member>
         <member name="P:Snowflake.Configuration.ConfigurationCollection`1.Configuration">
             <inheritdoc/>
         </member>
@@ -244,33 +174,6 @@
         <member name="P:Snowflake.Configuration.ConfigurationSectionDescriptor`1.Item(System.String)">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Configuration.ConfigurationSerializer.TypeMapper">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Configuration.ConfigurationSerializer.SerializeLine``1(System.String,``0)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Configuration.ConfigurationSerializer.SerializeValue(System.Object)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Configuration.ConfigurationSerializer.SerializeHeader(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Configuration.ConfigurationSerializer.SerializeFooter(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Configuration.ConfigurationSerializer.Serialize(Snowflake.Configuration.IConfigurationSection)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Configuration.ConfigurationTypeMapper.Add``1(System.Func{``0,System.String})">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Configuration.ConfigurationTypeMapper.ConvertValue``1(``0)">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Configuration.ConfigurationTypeMapper.Item(System.Type,System.Object)">
-            <inheritdoc/>
-        </member>
         <member name="P:Snowflake.Configuration.ConfigurationValue.Value">
             <inheritdoc/>
         </member>
@@ -281,23 +184,6 @@
             <summary>
             Cache of ensured descriptors
             </summary>
-        </member>
-        <member name="T:Snowflake.Configuration.IniConfigurationSerializer">
-             <summary>
-             A configuration serializer that uses INI format
-            
-             [Header]
-             Key = Value
-             </summary>
-        </member>
-        <member name="M:Snowflake.Configuration.IniConfigurationSerializer.SerializeLine``1(System.String,``0)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Configuration.IniConfigurationSerializer.SerializeHeader(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Configuration.IniConfigurationSerializer.Serialize(Snowflake.Configuration.IConfigurationSection)">
-            <inheritdoc/>
         </member>
         <member name="P:Snowflake.Configuration.Input.InputConfigurationSection`1.Configuration">
             <inheritdoc/>
@@ -390,20 +276,6 @@
             <inheritdoc/>
         </member>
         <member name="M:Snowflake.Configuration.Interceptors.InputTemplateInterceptor`1.Intercept(Castle.DynamicProxy.IInvocation)">
-            <inheritdoc/>
-        </member>
-        <member name="T:Snowflake.Configuration.KeyValuePairConfigurationSerializer">
-             <summary>
-             Provides a generic key value pair serializer with a
-             configuration separator:
-            
-             key separator value
-             </summary>
-        </member>
-        <member name="M:Snowflake.Configuration.KeyValuePairConfigurationSerializer.SerializeLine``1(System.String,``0)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Configuration.KeyValuePairConfigurationSerializer.Serialize(Snowflake.Configuration.IConfigurationSection)">
             <inheritdoc/>
         </member>
         <member name="P:Snowflake.Configuration.SelectionOptionDescriptor.DisplayName">

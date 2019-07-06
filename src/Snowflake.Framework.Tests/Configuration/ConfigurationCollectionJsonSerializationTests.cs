@@ -10,7 +10,7 @@ using Xunit;
 
 namespace Snowflake.Configuration.Tests
 {
-    public class ConfigurationCollectionSerializerTests
+    public class ConfigurationCollectionJsonSerializationTests
     {
         [Fact]
         public void JsonSerialization_Test()

@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration.Attributes;
+using Snowflake.Configuration.Serialization.Serializers.Implementations;
 
 namespace Snowflake.Configuration.Tests
 {
-    [ConfigurationFile("#dolphin", "Dolphin.ini")]
-    [ConfigurationTarget("#dolphin", typeof(object))]
-    [ConfigurationTarget("#regularroot", typeof(int))]
+    [ConfigurationTarget("#dolphin", typeof(SimpleIniConfigurationSerializer))]
+    [ConfigurationTarget("#regularroot", typeof(SimpleIniConfigurationSerializer))]
     [ConfigurationTarget("TestNestedSection", "#dolphin")]
     [ConfigurationTarget("TestNestedNestedSection", "TestNestedSection")]
 
