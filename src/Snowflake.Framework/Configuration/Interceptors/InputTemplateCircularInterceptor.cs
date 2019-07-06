@@ -18,6 +18,12 @@ namespace Snowflake.Configuration.Interceptors
         /// <inheritdoc/>
         public void Intercept(IInvocation invocation)
         {
+            if (invocation.Method.Name == nameof(@this.GetEnumerator))
+            {
+                invocation.ReturnValue = @this.GetEnumerator();
+                return;
+            }
+
             switch (invocation.Method.Name.Substring(4))
             {
                 case nameof(@this.Configuration):

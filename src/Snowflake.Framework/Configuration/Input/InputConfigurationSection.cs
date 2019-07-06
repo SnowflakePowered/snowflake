@@ -63,8 +63,7 @@ namespace Snowflake.Configuration.Input
             this.ValueCollection = new ConfigurationValueCollection();
             this.configurationInterceptor = new ConfigurationInterceptor(this.Descriptor, this.ValueCollection);
             this.Configuration =
-                generator.CreateInterfaceProxyWithoutTarget<T>(interceptor,
-                    configurationInterceptor, inputTemplate);
+                generator.CreateInterfaceProxyWithoutTarget<T>(interceptor, configurationInterceptor, inputTemplate);
         }
 
         /// <inheritdoc/>
