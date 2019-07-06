@@ -5,17 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
 using Snowflake.Configuration.Attributes;
+using Snowflake.Configuration.Serialization.Serializers.Implementations;
 using Snowflake.Configuration.Tests;
 
 namespace Snowflake.Configuration.Tests
 {
-    [ConfigurationFile("#dolphin", "Dolphin.ini")]
-    [ConfigurationFile("#retroarch", "retroarch.cfg")]
+    [ConfigurationTarget("#dolphin", typeof(SimpleIniConfigurationSerializer))]
+    [ConfigurationTarget("#dolphin", typeof(SimpleCfgConfigurationSerializer))]
     public interface
         OrderSensitiveConfigurationCollection : IConfigurationCollection<OrderSensitiveConfigurationCollection>
     {
-        [SerializableSection("#dolphin")] ExampleConfigurationSection ExampleConfiguration { get; set; }
+        [ConfigurationTargetMember("#dolphin")] ExampleConfigurationSection ExampleConfiguration { get; set; }
 
-        [SerializableSection("#retroarch")] IVideoConfiguration VideoConfiguration { get; set; }
+        [ConfigurationTargetMember("#retroarch")] IVideoConfiguration VideoConfiguration { get; set; }
     }
 }
