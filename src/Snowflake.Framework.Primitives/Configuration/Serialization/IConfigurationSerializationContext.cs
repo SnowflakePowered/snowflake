@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Snowflake.Configuration.Serialization.Serializers
+namespace Snowflake.Configuration.Serialization
 {
     public interface IConfigurationSerializationContext<T>
     {

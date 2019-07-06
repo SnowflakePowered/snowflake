@@ -61,15 +61,6 @@
             <typeparam name="T">The type of the configuration collection</typeparam>
             <returns>The collection descriptor for <see cref="T:self"/></returns>
         </member>
-        <member name="P:Snowflake.Configuration.ConfigurationFile.BooleanMapping">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Configuration.ConfigurationFile.Destination">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Configuration.ConfigurationFile.Key">
-            <inheritdoc/>
-        </member>
         <member name="T:Snowflake.Configuration.ConfigurationOptionDescriptor">
             <summary>
             Default constructor for <see cref="T:Snowflake.Configuration.IConfigurationOptionDescriptor"/>
@@ -222,12 +213,6 @@
             <inheritdoc/>
         </member>
         <member name="P:Snowflake.Configuration.Input.InputOption.KeyName">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Configuration.Input.InputSerializer.Serialize(Snowflake.Configuration.Input.IInputTemplate,Snowflake.Configuration.Input.IInputMapping)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Configuration.Input.InputSerializer.SerializeInput(System.String,Snowflake.Input.Controller.ControllerElement,Snowflake.Configuration.Input.IInputMapping)">
             <inheritdoc/>
         </member>
         <member name="P:Snowflake.Configuration.Input.InputTemplate`1.PlayerIndex">

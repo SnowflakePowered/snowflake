@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Snowflake.Configuration.Serialization;
 using Snowflake.Input.Controller;
 
 namespace Snowflake.Configuration.Serialization.Serializers

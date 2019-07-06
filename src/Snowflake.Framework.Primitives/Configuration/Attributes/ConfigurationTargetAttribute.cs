@@ -12,14 +12,13 @@ namespace Snowflake.Configuration.Attributes
     public class ConfigurationTargetAttribute : Attribute
     {
         /// <summary>
-        /// Define a root target with the following name and root target transformer.
+        /// Define a root target with the following name.
         /// </summary>
         /// <param name="targetName">The name of the target.</param>
-        /// <param name="targetTransformer">The type of the ConfigurationTargetTransformer that will evaluate the AST.</param>
-        public ConfigurationTargetAttribute(string targetName, Type targetTransformer)
+        public ConfigurationTargetAttribute(string targetName)
         {
             this.TargetName = targetName;
-            this.TargetTransformer = targetTransformer;
+            this.ParentTarget = null;
         }
 
         /// <summary>
@@ -45,11 +44,6 @@ namespace Snowflake.Configuration.Attributes
         /// combined with. Otherwise, it is null.
         /// </summary>
         public string? ParentTarget { get; }
-
-        /// <summary>
-        /// If <see cref="IsRoot"/> is true, the type of the target transformer that will evaulate this target's resultant AST.
-        /// </summary>
-        public Type? TargetTransformer { get; }
 
         /// <summary>
         /// Whether or not this target is a root target that will evaluate an AST to a stream.

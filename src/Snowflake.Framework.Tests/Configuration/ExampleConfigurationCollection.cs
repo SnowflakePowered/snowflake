@@ -8,8 +8,8 @@ using Snowflake.Configuration.Serialization.Serializers.Implementations;
 
 namespace Snowflake.Configuration.Tests
 {
-    [ConfigurationTarget("#dolphin", typeof(SimpleIniConfigurationSerializer))]
-    [ConfigurationTarget("#regularroot", typeof(SimpleIniConfigurationSerializer))]
+    [ConfigurationTarget("#dolphin")]
+    [ConfigurationTarget("#regularroot")]
     [ConfigurationTarget("TestNestedSection", "#dolphin")]
     [ConfigurationTarget("TestNestedNestedSection", "TestNestedSection")]
 
