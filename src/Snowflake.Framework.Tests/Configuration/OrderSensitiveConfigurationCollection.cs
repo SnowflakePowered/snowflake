@@ -11,7 +11,7 @@ using Snowflake.Configuration.Tests;
 namespace Snowflake.Configuration.Tests
 {
     [ConfigurationTarget("#dolphin", typeof(SimpleIniConfigurationSerializer))]
-    [ConfigurationTarget("#dolphin", typeof(SimpleCfgConfigurationSerializer))]
+    [ConfigurationTarget("#retroarch", typeof(SimpleCfgConfigurationSerializer))]
     public interface
         OrderSensitiveConfigurationCollection : IConfigurationCollection<OrderSensitiveConfigurationCollection>
     {
