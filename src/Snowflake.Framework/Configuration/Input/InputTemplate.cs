@@ -144,7 +144,11 @@ namespace Snowflake.Configuration.Input
         /// <inheritdoc/>
         public IEnumerator<KeyValuePair<IConfigurationOptionDescriptor, IConfigurationValue>> GetEnumerator()
         {
-            return this.Configuration.GetEnumerator();
+            return this.Configuration.Descriptor.Options
+                .Select(o =>
+                    new KeyValuePair<IConfigurationOptionDescriptor, IConfigurationValue>(o, 
+                    this.Configuration.Values[o.OptionKey]))
+                .GetEnumerator();
         }
 
         /// <inheritdoc/>

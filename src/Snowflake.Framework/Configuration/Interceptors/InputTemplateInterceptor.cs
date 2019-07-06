@@ -2,6 +2,7 @@
 using Castle.DynamicProxy;
 using Snowflake.Configuration;
 using Snowflake.Input.Controller;
+using Snowflake.Configuration.Input;
 
 namespace Snowflake.Configuration.Interceptors
 {
@@ -18,6 +19,7 @@ namespace Snowflake.Configuration.Interceptors
         }
 
         internal IConfigurationValueCollection ConfigValues { get; }
+
         public IConfigurationSectionDescriptor Descriptor { get; }
 
         internal IDictionary<string, ControllerElement> InputValues;
