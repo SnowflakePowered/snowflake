@@ -50,21 +50,31 @@ namespace Snowflake.Extensibility.Provisioning
 
         /// <summary>
         /// Gets this plugin's content directory, or the root location of the plugin.
+        /// 
+        /// This should only be used for discretionary or informational purposes. Consider
+        /// using <see cref="IPluginProvision.DataDirectory"/>, <see cref="IPluginProvision.ResourceDirectory"/>,
+        /// or  <see cref="IPluginProvision.CommonResourceDirectory"/> instead.
         /// </summary>
         DirectoryInfo ContentDirectory { get; }
 
         /// <summary>
-        /// Gets the plugin's data directory
+        /// Gets the plugin's data directory. The data directory should be used for temporary or
+        /// generated data that may change or be updated frequently, such as auxillary configurations files
+        /// or temporary files.
+        /// 
+        /// For configuration specifically, consider using <see cref="IPluginProvision.ConfigurationStore"/>.
         /// </summary>
         IDirectory DataDirectory { get; }
 
         /// <summary>
-        /// Gets the plugin's resource directory
+        /// Gets the plugin's resource directory. The resource directory is intended for static
+        /// files that are required only by this plugin, and should not be modified after install.
         /// </summary>
         IDirectory ResourceDirectory { get; }
 
         /// <summary>
-        /// Gets the resource directory common to the plugin's module.
+        /// Gets the resource directory common to the plugin's module. The common resource directory is intended for static
+        /// files that are shared between all plugins in the current module, and should not be modified after install.
         /// </summary>
         IDirectory CommonResourceDirectory { get; }
     }

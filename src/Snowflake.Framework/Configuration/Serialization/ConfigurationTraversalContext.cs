@@ -12,6 +12,7 @@ using Snowflake.Configuration.Input;
 
 namespace Snowflake.Configuration.Serialization
 {
+    /// <inheritdoc />
     public sealed class ConfigurationTraversalContext : IConfigurationTraversalContext
     {
         /// <summary>
@@ -19,11 +20,28 @@ namespace Snowflake.Configuration.Serialization
         /// </summary>
         public static string NullTarget = "#null";
 
+        /// <summary>
+        /// Creates a traversal context with the given path resolutions.
+        /// 
+        /// Use the syntax
+        /// <pre>
+        /// new ConfigurationTraversalContext(("drive", myDirectory), ("drive2", my2ndDirectory));
+        /// </pre>
+        /// </summary>
+        /// <param name="pathResolutionContext">
+        /// A list of tuples of strings and <see cref="IDirectory"/> that specify each
+        /// namespaced path.
+        /// </param>
         public ConfigurationTraversalContext(params (string directoryNamespace, IDirectory directory)[] pathResolutionContext)
         {
             this.PathResolutionContext = pathResolutionContext
                 .ToDictionary(v => v.directoryNamespace, v => v.directory);
         }
+
+        /// <summary>
+        /// Creates a traversal context with the given path resolutions.
+        /// </summary>
+        /// <param name="pathResolutionContext">The path resolutions supplied as a dictionary.</param>
         public ConfigurationTraversalContext(IDictionary<string, IDirectory> pathResolutionContext)
         {
             this.PathResolutionContext = pathResolutionContext;
