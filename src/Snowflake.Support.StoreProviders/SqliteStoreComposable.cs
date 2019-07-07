@@ -17,7 +17,6 @@ namespace Snowflake.Support.StoreProviders
 {
     public class SqliteStoreComposable : IComposable
     {
-
         [ImportService(typeof(IServiceRegistrationProvider))]
         [ImportService(typeof(IContentDirectoryProvider))]
         [ImportService(typeof(IFileSystem))]

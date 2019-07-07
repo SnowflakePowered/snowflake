@@ -66,6 +66,5 @@ namespace Snowflake.Extensibility.Provisioning
 
         /// <inheritdoc/>
         public IPluginConfigurationStore ConfigurationStore { get; }
-
     }
 }
