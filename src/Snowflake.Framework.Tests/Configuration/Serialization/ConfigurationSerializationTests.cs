@@ -36,7 +36,7 @@ namespace Snowflake.Configuration.Serialization
             IAbstractConfigurationNode dolphinList = list["#dolphin"];
 
             var iniSerializer = new SimpleIniConfigurationSerializer();
-            string outputIni = iniSerializer.Serialize(dolphinList);
+            string outputIni = iniSerializer.Transform(dolphinList);
             var parser = new IniDataParser();
             var data = parser.Parse(outputIni);
             Assert.NotEmpty(data.Sections);
@@ -60,7 +60,7 @@ namespace Snowflake.Configuration.Serialization
             IAbstractConfigurationNode dolphinList = list["#dolphin"];
 
             var cfgSerializer = new SimpleCfgConfigurationSerializer();
-            string outputCfg = cfgSerializer.Serialize(dolphinList);
+            string outputCfg = cfgSerializer.Transform(dolphinList);
             Assert.NotEqual(string.Empty, outputCfg);
             // todo: test cfg parse
         }
@@ -83,7 +83,7 @@ namespace Snowflake.Configuration.Serialization
 
             var xmlSerializer = new SimpleXmlConfigurationSerializer("Config");
            
-            string outputXml = xmlSerializer.Serialize(dolphinList);
+            string outputXml = xmlSerializer.Transform(dolphinList);
             XDocument doc = XDocument.Parse(outputXml);
             Assert.NotEmpty(doc.Nodes());
         }
@@ -106,7 +106,7 @@ namespace Snowflake.Configuration.Serialization
             IAbstractConfigurationNode dolphinList = list["#dolphin"];
 
             var jsonSerializer = new SimpleJsonConfigurationSerializer();
-            string outputJson = jsonSerializer.Serialize(dolphinList);
+            string outputJson = jsonSerializer.Transform(dolphinList);
             var jtoken = JToken.Parse(outputJson);
             Assert.True(jtoken.HasValues);
         }

@@ -1,23 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Snowflake.Configuration.Input;
 using Snowflake.Input.Controller;
 
 namespace Snowflake.Configuration.Serialization.Serializers
 {
-    public abstract class ConfigurationSerializer<T> : IConfigurationSerializer<T>
+    /// <summary>
+    /// Implements <see cref="IConfigurationTransformer{TOutput}"/> by serializing the 
+    /// syntax tree into some string or binary format.
+    /// </summary>
+    /// <typeparam name="T">The type of the serialized data after traversing the tree.</typeparam>
+    public abstract class ConfigurationSerializer<T> : IConfigurationTransformer<T>
     {
-        public abstract T Serialize(IAbstractConfigurationNode node);
+        /// <inheritdoc />
+        public abstract T Transform(IAbstractConfigurationNode node);
+
+        /// <summary>
+        /// Write the header to the serialized stream.
+        /// </summary>
+        /// <param name="context">The serialization context.</param>
         public virtual void SerializeHeader(IConfigurationSerializationContext<T> context)
         {
             return;
         }
 
+        /// <summary>
+        /// Write the header to the serialized stream.
+        /// </summary>
+        /// <param name="context">The serialization context.</param>
         public virtual void SerializeFooter(IConfigurationSerializationContext<T> context)
         {
             return;
         }
 
+        /// <summary>
+        /// Serialize a <see cref="IAbstractConfigurationNode"/> with the given context.
+        /// </summary>
+        /// <param name="node">The node to serialize.</param>
+        /// <param name="context">The serialization context.</param>
+        /// <param name="index">The position or index of the given node within the current block in the context.</param>
         public void SerializeNode(IAbstractConfigurationNode node,
             IConfigurationSerializationContext<T> context, int index = 0)
         {
@@ -48,8 +70,31 @@ namespace Snowflake.Configuration.Serialization.Serializers
                     break;
             }
         }
+
+        /// <summary>
+        /// Serialize a marker or header where a block or section begins in the serialized stream.
+        /// </summary>
+        /// <param name="context">The serialization context.</param>
+        /// <param name="index">The position or index of the given node within the current block in the context.</param>
         public abstract void SerializeBlockBegin(IConfigurationSerializationContext<T> context, int index);
+
+        /// <summary>
+        /// Serialize a marker or footer where a block or section ends in the serialized stream.
+        /// </summary>
+        /// <param name="context">The serialization context.</param>
+        /// <param name="index">The position or index of the given node within the current block in the context.</param>
         public abstract void SerializeBlockEnd(IConfigurationSerializationContext<T> context, int index);
+
+        /// <summary>
+        /// Serializes a list of configuration nodes.
+        /// 
+        /// For each child node to be serialized, the index should be incremented. Serializing a list node will 
+        /// enter a new block, and thus block headers and footers are written at the beginning and end of
+        /// serialization of this node respectively.
+        /// </summary>
+        /// <param name="node">The list of configuration nodes represented as a <see cref="ListConfigurationNode"/></param>
+        /// <param name="context">The serialization context.</param>
+        /// <param name="index">The position or index of the given node within the current block in the context.</param>
         protected void SerializeNode(ListConfigurationNode node, IConfigurationSerializationContext<T> context, int index)
         {
             // Ignore pseudo-targets
@@ -72,32 +117,85 @@ namespace Snowflake.Configuration.Serialization.Serializers
                 context.ExitScope();
             }
         }
+
+        /// <summary>
+        /// Serializes a configuration node that encapsulates a <see cref="string"/>.
+        /// </summary>
+        /// <param name="node">The node to serialize.</param>
+        /// <param name="context">The serialization context.</param>
+        /// <param name="index">The position or index of the given node within the current block in the context.</param>
         protected void SerializeNode(StringConfigurationNode node, IConfigurationSerializationContext<T> context, int index)
         {
             this.SerializeNodeValue(node.Value, node.Key, context, index);
         }
+
+        /// <summary>
+        /// Serializes a configuration node that encapsulates a <see cref="bool"/>.
+        /// </summary>
+        /// <param name="node">The node to serialize.</param>
+        /// <param name="context">The serialization context.</param>
+        /// <param name="index">The position or index of the given node within the current block in the context.</param>
         protected void SerializeNode(BooleanConfigurationNode node, IConfigurationSerializationContext<T> context, int index)
         {
             this.SerializeNodeValue(node.Value, node.Key, context, index);
         }
+
+        /// <summary>
+        /// Serializes a configuration node that encapsulates an integral value, implemented as a <see cref="long"/>
+        /// </summary>
+        /// <param name="node">The node to serialize.</param>
+        /// <param name="context">The serialization context.</param>
+        /// <param name="index">The position or index of the given node within the current block in the context.</param>
         protected void SerializeNode(IntegralConfigurationNode node, IConfigurationSerializationContext<T> context, int index)
         {
             this.SerializeNodeValue(node.Value, node.Key, context, index);
         }
+
+        /// <summary>
+        /// Serializes a configuration node that encapsulates a decimal value, implemented as a <see cref="double"/>.
+        /// 
+        /// Contrary to the name, this is not implemented as a <see cref="decimal"/>, and IEEE 754 floating point semantics
+        /// for double precision floating point numbers should be taken into account.
+        /// </summary>
+        /// <param name="node">The node to serialize.</param>
+        /// <param name="context">The serialization context.</param>
+        /// <param name="index">The position or index of the given node within the current block in the context.</param>
         protected void SerializeNode(DecimalConfigurationNode node, IConfigurationSerializationContext<T> context, int index)
         {
             this.SerializeNodeValue(node.Value, node.Key, context, index);
         }
+
+        /// <summary>
+        /// Serializes a configuration node that encapsulates an <see cref="Enum"/> value.
+        /// </summary>
+        /// <param name="node">The node to serialize.</param>
+        /// <param name="context">The serialization context.</param>
+        /// <param name="index">The position or index of the given node within the current block in the context.</param>
         protected void SerializeNode(EnumConfigurationNode node, IConfigurationSerializationContext<T> context, int index)
         {
             this.SerializeNodeValue((node as AbstractConfigurationNode<Enum>).Value, node.Value, node.Key, context, index);
         }
 
+        /// <summary>
+        /// Serializes a configuration node that encapsulates a <see cref="ControllerElement"/>.
+        /// 
+        /// This is only used when serializing syntax trees that came from <see cref="IInputTemplate"/>.
+        /// </summary>
+        /// <param name="node">The node to serialize.</param>
+        /// <param name="context">The serialization context.</param>
+        /// <param name="index">The position or index of the given node within the current block in the context.</param>
         protected void SerializeNode(ControllerElementConfigurationNode node, IConfigurationSerializationContext<T> context, int index)
         {
             this.SerializeNodeValue((node as AbstractConfigurationNode<ControllerElement>).Value, node.Value, node.Key, context, index);
         }
 
+        /// <summary>
+        /// Serializes the value of a <see cref="BooleanConfigurationNode"/>.
+        /// </summary>
+        /// <param name="value">The raw value of the node.</param>
+        /// <param name="key">The key of the node.</param>
+        /// <param name="context">The serialization context.</param>
+        /// <param name="index">The position or index of the given node within the current block in the context.</param>
         public abstract void SerializeNodeValue(bool value, string key, IConfigurationSerializationContext<T> context, int index);
         public abstract void SerializeNodeValue(double value, string key, IConfigurationSerializationContext<T> context, int index);
         public abstract void SerializeNodeValue(Enum enumValue, string value, string key, IConfigurationSerializationContext<T> context, int index);

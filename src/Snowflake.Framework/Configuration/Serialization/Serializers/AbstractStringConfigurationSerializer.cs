@@ -7,7 +7,7 @@ namespace Snowflake.Configuration.Serialization.Serializers
     public abstract class AbstractStringConfigurationSerializer
         : ConfigurationSerializer<string>
     {
-        public override string Serialize(IAbstractConfigurationNode node)
+        public override string Transform(IAbstractConfigurationNode node)
         {
             IConfigurationSerializationContext<string> context = new StringSerializationContext();
             this.SerializeHeader(context);

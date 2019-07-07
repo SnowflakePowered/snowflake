@@ -48,7 +48,7 @@ namespace Snowflake.Configuration.Serialization
             var list = context.TraverseInputTemplate(input, mapping, 0);
 
             var iniSerializer = new SimpleIniConfigurationSerializer();
-            string outputIni = iniSerializer.Serialize(list);
+            string outputIni = iniSerializer.Transform(list);
             var parser = new IniDataParser();
             var data = parser.Parse(outputIni);
             Assert.NotEmpty(data.Sections);
@@ -79,7 +79,7 @@ namespace Snowflake.Configuration.Serialization
 
 
             var cfgSerializer = new SimpleCfgConfigurationSerializer();
-            string outputCfg = cfgSerializer.Serialize(list);
+            string outputCfg = cfgSerializer.Transform(list);
             Assert.NotEqual(string.Empty, outputCfg);
             // todo: test cfg parse
         }
@@ -109,7 +109,7 @@ namespace Snowflake.Configuration.Serialization
 
             var xmlSerializer = new SimpleXmlConfigurationSerializer("Config");
            
-            string outputXml = xmlSerializer.Serialize(list);
+            string outputXml = xmlSerializer.Transform(list);
             XDocument doc = XDocument.Parse(outputXml);
             Assert.NotEmpty(doc.Nodes());
         }
@@ -139,7 +139,7 @@ namespace Snowflake.Configuration.Serialization
 
 
             var jsonSerializer = new SimpleJsonConfigurationSerializer();
-            string outputJson = jsonSerializer.Serialize(list);
+            string outputJson = jsonSerializer.Transform(list);
             var jtoken = JToken.Parse(outputJson);
             Assert.True(jtoken.HasValues);
         }

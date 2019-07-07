@@ -49,11 +49,14 @@ namespace Snowflake.FileSystem.Tests
             Assert.Equal(NormalizePath(dir.GetPath().FullName),
                 NormalizePath(Path.Combine(temp, "test")));
 
+#pragma warning disable CS0618 // Type or member is obsolete
             Assert.Equal(NormalizePath(dir.OpenDirectory("dir1").GetPath().FullName),
                 NormalizePath(Path.Combine(temp, "test", "dir1")));
 
             Assert.Equal(NormalizePath(dir.OpenDirectory("test").OpenDirectory("test").GetPath().FullName),
                 NormalizePath(Path.Combine(temp, "test", "test", "test")));
+#pragma warning restore CS0618 // Type or member is obsolete
+
         }
 
         [Fact]
@@ -65,9 +68,11 @@ namespace Snowflake.FileSystem.Tests
             var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
 
             var deep = dir.OpenDirectory("test/test");
-
+#pragma warning disable CS0618 // Type or member is obsolete
             Assert.Equal(NormalizePath(deep.GetPath().FullName),
                NormalizePath(Path.Combine(temp, "test", "test", "test")));
+#pragma warning restore CS0618 // Type or member is obsolete
+
         }
 
 
