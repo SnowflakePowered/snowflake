@@ -30,7 +30,7 @@ namespace Snowflake.Configuration.Serialization
             var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
 
             configuration.Configuration.ExampleConfiguration.FullscreenResolution = FullscreenResolution.Resolution1152X648;
-            var context = new ConfigurationTraversalContext(dir);
+            var context = new ConfigurationTraversalContext(("game", dir));
 
             var list = context.TraverseCollection(configuration.Configuration);
             IAbstractConfigurationNode dolphinList = list["#dolphin"];
@@ -54,7 +54,7 @@ namespace Snowflake.Configuration.Serialization
             var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
 
             configuration.Configuration.ExampleConfiguration.FullscreenResolution = FullscreenResolution.Resolution1152X648;
-            var context = new ConfigurationTraversalContext(dir);
+            var context = new ConfigurationTraversalContext(("game", dir));
 
             var list = context.TraverseCollection(configuration.Configuration);
             IAbstractConfigurationNode dolphinList = list["#dolphin"];
@@ -77,7 +77,7 @@ namespace Snowflake.Configuration.Serialization
             var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
 
             configuration.Configuration.ExampleConfiguration.FullscreenResolution = FullscreenResolution.Resolution1152X648;
-            var context = new ConfigurationTraversalContext(dir);
+            var context = new ConfigurationTraversalContext(("game", dir));
             var list = context.TraverseCollection(configuration.Configuration);
             IAbstractConfigurationNode dolphinList = list["#dolphin"];
 
@@ -100,7 +100,7 @@ namespace Snowflake.Configuration.Serialization
             var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
 
             configuration.Configuration.ExampleConfiguration.FullscreenResolution = FullscreenResolution.Resolution1152X648;
-            var context = new ConfigurationTraversalContext(dir);
+            var context = new ConfigurationTraversalContext(("game", dir));
 
             var list = context.TraverseCollection(configuration.Configuration);
             IAbstractConfigurationNode dolphinList = list["#dolphin"];

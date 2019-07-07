@@ -18,6 +18,38 @@ namespace Snowflake.Configuration.Serialization
 {
     public class ConfigurationTraversalContextTests
     {
+
+        [Fact]
+        public void PathNamespaceNotExists_Test()
+        {
+            var configuration =
+             new ConfigurationCollection<ExampleConfigurationCollection>(new ConfigurationValueCollection());
+
+            var fs = new PhysicalFileSystem();
+            var temp = Path.GetTempPath();
+            var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
+            var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
+
+            var context = new ConfigurationTraversalContext();
+
+            Assert.Throws<KeyNotFoundException>(() => context.TraverseCollection(configuration.Configuration));
+        }
+
+        [Fact]
+        public void PathNamespaceNotSpecified_Test()
+        {
+            var configuration =
+             new ConfigurationCollection<MissingPathConfigurationCollection>(new ConfigurationValueCollection());
+
+            var fs = new PhysicalFileSystem();
+            var temp = Path.GetTempPath();
+            var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
+            var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
+
+            var context = new ConfigurationTraversalContext();
+            Assert.Throws<ArgumentException>(() => context.TraverseCollection(configuration.Configuration));
+        }
+
         [Fact]
         public void DuplicateTarget_Test()
         {
@@ -29,7 +61,7 @@ namespace Snowflake.Configuration.Serialization
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
             var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
 
-            var context = new ConfigurationTraversalContext(dir);
+            var context = new ConfigurationTraversalContext(("game", dir));
 
             context.TraverseCollection(configuration.Configuration);
         }
@@ -45,7 +77,7 @@ namespace Snowflake.Configuration.Serialization
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
             var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
 
-            var context = new ConfigurationTraversalContext(dir);
+            var context = new ConfigurationTraversalContext(("game", dir));
             Assert.Throws<InvalidOperationException>(() => context.TraverseCollection(configuration));
         }
 
@@ -60,7 +92,7 @@ namespace Snowflake.Configuration.Serialization
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
             var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
 
-            var context = new ConfigurationTraversalContext(dir);
+            var context = new ConfigurationTraversalContext(("game", dir));
 
             var targets = context.TraverseCollection(configuration.Configuration);
         }
@@ -83,7 +115,7 @@ namespace Snowflake.Configuration.Serialization
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
             var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
 
-            var context = new ConfigurationTraversalContext(dir);
+            var context = new ConfigurationTraversalContext(("game", dir));
             var node = context.TraverseInputTemplate(input, mapping, 0);
         }
 
@@ -99,7 +131,7 @@ namespace Snowflake.Configuration.Serialization
             var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
 
             configuration.Configuration.ExampleConfiguration.FullscreenResolution = FullscreenResolution.Resolution1152X648;
-            var context = new ConfigurationTraversalContext(dir);
+            var context = new ConfigurationTraversalContext(("game", dir));
 
             var list = context.TraverseCollection(configuration.Configuration);
             Assert.Equal(2, list.Count);

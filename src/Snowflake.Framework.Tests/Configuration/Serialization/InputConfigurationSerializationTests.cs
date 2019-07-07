@@ -43,7 +43,7 @@ namespace Snowflake.Configuration.Serialization
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
             var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
 
-            var context = new ConfigurationTraversalContext(dir);
+            var context = new ConfigurationTraversalContext();
 
             var list = context.TraverseInputTemplate(input, mapping, 0);
 
@@ -73,7 +73,7 @@ namespace Snowflake.Configuration.Serialization
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
             var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
 
-            var context = new ConfigurationTraversalContext(dir);
+            var context = new ConfigurationTraversalContext();
 
             var list = context.TraverseInputTemplate(input, mapping, 0);
 
@@ -103,7 +103,7 @@ namespace Snowflake.Configuration.Serialization
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
             var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
 
-            var context = new ConfigurationTraversalContext(dir);
+            var context = new ConfigurationTraversalContext();
 
             var list = context.TraverseInputTemplate(input, mapping, 0);
 
@@ -133,7 +133,7 @@ namespace Snowflake.Configuration.Serialization
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
             var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
 
-            var context = new ConfigurationTraversalContext(dir);
+            var context = new ConfigurationTraversalContext();
 
             var list = context.TraverseInputTemplate(input, mapping, 0);
 
