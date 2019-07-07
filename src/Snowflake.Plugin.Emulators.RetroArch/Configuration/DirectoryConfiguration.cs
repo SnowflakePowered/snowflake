@@ -7,136 +7,136 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Configuration
     [ConfigurationSection("directory", "Directory Options")]
     public interface DirectoryConfiguration : IConfigurationSection<DirectoryConfiguration>
     {
-        [ConfigurationOption("assets_directory", "default", DisplayName = "Assets Directory", IsPath = true,
+        [ConfigurationOption("assets_directory", "default", PathType.Raw, DisplayName = "Assets Directory", 
             Private = true)]
         string AssetsDirectory { get; set; }
 
-        [ConfigurationOption("audio_filter_dir", "default", DisplayName = "Audio Filter Dir", IsPath = true,
+        [ConfigurationOption("audio_filter_dir", "default", PathType.Raw, DisplayName = "Audio Filter Dir", 
             Private = true)]
         string AudioFilterDir { get; set; }
 
-        [ConfigurationOption("bundle_assets_dst_path", "", DisplayName = "Bundle Assets Dst Path", IsPath = true,
+        [ConfigurationOption("bundle_assets_dst_path", "", PathType.Raw, DisplayName = "Bundle Assets Dst Path", 
             Private = true)]
         string BundleAssetsDstPath { get; set; }
 
-        [ConfigurationOption("bundle_assets_dst_path_subdir", "", DisplayName = "Bundle Assets Dst Path Subdir",
-            IsPath = true, Private = true)]
+        [ConfigurationOption("bundle_assets_dst_path_subdir", "", PathType.Raw, DisplayName = "Bundle Assets Dst Path Subdir",
+             Private = true)]
         string BundleAssetsDstPathSubdir { get; set; }
 
-        [ConfigurationOption("bundle_assets_src_path", "", DisplayName = "Bundle Assets Src Path", IsPath = true,
+        [ConfigurationOption("bundle_assets_src_path", "", PathType.Raw, DisplayName = "Bundle Assets Src Path", 
             Private = true)]
         string BundleAssetsSrcPath { get; set; }
 
-        [ConfigurationOption("cache_directory", "", DisplayName = "Cache Directory", IsPath = true, Private = true)]
+        [ConfigurationOption("cache_directory", "", PathType.Raw, DisplayName = "Cache Directory",  Private = true)]
         string CacheDirectory { get; set; }
 
-        [ConfigurationOption("cheat_database_path", "", DisplayName = "Cheat Database Path", IsPath = true,
+        [ConfigurationOption("cheat_database_path", "", PathType.Raw, DisplayName = "Cheat Database Path", 
             Private = true)]
         string CheatDatabasePath { get; set; }
 
-        [ConfigurationOption("content_database_path", "", DisplayName = "Content Database Path", IsPath = true,
+        [ConfigurationOption("content_database_path", "", PathType.Raw, DisplayName = "Content Database Path", 
             Private = true)]
         string ContentDatabasePath { get; set; }
 
-        [ConfigurationOption("content_history_dir", "", DisplayName = "Content History Dir", IsPath = true,
+        [ConfigurationOption("content_history_dir", "", PathType.Raw, DisplayName = "Content History Dir", 
             Private = true)]
         string ContentHistoryDir { get; set; }
 
-        [ConfigurationOption("content_history_path", ":\\content_history.lpl", DisplayName = "Content History Path",
-            IsPath = true, Private = true)]
+        [ConfigurationOption("content_history_path", ":\\content_history.lpl", PathType.Raw, DisplayName = "Content History Path",
+             Private = true)]
         string ContentHistoryPath { get; set; }
 
-        [ConfigurationOption("core_assets_directory", "default", DisplayName = "Core Assets Directory", IsPath = true,
+        [ConfigurationOption("core_assets_directory", "default", PathType.Raw, DisplayName = "Core Assets Directory", 
             Private = true)]
         string CoreAssetsDirectory { get; set; }
 
-        [ConfigurationOption("core_options_path", "", DisplayName = "Core Options Path", IsPath = true, Private = true)]
+        [ConfigurationOption("core_options_path", "", PathType.Raw, DisplayName = "Core Options Path",  Private = true)]
         string CoreOptionsPath { get; set; }
 
-        [ConfigurationOption("cursor_directory", "", DisplayName = "Cursor Directory", IsPath = true, Private = true)]
+        [ConfigurationOption("cursor_directory", "", PathType.Raw, DisplayName = "Cursor Directory",  Private = true)]
         string CursorDirectory { get; set; }
 
-        [ConfigurationOption("dynamic_wallpapers_directory", "default", DisplayName = "Dynamic Wallpapers Directory",
-            IsPath = true, Private = true)]
+        [ConfigurationOption("dynamic_wallpapers_directory", "default", PathType.Raw, DisplayName = "Dynamic Wallpapers Directory",
+             Private = true)]
         string DynamicWallpapersDirectory { get; set; }
 
-        [ConfigurationOption("input_remapping_directory", "", DisplayName = "Input Remapping Directory", IsPath = true,
+        [ConfigurationOption("input_remapping_directory", "", PathType.Raw, DisplayName = "Input Remapping Directory", 
             Private = true)]
         string InputRemappingDirectory { get; set; }
 
-        [ConfigurationOption("joypad_autoconfig_dir", "", DisplayName = "Joypad Autoconfig Dir", IsPath = true,
+        [ConfigurationOption("joypad_autoconfig_dir", "", PathType.Raw, DisplayName = "Joypad Autoconfig Dir", 
             Private = true)]
         string JoypadAutoconfigDir { get; set; }
 
-        [ConfigurationOption("libretro_directory", "", DisplayName = "Libretro Directory", IsPath = true,
+        [ConfigurationOption("libretro_directory", "", PathType.Raw, DisplayName = "Libretro Directory", 
             Private = true)]
         string LibretroDirectory { get; set; }
 
-        [ConfigurationOption("libretro_info_path", "", DisplayName = "Libretro Info Path", IsPath = true,
+        [ConfigurationOption("libretro_info_path", "", PathType.Raw, DisplayName = "Libretro Info Path", 
             Private = true)]
         string LibretroInfoPath { get; set; }
 
-        [ConfigurationOption("osk_overlay_directory", "default", DisplayName = "Osk Overlay Directory", IsPath = true,
+        [ConfigurationOption("osk_overlay_directory", "default", PathType.Raw, DisplayName = "Osk Overlay Directory", 
             Private = true)]
         string OskOverlayDirectory { get; set; }
 
-        [ConfigurationOption("overlay_directory", "default", DisplayName = "Overlay Directory", IsPath = true,
+        [ConfigurationOption("overlay_directory", "default", PathType.Raw, DisplayName = "Overlay Directory", 
             Private = true)]
         string OverlayDirectory { get; set; }
 
-        [ConfigurationOption("playlist_directory", "default", DisplayName = "Playlist Directory", IsPath = true,
+        [ConfigurationOption("playlist_directory",  "default", PathType.Raw, DisplayName = "Playlist Directory", 
             Private = true)]
         string PlaylistDirectory { get; set; }
 
-        [ConfigurationOption("recording_config_directory", "", DisplayName = "Recording Config Directory",
-            IsPath = true,
+        [ConfigurationOption("recording_config_directory", "", PathType.Raw, DisplayName = "Recording Config Directory",
+            
             Private = true)]
         string RecordingConfigDirectory { get; set; }
 
-        [ConfigurationOption("recording_output_directory", "", DisplayName = "Recording Output Directory",
-            IsPath = true,
+        [ConfigurationOption("recording_output_directory", "", PathType.Raw, DisplayName = "Recording Output Directory",
+            
             Private = true)]
         string RecordingOutputDirectory { get; set; }
 
-        [ConfigurationOption("resampler_directory", "", DisplayName = "Resampler Directory", IsPath = true,
+        [ConfigurationOption("resampler_directory", "", PathType.Raw, DisplayName = "Resampler Directory", 
             Private = true)]
         string ResamplerDirectory { get; set; }
 
-        [ConfigurationOption("rgui_browser_directory", "default", DisplayName = "Rgui Browser Directory", IsPath = true,
+        [ConfigurationOption("rgui_browser_directory", "default", PathType.Raw, DisplayName = "Rgui Browser Directory", 
             Private = true)]
         string RguiBrowserDirectory { get; set; }
 
-        [ConfigurationOption("rgui_config_directory", "default", DisplayName = "Rgui Config Directory", IsPath = true,
+        [ConfigurationOption("rgui_config_directory", "default", PathType.Raw, DisplayName = "Rgui Config Directory", 
             Private = true)]
         string RguiConfigDirectory { get; set; }
 
-        [ConfigurationOption("screenshot_directory", "default", DisplayName = "Screenshot Directory", IsPath = true,
+        [ConfigurationOption("screenshot_directory", "default", PathType.Raw, DisplayName = "Screenshot Directory", 
             Private = true)]
         string ScreenshotDirectory { get; set; }
 
-        [ConfigurationOption("system_directory", "default", DisplayName = "System Directory", IsPath = true,
+        [ConfigurationOption("system_directory", "default", PathType.Raw, DisplayName = "System Directory", 
             Private = true)]
         string SystemDirectory { get; set; }
 
-        [ConfigurationOption("savefile_directory", "default", DisplayName = "Savefile Directory")]
+        [ConfigurationOption("savefile_directory", "default", PathType.Raw, DisplayName = "Savefile Directory")]
         string SavefileDirectory { get; set; }
 
-        [ConfigurationOption("thumbnails_directory", "default", DisplayName = "Thumbnails Directory", IsPath = true,
+        [ConfigurationOption("thumbnails_directory", "default", PathType.Raw, DisplayName = "Thumbnails Directory", 
             Private = true)]
         string ThumbnailsDirectory { get; set; }
 
-        [ConfigurationOption("video_filter_dir", "default", DisplayName = "Video Filter Dir", IsPath = true,
+        [ConfigurationOption("video_filter_dir", "default", PathType.Raw, DisplayName = "Video Filter Dir", 
             Private = true)]
         string VideoFilterDir { get; set; }
 
-        [ConfigurationOption("video_font_path", "", DisplayName = "Video Font Path", IsPath = true, Private = true)]
+        [ConfigurationOption("video_font_path", "", PathType.Raw, DisplayName = "Video Font Path",  Private = true)]
         string VideoFontPath { get; set; }
 
-        [ConfigurationOption("video_shader_dir", "default", DisplayName = "Video Shader Dir", IsPath = true,
+        [ConfigurationOption("video_shader_dir", "default", PathType.Raw, DisplayName = "Video Shader Dir", 
             Private = true)]
         string VideoShaderDir { get; set; }
 
-        [ConfigurationOption("savestate_directory", "default", DisplayName = "Savestate Directory", IsPath = true,
+        [ConfigurationOption("savestate_directory", "default", PathType.Raw, DisplayName = "Savestate Directory", 
             Private = true)]
         string SavestateDirectory { get; set; }
     }

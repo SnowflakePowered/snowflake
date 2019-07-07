@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
-using Snowflake.Execution.Saving;
 using Snowflake.Extensibility.Provisioning;
 using Snowflake.Model.Records.Game;
 using Snowflake.Services;
@@ -40,7 +39,7 @@ namespace Snowflake.Execution.Extensibility
 
         /// <inheritdoc/>
         public abstract IEmulatorTask CreateTask(IGameRecord executingGame,
-            ISaveLocation saveLocation, IList<IEmulatedController> controllerConfiguration,
+            IList<IEmulatedController> controllerConfiguration,
             string profileContext = "default");
     }
 }

@@ -5,7 +5,6 @@ using System.Text;
 using Snowflake.Configuration;
 using Snowflake.Configuration.Input;
 using Snowflake.Execution.Process;
-using Snowflake.Execution.Saving;
 using Snowflake.Model.Records.Game;
 
 namespace Snowflake.Execution.Extensibility
@@ -30,9 +29,6 @@ namespace Snowflake.Execution.Extensibility
 
         /// <inheritdoc/>
         public IGameRecord EmulatingGame { get; }
-
-        /// <inheritdoc/>
-        public ISaveLocation GameSaveLocation { get; set; }
 
         /// <inheritdoc/>
         public IImmutableDictionary<string, string> Pragmas => this.pragmas.ToImmutableDictionary();

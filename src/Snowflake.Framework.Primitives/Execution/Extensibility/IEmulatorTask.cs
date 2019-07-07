@@ -5,7 +5,6 @@ using System.Text;
 using Snowflake.Configuration;
 using Snowflake.Configuration.Input;
 using Snowflake.Execution.Process;
-using Snowflake.Execution.Saving;
 using Snowflake.Model.Records.Game;
 
 namespace Snowflake.Execution.Extensibility
@@ -31,11 +30,6 @@ namespace Snowflake.Execution.Extensibility
         /// Gets the game that is to be emulated.
         /// </summary>
         IGameRecord EmulatingGame { get; }
-
-        /// <summary>
-        /// Gets the location where the save files for this game are to be persisted and loaded from.
-        /// </summary>
-        ISaveLocation GameSaveLocation { get; }
 
         /// <summary>
         /// Gets any string pragmas declared by the <see cref="IEmulator"/> that produced this task.

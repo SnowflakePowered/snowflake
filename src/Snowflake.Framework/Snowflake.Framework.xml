@@ -495,9 +495,6 @@
         <member name="P:Snowflake.Execution.Extensibility.EmulatorTask.EmulatingGame">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Execution.Extensibility.EmulatorTask.GameSaveLocation">
-            <inheritdoc/>
-        </member>
         <member name="P:Snowflake.Execution.Extensibility.EmulatorTask.Pragmas">
             <inheritdoc/>
         </member>
@@ -549,7 +546,7 @@
         <member name="P:Snowflake.Execution.Extensibility.ExternalEmulator.ConfigurationFactory">
             <inheritdoc/>
         </member>
-        <member name="M:Snowflake.Execution.Extensibility.ExternalEmulator.CreateTask(Snowflake.Model.Records.Game.IGameRecord,Snowflake.Execution.Saving.ISaveLocation,System.Collections.Generic.IList{Snowflake.Execution.Extensibility.IEmulatedController},System.String)">
+        <member name="M:Snowflake.Execution.Extensibility.ExternalEmulator.CreateTask(Snowflake.Model.Records.Game.IGameRecord,System.Collections.Generic.IList{Snowflake.Execution.Extensibility.IEmulatedController},System.String)">
             <inheritdoc/>
         </member>
         <member name="F:Snowflake.Extensibility.EmptyPluginConfiguration.EmptyConfiguration">

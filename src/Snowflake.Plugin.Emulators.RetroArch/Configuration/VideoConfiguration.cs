@@ -27,10 +27,10 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Configuration
         [ConfigurationOption("video_driver", VideoDriver.Vulkan, DisplayName = "Video Driver")]
         VideoDriver VideoDriver { get; set; }
 
-        [ConfigurationOption("video_filter", "", DisplayName = "Video Filter", Private = true, IsPath = true)]
+        [ConfigurationOption("video_filter", "", PathType.Raw, DisplayName = "Video Filter", Private = true)]
         string VideoFilter { get; set; }
 
-        [ConfigurationOption("video_filter_dir", "default", DisplayName = "Video Filter Dir", IsPath = true,
+        [ConfigurationOption("video_filter_dir", "default", PathType.Raw, DisplayName = "Video Filter Dir",
             Private = true)]
         string VideoFilterDir { get; set; }
 
@@ -94,7 +94,7 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Configuration
         [ConfigurationOption("video_shader_enable", true, DisplayName = "Enable Shaders", Simple = true)]
         bool VideoShaderEnable { get; set; }
 
-        [ConfigurationOption("video_shader", "", DisplayName = "Video Shader Path", IsPath = true, Private = true)]
+        [ConfigurationOption("video_shader", "", PathType.Raw, DisplayName = "Video Shader Path", Private = true)]
         string VideoShaderPath { get; set; }
 
         [ConfigurationOption("video_shared_context", false, DisplayName = "Video Shared Context", Private = true)]

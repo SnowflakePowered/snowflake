@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using GraphQL.Types;
 using Snowflake.Execution.Extensibility;
-using Snowflake.Execution.Saving;
 using Snowflake.Extensibility;
 using Snowflake.Framework.Remoting.GraphQL.Attributes;
 using Snowflake.Framework.Remoting.GraphQL.Query;
@@ -20,7 +19,6 @@ namespace Snowflake.Support.Remoting.GraphQL.Queries
     {
         public IPluginCollection<IEmulator> Emulators { get; }
         public IStoneProvider Stone { get; }
-        public ISaveLocationProvider SaveLocationProvider { get; }
         public IGameLibrary GameLibrary { get; }
         public InputQueryBuilder InputQueryApi { get; }
         public ControllerLayoutQueryBuilder ControllerQueryApi { get; }
@@ -28,13 +26,11 @@ namespace Snowflake.Support.Remoting.GraphQL.Queries
         public EmulationQueryBuilder(IPluginCollection<IEmulator> emulators,
             IStoneProvider stone,
             IGameLibrary library,
-            ISaveLocationProvider saveLocationProvider,
             InputQueryBuilder inputQueryBuilder,
             ControllerLayoutQueryBuilder controllerLayoutQueryBuilder)
         {
             this.Emulators = emulators;
             this.Stone = stone;
-            this.SaveLocationProvider = saveLocationProvider;
             this.InputQueryApi = inputQueryBuilder;
             this.ControllerQueryApi = controllerLayoutQueryBuilder;
             this.GameLibrary = library;
