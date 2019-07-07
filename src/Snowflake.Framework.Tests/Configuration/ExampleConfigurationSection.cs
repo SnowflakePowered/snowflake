@@ -41,7 +41,7 @@ namespace Snowflake.Configuration
         [ConfigurationOption("RenderWindowHeight", 480)]
         int RenderWindowHeight { get; set; }
 
-        [ConfigurationOption("ISOPath0", @"/program/RMGE01.wbfs", PathType.File)]
+        [ConfigurationOption("ISOPath0", @"game:/program/RMGE01.wbfs", PathType.File)]
         string ISOPath0 { get; set; }
 
         [ConfigurationOption("InternalCpuRatio", 1.0)]

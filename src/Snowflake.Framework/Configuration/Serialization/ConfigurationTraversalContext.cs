@@ -19,12 +19,17 @@ namespace Snowflake.Configuration.Serialization
         /// </summary>
         public static string NullTarget = "#null";
 
-        public ConfigurationTraversalContext(IDirectory pathResolutionContext)
+        public ConfigurationTraversalContext(params (string directoryNamespace, IDirectory directory)[] pathResolutionContext)
+        {
+            this.PathResolutionContext = pathResolutionContext
+                .ToDictionary(v => v.directoryNamespace, v => v.directory);
+        }
+        public ConfigurationTraversalContext(IDictionary<string, IDirectory> pathResolutionContext)
         {
             this.PathResolutionContext = pathResolutionContext;
         }
 
-        private IDirectory PathResolutionContext { get; }
+        private IDictionary<string, IDirectory> PathResolutionContext { get; }
 
         private static IEnumerable<IConfigurationTarget> ResolveConfigurationTargets(IConfigurationCollection collection)
         {
@@ -102,7 +107,8 @@ namespace Snowflake.Configuration.Serialization
 
             var targets = ConfigurationTraversalContext.ResolveConfigurationTargets(collection);
 
-            Dictionary<string, IAbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>>> rootNodes = new Dictionary<string, IAbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>>>();
+            Dictionary<string, IAbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>>>
+                rootNodes = new Dictionary<string, IAbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>>>();
 
             foreach (var rootTarget in targets)
             {
@@ -145,10 +151,19 @@ namespace Snowflake.Configuration.Serialization
                 if (useIndexer) serializedKey = serializedKey.Replace(indexer, Convert.ToString(index));
                 if (key.Flag) continue;
 
-                if (key.IsPath && value.Value is string path)
+                if (key.IsPath && value.Value is string fullPath)
                 {
+                    string[] pathComponents = fullPath.Split(":", 2);
+                    if (pathComponents.Length != 2)
+                        throw new ArgumentException("Path strings must be fully qualified with a namespace followed by a ':'.");
+                    string path = pathComponents[1];
+                    string drive  = pathComponents[0];
                     string directoryName = Path.GetDirectoryName(path);
-                    var directory = (Filesystem.Directory)this.PathResolutionContext.OpenDirectory(directoryName);
+
+                    if (!this.PathResolutionContext.TryGetValue(drive, out IDirectory rootDir))
+                        throw new KeyNotFoundException($"Unable to find a root for the filesystem namespace {drive} in the context.");
+
+                    var directory = (Filesystem.Directory)rootDir.OpenDirectory(directoryName);
                     var file = directory.OpenFile(path);
 
                     IAbstractConfigurationNode pathNode = key.PathType switch
