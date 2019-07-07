@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using Snowflake.Configuration;
 using Snowflake.Execution.Extensibility;
-using Snowflake.Execution.Saving;
 using Snowflake.Framework.Remoting.GraphQL;
 using Snowflake.Input;
 using Snowflake.Input.Controller.Mapped;
@@ -22,7 +21,6 @@ namespace Snowflake.Support.Remoting.GraphQL.Containers
         [ImportService(typeof(IInputManager))]
         [ImportService(typeof(IPluginManager))]
         [ImportService(typeof(IControllerElementMappingsStore))]
-        [ImportService(typeof(ISaveLocationProvider))]
         [ImportService(typeof(IGraphQLService))]
         [ImportService(typeof(ILogProvider))]
         [ImportService(typeof(IGameLibrary))]
@@ -32,13 +30,12 @@ namespace Snowflake.Support.Remoting.GraphQL.Containers
             var input = coreInstance.Get<IInputManager>();
             var plugin = coreInstance.Get<IPluginManager>();
             var mappedController = coreInstance.Get<IControllerElementMappingsStore>();
-            var saves = coreInstance.Get<ISaveLocationProvider>();
             var gameLib = coreInstance.Get<IGameLibrary>();
 
             var rootSchema = coreInstance.Get<IGraphQLService>();
             var inputQuery = new InputQueryBuilder(input, plugin, mappedController, stone);
             var controllerQueries = new ControllerLayoutQueryBuilder(stone);
-            var emuQuery = new EmulationQueryBuilder(plugin.GetCollection<IEmulator>(), stone, gameLib, saves,
+            var emuQuery = new EmulationQueryBuilder(plugin.GetCollection<IEmulator>(), stone, gameLib,
                 inputQuery, controllerQueries);
 
             rootSchema.Register(controllerQueries);

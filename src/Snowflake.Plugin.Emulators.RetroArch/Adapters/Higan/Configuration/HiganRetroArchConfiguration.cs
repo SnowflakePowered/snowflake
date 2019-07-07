@@ -8,10 +8,10 @@ using Snowflake.Configuration.Attributes;
 
 namespace Snowflake.Plugin.Emulators.RetroArch.Adapters.Higan.Configuration
 {
-    [ConfigurationFile("#coreoptions", "retroarch-core-options.cfg", "enabled", "disabled")]
+    [ConfigurationTarget("#coreoptions")]
     public interface HiganRetroArchConfiguration : RetroArchConfiguration,
         IConfigurationCollection<HiganRetroArchConfiguration>
     {
-        [SerializableSection("#coreoptions")] BsnesCoreConfiguration BsnesCoreConfig { get; set; }
+        [ConfigurationTargetMember("#coreoptions")] BsnesCoreConfiguration BsnesCoreConfig { get; set; }
     }
 }

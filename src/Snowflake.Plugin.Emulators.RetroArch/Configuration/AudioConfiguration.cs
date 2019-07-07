@@ -24,7 +24,7 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Configuration
         [ConfigurationOption("audio_enable", true, DisplayName = "Audio Enable", Simple = true)]
         bool AudioEnable { get; set; }
 
-        [ConfigurationOption("audio_filter_dir", "default", DisplayName = "Audio Filter Dir", IsPath = true)]
+        [ConfigurationOption("audio_filter_dir", "default", PathType.Raw, DisplayName = "Audio Filter Dir")]
         string AudioFilterDir { get; set; }
 
         [ConfigurationOption("audio_latency", 64, DisplayName = "Audio Latency (ms)", Min = 8, Max = 504,

@@ -30,9 +30,6 @@ namespace Snowflake.Support.Execution
 
             var systemFileProvider = new SystemFileProvider(cdp);
             register.RegisterService<ISystemFileProvider>(systemFileProvider);
-
-            var savingProvider = new SaveLocationProvider(cdp);
-            register.RegisterService<ISaveLocationProvider>(savingProvider);
         }
     }
 }

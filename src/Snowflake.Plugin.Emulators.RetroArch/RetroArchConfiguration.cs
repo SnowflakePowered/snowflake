@@ -5,57 +5,57 @@ using Snowflake.Plugin.Emulators.RetroArch.Configuration.Internal;
 
 namespace Snowflake.Plugin.Emulators.RetroArch
 {
-    [ConfigurationFile("#retroarch", "retroarch.cfg", "true", "false")]
+    [ConfigurationTarget("#retroarch")]
     public interface RetroArchConfiguration : IConfigurationCollection<RetroArchConfiguration>
     {
-        [SerializableSection("#retroarch")] BuiltinConfiguration BuiltinConfiguration { get; }
+        [ConfigurationTargetMember("#retroarch")] BuiltinConfiguration BuiltinConfiguration { get; }
 
-        [SerializableSection("#retroarch")] MenuConfiguration MenuConfiguration { get; }
+        [ConfigurationTargetMember("#retroarch")] MenuConfiguration MenuConfiguration { get; }
 
-        [SerializableSection("#retroarch")] GameConfiguration GameConfiguration { get; }
+        [ConfigurationTargetMember("#retroarch")] GameConfiguration GameConfiguration { get; }
 
-        [SerializableSection("#retroarch")] RecordConfiguration RecordConfiguration { get; }
+        [ConfigurationTargetMember("#retroarch")] RecordConfiguration RecordConfiguration { get; }
 
-        [SerializableSection("#retroarch")] PauseConfiguration PauseConfiguration { get; }
+        [ConfigurationTargetMember("#retroarch")] PauseConfiguration PauseConfiguration { get; }
 
-        [SerializableSection("#retroarch")] LocationConfiguration LocationConfiguration { get; }
+        [ConfigurationTargetMember("#retroarch")] LocationConfiguration LocationConfiguration { get; }
 
-        [SerializableSection("#retroarch")] NetworkConfiguration NetworkConfiguration { get; }
+        [ConfigurationTargetMember("#retroarch")] NetworkConfiguration NetworkConfiguration { get; }
 
-        [SerializableSection("#retroarch")] LogConfiguration LogConfiguration { get; }
+        [ConfigurationTargetMember("#retroarch")] LogConfiguration LogConfiguration { get; }
 
-        [SerializableSection("#retroarch")] InputConfiguration InputConfiguration { get; }
+        [ConfigurationTargetMember("#retroarch")] InputConfiguration InputConfiguration { get; }
 
-        [SerializableSection("#retroarch")] NetplayConfiguration NetplayConfiguration { get; }
+        [ConfigurationTargetMember("#retroarch")] NetplayConfiguration NetplayConfiguration { get; }
 
-        [SerializableSection("#retroarch")] XmbConfiguration XmbConfiguration { get; }
+        [ConfigurationTargetMember("#retroarch")] XmbConfiguration XmbConfiguration { get; }
 
-        [SerializableSection("#retroarch")] StdinConfiguration StdinConfiguration { get; }
+        [ConfigurationTargetMember("#retroarch")] StdinConfiguration StdinConfiguration { get; }
 
-        [SerializableSection("#retroarch")] CoreConfiguration CoreConfiguration { get; }
+        [ConfigurationTargetMember("#retroarch")] CoreConfiguration CoreConfiguration { get; }
 
-        [SerializableSection("#retroarch")] CameraConfiguration CameraConfiguration { get; }
+        [ConfigurationTargetMember("#retroarch")] CameraConfiguration CameraConfiguration { get; }
 
-        [SerializableSection("#retroarch")] BundleConfiguration BundleConfiguration { get; }
+        [ConfigurationTargetMember("#retroarch")] BundleConfiguration BundleConfiguration { get; }
 
-        [SerializableSection("#retroarch")] RewindConfiguration RewindConfiguration { get; }
+        [ConfigurationTargetMember("#retroarch")] RewindConfiguration RewindConfiguration { get; }
 
-        [SerializableSection("#retroarch")] SaveConfiguration SaveConfiguration { get; }
+        [ConfigurationTargetMember("#retroarch")] SaveConfiguration SaveConfiguration { get; }
 
-        [SerializableSection("#retroarch")] UserConfiguration UserConfiguration { get; }
+        [ConfigurationTargetMember("#retroarch")] UserConfiguration UserConfiguration { get; }
 
-        [SerializableSection("#retroarch")] ThreadedConfiguration ThreadedConfiguration { get; }
+        [ConfigurationTargetMember("#retroarch")] ThreadedConfiguration ThreadedConfiguration { get; }
 
-        [SerializableSection("#retroarch")] DirectoryConfiguration DirectoryConfiguration { get; }
+        [ConfigurationTargetMember("#retroarch")] DirectoryConfiguration DirectoryConfiguration { get; }
 
-        [SerializableSection("#retroarch")] UiConfiguration UiConfiguration { get; }
+        [ConfigurationTargetMember("#retroarch")] UiConfiguration UiConfiguration { get; }
 
-        [SerializableSection("#retroarch")] VideoConfiguration VideoConfiguration { get; }
+        [ConfigurationTargetMember("#retroarch")] VideoConfiguration VideoConfiguration { get; }
 
-        [SerializableSection("#retroarch")] AudioConfiguration AudioConfiguration { get; }
+        [ConfigurationTargetMember("#retroarch")] AudioConfiguration AudioConfiguration { get; }
 
-        [SerializableSection("#retroarch")] FramethrottleConfiguration FrametrottleConfiguration { get; }
+        [ConfigurationTargetMember("#retroarch")] FramethrottleConfiguration FrametrottleConfiguration { get; }
 
-        [SerializableSection("#retroarch")] ConfigConfiguration ConfigConfiguration { get; }
+        [ConfigurationTargetMember("#retroarch")] ConfigConfiguration ConfigConfiguration { get; }
     }
 }
