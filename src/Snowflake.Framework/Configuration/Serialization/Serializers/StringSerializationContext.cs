@@ -47,6 +47,5 @@ namespace Snowflake.Configuration.Serialization.Serializers
         }
 
         public string Result => this.Builder.ToString();
-        public override string ToString() => this.Builder.ToString();
     }
 }

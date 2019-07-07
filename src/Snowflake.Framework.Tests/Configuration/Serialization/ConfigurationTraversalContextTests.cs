@@ -35,6 +35,21 @@ namespace Snowflake.Configuration.Serialization
         }
 
         [Fact]
+        public void TopTraversalNotAllowedTarget_Test()
+        {
+            var configuration =
+             new ConfigurationCollection<DoubleTargetConfigurationCollection>(new ConfigurationValueCollection());
+
+            var fs = new PhysicalFileSystem();
+            var temp = Path.GetTempPath();
+            var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
+            var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
+
+            var context = new ConfigurationTraversalContext(dir);
+            Assert.Throws<InvalidOperationException>(() => context.TraverseCollection(configuration));
+        }
+
+        [Fact]
         public void RecursiveTarget_Test()
         {
             var configuration =

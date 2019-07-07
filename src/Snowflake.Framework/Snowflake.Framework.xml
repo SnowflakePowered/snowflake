@@ -286,9 +286,6 @@
             Defines a unit of a <see cref="T:Snowflake.Configuration.IConfigurationCollection`1"/> that will be
             evaluated independently into a tree of <see cref="T:Snowflake.Configuration.Serialization.IAbstractConfigurationNode"/>
             that will be evaluated and produce an output or side effects.
-            
-            As an implementation detail, two configuaration targets of the same name
-            are equal.
             </summary>
         </member>
         <member name="F:Snowflake.Configuration.Serialization.ConfigurationTraversalContext.NullTarget">

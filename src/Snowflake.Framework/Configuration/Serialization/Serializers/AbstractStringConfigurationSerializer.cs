@@ -13,7 +13,7 @@ namespace Snowflake.Configuration.Serialization.Serializers
             this.SerializeHeader(context);
             this.SerializeNode(node, context);
             this.SerializeFooter(context);
-            return context.ToString();
+            return context.Result;
         }
     }
 }
