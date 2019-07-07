@@ -31,11 +31,12 @@ namespace Snowflake.Configuration.Serialization
             var targets = collection.GetType().GetPublicAttributes<ConfigurationTargetAttribute>();
             var rootTargets = targets.Where(t => t.IsRoot);
             List<ConfigurationTarget> configurationTargets = new List<ConfigurationTarget>();
-
+           
             foreach (var rootTargetAttr in rootTargets)
             {
                 var rootTarget = new ConfigurationTarget(rootTargetAttr.TargetName);
-
+                if (configurationTargets.Contains(rootTarget))
+                    throw new ArgumentException("Target name already exists in graph as another root!");
                 Queue<ConfigurationTarget> targetsToProcess = new Queue<ConfigurationTarget>();
                 targetsToProcess.Enqueue(rootTarget);
 
@@ -45,8 +46,8 @@ namespace Snowflake.Configuration.Serialization
                     foreach (var childTargets in targets.Where(t => t.ParentTarget == target.TargetName)
                         .Select(t => new ConfigurationTarget(t.TargetName)))
                     {
-                        if (target.ChildTargets.ContainsKey(childTargets.TargetName))
-                            throw new ArgumentException("Target name already exists in the graph!");
+                        // No need to check for duplicates here because GetPublicAttributes
+                        // returns distinct attributes.
                         target.ChildTargets.Add(childTargets.TargetName, childTargets);
                         targetsToProcess.Enqueue(childTargets);
                     }

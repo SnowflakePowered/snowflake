@@ -281,10 +281,187 @@
         <member name="P:Snowflake.Configuration.SelectionOptionDescriptor.EnumType">
             <inheritdoc/>
         </member>
+        <member name="T:Snowflake.Configuration.Serialization.ConfigurationTarget">
+            <summary>
+            Defines a unit of a <see cref="T:Snowflake.Configuration.IConfigurationCollection`1"/> that will be
+            evaluated independently into a tree of <see cref="T:Snowflake.Configuration.Serialization.IAbstractConfigurationNode"/>
+            that will be evaluated and produce an output or side effects.
+            
+            As an implementation detail, two configuaration targets of the same name
+            are equal.
+            </summary>
+        </member>
         <member name="F:Snowflake.Configuration.Serialization.ConfigurationTraversalContext.NullTarget">
             <summary>
             Special string for the null target that is never serialized.
             </summary>
+        </member>
+        <member name="T:Snowflake.Configuration.Serialization.Serializers.ConfigurationSerializer`1">
+            <summary>
+            Implements <see cref="T:Snowflake.Configuration.Serialization.IConfigurationTransformer`1"/> by serializing the 
+            syntax tree into some string or binary format.
+            </summary>
+            <typeparam name="T">The type of the serialized data after traversing the tree.</typeparam>
+        </member>
+        <member name="M:Snowflake.Configuration.Serialization.Serializers.ConfigurationSerializer`1.Transform(Snowflake.Configuration.Serialization.IAbstractConfigurationNode)">
+            <inheritdoc />
+        </member>
+        <member name="M:Snowflake.Configuration.Serialization.Serializers.ConfigurationSerializer`1.SerializeHeader(Snowflake.Configuration.Serialization.IConfigurationSerializationContext{`0})">
+            <summary>
+            Write the header to the serialized stream.
+            </summary>
+            <param name="context">The serialization context.</param>
+        </member>
+        <member name="M:Snowflake.Configuration.Serialization.Serializers.ConfigurationSerializer`1.SerializeFooter(Snowflake.Configuration.Serialization.IConfigurationSerializationContext{`0})">
+            <summary>
+            Write the header to the serialized stream.
+            </summary>
+            <param name="context">The serialization context.</param>
+        </member>
+        <member name="M:Snowflake.Configuration.Serialization.Serializers.ConfigurationSerializer`1.SerializeNode(Snowflake.Configuration.Serialization.IAbstractConfigurationNode,Snowflake.Configuration.Serialization.IConfigurationSerializationContext{`0},System.Int32)">
+            <summary>
+            Serialize a <see cref="T:Snowflake.Configuration.Serialization.IAbstractConfigurationNode"/> with the given context.
+            </summary>
+            <param name="node">The node to serialize.</param>
+            <param name="context">The serialization context.</param>
+            <param name="index">The position or index of the given node within the current block in the context.</param>
+        </member>
+        <member name="M:Snowflake.Configuration.Serialization.Serializers.ConfigurationSerializer`1.SerializeBlockBegin(Snowflake.Configuration.Serialization.IConfigurationSerializationContext{`0},System.Int32)">
+            <summary>
+            Serialize a marker or header where a block or section begins in the serialized stream.
+            </summary>
+            <param name="context">The serialization context.</param>
+            <param name="index">The position or index of the given node within the current block in the context.</param>
+        </member>
+        <member name="M:Snowflake.Configuration.Serialization.Serializers.ConfigurationSerializer`1.SerializeBlockEnd(Snowflake.Configuration.Serialization.IConfigurationSerializationContext{`0},System.Int32)">
+            <summary>
+            Serialize a marker or footer where a block or section ends in the serialized stream.
+            </summary>
+            <param name="context">The serialization context.</param>
+            <param name="index">The position or index of the given node within the current block in the context.</param>
+        </member>
+        <member name="M:Snowflake.Configuration.Serialization.Serializers.ConfigurationSerializer`1.SerializeNode(Snowflake.Configuration.Serialization.ListConfigurationNode,Snowflake.Configuration.Serialization.IConfigurationSerializationContext{`0},System.Int32)">
+            <summary>
+            Serializes a list of configuration nodes.
+            
+            For each child node to be serialized, the index should be incremented. Serializing a list node will 
+            enter a new block, and thus block headers and footers are written at the beginning and end of
+            serialization of this node respectively.
+            </summary>
+            <param name="node">The list of configuration nodes represented as a <see cref="T:Snowflake.Configuration.Serialization.ListConfigurationNode"/></param>
+            <param name="context">The serialization context.</param>
+            <param name="index">The position or index of the given node within the current block in the context.</param>
+        </member>
+        <member name="M:Snowflake.Configuration.Serialization.Serializers.ConfigurationSerializer`1.SerializeNode(Snowflake.Configuration.Serialization.StringConfigurationNode,Snowflake.Configuration.Serialization.IConfigurationSerializationContext{`0},System.Int32)">
+            <summary>
+            Serializes a configuration node that encapsulates a <see cref="T:System.String"/>.
+            </summary>
+            <param name="node">The node to serialize.</param>
+            <param name="context">The serialization context.</param>
+            <param name="index">The position or index of the given node within the current block in the context.</param>
+        </member>
+        <member name="M:Snowflake.Configuration.Serialization.Serializers.ConfigurationSerializer`1.SerializeNode(Snowflake.Configuration.Serialization.BooleanConfigurationNode,Snowflake.Configuration.Serialization.IConfigurationSerializationContext{`0},System.Int32)">
+            <summary>
+            Serializes a configuration node that encapsulates a <see cref="T:System.Boolean"/>.
+            </summary>
+            <param name="node">The node to serialize.</param>
+            <param name="context">The serialization context.</param>
+            <param name="index">The position or index of the given node within the current block in the context.</param>
+        </member>
+        <member name="M:Snowflake.Configuration.Serialization.Serializers.ConfigurationSerializer`1.SerializeNode(Snowflake.Configuration.Serialization.IntegralConfigurationNode,Snowflake.Configuration.Serialization.IConfigurationSerializationContext{`0},System.Int32)">
+            <summary>
+            Serializes a configuration node that encapsulates an integral value, implemented as a <see cref="T:System.Int64"/>
+            </summary>
+            <param name="node">The node to serialize.</param>
+            <param name="context">The serialization context.</param>
+            <param name="index">The position or index of the given node within the current block in the context.</param>
+        </member>
+        <member name="M:Snowflake.Configuration.Serialization.Serializers.ConfigurationSerializer`1.SerializeNode(Snowflake.Configuration.Serialization.DecimalConfigurationNode,Snowflake.Configuration.Serialization.IConfigurationSerializationContext{`0},System.Int32)">
+            <summary>
+            Serializes a configuration node that encapsulates a decimal value, implemented as a <see cref="T:System.Double"/>.
+            
+            Contrary to the name, this is not implemented as a <see cref="T:System.Decimal"/>, and IEEE 754 floating point semantics
+            for double precision floating point numbers should be taken into account.
+            </summary>
+            <param name="node">The node to serialize.</param>
+            <param name="context">The serialization context.</param>
+            <param name="index">The position or index of the given node within the current block in the context.</param>
+        </member>
+        <member name="M:Snowflake.Configuration.Serialization.Serializers.ConfigurationSerializer`1.SerializeNode(Snowflake.Configuration.Serialization.EnumConfigurationNode,Snowflake.Configuration.Serialization.IConfigurationSerializationContext{`0},System.Int32)">
+            <summary>
+            Serializes a configuration node that encapsulates an <see cref="T:System.Enum"/> value.
+            </summary>
+            <param name="node">The node to serialize.</param>
+            <param name="context">The serialization context.</param>
+            <param name="index">The position or index of the given node within the current block in the context.</param>
+        </member>
+        <member name="M:Snowflake.Configuration.Serialization.Serializers.ConfigurationSerializer`1.SerializeNode(Snowflake.Configuration.Serialization.ControllerElementConfigurationNode,Snowflake.Configuration.Serialization.IConfigurationSerializationContext{`0},System.Int32)">
+            <summary>
+            Serializes a configuration node that encapsulates a <see cref="T:Snowflake.Input.Controller.ControllerElement"/>.
+            
+            This is only used when serializing syntax trees that came from <see cref="T:Snowflake.Configuration.Input.IInputTemplate"/>.
+            </summary>
+            <param name="node">The node to serialize.</param>
+            <param name="context">The serialization context.</param>
+            <param name="index">The position or index of the given node within the current block in the context.</param>
+        </member>
+        <member name="M:Snowflake.Configuration.Serialization.Serializers.ConfigurationSerializer`1.SerializeNodeValue(System.Boolean,System.String,Snowflake.Configuration.Serialization.IConfigurationSerializationContext{`0},System.Int32)">
+            <summary>
+            Serializes the value of a <see cref="T:Snowflake.Configuration.Serialization.BooleanConfigurationNode"/>. Override this when implementing a serializer.
+            </summary>
+            <param name="value">The raw value of the node.</param>
+            <param name="key">The key of the node.</param>
+            <param name="context">The serialization context.</param>
+            <param name="index">The position or index of the given node within the current block in the context.</param>
+        </member>
+        <member name="M:Snowflake.Configuration.Serialization.Serializers.ConfigurationSerializer`1.SerializeNodeValue(System.Double,System.String,Snowflake.Configuration.Serialization.IConfigurationSerializationContext{`0},System.Int32)">
+            <summary>
+            Serializes the value of a <see cref="T:Snowflake.Configuration.Serialization.DecimalConfigurationNode"/>. Override this when implementing a serializer.
+            </summary>
+            <param name="value">The raw value of the node.</param>
+            <param name="key">The key of the node.</param>
+            <param name="context">The serialization context.</param>
+            <param name="index">The position or index of the given node within the current block in the context.</param>
+        </member>
+        <member name="M:Snowflake.Configuration.Serialization.Serializers.ConfigurationSerializer`1.SerializeNodeValue(System.Enum,System.String,System.String,Snowflake.Configuration.Serialization.IConfigurationSerializationContext{`0},System.Int32)">
+            <summary>
+            Serializes the value of a <see cref="T:Snowflake.Configuration.Serialization.EnumConfigurationNode"/>. Override this when implementing a serializer.
+            </summary>
+            <param name="enumValue">The value of the node as the <see cref="T:System.Enum"/> object.</param>
+            <param name="value">The raw value of the node.</param>
+            <param name="key">The key of the node.</param>
+            <param name="context">The serialization context.</param>
+            <param name="index">The position or index of the given node within the current block in the context.</param>
+        </member>
+        <member name="M:Snowflake.Configuration.Serialization.Serializers.ConfigurationSerializer`1.SerializeNodeValue(System.Int64,System.String,Snowflake.Configuration.Serialization.IConfigurationSerializationContext{`0},System.Int32)">
+            <summary>
+            Serializes the value of a <see cref="T:Snowflake.Configuration.Serialization.IntegralConfigurationNode"/>. Override this when implementing a serializer.
+            </summary>
+            <param name="value">The raw value of the node.</param>
+            <param name="key">The key of the node.</param>
+            <param name="context">The serialization context.</param>
+            <param name="index">The position or index of the given node within the current block in the context.</param>
+        </member>
+        <member name="M:Snowflake.Configuration.Serialization.Serializers.ConfigurationSerializer`1.SerializeNodeValue(System.String,System.String,Snowflake.Configuration.Serialization.IConfigurationSerializationContext{`0},System.Int32)">
+            <summary>
+            Serializes the value of a <see cref="T:Snowflake.Configuration.Serialization.StringConfigurationNode"/>. Override this when implementing a serializer.
+            </summary>
+            <param name="value">The raw value of the node.</param>
+            <param name="key">The key of the node.</param>
+            <param name="context">The serialization context.</param>
+            <param name="index">The position or index of the given node within the current block in the context.</param>
+        </member>
+        <member name="M:Snowflake.Configuration.Serialization.Serializers.ConfigurationSerializer`1.SerializerNodeValue(Snowflake.Input.Controller.ControllerElement,System.String,System.String,Snowflake.Configuration.Serialization.IConfigurationSerializationContext{`0},System.Int32)">
+            <summary>
+            Serializes the value of a <see cref="T:Snowflake.Configuration.Serialization.EnumConfigurationNode"/>. Override this when implementing a serializer.
+            </summary>
+            <param name="controllerElementValue">The value of the node</param>
+            <param name="value">
+            The raw value of the node as the string representation of the element consistent with the 
+            <see cref="T:Snowflake.Configuration.Input.IInputMapping"/> the syntax tree was originally serialized with.</param>
+            <param name="key">The key of the node.</param>
+            <param name="context">The serialization context.</param>
+            <param name="index">The position or index of the given node within the current block in the context.</param>
         </member>
         <member name="T:Snowflake.Execution.Extensibility.EmulatorTask">
             <inheritdoc/>
