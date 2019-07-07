@@ -4,9 +4,6 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using Castle.Core.Internal;
 using Castle.DynamicProxy;
 using Snowflake.Configuration.Attributes;
 using Snowflake.Configuration.Interceptors;
@@ -39,7 +36,7 @@ namespace Snowflake.Configuration.Input
                 var val = this.configurationInterceptor.Values[this.Descriptor, key];
                 if (val != null)
                 {
-                    val.Value = value;
+                    val.Value = value!;
                 }
             }
         }

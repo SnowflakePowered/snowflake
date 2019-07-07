@@ -12,7 +12,7 @@ using Snowflake.Configuration.Input;
 
 namespace Snowflake.Configuration.Serialization
 {
-    public sealed class ConfigurationTraversalContext
+    public sealed class ConfigurationTraversalContext : IConfigurationTraversalContext
     {
         /// <summary>
         /// Special string for the null target that is never serialized.
@@ -24,7 +24,7 @@ namespace Snowflake.Configuration.Serialization
             this.PathResolutionContext = pathResolutionContext;
         }
 
-        public IDirectory PathResolutionContext { get; }
+        private IDirectory PathResolutionContext { get; }
 
         private static IEnumerable<IConfigurationTarget> ResolveConfigurationTargets(IConfigurationCollection collection)
         {
@@ -125,18 +125,18 @@ namespace Snowflake.Configuration.Serialization
             {
                 configNodes.Add(new ControllerElementConfigurationNode(
                     inputOption.OptionName.Replace(indexer, Convert.ToString(index)),
-                    inputOption.TargetElement, 
+                    inputOption.TargetElement,
                     mapping[inputOption.TargetElement],
                     inputOption.DeviceType));
             }
-            return new ListConfigurationNode(template.Descriptor.SectionName.Replace(indexer, 
+            return new ListConfigurationNode(template.Descriptor.SectionName.Replace(indexer,
                 Convert.ToString(index)),
                 configNodes.AsReadOnly());
         }
 
         private List<IAbstractConfigurationNode> TraverseSection(IConfigurationSection section,
-            bool useIndexer　= false,
-            string indexer = "{N}", 
+            bool useIndexer = false,
+            string indexer = "{N}",
             int index = 0)
         {
             var nodes = new List<IAbstractConfigurationNode>();
@@ -162,7 +162,7 @@ namespace Snowflake.Configuration.Serialization
 #pragma warning restore CS0618 // Type or member is obsolete
                         PathType.Raw => new StringConfigurationNode(serializedKey, path),
                         // UnknownConfigurationNodes are ignored in most serializers.
-                        _ => new UnknownConfigurationNode(serializedKey, path) 
+                        _ => new UnknownConfigurationNode(serializedKey, path)
                             as IAbstractConfigurationNode // hack to allow type inference,
                     };
                     nodes.Add(pathNode);
