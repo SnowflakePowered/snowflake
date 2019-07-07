@@ -35,8 +35,6 @@ namespace Snowflake.Configuration.Serialization
             foreach (var rootTargetAttr in rootTargets)
             {
                 var rootTarget = new ConfigurationTarget(rootTargetAttr.TargetName);
-                if (configurationTargets.Contains(rootTarget))
-                    throw new ArgumentException("Target name already exists in graph as another root!");
                 Queue<ConfigurationTarget> targetsToProcess = new Queue<ConfigurationTarget>();
                 targetsToProcess.Enqueue(rootTarget);
 
