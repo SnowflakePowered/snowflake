@@ -12,16 +12,18 @@ using Snowflake.Model.Game;
 using Snowflake.Model.Game.LibraryExtensions;
 using Snowflake.Services;
 using Zio;
-using Zio.FileSystems;
 
 namespace Snowflake.Support.StoreProviders
 {
     public class SqliteStoreComposable : IComposable
     {
+
         [ImportService(typeof(IServiceRegistrationProvider))]
         [ImportService(typeof(IContentDirectoryProvider))]
+        [ImportService(typeof(IFileSystem))]
         public void Compose(IModule module, Loader.IServiceRepository serviceContainer)
         {
+            var physicalFs = serviceContainer.Get<IFileSystem>();
             var contentDirectory = serviceContainer.Get<IContentDirectoryProvider>();
             string sqlitePath = Path.Combine(contentDirectory.ApplicationData.FullName, "library.db");
             var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
@@ -46,7 +48,6 @@ namespace Snowflake.Support.StoreProviders
             var configStore = new ConfigurationCollectionStore(optionsBuilder);
 
             var fileLibrary = new FileRecordLibrary(optionsBuilder);
-            var physicalFs = new PhysicalFileSystem();
 
             var appDataPath = physicalFs.ConvertPathFromInternal(contentDirectory.ApplicationData.FullName);
             var gameFs = physicalFs.GetOrCreateSubFileSystem(appDataPath / "games");

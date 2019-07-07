@@ -15,6 +15,9 @@ using Snowflake.Extensibility.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Snowflake.Model.Database;
 using Snowflake.Model.Database.Models;
+using Zio.FileSystems;
+using FS = Snowflake.Filesystem;
+using Zio;
 
 namespace Snowflake.Extensibility.Tests
 {
@@ -90,6 +93,9 @@ namespace Snowflake.Extensibility.Tests
         [Fact]
         public void PluginManagerRegister_Test()
         {
+
+            var fs = new PhysicalFileSystem();
+
             var appDataDirectory = new DirectoryInfo(Path.GetTempPath())
                 .CreateSubdirectory(Guid.NewGuid().ToString());
             var directoryProvider = new ContentDirectoryProvider(appDataDirectory.FullName);
@@ -97,7 +103,7 @@ namespace Snowflake.Extensibility.Tests
             optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
             var sqliteProvider = new PluginConfigurationStore(optionsBuilder);
             var logProvider = new LogProvider();
-            var pluginManager = new PluginManager(logProvider, directoryProvider, sqliteProvider);
+            var pluginManager = new PluginManager(logProvider, directoryProvider, sqliteProvider, fs);
             pluginManager.Register<StandalonePlugin>(new StandalonePluginImpl());
             Assert.NotEmpty(pluginManager.Get<StandalonePlugin>());
             Assert.NotNull(pluginManager.Get<StandalonePlugin>("TestPlugin"));
@@ -106,6 +112,7 @@ namespace Snowflake.Extensibility.Tests
         [Fact]
         public void PluginManagerRegisterProvisioned_Test()
         {
+            var fs = new PhysicalFileSystem();
             var appDataDirectory = new DirectoryInfo(Path.GetTempPath())
                 .CreateSubdirectory(Guid.NewGuid().ToString());
             var module = new Module(string.Empty, string.Empty, string.Empty, string.Empty, appDataDirectory,
@@ -120,7 +127,7 @@ namespace Snowflake.Extensibility.Tests
             var sqliteProvider = new PluginConfigurationStore(optionsBuilder);
 
             var logProvider = new LogProvider();
-            var pluginManager = new PluginManager(logProvider, directoryProvider, sqliteProvider);
+            var pluginManager = new PluginManager(logProvider, directoryProvider, sqliteProvider, fs);
             var provision = pluginManager.GetProvision<ProvisionedPluginImpl>(module);
             var plugin = new ProvisionedPluginImpl(provision);
 

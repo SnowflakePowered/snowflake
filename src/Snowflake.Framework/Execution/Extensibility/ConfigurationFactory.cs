@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Snowflake.Configuration;
 using Snowflake.Configuration.Input;
 using Snowflake.Extensibility.Provisioning;
+using Snowflake.Filesystem;
 
 namespace Snowflake.Execution.Extensibility
 {
@@ -20,8 +21,8 @@ namespace Snowflake.Execution.Extensibility
         public IEnumerable<IInputMapping> InputMappings { get; }
 
         protected ConfigurationFactory(IPluginProvision provision)
-            : this(provision.CommonResourceDirectory.CreateSubdirectory("InputMappings").EnumerateFiles()
-                .Select(mapping => JsonConvert.DeserializeObject<InputMapping>(File.ReadAllText(mapping.FullName)))
+            : this(provision.CommonResourceDirectory.OpenDirectory("InputMappings").EnumerateFiles()
+                .Select(mapping => JsonConvert.DeserializeObject<InputMapping>(mapping.ReadAllText()))
                 .Cast<IInputMapping>().ToList())
         {
         }
