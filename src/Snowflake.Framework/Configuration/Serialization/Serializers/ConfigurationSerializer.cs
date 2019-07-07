@@ -190,17 +190,61 @@ namespace Snowflake.Configuration.Serialization.Serializers
         }
 
         /// <summary>
-        /// Serializes the value of a <see cref="BooleanConfigurationNode"/>.
+        /// Serializes the value of a <see cref="BooleanConfigurationNode"/>. Override this when implementing a serializer.
         /// </summary>
         /// <param name="value">The raw value of the node.</param>
         /// <param name="key">The key of the node.</param>
         /// <param name="context">The serialization context.</param>
         /// <param name="index">The position or index of the given node within the current block in the context.</param>
         public abstract void SerializeNodeValue(bool value, string key, IConfigurationSerializationContext<T> context, int index);
+
+        /// <summary>
+        /// Serializes the value of a <see cref="DecimalConfigurationNode"/>. Override this when implementing a serializer.
+        /// </summary>
+        /// <param name="value">The raw value of the node.</param>
+        /// <param name="key">The key of the node.</param>
+        /// <param name="context">The serialization context.</param>
+        /// <param name="index">The position or index of the given node within the current block in the context.</param>
         public abstract void SerializeNodeValue(double value, string key, IConfigurationSerializationContext<T> context, int index);
+
+        /// <summary>
+        /// Serializes the value of a <see cref="EnumConfigurationNode"/>. Override this when implementing a serializer.
+        /// </summary>
+        /// <param name="enumValue">The value of the node as the <see cref="Enum"/> object.</param>
+        /// <param name="value">The raw value of the node.</param>
+        /// <param name="key">The key of the node.</param>
+        /// <param name="context">The serialization context.</param>
+        /// <param name="index">The position or index of the given node within the current block in the context.</param>
         public abstract void SerializeNodeValue(Enum enumValue, string value, string key, IConfigurationSerializationContext<T> context, int index);
+
+        /// <summary>
+        /// Serializes the value of a <see cref="IntegralConfigurationNode"/>. Override this when implementing a serializer.
+        /// </summary>
+        /// <param name="value">The raw value of the node.</param>
+        /// <param name="key">The key of the node.</param>
+        /// <param name="context">The serialization context.</param>
+        /// <param name="index">The position or index of the given node within the current block in the context.</param>
         public abstract void SerializeNodeValue(long value, string key, IConfigurationSerializationContext<T> context, int index);
+
+        /// <summary>
+        /// Serializes the value of a <see cref="StringConfigurationNode"/>. Override this when implementing a serializer.
+        /// </summary>
+        /// <param name="value">The raw value of the node.</param>
+        /// <param name="key">The key of the node.</param>
+        /// <param name="context">The serialization context.</param>
+        /// <param name="index">The position or index of the given node within the current block in the context.</param>
         public abstract void SerializeNodeValue(string value, string key, IConfigurationSerializationContext<T> context, int index);
+
+        /// <summary>
+        /// Serializes the value of a <see cref="EnumConfigurationNode"/>. Override this when implementing a serializer.
+        /// </summary>
+        /// <param name="controllerElementValue">The value of the node</param>
+        /// <param name="value">
+        /// The raw value of the node as the string representation of the element consistent with the 
+        /// <see cref="IInputMapping"/> the syntax tree was originally serialized with.</param>
+        /// <param name="key">The key of the node.</param>
+        /// <param name="context">The serialization context.</param>
+        /// <param name="index">The position or index of the given node within the current block in the context.</param>
         public abstract void SerializerNodeValue(ControllerElement controllerElementValue, string value, string key, IConfigurationSerializationContext<T> context, int index);
     }
 }

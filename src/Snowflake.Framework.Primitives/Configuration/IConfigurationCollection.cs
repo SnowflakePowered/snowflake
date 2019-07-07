@@ -7,8 +7,6 @@ namespace Snowflake.Configuration
     /// A configuration collection represents a single file of configuration.
     /// One file can have one single serializer for every section, and multiple
     /// filename for the configuration collection.
-    /// A configuration collection must be marked with one or more <see cref="ConfigurationFileAttribute"/>,
-    /// and all seriazable properties marked with a <see cref="SerializableSectionAttribute"/> that matches one or more configuration files.
     ///
     /// The enumeration is guaranteed to enumerate in the order in which the section properties were described.
     /// </summary>
@@ -26,8 +24,6 @@ namespace Snowflake.Configuration
     /// A configuration collection represents a single file of configuration.
     /// One file can have one single serializer for every section, and multiple
     /// filename for the configuration collection.
-    /// A configuration collection must be marked with one or more <see cref="ConfigurationFileAttribute"/>,
-    /// and all seriazable properties marked with a <see cref="SerializableSectionAttribute"/> that matches one or more configuration files.
     ///
     /// The enumeration is guaranteed to enumerate in the order in which the section properties were described.
     /// </summary>

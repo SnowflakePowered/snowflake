@@ -60,7 +60,7 @@ namespace Snowflake.Configuration.Attributes
         public double Increment { get; set; } = 1;
 
         /// <summary>
-        /// If <see cref="IsPath"/> is true, specifies the type of the path.
+        /// If this option is a path, specifies the type of the path.
         /// </summary>
         public PathType PathType { get; } = PathType.NotPath;
 
