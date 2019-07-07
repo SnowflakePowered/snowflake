@@ -19,6 +19,38 @@ namespace Snowflake.Configuration.Serialization
     public class ConfigurationTraversalContextTests
     {
         [Fact]
+        public void DuplicateTarget_Test()
+        {
+            var configuration =
+             new ConfigurationCollection<DoubleTargetConfigurationCollection>(new ConfigurationValueCollection());
+
+            var fs = new PhysicalFileSystem();
+            var temp = Path.GetTempPath();
+            var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
+            var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
+
+            var context = new ConfigurationTraversalContext(dir);
+
+            context.TraverseCollection(configuration.Configuration);
+        }
+
+        [Fact]
+        public void RecursiveTarget_Test()
+        {
+            var configuration =
+             new ConfigurationCollection<DoubleTargetConfigurationCollection>(new ConfigurationValueCollection());
+
+            var fs = new PhysicalFileSystem();
+            var temp = Path.GetTempPath();
+            var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
+            var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
+
+            var context = new ConfigurationTraversalContext(dir);
+
+            var targets = context.TraverseCollection(configuration.Configuration);
+        }
+
+        [Fact]
         public void InputTemplateToAbstractConfigurationNode_Test()
         {
             var testmappings = new StoneProvider().Controllers["XBOX_CONTROLLER"];
