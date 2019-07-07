@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Snowflake.Extensibility.Configuration;
+using Snowflake.Filesystem;
 
 namespace Snowflake.Extensibility.Provisioning
 {
@@ -16,8 +17,9 @@ namespace Snowflake.Extensibility.Provisioning
             string description,
             Version version,
             DirectoryInfo contentDirectory,
-            DirectoryInfo commonResourceDirectory,
-            DirectoryInfo resourceDirectory)
+            IDirectory dataDirectory,
+            IDirectory commonResourceDirectory,
+            IDirectory resourceDirectory)
         {
             this.Logger = logger;
             this.Properties = pluginProperties;
@@ -27,6 +29,7 @@ namespace Snowflake.Extensibility.Provisioning
             this.Version = version;
             this.ConfigurationStore = configurationStore;
             this.ContentDirectory = contentDirectory;
+            this.DataDirectory = dataDirectory;
             this.ResourceDirectory = resourceDirectory;
             this.CommonResourceDirectory = commonResourceDirectory;
         }
@@ -53,12 +56,16 @@ namespace Snowflake.Extensibility.Provisioning
         public DirectoryInfo ContentDirectory { get; }
 
         /// <inheritdoc/>
-        public DirectoryInfo ResourceDirectory { get; }
+        public IDirectory ResourceDirectory { get; }
 
         /// <inheritdoc/>
-        public DirectoryInfo CommonResourceDirectory { get; }
+        public IDirectory CommonResourceDirectory { get; }
+
+        /// <inheritdoc />
+        public IDirectory DataDirectory { get; }
 
         /// <inheritdoc/>
         public IPluginConfigurationStore ConfigurationStore { get; }
+
     }
 }

@@ -40,11 +40,6 @@ namespace Snowflake.Extensibility.Provisioning
             return EmptyPluginConfiguration.EmptyConfiguration;
         }
 
-        private string GetPluginName()
-        {
-            return this.GetType().GetTypeInfo().GetCustomAttribute<PluginAttribute>().PluginName;
-        }
-
         /// <inheritdoc/>
         public virtual void Dispose()
         {

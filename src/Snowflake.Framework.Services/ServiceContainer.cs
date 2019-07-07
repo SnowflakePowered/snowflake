@@ -11,6 +11,8 @@ using Snowflake.Input.Controller.Mapped;
 using Snowflake.Loader;
 using Snowflake.Services.Logging;
 using Snowflake.Support.Remoting.GraphQL.RootProvider;
+using Zio;
+using Zio.FileSystems;
 
 namespace Snowflake.Services
 {
@@ -46,7 +48,7 @@ namespace Snowflake.Services
             this.RegisterService<IContentDirectoryProvider>(directoryProvider);
             this.RegisterService<IServiceRegistrationProvider>(new ServiceRegistrationProvider(this));
             this.RegisterService<IServiceEnumerator>(new ServiceEnumerator(this));
-
+            this.RegisterService<IFileSystem>(new PhysicalFileSystem());
         }
 
         private void RegisterGraphQLRootSchema()

@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using Snowflake.Configuration;
 using Snowflake.Extensibility.Configuration;
+using Snowflake.Filesystem;
 
 namespace Snowflake.Extensibility.Provisioning
 {
@@ -48,18 +49,23 @@ namespace Snowflake.Extensibility.Provisioning
         Version Version { get; }
 
         /// <summary>
-        /// Gets this plugin's content directory
+        /// Gets this plugin's content directory, or the root location of the plugin.
         /// </summary>
         DirectoryInfo ContentDirectory { get; }
 
         /// <summary>
+        /// Gets the plugin's data directory
+        /// </summary>
+        IDirectory DataDirectory { get; }
+
+        /// <summary>
         /// Gets the plugin's resource directory
         /// </summary>
-        DirectoryInfo ResourceDirectory { get; }
+        IDirectory ResourceDirectory { get; }
 
         /// <summary>
         /// Gets the resource directory common to the plugin's module.
         /// </summary>
-        DirectoryInfo CommonResourceDirectory { get; }
+        IDirectory CommonResourceDirectory { get; }
     }
 }

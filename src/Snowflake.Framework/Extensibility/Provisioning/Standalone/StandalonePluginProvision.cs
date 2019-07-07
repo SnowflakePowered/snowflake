@@ -4,6 +4,7 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using Snowflake.Extensibility.Configuration;
+using Snowflake.Filesystem;
 
 namespace Snowflake.Extensibility.Provisioning.Standalone
 {
@@ -25,9 +26,11 @@ namespace Snowflake.Extensibility.Provisioning.Standalone
 
         public DirectoryInfo ContentDirectory => throw new NotImplementedException();
 
-        public DirectoryInfo ResourceDirectory => throw new NotImplementedException();
+        public IDirectory ResourceDirectory => throw new NotImplementedException();
 
-        public DirectoryInfo CommonResourceDirectory => throw new NotImplementedException();
+        public IDirectory CommonResourceDirectory => throw new NotImplementedException();
+
+        public IDirectory DataDirectory => throw new NotImplementedException();
 
         public StandalonePluginProvision(Type pluginType)
             : this(pluginType, EmptyPluginProperties.EmptyProperties)

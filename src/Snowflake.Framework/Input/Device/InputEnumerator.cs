@@ -9,6 +9,7 @@ using Newtonsoft.Json.Linq;
 using Snowflake.Extensibility;
 using Snowflake.Extensibility.Provisioning;
 using Snowflake.Input.Controller;
+using Snowflake.Filesystem;
 using Snowflake.Services;
 
 namespace Snowflake.Input.Device
@@ -24,9 +25,10 @@ namespace Snowflake.Input.Device
         protected InputEnumerator(IPluginProvision p)
             : base(p)
         {
+            var file = p.ResourceDirectory.OpenFile("layout.json");
+           
             this.ControllerLayout =
-                JsonConvert.DeserializeObject<ControllerLayout>(File.ReadAllText(p.ResourceDirectory.GetFiles()
-                    .First(f => f.Name == "layout.json").FullName));
+                JsonConvert.DeserializeObject<ControllerLayout>(file.ReadAllText());
         }
     }
 }
