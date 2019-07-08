@@ -543,9 +543,6 @@
         <member name="P:Snowflake.Execution.Extensibility.ExternalEmulator.Properties">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Execution.Extensibility.ExternalEmulator.ConfigurationFactory">
-            <inheritdoc/>
-        </member>
         <member name="M:Snowflake.Execution.Extensibility.ExternalEmulator.CreateTask(Snowflake.Model.Records.Game.IGameRecord,System.Collections.Generic.IList{Snowflake.Execution.Extensibility.IEmulatedController},System.String)">
             <inheritdoc/>
         </member>
