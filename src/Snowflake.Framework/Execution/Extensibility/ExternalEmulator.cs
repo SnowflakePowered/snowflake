@@ -35,9 +35,6 @@ namespace Snowflake.Execution.Extensibility
         public IEmulatorProperties Properties { get; }
 
         /// <inheritdoc/>
-        public abstract IConfigurationFactory ConfigurationFactory { get; }
-
-        /// <inheritdoc/>
         public abstract IEmulatorTask CreateTask(IGameRecord executingGame,
             IList<IEmulatedController> controllerConfiguration,
             string profileContext = "default");

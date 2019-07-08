@@ -27,11 +27,6 @@ namespace Snowflake.Execution.Extensibility
         IEmulatorProperties Properties { get; }
 
         /// <summary>
-        /// Gets the factory that produces configuration files for this emulator.
-        /// </summary>
-        IConfigurationFactory ConfigurationFactory { get; }
-
-        /// <summary>
         /// Creates a task to execute the given game with the emulator <see cref="Runner"/>
         /// </summary>
         /// <param name="executingGame">The game to execute.</param>

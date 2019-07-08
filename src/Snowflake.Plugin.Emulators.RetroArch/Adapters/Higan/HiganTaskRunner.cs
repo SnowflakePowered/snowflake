@@ -10,6 +10,7 @@ using Snowflake.Configuration.Input;
 using Snowflake.Execution.Extensibility;
 using Snowflake.Execution.Process;
 using Snowflake.Extensibility.Provisioning;
+using Snowflake.Filesystem;
 using Snowflake.Input.Device;
 using Snowflake.Model.Records.File;
 
@@ -19,7 +20,7 @@ namespace Snowflake.Adapters.Higan
     {
         public IEmulatorExecutable RetroArchExecutable { get; }
         public IEmulatorTaskRootDirectoryProvider DirectoryProvider { get; }
-        public DirectoryInfo CoreDirectory { get; }
+        public IDirectory CoreDirectory { get; }
         public IEmulatorProperties Properties { get; }
 
         public HiganTaskRunner(IEmulatorExecutable retroArchExecutable,
@@ -33,7 +34,7 @@ namespace Snowflake.Adapters.Higan
             }
 
             this.Properties = properties;
-            this.CoreDirectory = pluginProvision.CommonResourceDirectory.CreateSubdirectory("cores");
+            this.CoreDirectory = pluginProvision.CommonResourceDirectory.OpenDirectory("cores");
         }
 
         public async Task<IEmulatorTaskResult> ExecuteEmulationAsync(IEmulatorTask task)
