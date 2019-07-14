@@ -288,10 +288,33 @@
             that will be evaluated and produce an output or side effects.
             </summary>
         </member>
+        <member name="T:Snowflake.Configuration.Serialization.ConfigurationTraversalContext">
+            <inheritdoc />
+        </member>
         <member name="F:Snowflake.Configuration.Serialization.ConfigurationTraversalContext.NullTarget">
             <summary>
             Special string for the null target that is never serialized.
             </summary>
+        </member>
+        <member name="M:Snowflake.Configuration.Serialization.ConfigurationTraversalContext.#ctor(System.ValueTuple{System.String,Snowflake.Filesystem.IDirectory}[])">
+            <summary>
+            Creates a traversal context with the given path resolutions.
+            
+            Use the syntax
+            <pre>
+            new ConfigurationTraversalContext(("drive", myDirectory), ("drive2", my2ndDirectory));
+            </pre>
+            </summary>
+            <param name="pathResolutionContext">
+            A list of tuples of strings and <see cref="T:Snowflake.Filesystem.IDirectory"/> that specify each
+            namespaced path.
+            </param>
+        </member>
+        <member name="M:Snowflake.Configuration.Serialization.ConfigurationTraversalContext.#ctor(System.Collections.Generic.IDictionary{System.String,Snowflake.Filesystem.IDirectory})">
+            <summary>
+            Creates a traversal context with the given path resolutions.
+            </summary>
+            <param name="pathResolutionContext">The path resolutions supplied as a dictionary.</param>
         </member>
         <member name="T:Snowflake.Configuration.Serialization.Serializers.ConfigurationSerializer`1">
             <summary>
