@@ -176,9 +176,11 @@ namespace Snowflake.Configuration.Serialization
                         throw new ArgumentException("Path strings must be fully qualified with a namespace followed by a ':'.");
                     string path = pathComponents[1];
                     string drive  = pathComponents[0];
-                    string directoryName = Path.GetDirectoryName(path);
+                    string? directoryName = Path.GetDirectoryName(path);
 
-                    if (!this.PathResolutionContext.TryGetValue(drive, out IDirectory rootDir))
+                    if (directoryName == null) throw new ArgumentException($"Could not get directory name for path {path}.");
+
+                    if (!this.PathResolutionContext.TryGetValue(drive, out var rootDir))
                         throw new KeyNotFoundException($"Unable to find a root for the filesystem namespace {drive} in the context.");
 
                     var directory = (Filesystem.Directory)rootDir.OpenDirectory(directoryName);

@@ -36,7 +36,8 @@ namespace Snowflake.Installation.Tasks
 
             foreach (var entries in archive.Entries)
             {
-                string directoryName = Path.GetDirectoryName(entries.FullName);
+                string? directoryName = Path.GetDirectoryName(entries.FullName);
+                if (directoryName == null) continue;
                 // create the destination subdirectory.
                 var extractDest = this.Destination.OpenDirectory(directoryName);
                 var file = extractDest.OpenFile(entries.Name);

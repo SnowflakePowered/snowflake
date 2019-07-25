@@ -25,7 +25,11 @@ namespace Snowflake.Loader
         public T Get<T>()
             where T : class
         {
-            if (services.Contains(typeof(T).FullName))
+            if (typeof(T).FullName == null)
+                throw new InvalidOperationException($"Attempted to get service of a generic type parameter," +
+                    $" array type, pointer type, or byref type based on type parameter.");
+
+            if (services.Contains(typeof(T).FullName!))
             {
                 return this.coreService.Get<T>();
             }
