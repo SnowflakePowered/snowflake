@@ -141,7 +141,10 @@ namespace Snowflake.Filesystem
         public IFile CopyFrom(FileInfo source, bool overwrite)
         {
             if (!source.Exists) throw new FileNotFoundException($"{source.FullName} could not be found.");
-            string fileName = Path.GetFileName(source.Name);
+            string? fileName = Path.GetFileName(source.Name);
+
+            if (fileName == null) throw new ArgumentException($"Could not get file name for path {source.Name}.");
+
             source.CopyTo(this.RootFileSystem.ConvertPathToInternal(this.ThisDirectory.Path / fileName), overwrite);
             return this.OpenFile(fileName);
         }
@@ -152,7 +155,8 @@ namespace Snowflake.Filesystem
         public async Task<IFile> CopyFromAsync(FileInfo source, bool overwrite, CancellationToken cancellation = default)
         {
             if (!source.Exists) throw new FileNotFoundException($"{source.FullName} could not be found.");
-            string fileName = Path.GetFileName(source.Name);
+            string? fileName = Path.GetFileName(source.Name);
+            if (fileName == null) throw new ArgumentException($"Cannot get file name for path {source.Name}");
             var file = this.OpenFile(fileName);
             if (file.Created && !overwrite) throw new IOException($"{source.Name} already exists in the target directory.");
             using (var newStream = file.OpenStream())
