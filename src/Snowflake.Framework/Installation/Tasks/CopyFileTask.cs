@@ -25,6 +25,7 @@ namespace Snowflake.Installation.Tasks
             this.Source = source;
             this.Destination = destinationDirectory;
         }
+
         private TaskResult<FileInfo> Source { get; }
         private IDirectory Destination { get; }
 
