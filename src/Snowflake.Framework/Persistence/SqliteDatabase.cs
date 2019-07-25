@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Common;
-using IO = System.IO;
-using System.Linq;
-using System.Text;
+using System.IO;
 using Dapper;
 using Microsoft.Data.Sqlite;
-using Snowflake.Filesystem;
 
 namespace Snowflake.Persistence
 {
@@ -21,12 +17,7 @@ namespace Snowflake.Persistence
         public SqliteDatabase(string fileName)
         {
             this.DatabaseName = fileName;
-            if (!IO.File.Exists(this.DatabaseName))
-            {
-                IO.File.Create(this.DatabaseName).Dispose();
-            }
-
-            this.dbConnectionString = $"Data Source={this.DatabaseName};";
+            this.dbConnectionString = $"Data Source={this.DatabaseName};Mode=ReadWriteCreate;Cache=Private;";
         }
 
         /// <inheritdoc/>

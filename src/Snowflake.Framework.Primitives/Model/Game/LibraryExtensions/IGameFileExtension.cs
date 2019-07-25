@@ -79,13 +79,6 @@ namespace Snowflake.Model.Game.LibraryExtensions
         IFileRecord RegisterFile(IFile file, string mimetype);
 
         /// <summary>
-        /// Get the save location for the given save type.
-        /// </summary>
-        /// <param name="saveType">The type of save, for example, SRAM.</param>
-        /// <returns>A directory within <see cref="SavesRoot"/>that holds saves for the given type.</returns>
-        IDirectory GetSavesLocation(string saveType);
-
-        /// <summary>
         /// Gets a working scratch directory for an emulator instance within <see cref="RuntimeRoot"/>.
         /// </summary>
         /// <returns>A working scratch directory for an emulator running instance. This directory

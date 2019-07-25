@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Snowflake.Model.Database;
 using Snowflake.Filesystem;
-using Snowflake.Model.Game.LibraryExtensions;
 using Snowflake.Model.Records.File;
 using Zio;
 
@@ -44,12 +42,6 @@ namespace Snowflake.Model.Game.LibraryExtensions
         public IDirectory GetRuntimeLocation()
         {
             return this.RuntimeRoot.OpenDirectory(Guid.NewGuid().ToString());
-        }
-
-        public IDirectory GetSavesLocation(string saveType)
-        {
-            //todo: sanitize savetype.
-            return this.SavesRoot.OpenDirectory(saveType);
         }
 
         public IFileRecord? GetFileInfo(IFile file) => this.FileRecordLibrary.GetRecord(file);
