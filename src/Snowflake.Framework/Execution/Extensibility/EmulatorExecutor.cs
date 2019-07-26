@@ -10,12 +10,12 @@ namespace Snowflake.Execution.Extensibility
 {
     public abstract class EmulatorExecutor
     {
-        GameEmulation ProvisionEmulationInstance(IGame game,
+        void ProvisionEmulationInstance(IGame game,
             IList<IEmulatedController> controllerPorts,
             string configurationProfileName,
             SaveGame savegame)
         {
-            game.WithConfigurations()
+            game.WithConfigurations();
         }
     }
 }

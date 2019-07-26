@@ -546,6 +546,13 @@
         <member name="M:Snowflake.Execution.Extensibility.ExternalEmulator.CreateTask(Snowflake.Model.Records.Game.IGameRecord,System.Collections.Generic.IList{Snowflake.Execution.Extensibility.IEmulatedController},System.String)">
             <inheritdoc/>
         </member>
+        <member name="M:Snowflake.Execution.Saving.GameFileExtensionSaveGameManagerExtensions.WithSaves(Snowflake.Model.Game.LibraryExtensions.IGameFileExtension)">
+            <summary>
+            Provides SaveGameManagement
+            </summary>
+            <param name="this"></param>
+            <returns></returns>
+        </member>
         <member name="F:Snowflake.Extensibility.EmptyPluginConfiguration.EmptyConfiguration">
             <summary>
             The empty plugin configuration.
