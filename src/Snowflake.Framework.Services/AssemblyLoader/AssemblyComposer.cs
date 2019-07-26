@@ -51,9 +51,22 @@ namespace Snowflake.Services.AssemblyLoader
 
         public void Compose()
         {
-            var toCompose = this.moduleComposables.Select(p => (module: p.Module,
-                composable: p.Composable,
-                services: this.GetImportedServices(p.Composable))).ToList();
+            var toCompose = this.moduleComposables.Select(p => {
+                try
+                {
+                    return (module: p.Module,
+                        composable: p.Composable,
+                        services: this.GetImportedServices(p.Composable));
+                }
+                catch (Exception ex)
+                {
+                    this.logger.Error(
+                                $"Exception {ex.GetType()}: {ex.Message} occured when resolving services for {p.Composable.GetType().Name}.");
+                    this.logger.Error($"Stack Trace:{Environment.NewLine + ex.StackTrace}");
+                    return (module: null, composable: null, services: null);
+                }
+            }).Where(m => m.module != null).ToList();
+
             int count = toCompose.Count;
             while (count > 0)
             {

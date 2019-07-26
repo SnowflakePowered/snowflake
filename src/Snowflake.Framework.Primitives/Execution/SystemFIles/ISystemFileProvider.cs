@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using Snowflake.Filesystem;
 using Snowflake.Model.Game;
 
 namespace Snowflake.Execution.SystemFiles
@@ -13,51 +14,45 @@ namespace Snowflake.Execution.SystemFiles
     public interface ISystemFileProvider
     {
         /// <summary>
-        /// Gets the specified BIOS file if available.
+        /// Retrieves the <see cref="IDirectory"/> containing the system files for the specified platform.
+        /// 
+        /// Todo: expose as IReadOnlyDirectory
         /// </summary>
-        /// <throws>FileNotFoundException if the BIOS file is not available.</throws>
-        /// <param name="biosFile">The BIOS file specification.</param>
-        /// <returns>The file as a stream.</returns>
-        Stream GetSystemFile(IBiosFile biosFile);
+        /// <param name="biosPlatform">The Stone PlatformID for the requested system files.</param>
+        /// <returns></returns>
+        IDirectory GetSystemFileDirectory(PlatformId biosPlatform);
 
         /// <summary>
-        /// Gets the path of the specified BIOS file if available.
+        /// Retrieves the list of system files not available for use within the system file directory,
+        /// according to the platform's Stone specification.
+        /// 
+        /// This does only a cursory filename check and not a deeper MD5 verification of the file.
         /// </summary>
-        /// <throws>FileNotFoundException if the BIOS file is not available.</throws>
-        /// <param name="biosFile">The BIOS file specification.</param>
-        /// <returns>The path to the file.</returns>
-        FileInfo GetSystemFilePath(IBiosFile biosFile);
+        /// <param name="biosPlatform">The Stone PlatformID for the requested system file.</param>
+        /// <returns>Ahe list of system files not available for use within the system file directory,
+        /// according to the platform's Stone specification.</returns>
+        IEnumerable<IBiosFile> GetMissingSystemFiles(PlatformId biosPlatform);
 
         /// <summary>
-        /// Adds the specified BIOS file to the registry.
+        /// Retrieves the <see cref="IFile"/> for the specified system file with the provided MD5 hash
         /// </summary>
-        /// <exception cref="FileNotFoundException">If the system file is not found.</exception>
-        /// <param name="biosFile">The BIOS file specification.</param>
-        /// <param name="systemFilePath">The path to the file.</param>
-        void AddSystemFile(IBiosFile biosFile, FileInfo systemFilePath);
-
+        /// <param name="md5Hash">
+        /// The MD5 hash of the system file to request.
+        /// </param>
+        /// <param name="platformId">The platform ID of the system file to request.</param>
+        /// <returns>The <see cref="IFile"/> entry for the specified file if it exists,
+        /// otherwise returns null.
+        /// </returns>
+        IFile? GetSystemFileByMd5Hash(PlatformId platformId, string md5Hash);
+ 
         /// <summary>
-        /// Adds the specified BIOS file to the registry.
+        /// Retrieves the <see cref="IFile"/> for the specified system file with the provided file name.
         /// </summary>
-        /// <exception cref="FileNotFoundException">If the system file is not found.</exception>
-        /// <param name="biosFile">The BIOS file specification.</param>
-        /// <param name="systemFileStream">The file as a stream.</param>
-        void AddSystemFile(IBiosFile biosFile, Stream systemFileStream);
-
-        /// <summary>
-        /// Adds the specified BIOS file to the registry.
-        /// </summary>
-        /// <exception cref="FileNotFoundException">If the system file is not found.</exception>
-        /// <param name="biosFile">The BIOS file specification.</param>
-        /// <param name="systemFileStream">The file as a stream.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        Task AddSystemFileAsync(IBiosFile biosFile, Stream systemFileStream);
-
-        /// <summary>
-        /// Returns whether or not a given BIOS file is contained in the registery
-        /// </summary>
-        /// <param name="biosFile">The requested BIOS file.</param>
-        /// <returns>Whether or not the registry contiains the given BIOS file.</returns>
-        bool ContainsSystemFile(IBiosFile biosFile);
+        /// <param name="name">
+        /// The name of the system file to request.</param>
+        /// <returns>The <see cref="IFile"/> entry for the specified file if it exists,
+        /// otherwise returns null.
+        /// </returns>
+        IFile? GetSystemFileByName(PlatformId platformId, string name);
     }
 }

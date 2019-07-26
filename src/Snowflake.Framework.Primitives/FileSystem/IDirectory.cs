@@ -215,16 +215,5 @@ namespace Snowflake.Filesystem
         /// <param name="directory">The name of the directory to check.</param>
         /// <returns>Whether or not this directory contains the given directory.</returns>
         bool ContainsDirectory(string directory);
-
-        /// <summary>
-        /// Gets the underlying <see cref="DirectoryInfo"/> where files are contained.
-        /// 
-        /// This is very rarely necessary, and most IO tasks can be done efficiently and safely using the
-        /// provided API. Manipulating the underlying file system will potentially desync the manifest,
-        /// and cause loss of associated metadata.
-        /// </summary>
-        /// <returns>The underlying <see cref="DirectoryInfo"/> where files are contained.</returns>
-        [Obsolete("Avoid accessing the underlying file path, and use the object methods instead.")]
-        DirectoryInfo GetPath();
     }
 }
