@@ -27,9 +27,6 @@ namespace Snowflake.Support.Execution
 
             var emucdp = new EmulatorTaskRootDirectoryProvider(cdp);
             register.RegisterService<IEmulatorTaskRootDirectoryProvider>(emucdp);
-
-            var systemFileProvider = new SystemFileProvider(cdp);
-            register.RegisterService<ISystemFileProvider>(systemFileProvider);
         }
     }
 }
