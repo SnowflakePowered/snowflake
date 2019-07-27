@@ -69,7 +69,7 @@ namespace Snowflake.Filesystem
 
         public IReadOnlyFile AsReadOnly() => this;
 
-        public string RootedPath => this._ParentDirectory.RootFileSystem.ConvertPathFromInternal(this.RawInfo.Path.ToString()).FullName;
+        public string RootedPath => this.RawInfo.Path.ToString();
 
         IReadOnlyDirectory IReadOnlyFile.ParentDirectory => this._ParentDirectory;
     }
