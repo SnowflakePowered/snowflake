@@ -6,7 +6,7 @@ using Zio;
 
 namespace Snowflake.Filesystem
 {
-    internal sealed class File : IFile
+    internal sealed class File : IFile, IReadOnlyFile
     {
         internal File(Directory parentDirectory, FileEntry file, Guid guid)
         {
@@ -56,11 +56,21 @@ namespace Snowflake.Filesystem
             this._ParentDirectory.RemoveGuid(this.Name);
         }
 
-        public FileInfo GetFilePath()
+        public FileInfo UnsafeGetFilePath()
         {
             return new FileInfo(this.RawInfo.FileSystem.ConvertPathToInternal(this.RawInfo.Path));
         }
 
-        public string RootedPath => this.RawInfo.Path.ToString();
+        public Stream OpenReadStream()
+        {
+            if (!this.Created) throw new FileNotFoundException($"The file {this.Name} was not found");
+            return this.OpenStream(FileAccess.Read);
+        }
+
+        public IReadOnlyFile AsReadOnly() => this;
+
+        public string RootedPath => this._ParentDirectory.RootFileSystem.ConvertPathFromInternal(this.RawInfo.Path.ToString()).FullName;
+
+        IReadOnlyDirectory IReadOnlyFile.ParentDirectory => this._ParentDirectory;
     }
 }

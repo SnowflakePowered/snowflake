@@ -296,7 +296,7 @@
             Special string for the null target that is never serialized.
             </summary>
         </member>
-        <member name="M:Snowflake.Configuration.Serialization.ConfigurationTraversalContext.#ctor(System.ValueTuple{System.String,Snowflake.Filesystem.IDirectory}[])">
+        <member name="M:Snowflake.Configuration.Serialization.ConfigurationTraversalContext.#ctor(System.ValueTuple{System.String,Snowflake.Filesystem.IReadOnlyDirectory}[])">
             <summary>
             Creates a traversal context with the given path resolutions.
             
@@ -310,7 +310,7 @@
             namespaced path.
             </param>
         </member>
-        <member name="M:Snowflake.Configuration.Serialization.ConfigurationTraversalContext.#ctor(System.Collections.Generic.IDictionary{System.String,Snowflake.Filesystem.IDirectory})">
+        <member name="M:Snowflake.Configuration.Serialization.ConfigurationTraversalContext.#ctor(System.Collections.Generic.IDictionary{System.String,Snowflake.Filesystem.IReadOnlyDirectory})">
             <summary>
             Creates a traversal context with the given path resolutions.
             </summary>

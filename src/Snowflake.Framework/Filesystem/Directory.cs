@@ -14,7 +14,7 @@ using Dapper;
 
 namespace Snowflake.Filesystem
 {
-    internal sealed class Directory : IDirectory
+    internal sealed class Directory : IDirectory, IReadOnlyDirectory
     {
         private SqliteDatabase Manifest { get; }
 
@@ -126,7 +126,7 @@ namespace Snowflake.Filesystem
                 this.GetGuid(file.GetName()));
         }
 
-        public DirectoryInfo GetPath()
+        public DirectoryInfo UnsafeGetPath()
         {
             return new DirectoryInfo(this.RootFileSystem.ConvertPathToInternal(this.ThisDirectory.Path));
         }
@@ -168,40 +168,40 @@ namespace Snowflake.Filesystem
             return file;
         }
 
-        public IFile CopyFrom(IFile source, bool overwrite)
+        public IFile CopyFrom(IReadOnlyFile source, bool overwrite)
         {
             if (this.ContainsFile(source.Name) && !overwrite) throw new IOException($"{source.Name} already exists in the target directory.");
             this.AddGuid(source.Name, source.FileGuid);
 #pragma warning disable CS0618 // Type or member is obsolete
-            return this.CopyFrom(source.GetFilePath(), overwrite);
+            return this.CopyFrom(source.UnsafeGetFilePath(), overwrite);
 #pragma warning restore CS0618 // Type or member is obsolete
         }
 
-        public Task<IFile> CopyFromAsync(IFile source, CancellationToken cancellation = default) 
+        public Task<IFile> CopyFromAsync(IReadOnlyFile source, CancellationToken cancellation = default) 
             => this.CopyFromAsync(source, false, cancellation);
 
-        public async Task<IFile> CopyFromAsync(IFile source, bool overwrite, CancellationToken cancellation = default)
+        public async Task<IFile> CopyFromAsync(IReadOnlyFile source, bool overwrite, CancellationToken cancellation = default)
         {
 #pragma warning disable CS0618 // Type or member is obsolete
             if (this.ContainsFile(source.Name) && !overwrite) throw new IOException($"{source.Name} already exists in the target directory");
             this.AddGuid(source.Name, source.FileGuid);
-            return await this.CopyFromAsync(source.GetFilePath(), overwrite, cancellation);
+            return await this.CopyFromAsync(source.UnsafeGetFilePath(), overwrite, cancellation);
 #pragma warning restore CS0618 // Type or member is obsolete
         }
 
-        public IFile CopyFrom(IFile source) => this.CopyFrom(source, false);
+        public IFile CopyFrom(IReadOnlyFile source) => this.CopyFrom(source, false);
 
         public IFile MoveFrom(IFile source) => this.MoveFrom(source, false);
 
         public IFile MoveFrom(IFile source, bool overwrite)
         {
 #pragma warning disable CS0618 // Type or member is obsolete
-            if (!source.Created) throw new FileNotFoundException($"{source.GetFilePath().FullName} could not be found.");
+            if (!source.Created) throw new FileNotFoundException($"{source.UnsafeGetFilePath().FullName} could not be found.");
             if (this.ContainsFile(source.Name) && !overwrite) throw new IOException($"{source.Name} already exists in the target directory");
             this.AddGuid(source.Name, source.FileGuid);
             var file = this.OpenFile(source.Name);
             // unsafe usage here as optimization.
-            source.GetFilePath().MoveTo(file.GetFilePath().ToString(), overwrite);
+            source.UnsafeGetFilePath().MoveTo(file.UnsafeGetFilePath().ToString(), overwrite);
 #pragma warning restore CS0618 // Type or member is obsolete
             source.Delete();
             return file;
@@ -236,5 +236,48 @@ namespace Snowflake.Filesystem
                 }
             }
         }
+
+        IReadOnlyDirectory IReadOnlyDirectory.OpenDirectory(string name)
+        {
+            if (this.ContainsDirectory(name)) return (Directory)this.OpenDirectory(name);
+            throw new DirectoryNotFoundException($"Directory {name} does not exist within {this.Name}.");
+        }
+
+
+        IReadOnlyDirectory IReadOnlyDirectory.OpenDirectory(string name, bool createIfNotExists)
+        {
+            if (createIfNotExists) return this.OpenDirectory(name).AsReadOnly();
+            return (this as IReadOnlyDirectory).OpenDirectory(name);
+        }
+
+
+        IReadOnlyFile IReadOnlyDirectory.OpenFile(string file)
+        {
+            if (this.ContainsFile(file)) return this.OpenFile(file).AsReadOnly();
+            throw new FileNotFoundException($"File {file} does not exist within the directory {this.Name}.");
+        }
+
+        IReadOnlyFile IReadOnlyDirectory.OpenFile(string file, bool createIfNotExists)
+        {
+            if (createIfNotExists) return this.OpenFile(file).AsReadOnly();
+            return (this as IReadOnlyDirectory).OpenFile(file);
+        }
+
+        IEnumerable<IReadOnlyDirectory> IReadOnlyDirectory.EnumerateDirectories()
+        {
+            return this.EnumerateDirectories().Select(d => d.AsReadOnly());
+        }
+
+        IEnumerable<IReadOnlyFile> IReadOnlyDirectory.EnumerateFiles()
+        {
+            return this.EnumerateFiles().Select(f => f.AsReadOnly());
+        }
+
+        IEnumerable<IReadOnlyFile> IReadOnlyDirectory.EnumerateFilesRecursive()
+        {
+            return this.EnumerateFilesRecursive().Select(f => f.AsReadOnly());
+        }
+
+        public IReadOnlyDirectory AsReadOnly() => this;
     }
 }

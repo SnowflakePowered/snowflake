@@ -21,12 +21,12 @@ namespace Snowflake.Configuration.Serialization.Serializers.Implementations
             return;
         }
 
-        public override void SerializeNodeValue(bool value, string key,  IConfigurationSerializationContext<string> context, int index)
+        public override void SerializeNodeValue(bool value, string key, IConfigurationSerializationContext<string> context, int index)
         {
             context.AppendLine($@"{key}=""{value}""");
         }
 
-        public override void SerializeNodeValue(double value, string key,  IConfigurationSerializationContext<string> context, int index)
+        public override void SerializeNodeValue(double value, string key, IConfigurationSerializationContext<string> context, int index)
         {
             context.AppendLine($@"{key}=""{value}""");
         }
