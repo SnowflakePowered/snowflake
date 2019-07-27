@@ -10,6 +10,8 @@ namespace Snowflake.Filesystem
     /// metadata potentially attached to it by a unique <see cref="Guid"/> that tracks the file
     /// within the file system, as long as the <see cref="Snowflake.Filesystem"/> API methods
     /// are used.
+    /// 
+    /// Prefer using the <see cref="IReadOnlyFile"/> interface if no writes are guaranteed.
     /// </summary>
     public interface IReadOnlyFile
     {
@@ -28,12 +30,12 @@ namespace Snowflake.Filesystem
         IReadOnlyDirectory ParentDirectory { get; }
 
         /// <summary>
-        /// Opens a read-only stream to the file. If it does not currently exist, IOException
-        /// will be thrown.
+        /// Opens a read-only stream to the file. If it does not currently exist,
+        /// <see cref="FileNotFoundException"/> will be thrown.
         /// </summary>
         /// <returns>A read-write stream to the file.</returns>
-        Stream OpenStream();
-        
+        Stream OpenReadStream();
+
         /// <summary>
         /// The unique ID identifying this file in the directory manifest.
         /// </summary>
@@ -51,5 +53,22 @@ namespace Snowflake.Filesystem
         /// The path of this file, relative to the root of the directory provider.
         /// </summary>
         string RootedPath { get; }
+
+        /// <summary>
+        /// Returns the real file path of this file.
+        /// 
+        /// This method is obsolete because it is unsafe to use,
+        /// without going through the interface methods of 
+        /// <see cref="IFile"/>, there is no guarantee that the parent
+        /// <see cref="IDirectory"/> instance will remain consistent.
+        /// 
+        /// However, access to the underlying filesystem is necessary
+        /// for the API to be remotely useful at the barrier.
+        /// 
+        /// Restrict usage to read-only unless absolutely necessary.
+        /// </summary>
+        /// <returns>The real file path of the file.</returns>
+        [Obsolete("Avoid accessing the underlying file path, and use the object methods instead.")]
+        FileInfo UnsafeGetFilePath();
     }
 }

@@ -53,7 +53,7 @@ namespace Snowflake.Filesystem
         /// Copies a file from an unmanaged <see cref="FileInfo"/> that exists outside of
         /// a <see cref="IDirectory"/>.
         /// Do not use this method to copy from a managed <see cref="IDirectory"/>.
-        /// Instead, use <see cref="CopyFrom(IFile)"/>.
+        /// Instead, use <see cref="CopyFrom(IReadOnlyFile)"/>.
         /// </summary>
         /// <exception cref="IOException">If a file with the same name exists in the target destination.</exception>
         /// <exception cref="FileNotFoundException">If the source file can not be found.</exception>
@@ -65,7 +65,7 @@ namespace Snowflake.Filesystem
         /// Copies a file from an unmanaged <see cref="FileInfo"/> that exists outside of
         /// a <see cref="IDirectory"/>.
         /// Do not use this method to copy from a managed <see cref="IDirectory"/>.
-        /// Instead, use <see cref="CopyFrom(IFile)"/>.
+        /// Instead, use <see cref="CopyFrom(IReadOnlyFile)"/>.
         /// </summary>
         /// <exception cref="IOException">If a file with the same name exists in the target destination and <paramref name="overwrite"/> is false.</exception>
         /// <exception cref="FileNotFoundException">If the source file can not be found.</exception>
@@ -120,13 +120,13 @@ namespace Snowflake.Filesystem
 
         /// <summary>
         /// Moves a file between <see cref="IDirectory"/>, updating the 
-        /// manifests such that the resulting file has the same <see cref="IFile.FileGuid"/> as the source file.
+        /// manifests such that the resulting file has the same <see cref="IReadOnlyFile.FileGuid"/> as the source file.
         /// 
         /// The source file will cease to exist in its original <see cref="IDirectory"/>.
         /// 
         /// There is no asychronous equivalent by design, since <see cref="MoveFrom(IFile, bool)"/> is intended to
-        /// be faster than <see cref="CopyFromAsync(IFile, bool, CancellationToken)"/> if the <see cref="IDirectory"/> instances
-        /// are on the same file system. Otherwise, you should use <see cref="CopyFromAsync(IFile, bool, CancellationToken)"/>,
+        /// be faster than <see cref="CopyFromAsync(IReadOnlyFile, bool, CancellationToken)"/> if the <see cref="IDirectory"/> instances
+        /// are on the same file system. Otherwise, you should use <see cref="CopyFromAsync(IReadOnlyFile, bool, CancellationToken)"/>,
         /// then <see cref="IFile.Delete"/> the old file.
         /// </summary>
         /// <exception cref="IOException">If a file with the same name exists in the target destination and <paramref name="overwrite"/> is false.</exception>
@@ -144,7 +144,7 @@ namespace Snowflake.Filesystem
         /// <exception cref="FileNotFoundException">If the source file can not be found.</exception>
         /// <param name="source">The <see cref="FileInfo"/></param>
         /// <returns>The <see cref="IFile"/> that describes the file in the current <see cref="IDirectory"/>.</returns>
-        IFile CopyFrom(IFile source);
+        IFile CopyFrom(IReadOnlyFile source);
 
         /// <summary>
         /// Copies a file from a <see cref="IFile"/> from another <see cref="IDirectory"/>, updating the
@@ -155,7 +155,7 @@ namespace Snowflake.Filesystem
         /// <param name="source">The <see cref="FileInfo"/></param>
         /// <param name="overwrite">Overwrite the file if it already exists in this <see cref="IDirectory"/></param>
         /// <returns>The <see cref="IFile"/> that describes the file in the current <see cref="IDirectory"/>.</returns>
-        IFile CopyFrom(IFile source, bool overwrite);
+        IFile CopyFrom(IReadOnlyFile source, bool overwrite);
 
         /// <summary>
         /// Copies a file asynchronously from a <see cref="IFile"/> from another <see cref="IDirectory"/>, updating the
@@ -166,19 +166,19 @@ namespace Snowflake.Filesystem
         /// <param name="source">The <see cref="FileInfo"/></param>
         /// <param name="cancellation">Cancellation token for the asynchronous task.</param>
         /// <returns>The <see cref="IFile"/> that describes the file in the current <see cref="IDirectory"/>.</returns>
-        Task<IFile> CopyFromAsync(IFile source, CancellationToken cancellation = default);
+        Task<IFile> CopyFromAsync(IReadOnlyFile source, CancellationToken cancellation = default);
 
         /// <summary>
         /// Copies a file asynchronously from a <see cref="IFile"/> from another <see cref="IDirectory"/>, updating the
-        /// manifests such that the resulting file has the same <see cref="IFile.FileGuid"/> as the source file.
+        /// manifests such that the resulting file has the same <see cref="IReadOnlyFile.FileGuid"/> as the source file.
         /// </summary>
         /// <exception cref="IOException">If a file with the same name exists in the target destination and <paramref name="overwrite"/> is false.</exception>
         /// <exception cref="FileNotFoundException">If the source file can not be found.</exception>
         /// <param name="source">The <see cref="FileInfo"/></param>
         /// <param name="overwrite">Overwrite the file if it already exists in this <see cref="IDirectory"/></param>
         /// <param name="cancellation">Cancellation token for the asynchronous task.</param>
-        /// <returns>The <see cref="IFile"/> that describes the file in the current <see cref="IDirectory"/>.</returns>
-        Task<IFile> CopyFromAsync(IFile source, bool overwrite, CancellationToken cancellation = default);
+        /// <returns>The <see cref="IReadOnlyFile"/> that describes the file in the current <see cref="IDirectory"/>.</returns>
+        Task<IFile> CopyFromAsync(IReadOnlyFile source, bool overwrite, CancellationToken cancellation = default);
 
         /// <summary>
         /// Enumerates all direct child directories of this <see cref="IDirectory"/>.
@@ -217,6 +217,12 @@ namespace Snowflake.Filesystem
         bool ContainsDirectory(string directory);
 
         /// <summary>
+        /// Returns a read only view over this directory.
+        /// </summary>
+        /// <returns>A read only view over this directory.</returns>
+        IReadOnlyDirectory AsReadOnly();
+
+        /// <summary>
         /// Gets the underlying <see cref="DirectoryInfo"/> where files are contained.
         /// 
         /// This is very rarely necessary, and most IO tasks can be done efficiently and safely using the
@@ -225,6 +231,6 @@ namespace Snowflake.Filesystem
         /// </summary>
         /// <returns>The underlying <see cref="DirectoryInfo"/> where files are contained.</returns>
         [Obsolete("Avoid accessing the underlying file path, and use the object methods instead.")]
-        DirectoryInfo GetPath();
+        DirectoryInfo UnsafeGetPath();
     }
 }

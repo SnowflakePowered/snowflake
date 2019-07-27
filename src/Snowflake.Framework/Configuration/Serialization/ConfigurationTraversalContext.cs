@@ -32,7 +32,7 @@ namespace Snowflake.Configuration.Serialization
         /// A list of tuples of strings and <see cref="IDirectory"/> that specify each
         /// namespaced path.
         /// </param>
-        public ConfigurationTraversalContext(params (string directoryNamespace, IDirectory directory)[] pathResolutionContext)
+        public ConfigurationTraversalContext(params (string directoryNamespace, IReadOnlyDirectory directory)[] pathResolutionContext)
         {
             this.PathResolutionContext = pathResolutionContext
                 .ToDictionary(v => v.directoryNamespace, v => v.directory);
@@ -42,12 +42,12 @@ namespace Snowflake.Configuration.Serialization
         /// Creates a traversal context with the given path resolutions.
         /// </summary>
         /// <param name="pathResolutionContext">The path resolutions supplied as a dictionary.</param>
-        public ConfigurationTraversalContext(IDictionary<string, IDirectory> pathResolutionContext)
+        public ConfigurationTraversalContext(IDictionary<string, IReadOnlyDirectory> pathResolutionContext)
         {
             this.PathResolutionContext = pathResolutionContext;
         }
 
-        private IDictionary<string, IDirectory> PathResolutionContext { get; }
+        private IDictionary<string, IReadOnlyDirectory> PathResolutionContext { get; }
 
         private static IEnumerable<IConfigurationTarget> ResolveConfigurationTargets(IConfigurationCollection collection)
         {
@@ -183,16 +183,16 @@ namespace Snowflake.Configuration.Serialization
                     if (!this.PathResolutionContext.TryGetValue(drive, out var rootDir))
                         throw new KeyNotFoundException($"Unable to find a root for the filesystem namespace {drive} in the context.");
 
-                    var directory = (Filesystem.Directory)rootDir.OpenDirectory(directoryName);
-                    var file = directory.OpenFile(path);
+                    var directory = rootDir.OpenDirectory(directoryName, true);
+                    var file = directory.OpenFile(path, true);
 
                     IAbstractConfigurationNode pathNode = key.PathType switch
                     {
-                        PathType.Directory => new StringConfigurationNode(serializedKey, directory.GetPath().FullName),
 #pragma warning disable CS0618 // Type or member is obsolete
-                        PathType.File => new StringConfigurationNode(serializedKey, file.GetFilePath().FullName),
-                        PathType.Either => file.Created ? new StringConfigurationNode(serializedKey, file.GetFilePath().FullName) :
-                            new StringConfigurationNode(serializedKey, directory.GetPath().FullName),
+                        PathType.Directory => new StringConfigurationNode(serializedKey, directory.UnsafeGetPath().FullName),
+                        PathType.File => new StringConfigurationNode(serializedKey, file.UnsafeGetFilePath().FullName),
+                        PathType.Either => file.Created ? new StringConfigurationNode(serializedKey, file.UnsafeGetFilePath().FullName) :
+                            new StringConfigurationNode(serializedKey, directory.UnsafeGetPath().FullName),
 #pragma warning restore CS0618 // Type or member is obsolete
                         PathType.Raw => new StringConfigurationNode(serializedKey, path),
                         // UnknownConfigurationNodes are ignored in most serializers.

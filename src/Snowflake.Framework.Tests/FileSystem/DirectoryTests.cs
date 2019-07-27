@@ -46,14 +46,14 @@ namespace Snowflake.Filesystem.Tests
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
             var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
 
-            Assert.Equal(NormalizePath(dir.GetPath().FullName),
+            Assert.Equal(NormalizePath(dir.UnsafeGetPath().FullName),
                 NormalizePath(Path.Combine(temp, "test")));
 
 #pragma warning disable CS0618 // Type or member is obsolete
-            Assert.Equal(NormalizePath(dir.OpenDirectory("dir1").GetPath().FullName),
+            Assert.Equal(NormalizePath(dir.OpenDirectory("dir1").UnsafeGetPath().FullName),
                 NormalizePath(Path.Combine(temp, "test", "dir1")));
 
-            Assert.Equal(NormalizePath(dir.OpenDirectory("test").OpenDirectory("test").GetPath().FullName),
+            Assert.Equal(NormalizePath(dir.OpenDirectory("test").OpenDirectory("test").UnsafeGetPath().FullName),
                 NormalizePath(Path.Combine(temp, "test", "test", "test")));
 #pragma warning restore CS0618 // Type or member is obsolete
 
@@ -69,7 +69,7 @@ namespace Snowflake.Filesystem.Tests
 
             var deep = dir.OpenDirectory("test/test");
 #pragma warning disable CS0618 // Type or member is obsolete
-            Assert.Equal(NormalizePath(deep.GetPath().FullName),
+            Assert.Equal(NormalizePath(deep.UnsafeGetPath().FullName),
                NormalizePath(Path.Combine(temp, "test", "test", "test")));
 #pragma warning restore CS0618 // Type or member is obsolete
 

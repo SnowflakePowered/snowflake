@@ -41,7 +41,13 @@ namespace Snowflake.Extensibility.Provisioning
         }
 
         /// <inheritdoc/>
-        public virtual void Dispose()
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
         {
         }
     }
