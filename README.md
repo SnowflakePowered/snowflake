@@ -1,5 +1,5 @@
+![Snowflake](branding/horizon/snowflake/exports/Logo-Logotype@500px.png) [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FSnowflakePowered%2Fsnowflake.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FSnowflakePowered%2Fsnowflake?ref=badge_shield)
 
-![Snowflake](branding/horizon/snowflake/exports/Logo-Logotype@500px.png) 
 =========
 
 **Build Status**
@@ -56,3 +56,7 @@ Legal
 Snowflake is licensed under the Mozilla Public License 2.0 (MPL2) with certain parts dual licensed under the GNU General Public License version 3 and MPL2 as indicated. Since May 1, 2016, this license is retroactively applied to all prior copies of Snowflake's source code which may have been licensed under different terms. 
 
 Snowflake does not in any way facilitate the download of illegal ROM images or warez of any kind. 
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FSnowflakePowered%2Fsnowflake.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FSnowflakePowered%2Fsnowflake?ref=badge_large)
