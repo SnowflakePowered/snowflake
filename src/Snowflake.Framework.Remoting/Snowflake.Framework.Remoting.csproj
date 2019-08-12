@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GraphQL" Version="3.0.0-preview-1194" />
+    <PackageReference Include="GraphQL" Version="3.0.0-preview-1198" />
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" PrivateAssets="Compile" />
     <PackageReference Include="Microsoft.AspNetCore.ResponseCompression" Version="2.2.0" PrivateAssets="Compile" />
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.2.0" />
