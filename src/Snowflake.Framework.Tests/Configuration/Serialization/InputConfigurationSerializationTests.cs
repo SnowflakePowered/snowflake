@@ -33,7 +33,7 @@ namespace Snowflake.Configuration.Serialization
                     TestUtilities.GetStringResource("InputMappings.xinput_device.json"));
             var mapcol = ControllerElementMappings.GetDefaultMappings(realmapping, testmappings);
             string _mapping = TestUtilities.GetStringResource("InputMappings.DirectInput.XINPUT_DEVICE.json");
-            IInputMapping mapping = JsonConvert.DeserializeObject<InputMapping>(_mapping);
+            IDeviceInputMapping mapping = JsonConvert.DeserializeObject<InputMapping>(_mapping);
             var input =
              new InputTemplate<IRetroArchInput>(mapcol).Template;
 
@@ -63,7 +63,7 @@ namespace Snowflake.Configuration.Serialization
                     TestUtilities.GetStringResource("InputMappings.xinput_device.json"));
             var mapcol = ControllerElementMappings.GetDefaultMappings(realmapping, testmappings);
             string _mapping = TestUtilities.GetStringResource("InputMappings.DirectInput.XINPUT_DEVICE.json");
-            IInputMapping mapping = JsonConvert.DeserializeObject<InputMapping>(_mapping);
+            IDeviceInputMapping mapping = JsonConvert.DeserializeObject<InputMapping>(_mapping);
             var input =
              new InputTemplate<IRetroArchInput>(mapcol).Template;
 
@@ -93,7 +93,7 @@ namespace Snowflake.Configuration.Serialization
                     TestUtilities.GetStringResource("InputMappings.xinput_device.json"));
             var mapcol = ControllerElementMappings.GetDefaultMappings(realmapping, testmappings);
             string _mapping = TestUtilities.GetStringResource("InputMappings.DirectInput.XINPUT_DEVICE.json");
-            IInputMapping mapping = JsonConvert.DeserializeObject<InputMapping>(_mapping);
+            IDeviceInputMapping mapping = JsonConvert.DeserializeObject<InputMapping>(_mapping);
             var input =
              new InputTemplate<IRetroArchInput>(mapcol).Template;
 
@@ -123,7 +123,7 @@ namespace Snowflake.Configuration.Serialization
                     TestUtilities.GetStringResource("InputMappings.xinput_device.json"));
             var mapcol = ControllerElementMappings.GetDefaultMappings(realmapping, testmappings);
             string _mapping = TestUtilities.GetStringResource("InputMappings.DirectInput.XINPUT_DEVICE.json");
-            IInputMapping mapping = JsonConvert.DeserializeObject<InputMapping>(_mapping);
+            IDeviceInputMapping mapping = JsonConvert.DeserializeObject<InputMapping>(_mapping);
             var input =
              new InputTemplate<IRetroArchInput>(mapcol).Template;
 

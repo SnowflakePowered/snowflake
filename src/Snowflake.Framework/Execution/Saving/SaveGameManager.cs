@@ -17,8 +17,10 @@ namespace Snowflake.Execution.Saving
             this.SaveDirectory = saveDirectory;
         }
 
-        public SaveGame CreateSave(string type) => this.CreateSave(type, Enumerable.Empty<string>());
-        public SaveGame CreateSave(string type, IEnumerable<string> tags)
+        public SaveGame CreateSave(string type,
+            Action<IDirectory> factory) => this.CreateSave(type, Enumerable.Empty<string>(), factory);
+
+        public SaveGame CreateSave(string type, IEnumerable<string> tags, Action<IDirectory> factory)
         {
             var details = new SaveGameDetails()
             {
@@ -28,10 +30,14 @@ namespace Snowflake.Execution.Saving
                 Tags = tags,
             };
 
-            var saveDirectory = this.SaveDirectory.OpenDirectory($"{type}-{details.CreatedTimestamp.ToString("yyyy-MM-dd.HH-mm-ss")}");
+            var saveDirectory = this.SaveDirectory
+                .OpenDirectory($"{type}-{details.CreatedTimestamp.ToString("yyyy-MM-dd.HH-mm-ss")}");
             string manifestData = JsonConvert.SerializeObject(details);
             saveDirectory.OpenFile(".savemanifest").WriteAllText(manifestData);
-            return new SaveGame(saveDirectory, 
+
+            var saveContents = saveDirectory.OpenDirectory("savecontents");
+            factory(saveContents);
+            return new SaveGame(saveDirectory.AsReadOnly(), 
                 details.CreatedTimestamp, details.Guid, details.Type!, details.Tags!);
         }
 

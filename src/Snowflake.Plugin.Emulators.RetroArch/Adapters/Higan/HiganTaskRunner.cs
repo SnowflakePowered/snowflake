@@ -70,7 +70,7 @@ namespace Snowflake.Adapters.Higan
         }
 
         protected IDictionary<string, string> BuildConfiguration(IConfigurationCollection configuration,
-            IEnumerable<(IInputTemplate, IInputMapping)> inputTemplates)
+            IEnumerable<(IInputTemplate, IDeviceInputMapping)> inputTemplates)
         {
             throw new NotImplementedException();
             //    // build the configuration

@@ -6,7 +6,7 @@ using Zio;
 
 namespace Snowflake.Filesystem
 {
-    internal sealed class File : IFile, IReadOnlyFile
+    internal sealed class File : IFile
     {
         internal File(Directory parentDirectory, FileEntry file, Guid guid)
         {

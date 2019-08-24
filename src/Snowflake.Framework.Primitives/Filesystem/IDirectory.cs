@@ -91,7 +91,7 @@ namespace Snowflake.Filesystem
         /// Copies a file asynchronously from an unmanaged <see cref="FileInfo"/> that exists outside of
         /// a <see cref="IDirectory"/>.
         /// Do not use this method to copy from a managed <see cref="IDirectory"/>.
-        /// Instead, use <see cref="CopyFrom(IFile)"/>.
+        /// Instead, use <see cref="CopyFrom(IReadOnlyFile)"/>.
         /// </summary>
         /// <exception cref="IOException">If a file with the same name exists in the target destination and <paramref name="overwrite"/> is false.</exception>
         /// <exception cref="FileNotFoundException">If the source file can not be found.</exception>

@@ -13,7 +13,7 @@ using Snowflake.JsonConverters;
 namespace Snowflake.Configuration.Input
 {
     [JsonConverter(typeof(InputMappingConverter))]
-    public class InputMapping : IInputMapping
+    public class InputMapping : IDeviceInputMapping
     {
         private readonly IDictionary<ControllerElement, string> elementMappings;
 

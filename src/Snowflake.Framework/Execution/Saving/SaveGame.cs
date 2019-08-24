@@ -6,21 +6,21 @@ using System.Text;
 
 namespace Snowflake.Execution.Saving
 {
-    public class SaveGame
+    public class SaveGame : ISaveGame
     {
-        public IDirectory SaveContents { get; }
+        public IReadOnlyDirectory SaveContents { get; }
         public DateTimeOffset CreatedTimestamp { get; }
         public Guid Guid { get; }
         public string SaveType { get; }
         public IEnumerable<string> Tags { get; }
 
-        public SaveGame(IDirectory saveDirectory,
+        public SaveGame(IReadOnlyDirectory saveDirectory,
             DateTimeOffset createdTime,
             Guid saveGuid,
             string saveType,
             IEnumerable<string> tags)
         {
-            this.SaveContents = saveDirectory.OpenDirectory("savecontents");
+            this.SaveContents = saveDirectory;
             this.CreatedTimestamp = createdTime;
             this.Guid = saveGuid;
             this.SaveType = saveType;

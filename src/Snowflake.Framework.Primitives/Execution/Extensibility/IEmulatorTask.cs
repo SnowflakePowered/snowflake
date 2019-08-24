@@ -24,7 +24,7 @@ namespace Snowflake.Execution.Extensibility
         /// <summary>
         /// Gets a tuple of controller configuration for each template and the relative configuration mapping.
         /// </summary>
-        IList<(IInputTemplate template, IInputMapping mapping)> ControllerConfiguration { get; }
+        IList<(IInputTemplate template, IDeviceInputMapping mapping)> ControllerConfiguration { get; }
 
         /// <summary>
         /// Gets the game that is to be emulated.

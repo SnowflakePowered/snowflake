@@ -19,7 +19,7 @@ namespace Snowflake.Configuration.Input
         /// <param name="inputTemplate">The input template to serialize</param>
         /// <param name="inputMapping">The input mapping to serialize with</param>
         /// <returns>The entire input template serialized as a string</returns>
-        string Serialize(IInputTemplate inputTemplate, IInputMapping inputMapping);
+        string Serialize(IInputTemplate inputTemplate, IDeviceInputMapping inputMapping);
 
         /// <summary>
         /// Serializes a controller element line using the provided input mapper.
@@ -28,6 +28,6 @@ namespace Snowflake.Configuration.Input
         /// <param name="element">The controller element to serialize</param>
         /// <param name="inputMapping">The input mapping to serialize with</param>
         /// <returns></returns>
-        string SerializeInput(string key, ControllerElement element, IInputMapping inputMapping);
+        string SerializeInput(string key, ControllerElement element, IDeviceInputMapping inputMapping);
     }
 }

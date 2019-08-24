@@ -241,7 +241,7 @@ namespace Snowflake.Configuration.Serialization.Serializers
         /// <param name="controllerElementValue">The value of the node</param>
         /// <param name="value">
         /// The raw value of the node as the string representation of the element consistent with the 
-        /// <see cref="IInputMapping"/> the syntax tree was originally serialized with.</param>
+        /// <see cref="IDeviceInputMapping"/> the syntax tree was originally serialized with.</param>
         /// <param name="key">The key of the node.</param>
         /// <param name="context">The serialization context.</param>
         /// <param name="index">The position or index of the given node within the current block in the context.</param>

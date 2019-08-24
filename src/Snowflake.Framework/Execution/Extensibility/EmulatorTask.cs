@@ -25,7 +25,7 @@ namespace Snowflake.Execution.Extensibility
         public IConfigurationCollection EmulatorConfiguration { get; set; }
 
         /// <inheritdoc/>
-        public IList<(IInputTemplate template, IInputMapping mapping)> ControllerConfiguration { get; set; }
+        public IList<(IInputTemplate template, IDeviceInputMapping mapping)> ControllerConfiguration { get; set; }
 
         /// <inheritdoc/>
         public IGameRecord EmulatingGame { get; }
