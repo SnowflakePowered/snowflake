@@ -11,10 +11,10 @@ using Snowflake.Input.Device;
 
 namespace Snowflake.JsonConverters
 {
-    internal class InputMappingConverter : JsonCreationConverter<IInputMapping>
+    internal class InputMappingConverter : JsonCreationConverter<IDeviceInputMapping>
     {
         /// <inheritdoc/>
-        protected override IInputMapping Create(Type objectType, JObject jObject)
+        protected override IDeviceInputMapping Create(Type objectType, JObject jObject)
         {
             IDictionary<ControllerElement, string> controllerElements = (from prop in
                     jObject.Value<JObject>("Controller").Properties()

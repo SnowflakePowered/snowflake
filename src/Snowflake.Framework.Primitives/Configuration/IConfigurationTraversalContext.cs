@@ -26,7 +26,7 @@ namespace Snowflake.Configuration.Serialization
             TraverseCollection(IConfigurationCollection collection);
 
         /// <summary>
-        /// Traverses a <see cref="IInputTemplate"/> under the context of an <see cref="IInputMapping"/>
+        /// Traverses a <see cref="IInputTemplate"/> under the context of an <see cref="IDeviceInputMapping"/>
         /// to yield an AST formed by <see cref="IAbstractConfigurationNode"/>.
         /// </summary>
         /// <param name="template">The <see cref="IInputTemplate"/> to traverse in order to yield an AST.</param>
@@ -43,8 +43,8 @@ namespace Snowflake.Configuration.Serialization
         /// By default it is the string {N}, but can be overridden.
         /// </param>
         /// <returns>The syntax tree that the given <see cref="IInputTemplate"/> forms, relative to the provided
-        /// <see cref="IInputMapping"/>s.</returns>
+        /// <see cref="IDeviceInputMapping"/>s.</returns>
         IAbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>> TraverseInputTemplate(IInputTemplate template, 
-            IInputMapping mapping, int index, string indexer = "{N}");
+            IDeviceInputMapping mapping, int index, string indexer = "{N}");
     }
 }

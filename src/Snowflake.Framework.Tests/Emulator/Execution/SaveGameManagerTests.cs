@@ -21,7 +21,7 @@ namespace Snowflake.Emulator.Execution.Saving
             var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
 
             var manager =  new SaveGameManager(dir);
-            manager.CreateSave("sram");
+           // manager.CreateSave("sram");
             // todo: confirm
         }
     }

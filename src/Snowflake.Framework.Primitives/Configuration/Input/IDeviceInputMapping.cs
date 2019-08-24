@@ -11,7 +11,7 @@ namespace Snowflake.Configuration.Input
     /// <summary>
     /// Maps controller elements onto the string representation of the element for the configuration.
     /// </summary>
-    public interface IInputMapping
+    public interface IDeviceInputMapping
     {
         /// <summary>
         /// Gets the input API this mapping supports.
