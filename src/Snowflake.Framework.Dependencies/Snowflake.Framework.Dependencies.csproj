@@ -11,6 +11,6 @@
     <PackageReference Include="System.Collections.Immutable" Version="1.5.0" Publish="True" />
     <PackageReference Include="System.Dynamic.Runtime" Version="4.3.0" Publish="True" />
     <PackageReference Include="System.Linq.Parallel" Version="4.3.0" Publish="True" />
-    <PackageReference Include="System.Reactive" Version="4.1.5" />
+    <PackageReference Include="System.Reactive" Version="4.1.6" />
   </ItemGroup>
 </Project>
