@@ -26,7 +26,7 @@ namespace Snowflake.Plugin.Debug.GraphQLVisualizers
         public void Configure(IApplicationBuilder app)
         {
             // use graphiQL middleware at default url /graphiql
-            app.UseGraphiQLServer(new GraphiQLOptions() { GraphiQLPath = "/debug/gql/graphiql" });
+            app.UseGraphiQLServer(new GraphiQLOptions() { Path = "/debug/gql/graphiql" });
 
             // use graphql-playground middleware at default url /ui/playground
             app.UseGraphQLPlayground(new GraphQLPlaygroundOptions() { Path = "/debug/gql/playground" });

@@ -11,7 +11,7 @@
   <ItemGroup>
     <PackageReference Include="DiscUtils.Core" Version="0.15.1-ci0002" />
     <PackageReference Include="DiscUtils.Iso9660" Version="0.15.1-ci0002" />
-    <PackageReference Include="MimeMapping" Version="1.0.1.12" />
+    <PackageReference Include="MimeMapping" Version="1.0.1.17" />
   </ItemGroup>
   
   <ItemGroup>

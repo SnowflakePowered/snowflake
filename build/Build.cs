@@ -145,7 +145,7 @@ class Build : NukeBuild
     
     static string GetBuildNumber()
     {
-        string buildNumber = EnvironmentInfo.Variable("BUILD_NUMBER");
+        string buildNumber = EnvironmentInfo.GetVariable<string>("BUILD_NUMBER");
         if (String.IsNullOrWhiteSpace(buildNumber))
         {
             return "dirty";
@@ -155,7 +155,7 @@ class Build : NukeBuild
 
     static AbsolutePath GetOutDirectory()
     {
-        string staging = EnvironmentInfo.Variable("STAGING");
+        string staging = EnvironmentInfo.GetVariable<string>("STAGING");
         if (String.IsNullOrWhiteSpace(staging))
         {
             return RootDirectory / "out";
