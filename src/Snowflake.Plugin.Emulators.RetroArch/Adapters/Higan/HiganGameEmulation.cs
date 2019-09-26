@@ -59,19 +59,21 @@ namespace Snowflake.Adapters.Higan
                 this.ConfigurationProfile).Configuration;
 
             var node = tokenizer.TraverseCollection(config);
-            var retroArchNode = node["#retraorch"];
-            string configContents = serializer.Transform(retroArchNode);
+            var retroArchNode = node["#retroarch"];
+            StringBuilder configContents = new StringBuilder();
+
+            configContents.Append(serializer.Transform(retroArchNode));
 
             var configFile = this.Scratch.OpenDirectory("config")
                     .OpenFile("retroarch.cfg");
-            configFile.WriteAllText(configContents);
 
-            
             foreach (var port in this.ControllerPorts)
             {
                 var template = new InputTemplate<RetroPadTemplate>(port.LayoutMapping, port.PortIndex);
-                var node = tokenizer.TraverseInputTemplate(template, )
+                var inputNode = tokenizer.TraverseInputTemplate(template, this.InputMappings, port.PortIndex);
+                configContents.Append(serializer.Transform(retroArchNode));
             }
+            configFile.WriteAllText(configContents.ToString());
 
         }
 
