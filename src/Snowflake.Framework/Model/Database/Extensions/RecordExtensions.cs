@@ -15,8 +15,8 @@ namespace Snowflake.Model.Database.Extensions
         {
             return new GameRecordModel()
             {
-                Platform = @this.PlatformId,
-                RecordID = @this.RecordId,
+                PlatformID = @this.PlatformID,
+                RecordID = @this.RecordID,
                 RecordType = "game",
                 Metadata = @this.Metadata.AsModel()
             };
@@ -27,7 +27,7 @@ namespace Snowflake.Model.Database.Extensions
             return new FileRecordModel()
             {
                 MimeType = @this.MimeType,
-                RecordID = @this.RecordId,
+                RecordID = @this.RecordID,
                 RecordType = "file",
                 Metadata = @this.Metadata.AsModel()
             };

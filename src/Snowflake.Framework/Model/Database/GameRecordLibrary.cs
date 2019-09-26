@@ -25,7 +25,7 @@ namespace Snowflake.Model.Database
             using (var context = new DatabaseContext(this.Options.Options))
             {
                 var records = context.GameRecords.Include(r => r.Metadata)
-                    .Select(record => new GameRecord(record.Platform, record.RecordID,
+                    .Select(record => new GameRecord(record.PlatformID, record.RecordID,
                         record.Metadata.AsMetadataCollection(record.RecordID)))
                     .ToList();
                 return records;
@@ -37,24 +37,35 @@ namespace Snowflake.Model.Database
             using (var context = new DatabaseContext(this.Options.Options))
             {
                 var records = context.GameRecords.Include(r => r.Metadata)
-                    .Select(record => new GameRecord(record.Platform, record.RecordID,
+                    .Select(record => new GameRecord(record.PlatformID, record.RecordID,
                         record.Metadata.AsMetadataCollection(record.RecordID)))
-                    .Where(predicate).ToList();
-                return records;
+                    .Where(predicate.Compile());
+                return records?.ToList() ?? Enumerable.Empty<IGameRecord>();
             }
         }
 
-        public async Task<IEnumerable<IGameRecord>> GetRecordsAsync(Expression<Func<IGameRecord, bool>> predicate)
+        public IEnumerable<IGameRecord> QueryRecords(Expression<Func<IGameRecordQuery, bool>> predicate)
         {
             using (var context = new DatabaseContext(this.Options.Options))
             {
-                var records = await context.GameRecords
-                    .Include(r => r.Metadata)
-                    .Select(record => new GameRecord(record.Platform, record.RecordID,
-                        record.Metadata.AsMetadataCollection(record.RecordID)))
-                    .Where(predicate).ToListAsync();
-                return records;
+                var records = context.GameRecords.Include(r => r.Metadata)
+                    .Where(predicate)
+                    .Select(record => new GameRecord(record.PlatformID, record.RecordID,
+                        record.Metadata.AsMetadataCollection(record.RecordID)));
+                return records?.ToList() ?? Enumerable.Empty<IGameRecord>();
             }
+        }
+
+        public async Task<IEnumerable<IGameRecord>> QueryRecordsAsync(Expression<Func<IGameRecordQuery, bool>> predicate)
+        {
+            using var context = new DatabaseContext(this.Options.Options);
+            var records = await context.GameRecords
+                .Include(r => r.Metadata)
+                .Where(predicate)
+                .Select(record => new GameRecord(record.PlatformID, record.RecordID,
+                record.Metadata.AsMetadataCollection(record.RecordID)))
+                .ToListAsync();
+            return records;
         }
 
         public IGameRecord? GetRecord(Guid guid)
@@ -65,7 +76,7 @@ namespace Snowflake.Model.Database
                     .SingleOrDefault(g => g.RecordID == guid);
                 if (record != null)
                 {
-                    return new GameRecord(record.Platform, record.RecordID,
+                    return new GameRecord(record.PlatformID, record.RecordID,
                         record.Metadata.AsMetadataCollection(record.RecordID));
                 }
 

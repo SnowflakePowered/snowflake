@@ -172,7 +172,7 @@ namespace Snowflake.Scraping.Tests
         public void GameSeedCreation_Test()
         {
             var game = new Mock<IGame>();
-            game.SetupGet(g => g.Record.PlatformId).Returns("TEST_PLATFORM");
+            game.SetupGet(g => g.Record.PlatformID).Returns("TEST_PLATFORM");
             game.SetupGet(g => g.Record.Title).Returns("Test Title");
 
             var file = new Mock<IFileRecord>();

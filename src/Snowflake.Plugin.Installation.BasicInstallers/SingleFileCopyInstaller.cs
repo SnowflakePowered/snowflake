@@ -47,7 +47,7 @@ namespace Snowflake.Plugin.Installation.BasicInstallers
 
         public override async IAsyncEnumerable<TaskResult<IFile>> Install(IGame game, IEnumerable<FileSystemInfo> files)
         {
-            var platform =  game.Record.PlatformId;
+            var platform =  game.Record.PlatformID;
             foreach (var file in files.Select(f => f as FileInfo))
             {
                 if (file == null) continue;

@@ -17,7 +17,7 @@ namespace Snowflake.Execution.Saving.Tests
         public async Task CreateLocation_Test()
         {
             var gameMock = new Mock<IGameRecord>();
-            gameMock.Setup(g => g.RecordId).Returns(Guid.NewGuid());
+            gameMock.Setup(g => g.RecordID).Returns(Guid.NewGuid());
             var contentDirMock = new Mock<IContentDirectoryProvider>();
             contentDirMock.Setup(g => g.ApplicationData).Returns(new DirectoryInfo(Path.GetTempPath())
                 .CreateSubdirectory(Path.GetFileNameWithoutExtension(Path.GetTempFileName())));
@@ -31,7 +31,7 @@ namespace Snowflake.Execution.Saving.Tests
         public async Task SerializeLocation_Test()
         {
             var gameMock = new Mock<IGameRecord>();
-            gameMock.Setup(g => g.RecordId).Returns(Guid.NewGuid());
+            gameMock.Setup(g => g.RecordID).Returns(Guid.NewGuid());
             var contentDirMock = new Mock<IContentDirectoryProvider>();
             contentDirMock.Setup(g => g.ApplicationData).Returns(new DirectoryInfo(Path.GetTempPath())
                 .CreateSubdirectory(Path.GetFileNameWithoutExtension(Path.GetTempFileName())));
@@ -47,7 +47,7 @@ namespace Snowflake.Execution.Saving.Tests
         public async Task EnumeratorLocation_Test()
         {
             var gameMock = new Mock<IGameRecord>();
-            gameMock.Setup(g => g.RecordId).Returns(Guid.NewGuid());
+            gameMock.Setup(g => g.RecordID).Returns(Guid.NewGuid());
             var contentDirMock = new Mock<IContentDirectoryProvider>();
             contentDirMock.Setup(g => g.ApplicationData).Returns(new DirectoryInfo(Path.GetTempPath())
                 .CreateSubdirectory(Path.GetFileNameWithoutExtension(Path.GetTempFileName())));
@@ -63,7 +63,7 @@ namespace Snowflake.Execution.Saving.Tests
         public async Task LoadLocation_Test()
         {
             var gameMock = new Mock<IGameRecord>();
-            gameMock.Setup(g => g.RecordId).Returns(Guid.NewGuid());
+            gameMock.Setup(g => g.RecordID).Returns(Guid.NewGuid());
             var contentDirMock = new Mock<IContentDirectoryProvider>();
             contentDirMock.Setup(g => g.ApplicationData).Returns(new DirectoryInfo(Path.GetTempPath())
                 .CreateSubdirectory(Path.GetFileNameWithoutExtension(Path.GetTempFileName())));
@@ -80,7 +80,7 @@ namespace Snowflake.Execution.Saving.Tests
         public async Task PersistLocation_Test()
         {
             var gameMock = new Mock<IGameRecord>();
-            gameMock.Setup(g => g.RecordId).Returns(Guid.NewGuid());
+            gameMock.Setup(g => g.RecordID).Returns(Guid.NewGuid());
             var contentDirMock = new Mock<IContentDirectoryProvider>();
             contentDirMock.Setup(g => g.ApplicationData).Returns(new DirectoryInfo(Path.GetTempPath())
                 .CreateSubdirectory(Path.GetFileNameWithoutExtension(Path.GetTempFileName())));
@@ -98,7 +98,7 @@ namespace Snowflake.Execution.Saving.Tests
         public async Task UpdateLocation_Test()
         {
             var gameMock = new Mock<IGameRecord>();
-            gameMock.Setup(g => g.RecordId).Returns(Guid.NewGuid());
+            gameMock.Setup(g => g.RecordID).Returns(Guid.NewGuid());
             var contentDirMock = new Mock<IContentDirectoryProvider>();
             contentDirMock.Setup(g => g.ApplicationData).Returns(new DirectoryInfo(Path.GetTempPath())
                 .CreateSubdirectory(Path.GetFileNameWithoutExtension(Path.GetTempFileName())));

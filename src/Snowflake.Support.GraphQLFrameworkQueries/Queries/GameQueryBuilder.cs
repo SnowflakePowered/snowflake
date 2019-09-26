@@ -56,7 +56,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
 
             var installer = this.Installers.FirstOrDefault(p => p.SupportedPlatforms.Contains(platform));
             if (installer == null) throw new KeyNotFoundException("Platform Not Found");
-            return await this.InstallQueue.QueueJob(installer.Install(game, filesysinfo), game.Record.RecordId);
+            return await this.InstallQueue.QueueJob(installer.Install(game, filesysinfo), game.Record.RecordID);
         }
 
         [Mutation("installNextStep", "Proceeds with the next step of the installation process", typeof(FileGraphType))]

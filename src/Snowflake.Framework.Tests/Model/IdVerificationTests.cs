@@ -33,8 +33,8 @@ namespace Snowflake.Model.Tests
 
             Assert.NotEqual(controller, device);
             Assert.True(controller != device2);
-            Assert.True(controller != "not_ok");
 
+            Assert.Throws<InvalidControllerIdException>(() => controller != "not_ok");
             Assert.Throws<InvalidControllerIdException>(() => (ControllerId)"NOT_OK");
             Assert.Throws<InvalidControllerIdException>(() => (ControllerId)null);
 

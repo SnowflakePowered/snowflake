@@ -10,7 +10,7 @@ namespace Snowflake.Model.Records
         public IMetadataCollection Metadata { get; }
 
         /// <inheritdoc/>
-        public Guid RecordId => File.FileGuid;
+        public Guid RecordID => File.FileGuid;
 
         public IFile File { get; }
 

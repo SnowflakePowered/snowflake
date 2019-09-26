@@ -26,7 +26,7 @@ namespace Snowflake.Model.Game.LibraryExtensions
         public IGameFileExtension MakeExtension(IGameRecord record)
         {
             var gameFsRoot = this.GameFolderRoot
-                .GetOrCreateSubFileSystem((UPath) "/" / record.RecordId.ToString());
+                .GetOrCreateSubFileSystem((UPath) "/" / record.RecordID.ToString());
             return new GameFileExtension(gameFsRoot, this.FileLibrary);
         }
 

@@ -9,14 +9,14 @@ using Snowflake.Model.Records.File;
 namespace Snowflake.Model.Records.Game
 {
     /// <summary>
-    /// Represents a game as a collection of <see cref="IRecordMetadata"/> and <see cref="IFileRecord"/>s
+    /// Represents a game as a collection of <see cref="IRecordMetadata"/>.
     /// </summary>
     public interface IGameRecord : IRecord
     {
         /// <summary>
         /// Gets the Stone platform ID of this record
         /// </summary>
-        PlatformId PlatformId { get; }
+        PlatformId PlatformID { get; }
 
         /// <summary>
         /// Gets or sets the title of the game

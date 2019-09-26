@@ -6,24 +6,26 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Snowflake.Model.Database.Models;
 
-namespace Snowflake.Model.Database.Migrations
+namespace Snowflake.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20190512031719_DefaultMigrations")]
-    partial class DefaultMigrations
+    [Migration("20190925181410_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062");
+                .HasAnnotation("ProductVersion", "3.0.0");
 
             modelBuilder.Entity("Snowflake.Model.Database.Models.ConfigurationProfileModel", b =>
                 {
                     b.Property<Guid>("ValueCollectionGuid")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
 
-                    b.Property<string>("ConfigurationSource");
+                    b.Property<string>("ConfigurationSource")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("ValueCollectionGuid");
 
@@ -33,18 +35,23 @@ namespace Snowflake.Model.Database.Migrations
             modelBuilder.Entity("Snowflake.Model.Database.Models.ConfigurationValueModel", b =>
                 {
                     b.Property<Guid>("Guid")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("OptionKey")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("SectionKey")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Value")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
-                    b.Property<Guid>("ValueCollectionGuid");
+                    b.Property<Guid>("ValueCollectionGuid")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Guid");
 
@@ -55,11 +62,14 @@ namespace Snowflake.Model.Database.Migrations
 
             modelBuilder.Entity("Snowflake.Model.Database.Models.ControllerElementMappingsModel", b =>
                 {
-                    b.Property<string>("ControllerID");
+                    b.Property<string>("ControllerID")
+                        .HasColumnType("TEXT");
 
-                    b.Property<string>("DeviceID");
+                    b.Property<string>("DeviceID")
+                        .HasColumnType("TEXT");
 
-                    b.Property<string>("ProfileName");
+                    b.Property<string>("ProfileName")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("ControllerID", "DeviceID", "ProfileName");
 
@@ -68,13 +78,17 @@ namespace Snowflake.Model.Database.Migrations
 
             modelBuilder.Entity("Snowflake.Model.Database.Models.GameRecordConfigurationProfileModel", b =>
                 {
-                    b.Property<string>("ProfileName");
+                    b.Property<string>("ProfileName")
+                        .HasColumnType("TEXT");
 
-                    b.Property<Guid>("GameID");
+                    b.Property<Guid>("GameID")
+                        .HasColumnType("TEXT");
 
-                    b.Property<string>("ConfigurationSource");
+                    b.Property<string>("ConfigurationSource")
+                        .HasColumnType("TEXT");
 
-                    b.Property<Guid>("ProfileID");
+                    b.Property<Guid>("ProfileID")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("ProfileName", "GameID", "ConfigurationSource");
 
@@ -88,16 +102,21 @@ namespace Snowflake.Model.Database.Migrations
 
             modelBuilder.Entity("Snowflake.Model.Database.Models.MappedControllerElementModel", b =>
                 {
-                    b.Property<string>("ControllerID");
+                    b.Property<string>("ControllerID")
+                        .HasColumnType("TEXT");
 
-                    b.Property<string>("DeviceID");
+                    b.Property<string>("DeviceID")
+                        .HasColumnType("TEXT");
 
-                    b.Property<string>("ProfileName");
+                    b.Property<string>("ProfileName")
+                        .HasColumnType("TEXT");
 
-                    b.Property<string>("LayoutElement");
+                    b.Property<string>("LayoutElement")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("DeviceElement")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.HasKey("ControllerID", "DeviceID", "ProfileName", "LayoutElement");
 
@@ -107,15 +126,19 @@ namespace Snowflake.Model.Database.Migrations
             modelBuilder.Entity("Snowflake.Model.Database.Models.RecordMetadataModel", b =>
                 {
                     b.Property<Guid>("RecordMetadataID")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("MetadataKey")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("MetadataValue")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
-                    b.Property<Guid>("RecordID");
+                    b.Property<Guid>("RecordID")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("RecordMetadataID");
 
@@ -127,13 +150,16 @@ namespace Snowflake.Model.Database.Migrations
             modelBuilder.Entity("Snowflake.Model.Database.Models.RecordModel", b =>
                 {
                     b.Property<Guid>("RecordID")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Discriminator")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("RecordType")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.HasKey("RecordID");
 
@@ -147,7 +173,8 @@ namespace Snowflake.Model.Database.Migrations
                     b.HasBaseType("Snowflake.Model.Database.Models.RecordModel");
 
                     b.Property<string>("MimeType")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.HasDiscriminator().HasValue("FileRecordModel");
                 });
@@ -156,8 +183,9 @@ namespace Snowflake.Model.Database.Migrations
                 {
                     b.HasBaseType("Snowflake.Model.Database.Models.RecordModel");
 
-                    b.Property<string>("Platform")
-                        .IsRequired();
+                    b.Property<string>("PlatformID")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.HasDiscriminator().HasValue("GameRecordModel");
                 });
@@ -167,7 +195,8 @@ namespace Snowflake.Model.Database.Migrations
                     b.HasOne("Snowflake.Model.Database.Models.ConfigurationProfileModel", "Profile")
                         .WithMany("Values")
                         .HasForeignKey("ValueCollectionGuid")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Snowflake.Model.Database.Models.GameRecordConfigurationProfileModel", b =>
@@ -175,12 +204,14 @@ namespace Snowflake.Model.Database.Migrations
                     b.HasOne("Snowflake.Model.Database.Models.GameRecordModel", "Game")
                         .WithMany("ConfigurationProfiles")
                         .HasForeignKey("GameID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Snowflake.Model.Database.Models.ConfigurationProfileModel", "Profile")
                         .WithOne()
                         .HasForeignKey("Snowflake.Model.Database.Models.GameRecordConfigurationProfileModel", "ProfileID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Snowflake.Model.Database.Models.MappedControllerElementModel", b =>
@@ -188,7 +219,8 @@ namespace Snowflake.Model.Database.Migrations
                     b.HasOne("Snowflake.Model.Database.Models.ControllerElementMappingsModel", "Collection")
                         .WithMany("MappedElements")
                         .HasForeignKey("ControllerID", "DeviceID", "ProfileName")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Snowflake.Model.Database.Models.RecordMetadataModel", b =>
@@ -196,7 +228,8 @@ namespace Snowflake.Model.Database.Migrations
                     b.HasOne("Snowflake.Model.Database.Models.RecordModel", "Record")
                         .WithMany("Metadata")
                         .HasForeignKey("RecordID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

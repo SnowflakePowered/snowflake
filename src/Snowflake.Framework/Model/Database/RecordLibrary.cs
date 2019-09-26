@@ -23,7 +23,7 @@ namespace Snowflake.Model.Database
         public void DeleteRecord(TRecord record)
         {
             using var context = new DatabaseContext(this.Options.Options);
-            var recordToDelete = context.Records.SingleOrDefault(r => r.RecordID == record.RecordId);
+            var recordToDelete = context.Records.SingleOrDefault(r => r.RecordID == record.RecordID);
             if (record == null) return;
             context.Entry(recordToDelete).State = EntityState.Deleted;
             context.SaveChanges();
@@ -32,7 +32,7 @@ namespace Snowflake.Model.Database
         public void UpdateRecord(TRecord record)
         {
             using var context = new DatabaseContext(this.Options.Options);
-            foreach (var metadata in context.Metadata.Where(m => m.RecordID == record.RecordId))
+            foreach (var metadata in context.Metadata.Where(m => m.RecordID == record.RecordID))
             {
                 if (!record.Metadata.ContainsKey(metadata.MetadataKey))
                 {

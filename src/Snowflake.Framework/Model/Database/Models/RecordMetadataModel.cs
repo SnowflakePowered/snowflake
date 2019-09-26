@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
+using Snowflake.Model.Records;
 
 #nullable disable
 namespace Snowflake.Model.Database.Models
 {
-    internal class RecordMetadataModel
+    internal class RecordMetadataModel : IRecordMetadataQuery
     {
         public Guid RecordMetadataID { get; set; }
         public Guid RecordID { get; set; }

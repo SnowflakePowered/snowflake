@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
+using Snowflake.Model.Database.Extensions;
 
 #nullable disable
 namespace Snowflake.Model.Database.Models

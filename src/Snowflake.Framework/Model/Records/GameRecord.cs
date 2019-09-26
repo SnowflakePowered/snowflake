@@ -14,12 +14,12 @@ namespace Snowflake.Model.Records
             Guid recordId,
             IMetadataCollection metadata)
         {
-            this.PlatformId = platform;
-            this.RecordId = recordId;
+            this.PlatformID = platform;
+            this.RecordID = recordId;
             this.Metadata = metadata;
         }
 
-        public PlatformId PlatformId { get; }
+        public PlatformId PlatformID { get; }
 
         public string? Title
         {
@@ -29,6 +29,6 @@ namespace Snowflake.Model.Records
 
         public IMetadataCollection Metadata { get; }
 
-        public Guid RecordId { get; }
+        public Guid RecordID { get; }
     }
 }

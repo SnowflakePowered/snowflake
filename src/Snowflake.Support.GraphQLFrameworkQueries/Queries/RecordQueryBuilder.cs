@@ -92,7 +92,7 @@ namespace Snowflake.Support.Remoting.GraphQL.Queries
                 }
 
                 this.GameLibrary.UpdateGameRecord(game.Record);
-                return this.GameLibrary.GetGame(game.Record.RecordId);
+                return this.GameLibrary.GetGame(game.Record.RecordID);
             }
             catch (KeyNotFoundException)
             {

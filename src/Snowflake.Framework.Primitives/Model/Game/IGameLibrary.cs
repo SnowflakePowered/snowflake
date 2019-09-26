@@ -64,21 +64,30 @@ namespace Snowflake.Model.Game
 
         /// <summary>
         /// Retrieves all games in the library that fulfill the provided predicate. The default implementation
-        /// executes this predicate on the database rather than in client code, thus is much faster than 
-        /// using <see cref="GetAllGames"/>.
+        /// executes this predicate in client code. Use <see cref="QueryGames(Expression{Func{IGameRecordQuery, bool}})"/>
+        /// instead if possible for more performant queries.
         /// </summary>
         /// <param name="predicate">The predicate to filter on.</param>
         /// <returns>All games in the library that fulfill the provided predicate.</returns>
         IEnumerable<IGame> GetGames(Expression<Func<IGameRecord, bool>> predicate);
 
         /// <summary>
-        /// Retrieves all games in the library that fulfill the provided predicate asynchronously. The default implementation
-        /// executes this predicate on the database rather than in client code, thus is much faster than 
-        /// using <see cref="GetAllGames"/>.
+        /// Retrieves all games in the library that fulfill the provided predicate. The default implementation
+        /// executes the predicate on the database than in client code, thus is much faster than 
+        /// using <see cref="GetAllGames"/> or <see cref="GetGames(Expression{Func{IGameRecord, bool}})"/>.
         /// </summary>
         /// <param name="predicate">The predicate to filter on.</param>
         /// <returns>All games in the library that fulfill the provided predicate.</returns>
-        Task<IEnumerable<IGame>> GetGamesAsync(Expression<Func<IGameRecord, bool>> predicate);
+        IEnumerable<IGame> QueryGames(Expression<Func<IGameRecordQuery, bool>> predicate);
+
+        /// <summary>
+        /// Retrieves all games in the library that fulfill the provided predicate asynchronously. The default implementation
+        /// executes this predicate on the database rather than in client code, thus is much faster than 
+        /// using <see cref="GetAllGames"/> or <see cref="GetGames(Expression{Func{IGameRecord, bool}})"/>.
+        /// </summary>
+        /// <param name="predicate">The predicate to filter on.</param>
+        /// <returns>All games in the library that fulfill the provided predicate.</returns>
+        Task<IEnumerable<IGame>> QueryGamesAsync(Expression<Func<IGameRecordQuery, bool>> predicate);
 
         /// <summary>
         /// Updates a <see cref="IGameRecord"/> that exists in the database by providing the changed <see cref="IGameRecord"/>.

@@ -119,7 +119,7 @@ namespace Snowflake.Model.Tests
             record.Metadata.Add("file_metadata", "test");
             gl.GetExtension<GameFileExtensionProvider>().UpdateFile(record);
 
-            var newGame = gl.GetGame(game.Record.RecordId);
+            var newGame = gl.GetGame(game.Record.RecordID);
             Assert.NotEmpty(newGame.WithFiles().FileRecords);
         }
     }

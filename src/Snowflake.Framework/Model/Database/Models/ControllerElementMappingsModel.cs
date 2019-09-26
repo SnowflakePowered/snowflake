@@ -11,7 +11,7 @@ namespace Snowflake.Model.Database.Models
     {
         public List<MappedControllerElementModel> MappedElements { get; set; }
 
-        public string ControllerID { get; set; }
+        public ControllerId ControllerID { get; set; }
 
         public string DeviceID { get; set; }
 
@@ -21,6 +21,7 @@ namespace Snowflake.Model.Database.Models
         {
             modelBuilder.Entity<ControllerElementMappingsModel>()
                 .Property(p => p.ControllerID)
+                .HasConversion(p => p.ToString(), s => s)
                 .IsRequired();
 
             modelBuilder.Entity<ControllerElementMappingsModel>()

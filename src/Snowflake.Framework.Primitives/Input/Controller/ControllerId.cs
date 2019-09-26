@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -8,7 +9,7 @@ namespace Snowflake.Input.Controller
     /// <summary>
     /// Represents a Stone controller ID.
     /// </summary>
-    public struct ControllerId : IEquatable<ControllerId>, IEquatable<string>
+    public struct ControllerId : IEquatable<ControllerId>, IEquatable<string>, IComparable<string>, IComparable
     {
         private string ControllerIdString { get; }
 
@@ -54,15 +55,21 @@ namespace Snowflake.Input.Controller
         {
             return HashCode.Combine(ControllerIdString);
         }
-        
+
+        public int CompareTo([AllowNull] string other)
+        {
+            return ControllerIdString.CompareTo(other);
+        }
+
+        public int CompareTo(object? obj)
+        {
+            if (obj is ControllerId c) return ControllerIdString.CompareTo(c.ControllerIdString);
+            return ControllerIdString.CompareTo(obj);
+        }
+
 #pragma warning disable 1591
         public static bool operator ==(ControllerId x, ControllerId y) => x.ControllerIdString == y.ControllerIdString;
         public static bool operator !=(ControllerId x, ControllerId y) => x.ControllerIdString != y.ControllerIdString;
-
-        public static bool operator ==(string x, ControllerId y) => x.ToUpperInvariant() == y.ControllerIdString;
-        public static bool operator !=(string x, ControllerId y) => x.ToUpperInvariant() != y.ControllerIdString;
-        public static bool operator ==(ControllerId x, string y) => x.ControllerIdString == y.ToUpperInvariant();
-        public static bool operator !=(ControllerId x, string y) => x.ControllerIdString != y.ToUpperInvariant();
 #pragma warning restore 1591
 
         

@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Text;
 
 namespace Snowflake.Model.Game
@@ -7,7 +10,7 @@ namespace Snowflake.Model.Game
     /// <summary>
     /// Represents a Stone Platform ID.
     /// </summary>
-    public struct PlatformId : IEquatable<PlatformId>, IEquatable<string>
+    public struct PlatformId : IEquatable<PlatformId>, IEquatable<string>, IComparable<string>, IComparable
     {
         private string PlatformIdString { get; }
         
@@ -24,14 +27,14 @@ namespace Snowflake.Model.Game
         }
 
         /// <inheritdoc />
-        public bool Equals(string other)
+        public bool Equals([AllowNull] string other)
         {
             return other != null &&
                    other.Equals(this.PlatformIdString, StringComparison.InvariantCultureIgnoreCase);
         }
         
         /// <inheritdoc />
-        public override bool Equals(object other)
+        public override bool Equals(object? other)
         {
             return other switch {
                 PlatformId p => this.Equals(p),
@@ -52,15 +55,23 @@ namespace Snowflake.Model.Game
             return HashCode.Combine(PlatformIdString);
         }
 
-        
+        /// <inheritdoc />
+        public int CompareTo([AllowNull] string other)
+        {
+            return PlatformIdString.CompareTo(other);
+        }
+
+        /// <inheritdoc />
+        public int CompareTo(object? obj)
+        {
+            if (obj is PlatformId p) return PlatformIdString.CompareTo(p.PlatformIdString);
+            return PlatformIdString.CompareTo(obj);
+        }
+
+
 #pragma warning disable 1591
         public static bool operator ==(PlatformId x, PlatformId y) => x.PlatformIdString == y.PlatformIdString;
         public static bool operator !=(PlatformId x, PlatformId y) => x.PlatformIdString != y.PlatformIdString;
-
-        public static bool operator ==(string x, PlatformId y) => x.ToUpperInvariant() == y.PlatformIdString;
-        public static bool operator !=(string x, PlatformId y) => x.ToUpperInvariant() != y.PlatformIdString;
-        public static bool operator ==(PlatformId x, string y) => x.PlatformIdString == y.ToUpperInvariant();
-        public static bool operator !=(PlatformId x, string y) => x.PlatformIdString != y.ToUpperInvariant();
 #pragma warning restore 1591
 
            

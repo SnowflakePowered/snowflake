@@ -23,15 +23,15 @@ namespace Snowflake.Support.Remoting.GraphQL.Types.Model
 
             Field<StringGraphType>("platformId",
                 description: "The platform or console this game was created for",
-                resolve: context => context.Source.PlatformId.ToString());
+                resolve: context => context.Source.PlatformID.ToString());
 
             Field<GuidGraphType>("guid",
                 description: "The unique ID of the game.",
-                resolve: context => context.Source.RecordId);
+                resolve: context => context.Source.RecordID);
 
             Field<StringGraphType>("id",
                 description: "The opaque GraphQL unique ID of the game. For caching purposes only.",
-                resolve: context => context.Source.RecordId.ToGraphQlUniqueId("GameRecord"));
+                resolve: context => context.Source.RecordID.ToGraphQlUniqueId("GameRecord"));
 
             Field<ListGraphType<RecordMetadataGraphType>>(
                 "metadata",
