@@ -1128,7 +1128,7 @@
         <member name="P:Snowflake.Model.Records.FileRecord.Metadata">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Model.Records.FileRecord.RecordId">
+        <member name="P:Snowflake.Model.Records.FileRecord.RecordID">
             <inheritdoc/>
         </member>
         <member name="P:Snowflake.Model.Records.FileRecord.MimeType">

@@ -27,7 +27,7 @@ namespace Snowflake.Model.Records
         }
 
         public RecordMetadata(string key, string value, IRecord record)
-            : this(key, value, record.RecordId)
+            : this(key, value, record.RecordID)
         {
         }
 

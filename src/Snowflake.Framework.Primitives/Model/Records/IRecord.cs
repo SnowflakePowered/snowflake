@@ -15,6 +15,6 @@ namespace Snowflake.Model.Records
         /// <summary>
         /// Gets the unique ID of the record.
         /// </summary>
-        Guid RecordId { get; }
+        Guid RecordID { get; }
     }
 }

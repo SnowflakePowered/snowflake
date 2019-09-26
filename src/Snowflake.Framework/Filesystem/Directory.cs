@@ -26,7 +26,7 @@ namespace Snowflake.Filesystem
 
             this.Manifest =
                 new SqliteDatabase(this.RootFileSystem.ConvertPathToInternal(this.ThisDirectory.Path / ".manifest"));
-            this.Manifest.CreateTable("directory_manifest", "uuid UUID", "filename TEXT PRIMARY KEY");
+            this.Manifest.CreateTable("directory_manifest", "uuid TEXT", "filename TEXT PRIMARY KEY");
         }
 
         internal Directory(IFileSystem rootFs)
@@ -62,13 +62,13 @@ namespace Snowflake.Filesystem
         {
             return this.Manifest.Query(conn =>
             {
-                var bytes = conn.Query<byte[]>(@"SELECT uuid FROM directory_manifest WHERE filename = @file",
+                var bytes = conn.Query<string>(@"SELECT uuid FROM directory_manifest WHERE filename = @file",
                     new {file});
                 if (bytes.Count() == 0)
                 {
                     conn.Execute(@"INSERT OR REPLACE INTO directory_manifest (uuid, filename) VALUES (@guid, @file)",
                         new {guid = Guid.NewGuid(), file});
-                    bytes = conn.Query<byte[]>(@"SELECT uuid FROM directory_manifest WHERE filename = @file",
+                    bytes = conn.Query<string>(@"SELECT uuid FROM directory_manifest WHERE filename = @file",
                         new {file});
                     return new Guid(bytes.First());
                 }

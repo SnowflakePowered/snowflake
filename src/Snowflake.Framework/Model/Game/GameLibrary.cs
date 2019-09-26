@@ -90,9 +90,20 @@ namespace Snowflake.Model.Game
                 });
         }
 
-        public async Task<IEnumerable<IGame>> GetGamesAsync(Expression<Func<IGameRecord, bool>> predicate)
+        public async Task<IEnumerable<IGame>> QueryGamesAsync(Expression<Func<IGameRecordQuery, bool>> predicate)
         {
-            return (await this.GameRecordLibrary.GetRecordsAsync(predicate))
+            return (await this.GameRecordLibrary.QueryRecordsAsync(predicate))
+                .Select(gameRecord =>
+                {
+                    var extensions = this.Extensions
+                        .ToDictionary(k => k.Value.extensionType, v => v.Value.extension.MakeExtension(gameRecord));
+                    return new Game(gameRecord, extensions);
+                });
+        }
+
+        public IEnumerable<IGame> QueryGames(Expression<Func<IGameRecordQuery, bool>> predicate)
+        {
+            return this.GameRecordLibrary.QueryRecords(predicate)
                 .Select(gameRecord =>
                 {
                     var extensions = this.Extensions

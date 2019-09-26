@@ -29,7 +29,7 @@ namespace Snowflake.Model.Database
             using var context = new DatabaseContext(this.Options.Options);
             return context.GameRecords
                 .Include(g => g.ConfigurationProfiles)
-                .SingleOrDefault(g => g.RecordID == gameRecord.RecordId)?
+                .SingleOrDefault(g => g.RecordID == gameRecord.RecordID)?
                 .ConfigurationProfiles
                 .GroupBy(p => p.ConfigurationSource, p => p.ProfileName) ??
                 Enumerable.Empty<IGrouping<string, string>>();
@@ -58,9 +58,9 @@ namespace Snowflake.Model.Database
 
             var gameEntity = context.GameRecords
                 .Include(p => p.ConfigurationProfiles)
-                .SingleOrDefault(p => p.RecordID == gameRecord.RecordId);
+                .SingleOrDefault(p => p.RecordID == gameRecord.RecordID);
 
-            if (gameEntity == null) throw new DependentEntityNotExistsException(gameRecord.RecordId);
+            if (gameEntity == null) throw new DependentEntityNotExistsException(gameRecord.RecordID);
 
             var entity = context.ConfigurationProfiles
                 .Add(collection.AsModel(sourceName));

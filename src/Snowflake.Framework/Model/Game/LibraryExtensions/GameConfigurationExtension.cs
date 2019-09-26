@@ -23,7 +23,7 @@ namespace Snowflake.Model.Game.LibraryExtensions
         public void DeleteProfile(string sourceName, string profile)
         {
             this.ConfigurationStore
-                .DeleteConfigurationForGame(this.GameRecord.RecordId, sourceName, profile);
+                .DeleteConfigurationForGame(this.GameRecord.RecordID, sourceName, profile);
         }
 
         public IEnumerable<IGrouping<string, string>> GetProfileNames()
@@ -42,7 +42,7 @@ namespace Snowflake.Model.Game.LibraryExtensions
             where T : class, IConfigurationCollection<T>
         {
             return this.ConfigurationStore
-                .GetConfiguration<T>(this.GameRecord.RecordId, sourceName, profile);
+                .GetConfiguration<T>(this.GameRecord.RecordID, sourceName, profile);
         }
     }
 }

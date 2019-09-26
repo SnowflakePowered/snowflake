@@ -13,7 +13,7 @@ namespace Snowflake.Model.Database.Models
         public ControllerElement LayoutElement { get; set; }
         public ControllerElement DeviceElement { get; set; }
 
-        public string ControllerID { get; set; }
+        public ControllerId ControllerID { get; set; }
         public string DeviceID { get; set; }
         public string ProfileName { get; set; }
 
@@ -21,6 +21,10 @@ namespace Snowflake.Model.Database.Models
 
         internal static void SetupModel(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<MappedControllerElementModel>()
+                .Property(p => p.ControllerID)
+                .HasConversion(p => p.ToString(), s => s);
+
             modelBuilder.Entity<MappedControllerElementModel>()
                 .Property(p => p.LayoutElement)
                 .HasConversion(e => Enums.AsString(e), e => Enums.Parse<ControllerElement>(e))

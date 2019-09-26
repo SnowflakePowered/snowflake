@@ -27,7 +27,7 @@ namespace Snowflake.Support.Execution
 
             DirectoryInfo locationRoot = this.SaveLocationRoot
                 .CreateSubdirectory(saveGuid.ToString());
-            var saveLocation = new SaveLocation(gameRecord.RecordId, saveType, locationRoot, saveGuid,
+            var saveLocation = new SaveLocation(gameRecord.RecordID, saveType, locationRoot, saveGuid,
                 DateTimeOffset.UtcNow);
             return await this.UpdateSaveLocation(saveLocation);
         }
@@ -64,7 +64,7 @@ namespace Snowflake.Support.Execution
         public async Task<IEnumerable<ISaveLocation>> GetSaveLocationsAsync(IGameRecord gameRecord)
         {
             return (await this.GetAllSaveLocationsAsync())
-                .Where(s => s.RecordGuid == gameRecord.RecordId);
+                .Where(s => s.RecordGuid == gameRecord.RecordID);
         }
 
         public async Task<ISaveLocation> UpdateSaveLocation(ISaveLocation location)

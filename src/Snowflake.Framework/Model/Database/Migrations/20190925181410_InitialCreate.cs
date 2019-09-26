@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Snowflake.Model.Database.Migrations
+namespace Snowflake.Migrations
 {
-    public partial class DefaultMigrations : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -40,7 +40,7 @@ namespace Snowflake.Model.Database.Migrations
                     RecordType = table.Column<string>(nullable: false),
                     Discriminator = table.Column<string>(nullable: false),
                     MimeType = table.Column<string>(nullable: true),
-                    Platform = table.Column<string>(nullable: true)
+                    PlatformID = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

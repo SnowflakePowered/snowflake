@@ -21,7 +21,7 @@ namespace Snowflake.Model.Database.Extensions
                 }).ToList();
         }
 
-        public static IMetadataCollection AsMetadataCollection(this IEnumerable<RecordMetadataModel> @this,
+        public static IMetadataCollection AsMetadataCollection(this IEnumerable<IRecordMetadataQuery> @this,
             Guid recordGuid)
         {
             var collection = new MetadataCollection(recordGuid);
