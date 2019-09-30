@@ -27,7 +27,7 @@
 
   <ItemGroup>
     <PackageReference Include="Castle.Core" Version="4.4.0" PrivateAssets="Compile" />
-    <PackageReference Include="Dapper" Version="2.0.4" PrivateAssets="Compile" />
+    <PackageReference Include="Dapper" Version="2.0.30" PrivateAssets="Compile" />
     <PackageReference Include="Enums.NET" Version="2.3.2" PrivateAssets="Compile" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="3.0.0" PrivateAssets="Compile" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.0.0" PrivateAssets="Compile" />
