@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
+    <_SnowflakeUseDevelopmentSDK>true</_SnowflakeUseDevelopmentSDK>
   </PropertyGroup>
 
   <ItemGroup>

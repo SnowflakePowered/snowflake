@@ -22,6 +22,8 @@ namespace Snowflake.Plugin.InputManager.Win32
                                                                 || device.Type == SharpDX.DirectInput.DeviceType
                                                                     .Joystick), directInput);
             var xinputGamepads = this.GetXInputGamepads();
+
+            
             var keyboards = directInput.GetDevices(DeviceClass.Keyboard, DeviceEnumerationFlags.AllDevices)
                 .Select(keyboard => new LowLevelInputDevice()
                 {
@@ -53,9 +55,11 @@ namespace Snowflake.Plugin.InputManager.Win32
             var inputDevices = new List<ILowLevelInputDevice>();
             for (int i = 0; i < gamepads.Count(); i++)
             {
+               
                 DeviceInstance deviceInstance = gamepads.ElementAt(i);
+                
                 using SharpDX.DirectInput.Device device = new Joystick(directInput, deviceInstance.InstanceGuid);
-
+                
                 var inputDevice = new LowLevelInputDevice()
                 {
                     DiscoveryApi = InputApi.DirectInput,

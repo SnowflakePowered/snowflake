@@ -29,7 +29,7 @@ namespace Snowflake.Input.Controller.Extensions
         /// <returns>Whether the element is a keyboard key element</returns>
         public static bool IsAxis(this ControllerElement element)
         {
-            return element.GetMember().Name.Contains("Axis");
+            return element.GetMember()!.Name.Contains("Axis");
         }
     }
 }

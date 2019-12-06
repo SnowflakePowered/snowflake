@@ -74,7 +74,6 @@ namespace Snowflake.Adapters.Higan
                 configContents.Append(serializer.Transform(retroArchNode));
             }
             configFile.WriteAllText(configContents.ToString());
-
         }
 
         protected override void TeardownGame()

@@ -13,8 +13,8 @@ namespace Snowflake.Configuration.Serialization
         internal EnumConfigurationNode(string key, Enum value, Type enumType) : base(key, value)
         {
             this.EnumType = enumType;
-            this.Value = NonGenericEnums.GetMember(enumType, value)
-                .Attributes.Get<SelectionOptionAttribute>().SerializeAs;
+            this.Value = Enums.GetMember(enumType, value)?
+                .Attributes?.Get<SelectionOptionAttribute>()?.SerializeAs ?? String.Empty;
         }
         public new string Value { get; }
         public Type EnumType { get; }

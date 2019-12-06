@@ -11,6 +11,7 @@ using Castle.Core.Internal;
 using System.Reflection;
 using EnumsNET.NonGeneric;
 using System.ComponentModel;
+using EnumsNET;
 
 namespace Snowflake.Configuration
 {
@@ -38,7 +39,7 @@ namespace Snowflake.Configuration
             return optionType == typeof(string)
                 ? strValue ?? string.Empty // return string value if string
                 : optionType?.GetTypeInfo()?.IsEnum ?? false
-                    ? NonGenericEnums.Parse(optionType, strValue) // return parsed enum if enum
+                    ? Enums.Parse(optionType, strValue ?? String.Empty) // return parsed enum if enum
                     : TypeDescriptor.GetConverter(optionType).ConvertFromInvariantString(strValue);
         }
 
