@@ -39,11 +39,11 @@ namespace Snowflake.Configuration
             }
 
             var selection = selectionEnum.Attributes.Get<SelectionOptionAttribute>();
-            this.DisplayName = selection.DisplayName ?? selectionEnum.Name;
+            this.DisplayName = selection?.DisplayName ?? selectionEnum.Name;
             this.EnumName = selectionEnum.Name;
             this.EnumType = selectionEnum.Value.GetType();
-            this.Private = selection.Private;
-            this.SerializeAs = selection.SerializeAs;
+            this.Private = selection?.Private ?? true;
+            this.SerializeAs = selection?.SerializeAs ?? String.Empty;
             this.NumericValue = selectionEnum.ToInt32();
         }
     }
