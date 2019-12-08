@@ -15,8 +15,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Execution\SystemFiles\**" />
     <Compile Remove="Migrations\**" />
+    <EmbeddedResource Remove="Execution\SystemFiles\**" />
     <EmbeddedResource Remove="Migrations\**" />
+    <None Remove="Execution\SystemFiles\**" />
     <None Remove="Migrations\**" />
   </ItemGroup>
 
@@ -47,7 +50,7 @@
     <AdditionalFiles Include="..\stylecop.json" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Execution\SystemFiles\" />
+    <Folder Include="Input\Device\" />
   </ItemGroup>
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\Snowflake.ruleset</CodeAnalysisRuleSet>

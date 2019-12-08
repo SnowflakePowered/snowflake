@@ -197,9 +197,6 @@
         <member name="P:Snowflake.Configuration.Input.InputMapping.Item(Snowflake.Input.Controller.ControllerElement)">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Configuration.Input.InputMapping.InputApi">
-            <inheritdoc/>
-        </member>
         <member name="P:Snowflake.Configuration.Input.InputMapping.DeviceLayouts">
             <inheritdoc/>
         </member>
@@ -911,9 +908,6 @@
         <member name="P:Snowflake.Input.Controller.ControllerLayout.FriendlyName">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Input.Controller.ControllerLayout.IsRealDevice">
-            <inheritdoc/>
-        </member>
         <member name="P:Snowflake.Input.Controller.ControllerLayout.Platforms">
             <inheritdoc/>
         </member>
@@ -963,30 +957,6 @@
             <inheritdoc/>
         </member>
         <member name="P:Snowflake.Input.Controller.Mapped.MappedControllerElement.DeviceElement">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Input.Device.InputDevice.DeviceId">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Input.Device.InputDevice.DeviceInfo">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Input.Device.InputDevice.DeviceIndex">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Input.Device.InputDevice.ControllerName">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Input.Device.InputDevice.DeviceApi">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Input.Device.InputDevice.DeviceLayout">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Input.Device.InputEnumerator.ControllerLayout">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Input.Device.InputEnumerator.GetConnectedDevices">
             <inheritdoc/>
         </member>
         <member name="T:Snowflake.Installation.Extensibility.GameInstaller">

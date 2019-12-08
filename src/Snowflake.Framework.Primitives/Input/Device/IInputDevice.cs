@@ -1,48 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using Snowflake.Input.Controller;
 
 namespace Snowflake.Input.Device
 {
     /// <summary>
-    /// A more filtered, usable version of an ILowLevelInputDevice
+    /// Represents the physical instance of a hardware peripheral agnostic of any
+    /// input API. That is to mean that one device may implement multiple device APIs
+    /// (driver instances).
     /// </summary>
     public interface IInputDevice
     {
         /// <summary>
-        /// Gets a unique name assigned to this type of device
+        /// The USB VID of this device.
+        /// 
+        /// May not be accurate for Keyboard and Passthrough devices.
         /// </summary>
-        string DeviceId { get; }
+        short VendorID { get; }
+        /// <summary>
+        /// The USB PID of this device.
+        /// </summary>
+        short ProductID { get; }
 
         /// <summary>
-        /// Gets the device this wrapper belongs to
+        /// The friendly name of the device.
         /// </summary>
-        ILowLevelInputDevice DeviceInfo { get; }
+        string DisplayName { get; }
 
         /// <summary>
-        /// Gets the device index differs from the enumeration number that it is the index in a set
-        /// of the device rather than all devices.
-        /// For example, if the device is an Xinput device and is the 3rd input device, this index would be
-        /// 2 in the set of input devices.
+        /// A GUID that identifies the device.
+        /// 
+        /// In general, this GUID is opaque and arbitrary; its format is up to the OS input enumerator.
+        /// However, on Windows, this will be the device instance GUID as enumerated from DirectInput, and
+        /// on Linux, this GUID will be in SDL2 format.
         /// </summary>
-        int? DeviceIndex { get; }
+        Guid InstanceGuid { get; }
 
         /// <summary>
-        /// Gets a friendly name for the controller (Xbox Controller, or Wii Remote, etc etc)
+        /// Gets the input driver instances for which this device implements.
         /// </summary>
-        string ControllerName { get; }
-
-        /// <summary>
-        /// Gets the device layout this input device implements
-        /// </summary>
-        IControllerLayout DeviceLayout { get; }
-
-        /// <summary>
-        /// Gets the API this controller uses
-        /// </summary>
-        InputApi DeviceApi { get; }
+        IEnumerable<IInputDriverInstance> Instances { get; }
     }
 }
