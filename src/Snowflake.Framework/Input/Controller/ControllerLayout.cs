@@ -21,9 +21,6 @@ namespace Snowflake.Input.Controller
         public string FriendlyName { get; }
 
         /// <inheritdoc/>
-        public bool IsRealDevice { get; }
-
-        /// <inheritdoc/>
         public IEnumerable<PlatformId> Platforms { get; }
 
         /// <inheritdoc/>
@@ -34,7 +31,6 @@ namespace Snowflake.Input.Controller
         {
             this.LayoutId = layoutId;
             this.FriendlyName = friendlyName;
-            this.IsRealDevice = isRealDevice;
             this.Platforms = platforms;
             this.Layout = layout;
         }

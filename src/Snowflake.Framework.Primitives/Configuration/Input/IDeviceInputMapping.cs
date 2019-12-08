@@ -14,11 +14,6 @@ namespace Snowflake.Configuration.Input
     public interface IDeviceInputMapping
     {
         /// <summary>
-        /// Gets the input API this mapping supports.
-        /// </summary>
-        InputApi InputApi { get; }
-
-        /// <summary>
         /// Gets the device layouts this input mapping supports within this input API.
         /// </summary>
         IEnumerable<string> DeviceLayouts { get; }

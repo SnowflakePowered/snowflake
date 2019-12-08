@@ -23,11 +23,6 @@ namespace Snowflake.Input.Controller
         string FriendlyName { get; }
 
         /// <summary>
-        /// Gets a value indicating whether whether or not this is a real device layout or a virtual one.
-        /// </summary>
-        bool IsRealDevice { get; }
-
-        /// <summary>
         /// Gets the platforms this controller supports.
         /// </summary>
         IEnumerable<PlatformId> Platforms { get; }

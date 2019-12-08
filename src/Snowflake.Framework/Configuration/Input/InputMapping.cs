@@ -42,16 +42,16 @@ namespace Snowflake.Configuration.Input
         }
 
         /// <inheritdoc/>
-        public InputApi InputApi { get; }
+        //public InputApi InputApi { get; }
 
         /// <inheritdoc/>
         public IEnumerable<string> DeviceLayouts { get; }
 
         public InputMapping(IDictionary<ControllerElement, string> elementMappings,
-            InputApi inputApi, IEnumerable<string> deviceLayouts)
+           IEnumerable<string> deviceLayouts)
         {
             this.elementMappings = elementMappings;
-            this.InputApi = inputApi;
+            //this.InputApi = inputApi;
             this.DeviceLayouts = deviceLayouts;
         }
     }
