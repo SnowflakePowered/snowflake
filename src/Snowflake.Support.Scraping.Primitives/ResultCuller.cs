@@ -23,7 +23,7 @@ namespace Snowflake.Support.Scraping.Primitives
 
         public override IEnumerable<ISeed> Filter(IEnumerable<ISeed> seedsToTrim, ISeedRootContext context)
         {
-            var clientResult = seedsToTrim.FirstOrDefault(s => s.Source == GameScrapeContext.ClientSeedSource);
+            var clientResult = seedsToTrim.FirstOrDefault(s => s.Source == IScrapeContext.ClientSeedSource);
             if (clientResult != null)
             {
                 yield return clientResult;
