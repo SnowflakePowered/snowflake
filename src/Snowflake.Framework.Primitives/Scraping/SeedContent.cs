@@ -16,12 +16,12 @@ namespace Snowflake.Scraping
         /// By convention, any non root seeds must be a child of the root seed, which
         /// has a type __root.
         /// </summary>
-        public const string RootSeedType = "__root";
+        public static readonly string RootSeedType = "__root";
 
         /// <summary>
         /// Represents a null value seedcontent.
         /// </summary>
-        public const string NullSeedType = "__null";
+        public static readonly string NullSeedType = "__null";
 
         /// <summary>
         /// A <see cref="SeedContent"/> is polymorphically equivalent to a

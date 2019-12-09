@@ -8,21 +8,21 @@
         /// <summary>
         /// The name of the plugin
         /// </summary>
-        public const string Name = "name";
+        public static readonly string Name = "name";
 
         /// <summary>
         /// The description of the plugin
         /// </summary>
-        public const string Description = "description";
+        public static readonly string Description = "description";
 
         /// <summary>
         /// The author of the plugin
         /// </summary>
-        public const string Author = "author";
+        public static readonly string Author = "author";
 
         /// <summary>
         /// The plugins supported platforms
         /// </summary>
-        public const string SupportedPlatforms = "platforms";
+        public static readonly string SupportedPlatforms = "platforms";
     }
 }

@@ -10,7 +10,7 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDXA
     internal class CDXABlockStream : Stream
     {
         private readonly Stream diskStream;
-        public const long BlockLength = CDXADisc.BlockSize - CDXADisc.BlockHeaderSize;
+        public static readonly long BlockLength = CDXADisc.BlockSize - CDXADisc.BlockHeaderSize;
 
         public CDXABlockStream(uint lba, Stream diskStream)
         {

@@ -5,7 +5,7 @@ namespace Snowflake.Stone.FileSignatures.Formats.SFO
 {
     internal sealed class SFOKeyTableEntry
     {
-        public const byte delimiterByte = 0;
+        public static readonly byte delimiterByte = 0;
 
         /// <summary>
         /// The keyTable-length in bytes
