@@ -14,46 +14,46 @@ namespace Snowflake.Caching
         /// <summary>
         /// Front box art
         /// </summary>
-        public const string MediaBoxartFront = "media_boxart_front";
+        public static readonly string MediaBoxartFront = "media_boxart_front";
 
         /// <summary>
         /// Back box art
         /// </summary>
-        public const string MediaBoxartBack = "media_boxart_back";
+        public static readonly string MediaBoxartBack = "media_boxart_back";
 
         /// <summary>
         /// Manual page
         /// </summary>
-        public const string MediaManualPage = "media_manual_page";
+        public static readonly string MediaManualPage = "media_manual_page";
 
         /// <summary>
         /// Game icon
         /// </summary>
-        public const string MediaIcon = "media_icon";
+        public static readonly string MediaIcon = "media_icon";
 
         /// <summary>
         /// Promotional material, such as promotional screenshots, advertisements, etc.
         /// </summary>
-        public const string MediaPromotional = "media_promotional";
+        public static readonly string MediaPromotional = "media_promotional";
 
         /// <summary>
         /// Game logoes
         /// </summary>
-        public const string MediaLogo = "media_logo";
+        public static readonly string MediaLogo = "media_logo";
 
         /// <summary>
         /// An arcade cabinet marquee
         /// </summary>
-        public const string MediaMarquee = "media_marquee";
+        public static readonly string MediaMarquee = "media_marquee";
 
         /// <summary>
         /// A game screenshot
         /// </summary>
-        public const string Screenshot = "screenshot";
+        public static readonly string Screenshot = "screenshot";
 
         /// <summary>
         /// A generic image
         /// </summary>
-        public const string Generic = "generic";
+        public static readonly string Generic = "generic";
     }
 }

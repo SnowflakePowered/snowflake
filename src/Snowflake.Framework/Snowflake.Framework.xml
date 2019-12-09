@@ -1416,11 +1416,6 @@
             <param name="children">The list of seed results to return</param>
             <returns>The nested portion of a seed tree result.</returns>
         </member>
-        <member name="F:Snowflake.Scraping.GameScrapeContext.ClientSeedSource">
-            <summary>
-             The default source for a Client-provided seed.
-            </summary>
-        </member>
         <member name="P:Snowflake.Scraping.GameScrapeContext.Scrapers">
             <inheritdoc />
         </member>

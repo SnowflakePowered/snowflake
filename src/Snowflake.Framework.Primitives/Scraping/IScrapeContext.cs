@@ -13,6 +13,11 @@ namespace Snowflake.Scraping
     public interface IScrapeContext : IAsyncEnumerable<IEnumerable<ISeed>>
     {
         /// <summary>
+        ///  The default source for a Client-provided seed.
+        /// </summary>
+        static readonly string ClientSeedSource = "__client";
+
+        /// <summary>
         /// Gets the seed root context local to this job.
         /// </summary>
         ISeedRootContext Context { get; }

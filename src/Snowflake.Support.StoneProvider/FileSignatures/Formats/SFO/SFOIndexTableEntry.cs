@@ -8,7 +8,7 @@ namespace Snowflake.Stone.FileSignatures.Formats.SFO
         /// <summary>
         /// The length of an entry in an SFO Index Table
         /// </summary>
-        public const int IndexTableEntryLength = 16;
+        public static readonly int IndexTableEntryLength = 16;
 
         public byte[] OffsetKeyNameInKeyTable { get; set; }
         public byte DataAlignmentRequirements { get; set; }

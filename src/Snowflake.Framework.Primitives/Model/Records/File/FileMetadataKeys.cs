@@ -15,46 +15,46 @@ namespace Snowflake.Model.Records.File
         /// <summary>
         /// The crc32 of the file
         /// </summary>
-        public const string FileHashCrc32 = "file_hash_crc32";
+        public static readonly string FileHashCrc32 = "file_hash_crc32";
 
         /// <summary>
         /// The md5 of the file
         /// </summary>
-        public const string FileHashMd5 = "file_hash_md5";
+        public static readonly string FileHashMd5 = "file_hash_md5";
 
         /// <summary>
         /// The sha1 of the file
         /// </summary>
-        public const string FileHashSha1 = "file_hash_sha1";
+        public static readonly string FileHashSha1 = "file_hash_sha1";
 
         /// <summary>
         /// The region of the rom.
         /// </summary>
-        public const string RomRegion = "rom_region";
+        public static readonly string RomRegion = "rom_region";
 
         /// <summary>
         /// The stone platform id of the rom file
         /// </summary>
-        public const string RomPlatform = "rom_platform";
+        public static readonly string RomPlatform = "rom_platform";
 
         /// <summary>
         /// The internal name of the ROM.
         /// </summary>
-        public const string RomInternalName = "rom_internal_name";
+        public static readonly string RomInternalName = "rom_internal_name";
 
         /// <summary>
         /// The serial of the ROM
         /// </summary>
-        public const string RomSerial = "rom_serial";
+        public static readonly string RomSerial = "rom_serial";
 
         /// <summary>
         /// The canonical title of a ROM from the shiragame database
         /// </summary>
-        public const string RomCanonicalTitle = "rom_canonical_title";
+        public static readonly string RomCanonicalTitle = "rom_canonical_title";
         
         /// <summary>
         /// The filename of the runnable binary in a zip file.
         /// </summary>
-        public const string RomZipRunnableFilename = "rom_zip_runnable_filename";
+        public static readonly string RomZipRunnableFilename = "rom_zip_runnable_filename";
     }
 }

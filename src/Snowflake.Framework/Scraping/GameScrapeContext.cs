@@ -14,11 +14,6 @@ namespace Snowflake.Scraping
 {
     public class GameScrapeContext : IScrapeContext
     {
-        /// <summary>
-        ///  The default source for a Client-provided seed.
-        /// </summary>
-        public static readonly string ClientSeedSource = "__client";
-
         /// <inheritdoc />
         public IEnumerable<IScraper> Scrapers { get; }
 
@@ -72,7 +67,7 @@ namespace Snowflake.Scraping
             this.Visited = new List<(string, Guid)>();
             this.Scrapers = scrapers;
             this.Cullers = cullers;
-            this.Context.AddRange(initialSeeds.Select(p => (p, this.Context.Root)), GameScrapeContext.ClientSeedSource);
+            this.Context.AddRange(initialSeeds.Select(p => (p, this.Context.Root)), IScrapeContext.ClientSeedSource);
         }
 
         internal GameScrapeContext(IEnumerable<SeedTree> initialSeeds,
@@ -83,7 +78,7 @@ namespace Snowflake.Scraping
             this.Scrapers = scrapers;
             this.Cullers = cullers;
             this.Context.AddRange(
-                initialSeeds.SelectMany(s => s.Collapse(this.Context.Root, GameScrapeContext.ClientSeedSource)));
+                initialSeeds.SelectMany(s => s.Collapse(this.Context.Root, IScrapeContext.ClientSeedSource)));
         }
 
         private ISeed GetAttachTarget(AttachTarget t, ISeed matchingSeed)
@@ -102,7 +97,7 @@ namespace Snowflake.Scraping
         public async ValueTask<bool> Proceed(IEnumerable<SeedContent> seedsToAdd)
         {
             // Add any client seeds.
-            this.Context.AddRange(seedsToAdd.Select(p => (p, this.Context.Root)), GameScrapeContext.ClientSeedSource);
+            this.Context.AddRange(seedsToAdd.Select(p => (p, this.Context.Root)), IScrapeContext.ClientSeedSource);
 
             // Keep track of previously visited seeds.
             int previousCount = this.Visited.Count;

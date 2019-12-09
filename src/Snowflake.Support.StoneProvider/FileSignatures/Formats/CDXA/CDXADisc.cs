@@ -11,8 +11,8 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDXA
 {
     internal class CDXADisc : IDiscReader
     {
-        public const int BlockSize = 0x930;
-        public const int BlockHeaderSize = 0x18;
+        public static readonly int BlockSize = 0x930;
+        public static readonly int BlockHeaderSize = 0x18;
         public static readonly byte[] FileRecordDelimeter = {0x8D, 0x55, 0x58, 0x41};
         private readonly Stream diskStream;
         public string VolumeDescriptor { get; }
