@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Snowflake.Input.Device.Extensibility;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -12,11 +13,22 @@ namespace Snowflake.Input.Device
     public interface IInputDevice
     {
         /// <summary>
+        /// The instance GUID for the required passthrough instance.
+        /// </summary>
+        static readonly Guid PassthroughInstanceGuid = new Guid("53465041-0000-5041-5353-504944564944");
+
+        /// <summary>
+        /// The instance GUID for the required keyboard instance.
+        /// </summary>
+        static readonly Guid KeyboardInstanceGuid = new Guid("53464B59-0000-004B-4559-504944564944");
+
+        /// <summary>
         /// The USB VID of this device.
         /// 
         /// May not be accurate for Keyboard and Passthrough devices.
         /// </summary>
         short VendorID { get; }
+
         /// <summary>
         /// The USB PID of this device.
         /// </summary>
@@ -30,9 +42,13 @@ namespace Snowflake.Input.Device
         /// <summary>
         /// A GUID that identifies the device.
         /// 
-        /// In general, this GUID is opaque and arbitrary; its format is up to the OS input enumerator.
-        /// However, on Windows, this will be the device instance GUID as enumerated from DirectInput, and
-        /// on Linux, this GUID will be in SDL2 format.
+        /// In general, this GUID is opaque and arbitrary, but must be consistent with the 
+        /// <see cref="IDeviceEnumerator"/> that produced this device.
+        /// 
+        /// On Windows, this will be the device instance GUID as enumerated from DirectInput, and
+        /// on Linux, this GUID will be in SDL2 format. The passthrough and keyboard instances
+        /// will always have the GUIDs <see cref="PassthroughInstanceGuid"/> and <see cref="KeyboardInstanceGuid"/>
+        /// in particular.
         /// </summary>
         Guid InstanceGuid { get; }
 
