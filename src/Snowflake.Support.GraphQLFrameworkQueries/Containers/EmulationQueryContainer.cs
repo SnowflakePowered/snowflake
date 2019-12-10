@@ -18,7 +18,7 @@ namespace Snowflake.Support.Remoting.GraphQL.Containers
     {
         /// <inheritdoc/>
         [ImportService(typeof(IStoneProvider))]
-        [ImportService(typeof(IInputManager))]
+        //[ImportService(typeof(IInputManager))]
         [ImportService(typeof(IPluginManager))]
         [ImportService(typeof(IControllerElementMappingsStore))]
         [ImportService(typeof(IGraphQLService))]
@@ -26,25 +26,25 @@ namespace Snowflake.Support.Remoting.GraphQL.Containers
         [ImportService(typeof(IGameLibrary))]
         public void Compose(IModule module, IServiceRepository coreInstance)
         {
-            var stone = coreInstance.Get<IStoneProvider>();
-            var input = coreInstance.Get<IInputManager>();
-            var plugin = coreInstance.Get<IPluginManager>();
-            var mappedController = coreInstance.Get<IControllerElementMappingsStore>();
-            var gameLib = coreInstance.Get<IGameLibrary>();
+            //    var stone = coreInstance.Get<IStoneProvider>();
+            //    var input = coreInstance.Get<IInputManager>();
+            //    var plugin = coreInstance.Get<IPluginManager>();
+            //    var mappedController = coreInstance.Get<IControllerElementMappingsStore>();
+            //    var gameLib = coreInstance.Get<IGameLibrary>();
 
-            var rootSchema = coreInstance.Get<IGraphQLService>();
-            var inputQuery = new InputQueryBuilder(input, plugin, mappedController, stone);
-            var controllerQueries = new ControllerLayoutQueryBuilder(stone);
-            var emuQuery = new EmulationQueryBuilder(plugin.GetCollection<IEmulator>(), stone, gameLib,
-                inputQuery, controllerQueries);
+            //    var rootSchema = coreInstance.Get<IGraphQLService>();
+            //    var inputQuery = new InputQueryBuilder(input, plugin, mappedController, stone);
+            //    var controllerQueries = new ControllerLayoutQueryBuilder(stone);
+            //    var emuQuery = new EmulationQueryBuilder(plugin.GetCollection<IEmulator>(), stone, gameLib,
+            //        inputQuery, controllerQueries);
 
-            rootSchema.Register(controllerQueries);
-            rootSchema.Register(inputQuery);
-            rootSchema.Register(emuQuery);
-            var logger = coreInstance.Get<ILogProvider>().GetLogger("graphql");
-            logger.Info("Registered Controller GraphQL Queries.");
-            logger.Info("Registered Input GraphQL Queries.");
-            logger.Info("Registered Emulation GraphQL Queries.");
+            //    rootSchema.Register(controllerQueries);
+            //    rootSchema.Register(inputQuery);
+            //    rootSchema.Register(emuQuery);
+            //    var logger = coreInstance.Get<ILogProvider>().GetLogger("graphql");
+            //    logger.Info("Registered Controller GraphQL Queries.");
+            //    logger.Info("Registered Input GraphQL Queries.");
+            //    logger.Info("Registered Emulation GraphQL Queries.");
         }
     }
 }

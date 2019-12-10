@@ -6,6 +6,7 @@ using SharpDX.RawInput;
 using System.Linq;
 using System.Collections.Generic;
 using System.Management;
+using Snowflake.Support.InputEnumerators.Windows;
 
 namespace Snowflake.Framework.Tests.Input.Windows
 {
@@ -16,19 +17,8 @@ namespace Snowflake.Framework.Tests.Input.Windows
         [Fact]
         public void Test1()
         {
-            var xinputInstance = new Controller(UserIndex.One);
-            var capabilities = xinputInstance.GetCapabilities(DeviceQueryType.Any);
-            var state = xinputInstance.GetState();
-
-            var directInput = new DirectInput();
-
-            var devices = directInput.GetDevices(DeviceClass.GameControl,
-                DeviceEnumerationFlags.AttachedOnly).Select(j => new Joystick(directInput, j.InstanceGuid))
-                .ToList();
-            devices[1].Acquire();
-            var dstate = devices[1].GetCurrentState();
-
-            var prop = devices[1].GetObjects();
+            var e = new WindowsDeviceEnumerator();
+            var devices = e.QueryConnectedDevices().ToList();
         }
     }
 }

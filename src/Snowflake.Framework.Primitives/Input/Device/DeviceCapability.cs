@@ -49,8 +49,14 @@ namespace Snowflake.Input.Device
     /// that is -1 approaches 1 as 0.00 approaches 1.00.
     /// </para>
     /// 
-    /// Every axis enumerated must have all three capabilities enumerated, but all three axis capabilities
-    /// may not necessarily be mapped by an emulator.
+    /// An enumerated axis enumerated may have all three capabilities enumerated, particularly if 
+    /// it is an analog stick. Some drivers may not have support for all three capabilities, such as
+    /// XInput triggers only exposing [0.00, 1.00] for triggers.
+    /// </para>
+    /// 
+    /// <para>
+    /// Mouse cursor capabilities are also triplicated with the same semantics as axis, except for
+    /// absolute values. Relative mouse movement is mapped to Axis0 by convention. 
     /// </para>
     /// </summary>
     public enum DeviceCapability
@@ -1353,6 +1359,62 @@ namespace Snowflake.Input.Device
         /// The F12 Key
         /// </summary>
         KeyF12,
+        #endregion
+        #region Mouse
+        /// <summary>
+        /// Left mouse button
+        /// </summary>
+        Mouse0,
+        /// <summary>
+        /// Right mouse button
+        /// </summary>
+        Mouse1,
+        /// <summary>
+        /// Middle mouse button
+        /// </summary>
+        Mouse2,
+        /// <summary>
+        /// Side forward mouse button
+        /// </summary>
+        Mouse3,
+        /// <summary>
+        /// Side backward mouse button
+        /// </summary>
+        Mouse4,
+        /// <summary>
+        /// Absolute Cursor X Positive
+        /// </summary>
+        CursorXPositive,
+        /// <summary>
+        /// Absolute Cursor X Negative
+        /// </summary>
+        CursorXNegative,
+        /// <summary>
+        /// Absolute Cursor X 
+        /// </summary>
+        CursorX,
+        /// <summary>
+        /// Absolute Cursor Y Positive
+        /// </summary>
+        CursorYPositive,
+        /// <summary>
+        /// Absolute Cursor Y Negative
+        /// </summary>
+        CursorYNegative,
+        /// <summary>
+        /// Absolute Cursor Y 
+        /// </summary>
+        CursorY,
+        #endregion
+        #region Rumble motors
+        /// <summary>
+        /// Left rumble motor
+        /// </summary>
+        Rumble0,
+        /// <summary>
+        /// Right rumble motor
+        /// </summary>
+        Rumble1,
         #endregion
     }
 }
