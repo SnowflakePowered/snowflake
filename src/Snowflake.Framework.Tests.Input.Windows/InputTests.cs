@@ -2,7 +2,6 @@ using System;
 using Xunit;
 using SharpDX.XInput;
 using SharpDX.DirectInput;
-using SharpDX.RawInput;
 using System.Linq;
 using System.Collections.Generic;
 using System.Management;
