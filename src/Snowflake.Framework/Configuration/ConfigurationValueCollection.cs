@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
 using System.Collections.Immutable;
 using Snowflake.Configuration.Utility;
 using System.Linq.Expressions;
 using Snowflake.Configuration.Extensions;
-using Castle.Core.Internal;
 using System.Reflection;
-using EnumsNET.NonGeneric;
 using System.ComponentModel;
 using EnumsNET;
 
@@ -39,7 +36,7 @@ namespace Snowflake.Configuration
             return optionType == typeof(string)
                 ? strValue ?? string.Empty // return string value if string
                 : optionType?.GetTypeInfo()?.IsEnum ?? false
-                    ? Enums.Parse(optionType, strValue ?? String.Empty) // return parsed enum if enum
+                    ? Enums.Parse(optionType!, strValue ?? String.Empty) // return parsed enum if enum
                     : TypeDescriptor.GetConverter(optionType).ConvertFromInvariantString(strValue);
         }
 

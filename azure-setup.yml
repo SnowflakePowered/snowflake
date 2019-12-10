@@ -3,11 +3,11 @@ parameters:
 
 steps:
   - task: DotNetCoreInstaller@1
-    displayName: Installing .NET Core 3.0 SDK
+    displayName: Installing .NET Core 3.1 SDK
     inputs:
       includePreviewVersions: true
       packageType: 'sdk' # Options: runtime, sdk
-      version: '3.0.100'
+      version: '3.1.100'
 
   - task: NuGetToolInstaller@0
     displayName: Installing NuGet CLI

@@ -1,7 +1,9 @@
 ﻿<Project Sdk="Snowflake.Framework.Dependencies.Sdk/2.0.0">
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>    <RootNamespace>Snowflake</RootNamespace>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>Snowflake</RootNamespace>
     <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
+    <_SnowflakeUseDevelopmentSDK>true</_SnowflakeUseDevelopmentSDK>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Cover' ">

@@ -71,9 +71,9 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.AssemblyModuleBuilderTask
                 where element.Name.LocalName == "TargetFramework"
                 select element.Value).FirstOrDefault();
 
-            if (targetFramework != "netcoreapp3.0")
+            if (targetFramework != "netcoreapp3.1")
             {
-                throw new InvalidOperationException($"Error! Assembly modules must target framework netcoreapp3.0");
+                throw new InvalidOperationException($"Error! Assembly modules must target framework netcoreapp3.1");
             }
 
             Console.WriteLine($"Found module {module.Entry}");
