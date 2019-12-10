@@ -23,10 +23,6 @@
     <ProjectReference Include="..\Snowflake.Framework.Services\Snowflake.Framework.Services.csproj" />
   </ItemGroup>
 
-   <ItemGroup>
-    <DotNetCliToolReference Include="dotnet-snowflake" Version="$(SnowflakeSDKToolingVersion)" />
-  </ItemGroup>
-
   <ItemGroup Condition="Exists('module.json')">
     <None Update="module.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
