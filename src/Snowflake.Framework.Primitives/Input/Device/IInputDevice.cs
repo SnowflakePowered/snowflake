@@ -1,4 +1,4 @@
-﻿using Snowflake.Input.Device.Extensibility;
+﻿using Snowflake.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,31 +13,34 @@ namespace Snowflake.Input.Device
     public interface IInputDevice
     {
         /// <summary>
-        /// The instance GUID for the required passthrough instance.
-        /// </summary>
-        static readonly Guid PassthroughInstanceGuid = new Guid("53465041-0000-5041-5353-504944564944");
-
-        /// <summary>
-        /// The instance GUID for the required keyboard instance.
-        /// </summary>
-        static readonly Guid KeyboardInstanceGuid = new Guid("53464B59-0000-004B-4559-504944564944");
-
-        /// <summary>
         /// The USB VID of this device.
         /// 
         /// May not be accurate for Keyboard and Passthrough devices.
         /// </summary>
-        short VendorID { get; }
+        int VendorID { get; }
 
         /// <summary>
         /// The USB PID of this device.
         /// </summary>
-        short ProductID { get; }
+        int ProductID { get; }
 
         /// <summary>
-        /// The friendly name of the device.
+        /// The name of the device.
         /// </summary>
-        string DisplayName { get; }
+        string DeviceName { get; }
+
+        /// <summary>
+        /// A user-friendly label to give to this device.
+        /// </summary>
+        string FriendlyName { get; }
+
+        /// <summary>
+        /// Gets the path to this device instance.
+        /// 
+        /// On Windows, this usually begins with \\?\HID
+        /// whereas on Linux, this usually begins with /dev/input.
+        /// </summary>
+        string DevicePath { get; }
 
         /// <summary>
         /// A GUID that identifies the device.
@@ -47,7 +50,8 @@ namespace Snowflake.Input.Device
         /// 
         /// On Windows, this will be the device instance GUID as enumerated from DirectInput, and
         /// on Linux, this GUID will be in SDL2 format. The passthrough and keyboard instances
-        /// will always have the GUIDs <see cref="PassthroughInstanceGuid"/> and <see cref="KeyboardInstanceGuid"/>
+        /// will always have the GUIDs <see cref="IDeviceEnumerator.PassthroughInstanceGuid"/> and
+        /// <see cref="IDeviceEnumerator.KeyboardInstanceGuid"/>
         /// in particular.
         /// </summary>
         Guid InstanceGuid { get; }

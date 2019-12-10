@@ -23,7 +23,6 @@ namespace Snowflake.Configuration.Tests
         {
             string _mapping = TestUtilities.GetStringResource("InputMappings.DirectInput.XINPUT_DEVICE.json");
             IDeviceInputMapping mapping = JsonConvert.DeserializeObject<InputMapping>(_mapping);
-            Assert.Equal(InputApi.XInput, mapping.InputApi);
             Assert.Equal("0", mapping[ControllerElement.ButtonA]);
             Assert.Equal("1", mapping[ControllerElement.ButtonB]);
             Assert.Equal("2", mapping[ControllerElement.ButtonX]);
@@ -58,7 +57,7 @@ namespace Snowflake.Configuration.Tests
         {
             string _mapping = TestUtilities.GetStringResource("InputMappings.DirectInput.KEYBOARD_DEVICE.json");
             IDeviceInputMapping mapping = JsonConvert.DeserializeObject<InputMapping>(_mapping);
-            Assert.Equal(InputApi.DirectInput, mapping.InputApi);
+            //Assert.Equal(InputApi.DirectInput, mapping.InputApi);
             Assert.Equal("nul", mapping[ControllerElement.KeyNone]);
             Assert.Equal("a", mapping[ControllerElement.KeyA]);
             Assert.Equal("b", mapping[ControllerElement.KeyB]);

@@ -2,6 +2,7 @@
 using Snowflake.Input.Device;
 using Snowflake.Loader;
 using Snowflake.Services;
+using Snowflake.Support.InputEnumerators.Windows;
 
 namespace Snowflake.Plugin.InputManager.Win32
 {
@@ -11,8 +12,8 @@ namespace Snowflake.Plugin.InputManager.Win32
         [ImportService(typeof(IServiceRegistrationProvider))]
         public void Compose(IModule module, IServiceRepository coreInstance)
         {
-            //coreInstance.Get<IServiceRegistrationProvider>()
-            //    .RegisterService<IInputManager>(new InputManager());
+            coreInstance.Get<IServiceRegistrationProvider>()
+                .RegisterService<IDeviceEnumerator>(new WindowsDeviceEnumerator());
         }
     }
 }
