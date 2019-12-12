@@ -41,7 +41,7 @@ namespace Snowflake.Model.Database.Models
                .IsRequired();
 
             modelBuilder.Entity<ControllerElementMappingsModel>()
-                .HasKey(p => new {p.ControllerID, p.DeviceName, p.DriverType, p.ProfileName});
+                .HasKey(p => new {p.ControllerID, p.DriverType, p.DeviceName, p.VendorID, p.ProfileName});
         }
     }
 }
