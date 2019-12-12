@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Snowflake.Input.Controller;
 using Snowflake.Input.Controller.Mapped;
+using Snowflake.Input.Device;
 using Snowflake.Model.Database.Extensions;
 using Snowflake.Model.Database.Models;
 
@@ -28,35 +29,46 @@ namespace Snowflake.Model.Database
             context.SaveChanges();
         }
 
-        public IControllerElementMappings? GetMappings(ControllerId controllerId, string deviceId, string profileName)
+        public IControllerElementMappings? GetMappings(ControllerId controllerId,
+            InputDriverType driver,
+            string deviceName,
+            int vendorId,
+            string profileName
+            )
         {
             using var context = new DatabaseContext(this.Options.Options);
             var mappings = context.ControllerElementMappings
                 .Include(p => p.MappedElements)
-                .SingleOrDefault(p => p.ControllerID == controllerId &&
-                                      p.DeviceID == deviceId && p.ProfileName == profileName);
+                .SingleOrDefault(p => p.ControllerID == controllerId
+                                    && p.DriverType == driver
+                                    && p.DeviceName == deviceName
+                                    && p.VendorID == vendorId
+                                    && p.ProfileName == profileName);
             return mappings?.AsControllerElementMappings();
         }
 
-        public IEnumerable<IControllerElementMappings> GetMappings(ControllerId controllerId, string deviceId)
+        public IEnumerable<IControllerElementMappings> GetMappings(ControllerId controllerId,
+            string deviceName, int vendorId)
         {
             using var context = new DatabaseContext(this.Options.Options);
             var mappings = context.ControllerElementMappings
                 .Include(p => p.MappedElements)
-                .Where(p => p.ControllerID == controllerId &&
-                            p.DeviceID == deviceId)
+                .Where(p => p.ControllerID == controllerId 
+                         && p.DeviceName == deviceName
+                         && p.VendorID == vendorId)
                 .Select(m => m.AsControllerElementMappings())
                 .ToList();
             return mappings;
         }
 
-        public void DeleteMappings(ControllerId controllerId, string deviceId)
+        public void DeleteMappings(ControllerId controllerId, string deviceName, int vendorId)
         {
             using var context = new DatabaseContext(this.Options.Options);
             var retrievedMappings = context.ControllerElementMappings
                 .Include(p => p.MappedElements)
-                .Where(p => p.ControllerID == controllerId &&
-                            p.DeviceID == deviceId);
+                .Where(p => p.ControllerID == controllerId 
+                         && p.DeviceName == deviceName
+                         && p.VendorID == vendorId);
 
             foreach (var retrievedMapping in retrievedMappings)
             {
@@ -71,26 +83,33 @@ namespace Snowflake.Model.Database
             using var context = new DatabaseContext(this.Options.Options);
             var retrievedMappings = context.ControllerElementMappings
                 .Include(p => p.MappedElements)
-                .SingleOrDefault(p => p.ControllerID == mappings.ControllerId &&
-                                      p.DeviceID == mappings.DeviceId && p.ProfileName == profileName);
+                .SingleOrDefault(p => p.ControllerID == mappings.ControllerId 
+                                   && p.DriverType == mappings.DriverType
+                                   && p.DeviceName == mappings.DeviceName 
+                                   && p.VendorID == mappings.VendorID
+                                   && p.ProfileName == profileName);
 
             foreach (var mapping in retrievedMappings.MappedElements)
             {
-                if (mappings[mapping.LayoutElement] == mapping.DeviceElement) continue;
-                mapping.DeviceElement = mappings[mapping.LayoutElement];
+                if (mappings[mapping.LayoutElement] == mapping.DeviceCapability) continue;
+                mapping.DeviceCapability = mappings[mapping.LayoutElement];
                 context.Entry(mapping).State = EntityState.Modified;
             }
 
             context.SaveChanges();
         }
 
-        public void DeleteMappings(ControllerId controllerId, string deviceId, string profileName)
+        public void DeleteMappings(ControllerId controllerId, InputDriverType driverType,
+            string deviceName, int vendorId, string profileName)
         {
             using var context = new DatabaseContext(this.Options.Options);
             var retrievedMappings = context.ControllerElementMappings
                 .Include(p => p.MappedElements)
-                .SingleOrDefault(p => p.ControllerID == controllerId &&
-                                      p.DeviceID == deviceId && p.ProfileName == profileName);
+                .SingleOrDefault(p => p.ControllerID == controllerId 
+                                    && p.DriverType == driverType
+                                    && p.DeviceName == deviceName
+                                    && p.VendorID == vendorId
+                                    && p.ProfileName == profileName);
 
             if (retrievedMappings != null)
             {

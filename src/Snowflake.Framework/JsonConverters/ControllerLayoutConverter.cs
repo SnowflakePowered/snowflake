@@ -19,7 +19,6 @@ namespace Snowflake.JsonConverters
             string friendlyName = jObject.Value<string>("FriendlyName");
             IEnumerable<string> platformsWhitelist = jObject.Value<JArray>("Platforms").Values<string>();
             var jlayout = jObject.Value<JObject>("Layout");
-            bool isDevice = jObject.Value<bool>("IsRealDevice");
 
             // var layout = new ControllerLayout(layoutName, platformsWhitelist, friendlyName, isDevice);
             var layout = new ControllerElementCollection();
@@ -28,12 +27,12 @@ namespace Snowflake.JsonConverters
                 let elementKey = Enums.Parse<ControllerElement>(layoutElements.Name)
                 let elementLabel = layoutElements.Value.Value<string>("Label")
                 let elementType = Enums.Parse<ControllerElementType>(layoutElements.Value.Value<string>("Type"))
-                select (elementKey: elementKey, elementInfo: new ControllerElementInfo(elementLabel, elementType)))
+                select (elementKey, elementInfo: new ControllerElementInfo(elementLabel, elementType)))
             {
                 layout.Add(controllerElement.elementKey, controllerElement.elementInfo);
             }
 
-            return new ControllerLayout(layoutName, platformsWhitelist.Cast<PlatformId>(), friendlyName, layout, isDevice);
+            return new ControllerLayout(layoutName, platformsWhitelist.Cast<PlatformId>(), friendlyName, layout);
         }
     }
 }

@@ -16,12 +16,12 @@ namespace Snowflake.JsonConverters
         /// <inheritdoc/>
         protected override IDeviceInputMapping Create(Type objectType, JObject jObject)
         {
-            IDictionary<ControllerElement, string> controllerElements = (from prop in
+            IDictionary<DeviceCapability, string> controllerElements = (from prop in
                     jObject.Value<JObject>("Controller").Properties()
                         .Concat(jObject.Value<JObject>("Keyboard").Properties())
                 select new
                 {
-                    element = Enums.Parse<ControllerElement>(prop.Name),
+                    element = Enums.Parse<DeviceCapability>(prop.Name),
                     value = prop.Value.Value<string>(),
                 }).ToDictionary(o => o.element, o => o.value);
 
@@ -30,7 +30,9 @@ namespace Snowflake.JsonConverters
             //return new InputMapping(controllerElements, inputApi, deviceLayouts)
 
                 //InputApi inputApi = Enums.Parse<InputApi>(jObject.Value<string>("InputApi"));
-            return new InputMapping(controllerElements, deviceLayouts);
+
+            //todo
+            return new InputMapping(controllerElements, InputDriverType.DirectInput);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Snowflake.Input.Controller.Mapped;
+using Snowflake.Input.Device;
 
 namespace Snowflake.Input.Controller.Mapped
 {
@@ -16,38 +17,46 @@ namespace Snowflake.Input.Controller.Mapped
         /// <param name="mappings">The <see cref="IControllerElementMappings"/> to store.</param>
         /// <param name="profileName">The profile name to store the mappings under.</param>
         void AddMappings(IControllerElementMappings mappings, string profileName);
-        
+
         /// <summary>
-        /// Deletes all mappings from the provided controller ID to device ID.
+        /// Deletes all mappings from the provided controller ID to device.
         /// </summary>
         /// <param name="controllerId">The Stone controller ID that maps to the real device.</param>
-        /// <param name="deviceId">The device ID that maps from the spec controller.</param>
-        void DeleteMappings(ControllerId controllerId, string deviceId);
+        /// <param name="deviceName">The name of the device to delete mappings.</param>
+        /// <param name="vendorId">The vendor ID of the device.</param>
+        void DeleteMappings(ControllerId controllerId, string deviceName, int vendorId);
 
         /// <summary>
         /// Deletes the mapping profile from the provided controller ID to device ID.
         /// </summary>
         /// <param name="controllerId">The Stone controller ID that maps to the real device.</param>
-        /// <param name="deviceId">The device ID that maps from the spec controller.</param>
+        /// <param name="driverType">The driver for which the mapping is for.</param>
+        /// <param name="deviceName">The name of the device.</param>
+        /// <param name="vendorId">The vendor ID of the device.</param>
         /// <param name="profileName">The name of the mapping profile.</param>
-        void DeleteMappings(ControllerId controllerId, string deviceId, string profileName);
-        
+        void DeleteMappings(ControllerId controllerId, InputDriverType driverType, 
+            string deviceName, int vendorId, string profileName);
+
         /// <summary>
         /// Gets all saved mappings from the provided controller ID to device ID.
         /// </summary>
         /// <param name="controllerId">The Stone controller ID that maps to the real device.</param>
-        /// <param name="deviceId">The device ID that maps from the spec controller.</param>
+        /// <param name="deviceName">The device ID that maps from the spec controller.</param>
+        /// <param name="vendorId">The vendor ID of the device.</param>
         /// <returns>All saved mappings from the provided controller ID to device ID.</returns>
-        IEnumerable<IControllerElementMappings> GetMappings(ControllerId controllerId, string deviceId);
+        IEnumerable<IControllerElementMappings> GetMappings(ControllerId controllerId, string deviceName, int vendorId);
 
         /// <summary>
         /// Gets the saved mapping profile from the provided controller ID to device ID.
         /// </summary>
         /// <param name="controllerId">The Stone controller ID that maps to the real device.</param>
+        /// <param name="driverType">The driver for which the mapping is for.</param>
         /// <param name="deviceId">The device ID that maps from the spec controller.</param>
+        /// <param name="vendorId">The vendor ID of the device.</param>
         /// <param name="profileName">The name of the mapping profile.</param>
         /// <returns>The saved mapping profile from the provided controller ID to device ID.</returns>
-        IControllerElementMappings? GetMappings(ControllerId controllerId, string deviceId, string profileName);
+        IControllerElementMappings? GetMappings(ControllerId controllerId, InputDriverType driverType, 
+            string deviceId, int vendorId, string profileName);
         
         /// <summary>
         /// Updates the specific mapping profile with the given profile name.

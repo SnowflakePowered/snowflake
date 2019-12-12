@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Text;
 using Snowflake.Configuration.Input;
 using Snowflake.Input.Controller;
+using Snowflake.Input.Device;
 
 namespace Snowflake.Configuration.Serialization
 {
-    public sealed class ControllerElementConfigurationNode
-        : AbstractConfigurationNode<ControllerElement>
+    public sealed class DeviceCapabilityElementConfigurationNode
+        : AbstractConfigurationNode<DeviceCapability>
     {
-        internal ControllerElementConfigurationNode(string key, ControllerElement value, 
+        internal DeviceCapabilityElementConfigurationNode(string key, 
+            ControllerElement element,
+            DeviceCapability value, 
             string mappedValue, 
             InputOptionDeviceType type)
             : base(key, value)
@@ -19,6 +22,8 @@ namespace Snowflake.Configuration.Serialization
         }
 
         public new string Value { get; }
+
+        public ControllerElement VirtualElement { get; }
         public InputOptionDeviceType DeviceType { get; }
     }
 }

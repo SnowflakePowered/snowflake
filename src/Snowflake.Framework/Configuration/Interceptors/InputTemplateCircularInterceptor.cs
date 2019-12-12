@@ -2,6 +2,7 @@
 using Snowflake.Configuration;
 using Snowflake.Configuration.Input;
 using Snowflake.Input.Controller;
+using Snowflake.Input.Device;
 
 namespace Snowflake.Configuration.Interceptors
 {
@@ -68,7 +69,7 @@ namespace Snowflake.Configuration.Interceptors
                         if (invocation.Method.Name.StartsWith("set_"))
                         {
                             @this[(ControllerElement) invocation.Arguments[0]] =
-                                (ControllerElement) invocation.Arguments[1];
+                                (DeviceCapability) invocation.Arguments[1];
                         }
                     }
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Snowflake.Input.Controller;
 using Snowflake.Input.Controller.Mapped;
+using Snowflake.Input.Device;
 using Snowflake.Model.Database.Models;
 
 namespace Snowflake.Model.Database.Extensions
@@ -16,32 +17,41 @@ namespace Snowflake.Model.Database.Extensions
             {
                 ProfileName = profileName,
                 ControllerID = @this.ControllerId,
-                DeviceID = @this.DeviceId,
-                MappedElements = @this.Select(e => e.AsModel(@this.ControllerId, @this.DeviceId, profileName)).ToList()
+                DeviceName = @this.DeviceName,
+                VendorID = @this.VendorID,
+                MappedElements = @this.Select(e => e.AsModel(@this.ControllerId, @this.DeviceName, 
+                profileName, @this.VendorID, @this.DriverType)).ToList()
             };
         }
 
-        private static MappedControllerElementModel AsModel(this IMappedControllerElement @this,
+        private static MappedControllerElementModel AsModel(this MappedControllerElement @this,
             ControllerId controllerId,
-            string deviceId,
-            string profileName)
+            string deviceName,
+            string profileName,
+            int vendorId,
+            InputDriverType driverType)
         {
             return new MappedControllerElementModel
             {
                 LayoutElement = @this.LayoutElement,
-                DeviceElement = @this.DeviceElement,
+                DeviceCapability = @this.DeviceCapability,
                 ProfileName = profileName,
                 ControllerID = controllerId,
-                DeviceID = deviceId
+                DeviceName = deviceName,
+                VendorID = vendorId,
+                DriverType = driverType
             };
         }
 
         public static IControllerElementMappings AsControllerElementMappings(this ControllerElementMappingsModel @this)
         {
-            var mappings = new ControllerElementMappings(@this.DeviceID, @this.ControllerID);
+            var mappings = new ControllerElementMappings(@this.DeviceName,
+                @this.ControllerID,
+                @this.DriverType,
+                @this.VendorID);
             foreach (var mapping in @this.MappedElements)
             {
-                mappings.Add(new MappedControllerElement(mapping.LayoutElement, mapping.DeviceElement));
+                mappings.Add(new MappedControllerElement(mapping.LayoutElement, mapping.DeviceCapability));
             }
 
             return mappings;
