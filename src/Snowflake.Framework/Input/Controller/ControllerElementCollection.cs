@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Snowflake.Input.Controller.Extensions;
 
 namespace Snowflake.Input.Controller
 {
@@ -271,11 +270,6 @@ namespace Snowflake.Input.Controller
         {
             get
             {
-                if (element.IsKeyboardKey())
-                {
-                    return this.Keyboard;
-                }
-
                 if (this.controllerElements.ContainsKey(element) || element == ControllerElement.NoElement)
                 {
                     return this.controllerElements[element];

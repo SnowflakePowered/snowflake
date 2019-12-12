@@ -3,13 +3,14 @@ using Castle.DynamicProxy;
 using Snowflake.Configuration;
 using Snowflake.Input.Controller;
 using Snowflake.Configuration.Input;
+using Snowflake.Input.Device;
 
 namespace Snowflake.Configuration.Interceptors
 {
     internal class InputTemplateInterceptor<T> : IInterceptor
     {
         internal InputTemplateInterceptor(
-            IDictionary<string, ControllerElement> inputValues,
+            IDictionary<string, DeviceCapability> inputValues,
             IConfigurationValueCollection configValues,
             IConfigurationSectionDescriptor descriptor)
         {
@@ -22,7 +23,7 @@ namespace Snowflake.Configuration.Interceptors
 
         public IConfigurationSectionDescriptor Descriptor { get; }
 
-        internal IDictionary<string, ControllerElement> InputValues;
+        internal IDictionary<string, DeviceCapability> InputValues { get; }
 
         /// <inheritdoc/>
         public void Intercept(IInvocation invocation)
@@ -32,13 +33,13 @@ namespace Snowflake.Configuration.Interceptors
             {
                 if (invocation.Method.Name.StartsWith("get_"))
                 {
-                    if (this.InputValues.TryGetValue(propertyName, out ControllerElement value))
+                    if (this.InputValues.TryGetValue(propertyName, out DeviceCapability value))
                     {
                         invocation.ReturnValue = value; // type is IConfigurationSection<T>
                     }
                     else
                     {
-                        invocation.ReturnValue = ControllerElement.NoElement;
+                        invocation.ReturnValue = DeviceCapability.None;
                     }
                 }
             }

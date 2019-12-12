@@ -12,7 +12,6 @@ using Snowflake.Configuration.Attributes;
 using Snowflake.Configuration.Input;
 using Snowflake.Configuration.Interceptors;
 using Snowflake.Input.Controller;
-using Snowflake.Input.Controller.Extensions;
 using Snowflake.Input.Controller.Mapped;
 using Snowflake.Input.Device;
 
@@ -28,7 +27,7 @@ namespace Snowflake.Configuration.Input
         public T Template { get; }
 
         /// <inheritdoc/>
-        public IReadOnlyDictionary<string, ControllerElement> Values
+        public IReadOnlyDictionary<string, DeviceCapability> Values
             => ImmutableDictionary.CreateRange(this.inputTemplateInterceptor.InputValues);
 
         /// <inheritdoc/>
@@ -42,7 +41,7 @@ namespace Snowflake.Configuration.Input
         private readonly InputTemplateInterceptor<T> inputTemplateInterceptor;
 
         /// <inheritdoc/>
-        public ControllerElement this[ControllerElement virtualElement]
+        public DeviceCapability this[ControllerElement virtualElement]
         {
             get
             {
@@ -55,12 +54,12 @@ namespace Snowflake.Configuration.Input
                         "This template does not support the target element or element type.");
                 }
 
-                if (this.inputTemplateInterceptor.InputValues.TryGetValue(optionKey, out ControllerElement controllerElem))
+                if (this.inputTemplateInterceptor.InputValues.TryGetValue(optionKey, out DeviceCapability deviceElem))
                 {
-                    return controllerElem;
+                    return deviceElem;
                 };
 
-                return ControllerElement.NoElement;
+                return DeviceCapability.None;
             }
 
             set
@@ -96,12 +95,12 @@ namespace Snowflake.Configuration.Input
                 let option = this._Options[key]
                 let target = option.TargetElement
                 where element.LayoutElement == target
-                where option.DeviceType.HasFlag(InputOptionDeviceType.Keyboard) == element.DeviceElement.IsKeyboardKey()
-                where option.DeviceType.HasFlag(InputOptionDeviceType.ControllerAxes) == element.DeviceElement.IsAxis()
-                select new {key, element.DeviceElement}).ToDictionary(d => d.key, d => d.DeviceElement);
+                where option.DeviceType.HasFlag(InputOptionDeviceType.Keyboard) == element.DeviceCapability.IsKeyboardKey()
+                where option.DeviceType.HasFlag(InputOptionDeviceType.ControllerAxes) == element.DeviceCapability.IsAxis()
+                select new {key, element.DeviceCapability}).ToDictionary(d => d.key, d => d.DeviceCapability);
             var map = from key in this._Options.Keys
-                let value = overrides.ContainsKey(key) ? overrides[key] : ControllerElement.NoElement
-                select new KeyValuePair<string, ControllerElement>(key, value);
+                let value = overrides.ContainsKey(key) ? overrides[key] : DeviceCapability.None
+                select new KeyValuePair<string, DeviceCapability>(key, value);
            
             //this.configurationOptions = (from prop in typeof(T).GetProperties()
             //              let configAttribute = prop.GetCustomAttribute<ConfigurationOptionAttribute>()

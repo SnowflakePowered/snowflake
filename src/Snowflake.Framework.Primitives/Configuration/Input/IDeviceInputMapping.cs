@@ -13,21 +13,22 @@ namespace Snowflake.Configuration.Input
     /// </summary>
     public interface IDeviceInputMapping
     {
+      
         /// <summary>
-        /// Gets the device layouts this input mapping supports within this input API.
+        /// The driver type for this input mapping
         /// </summary>
-        IEnumerable<string> DeviceLayouts { get; }
+        InputDriverType InputDriver { get; }
 
         /// <summary>
-        /// Gets the mapping for this controller element. If the mapping does not exist,
-        /// it will try to fallback to the representation for <see cref="ControllerElement.KeyNone"/> if the given element
-        /// is a keyboard key element, or <see cref="ControllerElement.NoElement"/> if the given element is
-        /// not a keyboard key, or if there is no mapping for <see cref="ControllerElement.KeyNone"/>. If no mapping
-        /// is found for <see cref="ControllerElement.NoElement"/>, then the empty string is returned.
+        /// Gets the mapping for this device capabilitiy. If the mapping does not exist,
+        /// it will try to fallback to the representation for <see cref="DeviceCapability.KeyNone"/> if the given element
+        /// is a keyboard key element, or <see cref="DeviceCapability.None"/> if the given element is
+        /// not a keyboard key, or if there is no mapping for <see cref="DeviceCapability.KeyNone"/> . If no mapping
+        /// is found for <see cref="DeviceCapability.None"/>, then the empty string is returned.
         /// </summary>
         /// 
-        /// <param name="element">The mapping for this controller element</param>
-        /// <returns>The string representation of the given element defined by this mapping.</returns>
-        string this[ControllerElement element] { get; }
+        /// <param name="element">The mapping for this device capability</param>
+        /// <returns>The string representation of the given capability defined by this mapping.</returns>
+        string this[DeviceCapability element] { get; }
     }
 }

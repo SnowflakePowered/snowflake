@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Snowflake.Input.Device;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,12 +11,22 @@ namespace Snowflake.Input.Controller.Mapped
     /// <summary>
     /// Represents a collection of mapped elements.
     /// </summary>
-    public interface IControllerElementMappings : IEnumerable<IMappedControllerElement>
+    public interface IControllerElementMappings : IEnumerable<MappedControllerElement>
     {
         /// <summary>
         /// Gets the device id of the real device
         /// </summary>
-        string DeviceId { get; }
+        InputDriverType DriverType { get; }
+
+        /// <summary>
+        /// Gets the name of the device.
+        /// </summary>
+        string DeviceName { get; }
+
+        /// <summary>
+        /// Gets the vendor ID of the device this mapping was created for.
+        /// </summary>
+        int VendorID { get; }
 
         /// <summary>
         /// Gets the controller id of the virtual controller layout
@@ -31,6 +42,6 @@ namespace Snowflake.Input.Controller.Mapped
         /// </summary>
         /// <param name="layoutElement">The layout element</param>
         /// <returns>The device element that is mapped to the given layout element.</returns>
-        ControllerElement this[ControllerElement layoutElement] { get; set; }
+        DeviceCapability this[ControllerElement layoutElement] { get; set; }
     }
 }

@@ -27,7 +27,7 @@ namespace Snowflake.Input.Controller
         public IControllerElementCollection Layout { get; }
 
         internal ControllerLayout(ControllerId layoutId, IEnumerable<PlatformId> platforms, string friendlyName,
-            IControllerElementCollection layout, bool isRealDevice = false)
+            IControllerElementCollection layout)
         {
             this.LayoutId = layoutId;
             this.FriendlyName = friendlyName;

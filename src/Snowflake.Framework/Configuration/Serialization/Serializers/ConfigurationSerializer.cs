@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Snowflake.Configuration.Input;
 using Snowflake.Input.Controller;
+using Snowflake.Input.Device;
 
 namespace Snowflake.Configuration.Serialization.Serializers
 {
@@ -60,7 +61,7 @@ namespace Snowflake.Configuration.Serialization.Serializers
                 case DecimalConfigurationNode decNode:
                     this.SerializeNode(decNode, context, index);
                     break;
-                case ControllerElementConfigurationNode ctrlNode:
+                case DeviceCapabilityElementConfigurationNode ctrlNode:
                     this.SerializeNode(ctrlNode, context, index);
                     break;
                 case EnumConfigurationNode enumNode:
@@ -184,9 +185,9 @@ namespace Snowflake.Configuration.Serialization.Serializers
         /// <param name="node">The node to serialize.</param>
         /// <param name="context">The serialization context.</param>
         /// <param name="index">The position or index of the given node within the current block in the context.</param>
-        protected void SerializeNode(ControllerElementConfigurationNode node, IConfigurationSerializationContext<T> context, int index)
+        protected void SerializeNode(DeviceCapabilityElementConfigurationNode node, IConfigurationSerializationContext<T> context, int index)
         {
-            this.SerializeNodeValue((node as AbstractConfigurationNode<ControllerElement>).Value, node.Value, node.Key, context, index);
+            this.SerializeNodeValue((node as AbstractConfigurationNode<DeviceCapability>).Value, node.Value, node.Key, context, index);
         }
 
         /// <summary>

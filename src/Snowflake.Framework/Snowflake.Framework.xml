@@ -194,10 +194,10 @@
         <member name="M:Snowflake.Configuration.Input.InputConfigurationSection`1.System#Collections#IEnumerable#GetEnumerator">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Configuration.Input.InputMapping.Item(Snowflake.Input.Controller.ControllerElement)">
+        <member name="P:Snowflake.Configuration.Input.InputMapping.Item(Snowflake.Input.Device.DeviceCapability)">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Configuration.Input.InputMapping.DeviceLayouts">
+        <member name="P:Snowflake.Configuration.Input.InputMapping.InputDriver">
             <inheritdoc/>
         </member>
         <member name="P:Snowflake.Configuration.Input.InputOption.DeviceType">
@@ -412,7 +412,7 @@
             <param name="context">The serialization context.</param>
             <param name="index">The position or index of the given node within the current block in the context.</param>
         </member>
-        <member name="M:Snowflake.Configuration.Serialization.Serializers.ConfigurationSerializer`1.SerializeNode(Snowflake.Configuration.Serialization.ControllerElementConfigurationNode,Snowflake.Configuration.Serialization.IConfigurationSerializationContext{`0},System.Int32)">
+        <member name="M:Snowflake.Configuration.Serialization.Serializers.ConfigurationSerializer`1.SerializeNode(Snowflake.Configuration.Serialization.DeviceCapabilityElementConfigurationNode,Snowflake.Configuration.Serialization.IConfigurationSerializationContext{`0},System.Int32)">
             <summary>
             Serializes a configuration node that encapsulates a <see cref="T:Snowflake.Input.Controller.ControllerElement"/>.
             
@@ -914,50 +914,31 @@
         <member name="P:Snowflake.Input.Controller.ControllerLayout.Layout">
             <inheritdoc/>
         </member>
-        <member name="T:Snowflake.Input.Controller.Extensions.ControllerElementExtensions">
-            <summary>
-            Controller element extensions.
-            </summary>
-        </member>
-        <member name="M:Snowflake.Input.Controller.Extensions.ControllerElementExtensions.IsKeyboardKey(Snowflake.Input.Controller.ControllerElement)">
-            <summary>
-            Checks if the element is a keyboard key element.
-            </summary>
-            <param name="element">The controller element to check.</param>
-            <returns>Whether the element is a keyboard key element</returns>
-        </member>
-        <member name="M:Snowflake.Input.Controller.Extensions.ControllerElementExtensions.IsAxis(Snowflake.Input.Controller.ControllerElement)">
-            <summary>
-            Checks if the element is an axis element
-            </summary>
-            <param name="element">The controller element to check.</param>
-            <returns>Whether the element is a keyboard key element</returns>
-        </member>
         <member name="M:Snowflake.Input.Controller.Mapped.ControllerElementMappings.GetEnumerator">
             <inheritdoc/>
         </member>
         <member name="M:Snowflake.Input.Controller.Mapped.ControllerElementMappings.System#Collections#IEnumerable#GetEnumerator">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Input.Controller.Mapped.ControllerElementMappings.DeviceId">
+        <member name="P:Snowflake.Input.Controller.Mapped.ControllerElementMappings.DeviceName">
             <inheritdoc/>
         </member>
         <member name="P:Snowflake.Input.Controller.Mapped.ControllerElementMappings.ControllerId">
             <inheritdoc/>
         </member>
-        <member name="M:Snowflake.Input.Controller.Mapped.ControllerElementMappings.GetDefaultMappings(Snowflake.Input.Controller.IControllerLayout,Snowflake.Input.Controller.IControllerLayout)">
+        <member name="M:Snowflake.Input.Device.DeviceCapabilityExtensions.IsKeyboardKey(Snowflake.Input.Device.DeviceCapability)">
             <summary>
-            Gets default mappings for a real device to a virtual device
+            Checks if the element is a keyboard key element.
             </summary>
-            <param name="realDevice">The button layout of the real controller device</param>
-            <param name="virtualDevice">The button layout of the defined controller device</param>
-            <returns></returns>
+            <param name="element">The controller element to check.</param>
+            <returns>Whether the element is a keyboard key element</returns>
         </member>
-        <member name="P:Snowflake.Input.Controller.Mapped.MappedControllerElement.LayoutElement">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Input.Controller.Mapped.MappedControllerElement.DeviceElement">
-            <inheritdoc/>
+        <member name="M:Snowflake.Input.Device.DeviceCapabilityExtensions.IsAxis(Snowflake.Input.Device.DeviceCapability)">
+            <summary>
+            Checks if the element is an axis element
+            </summary>
+            <param name="element">The controller element to check.</param>
+            <returns>Whether the element is a keyboard key element</returns>
         </member>
         <member name="T:Snowflake.Installation.Extensibility.GameInstaller">
             <inheritdoc cref="T:Snowflake.Installation.Extensibility.IGameInstaller" />
