@@ -71,9 +71,9 @@ namespace Snowflake.Configuration.Input
                     let inputOptionAttribute = prop.GetCustomAttribute<InputOptionAttribute>()
                     where inputOptionAttribute != null
                     let name = prop.Name
-                    select new KeyValuePair<string, IInputOption>(name, new InputOption(inputOptionAttribute, name)))
-                .ToDictionary(o => o.Key,
-                    o => o.Value);
+                    select (name, option: (IInputOption)new InputOption(inputOptionAttribute, name)))
+                .ToDictionary(o => o.name,
+                    o => o.option);
             var overrides = (from element in mappedElements
                 from key in this._Options.Keys
                 let option = this._Options[key]
@@ -81,7 +81,7 @@ namespace Snowflake.Configuration.Input
                 where element.LayoutElement == target
                 where option.OptionType.HasFlag(InputOptionType.Keyboard) == element.DeviceCapability.IsKeyboardKey()
                 where option.OptionType.HasFlag(InputOptionType.ControllerAxes) == element.DeviceCapability.IsAxis()
-                select new {key, element.DeviceCapability}).ToDictionary(d => d.key, d => d.DeviceCapability);
+                select (key, element.DeviceCapability)).ToDictionary(d => d.key, d => d.DeviceCapability);
             var map = from key in this._Options.Keys
                 let value = overrides.ContainsKey(key) ? overrides[key] : DeviceCapability.None
                 select new KeyValuePair<string, DeviceCapability>(key, value);
