@@ -8,6 +8,7 @@ using Snowflake.Configuration;
 using Snowflake.Configuration.Input;
 using Snowflake.Input.Controller;
 using Snowflake.Input.Controller.Mapped;
+using Snowflake.Input.Device;
 using Snowflake.Services;
 using Snowflake.Tests;
 using Xunit;
@@ -17,63 +18,46 @@ namespace Snowflake.Configuration.Tests
     public class DynamicProxyInputTests
     {
         [Fact]
-        public void Init_Test()
-        {
-            var stoneProvider = new StoneProvider();
-            var testmappings = stoneProvider.Controllers.First().Value;
-            var realmapping =
-                JsonConvert.DeserializeObject<ControllerLayout>(
-                    TestUtilities.GetStringResource("InputMappings.keyboard_device.json"));
-            var mapcol = ControllerElementMappings.GetDefaultMappings(realmapping, testmappings);
-            var x = new InputTemplate<IRetroArchInput>(mapcol);
-            x[ControllerElement.ButtonA] = ControllerElement.DirectionalS;
-            Assert.Equal(ControllerElement.DirectionalS, x.Template.InputPlayerABtn);
-            Assert.Equal(x.Template.Configuration.InputPlayerA, x.Template.InputPlayerA);
-        }
-
-        [Fact]
         public void Setter_Test()
         {
-            var stoneProvider = new StoneProvider();
-            var testmappings = stoneProvider.Controllers.First().Value;
-            var realmapping =
-                JsonConvert.DeserializeObject<ControllerLayout>(
-                    TestUtilities.GetStringResource("InputMappings.keyboard_device.json"));
-            var mapcol = ControllerElementMappings.GetDefaultMappings(realmapping, testmappings);
+            var mapcol = new ControllerElementMappings("Keyboard",
+                "TEST_CONTROLLER",
+                InputDriverType.Keyboard,
+                IDeviceEnumerator.VirtualVendorID,
+                new XInputDeviceInstance(0).DefaultLayout);
             var x = new InputTemplate<IRetroArchInput>(mapcol);
-            x[ControllerElement.ButtonA] = ControllerElement.DirectionalS;
-            Assert.Equal(ControllerElement.DirectionalS, x.Template.InputPlayerABtn);
+            x[ControllerElement.ButtonA] = DeviceCapability.Hat0S;
+            Assert.Equal(DeviceCapability.Hat0S, x.Template.InputPlayerABtn);
+            Assert.Equal(x.Template.Configuration.InputPlayerA, x.Template.InputPlayerA);
         }
 
         [Fact]
         public void NestedSetter_Test()
         {
-            var stoneProvider = new StoneProvider();
-            var testmappings = stoneProvider.Controllers.First().Value;
-            var realmapping =
-                JsonConvert.DeserializeObject<ControllerLayout>(
-                    TestUtilities.GetStringResource("InputMappings.keyboard_device.json"));
-            var mapcol = ControllerElementMappings.GetDefaultMappings(realmapping, testmappings);
+            var mapcol = new ControllerElementMappings("Keyboard",
+               "TEST_CONTROLLER",
+               InputDriverType.Keyboard,
+               IDeviceEnumerator.VirtualVendorID,
+               new XInputDeviceInstance(0).DefaultLayout);
             var x = new InputTemplate<IRetroArchInput>(mapcol);
-            x[ControllerElement.ButtonA] = ControllerElement.DirectionalS;
-            Assert.Equal(ControllerElement.DirectionalS, x.Template.Configuration.InputPlayerABtn);
+            x[ControllerElement.ButtonA] = DeviceCapability.Hat0S;
+            Assert.Equal(DeviceCapability.Hat0S, x.Template.Configuration.InputPlayerABtn);
         }
 
         [Fact]
         public void SuperNestedSetter_Test()
         {
-            var stoneProvider = new StoneProvider();
-            var testmappings = stoneProvider.Controllers.First().Value;
-            var realmapping =
-                JsonConvert.DeserializeObject<ControllerLayout>(
-                    TestUtilities.GetStringResource("InputMappings.keyboard_device.json"));
-            var mapcol = ControllerElementMappings.GetDefaultMappings(realmapping, testmappings);
+            var mapcol = new ControllerElementMappings("Keyboard",
+               "TEST_CONTROLLER",
+               InputDriverType.Keyboard,
+               IDeviceEnumerator.VirtualVendorID,
+               new XInputDeviceInstance(0).DefaultLayout);
             var x = new InputTemplate<IRetroArchInput>(mapcol);
-            x[ControllerElement.ButtonA] = ControllerElement.DirectionalS;
+            x[ControllerElement.ButtonA] = DeviceCapability.Hat0S;
             var y = (x as IConfigurationSection<IRetroArchInput>).Configuration["InputDevice"] = 1;
             var z = x.Template.Configuration.Values;
             var c = (x as IConfigurationSection<IRetroArchInput>).Values;
-            Assert.Equal(ControllerElement.DirectionalS, x.Template.Template.Configuration.InputPlayerABtn);
+            Assert.Equal(DeviceCapability.Hat0S, x.Template.Template.Configuration.InputPlayerABtn);
             Assert.Equal(1, (x as IConfigurationSection<IRetroArchInput>).Configuration.InputDevice);
         }
     }

@@ -64,12 +64,12 @@ namespace Snowflake.Configuration.Interceptors
                         break;
                     }
 
-                    if (invocation.Method.DeclaringType == typeof(IInputTemplate<T>))
+                    if (invocation.Method.DeclaringType == typeof(IInputTemplate))
                     {
                         if (invocation.Method.Name.StartsWith("set_"))
                         {
                             @this[(ControllerElement) invocation.Arguments[0]] =
-                                (DeviceCapability) invocation.Arguments[1];
+                                (DeviceCapability) invocation.Arguments[2];
                         }
                     }
 

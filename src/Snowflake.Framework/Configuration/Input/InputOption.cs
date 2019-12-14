@@ -5,7 +5,7 @@ namespace Snowflake.Configuration.Input
     public class InputOption : IInputOption
     {
         /// <inheritdoc/>
-        public InputOptionDeviceType DeviceType { get; }
+        public InputOptionType OptionType { get; }
 
         /// <inheritdoc/>
         public ControllerElement TargetElement { get; }
@@ -19,7 +19,7 @@ namespace Snowflake.Configuration.Input
         internal InputOption(InputOptionAttribute attribute, string keyName)
         {
             this.OptionName = attribute.OptionName;
-            this.DeviceType = attribute.InputOptionType;
+            this.OptionType = attribute.InputOptionType;
             this.TargetElement = attribute.TargetElement;
             this.KeyName = keyName;
         }

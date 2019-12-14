@@ -8,6 +8,7 @@ using Snowflake.Configuration.Attributes;
 using Snowflake.Configuration.Input;
 using Snowflake.Input.Controller;
 using Snowflake.Input.Controller.Mapped;
+using Snowflake.Input.Device;
 
 namespace Snowflake.Configuration.Tests
 {
@@ -20,245 +21,245 @@ namespace Snowflake.Configuration.Tests
         [ConfigurationOption("input_player{N}_joypad_index", 0)]
         int InputJoypadIndex { get; set; }
 
-        [InputOption("input_player{N}_turbo", InputOptionDeviceType.Keyboard, ControllerElement.NoElement)]
-        ControllerElement InputPlayerTurbo { get; }
+        [InputOption("input_player{N}_turbo", InputOptionType.Keyboard, ControllerElement.NoElement)]
+        DeviceCapability InputPlayerTurbo { get; }
 
-        [InputOption("input_player{N}_turbo_btn", InputOptionDeviceType.Controller, ControllerElement.NoElement)]
-        ControllerElement InputPlayerTurboBtn { get; }
+        [InputOption("input_player{N}_turbo_btn", InputOptionType.Controller, ControllerElement.NoElement)]
+        DeviceCapability InputPlayerTurboBtn { get; }
 
-        [InputOption("input_player{N}_turbo_axis", InputOptionDeviceType.ControllerAxes, ControllerElement.NoElement)]
-        ControllerElement InputPlayerTurboAxis { get; set; }
+        [InputOption("input_player{N}_turbo_axis", InputOptionType.ControllerAxes, ControllerElement.NoElement)]
+        DeviceCapability InputPlayerTurboAxis { get; set; }
 
-        [InputOption("input_player{N}_b", InputOptionDeviceType.Keyboard, ControllerElement.ButtonB)]
-        ControllerElement InputPlayerB { get; }
+        [InputOption("input_player{N}_b", InputOptionType.Keyboard, ControllerElement.ButtonB)]
+        DeviceCapability InputPlayerB { get; }
 
-        [InputOption("input_player{N}_b_btn", InputOptionDeviceType.Controller, ControllerElement.ButtonB)]
-        ControllerElement InputPlayerBBtn { get; }
+        [InputOption("input_player{N}_b_btn", InputOptionType.Controller, ControllerElement.ButtonB)]
+        DeviceCapability InputPlayerBBtn { get; }
 
-        [InputOption("input_player{N}_b_axis", InputOptionDeviceType.ControllerAxes, ControllerElement.ButtonB)]
-        ControllerElement InputPlayerBAxis { get; }
+        [InputOption("input_player{N}_b_axis", InputOptionType.ControllerAxes, ControllerElement.ButtonB)]
+        DeviceCapability InputPlayerBAxis { get; }
 
-        [InputOption("input_player{N}_y", InputOptionDeviceType.Keyboard, ControllerElement.ButtonY)]
-        ControllerElement InputPlayerY { get; }
+        [InputOption("input_player{N}_y", InputOptionType.Keyboard, ControllerElement.ButtonY)]
+        DeviceCapability InputPlayerY { get; }
 
-        [InputOption("input_player{N}_y_btn", InputOptionDeviceType.Controller, ControllerElement.ButtonY)]
-        ControllerElement InputPlayerYBtn { get; }
+        [InputOption("input_player{N}_y_btn", InputOptionType.Controller, ControllerElement.ButtonY)]
+        DeviceCapability InputPlayerYBtn { get; }
 
-        [InputOption("input_player{N}_y_axis", InputOptionDeviceType.ControllerAxes, ControllerElement.ButtonY)]
-        ControllerElement InputPlayerYAxis { get; }
+        [InputOption("input_player{N}_y_axis", InputOptionType.ControllerAxes, ControllerElement.ButtonY)]
+        DeviceCapability InputPlayerYAxis { get; }
 
-        [InputOption("input_player{N}_select", InputOptionDeviceType.Keyboard, ControllerElement.ButtonSelect)]
-        ControllerElement InputPlayerSelect { get; }
+        [InputOption("input_player{N}_select", InputOptionType.Keyboard, ControllerElement.ButtonSelect)]
+        DeviceCapability InputPlayerSelect { get; }
 
-        [InputOption("input_player{N}_select_btn", InputOptionDeviceType.Controller, ControllerElement.ButtonSelect)]
-        ControllerElement InputPlayerSelectBtn { get; }
+        [InputOption("input_player{N}_select_btn", InputOptionType.Controller, ControllerElement.ButtonSelect)]
+        DeviceCapability InputPlayerSelectBtn { get; }
 
-        [InputOption("input_player{N}_select_axis", InputOptionDeviceType.ControllerAxes, ControllerElement.ButtonSelect)]
-        ControllerElement InputPlayerSelectAxis { get; }
+        [InputOption("input_player{N}_select_axis", InputOptionType.ControllerAxes, ControllerElement.ButtonSelect)]
+        DeviceCapability InputPlayerSelectAxis { get; }
 
-        [InputOption("input_player{N}_start", InputOptionDeviceType.Keyboard, ControllerElement.ButtonStart)]
-        ControllerElement InputPlayerStart { get; }
+        [InputOption("input_player{N}_start", InputOptionType.Keyboard, ControllerElement.ButtonStart)]
+        DeviceCapability InputPlayerStart { get; }
 
-        [InputOption("input_player{N}_start_btn", InputOptionDeviceType.Controller, ControllerElement.ButtonStart)]
-        ControllerElement InputPlayerStartBtn { get; }
+        [InputOption("input_player{N}_start_btn", InputOptionType.Controller, ControllerElement.ButtonStart)]
+        DeviceCapability InputPlayerStartBtn { get; }
 
-        [InputOption("input_player{N}_start_axis", InputOptionDeviceType.ControllerAxes, ControllerElement.ButtonStart)]
-        ControllerElement InputPlayerStartAxis { get; }
+        [InputOption("input_player{N}_start_axis", InputOptionType.ControllerAxes, ControllerElement.ButtonStart)]
+        DeviceCapability InputPlayerStartAxis { get; }
 
-        [InputOption("input_player{N}_up", InputOptionDeviceType.Keyboard, ControllerElement.DirectionalN)]
-        ControllerElement InputPlayerUp { get; }
+        [InputOption("input_player{N}_up", InputOptionType.Keyboard, ControllerElement.DirectionalN)]
+        DeviceCapability InputPlayerUp { get; }
 
-        [InputOption("input_player{N}_up_btn", InputOptionDeviceType.Controller, ControllerElement.DirectionalN)]
-        ControllerElement InputPlayerUpBtn { get; }
+        [InputOption("input_player{N}_up_btn", InputOptionType.Controller, ControllerElement.DirectionalN)]
+        DeviceCapability InputPlayerUpBtn { get; }
 
-        [InputOption("input_player{N}_up_axis", InputOptionDeviceType.ControllerAxes, ControllerElement.DirectionalN)]
-        ControllerElement InputPlayerUpAxis { get; }
+        [InputOption("input_player{N}_up_axis", InputOptionType.ControllerAxes, ControllerElement.DirectionalN)]
+        DeviceCapability InputPlayerUpAxis { get; }
 
-        [InputOption("input_player{N}_down", InputOptionDeviceType.Keyboard, ControllerElement.DirectionalS)]
-        ControllerElement InputPlayerDown { get; }
+        [InputOption("input_player{N}_down", InputOptionType.Keyboard, ControllerElement.DirectionalS)]
+        DeviceCapability InputPlayerDown { get; }
 
-        [InputOption("input_player{N}_down_btn", InputOptionDeviceType.Controller, ControllerElement.DirectionalS)]
-        ControllerElement InputPlayerDownBtn { get; }
+        [InputOption("input_player{N}_down_btn", InputOptionType.Controller, ControllerElement.DirectionalS)]
+        DeviceCapability InputPlayerDownBtn { get; }
 
-        [InputOption("input_player{N}_down_axis", InputOptionDeviceType.ControllerAxes, ControllerElement.DirectionalS)]
-        ControllerElement InputPlayerDownAxis { get; }
+        [InputOption("input_player{N}_down_axis", InputOptionType.ControllerAxes, ControllerElement.DirectionalS)]
+        DeviceCapability InputPlayerDownAxis { get; }
 
-        [InputOption("input_player{N}_left", InputOptionDeviceType.Keyboard, ControllerElement.DirectionalW)]
-        ControllerElement InputPlayerLeft { get; }
+        [InputOption("input_player{N}_left", InputOptionType.Keyboard, ControllerElement.DirectionalW)]
+        DeviceCapability InputPlayerLeft { get; }
 
-        [InputOption("input_player{N}_left_btn", InputOptionDeviceType.Controller, ControllerElement.DirectionalW)]
-        ControllerElement InputPlayerLeftBtn { get; }
+        [InputOption("input_player{N}_left_btn", InputOptionType.Controller, ControllerElement.DirectionalW)]
+        DeviceCapability InputPlayerLeftBtn { get; }
 
-        [InputOption("input_player{N}_left_axis", InputOptionDeviceType.ControllerAxes, ControllerElement.DirectionalW)]
-        ControllerElement InputPlayerLeftAxis { get; }
+        [InputOption("input_player{N}_left_axis", InputOptionType.ControllerAxes, ControllerElement.DirectionalW)]
+        DeviceCapability InputPlayerLeftAxis { get; }
 
-        [InputOption("input_player{N}_right", InputOptionDeviceType.Keyboard, ControllerElement.DirectionalE)]
-        ControllerElement InputPlayerRight { get; }
+        [InputOption("input_player{N}_right", InputOptionType.Keyboard, ControllerElement.DirectionalE)]
+        DeviceCapability InputPlayerRight { get; }
 
-        [InputOption("input_player{N}_right_btn", InputOptionDeviceType.Controller, ControllerElement.DirectionalE)]
-        ControllerElement InputPlayerRightBtn { get; }
+        [InputOption("input_player{N}_right_btn", InputOptionType.Controller, ControllerElement.DirectionalE)]
+        DeviceCapability InputPlayerRightBtn { get; }
 
-        [InputOption("input_player{N}_right_axis", InputOptionDeviceType.ControllerAxes, ControllerElement.DirectionalE)]
-        ControllerElement InputPlayerRightAxis { get; }
+        [InputOption("input_player{N}_right_axis", InputOptionType.ControllerAxes, ControllerElement.DirectionalE)]
+        DeviceCapability InputPlayerRightAxis { get; }
 
-        [InputOption("input_player{N}_a", InputOptionDeviceType.Keyboard, ControllerElement.ButtonA)]
-        ControllerElement InputPlayerA { get; }
+        [InputOption("input_player{N}_a", InputOptionType.Keyboard, ControllerElement.ButtonA)]
+        DeviceCapability InputPlayerA { get; }
 
-        [InputOption("input_player{N}_a_btn", InputOptionDeviceType.Controller, ControllerElement.ButtonA)]
-        ControllerElement InputPlayerABtn { get; }
+        [InputOption("input_player{N}_a_btn", InputOptionType.Controller, ControllerElement.ButtonA)]
+        DeviceCapability InputPlayerABtn { get; }
 
-        [InputOption("input_player{N}_a_axis", InputOptionDeviceType.ControllerAxes, ControllerElement.ButtonA)]
-        ControllerElement InputPlayerAAxis { get; }
+        [InputOption("input_player{N}_a_axis", InputOptionType.ControllerAxes, ControllerElement.ButtonA)]
+        DeviceCapability InputPlayerAAxis { get; }
 
-        [InputOption("input_player{N}_x", InputOptionDeviceType.Keyboard, ControllerElement.ButtonX)]
-        ControllerElement InputPlayerX { get; }
+        [InputOption("input_player{N}_x", InputOptionType.Keyboard, ControllerElement.ButtonX)]
+        DeviceCapability InputPlayerX { get; }
 
-        [InputOption("input_player{N}_x_btn", InputOptionDeviceType.Controller, ControllerElement.ButtonX)]
-        ControllerElement InputPlayerXBtn { get; }
+        [InputOption("input_player{N}_x_btn", InputOptionType.Controller, ControllerElement.ButtonX)]
+        DeviceCapability InputPlayerXBtn { get; }
 
-        [InputOption("input_player{N}_x_axis", InputOptionDeviceType.ControllerAxes, ControllerElement.ButtonX)]
-        ControllerElement InputPlayerXAxis { get; }
+        [InputOption("input_player{N}_x_axis", InputOptionType.ControllerAxes, ControllerElement.ButtonX)]
+        DeviceCapability InputPlayerXAxis { get; }
 
-        [InputOption("input_player{N}_l", InputOptionDeviceType.Keyboard, ControllerElement.ButtonL)]
-        ControllerElement InputPlayerL { get; }
+        [InputOption("input_player{N}_l", InputOptionType.Keyboard, ControllerElement.ButtonL)]
+        DeviceCapability InputPlayerL { get; }
 
-        [InputOption("input_player{N}_l_btn", InputOptionDeviceType.Controller, ControllerElement.ButtonL)]
-        ControllerElement InputPlayerLBtn { get; }
+        [InputOption("input_player{N}_l_btn", InputOptionType.Controller, ControllerElement.ButtonL)]
+        DeviceCapability InputPlayerLBtn { get; }
 
-        [InputOption("input_player{N}_l_axis", InputOptionDeviceType.ControllerAxes, ControllerElement.ButtonL)]
-        ControllerElement InputPlayerLAxis { get; }
+        [InputOption("input_player{N}_l_axis", InputOptionType.ControllerAxes, ControllerElement.ButtonL)]
+        DeviceCapability InputPlayerLAxis { get; }
 
-        [InputOption("input_player{N}_r", InputOptionDeviceType.Keyboard, ControllerElement.ButtonR)]
-        ControllerElement InputPlayerR { get; }
+        [InputOption("input_player{N}_r", InputOptionType.Keyboard, ControllerElement.ButtonR)]
+        DeviceCapability InputPlayerR { get; }
 
-        [InputOption("input_player{N}_r_btn", InputOptionDeviceType.Controller, ControllerElement.ButtonR)]
-        ControllerElement InputPlayerRBtn { get; }
+        [InputOption("input_player{N}_r_btn", InputOptionType.Controller, ControllerElement.ButtonR)]
+        DeviceCapability InputPlayerRBtn { get; }
 
-        [InputOption("input_player{N}_r_axis", InputOptionDeviceType.ControllerAxes, ControllerElement.ButtonR)]
-        ControllerElement InputPlayerRAxis { get; }
+        [InputOption("input_player{N}_r_axis", InputOptionType.ControllerAxes, ControllerElement.ButtonR)]
+        DeviceCapability InputPlayerRAxis { get; }
 
-        [InputOption("input_player{N}_l2", InputOptionDeviceType.Keyboard, ControllerElement.TriggerLeft)]
-        ControllerElement InputPlayerL2 { get; }
+        [InputOption("input_player{N}_l2", InputOptionType.Keyboard, ControllerElement.TriggerLeft)]
+        DeviceCapability InputPlayerL2 { get; }
 
-        [InputOption("input_player{N}_l2_btn", InputOptionDeviceType.Controller, ControllerElement.TriggerLeft)]
-        ControllerElement InputPlayerL2Btn { get; }
+        [InputOption("input_player{N}_l2_btn", InputOptionType.Controller, ControllerElement.TriggerLeft)]
+        DeviceCapability InputPlayerL2Btn { get; }
 
-        [InputOption("input_player{N}_l2_axis", InputOptionDeviceType.ControllerAxes, ControllerElement.TriggerLeft)]
-        ControllerElement InputPlayerL2Axis { get; }
+        [InputOption("input_player{N}_l2_axis", InputOptionType.ControllerAxes, ControllerElement.TriggerLeft)]
+        DeviceCapability InputPlayerL2Axis { get; }
 
-        [InputOption("input_player{N}_r2", InputOptionDeviceType.Keyboard, ControllerElement.TriggerRight)]
-        ControllerElement InputPlayerR2 { get; }
+        [InputOption("input_player{N}_r2", InputOptionType.Keyboard, ControllerElement.TriggerRight)]
+        DeviceCapability InputPlayerR2 { get; }
 
-        [InputOption("input_player{N}_r2_btn", InputOptionDeviceType.Controller, ControllerElement.TriggerRight)]
-        ControllerElement InputPlayerR2Btn { get; }
+        [InputOption("input_player{N}_r2_btn", InputOptionType.Controller, ControllerElement.TriggerRight)]
+        DeviceCapability InputPlayerR2Btn { get; }
 
-        [InputOption("input_player{N}_r2_axis", InputOptionDeviceType.ControllerAxes, ControllerElement.TriggerRight)]
-        ControllerElement InputPlayerR2Axis { get; }
+        [InputOption("input_player{N}_r2_axis", InputOptionType.ControllerAxes, ControllerElement.TriggerRight)]
+        DeviceCapability InputPlayerR2Axis { get; }
 
-        [InputOption("input_player{N}_l3", InputOptionDeviceType.Keyboard, ControllerElement.ButtonClickL)]
-        ControllerElement InputPlayerL3 { get; }
+        [InputOption("input_player{N}_l3", InputOptionType.Keyboard, ControllerElement.ButtonClickL)]
+        DeviceCapability InputPlayerL3 { get; }
 
-        [InputOption("input_player{N}_l3_btn", InputOptionDeviceType.Controller, ControllerElement.ButtonClickL)]
-        ControllerElement InputPlayerL3Btn { get; }
+        [InputOption("input_player{N}_l3_btn", InputOptionType.Controller, ControllerElement.ButtonClickL)]
+        DeviceCapability InputPlayerL3Btn { get; }
 
-        [InputOption("input_player{N}_l3_axis", InputOptionDeviceType.ControllerAxes, ControllerElement.ButtonClickL)]
-        ControllerElement InputPlayerL3Axis { get; }
+        [InputOption("input_player{N}_l3_axis", InputOptionType.ControllerAxes, ControllerElement.ButtonClickL)]
+        DeviceCapability InputPlayerL3Axis { get; }
 
-        [InputOption("input_player{N}_r3", InputOptionDeviceType.Keyboard, ControllerElement.ButtonClickR)]
-        ControllerElement InputPlayerR3 { get; }
+        [InputOption("input_player{N}_r3", InputOptionType.Keyboard, ControllerElement.ButtonClickR)]
+        DeviceCapability InputPlayerR3 { get; }
 
-        [InputOption("input_player{N}_r3_btn", InputOptionDeviceType.Controller, ControllerElement.ButtonClickR)]
-        ControllerElement InputPlayerR3Btn { get; }
+        [InputOption("input_player{N}_r3_btn", InputOptionType.Controller, ControllerElement.ButtonClickR)]
+        DeviceCapability InputPlayerR3Btn { get; }
 
-        [InputOption("input_player{N}_r3_axis", InputOptionDeviceType.ControllerAxes, ControllerElement.ButtonClickR)]
-        ControllerElement InputPlayerR3Axis { get; }
+        [InputOption("input_player{N}_r3_axis", InputOptionType.ControllerAxes, ControllerElement.ButtonClickR)]
+        DeviceCapability InputPlayerR3Axis { get; }
 
-        [InputOption("input_player{N}_l_x_plus", InputOptionDeviceType.Keyboard, ControllerElement.AxisLeftAnalogPositiveX)]
-        ControllerElement InputPlayerLXPlus { get; }
+        [InputOption("input_player{N}_l_x_plus", InputOptionType.Keyboard, ControllerElement.AxisLeftAnalogPositiveX)]
+        DeviceCapability InputPlayerLXPlus { get; }
 
-        [InputOption("input_player{N}_l_x_plus_btn", InputOptionDeviceType.Controller,
+        [InputOption("input_player{N}_l_x_plus_btn", InputOptionType.Controller,
             ControllerElement.AxisLeftAnalogPositiveX)]
-        ControllerElement InputPlayerLXPlusBtn { get; }
+        DeviceCapability InputPlayerLXPlusBtn { get; }
 
-        [InputOption("input_player{N}_l_x_plus_axis", InputOptionDeviceType.ControllerAxes,
+        [InputOption("input_player{N}_l_x_plus_axis", InputOptionType.ControllerAxes,
             ControllerElement.AxisLeftAnalogPositiveX)]
-        ControllerElement InputPlayerLXPlusAxis { get; }
+        DeviceCapability InputPlayerLXPlusAxis { get; }
 
-        [InputOption("input_player{N}_l_x_minus", InputOptionDeviceType.Keyboard, ControllerElement.AxisLeftAnalogNegativeX)]
-        ControllerElement InputPlayerLXMinus { get; }
+        [InputOption("input_player{N}_l_x_minus", InputOptionType.Keyboard, ControllerElement.AxisLeftAnalogNegativeX)]
+        DeviceCapability InputPlayerLXMinus { get; }
 
-        [InputOption("input_player{N}_l_x_minus_btn", InputOptionDeviceType.Controller,
+        [InputOption("input_player{N}_l_x_minus_btn", InputOptionType.Controller,
             ControllerElement.AxisLeftAnalogNegativeX)]
-        ControllerElement InputPlayerLXMinusBtn { get; }
+        DeviceCapability InputPlayerLXMinusBtn { get; }
 
-        [InputOption("input_player{N}_l_x_minus_axis", InputOptionDeviceType.ControllerAxes,
+        [InputOption("input_player{N}_l_x_minus_axis", InputOptionType.ControllerAxes,
             ControllerElement.AxisLeftAnalogNegativeX)]
-        ControllerElement InputPlayerLXMinusAxis { get; }
+        DeviceCapability InputPlayerLXMinusAxis { get; }
 
-        [InputOption("input_player{N}_l_y_plus", InputOptionDeviceType.Keyboard, ControllerElement.AxisLeftAnalogPositiveY)]
-        ControllerElement InputPlayerLYPlus { get; }
+        [InputOption("input_player{N}_l_y_plus", InputOptionType.Keyboard, ControllerElement.AxisLeftAnalogPositiveY)]
+        DeviceCapability InputPlayerLYPlus { get; }
 
-        [InputOption("input_player{N}_l_y_plus_btn", InputOptionDeviceType.Controller,
+        [InputOption("input_player{N}_l_y_plus_btn", InputOptionType.Controller,
             ControllerElement.AxisLeftAnalogPositiveY)]
-        ControllerElement InputPlayerLYPlusBtn { get; }
+        DeviceCapability InputPlayerLYPlusBtn { get; }
 
-        [InputOption("input_player{N}_l_y_plus_axis", InputOptionDeviceType.ControllerAxes,
+        [InputOption("input_player{N}_l_y_plus_axis", InputOptionType.ControllerAxes,
             ControllerElement.AxisLeftAnalogPositiveY)]
-        ControllerElement InputPlayerLYPlusAxis { get; }
+        DeviceCapability InputPlayerLYPlusAxis { get; }
 
-        [InputOption("input_player{N}_l_y_minus", InputOptionDeviceType.Keyboard, ControllerElement.AxisLeftAnalogNegativeY)]
-        ControllerElement InputPlayerLYMinus { get; }
+        [InputOption("input_player{N}_l_y_minus", InputOptionType.Keyboard, ControllerElement.AxisLeftAnalogNegativeY)]
+        DeviceCapability InputPlayerLYMinus { get; }
 
-        [InputOption("input_player{N}_l_y_minus_btn", InputOptionDeviceType.Controller,
+        [InputOption("input_player{N}_l_y_minus_btn", InputOptionType.Controller,
             ControllerElement.AxisLeftAnalogNegativeY)]
-        ControllerElement InputPlayerLYMinusBtn { get; }
+        DeviceCapability InputPlayerLYMinusBtn { get; }
 
-        [InputOption("input_player{N}_l_y_minus_axis", InputOptionDeviceType.ControllerAxes,
+        [InputOption("input_player{N}_l_y_minus_axis", InputOptionType.ControllerAxes,
             ControllerElement.AxisLeftAnalogNegativeY)]
-        ControllerElement InputPlayerLYMinusAxis { get; }
+        DeviceCapability InputPlayerLYMinusAxis { get; }
 
-        [InputOption("input_player{N}_r_x_plus", InputOptionDeviceType.Keyboard, ControllerElement.AxisRightAnalogPositiveX)]
-        ControllerElement InputPlayerRXPlus { get; }
+        [InputOption("input_player{N}_r_x_plus", InputOptionType.Keyboard, ControllerElement.AxisRightAnalogPositiveX)]
+        DeviceCapability InputPlayerRXPlus { get; }
 
-        [InputOption("input_player{N}_r_x_plus_btn", InputOptionDeviceType.Controller,
+        [InputOption("input_player{N}_r_x_plus_btn", InputOptionType.Controller,
             ControllerElement.AxisRightAnalogPositiveX)]
-        ControllerElement InputPlayerRXPlusBtn { get; }
+        DeviceCapability InputPlayerRXPlusBtn { get; }
 
-        [InputOption("input_player{N}_r_x_plus_axis", InputOptionDeviceType.ControllerAxes,
+        [InputOption("input_player{N}_r_x_plus_axis", InputOptionType.ControllerAxes,
             ControllerElement.AxisRightAnalogPositiveX)]
-        ControllerElement InputPlayerRXPlusAxis { get; }
+        DeviceCapability InputPlayerRXPlusAxis { get; }
 
-        [InputOption("input_player{N}_r_x_minus", InputOptionDeviceType.Keyboard, ControllerElement.AxisRightAnalogNegativeX)]
-        ControllerElement InputPlayerRXMinus { get; }
+        [InputOption("input_player{N}_r_x_minus", InputOptionType.Keyboard, ControllerElement.AxisRightAnalogNegativeX)]
+        DeviceCapability InputPlayerRXMinus { get; }
 
-        [InputOption("input_player{N}_r_x_minus_btn", InputOptionDeviceType.Controller,
+        [InputOption("input_player{N}_r_x_minus_btn", InputOptionType.Controller,
             ControllerElement.AxisRightAnalogNegativeX)]
-        ControllerElement InputPlayerRXMinusBtn { get; }
+        DeviceCapability InputPlayerRXMinusBtn { get; }
 
-        [InputOption("input_player{N}_r_x_minus_axis", InputOptionDeviceType.ControllerAxes,
+        [InputOption("input_player{N}_r_x_minus_axis", InputOptionType.ControllerAxes,
             ControllerElement.AxisRightAnalogNegativeX)]
-        ControllerElement InputPlayerRXMinusAxis { get; }
+        DeviceCapability InputPlayerRXMinusAxis { get; }
 
-        [InputOption("input_player{N}_r_y_plus", InputOptionDeviceType.Keyboard, ControllerElement.AxisRightAnalogPositiveY)]
-        ControllerElement InputPlayerRYPlus { get; }
+        [InputOption("input_player{N}_r_y_plus", InputOptionType.Keyboard, ControllerElement.AxisRightAnalogPositiveY)]
+        DeviceCapability InputPlayerRYPlus { get; }
 
-        [InputOption("input_player{N}_r_y_plus_btn", InputOptionDeviceType.Controller,
+        [InputOption("input_player{N}_r_y_plus_btn", InputOptionType.Controller,
             ControllerElement.AxisRightAnalogPositiveY)]
-        ControllerElement InputPlayerRYPlusBtn { get; }
+        DeviceCapability InputPlayerRYPlusBtn { get; }
 
-        [InputOption("input_player{N}_r_y_plus_axis", InputOptionDeviceType.ControllerAxes,
+        [InputOption("input_player{N}_r_y_plus_axis", InputOptionType.ControllerAxes,
             ControllerElement.AxisRightAnalogPositiveY)]
-        ControllerElement InputPlayerRYPlusAxis { get; }
+        DeviceCapability InputPlayerRYPlusAxis { get; }
 
-        [InputOption("input_player{N}_r_y_minus", InputOptionDeviceType.Keyboard, ControllerElement.AxisRightAnalogNegativeY)]
-        ControllerElement InputPlayerRYMinus { get; }
+        [InputOption("input_player{N}_r_y_minus", InputOptionType.Keyboard, ControllerElement.AxisRightAnalogNegativeY)]
+        DeviceCapability InputPlayerRYMinus { get; }
 
-        [InputOption("input_player{N}_r_y_minus_btn", InputOptionDeviceType.Controller,
+        [InputOption("input_player{N}_r_y_minus_btn", InputOptionType.Controller,
             ControllerElement.AxisRightAnalogNegativeY)]
-        ControllerElement InputPlayerRYMinusBtn { get; }
+        DeviceCapability InputPlayerRYMinusBtn { get; }
 
-        [InputOption("input_player{N}_r_y_minus_axis", InputOptionDeviceType.ControllerAxes,
+        [InputOption("input_player{N}_r_y_minus_axis", InputOptionType.ControllerAxes,
             ControllerElement.AxisRightAnalogNegativeY)]
-        ControllerElement InputPlayerRYMinusAxis { get; }
+        DeviceCapability InputPlayerRYMinusAxis { get; }
     }
 }

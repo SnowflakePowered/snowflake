@@ -4,9 +4,12 @@ using System.IO;
 using System.Text;
 using Newtonsoft.Json;
 using Snowflake.Configuration.Input;
+using Snowflake.Configuration.Serialization.Serializers.Implementations;
 using Snowflake.Configuration.Tests;
 using Snowflake.Input.Controller;
 using Snowflake.Input.Controller.Mapped;
+using Snowflake.Input.Device;
+using Snowflake.Input.Tests;
 using Snowflake.Services;
 using Snowflake.Tests;
 using Xunit;
@@ -100,13 +103,12 @@ namespace Snowflake.Configuration.Serialization
         [Fact]
         public void InputTemplateToAbstractConfigurationNode_Test()
         {
-            var testmappings = new StoneProvider().Controllers["XBOX_CONTROLLER"];
-            var realmapping =
-                JsonConvert.DeserializeObject<ControllerLayout>(
-                    TestUtilities.GetStringResource("InputMappings.xinput_device.json"));
-            var mapcol = ControllerElementMappings.GetDefaultMappings(realmapping, testmappings);
-            string _mapping = TestUtilities.GetStringResource("InputMappings.DirectInput.XINPUT_DEVICE.json");
-            IDeviceInputMapping mapping = JsonConvert.DeserializeObject<InputMapping>(_mapping);
+            var mapcol = new ControllerElementMappings("Keyboard",
+                            "TEST_CONTROLLER",
+                            InputDriverType.Keyboard,
+                            IDeviceEnumerator.VirtualVendorID,
+                            new XInputDeviceInstance(0).DefaultLayout);
+            IDeviceInputMapping mapping = new TestInputMapping(InputDriverType.Keyboard);
             var input =
              new InputTemplate<IRetroArchInput>(mapcol).Template;
 
@@ -117,6 +119,9 @@ namespace Snowflake.Configuration.Serialization
 
             var context = new ConfigurationTraversalContext(("game", dir));
             var node = context.TraverseInputTemplate(input, mapping, 0);
+            var cfgSerializer = new SimpleCfgConfigurationSerializer();
+            string outputCfg = cfgSerializer.Transform(node);
+
         }
 
         [Fact]

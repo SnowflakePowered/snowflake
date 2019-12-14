@@ -24,12 +24,14 @@ namespace Snowflake.Migrations
                 columns: table => new
                 {
                     ControllerID = table.Column<string>(nullable: false),
-                    DeviceID = table.Column<string>(nullable: false),
-                    ProfileName = table.Column<string>(nullable: false)
+                    DeviceName = table.Column<string>(nullable: false),
+                    ProfileName = table.Column<string>(nullable: false),
+                    VendorID = table.Column<int>(nullable: false),
+                    DriverType = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ControllerElementMappings", x => new { x.ControllerID, x.DeviceID, x.ProfileName });
+                    table.PrimaryKey("PK_ControllerElementMappings", x => new { x.ControllerID, x.DriverType, x.DeviceName, x.VendorID, x.ProfileName });
                 });
 
             migrationBuilder.CreateTable(
@@ -74,18 +76,20 @@ namespace Snowflake.Migrations
                 {
                     LayoutElement = table.Column<string>(nullable: false),
                     ControllerID = table.Column<string>(nullable: false),
-                    DeviceID = table.Column<string>(nullable: false),
+                    DeviceName = table.Column<string>(nullable: false),
                     ProfileName = table.Column<string>(nullable: false),
-                    DeviceElement = table.Column<string>(nullable: false)
+                    VendorID = table.Column<int>(nullable: false),
+                    DriverType = table.Column<int>(nullable: false),
+                    DeviceCapability = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MappedControllerElements", x => new { x.ControllerID, x.DeviceID, x.ProfileName, x.LayoutElement });
+                    table.PrimaryKey("PK_MappedControllerElements", x => new { x.ControllerID, x.DeviceName, x.VendorID, x.DriverType, x.ProfileName, x.LayoutElement });
                     table.ForeignKey(
-                        name: "FK_MappedControllerElements_ControllerElementMappings_ControllerID_DeviceID_ProfileName",
-                        columns: x => new { x.ControllerID, x.DeviceID, x.ProfileName },
+                        name: "FK_MappedControllerElements_ControllerElementMappings_ControllerID_DriverType_DeviceName_VendorID_ProfileName",
+                        columns: x => new { x.ControllerID, x.DriverType, x.DeviceName, x.VendorID, x.ProfileName },
                         principalTable: "ControllerElementMappings",
-                        principalColumns: new[] { "ControllerID", "DeviceID", "ProfileName" },
+                        principalColumns: new[] { "ControllerID", "DriverType", "DeviceName", "VendorID", "ProfileName" },
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -150,6 +154,11 @@ namespace Snowflake.Migrations
                 table: "GameRecordsConfigurationProfiles",
                 column: "ProfileID",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MappedControllerElements_ControllerID_DriverType_DeviceName_VendorID_ProfileName",
+                table: "MappedControllerElements",
+                columns: new[] { "ControllerID", "DriverType", "DeviceName", "VendorID", "ProfileName" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Metadata_RecordID",
