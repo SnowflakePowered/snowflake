@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using Snowflake.Input.Controller;
@@ -22,5 +23,10 @@ namespace Snowflake.Input.Device
             => this.Mapping.TryGetValue(e, out DeviceCapability d) ? d : DeviceCapability.None;
         
         private IDictionary<ControllerElement, DeviceCapability> Mapping { get; }
+
+        public IEnumerator<KeyValuePair<ControllerElement, DeviceCapability>> GetEnumerator() 
+            => this.Mapping.GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
     }
 }

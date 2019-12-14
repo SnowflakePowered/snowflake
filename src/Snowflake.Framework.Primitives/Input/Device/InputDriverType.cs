@@ -7,6 +7,23 @@ namespace Snowflake.Input.Device
     public enum InputDriverType
     {
         /// <summary>
+        /// No input driver.
+        /// 
+        /// Reserved for internal use. Do not use for emulator handled input, 
+        /// that is represented by <see cref="Passthrough"/>
+        /// </summary>
+        None,
+        /// <summary>
+        /// Passthrough driver delegates input configuration
+        /// to the emulator. Generally used for native solutions
+        /// involving libUSB or other non-standard peripherals.
+        /// </summary>
+        Passthrough,
+        /// <summary>
+        /// API agnostic keyboard driver. 
+        /// </summary>
+        Keyboard,
+        /// <summary>
         /// Microsoft DirectInput
         /// </summary>
         DirectInput,
@@ -18,15 +35,6 @@ namespace Snowflake.Input.Device
         /// Linux evdev API using libevdev
         /// </summary>
         Libevdev,
-        /// <summary>
-        /// Passthrough driver delegates input configuration
-        /// to the emulator. Generally used for native solutions
-        /// involving libUSB or other non-standard peripherals.
-        /// </summary>
-        Passthrough,
-        /// <summary>
-        /// API agnostic keyboard driver. 
-        /// </summary>
-        Keyboard,
+        
     }
 }

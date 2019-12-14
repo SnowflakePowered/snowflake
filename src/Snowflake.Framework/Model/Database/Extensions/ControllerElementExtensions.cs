@@ -16,6 +16,7 @@ namespace Snowflake.Model.Database.Extensions
             return new ControllerElementMappingsModel
             {
                 ProfileName = profileName,
+                DriverType = @this.DriverType,
                 ControllerID = @this.ControllerId,
                 DeviceName = @this.DeviceName,
                 VendorID = @this.VendorID,

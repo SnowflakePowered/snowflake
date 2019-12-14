@@ -19,6 +19,8 @@ using Snowflake.Input.Controller.Mapped;
 using Snowflake.Configuration.Input;
 using Snowflake.Services;
 using Snowflake.Input.Controller;
+using Snowflake.Input.Tests;
+using Snowflake.Input.Device;
 
 namespace Snowflake.Configuration.Serialization
 {
@@ -27,13 +29,12 @@ namespace Snowflake.Configuration.Serialization
         [Fact]
         public void InputTemplateToAbstractConfigurationNodeIniSerializer_Test()
         {
-            var testmappings = new StoneProvider().Controllers["XBOX_CONTROLLER"];
-            var realmapping =
-                JsonConvert.DeserializeObject<ControllerLayout>(
-                    TestUtilities.GetStringResource("InputMappings.xinput_device.json"));
-            var mapcol = ControllerElementMappings.GetDefaultMappings(realmapping, testmappings);
-            string _mapping = TestUtilities.GetStringResource("InputMappings.DirectInput.XINPUT_DEVICE.json");
-            IDeviceInputMapping mapping = JsonConvert.DeserializeObject<InputMapping>(_mapping);
+            var mapcol = new ControllerElementMappings("Keyboard",
+                            "TEST_CONTROLLER",
+                            InputDriverType.Keyboard,
+                            IDeviceEnumerator.VirtualVendorID,
+                            new XInputDeviceInstance(0).DefaultLayout);
+            IDeviceInputMapping mapping = new TestInputMapping(InputDriverType.XInput);
             var input =
              new InputTemplate<IRetroArchInput>(mapcol).Template;
 
@@ -57,13 +58,12 @@ namespace Snowflake.Configuration.Serialization
         [Fact]
         public void InputTemplateToAbstractConfigurationNodeCfgSerializer_Test()
         {
-            var testmappings = new StoneProvider().Controllers["XBOX_CONTROLLER"];
-            var realmapping =
-                JsonConvert.DeserializeObject<ControllerLayout>(
-                    TestUtilities.GetStringResource("InputMappings.xinput_device.json"));
-            var mapcol = ControllerElementMappings.GetDefaultMappings(realmapping, testmappings);
-            string _mapping = TestUtilities.GetStringResource("InputMappings.DirectInput.XINPUT_DEVICE.json");
-            IDeviceInputMapping mapping = JsonConvert.DeserializeObject<InputMapping>(_mapping);
+            var mapcol = new ControllerElementMappings("Keyboard",
+                           "TEST_CONTROLLER",
+                           InputDriverType.Keyboard,
+                           IDeviceEnumerator.VirtualVendorID,
+                           new XInputDeviceInstance(0).DefaultLayout);
+            IDeviceInputMapping mapping = new TestInputMapping(InputDriverType.XInput);
             var input =
              new InputTemplate<IRetroArchInput>(mapcol).Template;
 
@@ -87,13 +87,12 @@ namespace Snowflake.Configuration.Serialization
         [Fact]
         public void InputTemplateToAbstractConfigurationNodeXmlSerializer_Test()
         {
-            var testmappings = new StoneProvider().Controllers["XBOX_CONTROLLER"];
-            var realmapping =
-                JsonConvert.DeserializeObject<ControllerLayout>(
-                    TestUtilities.GetStringResource("InputMappings.xinput_device.json"));
-            var mapcol = ControllerElementMappings.GetDefaultMappings(realmapping, testmappings);
-            string _mapping = TestUtilities.GetStringResource("InputMappings.DirectInput.XINPUT_DEVICE.json");
-            IDeviceInputMapping mapping = JsonConvert.DeserializeObject<InputMapping>(_mapping);
+            var mapcol = new ControllerElementMappings("Keyboard",
+                           "TEST_CONTROLLER",
+                           InputDriverType.Keyboard,
+                           IDeviceEnumerator.VirtualVendorID,
+                           new XInputDeviceInstance(0).DefaultLayout);
+            IDeviceInputMapping mapping = new TestInputMapping(InputDriverType.XInput);
             var input =
              new InputTemplate<IRetroArchInput>(mapcol).Template;
 
@@ -117,13 +116,12 @@ namespace Snowflake.Configuration.Serialization
         [Fact]
         public void InputTemplateToAbstractConfigurationNodeJsonSerializer_Test()
         {
-            var testmappings = new StoneProvider().Controllers["XBOX_CONTROLLER"];
-            var realmapping =
-                JsonConvert.DeserializeObject<ControllerLayout>(
-                    TestUtilities.GetStringResource("InputMappings.xinput_device.json"));
-            var mapcol = ControllerElementMappings.GetDefaultMappings(realmapping, testmappings);
-            string _mapping = TestUtilities.GetStringResource("InputMappings.DirectInput.XINPUT_DEVICE.json");
-            IDeviceInputMapping mapping = JsonConvert.DeserializeObject<InputMapping>(_mapping);
+            var mapcol = new ControllerElementMappings("Keyboard",
+                          "TEST_CONTROLLER",
+                          InputDriverType.Keyboard,
+                          IDeviceEnumerator.VirtualVendorID,
+                          new XInputDeviceInstance(0).DefaultLayout);
+            IDeviceInputMapping mapping = new TestInputMapping(InputDriverType.XInput);
             var input =
              new InputTemplate<IRetroArchInput>(mapcol).Template;
 

@@ -14,16 +14,17 @@ namespace Snowflake.Configuration.Serialization
             ControllerElement element,
             DeviceCapability value, 
             string mappedValue, 
-            InputOptionDeviceType type)
+            InputOptionType type)
             : base(key, value)
         {
             this.DeviceType = type;
             this.Value = mappedValue;
+            this.VirtualElement = element;
         }
 
         public new string Value { get; }
 
         public ControllerElement VirtualElement { get; }
-        public InputOptionDeviceType DeviceType { get; }
+        public InputOptionType DeviceType { get; }
     }
 }

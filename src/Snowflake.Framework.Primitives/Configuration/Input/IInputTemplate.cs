@@ -32,7 +32,7 @@ namespace Snowflake.Configuration.Input
 
         /// <summary>
         /// Gets the mapped controller elements of the input configuration.
-        /// The implementation of this properly should require this be immutable.
+        /// A proper implementation should require this be immutable.
         /// This dictionary is keyed on the property names of the input template interface.
         /// </summary>
         new IReadOnlyDictionary<string, DeviceCapability> Values { get; }
@@ -48,6 +48,6 @@ namespace Snowflake.Configuration.Input
         /// Gets or sets the real device element that has been mapped to a virtual element.
         /// </summary>
         /// <param name="virtualElement">The virtual element on the controller definition</param>
-        DeviceCapability this[ControllerElement virtualElement] { get; set; }
+        DeviceCapability this[ControllerElement virtualElement] { set; }
     }
 }

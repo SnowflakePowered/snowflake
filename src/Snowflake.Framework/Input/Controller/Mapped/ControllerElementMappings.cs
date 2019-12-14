@@ -13,7 +13,7 @@ namespace Snowflake.Input.Controller.Mapped
         /// <inheritdoc/>
         public IEnumerator<MappedControllerElement> GetEnumerator()
         {
-            return this.controllerElements.GetEnumerator();
+            return this.controllerElements.Values.GetEnumerator();
         }
 
         /// <inheritdoc/>
@@ -36,81 +36,53 @@ namespace Snowflake.Input.Controller.Mapped
         {
             get
             {
-                return this.controllerElements.FirstOrDefault(l => l.LayoutElement == layoutElement)
-                           .DeviceCapability;
+                this.controllerElements.TryGetValue(layoutElement, out MappedControllerElement map);
+                return map.DeviceCapability;
             }
             set
             {
-                var mappedElement = this.controllerElements.FirstOrDefault(l => l.LayoutElement == layoutElement);
-                mappedElement.DeviceCapability = value;
+                this.controllerElements[layoutElement] = new MappedControllerElement(layoutElement, value);
             }
         }
 
-        private readonly List<MappedControllerElement> controllerElements;
+        private readonly Dictionary<ControllerElement, MappedControllerElement> controllerElements;
 
         public ControllerElementMappings(string deviceName,
-            string controllerId, InputDriverType driver, int vendor)
+            ControllerId controllerId, InputDriverType driver, int vendor,
+            IDeviceLayoutMapping mapping)
+            : this(deviceName, controllerId, driver, vendor)
+        {
+            foreach (var (key, value) in mapping)
+            {
+                this.Add(new MappedControllerElement(key, value));
+            }
+        }
+
+        public ControllerElementMappings(string deviceName,
+            ControllerId controllerId, InputDriverType driver, int vendor,
+            IDeviceLayoutMapping mapping,
+            IControllerLayout layout)
+            : this(deviceName, controllerId, driver, vendor)
+        {
+            foreach (var (element, _) in layout.Layout)
+            {
+                this.Add(new MappedControllerElement(element, mapping[element]));
+            }
+        }
+
+        public ControllerElementMappings(string deviceName,
+            ControllerId controllerId, InputDriverType driver, int vendor)
         {
             this.DeviceName = deviceName;
             this.ControllerId = controllerId;
             this.DriverType = driver;
             this.VendorID = vendor;
-            this.controllerElements = new List<MappedControllerElement>();
+            this.controllerElements = new Dictionary<ControllerElement, MappedControllerElement>();
         }
 
         public void Add(MappedControllerElement controllerElement)
         {
-            this.controllerElements.Add(controllerElement);
+            this.controllerElements[controllerElement.LayoutElement] = controllerElement;
         }
-
-        ///// <summary>
-        ///// Gets default mappings for a real device to a virtual device
-        ///// </summary>
-        ///// <param name="realDevice">The button layout of the real controller device</param>
-        ///// <param name="virtualDevice">The button layout of the defined controller device</param>
-        ///// <returns></returns>
-        //public static IControllerElementMappings GetDefaultMappings(IControllerLayout realDevice,
-        //    IControllerLayout virtualDevice)
-        //{
-        //    // todo
-        //    return new ControllerElementMappings("", "");
-        //    //return realDevice.Layout.Keyboard == null
-        //    //    ? ControllerElementMappings.GetDefaultDeviceMappings(realDevice, virtualDevice)
-        //    //    : ControllerElementMappings.GetDefaultKeyboardMappings(realDevice, virtualDevice);
-        //}
-
-        //private static IControllerElementMappings GetDefaultKeyboardMappings(IControllerLayout realKeyboard,
-        //    IControllerLayout virtualDevice)
-        //{
-        //    var mappedElements = from element in virtualDevice.Layout
-        //        select new MappedControllerElement(element.Key,
-        //            ControllerElementMappings.DefaultKeyboardMappings.ContainsKey(element.Key)
-        //                ? ControllerElementMappings.DefaultKeyboardMappings[element.Key]
-        //                : ControllerElement.KeyNone);
-        //    var elementCollection = new ControllerElementMappings(realKeyboard.LayoutId, virtualDevice.LayoutId);
-        //    foreach (var element in mappedElements)
-        //    {
-        //        elementCollection.Add(element);
-        //    }
-
-        //    return elementCollection;
-        //}
-
-        //private static IControllerElementMappings GetDefaultDeviceMappings(IControllerLayout realDevice,
-        //    IControllerLayout virtualDevice)
-        //{
-        //    var mappedElements = from element in virtualDevice.Layout
-        //        select new MappedControllerElement(element.Key,
-        //            realDevice.Layout[element.Key] != null ? element.Key : ControllerElement.NoElement);
-
-        //    var elementCollection = new ControllerElementMappings(realDevice.LayoutId, virtualDevice.LayoutId);
-
-        //    foreach (var element in mappedElements)
-        //    {
-        //        elementCollection.Add(element);
-        //    }
-
-        //    return elementCollection;
-        //}
     }
 }

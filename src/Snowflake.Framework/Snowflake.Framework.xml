@@ -200,7 +200,7 @@
         <member name="P:Snowflake.Configuration.Input.InputMapping.InputDriver">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Configuration.Input.InputOption.DeviceType">
+        <member name="P:Snowflake.Configuration.Input.InputOption.OptionType">
             <inheritdoc/>
         </member>
         <member name="P:Snowflake.Configuration.Input.InputOption.TargetElement">

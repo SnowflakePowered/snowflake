@@ -146,12 +146,16 @@ namespace Snowflake.Configuration.Serialization
             var configNodes = this.TraverseSection(template, true, indexer, index);
             foreach (var inputOption in template.Options)
             {
+
+                var capability = template.Values[inputOption.KeyName];
+                var elementStr = mapping[capability];
+
                 configNodes.Add(new DeviceCapabilityElementConfigurationNode(
                     inputOption.OptionName.Replace(indexer, Convert.ToString(index)),
                     inputOption.TargetElement,
-                    template[inputOption.TargetElement],
-                    mapping[template[inputOption.TargetElement]],
-                    inputOption.DeviceType));
+                    capability,
+                    elementStr,
+                    inputOption.OptionType));
             }
             return new ListConfigurationNode(template.Descriptor.SectionName.Replace(indexer,
                 Convert.ToString(index)),

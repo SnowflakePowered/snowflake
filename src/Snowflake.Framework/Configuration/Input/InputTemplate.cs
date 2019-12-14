@@ -43,32 +43,16 @@ namespace Snowflake.Configuration.Input
         /// <inheritdoc/>
         public DeviceCapability this[ControllerElement virtualElement]
         {
-            get
-            {
-                string optionKey = (from option in this._Options
-                    where option.Value.TargetElement == virtualElement
-                    select option.Key).FirstOrDefault();
-                if (optionKey == null)
-                {
-                    throw new KeyNotFoundException(
-                        "This template does not support the target element or element type.");
-                }
-
-                if (this.inputTemplateInterceptor.InputValues.TryGetValue(optionKey, out DeviceCapability deviceElem))
-                {
-                    return deviceElem;
-                };
-
-                return DeviceCapability.None;
-            }
-
             set
             {
                 string optionKey = (from option in this._Options
-                    where option.Value.TargetElement == virtualElement
-                    where option.Value.DeviceType.HasFlag(InputOptionDeviceType.Keyboard) == value.IsKeyboardKey()
-                    where option.Value.DeviceType.HasFlag(InputOptionDeviceType.ControllerAxes) == value.IsAxis()
-                    select option.Key).FirstOrDefault();
+                                    where option.Value.TargetElement == virtualElement
+                                    where option.Value.OptionType.HasFlag(InputOptionType.Keyboard) 
+                                        == value.IsKeyboardKey()
+                                    where option.Value.OptionType.HasFlag(InputOptionType.ControllerAxes)
+                                        == value.IsAxis()
+                                    select option.Key).FirstOrDefault();
+
                 if (optionKey == null)
                 {
                     throw new KeyNotFoundException(
@@ -95,8 +79,8 @@ namespace Snowflake.Configuration.Input
                 let option = this._Options[key]
                 let target = option.TargetElement
                 where element.LayoutElement == target
-                where option.DeviceType.HasFlag(InputOptionDeviceType.Keyboard) == element.DeviceCapability.IsKeyboardKey()
-                where option.DeviceType.HasFlag(InputOptionDeviceType.ControllerAxes) == element.DeviceCapability.IsAxis()
+                where option.OptionType.HasFlag(InputOptionType.Keyboard) == element.DeviceCapability.IsKeyboardKey()
+                where option.OptionType.HasFlag(InputOptionType.ControllerAxes) == element.DeviceCapability.IsAxis()
                 select new {key, element.DeviceCapability}).ToDictionary(d => d.key, d => d.DeviceCapability);
             var map = from key in this._Options.Keys
                 let value = overrides.ContainsKey(key) ? overrides[key] : DeviceCapability.None
