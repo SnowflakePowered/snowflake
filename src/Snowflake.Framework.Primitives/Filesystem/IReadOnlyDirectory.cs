@@ -111,7 +111,6 @@ namespace Snowflake.Filesystem
         /// <returns>Whether or not this directory contains the given directory.</returns>
         bool ContainsDirectory(string directory);
 
-
         /// <summary>
         /// Gets the underlying <see cref="DirectoryInfo"/> where files are contained.
         /// 

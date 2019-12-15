@@ -9,6 +9,5 @@ namespace Snowflake.Execution.SystemFiles
     {
         PlatformId Platform { get; }
         string Md5Hash { get; }
-
     }
 }
