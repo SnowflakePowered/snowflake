@@ -139,5 +139,23 @@ namespace Snowflake.Services
             this.FileSignatures.TryGetValue(mimetype.ToLower(), out var s);
             return s;
         }
+
+        /// <inheritdoc />
+        public IFileSignature? GetFileSignature(string mimetype, Stream romStream)
+        {
+            if (!this.FileSignatures.TryGetValue(mimetype.ToLowerInvariant(), out var fileSignatures)) return null;
+            long streamPos = romStream.Position;
+            foreach (var sig in fileSignatures)
+            {
+                romStream.Seek(streamPos, SeekOrigin.Begin);
+                if (sig.HeaderSignatureMatches(romStream))
+                {
+                    romStream.Seek(streamPos, SeekOrigin.Begin);
+                    return sig;
+                }
+            }
+            romStream.Seek(streamPos, SeekOrigin.Begin);
+            return null;
+        }
     }
 }

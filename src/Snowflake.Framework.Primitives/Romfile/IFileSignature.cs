@@ -34,24 +34,25 @@ namespace Snowflake.Romfile
 
         /// <summary>
         /// Gets the game serial from the file signature if possible
-        /// <param name="fileContents">The contents of the ROM</param>
         /// </summary>
         /// <remarks>
         /// Never close <paramref name="fileContents"/>.
         /// 
         /// This method may not throw if <see cref="HeaderSignatureMatches(Stream)"/> is true.
         /// </remarks>
+        /// <param name="fileContents">The contents of the ROM</param>
         string GetSerial(Stream fileContents);
 
         /// <summary>
         /// Gets the internal name of the ROM if possible
-        /// <param name="fileContents">The contents of the ROM</param>
         /// </summary>
         /// <remarks>
         /// Never close <paramref name="fileContents"/>. 
         /// 
         /// This method may not throw if <see cref="HeaderSignatureMatches(Stream)"/> is true.
         /// </remarks>
+        /// <param name="fileContents">The contents of the ROM</param>
+
         string GetInternalName(Stream fileContents);
     }
 }

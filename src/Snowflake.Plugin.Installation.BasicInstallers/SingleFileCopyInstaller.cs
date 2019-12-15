@@ -11,6 +11,7 @@ using Snowflake.Extensibility.Provisioning;
 using Snowflake.Extensibility;
 using Snowflake.Services;
 using Snowflake.Filesystem;
+using Snowflake.Romfile;
 
 namespace Snowflake.Plugin.Installation.BasicInstallers
 {
@@ -45,9 +46,30 @@ namespace Snowflake.Plugin.Installation.BasicInstallers
 
         public IStoneProvider StoneProvider { get; }
 
+        public override IEnumerable<IInstallable> GetInstallables(PlatformId platformId, IEnumerable<FileSystemInfo> fileEntries)
+        {
+            foreach (var entry in fileEntries)
+            {
+                if (entry is FileInfo file) {
+                    using var stream = file.OpenRead();
+                    string mimetype = this.StoneProvider.GetStoneMimetype(platformId, stream, file.Extension);
+                    if (mimetype == String.Empty) continue;
+                    string serial = this.StoneProvider.GetFileSignature(mimetype, stream)?
+                        .GetSerial(stream);
+                    if (serial is null || serial is "")
+                    {
+                        yield return new Installable(new[] { file }, file);
+                        continue;
+                    }
+                    yield return new Installable(new[] { file }, $"{file.Name} ({serial})");
+                }
+            }
+        }
+
         public override async IAsyncEnumerable<TaskResult<IFile>> Install(IGame game, IEnumerable<FileSystemInfo> files)
         {
             var platform =  game.Record.PlatformID;
+           
             foreach (var file in files.Select(f => f as FileInfo))
             {
                 if (file == null) continue;
@@ -59,7 +81,6 @@ namespace Snowflake.Plugin.Installation.BasicInstallers
                 yield return copiedFile;
                 
                 game.WithFiles().RegisterFile(await copiedFile, mimetype);
-                
             }
         }
     }

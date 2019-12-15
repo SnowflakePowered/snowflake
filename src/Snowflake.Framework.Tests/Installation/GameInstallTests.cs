@@ -47,11 +47,16 @@ namespace Snowflake.Installation.Tests
             var stone = new StoneProvider();
             var install = new SingleFileCopyInstaller(stone);
 
-            await foreach (var res in install.Install(game, new List<FileSystemInfo>() { new FileInfo(fname) }))
+            var installables = install.GetInstallables("NINTENDO_NES", new List<FileSystemInfo>() { new FileInfo(fname) });
+            
+            foreach (var i in installables)
             {
+                await foreach (var res in install.Install(game, i.Artifacts))
+                {
 
+                }
             }
-
+            
             Assert.NotEmpty(game.WithFiles().FileRecords);
         }
     }

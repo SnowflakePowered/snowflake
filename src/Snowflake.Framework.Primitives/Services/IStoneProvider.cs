@@ -42,6 +42,17 @@ namespace Snowflake.Services
         string GetStoneMimetype(PlatformId knownPlatform, Stream romStream, string extensionFallback);
 
         /// <summary>
+        /// Attempts to get a the filesignature for the given mimetype and ROM stream, preserving the
+        /// position of the stream.
+        /// </summary>
+        /// <param name="mimetype">
+        /// The mimetype of the ROM. Use <see cref="GetStoneMimetype(PlatformId, Stream, string)"/>
+        /// to determine this.</param>
+        /// <param name="romStream">A stream containing the ROM file.</param>
+        /// <returns>A <see cref="IFileSignature"/> compatible with this mimetype and file, or null if none is found.</returns>
+        IFileSignature? GetFileSignature(string mimetype, Stream romStream);
+
+        /// <summary>
         /// Attempts to discover the mimetype from all known file signatures. No fallback is available for this method,
         /// so if the file does not match a known file signature, this method will return the empty string.
         /// 
@@ -55,7 +66,7 @@ namespace Snowflake.Services
         /// If a filesignature is known for a mimetype, returns the filesignature object. Otherwise, returns null.
         /// </summary>
         /// <param name="mimetype">A stone mimetype</param>
-        /// <returns></returns>
+        /// <returns>A list of possible signatures for the mimetype.</returns>
         IEnumerable<IFileSignature> GetSignatures(string mimetype);
 
         /// <summary>
