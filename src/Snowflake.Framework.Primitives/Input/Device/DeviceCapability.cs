@@ -886,11 +886,6 @@ namespace Snowflake.Input.Device
         // -- Keyboard Keys
 
         /// <summary>
-        /// The None Key
-        /// </summary>
-        KeyNone,
-
-        /// <summary>
         /// The A Key
         /// </summary>
         KeyA,

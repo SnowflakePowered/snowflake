@@ -58,7 +58,6 @@ namespace Snowflake.Configuration.Tests
             string _mapping = TestUtilities.GetStringResource("InputMappings.DirectInput.KEYBOARD_DEVICE.json");
             IDeviceInputMapping mapping = JsonConvert.DeserializeObject<InputMapping>(_mapping);
             //Assert.Equal(InputApi.DirectInput, mapping.InputApi);
-            Assert.Equal("nul", mapping[DeviceCapability.KeyNone]);
             Assert.Equal("a", mapping[DeviceCapability.KeyA]);
             Assert.Equal("b", mapping[DeviceCapability.KeyB]);
             Assert.Equal("c", mapping[DeviceCapability.KeyC]);

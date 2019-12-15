@@ -1,4 +1,5 @@
 ﻿using Snowflake.Input.Controller;
+using Snowflake.Input.Device;
 
 namespace Snowflake.Configuration.Input
 {
@@ -10,7 +11,7 @@ namespace Snowflake.Configuration.Input
         /// <summary>
         /// Gets the type of device the input option accepts
         /// </summary>
-        InputOptionType OptionType { get; }
+        DeviceCapabilityClass OptionType { get; }
 
         /// <summary>
         /// Gets the mapped element to the input option.

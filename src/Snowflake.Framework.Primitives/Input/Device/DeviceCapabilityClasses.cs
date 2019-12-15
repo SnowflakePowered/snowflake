@@ -1,9 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Linq;
 using System.Text;
 
 namespace Snowflake.Input.Device
 {
+    /// <summary>
+    /// Helper methods for device capability classes
+    /// </summary>
     public static class DeviceCapabilityClasses
     {
         private static IReadOnlyList<DeviceCapability> _buttons = new List<DeviceCapability> {
@@ -181,7 +186,6 @@ namespace Snowflake.Input.Device
             DeviceCapability.Hat3W,
         };
         private static IReadOnlyList<DeviceCapability> _keyboard = new List<DeviceCapability> {
-            DeviceCapability.KeyNone,
             DeviceCapability.KeyA,
             DeviceCapability.KeyB,
             DeviceCapability.KeyC,
@@ -277,12 +281,18 @@ namespace Snowflake.Input.Device
             DeviceCapability.KeyF11,
             DeviceCapability.KeyF12,
         };
-        private static IReadOnlyList<DeviceCapability> _mouse = new List<DeviceCapability> {
+
+        private static IReadOnlyList<DeviceCapability> _mouseButton = new List<DeviceCapability>
+        {
             DeviceCapability.Mouse0,
             DeviceCapability.Mouse1,
             DeviceCapability.Mouse2,
             DeviceCapability.Mouse3,
             DeviceCapability.Mouse4,
+        };
+
+        private static IReadOnlyList<DeviceCapability> _mouseCursor = new List<DeviceCapability> 
+        {
             DeviceCapability.CursorXPositive,
             DeviceCapability.CursorXNegative,
             DeviceCapability.CursorX,
@@ -294,20 +304,77 @@ namespace Snowflake.Input.Device
             DeviceCapability.Rumble0,
             DeviceCapability.Rumble1
         };
-        
+
+        private static ImmutableHashSet<DeviceCapability> _hashKeyboardKeys
+            = ImmutableHashSet.CreateRange(DeviceCapabilityClasses.Keyboard);
+
+        private static ImmutableHashSet<DeviceCapability> _hashMouseCursor
+           = ImmutableHashSet.CreateRange(DeviceCapabilityClasses.MouseCursor);
+
+        private static ImmutableHashSet<DeviceCapability> _hashMouseButton
+         = ImmutableHashSet.CreateRange(DeviceCapabilityClasses.MouseButtons);
+
+        private static ImmutableHashSet<DeviceCapability> _hashAxes
+          = ImmutableHashSet.CreateRange(DeviceCapabilityClasses.Axes);
+
+        private static ImmutableHashSet<DeviceCapability> _hashButtons
+          = ImmutableHashSet.CreateRange(DeviceCapabilityClasses.Buttons);
+
+        private static ImmutableHashSet<DeviceCapability> _hashHats
+          = ImmutableHashSet.CreateRange(DeviceCapabilityClasses.Hats);
+
+
+        /// <summary>
+        /// All button <see cref="DeviceCapability"/>.
+        /// </summary>
         public static IEnumerable<DeviceCapability> Buttons => _buttons;
+
+        /// <summary>
+        /// All axis <see cref="DeviceCapability"/>.
+        /// </summary>
         public static IEnumerable<DeviceCapability> Axes => _axes;
+
+        /// <summary>
+        /// All directional <see cref="DeviceCapability"/>.
+        /// </summary>
         public static IEnumerable<DeviceCapability> Hats => _hats;
+
+        /// <summary>
+        /// All keyboard <see cref="DeviceCapability"/>.
+        /// </summary>
         public static IEnumerable<DeviceCapability> Keyboard => _keyboard;
-        public static IEnumerable<DeviceCapability> Mouse => _mouse;
+
+        /// <summary>
+        /// All mouse  button<see cref="DeviceCapability"/>.
+        /// </summary>
+        public static IEnumerable<DeviceCapability> MouseButtons => _mouseButton;
+
+        /// <summary>
+        /// All mouse cursor <see cref="DeviceCapability"/>.
+        /// </summary>
+        public static IEnumerable<DeviceCapability> MouseCursor => _mouseCursor;
+
+        /// <summary>
+        /// All rumble <see cref="DeviceCapability"/>.
+        /// </summary>
         public static IEnumerable<DeviceCapability> Rumble => _rumble;
 
+        /// <summary>
+        /// Gets the <see cref="DeviceCapability"/> for the specified button index.
+        /// </summary>
+        /// <param name="i">The index of the button</param>
+        /// <returns>The button <see cref="DeviceCapability"/></returns>
         public static DeviceCapability GetButton(int i)
         {
             if (i >= _buttons.Count) return DeviceCapability.None;
             return _buttons[i];
         }
 
+        /// <summary>
+        /// Gets the set of <see cref="DeviceCapability"/> for the specified axis index.
+        /// </summary>
+        /// <param name="i">The index of the axis</param>
+        /// <returns>The set of <see cref="DeviceCapability"/> for the axis</returns>
         public static IEnumerable<DeviceCapability> GetAxis(int i)
         {
             if (i >= 8) yield break;
@@ -316,7 +383,11 @@ namespace Snowflake.Input.Device
                 yield return _axes[(i * 3) + j];
             }
         }
-
+        /// <summary>
+        /// Gets the set of <see cref="DeviceCapability"/> for the specified directional hat index.
+        /// </summary>
+        /// <param name="i">The index of the directional hat</param>
+        /// <returns>The set of <see cref="DeviceCapability"/> for the hat</returns>
         public static IEnumerable<DeviceCapability> GetHat(int i)
         {
             if (i >= 3) yield break;
@@ -324,6 +395,26 @@ namespace Snowflake.Input.Device
             {
                 yield return _hats[(i * 4) + j];
             }
+        }
+
+        /// <summary>
+        /// Gets the capability class for a <see cref="DeviceCapability"/>
+        /// </summary>
+        /// <param name="capability">The <see cref="DeviceCapability"/></param>
+        /// <returns>The class of the <see cref="DeviceCapability"/></returns>
+        public static DeviceCapabilityClass GetClass(DeviceCapability capability)
+        {
+            if (_hashAxes.Contains(capability)) return DeviceCapabilityClass.ControllerAxes;
+            if (_hashButtons.Contains(capability)) return DeviceCapabilityClass.ControllerFaceButton;
+            if (_hashHats.Contains(capability)) return DeviceCapabilityClass.ControllerDirectional;
+            if (_hashKeyboardKeys.Contains(capability)) return DeviceCapabilityClass.Keyboard;
+            if (_hashMouseButton.Contains(capability)) return DeviceCapabilityClass.MouseButton;
+            if (_hashMouseCursor.Contains(capability)) return DeviceCapabilityClass.MouseCursor;
+
+            // only 2 rumble, probably don't need to hash this.
+            if (DeviceCapabilityClasses._rumble.Contains(capability)) return DeviceCapabilityClass.Rumble;
+
+            return DeviceCapabilityClass.None;
         }
     }
 }

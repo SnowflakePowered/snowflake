@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Snowflake.Configuration.Input;
 using Snowflake.Input.Controller;
 using Snowflake.Input.Device;
 
@@ -14,7 +13,7 @@ namespace Snowflake.Configuration.Serialization
             ControllerElement element,
             DeviceCapability value, 
             string mappedValue, 
-            InputOptionType type)
+            DeviceCapabilityClass type)
             : base(key, value)
         {
             this.DeviceType = type;
@@ -25,6 +24,6 @@ namespace Snowflake.Configuration.Serialization
         public new string Value { get; }
 
         public ControllerElement VirtualElement { get; }
-        public InputOptionType DeviceType { get; }
+        public DeviceCapabilityClass DeviceType { get; }
     }
 }

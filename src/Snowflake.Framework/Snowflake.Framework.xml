@@ -926,19 +926,12 @@
         <member name="P:Snowflake.Input.Controller.Mapped.ControllerElementMappings.ControllerId">
             <inheritdoc/>
         </member>
-        <member name="M:Snowflake.Input.Device.DeviceCapabilityExtensions.IsKeyboardKey(Snowflake.Input.Device.DeviceCapability)">
+        <member name="M:Snowflake.Input.Device.DeviceCapabilityExtensions.GetClass(Snowflake.Input.Device.DeviceCapability)">
             <summary>
-            Checks if the element is a keyboard key element.
+            Gets the capability class of this <see cref="T:Snowflake.Input.Device.DeviceCapability"/>
             </summary>
-            <param name="element">The controller element to check.</param>
-            <returns>Whether the element is a keyboard key element</returns>
-        </member>
-        <member name="M:Snowflake.Input.Device.DeviceCapabilityExtensions.IsAxis(Snowflake.Input.Device.DeviceCapability)">
-            <summary>
-            Checks if the element is an axis element
-            </summary>
-            <param name="element">The controller element to check.</param>
-            <returns>Whether the element is a keyboard key element</returns>
+            <param name="this">The <see cref="T:Snowflake.Input.Device.DeviceCapability"/></param>
+            <returns>The capability class of the capability.</returns>
         </member>
         <member name="T:Snowflake.Installation.Extensibility.GameInstaller">
             <inheritdoc cref="T:Snowflake.Installation.Extensibility.IGameInstaller" />

@@ -27,12 +27,6 @@ namespace Snowflake.Configuration.Input
                     return mappedValue;
                 }
 
-                if (element.IsKeyboardKey() 
-                    && this.elementMappings.TryGetValue(DeviceCapability.KeyNone, out string? keyNone)
-                    && keyNone != null) {
-                    return keyNone;
-                }
-
                 if (this.elementMappings.TryGetValue(DeviceCapability.None, out string? noElement)
                     && noElement != null)
                 {
