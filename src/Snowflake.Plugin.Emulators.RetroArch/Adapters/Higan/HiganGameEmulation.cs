@@ -4,6 +4,7 @@ using Snowflake.Configuration.Serialization.Serializers.Implementations;
 using Snowflake.Execution.Extensibility;
 using Snowflake.Execution.Saving;
 using Snowflake.Filesystem;
+using Snowflake.Input.Device;
 using Snowflake.Model.Game;
 using Snowflake.Model.Game.LibraryExtensions;
 using Snowflake.Plugin.Emulators.RetroArch;
@@ -19,11 +20,15 @@ namespace Snowflake.Adapters.Higan
 {
     public class HiganGameEmulation : GameEmulation
     {
-        public HiganGameEmulation(IGame game, Guid guid) : base(game, guid)
+        public HiganGameEmulation(IGame game, 
+            Guid guid,
+            IDictionary<InputDriverType, IDeviceInputMapping> inputMappings) : base(game, guid)
         {
+            this.InputMappings = inputMappings;
             this.Scratch = this.Game.WithFiles().GetRuntimeLocation();
         }
 
+        public IDictionary<InputDriverType, IDeviceInputMapping> InputMappings { get; }
         private IDirectory Scratch { get; }
 
         public override async Task PersistSaveGame(IDirectory targetDirectory)
@@ -69,11 +74,15 @@ namespace Snowflake.Adapters.Higan
 
             foreach (var port in this.ControllerPorts)
             {
+                var mappings = this.InputMappings[port.PhysicalDeviceInstance.Driver];
                 var template = new InputTemplate<RetroPadTemplate>(port.LayoutMapping, port.PortIndex);
-                var inputNode = tokenizer.TraverseInputTemplate(template, this.InputMappings, port.PortIndex);
+
+                template.Template.Configuration.InputJoypadIndex = port.PhysicalDeviceInstance.EnumerationIndex;
+
+                var inputNode = tokenizer.TraverseInputTemplate(template, mappings, port.PortIndex);
                 configContents.Append(serializer.Transform(retroArchNode));
             }
-            configFile.WriteAllText(configContents.ToString());
+            await configFile.WriteAllTextAsync(configContents.ToString());
         }
 
         protected override void TeardownGame()
