@@ -404,7 +404,7 @@ namespace Snowflake.Input.Device
         /// <returns>The class of the <see cref="DeviceCapability"/></returns>
         public static DeviceCapabilityClass GetClass(DeviceCapability capability)
         {
-            if (_hashAxes.Contains(capability)) return DeviceCapabilityClass.ControllerAxes;
+            if (_hashAxes.Contains(capability)) return DeviceCapabilityClass.ControllerAxis;
             if (_hashButtons.Contains(capability)) return DeviceCapabilityClass.ControllerFaceButton;
             if (_hashHats.Contains(capability)) return DeviceCapabilityClass.ControllerDirectional;
             if (_hashKeyboardKeys.Contains(capability)) return DeviceCapabilityClass.Keyboard;

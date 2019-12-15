@@ -12,7 +12,7 @@ using Snowflake.JsonConverters;
 namespace Snowflake.Configuration.Input
 {
     [JsonConverter(typeof(InputMappingConverter))]
-    public class InputMapping : IDeviceInputMapping
+    public class JsonInputMapping : IDeviceInputMapping
     {
         private readonly IDictionary<DeviceCapability, string> elementMappings;
 
@@ -40,7 +40,7 @@ namespace Snowflake.Configuration.Input
         /// <inheritdoc/>
         public InputDriverType InputDriver { get; }
 
-        public InputMapping(IDictionary<DeviceCapability, string> elementMappings,
+        public JsonInputMapping(IDictionary<DeviceCapability, string> elementMappings,
             InputDriverType inputDriver)
         {
             this.elementMappings = elementMappings;

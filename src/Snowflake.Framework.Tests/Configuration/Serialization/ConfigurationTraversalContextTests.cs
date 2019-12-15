@@ -119,9 +119,6 @@ namespace Snowflake.Configuration.Serialization
 
             var context = new ConfigurationTraversalContext(("game", dir));
             var node = context.TraverseInputTemplate(input, mapping, 0);
-            var cfgSerializer = new SimpleCfgConfigurationSerializer();
-            string outputCfg = cfgSerializer.Transform(node);
-
         }
 
         [Fact]

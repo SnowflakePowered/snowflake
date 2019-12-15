@@ -20,12 +20,12 @@ namespace Snowflake.Input.Device
         /// <summary>
         /// Controller capabilities, excluding rumble.
         /// </summary>
-        Controller = ControllerButton | ControllerAxes,
+        Controller = ControllerButton | ControllerAxis,
 
         /// <summary>
         /// Controller Axes
         /// </summary>
-        ControllerAxes = 1 << 1,
+        ControllerAxis = 1 << 1,
 
         /// <summary>
         /// Controller buttons, including both directional and face buttons.

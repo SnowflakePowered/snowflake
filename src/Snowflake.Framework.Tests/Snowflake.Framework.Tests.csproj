@@ -38,6 +38,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="TestResources\GameCache\inputmapping-retroarch.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="..\..\shiragame.db">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Link>shiragame.db</Link>

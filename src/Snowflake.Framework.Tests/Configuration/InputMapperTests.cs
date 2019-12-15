@@ -10,6 +10,7 @@ using Snowflake.Configuration.Input;
 using Snowflake.Input.Controller;
 using Snowflake.Input.Controller.Mapped;
 using Snowflake.Input.Device;
+using Snowflake.Input.Tests;
 using Snowflake.Services;
 using Snowflake.Tests;
 using Xunit;
@@ -55,9 +56,9 @@ namespace Snowflake.Configuration.Tests
         [Fact]
         public void KeyboardMapping_Test()
         {
-            string _mapping = TestUtilities.GetStringResource("InputMappings.DirectInput.KEYBOARD_DEVICE.json");
-            IDeviceInputMapping mapping = JsonConvert.DeserializeObject<InputMapping>(_mapping);
-            //Assert.Equal(InputApi.DirectInput, mapping.InputApi);
+            string _mapping = TestUtilities.GetStringResource("InputMappings.inputmapping-retroarch.json");
+            IDeviceInputMapping mapping = JsonConvert.DeserializeObject<JsonInputMapping>(_mapping);
+            Assert.Equal(InputDriverType.DirectInput, mapping.InputDriver);
             Assert.Equal("a", mapping[DeviceCapability.KeyA]);
             Assert.Equal("b", mapping[DeviceCapability.KeyB]);
             Assert.Equal("c", mapping[DeviceCapability.KeyC]);
@@ -154,39 +155,27 @@ namespace Snowflake.Configuration.Tests
             Assert.Equal("f12", mapping[DeviceCapability.KeyF12]);
         }
 
-        //[Fact]
-        //public void DefaultMappedElementCollection_Test()
-        //{
-        //    var testmappings = new StoneProvider().Controllers.First().Value;
-        //    var realmapping =
-        //        JsonConvert.DeserializeObject<ControllerLayout>(
-        //            TestUtilities.GetStringResource("InputMappings.xinput_device.json"));
-        //    var mapcol = ControllerElementMappings.GetDefaultMappings(realmapping, testmappings);
-        //    foreach (var controllerElem in from elem in mapcol
-        //        where elem.DeviceElement != ControllerElement.NoElement
-        //        select elem.DeviceElement)
-        //    {
-        //        Assert.NotNull(realmapping.Layout[controllerElem]);
-        //    }
-        //}
+        [Fact]
+        public void InputTemplateGetterSetter_Test()
+        {
+            var mapcol = new ControllerElementMappings("Keyboard",
+                           "TEST_CONTROLLER",
+                           InputDriverType.Keyboard,
+                           IDeviceEnumerator.VirtualVendorID,
+                           new XInputDeviceInstance(0).DefaultLayout);
 
-        //[Fact]
-        //public void InputTemplateGetterSetter_Test()
-        //{
-        //    var realLayout =
-        //        JsonConvert.DeserializeObject<ControllerLayout>(
-        //            TestUtilities.GetStringResource("InputMappings.keyboard_device.json"));
+            var template = new InputTemplate<IRetroArchInput>(mapcol, 0);
 
-        //    var targetLayout =
-        //        JsonConvert.DeserializeObject<ControllerLayout>(
-        //            TestUtilities.GetStringResource("InputMappings.xinput_device.json"));
+            Assert.Equal(DeviceCapability.Button0, template.Template.InputPlayerABtn);
+            template[ControllerElement.ButtonA] = DeviceCapability.Button1;
+            template[ControllerElement.ButtonA] = DeviceCapability.Key2;
+            template[ControllerElement.ButtonA] = DeviceCapability.Axis0Negative;
 
-        //    //var mapcol = ControllerElementMappings.GetDefaultMappings(realLayout, targetLayout);
-        //    //IInputTemplate template = new InputTemplate<IRetroArchInput>(mapcol, 0);
+            Assert.Equal(DeviceCapability.Button1, template.Template.InputPlayerABtn);
+            Assert.Equal(DeviceCapability.Key2, template.Template.InputPlayerA);
+            Assert.Equal(DeviceCapability.Axis0Negative, template.Template.InputPlayerAAxis);
 
-        //    //Assert.Equal(ControllerElement.KeyZ, template[ControllerElement.ButtonA]);
-        //    //template[ControllerElement.ButtonA] = ControllerElement.KeyX;
-        //    //Assert.Equal(ControllerElement.KeyX, template[ControllerElement.ButtonA]);
-        //}
+
+        }
     }
 }

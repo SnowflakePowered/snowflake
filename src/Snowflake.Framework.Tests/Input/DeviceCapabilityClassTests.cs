@@ -39,7 +39,7 @@ namespace Snowflake.Input.Tests
 
             Assert.True(FlagEnums.HasAnyFlags(DeviceCapabilityClass.ControllerDirectional, DeviceCapability.Hat0E.GetClass()));
             Assert.True(FlagEnums.HasAnyFlags(DeviceCapabilityClass.ControllerFaceButton, DeviceCapability.Button0.GetClass()));
-            Assert.True(FlagEnums.HasAnyFlags(DeviceCapabilityClass.ControllerAxes, DeviceCapability.Axis0.GetClass()));
+            Assert.True(FlagEnums.HasAnyFlags(DeviceCapabilityClass.ControllerAxis, DeviceCapability.Axis0.GetClass()));
         }
     }
 }
