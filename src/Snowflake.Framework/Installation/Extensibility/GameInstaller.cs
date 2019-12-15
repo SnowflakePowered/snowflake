@@ -32,6 +32,9 @@ namespace Snowflake.Installation.Extensibility
         public IEnumerable<PlatformId> SupportedPlatforms { get; }
 
         /// <inheritdoc />
+        public abstract IEnumerable<IInstallable> GetInstallables(PlatformId platformId, IEnumerable<FileSystemInfo> fileEntries);
+
+        /// <inheritdoc />
         public abstract IAsyncEnumerable<TaskResult<IFile>> Install(IGame game, IEnumerable<FileSystemInfo> files);
     }
 }
