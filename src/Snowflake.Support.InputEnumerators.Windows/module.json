@@ -1,5 +1,5 @@
 ﻿{
-  "entry": "Snowflake.Support.Windows.InputManager.dll",
+  "entry": "Snowflake.Support.InputEnumerators.Windows.dll",
   "loader": "assembly",
   "frameworkVersion": "1.0.0",
   "version": "1.0.0",
