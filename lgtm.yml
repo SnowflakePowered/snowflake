@@ -8,7 +8,7 @@ extraction:
       solution: src/Snowflake.sln
       vstools_version: 15
       dotnet:
-        version: '3.0.100'
+        version: '3.1.100'
   python:
     python_setup: 
       version: 3
