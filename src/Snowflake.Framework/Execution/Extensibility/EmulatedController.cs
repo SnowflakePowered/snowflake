@@ -11,11 +11,13 @@ namespace Snowflake.Execution.Extensibility
     {
         public EmulatedController(int portIndex,
             IInputDevice physicalDevice,
+            IInputDriverInstance driverInstance,
             IControllerLayout targetLayout,
             IControllerElementMappings layoutMapping)
         {
             this.PortIndex = portIndex;
             this.PhysicalDevice = physicalDevice;
+            this.PhysicalDeviceInstance = driverInstance;
             this.TargetLayout = targetLayout;
             this.LayoutMapping = layoutMapping;
         }
@@ -27,5 +29,7 @@ namespace Snowflake.Execution.Extensibility
         public IControllerLayout TargetLayout { get; }
 
         public IControllerElementMappings LayoutMapping { get; }
+
+        public IInputDriverInstance PhysicalDeviceInstance { get; }
     }
 }

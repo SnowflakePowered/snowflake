@@ -21,8 +21,8 @@ namespace Snowflake.Execution.Extensibility
 
         public IList<IEmulatedController> ControllerPorts { get; }
 
-        public IDeviceInputMapping InputMappings { get; }
-        public GameEmulation(IGame game, Guid guid)
+        public GameEmulation(IGame game, 
+            Guid guid)
         {
             this.Game = game;
             this.Guid = guid;

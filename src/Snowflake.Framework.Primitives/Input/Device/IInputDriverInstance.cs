@@ -19,7 +19,7 @@ namespace Snowflake.Input.Device
         /// When enumerating devices with a given driver, the index of enumeration for this driver.
         /// 
         /// If <see cref="Driver"/> is <see cref="InputDriverType.Passthrough"/>, or
-        /// <see cref="InputDriverType.DirectInput"/>, the index is always 0.
+        /// <see cref="InputDriverType.Keyboard"/>, the index is always 0.
         /// </summary>
         int EnumerationIndex { get; }
 
