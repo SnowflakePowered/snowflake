@@ -25,8 +25,8 @@ namespace Snowflake.Support.Execution
             var loader = new EmulatorExecutableProvider(logProvider.GetLogger("EmulatorExecutableLoader"), modules);
             register.RegisterService<IEmulatorExecutableProvider>(loader);
 
-            var emucdp = new EmulatorTaskRootDirectoryProvider(cdp);
-            register.RegisterService<IEmulatorTaskRootDirectoryProvider>(emucdp);
+            //var emucdp = new EmulatorTaskRootDirectoryProvider(cdp);
+            //register.RegisterService<IEmulatorTaskRootDirectoryProvider>(emucdp);
         }
     }
 }

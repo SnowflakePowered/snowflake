@@ -1,13 +1,10 @@
-﻿using Snowflake.Configuration.Input;
-using Snowflake.Execution.Saving;
+﻿using Snowflake.Execution.Saving;
 using Snowflake.Extensibility.Provisioning;
 using Snowflake.Extensibility.Provisioning.Standalone;
 using Snowflake.Model.Game;
-using Snowflake.Model.Game.LibraryExtensions;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Snowflake.Execution.Extensibility
 {
@@ -28,15 +25,14 @@ namespace Snowflake.Execution.Extensibility
 
         protected abstract GameEmulation CreateEmulationInstance(IGame game,
             IList<IEmulatedController> controllerPorts,
-            string configurationProfileName,
-            SaveGame savegame);
+            string configurationProfileName);
 
         public GameEmulation ProvisionEmulationInstance(IGame game,
             IList<IEmulatedController> controllerPorts,
             string configurationProfileName,
             SaveGame savegame)
         {
-            var instance = this.CreateEmulationInstance(game, controllerPorts, configurationProfileName, savegame);
+            var instance = this.CreateEmulationInstance(game, controllerPorts, configurationProfileName);
             // this should always succeed from uniqueness of GUIDs.
             this.Instances.TryAdd(instance.Guid, instance);
             return instance;

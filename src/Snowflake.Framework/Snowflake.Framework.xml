@@ -480,69 +480,6 @@
             <param name="context">The serialization context.</param>
             <param name="index">The position or index of the given node within the current block in the context.</param>
         </member>
-        <member name="T:Snowflake.Execution.Extensibility.EmulatorTask">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Execution.Extensibility.EmulatorTask.EmulatorConfiguration">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Execution.Extensibility.EmulatorTask.ControllerConfiguration">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Execution.Extensibility.EmulatorTask.EmulatingGame">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Execution.Extensibility.EmulatorTask.Pragmas">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Execution.Extensibility.EmulatorTask.ProcessTaskRoot">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Execution.Extensibility.EmulatorTask.TaskIdentifier">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Execution.Extensibility.EmulatorTask.AddPragma(System.String,System.String)">
-            <summary>
-            Add a pragma to the task.
-            </summary>
-            <param name="pragmaKey">The key of the pragma.</param>
-            <param name="pragmaValue">The value of the pragma.</param>
-        </member>
-        <member name="T:Snowflake.Execution.Extensibility.EmulatorTaskResult">
-            <inheritdoc/>s
-        </member>
-        <member name="P:Snowflake.Execution.Extensibility.EmulatorTaskResult.EmulatorName">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Execution.Extensibility.EmulatorTaskResult.StartTime">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Execution.Extensibility.EmulatorTaskResult.IsRunning">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Execution.Extensibility.EmulatorTaskResult.Closed">
-            <inheritdoc/>
-        </member>
-        <member name="T:Snowflake.Execution.Extensibility.ExternalEmulator">
-            <summary>
-            Represents a <see cref="T:Snowflake.Execution.Extensibility.IEmulator"/> that wraps an external emulator.
-            </summary>
-        </member>
-        <member name="P:Snowflake.Execution.Extensibility.ExternalEmulator.StoneProvider">
-            <summary>
-            Gets a <see cref="T:Snowflake.Services.IStoneProvider"/>. We noticed that many emulator wrappers require
-            access to platform and controller information through Stone.
-            </summary>
-        </member>
-        <member name="P:Snowflake.Execution.Extensibility.ExternalEmulator.Runner">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Execution.Extensibility.ExternalEmulator.Properties">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Execution.Extensibility.ExternalEmulator.CreateTask(Snowflake.Model.Records.Game.IGameRecord,System.Collections.Generic.IList{Snowflake.Execution.Extensibility.IEmulatedController},System.String)">
-            <inheritdoc/>
-        </member>
         <member name="M:Snowflake.Execution.Saving.GameFileExtensionSaveGameManagerExtensions.WithSaves(Snowflake.Model.Game.LibraryExtensions.IGameFileExtension)">
             <summary>
             Provides SaveGameManagement
@@ -649,7 +586,28 @@
             <param name="contents">The contents to write to file.</param>
             <returns>A string containing all text in the file.</returns>
         </member>
+        <member name="M:Snowflake.Filesystem.FileExtensions.WriteAllTextAsync(Snowflake.Filesystem.IFile,System.String)">
+            <summary>
+            Opens a text file, writes all the text in the file into a string asynchronously, and then closes the opened stream.
+            The default encoding is UTF8.
+            
+            If the file already exists, it is overwritten.
+            </summary>
+            <param name="this">The <see cref="T:Snowflake.Filesystem.IFile"/> to read.</param>
+            <param name="contents">The contents to write to file.</param>
+            <returns>A string containing all text in the file.</returns>
+        </member>
         <member name="M:Snowflake.Filesystem.FileExtensions.WriteAllText(Snowflake.Filesystem.IFile,System.String,System.Text.Encoding)">
+            <summary>
+            Opens a text file, writes all the text in the file into a string with the specified encoding,
+            and then closes the opened stream. If the file already exists, it is overwritten.
+            </summary>
+            <param name="this">The <see cref="T:Snowflake.Filesystem.IFile"/> to read.</param>
+            <param name="contents">The contents to write to file.</param>
+            <param name="encoding">The encoding applied to the contents of the file.</param>
+            <returns>A string containing all text in the file.</returns>
+        </member>
+        <member name="M:Snowflake.Filesystem.FileExtensions.WriteAllTextAsync(Snowflake.Filesystem.IFile,System.String,System.Text.Encoding)">
             <summary>
             Opens a text file, writes all the text in the file into a string with the specified encoding,
             and then closes the opened stream. If the file already exists, it is overwritten.

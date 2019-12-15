@@ -29,6 +29,7 @@ namespace Snowflake.Adapters.Higan
         }
 
         public IDictionary<InputDriverType, IDeviceInputMapping> InputMappings { get; }
+        public SaveGame InitialSave { get; }
         private IDirectory Scratch { get; }
 
         public override async Task PersistSaveGame(IDirectory targetDirectory)
@@ -42,6 +43,7 @@ namespace Snowflake.Adapters.Higan
 
         public override Task RestoreSaveGame(SaveGame targetDirectory)
         {
+            
             throw new NotImplementedException();
         }
 
