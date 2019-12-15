@@ -33,8 +33,8 @@ namespace Snowflake.Input.Device
 
         public int GetObjectOffset(DeviceCapability capability) => 
             this.CapabilityMap.TryGetValue(capability, out (int offset, int _) val) ? val.offset : -1;
+
         public int GetObjectRawId(DeviceCapability capability) =>
             this.CapabilityMap.TryGetValue(capability, out (int _, int rawId) val) ? val.rawId : -1;
-
     }
 }

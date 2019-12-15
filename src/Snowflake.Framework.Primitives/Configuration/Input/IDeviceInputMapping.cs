@@ -13,7 +13,6 @@ namespace Snowflake.Configuration.Input
     /// </summary>
     public interface IDeviceInputMapping
     {
-      
         /// <summary>
         /// The driver type for this input mapping
         /// </summary>

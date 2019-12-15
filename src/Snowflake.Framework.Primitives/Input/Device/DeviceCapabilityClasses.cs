@@ -141,6 +141,7 @@ namespace Snowflake.Input.Device
             DeviceCapability.Button126,
             DeviceCapability.Button127,
         };
+
         private static IReadOnlyList<DeviceCapability> _axes = new List<DeviceCapability> {
             DeviceCapability.Axis0Positive,
             DeviceCapability.Axis0Negative,
@@ -167,6 +168,7 @@ namespace Snowflake.Input.Device
             DeviceCapability.Axis7Negative,
             DeviceCapability.Axis7,
         };
+
         private static IReadOnlyList<DeviceCapability> _hats = new List<DeviceCapability> {
             DeviceCapability.Hat0N,
             DeviceCapability.Hat0S,
@@ -185,6 +187,7 @@ namespace Snowflake.Input.Device
             DeviceCapability.Hat3E,
             DeviceCapability.Hat3W,
         };
+
         private static IReadOnlyList<DeviceCapability> _keyboard = new List<DeviceCapability> {
             DeviceCapability.KeyA,
             DeviceCapability.KeyB,
@@ -300,6 +303,7 @@ namespace Snowflake.Input.Device
             DeviceCapability.CursorYNegative,
             DeviceCapability.CursorY,
         };
+
         private static IReadOnlyList<DeviceCapability> _rumble = new List<DeviceCapability> {
             DeviceCapability.Rumble0,
             DeviceCapability.Rumble1
@@ -322,7 +326,6 @@ namespace Snowflake.Input.Device
 
         private static ImmutableHashSet<DeviceCapability> _hashHats
           = ImmutableHashSet.CreateRange(DeviceCapabilityClasses.Hats);
-
 
         /// <summary>
         /// All button <see cref="DeviceCapability"/>.
@@ -383,6 +386,7 @@ namespace Snowflake.Input.Device
                 yield return _axes[(i * 3) + j];
             }
         }
+
         /// <summary>
         /// Gets the set of <see cref="DeviceCapability"/> for the specified directional hat index.
         /// </summary>

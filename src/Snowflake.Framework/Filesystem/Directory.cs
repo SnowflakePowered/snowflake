@@ -243,13 +243,11 @@ namespace Snowflake.Filesystem
             throw new DirectoryNotFoundException($"Directory {name} does not exist within {this.Name}.");
         }
 
-
         IReadOnlyDirectory IReadOnlyDirectory.OpenDirectory(string name, bool createIfNotExists)
         {
             if (createIfNotExists) return this.OpenDirectory(name).AsReadOnly();
             return (this as IReadOnlyDirectory).OpenDirectory(name);
         }
-
 
         IReadOnlyFile IReadOnlyDirectory.OpenFile(string file)
         {

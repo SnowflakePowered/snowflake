@@ -5,12 +5,12 @@ using System.Text;
 
 namespace Snowflake.Input.Device
 {
-
     public sealed class XInputDeviceInstance : IInputDriverInstance
     {
         private static readonly IDictionary<ControllerElement, DeviceCapability> _xInputMappings =
            new Dictionary<ControllerElement, DeviceCapability>()
            {
+                // Buttons
                 {ControllerElement.ButtonStart, DeviceCapability.Button6},
                 {ControllerElement.ButtonSelect, DeviceCapability.Button7},
                 {ControllerElement.ButtonA, DeviceCapability.Button0},
@@ -21,26 +21,24 @@ namespace Snowflake.Input.Device
                 {ControllerElement.ButtonR, DeviceCapability.Button5},
                 {ControllerElement.ButtonClickL, DeviceCapability.Button8},
                 {ControllerElement.ButtonClickR, DeviceCapability.Button9},
-
+                // Directional
                 {ControllerElement.DirectionalN, DeviceCapability.Hat0N},
                 {ControllerElement.DirectionalE, DeviceCapability.Hat0E},
                 {ControllerElement.DirectionalS, DeviceCapability.Hat0S},
                 {ControllerElement.DirectionalW, DeviceCapability.Hat0W},
-
+                // Left Axes
                 {ControllerElement.AxisLeftAnalogPositiveY, DeviceCapability.Axis1Positive},
                 {ControllerElement.AxisLeftAnalogNegativeX, DeviceCapability.Axis0Negative},
-
                 {ControllerElement.AxisLeftAnalogNegativeY, DeviceCapability.Axis1Negative},
                 {ControllerElement.AxisLeftAnalogPositiveX, DeviceCapability.Axis0Positive},
-
+                // Right Axes
                 {ControllerElement.AxisRightAnalogPositiveY, DeviceCapability.Axis3Positive},
                 {ControllerElement.AxisRightAnalogNegativeX, DeviceCapability.Axis2Negative},
                 {ControllerElement.AxisRightAnalogNegativeY, DeviceCapability.Axis3Negative},
                 {ControllerElement.AxisRightAnalogPositiveX, DeviceCapability.Axis2Positive},
-
+                // Triggers
                 {ControllerElement.TriggerLeft, DeviceCapability.Axis4},
                 {ControllerElement.TriggerRight, DeviceCapability.Axis5}
-
            };
 
         private static IReadOnlyList<DeviceCapability> _xInputCapabilities = new List<DeviceCapability> {
