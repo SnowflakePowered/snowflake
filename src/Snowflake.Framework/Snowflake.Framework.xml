@@ -480,13 +480,6 @@
             <param name="context">The serialization context.</param>
             <param name="index">The position or index of the given node within the current block in the context.</param>
         </member>
-        <member name="M:Snowflake.Execution.Saving.GameFileExtensionSaveGameManagerExtensions.WithSaves(Snowflake.Model.Game.LibraryExtensions.IGameFileExtension)">
-            <summary>
-            Provides SaveGameManagement
-            </summary>
-            <param name="this"></param>
-            <returns></returns>
-        </member>
         <member name="F:Snowflake.Extensibility.EmptyPluginConfiguration.EmptyConfiguration">
             <summary>
             The empty plugin configuration.
@@ -1154,6 +1147,13 @@
             <summary>
             The namespace for ISO OIDs (from RFC 4122, Appendix C).
             </summary>
+        </member>
+        <member name="M:Snowflake.Orchestration.Saving.GameFileExtensionSaveGameManagerExtensions.WithSaves(Snowflake.Model.Game.LibraryExtensions.IGameFileExtension)">
+            <summary>
+            Provides SaveGameManagement
+            </summary>
+            <param name="this"></param>
+            <returns></returns>
         </member>
         <member name="P:Snowflake.Persistence.SqliteDatabase.DatabaseName">
             <inheritdoc/>
