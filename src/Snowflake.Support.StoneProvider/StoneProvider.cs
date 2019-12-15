@@ -83,7 +83,7 @@ namespace Snowflake.Services
         private string GetStoneData()
         {
             var assembly = typeof(StoneProvider).GetTypeInfo().Assembly;
-            using (Stream stream = assembly.GetManifestResourceStream($"Snowflake.stone.dist.json"))
+            using (Stream stream = assembly.GetManifestResourceStream($"Snowflake.stone.dist.json")!)
             using (var reader = new StreamReader(stream))
             {
                 return reader.ReadToEnd();
@@ -93,7 +93,7 @@ namespace Snowflake.Services
         /// <inheritdoc />
         public string GetStoneMimetype(PlatformId knownPlatform, Stream romStream, string extensionFallback)
         {
-            this.Platforms.TryGetValue(knownPlatform, out IPlatformInfo platform);
+            this.Platforms.TryGetValue(knownPlatform, out IPlatformInfo? platform);
             if (platform == null) return String.Empty;
             long streamPos = romStream.Position;
             foreach (var mimetype in platform.FileTypes.Values)
@@ -137,7 +137,7 @@ namespace Snowflake.Services
         public IEnumerable<IFileSignature> GetSignatures(string mimetype)
         {
             this.FileSignatures.TryGetValue(mimetype.ToLower(), out var s);
-            return s;
+            return s ?? Enumerable.Empty<IFileSignature>();
         }
 
         /// <inheritdoc />

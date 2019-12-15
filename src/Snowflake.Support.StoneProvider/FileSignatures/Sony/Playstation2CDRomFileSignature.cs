@@ -19,7 +19,7 @@ namespace Snowflake.Stone.FileSignatures.Sony
             {
                 romStream.Seek(0, SeekOrigin.Begin);
                 var reader = new PlaystationDisc(new CDXADisc(romStream));
-                string systemcnf = reader.GetMeta();
+                string? systemcnf = reader.GetMeta();
                 return systemcnf?.Contains("BOOT2") ?? false;
             }
             catch 
@@ -29,11 +29,11 @@ namespace Snowflake.Stone.FileSignatures.Sony
         }
 
         /// <inheritdoc/>
-        public string GetSerial(Stream romStream)
+        public string? GetSerial(Stream romStream)
         {
             romStream.Seek(0, SeekOrigin.Begin);
             var reader = new PlaystationDisc(new CDXADisc(romStream));
-            string systemcnf = reader.GetMeta();
+            string? systemcnf = reader.GetMeta();
             if (systemcnf == null) return null;
             return Regex.Match(systemcnf, "[A-Z]+_[0-9][0-9][0-9].[0-9][0-9]",
                 RegexOptions.IgnoreCase).Value.Replace(".", string.Empty).Replace("_", "-");

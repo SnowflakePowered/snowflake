@@ -17,7 +17,7 @@ namespace Snowflake.Stone.FileSignatures.Nintendo
         private readonly uint formatByte;
 
         /// <inheritdoc/>
-        public byte[] HeaderSignature { get; }
+        public byte[] HeaderSignature { get; } = new byte[] { };
 
         protected Nintendo64FileSignature(uint formatByte, Func<Stream, T> streamConverter)
         {

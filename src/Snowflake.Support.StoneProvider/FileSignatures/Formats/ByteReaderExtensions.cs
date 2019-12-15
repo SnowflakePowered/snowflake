@@ -14,7 +14,7 @@ namespace Snowflake.Stone.FileSignatures.Formats
         /// <param name="length">The length of the string in bytes</param>
         /// <param name="encoding">The encoding to be used. Defaults to UTF8</param>
         /// <returns></returns>
-        public static string ReadString(this BinaryReader @this, int length, Encoding encoding = null)
+        public static string ReadString(this BinaryReader @this, int length, Encoding? encoding = null)
         {
             return (encoding ?? Encoding.UTF8).GetString(@this.ReadBytes(length));
         }

@@ -31,7 +31,7 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDI
         private Stream ImageStream { get; }
         private List<Session> _sessions { get; }
         private List<Track> _tracks { get; }
-        private IList<CDXARecord> _fileRecords { get; }
+        //private IList<CDXARecord> _fileRecords { get; }
         internal IEnumerable<Track> Tracks => _tracks.AsEnumerable();
 
         public IReadOnlyList<Session> Sessions => _sessions.AsReadOnly();
@@ -45,7 +45,7 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDI
             this.VolumeDescriptor = this.GetVolumeDescriptor();
 
             // uint lba = this.GetISOPVD().RootDirectoryLBA;
-            // this._fileRecords = this.GetRecords("", lba);
+             // this._fileRecords = this.GetRecords("", lba);
         }
 
 
@@ -419,7 +419,7 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDI
             public long PregapLength { get; set; }
 
             public long TotalLength { get; set; }
-            public string FileName { get; set; }
+            public string? FileName { get; set; }
             /* type of information encoded in the sub q channel */
             public int adr { get; set; }
             /* type of track */

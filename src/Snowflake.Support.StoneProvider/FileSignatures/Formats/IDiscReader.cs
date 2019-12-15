@@ -7,7 +7,7 @@ namespace Snowflake.Stone.FileSignatures.Formats
 {
     internal interface IDiscReader
     {
-        Stream OpenBlock(uint lba);
+        Stream? OpenBlock(uint lba);
         string VolumeDescriptor { get; }
     }
 }

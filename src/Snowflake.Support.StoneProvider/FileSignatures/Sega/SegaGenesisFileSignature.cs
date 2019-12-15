@@ -9,7 +9,7 @@ namespace Snowflake.Stone.FileSignatures.Sega
     internal sealed class SegaGenesisFileSignature : IFileSignature
     {
         /// <inheritdoc/>
-        public byte[] HeaderSignature { get; }
+        public byte[] HeaderSignature { get; } = new byte[] { };
 
         private static readonly Sega32XFileSignature ThirtyTwoXSignature = new Sega32XFileSignature();
         /// <inheritdoc/>

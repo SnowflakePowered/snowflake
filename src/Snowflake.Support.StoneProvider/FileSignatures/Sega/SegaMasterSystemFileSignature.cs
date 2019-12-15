@@ -21,7 +21,7 @@ namespace Snowflake.Stone.FileSignatures.Sega
         }
 
         /// <inheritdoc/>
-        public string GetSerial(Stream romStream)
+        public string? GetSerial(Stream romStream)
         {
             byte[] buffer = new byte[3];
             romStream.Seek(0x7FFC, SeekOrigin.Begin);
@@ -44,6 +44,6 @@ namespace Snowflake.Stone.FileSignatures.Sega
         }
 
         /// <inheritdoc/>
-        public string GetInternalName(Stream fileContents) => null;
+        public string? GetInternalName(Stream fileContents) => null;
     }
 }

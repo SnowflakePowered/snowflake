@@ -33,6 +33,6 @@ namespace Snowflake.Stone.FileSignatures.Nintendo
         }
 
         /// <inheritdoc/>
-        public string GetSerial(Stream fileContents) => null;
+        public string? GetSerial(Stream fileContents) => null;
     }
 }

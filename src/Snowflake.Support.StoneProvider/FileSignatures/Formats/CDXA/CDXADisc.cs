@@ -33,7 +33,7 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDXA
             return new ISOPrimaryVolumeDescriptor(this.OpenBlock(16));
         }
 
-        public Stream OpenFile(string fileName)
+        public Stream? OpenFile(string fileName)
         {
             if (!this.Files.ContainsKey(fileName)) return null;
             return this.Files[fileName].OpenFile();

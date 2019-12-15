@@ -41,7 +41,7 @@ namespace Snowflake.Romfile
         /// This method may not throw if <see cref="HeaderSignatureMatches(Stream)"/> is true.
         /// </remarks>
         /// <param name="fileContents">The contents of the ROM</param>
-        string GetSerial(Stream fileContents);
+        string? GetSerial(Stream fileContents);
 
         /// <summary>
         /// Gets the internal name of the ROM if possible
@@ -53,6 +53,6 @@ namespace Snowflake.Romfile
         /// </remarks>
         /// <param name="fileContents">The contents of the ROM</param>
 
-        string GetInternalName(Stream fileContents);
+        string? GetInternalName(Stream fileContents);
     }
 }
