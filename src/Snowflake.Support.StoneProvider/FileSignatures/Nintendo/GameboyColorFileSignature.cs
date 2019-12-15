@@ -22,7 +22,7 @@ namespace Snowflake.Stone.FileSignatures.Nintendo
         }
 
         /// <inheritdoc/>
-        public string GetInternalName(Stream romStream)
+        public string? GetInternalName(Stream romStream)
         {
             byte[] buffer = new byte[11]; // cgb internal names are only 11 bytes long
             romStream.Seek(0x134, SeekOrigin.Begin);
@@ -32,6 +32,6 @@ namespace Snowflake.Stone.FileSignatures.Nintendo
         }
 
         /// <inheritdoc/>
-        public string GetSerial(Stream romStream) => null;
+        public string? GetSerial(Stream romStream) => null;
     }
 }

@@ -10,10 +10,10 @@ namespace Snowflake.Stone.FileSignatures.Nintendo
         public byte[] HeaderSignature => new byte[4] {0x4E, 0x45, 0x53, 0x1A}; // 'N' 'E' 'S' <EOF>
 
         /// <inheritdoc/>
-        public string GetInternalName(Stream fileContents) => null;
+        public string? GetInternalName(Stream fileContents) => null;
 
         /// <inheritdoc/>
-        public string GetSerial(Stream fileContents) => null;
+        public string? GetSerial(Stream fileContents) => null;
 
         /// <inheritdoc/>
         public bool HeaderSignatureMatches(Stream romStream)

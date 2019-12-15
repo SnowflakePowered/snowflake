@@ -32,24 +32,24 @@ namespace Snowflake.Services
             }
         }
 
-        public IDirectory GetSystemFileDirectory(PlatformId biosPlatform)
+        public IReadOnlyDirectory GetSystemFileDirectory(PlatformId biosPlatform)
         {
-           return this.SystemFileRoot.OpenDirectory(biosPlatform);
+           return this.SystemFileRoot.OpenDirectory(biosPlatform).AsReadOnly();
         }
 
-        public IFile? GetSystemFileByMd5Hash(PlatformId platformId, string md5Hash)
+        public IReadOnlyFile? GetSystemFileByMd5Hash(PlatformId platformId, string md5Hash)
         {
             using var md5 = MD5.Create();
             return this.GetSystemFileDirectory(platformId).EnumerateFiles().AsParallel().FirstOrDefault(f =>
             {
-                using var stream = f.OpenStream();
+                using var stream = f.OpenReadStream();
                 var hash = md5.ComputeHash(stream);
                 var hashString = BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
                 return hashString == md5Hash.ToLowerInvariant();
             });
         }
 
-        public IFile? GetSystemFileByName(PlatformId platformId, string name)
+        public IReadOnlyFile? GetSystemFileByName(PlatformId platformId, string name)
         {
             var directory = this.GetSystemFileDirectory(platformId);
             if (directory.ContainsFile(name) && directory.OpenFile(name).Created) return directory.OpenFile(name);

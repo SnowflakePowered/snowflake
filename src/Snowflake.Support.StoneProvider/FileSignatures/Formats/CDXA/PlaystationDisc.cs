@@ -42,11 +42,12 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDXA
             }
 
             bool psHeader = Encoding.UTF8.GetString(buf).Contains("Sony Computer Entertainment");
-            string syscnf = this.GetMeta();
+            string? syscnf = this.GetMeta();
             if (syscnf == null) return false;
             string exe = syscnf.Substring(14, 11);
             byte[] exebuf = new byte[8];
             using var exeFile = this.disk.OpenFile(exe);
+            if (exeFile == null) return false;
             exeFile.Read(exebuf, 0, 8);
             string exeHeader = Encoding.UTF8.GetString(exebuf);
             return psHeader && (exeHeader == "PS-X EXE" || exeHeader == "CPE");
@@ -56,7 +57,7 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDXA
         /// Gets the SYSTEM.CNF file from the disc if it exists.
         /// </summary>
         /// <returns>Returns the contents of the SYSTEM.CNF file if it exists, or null otherwise.</returns>
-        public string GetMeta()
+        public string? GetMeta()
         {
             if (!this.disk.Files.ContainsKey("SYSTEM.CNF")) return null;
             var file = this.disk.Files["SYSTEM.CNF"];

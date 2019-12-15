@@ -7,7 +7,7 @@ namespace Snowflake.Stone.FileSignatures.Formats.SFO
     {
         internal const int headerSize = 20;
 
-        private SFOHeader sfoHeader;
+        private SFOHeader? sfoHeader;
         public IDictionary<string, string> KeyValues { get; }
         public IList<SFOIndexTableEntry> IndexTableEntries { get; }
 

@@ -10,7 +10,7 @@ namespace Snowflake.Stone.FileSignatures.Formats.SFO
         /// </summary>
         public static readonly int IndexTableEntryLength = 16;
 
-        public byte[] OffsetKeyNameInKeyTable { get; set; }
+        public byte[]? OffsetKeyNameInKeyTable { get; set; }
         public byte DataAlignmentRequirements { get; set; }
         public byte DataTypeValue { get; set; }
         public int SizeValueData { get; set; }

@@ -54,7 +54,7 @@ namespace Snowflake.Stone.FileSignatures.Nintendo
         }
 
         /// <inheritdoc/>
-        public string GetSerial(Stream romStream)
+        public string? GetSerial(Stream romStream)
         {
             byte[] buffer = new byte[4];
             int offset = 0;
@@ -89,7 +89,7 @@ namespace Snowflake.Stone.FileSignatures.Nintendo
         }
 
         /// <inheritdoc/>
-        public string GetInternalName(Stream romStream)
+        public string? GetInternalName(Stream romStream)
         {
             byte[] buffer = new byte[21];
             int offset = 0;

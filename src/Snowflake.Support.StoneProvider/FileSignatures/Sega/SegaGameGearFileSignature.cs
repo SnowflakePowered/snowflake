@@ -45,6 +45,6 @@ namespace Snowflake.Stone.FileSignatures.Sega
         }
 
         /// <inheritdoc/>
-        public string GetInternalName(Stream fileContents) => null;
+        public string? GetInternalName(Stream fileContents) => null;
     }
 }

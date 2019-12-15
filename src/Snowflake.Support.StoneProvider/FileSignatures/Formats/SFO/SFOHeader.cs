@@ -5,8 +5,8 @@ namespace Snowflake.Stone.FileSignatures.Formats.SFO
 {
     internal class SFOHeader
     {
-        public string FileType { get; set; }
-        public string SfoVersion { get; set; }
+        public string? FileType { get; set; }
+        public string? SfoVersion { get; set; }
         public int OffsetKeyTable { get; set; }
         public int OffsetValueTable { get; set; }
         public int NumberDataItems { get; set; }

@@ -15,11 +15,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Execution\SystemFiles\**" />
+    <Compile Remove="Orchestration\SystemFiles\**" />
     <Compile Remove="Migrations\**" />
-    <EmbeddedResource Remove="Execution\SystemFiles\**" />
+    <EmbeddedResource Remove="Orchestration\SystemFiles\**" />
     <EmbeddedResource Remove="Migrations\**" />
-    <None Remove="Execution\SystemFiles\**" />
+    <None Remove="Orchestration\SystemFiles\**" />
     <None Remove="Migrations\**" />
   </ItemGroup>
 
