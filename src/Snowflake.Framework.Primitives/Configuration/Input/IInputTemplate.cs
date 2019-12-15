@@ -46,8 +46,12 @@ namespace Snowflake.Configuration.Input
 
         /// <summary>
         /// Gets or sets the real device element that has been mapped to a virtual element.
+        /// 
+        /// This will set all matching options for every <see cref="IInputOption"/> that matches the provided
+        /// <see cref="IInputOption.TargetElement"/> and the provided <see cref="DeviceCapability"/>,
+        /// depending on the <see cref="DeviceCapabilityClass"/> of the option.
         /// </summary>
-        /// <param name="virtualElement">The virtual element on the controller definition</param>
-        DeviceCapability this[ControllerElement virtualElement] { set; }
+        /// <param name="targetElement">The virtual element on the controller definition</param>
+        DeviceCapability this[ControllerElement targetElement] { set; }
     }
 }

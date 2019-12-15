@@ -8,8 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Castle.Core.Internal;
 using Castle.DynamicProxy;
+using EnumsNET;
 using Snowflake.Configuration.Attributes;
-using Snowflake.Configuration.Input;
 using Snowflake.Configuration.Interceptors;
 using Snowflake.Input.Controller;
 using Snowflake.Input.Controller.Mapped;
@@ -45,21 +45,21 @@ namespace Snowflake.Configuration.Input
         {
             set
             {
-                string optionKey = (from option in this._Options
+                IEnumerable<string> optionKeys = from option in this._Options
                                     where option.Value.TargetElement == virtualElement
-                                    where option.Value.OptionType.HasFlag(InputOptionType.Keyboard) 
-                                        == value.IsKeyboardKey()
-                                    where option.Value.OptionType.HasFlag(InputOptionType.ControllerAxes)
-                                        == value.IsAxis()
-                                    select option.Key).FirstOrDefault();
+                                    where FlagEnums.HasAnyFlags(option.Value.OptionType, value.GetClass())
+                                    select option.Key;
 
-                if (optionKey == null)
+                if (!optionKeys.Any())
                 {
                     throw new KeyNotFoundException(
                         "This template does not support the target element or element type.");
                 }
 
-                this.inputTemplateInterceptor.InputValues[optionKey] = value;
+                foreach (string optionKey in optionKeys)
+                {
+                    this.inputTemplateInterceptor.InputValues[optionKey] = value;
+                }
             }
         }
 
@@ -79,8 +79,8 @@ namespace Snowflake.Configuration.Input
                 let option = this._Options[key]
                 let target = option.TargetElement
                 where element.LayoutElement == target
-                where option.OptionType.HasFlag(InputOptionType.Keyboard) == element.DeviceCapability.IsKeyboardKey()
-                where option.OptionType.HasFlag(InputOptionType.ControllerAxes) == element.DeviceCapability.IsAxis()
+
+                where FlagEnums.HasAnyFlags(option.OptionType, element.DeviceCapability.GetClass())
                 select (key, element.DeviceCapability)).ToDictionary(d => d.key, d => d.DeviceCapability);
             var map = from key in this._Options.Keys
                 let value = overrides.ContainsKey(key) ? overrides[key] : DeviceCapability.None

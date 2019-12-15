@@ -47,7 +47,8 @@ namespace Snowflake.Input.Device
         public KeyboardDeviceInstance()
         {
             this.Capabilities = DeviceCapabilityClasses.Keyboard
-                .Concat(DeviceCapabilityClasses.Mouse)
+                .Concat(DeviceCapabilityClasses.MouseButtons)
+                .Concat(DeviceCapabilityClasses.MouseCursor)
                 .Concat(new[] { DeviceCapability.Axis0, 
                     DeviceCapability.Axis0Negative, 
                     DeviceCapability.Axis0Positive })

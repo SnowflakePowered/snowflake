@@ -1,11 +1,12 @@
 ﻿using Snowflake.Input.Controller;
+using Snowflake.Input.Device;
 
 namespace Snowflake.Configuration.Input
 {
     public class InputOption : IInputOption
     {
         /// <inheritdoc/>
-        public InputOptionType OptionType { get; }
+        public DeviceCapabilityClass OptionType { get; }
 
         /// <inheritdoc/>
         public ControllerElement TargetElement { get; }
