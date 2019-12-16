@@ -42,7 +42,6 @@ namespace Snowflake.Adapters.Higan
 
         public override Task RestoreSaveGame(SaveGame targetDirectory)
         {
-            
             throw new NotImplementedException();
         }
 

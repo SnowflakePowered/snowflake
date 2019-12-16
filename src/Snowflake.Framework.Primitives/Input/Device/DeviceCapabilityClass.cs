@@ -71,6 +71,5 @@ namespace Snowflake.Input.Device
         /// Rumble motors
         /// </summary>
         Rumble = 1 << 6,
-
     }
 }
