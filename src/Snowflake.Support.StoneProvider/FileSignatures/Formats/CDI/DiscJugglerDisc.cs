@@ -210,43 +210,24 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDI
             int dataSize) 
             GetTrackLayout(uint sectorMode, int sectorSize)
         {
-
-            if (sectorMode == 0 && sectorSize == 2352) // Full Sector
+            return (sectorMode, sectorSize) switch
             {
-                return (GDRomSectorFormats.CDDA, 0, 0, 2352);
-            }
-            else if (sectorMode == 1 && sectorSize == 2048) // Mode 1 2018
-            {
-                return (GDRomSectorFormats.Mode1, 0, 0, 2048);
-            }
-            else if (sectorMode == 1 && sectorSize == 2352) // Mode 1 2352
-            {
-                return (GDRomSectorFormats.Mode1, 16, 288, 2048); // SYNC(12) + HEAD(4) + DATA(2048) + (EDC(4)+SPACE(8)+ECC(276) = ERR(288))
-            }
-            else if (sectorMode == 1 && sectorSize == 2336)
-            {
-                return (GDRomSectorFormats.Mode1, 0, 288, 2048);
-            }
-            else if (sectorMode == 2 && sectorSize == 2048)
-            {
-                return (GDRomSectorFormats.Mode2Form1, 0, 0, 2048);
-            }
-            else if (sectorMode == 2 && sectorSize == 2352)
-            {
-                return (GDRomSectorFormats.Mode2Form1, 24, 280, 2048);
-            }
-            else if (sectorMode == 2 && sectorSize == 2336)
-            {
-                return (GDRomSectorFormats.Mode2Form1, 0, 280, 2048);
-            } else if (sectorMode == 2 && sectorSize == 2448)
-            {
+                // Full Sector
+                (0, 2352) => (GDRomSectorFormats.CDDA, 0, 0, 2352),
+                // Mode 1 2018
+                (1, 2048) => (GDRomSectorFormats.Mode1, 0, 0, 2048),
+                // Mode 1 2352
+                // SYNC(12) + HEAD(4) + DATA(2048) + (EDC(4)+SPACE(8)+ECC(276) = ERR(288))
+                (1, 2352) => (GDRomSectorFormats.Mode1, 16, 288, 2048),
+                (1, 2336) => (GDRomSectorFormats.Mode1, 0, 288, 2048),
+                (2, 2048) => (GDRomSectorFormats.Mode2Form1, 0, 0, 2048),
+                (2, 2352) => (GDRomSectorFormats.Mode2Form1, 24, 280, 2048),
+                (2, 2336) => (GDRomSectorFormats.Mode2Form1, 0, 280, 2048),
                 // Pier Solar?
                 // https://github.com/reicast/reicast-emulator/blob/ce90d43c344f19fdce915deef636ded933bc0d08/core/imgread/common.h
-                return (GDRomSectorFormats.Mode2Form2, 24, 2048, 376);
-            }
-
-            throw new DiscJugglerParseException("Unsupported GD-ROM mode.");
-
+                (2, 2448) => (GDRomSectorFormats.Mode2Form2, 24, 2048, 376),
+                _ => throw new DiscJugglerParseException("Unsupported GD-ROM mode.")
+            };
         }
         private (uint rawVersion, uint headerOffset, DiscJugglerVersions djVersion) ParseHeader()
         {
