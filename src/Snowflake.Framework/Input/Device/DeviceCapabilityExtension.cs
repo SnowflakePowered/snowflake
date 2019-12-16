@@ -7,7 +7,6 @@ namespace Snowflake.Input.Device
 {
     public static class DeviceCapabilityExtensions
     {
-
         /// <summary>
         /// Gets the capability class of this <see cref="DeviceCapability"/>
         /// </summary>

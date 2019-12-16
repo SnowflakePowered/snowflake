@@ -79,7 +79,6 @@ namespace Snowflake.Configuration.Input
                 let option = this._Options[key]
                 let target = option.TargetElement
                 where element.LayoutElement == target
-
                 where FlagEnums.HasAnyFlags(option.OptionType, element.DeviceCapability.GetClass())
                 select (key, element.DeviceCapability)).ToDictionary(d => d.key, d => d.DeviceCapability);
             var map = from key in this._Options.Keys
