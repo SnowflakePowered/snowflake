@@ -8,7 +8,7 @@ namespace Snowflake.Input.Device
     /// <summary>
     /// Represents an instance of a device with regards to a specific input driver.
     /// </summary>
-    public interface IInputDriverInstance
+    public interface IInputDeviceInstance
     {
         /// <summary>
         /// The input driver this instance implements

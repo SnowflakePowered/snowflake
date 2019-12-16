@@ -21,8 +21,7 @@ namespace Snowflake.Adapters.Higan
     public class HiganGameEmulation : GameEmulation
     {
         public HiganGameEmulation(IGame game, 
-            Guid guid,
-            IDictionary<InputDriverType, IDeviceInputMapping> inputMappings) : base(game, guid)
+            IDictionary<InputDriverType, IDeviceInputMapping> inputMappings) : base(game)
         {
             this.InputMappings = inputMappings;
             this.Scratch = this.Game.WithFiles().GetRuntimeLocation();

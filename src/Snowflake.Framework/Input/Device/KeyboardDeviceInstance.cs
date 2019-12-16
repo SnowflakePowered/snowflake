@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Snowflake.Input.Device
 {
-    public sealed class KeyboardDeviceInstance : IInputDriverInstance
+    public sealed class KeyboardDeviceInstance : IInputDeviceInstance
     {
         private static readonly IDictionary<ControllerElement, DeviceCapability> DefaultKeyboardMappings =
             new Dictionary<ControllerElement, DeviceCapability>()

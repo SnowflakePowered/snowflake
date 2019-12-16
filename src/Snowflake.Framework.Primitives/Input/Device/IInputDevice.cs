@@ -57,8 +57,8 @@ namespace Snowflake.Input.Device
         Guid InstanceGuid { get; }
 
         /// <summary>
-        /// Gets the input driver instances for which this device implements.
+        /// Gets the device driver instances for which this device implements.
         /// </summary>
-        IEnumerable<IInputDriverInstance> Instances { get; }
+        IEnumerable<IInputDeviceInstance> Instances { get; }
     }
 }

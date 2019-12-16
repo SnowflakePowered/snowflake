@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Snowflake.Input.Device
 {
-    public sealed class XInputDeviceInstance : IInputDriverInstance
+    public sealed class XInputDeviceInstance : IInputDeviceInstance
     {
         private static readonly IDictionary<ControllerElement, DeviceCapability> _xInputMappings =
            new Dictionary<ControllerElement, DeviceCapability>()

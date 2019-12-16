@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Snowflake.Input.Device
 {
+    /// <summary>
+    /// The type of input driver for a <see cref="IInputDeviceInstance"/>.
+    /// </summary>
     public enum InputDriverType
     {
         /// <summary>
@@ -35,6 +38,5 @@ namespace Snowflake.Input.Device
         /// Linux evdev API using libevdev
         /// </summary>
         Libevdev,
-        
     }
 }

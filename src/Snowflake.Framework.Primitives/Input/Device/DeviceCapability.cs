@@ -12,7 +12,7 @@ namespace Snowflake.Input.Device
     /// This differs from <see cref="ControllerElement"/> in semantics;
     /// whereas <see cref="ControllerElement"/> semantics are derived from
     /// the Stone controller layout specification, <see cref="DeviceCapability"/>
-    /// enumerations semantics come from the <see cref="IInputDriverInstance"/> for which
+    /// enumerations semantics come from the <see cref="IInputDeviceInstance"/> for which
     /// these capabilities were instantiated.
     /// </para>
     /// 
