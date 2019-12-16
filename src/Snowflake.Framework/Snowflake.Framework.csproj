@@ -59,13 +59,4 @@
     <WarningsAsErrors>NU1605;8604;8061;8602;8603;8612;8613;8620</WarningsAsErrors>
     <NoWarn>1701;1702;1705;1519;1591;8619</NoWarn>
   </PropertyGroup>
-
-    <!--Hack to work around System.Collections.Generic.IAsyncEnumerable and System.Interactive.Async-->
-  <Target Name="AddAssemblyAliasToReactiveAsync" AfterTargets="ResolveAssemblyReferences" Condition=" '$(TargetFramework)' != '' AND ( '$(TargetFramework)' == 'netcoreapp3.1' OR '$(TargetFramework)' == 'netstandard2.1' ) ">
-    <ItemGroup>
-      <ReferencePath Condition=" '%(FileName)' == 'System.Interactive.Async' ">
-        <Aliases>reactive</Aliases>
-      </ReferencePath>
-    </ItemGroup>
-  </Target>
 </Project>
