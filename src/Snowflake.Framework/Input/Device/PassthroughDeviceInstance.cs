@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Snowflake.Input.Device
 {
-    public sealed class PassthroughDeviceInstance : IInputDriverInstance
+    public sealed class PassthroughDeviceInstance : IInputDeviceInstance
     {
         public InputDriverType Driver => InputDriverType.Passthrough;
 

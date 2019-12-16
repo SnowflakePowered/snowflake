@@ -11,7 +11,7 @@ namespace Snowflake.Orchestration.Extensibility
     {
         public EmulatedController(int portIndex,
             IInputDevice physicalDevice,
-            IInputDriverInstance driverInstance,
+            IInputDeviceInstance driverInstance,
             IControllerLayout targetLayout,
             IControllerElementMappings layoutMapping)
         {
@@ -30,6 +30,6 @@ namespace Snowflake.Orchestration.Extensibility
 
         public IControllerElementMappings LayoutMapping { get; }
 
-        public IInputDriverInstance PhysicalDeviceInstance { get; }
+        public IInputDeviceInstance PhysicalDeviceInstance { get; }
     }
 }

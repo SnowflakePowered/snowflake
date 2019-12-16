@@ -15,17 +15,13 @@ namespace Snowflake.Orchestration.Extensibility
     {
         public IGame Game { get; }
 
-        public Guid Guid { get; }
-
         public string ConfigurationProfile { get; }
 
         public IList<IEmulatedController> ControllerPorts { get; }
 
-        public GameEmulation(IGame game, 
-            Guid guid)
+        public GameEmulation(IGame game)
         {
             this.Game = game;
-            this.Guid = guid;
         }
 
         public abstract Task SetupEnvironment();

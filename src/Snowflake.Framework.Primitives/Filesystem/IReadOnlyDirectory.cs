@@ -74,7 +74,6 @@ namespace Snowflake.Filesystem
         /// <returns>An object that associates a given file with a with a unique <see cref="Guid"/></returns>
         IReadOnlyFile OpenFile(string file, bool createIfNotExists);
 
-
         /// <summary>
         /// Enumerates all direct child directories of this <see cref="IDirectory"/>.
         /// </summary>

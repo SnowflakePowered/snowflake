@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Snowflake.Input.Device
 {
-    public sealed class DirectInputDeviceInstance : IInputDriverInstance
+    public sealed class DirectInputDeviceInstance : IInputDeviceInstance
     {
         internal DirectInputDeviceInstance(int enumerationIndex, 
             int classEnumerationIndex, int uniqueNameEnumerationIndex, 

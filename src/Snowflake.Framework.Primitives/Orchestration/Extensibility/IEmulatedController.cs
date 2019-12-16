@@ -23,7 +23,7 @@ namespace Snowflake.Orchestration.Extensibility
         /// <summary>
         /// Gets the driver instance of the physical device plugged into this emulated port.
         /// </summary>
-        IInputDriverInstance PhysicalDeviceInstance { get; }
+        IInputDeviceInstance PhysicalDeviceInstance { get; }
 
         /// <summary>
         /// Gets the layout of the emulated controller

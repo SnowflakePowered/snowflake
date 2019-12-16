@@ -18,14 +18,14 @@ namespace Snowflake.Input.Device
         public string DevicePath { get; }
 
         public string FriendlyName { get; }
-        public IEnumerable<IInputDriverInstance> Instances { get; }
+        public IEnumerable<IInputDeviceInstance> Instances { get; }
 
         public InputDevice(int vendorId, int productId, 
             string productName, 
             string friendlyName,
             string devicePath,
             Guid instanceGuid, 
-            IReadOnlyList<IInputDriverInstance> instances)
+            IReadOnlyList<IInputDeviceInstance> instances)
         {
             this.VendorID = vendorId;
             this.ProductID = productId;

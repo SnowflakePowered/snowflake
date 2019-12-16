@@ -19,11 +19,10 @@ namespace Snowflake.Adapters.Higan
         }
 
         protected override GameEmulation 
-            CreateEmulationInstance(IGame game, IList<IEmulatedController> controllerPorts, 
+            ProvisionEmulationInstance(IGame game, IList<IEmulatedController> controllerPorts, 
             string configurationProfileName)
         {
             var gameEmulation = new HiganGameEmulation(game,
-                Guid.NewGuid(),
                 new Dictionary<InputDriverType, IDeviceInputMapping>());
             return gameEmulation;
         }

@@ -20,12 +20,12 @@ namespace Snowflake.Support.InputEnumerators.Windows
             yield return new InputDevice(IDeviceEnumerator.VirtualVendorID,
                 IDeviceEnumerator.PassthroughDevicePID, 
                 "Passthrough", "Emulator Handled", "passthrough", IDeviceEnumerator.PassthroughInstanceGuid,
-                new List<IInputDriverInstance>() { new PassthroughDeviceInstance() });
+                new List<IInputDeviceInstance>() { new PassthroughDeviceInstance() });
 
             yield return new InputDevice(IDeviceEnumerator.VirtualVendorID,
              IDeviceEnumerator.KeyboardDevicePID, "Keyboard",
              "Keyboard and Mouse", "keyboard" ,IDeviceEnumerator.KeyboardInstanceGuid,
-             new List<IInputDriverInstance>() { new KeyboardDeviceInstance() });
+             new List<IInputDeviceInstance>() { new KeyboardDeviceInstance() });
 
             using var directInput = new DirectInput();
 
@@ -42,7 +42,7 @@ namespace Snowflake.Support.InputEnumerators.Windows
                 int allOrder = device.Properties.JoystickId;
                 string name = device.Information.ProductName;
                 string path = device.Properties.InterfacePath;
-                var instances = new List<IInputDriverInstance>();
+                var instances = new List<IInputDeviceInstance>();
 
                 // keep track of orderings
                 dinputPNameCount.TryGetValue(name, out int nameOrder);
