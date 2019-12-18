@@ -8,7 +8,7 @@ using Snowflake.Input.Controller.Mapped;
 using Snowflake.Input.Device;
 using Xunit;
 
-namespace Snowflake.Emulator.Execution.Tests
+namespace Snowflake.Orchestration.Tests
 {
     public class EmulatedControllerTests
     {
