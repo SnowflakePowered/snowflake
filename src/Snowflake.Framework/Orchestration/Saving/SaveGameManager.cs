@@ -2,14 +2,19 @@
 using Snowflake.Filesystem;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Snowflake.Orchestration.Saving
 {
-    public sealed class SaveGameManager
+    public sealed class SaveGameManager : ISaveGameManager
     {
+        private static readonly string DateFormat = "yyyy-MM-dd.HH-mm-ss";
+        private static readonly string ManifestName = ".savemanifest";
+        private static readonly string ContentsDirectoryName = "savecontents";
+
         private IDirectory SaveDirectory { get; }
 
         internal SaveGameManager(IDirectory saveDirectory)
@@ -29,16 +34,34 @@ namespace Snowflake.Orchestration.Saving
         public ISaveGame? GetSave(Guid guid)
         {
             var savedir = this.SaveDirectory.EnumerateDirectories()
-            .FirstOrDefault(f => f.Name.StartsWith(guid.ToString()));
+                .FirstOrDefault(f => f.Name.EndsWith(guid.ToString()));
             if (savedir == null) return null;
+            return this.GetSave(savedir);
+        }
+
+        public ISaveGame? GetLatestSave(string type)
+        {
+            var savedirs = from f in this.SaveDirectory.EnumerateDirectories()
+                            where f.Name.StartsWith(type)
+                            let time = DateTimeOffset.TryParseExact(f.Name.Substring(type.Length + 1, DateFormat.Length),
+                                                DateFormat, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal,
+                                                out var date) ? new DateTimeOffset?(date) : null
+                            where time != null
+                            orderby time.Value descending
+                            select f;
+
+
+            var savedir = savedirs.FirstOrDefault();
+            if (savedir == null) return null;
+
             return this.GetSave(savedir);
         }
 
         private ISaveGame? GetSave(IDirectory directory)
         {
-            var savemanifest = directory.OpenFile(".savemanifest");
+            var savemanifest = directory.OpenFile(ManifestName);
             if (!savemanifest.Created) return null;
-            var saveContents = directory.OpenDirectory("savecontents");
+            var saveContents = directory.OpenDirectory(ContentsDirectoryName);
             var details = JsonConvert.DeserializeObject<SaveGameDetails>(savemanifest.ReadAllText());
             return new SaveGame(saveContents.AsReadOnly(),
                 details.CreatedTimestamp, details.Guid, details.Type, details.Tags);
@@ -58,13 +81,13 @@ namespace Snowflake.Orchestration.Saving
             };
 
             var saveDirectory = this.SaveDirectory
-                .OpenDirectory($"{details.Guid}-{type}-{details.CreatedTimestamp.ToString("yyyy-MM-dd.HH-mm-ss")}");
+                .OpenDirectory($"{type}-{details.CreatedTimestamp.ToString(DateFormat)}-{details.Guid}");
             string manifestData = JsonConvert.SerializeObject(details);
-            saveDirectory.OpenFile(".savemanifest").WriteAllText(manifestData);
+            saveDirectory.OpenFile(ManifestName).WriteAllText(manifestData);
 
-            var saveContents = saveDirectory.OpenDirectory("savecontents");
+            var saveContents = saveDirectory.OpenDirectory(ContentsDirectoryName);
             factory(saveContents);
-            return new SaveGame(saveContents.AsReadOnly(), 
+            return new SaveGame(saveContents.AsReadOnly(),
                 details.CreatedTimestamp, details.Guid, details.Type, details.Tags);
         }
 
