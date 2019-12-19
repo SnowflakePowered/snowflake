@@ -47,7 +47,7 @@ namespace Snowflake.Orchestration.Saving
                                                 DateFormat, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal,
                                                 out var date) ? new DateTimeOffset?(date) : null
                             where time != null
-                            orderby time.Value descending
+                            orderby time!.Value descending
                             select f;
 
 
