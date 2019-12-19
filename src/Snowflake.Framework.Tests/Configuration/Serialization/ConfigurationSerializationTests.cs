@@ -14,7 +14,7 @@ using System.Xml.Linq;
 using System.Linq;
 using IniParser.Parser;
 
-namespace Snowflake.Configuration.Serialization
+namespace Snowflake.Configuration.Serialization.Tests
 {
     public class ConfigurationSerializationTests
     {
