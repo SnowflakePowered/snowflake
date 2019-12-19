@@ -42,7 +42,7 @@ namespace Snowflake.Orchestration.Saving
         public ISaveGame? GetLatestSave(string type)
         {
             var savedirs = from f in this.SaveDirectory.EnumerateDirectories()
-                            where f.Name.StartsWith(type)
+                            where f.Name.StartsWith(type) && f.Name.Length > type.Length && f.ContainsFile(ManifestName)
                             let time = DateTimeOffset.TryParseExact(f.Name.Substring(type.Length + 1, DateFormat.Length),
                                                 DateFormat, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal,
                                                 out var date) ? new DateTimeOffset?(date) : null
