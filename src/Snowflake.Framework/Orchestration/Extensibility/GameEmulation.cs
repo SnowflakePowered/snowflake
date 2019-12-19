@@ -28,9 +28,9 @@ namespace Snowflake.Orchestration.Extensibility
 
         public abstract Task CompileConfiguration();
 
-        public abstract Task RestoreSaveGame(SaveGame targetDirectory);
+        public abstract Task RestoreSaveGame(ISaveGame targetDirectory);
 
-        public abstract Task PersistSaveGame(IDirectory targetDirectory);
+        public abstract Task<ISaveGame> PersistSaveGame();
 
         public abstract CancellationToken RunGame();
         protected abstract void TeardownGame();

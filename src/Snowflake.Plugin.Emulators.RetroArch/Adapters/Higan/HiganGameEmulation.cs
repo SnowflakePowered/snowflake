@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Snowflake.Adapters.Higan
 {
@@ -28,20 +29,30 @@ namespace Snowflake.Adapters.Higan
         }
 
         public IDictionary<InputDriverType, IDeviceInputMapping> InputMappings { get; }
-        public SaveGame InitialSave { get; }
+        private ISaveGame InitialSave { get; set; }
         private IDirectory Scratch { get; }
 
-        public override async Task PersistSaveGame(IDirectory targetDirectory)
+        public override Task<ISaveGame> PersistSaveGame()
         {
-            var saveDirectory = this.Scratch.OpenDirectory("save");
-            foreach (var file in saveDirectory.EnumerateFilesRecursive())
+            var tags = this.InitialSave?.Tags ?? Enumerable.Empty<string>();
+            return this.Game.WithFiles().WithSaves().CreateSave("sram", tags, async targetDirectory =>
             {
-                await targetDirectory.CopyFromAsync(file);
-            }
+                var saveDirectory = this.Scratch.OpenDirectory("save");
+                foreach (var file in saveDirectory.EnumerateFilesRecursive())
+                {
+                    await targetDirectory.CopyFromAsync(file);
+                }
+            });
         }
 
-        public override Task RestoreSaveGame(SaveGame targetDirectory)
+        public override async Task RestoreSaveGame(ISaveGame loadedSave)
         {
+            this.InitialSave = loadedSave;
+            var saveDirectory = this.Scratch.OpenDirectory("save");
+            foreach (var file in loadedSave.SaveContents.EnumerateFilesRecursive())
+            {
+                await saveDirectory.CopyFromAsync(file);
+            }
             throw new NotImplementedException();
         }
 
