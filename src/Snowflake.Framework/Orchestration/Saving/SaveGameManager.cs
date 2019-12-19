@@ -67,10 +67,10 @@ namespace Snowflake.Orchestration.Saving
                 details.CreatedTimestamp, details.Guid, details.Type, details.Tags);
         }
 
-        public ISaveGame CreateSave(string type,
-            Action<IDirectory> factory) => this.CreateSave(type, Enumerable.Empty<string>(), factory);
+        public Task<ISaveGame> CreateSave(string type,
+            Func<IDirectory, Task> factory) => this.CreateSave(type, Enumerable.Empty<string>(), factory);
 
-        public ISaveGame CreateSave(string type, IEnumerable<string> tags, Action<IDirectory> factory)
+        public async Task<ISaveGame> CreateSave(string type, IEnumerable<string> tags, Func<IDirectory, Task> factory)
         {
             var details = new SaveGameDetails()
             {
@@ -86,7 +86,7 @@ namespace Snowflake.Orchestration.Saving
             saveDirectory.OpenFile(ManifestName).WriteAllText(manifestData);
 
             var saveContents = saveDirectory.OpenDirectory(ContentsDirectoryName);
-            factory(saveContents);
+            await factory(saveContents);
             return new SaveGame(saveContents.AsReadOnly(),
                 details.CreatedTimestamp, details.Guid, details.Type, details.Tags);
         }
