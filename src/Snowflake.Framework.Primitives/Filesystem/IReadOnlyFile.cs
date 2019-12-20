@@ -66,6 +66,8 @@ namespace Snowflake.Filesystem
         /// for the API to be remotely useful at the barrier.
         /// 
         /// Restrict usage to read-only unless absolutely necessary.
+        /// 
+        /// If this is a link, returns the path the link points to.
         /// </summary>
         /// <returns>The real file path of the file.</returns>
         [Obsolete("Avoid accessing the underlying file path, and use the object methods instead.")]

@@ -70,7 +70,9 @@ namespace Snowflake.Filesystem
         /// <exception cref="IOException">If a file with the same name exists in the target destination and <paramref name="overwrite"/> is false.</exception>
         /// <exception cref="FileNotFoundException">If the source file can not be found.</exception>
         /// <param name="source">The <see cref="FileInfo"/></param>
-        /// <param name="overwrite">Overwrite the file if it already exists in this <see cref="IDirectory"/></param>
+        /// <param name="overwrite">
+        /// Overwrite the file if it already exists in this <see cref="IDirectory"/>.
+        /// If a file already exists, the new file will inherit the old file's GUID.</param>
         /// <returns>The <see cref="IFile"/> that describes the file in the current <see cref="IDirectory"/>.</returns>
         IFile CopyFrom(FileInfo source, bool overwrite);
 
@@ -96,7 +98,10 @@ namespace Snowflake.Filesystem
         /// <exception cref="IOException">If a file with the same name exists in the target destination and <paramref name="overwrite"/> is false.</exception>
         /// <exception cref="FileNotFoundException">If the source file can not be found.</exception>
         /// <param name="source">The <see cref="FileInfo"/></param>
-        /// <param name="overwrite">Overwrite the file if it already exists in this <see cref="IDirectory"/></param>
+        /// <param name="overwrite">
+        /// Overwrite the file if it already exists in this <see cref="IDirectory"/>.
+        /// If a file already exists, the new file will inherit the old file's GUID.
+        /// </param>
         /// <param name="cancellation">A cancellation token that is forwarded to the underlying <see cref="Task{TResult}"/>.</param>
         /// <returns>The <see cref="IFile"/> that describes the file in the current <see cref="IDirectory"/>.</returns>
         Task<IFile> CopyFromAsync(FileInfo source, bool overwrite, CancellationToken cancellation = default);
@@ -108,8 +113,8 @@ namespace Snowflake.Filesystem
         /// The source file will cease to exist in its original <see cref="IDirectory"/>.
         ///
         /// There is no asychronous equivalent by design, since <see cref="MoveFrom(IFile, bool)"/> is intended to
-        /// be faster than <see cref="CopyFromAsync(IFile, CancellationToken)"/> if the <see cref="IDirectory"/> instances
-        /// are on the same file system. Otherwise, you should use <see cref="CopyFromAsync(IFile, CancellationToken)"/>,
+        /// be faster than <see cref="CopyFromAsync(IReadOnlyFile, CancellationToken)"/> if the <see cref="IDirectory"/> instances
+        /// are on the same file system. Otherwise, you should use <see cref="CopyFromAsync(IReadOnlyFile, CancellationToken)"/>,
         /// then <see cref="IFile.Delete"/> the old file.
         /// </summary>
         /// <exception cref="IOException">If a file with the same name exists in the target destination.</exception>
@@ -133,12 +138,15 @@ namespace Snowflake.Filesystem
         /// <exception cref="FileNotFoundException">If the source file can not be found.</exception>
         /// <param name="source">The <see cref="FileInfo"/></param>
         /// <returns>The <see cref="IFile"/> that describes the file in the current <see cref="IDirectory"/>.</returns>
-        /// <param name="overwrite">Overwrite the file if it already exists in this <see cref="IDirectory"/></param>
+        /// <param name="overwrite">
+        /// Overwrite the file if it already exists in this <see cref="IDirectory"/>.
+        /// The new file will keep its existing metadata.
+        /// </param>
         IFile MoveFrom(IFile source, bool overwrite);
 
         /// <summary>
         /// Copies a file from a <see cref="IFile"/> from another <see cref="IDirectory"/>, updating the
-        /// manifests such that the resulting file has the same <see cref="IFile.FileGuid"/> as the source file.
+        /// manifests such that the resulting file has the same <see cref="IReadOnlyFile.FileGuid"/> as the source file.
         /// </summary>
         /// <exception cref="IOException">If a file with the same name exists in the target destination.</exception>
         /// <exception cref="FileNotFoundException">If the source file can not be found.</exception>
@@ -148,7 +156,7 @@ namespace Snowflake.Filesystem
 
         /// <summary>
         /// Copies a file from a <see cref="IFile"/> from another <see cref="IDirectory"/>, updating the
-        /// manifests such that the resulting file has the same <see cref="IFile.FileGuid"/> as the source file.
+        /// manifests such that the resulting file has the same <see cref="IReadOnlyFile.FileGuid"/> as the source file.
         /// </summary>
         /// <exception cref="IOException">If a file with the same name exists in the target destination and <paramref name="overwrite"/> is false.</exception>
         /// <exception cref="FileNotFoundException">If the source file can not be found.</exception>
@@ -201,7 +209,7 @@ namespace Snowflake.Filesystem
         IEnumerable<IFile> EnumerateFilesRecursive();
 
         /// <summary>
-        /// Whether or not this directory contains a file in its manifest. If provided a
+        /// Whether or not this directory contains a file. If provided a
         /// full path, this will truncate the path using <see cref="Path.GetFileName(string)"/>
         /// </summary>
         /// <param name="file">The name of the file to check.</param>
@@ -221,6 +229,42 @@ namespace Snowflake.Filesystem
         /// </summary>
         /// <returns>A read only view over this directory.</returns>
         IReadOnlyDirectory AsReadOnly();
+
+        /// <summary>
+        /// Creates a link to an unmanaged <see cref="FileInfo"/> that exists outside of
+        /// a <see cref="IDirectory"/>.
+        /// Do not ever link to another `IFile`. Instead, use <see cref="CopyFrom(IReadOnlyFile)"/>.
+        /// 
+        /// The underlying file that a link points to can only be modified through the stream.
+        /// Calling <see cref="IFile.Delete"/> or <see cref="IFile.Rename(string)"/> will only rename
+        /// or delete the link. If the file the link points to does not exist, 
+        /// calling <see cref="IFile.OpenStream()"/> will throw <see cref="FileNotFoundException"/>.
+        /// 
+        /// </summary>
+        /// <exception cref="IOException">If a file with the same name exists in the target destination.</exception>
+        /// <exception cref="FileNotFoundException">If the source file can not be found.</exception>
+        /// <param name="source">The <see cref="FileInfo"/></param>
+        /// <returns>The <see cref="IFile"/> that describes the file in the current <see cref="IDirectory"/>.</returns>
+        IFile LinkFrom(FileInfo source);
+
+        /// <summary>
+        /// Creates a link to an unmanaged <see cref="FileInfo"/> that exists outside of
+        /// a <see cref="IDirectory"/>.
+        /// Do not ever link to another <see cref="IFile"/>. Instead, use <see cref="CopyFrom(IReadOnlyFile)"/>.
+        /// 
+        /// The underlying file that a link points to can only be modified through the stream.
+        /// Calling <see cref="IFile.Delete"/> or <see cref="IFile.Rename(string)"/> will only rename
+        /// or delete the link. If the file the link points to does not exist, 
+        /// calling <see cref="IFile.OpenStream()"/> will throw <see cref="FileNotFoundException"/>.
+        /// 
+        /// </summary>
+        /// <exception cref="IOException">If a file with the same name exists in the target destination and <paramref name="overwrite"/> is false.</exception>
+        /// <exception cref="FileNotFoundException">If the source file can not be found.</exception>
+        /// <param name="source">The <see cref="FileInfo"/></param>
+        /// <param name="overwrite">Overwrite the file if it already exists in this <see cref="IDirectory"/>.
+        /// The new link will inherit the GUID of the previously existing file.</param>
+        /// <returns>The <see cref="IFile"/> that describes the file in the current <see cref="IDirectory"/>.</returns>
+        IFile LinkFrom(FileInfo source, bool overwrite);
 
         /// <summary>
         /// Gets the underlying <see cref="DirectoryInfo"/> where files are contained.

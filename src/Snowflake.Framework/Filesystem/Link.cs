@@ -6,25 +6,29 @@ using Zio;
 
 namespace Snowflake.Filesystem
 {
-    internal sealed class File : IFile
+    internal sealed class Link : IFile
     {
-        internal File(Directory parentDirectory, FileEntry file, Guid guid)
+        internal Link(Directory parentDirectory, FileEntry file, Guid guid)
         {
             this.RawInfo = file;
+            this.FileSystemPath = new Lazy<FileInfo>(this.GetFileInfo);
             this._ParentDirectory = parentDirectory;
             this.FileGuid = guid;
         }
 
+        private FileInfo GetFileInfo() => new FileInfo(this.RawInfo.ReadAllText(Encoding.UTF8)["LINK\n".Length..]);
+
         public string Name => this.RawInfo.Name;
 
         internal FileEntry RawInfo { get; private set; }
+        private Lazy<FileInfo> FileSystemPath { get; }
 
         public long Length => this.RawInfo.Length;
 
         internal Directory _ParentDirectory { get; }
         public IDirectory ParentDirectory => _ParentDirectory;
 
-        public bool Created => this.RawInfo.Exists;
+        public bool Created => this.FileSystemPath.Value.Exists;
 
         public Guid FileGuid { get; }
 
@@ -35,12 +39,7 @@ namespace Snowflake.Filesystem
 
         public Stream OpenStream(FileAccess rw)
         {
-            return this.OpenStream(FileMode.OpenOrCreate, rw);
-        }
-
-        public Stream OpenStream(FileMode mode, FileAccess rw, FileShare share = FileShare.None)
-        {
-            return this.RawInfo.Open(mode, rw, share);
+            return this.OpenStream(FileMode.Open, FileAccess.ReadWrite, FileShare.None);
         }
 
         public void Rename(string newName)
@@ -63,7 +62,7 @@ namespace Snowflake.Filesystem
 
         public FileInfo UnsafeGetFilePath()
         {
-            return new FileInfo(this.RawInfo.FileSystem.ConvertPathToInternal(this.RawInfo.Path));
+            return this.FileSystemPath.Value;
         }
 
         public Stream OpenReadStream()
@@ -73,6 +72,11 @@ namespace Snowflake.Filesystem
         }
 
         public IReadOnlyFile AsReadOnly() => this;
+
+        public Stream OpenStream(FileMode mode, FileAccess rw, FileShare share)
+        {
+            return this.FileSystemPath.Value.Open(mode, rw, share);
+        }
 
         public string RootedPath => this.RawInfo.Path.ToString();
 

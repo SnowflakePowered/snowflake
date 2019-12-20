@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using IO = System.IO;
-using System.Text;
 using System.Linq;
 using Zio;
 using System.Threading.Tasks;
 using System.Threading;
-using System.Collections.Concurrent;
-using System.Collections.Immutable;
 using Snowflake.Persistence;
 using Dapper;
+using Snowflake.Model.Records.Utility;
+using System.Text;
 
 namespace Snowflake.Filesystem
 {
     internal sealed class Directory : IDirectory, IReadOnlyDirectory
     {
+        private static readonly Guid LinkNamespaceGuid = new Guid("c63c1258-d241-47be-b1ad-a4a83e0f4ad5");
+
         private SqliteDatabase Manifest { get; }
 
         internal Directory(string name, IFileSystem rootFs, DirectoryEntry parentDirectory)
@@ -58,7 +58,7 @@ namespace Snowflake.Filesystem
             });
         }
 
-        internal Guid GetGuid(string file)
+        internal Guid GetGuid(string file, Guid? overrideGuid = null)
         {
             return this.Manifest.Query(conn =>
             {
@@ -67,7 +67,7 @@ namespace Snowflake.Filesystem
                 if (bytes.Count() == 0)
                 {
                     conn.Execute(@"INSERT OR REPLACE INTO directory_manifest (uuid, filename) VALUES (@guid, @file)",
-                        new {guid = Guid.NewGuid(), file});
+                        new {guid = overrideGuid ?? Guid.NewGuid(), file});
                     bytes = conn.Query<string>(@"SELECT uuid FROM directory_manifest WHERE filename = @file",
                         new {file});
                     return new Guid(bytes.First());
@@ -122,8 +122,24 @@ namespace Snowflake.Filesystem
         private IFile OpenFile(UPath file)
         {
             if (file.GetName() == ".manifest") throw new UnauthorizedAccessException("Unable to open manifest file.");
-            return new File(this, new FileEntry(this.RootFileSystem, file),
-                this.GetGuid(file.GetName()));
+            var guid = this.GetGuid(file.GetName());
+            var guidBytes = guid.ToByteArray();
+            var linkHeaderGuid = GuidCreator.Create(Directory.LinkNamespaceGuid, file.GetName()).ToByteArray();
+            GuidCreator.SwapByteOrder(linkHeaderGuid);
+            GuidCreator.SwapByteOrder(guidBytes);
+
+            if (guidBytes[6] >> 4 == 9 && guidBytes[0..3].SequenceEqual(linkHeaderGuid[0..3])) {
+                return new Link(this, new FileEntry(this.RootFileSystem, file), guid);
+            }
+
+            return new File(this, new FileEntry(this.RootFileSystem, file), guid);
+        }
+
+        private File OpenFile(UPath file, Guid guid)
+        {
+            if (file.GetName() == ".manifest") throw new UnauthorizedAccessException("Unable to open manifest file.");
+            var newGuid = this.GetGuid(file.GetName(), guid);
+            return new File(this, new FileEntry(this.RootFileSystem, file), guid);
         }
 
         public DirectoryInfo UnsafeGetPath()
@@ -277,5 +293,47 @@ namespace Snowflake.Filesystem
         }
 
         public IReadOnlyDirectory AsReadOnly() => this;
+
+        public IFile LinkFrom(FileInfo source) => this.LinkFrom(source, false);
+
+        public IFile LinkFrom(FileInfo source, bool overwrite)
+        {
+
+            if (!source.Exists) throw new FileNotFoundException($"{source.FullName} could not be found.");
+            string? fileName = Path.GetFileName(source.Name);
+
+            if (fileName == null) throw new ArgumentException($"Could not get file name for path {source.Name}.");
+
+#pragma warning disable CS0618 // Type or member is obsolete
+            if (this.ContainsFile(fileName) && !overwrite) throw new IOException($"{source.Name} already exists in the target directory.");
+
+            string normalizedFilename = (this.ThisDirectory.Path / Path.GetFileName(fileName)).GetName();
+            var linkHeaderGuid = GuidCreator.Create(Directory.LinkNamespaceGuid, normalizedFilename).ToByteArray();
+            GuidCreator.SwapByteOrder(linkHeaderGuid);
+            
+            var linkGuidSrc = Guid.NewGuid().ToByteArray();
+            GuidCreator.SwapByteOrder(linkGuidSrc);
+
+            // Set the first 4 bytes to be deterministic 
+            linkGuidSrc[0] = linkHeaderGuid[0];
+            linkGuidSrc[1] = linkHeaderGuid[1];
+            linkGuidSrc[2] = linkHeaderGuid[2];
+            linkGuidSrc[3] = linkHeaderGuid[3];
+
+            // version 9 (invalid GUID version, but GUIDs generated here will have version 9)
+            linkGuidSrc[6] = (byte)((linkGuidSrc[6] & 0x0F) | (9 << 4));
+            GuidCreator.SwapByteOrder(linkGuidSrc);
+
+            var linkGuid = new Guid(linkGuidSrc);
+            
+            var file = this.OpenFile(this.ThisDirectory.Path / Path.GetFileName(fileName), linkGuid);
+
+            using (var newStream = file.OpenStream())
+            {
+                newStream.Write(Encoding.UTF8.GetBytes($"LINK\n{Path.GetFullPath(new Uri(source.FullName).LocalPath)}"));
+            }
+            return this.OpenFile(fileName);
+#pragma warning restore CS0618 // Type or member is obsolete
+        }
     }
 }

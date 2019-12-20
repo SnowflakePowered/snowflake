@@ -16,18 +16,39 @@ namespace Snowflake.Filesystem
     {
         /// <summary>
         /// Opens a read-write stream to the file. If it does not currently exist,
-        /// it will be created. 
+        /// it will be created, unless it is a link to
+        /// an unmanaged file created using <see cref="IDirectory.LinkFrom(FileInfo)"/>,
+        /// which it will instead throw <see cref="FileNotFoundException"/>.
         /// </summary>
+        /// If this file is a link to an unmanaged file, and the file on disk does not exist, opening
+        /// a stream will throw this exception.
         /// <returns>A read-write stream to the file.</returns>
         Stream OpenStream();
 
         /// <summary>
-        /// Opens a stream to the file with the given <see cref="FileAccess"/>. 
-        /// If it does not currently exist, it will be created. 
+        /// Opens a stream to the file with the given <see cref="FileAccess"/>, in <see cref="FileMode.OpenOrCreate"/>.
+        /// 
+        /// If it does not currently exist, it will be created unless it is a link to
+        /// an unmanaged file created using <see cref="IDirectory.LinkFrom(FileInfo)"/>,
+        /// which it will instead throw <see cref="FileNotFoundException"/>.
         /// </summary>
         /// <param name="rw">The <see cref="FileAccess"/> permissions to open the stream with.</param>
+        /// <exception cref="FileNotFoundException">
+        /// If this file is a link to an unmanaged file, and the file on disk does not exist, opening
+        /// a stream will throw this exception.
+        /// </exception>
         /// <returns>A stream to the file with the given <see cref="FileAccess"/>.</returns>
         Stream OpenStream(FileAccess rw);
+
+        /// <summary>
+        /// Opens a stream to the file in the specified mode with read, write, or read/write access, and sharing options.
+        /// </summary>
+        /// <param name="mode">The mode with which to open the file.</param>
+        /// <param name="rw">The <see cref="FileAccess"/> permissions to open the stream with.</param>
+        /// <param name="share">The sharing mode with which to open the file.</param>
+        /// 
+        /// <returns>A stream to the file with the given <see cref="FileAccess"/>.</returns>
+        Stream OpenStream(FileMode mode, FileAccess rw, FileShare share = FileShare.None);
 
         /// <summary>
         /// Renames the file, keeping the same <see cref="IReadOnlyFile.FileGuid"/>.
@@ -41,7 +62,8 @@ namespace Snowflake.Filesystem
 
         /// <summary>
         /// Deletes a <see cref="IFile"/> from the underlying file system as well as the
-        /// manifest of the <see cref="IReadOnlyFile.ParentDirectory"/>.
+        /// manifest of the <see cref="IReadOnlyFile.ParentDirectory"/>. If this is a link,
+        /// only the link will be deleted.
         /// 
         /// If <see cref="IReadOnlyFile.Created"/> is false, the file will simply be removed from the
         /// manifest.
