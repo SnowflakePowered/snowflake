@@ -223,6 +223,14 @@ namespace Snowflake.Filesystem
         IReadOnlyDirectory AsReadOnly();
 
         /// <summary>
+        /// Deletes the directory, including all files and subdirectories included.
+        /// 
+        /// This will invalidate all instances of <see cref="IDirectory"/> pointing to
+        /// this specific directory until it exists again. 
+        /// </summary>       
+        void Delete();
+
+        /// <summary>
         /// Gets the underlying <see cref="DirectoryInfo"/> where files are contained.
         /// 
         /// This is very rarely necessary, and most IO tasks can be done efficiently and safely using the

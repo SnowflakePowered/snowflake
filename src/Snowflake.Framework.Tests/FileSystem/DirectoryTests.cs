@@ -268,5 +268,18 @@ namespace Snowflake.Filesystem.Tests
             Assert.Equal(file.FileGuid, dir.OpenFile(tempFile2).FileGuid);
         }
 
+        [Fact]
+        public void DirectoryDelete_Test()
+        {
+            var fs = new PhysicalFileSystem();
+
+            var temp = Path.GetTempPath();
+            var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
+            var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
+            var nested = dir.OpenDirectory("nested");
+            dir.Delete();
+            Assert.Throws<InvalidOperationException>(() => dir.EnumerateFiles());
+            Assert.Throws<InvalidOperationException>(() => nested.EnumerateFiles());
+        }
     }
 }

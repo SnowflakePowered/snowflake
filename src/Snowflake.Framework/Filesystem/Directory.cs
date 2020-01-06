@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using IO = System.IO;
-using System.Text;
 using System.Linq;
 using Zio;
 using System.Threading.Tasks;
 using System.Threading;
-using System.Collections.Concurrent;
-using System.Collections.Immutable;
 using Snowflake.Persistence;
 using Dapper;
 
@@ -17,6 +13,8 @@ namespace Snowflake.Filesystem
     internal sealed class Directory : IDirectory, IReadOnlyDirectory
     {
         private SqliteDatabase Manifest { get; }
+
+        private bool IsDeleted { get; set; } = false;
 
         internal Directory(string name, IFileSystem rootFs, DirectoryEntry parentDirectory)
         {
@@ -40,8 +38,22 @@ namespace Snowflake.Filesystem
             this.Manifest.CreateTable("directory_manifest", "uuid UUID", "filename TEXT PRIMARY KEY");
         }
 
+        private void CheckDeleted()
+        {
+            if (!this.ContainsFile(".manifest"))
+            {
+                this.IsDeleted = true;
+            }
+
+            if (this.IsDeleted)
+            {
+                throw new InvalidOperationException("Directory is already deleted.");
+            }
+        }
+
         internal void AddGuid(string file, Guid guid)
         {
+            this.CheckDeleted();
             this.Manifest.Execute(connection =>
             {
                 connection.Execute(
@@ -52,6 +64,7 @@ namespace Snowflake.Filesystem
 
         internal void RemoveGuid(string file)
         {
+            this.CheckDeleted();
             this.Manifest.Execute(connection =>
             {
                 connection.Execute(@"DELETE FROM directory_manifest WHERE filename = @file", new {file});
@@ -60,6 +73,7 @@ namespace Snowflake.Filesystem
 
         internal Guid GetGuid(string file)
         {
+            this.CheckDeleted();
             return this.Manifest.Query(conn =>
             {
                 var bytes = conn.Query<string>(@"SELECT uuid FROM directory_manifest WHERE filename = @file",
@@ -96,6 +110,7 @@ namespace Snowflake.Filesystem
 
         public IDirectory OpenDirectory(string name)
         {
+            this.CheckDeleted();
             var directoryStrings = ((UPath)name).Split();
 
             Directory currentDirectory = this;
@@ -108,12 +123,14 @@ namespace Snowflake.Filesystem
 
         public IEnumerable<IDirectory> EnumerateDirectories()
         {
+            this.CheckDeleted();
             return this.ThisDirectory.EnumerateDirectories()
                 .Select(d => this.OpenDirectory(d.Name));
         }
 
         public IEnumerable<IFile> EnumerateFiles()
         {
+            this.CheckDeleted();
             return this.ThisDirectory.EnumerateFiles()
                 .Where(f => f.Name != ".manifest")
                 .Select(f => this.OpenFile(f.Name));
@@ -121,6 +138,7 @@ namespace Snowflake.Filesystem
 
         private IFile OpenFile(UPath file)
         {
+            this.CheckDeleted();
             if (file.GetName() == ".manifest") throw new UnauthorizedAccessException("Unable to open manifest file.");
             return new File(this, new FileEntry(this.RootFileSystem, file),
                 this.GetGuid(file.GetName()));
@@ -140,6 +158,7 @@ namespace Snowflake.Filesystem
 
         public IFile CopyFrom(FileInfo source, bool overwrite)
         {
+            this.CheckDeleted();
             if (!source.Exists) throw new FileNotFoundException($"{source.FullName} could not be found.");
             string? fileName = Path.GetFileName(source.Name);
 
@@ -154,6 +173,7 @@ namespace Snowflake.Filesystem
 
         public async Task<IFile> CopyFromAsync(FileInfo source, bool overwrite, CancellationToken cancellation = default)
         {
+            this.CheckDeleted();
             if (!source.Exists) throw new FileNotFoundException($"{source.FullName} could not be found.");
             string? fileName = Path.GetFileName(source.Name);
             if (fileName == null) throw new ArgumentException($"Cannot get file name for path {source.Name}");
@@ -195,6 +215,7 @@ namespace Snowflake.Filesystem
 
         public IFile MoveFrom(IFile source, bool overwrite)
         {
+            this.CheckDeleted();
 #pragma warning disable CS0618 // Type or member is obsolete
             if (!source.Created) throw new FileNotFoundException($"{source.UnsafeGetFilePath().FullName} could not be found.");
             if (this.ContainsFile(source.Name) && !overwrite) throw new IOException($"{source.Name} already exists in the target directory");
@@ -277,5 +298,12 @@ namespace Snowflake.Filesystem
         }
 
         public IReadOnlyDirectory AsReadOnly() => this;
+
+        public void Delete()
+        {
+            this.CheckDeleted();
+            this.IsDeleted = true;
+            this.ThisDirectory.Delete(true);
+        }
     }
 }
