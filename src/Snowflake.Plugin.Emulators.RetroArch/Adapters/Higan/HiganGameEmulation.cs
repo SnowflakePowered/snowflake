@@ -16,21 +16,32 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Linq;
+using Snowflake.Orchestration.Process;
+using System.Diagnostics;
+using System.Threading.Tasks.Sources;
+
+#nullable enable
 
 namespace Snowflake.Adapters.Higan
 {
     public class HiganGameEmulation : GameEmulation
     {
         public HiganGameEmulation(IGame game, 
-            IDictionary<InputDriverType, IDeviceInputMapping> inputMappings) : base(game)
+            IDictionary<InputDriverType, IDeviceInputMapping> inputMappings,
+            IEmulatorExecutable retroarchExecutable) : base(game)
         {
             this.InputMappings = inputMappings;
+            this.Executable = retroarchExecutable;
             this.Scratch = this.Game.WithFiles().GetRuntimeLocation();
         }
 
         public IDictionary<InputDriverType, IDeviceInputMapping> InputMappings { get; }
-        private ISaveGame InitialSave { get; set; }
+        public IEmulatorExecutable Executable { get; }
+        private ISaveGame? InitialSave { get; set; }
         private IDirectory Scratch { get; }
+
+        private CancellationTokenSource? ProcessCancellationSource { get; set; }
+        private Process RunningProcess { get; set; }
 
         public override Task<ISaveGame> PersistSaveGame()
         {
@@ -53,26 +64,45 @@ namespace Snowflake.Adapters.Higan
             {
                 await saveDirectory.CopyFromAsync(file);
             }
-            throw new NotImplementedException();
         }
 
-        public override CancellationToken RunGame()
+        public override CancellationToken StartEmulation()
         {
-            throw new NotImplementedException();
+            if (this.ProcessCancellationSource != null) return this.ProcessCancellationSource.Token;
+            var processBuilder = this.Executable.GetProcessBuilder();
+            // todo: setup options here
+
+            var psi = processBuilder.ToProcessStartInfo();
+            this.RunningProcess = Process.Start(psi);
+            
+            this.ProcessCancellationSource = new CancellationTokenSource();
+            this.RunningProcess.EnableRaisingEvents = true;
+            
+            this.RunningProcess.Exited += (s, e) => this.ProcessCancellationSource.Cancel();
+            return this.ProcessCancellationSource.Token;
         }
 
-        public override Task SetupEnvironment()
+        public override async Task SetupEnvironment()
         {
-            throw new NotImplementedException();
+            // todo: copy BIOS files to env
         }
 
         public async override Task CompileConfiguration()
         {
             var serializer = new SimpleCfgConfigurationSerializer();
             var tokenizer = new ConfigurationTraversalContext();
-            var config = this.Game.WithConfigurations()
+            var configProfile = this.Game.WithConfigurations()
                 .GetProfile<HiganRetroArchConfiguration>(nameof(HiganGameEmulation),
-                this.ConfigurationProfile).Configuration;
+                this.ConfigurationProfile);
+
+            if (configProfile == null)
+            {
+                configProfile = this.Game.WithConfigurations()
+                    .CreateNewProfile<HiganRetroArchConfiguration>
+                    (nameof(HiganGameEmulation), this.ConfigurationProfile);
+            }
+                
+            var config = configProfile.Configuration;
 
             var node = tokenizer.TraverseCollection(config);
             var retroArchNode = node["#retroarch"];
@@ -96,9 +126,17 @@ namespace Snowflake.Adapters.Higan
             await configFile.WriteAllTextAsync(configContents.ToString());
         }
 
-        protected override void TeardownGame()
+        protected override async Task TeardownGame()
         {
-            throw new NotImplementedException();
+            this.Scratch.Delete();
+        }
+
+        public override async Task StopEmulation()
+        {
+            using var controller = new RetroArchNetworkController();
+            await controller.Quit();
+            await this.RunningProcess.WaitForExitAsync(new CancellationTokenSource(500).Token);
+            this.RunningProcess.Kill(true);
         }
     }
 }

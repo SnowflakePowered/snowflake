@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Snowflake.Orchestration.Extensibility
 {
-    public abstract class GameEmulation : IDisposable
+    public abstract class GameEmulation : IAsyncDisposable
     {
         public IGame Game { get; }
 
@@ -30,30 +30,23 @@ namespace Snowflake.Orchestration.Extensibility
 
         public abstract Task RestoreSaveGame(ISaveGame targetDirectory);
 
+        public abstract CancellationToken StartEmulation();
+
+        public abstract Task StopEmulation();
         public abstract Task<ISaveGame> PersistSaveGame();
 
-        public abstract CancellationToken RunGame();
-        protected abstract void TeardownGame();
+        protected abstract Task TeardownGame();
 
-        #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
+        #region IAsyncDisposable Support
 
-        protected virtual void Dispose(bool disposing)
+        private bool IsDisposed { get; set; } = false;
+        public async ValueTask DisposeAsync()
         {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                    this.TeardownGame();
-                }
-                disposedValue = true;
-            }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
+            if (this.IsDisposed) return;
+            this.IsDisposed = true;
+            await this.StopEmulation();
+            await this.PersistSaveGame();
+            await this.TeardownGame();
         }
         #endregion
     }
