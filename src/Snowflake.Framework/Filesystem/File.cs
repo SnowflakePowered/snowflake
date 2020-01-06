@@ -46,9 +46,9 @@ namespace Snowflake.Filesystem
         public void Rename(string newName)
         {
             this.RawInfo.MoveTo(this.RawInfo.Parent.Path / Path.GetFileName(newName));
-            this._ParentDirectory.RemoveGuid(this.Name);
+            this._ParentDirectory.RemoveManifestRecord(this.Name);
             this.RawInfo = new FileEntry(this.RawInfo.FileSystem, this.RawInfo.Parent.Path / Path.GetFileName(newName));
-            this._ParentDirectory.AddGuid(this.Name, this.FileGuid);
+            this._ParentDirectory.AddManifestRecord(this.Name, this.FileGuid, false);
         }
 
         public void Delete()
@@ -58,13 +58,15 @@ namespace Snowflake.Filesystem
                 this.RawInfo.Delete();
             }
 
-            this._ParentDirectory.RemoveGuid(this.Name);
+            this._ParentDirectory.RemoveManifestRecord(this.Name);
         }
 
         public FileInfo UnsafeGetFilePath()
         {
             return new FileInfo(this.RawInfo.FileSystem.ConvertPathToInternal(this.RawInfo.Path));
         }
+
+        FileInfo IReadOnlyFile.UnsafeGetFilePointerPath() => this.UnsafeGetFilePath();
 
         public Stream OpenReadStream()
         {
@@ -77,5 +79,7 @@ namespace Snowflake.Filesystem
         public string RootedPath => this.RawInfo.Path.ToString();
 
         IReadOnlyDirectory IReadOnlyFile.ParentDirectory => this._ParentDirectory;
+
+        public bool IsLink => false;
     }
 }

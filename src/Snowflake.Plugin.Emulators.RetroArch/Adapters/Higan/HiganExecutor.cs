@@ -23,7 +23,7 @@ namespace Snowflake.Adapters.Higan
             string configurationProfileName)
         {
             var gameEmulation = new HiganGameEmulation(game,
-                new Dictionary<InputDriverType, IDeviceInputMapping>());
+                new Dictionary<InputDriverType, IDeviceInputMapping>(), null);
             return gameEmulation;
         }
     }

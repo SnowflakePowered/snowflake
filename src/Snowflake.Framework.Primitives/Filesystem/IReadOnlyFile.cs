@@ -55,6 +55,11 @@ namespace Snowflake.Filesystem
         string RootedPath { get; }
 
         /// <summary>
+        /// Whether or not this file is a link.
+        /// </summary>
+        bool IsLink { get; }
+
+        /// <summary>
         /// Returns the real file path of this file.
         /// 
         /// This method is obsolete because it is unsafe to use,
@@ -65,10 +70,19 @@ namespace Snowflake.Filesystem
         /// However, access to the underlying filesystem is necessary
         /// for the API to be remotely useful at the barrier.
         /// 
+        /// If <see cref="IsLink"/> is true, then this returns the path that is linked to.
+        /// 
         /// Restrict usage to read-only unless absolutely necessary.
         /// </summary>
         /// <returns>The real file path of the file.</returns>
         [Obsolete("Avoid accessing the underlying file path, and use the object methods instead.")]
         FileInfo UnsafeGetFilePath();
+
+        /// <summary>
+        /// Returns the real file path of this file, regardless of whether or not it is a link.
+        /// For internal use when implementing copy and move operations.
+        /// If <see cref="IsLink"/> is false, this should be equivalent to <see cref="UnsafeGetFilePath"/>. 
+        /// Otherwise, it should return the path to the link file. 
+        internal FileInfo UnsafeGetFilePointerPath();
     }
 }
