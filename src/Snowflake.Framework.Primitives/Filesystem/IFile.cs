@@ -30,6 +30,16 @@ namespace Snowflake.Filesystem
         Stream OpenStream(FileAccess rw);
 
         /// <summary>
+        /// Opens a stream to the file in the specified mode with read, write, or read/write access, and sharing options.
+        /// </summary>
+        /// <param name="mode">The mode with which to open the file.</param>
+        /// <param name="rw">The <see cref="FileAccess"/> permissions to open the stream with.</param>
+        /// <param name="share">The sharing mode with which to open the file.</param>
+        /// 
+        /// <returns>A stream to the file with the given <see cref="FileAccess"/>.</returns>
+        Stream OpenStream(FileMode mode, FileAccess rw, FileShare share);
+
+        /// <summary>
         /// Renames the file, keeping the same <see cref="IReadOnlyFile.FileGuid"/>.
         /// If the provided name is a path, it will be truncated with <see cref="Path.GetFileName(string)"/>.
         /// 

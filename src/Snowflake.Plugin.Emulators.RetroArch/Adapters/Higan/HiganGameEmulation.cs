@@ -129,7 +129,7 @@ namespace Snowflake.Adapters.Higan
         protected override async Task TeardownGame()
         {
             this.Scratch.Delete();
-        }
+        } 
 
         public override async Task StopEmulation()
         {
