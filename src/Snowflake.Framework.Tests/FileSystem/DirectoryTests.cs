@@ -96,7 +96,7 @@ namespace Snowflake.Filesystem.Tests
             var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
             var file = dir.OpenFile("test.txt");
             Assert.True(dir.ContainsFile(".manifest"));
-            Assert.Equal(file.FileGuid, dir.RetrieveManifestRecord(dir.ThisDirectory.Path / Path.GetFileName("test.text")).guid);
+            Assert.Equal(file.FileGuid, dir.RetrieveManifestRecord(dir.ThisDirectory.Path / Path.GetFileName("test.txt")).guid);
         }
 
         [Fact]
@@ -108,7 +108,7 @@ namespace Snowflake.Filesystem.Tests
             var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
             var file = dir.OpenFile("test.txt");
             Assert.True(dir.ContainsFile(".manifest"));
-            Assert.Equal(file.FileGuid, dir.RetrieveManifestRecord(dir.ThisDirectory.Path / Path.GetFileName("test.text")).guid);
+            Assert.Equal(file.FileGuid, dir.RetrieveManifestRecord(dir.ThisDirectory.Path / Path.GetFileName("test.txt")).guid);
             file.Delete();
             var newFile = dir.OpenFile("test.txt");
             Assert.NotEqual(newFile.FileGuid, file.FileGuid);
@@ -124,7 +124,7 @@ namespace Snowflake.Filesystem.Tests
             var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
             var file = dir.OpenFile("test.txt");
             Assert.True(dir.ContainsFile(".manifest"));
-            Assert.Equal(file.FileGuid, dir.RetrieveManifestRecord(dir.ThisDirectory.Path / Path.GetFileName("test.text")).guid);
+            Assert.Equal(file.FileGuid, dir.RetrieveManifestRecord(dir.ThisDirectory.Path / Path.GetFileName("test.txt")).guid);
             file.OpenStream().Close();
             dir.OpenDirectory("next_test").OpenFile("test2.txt").OpenStream().Close();
             var iter = dir.EnumerateFilesRecursive();
