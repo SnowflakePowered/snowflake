@@ -8,7 +8,7 @@ namespace Snowflake.Filesystem
 {
     internal sealed class Link : IFile
     {
-        private static readonly string LinkHeader = "LINK\n";
+        internal static readonly string LinkHeader = "LINK\n";
         internal Link(Directory parentDirectory, FileEntry file, Guid guid)
         {
             this.RawInfo = file;
@@ -46,9 +46,9 @@ namespace Snowflake.Filesystem
         public void Rename(string newName)
         {
             this.RawInfo.MoveTo(this.RawInfo.Parent.Path / Path.GetFileName(newName));
-            this._ParentDirectory.RemoveGuid(this.Name);
+            this._ParentDirectory.RemoveManifestRecord(this.Name);
             this.RawInfo = new FileEntry(this.RawInfo.FileSystem, this.RawInfo.Parent.Path / Path.GetFileName(newName));
-            this._ParentDirectory.AddGuid(this.Name, this.FileGuid);
+            this._ParentDirectory.AddManifestRecord(this.Name, this.FileGuid, true);
         }
 
         public void Delete()
@@ -58,13 +58,13 @@ namespace Snowflake.Filesystem
                 this.RawInfo.Delete();
             }
 
-            this._ParentDirectory.RemoveGuid(this.Name);
+            this._ParentDirectory.RemoveManifestRecord(this.Name);
         }
 
-        public FileInfo UnsafeGetFilePath()
-        {
-            return this.FileSystemPath.Value;
-        }
+        public FileInfo UnsafeGetFilePath() => this.FileSystemPath.Value;
+
+        FileInfo IReadOnlyFile.UnsafeGetFilePointerPath() => new FileInfo(this.RawInfo.FileSystem.ConvertPathToInternal(this.RawInfo.Path));
+
 
         public Stream OpenReadStream()
         {
@@ -82,5 +82,7 @@ namespace Snowflake.Filesystem
         public string RootedPath => this.RawInfo.Path.ToString();
 
         IReadOnlyDirectory IReadOnlyFile.ParentDirectory => this._ParentDirectory;
+
+        public bool IsLink => true;
     }
 }

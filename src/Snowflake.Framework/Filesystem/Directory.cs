@@ -7,11 +7,18 @@ using System.Threading.Tasks;
 using System.Threading;
 using Snowflake.Persistence;
 using Dapper;
+using System.Text;
 
 namespace Snowflake.Filesystem
 {
     internal sealed class Directory : IDirectory, IReadOnlyDirectory
     {
+        private class ManifestRecord
+        {
+            public string uuid { get; set; }
+            public bool is_link { get; set; }
+        }
+
         private SqliteDatabase Manifest { get; }
 
         private bool IsDeleted { get; set; } = false;
@@ -24,7 +31,7 @@ namespace Snowflake.Filesystem
 
             this.Manifest =
                 new SqliteDatabase(this.RootFileSystem.ConvertPathToInternal(this.ThisDirectory.Path / ".manifest"));
-            this.Manifest.CreateTable("directory_manifest", "uuid TEXT", "filename TEXT PRIMARY KEY");
+            this.Manifest.CreateTable("directory_manifest", "uuid TEXT", "is_link BOOLEAN", "filename TEXT PRIMARY KEY");
         }
 
         internal Directory(IFileSystem rootFs)
@@ -35,7 +42,7 @@ namespace Snowflake.Filesystem
 
             this.Manifest =
                 new SqliteDatabase(this.RootFileSystem.ConvertPathToInternal(this.ThisDirectory.Path / ".manifest"));
-            this.Manifest.CreateTable("directory_manifest", "uuid UUID", "filename TEXT PRIMARY KEY");
+            this.Manifest.CreateTable("directory_manifest", "uuid UUID", "is_link BOOLEAN", "filename TEXT PRIMARY KEY");
         }
 
         private void CheckDeleted()
@@ -51,18 +58,18 @@ namespace Snowflake.Filesystem
             }
         }
 
-        internal void AddGuid(string file, Guid guid)
+        internal void AddManifestRecord(string file, Guid guid, bool isLink)
         {
             this.CheckDeleted();
             this.Manifest.Execute(connection =>
             {
                 connection.Execute(
-                    @"INSERT OR REPLACE INTO directory_manifest (uuid, filename) VALUES (@guid, @file)",
-                    new {guid, file});
+                    @"INSERT OR REPLACE INTO directory_manifest (uuid, is_link, filename) VALUES (@guid, @isLink, @file)",
+                    new {guid, isLink, file});
             });
         }
 
-        internal void RemoveGuid(string file)
+        internal void RemoveManifestRecord(string file)
         {
             this.CheckDeleted();
             this.Manifest.Execute(connection =>
@@ -71,24 +78,50 @@ namespace Snowflake.Filesystem
             });
         }
 
-        internal Guid GetGuid(string file)
+        internal (Guid guid, bool isLink) RetrieveManifestRecord(UPath file)
         {
             this.CheckDeleted();
-            return this.Manifest.Query(conn =>
+            var fileName = file.GetName();
+            return this.Manifest.Query<(Guid, bool)>(conn =>
             {
-                var bytes = conn.Query<string>(@"SELECT uuid FROM directory_manifest WHERE filename = @file",
-                    new {file});
-                if (bytes.Count() == 0)
+                var record = conn.Query<ManifestRecord>(@"SELECT uuid, is_link FROM directory_manifest WHERE filename = @fileName",
+                    new {fileName});
+             
+                if (record.Count() == 0)
                 {
-                    conn.Execute(@"INSERT OR REPLACE INTO directory_manifest (uuid, filename) VALUES (@guid, @file)",
-                        new {guid = Guid.NewGuid(), file});
-                    bytes = conn.Query<string>(@"SELECT uuid FROM directory_manifest WHERE filename = @file",
-                        new {file});
-                    return new Guid(bytes.First());
+                    // New file encountered.
+
+                    bool isLink = this.CheckIsLink(file);
+                    conn.Execute(@"INSERT OR REPLACE INTO directory_manifest (uuid, is_link, filename) VALUES (@guid, @isLink, @fileName)",
+                        new {guid = Guid.NewGuid(), fileName, isLink});
+
+                    record = conn.Query<ManifestRecord>(@"SELECT uuid FROM directory_manifest WHERE filename = @fileName",
+                        new {fileName});
                 }
 
-                return new Guid(bytes.First());
+                var _record = record.First();
+                return (new Guid(_record.uuid), _record.is_link);
             });
+        }
+
+        internal bool CheckIsLink(UPath file)
+        {
+            var entry = new FileEntry(this.RootFileSystem, file);
+
+            // Uncreated files can not be links (but can link to nonexisting files).
+            if (!entry.Exists) return false;
+
+            try
+            {
+                using var stream = entry.Open(FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                Span<byte> buf = stackalloc byte[5];
+                stream.Read(buf);
+                return Encoding.UTF8.GetString(buf) == Link.LinkHeader;
+            } 
+            catch
+            {
+                return false;
+            }
         }
 
         internal IFileSystem RootFileSystem { get; }
@@ -140,8 +173,14 @@ namespace Snowflake.Filesystem
         {
             this.CheckDeleted();
             if (file.GetName() == ".manifest") throw new UnauthorizedAccessException("Unable to open manifest file.");
-            return new File(this, new FileEntry(this.RootFileSystem, file),
-                this.GetGuid(file.GetName()));
+
+            (Guid guid, bool isLink) = this.RetrieveManifestRecord(file);
+
+            return isLink switch
+            {
+                false => new File(this, new FileEntry(this.RootFileSystem, file), guid),
+                true => new Link(this, new FileEntry(this.RootFileSystem, file), guid)
+            };
         }
 
         public DirectoryInfo UnsafeGetPath()
@@ -191,10 +230,9 @@ namespace Snowflake.Filesystem
         public IFile CopyFrom(IReadOnlyFile source, bool overwrite)
         {
             if (this.ContainsFile(source.Name) && !overwrite) throw new IOException($"{source.Name} already exists in the target directory.");
-            this.AddGuid(source.Name, source.FileGuid);
-#pragma warning disable CS0618 // Type or member is obsolete
-            return this.CopyFrom(source.UnsafeGetFilePath(), overwrite);
-#pragma warning restore CS0618 // Type or member is obsolete
+            this.AddManifestRecord(source.Name, source.FileGuid, false);
+
+            return this.CopyFrom(source.UnsafeGetFilePointerPath(), overwrite);
         }
 
         public Task<IFile> CopyFromAsync(IReadOnlyFile source, CancellationToken cancellation = default) 
@@ -202,11 +240,10 @@ namespace Snowflake.Filesystem
 
         public async Task<IFile> CopyFromAsync(IReadOnlyFile source, bool overwrite, CancellationToken cancellation = default)
         {
-#pragma warning disable CS0618 // Type or member is obsolete
+
             if (this.ContainsFile(source.Name) && !overwrite) throw new IOException($"{source.Name} already exists in the target directory");
-            this.AddGuid(source.Name, source.FileGuid);
-            return await this.CopyFromAsync(source.UnsafeGetFilePath(), overwrite, cancellation);
-#pragma warning restore CS0618 // Type or member is obsolete
+            this.AddManifestRecord(source.Name, source.FileGuid, false);
+            return await this.CopyFromAsync(source.UnsafeGetFilePointerPath(), overwrite, cancellation);
         }
 
         public IFile CopyFrom(IReadOnlyFile source) => this.CopyFrom(source, false);
@@ -216,14 +253,13 @@ namespace Snowflake.Filesystem
         public IFile MoveFrom(IFile source, bool overwrite)
         {
             this.CheckDeleted();
-#pragma warning disable CS0618 // Type or member is obsolete
-            if (!source.Created) throw new FileNotFoundException($"{source.UnsafeGetFilePath().FullName} could not be found.");
+
+            if (!source.Created) throw new FileNotFoundException($"{source.UnsafeGetFilePointerPath().FullName} could not be found.");
             if (this.ContainsFile(source.Name) && !overwrite) throw new IOException($"{source.Name} already exists in the target directory");
-            this.AddGuid(source.Name, source.FileGuid);
+            this.AddManifestRecord(source.Name, source.FileGuid, false);
             var file = this.OpenFile(source.Name);
             // unsafe usage here as optimization.
-            source.UnsafeGetFilePath().MoveTo(file.UnsafeGetFilePath().ToString(), overwrite);
-#pragma warning restore CS0618 // Type or member is obsolete
+            source.UnsafeGetFilePointerPath().MoveTo(file.UnsafeGetFilePointerPath().ToString(), overwrite);
             source.Delete();
             return file;
         }
