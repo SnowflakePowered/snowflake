@@ -33,11 +33,9 @@ namespace Snowflake.Support.StoreProviders
             {
                 var connection = context.Database.GetDbConnection();
                 connection.Open();
-                using (var command = connection.CreateCommand())
-                {
-                    command.CommandText = "PRAGMA journal_mode=WAL;";
-                    command.ExecuteNonQuery();
-                }
+                using var command = connection.CreateCommand();
+                command.CommandText = "PRAGMA journal_mode=WAL;";
+                command.ExecuteNonQuery();
             }
 
             // game library dependency tree
