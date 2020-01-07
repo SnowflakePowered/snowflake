@@ -83,6 +83,13 @@ namespace Snowflake.Filesystem
 
         IReadOnlyDirectory IReadOnlyFile.ParentDirectory => this._ParentDirectory;
 
+        /// <summary>
+        /// Open the <see cref="Link"/> as a <see cref="File"/>, exposing
+        /// the link source file.
+        /// </summary>
+        /// <returns>A <see cref="File"/> where the link file is readable.</returns>
+        internal File UnsafeOpenAsFile() => new File(this._ParentDirectory, this.RawInfo, this.FileGuid);
+
         public bool IsLink => true;
     }
 }
