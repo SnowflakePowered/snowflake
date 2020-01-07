@@ -8,7 +8,7 @@ namespace Snowflake.Filesystem
 {
     internal sealed class Link : IFile
     {
-        internal static readonly string LinkHeader = "LINK\n";
+        internal static readonly string LinkHeader = "@@SF__LINK\n";
         internal Link(Directory parentDirectory, FileEntry file, Guid guid)
         {
             this.RawInfo = file;
@@ -24,7 +24,7 @@ namespace Snowflake.Filesystem
         internal FileEntry RawInfo { get; private set; }
         private Lazy<FileInfo> FileSystemPath { get; }
 
-        public long Length => this.RawInfo.Length;
+        public long Length => this.Created ? this.FileSystemPath.Value.Length : -1;
 
         internal Directory _ParentDirectory { get; }
         public IDirectory ParentDirectory => _ParentDirectory;
