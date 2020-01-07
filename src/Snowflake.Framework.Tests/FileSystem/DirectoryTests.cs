@@ -277,9 +277,10 @@ namespace Snowflake.Filesystem.Tests
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
             var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
             var nested = dir.OpenDirectory("nested");
-            dir.Delete();
-            Assert.Throws<InvalidOperationException>(() => dir.EnumerateFiles());
+            var nested2 = nested.OpenDirectory("nested2");
+            nested.Delete();
             Assert.Throws<InvalidOperationException>(() => nested.EnumerateFiles());
+            Assert.Throws<InvalidOperationException>(() => nested2.EnumerateFiles());
         }
     }
 }
