@@ -15,7 +15,6 @@ namespace Snowflake.Plugin.Emulators.RetroArch
 
         public RetroArchNetworkController(string ipaddress, int port)
         {
-         
             this.Client = new UdpClient();
             this.Endpoint = new IPEndPoint(IPAddress.Parse(ipaddress), port);
         }
