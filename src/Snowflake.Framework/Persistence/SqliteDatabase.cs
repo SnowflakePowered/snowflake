@@ -69,16 +69,14 @@ namespace Snowflake.Persistence
         /// <param name="queryFunction">A function to query the database using the opened connection</param>
         public void Execute(Action<IDbConnection> queryFunction)
         {
-            using (var dbTransaction = this.GetConnection().BeginTransaction())
-            using (var dbConnection = dbTransaction.Connection)
+            using var dbTransaction = this.GetConnection().BeginTransaction();
+            using var dbConnection = dbTransaction.Connection;
+            dbConnection.Open();
+            queryFunction(dbConnection);
+            dbTransaction.Commit();
+            if (dbConnection.State != ConnectionState.Closed)
             {
-                dbConnection.Open();
-                queryFunction(dbConnection);
-                dbTransaction.Commit();
-                if (dbConnection.State != ConnectionState.Closed)
-                {
-                    dbConnection.Close();
-                }
+                dbConnection.Close();
             }
         }
 

@@ -22,38 +22,32 @@ namespace Snowflake.Model.Database
 
         public IEnumerable<IGameRecord> GetAllRecords()
         {
-            using (var context = new DatabaseContext(this.Options.Options))
-            {
-                var records = context.GameRecords.Include(r => r.Metadata)
-                    .Select(record => new GameRecord(record.PlatformID, record.RecordID,
-                        record.Metadata.AsMetadataCollection(record.RecordID)))
-                    .ToList();
-                return records;
-            }
+            using var context = new DatabaseContext(this.Options.Options);
+            var records = context.GameRecords.Include(r => r.Metadata)
+                .Select(record => new GameRecord(record.PlatformID, record.RecordID,
+                record.Metadata.AsMetadataCollection(record.RecordID)))
+                .ToList();
+            return records;
         }
 
         public IEnumerable<IGameRecord> GetRecords(Expression<Func<IGameRecord, bool>> predicate)
         {
-            using (var context = new DatabaseContext(this.Options.Options))
-            {
-                var records = context.GameRecords.Include(r => r.Metadata)
-                    .Select(record => new GameRecord(record.PlatformID, record.RecordID,
-                        record.Metadata.AsMetadataCollection(record.RecordID)))
-                    .Where(predicate.Compile());
-                return records?.ToList() ?? Enumerable.Empty<IGameRecord>();
-            }
+            using var context = new DatabaseContext(this.Options.Options);
+            var records = context.GameRecords.Include(r => r.Metadata)
+                .Select(record => new GameRecord(record.PlatformID, record.RecordID,
+                record.Metadata.AsMetadataCollection(record.RecordID)))
+                .Where(predicate.Compile());
+            return records?.ToList() ?? Enumerable.Empty<IGameRecord>();
         }
 
         public IEnumerable<IGameRecord> QueryRecords(Expression<Func<IGameRecordQuery, bool>> predicate)
         {
-            using (var context = new DatabaseContext(this.Options.Options))
-            {
-                var records = context.GameRecords.Include(r => r.Metadata)
-                    .Where(predicate)
-                    .Select(record => new GameRecord(record.PlatformID, record.RecordID,
-                        record.Metadata.AsMetadataCollection(record.RecordID)));
-                return records?.ToList() ?? Enumerable.Empty<IGameRecord>();
-            }
+            using var context = new DatabaseContext(this.Options.Options);
+            var records = context.GameRecords.Include(r => r.Metadata)
+                .Where(predicate)
+                .Select(record => new GameRecord(record.PlatformID, record.RecordID,
+                record.Metadata.AsMetadataCollection(record.RecordID)));
+            return records?.ToList() ?? Enumerable.Empty<IGameRecord>();
         }
 
         public async Task<IEnumerable<IGameRecord>> QueryRecordsAsync(Expression<Func<IGameRecordQuery, bool>> predicate)
@@ -70,18 +64,15 @@ namespace Snowflake.Model.Database
 
         public IGameRecord? GetRecord(Guid guid)
         {
-            using (var context = new DatabaseContext(this.Options.Options))
+            using var context = new DatabaseContext(this.Options.Options);
+            var record = context.GameRecords.Include(r => r.Metadata).SingleOrDefault(g => g.RecordID == guid);
+            if (record != null)
             {
-                var record = context.GameRecords.Include(r => r.Metadata)
-                    .SingleOrDefault(g => g.RecordID == guid);
-                if (record != null)
-                {
-                    return new GameRecord(record.PlatformID, record.RecordID,
-                        record.Metadata.AsMetadataCollection(record.RecordID));
-                }
-
-                return null;
+                return new GameRecord(record.PlatformID, record.RecordID,
+                    record.Metadata.AsMetadataCollection(record.RecordID));
             }
+
+            return null;
         }
 
         public IGameRecord CreateRecord(PlatformId platformId)
