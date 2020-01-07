@@ -37,7 +37,7 @@ namespace Snowflake.Filesystem
         /// <param name="share">The sharing mode with which to open the file.</param>
         /// 
         /// <returns>A stream to the file with the given <see cref="FileAccess"/>.</returns>
-        Stream OpenStream(FileMode mode, FileAccess rw, FileShare share);
+        Stream OpenStream(FileMode mode, FileAccess rw, FileShare share = FileShare.None);
 
         /// <summary>
         /// Renames the file, keeping the same <see cref="IReadOnlyFile.FileGuid"/>.

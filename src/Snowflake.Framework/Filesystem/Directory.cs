@@ -94,7 +94,7 @@ namespace Snowflake.Filesystem
             }
         }
 
-        internal (Guid guid, bool isLink) RetrieveManifestRecord(UPath file)
+        internal (Guid guid, bool isLink) RetrieveManifestRecord(UPath file, bool updateLink)
         {
             this.CheckDeleted();
             var fileName = file.GetName();
@@ -105,12 +105,13 @@ namespace Snowflake.Filesystem
                     var record = conn.Query<ManifestRecord>(@"SELECT uuid, is_link FROM directory_manifest WHERE filename = @fileName",
                         new { fileName });
 
-                    if (record.Count() == 0)
+                    if (!record.Any() || updateLink)
                     {
                         // New file encountered.
                         bool isLink = this.CheckIsLink(file);
+                        Guid guid = record.Any() ? new Guid(record.First().uuid) : Guid.NewGuid();
                         conn.Execute(@"INSERT OR REPLACE INTO directory_manifest (uuid, is_link, filename) VALUES (@guid, @isLink, @fileName)",
-                            new { guid = Guid.NewGuid(), fileName, isLink });
+                            new { guid, fileName, isLink });
 
                         record = conn.Query<ManifestRecord>(@"SELECT uuid, is_link FROM directory_manifest WHERE filename = @fileName",
                             new { fileName });
@@ -122,6 +123,20 @@ namespace Snowflake.Filesystem
             }
         }
 
+        internal void UpdateLinkCache(UPath filePath, bool isLink)
+        {
+            this.CheckDeleted();
+
+            lock (this.DatabaseLock)
+            {
+                this.Manifest.Execute(connection =>
+                {
+                    connection.Execute(
+                        @"UPDATE directory_manifest SET is_link = @isLink WHERE filename = @file",
+                        new { isLink, file = filePath.GetName() });
+                });
+            }
+        }
         internal bool CheckIsLink(UPath file)
         {
             var entry = new FileEntry(this.RootFileSystem, file);
@@ -184,15 +199,15 @@ namespace Snowflake.Filesystem
             this.CheckDeleted();
             return this.ThisDirectory.EnumerateFiles()
                 .Where(f => f.Name != ".manifest")
-                .Select(f => this.OpenFile(f.Name));
+                .Select(f => this.OpenFile(f.Name, false));
         }
 
-        private IFile OpenFile(UPath file)
+        private IFile OpenFile(UPath file, bool updateLink)
         {
             this.CheckDeleted();
             if (file.GetName() == ".manifest") throw new UnauthorizedAccessException("Unable to open manifest file.");
 
-            (Guid guid, bool isLink) = this.RetrieveManifestRecord(file);
+            (Guid guid, bool isLink) = this.RetrieveManifestRecord(file, updateLink);
 
             return isLink switch
             {
@@ -206,9 +221,14 @@ namespace Snowflake.Filesystem
             return new DirectoryInfo(this.RootFileSystem.ConvertPathToInternal(this.ThisDirectory.Path));
         }
 
+        private IFile OpenFile(string file, bool updateLink)
+        {
+            return this.OpenFile(this.ThisDirectory.Path / Path.GetFileName(file), updateLink);
+        }
+
         public IFile OpenFile(string file)
         {
-            return this.OpenFile(this.ThisDirectory.Path / Path.GetFileName(file));
+            return this.OpenFile(this.ThisDirectory.Path / Path.GetFileName(file), false);
         }
 
         public IFile CopyFrom(FileInfo source) => this.CopyFrom(source, false);
@@ -222,7 +242,7 @@ namespace Snowflake.Filesystem
             if (fileName == null) throw new ArgumentException($"Could not get file name for path {source.Name}.");
 
             source.CopyTo(this.RootFileSystem.ConvertPathToInternal(this.ThisDirectory.Path / fileName), overwrite);
-            return this.OpenFile(fileName);
+            return this.OpenFile(fileName, true);
         }
 
         public Task<IFile> CopyFromAsync(FileInfo source, CancellationToken cancellation = default) 
@@ -234,15 +254,19 @@ namespace Snowflake.Filesystem
             if (!source.Exists) throw new FileNotFoundException($"{source.FullName} could not be found.");
             string? fileName = Path.GetFileName(source.Name);
             if (fileName == null) throw new ArgumentException($"Cannot get file name for path {source.Name}");
-            var file = this.OpenFile(fileName);
+            var file = this.OpenFile(fileName, false);
             if (file.Created && !overwrite) throw new IOException($"{source.Name} already exists in the target directory.");
-            using (var newStream = file.OpenStream())
+            if (file is Link link)
+            {
+                file = link.UnsafeOpenAsFile();
+            }
+            using (var newStream = file.OpenStream(FileMode.Create, FileAccess.ReadWrite))
             using (var sourceStream = source.OpenRead())
             {
                 await sourceStream.CopyToAsync(newStream, cancellation);
             }
 
-            return file;
+            return this.OpenFile(fileName, true);
         }
 
         public IFile CopyFrom(IReadOnlyFile source, bool overwrite)
@@ -275,11 +299,11 @@ namespace Snowflake.Filesystem
             if (!source.Created) throw new FileNotFoundException($"{source.UnsafeGetFilePointerPath().FullName} could not be found.");
             if (this.ContainsFile(source.Name) && !overwrite) throw new IOException($"{source.Name} already exists in the target directory");
             this.AddManifestRecord(source.Name, source.FileGuid, source.IsLink);
-            var file = this.OpenFile(source.Name);
+            var file = this.OpenFile(source.Name, false);
             // unsafe usage here as optimization.
             source.UnsafeGetFilePointerPath().MoveTo(file.UnsafeGetFilePointerPath().ToString(), overwrite);
             source.Delete();
-            return file;
+            return this.OpenFile(file.Name, true);
         }
 
         public IEnumerable<IFile> EnumerateFilesRecursive()
@@ -326,13 +350,13 @@ namespace Snowflake.Filesystem
 
         IReadOnlyFile IReadOnlyDirectory.OpenFile(string file)
         {
-            if (this.ContainsFile(file)) return this.OpenFile(file).AsReadOnly();
+            if (this.ContainsFile(file)) return this.OpenFile(file, false).AsReadOnly();
             throw new FileNotFoundException($"File {file} does not exist within the directory {this.Name}.");
         }
 
         IReadOnlyFile IReadOnlyDirectory.OpenFile(string file, bool createIfNotExists)
         {
-            if (createIfNotExists) return this.OpenFile(file).AsReadOnly();
+            if (createIfNotExists) return this.OpenFile(file, false).AsReadOnly();
             return (this as IReadOnlyDirectory).OpenFile(file);
         }
 
@@ -373,20 +397,24 @@ namespace Snowflake.Filesystem
 
             if (fileName == null) throw new ArgumentException($"Could not get file name for path {source.Name}.");
 
-            if (this.ContainsFile(fileName) && !overwrite) throw new IOException($"{source.Name} already exists in the target directory.");
+            if (this.ContainsFile(fileName) && !overwrite) 
+                throw new IOException($"{source.Name} already exists in the target directory.");
 
             UPath destination = (this.ThisDirectory.Path / Path.GetFileName(fileName));
+
+            // Ensure link cache is cleared
+            this.UpdateLinkCache(destination, true);
 
             // Create an orphaned file
             var file = new File(this, new FileEntry(this.RootFileSystem, destination), Guid.Empty);
 
-            using (var newStream = file.OpenStream())
+            using (var newStream = file.OpenStream(FileMode.Create, FileAccess.ReadWrite))
             {
                 newStream.Write(Encoding.UTF8.GetBytes($"{Link.LinkHeader}{Path.GetFullPath(new Uri(source.FullName).LocalPath)}"));
             }
 
             // De-orphan the file (as a link)
-            return this.OpenFile(fileName);
+            return this.OpenFile(fileName, true);
         }
     }
 }
