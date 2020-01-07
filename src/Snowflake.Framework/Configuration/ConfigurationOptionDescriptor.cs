@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using EnumsNET;
 using EnumsNET.NonGeneric;
 using Newtonsoft.Json;
 using Snowflake.Configuration.Attributes;
@@ -94,7 +95,7 @@ namespace Snowflake.Configuration
             this.OptionType = ConfigurationOptionDescriptor.GetOptionType(this.Type, this.IsPath);
             this.IsSelection = this.OptionType == ConfigurationOptionType.Selection;
             this.SelectionOptions = this.IsSelection
-                ? NonGenericEnums.GetMembers(this.Type)
+                ? Enums.GetMembers(this.Type)
                     .Select(m => new SelectionOptionDescriptor(m))
                     .ToList()
                 : Enumerable.Empty<ISelectionOptionDescriptor>();

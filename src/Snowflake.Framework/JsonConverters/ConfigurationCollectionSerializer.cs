@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using EnumsNET;
 using EnumsNET.NonGeneric;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -62,7 +63,7 @@ namespace Snowflake.JsonConverters
 
         private static IEnumerable<JProperty> SerializeEnumValues(Type selectionEnum)
         {
-            return from enumOption in NonGenericEnums.GetMembers(selectionEnum)
+            return from enumOption in Enums.GetMembers(selectionEnum)
                 where enumOption.Attributes.Has<SelectionOptionAttribute>()
                 let attribute = enumOption.Attributes.Get<SelectionOptionAttribute>()
                 select new JProperty(enumOption.Name, new JObject()

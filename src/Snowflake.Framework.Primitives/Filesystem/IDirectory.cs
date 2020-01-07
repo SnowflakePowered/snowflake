@@ -78,7 +78,7 @@ namespace Snowflake.Filesystem
         /// Copies a file asynchronously from an unmanaged <see cref="FileInfo"/> that exists outside of
         /// a <see cref="IDirectory"/>.
         /// Do not use this method to copy from a managed <see cref="IDirectory"/>.
-        /// Instead, use <see cref="CopyFrom(IFile)"/>.
+        /// Instead, use <see cref="IDirectory.CopyFrom(IReadOnlyFile)"/>.
         /// </summary>
         /// <exception cref="IOException">If a file with the same name exists in the target destination.</exception>
         /// <exception cref="FileNotFoundException">If the source file can not be found.</exception>
@@ -103,13 +103,13 @@ namespace Snowflake.Filesystem
 
         /// <summary>
         /// Moves a file between <see cref="IDirectory"/>, updating the 
-        /// manifests such that the resulting file has the same <see cref="IFile.FileGuid"/> as the source file.
+        /// manifests such that the resulting file has the same <see cref="IReadOnlyFile.FileGuid"/> as the source file.
         /// 
         /// The source file will cease to exist in its original <see cref="IDirectory"/>.
         ///
         /// There is no asychronous equivalent by design, since <see cref="MoveFrom(IFile, bool)"/> is intended to
-        /// be faster than <see cref="CopyFromAsync(IFile, CancellationToken)"/> if the <see cref="IDirectory"/> instances
-        /// are on the same file system. Otherwise, you should use <see cref="CopyFromAsync(IFile, CancellationToken)"/>,
+        /// be faster than <see cref="CopyFromAsync(IReadOnlyFile, CancellationToken)"/> if the <see cref="IDirectory"/> instances
+        /// are on the same file system. Otherwise, you should use <see cref="CopyFromAsync(IReadOnlyFile, CancellationToken)"/>,
         /// then <see cref="IFile.Delete"/> the old file.
         /// </summary>
         /// <exception cref="IOException">If a file with the same name exists in the target destination.</exception>
@@ -138,7 +138,7 @@ namespace Snowflake.Filesystem
 
         /// <summary>
         /// Copies a file from a <see cref="IFile"/> from another <see cref="IDirectory"/>, updating the
-        /// manifests such that the resulting file has the same <see cref="IFile.FileGuid"/> as the source file.
+        /// manifests such that the resulting file has the same <see cref="IReadOnlyFile.FileGuid"/> as the source file.
         /// </summary>
         /// <exception cref="IOException">If a file with the same name exists in the target destination.</exception>
         /// <exception cref="FileNotFoundException">If the source file can not be found.</exception>
@@ -148,7 +148,7 @@ namespace Snowflake.Filesystem
 
         /// <summary>
         /// Copies a file from a <see cref="IFile"/> from another <see cref="IDirectory"/>, updating the
-        /// manifests such that the resulting file has the same <see cref="IFile.FileGuid"/> as the source file.
+        /// manifests such that the resulting file has the same <see cref="IReadOnlyFile.FileGuid"/> as the source file.
         /// </summary>
         /// <exception cref="IOException">If a file with the same name exists in the target destination and <paramref name="overwrite"/> is false.</exception>
         /// <exception cref="FileNotFoundException">If the source file can not be found.</exception>
@@ -159,7 +159,7 @@ namespace Snowflake.Filesystem
 
         /// <summary>
         /// Copies a file asynchronously from a <see cref="IFile"/> from another <see cref="IDirectory"/>, updating the
-        /// manifests such that the resulting file has the same <see cref="IFile.FileGuid"/> as the source file.
+        /// manifests such that the resulting file has the same <see cref="IReadOnlyFile.FileGuid"/> as the source file.
         /// </summary>
         /// <exception cref="IOException">If a file with the same name exists in the target destination.</exception>
         /// <exception cref="FileNotFoundException">If the source file can not be found.</exception>

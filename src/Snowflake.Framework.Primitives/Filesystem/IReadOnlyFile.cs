@@ -84,6 +84,7 @@ namespace Snowflake.Filesystem
         /// For internal use when implementing copy and move operations.
         /// If <see cref="IsLink"/> is false, this should be equivalent to <see cref="UnsafeGetFilePath"/>. 
         /// Otherwise, it should return the path to the link file. 
+        /// </summary>
         internal FileInfo UnsafeGetFilePointerPath();
     }
 }

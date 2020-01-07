@@ -203,6 +203,7 @@ namespace Snowflake.Filesystem.Tests
             Assert.Equal(file.FileGuid, link.FileGuid);
         }
 
+        [Fact]
         public async Task FileOverwritesLinkAsync_Test()
         {
             var fs = new PhysicalFileSystem();

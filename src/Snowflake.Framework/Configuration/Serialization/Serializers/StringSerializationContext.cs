@@ -24,7 +24,7 @@ namespace Snowflake.Configuration.Serialization.Serializers
 
         public string ExitScope()
         {
-            if (this.ContextStack.TryPop(out string scope)) return scope;
+            if (this.ContextStack.TryPop(out string? scope)) return scope;
             return String.Empty;
         }
 
@@ -35,7 +35,7 @@ namespace Snowflake.Configuration.Serialization.Serializers
 
         public string GetCurrentScope()
         {
-            if (this.ContextStack.TryPeek(out string scope)) return scope;
+            if (this.ContextStack.TryPeek(out string? scope)) return scope;
             return String.Empty;
         }
 

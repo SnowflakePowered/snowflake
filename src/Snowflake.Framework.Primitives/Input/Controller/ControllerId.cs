@@ -35,7 +35,7 @@ namespace Snowflake.Input.Controller
         }
 
         /// <inheritdoc />
-        public override bool Equals(object other)
+        public override bool Equals(object? other)
         {
             return other switch {
                 ControllerId p => this.Equals(p),
@@ -56,11 +56,13 @@ namespace Snowflake.Input.Controller
             return HashCode.Combine(ControllerIdString);
         }
 
+        /// <inheritdoc />
         public int CompareTo([AllowNull] string other)
         {
             return ControllerIdString.CompareTo(other);
         }
 
+        /// <inheritdoc />
         public int CompareTo(object? obj)
         {
             if (obj is ControllerId c) return ControllerIdString.CompareTo(c.ControllerIdString);

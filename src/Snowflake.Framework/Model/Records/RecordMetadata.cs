@@ -45,7 +45,7 @@ namespace Snowflake.Model.Records
         public override int GetHashCode() => this.Guid.GetHashCode();
 
         /// <inheritdoc/>
-        public override bool Equals(object metadata)
+        public override bool Equals(object? metadata)
         {
             if (!(metadata is IRecordMetadata m))
             {
