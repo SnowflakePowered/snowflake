@@ -31,13 +31,13 @@ namespace Snowflake.Stone.FileSignatures.Sony
         }
 
         /// <inheritdoc/>
-        public string GetSerial(Stream romStream)
+        public string? GetSerial(Stream romStream)
         {
             romStream.Seek(0, SeekOrigin.Begin);
             var disk = new PlaystationDisc(new CDXADisc(romStream));
-            string syscnf = disk.GetMeta();
-            string exe = syscnf.Substring(14, 11);
-            return exe.Replace(".", string.Empty).Replace("_", "-");
+            string? syscnf = disk.GetMeta();
+            string? exe = syscnf?.Substring(14, 11);
+            return exe?.Replace(".", string.Empty).Replace("_", "-");
         }
 
         /// <inheritdoc/>

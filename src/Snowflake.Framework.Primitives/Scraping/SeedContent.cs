@@ -101,7 +101,7 @@ namespace Snowflake.Scraping
         /// </summary>
         /// <param name="other">The object to compare.</param>
         /// <returns>if the two objects are equal.</returns>
-        public override bool Equals(object other)
+        public override bool Equals(object? other)
         {
             if (!(other is SeedContent))
             {

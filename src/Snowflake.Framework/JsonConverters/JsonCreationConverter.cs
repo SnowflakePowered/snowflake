@@ -85,7 +85,7 @@ namespace Snowflake.JsonConverters
                     continue;
                 }
 
-                object propVal = prop.GetValue(value, null);
+                object? propVal = prop.GetValue(value, null);
                 if (propVal != null)
                 {
                     jo.Add(prop.Name, JToken.FromObject(propVal, serializer));

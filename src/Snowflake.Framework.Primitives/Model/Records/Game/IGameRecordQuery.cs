@@ -20,6 +20,9 @@ namespace Snowflake.Model.Records.Game
         /// The RecordID of the Game Record
         /// </summary>
         Guid RecordID { get; }
+        /// <summary>
+        /// Queries the metadata associated with this record.
+        /// </summary>
         IEnumerable<IRecordMetadataQuery> Metadata { get; }
     }
 }

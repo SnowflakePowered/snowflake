@@ -18,8 +18,12 @@ namespace Snowflake.Filesystem
 
         private class ManifestRecord
         {
+#pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
+#pragma warning disable IDE1006 // Naming Styles
             public string uuid { get; set; }
             public bool is_link { get; set; }
+#pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
+#pragma warning restore IDE1006 // Naming Styles
         }
 
         private SqliteDatabase Manifest { get; }

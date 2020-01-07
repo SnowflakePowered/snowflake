@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using EnumsNET;
 using EnumsNET.NonGeneric;
 using Snowflake.Configuration;
 using Snowflake.Model.Database.Models;
@@ -40,7 +41,7 @@ namespace Snowflake.Model.Database.Extensions
             if (@this == null) return null;
 
             return @this.GetType().GetTypeInfo().IsEnum
-                ? NonGenericEnums.GetName(@this.GetType(), @this)
+                ? Enums.GetName(@this.GetType(), @this)
                 : // optimized path for enums
                 Convert.ToString(@this);
         }

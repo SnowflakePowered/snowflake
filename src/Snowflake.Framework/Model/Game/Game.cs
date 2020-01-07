@@ -24,7 +24,7 @@ namespace Snowflake.Model.Game
 
         public TExtension GetExtension<TExtension>() where TExtension : class, IGameExtension
         {
-            if (this.Extensions.TryGetValue(typeof(TExtension), out IGameExtension t))
+            if (this.Extensions.TryGetValue(typeof(TExtension), out IGameExtension? t))
             {
                 return (TExtension)t;
             }

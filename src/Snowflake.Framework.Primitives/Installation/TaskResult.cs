@@ -140,7 +140,7 @@ namespace Snowflake.Installation
         /// <param name="result">The task that yields the result.</param>
         /// <param name="ex">The exception to be returned when this <see cref="TaskResult{TResult}"/> is checked for errors.</param>
         /// <returns>A <see cref="TaskResult{TResult}"/> that represents the yielded result, with the provided exception.</returns>
-        public static TaskResult<TResult> Failure<TResult>(string name, ValueTask<TResult> result, Exception ex)
+        public static TaskResult<TResult> Failure<TResult>(string name, ValueTask<TResult> result, Exception? ex)
         {
             return new TaskResult<TResult>(name, result, ex);
         }
@@ -157,7 +157,7 @@ namespace Snowflake.Installation
             var tcs = new TaskCompletionSource<TBase>();
 
             task.ContinueWith(t => tcs.SetResult(t.Result), TaskContinuationOptions.OnlyOnRanToCompletion);
-            task.ContinueWith(t => tcs.SetException(t.Exception.InnerExceptions), TaskContinuationOptions.OnlyOnFaulted);
+            task.ContinueWith(t => tcs.SetException(t.Exception!.InnerExceptions), TaskContinuationOptions.OnlyOnFaulted);
             task.ContinueWith(t => tcs.SetCanceled(), TaskContinuationOptions.OnlyOnCanceled);
             return tcs.Task;
         }
