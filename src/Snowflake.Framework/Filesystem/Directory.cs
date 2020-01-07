@@ -132,7 +132,7 @@ namespace Snowflake.Filesystem
             try
             {
                 using var stream = entry.Open(FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                Span<byte> buf = stackalloc byte[5];
+                Span<byte> buf = stackalloc byte[Link.LinkHeader.Length];
                 stream.Read(buf);
                 return Encoding.UTF8.GetString(buf) == Link.LinkHeader;
             } 
@@ -382,7 +382,7 @@ namespace Snowflake.Filesystem
 
             using (var newStream = file.OpenStream())
             {
-                newStream.Write(Encoding.UTF8.GetBytes($"LINK\n{Path.GetFullPath(new Uri(source.FullName).LocalPath)}"));
+                newStream.Write(Encoding.UTF8.GetBytes($"{Link.LinkHeader}{Path.GetFullPath(new Uri(source.FullName).LocalPath)}"));
             }
 
             // De-orphan the file (as a link)

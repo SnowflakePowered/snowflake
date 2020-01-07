@@ -19,8 +19,9 @@ namespace Snowflake.Filesystem
         /// The name of the file.
         /// </summary>
         string Name { get; }
+
         /// <summary>
-        /// The length of the file in bytes.
+        /// The length of the file in bytes. If the file does not yet exist, this value is -1.
         /// </summary>
         long Length { get; }
 

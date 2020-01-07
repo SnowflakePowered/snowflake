@@ -19,7 +19,7 @@ namespace Snowflake.Filesystem
 
         internal FileEntry RawInfo { get; private set; }
 
-        public long Length => this.RawInfo.Length;
+        public long Length => this.RawInfo.Exists ? this.RawInfo.Length : -1;
 
         internal Directory _ParentDirectory { get; }
         public IDirectory ParentDirectory => _ParentDirectory;
