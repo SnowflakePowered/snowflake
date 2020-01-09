@@ -57,8 +57,7 @@ namespace Snowflake.Configuration.Tests
         public void KeyboardMapping_Test()
         {
             string _mapping = TestUtilities.GetStringResource("InputMappings.inputmapping-retroarch.json");
-            IDeviceInputMapping mapping = JsonConvert.DeserializeObject<JsonInputMapping>(_mapping);
-            Assert.Equal(InputDriverType.DirectInput, mapping.InputDriver);
+            IDeviceInputMapping mapping = JsonConvert.DeserializeObject<DictionaryInputMapping>(_mapping);
             Assert.Equal("a", mapping[DeviceCapability.KeyA]);
             Assert.Equal("b", mapping[DeviceCapability.KeyB]);
             Assert.Equal("c", mapping[DeviceCapability.KeyC]);

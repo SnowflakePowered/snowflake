@@ -8,13 +8,10 @@ namespace Snowflake.Input.Tests
 {
     public class TestInputMapping : IDeviceInputMapping
     {
-        public TestInputMapping(InputDriverType type)
+        public TestInputMapping()
         {
-            this.InputDriver = type;
         }
 
         public string this[DeviceCapability element] => element.ToString();
-
-        public InputDriverType InputDriver { get; }
     }
 }

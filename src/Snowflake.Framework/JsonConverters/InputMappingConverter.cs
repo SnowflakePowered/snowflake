@@ -18,13 +18,11 @@ namespace Snowflake.JsonConverters
         {
             IDictionary<DeviceCapability, string> controllerElements = (from prop in
                     jObject.Value<JObject>("mappings").Properties()
-                    select (element: Enums.Parse<DeviceCapability>(prop.Name), 
-                        value: prop.Value.Value<string>()))
-                        .ToDictionary(o => o.element, o => o.value);
+                    select (element: Enums.Parse<DeviceCapability>(prop.Name),
+                            value: prop.Value.Value<string>()))
+                    .ToDictionary(o => o.element, o => o.value);
 
-            InputDriverType driverType = Enums.Parse<InputDriverType>(jObject.Value<string>("driver"));
-
-            return new JsonInputMapping(controllerElements, InputDriverType.DirectInput);
+            return new DictionaryInputMapping(controllerElements);
         }
     }
 }

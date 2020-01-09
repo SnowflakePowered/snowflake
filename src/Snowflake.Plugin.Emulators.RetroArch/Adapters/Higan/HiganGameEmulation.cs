@@ -116,6 +116,7 @@ namespace Snowflake.Adapters.Higan
             foreach (var port in this.ControllerPorts)
             {
                 var mappings = this.InputMappings[port.PhysicalDeviceInstance.Driver];
+             
                 var template = new InputTemplate<RetroPadTemplate>(port.LayoutMapping, port.PortIndex);
 
                 template.Template.Configuration.InputJoypadIndex = port.PhysicalDeviceInstance.EnumerationIndex;
