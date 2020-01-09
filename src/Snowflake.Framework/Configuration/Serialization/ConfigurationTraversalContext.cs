@@ -93,7 +93,11 @@ namespace Snowflake.Configuration.Serialization
         }
 
         public IReadOnlyDictionary<string, IAbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>>>
-            TraverseCollection(IConfigurationCollection collection)
+            TraverseCollection(IConfigurationCollection collection) =>
+            this.TraverseCollection(collection, Enumerable.Empty<(string, IAbstractConfigurationNode)>());
+
+        public IReadOnlyDictionary<string, IAbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>>>
+            TraverseCollection(IConfigurationCollection collection, IEnumerable<(string targetName, IAbstractConfigurationNode node)> extraNodes)
         {
             if (collection.GetType().IsGenericType
                 && collection.GetType().GetGenericTypeDefinition() == typeof(ConfigurationCollection<>))
@@ -115,6 +119,12 @@ namespace Snowflake.Configuration.Serialization
 
             var flatTargets = collection.GetType().GetPublicAttributes<ConfigurationTargetAttribute>()
                 .ToDictionary(t => t.TargetName, t => (target: t, nodes: new List<IAbstractConfigurationNode>()));
+
+            foreach (var (targetName, node) in extraNodes)
+            {
+                if (!flatTargets.ContainsKey(targetName) || targetName == ConfigurationTraversalContext.NullTarget) continue;
+                flatTargets[targetName].nodes.Add(node);
+            }
 
             foreach (var (key, value) in collection)
             {
