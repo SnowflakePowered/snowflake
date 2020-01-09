@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Snowflake.Configuration.Input;
 using Snowflake.Input.Controller;
 
@@ -22,8 +23,25 @@ namespace Snowflake.Configuration.Serialization
         /// </param>
         /// <returns>A mapping of targets to <see cref="IAbstractConfigurationNode{T}"/> that represent the
         /// syntax tree that the target forms.</returns>
-        IReadOnlyDictionary<string, IAbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>>> 
+        IReadOnlyDictionary<string, IAbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>>>
             TraverseCollection(IConfigurationCollection collection);
+
+        /// <summary>
+        /// Traverses a <see cref="IConfigurationCollection"/> to yield a mapping of
+        /// targets to ASTs formed by <see cref="IAbstractConfigurationNode"/>.
+        /// 
+        /// The special target #null is ignored and never traversed.
+        /// </summary>
+        /// <param name="collection">
+        /// The <see cref="IConfigurationCollection"/> with targets specified to
+        /// traverse in order to yield an AST.
+        /// </param>
+        /// <param name="extraNodes">Extra nodes to attach to a specified target.</param>
+        /// <returns>A mapping of targets to <see cref="IAbstractConfigurationNode{T}"/> that represent the
+        /// syntax tree that the target forms.</returns>
+        IReadOnlyDictionary<string, IAbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>>> 
+            TraverseCollection(IConfigurationCollection collection,
+            IEnumerable<(string targetName, IAbstractConfigurationNode node)> extraNodes);
 
         /// <summary>
         /// Traverses a <see cref="IInputTemplate"/> under the context of an <see cref="IDeviceInputMapping"/>
