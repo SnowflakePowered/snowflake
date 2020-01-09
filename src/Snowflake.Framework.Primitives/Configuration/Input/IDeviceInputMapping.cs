@@ -14,11 +14,6 @@ namespace Snowflake.Configuration.Input
     public interface IDeviceInputMapping
     {
         /// <summary>
-        /// The driver type for this input mapping
-        /// </summary>
-        InputDriverType InputDriver { get; }
-
-        /// <summary>
         /// Gets the mapping for this device capabilitiy. If the mapping does not exist,
         /// it will try to fallback to the representation for <see cref="DeviceCapability.None"/>. If no mapping
         /// is found for <see cref="DeviceCapability.None"/>, then the empty string is returned.

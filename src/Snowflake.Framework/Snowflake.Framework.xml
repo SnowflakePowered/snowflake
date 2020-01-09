@@ -176,6 +176,9 @@
             Cache of ensured descriptors
             </summary>
         </member>
+        <member name="P:Snowflake.Configuration.Input.DictionaryInputMapping.Item(Snowflake.Input.Device.DeviceCapability)">
+            <inheritdoc/>
+        </member>
         <member name="P:Snowflake.Configuration.Input.InputConfigurationSection`1.Configuration">
             <inheritdoc/>
         </member>
@@ -234,12 +237,6 @@
             <inheritdoc/>
         </member>
         <member name="M:Snowflake.Configuration.Input.InputTemplate`1.GetEnumerator">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Configuration.Input.JsonInputMapping.Item(Snowflake.Input.Device.DeviceCapability)">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Configuration.Input.JsonInputMapping.InputDriver">
             <inheritdoc/>
         </member>
         <member name="T:Snowflake.Configuration.Interceptors.ConfigurationCircularInterceptor`1">

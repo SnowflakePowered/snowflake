@@ -34,7 +34,7 @@ namespace Snowflake.Configuration.Serialization
                             InputDriverType.Keyboard,
                             IDeviceEnumerator.VirtualVendorID,
                             new XInputDeviceInstance(0).DefaultLayout);
-            IDeviceInputMapping mapping = new TestInputMapping(InputDriverType.XInput);
+            IDeviceInputMapping mapping = new TestInputMapping();
             var input =
              new InputTemplate<IRetroArchInput>(mapcol).Template;
 
@@ -63,7 +63,7 @@ namespace Snowflake.Configuration.Serialization
                            InputDriverType.Keyboard,
                            IDeviceEnumerator.VirtualVendorID,
                            new XInputDeviceInstance(0).DefaultLayout);
-            IDeviceInputMapping mapping = new TestInputMapping(InputDriverType.XInput);
+            IDeviceInputMapping mapping = new TestInputMapping();
             var input =
              new InputTemplate<IRetroArchInput>(mapcol).Template;
 
@@ -92,7 +92,7 @@ namespace Snowflake.Configuration.Serialization
                            InputDriverType.Keyboard,
                            IDeviceEnumerator.VirtualVendorID,
                            new XInputDeviceInstance(0).DefaultLayout);
-            IDeviceInputMapping mapping = new TestInputMapping(InputDriverType.XInput);
+            IDeviceInputMapping mapping = new TestInputMapping();
             var input =
              new InputTemplate<IRetroArchInput>(mapcol).Template;
 
@@ -121,7 +121,7 @@ namespace Snowflake.Configuration.Serialization
                           InputDriverType.Keyboard,
                           IDeviceEnumerator.VirtualVendorID,
                           new XInputDeviceInstance(0).DefaultLayout);
-            IDeviceInputMapping mapping = new TestInputMapping(InputDriverType.XInput);
+            IDeviceInputMapping mapping = new TestInputMapping();
             var input =
              new InputTemplate<IRetroArchInput>(mapcol).Template;
 
