@@ -32,7 +32,7 @@
     <PackageReference Include="Castle.Core" Version="4.4.0" PrivateAssets="Compile" />
     <PackageReference Include="Dapper" Version="2.0.30" PrivateAssets="Compile" />
     <PackageReference Include="Enums.NET" Version="3.0.2" PrivateAssets="Compile" />
-    <PackageReference Include="Microsoft.Data.Sqlite" Version="3.1.0" PrivateAssets="Compile" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="3.1.1" PrivateAssets="Compile" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.0" PrivateAssets="Compile" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.0">
