@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="NLog" Version="4.6.8" PrivateAssets="Compile" />
-    <PackageReference Include="GraphQL.Server.Transports.AspNetCore" Version="3.5.0-alpha0039" PrivateAssets="Compile" />
+    <PackageReference Include="GraphQL.Server.Transports.AspNetCore" Version="3.5.0-alpha0043" PrivateAssets="Compile" />
     <PackageReference Include="GraphQL.Server.Transports.WebSockets" Version="3.5.0-alpha0039" PrivateAssets="Compile" />
   </ItemGroup>
 
