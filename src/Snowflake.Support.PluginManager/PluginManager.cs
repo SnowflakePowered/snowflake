@@ -97,7 +97,7 @@ namespace Snowflake.Support.PluginManager
                 properties.Get(PluginInfoFields.Description) ?? pluginAttr.Description,
                 pluginAttr.Version, composableModule.ContentsDirectory, 
                 new FS.Directory(pluginDataFs),
-                pluginCommonDir, pluginResourceDir);
+                pluginCommonDir.AsReadOnly(), pluginResourceDir.AsReadOnly());
         }
 
         /// <inheritdoc/>

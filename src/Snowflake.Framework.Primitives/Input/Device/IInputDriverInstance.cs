@@ -32,7 +32,7 @@ namespace Snowflake.Input.Device
         /// 2 and 4 respectively, they would have a class enumeration index of 0 and 1.
         /// 
         /// However, if this was an XInput device, then this is the same as <see cref="EnumerationIndex"/>
-        /// since XInput devices do not disambiguate between devices..
+        /// since XInput devices do not disambiguate between devices.
         /// </summary>
         int ClassEnumerationIndex { get; }
 
@@ -57,7 +57,7 @@ namespace Snowflake.Input.Device
 
         /// <summary>
         /// Without regards to a Stone controller layout, provides
-        /// the natural mapping from controller element to 
+        /// the natural mapping from controller element to a device capability.
         /// </summary>
         IDeviceLayoutMapping DefaultLayout { get; }
     }

@@ -18,8 +18,8 @@ namespace Snowflake.Extensibility.Provisioning
             Version version,
             DirectoryInfo contentDirectory,
             IDirectory dataDirectory,
-            IDirectory commonResourceDirectory,
-            IDirectory resourceDirectory)
+            IReadOnlyDirectory commonResourceDirectory,
+            IReadOnlyDirectory resourceDirectory)
         {
             this.Logger = logger;
             this.Properties = pluginProperties;
@@ -56,10 +56,10 @@ namespace Snowflake.Extensibility.Provisioning
         public DirectoryInfo ContentDirectory { get; }
 
         /// <inheritdoc/>
-        public IDirectory ResourceDirectory { get; }
+        public IReadOnlyDirectory ResourceDirectory { get; }
 
         /// <inheritdoc/>
-        public IDirectory CommonResourceDirectory { get; }
+        public IReadOnlyDirectory CommonResourceDirectory { get; }
 
         /// <inheritdoc />
         public IDirectory DataDirectory { get; }

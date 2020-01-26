@@ -11,12 +11,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Adapters\Nestopia\**" />
-    <EmbeddedResource Remove="Adapters\Nestopia\**" />
-    <None Remove="Adapters\Nestopia\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="System.Diagnostics.Process" Version="4.3.0" />
   </ItemGroup>
 
@@ -27,7 +21,10 @@
     <None Update="module.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="resource\common\inputmappings.json">
+    <None Update="resource\common\InputMappings\DirectInput.KEYBOARD_DEVICE.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="resource\common\InputMappings\DirectInput.XINPUT_DEVICE.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="resource\RetroArchBsnes\plugin.json">

@@ -14,7 +14,7 @@ namespace Snowflake.Filesystem
         /// </summary>
         /// <param name="this">The <see cref="IFile"/> to read.</param>
         /// <returns>A string containing all text in the file.</returns>
-        public static string ReadAllText(this IFile @this) => FileExtensions.ReadAllText(@this, Encoding.UTF8);
+        public static string ReadAllText(this IReadOnlyFile @this) => FileExtensions.ReadAllText(@this, Encoding.UTF8);
 
         /// <summary>
         /// Opens a text file, reads all the text in the file into a string with the specified encoding,
@@ -23,9 +23,9 @@ namespace Snowflake.Filesystem
         /// <param name="this">The <see cref="IFile"/> to read.</param>
         /// <param name="encoding">The encoding applied to the contents of the file.</param>
         /// <returns>A string containing all text in the file.</returns>
-        public static string ReadAllText(this IFile @this, Encoding encoding)
+        public static string ReadAllText(this IReadOnlyFile @this, Encoding encoding)
         {
-            using var fileStream = @this.OpenStream();
+            using var fileStream = @this.OpenReadStream();
             using var stringReader = new StreamReader(fileStream, encoding);
             return stringReader.ReadToEnd();
         }

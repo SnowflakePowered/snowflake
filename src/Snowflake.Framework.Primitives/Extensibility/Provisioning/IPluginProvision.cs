@@ -70,12 +70,12 @@ namespace Snowflake.Extensibility.Provisioning
         /// Gets the plugin's resource directory. The resource directory is intended for static
         /// files that are required only by this plugin, and should not be modified after install.
         /// </summary>
-        IDirectory ResourceDirectory { get; }
+        IReadOnlyDirectory ResourceDirectory { get; }
 
         /// <summary>
         /// Gets the resource directory common to the plugin's module. The common resource directory is intended for static
         /// files that are shared between all plugins in the current module, and should not be modified after install.
         /// </summary>
-        IDirectory CommonResourceDirectory { get; }
+        IReadOnlyDirectory CommonResourceDirectory { get; }
     }
 }

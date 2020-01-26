@@ -16,7 +16,7 @@ namespace Snowflake.Model.Game.LibraryExtensions
         ///
         /// Configurations are unique on their <paramref name="sourceName"/> and <paramref name="profile"/>,
         /// NOT their prototype <typeparamref name="T"/>.
-        /// In fact, it is possible to have one <see cref="IConfigurationCollection{T}"/>, but highly not recommended to
+        /// In fact, it is possible, but highly not recommended, to have one <see cref="IConfigurationCollection{T}"/>, to
         /// be interpreted differently as different prototypes.
         /// </summary>
         /// <param name="sourceName">The name of the emulator plugin, or whatever is the source or creator of
@@ -24,7 +24,7 @@ namespace Snowflake.Model.Game.LibraryExtensions
         /// a configuration prototype.</param>
         /// <param name="profile">The name of the configuration profile.</param>
         /// <typeparam name="T">The prototype of the configuration.</typeparam>
-        /// <returns>A new configuration profile. If a configuration profile with the same
+        /// <returns>A new configuration profile . If a configuration profile with the same
         /// source name and profile name exist, this will throw an exception.</returns>
         IConfigurationCollection<T> CreateNewProfile<T>(string sourceName, string profile)
             where T : class, IConfigurationCollection<T>;

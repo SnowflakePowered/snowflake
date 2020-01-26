@@ -1,0 +1,14 @@
+﻿{
+  "ports": [
+    {
+      "layouts": [ "SNES_CONTROLLER" ],
+      "displayName": "Port 1",
+      "passthrough": false
+    },
+    {
+      "layouts": [ "SNES_CONTROLLER" ],
+      "displayName": "Port 1",
+      "passthrough": false
+    }
+  ]
+}

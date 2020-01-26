@@ -39,8 +39,18 @@ namespace Snowflake.Loader
         string Name { get; }
 
         /// <summary>
+        /// Gets the display name of the module.
+        /// </summary>
+        string DisplayName { get; }
+
+        /// <summary>
         /// The version of this module.
         /// </summary>
         Version Version { get; }
+
+        /// <summary>
+        /// Optional loader specific options
+        /// </summary>
+        dynamic? LoaderOptions { get; }
     }
 }
