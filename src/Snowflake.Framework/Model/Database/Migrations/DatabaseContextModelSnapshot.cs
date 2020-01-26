@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Snowflake.Model.Database.Models;
 
-namespace Snowflake.Migrations
+namespace Snowflake.Model.Database.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
     partial class DatabaseContextModelSnapshot : ModelSnapshot
@@ -133,6 +133,40 @@ namespace Snowflake.Migrations
                     b.HasIndex("ControllerID", "DriverType", "DeviceName", "VendorID", "ProfileName");
 
                     b.ToTable("MappedControllerElements");
+                });
+
+            modelBuilder.Entity("Snowflake.Model.Database.Models.PortDeviceEntryModel", b =>
+                {
+                    b.Property<string>("OrchestratorName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PlatformID")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("PortIndex")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ControllerID")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("DeviceName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Driver")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ProfileName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("UniqueNameEnumerationIndex")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("OrchestratorName", "PlatformID", "PortIndex");
+
+                    b.ToTable("PortDeviceEntries");
                 });
 
             modelBuilder.Entity("Snowflake.Model.Database.Models.RecordMetadataModel", b =>

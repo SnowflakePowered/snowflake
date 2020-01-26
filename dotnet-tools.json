@@ -6,6 +6,12 @@
       "commands": [
         "snowflake"
       ]
+    },
+    "dotnet-ef": {
+      "version": "3.1.1",
+      "commands": [
+        "dotnet-ef"
+      ]
     }
   }
 }
