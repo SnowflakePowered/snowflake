@@ -22,6 +22,8 @@ namespace Snowflake.Model.Database.Models
         public DbSet<ControllerElementMappingsModel> ControllerElementMappings { get; set; }
         public DbSet<MappedControllerElementModel> MappedControllerElements { get; set; }
 
+        public DbSet<PortDeviceEntryModel> PortDeviceEntries { get; set; }
+
         public DatabaseContext(DbContextOptions<DatabaseContext> options)
             : base(options)
         {
@@ -42,6 +44,8 @@ namespace Snowflake.Model.Database.Models
             FileRecordModel.SetupModel(modelBuilder);
 
             GameRecordConfigurationProfileModel.SetupModel(modelBuilder);
+
+            PortDeviceEntryModel.SetupModel(modelBuilder);
         }
     }
 }
