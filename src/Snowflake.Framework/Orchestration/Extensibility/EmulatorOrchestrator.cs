@@ -8,19 +8,19 @@ using System.Collections.Generic;
 
 namespace Snowflake.Orchestration.Extensibility
 {
-    public abstract class EmulatorExecutor : ProvisionedPlugin
+    public abstract class EmulatorOrchestrator : ProvisionedPlugin, IEmulatorOrchestrator
     {
-        protected EmulatorExecutor(Type pluginType)
+        protected EmulatorOrchestrator(Type pluginType)
            : this(new StandalonePluginProvision(pluginType))
         {
         }
 
-        protected EmulatorExecutor(IPluginProvision provision)
+        protected EmulatorOrchestrator(IPluginProvision provision)
             : base(provision)
         {
         }
 
-        protected abstract GameEmulation ProvisionEmulationInstance(IGame game,
+        public abstract IGameEmulation ProvisionEmulationInstance(IGame game,
             IList<IEmulatedController> controllerPorts,
             string configurationProfileName);
     }

@@ -16,7 +16,7 @@ namespace Snowflake.Support.Execution
         {
             var loader = new EmulatorExecutableLoader(logger);
             this.Executables = enumerator.Modules
-                .Where(m => m.Loader == "emulatorapp")
+                .Where(m => m.Loader == "emulator")
                 .SelectMany(m => loader.LoadModule(m)).ToList();
         }
 

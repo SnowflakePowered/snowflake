@@ -1,0 +1,8 @@
+﻿{
+  "entry": "retroarch.exe",
+  "loader": "emulator",
+  "version": "1.8.4",
+  "author": "libretro Team",
+  "name": "retroarch",
+  "displayName": "RetroArch for Windows (x64)"
+}

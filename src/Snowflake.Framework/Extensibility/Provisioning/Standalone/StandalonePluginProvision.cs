@@ -26,9 +26,9 @@ namespace Snowflake.Extensibility.Provisioning.Standalone
 
         public DirectoryInfo ContentDirectory => throw new NotImplementedException();
 
-        public IDirectory ResourceDirectory => throw new NotImplementedException();
+        public IReadOnlyDirectory ResourceDirectory => throw new NotImplementedException();
 
-        public IDirectory CommonResourceDirectory => throw new NotImplementedException();
+        public IReadOnlyDirectory CommonResourceDirectory => throw new NotImplementedException();
 
         public IDirectory DataDirectory => throw new NotImplementedException();
 

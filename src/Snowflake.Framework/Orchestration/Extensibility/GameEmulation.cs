@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Snowflake.Orchestration.Extensibility
 {
-    public abstract class GameEmulation : IAsyncDisposable
+    public abstract class GameEmulation : IAsyncDisposable, IGameEmulation
     {
         public IGame Game { get; }
 
@@ -19,9 +19,13 @@ namespace Snowflake.Orchestration.Extensibility
 
         public IList<IEmulatedController> ControllerPorts { get; }
 
-        public GameEmulation(IGame game)
+        public GameEmulation(IGame game, 
+            string configurationProfile,
+            IList<IEmulatedController> controllerPorts)
         {
             this.Game = game;
+            this.ConfigurationProfile = configurationProfile;
+            this.ControllerPorts = controllerPorts;
         }
 
         public abstract Task SetupEnvironment();
@@ -33,6 +37,7 @@ namespace Snowflake.Orchestration.Extensibility
         public abstract CancellationToken StartEmulation();
 
         public abstract Task StopEmulation();
+
         public abstract Task<ISaveGame> PersistSaveGame();
 
         protected abstract Task TeardownGame();

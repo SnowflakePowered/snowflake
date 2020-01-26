@@ -9,18 +9,18 @@ using System.Collections.Generic;
 using System.Text;
 using Snowflake.Orchestration.Process;
 
-namespace Snowflake.Adapters.Higan
+namespace Snowflake.Plugin.Emulators.bsnes
 {
-    [Plugin("RetroArch-HiganExecutor")]
-    public class HiganExecutor : EmulatorExecutor
+    [Plugin("bsnes-Executor")]
+    public class BsnesExecutor : EmulatorExecutor
     {
-        public HiganExecutor(IEmulatorExecutable retroArchExecutable)
-            : base(typeof(HiganExecutor))
+        public BsnesExecutor(IEmulatorExecutable bsnesExecutable)
+            : base(typeof(BsnesExecutor))
         {
-            this.RetroArchExecutable = retroArchExecutable;
+            this.BsnesExecutable = bsnesExecutable;
         }
 
-        private IEmulatorExecutable RetroArchExecutable { get; }
+        private IEmulatorExecutable BsnesExecutable { get; }
 
         protected override GameEmulation 
             ProvisionEmulationInstance(IGame game, IList<IEmulatedController> controllerPorts, 
@@ -28,7 +28,7 @@ namespace Snowflake.Adapters.Higan
         {
             var gameEmulation = new HiganGameEmulation(game,
                 new Dictionary<InputDriverType, IDeviceInputMapping>(),
-                this.RetroArchExecutable);
+                this.BsnesExecutable);
             return gameEmulation;
         }
     }

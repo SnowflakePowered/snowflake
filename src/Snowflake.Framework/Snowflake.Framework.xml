@@ -548,7 +548,7 @@
         <member name="M:Snowflake.Extensibility.Provisioning.ProvisionedPlugin.Dispose">
             <inheritdoc/>
         </member>
-        <member name="M:Snowflake.Filesystem.FileExtensions.ReadAllText(Snowflake.Filesystem.IFile)">
+        <member name="M:Snowflake.Filesystem.FileExtensions.ReadAllText(Snowflake.Filesystem.IReadOnlyFile)">
             <summary>
             Opens a text file, reads all the text in the file into a string, and then closes the opened stream.
             The default encoding is UTF8.
@@ -556,7 +556,7 @@
             <param name="this">The <see cref="T:Snowflake.Filesystem.IFile"/> to read.</param>
             <returns>A string containing all text in the file.</returns>
         </member>
-        <member name="M:Snowflake.Filesystem.FileExtensions.ReadAllText(Snowflake.Filesystem.IFile,System.Text.Encoding)">
+        <member name="M:Snowflake.Filesystem.FileExtensions.ReadAllText(Snowflake.Filesystem.IReadOnlyFile,System.Text.Encoding)">
             <summary>
             Opens a text file, reads all the text in the file into a string with the specified encoding,
             and then closes the opened stream.
@@ -1036,6 +1036,12 @@
         </member>
         <member name="P:Snowflake.Loader.Module.Version">
             <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Loader.Module.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="P:Snowflake.Loader.Module.LoaderOptions">
+            <inheritdoc />
         </member>
         <member name="P:Snowflake.Loader.ModuleEnumerator.Modules">
             <inheritdoc/>

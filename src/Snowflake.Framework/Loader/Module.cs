@@ -28,29 +28,39 @@ namespace Snowflake.Loader
         /// <inheritdoc/>
         public Version Version { get; }
 
-        public Module(string name, string entry, string loader, string author, DirectoryInfo moduleDirectory,
-            Version version)
+        /// <inheritdoc />
+        public string DisplayName { get; }
+
+        /// <inheritdoc />
+        public dynamic? LoaderOptions { get; }
+
+        public Module(string name, string displayName, string entry, string loader, string author, DirectoryInfo moduleDirectory,
+            Version version, dynamic? loaderOptions)
         {
             this.Name = name;
+            this.DisplayName = displayName;
             this.Entry = entry;
             this.Loader = loader;
             this.Author = author;
             this.ModuleDirectory = moduleDirectory;
             this.ContentsDirectory = moduleDirectory.CreateSubdirectory("contents");
             this.Version = version;
+            this.LoaderOptions = loaderOptions;
         }
     }
 
     internal class ModuleDefinition
     {
         private string Name { get; }
+        private string DisplayName { get; }
         private string Entry { get; }
         private string Loader { get; }
         private string FrameworkVersion { get; }
         private string Version { get; }
         private string Author { get; }
-
+        private dynamic LoaderOptions { get; }
         public ModuleDefinition(string name,
+            string displayName,
             string entry,
             string loader,
             string frameworkVersion,
@@ -63,14 +73,18 @@ namespace Snowflake.Loader
             this.Loader = loader;
             this.Version = version;
             this.Author = author;
+            this.DisplayName = displayName;
             this.FrameworkVersion = frameworkVersion;
+            this.LoaderOptions = loaderOptions;
         }
 
         public IModule ToModule(DirectoryInfo moduleDirectory) => new Module(this.Name,
+            this.DisplayName ?? this.Name,
             this.Entry,
             this.Loader,
             this.Author,
             moduleDirectory,
-            System.Version.Parse(this.Version));
+            System.Version.Parse(this.Version),
+            this.LoaderOptions);
     }
 }
