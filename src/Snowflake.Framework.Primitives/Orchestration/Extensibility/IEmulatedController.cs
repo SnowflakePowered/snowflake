@@ -10,7 +10,7 @@ namespace Snowflake.Orchestration.Extensibility
     public interface IEmulatedController
     {
         /// <summary>
-        /// Gets the port number index emulated, zero indexed.
+        /// Gets the emulated port number index, zero indexed.
         /// eg. (0 -> Player One, 1 -> Player 2)
         /// </summary>
         int PortIndex { get; }

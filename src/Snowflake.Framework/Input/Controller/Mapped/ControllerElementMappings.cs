@@ -59,18 +59,6 @@ namespace Snowflake.Input.Controller.Mapped
         }
 
         public ControllerElementMappings(string deviceName,
-            ControllerId controllerId, InputDriverType driver, int vendor,
-            IDeviceLayoutMapping mapping,
-            IControllerLayout layout)
-            : this(deviceName, controllerId, driver, vendor)
-        {
-            foreach (var (element, _) in layout.Layout)
-            {
-                this.Add(new MappedControllerElement(element, mapping[element]));
-            }
-        }
-
-        public ControllerElementMappings(string deviceName,
             ControllerId controllerId, InputDriverType driver, int vendor)
         {
             this.DeviceName = deviceName;
