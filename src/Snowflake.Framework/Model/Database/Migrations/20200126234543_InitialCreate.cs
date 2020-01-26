@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Snowflake.Migrations
+namespace Snowflake.Model.Database.Migrations
 {
     public partial class InitialCreate : Migration
     {
@@ -32,6 +32,24 @@ namespace Snowflake.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ControllerElementMappings", x => new { x.ControllerID, x.DriverType, x.DeviceName, x.VendorID, x.ProfileName });
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PortDeviceEntries",
+                columns: table => new
+                {
+                    PlatformID = table.Column<string>(nullable: false),
+                    PortIndex = table.Column<int>(nullable: false),
+                    OrchestratorName = table.Column<string>(nullable: false),
+                    Driver = table.Column<int>(nullable: false),
+                    ControllerID = table.Column<string>(nullable: false),
+                    DeviceName = table.Column<string>(nullable: false),
+                    ProfileName = table.Column<string>(nullable: false),
+                    UniqueNameEnumerationIndex = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PortDeviceEntries", x => new { x.OrchestratorName, x.PlatformID, x.PortIndex });
                 });
 
             migrationBuilder.CreateTable(
@@ -179,6 +197,9 @@ namespace Snowflake.Migrations
 
             migrationBuilder.DropTable(
                 name: "Metadata");
+
+            migrationBuilder.DropTable(
+                name: "PortDeviceEntries");
 
             migrationBuilder.DropTable(
                 name: "ConfigurationProfiles");

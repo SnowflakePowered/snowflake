@@ -52,10 +52,10 @@ namespace Snowflake.Model.Database
         {
             using var context = new DatabaseContext(this.Options.Options);
             var mappings = context.ControllerElementMappings
-                .Include(p => p.MappedElements)
-                .Where(p => p.ControllerID == controllerId 
+                 .Where(p => p.ControllerID == controllerId
                          && p.DeviceName == deviceName
                          && p.VendorID == vendorId)
+                .Include(p => p.MappedElements)
                 .Select(m => m.AsControllerElementMappings())
                 .ToList();
             return mappings;
@@ -65,10 +65,11 @@ namespace Snowflake.Model.Database
         {
             using var context = new DatabaseContext(this.Options.Options);
             var retrievedMappings = context.ControllerElementMappings
-                .Include(p => p.MappedElements)
-                .Where(p => p.ControllerID == controllerId 
+                .Where(p => p.ControllerID == controllerId
                          && p.DeviceName == deviceName
-                         && p.VendorID == vendorId);
+                         && p.VendorID == vendorId)
+                .Include(p => p.MappedElements);
+               
 
             foreach (var retrievedMapping in retrievedMappings)
             {
