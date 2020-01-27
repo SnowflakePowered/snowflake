@@ -13,10 +13,10 @@ namespace Snowflake.Orchestration.Extensibility
     /// </summary>
     public interface IEmulatedPortStore
     {
-        IEmulatedPortDeviceEntry? GetPort(PlatformId platform, int portNumber);
-        public void SetPort(PlatformId platform, int portNumber, ControllerId controller,
+        IEmulatedPortDeviceEntry? GetPort(IEmulatorOrchestrator orchestrator, PlatformId platform, int portNumber);
+        public void SetPort(IEmulatorOrchestrator orchestrator, PlatformId platform, int portNumber, ControllerId controller,
            IInputDevice device, IInputDeviceInstance instance, string inputProfile);
-        void ClearPort(PlatformId platform, int portNumber);
-        IEnumerable<IEmulatedPortDeviceEntry> EnumeratePorts(PlatformId platform);
+        void ClearPort(IEmulatorOrchestrator orchestrator, PlatformId platform, int portNumber);
+        IEnumerable<IEmulatedPortDeviceEntry> EnumeratePorts(IEmulatorOrchestrator orchestrator, PlatformId platform);
     }
 }

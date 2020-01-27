@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Snowflake.Model.Database.Models;
 
-namespace Snowflake.Model.Database.Migrations
+namespace Snowflake.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
     partial class DatabaseContextModelSnapshot : ModelSnapshot
@@ -157,11 +157,14 @@ namespace Snowflake.Model.Database.Migrations
                     b.Property<int>("Driver")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("ProductEnumerationIndex")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("ProfileName")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("UniqueNameEnumerationIndex")
+                    b.Property<int>("VendorID")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("OrchestratorName", "PlatformID", "PortIndex");

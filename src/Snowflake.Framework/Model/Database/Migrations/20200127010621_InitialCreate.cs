@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Snowflake.Model.Database.Migrations
+namespace Snowflake.Migrations
 {
     public partial class InitialCreate : Migration
     {
@@ -44,8 +44,9 @@ namespace Snowflake.Model.Database.Migrations
                     Driver = table.Column<int>(nullable: false),
                     ControllerID = table.Column<string>(nullable: false),
                     DeviceName = table.Column<string>(nullable: false),
+                    VendorID = table.Column<int>(nullable: false),
                     ProfileName = table.Column<string>(nullable: false),
-                    UniqueNameEnumerationIndex = table.Column<int>(nullable: false)
+                    ProductEnumerationIndex = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

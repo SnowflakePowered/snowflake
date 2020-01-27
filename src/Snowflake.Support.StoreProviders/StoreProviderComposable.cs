@@ -10,12 +10,13 @@ using Snowflake.Model.Database;
 using Snowflake.Model.Database.Models;
 using Snowflake.Model.Game;
 using Snowflake.Model.Game.LibraryExtensions;
+using Snowflake.Orchestration.Extensibility;
 using Snowflake.Services;
 using Zio;
 
 namespace Snowflake.Support.StoreProviders
 {
-    public class SqliteStoreComposable : IComposable
+    public class StoreProviderComposable : IComposable
     {
         [ImportService(typeof(IServiceRegistrationProvider))]
         [ImportService(typeof(IContentDirectoryProvider))]
@@ -72,6 +73,11 @@ namespace Snowflake.Support.StoreProviders
             var inputStore = new ControllerElementMappingsStore(optionsBuilder);
             serviceContainer.Get<IServiceRegistrationProvider>()
                 .RegisterService<IControllerElementMappingsStore>(inputStore);
+
+            // ports
+            var portStore = new EmulatedPortStore(optionsBuilder);
+            serviceContainer.Get<IServiceRegistrationProvider>()
+                .RegisterService<IEmulatedPortStore>(portStore);
         }
     }
 }
