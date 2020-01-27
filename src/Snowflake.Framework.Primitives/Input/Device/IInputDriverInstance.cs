@@ -31,24 +31,42 @@ namespace Snowflake.Input.Device
         /// For example, if 2 DualShock 4 (054c:09cc) controllers were installed, with enumeration index of 
         /// 2 and 4 respectively, they would have a class enumeration index of 0 and 1.
         /// 
-        /// However, if this was an XInput device, then this is the same as <see cref="EnumerationIndex"/>
+        /// However, if this was an XInput device instance, then this is the same as <see cref="EnumerationIndex"/>
         /// since XInput devices do not disambiguate between devices.
         /// </summary>
         int ClassEnumerationIndex { get; }
 
         /// <summary>
         /// When enumerating devices with a given driver, the index of enumeration for this driver,
-        /// with regards to the specific type of device, as determined by unique ProductName combination,
+        /// with regards to the specific type of device, as determined by unique ProductName
+        /// combination, if and only if the driver disambiguates between different devices.
+        /// 
+        /// For example, if 2 DualShock 4 ("Wireless Controller") controllers were installed, 
+        /// with enumeration index of 2 and 4 respectively, they would have a class enumeration
+        /// index of 0 and 1. If for example however, another controller from another vendor, 
+        /// such as 8bitdo, was also named "Wireless Controller", that controller would
+        /// have index 2. To distinguish between product names across different vendors,
+        /// use the more specific <see cref="ProductEnumerationIndex"/>.
+        /// 
+        /// However, if this was an XInput device instance, then this is the same as <see cref="EnumerationIndex"/>,
+        /// since XInput devices do not disambiguate between devices.
+        /// </summary>
+        int NameEnumerationIndex { get; }
+
+        /// <summary>
+        /// When enumerating devices with a given driver, the index of enumeration for this driver,
+        /// with regards to the specific type of device, as determined by unique VendorID and ProductName
+        /// combination to uniquely identify a product,
         /// if and only if the driver disambiguates between different devices.
         /// 
         /// For example, if 2 DualShock 4 ("Wireless Controller") controllers were installed, 
         /// with enumeration index of 2 and 4 respectively, they would have a class enumeration
         /// index of 0 and 1.
         /// 
-        /// However, if this was an XInput device, then this is the same as <see cref="EnumerationIndex"/>,
+        /// However, if this was an XInput device instance, then this is the same as <see cref="EnumerationIndex"/>,
         /// since XInput devices do not disambiguate between devices.
         /// </summary>
-        int UniqueNameEnumerationIndex { get; }
+        int ProductEnumerationIndex { get; }
 
         /// <summary>
         /// The capabilities this device instance supports. 

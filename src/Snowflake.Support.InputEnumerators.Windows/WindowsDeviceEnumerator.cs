@@ -30,6 +30,7 @@ namespace Snowflake.Support.InputEnumerators.Windows
             using var directInput = new DirectInput();
 
             int xinputIndex = 0;
+            var dinputProdCount = new Dictionary<(int vid, string), int>();
             var dinputPNameCount = new Dictionary<string, int>();
             var dinputClassCount = new Dictionary<(int vid, int pid), int>();
 
@@ -45,10 +46,13 @@ namespace Snowflake.Support.InputEnumerators.Windows
                 var instances = new List<IInputDeviceInstance>();
 
                 // keep track of orderings
+                dinputProdCount.TryGetValue((vid, name), out int prodOrder);
                 dinputPNameCount.TryGetValue(name, out int nameOrder);
                 dinputClassCount.TryGetValue((pid, vid), out int classOrder);
+
+                dinputProdCount[(vid, name)] = prodOrder + 1;
                 dinputPNameCount[name] = nameOrder + 1;
-                dinputClassCount[(pid, vid)] = nameOrder + 1;
+                dinputClassCount[(pid, vid)] = classOrder + 1;
 
                 if (path.ToLowerInvariant().Contains("ig_") && xinputIndex < 4)
                 {
@@ -65,7 +69,7 @@ namespace Snowflake.Support.InputEnumerators.Windows
                     .ToDictionary(d => d.capability, d => (d.offset, d.rawId));
 
                 // todo add support for mapping overrides
-                instances.Add(new DirectInputDeviceInstance(allOrder, classOrder, nameOrder, capabilities, 
+                instances.Add(new DirectInputDeviceInstance(allOrder, classOrder, nameOrder, prodOrder, capabilities, 
                     GenerateDefaultMapping(capabilities.Keys)));
 
                 yield return new InputDevice(vid, pid,

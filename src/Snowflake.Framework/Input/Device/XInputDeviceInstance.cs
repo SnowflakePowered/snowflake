@@ -99,10 +99,12 @@ namespace Snowflake.Input.Device
 
         public int ClassEnumerationIndex => this.EnumerationIndex;
 
-        public int UniqueNameEnumerationIndex => this.EnumerationIndex;
+        public int NameEnumerationIndex => this.EnumerationIndex;
 
         public IEnumerable<DeviceCapability> Capabilities => XInputDeviceInstance._xInputCapabilities;
 
         public IDeviceLayoutMapping DefaultLayout { get; }
+
+        public int ProductEnumerationIndex => this.EnumerationIndex;
     }
 }

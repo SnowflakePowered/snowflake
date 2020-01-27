@@ -17,6 +17,8 @@ namespace Snowflake.Input.Device
 
         public IDeviceLayoutMapping DefaultLayout => DeviceLayoutMapping.EmptyMapping;
 
-        public int UniqueNameEnumerationIndex => 0;
+        public int NameEnumerationIndex => 0;
+
+        public int ProductEnumerationIndex => 0;
     }
 }
