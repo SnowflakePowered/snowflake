@@ -29,8 +29,9 @@ namespace Snowflake.Adapters.Higan
         public RetroArchBsnesGameEmulation(IGame game,
             string configurationProfile,
             IList<IEmulatedController> controllerPorts,
+            ISaveGame? initialSave,
             IDictionary<InputDriverType, IDeviceInputMapping> inputMappings,
-            IEmulatorExecutable retroarchExecutable) : base(game, configurationProfile, controllerPorts)
+            IEmulatorExecutable retroarchExecutable) : base(game, configurationProfile, controllerPorts, initialSave)
         {
             this.InputMappings = inputMappings;
             this.Executable = retroarchExecutable;
@@ -39,7 +40,6 @@ namespace Snowflake.Adapters.Higan
 
         public IDictionary<InputDriverType, IDeviceInputMapping> InputMappings { get; }
         public IEmulatorExecutable Executable { get; }
-        private ISaveGame? InitialSave { get; set; }
         private IDirectory Scratch { get; }
 
         private CancellationTokenSource? ProcessCancellationSource { get; set; }
@@ -58,11 +58,11 @@ namespace Snowflake.Adapters.Higan
             });
         }
 
-        public override async Task RestoreSaveGame(ISaveGame loadedSave)
+        public override async Task RestoreSaveGame()
         {
-            this.InitialSave = loadedSave;
+            if (this.InitialSave == null) return;
             var saveDirectory = this.Scratch.OpenDirectory("save");
-            foreach (var file in loadedSave.SaveContents.EnumerateFilesRecursive())
+            foreach (var file in this.InitialSave.SaveContents.EnumerateFilesRecursive())
             {
                 await saveDirectory.CopyFromAsync(file);
             }

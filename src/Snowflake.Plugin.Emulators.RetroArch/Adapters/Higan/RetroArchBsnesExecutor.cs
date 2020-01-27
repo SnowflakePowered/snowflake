@@ -36,11 +36,12 @@ namespace Snowflake.Adapters.Higan
 
         public override IGameEmulation 
             ProvisionEmulationInstance(IGame game, IList<IEmulatedController> controllerPorts, 
-            string configurationProfileName)
+            string configurationProfileName, ISaveGame initialSave)
         {
             var gameEmulation = new RetroArchBsnesGameEmulation(game,
                 configurationProfileName,
                 controllerPorts,
+                initialSave,
                 this.Mappings,
                 this.RetroArchExecutable);
             return gameEmulation;
