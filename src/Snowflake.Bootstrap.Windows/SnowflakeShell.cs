@@ -30,23 +30,6 @@ namespace Snowflake.Shell.Windows
             var loader = this.loadedCore.Get<IModuleEnumerator>();
             var composer = new AssemblyComposer(this.loadedCore, loader);
             composer.Compose();
-            this.RunTestHook();
-        }
-
-
-        private void RunTestHook()
-        {
-            var devices = this.loadedCore.Get<IDeviceEnumerator>();
-            var keyboard = devices.QueryConnectedDevices().First(d => d.InstanceGuid == IDeviceEnumerator.KeyboardInstanceGuid);
-            var kbdInstance = keyboard.Instances.First();
-            var snesLayout = this.loadedCore.Get<IStoneProvider>().Controllers["SNES_CONTROLLER"];
-            var mapcol = new ControllerElementMappings(keyboard.DeviceName,
-                           "SNES_CONTROLLER",
-                           kbdInstance.Driver,
-                           keyboard.VendorID,
-                           kbdInstance.DefaultLayout);
-            var controller = new EmulatedController(0, keyboard, kbdInstance, snesLayout, mapcol);
-            //todo need persistence of real to emulated controllers!!
         }
 
         public void RestartCore()
