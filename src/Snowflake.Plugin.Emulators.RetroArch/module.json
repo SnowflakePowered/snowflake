@@ -4,5 +4,6 @@
   "frameworkVersion": "1.0.0",
   "version": "1.0.0",
   "author": "Snowflake",
-  "name": "Snowflake RetroArch Interop Layer"
+  "name": "orchestration.retroarch.windows",
+  "displayName": "Snowflake RetroArch Interop Layer"
 }

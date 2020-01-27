@@ -26,7 +26,8 @@ namespace Snowflake.Plugin.Emulators.RetroArch
             var log = serviceContainer.Get<ILogProvider>().GetLogger("RetroArch");
             var retroArchExecutable = exp.GetEmulator("retroarch");
 
-            pm.Register<IEmulatorOrchestrator>(new RetroArchBsnesExecutor(retroArchExecutable));
+            var provision = pm.GetProvision<RetroArchBsnesExecutor>(composableModule);
+            pm.Register<IEmulatorOrchestrator>(new RetroArchBsnesExecutor(retroArchExecutable, provision));
             // var shaderManager = new ShaderManager(processHandler.Provision.ContentDirectory.CreateSubdirectory("shaders").FullName);
             //var higanProvision = pm.GetProvision<HiganSnesAdapter>(composableModule);
             //pm.Register<IEmulator>(new HiganSnesAdapter(higanProvision, stone, emucdp, exe));

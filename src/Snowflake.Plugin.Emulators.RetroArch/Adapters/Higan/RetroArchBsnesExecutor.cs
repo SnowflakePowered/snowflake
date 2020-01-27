@@ -10,14 +10,15 @@ using System.Text;
 using Snowflake.Orchestration.Process;
 using Newtonsoft.Json;
 using Snowflake.Filesystem;
+using Snowflake.Extensibility.Provisioning;
 
 namespace Snowflake.Adapters.Higan
 {
     [Plugin("RetroArch-BsnesExecutor")]
     public class RetroArchBsnesExecutor : EmulatorOrchestrator
     {
-        public RetroArchBsnesExecutor(IEmulatorExecutable retroArchExecutable)
-            : base(typeof(RetroArchBsnesExecutor))
+        public RetroArchBsnesExecutor(IEmulatorExecutable retroArchExecutable, IPluginProvision provision)
+            : base(provision)
         {
             this.RetroArchExecutable = retroArchExecutable;
             var mapping = JsonConvert.DeserializeObject<IDeviceInputMapping>
