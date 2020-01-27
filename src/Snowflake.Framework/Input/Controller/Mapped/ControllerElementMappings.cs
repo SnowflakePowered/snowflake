@@ -52,9 +52,9 @@ namespace Snowflake.Input.Controller.Mapped
             IDeviceLayoutMapping mapping)
             : this(deviceName, controllerId, driver, vendor)
         {
-            foreach (var (key, value) in mapping)
+            foreach (var controllerElement in mapping)
             {
-                this.Add(new MappedControllerElement(key, value));
+                this.Add(controllerElement);
             }
         }
 

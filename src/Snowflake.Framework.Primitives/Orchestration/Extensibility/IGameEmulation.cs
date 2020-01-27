@@ -11,11 +11,12 @@ namespace Snowflake.Orchestration.Extensibility
         string ConfigurationProfile { get; }
         IList<IEmulatedController> ControllerPorts { get; }
         IGame Game { get; }
+        ISaveGame? InitialSave { get; }
 
         Task CompileConfiguration();
         ValueTask DisposeAsync();
         Task<ISaveGame> PersistSaveGame();
-        Task RestoreSaveGame(ISaveGame targetDirectory);
+        Task RestoreSaveGame();
         Task SetupEnvironment();
         CancellationToken StartEmulation();
         Task StopEmulation();

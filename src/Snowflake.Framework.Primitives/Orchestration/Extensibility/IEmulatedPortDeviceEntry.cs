@@ -11,9 +11,7 @@ namespace Snowflake.Orchestration.Extensibility
     public interface IEmulatedPortDeviceEntry
     {
         InputDriverType Driver { get; }
-        string DeviceName { get; }
-        int VendorID { get; }
-        int ProductEnumerationIndex { get; }
+        Guid InstanceGuid { get; }
         ControllerId ControllerID { get; }
         PlatformId PlatformID { get; }
         string ProfileName { get; }

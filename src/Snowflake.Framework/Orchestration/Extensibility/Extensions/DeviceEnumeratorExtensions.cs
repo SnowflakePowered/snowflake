@@ -12,32 +12,22 @@ namespace Snowflake.Orchestration.Extensibility.Extensions
         public static bool IsPortDeviceConnected(this IDeviceEnumerator @this,
             IEmulatedPortDeviceEntry portDevice)
         {
-            return @this.QueryConnectedDevices().Any(d => d.DeviceName == portDevice.DeviceName
-                && d.VendorID == portDevice.VendorID
-                && d.Instances.Any(i => i.Driver == portDevice.Driver &&
-                    i.NameEnumerationIndex == portDevice.ProductEnumerationIndex));
+            return @this.QueryConnectedDevices().Any(d => d.InstanceGuid == portDevice.InstanceGuid);
         }
 
         public static IInputDeviceInstance? GetPortDeviceInstance(this IDeviceEnumerator @this,
             IEmulatedPortDeviceEntry portDevice)
         {
             return @this.QueryConnectedDevices()
-                .Where(d => d.DeviceName == portDevice.DeviceName && d.VendorID == portDevice.VendorID)
-                .SelectMany(d => d.Instances)
-                .FirstOrDefault(i => i.Driver == portDevice.Driver &&
-                    i.NameEnumerationIndex == portDevice.ProductEnumerationIndex);
+                .FirstOrDefault(d => d.InstanceGuid == portDevice.InstanceGuid)?.Instances?
+                .FirstOrDefault(i => i.Driver == portDevice.Driver);
         }
 
         public static IInputDevice? GetPortDevice(this IDeviceEnumerator @this,
             IEmulatedPortDeviceEntry portDevice)
         {
             return @this.QueryConnectedDevices()
-                .FirstOrDefault(d => d.DeviceName == portDevice.DeviceName
-                    && d.VendorID == portDevice.VendorID
-                    && d.Instances.Any(i => i.Driver == portDevice.Driver &&
-                    i.NameEnumerationIndex == portDevice.ProductEnumerationIndex));
+                .FirstOrDefault(d => d.InstanceGuid == portDevice.InstanceGuid);
         }
-
-
     }
 }

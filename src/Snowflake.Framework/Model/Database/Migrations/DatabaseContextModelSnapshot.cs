@@ -150,22 +150,15 @@ namespace Snowflake.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("DeviceName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<int>("Driver")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("ProductEnumerationIndex")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid>("InstanceGuid")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("ProfileName")
                         .IsRequired()
                         .HasColumnType("TEXT");
-
-                    b.Property<int>("VendorID")
-                        .HasColumnType("INTEGER");
 
                     b.HasKey("OrchestratorName", "PlatformID", "PortIndex");
 

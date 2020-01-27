@@ -24,7 +24,8 @@ namespace Snowflake.Model.Tests
             var orch = new Mock<IEmulatorOrchestrator>();
             orch.SetupGet(p => p.Name).Returns("Test");
             var device = new Mock<IInputDevice>();
-            device.SetupGet(p => p.DeviceName).Returns("Test Controller");
+            var instanceGuid = Guid.NewGuid();
+            device.SetupGet(p => p.InstanceGuid).Returns(instanceGuid);
 
             var instance = new Mock<IInputDeviceInstance>();
             instance.SetupGet(p => p.Driver).Returns(InputDriverType.Passthrough);
@@ -34,7 +35,7 @@ namespace Snowflake.Model.Tests
 
             var ret = store.GetPort(orch.Object, "TEST_PLATFORM", 0);
             Assert.NotNull(ret);
-            Assert.Equal("Test Controller", ret.DeviceName);
+            Assert.Equal(instanceGuid, ret.InstanceGuid);
             Assert.Equal("TEST_CONTROLLER", ret.ControllerID);
             Assert.Equal(InputDriverType.Passthrough, ret.Driver);
         }
@@ -48,7 +49,8 @@ namespace Snowflake.Model.Tests
             var orch = new Mock<IEmulatorOrchestrator>();
             orch.SetupGet(p => p.Name).Returns("Test");
             var device = new Mock<IInputDevice>();
-            device.SetupGet(p => p.DeviceName).Returns("Test Controller");
+            var instanceGuid = Guid.NewGuid();
+            device.SetupGet(p => p.InstanceGuid).Returns(instanceGuid);
 
             var instance = new Mock<IInputDeviceInstance>();
             instance.SetupGet(p => p.Driver).Returns(InputDriverType.Passthrough);
@@ -58,7 +60,7 @@ namespace Snowflake.Model.Tests
 
             var ret = store.GetPort(orch.Object, "TEST_PLATFORM", 0);
             Assert.NotNull(ret);
-            Assert.Equal("Test Controller", ret.DeviceName);
+            Assert.Equal(instanceGuid, ret.InstanceGuid);
             Assert.Equal("TEST_CONTROLLER", ret.ControllerID);
             Assert.Equal(InputDriverType.Passthrough, ret.Driver);
 
@@ -76,7 +78,9 @@ namespace Snowflake.Model.Tests
             var orch = new Mock<IEmulatorOrchestrator>();
             orch.SetupGet(p => p.Name).Returns("Test");
             var device = new Mock<IInputDevice>();
-            device.SetupGet(p => p.DeviceName).Returns("Test Controller");
+            var instanceGuid = Guid.NewGuid();
+            device.SetupGet(p => p.InstanceGuid).Returns(instanceGuid);
+
 
             var instance = new Mock<IInputDeviceInstance>();
             instance.SetupGet(p => p.Driver).Returns(InputDriverType.Passthrough);

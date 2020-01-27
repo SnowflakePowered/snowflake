@@ -43,10 +43,8 @@ namespace Snowflake.Migrations
                     OrchestratorName = table.Column<string>(nullable: false),
                     Driver = table.Column<int>(nullable: false),
                     ControllerID = table.Column<string>(nullable: false),
-                    DeviceName = table.Column<string>(nullable: false),
-                    VendorID = table.Column<int>(nullable: false),
-                    ProfileName = table.Column<string>(nullable: false),
-                    ProductEnumerationIndex = table.Column<int>(nullable: false)
+                    InstanceGuid = table.Column<Guid>(nullable: false),
+                    ProfileName = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {

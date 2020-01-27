@@ -60,11 +60,9 @@ namespace Snowflake.Model.Database
             if (entity != null)
             {
                 entity.ProfileName = inputProfile;
-                entity.ProductEnumerationIndex = instance.NameEnumerationIndex;
+                entity.InstanceGuid = device.InstanceGuid;
                 entity.ControllerID = controller;
-                entity.DeviceName = device.DeviceName;
                 entity.Driver = instance.Driver;
-                entity.VendorID = device.VendorID;
                 context.Entry(entity).State = EntityState.Modified;
             }
             else
@@ -72,13 +70,11 @@ namespace Snowflake.Model.Database
                 var newEntity = new PortDeviceEntryModel()
                 {
                     ProfileName = inputProfile,
-                    ProductEnumerationIndex = instance.NameEnumerationIndex,
+                    InstanceGuid = device.InstanceGuid,
                     ControllerID = controller,
-                    DeviceName = device.DeviceName,
                     Driver = instance.Driver,
                     OrchestratorName = emulatorName,
                     PlatformID = platform,
-                    VendorID = device.VendorID,
                     PortIndex = portNumber
                 };
                 context.PortDeviceEntries.Add(newEntity);
