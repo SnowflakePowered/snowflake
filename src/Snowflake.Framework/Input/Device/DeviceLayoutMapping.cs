@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Snowflake.Input.Controller;
+using Snowflake.Input.Controller.Mapped;
 
 namespace Snowflake.Input.Device
 {
@@ -24,9 +26,11 @@ namespace Snowflake.Input.Device
         
         private IDictionary<ControllerElement, DeviceCapability> Mapping { get; }
 
-        public IEnumerator<KeyValuePair<ControllerElement, DeviceCapability>> GetEnumerator() 
-            => this.Mapping.GetEnumerator();
-
         IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
+
+        public IEnumerator<MappedControllerElement> GetEnumerator()
+        {
+            return this.Mapping.Select(o => (MappedControllerElement)o).GetEnumerator();
+        }
     }
 }
