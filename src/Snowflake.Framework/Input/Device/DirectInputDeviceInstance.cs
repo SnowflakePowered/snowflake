@@ -8,12 +8,14 @@ namespace Snowflake.Input.Device
     {
         internal DirectInputDeviceInstance(int enumerationIndex, 
             int classEnumerationIndex, int uniqueNameEnumerationIndex, 
+            int productEnumerationIndex,
             IReadOnlyDictionary<DeviceCapability, (int offset, int rawId)> capabilities, 
             IDeviceLayoutMapping defaultLayout)
         {
             this.EnumerationIndex = enumerationIndex;
             this.ClassEnumerationIndex = classEnumerationIndex;
-            this.UniqueNameEnumerationIndex = uniqueNameEnumerationIndex;
+            this.NameEnumerationIndex = uniqueNameEnumerationIndex;
+            this.ProductEnumerationIndex = productEnumerationIndex;
             this.DefaultLayout = defaultLayout;
             this.CapabilityMap = capabilities;
         }
@@ -25,11 +27,13 @@ namespace Snowflake.Input.Device
 
         public int ClassEnumerationIndex { get; }
 
-        public int UniqueNameEnumerationIndex { get; }
+        public int NameEnumerationIndex { get; }
 
         public IEnumerable<DeviceCapability> Capabilities => this.CapabilityMap.Keys;
 
         public IDeviceLayoutMapping DefaultLayout { get; }
+
+        public int ProductEnumerationIndex { get; }
 
         public int GetObjectOffset(DeviceCapability capability) => 
             this.CapabilityMap.TryGetValue(capability, out (int offset, int _) val) ? val.offset : -1;
