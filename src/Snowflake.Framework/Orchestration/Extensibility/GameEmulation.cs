@@ -19,20 +19,23 @@ namespace Snowflake.Orchestration.Extensibility
 
         public IList<IEmulatedController> ControllerPorts { get; }
 
+        public ISaveGame? InitialSave { get; }
         public GameEmulation(IGame game, 
             string configurationProfile,
-            IList<IEmulatedController> controllerPorts)
+            IList<IEmulatedController> controllerPorts,
+            ISaveGame? initialSave)
         {
             this.Game = game;
             this.ConfigurationProfile = configurationProfile;
             this.ControllerPorts = controllerPorts;
+            this.InitialSave = initialSave;
         }
 
         public abstract Task SetupEnvironment();
 
         public abstract Task CompileConfiguration();
 
-        public abstract Task RestoreSaveGame(ISaveGame targetDirectory);
+        public abstract Task RestoreSaveGame();
 
         public abstract CancellationToken StartEmulation();
 
