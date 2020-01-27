@@ -32,5 +32,26 @@ namespace Snowflake.Input.Controller.Mapped
             this.LayoutElement = virtualElement;
             this.DeviceCapability = deviceElement;
         }
+
+        /// <summary>
+        /// Create a new mapping between a virtual controller element and device capability from a key value pair
+        /// </summary>
+        /// <param name="kvp">The key value pair to convert</param>
+        public MappedControllerElement(KeyValuePair<ControllerElement, DeviceCapability> kvp)
+        {
+            this.LayoutElement = kvp.Key;
+            this.DeviceCapability = kvp.Value;
+        }
+
+
+        /// <summary>
+        /// Converts between a <see cref="MappedControllerElement"/> and a <see cref="KeyValuePair{TKey, TValue}"/>
+        /// of the proper type.
+        /// </summary>
+        /// <param name="kvp">The key value pair</param>
+        public static explicit operator MappedControllerElement(KeyValuePair<ControllerElement, DeviceCapability> kvp)
+        {
+            return new MappedControllerElement(kvp);
+        }
     }
 }

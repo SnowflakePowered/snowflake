@@ -1,4 +1,5 @@
 ﻿using Snowflake.Input.Controller;
+using Snowflake.Input.Controller.Mapped;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,7 +10,7 @@ namespace Snowflake.Input.Device
     /// Represents a map from a <see cref="Controller.ControllerElement"/>
     /// to a <see cref="DeviceCapability"/>
     /// </summary>
-    public interface IDeviceLayoutMapping : IEnumerable<KeyValuePair<ControllerElement, DeviceCapability>>
+    public interface IDeviceLayoutMapping : IEnumerable<MappedControllerElement>
     {
         /// <summary>
         /// Gets the capability that maps on to the given element.
