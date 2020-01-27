@@ -34,8 +34,7 @@ namespace Snowflake.Orchestration.Extensibility
             if (portEntry == null) return null;
             var device = this.Devices.GetPortDevice(portEntry);
             if (device == null) return null;
-            var instance = device.Instances.FirstOrDefault(i => i.Driver == portEntry.Driver
-                && i.ProductEnumerationIndex == portEntry.ProductEnumerationIndex);
+            var instance = device.Instances.FirstOrDefault(i => i.Driver == portEntry.Driver);
             var profile = this.Mappings.GetMappings(portEntry.ControllerID, portEntry.Driver,
                 device.DeviceName, device.VendorID, portEntry.ProfileName);
             if (profile == null) return null;

@@ -43,7 +43,7 @@ namespace Snowflake.Input.Device
         string DevicePath { get; }
 
         /// <summary>
-        /// A GUID that identifies the device.
+        /// A GUID that uniquely identifies the device.
         /// 
         /// In general, this GUID is opaque and arbitrary, but must be consistent with the 
         /// <see cref="IDeviceEnumerator"/> that produced this device.

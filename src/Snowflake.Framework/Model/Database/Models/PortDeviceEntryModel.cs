@@ -14,10 +14,8 @@ namespace Snowflake.Model.Database.Models
         public InputDriverType Driver { get; set; }
         public ControllerId ControllerID { get; set; }
         public PlatformId PlatformID { get; set; }
-        public string DeviceName { get; set; }
-        public int VendorID { get; set; }
+        public Guid InstanceGuid { get; set; }
         public string ProfileName { get; set; }
-        public int ProductEnumerationIndex { get; set; }
         public int PortIndex { get; set; }
         public string OrchestratorName { get; set; }
 
@@ -35,19 +33,13 @@ namespace Snowflake.Model.Database.Models
              .HasConversion(p => p.ToString(), s => s)
              .IsRequired();
             modelBuilder.Entity<PortDeviceEntryModel>()
-               .Property(p => p.DeviceName)
+               .Property(p => p.InstanceGuid)
                .IsRequired();
             modelBuilder.Entity<PortDeviceEntryModel>()
                .Property(p => p.ProfileName)
                .IsRequired();
             modelBuilder.Entity<PortDeviceEntryModel>()
                .Property(p => p.PortIndex)
-               .IsRequired();
-            modelBuilder.Entity<PortDeviceEntryModel>()
-              .Property(p => p.VendorID)
-              .IsRequired();
-            modelBuilder.Entity<PortDeviceEntryModel>()
-               .Property(p => p.ProductEnumerationIndex)
                .IsRequired();
             modelBuilder.Entity<PortDeviceEntryModel>()
                .Property(p => p.OrchestratorName)
