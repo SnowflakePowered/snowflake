@@ -15,8 +15,9 @@ namespace Snowflake.Model.Database.Models
         public ControllerId ControllerID { get; set; }
         public PlatformId PlatformID { get; set; }
         public string DeviceName { get; set; }
+        public int VendorID { get; set; }
         public string ProfileName { get; set; }
-        public int UniqueNameEnumerationIndex { get; set; }
+        public int ProductEnumerationIndex { get; set; }
         public int PortIndex { get; set; }
         public string OrchestratorName { get; set; }
 
@@ -43,7 +44,10 @@ namespace Snowflake.Model.Database.Models
                .Property(p => p.PortIndex)
                .IsRequired();
             modelBuilder.Entity<PortDeviceEntryModel>()
-               .Property(p => p.UniqueNameEnumerationIndex)
+              .Property(p => p.VendorID)
+              .IsRequired();
+            modelBuilder.Entity<PortDeviceEntryModel>()
+               .Property(p => p.ProductEnumerationIndex)
                .IsRequired();
             modelBuilder.Entity<PortDeviceEntryModel>()
                .Property(p => p.OrchestratorName)

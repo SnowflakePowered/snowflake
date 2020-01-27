@@ -12,7 +12,8 @@ namespace Snowflake.Orchestration.Extensibility
     {
         InputDriverType Driver { get; }
         string DeviceName { get; }
-        int UniqueNameEnumerationIndex { get; }
+        int VendorID { get; }
+        int ProductEnumerationIndex { get; }
         ControllerId ControllerID { get; }
         PlatformId PlatformID { get; }
         string ProfileName { get; }

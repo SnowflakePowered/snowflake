@@ -6,10 +6,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Snowflake.Model.Database.Models;
 
-namespace Snowflake.Model.Database.Migrations
+namespace Snowflake.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20200126234543_InitialCreate")]
+    [Migration("20200127010621_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -159,11 +159,14 @@ namespace Snowflake.Model.Database.Migrations
                     b.Property<int>("Driver")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("ProductEnumerationIndex")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("ProfileName")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("UniqueNameEnumerationIndex")
+                    b.Property<int>("VendorID")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("OrchestratorName", "PlatformID", "PortIndex");
