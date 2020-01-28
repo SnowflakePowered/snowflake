@@ -38,6 +38,5 @@ namespace Snowflake.Orchestration.Extensibility
             IList<IEmulatedController> controllerPorts,
             string configurationProfileName,
             ISaveGame? initialSave);
-
     }
 }

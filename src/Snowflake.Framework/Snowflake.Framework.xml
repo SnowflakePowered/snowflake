@@ -1158,6 +1158,35 @@
             The namespace for ISO OIDs (from RFC 4122, Appendix C).
             </summary>
         </member>
+        <member name="M:Snowflake.Orchestration.Extensibility.Extensions.DeviceEnumeratorExtensions.IsPortDeviceConnected(Snowflake.Services.IDeviceEnumerator,Snowflake.Orchestration.Extensibility.IEmulatedPortDeviceEntry)">
+            <summary>
+            Checks if the <see cref="T:Snowflake.Input.Device.IInputDeviceInstance"/> specified by the given
+            <see cref="T:Snowflake.Orchestration.Extensibility.IEmulatedPortDeviceEntry"/> is connected to the system.
+            </summary>
+            <param name="this">The <see cref="T:Snowflake.Services.IDeviceEnumerator"/> to use.</param>
+            <param name="portDevice">The <see cref="T:Snowflake.Orchestration.Extensibility.IEmulatedPortDeviceEntry"/> to check if connected.</param>
+            <returns>Whether or not the given <see cref="T:Snowflake.Orchestration.Extensibility.IEmulatedPortDeviceEntry"/> is connected.</returns>
+        </member>
+        <member name="M:Snowflake.Orchestration.Extensibility.Extensions.DeviceEnumeratorExtensions.GetPortDeviceInstance(Snowflake.Services.IDeviceEnumerator,Snowflake.Orchestration.Extensibility.IEmulatedPortDeviceEntry)">
+            <summary>
+            Gets the <see cref="T:Snowflake.Input.Device.IInputDeviceInstance"/> specifid by the given <see cref="T:Snowflake.Orchestration.Extensibility.IEmulatedPortDeviceEntry"/> 
+            if it is connected to the system, or null if it does not.
+            </summary>
+            <param name="this">The <see cref="T:Snowflake.Services.IDeviceEnumerator"/> to use.</param>
+            <param name="portDevice">The <see cref="T:Snowflake.Orchestration.Extensibility.IEmulatedPortDeviceEntry"/> to check if connected.</param>
+            <returns>The <see cref="T:Snowflake.Input.Device.IInputDeviceInstance"/> specifid by the given <see cref="T:Snowflake.Orchestration.Extensibility.IEmulatedPortDeviceEntry"/> 
+            if it is connected to the system, or null if it does not.</returns>
+        </member>
+        <member name="M:Snowflake.Orchestration.Extensibility.Extensions.DeviceEnumeratorExtensions.GetPortDevice(Snowflake.Services.IDeviceEnumerator,Snowflake.Orchestration.Extensibility.IEmulatedPortDeviceEntry)">
+            <summary>
+            Gets the <see cref="T:Snowflake.Input.Device.IInputDevice"/> specifid by the given <see cref="T:Snowflake.Orchestration.Extensibility.IEmulatedPortDeviceEntry"/> 
+            if it is connected to the system, or null if it does not.
+            </summary>
+            <param name="this">The <see cref="T:Snowflake.Services.IDeviceEnumerator"/> to use.</param>
+            <param name="portDevice">The <see cref="T:Snowflake.Orchestration.Extensibility.IEmulatedPortDeviceEntry"/> to check if connected.</param>
+            <returns>The <see cref="T:Snowflake.Input.Device.IInputDevice"/> specifid by the given <see cref="T:Snowflake.Orchestration.Extensibility.IEmulatedPortDeviceEntry"/> 
+            if it is connected to the system, or null if it does not.</returns>
+        </member>
         <member name="M:Snowflake.Orchestration.Process.ProcessExtensions.WaitForExitAsync(System.Diagnostics.Process,System.Threading.CancellationToken)">
             <summary>
             Waits asynchronously for the process to exit.
