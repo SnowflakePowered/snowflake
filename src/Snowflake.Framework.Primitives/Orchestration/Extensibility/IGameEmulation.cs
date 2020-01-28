@@ -22,15 +22,18 @@ namespace Snowflake.Orchestration.Extensibility
         /// The implementation is responsible for fetching this profile correctly in <see cref="CompileConfiguration"/>.
         /// </summary>
         string ConfigurationProfile { get; }
+
         /// <summary>
         /// A list of <see cref="IEmulatedController"/> that representes the input devices that will be used
         /// in this emulation instance.
         /// </summary>
         IList<IEmulatedController> ControllerPorts { get; }
+
         /// <summary>
         /// The game that is being emulated in this instance.
         /// </summary>
         IGame Game { get; }
+
         /// <summary>
         /// The initial save game that should be copied into the working directory for this emulation instance.
         /// If this is null, then the implementation is responsible for creating a blank initial save game state
@@ -65,16 +68,19 @@ namespace Snowflake.Orchestration.Extensibility
         /// </summary>
         /// <returns>An asynchronous task that signals the completion of the preparation.</returns>
         Task SetupEnvironment();
+
         /// <summary>
         /// Begin the emulation instancee (run the game).
         /// </summary>
         /// <returns>A cancellation token that indicates when the emulation is halted by the user, or programmatically.</returns>
         CancellationToken StartEmulation();
+
         /// <summary>
         /// As safely as possible, halt the currently running emulation instance forever.
         /// </summary>
         /// <returns>An asynchronous task that signals the completion of the instance halt.</returns>
         Task StopEmulation();
+
         /// <summary>
         /// Implements <see cref="IAsyncDisposable"/>.
         /// When disposed, immediately stop the currently running emulation instance, if any,

@@ -23,6 +23,7 @@ namespace Snowflake.Orchestration.Extensibility
         /// <param name="game">The game that is to be run.</param>
         /// <returns>A list of BIOS files that are missing that are required to run the given game.</returns>
         IEnumerable<ISystemFile> CheckMissingSystemFiles(IGame game);
+
         /// <summary>
         /// Validates game prerequisites, and transforms if necessary, any files registered with
         /// the game into a format usable for this particular <see cref="IEmulatorOrchestrator"/>.
@@ -33,6 +34,7 @@ namespace Snowflake.Orchestration.Extensibility
         /// <returns>A queuable installation job that transforms the files of the game into a format usable for
         /// this particular <see cref="IEmulatorOrchestrator"/>.</returns>
         IAsyncEnumerable<TaskResult<IFile>> ValidateGamePrerequisites(IGame game);
+
         /// <summary>
         /// Provision the emulation instance to run the game.
         /// </summary>
