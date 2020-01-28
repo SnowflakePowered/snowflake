@@ -59,7 +59,7 @@ namespace Snowflake.Services.AssemblyLoader
             {
                 var container = Instantiate.CreateInstance(type);
                 var castedContainer = (IComposable) container;
-                Console.WriteLine($"Found Container {container.GetType().Name}");
+                logger.Info($"Found Container {container.GetType().Name}");
                 yield return castedContainer;
             }
         }
