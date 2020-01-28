@@ -7,7 +7,7 @@ namespace Snowflake.Model.Game
     /// <summary>
     /// Represents a BIOS file of a Stone <see cref="IPlatformInfo"/> definition.
     /// </summary>
-    public interface IBiosFile
+    public interface ISystemFile
     {
         /// <summary>
         /// Gets the canonical file name of the BIOS file.

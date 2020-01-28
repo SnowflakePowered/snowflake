@@ -31,6 +31,26 @@ namespace Snowflake.Orchestration.Saving.Tests
         }
 
         [Fact]
+        public async Task DeleteSave_Test()
+        {
+            var fs = new PhysicalFileSystem();
+            var temp = Path.GetTempPath();
+            var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
+            var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
+
+            var manager = new SaveGameManager(dir);
+            var save = await manager.CreateSave("test", async directory => directory.OpenFile("test.save").OpenStream().Close());
+            var retrievedSave = manager.GetSave(save.Guid);
+            Assert.NotNull(retrievedSave);
+            Assert.Equal(save.Guid, retrievedSave.Guid);
+            Assert.NotEmpty(retrievedSave.SaveContents.EnumerateFiles());
+            manager.DeleteSave(save.Guid);
+            Assert.Null(manager.GetSave(save.Guid));
+            // todo: confirm
+        }
+
+
+        [Fact]
         public async Task RetrieveLatestSave_Test()
         {
             var fs = new PhysicalFileSystem();

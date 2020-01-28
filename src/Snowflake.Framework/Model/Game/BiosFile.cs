@@ -5,7 +5,7 @@ using Snowflake.Model.Game;
 
 namespace Snowflake.Model.Game
 {
-    internal class BiosFile : IBiosFile
+    internal class BiosFile : ISystemFile
     {
         public string FileName { get; }
 

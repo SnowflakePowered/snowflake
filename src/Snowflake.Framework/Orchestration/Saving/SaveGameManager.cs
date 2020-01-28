@@ -91,6 +91,13 @@ namespace Snowflake.Orchestration.Saving
                 details.CreatedTimestamp, details.Guid, details.Type, details.Tags);
         }
 
+        public void DeleteSave(Guid guid)
+        {
+            var savedir = this.SaveDirectory.EnumerateDirectories()
+                .FirstOrDefault(f => f.Name.EndsWith(guid.ToString()));
+            savedir?.Delete();
+        }
+
         private class SaveGameDetails
         {
             public DateTimeOffset CreatedTimestamp { get; set; }

@@ -7,7 +7,7 @@ using Snowflake.Model.Game;
 
 namespace Snowflake.Support.GraphQLFrameworkQueries.Types.PlatformInfo
 {
-    internal class BiosFilesGraphType : ObjectGraphType<IBiosFile>
+    internal class BiosFilesGraphType : ObjectGraphType<ISystemFile>
     {
         public BiosFilesGraphType()
         {

@@ -32,7 +32,7 @@ namespace Snowflake.Model.Game
         /// <summary>
         /// Gets the list of bios files for this platform
         /// </summary>
-        IEnumerable<IBiosFile> BiosFiles { get; }
+        IEnumerable<ISystemFile> BiosFiles { get; }
 
         /// <summary>
         /// Gets the maximum amount of inputs that are physically possible for this platform to have.

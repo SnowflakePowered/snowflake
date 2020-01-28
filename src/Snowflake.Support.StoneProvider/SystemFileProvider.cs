@@ -20,7 +20,7 @@ namespace Snowflake.Services
             this.Stone = stone;
         }
 
-        public IEnumerable<IBiosFile> GetMissingSystemFiles(PlatformId biosPlatform)
+        public IEnumerable<ISystemFile> GetMissingSystemFiles(PlatformId biosPlatform)
         {
             var biosFiles = this.Stone.Platforms[biosPlatform].BiosFiles;
             var directory = this.GetSystemFileDirectory(biosPlatform);

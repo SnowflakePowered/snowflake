@@ -9,7 +9,7 @@ namespace Snowflake.Model.Game
     internal class PlatformInfo : IPlatformInfo
     {
         internal PlatformInfo(string platformId, string name, IDictionary<string, string> metadata,
-            IDictionary<string, string> fileTypes, IEnumerable<IBiosFile> biosFiles, int maximumInputs)
+            IDictionary<string, string> fileTypes, IEnumerable<ISystemFile> biosFiles, int maximumInputs)
         {
             this.PlatformId = platformId;
             this.Metadata = metadata;
@@ -32,7 +32,7 @@ namespace Snowflake.Model.Game
         public IDictionary<string, string> FileTypes { get; }
 
         /// <inheritdoc/>
-        public IEnumerable<IBiosFile> BiosFiles { get; }
+        public IEnumerable<ISystemFile> BiosFiles { get; }
 
         /// <inheritdoc/>
         public int MaximumInputs { get; }
