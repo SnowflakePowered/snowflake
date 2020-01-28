@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using GraphQL.Server;
+using GraphQL.Server.Ui.Altair;
 using GraphQL.Server.Ui.GraphiQL;
 using GraphQL.Server.Ui.Playground;
 using GraphQL.Server.Ui.Voyager;
@@ -33,6 +34,9 @@ namespace Snowflake.Plugin.Debug.GraphQLVisualizers
 
             // use voyager middleware at default url /ui/voyager
             app.UseGraphQLVoyager(new GraphQLVoyagerOptions() { Path = "/debug/gql/voyager" });
+
+            // use voyager middleware at default url /ui/voyager
+            app.UseGraphQLAltair(new GraphQLAltairOptions() { Path = "/debug/gql/altair" });
         }
 
         public void ConfigureServices(IServiceCollection services)
