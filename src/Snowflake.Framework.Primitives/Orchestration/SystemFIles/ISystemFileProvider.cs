@@ -29,7 +29,7 @@ namespace Snowflake.Orchestration.SystemFiles
         /// <param name="biosPlatform">The Stone PlatformID for the requested system file.</param>
         /// <returns>A list of system files not available for use within the system file directory,
         /// according to the platform's Stone specification.</returns>
-        IEnumerable<IBiosFile> GetMissingSystemFiles(PlatformId biosPlatform);
+        IEnumerable<ISystemFile> GetMissingSystemFiles(PlatformId biosPlatform);
 
         /// <summary>
         /// Retrieves the <see cref="IReadOnlyFile"/> for the specified system file with the provided MD5 hash

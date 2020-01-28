@@ -23,9 +23,11 @@ namespace Snowflake.Services.Logging
 
             var configuration = new LoggingConfiguration();
             var consoleTarget = new ColoredConsoleTarget("Console");
-            var asyncConsoleTarget = new AsyncTargetWrapper(consoleTarget, 2400, AsyncTargetWrapperOverflowAction.Grow);
-            asyncConsoleTarget.OptimizeBufferReuse = true;
-            asyncConsoleTarget.Name = "Console";
+            var asyncConsoleTarget = new AsyncTargetWrapper(consoleTarget, 2400, AsyncTargetWrapperOverflowAction.Grow)
+            {
+                OptimizeBufferReuse = true,
+                Name = "Console"
+            };
             consoleTarget.UseDefaultRowHighlightingRules = false;
 
             consoleTarget.WordHighlightingRules.Add(new ConsoleWordHighlightingRule()
