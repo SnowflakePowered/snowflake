@@ -14,7 +14,7 @@ using Snowflake.Installation;
 using Snowflake.Installation.Extensibility;
 using Snowflake.Model.Game;
 using Snowflake.Services;
-using Snowflake.Support.Remoting.GraphQL.Types.Model;
+using Snowflake.Support.GraphQLFrameworkQueries.Types.Model;
 
 namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
 {

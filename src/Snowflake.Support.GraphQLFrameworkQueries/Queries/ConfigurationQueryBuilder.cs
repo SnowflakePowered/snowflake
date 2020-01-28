@@ -1,19 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using GraphQL.Types;
 using Snowflake.Configuration;
-using Snowflake.Execution.Extensibility;
-using Snowflake.Extensibility;
 using Snowflake.Extensibility.Configuration;
 using Snowflake.Framework.Remoting.GraphQL.Attributes;
 using Snowflake.Framework.Remoting.GraphQL.Query;
 using Snowflake.Services;
-using Snowflake.Support.Remoting.GraphQL.Inputs.Configuration;
-using Snowflake.Support.Remoting.GraphQL.Types.Configuration;
+using Snowflake.Support.GraphQLFrameworkQueries.Inputs.Configuration;
+using Snowflake.Support.GraphQLFrameworkQueries.Types.Configuration;
 
-namespace Snowflake.Support.Remoting.GraphQL.Queries
+namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
 {
     public class ConfigurationQueryBuilder : QueryBuilder
     {

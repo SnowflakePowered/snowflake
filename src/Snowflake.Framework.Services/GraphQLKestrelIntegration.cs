@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using GraphQL;
 using GraphQL.Server;
 using GraphQL.Types;
 using Microsoft.AspNetCore.Builder;
@@ -31,7 +32,7 @@ namespace Snowflake.Services
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton(this.GraphQLRootSchema);
-
+            
             // Add GraphQL services and configure options
             services.AddGraphQL(options =>
             {

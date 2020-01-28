@@ -40,7 +40,8 @@ namespace Snowflake.Services
 
             this.RegisterService<ILogProvider>(new LogProvider());
             this.RegisterService<IModuleEnumerator>(new ModuleEnumerator(appDataDirectory));
-            this.RegisterService<IKestrelWebServerService>(new KestrelServerService(appDataDirectory, 
+            this.RegisterService<IKestrelWebServerService>(new KestrelServerService(appDataDirectory,
+                "http://localhost:9797",
                 this.Get<ILogProvider>().GetLogger("kestrel")));
 
             this.RegisterGraphQLRootSchema();

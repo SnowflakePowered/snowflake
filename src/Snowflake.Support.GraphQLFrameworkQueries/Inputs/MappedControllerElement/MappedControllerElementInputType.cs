@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using GraphQL.Types;
-using Snowflake.Support.Remoting.GraphQL.Types.ControllerLayout;
+using Snowflake.Support.GraphQLFrameworkQueries.Types.ControllerLayout;
 
-namespace Snowflake.Support.Remoting.GraphQL.Inputs.MappedControllerElement
+namespace Snowflake.Support.GraphQLFrameworkQueries.Inputs.MappedControllerElement
 {
     public class MappedControllerElementInputType : InputObjectGraphType<MappedControllerElementInputObject>
     {
@@ -13,8 +13,8 @@ namespace Snowflake.Support.Remoting.GraphQL.Inputs.MappedControllerElement
             Name = "MappedControllerElementInput";
             Field<ControllerElementEnum>("layoutElement",
                 resolve: context => context.Source.LayoutElement);
-            Field<ControllerElementEnum>("deviceElement",
-                resolve: context => context.Source.DeviceElement);
+            Field<ControllerElementEnum>("deviceCapability",
+                resolve: context => context.Source.DeviceCapability);
         }
     }
 }

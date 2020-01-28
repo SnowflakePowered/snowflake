@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using GraphQL.Types;
 
-namespace Snowflake.Support.Remoting.GraphQL.Inputs.Scraping
+namespace Snowflake.Support.GraphQLFrameworkQueries.Inputs.Scraping
 {
     public class SeedTreeInputObjectCollectionType : InputObjectGraphType<SeedTreeInputObjectCollection>
     {

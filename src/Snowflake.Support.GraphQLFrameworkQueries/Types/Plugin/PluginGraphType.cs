@@ -4,7 +4,7 @@ using System.Text;
 using GraphQL.Types;
 using Snowflake.Extensibility;
 
-namespace Snowflake.Support.Remoting.GraphQL.Types.Plugin
+namespace Snowflake.Support.GraphQLFrameworkQueries.Types.Plugin
 {
     public class PluginGraphType : ObjectGraphType<IPlugin>
     {

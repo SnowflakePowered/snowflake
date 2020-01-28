@@ -7,74 +7,76 @@ using Snowflake.Configuration;
 using Snowflake.Framework.Remoting.GraphQL.Attributes;
 using Snowflake.Framework.Remoting.GraphQL.Query;
 using Snowflake.Input;
+using Snowflake.Input.Controller;
 using Snowflake.Input.Controller.Mapped;
 using Snowflake.Input.Device;
 using Snowflake.Services;
-using Snowflake.Support.Remoting.GraphQL.Inputs.MappedControllerElement;
-using Snowflake.Support.Remoting.GraphQL.Types.Configuration;
-using Snowflake.Support.Remoting.GraphQL.Types.InputDevice;
-using Snowflake.Support.Remoting.GraphQL.Types.InputDevice.Mapped;
+using Snowflake.Support.GraphQLFrameworkQueries.Inputs.MappedControllerElement;
+using Snowflake.Support.GraphQLFrameworkQueries.Types.Configuration;
+using Snowflake.Support.GraphQLFrameworkQueries.Types.InputDevice;
+using Snowflake.Support.GraphQLFrameworkQueries.Types.InputDevice.Mapped;
 
-namespace Snowflake.Support.Remoting.GraphQL.Queries
+namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
 {
     public class InputQueryBuilder : QueryBuilder
     {
-        public IInputManager Manager { get; }
-        public IPluginManager Plugins { get; }
-        public IEnumerable<IInputEnumerator> Enumerators => this.Plugins.Get<IInputEnumerator>();
+        public IDeviceEnumerator DeviceEnumerator { get; }
         public IControllerElementMappingsStore MappedElementStore { get; }
         public IStoneProvider StoneProvider { get; }
 
-        public InputQueryBuilder(IInputManager manager,
-            IPluginManager pluginManager,
+        public InputQueryBuilder(IDeviceEnumerator deviceEnumerator,
             IControllerElementMappingsStore mappedElementCollectionStore,
             IStoneProvider stoneProvider)
         {
-            this.Manager = manager;
-            this.Plugins = pluginManager;
+            this.DeviceEnumerator = deviceEnumerator;
             this.MappedElementStore = mappedElementCollectionStore;
             this.StoneProvider = stoneProvider;
         }
 
-        [Connection("lowLevelInputDevices", "Gets all enumerated input devices on this computer.",
-            typeof(LowLevelInputDeviceGraphType))]
-        public IEnumerable<ILowLevelInputDevice> GetLLInputs()
+        [Connection("inputDevices", "Gets all connected input devices on this computer.",
+            typeof(InputDeviceGraphType))]
+        public IEnumerable<IInputDevice> GetInputDevices()
         {
-            return this.Manager.GetAllDevices();
+            return this.DeviceEnumerator.QueryConnectedDevices();
         }
 
-        [Connection("inputDevices", "Gets the sorted input devices on this computer.", typeof(InputDeviceGraphType))]
-        public IEnumerable<IInputDevice> GetAllInputDevices()
-        {
-            return this.Enumerators.SelectMany(p => p.GetConnectedDevices());
-        }
-
-        [Field("mappedControllerProfile", "Gets a controller profile for the given Stone controller and real device",
+        [Field("controllerProfile", "Gets a controller profile for the given Stone controller and real device",
             typeof(MappedControllerElementCollectionGraphType))]
-        [Parameter(typeof(string), typeof(StringGraphType), "controllerId", "The Stone Controller ID to map to.")]
-        [Parameter(typeof(string), typeof(StringGraphType), "deviceId", "The real device to map from.")]
-        [Parameter(typeof(string), typeof(StringGraphType), "profileName", "A profile name.", nullable: true)]
-        public IControllerElementMappings GetProfile(string controllerId, string deviceId,
+        [Parameter(typeof(string), typeof(StringGraphType), "deviceName", "The hardware device name of the device.")]
+        [Parameter(typeof(int), typeof(IntGraphType), "vendorId", "The vendor ID number of the device.")]
+        [Parameter(typeof(InputDriverType), typeof(InputDriverEnum), "inputDriver", "The input driver of the instance for this controller profile.")]
+        [Parameter(typeof(string), typeof(StringGraphType), "controllerId", "The Stone Controller ID that this mapping represents.")]
+
+        [Parameter(typeof(string), typeof(StringGraphType), "profileName", "A profile name for the mapping.", nullable: true)]
+        public IControllerElementMappings GetProfile(string deviceName, int vendorId, InputDriverType inputDriver, string controllerId,
             string profileName = "default")
         {
-            return this.MappedElementStore.GetMappings(controllerId, deviceId, profileName);
+            return this.MappedElementStore.GetMappings(controllerId, inputDriver, deviceName, vendorId, profileName ?? "default");
         }
+
+        [Connection("controllerProfiles", "Gets all a controller profiles for the given real device",
+            typeof(MappedControllerElementCollectionGraphType))]
+        [Parameter(typeof(string), typeof(StringGraphType), "deviceName", "The hardware device name of the device.")]
+        [Parameter(typeof(int), typeof(IntGraphType), "vendorId", "The vendor ID number of the device.")]
+        [Parameter(typeof(string), typeof(StringGraphType), "controllerId", "The Stone Controller ID that this mapping represents.")]
+        public IEnumerable<IControllerElementMappings> GetProfiles(string deviceName, int vendorId, string controllerId)
+        {
+            return this.MappedElementStore.GetMappings(controllerId, deviceName, vendorId);
+        }
+
 
         // todo: make this a mutation input object.
-        [Field("defaultControllerProfile",
-            "Gets the default controller profile for the given Stone controller and real device.",
-            typeof(MappedControllerElementCollectionGraphType))]
-        [Parameter(typeof(string), typeof(StringGraphType), "controllerId", "The Stone Controller ID to map to.")]
-        [Parameter(typeof(string), typeof(StringGraphType), "deviceId", "The real device to map from.")]
-        [Parameter(typeof(string), typeof(StringGraphType), "profileName", "A profile name.", nullable: true)]
-        public IControllerElementMappings GetDefaultProfile(string controllerId, string deviceId,
-            string profileName = "default")
+        [Field("defaultLayout",
+            "Gets the default mapping between Stone controller IDs and the provided device.",
+            typeof(ListGraphType<MappedControllerElementGraphType>))]
+        [Parameter(typeof(Guid), typeof(GuidGraphType), "deviceInstanceGuid", "The device instance to get the layout for.")]
+        [Parameter(typeof(InputDriverType), typeof(InputDriverEnum), "inputDriver", "The input driver of the instance for this controller profile.")]
+        public IEnumerable<MappedControllerElement> GetDefaultProfile(Guid deviceInstanceGuid, InputDriverType inputDriver)
         {
-            var emulatedController = this.StoneProvider.Controllers[controllerId];
-            var realController = this.GetAllInputDevices().FirstOrDefault(p => p.DeviceId == deviceId)?.DeviceLayout;
-
-            // todo: check for nulls
-            return ControllerElementMappings.GetDefaultMappings(realController, emulatedController);
+            var device = this.DeviceEnumerator.QueryConnectedDevices()
+                .FirstOrDefault(i => i.InstanceGuid == deviceInstanceGuid)?.Instances
+                .FirstOrDefault(i => i.Driver == inputDriver);
+            return device.DefaultLayout;
         }
 
         [Mutation("createControllerProfile",
@@ -84,14 +86,19 @@ namespace Snowflake.Support.Remoting.GraphQL.Queries
             typeof(DefaultMappedControllerElementCollectionInputType), "input", "The input")]
         public IControllerElementMappings CreateProfile(DefaultMappedControllerElementCollectionInputObject input)
         {
-            var emulatedController = this.StoneProvider.Controllers[input.ControllerId];
-            var realController = this.GetAllInputDevices().FirstOrDefault(p => p.DeviceId == input.DeviceId)
-                ?.DeviceLayout;
+            var device = this.DeviceEnumerator.QueryConnectedDevices()
+                .FirstOrDefault(d => d.InstanceGuid == input.InstanceGuid);
+            var instance = device?.Instances
+                .FirstOrDefault(i => i.Driver == input.InputDriver);
 
-            // todo: check for nulls
-            var defaults = ControllerElementMappings.GetDefaultMappings(realController, emulatedController);
+            // todo : throw error here?
+            if (instance == null) return null;
+
+            var defaults = new ControllerElementMappings(device.DeviceName, input.ControllerId,
+                input.InputDriver, device.VendorID, instance.DefaultLayout);
             this.MappedElementStore.AddMappings(defaults, input.ProfileName);
-            return this.MappedElementStore.GetMappings(input.ControllerId, input.DeviceId, input.ProfileName);
+            return this.MappedElementStore.GetMappings(input.ControllerId, instance.Driver,
+                device.DeviceName, device.VendorID, input.ProfileName);
         }
 
         [Mutation("setControllerProfile",
@@ -101,15 +108,17 @@ namespace Snowflake.Support.Remoting.GraphQL.Queries
             typeof(MappedControllerElementCollectionInputType), "input", "The input")]
         public IControllerElementMappings SetProfile(MappedControllerElementCollectionInputObject input)
         {
-            var collection = this.MappedElementStore.GetMappings(input.ControllerId, input.DeviceId, input.ProfileName);
+            var collection = this.MappedElementStore.GetMappings(input.ControllerId, input.InputDriver, 
+                input.DeviceName, input.VendorID, input.ProfileName);
 
             foreach (var mapping in input.Mappings)
             {
-                collection[mapping.LayoutElement] = mapping.DeviceElement;
+                collection[mapping.LayoutElement] = mapping.DeviceCapability;
             }
 
             this.MappedElementStore.UpdateMappings(collection, input.ProfileName);
-            return this.MappedElementStore.GetMappings(input.ControllerId, input.DeviceId, input.ProfileName);
+            return this.MappedElementStore.GetMappings(input.ControllerId, input.InputDriver,
+                input.DeviceName, input.VendorID, input.ProfileName);
         }
     }
 }

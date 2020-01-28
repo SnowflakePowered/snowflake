@@ -5,15 +5,15 @@
     <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
     <_SnowflakeUseDevelopmentSDK>true</_SnowflakeUseDevelopmentSDK>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="GraphQL" Version="3.0.0-preview-1352" />
-  </ItemGroup>
   
 <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json" />
 
   </ItemGroup>
+  
+<ItemGroup>
+  <Folder Include="Types\Execution\" />
+</ItemGroup>
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\Snowflake.ruleset</CodeAnalysisRuleSet>
     <NoWarn>1701;1702;1591;</NoWarn>

@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using Snowflake.Configuration;
-using Snowflake.Execution.Extensibility;
 using Snowflake.Framework.Remoting.GraphQL;
 using Snowflake.Input;
 using Snowflake.Input.Controller.Mapped;
@@ -10,15 +9,15 @@ using Snowflake.Model.Game;
 using Snowflake.Scraping;
 using Snowflake.Scraping.Extensibility;
 using Snowflake.Services;
-using Snowflake.Support.Remoting.GraphQL.Queries;
+using Snowflake.Support.GraphQLFrameworkQueries.Queries;
 
-namespace Snowflake.Support.Remoting.GraphQL.Containers
+namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
 {
-    public class EmulationQueryContainer : IComposable
+    public class InputQueryContainer : IComposable
     {
         /// <inheritdoc/>
         [ImportService(typeof(IStoneProvider))]
-        //[ImportService(typeof(IInputManager))]
+        [ImportService(typeof(IDeviceEnumerator))]
         [ImportService(typeof(IPluginManager))]
         [ImportService(typeof(IControllerElementMappingsStore))]
         [ImportService(typeof(IGraphQLService))]
@@ -26,10 +25,16 @@ namespace Snowflake.Support.Remoting.GraphQL.Containers
         [ImportService(typeof(IGameLibrary))]
         public void Compose(IModule module, IServiceRepository coreInstance)
         {
-            //    var stone = coreInstance.Get<IStoneProvider>();
-            //    var input = coreInstance.Get<IInputManager>();
-            //    var plugin = coreInstance.Get<IPluginManager>();
-            //    var mappedController = coreInstance.Get<IControllerElementMappingsStore>();
+            var stone = coreInstance.Get<IStoneProvider>();
+            var input = coreInstance.Get<IDeviceEnumerator>();
+            var mappedController = coreInstance.Get<IControllerElementMappingsStore>();
+            var rootSchema = coreInstance.Get<IGraphQLService>();
+
+            var inputQuery = new InputQueryBuilder(input, mappedController, stone);
+            rootSchema.Register(inputQuery);
+            var logger = coreInstance.Get<ILogProvider>().GetLogger("graphql");
+            logger.Info("Registered Input GraphQL Queries.");
+
             //    var gameLib = coreInstance.Get<IGameLibrary>();
 
             //    var rootSchema = coreInstance.Get<IGraphQLService>();
@@ -43,7 +48,6 @@ namespace Snowflake.Support.Remoting.GraphQL.Containers
             //    rootSchema.Register(emuQuery);
             //    var logger = coreInstance.Get<ILogProvider>().GetLogger("graphql");
             //    logger.Info("Registered Controller GraphQL Queries.");
-            //    logger.Info("Registered Input GraphQL Queries.");
             //    logger.Info("Registered Emulation GraphQL Queries.");
         }
     }

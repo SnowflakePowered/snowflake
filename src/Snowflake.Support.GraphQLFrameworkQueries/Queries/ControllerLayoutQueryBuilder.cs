@@ -6,10 +6,10 @@ using Snowflake.Framework.Remoting.GraphQL.Attributes;
 using Snowflake.Framework.Remoting.GraphQL.Query;
 using Snowflake.Input.Controller;
 using Snowflake.Services;
-using Snowflake.Support.Remoting.GraphQL.Types.ControllerLayout;
-using Snowflake.Support.Remoting.GraphQL.Types.PlatformInfo;
+using Snowflake.Support.GraphQLFrameworkQueries.Types.ControllerLayout;
+using Snowflake.Support.GraphQLFrameworkQueries.Types.PlatformInfo;
 
-namespace Snowflake.Support.Remoting.GraphQL.Queries
+namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
 {
     public class ControllerLayoutQueryBuilder : QueryBuilder
     {

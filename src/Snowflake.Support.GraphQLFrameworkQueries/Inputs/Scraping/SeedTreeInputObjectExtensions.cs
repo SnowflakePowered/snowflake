@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Snowflake.Scraping.Extensibility;
 
-namespace Snowflake.Support.Remoting.GraphQL.Inputs.Scraping
+namespace Snowflake.Support.GraphQLFrameworkQueries.Inputs.Scraping
 {
     public static class SeedTreeInputObjectExtensions
     {

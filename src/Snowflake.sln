@@ -87,6 +87,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Support.InputEnum
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Support.Orchestration.Providers", "Snowflake.Support.Orchestration.Providers\Snowflake.Support.Orchestration.Providers.csproj", "{566BBE4C-1ADF-425C-BF31-44A495131C09}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Support.GraphQLFrameworkQueries", "Snowflake.Support.GraphQLFrameworkQueries\Snowflake.Support.GraphQLFrameworkQueries.csproj", "{DD94F85D-84A5-430F-96FE-55B8D702A2FE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -455,6 +457,18 @@ Global
 		{566BBE4C-1ADF-425C-BF31-44A495131C09}.Release|x64.Build.0 = Release|Any CPU
 		{566BBE4C-1ADF-425C-BF31-44A495131C09}.Release|x86.ActiveCfg = Release|Any CPU
 		{566BBE4C-1ADF-425C-BF31-44A495131C09}.Release|x86.Build.0 = Release|Any CPU
+		{DD94F85D-84A5-430F-96FE-55B8D702A2FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD94F85D-84A5-430F-96FE-55B8D702A2FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD94F85D-84A5-430F-96FE-55B8D702A2FE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{DD94F85D-84A5-430F-96FE-55B8D702A2FE}.Debug|x64.Build.0 = Debug|Any CPU
+		{DD94F85D-84A5-430F-96FE-55B8D702A2FE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DD94F85D-84A5-430F-96FE-55B8D702A2FE}.Debug|x86.Build.0 = Debug|Any CPU
+		{DD94F85D-84A5-430F-96FE-55B8D702A2FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD94F85D-84A5-430F-96FE-55B8D702A2FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD94F85D-84A5-430F-96FE-55B8D702A2FE}.Release|x64.ActiveCfg = Release|Any CPU
+		{DD94F85D-84A5-430F-96FE-55B8D702A2FE}.Release|x64.Build.0 = Release|Any CPU
+		{DD94F85D-84A5-430F-96FE-55B8D702A2FE}.Release|x86.ActiveCfg = Release|Any CPU
+		{DD94F85D-84A5-430F-96FE-55B8D702A2FE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -494,6 +508,7 @@ Global
 		{3E93A198-0DCB-4BBC-A169-118703DF5614} = {16BB0B43-6224-42C2-9A33-A039348CF965}
 		{7E255661-2E15-439A-B1B9-CB0CF52C7079} = {FBD15674-246A-4C57-B865-07214D8BB9A1}
 		{566BBE4C-1ADF-425C-BF31-44A495131C09} = {FBD15674-246A-4C57-B865-07214D8BB9A1}
+		{DD94F85D-84A5-430F-96FE-55B8D702A2FE} = {FBD15674-246A-4C57-B865-07214D8BB9A1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {532F5D25-2D82-45B3-BF60-DDA40A0FB795}

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Snowflake.Support.Remoting.GraphQL.Types
+namespace Snowflake.Support.GraphQLFrameworkQueries.Types
 {
     public static class GuidExtensions
     {

@@ -13,7 +13,7 @@ namespace GraphQL.Relay.Types
 
         public static Connection<TSource> ToConnection<TSource, TParent>(
             IEnumerable<TSource> items,
-            ResolveConnectionContext<TParent> context)
+            IResolveConnectionContext<TParent> context)
         {
             var list = items.ToList();
             return ToConnection(list, context, sliceStartIndex: 0, totalCount: list.Count);
@@ -21,7 +21,7 @@ namespace GraphQL.Relay.Types
 
         public static Connection<TSource> ToConnection<TSource, TParent>(
             IEnumerable<TSource> slice,
-            ResolveConnectionContext<TParent> context,
+            IResolveConnectionContext<TParent> context,
             int sliceStartIndex,
             int totalCount)
         {

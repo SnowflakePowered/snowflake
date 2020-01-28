@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using GraphQL.Types;
-using Snowflake.Execution.Extensibility;
+using Snowflake.Orchestration.Extensibility;
 using Snowflake.Extensibility;
 using Snowflake.Framework.Remoting.GraphQL.Attributes;
 using Snowflake.Framework.Remoting.GraphQL.Query;
 using Snowflake.Loader;
 using Snowflake.Scraping.Extensibility;
 using Snowflake.Services;
-using Snowflake.Support.Remoting.GraphQL.Types.Module;
-using Snowflake.Support.Remoting.GraphQL.Types.Plugin;
+using Snowflake.Support.GraphQLFrameworkQueries.Types.Module;
+using Snowflake.Support.GraphQLFrameworkQueries.Types.Plugin;
 
-namespace Snowflake.Support.Remoting.GraphQL.Queries
+namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
 {
     public class ExtensibilityQueryBuilder : QueryBuilder
     {
@@ -60,10 +60,10 @@ namespace Snowflake.Support.Remoting.GraphQL.Queries
             return this.PluginManager.GetCollection<ICuller>();
         }
 
-        [Connection("loadedEmulators", "Gets a list of emulators loaded.", typeof(EmulatorGraphType))]
-        public IEnumerable<IEmulator> GetLoadedEmulators()
+        [Connection("loadedEmulators", "Gets a list of emulators loaded.", typeof(EmulatorOrchestratorGraphType))]
+        public IEnumerable<IEmulatorOrchestrator> GetLoadedEmulators()
         {
-            return this.PluginManager.GetCollection<IEmulator>();
+            return this.PluginManager.GetCollection<IEmulatorOrchestrator>();
         }
     }
 }

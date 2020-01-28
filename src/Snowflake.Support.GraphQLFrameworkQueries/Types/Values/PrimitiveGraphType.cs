@@ -4,7 +4,7 @@ using System.Text;
 using GraphQL.Language.AST;
 using GraphQL.Types;
 
-namespace Snowflake.Support.Remoting.GraphQL.Types.Values
+namespace Snowflake.Support.GraphQLFrameworkQueries.Types.Values
 {
     public class PrimitiveGraphType : ScalarGraphType
     {

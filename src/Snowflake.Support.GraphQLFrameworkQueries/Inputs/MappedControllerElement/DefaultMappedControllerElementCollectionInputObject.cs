@@ -1,12 +1,14 @@
-﻿using System;
+﻿using Snowflake.Input.Device;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Snowflake.Support.Remoting.GraphQL.Inputs.MappedControllerElement
+namespace Snowflake.Support.GraphQLFrameworkQueries.Inputs.MappedControllerElement
 {
     public class DefaultMappedControllerElementCollectionInputObject
     {
-        public string DeviceId { get; set; }
+        public Guid InstanceGuid { get; set; }
+        public InputDriverType InputDriver { get; set; }
         public string ControllerId { get; set; }
         public string ProfileName { get; set; }
     }

@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using Snowflake.Configuration;
-using Snowflake.Execution.Extensibility;
 using Snowflake.Extensibility.Configuration;
 using Snowflake.Filesystem;
 using Snowflake.Framework.Extensibility;
@@ -15,9 +14,9 @@ using Snowflake.Scraping;
 using Snowflake.Scraping.Extensibility;
 using Snowflake.Services;
 using Snowflake.Support.GraphQLFrameworkQueries.Queries;
-using Snowflake.Support.Remoting.GraphQL.Queries;
+using Snowflake.Support.GraphQLFrameworkQueries.Queries;
 
-namespace Snowflake.Support.Remoting.GraphQL.Containers
+namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
 {
     public class GameQueryContainer : IComposable
     {
