@@ -14,6 +14,7 @@ using Snowflake.Installation;
 using Snowflake.Installation.Extensibility;
 using Snowflake.Model.Game;
 using Snowflake.Services;
+using Snowflake.Support.GraphQLFrameworkQueries.Types.Installable;
 using Snowflake.Support.GraphQLFrameworkQueries.Types.Model;
 
 namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
@@ -34,23 +35,39 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
         IAsyncJobQueue<TaskResult<IFile>> InstallQueue { get; }
         IGameLibrary GameLibrary { get; }
 
+        [Connection("installables", "Retrieves the installable for the given set of files.", typeof(InstallableGraphType))]
+        [Parameter(typeof(string), typeof(StringGraphType), "platform", "The platform to install this game for", false)]
+        [Parameter(typeof(IEnumerable<string>), typeof(ListGraphType<StringGraphType>), "files",
+            "A list of filenames as part of the game", false)]
+        public IEnumerable<InstallableGraphObject> GetInstallables(string platform, IEnumerable<string> files)
+        {
+            var filesysinfo = files.Select<string, FileSystemInfo>(s =>
+                (File.Exists(s), Directory.Exists(s)) switch
+                {
+                    (true, _) => new FileInfo(s),
+                    (_, true) => new DirectoryInfo(s),
+                    (false, false) => null
+                }).Where(f => f != null).ToList();
+
+            return from installer in this.Installers
+                   let installables = installer.GetInstallables(platform, filesysinfo)
+                   from installable in installables
+                   select new InstallableGraphObject(installer, installable);
+        }
+
         [Mutation("beginInstallGame", "Creates a game install job. Returns the UUID of the created game", typeof(GuidGraphType))]
         [Parameter(typeof(string), typeof(StringGraphType), "platform", "The platform to install this game for", false)]
         [Parameter(typeof(IEnumerable<string>), typeof(ListGraphType<StringGraphType>), "files",
             "A list of filenames as part of the game", false)]
         public async Task<Guid> CreateGameInstallation(string platform, IEnumerable<string> files)
         {
-            var filesysinfo = files.Select<string, FileSystemInfo>(s =>
-            {
-                if (File.Exists(s)) {
-                    return new FileInfo(s);
-                    }
-                else if (Directory.Exists(s))
+            var filesysinfo = files.Select<string, FileSystemInfo>(s => 
+                (File.Exists(s), Directory.Exists(s)) switch
                 {
-                    return new DirectoryInfo(s);
-                }
-                return null;
-            }).Where(f => f != null).ToList();
+                     (true, _) => new FileInfo(s),
+                     (_, true) => new DirectoryInfo(s),
+                     (false, false) => null
+                }).Where(f => f != null).ToList();
 
             var game = this.GameLibrary.CreateGame(platform);
 
