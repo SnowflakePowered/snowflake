@@ -43,7 +43,6 @@ namespace Snowflake.Input.Controller.Mapped
             this.DeviceCapability = kvp.Value;
         }
 
-
         /// <summary>
         /// Converts between a <see cref="MappedControllerElement"/> and a <see cref="KeyValuePair{TKey, TValue}"/>
         /// of the proper type.

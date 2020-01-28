@@ -64,7 +64,6 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
             return this.MappedElementStore.GetMappings(controllerId, deviceName, vendorId);
         }
 
-
         // todo: make this a mutation input object.
         [Field("defaultLayout",
             "Gets the default mapping between Stone controller IDs and the provided device.",
