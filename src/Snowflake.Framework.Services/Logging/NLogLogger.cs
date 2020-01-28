@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using NLog;
 using NLog.Config;
 using NLog.Layouts;
@@ -22,8 +23,79 @@ namespace Snowflake.Services.Logging
 
             var configuration = new LoggingConfiguration();
             var consoleTarget = new ColoredConsoleTarget("Console");
-            var asyncConsoleTarget = new AsyncTargetWrapper("Console", consoleTarget);
-            consoleTarget.Layout = new NLog.Layouts.SimpleLayout("[${level:uppercase=true}] ${message}");
+            var asyncConsoleTarget = new AsyncTargetWrapper(consoleTarget, 2400, AsyncTargetWrapperOverflowAction.Grow);
+            asyncConsoleTarget.OptimizeBufferReuse = true;
+            asyncConsoleTarget.Name = "Console";
+            consoleTarget.UseDefaultRowHighlightingRules = false;
+
+            consoleTarget.WordHighlightingRules.Add(new ConsoleWordHighlightingRule()
+            {
+                Regex = @"(?<=^\[\w+\][^w]+)\(\w+\)",
+                ForegroundColor = ConsoleOutputColor.DarkGray,
+            });
+            consoleTarget.WordHighlightingRules.Add(new ConsoleWordHighlightingRule()
+            {
+                Regex = @"^\[INFO\]",
+                ForegroundColor = ConsoleOutputColor.DarkGreen,
+            });
+            consoleTarget.WordHighlightingRules.Add(new ConsoleWordHighlightingRule()
+            {
+                Regex = @"^\[ERROR\]",
+                ForegroundColor = ConsoleOutputColor.DarkYellow,
+            });
+            consoleTarget.WordHighlightingRules.Add(new ConsoleWordHighlightingRule()
+            {
+                Regex = @"^\[WARN\]",
+                ForegroundColor = ConsoleOutputColor.Magenta,
+            });
+            consoleTarget.WordHighlightingRules.Add(new ConsoleWordHighlightingRule()
+            {
+                Regex = @"^\[FATAL\]",
+                ForegroundColor = ConsoleOutputColor.Red,
+            });
+            consoleTarget.WordHighlightingRules.Add(new ConsoleWordHighlightingRule()
+            {
+                Regex = @"^\[DEBUG\]",
+                ForegroundColor = ConsoleOutputColor.Blue,
+            });
+            consoleTarget.WordHighlightingRules.Add(new ConsoleWordHighlightingRule()
+            {
+                Regex = @"^\[TRACE\]",
+                ForegroundColor = ConsoleOutputColor.Cyan,
+            });
+            consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule()
+            {
+                Condition = "level == LogLevel.Fatal",
+                ForegroundColor = ConsoleOutputColor.DarkRed,
+            });
+            consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule()
+            {
+                Condition = "level == LogLevel.Warn",
+                ForegroundColor = ConsoleOutputColor.DarkMagenta,
+            });
+            consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule()
+            {
+                Condition = "level == LogLevel.Error",
+                ForegroundColor = ConsoleOutputColor.Yellow,
+            });
+            consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule()
+            { 
+                Condition = "level == LogLevel.Info",
+                ForegroundColor = ConsoleOutputColor.Gray,
+            });
+            consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule()
+            {
+                Condition = "level == LogLevel.Trace",
+                ForegroundColor = ConsoleOutputColor.DarkCyan,
+            });
+            consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule()
+            {
+                Condition = "level == LogLevel.Debug",
+                ForegroundColor = ConsoleOutputColor.DarkBlue,
+            });
+
+            consoleTarget.EnableAnsiOutput = true;
+            consoleTarget.Layout = new NLog.Layouts.SimpleLayout("[${level:uppercase=true}] (${logger}) ${message}");
             configuration.AddRule(NLog.LogLevel.Trace, NLog.LogLevel.Fatal, asyncConsoleTarget);
             configuration.AddTarget(asyncConsoleTarget);
             LogManager.Configuration = configuration;

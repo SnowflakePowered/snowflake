@@ -34,13 +34,13 @@ namespace Snowflake.Services
             services.AddSingleton(this.GraphQLRootSchema);
             
             // Add GraphQL services and configure options
-            services.AddGraphQL(options =>
-            {
-                options.EnableMetrics = true;
-                options.ExposeExceptions = true;
-            })
-            .AddWebSockets() // Add required services for web socket support
-            .AddDataLoader(); // Add required services for DataLoader support
+            //services.AddGraphQL(options =>
+            //{
+            //    options.EnableMetrics = true;
+            //    options.ExposeExceptions = true;
+            //})
+            //.AddWebSockets() // Add required services for web socket support
+            //.AddDataLoader(); // Add required services for DataLoader support
         }
     }
 }
