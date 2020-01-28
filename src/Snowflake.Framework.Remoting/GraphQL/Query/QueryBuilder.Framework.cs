@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
+using GraphQL;
 using GraphQL.Builders;
 using GraphQL.Relay.Types;
 using GraphQL.Types;
@@ -19,7 +20,7 @@ namespace Snowflake.Framework.Remoting.GraphQL.Query
 
         static QueryBuilder()
         {
-            MethodInfo GetMethod<T>(Expression<Func<ResolveConnectionContext<T>, IEnumerable<T>, T>> expression)
+            MethodInfo GetMethod<T>(Expression<Func<IResolveConnectionContext<T>, IEnumerable<T>, T>> expression)
             {
                 MethodCallExpression methodCall = (MethodCallExpression) expression.Body;
                 return methodCall.Method;
@@ -138,15 +139,15 @@ namespace Snowflake.Framework.Remoting.GraphQL.Query
             };
         }
 
-        private Func<ResolveConnectionContext<object>, object>
+        private Func<IResolveConnectionContext<object>, object>
             CreateConnectionResolver(ConnectionQuery query)
         {
             var connectionBuildCall = QueryBuilder.ConnectionMaker.MakeGenericMethod(query.ElementType, typeof(object));
-            ParameterExpression context = Expression.Parameter(typeof(ResolveConnectionContext<object>), "context");
-            Expression<Func<ResolveFieldContext<object>, object>> resolvedValue = invokingContext =>
+            ParameterExpression context = Expression.Parameter(typeof(IResolveConnectionContext<object>), "context");
+            Expression<Func<IResolveFieldContext<object>, object>> resolvedValue = invokingContext =>
                 query.Resolver(invokingContext);
 
-            var executor = Expression.Lambda<Func<ResolveConnectionContext<object>, object>>(
+            var executor = Expression.Lambda<Func<IResolveConnectionContext<object>, object>>(
                 Expression.Call(
                     null,
                     connectionBuildCall,
@@ -217,7 +218,7 @@ namespace Snowflake.Framework.Remoting.GraphQL.Query
         /// <param name="context"></param>
         /// <param name="invokingMethod"></param>
         /// <returns></returns>
-        private static object[] CollectParameters(ResolveFieldContext<object> context, MethodInfo invokingMethod)
+        private static object[] CollectParameters(IResolveFieldContext<object> context, MethodInfo invokingMethod)
         {
             IList<object> paramValues = new List<object>();
             foreach (var parameter in invokingMethod.GetParameters())
@@ -236,7 +237,7 @@ namespace Snowflake.Framework.Remoting.GraphQL.Query
             return paramValues.ToArray();
         }
 
-        private Func<ResolveFieldContext<object>, object>
+        private Func<IResolveFieldContext<object>, object>
             CreateResolver(Func<object[], object> invoker, MethodInfo invokingMethod) =>
             this.CreateResolver<object>(invoker, invokingMethod);
 
@@ -247,10 +248,10 @@ namespace Snowflake.Framework.Remoting.GraphQL.Query
         /// <param name="invoker"></param>
         /// <param name="invokingMethod"></param>
         /// <returns></returns>
-        private Func<ResolveFieldContext<object>, T>
+        private Func<IResolveFieldContext<object>, T>
             CreateResolver<T>(Func<object[], T> invoker, MethodInfo invokingMethod)
         {
-            Func<ResolveFieldContext<object>, T> resolver = context =>
+            Func<IResolveFieldContext<object>, T> resolver = context =>
             {
                 var args = QueryBuilder.CollectParameters(context, invokingMethod);
                 return invoker(args);

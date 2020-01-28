@@ -39,7 +39,7 @@ namespace GraphQL.Relay.Types
 
         public ArraySliceMetrics(
             IList<TSource> slice,
-            ResolveConnectionContext<TParent> context)
+            IResolveConnectionContext<TParent> context)
             : this(slice, context, 0, slice.Count)
         {
         }
@@ -50,7 +50,7 @@ namespace GraphQL.Relay.Types
 
         public ArraySliceMetrics(
             IList<TSource> slice,
-            ResolveConnectionContext<TParent> context,
+            IResolveConnectionContext<TParent> context,
             int sliceStartIndex,
             int totalCount)
         {

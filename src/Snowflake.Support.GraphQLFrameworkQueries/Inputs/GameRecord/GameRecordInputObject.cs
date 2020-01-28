@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Snowflake.Support.Remoting.GraphQL.Inputs.RecordMetadata;
+using Snowflake.Support.GraphQLFrameworkQueries.Inputs.RecordMetadata;
 
-namespace Snowflake.Support.Remoting.GraphQL.Inputs.GameRecord
+namespace Snowflake.Support.GraphQLFrameworkQueries.Inputs.GameRecord
 {
     public class GameRecordInputObject
     {

@@ -13,12 +13,12 @@ using Snowflake.Model.Game;
 using Snowflake.Model.Records.Game;
 using Snowflake.Scraping;
 using Snowflake.Scraping.Extensibility;
-using Snowflake.Support.Remoting.GraphQL.Inputs.Scraping;
-using Snowflake.Support.Remoting.GraphQL.Types.Model;
-using Snowflake.Support.Remoting.GraphQL.Types.Scraping;
+using Snowflake.Support.GraphQLFrameworkQueries.Inputs.Scraping;
+using Snowflake.Support.GraphQLFrameworkQueries.Types.Model;
+using Snowflake.Support.GraphQLFrameworkQueries.Types.Scraping;
 using static Snowflake.Scraping.Extensibility.SeedBuilder;
 
-namespace Snowflake.Support.Remoting.GraphQL.Queries
+namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
 {
     public class ScrapingQueryBuilder : QueryBuilder
     {

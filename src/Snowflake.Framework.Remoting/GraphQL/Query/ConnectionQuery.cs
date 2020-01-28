@@ -14,6 +14,6 @@ namespace Snowflake.Framework.Remoting.GraphQL.Query
         public QueryArguments Arguments { get; set; }
         public Type ElementType { get; set; }
         public Type CollectionType { get; set; }
-        public Func<ResolveFieldContext<object>, object> Resolver { get; set; }
+        public Func<IResolveFieldContext<object>, object> Resolver { get; set; }
     }
 }

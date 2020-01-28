@@ -4,7 +4,7 @@ using System.Text;
 using GraphQL.Types;
 using Snowflake.Configuration;
 
-namespace Snowflake.Support.Remoting.GraphQL.Types.Configuration
+namespace Snowflake.Support.GraphQLFrameworkQueries.Types.Configuration
 {
     public class ConfigurationSectionDescriptorGraphType : ObjectGraphType<IConfigurationSectionDescriptor>
     {

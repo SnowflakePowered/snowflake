@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using GraphQL.Types;
-using Snowflake.Support.Remoting.GraphQL.Types.Values;
+using Snowflake.Support.GraphQLFrameworkQueries.Types.Values;
 
-namespace Snowflake.Support.Remoting.GraphQL.Types.Configuration
+namespace Snowflake.Support.GraphQLFrameworkQueries.Types.Configuration
 {
     public class CustomMetadataType : ObjectGraphType<KeyValuePair<string, object>>
     {

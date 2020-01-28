@@ -11,14 +11,14 @@ using Snowflake.Input.Controller;
 using Snowflake.Model.Game;
 using Snowflake.Model.Records.Game;
 using Snowflake.Services;
-using Snowflake.Support.Remoting.GraphQL.Inputs.FileRecord;
-using Snowflake.Support.Remoting.GraphQL.Inputs.GameRecord;
-using Snowflake.Support.Remoting.GraphQL.Inputs.RecordMetadata;
-using Snowflake.Support.Remoting.GraphQL.Types.ControllerLayout;
-using Snowflake.Support.Remoting.GraphQL.Types.PlatformInfo;
-using Snowflake.Support.Remoting.GraphQL.Types.Model;
+using Snowflake.Support.GraphQLFrameworkQueries.Inputs.FileRecord;
+using Snowflake.Support.GraphQLFrameworkQueries.Inputs.GameRecord;
+using Snowflake.Support.GraphQLFrameworkQueries.Inputs.RecordMetadata;
+using Snowflake.Support.GraphQLFrameworkQueries.Types.ControllerLayout;
+using Snowflake.Support.GraphQLFrameworkQueries.Types.PlatformInfo;
+using Snowflake.Support.GraphQLFrameworkQueries.Types.Model;
 
-namespace Snowflake.Support.Remoting.GraphQL.Queries
+namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
 {
     public class RecordQueryBuilder : QueryBuilder
     {

@@ -4,7 +4,7 @@ using System.Text;
 using GraphQL.Types;
 using Snowflake.Filesystem;
 
-namespace Snowflake.Support.Remoting.GraphQL.Types.Model
+namespace Snowflake.Support.GraphQLFrameworkQueries.Types.Model
 {
     public class FileGraphType : ObjectGraphType<IFile>
     {

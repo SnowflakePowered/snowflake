@@ -6,9 +6,9 @@ using Snowflake.Framework.Remoting.GraphQL.Attributes;
 using Snowflake.Framework.Remoting.GraphQL.Query;
 using Snowflake.Model.Game;
 using Snowflake.Services;
-using Snowflake.Support.Remoting.GraphQL.Types.PlatformInfo;
+using Snowflake.Support.GraphQLFrameworkQueries.Types.PlatformInfo;
 
-namespace Snowflake.Support.Remoting.GraphQL.Queries
+namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
 {
     public class PlatformInfoQueryBuilder : QueryBuilder
     {

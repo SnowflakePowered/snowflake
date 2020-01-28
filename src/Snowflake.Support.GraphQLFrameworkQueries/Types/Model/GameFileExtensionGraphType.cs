@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using GraphQL;
 using GraphQL.Types;
 using Snowflake.Model.Game.LibraryExtensions;
 
-namespace Snowflake.Support.Remoting.GraphQL.Types.Model
+namespace Snowflake.Support.GraphQLFrameworkQueries.Types.Model
 {
     public class GameFileExtensionGraphType : ObjectGraphType<IGameFileExtension>
     {

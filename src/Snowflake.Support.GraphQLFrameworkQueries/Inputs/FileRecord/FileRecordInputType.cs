@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using GraphQL.Types;
-using Snowflake.Support.Remoting.GraphQL.Inputs.RecordMetadata;
+using Snowflake.Support.GraphQLFrameworkQueries.Inputs.RecordMetadata;
 
-namespace Snowflake.Support.Remoting.GraphQL.Inputs.FileRecord
+namespace Snowflake.Support.GraphQLFrameworkQueries.Inputs.FileRecord
 {
     public class FileRecordInputType : InputObjectGraphType<FileRecordInputObject>
     {

@@ -5,7 +5,7 @@ using System.Text;
 using GraphQL.Types;
 using Snowflake.Model.Records.Game;
 
-namespace Snowflake.Support.Remoting.GraphQL.Types.Model
+namespace Snowflake.Support.GraphQLFrameworkQueries.Types.Model
 {
     public class GameRecordGraphType : ObjectGraphType<IGameRecord>
     {

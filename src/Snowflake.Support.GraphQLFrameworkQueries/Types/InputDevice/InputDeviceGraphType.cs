@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using GraphQL.Types;
 using Snowflake.Input.Device;
-using Snowflake.Support.Remoting.GraphQL.Types.ControllerLayout;
+using Snowflake.Support.GraphQLFrameworkQueries.Types.ControllerLayout;
 
-namespace Snowflake.Support.Remoting.GraphQL.Types.InputDevice
+namespace Snowflake.Support.GraphQLFrameworkQueries.Types.InputDevice
 {
     public class InputDeviceGraphType : ObjectGraphType<IInputDevice>
     {
@@ -13,20 +13,27 @@ namespace Snowflake.Support.Remoting.GraphQL.Types.InputDevice
         {
             Name = "InputDevice";
             Description = "Describes an enumerated input device with a determined layout.";
-            Field<InputApiEnum>("deviceApi",
-                description: "The input API of this device.",
-                resolve: context => context.Source.DeviceApi);
-            Field<ControllerLayoutGraphType>("deviceLayout",
-                description: "The Stone layout for this device.",
-                resolve: context => context.Source.DeviceLayout);
-            Field<LowLevelInputDeviceGraphType>("deviceInfo",
-                description: "The low level device information for this enumerated input device",
-                resolve: context => context.Source.DeviceInfo);
-            Field(i => i.ControllerName).Description("The human-readable name for this controller.");
-            Field(i => i.DeviceId).Description("The unique name for this type of controller.");
-            Field<IntGraphType>("deviceIndex",
-                description: "The 0 - indexed controller number for multiple controllers.",
-                resolve: context => context.Source.DeviceIndex);
+            Field<ListGraphType<InputDeviceInstanceGraphType>>("instances",
+                description: "The enumerated driver instances of this device.",
+                resolve: context => context.Source.Instances);
+            Field<IntGraphType>("vendorId",
+                description: "The Vendor ID of the device.",
+                resolve: context => context.Source.VendorID);
+            Field<IntGraphType>("productId",
+                description: "The product ID of the device.",
+                resolve: context => context.Source.ProductID);
+            Field<GuidGraphType>("instanceGuid",
+                description: "The instance GUID of the device. This can be used to refer to the device later on.",
+                resolve: context => context.Source.InstanceGuid);
+            Field<StringGraphType>("friendlyName",
+                description: "A user-friendly name to refer to this device.",
+                resolve: context => context.Source.FriendlyName);
+            Field<StringGraphType>("deviceName",
+                description: "The hardware-defined name of this device.",
+                resolve: context => context.Source.DeviceName);
+            Field<StringGraphType>("devicePath",
+                description: "The path to this device instance.",
+                resolve: context => context.Source.DevicePath);
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using GraphQL.Types;
 
-namespace Snowflake.Support.Remoting.GraphQL.Types.Values
+namespace Snowflake.Support.GraphQLFrameworkQueries.Types.Values
 {
     public class IntValueGraphType : ObjectGraphType<int>
     {

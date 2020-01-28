@@ -4,7 +4,7 @@ using System.Text;
 using GraphQL.Types;
 using Snowflake.Loader;
 
-namespace Snowflake.Support.Remoting.GraphQL.Types.Module
+namespace Snowflake.Support.GraphQLFrameworkQueries.Types.Module
 {
     public class ModuleGraphType : ObjectGraphType<IModule>
     {

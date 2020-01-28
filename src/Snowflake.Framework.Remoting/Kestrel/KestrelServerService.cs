@@ -16,8 +16,9 @@ namespace Snowflake.Framework.Remoting.Kestrel
 {
     internal class KestrelServerService : IKestrelWebServerService
     {
-        public KestrelServerService(string appdataDirectory, ILogger logger)
+        public KestrelServerService(string appdataDirectory, string hostname, ILogger logger)
         {
+            this.Hostname = hostname;
             this.Providers = new ConcurrentDictionary<Type, IKestrelServerMiddlewareProvider>();
             this.WebRoot = Path.Combine(appdataDirectory, "webroot");
             this.Logger = logger;
@@ -30,7 +31,7 @@ namespace Snowflake.Framework.Remoting.Kestrel
                              .UseWebRoot(this.WebRoot)
                              .UseKestrel()
                              
-                             .UseUrls("http://localhost:9797")
+                             .UseUrls(this.Hostname)
                              .ConfigureServices(this.ConfigureServices)
                              .Configure(this.Configure)
                              .Build()
@@ -41,7 +42,7 @@ namespace Snowflake.Framework.Remoting.Kestrel
 
         public IWebHost WebHost { get; }
         private CancellationTokenSource ServerToken { get; set; }
-
+        public string Hostname { get; }
         private ConcurrentDictionary<Type, IKestrelServerMiddlewareProvider> Providers { get; }
 
         public ILogger Logger { get; }
