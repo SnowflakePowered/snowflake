@@ -11,6 +11,7 @@ using System.Collections.Concurrent;
 using System.IO;
 using Snowflake.Extensibility;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 namespace Snowflake.Framework.Remoting.Kestrel
 {
@@ -58,6 +59,12 @@ namespace Snowflake.Framework.Remoting.Kestrel
         {
             services.AddCors();
             services.AddResponseCompression();
+            services.Configure<KestrelServerOptions>(options =>
+            {
+            	// todo: remove this when GraphQL is fixed
+                options.AllowSynchronousIO = true;
+            });
+
             foreach (var provider in this.Providers.Values)
             {
                 provider.ConfigureServices(services);

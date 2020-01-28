@@ -22,7 +22,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Types.InputDevice
                 resolve: context => context.Source.Capabilities);
             Field<ListGraphType<MappedControllerElementGraphType>>("defaultLayout",
                 description: "The default, assumed natural mapping from capability to virtual element without regard for any specific layout.",
-                resolve: context => context.Source.DefaultLayout);
+                resolve: context => (IEnumerable<MappedControllerElement>)context.Source.DefaultLayout);
             Field<IntGraphType>("enumerationIndex",
                 description: "When enumerating devices with a given driver, the index of enumeration for this driver.",
                 resolve: context => context.Source.EnumerationIndex);

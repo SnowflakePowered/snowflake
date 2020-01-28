@@ -14,7 +14,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Types.InputDevice.Mapped
             Name = "MappedControllerElement";
             Description =
                 "Decribes a mapping between a capability on a real input device to an element on an emulated controller.";
-            Field<ControllerElementEnum>("deviceCapability",
+            Field<DeviceCapabilityEnum>("deviceCapability",
                 description: "The device capability that will represent the emulated element.",
                 resolve: context => context.Source.DeviceCapability);
             Field<ControllerElementEnum>("layoutElement",
