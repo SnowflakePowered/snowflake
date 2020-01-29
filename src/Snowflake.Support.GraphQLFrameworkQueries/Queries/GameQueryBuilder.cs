@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using GraphQL.Types;
 using Snowflake.Extensibility;
@@ -13,7 +12,6 @@ using Snowflake.Framework.Remoting.GraphQL.Query;
 using Snowflake.Installation;
 using Snowflake.Installation.Extensibility;
 using Snowflake.Model.Game;
-using Snowflake.Services;
 using Snowflake.Support.GraphQLFrameworkQueries.Types.Installable;
 using Snowflake.Support.GraphQLFrameworkQueries.Types.Model;
 
@@ -21,24 +19,22 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
 {
     public class GameQueryBuilder : QueryBuilder
     {
-        public GameQueryBuilder(IPluginCollection<IGameInstaller> installers,
-            IStoneProvider stone, IAsyncJobQueue<TaskResult<IFile>> installQueue, IGameLibrary gameLibrary)
+        public GameQueryBuilder(IPluginCollection<IGameInstaller> installers, IAsyncJobQueue<TaskResult<IFile>> installQueue, 
+            IGameLibrary gameLibrary)
         {
             this.Installers = installers;
-            this.Stone = stone;
             this.InstallQueue = installQueue;
             this.GameLibrary = gameLibrary;
         }
 
         IPluginCollection<IGameInstaller> Installers { get; }
-        IStoneProvider Stone { get; }
         IAsyncJobQueue<TaskResult<IFile>> InstallQueue { get; }
         IGameLibrary GameLibrary { get; }
 
         [Connection("installables", "Retrieves the installable for the given set of files.", typeof(InstallableGraphType))]
-        [Parameter(typeof(string), typeof(StringGraphType), "platform", "The platform to install this game for", false)]
+        [Parameter(typeof(string), typeof(StringGraphType), "platform", "The platform to install this game for.", false)]
         [Parameter(typeof(IEnumerable<string>), typeof(ListGraphType<StringGraphType>), "files",
-            "A list of filenames as part of the game", false)]
+            "A list of filenames as part of the game.", false)]
         public IEnumerable<InstallableGraphObject> GetInstallables(string platform, IEnumerable<string> files)
         {
             var filesysinfo = files.Select<string, FileSystemInfo>(s =>
@@ -56,10 +52,11 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
         }
 
         [Mutation("beginInstallGame", "Creates a game install job. Returns the UUID of the created game", typeof(GuidGraphType))]
+        [Parameter(typeof(string), typeof(StringGraphType), "installerName", "The name of the installer to use.", false)]
         [Parameter(typeof(string), typeof(StringGraphType), "platform", "The platform to install this game for", false)]
         [Parameter(typeof(IEnumerable<string>), typeof(ListGraphType<StringGraphType>), "files",
             "A list of filenames as part of the game", false)]
-        public async Task<Guid> CreateGameInstallation(string platform, IEnumerable<string> files)
+        public async Task<Guid> CreateGameInstallation(string installerName, string platform, IEnumerable<string> files)
         {
             var filesysinfo = files.Select<string, FileSystemInfo>(s => 
                 (File.Exists(s), Directory.Exists(s)) switch
@@ -71,7 +68,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
 
             var game = this.GameLibrary.CreateGame(platform);
 
-            var installer = this.Installers.FirstOrDefault(p => p.SupportedPlatforms.Contains(platform));
+            var installer = this.Installers.FirstOrDefault(p => p.Name == installerName && p.SupportedPlatforms.Contains(platform));
             if (installer == null) throw new KeyNotFoundException("Platform Not Found");
             return await this.InstallQueue.QueueJob(installer.Install(game, filesysinfo), game.Record.RecordID);
         }
