@@ -22,7 +22,6 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
     {
         /// <inheritdoc/>
         [ImportService(typeof(IPluginManager))]
-        [ImportService(typeof(IStoneProvider))]
         [ImportService(typeof(IGameLibrary))]
         [ImportService(typeof(IGraphQLService))]
         [ImportService(typeof(ILogProvider))]
@@ -30,12 +29,11 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
         {
             var plugin = coreInstance.Get<IPluginManager>();
 
-            var stone = coreInstance.Get<IStoneProvider>();
             var games = coreInstance.Get<IGameLibrary>();
             var rootSchema = coreInstance.Get<IGraphQLService>();
 
             var gameQuery = new GameQueryBuilder(plugin.GetCollection<IGameInstaller>(),
-                stone, new AsyncJobQueue<TaskResult<IFile>>(), games);
+                new AsyncJobQueue<TaskResult<IFile>>(), games);
             rootSchema.Register(gameQuery);
             var logger = coreInstance.Get<ILogProvider>().GetLogger("graphql");
             logger.Info("Registered Game GraphQL Queries.");
