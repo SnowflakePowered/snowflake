@@ -10,9 +10,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DiscUtils.Core" Version="0.15.1-ci0002" />
-    <PackageReference Include="DiscUtils.Iso9660" Version="0.15.1-ci0002" />
     <PackageReference Include="MimeMapping" Version="1.0.1.26" />
+    <PackageReference Include="Quamotion.DiscUtils.Core" Version="0.15.4" />
+    <PackageReference Include="Quamotion.DiscUtils.Iso9660" Version="0.15.4" />
   </ItemGroup>
   
   <ItemGroup>
