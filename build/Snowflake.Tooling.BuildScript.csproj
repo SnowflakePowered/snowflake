@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Build" Version="16.4.0" />
-    <PackageReference Include="Nuke.Common" Version="0.23.6" />
+    <PackageReference Include="Nuke.Common" Version="0.23.7" />
   </ItemGroup>
 
   <ItemGroup>
