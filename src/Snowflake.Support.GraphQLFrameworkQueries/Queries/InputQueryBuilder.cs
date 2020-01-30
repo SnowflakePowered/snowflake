@@ -12,7 +12,6 @@ using Snowflake.Input.Controller.Mapped;
 using Snowflake.Input.Device;
 using Snowflake.Services;
 using Snowflake.Support.GraphQLFrameworkQueries.Inputs.MappedControllerElement;
-using Snowflake.Support.GraphQLFrameworkQueries.Types.Configuration;
 using Snowflake.Support.GraphQLFrameworkQueries.Types.InputDevice;
 using Snowflake.Support.GraphQLFrameworkQueries.Types.InputDevice.Mapped;
 
@@ -64,7 +63,6 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
             return this.MappedElementStore.GetMappings(controllerId, deviceName, vendorId);
         }
 
-        // todo: make this a mutation input object.
         [Field("defaultLayout",
             "Gets the default mapping between Stone controller IDs and the provided device.",
             typeof(ListGraphType<MappedControllerElementGraphType>))]
@@ -89,11 +87,12 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
                 .FirstOrDefault(d => d.InstanceGuid == input.InstanceGuid);
             var instance = device?.Instances
                 .FirstOrDefault(i => i.Driver == input.InputDriver);
-
+            this.StoneProvider.Controllers.TryGetValue(input.ControllerId, out var controllerLayout);
             // todo : throw error here?
             if (instance == null) return null;
+            if (controllerLayout == null) return null;
 
-            var defaults = new ControllerElementMappings(device.DeviceName, input.ControllerId,
+            var defaults = new ControllerElementMappings(device.DeviceName, controllerLayout,
                 input.InputDriver, device.VendorID, instance.DefaultLayout);
             this.MappedElementStore.AddMappings(defaults, input.ProfileName);
             return this.MappedElementStore.GetMappings(input.ControllerId, instance.Driver,

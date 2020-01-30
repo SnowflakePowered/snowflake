@@ -47,6 +47,15 @@ namespace Snowflake.Input.Controller.Mapped
 
         private readonly Dictionary<ControllerElement, MappedControllerElement> controllerElements;
 
+        /// <summary>
+        /// Initializes a <see cref="ControllerElementMappings"/> from an <see cref="IDeviceLayoutMapping"/>,
+        /// that includes all mappings from the default layout.
+        /// </summary>
+        /// <param name="deviceName">The name of the physical device for this set of mappings.</param>
+        /// <param name="controllerId">The Stone <see cref="ControllerId"/> this mapping is intended for.</param>
+        /// <param name="driver">The <see cref="InputDriverType"/> of the device instance for this set of mappings.</param>
+        /// <param name="vendor">The vendor ID of the physical device for this set of mappings.</param>
+        /// <param name="mapping">The device layout mapping provided by the device enumerator.</param>
         public ControllerElementMappings(string deviceName,
             ControllerId controllerId, InputDriverType driver, int vendor,
             IDeviceLayoutMapping mapping)
@@ -55,6 +64,27 @@ namespace Snowflake.Input.Controller.Mapped
             foreach (var controllerElement in mapping)
             {
                 this.Add(controllerElement);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a<see cref= "ControllerElementMappings" /> from an <see cref="IDeviceLayoutMapping"/>,
+        /// that includes only mappings that are assignable to the provided layout.
+        /// </summary>
+        /// <param name="deviceName">The name of the physical device for this set of mappings.</param>
+        /// <param name="controller">The controller layout to assign device mappings to.</param>
+        /// <param name="driver">The <see cref="InputDriverType"/> of the device instance for this set of mappings.</param>
+        /// <param name="vendor">The vendor ID of the physical device for this set of mappings.</param>
+        /// <param name="mapping">The device layout mapping provided by the device enumerator.</param>
+        public ControllerElementMappings(string deviceName,
+           IControllerLayout controller, InputDriverType driver, int vendor,
+           IDeviceLayoutMapping mapping)
+           : this(deviceName, controller.LayoutId, driver, vendor)
+        {
+            foreach (var (controllerElement, _) in controller.Layout)
+            {
+                if (mapping[controllerElement] == DeviceCapability.None) continue;
+                this.Add(new MappedControllerElement(controllerElement, mapping[controllerElement]));
             }
         }
 
