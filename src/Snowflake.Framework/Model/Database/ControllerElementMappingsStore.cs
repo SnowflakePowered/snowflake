@@ -25,6 +25,7 @@ namespace Snowflake.Model.Database
         public void AddMappings(IControllerElementMappings mappings, string profileName)
         {
             using var context = new DatabaseContext(this.Options.Options);
+            // todo: check already exists
             context.ControllerElementMappings.Add(mappings.AsModel(profileName));
             context.SaveChanges();
         }
