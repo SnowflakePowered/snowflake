@@ -17,7 +17,7 @@ using Zio.FileSystems;
 namespace Snowflake.Services
 {
     /// <inheritdoc />
-    public class ServiceContainer : IServiceContainer
+    internal class ServiceContainer : IServiceContainer
     {
         #region Loaded Objects
 
@@ -32,7 +32,7 @@ namespace Snowflake.Services
         bool disposed;
 
         /// <inheritdoc />
-        public ServiceContainer(string appDataDirectory)
+        public ServiceContainer(string appDataDirectory, string kestrelHostname)
         {
             this.AppDataDirectory = appDataDirectory;
             var directoryProvider = new ContentDirectoryProvider(this.AppDataDirectory);
@@ -41,7 +41,7 @@ namespace Snowflake.Services
             this.RegisterService<ILogProvider>(new LogProvider());
             this.RegisterService<IModuleEnumerator>(new ModuleEnumerator(appDataDirectory));
             this.RegisterService<IKestrelWebServerService>(new KestrelServerService(appDataDirectory,
-                "http://localhost:9797",
+                kestrelHostname,
                 this.Get<ILogProvider>().GetLogger("kestrel")));
 
             this.RegisterGraphQLRootSchema();

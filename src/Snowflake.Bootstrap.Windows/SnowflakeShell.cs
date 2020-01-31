@@ -26,7 +26,7 @@ namespace Snowflake.Shell.Windows
 
         public void StartCore()
         {
-            this.loadedCore = new ServiceContainer(this.appDataDirectory);
+            this.loadedCore = new ServiceContainer(this.appDataDirectory, "http://localhost:9797");
             var loader = this.loadedCore.Get<IModuleEnumerator>();
             var composer = new AssemblyComposer(this.loadedCore, loader);
             composer.Compose();
