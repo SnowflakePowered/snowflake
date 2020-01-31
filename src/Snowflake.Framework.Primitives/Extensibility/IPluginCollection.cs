@@ -11,13 +11,13 @@ namespace Snowflake.Extensibility
     /// </summary>
     /// <typeparam name="T">The type of plugin</typeparam>
     public interface IPluginCollection<T> : IEnumerable<T>
-        where T : IPlugin
+        where T : class, IPlugin
     {
         /// <summary>
         /// Gets the instance of T.
         /// </summary>
         /// <param name="pluginName">The name of the plugin</param>
         /// <returns>An instance of the plugin with the given plugin name. </returns>
-        T this[string pluginName] { get; }
+        T? this[string pluginName] { get; }
     }
 }

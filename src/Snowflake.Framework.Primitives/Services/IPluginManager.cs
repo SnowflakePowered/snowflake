@@ -18,7 +18,7 @@ namespace Snowflake.Services
         /// <param name="module">The module the plugin is loaded from</param>
         /// <returns>A provision used to initialize an <see cref="IProvisionedPlugin"/></returns>
         IPluginProvision GetProvision<T>(IModule module)
-            where T : IPlugin;
+            where T : class, IPlugin;
 
         /// <summary>
         /// Registers a plugin with the plugin manager.
@@ -28,7 +28,7 @@ namespace Snowflake.Services
         /// </typeparam>
         /// <param name="plugin">The plugin instance</param>
         void Register<T>(T plugin)
-            where T : IPlugin;
+            where T : class, IPlugin;
 
         /// <summary>
         /// Gets all plugins registered under the type category
@@ -38,7 +38,7 @@ namespace Snowflake.Services
         /// </typeparam>
         /// <returns>All plugins registered under a specific category.</returns>
         IEnumerable<T> Get<T>()
-            where T : IPlugin;
+            where T : class, IPlugin;
 
         /// <summary>
         /// Gets all plugins registered under the type category as a plugin collection.
@@ -48,7 +48,7 @@ namespace Snowflake.Services
         /// </typeparam>
         /// <returns>All plugins registered under a specific category.</returns>
         IPluginCollection<T> GetCollection<T>()
-            where T : IPlugin;
+            where T : class, IPlugin;
 
         /// <summary>
         /// Gets a specific plugin registered under a given type category
@@ -58,8 +58,8 @@ namespace Snowflake.Services
         /// </typeparam>
         /// <param name="pluginName">The name of the plugin.</param>
         /// <returns>The given plugin if it exists, null if it does not.</returns>
-        T Get<T>(string pluginName)
-            where T : IPlugin;
+        T? Get<T>(string pluginName)
+            where T : class, IPlugin;
 
         /// <summary>
         /// Gets a specific provisioned plugin
@@ -77,7 +77,7 @@ namespace Snowflake.Services
         /// <param name="pluginName">The name of the plugin.</param>
         /// <returns>True if the plugin has been registered.</returns>
         bool IsRegistered<T>(string pluginName)
-            where T : IPlugin;
+            where T : class, IPlugin;
 
         /// <summary>
         /// Checks if a given plugin has been loaded into the plugin manager.
