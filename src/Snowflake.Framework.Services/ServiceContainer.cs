@@ -63,10 +63,9 @@ namespace Snowflake.Services
         /// <inheritdoc/>
         public void RegisterService<T>(T serviceObject)
         {
-            // todo: check for same name
             if (this.serviceContainer.ContainsKey(typeof(T)))
             {
-                return; // todo throw exception
+                throw new ArgumentException($"A service of type {typeof(T).AssemblyQualifiedName} already exists!");
             }
 
             this.serviceContainer.Add(typeof(T), serviceObject);
