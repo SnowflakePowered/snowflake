@@ -7,35 +7,35 @@ using GraphQL.Relay.Utilities;
 
 namespace GraphQL.Relay.Types
 {
-    internal struct ArraySliceMetrics<TSource, TParent>
+    internal ref struct ArraySliceMetrics<TSource, TParent>
     {
         private IList<TSource> _items;
 
         /// <summary>
         /// Gets or sets the Total number of items in outer list. May be >= the SliceSize
         /// </summary>
-        public int TotalCount { get; set; }
+        public int TotalCount { get; }
 
         /// <summary>
         /// Gets or sets the local total of the list slice.
         /// </summary>
-        public int SliceSize { get; set; }
+        public int SliceSize { get; }
 
         /// <summary>
         /// Gets or sets the start index of the slice within the larger List
         /// </summary>
         /// <returns></returns>
-        public int StartIndex { get; set; } 
+        public int StartIndex { get; } 
 
         /// <summary>
         /// Gets the end index of the slice within the larger List
         /// </summary>
         public int EndIndex => this.StartIndex + this.SliceSize;
 
-        public int StartOffset { get; set; }
-        public int EndOffset { get; set; }
-        public bool HasPrevious { get; set; }
-        public bool HasNext { get; set; }
+        public int StartOffset { get; }
+        public int EndOffset { get; }
+        public bool HasPrevious { get; }
+        public bool HasNext { get; }
 
         public ArraySliceMetrics(
             IList<TSource> slice,
@@ -63,9 +63,9 @@ namespace GraphQL.Relay.Types
 
             var beforeOffset = ConnectionUtils.OffsetOrDefault(context.Before, totalCount);
             var afterOffset = ConnectionUtils.OffsetOrDefault(context.After, defaultOffset: -1);
-
-            this.StartOffset = new[] {sliceStartIndex - 1, afterOffset, -1}.Max() + 1;
-            this.EndOffset = new[] {endIndex - 1, beforeOffset, totalCount}.Max();
+           
+            this.StartOffset =  Math.Max(sliceStartIndex - 1, Math.Max(afterOffset, -1)) + 1;
+            this.EndOffset = Math.Max(endIndex - 1, Math.Max(beforeOffset, totalCount));
 
             if (context.First.HasValue)
             {
