@@ -121,7 +121,7 @@ namespace Snowflake.Filesystem.Tests
             var fs = new PhysicalFileSystem();
             var temp = Path.GetTempPath();
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
-            var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
+            var dir = new FS.Directory("testrr", pfs, pfs.GetDirectoryEntry("/"));
             var file = dir.OpenFile("test.txt");
             Assert.True(dir.ContainsFile(".manifest"));
             Assert.Equal(file.FileGuid, dir.RetrieveManifestRecord(dir.ThisDirectory.Path / Path.GetFileName("test.txt"), false).guid);
