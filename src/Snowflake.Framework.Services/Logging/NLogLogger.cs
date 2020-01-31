@@ -29,7 +29,11 @@ namespace Snowflake.Services.Logging
                 Name = "Console"
             };
             consoleTarget.UseDefaultRowHighlightingRules = false;
-
+            consoleTarget.WordHighlightingRules.Add(new ConsoleWordHighlightingRule()
+            {
+                Text = "Snowflake.",
+                ForegroundColor = ConsoleOutputColor.DarkCyan,
+            });
             consoleTarget.WordHighlightingRules.Add(new ConsoleWordHighlightingRule()
             {
                 Regex = @"(?<=^\[\w+\][^w]+)\(\w+\)",

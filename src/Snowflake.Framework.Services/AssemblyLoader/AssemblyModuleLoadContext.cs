@@ -38,12 +38,11 @@ namespace Snowflake.Services.AssemblyLoader
         /// <inheritdoc/>
         protected override Assembly Load(AssemblyName assemblyName)
         {
-            logger.Info($"Attempting to load {assemblyName.Name}");
             if (assemblyName.GetPublicKeyToken().Length == 0 &&
                 unsignedAssemblies.ContainsKey((assemblyName.Name, assemblyName.Version)))
             {
                 logger.Warn(
-                    $"Resolving {assemblyName.Name} version {assemblyName.Version} from unsigned assembly cache.");
+                    $"Resolving {assemblyName.Name} v{assemblyName.Version} from unsigned assembly cache.");
                 return AssemblyModuleLoadContext.unsignedAssemblies[(assemblyName.Name, assemblyName.Version)];
             }
 
@@ -54,7 +53,6 @@ namespace Snowflake.Services.AssemblyLoader
             if (assemblyName.Name == "Snowflake.Framework.Primitives")
             {
                 Version supportedVersion = typeof(IServiceContainer).GetTypeInfo().Assembly.GetName().Version;
-                this.logger.Info($"Found Snowflake Framework Version {assemblyName.Version}");
                 if (assemblyName.Version.Major != supportedVersion.Major)
                 {
                     // todo: more robust version check
@@ -68,7 +66,7 @@ namespace Snowflake.Services.AssemblyLoader
             if (runtimeLibs.Select(l => l.Name.ToLower()).Contains(assemblyName.Name.ToLower()))
             {
                 logger.Info(
-                    $"Attempting to resolve {assemblyName.Name} version {assemblyName.Version} from runtime...");
+                    $"Resolving {assemblyName.Name} v{assemblyName.Version} from runtime.");
                 try
                 {
                     return Assembly.Load(assemblyName);
@@ -114,7 +112,7 @@ namespace Snowflake.Services.AssemblyLoader
                 }
                 else
                 {
-                    logger.Info($"Loading {assemblyName.Name} from GAC!");
+                    logger.Info($"Loading {assemblyName.Name} from GAC.");
                     return Assembly.Load(assemblyName);
                 }
             }
