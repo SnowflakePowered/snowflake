@@ -78,7 +78,7 @@ namespace Snowflake.Services.AssemblyLoader
                         try
                         {
                             this.logger.Info(
-                                $"Composing {uncomposed.composable.GetType().Name} with services {string.Join(" ", uncomposed.services)}");
+                                $"Composing {uncomposed.composable.GetType().Name} with services: {Environment.NewLine}\t\t\t\t{string.Join($"{Environment.NewLine}\t\t\t\t", uncomposed.services)}");
                             this.ComposeContainer(uncomposed.module, uncomposed.composable, uncomposed.services);
                             this.logger.Info($"Finished composing {uncomposed.composable.GetType().Name}");
                         }
