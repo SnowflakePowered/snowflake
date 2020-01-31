@@ -6,7 +6,6 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Snowflake.Extensibility;
@@ -48,7 +47,7 @@ namespace Snowflake.Support.PluginManager
 
         /// <inheritdoc/>
         public IPluginProvision GetProvision<T>(IModule composableModule)
-            where T : IPlugin
+            where T : class, IPlugin
         {
             var appDataPath = rootFs.ConvertPathFromInternal(this.contentDirectory.ApplicationData.FullName);
 
@@ -102,7 +101,7 @@ namespace Snowflake.Support.PluginManager
 
         /// <inheritdoc/>
         public IEnumerable<T> Get<T>()
-            where T : IPlugin
+            where T : class, IPlugin
         {
             if (this.loadedPlugins.ContainsKey(typeof(T)))
             {
@@ -113,10 +112,11 @@ namespace Snowflake.Support.PluginManager
         }
 
         /// <inheritdoc/>
-        public T Get<T>(string pluginName)
-            where T : IPlugin
+        public T? Get<T>(string pluginName)
+            where T : class, IPlugin
         {
-            return (T) this.loadedPlugins[typeof(T)].FirstOrDefault(p => p.Name == pluginName);
+            if (!this.loadedPlugins.TryGetValue(typeof(T), out var pluginCollection)) return null;
+            return (T?) pluginCollection.FirstOrDefault(p => p.Name == pluginName);
         }
 
         /// <inheritdoc/>
@@ -130,7 +130,7 @@ namespace Snowflake.Support.PluginManager
 
         /// <inheritdoc/>
         public void Register<T>(T plugin)
-            where T : IPlugin
+            where T : class, IPlugin
         {
             if (!this.loadedPlugins.ContainsKey(typeof(T)))
             {
@@ -147,7 +147,7 @@ namespace Snowflake.Support.PluginManager
 
         /// <inheritdoc/>
         public bool IsRegistered<T>(string pluginName)
-            where T : IPlugin
+            where T : class, IPlugin
         {
             return this.Get<T>(pluginName) != null;
         }
@@ -160,7 +160,7 @@ namespace Snowflake.Support.PluginManager
 
         /// <inheritdoc/>
         public IPluginCollection<T> GetCollection<T>()
-            where T : IPlugin
+            where T : class, IPlugin
         {
             return new PluginCollection<T>(this);
         }

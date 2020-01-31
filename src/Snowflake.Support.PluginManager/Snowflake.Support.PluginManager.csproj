@@ -5,6 +5,7 @@
     <AssemblyName>Snowflake.Support.PluginManager</AssemblyName>
     <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
     <_SnowflakeUseDevelopmentSDK>true</_SnowflakeUseDevelopmentSDK>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
