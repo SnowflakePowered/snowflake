@@ -14,7 +14,6 @@ using Snowflake.Scraping;
 using Snowflake.Scraping.Extensibility;
 using Snowflake.Services;
 using Snowflake.Support.GraphQLFrameworkQueries.Queries;
-using Snowflake.Support.GraphQLFrameworkQueries.Queries;
 
 namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
 {
