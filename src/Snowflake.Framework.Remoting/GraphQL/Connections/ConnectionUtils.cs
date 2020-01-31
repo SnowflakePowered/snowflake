@@ -33,10 +33,12 @@ namespace GraphQL.Relay.Types
                 sliceStartIndex,
                 totalCount);
 
+            int startOffset = metrics.StartOffset;
+
             var edges = metrics.Slice.Select((item, i) => new Edge<TSource>
                 {
                     Node = item,
-                    Cursor = OffsetToCursor(metrics.StartOffset + i),
+                    Cursor = OffsetToCursor(startOffset + i),
                 })
                 .ToList();
 
