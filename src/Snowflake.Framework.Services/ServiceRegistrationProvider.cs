@@ -20,7 +20,7 @@ namespace Snowflake.Services
             if (typeof(T).Assembly == serviceObject.GetType().Assembly)
             {
                 throw new InvalidOperationException(
-                    "Can not register a service who's implementation and interface reside in the same assembly!");
+                    "Unable to register a service whose implementation and interface reside in the same assembly!");
             }
 
             this.coreService.RegisterService(serviceObject);

@@ -19,10 +19,11 @@ namespace Snowflake.Services
         string AppDataDirectory { get; }
 
         /// <summary>
-        /// Register a service with this coreservice
+        /// Register a new singleton service.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="serviceInstance"></param>
+        /// <typeparam name="T">The type of the service.</typeparam>
+        /// <param name="serviceInstance">The instance of the service.</param>
+        /// <exception cref="ArgumentException">Thrown when a service of the same type already exists.</exception>
         void RegisterService<T>(T serviceInstance);
 
         /// <summary>
