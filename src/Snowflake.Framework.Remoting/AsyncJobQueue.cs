@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Snowflake.Framework.Extensibility
 {
+    /// <inheritdoc />
     public sealed class AsyncJobQueue<T> : IAsyncJobQueue<T>
     {
         private sealed class AsyncJobQueueEnumerable : IAsyncEnumerable<T>
@@ -77,7 +78,7 @@ namespace Snowflake.Framework.Extensibility
             yield break;
         }
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
-
+        /// <inheritdoc />
         public async ValueTask<(T, bool)> GetNext(Guid jobId)
         {
             var enumerator = this.GetEnumerator(jobId);
@@ -97,6 +98,7 @@ namespace Snowflake.Framework.Extensibility
             return result;
         }
 
+        /// <inheritdoc />
         public ValueTask<Guid> QueueJob(IAsyncEnumerable<T> asyncEnumerable, CancellationToken token = default)
         {
             var guid = Guid.NewGuid();
@@ -106,6 +108,7 @@ namespace Snowflake.Framework.Extensibility
             return new ValueTask<Guid>(guid);
         }
 
+        /// <inheritdoc />
         public async ValueTask<Guid> QueueJob(IAsyncEnumerable<T> asyncEnumerable, Guid guid, CancellationToken token = default)
         {
             if (this.Enumerators.TryGetValue(guid, out IAsyncEnumerator<T> old))
@@ -125,17 +128,20 @@ namespace Snowflake.Framework.Extensibility
             return guid;
         }
 
+        /// <inheritdoc />
         public IAsyncEnumerable<T> AsEnumerable(Guid jobId)
         {
             return new AsyncJobQueueEnumerable(this, jobId);
         }
 
+        /// <inheritdoc />
         public IAsyncEnumerable<T> GetSource(Guid jobId)
         {
             this.Enumerables.TryGetValue(jobId, out var enumerable);
             return enumerable;
         }
 
+        /// <inheritdoc />
         public bool TryRemoveSource(Guid jobId, out IAsyncEnumerable<T> asyncEnumerable)
         {
             asyncEnumerable = Empty();

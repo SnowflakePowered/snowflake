@@ -2,9 +2,19 @@
 using System.Collections.Generic;
 using System.Text;
 using GraphQL.Types;
+using Snowflake.Framework.Remoting.GraphQL.Attributes;
 
 namespace Snowflake.Framework.Remoting.GraphQL.Query
 {
+    /// <summary>
+    /// A class that provides GraphQL Schema access through <see cref="IGraphQLService.Register(QueryBuilder)"/> must
+    /// inherit from <see cref="QueryBuilder"/>. While no extra properties are made visible, <see cref="QueryBuilder"/>
+    /// uses some behind-the-scenes reflection access to rewrite properly marked methods of the inheriting class into
+    /// GraphQL-accessible functions.
+    /// <br/>
+    /// See <see cref="FieldAttribute"/>, <see cref="ConnectionAttribute"/>, and <see cref="MutationAttribute"/> for
+    /// how to mark a method as a GraphQL query.
+    /// </summary>
     public abstract partial class QueryBuilder
     {
         /// <summary>

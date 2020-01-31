@@ -57,11 +57,6 @@ namespace GraphQL.Relay.Types
             };
         }
 
-        internal static object ToConnection(object values, ResolveConnectionContext<object> context)
-        {
-            throw new NotImplementedException();
-        }
-
         public static string CursorForObjectInConnection<T>(
             IEnumerable<T> slice,
             T item)
