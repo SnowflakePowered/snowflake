@@ -29,7 +29,7 @@ namespace Snowflake.Loader.Tests
             ZipArchive archive = new ZipArchive(composableAssemblyZipStream);
 
             archive.ExtractToDirectory(moduleDirectory.CreateSubdirectory("Snowflake.Framework.Tests").FullName);
-            var container = new ServiceContainer(appDataDirectory.FullName);
+            var container = new ServiceContainer(appDataDirectory.FullName, "https://localhost:9797");
 
             Assert.Contains(container.Get<IModuleEnumerator>()
                 .Modules, m => m.Entry == "Snowflake.Framework.Tests.DummyComposable.dll");
@@ -52,7 +52,7 @@ namespace Snowflake.Loader.Tests
             ZipArchive archive = new ZipArchive(composableAssemblyZipStream);
 
             archive.ExtractToDirectory(moduleDirectory.CreateSubdirectory("Snowflake.Framework.Tests").FullName);
-            var container = new ServiceContainer(appDataDirectory.FullName);
+            var container = new ServiceContainer(appDataDirectory.FullName, "https://localhost:9797");
 
             Assert.Contains(container.Get<IModuleEnumerator>()
                 .Modules, m => m.Entry == "Snowflake.Framework.Tests.InvalidComposable.dll");
@@ -74,7 +74,7 @@ namespace Snowflake.Loader.Tests
             ZipArchive archive = new ZipArchive(composableAssemblyZipStream);
 
             archive.ExtractToDirectory(moduleDirectory.CreateSubdirectory("Snowflake.Framework.Tests").FullName);
-            var container = new ServiceContainer(appDataDirectory.FullName);
+            var container = new ServiceContainer(appDataDirectory.FullName, "https://localhost:9797");
 
             var module = container.Get<IModuleEnumerator>()
                 .Modules.FirstOrDefault(m => m.Entry == "Snowflake.Framework.Tests.InvalidComposable.dll");
