@@ -11,19 +11,14 @@ namespace Snowflake.Services.Logging
     internal class NlogLogger : Snowflake.Extensibility.ILogger
     {
         private readonly NLog.ILogger baseLogger;
-
-        private static bool isSetup = false;
-
-        private static void Setup()
+        private static readonly ColoredConsoleTarget consoleTarget;
+        private static readonly AsyncTargetWrapper asyncConsoleTarget;
+        private static readonly LoggingConfiguration configuration;
+        static NlogLogger()
         {
-            if (NlogLogger.isSetup)
-            {
-                return;
-            }
-
-            var configuration = new LoggingConfiguration();
-            var consoleTarget = new ColoredConsoleTarget("Console");
-            var asyncConsoleTarget = new AsyncTargetWrapper(consoleTarget, 2400, AsyncTargetWrapperOverflowAction.Grow)
+            NlogLogger.configuration = new LoggingConfiguration();
+            NlogLogger.consoleTarget = new ColoredConsoleTarget("Console");
+            NlogLogger.asyncConsoleTarget = new AsyncTargetWrapper(consoleTarget, 2400, AsyncTargetWrapperOverflowAction.Grow)
             {
                 OptimizeBufferReuse = true,
                 Name = "Console"
@@ -85,7 +80,7 @@ namespace Snowflake.Services.Logging
                 ForegroundColor = ConsoleOutputColor.Yellow,
             });
             consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule()
-            { 
+            {
                 Condition = "level == LogLevel.Info",
                 ForegroundColor = ConsoleOutputColor.Gray,
             });
@@ -105,7 +100,6 @@ namespace Snowflake.Services.Logging
             configuration.AddRule(NLog.LogLevel.Trace, NLog.LogLevel.Fatal, asyncConsoleTarget);
             configuration.AddTarget(asyncConsoleTarget);
             LogManager.Configuration = configuration;
-            NlogLogger.isSetup = true;
         }
 
         internal NlogLogger(NLog.ILogger baseLogger)
@@ -115,7 +109,6 @@ namespace Snowflake.Services.Logging
 
         public NlogLogger(string loggerName)
         {
-            NlogLogger.Setup();
             this.baseLogger = LogManager.GetLogger(loggerName);
         }
 

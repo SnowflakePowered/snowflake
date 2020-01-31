@@ -10,9 +10,7 @@ namespace GraphQL.Relay.Utilities
         public static IEnumerable<T> Slice<T>(this IEnumerable<T> collection, int start, int end)
         {
             int index = 0;
-            int count = 0;
-
-            count = collection.Count();
+            int count = collection.Count();
 
             // Get start/end indexes, negative numbers start at the end of the collection.
             if (start < 0)

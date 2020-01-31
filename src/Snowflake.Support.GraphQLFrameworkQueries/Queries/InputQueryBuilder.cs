@@ -87,12 +87,11 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
                 .FirstOrDefault(d => d.InstanceGuid == input.InstanceGuid);
             var instance = device?.Instances
                 .FirstOrDefault(i => i.Driver == input.InputDriver);
-            this.StoneProvider.Controllers.TryGetValue(input.ControllerId, out var controllerLayout);
             // todo : throw error here?
             if (instance == null) return null;
-            if (controllerLayout == null) return null;
+            if (!this.StoneProvider.Controllers.TryGetValue(input.ControllerId, out var controllerLayout)) return null;
 
-            var defaults = new ControllerElementMappings(device.DeviceName, controllerLayout,
+            var defaults = new ControllerElementMappings(device!.DeviceName, controllerLayout,
                 input.InputDriver, device.VendorID, instance.DefaultLayout);
             this.MappedElementStore.AddMappings(defaults, input.ProfileName);
             return this.MappedElementStore.GetMappings(input.ControllerId, instance.Driver,

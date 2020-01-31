@@ -47,7 +47,7 @@ namespace Snowflake.Plugin.Scraping.GiantBomb
             {"SEGA_GG", 5},
         };
 
-        private static IDictionary<string, SortDirection> defaultSort = new Dictionary<string, SortDirection>
+        private static readonly IDictionary<string, SortDirection> defaultSort = new Dictionary<string, SortDirection>
         {
             {"name", SortDirection.Ascending }
         };
