@@ -7,7 +7,7 @@ using GraphQL.Relay.Utilities;
 
 namespace GraphQL.Relay.Types
 {
-    internal class ArraySliceMetrics<TSource, TParent>
+    internal struct ArraySliceMetrics<TSource, TParent>
     {
         private IList<TSource> _items;
 
@@ -25,12 +25,12 @@ namespace GraphQL.Relay.Types
         /// Gets or sets the start index of the slice within the larger List
         /// </summary>
         /// <returns></returns>
-        public int StartIndex { get; set; } = 0;
+        public int StartIndex { get; set; } 
 
         /// <summary>
         /// Gets the end index of the slice within the larger List
         /// </summary>
-        public int EndIndex => StartIndex + SliceSize;
+        public int EndIndex => this.StartIndex + this.SliceSize;
 
         public int StartOffset { get; set; }
         public int EndOffset { get; set; }
@@ -56,30 +56,33 @@ namespace GraphQL.Relay.Types
         {
             _items = slice;
 
-            SliceSize = slice.Count;
-            StartIndex = sliceStartIndex;
+            this.SliceSize = slice.Count;
+            this.StartIndex = sliceStartIndex;
+
+            var endIndex = this.StartIndex + this.SliceSize;
 
             var beforeOffset = ConnectionUtils.OffsetOrDefault(context.Before, totalCount);
             var afterOffset = ConnectionUtils.OffsetOrDefault(context.After, defaultOffset: -1);
 
-            StartOffset = new[] {sliceStartIndex - 1, afterOffset, -1}.Max() + 1;
-            EndOffset = new[] {EndIndex - 1, beforeOffset, totalCount}.Max();
+            this.StartOffset = new[] {sliceStartIndex - 1, afterOffset, -1}.Max() + 1;
+            this.EndOffset = new[] {endIndex - 1, beforeOffset, totalCount}.Max();
 
             if (context.First.HasValue)
             {
-                EndOffset = Math.Min(EndOffset, StartOffset + context.First.Value);
+                this.EndOffset = Math.Min(this.EndOffset, this.StartOffset + context.First.Value);
             }
 
             if (context.Last.HasValue)
             {
-                StartOffset = Math.Min(StartOffset, EndOffset - context.Last.Value);
+                this.StartOffset = Math.Min(this.StartOffset, this.EndOffset - context.Last.Value);
             }
 
             var lowerBound = context.After != null ? afterOffset + 1 : 0;
             var upperBound = context.Before != null ? beforeOffset : totalCount;
 
-            HasPrevious = context.Last.HasValue && StartOffset > lowerBound;
-            HasNext = context.First.HasValue && EndOffset < upperBound;
+            this.HasPrevious = context.Last.HasValue && this.StartOffset > lowerBound;
+            this.HasNext = context.First.HasValue && this.EndOffset < upperBound;
+            this.TotalCount = totalCount;
         }
     }
 }

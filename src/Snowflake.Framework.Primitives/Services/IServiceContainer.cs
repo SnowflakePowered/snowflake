@@ -6,6 +6,10 @@ namespace Snowflake.Services
 {
     /// <summary>
     /// The core frontend service that handles all the functions of the frontend core.
+    /// Acts as a dependency injection container for all <see cref="IComposable"/> modules.
+    /// An instance of <see cref="IServiceContainer"/> can not be directly obtained. Instead,
+    /// services within it must be requested using <see cref="ImportServiceAttribute"/>, and
+    /// new services can be registered using the <see cref="IServiceRegistrationProvider"/> service.
     /// </summary>
     public interface IServiceContainer : IDisposable
     {
