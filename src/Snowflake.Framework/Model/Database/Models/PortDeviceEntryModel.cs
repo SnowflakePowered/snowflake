@@ -4,8 +4,6 @@ using Snowflake.Input.Device;
 using Snowflake.Model.Game;
 using Snowflake.Orchestration.Extensibility;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Snowflake.Model.Database.Models
 {
