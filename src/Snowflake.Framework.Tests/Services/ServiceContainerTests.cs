@@ -15,7 +15,7 @@ namespace Snowflake.Services.Tests
         {
             var appDataDirectory = new DirectoryInfo(Path.GetTempPath())
                 .CreateSubdirectory(Guid.NewGuid().ToString());
-            var container = new ServiceContainer(appDataDirectory.FullName);
+            var container = new ServiceContainer(appDataDirectory.FullName, "https://localhost:9797");
         }
 
         [Fact]
@@ -23,7 +23,7 @@ namespace Snowflake.Services.Tests
         {
             var appDataDirectory = new DirectoryInfo(Path.GetTempPath())
                 .CreateSubdirectory(Guid.NewGuid().ToString());
-            var container = new ServiceContainer(appDataDirectory.FullName);
+            var container = new ServiceContainer(appDataDirectory.FullName, "https://localhost:9797");
             Assert.NotNull(container.Get<IServiceRegistrationProvider>());
             Assert.NotNull(container.Get<IContentDirectoryProvider>());
             Assert.NotNull(container.Get<ILogProvider>());
@@ -36,7 +36,7 @@ namespace Snowflake.Services.Tests
         {
             var appDataDirectory = new DirectoryInfo(Path.GetTempPath())
                 .CreateSubdirectory(Guid.NewGuid().ToString());
-            var container = new ServiceContainer(appDataDirectory.FullName);
+            var container = new ServiceContainer(appDataDirectory.FullName, "https://localhost:9797");
             IDummyComposable dummy = new DummyService();
             container.RegisterService(dummy);
             Assert.Equal(dummy, container.Get<IDummyComposable>());
