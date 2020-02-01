@@ -17,12 +17,12 @@ namespace Snowflake.Orchestration.Extensibility
 
         public string ConfigurationProfile { get; }
 
-        public IList<IEmulatedController> ControllerPorts { get; }
+        public IEnumerable<IEmulatedController> ControllerPorts { get; }
 
         public ISaveGame? InitialSave { get; }
         public GameEmulation(IGame game, 
             string configurationProfile,
-            IList<IEmulatedController> controllerPorts,
+            IEnumerable<IEmulatedController> controllerPorts,
             ISaveGame? initialSave)
         {
             this.Game = game;

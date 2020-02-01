@@ -35,7 +35,7 @@ namespace Snowflake.Orchestration.Extensibility
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
 
         public abstract IGameEmulation ProvisionEmulationInstance(IGame game,
-            IList<IEmulatedController> controllerPorts,
+            IEnumerable<IEmulatedController> controllerPorts,
             string configurationProfileName,
             ISaveGame? initialSave);
     }

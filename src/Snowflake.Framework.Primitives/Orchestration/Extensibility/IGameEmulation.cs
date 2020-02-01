@@ -27,7 +27,7 @@ namespace Snowflake.Orchestration.Extensibility
         /// A list of <see cref="IEmulatedController"/> that representes the input devices that will be used
         /// in this emulation instance.
         /// </summary>
-        IList<IEmulatedController> ControllerPorts { get; }
+        IEnumerable<IEmulatedController> ControllerPorts { get; }
 
         /// <summary>
         /// The game that is being emulated in this instance.

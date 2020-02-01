@@ -44,7 +44,7 @@ namespace Snowflake.Orchestration.Extensibility
         /// <param name="initialSave">The initial save, if any, to resume the emulation from.</param>
         /// <returns>An emulator specific <see cref="IGameEmulation"/> instance that can be used to begin the emulation.</returns>
         IGameEmulation ProvisionEmulationInstance(IGame game, 
-            IList<IEmulatedController> controllerPorts, string configurationProfileName,
+            IEnumerable<IEmulatedController> controllerPorts, string configurationProfileName,
             ISaveGame? initialSave);
     }
 }
