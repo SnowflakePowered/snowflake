@@ -15,7 +15,7 @@ namespace Snowflake.Input.Controller
         /// <summary>
         /// Gets the identifier or name of the layout.
         /// </summary>
-        ControllerId LayoutId { get; }
+        ControllerId LayoutID { get; }
 
         /// <summary>
         /// Gets the friendly name of this layout

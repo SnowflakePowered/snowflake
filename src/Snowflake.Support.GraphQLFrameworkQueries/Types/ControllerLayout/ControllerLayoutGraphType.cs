@@ -15,7 +15,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Types.ControllerLayout
             Description = "A Stone Controller Layout";
             Field(c => c.FriendlyName).Description("The Friendly Name of this controller layout");
             Field<StringGraphType>("layoutId", 
-                resolve: c => (string)c.Source.LayoutId, 
+                resolve: c => (string)c.Source.LayoutID, 
                 description: "The Stone Layout ID for this controller layout");
             Field<ListGraphType<StringGraphType>>(
                 "platforms",

@@ -85,7 +85,7 @@ namespace Snowflake.Model.Database
             using var context = new DatabaseContext(this.Options.Options);
             var retrievedMappings = context.ControllerElementMappings
                 .Include(p => p.MappedElements)
-                .SingleOrDefault(p => p.ControllerID == mappings.ControllerId 
+                .SingleOrDefault(p => p.ControllerID == mappings.ControllerID 
                                    && p.DriverType == mappings.DriverType
                                    && p.DeviceName == mappings.DeviceName 
                                    && p.VendorID == mappings.VendorID

@@ -17,7 +17,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Types.PlatformInfo
             Name = "PlatformInfo";
             Description = "A Stone Platform Definition.";
             Field<StringGraphType>("platformId", description: "The Stone PlatformID.",
-                resolve: context => context.Source.PlatformId.ToString());
+                resolve: context => context.Source.PlatformID.ToString());
             Field(p => p.FriendlyName).Description("The human readable name of the platform.");
             Field(p => p.MaximumInputs).Description("The maximum inputs this platform can have.");
             Field<ListGraphType<FileTypeGraphType>>("fileType",

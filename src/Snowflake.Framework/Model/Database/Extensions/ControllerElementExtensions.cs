@@ -17,10 +17,10 @@ namespace Snowflake.Model.Database.Extensions
             {
                 ProfileName = profileName,
                 DriverType = @this.DriverType,
-                ControllerID = @this.ControllerId,
+                ControllerID = @this.ControllerID,
                 DeviceName = @this.DeviceName,
                 VendorID = @this.VendorID,
-                MappedElements = @this.Select(e => e.AsModel(@this.ControllerId, @this.DeviceName, 
+                MappedElements = @this.Select(e => e.AsModel(@this.ControllerID, @this.DeviceName, 
                 profileName, @this.VendorID, @this.DriverType)).ToList()
             };
         }

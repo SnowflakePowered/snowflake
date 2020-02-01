@@ -11,7 +11,7 @@ namespace Snowflake.Model.Game
         internal PlatformInfo(string platformId, string name, IDictionary<string, string> metadata,
             IDictionary<string, string> fileTypes, IEnumerable<ISystemFile> biosFiles, int maximumInputs)
         {
-            this.PlatformId = platformId;
+            this.PlatformID = platformId;
             this.Metadata = metadata;
             this.FileTypes = fileTypes;
             this.BiosFiles = biosFiles;
@@ -23,7 +23,7 @@ namespace Snowflake.Model.Game
         public string FriendlyName { get; }
 
         /// <inheritdoc/>
-        public PlatformId PlatformId { get; }
+        public PlatformId PlatformID { get; }
 
         /// <inheritdoc/>
         public IDictionary<string, string> Metadata { get; set; }

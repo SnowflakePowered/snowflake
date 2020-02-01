@@ -857,7 +857,7 @@
         <member name="P:Snowflake.Input.Controller.ControllerElementInfo.Type">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Input.Controller.ControllerLayout.LayoutId">
+        <member name="P:Snowflake.Input.Controller.ControllerLayout.LayoutID">
             <inheritdoc/>
         </member>
         <member name="P:Snowflake.Input.Controller.ControllerLayout.FriendlyName">
@@ -878,7 +878,7 @@
         <member name="P:Snowflake.Input.Controller.Mapped.ControllerElementMappings.DeviceName">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Input.Controller.Mapped.ControllerElementMappings.ControllerId">
+        <member name="P:Snowflake.Input.Controller.Mapped.ControllerElementMappings.ControllerID">
             <inheritdoc/>
         </member>
         <member name="M:Snowflake.Input.Controller.Mapped.ControllerElementMappings.#ctor(System.String,Snowflake.Input.Controller.ControllerId,Snowflake.Input.Device.InputDriverType,System.Int32,Snowflake.Input.Device.IDeviceLayoutMapping)">
@@ -887,7 +887,7 @@
             that includes all mappings from the default layout.
             </summary>
             <param name="deviceName">The name of the physical device for this set of mappings.</param>
-            <param name="controllerId">The Stone <see cref="P:Snowflake.Input.Controller.Mapped.ControllerElementMappings.ControllerId"/> this mapping is intended for.</param>
+            <param name="controllerId">The Stone <see cref="P:Snowflake.Input.Controller.Mapped.ControllerElementMappings.ControllerID"/> this mapping is intended for.</param>
             <param name="driver">The <see cref="T:Snowflake.Input.Device.InputDriverType"/> of the device instance for this set of mappings.</param>
             <param name="vendor">The vendor ID of the physical device for this set of mappings.</param>
             <param name="mapping">The device layout mapping provided by the device enumerator.</param>
@@ -1077,7 +1077,7 @@
         <member name="P:Snowflake.Model.Game.PlatformInfo.FriendlyName">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Model.Game.PlatformInfo.PlatformId">
+        <member name="P:Snowflake.Model.Game.PlatformInfo.PlatformID">
             <inheritdoc/>
         </member>
         <member name="P:Snowflake.Model.Game.PlatformInfo.Metadata">

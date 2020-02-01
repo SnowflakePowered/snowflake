@@ -45,7 +45,7 @@ namespace Shiragame.Builder
                 let ext = Path.GetExtension(o.romFileName)
                 let crc = o.romHashCRC
                 where crc != null // only accept hashable files
-                select new RomInfo(platform.PlatformId,
+                select new RomInfo(platform.PlatformID,
                     o.romHashCRC,
                     o.romHashMD5,
                     o.romHashSHA1,
@@ -63,7 +63,7 @@ namespace Shiragame.Builder
                 where this.PlatformMap.ContainsKey((int) o.systemID)
                 let platform = this.stone.Platforms[this.PlatformMap[(int) o.systemID]]
                 let serials = o.romSerial
-                select new SerialInfo(platform.PlatformId,
+                select new SerialInfo(platform.PlatformID,
                     o.romExtensionlessFileName,
                     this.RegionMap[(int) o.regionID],
                     serials);

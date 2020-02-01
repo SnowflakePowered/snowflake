@@ -26,7 +26,7 @@ namespace Snowflake.Input.Controller.Mapped
         public string DeviceName { get; }
 
         /// <inheritdoc/>
-        public ControllerId ControllerId { get; }
+        public ControllerId ControllerID { get; }
 
         public InputDriverType DriverType { get; }
 
@@ -52,7 +52,7 @@ namespace Snowflake.Input.Controller.Mapped
         /// that includes all mappings from the default layout.
         /// </summary>
         /// <param name="deviceName">The name of the physical device for this set of mappings.</param>
-        /// <param name="controllerId">The Stone <see cref="ControllerId"/> this mapping is intended for.</param>
+        /// <param name="controllerId">The Stone <see cref="ControllerID"/> this mapping is intended for.</param>
         /// <param name="driver">The <see cref="InputDriverType"/> of the device instance for this set of mappings.</param>
         /// <param name="vendor">The vendor ID of the physical device for this set of mappings.</param>
         /// <param name="mapping">The device layout mapping provided by the device enumerator.</param>
@@ -79,7 +79,7 @@ namespace Snowflake.Input.Controller.Mapped
         public ControllerElementMappings(string deviceName,
            IControllerLayout controller, InputDriverType driver, int vendor,
            IDeviceLayoutMapping mapping)
-           : this(deviceName, controller.LayoutId, driver, vendor)
+           : this(deviceName, controller.LayoutID, driver, vendor)
         {
             foreach (var (controllerElement, _) in controller.Layout)
             {
@@ -92,7 +92,7 @@ namespace Snowflake.Input.Controller.Mapped
             ControllerId controllerId, InputDriverType driver, int vendor)
         {
             this.DeviceName = deviceName;
-            this.ControllerId = controllerId;
+            this.ControllerID = controllerId;
             this.DriverType = driver;
             this.VendorID = vendor;
             this.controllerElements = new Dictionary<ControllerElement, MappedControllerElement>();
