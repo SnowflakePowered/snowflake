@@ -13,7 +13,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Types.InputDevice.Mapped
             Name = "ControllerElementMappings";
             Description =
                 "A collection of mapped controller elements. Essentially a mapping profile from a real device to an emulated virtual device.";
-            Field<StringGraphType>("controllerId", resolve: c => c.Source.ControllerId, description: "The Stone Controller ID of the emulated controller this collection maps to.");
+            Field<StringGraphType>("controllerId", resolve: c => c.Source.ControllerID, description: "The Stone Controller ID of the emulated controller this collection maps to.");
             Field(c => c.DeviceName).Description("The Controller ID of the real device this collection maps from.");
             Field<ListGraphType<MappedControllerElementGraphType>>("mappings",
                 description: "The set of mappings that map each element from the real device to the emulated device.",

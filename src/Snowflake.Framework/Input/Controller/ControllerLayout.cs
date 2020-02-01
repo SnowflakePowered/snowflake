@@ -15,7 +15,7 @@ namespace Snowflake.Input.Controller
     internal class ControllerLayout : IControllerLayout
     {
         /// <inheritdoc/>
-        public ControllerId LayoutId { get; }
+        public ControllerId LayoutID { get; }
 
         /// <inheritdoc/>
         public string FriendlyName { get; }
@@ -29,7 +29,7 @@ namespace Snowflake.Input.Controller
         internal ControllerLayout(ControllerId layoutId, IEnumerable<PlatformId> platforms, string friendlyName,
             IControllerElementCollection layout)
         {
-            this.LayoutId = layoutId;
+            this.LayoutID = layoutId;
             this.FriendlyName = friendlyName;
             this.Platforms = platforms;
             this.Layout = layout;

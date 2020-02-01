@@ -9,9 +9,9 @@ namespace Snowflake.Model.Game
     public interface IPlatformInfo
     {
         /// <summary>
-        /// Gets the id of the platform that this object is related to
+        /// Gets the ID of the platform that this object is related to
         /// </summary>
-        PlatformId PlatformId { get; }
+        PlatformId PlatformID { get; }
 
         /// <summary>
         /// Gets the friendly name of this platform

@@ -31,7 +31,7 @@ namespace Snowflake.Input.Controller.Mapped
         /// <summary>
         /// Gets the controller id of the virtual controller layout
         /// </summary>
-        ControllerId ControllerId { get; }
+        ControllerId ControllerID { get; }
 
         /// <summary>
         /// Gets or sets the device element mapped to the given layout element,

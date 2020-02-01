@@ -43,7 +43,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
             var game = this.GameLibrary.GetGame(gameGuid);
             var platform = this.Stone.Platforms[game.Record.PlatformID];
             var controllers = (from i in Enumerable.Range(0, platform.MaximumInputs)
-                               select this.Ports.GetControllerAtPort(orchestrator, platform.PlatformId, i)).ToList();
+                               select this.Ports.GetControllerAtPort(orchestrator, platform.PlatformID, i)).ToList();
             orchestrator.ProvisionEmulationInstance(game, controllers, configurationProfile, null);
             return new Guid();
         }
