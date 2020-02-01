@@ -18,12 +18,14 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
         public IPluginCollection<IEmulatorOrchestrator> Orchestrators { get; }
         public IStoneProvider Stone { get; }
         public IGameLibrary GameLibrary { get; }
+        public IEmulatedPortsManager Ports { get; }
         public InputQueryBuilder InputQueryApi { get; }
         public ControllerLayoutQueryBuilder ControllerQueryApi { get; }
 
         public EmulationQueryBuilder(IPluginCollection<IEmulatorOrchestrator> orchestrators,
             IStoneProvider stone,
             IGameLibrary library,
+            IEmulatedPortsManager ports,
             InputQueryBuilder inputQueryBuilder,
             ControllerLayoutQueryBuilder controllerLayoutQueryBuilder)
         {
@@ -32,11 +34,17 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
             this.InputQueryApi = inputQueryBuilder;
             this.ControllerQueryApi = controllerLayoutQueryBuilder;
             this.GameLibrary = library;
+            this.Ports = ports;
         }
 
-        public Guid CreateGameEmulationInstance(string emulatorName)
+        public Guid CreateGameEmulationInstance(string emulatorName, string configurationProfile, Guid gameGuid)
         {
             var orchestrator = this.Orchestrators[emulatorName];
+            var game = this.GameLibrary.GetGame(gameGuid);
+            var platform = this.Stone.Platforms[game.Record.PlatformID];
+            var controllers = (from i in Enumerable.Range(0, platform.MaximumInputs)
+                               select this.Ports.GetControllerAtPort(orchestrator, platform.PlatformId, i)).ToList();
+            orchestrator.ProvisionEmulationInstance(game, controllers, configurationProfile, null);
             return new Guid();
         }
         

@@ -28,7 +28,7 @@ namespace Snowflake.Adapters.Higan
     {
         public RetroArchBsnesGameEmulation(IGame game,
             string configurationProfile,
-            IList<IEmulatedController> controllerPorts,
+            IEnumerable<IEmulatedController> controllerPorts,
             ISaveGame? initialSave,
             IDictionary<InputDriverType, IDeviceInputMapping> inputMappings,
             IEmulatorExecutable retroarchExecutable) : base(game, configurationProfile, controllerPorts, initialSave)
