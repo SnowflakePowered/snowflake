@@ -66,7 +66,6 @@ namespace Snowflake.Extensibility.Configuration
         /// <param name="value">The configuration value with valid GUID and updated data</param>
         Task SetAsync(IConfigurationValue value);
 
-
         /// <summary>
         /// Updates multiple <em>existing</em> configuration values, this will do nothing for the GUID is not found in
         /// the database.
@@ -80,7 +79,5 @@ namespace Snowflake.Extensibility.Configuration
         /// </summary>
         /// <param name="values">The configuration value with valid GUID and updated data</param>
         Task SetAsync(IEnumerable<IConfigurationValue> values);
-
-
     }
 }
