@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Snowflake.Configuration;
 
 namespace Snowflake.Orchestration.Extensibility
 {
@@ -15,18 +16,14 @@ namespace Snowflake.Orchestration.Extensibility
     {
         public IGame Game { get; }
 
-        public string ConfigurationProfile { get; }
-
         public IEnumerable<IEmulatedController> ControllerPorts { get; }
 
         public ISaveGame? InitialSave { get; }
-        public GameEmulation(IGame game, 
-            string configurationProfile,
+        public GameEmulation(IGame game,
             IEnumerable<IEmulatedController> controllerPorts,
             ISaveGame? initialSave)
         {
             this.Game = game;
-            this.ConfigurationProfile = configurationProfile;
             this.ControllerPorts = controllerPorts;
             this.InitialSave = initialSave;
         }
@@ -57,5 +54,19 @@ namespace Snowflake.Orchestration.Extensibility
             await this.TeardownGame();
         }
         #endregion
+    }
+
+    public abstract class GameEmulation<TConfigurationCollection> : GameEmulation
+        where TConfigurationCollection : class, IConfigurationCollection<TConfigurationCollection>
+    {
+        public TConfigurationCollection ConfigurationProfile { get; }
+
+        public GameEmulation(IGame game,
+           TConfigurationCollection configuration,
+           IEnumerable<IEmulatedController> controllerPorts,
+           ISaveGame? initialSave) : base(game, controllerPorts, initialSave)
+        {
+            this.ConfigurationProfile = configuration;
+        }
     }
 }

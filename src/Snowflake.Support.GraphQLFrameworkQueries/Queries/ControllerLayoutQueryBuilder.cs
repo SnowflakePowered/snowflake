@@ -20,7 +20,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
             this.StoneProvider = stoneProvider;
         }
 
-        [Field("controllerLayout", "A Stone Controller Layout", typeof(ControllerLayoutGraphType))]
+        [Query("controllerLayout", "A Stone Controller Layout", typeof(ControllerLayoutGraphType))]
         [Parameter(typeof(string), typeof(StringGraphType), "layoutID", "The Stone Layout ID for this controller")]
         public IControllerLayout GetControllerLayout(string layoutID)
         {

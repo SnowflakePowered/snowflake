@@ -1,4 +1,5 @@
-﻿using Snowflake.Extensibility;
+﻿using Snowflake.Configuration;
+using Snowflake.Extensibility;
 using Snowflake.Filesystem;
 using Snowflake.Installation;
 using Snowflake.Model.Game;
@@ -34,6 +35,22 @@ namespace Snowflake.Orchestration.Extensibility
         /// <returns>A queuable installation job that transforms the files of the game into a format usable for
         /// this particular <see cref="IEmulatorOrchestrator"/>.</returns>
         IAsyncEnumerable<TaskResult<IFile>> ValidateGamePrerequisites(IGame game);
+
+        /// <summary>
+        /// Gets the inner-type erased generic <see cref="IConfigurationCollection"/> for this game, used
+        /// to configure the game for this orchestrator.
+        /// </summary>
+        /// <param name="game">The game to retrieve configuration for.</param>
+        /// <param name="profile">The configuration profile.</param>
+        IConfigurationCollection? GetGameConfigurationValues(IGame game, string profile);
+
+        /// <summary>
+        /// Creates a new game configuration for this game, used to configure the game for this orchestrator,
+        /// returning the inner-type erased generic  <see cref="IConfigurationCollection"/> for this game.
+        /// </summary>
+        /// <param name="game">The game to retrieve configuration for.</param>
+        /// <param name="profile">The configuration profile.</param>
+        IConfigurationCollection CreateGameConfiguration(IGame game, string profile);
 
         /// <summary>
         /// Provision the emulation instance to run the game.

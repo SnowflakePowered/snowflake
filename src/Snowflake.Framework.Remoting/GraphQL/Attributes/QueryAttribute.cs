@@ -8,16 +8,16 @@ namespace Snowflake.Framework.Remoting.GraphQL.Attributes
 {
     /// <summary>
     /// <para>
-    /// A GraphQL field in this context is specifically a field on the query root object. This attribute will mark
+    /// A GraphQL field query in this context is specifically a field on the query root object. This attribute will mark
     /// a method as being a GraphQL field on the query root object, and thus makes a method available to the GraphQL query schema.
     /// </para>
     /// <para>
-    /// A method can only be marked with one of <see cref="ConnectionAttribute"/>, <see cref="FieldAttribute"/>, or <see cref="MutationAttribute"/>,
+    /// A method can only be marked with one of <see cref="ConnectionAttribute"/>, <see cref="QueryAttribute"/>, or <see cref="MutationAttribute"/>,
     /// never more than one.
     /// </para>
     /// </summary>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
-    public sealed class FieldAttribute : Attribute
+    public sealed class QueryAttribute : Attribute
     {
         /// <summary>
         /// The <see cref="ObjectGraphType"/> conversion of the return type.
@@ -38,7 +38,7 @@ namespace Snowflake.Framework.Remoting.GraphQL.Attributes
         /// <param name="fieldName">The name of the GraphQL field to expose.</param>
         /// <param name="description">The description of the field.</param>
         /// <param name="graphType">The <see cref="ObjectGraphType"/> conversion of the return type.</param>
-        public FieldAttribute(string fieldName, string description, Type graphType)
+        public QueryAttribute(string fieldName, string description, Type graphType)
         {
             this.GraphType = graphType;
             this.FieldName = fieldName;

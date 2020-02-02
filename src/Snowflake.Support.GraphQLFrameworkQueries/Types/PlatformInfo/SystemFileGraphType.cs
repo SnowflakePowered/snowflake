@@ -7,12 +7,12 @@ using Snowflake.Model.Game;
 
 namespace Snowflake.Support.GraphQLFrameworkQueries.Types.PlatformInfo
 {
-    internal class BiosFilesGraphType : ObjectGraphType<ISystemFile>
+    internal class SystemFileGraphType : ObjectGraphType<ISystemFile>
     {
-        public BiosFilesGraphType()
+        public SystemFileGraphType()
         {
-            Description = "The BIOS Files that this Platform is known to have.";
-            Name = "BiosFiles";
+            Description = "A BIOS or System File that is required for an emulator to run a game.";
+            Name = "SystemFile";
             Field<NonNullGraphType<StringGraphType>>("fileName",
                 description: "The file name of this BIOS file.",
                 resolve: context => context.Source.FileName);

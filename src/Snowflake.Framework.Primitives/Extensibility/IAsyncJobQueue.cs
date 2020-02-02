@@ -51,7 +51,7 @@ namespace Snowflake.Framework.Extensibility
         bool TryRemoveSource(Guid jobId, out IAsyncEnumerable<T> asyncEnumerable);
 
         /// <summary>
-        /// Queues an <see cref="IAsyncEnumerable{T}"/> into the job queue
+        /// Queues an <see cref="IAsyncEnumerable{T}"/> into the job queue.
         /// </summary>
         /// <param name="asyncEnumerable">The <see cref="IAsyncEnumerable{T}"/> to persist in memory.</param>
         /// <param name="token">A <see cref="CancellationToken"/> that will be passed to the enumerator used in <see cref="GetNext(Guid)"/>

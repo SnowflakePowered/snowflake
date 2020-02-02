@@ -20,6 +20,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Types.Configuration
             Field<ListGraphType<ConfigurationSectionGraphType>>("sections",
                 description: "The various sections of this configuration collection.",
                 resolve: context => context.Source);
+            // todo: ConfigurationValueCollection graph type here.
         }
     }
 }

@@ -39,7 +39,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
             return this.DeviceEnumerator.QueryConnectedDevices();
         }
 
-        [Field("controllerProfile", "Gets a controller profile for the given Stone controller and real device",
+        [Query("controllerProfile", "Gets a controller profile for the given Stone controller and real device",
             typeof(MappedControllerElementCollectionGraphType))]
         [Parameter(typeof(string), typeof(StringGraphType), "deviceName", "The hardware device name of the device.")]
         [Parameter(typeof(int), typeof(IntGraphType), "vendorId", "The vendor ID number of the device.")]
@@ -63,7 +63,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
             return this.MappedElementStore.GetMappings(controllerId, deviceName, vendorId);
         }
 
-        [Field("defaultLayout",
+        [Query("defaultLayout",
             "Gets the default mapping between Stone controller IDs and the provided device.",
             typeof(ListGraphType<MappedControllerElementGraphType>))]
         [Parameter(typeof(Guid), typeof(GuidGraphType), "deviceInstanceGuid", "The device instance to get the layout for.")]

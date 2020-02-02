@@ -14,7 +14,7 @@ namespace Snowflake.Framework.Remoting.GraphQL.Attributes
     /// potentialy meaningless, since nothing is cached between calls of the same method.
     /// </para>
     /// <para>
-    /// A method can only be marked with one of <see cref="ConnectionAttribute"/>, <see cref="FieldAttribute"/>, or <see cref="MutationAttribute"/>,
+    /// A method can only be marked with one of <see cref="ConnectionAttribute"/>, <see cref="QueryAttribute"/>, or <see cref="MutationAttribute"/>,
     /// never more than one.
     /// </para>
     /// </summary>

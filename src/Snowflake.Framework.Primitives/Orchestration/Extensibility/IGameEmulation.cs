@@ -17,13 +17,6 @@ namespace Snowflake.Orchestration.Extensibility
     public interface IGameEmulation
     {
         /// <summary>
-        /// The name of the configuration profile to use.
-        /// 
-        /// The implementation is responsible for fetching this profile correctly in <see cref="CompileConfiguration"/>.
-        /// </summary>
-        string ConfigurationProfile { get; }
-
-        /// <summary>
         /// A list of <see cref="IEmulatedController"/> that representes the input devices that will be used
         /// in this emulation instance.
         /// </summary>
@@ -58,6 +51,10 @@ namespace Snowflake.Orchestration.Extensibility
         /// <summary>
         /// Restores <see cref="InitialSave"/> into the working directory save folder, or otherwise prepares
         /// the folder for a new game if <see cref="InitialSave"/> is null.
+        /// <para>
+        /// This method must be idempotent. If the save game restore succeeds, calling this method again must do
+        /// nothing.
+        /// </para>
         /// </summary>
         /// <returns>An asynchronous task that signals the completion of the restore.</returns>
         Task RestoreSaveGame();
@@ -65,18 +62,30 @@ namespace Snowflake.Orchestration.Extensibility
         /// <summary>
         /// Run any misceallenous tasks required to prepare the working directory, such as copying BIOS files
         /// to the working directory if necessary.
+        /// <para>
+        /// This method must be idempotent. If the environment setup succeeds, calling this method again must do
+        /// nothing.
+        /// </para>
         /// </summary>
         /// <returns>An asynchronous task that signals the completion of the preparation.</returns>
         Task SetupEnvironment();
 
         /// <summary>
         /// Begin the emulation instancee (run the game).
+        /// <para>
+        /// This method must be idempotent. Once an emulation has started, this method must return the same cancellation token
+        /// for the same process instance in future calls. If the emulation has stopped, this method must do nothing.
+        /// </para>
         /// </summary>
         /// <returns>A cancellation token that indicates when the emulation is halted by the user, or programmatically.</returns>
         CancellationToken StartEmulation();
 
         /// <summary>
         /// As safely as possible, halt the currently running emulation instance forever.
+        /// <para>
+        /// This method must be idempotent. Once an emulation has stopped, it can never be restarted, and calling this
+        /// method again must do nothing.
+        /// </para>
         /// </summary>
         /// <returns>An asynchronous task that signals the completion of the instance halt.</returns>
         Task StopEmulation();
@@ -85,6 +94,9 @@ namespace Snowflake.Orchestration.Extensibility
         /// Implements <see cref="IAsyncDisposable"/>.
         /// When disposed, immediately stop the currently running emulation instance, if any,
         /// persist the save, and then clean up the working directory if any.
+        /// <para>
+        /// This method must be idempotent. Disposing an already-disposed instance is not allowed.
+        /// </para>
         /// </summary>
         /// <returns></returns>
         ValueTask DisposeAsync();
