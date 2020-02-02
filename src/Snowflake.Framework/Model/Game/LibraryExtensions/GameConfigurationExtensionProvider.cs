@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Snowflake.Configuration;
 using Snowflake.Model.Database;
 using Snowflake.Model.Records.Game;
@@ -50,6 +51,31 @@ namespace Snowflake.Model.Game.LibraryExtensions
         public void UpdateProfile(IConfigurationCollection profile)
         {
             this.CollectionStore.UpdateConfiguration(profile);
+        }
+
+        Task<IConfigurationCollection<T>?> IGameConfigurationExtensionProvider.GetProfileAsync<T>(Guid valueCollectionGuid)
+        {
+            return this.CollectionStore.GetConfigurationAsync<T>(valueCollectionGuid);
+        }
+
+        public Task DeleteProfileAsync(Guid valueCollectionGuid)
+        {
+            return this.CollectionStore.DeleteConfigurationAsync(valueCollectionGuid);
+        }
+
+        public Task UpdateValueAsync(IConfigurationValue newValue)
+        {
+            return this.CollectionStore.UpdateValueAsync(newValue);
+        }
+
+        public Task UpdateValueAsync(Guid valueGuid, object newValue)
+        {
+            return this.CollectionStore.UpdateValueAsync(valueGuid, newValue);
+        }
+
+        public Task UpdateProfileAsync(IConfigurationCollection profile)
+        {
+            return this.CollectionStore.UpdateConfigurationAsync(profile);
         }
     }
 }
