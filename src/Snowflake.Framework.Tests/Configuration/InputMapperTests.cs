@@ -173,8 +173,6 @@ namespace Snowflake.Configuration.Tests
             Assert.Equal(DeviceCapability.Button1, template.Template.InputPlayerABtn);
             Assert.Equal(DeviceCapability.Key2, template.Template.InputPlayerA);
             Assert.Equal(DeviceCapability.Axis0Negative, template.Template.InputPlayerAAxis);
-
-
         }
     }
 }

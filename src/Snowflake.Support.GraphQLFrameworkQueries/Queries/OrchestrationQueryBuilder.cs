@@ -61,7 +61,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
             Guid gameGuid, bool verify = false)
         {
             var orchestrator = this.Orchestrators[orchestratorName];
-            var game = this.GameLibrary.GetGame(gameGuid);
+            var game = await this.GameLibrary.GetGameAsync(gameGuid);
             var platform = this.Stone.Platforms[game.Record.PlatformID];
             var controllers = (from i in Enumerable.Range(0, platform.MaximumInputs)
                                select this.Ports.GetControllerAtPort(orchestrator, platform.PlatformID, i)).ToList();

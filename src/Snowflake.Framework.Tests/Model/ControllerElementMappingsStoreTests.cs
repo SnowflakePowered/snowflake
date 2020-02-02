@@ -42,9 +42,9 @@ namespace Snowflake.Model.Tests
             var stoneProvider = new StoneProvider();
             foreach (var testmappings in stoneProvider.Controllers.Values)
             {
-                var mapcol = new ControllerElementMappings("Keyboard",
+                var mapcol = new ControllerElementMappings("Xbox",
                            "TEST_CONTROLLER",
-                           InputDriverType.Keyboard,
+                           InputDriverType.XInput,
                            IDeviceEnumerator.VirtualVendorID,
                            new XInputDeviceInstance(0).DefaultLayout);
 
@@ -56,8 +56,8 @@ namespace Snowflake.Model.Tests
                 elementStore.AddMappings(mapcol, "default");
 
                 var retStore = elementStore.GetMappings(mapcol.ControllerID, 
-                    InputDriverType.Keyboard, 
-                    "Keyboard",
+                    InputDriverType.XInput, 
+                    "Xbox",
                     IDeviceEnumerator.VirtualVendorID,
                     "default");
 
@@ -317,7 +317,7 @@ namespace Snowflake.Model.Tests
                            "TEST_CONTROLLER",
                            InputDriverType.Keyboard,
                            IDeviceEnumerator.VirtualVendorID,
-                           new XInputDeviceInstance(0).DefaultLayout);
+                           new KeyboardDeviceInstance().DefaultLayout);
 
                 var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
                 optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
@@ -347,7 +347,7 @@ namespace Snowflake.Model.Tests
                            "TEST_CONTROLLER",
                            InputDriverType.Keyboard,
                            IDeviceEnumerator.VirtualVendorID,
-                           new XInputDeviceInstance(0).DefaultLayout);
+                           new KeyboardDeviceInstance().DefaultLayout);
 
                 var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
                 optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
@@ -367,5 +367,18 @@ namespace Snowflake.Model.Tests
             }
         }
 
+        [Fact]
+        public void ControllerElementMappingActualLayout_Test()
+        {
+            var stone = new StoneProvider();
+            var nes = stone.Controllers["NES_CONTROLLER"];
+            var mapcol = new ControllerElementMappings("Keyboard",
+                nes,
+                           InputDriverType.Keyboard,
+                           IDeviceEnumerator.VirtualVendorID,
+                           new KeyboardDeviceInstance().DefaultLayout);
+            Assert.Equal(DeviceCapability.None, mapcol[ControllerElement.Button0]);
+            Assert.Equal(nes.Layout.Count(), mapcol.Count());
+        }
     }
 }
