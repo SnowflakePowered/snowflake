@@ -14,71 +14,62 @@ namespace Snowflake.Model.Database
 {
     internal partial class PluginConfigurationStore : IPluginConfigurationStore
     {
-        private DbContextOptionsBuilder<DatabaseContext> Options { get; set; }
-
-        public PluginConfigurationStore(DbContextOptionsBuilder<DatabaseContext> options)
+        #region Asynchronous API
+        public async Task SetAsync(IConfigurationValue value)
         {
-            this.Options = options;
-            using var context = new DatabaseContext(Options.Options);
-            context.Database.Migrate();
-        }
-
-        #region Synchronous API
-        public void Set(IConfigurationValue value)
-        {
-            using var context = new DatabaseContext(Options.Options);
-            var entity = context.ConfigurationValues
-                .SingleOrDefault(v => v.Guid == value.Guid);
+            await using var context = new DatabaseContext(Options.Options);
+            var entity = await context.ConfigurationValues
+                .SingleOrDefaultAsync(v => v.Guid == value.Guid);
             if (entity == null) return;
             entity.Value = value.Value.AsConfigurationStringValue();
             context.Entry(entity).State = EntityState.Modified;
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public void Set(IEnumerable<IConfigurationValue> values)
+        public async Task SetAsync(IEnumerable<IConfigurationValue> values)
         {
-            using var context = new DatabaseContext(Options.Options);
+            await using var context = new DatabaseContext(Options.Options);
             foreach (var value in values)
             {
-                var entity = context.ConfigurationValues.Find(value.Guid);
+                var entity = await context.ConfigurationValues.FindAsync(value.Guid);
                 if (entity == null) continue;
                 entity.Value = value.Value.AsConfigurationStringValue();
                 context.Entry(entity).State = EntityState.Modified;
             }
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public IConfigurationSection<T> Get<T>()
+        public async Task<IConfigurationSection<T>> GetAsync<T>()
             where T : class, IConfigurationSection<T>
         {
-            using var context = new DatabaseContext(Options.Options);
-            var entity = context.ConfigurationProfiles
+            await using var context = new DatabaseContext(Options.Options);
+            var entity = await context.ConfigurationProfiles
                 .Include(p => p.Values)
-                .SingleOrDefault(p => p.ConfigurationSource == $"plugin:{typeof(T).Name}");
+                .SingleOrDefaultAsync(p => p.ConfigurationSource == $"plugin:{typeof(T).Name}");
 
             if (entity != null) return entity.AsConfigurationSection<T>();
 
             var defaults = new ConfigurationSection<T>
                 (new ConfigurationValueCollection(), typeof(T).Name);
-            context.ConfigurationProfiles.Add(defaults.AsModel($"plugin:{typeof(T).Name}"));
-            context.SaveChanges();
+            await context.ConfigurationProfiles.AddAsync(defaults.AsModel($"plugin:{typeof(T).Name}"));
+            await context.SaveChangesAsync();
             return defaults;
         }
 
-        public void Set<T>(IConfigurationSection<T> configuration)
+        public async Task SetAsync<T>(IConfigurationSection<T> configuration)
             where T : class, IConfigurationSection<T>
         {
-            using var context = new DatabaseContext(Options.Options);
-            var entity = context.ConfigurationProfiles
+            await using var context = new DatabaseContext(Options.Options);
+            var entity = await context.ConfigurationProfiles
                 .Include(p => p.Values)
-                .SingleOrDefault(p => p.ConfigurationSource == $"plugin:{typeof(T).Name}");
+                .SingleOrDefaultAsync(p => p.ConfigurationSource == $"plugin:{typeof(T).Name}");
 
             if (entity == null)
             {
                 var defaults = new ConfigurationSection<T>
                     (new ConfigurationValueCollection(), typeof(T).Name);
-                context.ConfigurationProfiles.Add(defaults.AsModel($"plugin:{typeof(T).Name}"));
+                await context.ConfigurationProfiles.AddAsync(defaults.AsModel($"plugin:{typeof(T).Name}"));
             }
             else
             {
@@ -94,7 +85,7 @@ namespace Snowflake.Model.Database
                 }
             }
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
         #endregion
     }

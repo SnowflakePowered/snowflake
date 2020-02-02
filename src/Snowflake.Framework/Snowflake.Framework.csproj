@@ -24,11 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Configuration\Interceptors\ConfigurationInterceptor.cs~RF199716.TMP" />
-    <None Remove="Configuration\Serialization\ConfigurationTraversalContext.cs~RF1d4d95c3.TMP" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Castle.Core" Version="4.4.0" PrivateAssets="Compile" />
     <PackageReference Include="Dapper" Version="2.0.30" PrivateAssets="Compile" />
     <PackageReference Include="Enums.NET" Version="3.0.3" PrivateAssets="Compile" />
@@ -51,6 +46,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Model\Database\Migrations\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Model\Database\ControllerElementMappingsStore.Async.cs" />
   </ItemGroup>
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\Snowflake.ruleset</CodeAnalysisRuleSet>
