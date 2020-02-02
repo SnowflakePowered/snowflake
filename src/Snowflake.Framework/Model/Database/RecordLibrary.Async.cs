@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Snowflake.Model.Database.Models;
 using Snowflake.Model.Records;
@@ -11,27 +12,18 @@ namespace Snowflake.Model.Database
     internal abstract partial class RecordLibrary<TRecord>
         where TRecord : class, IRecord
     {
-        protected DbContextOptionsBuilder<DatabaseContext> Options { get; private set; }
-
-        protected RecordLibrary(DbContextOptionsBuilder<DatabaseContext> options)
+        public async Task DeleteRecordAsync(TRecord record)
         {
-            this.Options = options;
-            using var context = new DatabaseContext(options.Options);
-            context.Database.Migrate();
-        }
-
-        public void DeleteRecord(TRecord record)
-        {
-            using var context = new DatabaseContext(this.Options.Options);
-            var recordToDelete = context.Records.SingleOrDefault(r => r.RecordID == record.RecordID);
+            await using var context = new DatabaseContext(this.Options.Options);
+            var recordToDelete = await context.Records.SingleOrDefaultAsync(r => r.RecordID == record.RecordID);
             if (record == null) return;
             context.Entry(recordToDelete).State = EntityState.Deleted;
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public void UpdateRecord(TRecord record)
+        public async Task UpdateRecordAsync(TRecord record)
         {
-            using var context = new DatabaseContext(this.Options.Options);
+            await using var context = new DatabaseContext(this.Options.Options);
             foreach (var metadata in context.Metadata.Where(m => m.RecordID == record.RecordID))
             {
                 if (!record.Metadata.ContainsKey(metadata.MetadataKey))
@@ -47,9 +39,9 @@ namespace Snowflake.Model.Database
 
             foreach (var metadata in record.Metadata.Values)
             {
-                var model = context.Metadata?.Find(metadata.Guid);
+                var model = await context.Metadata.FindAsync(metadata.Guid);
                 if (model != null) continue;
-                context.Metadata!.Add(new RecordMetadataModel()
+                await context.Metadata.AddAsync(new RecordMetadataModel()
                 {
                     RecordID = metadata.Record,
                     RecordMetadataID = metadata.Guid,
@@ -58,7 +50,7 @@ namespace Snowflake.Model.Database
                 });
             }
 
-            context.SaveChanges();
+           await context.SaveChangesAsync();
         }
     }
 }

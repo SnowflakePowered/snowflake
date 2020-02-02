@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Snowflake.Model.Database;
 using Snowflake.Model.Game.LibraryExtensions;
 using Snowflake.Model.Records.File;
@@ -33,6 +34,11 @@ namespace Snowflake.Model.Game.LibraryExtensions
         public void UpdateFile(IFileRecord file)
         {
             this.FileLibrary.UpdateRecord(file);
+        }
+
+        public Task UpdateFileAsync(IFileRecord file)
+        {
+            return this.FileLibrary.UpdateRecordAsync(file);
         }
 
         IGameExtension IGameExtensionProvider.MakeExtension(IGameRecord record)

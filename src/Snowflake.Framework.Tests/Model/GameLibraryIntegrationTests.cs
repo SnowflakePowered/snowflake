@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -18,7 +19,7 @@ namespace Snowflake.Model.Tests
     public class GameLibraryIntegrationTests
     {
         [Fact]
-        public async Task GameLibraryIntegrationCreate_Test()
+        public void GameLibraryIntegrationCreate_Test()
         {
             var path = new DirectoryInfo(Path.GetTempPath())
                 .CreateSubdirectory(Path.GetFileNameWithoutExtension(Path.GetTempFileName()));
@@ -30,6 +31,43 @@ namespace Snowflake.Model.Tests
             var glib = new GameRecordLibrary(optionsBuilder);
             var gl = new GameLibrary(glib);
             var game = gl.CreateGame("NINTENDO_NES");
+        }
+
+        [Fact]
+        public async Task GameLibraryIntegrationQuery_Test()
+        {
+            var path = new DirectoryInfo(Path.GetTempPath())
+                .CreateSubdirectory(Path.GetFileNameWithoutExtension(Path.GetTempFileName()));
+            var fs = new PhysicalFileSystem();
+            var gfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(path.FullName));
+
+            var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
+            optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
+            var glib = new GameRecordLibrary(optionsBuilder);
+            var gl = new GameLibrary(glib);
+            var game = gl.CreateGame("NINTENDO_NES");
+            Assert.NotEmpty(gl.QueryGames(g => g.PlatformID == "NINTENDO_NES"));
+            Assert.NotEmpty(gl.GetGames(g => g.PlatformID == "NINTENDO_NES"));
+            Assert.NotEmpty(gl.GetAllGames());
+            Assert.NotNull(gl.GetGame(game.Record.RecordID));
+        }
+
+        [Fact]
+        public async Task GameLibraryIntegrationQueryAsync_Test()
+        {
+            var path = new DirectoryInfo(Path.GetTempPath())
+                .CreateSubdirectory(Path.GetFileNameWithoutExtension(Path.GetTempFileName()));
+            var fs = new PhysicalFileSystem();
+            var gfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(path.FullName));
+
+            var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
+            optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
+            var glib = new GameRecordLibrary(optionsBuilder);
+            var gl = new GameLibrary(glib);
+            var game = await gl.CreateGameAsync("NINTENDO_NES");
+            Assert.False(await gl.QueryGamesAsync(g => g.PlatformID == "NINTENDO_NES").IsEmptyAsync());
+            Assert.False(await gl.GetAllGamesAsync().IsEmptyAsync());
+            Assert.NotNull(await gl.GetGameAsync(game.Record.RecordID));
         }
 
         [Fact]
@@ -74,7 +112,7 @@ namespace Snowflake.Model.Tests
         }
 
         [Fact]
-        public async Task GameLibraryUnknownExtension_Test()
+        public void GameLibraryUnknownExtension_Test()
         {
             var path = new DirectoryInfo(Path.GetTempPath())
                 .CreateSubdirectory(Path.GetFileNameWithoutExtension(Path.GetTempFileName()));
@@ -93,7 +131,7 @@ namespace Snowflake.Model.Tests
         }
 
         [Fact]
-        public async Task GameLibraryIntegrationUpdate_Test()
+        public void GameLibraryIntegrationUpdate_Test()
         {
             var path = new DirectoryInfo(Path.GetTempPath())
                 .CreateSubdirectory(Path.GetFileNameWithoutExtension(Path.GetTempFileName()));
@@ -121,7 +159,7 @@ namespace Snowflake.Model.Tests
             gl.GetExtension<GameFileExtensionProvider>().UpdateFile(record);
 
             var newGame = gl.GetGame(game.Record.RecordID);
-            Assert.NotEmpty(newGame.WithFiles().FileRecords);
+            Assert.NotEmpty(newGame.WithFiles().GetFileRecords());
         }
 
 
@@ -137,7 +175,7 @@ namespace Snowflake.Model.Tests
             optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
             var glib = new GameRecordLibrary(optionsBuilder);
             var gl = new GameLibrary(glib);
-            var game = gl.CreateGame("NINTENDO_NES");
+            var game = await gl.CreateGameAsync("NINTENDO_NES");
         }
 
         [Fact]
@@ -156,7 +194,7 @@ namespace Snowflake.Model.Tests
             var gl = new GameLibrary(glib);
             gl.AddExtension<IGameConfigurationExtensionProvider, IGameConfigurationExtension>
                 (new GameConfigurationExtensionProvider(ccs));
-            var game = gl.CreateGame("NINTENDO_NES");
+            var game = await gl.CreateGameAsync("NINTENDO_NES");
 
             var profile = await game.WithConfigurations()
                 .CreateNewProfileAsync<ExampleConfigurationCollection>("TestConfiguration", "test");
@@ -196,7 +234,7 @@ namespace Snowflake.Model.Tests
 
             var gl = new GameLibrary(glib);
             Assert.Throws<KeyNotFoundException>(() => gl.GetExtension<IGameConfigurationExtensionProvider>());
-            var game = gl.CreateGame("NINTENDO_NES");
+            var game = await gl.CreateGameAsync("NINTENDO_NES");
             Assert.Throws<KeyNotFoundException>(() => game.GetExtension<IGameConfigurationExtension>());
         }
 
@@ -217,19 +255,19 @@ namespace Snowflake.Model.Tests
             gl.AddExtension<GameFileExtensionProvider, IGameFileExtension
             >(new GameFileExtensionProvider(flib, gfs));
 
-            var game = gl.CreateGame("NINTENDO_NES");
+            var game = await gl.CreateGameAsync("NINTENDO_NES");
             game.Record.Title = "My Awesome Game";
-            gl.UpdateGameRecord(game.Record);
+            await gl.UpdateGameRecordAsync(game.Record);
 
             var file = game.WithFiles().MiscRoot.OpenFile("Test.txt");
             file.OpenStream().Close();
             game.WithFiles().RegisterFile(file, "application/text");
             var record = game.WithFiles().GetFileInfo(file);
             record.Metadata.Add("file_metadata", "test");
-            gl.GetExtension<GameFileExtensionProvider>().UpdateFile(record);
+            await gl.GetExtension<GameFileExtensionProvider>().UpdateFileAsync(record);
 
-            var newGame = gl.GetGame(game.Record.RecordID);
-            Assert.NotEmpty(newGame.WithFiles().FileRecords);
+            var newGame = await gl.GetGameAsync(game.Record.RecordID);
+            Assert.False(await newGame.WithFiles().GetFileRecordsAsync().IsEmptyAsync());
         }
     }
 }

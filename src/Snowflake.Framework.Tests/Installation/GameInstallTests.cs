@@ -57,7 +57,7 @@ namespace Snowflake.Installation.Tests
                 }
             }
             
-            Assert.NotEmpty(game.WithFiles().FileRecords);
+            Assert.NotEmpty(game.WithFiles().GetFileRecords());
         }
     }
 }

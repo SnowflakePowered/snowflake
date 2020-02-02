@@ -90,15 +90,14 @@ namespace Snowflake.Model.Game
                 });
         }
 
-        public async Task<IEnumerable<IGame>> QueryGamesAsync(Expression<Func<IGameRecordQuery, bool>> predicate)
+        public async IAsyncEnumerable<IGame> QueryGamesAsync(Expression<Func<IGameRecordQuery, bool>> predicate)
         {
-            return (await this.GameRecordLibrary.QueryRecordsAsync(predicate))
-                .Select(gameRecord =>
-                {
-                    var extensions = this.Extensions
+            await foreach (var gameRecord in this.GameRecordLibrary.QueryRecordsAsync(predicate))
+            {
+                var extensions = this.Extensions
                         .ToDictionary(k => k.Value.extensionType, v => v.Value.extension.MakeExtension(gameRecord));
-                    return new Game(gameRecord, extensions);
-                });
+                yield return new Game(gameRecord, extensions);
+            }
         }
 
         public IEnumerable<IGame> QueryGames(Expression<Func<IGameRecordQuery, bool>> predicate)
@@ -110,6 +109,39 @@ namespace Snowflake.Model.Game
                         .ToDictionary(k => k.Value.extensionType, v => v.Value.extension.MakeExtension(gameRecord));
                     return new Game(gameRecord, extensions);
                 });
+        }
+
+        public async Task<IGame> CreateGameAsync(PlatformId platformId)
+        {
+            var gameRecord = await this.GameRecordLibrary.CreateRecordAsync(platformId);
+            var extensions = this.Extensions
+                .ToDictionary(k => k.Value.extensionType,
+                    v => v.Value.extension.MakeExtension(gameRecord));
+            return new Game(gameRecord, extensions);
+        }
+
+        public async Task<IGame?> GetGameAsync(Guid guid)
+        {
+            var gameRecord = await this.GameRecordLibrary.GetRecordAsync(guid);
+            if (gameRecord == null) return null;
+            var extensions = this.Extensions
+                .ToDictionary(k => k.Value.extensionType, v => v.Value.extension.MakeExtension(gameRecord));
+            return new Game(gameRecord, extensions);
+        }
+
+        public async IAsyncEnumerable<IGame> GetAllGamesAsync()
+        {
+            await foreach (var gameRecord in this.GameRecordLibrary.GetAllRecordsAsync())
+            {
+                var extensions = this.Extensions
+                   .ToDictionary(k => k.Value.extensionType, v => v.Value.extension.MakeExtension(gameRecord));
+                yield return new Game(gameRecord, extensions);
+            }
+        }
+
+        public Task UpdateGameRecordAsync(IGameRecord game)
+        {
+            return this.GameRecordLibrary.UpdateRecordAsync(game);
         }
     }
 }

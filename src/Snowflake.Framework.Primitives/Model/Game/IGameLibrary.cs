@@ -40,6 +40,13 @@ namespace Snowflake.Model.Game
         IGame CreateGame(PlatformId platformId);
 
         /// <summary>
+        /// Asynchronously creates a game in the game library.
+        /// </summary>
+        /// <param name="platformId"></param>
+        /// <returns></returns>
+        Task<IGame> CreateGameAsync(PlatformId platformId);
+
+        /// <summary>
         /// Gets a registered extension provider of the given type.
         /// If no extension of type <typeparamref name="T"/> is 
         /// registered, returns null.
@@ -56,11 +63,25 @@ namespace Snowflake.Model.Game
         IGame? GetGame(Guid guid);
 
         /// <summary>
+        /// Asynchronously gets a game that was created in the library by its unique GUID.
+        /// </summary>
+        /// <param name="guid">The unique GUID of the game.</param>
+        /// <returns>The game with the provided GUID, or null if it does not exist</returns>
+        Task<IGame?> GetGameAsync(Guid guid);
+
+        /// <summary>
         /// Retrieves all games in the library. See <see cref="GetGames(Expression{Func{IGameRecord, bool}})"/> instead, 
         /// instead of enumerating all possible games.
         /// </summary>
         /// <returns>All games in the library.</returns>
         IEnumerable<IGame> GetAllGames();
+
+        /// <summary>
+        /// Asynchronously retrieves all games in the library. See <see cref="GetGames(Expression{Func{IGameRecord, bool}})"/> instead, 
+        /// instead of enumerating all possible games.
+        /// </summary>
+        /// <returns>All games in the library.</returns>
+        IAsyncEnumerable<IGame> GetAllGamesAsync();
 
         /// <summary>
         /// Retrieves all games in the library that fulfill the provided predicate. The default implementation
@@ -83,16 +104,22 @@ namespace Snowflake.Model.Game
         /// <summary>
         /// Retrieves all games in the library that fulfill the provided predicate asynchronously. The default implementation
         /// executes this predicate on the database rather than in client code, thus is much faster than 
-        /// using <see cref="GetAllGames"/> or <see cref="GetGames(Expression{Func{IGameRecord, bool}})"/>.
+        /// using <see cref="GetAllGamesAsync"/> or <see cref="GetGames(Expression{Func{IGameRecord, bool}})"/>.
         /// </summary>
         /// <param name="predicate">The predicate to filter on.</param>
         /// <returns>All games in the library that fulfill the provided predicate.</returns>
-        Task<IEnumerable<IGame>> QueryGamesAsync(Expression<Func<IGameRecordQuery, bool>> predicate);
+        IAsyncEnumerable<IGame> QueryGamesAsync(Expression<Func<IGameRecordQuery, bool>> predicate);
 
         /// <summary>
         /// Updates a <see cref="IGameRecord"/> that exists in the database by providing the changed <see cref="IGameRecord"/>.
         /// </summary>
         /// <param name="game">The updated <see cref="IGameRecord"/></param>
         void UpdateGameRecord(IGameRecord game);
+
+        /// <summary>
+        /// Asynchronously updates a <see cref="IGameRecord"/> that exists in the database by providing the changed <see cref="IGameRecord"/>.
+        /// </summary>
+        /// <param name="game">The updated <see cref="IGameRecord"/></param>
+        Task UpdateGameRecordAsync(IGameRecord game);
     }
 }

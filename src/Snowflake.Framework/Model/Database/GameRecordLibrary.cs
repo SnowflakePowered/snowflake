@@ -13,7 +13,7 @@ using Snowflake.Model.Records.Game;
 
 namespace Snowflake.Model.Database
 {
-    internal class GameRecordLibrary : RecordLibrary<IGameRecord>
+    internal partial class GameRecordLibrary : RecordLibrary<IGameRecord>
     {
         public GameRecordLibrary(DbContextOptionsBuilder<DatabaseContext> options)
             : base(options)
@@ -22,44 +22,31 @@ namespace Snowflake.Model.Database
 
         public IEnumerable<IGameRecord> GetAllRecords()
         {
-            using var context = new DatabaseContext(this.Options.Options);
+            var context = new DatabaseContext(this.Options.Options);
             var records = context.GameRecords.Include(r => r.Metadata)
                 .Select(record => new GameRecord(record.PlatformID, record.RecordID,
-                record.Metadata.AsMetadataCollection(record.RecordID)))
-                .ToList();
+                record.Metadata.AsMetadataCollection(record.RecordID))).AsEnumerable();
             return records;
         }
 
         public IEnumerable<IGameRecord> GetRecords(Expression<Func<IGameRecord, bool>> predicate)
         {
-            using var context = new DatabaseContext(this.Options.Options);
+            var context = new DatabaseContext(this.Options.Options);
             var records = context.GameRecords.Include(r => r.Metadata)
                 .Select(record => new GameRecord(record.PlatformID, record.RecordID,
                 record.Metadata.AsMetadataCollection(record.RecordID)))
                 .Where(predicate.Compile());
-            return records?.ToList() ?? Enumerable.Empty<IGameRecord>();
+            return records?.AsEnumerable() ?? Enumerable.Empty<IGameRecord>();
         }
 
         public IEnumerable<IGameRecord> QueryRecords(Expression<Func<IGameRecordQuery, bool>> predicate)
         {
-            using var context = new DatabaseContext(this.Options.Options);
+            var context = new DatabaseContext(this.Options.Options);
             var records = context.GameRecords.Include(r => r.Metadata)
                 .Where(predicate)
                 .Select(record => new GameRecord(record.PlatformID, record.RecordID,
                 record.Metadata.AsMetadataCollection(record.RecordID)));
-            return records?.ToList() ?? Enumerable.Empty<IGameRecord>();
-        }
-
-        public async Task<IEnumerable<IGameRecord>> QueryRecordsAsync(Expression<Func<IGameRecordQuery, bool>> predicate)
-        {
-            using var context = new DatabaseContext(this.Options.Options);
-            var records = await context.GameRecords
-                .Include(r => r.Metadata)
-                .Where(predicate)
-                .Select(record => new GameRecord(record.PlatformID, record.RecordID,
-                record.Metadata.AsMetadataCollection(record.RecordID)))
-                .ToListAsync();
-            return records;
+            return records?.AsEnumerable() ?? Enumerable.Empty<IGameRecord>();
         }
 
         public IGameRecord? GetRecord(Guid guid)
