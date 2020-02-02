@@ -59,9 +59,9 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
 
         [Mutation("createGame", "Creates a new game entry", typeof(GuidGraphType))]
         [Parameter(typeof(string), typeof(StringGraphType), "platformId", "The platform of the game entry.", false)]
-        public Guid CreateGame(string platformId)
+        public async Task<Guid> CreateGame(string platformId)
         {
-            var game = this.GameLibrary.CreateGame(platformId);
+            var game = await this.GameLibrary.CreateGameAsync(platformId);
             return game.Record.RecordID;
         }
 
@@ -80,7 +80,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
                      (false, false) => null
                 }).Where(f => f != null).ToList();
 
-            var game = this.GameLibrary.GetGame(gameGuid);
+            var game = await this.GameLibrary.GetGameAsync(gameGuid);
             //todo better excepion here
             if (game == null) throw new KeyNotFoundException("Game Not Found");
 
@@ -114,7 +114,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
         {
             var orchestrator = this.Orchestrators[orchestratorName];
             if (orchestrator == null) throw new KeyNotFoundException("Installer Not Found");
-            var game = this.GameLibrary.GetGame(gameGuid);
+            var game = await this.GameLibrary.GetGameAsync(gameGuid);
             if (game == null) throw new KeyNotFoundException("Game Not Found");
             return await this.InstallQueue.QueueJob(orchestrator.ValidateGamePrerequisites(game));
         }

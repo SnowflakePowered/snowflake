@@ -25,6 +25,19 @@ namespace Snowflake.Scraping.Tests
             Assert.False(await scrapeJob.Proceed(Enumerable.Empty<SeedContent>()));
         }
 
+
+        [Fact]
+        public async Task TrivialAsync_Test()
+        {
+            var scraper = new TrivialScraper();
+            var scrapeJob = new GameScrapeContext(new[] { scraper }, new ICuller[] { });
+            await foreach (var s in scrapeJob)
+            {
+                Assert.NotEmpty(s);
+                Assert.NotEmpty(s.Where(se => se.Content.Type == "Test"));
+            }
+        }
+
         [Fact]
         public async Task Dependent_Test()
         {

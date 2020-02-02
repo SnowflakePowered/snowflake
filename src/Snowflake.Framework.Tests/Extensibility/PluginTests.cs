@@ -18,6 +18,8 @@ using Snowflake.Model.Database.Models;
 using Zio.FileSystems;
 using FS = Snowflake.Filesystem;
 using Zio;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Snowflake.Extensibility.Tests
 {
@@ -86,9 +88,22 @@ namespace Snowflake.Extensibility.Tests
         public void EmptyConfigurationStore_Test()
         {
             var config = EmptyPluginConfigurationStore.EmptyConfigurationStore;
-            config.Set(new ConfigurationSection<ExampleConfigurationSection>());
+            var section = new ConfigurationSection<ExampleConfigurationSection>();
+            config.Set(section);
+            config.Set(section.Values.Values.First());
             config.Get<ExampleConfigurationSection>();
         }
+
+        [Fact]
+        public async Task EmptyConfigurationStoreAsync_Test()
+        {
+            var config = EmptyPluginConfigurationStore.EmptyConfigurationStore;
+            var section = new ConfigurationSection<ExampleConfigurationSection>();
+            await config.SetAsync(section);
+            await config.SetAsync(section.Values.Values.First());
+            await config.GetAsync<ExampleConfigurationSection>();
+        }
+
 
         [Fact]
         public void PluginManagerRegister_Test()

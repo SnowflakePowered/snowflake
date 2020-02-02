@@ -39,12 +39,14 @@ namespace Snowflake.Extensibility.Provisioning.Standalone
             return;
         }
 
-        Task<IConfigurationSection<T>> IPluginConfigurationStore.GetAsync<T>()
+        public Task<IConfigurationSection<T>> GetAsync<T>()
+            where T : class, IConfigurationSection<T>
         {
             return Task.FromResult((IConfigurationSection<T>)new ConfigurationSection<T>());
         }
 
-        Task IPluginConfigurationStore.SetAsync<T>(IConfigurationSection<T> configuration)
+        public Task SetAsync<T>(IConfigurationSection<T> configuration)
+            where T : class, IConfigurationSection<T>
         {
             return Task.CompletedTask;
         }

@@ -261,8 +261,8 @@ namespace Snowflake.Model.Tests
 
             var file = game.WithFiles().MiscRoot.OpenFile("Test.txt");
             file.OpenStream().Close();
-            game.WithFiles().RegisterFile(file, "application/text");
-            var record = game.WithFiles().GetFileInfo(file);
+            await game.WithFiles().RegisterFileAsync(file, "application/text");
+            var record = await game.WithFiles().GetFileInfoAsync(file);
             record.Metadata.Add("file_metadata", "test");
             await gl.GetExtension<GameFileExtensionProvider>().UpdateFileAsync(record);
 
