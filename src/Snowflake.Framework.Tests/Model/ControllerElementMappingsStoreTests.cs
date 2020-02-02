@@ -70,6 +70,41 @@ namespace Snowflake.Model.Tests
             }
         }
 
+
+        [Fact]
+        public async Task AddGamepadAsyncMappings_Test()
+        {
+            var stoneProvider = new StoneProvider();
+            foreach (var testmappings in stoneProvider.Controllers.Values)
+            {
+                var mapcol = new ControllerElementMappings("Keyboard",
+                           "TEST_CONTROLLER",
+                           InputDriverType.Keyboard,
+                           IDeviceEnumerator.VirtualVendorID,
+                           new XInputDeviceInstance(0).DefaultLayout);
+
+                var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
+                optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
+
+                var elementStore = new ControllerElementMappingsStore(optionsBuilder);
+
+               await elementStore.AddMappingsAsync(mapcol, "default");
+
+                var retStore = await elementStore.GetMappingsAsync(mapcol.ControllerID,
+                    InputDriverType.Keyboard,
+                    "Keyboard",
+                    IDeviceEnumerator.VirtualVendorID,
+                    "default");
+
+                foreach (var element in retStore)
+                {
+                    Assert.Contains(element.LayoutElement, mapcol.Select(x => x.LayoutElement));
+                    Assert.Equal(element.DeviceCapability,
+                        mapcol.First(x => x.LayoutElement == element.LayoutElement).DeviceCapability);
+                }
+            }
+        }
+
         [Fact]
         public void UpdateMappedInputCollectionGamepad_Test()
         {
@@ -94,6 +129,48 @@ namespace Snowflake.Model.Tests
 
                 elementStore.UpdateMappings(mapcol, "default");
                 var retStore = elementStore.GetMappings(mapcol.ControllerID,
+                    InputDriverType.Keyboard, mapcol.DeviceName, IDeviceEnumerator.VirtualVendorID, "default");
+
+                foreach (var element in retStore)
+                {
+                    Assert.Contains(element.LayoutElement, mapcol.Select(x => x.LayoutElement));
+                    Assert.Equal(element.DeviceCapability,
+                        mapcol.First(x => x.LayoutElement == element.LayoutElement).DeviceCapability);
+                }
+
+                // Switch left joycon has no A button 
+                if (testmappings.Layout[ControllerElement.ButtonA] != null)
+                {
+                    Assert.Equal(DeviceCapability.Button1, retStore[ControllerElement.ButtonA]);
+                }
+            }
+        }
+
+
+        [Fact]
+        public async Task UpdateMappedInputCollectionGamepadAsync_Test()
+        {
+            var stoneProvider = new StoneProvider();
+            foreach (var testmappings in stoneProvider.Controllers.Values)
+            {
+                var mapcol = new ControllerElementMappings("Keyboard",
+                           "TEST_CONTROLLER",
+                           InputDriverType.Keyboard,
+                           IDeviceEnumerator.VirtualVendorID,
+                           new XInputDeviceInstance(0).DefaultLayout);
+
+                var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
+                optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
+
+                var elementStore = new ControllerElementMappingsStore(optionsBuilder);
+
+                await elementStore.AddMappingsAsync(mapcol, "default");
+
+                // map buttonA to buttonB.
+                mapcol[ControllerElement.ButtonA] = DeviceCapability.Button1;
+
+                await elementStore.UpdateMappingsAsync(mapcol, "default");
+                var retStore = await elementStore.GetMappingsAsync(mapcol.ControllerID,
                     InputDriverType.Keyboard, mapcol.DeviceName, IDeviceEnumerator.VirtualVendorID, "default");
 
                 foreach (var element in retStore)
@@ -140,6 +217,36 @@ namespace Snowflake.Model.Tests
             }
         }
 
+
+        [Fact]
+        public async Task DeleteMappingsAsync_Test()
+        {
+            var stoneProvider = new StoneProvider();
+            foreach (var testmappings in stoneProvider.Controllers.Values)
+            {
+                var mapcol = new ControllerElementMappings("Keyboard",
+                           "TEST_CONTROLLER",
+                           InputDriverType.Keyboard,
+                           IDeviceEnumerator.VirtualVendorID,
+                           new XInputDeviceInstance(0).DefaultLayout);
+
+                var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
+                optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
+                var elementStore = new ControllerElementMappingsStore(optionsBuilder);
+
+                await elementStore.AddMappingsAsync(mapcol, "default");
+
+                var retStore = await elementStore.GetMappingsAsync(mapcol.ControllerID,
+                    InputDriverType.Keyboard, mapcol.DeviceName, IDeviceEnumerator.VirtualVendorID, "default");
+                Assert.NotNull(retStore);
+                await elementStore.DeleteMappingsAsync(mapcol.ControllerID, InputDriverType.Keyboard, mapcol.DeviceName,
+                    IDeviceEnumerator.VirtualVendorID, "default");
+                var deletedRetStore = elementStore.GetMappings(mapcol.ControllerID, InputDriverType.Keyboard,
+                    mapcol.DeviceName, IDeviceEnumerator.VirtualVendorID, "default");
+                Assert.Null(deletedRetStore);
+            }
+        }
+
         [Fact]
         public void GetMultipleMappings_Test()
         {
@@ -167,6 +274,36 @@ namespace Snowflake.Model.Tests
                 Assert.Single(elementStore.GetMappings(mapcol.ControllerID, mapcol.DeviceName, mapcol.VendorID));
                 elementStore.DeleteMappings(mapcol.ControllerID, mapcol.DeviceName, IDeviceEnumerator.VirtualVendorID);
                 Assert.Empty(elementStore.GetMappings(mapcol.ControllerID, mapcol.DeviceName, mapcol.VendorID));
+            }
+        }
+
+        [Fact]
+        public async Task GetMultipleMappingsAsync_Test()
+        {
+            var stoneProvider = new StoneProvider();
+            foreach (var testmappings in stoneProvider.Controllers.Values)
+            {
+                var mapcol = new ControllerElementMappings("Keyboard",
+                            "TEST_CONTROLLER",
+                            InputDriverType.Keyboard,
+                            IDeviceEnumerator.VirtualVendorID,
+                            new XInputDeviceInstance(0).DefaultLayout);
+
+                var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
+                optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
+                var elementStore = new ControllerElementMappingsStore(optionsBuilder);
+
+                await elementStore.AddMappingsAsync(mapcol, "default");
+                await elementStore.AddMappingsAsync(mapcol, "default2");
+
+                Assert.Equal(2, await elementStore.GetMappingsAsync(mapcol.ControllerID, mapcol.DeviceName,
+                    IDeviceEnumerator.VirtualVendorID)
+                    .CountAsync());
+                await elementStore.DeleteMappingsAsync(mapcol.ControllerID, InputDriverType.Keyboard, mapcol.DeviceName,
+                    IDeviceEnumerator.VirtualVendorID, "default");
+                Assert.Single(elementStore.GetMappings(mapcol.ControllerID, mapcol.DeviceName, mapcol.VendorID));
+                await elementStore.DeleteMappingsAsync(mapcol.ControllerID, mapcol.DeviceName, IDeviceEnumerator.VirtualVendorID);
+                Assert.True(await elementStore.GetMappingsAsync(mapcol.ControllerID, mapcol.DeviceName, mapcol.VendorID).IsEmptyAsync());
             }
         }
 
@@ -199,5 +336,36 @@ namespace Snowflake.Model.Tests
                 }
             }
         }
+
+        [Fact]
+        public async Task AddKeyboardMappingsAsync_Test()
+        {
+            var stoneProvider = new StoneProvider();
+            foreach (var testmappings in stoneProvider.Controllers.Values)
+            {
+                var mapcol = new ControllerElementMappings("Keyboard",
+                           "TEST_CONTROLLER",
+                           InputDriverType.Keyboard,
+                           IDeviceEnumerator.VirtualVendorID,
+                           new XInputDeviceInstance(0).DefaultLayout);
+
+                var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
+                optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
+                var elementStore = new ControllerElementMappingsStore(optionsBuilder);
+
+                await elementStore.AddMappingsAsync(mapcol, "default");
+
+                var retStore = await elementStore.GetMappingsAsync(
+                    mapcol.ControllerID, InputDriverType.Keyboard, "Keyboard",
+                    IDeviceEnumerator.VirtualVendorID, "default");
+                foreach (var element in retStore)
+                {
+                    Assert.Contains(element.LayoutElement, mapcol.Select(x => x.LayoutElement));
+                    Assert.Equal(element.DeviceCapability,
+                        mapcol.First(x => x.LayoutElement == element.LayoutElement).DeviceCapability);
+                }
+            }
+        }
+
     }
 }
