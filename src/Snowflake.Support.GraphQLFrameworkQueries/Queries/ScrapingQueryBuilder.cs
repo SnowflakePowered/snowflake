@@ -55,7 +55,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
         }
 
         [Mutation("beginScrapeGame", "Creates a game scraping cintext. Returns the UUID of the context.", typeof(GuidGraphType))]
-        [Parameter(typeof(Guid), typeof(GuidGraphType), "gameGuid", "The game to source this scraping context  from", false)]
+        [Parameter(typeof(Guid), typeof(GuidGraphType), "gameGuid", "The game to source this scraping context from", false)]
         [Parameter(typeof(IEnumerable<string>), typeof(ListGraphType<StringGraphType>), "scraperNames",
             "The scrapers to use for this job.")]
         [Parameter(typeof(IEnumerable<string>), typeof(ListGraphType<StringGraphType>), "cullerNames",
@@ -86,7 +86,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
             return await ((GameScrapeContext)this.GameScrapeContextJobQueue.GetSource(jobGuid));
         }
 
-        [Field("discardScrapeResults", "Discards the completed scrape results.", typeof(ListGraphType<SeedGraphType>))]
+        [Query("discardScrapeResults", "Discards the completed scrape results.", typeof(ListGraphType<SeedGraphType>))]
         [Parameter(typeof(Guid), typeof(GuidGraphType), "jobGuid", "The GUID of the created scraping context to proceed with.", false)]
         public async Task<IEnumerable<ISeed>> DiscardScrapeResults(Guid jobGuid)
         {

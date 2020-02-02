@@ -24,7 +24,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Types.PlatformInfo
                 resolve: context =>
                     context.Source.FileTypes.Select(p => new FileType() {Extension = p.Key, Mime = p.Value}));
             Field<ListGraphType<MetadataGraphType>>("metadata", resolve: context => context.Source.Metadata.ToList());
-            Field<ListGraphType<BiosFilesGraphType>>("biosFiles",
+            Field<ListGraphType<SystemFileGraphType>>("biosFiles",
                 resolve: context => context.Source.BiosFiles.ToList());
         }
     }

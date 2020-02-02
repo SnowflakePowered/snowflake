@@ -22,7 +22,7 @@ namespace Snowflake.Framework.Remoting.GraphQL.Query
     /// GraphQL-accessible functions.
     /// </para>
     /// <para>
-    /// See <see cref="FieldAttribute"/>, <see cref="ConnectionAttribute"/>, and <see cref="MutationAttribute"/> for
+    /// See <see cref="QueryAttribute"/>, <see cref="ConnectionAttribute"/>, and <see cref="MutationAttribute"/> for
     /// how to mark a method as a GraphQL query.
     /// </para>
     /// </summary>
@@ -50,7 +50,7 @@ namespace Snowflake.Framework.Remoting.GraphQL.Query
                 let queryAttr = m.GetCustomAttribute<TAttribute>()
                 where queryAttr != null
                 let endpointParamsAttrs = m.GetCustomAttributes<ParameterAttribute>()
-                select (methodInfo: m, queryAttr: queryAttr, paramAttrs: endpointParamsAttrs);
+                select (methodInfo: m, queryAttr, paramAttrs: endpointParamsAttrs);
             foreach (var endpoint in endpoints)
             {
                 this.VerifyParameters(endpoint.methodInfo, endpoint.paramAttrs);
@@ -59,9 +59,9 @@ namespace Snowflake.Framework.Remoting.GraphQL.Query
             return endpoints;
         }
 
-        private IEnumerable<(MethodInfo fieldMethod, FieldAttribute fieldAttr, IEnumerable<ParameterAttribute> paramAttr
+        private IEnumerable<(MethodInfo fieldMethod, QueryAttribute fieldAttr, IEnumerable<ParameterAttribute> paramAttr
                 )>
-            EnumerateFieldQueries() => this.EnumerateQueries<FieldAttribute>();
+            EnumerateFieldQueries() => this.EnumerateQueries<QueryAttribute>();
 
         private IEnumerable<(MethodInfo fieldMethod, ConnectionAttribute connectionAttr,
             IEnumerable<ParameterAttribute> paramAttr)> EnumerateConnectionQueries()
@@ -90,7 +90,7 @@ namespace Snowflake.Framework.Remoting.GraphQL.Query
                     }).ToList();
         }
 
-        private FieldQuery MakeFieldQuery(MethodInfo fieldMethod, FieldAttribute fieldAttr,
+        private FieldQuery MakeFieldQuery(MethodInfo fieldMethod, QueryAttribute fieldAttr,
             IEnumerable<ParameterAttribute> paramAttr)
         {
             var invoker = this.CreateInvoker(fieldMethod);

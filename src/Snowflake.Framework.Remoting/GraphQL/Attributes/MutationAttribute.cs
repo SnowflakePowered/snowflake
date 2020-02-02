@@ -9,11 +9,11 @@ namespace Snowflake.Framework.Remoting.GraphQL.Attributes
     /// <summary>
     /// <para>
     /// A mutation field in this context is simply a normal field on the mutation root object.
-    /// By convention, only fields in the mutation root object may mutate state, as compared to <see cref="FieldAttribute"/>,
+    /// By convention, only fields in the mutation root object may mutate state, as compared to <see cref="QueryAttribute"/>,
     /// which will attach the method as a field on the query root object instead.
     /// </para>
     /// <para>
-    /// A method can only be marked with one of <see cref="ConnectionAttribute"/>, <see cref="FieldAttribute"/>, or <see cref="MutationAttribute"/>,
+    /// A method can only be marked with one of <see cref="ConnectionAttribute"/>, <see cref="QueryAttribute"/>, or <see cref="MutationAttribute"/>,
     /// never more than one.
     /// </para>
     /// </summary>

@@ -187,7 +187,7 @@ namespace Snowflake.GraphQl.Tests
     
     public class BrokenQueryBuilder : QueryBuilder
     {
-        [Field("broken", "", typeof(StringGraphType))]
+        [Query("broken", "", typeof(StringGraphType))]
         public string Broken(string brokenParam)
         {
             return brokenParam;
@@ -205,7 +205,7 @@ namespace Snowflake.GraphQl.Tests
             yield return returnTwo;
         }
 
-        [Field("defaultTest", "", typeof(IntGraphType))]
+        [Query("defaultTest", "", typeof(IntGraphType))]
         [Parameter(typeof(int), typeof(IntGraphType), "returnOne", "")]
         [Parameter(typeof(int), typeof(IntGraphType), "returnTwo", "")]
         public int DefaultTest(int returnOne, int returnTwo = 1)

@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using Snowflake.Installation;
 using Snowflake.Filesystem;
 using System.Linq;
+using Snowflake.Configuration;
+using Snowflake.Model.Game.LibraryExtensions;
 
 namespace Snowflake.Orchestration.Extensibility
 {
@@ -38,5 +40,9 @@ namespace Snowflake.Orchestration.Extensibility
             IEnumerable<IEmulatedController> controllerPorts,
             string configurationProfileName,
             ISaveGame? initialSave);
+
+        public abstract IConfigurationCollection GetGameConfigurationValues(IGame game, string profile);
+
+        public abstract IConfigurationCollection CreateGameConfiguration(IGame game, string profile);
     }
 }

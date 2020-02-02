@@ -19,7 +19,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
             this.StoneProvider = stoneProvider;
         }
 
-        [Field("platformInfo", "A Stone Platform", typeof(PlatformInfoGraphType))]
+        [Query("platformInfo", "A Stone Platform", typeof(PlatformInfoGraphType))]
         [Parameter(typeof(string), typeof(StringGraphType), "platformID", "The Stone PlatformID for this platform")]
         public IPlatformInfo GetPlatform(string platformID)
         {

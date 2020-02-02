@@ -12,7 +12,7 @@ namespace Snowflake.Framework.Remoting.GraphQL.Query
     /// uses some behind-the-scenes reflection access to rewrite properly marked methods of the inheriting class into
     /// GraphQL-accessible functions.
     /// <br/>
-    /// See <see cref="FieldAttribute"/>, <see cref="ConnectionAttribute"/>, and <see cref="MutationAttribute"/> for
+    /// See <see cref="QueryAttribute"/>, <see cref="ConnectionAttribute"/>, and <see cref="MutationAttribute"/> for
     /// how to mark a method as a GraphQL query.
     /// </summary>
     public abstract partial class QueryBuilder

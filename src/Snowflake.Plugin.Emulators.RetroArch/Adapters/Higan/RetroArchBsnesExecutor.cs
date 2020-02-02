@@ -11,6 +11,9 @@ using Snowflake.Orchestration.Process;
 using Newtonsoft.Json;
 using Snowflake.Filesystem;
 using Snowflake.Extensibility.Provisioning;
+using Snowflake.Model.Game.LibraryExtensions;
+using Snowflake.Plugin.Emulators.RetroArch.Adapters.Higan.Configuration;
+using Snowflake.Configuration;
 
 namespace Snowflake.Adapters.Higan
 {
@@ -34,12 +37,27 @@ namespace Snowflake.Adapters.Higan
         private Dictionary<InputDriverType, IDeviceInputMapping> Mappings { get; }
         private IEmulatorExecutable RetroArchExecutable { get; }
 
+        public override IConfigurationCollection CreateGameConfiguration(IGame game, string profile)
+        {
+            return game.WithConfigurations()
+                .CreateNewProfile<HiganRetroArchConfiguration>(nameof(RetroArchBsnesExecutor), profile);
+        }
+
+        public override IConfigurationCollection GetGameConfigurationValues(IGame game, string profile)
+        {
+            return game.WithConfigurations()
+                .GetProfile<HiganRetroArchConfiguration>(nameof(RetroArchBsnesExecutor), profile);
+        }
+
         public override IGameEmulation 
-            ProvisionEmulationInstance(IGame game, IEnumerable<IEmulatedController?> controllerPorts, 
+            ProvisionEmulationInstance(IGame game, IEnumerable<IEmulatedController> controllerPorts, 
             string configurationProfileName, ISaveGame initialSave)
         {
+            var configuration = game.WithConfigurations()
+                .GetProfile<HiganRetroArchConfiguration>(nameof(RetroArchBsnesExecutor), 
+                configurationProfileName);
             var gameEmulation = new RetroArchBsnesGameEmulation(game,
-                configurationProfileName,
+                configuration.Configuration,
                 controllerPorts,
                 initialSave,
                 this.Mappings,

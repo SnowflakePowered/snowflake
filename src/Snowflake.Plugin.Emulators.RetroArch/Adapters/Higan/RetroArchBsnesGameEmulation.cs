@@ -19,15 +19,16 @@ using System.Linq;
 using Snowflake.Orchestration.Process;
 using System.Diagnostics;
 using System.Threading.Tasks.Sources;
+using Snowflake.Configuration;
 
 #nullable enable
 
 namespace Snowflake.Adapters.Higan
 {
-    public class RetroArchBsnesGameEmulation : GameEmulation
+    public class RetroArchBsnesGameEmulation : GameEmulation<HiganRetroArchConfiguration>
     {
         public RetroArchBsnesGameEmulation(IGame game,
-            string configurationProfile,
+            HiganRetroArchConfiguration configurationProfile,
             IEnumerable<IEmulatedController> controllerPorts,
             ISaveGame? initialSave,
             IDictionary<InputDriverType, IDeviceInputMapping> inputMappings,
@@ -93,20 +94,8 @@ namespace Snowflake.Adapters.Higan
         {
             var serializer = new SimpleCfgConfigurationSerializer();
             var tokenizer = new ConfigurationTraversalContext();
-            var configProfile = this.Game.WithConfigurations()
-                .GetProfile<HiganRetroArchConfiguration>(nameof(RetroArchBsnesGameEmulation),
-                this.ConfigurationProfile);
-
-            if (configProfile == null)
-            {
-                configProfile = this.Game.WithConfigurations()
-                    .CreateNewProfile<HiganRetroArchConfiguration>
-                    (nameof(RetroArchBsnesGameEmulation), this.ConfigurationProfile);
-            }
-                
-            var config = configProfile.Configuration;
-
-            var node = tokenizer.TraverseCollection(config);
+            
+            var node = tokenizer.TraverseCollection(this.ConfigurationProfile);
             var retroArchNode = node["#retroarch"];
             StringBuilder configContents = new StringBuilder();
 
