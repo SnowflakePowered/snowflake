@@ -183,7 +183,7 @@ namespace Snowflake.Scraping.Tests
             var ext = new Mock<IGameFileExtension>();
             game.Setup(g => g.GetExtension<IGameFileExtension>()).Returns(ext.Object);
 
-            ext.SetupGet(e => e.FileRecords).Returns(new IFileRecord[] { file.Object }); 
+            ext.Setup(e => e.GetFileRecords()).Returns(new IFileRecord[] { file.Object }); 
             var context = new GameScrapeContext(game.Object, Enumerable.Empty<IScraper>(), Enumerable.Empty<ICuller>());
 
             var seeds = context.Context.GetUnculled().Select(s => s.Content).ToList();

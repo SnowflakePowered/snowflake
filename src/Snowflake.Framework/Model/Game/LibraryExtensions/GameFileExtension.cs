@@ -4,6 +4,7 @@ using Snowflake.Model.Database;
 using Snowflake.Filesystem;
 using Snowflake.Model.Records.File;
 using Zio;
+using System.Threading.Tasks;
 
 namespace Snowflake.Model.Game.LibraryExtensions
 {
@@ -37,8 +38,6 @@ namespace Snowflake.Model.Game.LibraryExtensions
 
         public IDirectory RuntimeRoot { get; }
 
-        public IEnumerable<IFileRecord> FileRecords => this.FileRecordLibrary.GetFileRecords(this.Root);
-
         public IDirectory GetRuntimeLocation()
         {
             return this.RuntimeRoot.OpenDirectory(Guid.NewGuid().ToString());
@@ -50,6 +49,18 @@ namespace Snowflake.Model.Game.LibraryExtensions
         {
             this.FileRecordLibrary.RegisterFile(file, mimetype);
             return this.GetFileInfo(file)!;
+        }
+
+        public IEnumerable<IFileRecord> GetFileRecords() => this.FileRecordLibrary.GetFileRecords(this.Root);
+
+        public IAsyncEnumerable<IFileRecord> GetFileRecordsAsync() => this.FileRecordLibrary.GetFileRecordsAsync(this.Root);
+
+        public Task<IFileRecord?> GetFileInfoAsync(IFile file) => this.FileRecordLibrary.GetRecordAsync(file);
+
+        public async Task<IFileRecord> RegisterFileAsync(IFile file, string mimetype)
+        {
+            await this.FileRecordLibrary.RegisterFileAsync(file, mimetype);
+            return (await this.GetFileInfoAsync(file))!;
         }
     }
 }

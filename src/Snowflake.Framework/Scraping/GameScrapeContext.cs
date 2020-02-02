@@ -45,7 +45,7 @@ namespace Snowflake.Scraping
                 yield return ("search_title", game.Record.Title);
             }
 
-            foreach (var file in game.WithFiles().FileRecords)
+            foreach (var file in game.WithFiles().GetFileRecords())
             {
                 if (file.Metadata.ContainsKey("hash_crc32"))
                 {

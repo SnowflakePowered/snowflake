@@ -7,20 +7,16 @@ using Snowflake.Model.Database.Models;
 using Snowflake.Filesystem;
 using Snowflake.Model.Records;
 using Snowflake.Model.Records.File;
+using System.Threading.Tasks;
 
 namespace Snowflake.Model.Database
 {
     internal partial class FileRecordLibrary : RecordLibrary<IFileRecord>
     {
-        public FileRecordLibrary(DbContextOptionsBuilder<DatabaseContext> options)
-            : base(options)
-        {
-        }
-
-        public void RegisterFile(IFile file, string mimetype)
+        public async Task RegisterFileAsync(IFile file, string mimetype)
         {
             using var context = new DatabaseContext(this.Options.Options);
-            var record = context.FileRecords.Find(file.FileGuid);
+            var record = await context.FileRecords.FindAsync(file.FileGuid);
             if (record != null)
             {
                 record.MimeType = mimetype;
@@ -28,17 +24,17 @@ namespace Snowflake.Model.Database
             }
             else
             {
-                context.FileRecords.Add((file, mimetype).AsModel());
+                await context.FileRecords.AddAsync((file, mimetype).AsModel());
             }
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public IFileRecord? GetRecord(IFile file)
+        public async Task<IFileRecord?> GetRecordAsync(IFile file)
         {
-            using var context = new DatabaseContext(this.Options.Options);
-            var record = context.FileRecords.Include(f => f.Metadata)
-                .SingleOrDefault(f => f.RecordID == file.FileGuid);
+            await using var context = new DatabaseContext(this.Options.Options);
+            var record = await context.FileRecords.Include(f => f.Metadata)
+                .SingleOrDefaultAsync(f => f.RecordID == file.FileGuid);
             if (record != null)
             {
                 return new FileRecord(file, record.MimeType,
@@ -48,9 +44,9 @@ namespace Snowflake.Model.Database
             return null;
         }
 
-        public IEnumerable<IFileRecord> GetFileRecords(IDirectory directoryRoot)
+        public async IAsyncEnumerable<IFileRecord> GetFileRecordsAsync(IDirectory directoryRoot)
         {
-            using var context = new DatabaseContext(this.Options.Options);
+            await using var context = new DatabaseContext(this.Options.Options);
             var files = directoryRoot.EnumerateFilesRecursive().ToList();
             var records = context.FileRecords
                 .Include(r => r.Metadata)
