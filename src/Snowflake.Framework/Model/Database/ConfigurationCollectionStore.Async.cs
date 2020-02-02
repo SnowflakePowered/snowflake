@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Snowflake.Configuration;
 using Snowflake.Model.Database.Exceptions;
@@ -14,56 +15,35 @@ namespace Snowflake.Model.Database
 {
     internal partial class ConfigurationCollectionStore
     {
-        private DbContextOptionsBuilder<DatabaseContext> Options { get; set; }
-
-        public ConfigurationCollectionStore(DbContextOptionsBuilder<DatabaseContext> options)
-        {
-            this.Options = options;
-            using var context = new DatabaseContext(this.Options.Options);
-            context.Database.Migrate();
-        }
-
-        public IEnumerable<IGrouping<string, string>>
-            GetProfileNames(IGameRecord gameRecord)
-        {
-            using var context = new DatabaseContext(this.Options.Options);
-            return context.GameRecords
-                .Include(g => g.ConfigurationProfiles)
-                .SingleOrDefault(g => g.RecordID == gameRecord.RecordID)?
-                .ConfigurationProfiles
-                .GroupBy(p => p.ConfigurationSource, p => p.ProfileName) ??
-                Enumerable.Empty<IGrouping<string, string>>();
-        }
-
-        public IConfigurationCollection<T> CreateConfiguration<T>(string sourceName)
+        public async Task<IConfigurationCollection<T>> CreateConfigurationAsync<T>(string sourceName)
             where T : class, IConfigurationCollection<T>
         {
             var collection = new ConfigurationCollection<T>();
 
-            using var context = new DatabaseContext(this.Options.Options);
+            await using var context = new DatabaseContext(this.Options.Options);
 
-            context.ConfigurationProfiles.Add(collection.AsModel(sourceName));
-            context.SaveChanges();
+            await context.ConfigurationProfiles.AddAsync(collection.AsModel(sourceName));
+            await context.SaveChangesAsync();
             
             return collection;
         }
 
-        public IConfigurationCollection<T> CreateConfigurationForGame<T>(IGameRecord gameRecord,
+        public async Task<IConfigurationCollection<T>> CreateConfigurationForGameAsync<T>(IGameRecord gameRecord,
             string sourceName, string profileName)
             where T : class, IConfigurationCollection<T>
         {
             var collection = new ConfigurationCollection<T>();
 
-            using var context = new DatabaseContext(this.Options.Options);
+            await using var context = new DatabaseContext(this.Options.Options);
 
-            var gameEntity = context.GameRecords
+            var gameEntity = await context.GameRecords
                 .Include(p => p.ConfigurationProfiles)
-                .SingleOrDefault(p => p.RecordID == gameRecord.RecordID);
+                .SingleOrDefaultAsync(p => p.RecordID == gameRecord.RecordID);
 
             if (gameEntity == null) throw new DependentEntityNotExistsException(gameRecord.RecordID);
 
-            var entity = context.ConfigurationProfiles
-                .Add(collection.AsModel(sourceName));
+            var entity = await context.ConfigurationProfiles
+                .AddAsync(collection.AsModel(sourceName));
 
             gameEntity.ConfigurationProfiles.Add(new GameRecordConfigurationProfileModel
             {
@@ -72,27 +52,27 @@ namespace Snowflake.Model.Database
                 Profile = entity.Entity
             });
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             
             return collection;
         }
 
-        public void DeleteConfiguration(Guid configurationValueCollectionGuid)
+        public async Task DeleteConfigurationAsync(Guid configurationValueCollectionGuid)
         {
             using var context = new DatabaseContext(this.Options.Options);
-            var profile = context.ConfigurationProfiles.Find(configurationValueCollectionGuid);
+            var profile = await context.ConfigurationProfiles.FindAsync(configurationValueCollectionGuid);
             if (profile == null) return;
 
             context.Entry(profile).State = EntityState.Deleted;
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public void DeleteConfigurationForGame(Guid gameGuid, string sourceName, string profileName)
+        public async Task DeleteConfigurationForGameAsync(Guid gameGuid, string sourceName, string profileName)
         {
-            using var context = new DatabaseContext(this.Options.Options);
-            var profileJunction = context.GameRecordsConfigurationProfiles
+            await using var context = new DatabaseContext(this.Options.Options);
+            var profileJunction = await context.GameRecordsConfigurationProfiles
                 .Include(p => p.Profile)
-                .SingleOrDefault(g => g.GameID == gameGuid
+                .SingleOrDefaultAsync(g => g.GameID == gameGuid
                                       && g.ConfigurationSource == sourceName
                                       && g.ProfileName == profileName);
             if (profileJunction == null) return;
@@ -100,15 +80,14 @@ namespace Snowflake.Model.Database
             context.Entry(profileJunction).State = EntityState.Deleted;
             context.Entry(profileJunction.Profile).State = EntityState.Deleted;
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public void UpdateConfiguration(IConfigurationCollection configurationCollection)
+        public async Task UpdateConfigurationAsync(IConfigurationCollection configurationCollection)
         {
-            using var context = new DatabaseContext(this.Options.Options);
+            await using var context = new DatabaseContext(this.Options.Options);
             var guid = configurationCollection.ValueCollection.Guid;
-            var config = context.ConfigurationProfiles?
-                .Find(guid);
+            var config = await context.ConfigurationProfiles.FindAsync(guid);
             if (config == null) return;
 
             foreach
@@ -124,10 +103,10 @@ namespace Snowflake.Model.Database
 
             foreach ((string section, string option, IConfigurationValue configurationValue) in configurationCollection.ValueCollection)
             {
-                var value = context.ConfigurationValues.Find(configurationValue.Guid);
+                var value = await context.ConfigurationValues.FindAsync(configurationValue.Guid);
                 if (value != null) continue;
 
-                context.ConfigurationValues.Add(new ConfigurationValueModel
+               await context.ConfigurationValues.AddAsync(new ConfigurationValueModel
                 {
                     SectionKey = section,
                     OptionKey = option,
@@ -137,48 +116,48 @@ namespace Snowflake.Model.Database
                 });
             }
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public IConfigurationCollection<T>? GetConfiguration<T>(Guid valueCollectionGuid)
+        public async Task<IConfigurationCollection<T>?> GetConfigurationAsync<T>(Guid valueCollectionGuid)
             where T : class, IConfigurationCollection<T>
         {
-            using var context = new DatabaseContext(this.Options.Options);
-            var config = context.ConfigurationProfiles
+            await using var context = new DatabaseContext(this.Options.Options);
+            var config = await context.ConfigurationProfiles
                 .Include(c => c.Values)
-                .SingleOrDefault(c => c.ValueCollectionGuid == valueCollectionGuid);
+                .SingleOrDefaultAsync(c => c.ValueCollectionGuid == valueCollectionGuid);
             return config?.AsConfiguration<T>();
         }
 
-        public IConfigurationCollection<T>? GetConfiguration<T>(Guid gameGuid,
+        public async Task<IConfigurationCollection<T>?> GetConfigurationAsync<T>(Guid gameGuid,
             string sourceName, string profileName)
             where T : class, IConfigurationCollection<T>
         {
-            using var context = new DatabaseContext(this.Options.Options);
-            var profileJunction = context.GameRecordsConfigurationProfiles
+            await using var context = new DatabaseContext(this.Options.Options);
+            var profileJunction = await context.GameRecordsConfigurationProfiles
                 .Include(g => g.Profile)
                 .ThenInclude(g => g.Values)
-                .SingleOrDefault(g => g.GameID == gameGuid
+                .SingleOrDefaultAsync(g => g.GameID == gameGuid
                                       && g.ConfigurationSource == sourceName
                                       && g.ProfileName == profileName);
             if (profileJunction == null) return null;
 
-            var profile = context.ConfigurationProfiles
-                .SingleOrDefault(s => s.ValueCollectionGuid == profileJunction.ProfileID);
+            var profile = await context.ConfigurationProfiles
+                .SingleOrDefaultAsync(s => s.ValueCollectionGuid == profileJunction.ProfileID);
 
             return profile?.AsConfiguration<T>();
         }
 
-        public void UpdateValue(IConfigurationValue value) => this.UpdateValue(value.Guid, value.Value);
+        public Task UpdateValueAsync(IConfigurationValue value) => this.UpdateValueAsync(value.Guid, value.Value);
 
-        public void UpdateValue(Guid valueGuid, object? value)
+        public async Task UpdateValueAsync(Guid valueGuid, object? value)
         {
-            using var context = new DatabaseContext(this.Options.Options);
-            var entityValue = context.ConfigurationValues.Find(valueGuid);
+            await using var context = new DatabaseContext(this.Options.Options);
+            var entityValue = await context.ConfigurationValues.FindAsync(valueGuid);
             if (entityValue == null) return;
             entityValue.Value = value.AsConfigurationStringValue();
             context.Entry(entityValue).State = EntityState.Modified;
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
     }
 }
