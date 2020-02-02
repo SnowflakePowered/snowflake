@@ -7,7 +7,7 @@ codecov:
 coverage:
   precision: 2
   round: down
-  range: "50...80"
+  range: "70...90"
   fixes:
     - "build/::"
   status:
