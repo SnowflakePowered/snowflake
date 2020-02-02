@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Snowflake.Configuration;
 using Snowflake.Extensibility.Configuration;
 
@@ -36,6 +37,26 @@ namespace Snowflake.Extensibility.Provisioning.Standalone
         public void Set(IEnumerable<IConfigurationValue> values)
         {
             return;
+        }
+
+        Task<IConfigurationSection<T>> IPluginConfigurationStore.GetAsync<T>()
+        {
+            return Task.FromResult((IConfigurationSection<T>)new ConfigurationSection<T>());
+        }
+
+        Task IPluginConfigurationStore.SetAsync<T>(IConfigurationSection<T> configuration)
+        {
+            return Task.CompletedTask;
+        }
+
+        public Task SetAsync(IConfigurationValue value)
+        {
+            return Task.CompletedTask;
+        }
+
+        public Task SetAsync(IEnumerable<IConfigurationValue> values)
+        {
+            return Task.CompletedTask;
         }
     }
 }

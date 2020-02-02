@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Snowflake.Configuration;
 using Snowflake.Extensibility.Configuration;
@@ -92,6 +93,92 @@ namespace Snowflake.Extensibility.Tests
             });
 
             var retrievedConfig = store.Get<ExampleConfigurationSection>();
+            Assert.NotNull(retrievedConfig);
+            Assert.NotNull(retrievedConfig);
+            Assert.Equal(configSection.Configuration.ISOPath0, retrievedConfig.Configuration.ISOPath0);
+            Assert.Equal(configSection.Configuration.FullscreenResolution,
+                retrievedConfig.Configuration.FullscreenResolution);
+            Assert.Equal(configSection.Configuration.Fullscreen, retrievedConfig.Configuration.Fullscreen);
+        }
+
+        [Fact]
+        public async Task ConfigurationStoreSetAsync_Test()
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
+            optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
+            var store = new PluginConfigurationStore(optionsBuilder);
+
+            var configSection = await store.GetAsync<ExampleConfigurationSection>();
+            await store.SetAsync(configSection);
+        }
+
+        [Fact]
+        public async Task ConfigurationStoreGetAsync_Test()
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
+            optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
+            var store = new PluginConfigurationStore(optionsBuilder);
+
+            var configSection = await store.GetAsync<ExampleConfigurationSection>();
+            await store.SetAsync(configSection);
+
+            var retrievedConfig = await store.GetAsync<ExampleConfigurationSection>();
+            Assert.NotNull(retrievedConfig);
+            Assert.Equal(configSection.Configuration.ISOPath0, retrievedConfig.Configuration.ISOPath0);
+            Assert.Equal(configSection.Configuration.FullscreenResolution,
+                retrievedConfig.Configuration.FullscreenResolution);
+            Assert.Equal(configSection.Configuration.Fullscreen, retrievedConfig.Configuration.Fullscreen);
+        }
+
+        [Fact]
+        public async Task ConfigurationStoreSetIndividualAsync_Test()
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
+            optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
+            var store = new PluginConfigurationStore(optionsBuilder);
+
+            var configSection = await store.GetAsync<ExampleConfigurationSection>();
+            await store.SetAsync(configSection);
+            configSection.Configuration.ISOPath0 = "TestEqual";
+            configSection.Configuration.FullscreenResolution = FullscreenResolution.Resolution1152X648;
+            configSection.Configuration.Fullscreen = false;
+
+            await store.SetAsync(configSection);
+            configSection.Configuration.FullscreenResolution = FullscreenResolution.Resolution1280X768;
+            await store.SetAsync(configSection.Configuration.Values["FullscreenResolution"]);
+
+            var retrievedConfig =await store.GetAsync<ExampleConfigurationSection>();
+            Assert.NotNull(retrievedConfig);
+            Assert.NotNull(retrievedConfig);
+            Assert.Equal(configSection.Configuration.ISOPath0, retrievedConfig.Configuration.ISOPath0);
+            Assert.Equal(configSection.Configuration.FullscreenResolution,
+                retrievedConfig.Configuration.FullscreenResolution);
+            Assert.Equal(configSection.Configuration.Fullscreen, retrievedConfig.Configuration.Fullscreen);
+        }
+
+        [Fact]
+        public async Task ConfigurationStoreSetIndividualEnumerableAsync_Test()
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
+            optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
+            var store = new PluginConfigurationStore(optionsBuilder);
+
+            var configSection = await store.GetAsync<ExampleConfigurationSection>();
+            await store.SetAsync(configSection);
+            configSection.Configuration.ISOPath0 = "TestEqual";
+            configSection.Configuration.FullscreenResolution = FullscreenResolution.Resolution1152X648;
+            configSection.Configuration.Fullscreen = false;
+
+            await store.SetAsync(configSection);
+            configSection.Configuration.FullscreenResolution = FullscreenResolution.Resolution1280X768;
+            configSection.Configuration.Fullscreen = true;
+            await store.SetAsync(new[]
+            {
+                configSection.Configuration.Values["FullscreenResolution"],
+                configSection.Configuration.Values["Fullscreen"],
+            });
+
+            var retrievedConfig = await store.GetAsync<ExampleConfigurationSection>();
             Assert.NotNull(retrievedConfig);
             Assert.NotNull(retrievedConfig);
             Assert.Equal(configSection.Configuration.ISOPath0, retrievedConfig.Configuration.ISOPath0);
