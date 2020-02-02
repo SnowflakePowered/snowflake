@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Snowflake.Configuration;
 
 namespace Snowflake.Extensibility.Configuration
@@ -25,11 +26,30 @@ namespace Snowflake.Extensibility.Configuration
             where T : class, IConfigurationSection<T>;
 
         /// <summary>
+        /// Retrieves the configuration collection associated with this game record.
+        /// This method is guaranteed to return a usable instance of the configuration collection.
+        /// If a prior configuration has not been set, it should return a default instance with all
+        /// properties initialized.
+        /// </summary>
+        /// <typeparam name="T">The type of configuration collection</typeparam>
+        /// <returns>The configuration collection associated with this game record. </returns>
+        Task<IConfigurationSection<T>> GetAsync<T>()
+            where T : class, IConfigurationSection<T>;
+
+        /// <summary>
         /// Saves and persists a configuration collection to the store.
         /// </summary>
         /// <typeparam name="T">The type of configuration collection</typeparam>
         /// <param name="configuration">The configuration to save to the store</param>
         void Set<T>(IConfigurationSection<T> configuration)
+            where T : class, IConfigurationSection<T>;
+
+        /// <summary>
+        /// Saves and persists a configuration collection to the store.
+        /// </summary>
+        /// <typeparam name="T">The type of configuration collection</typeparam>
+        /// <param name="configuration">The configuration to save to the store</param>
+        Task SetAsync<T>(IConfigurationSection<T> configuration)
             where T : class, IConfigurationSection<T>;
 
         /// <summary>
@@ -40,10 +60,27 @@ namespace Snowflake.Extensibility.Configuration
         void Set(IConfigurationValue value);
 
         /// <summary>
+        /// Asynchronously updates a single <em>existing</em> configuration value, this will do nothing if the GUID is not found in
+        /// the database.
+        /// </summary>
+        /// <param name="value">The configuration value with valid GUID and updated data</param>
+        Task SetAsync(IConfigurationValue value);
+
+
+        /// <summary>
         /// Updates multiple <em>existing</em> configuration values, this will do nothing for the GUID is not found in
         /// the database.
         /// </summary>
         /// <param name="values">The configuration value with valid GUID and updated data</param>
         void Set(IEnumerable<IConfigurationValue> values);
+
+        /// <summary>
+        /// Asynchronously updates multiple <em>existing</em> configuration values, this will do nothing for the GUID is not found in
+        /// the database.
+        /// </summary>
+        /// <param name="values">The configuration value with valid GUID and updated data</param>
+        Task SetAsync(IEnumerable<IConfigurationValue> values);
+
+
     }
 }
