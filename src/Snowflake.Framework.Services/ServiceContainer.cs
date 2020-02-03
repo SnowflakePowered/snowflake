@@ -100,9 +100,13 @@ namespace Snowflake.Services
 
             if (disposing)
             {
-                this.Get<IPluginManager>().Dispose();
+                foreach (var service in this.serviceContainer.Values)
+                {
+                    (service as IDisposable)?.Dispose();
+                }
+
 #pragma warning disable S1215 // "GC.Collect" should not be called
-                GC.Collect();
+                GC.Collect(); // lgtm [cs/call-to-gc]
 #pragma warning restore S1215 // "GC.Collect" should not be called
             }
 
