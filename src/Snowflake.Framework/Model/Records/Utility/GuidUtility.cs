@@ -54,7 +54,6 @@ namespace Snowflake.Model.Records.Utility
 
             // comput the hash of the name space ID concatenated with the name (step 4)
             byte[] hash;
-            using (var algorithm = version == 3 ? (HashAlgorithm) MD5.Create() : (HashAlgorithm) SHA1.Create())
             using (var incrementalHash = version == 3
                 ? IncrementalHash.CreateHash(HashAlgorithmName.MD5)
                 : IncrementalHash.CreateHash(HashAlgorithmName.SHA1))
