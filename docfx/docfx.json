@@ -15,7 +15,7 @@
     }
   ],
   "build": {
-    "template": "theme",
+    "template": "theme/docfx",
     "content": [
       {
         "files": [ "**/*.yml" ],
