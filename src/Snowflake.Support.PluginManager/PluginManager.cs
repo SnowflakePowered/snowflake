@@ -175,7 +175,7 @@ namespace Snowflake.Support.PluginManager
             {
                 if (disposing)
                 {
-                    foreach (IPlugin plugin in this.loadedPlugins.Values)
+                    foreach (IPlugin plugin in this.loadedPlugins.Values.SelectMany(i => i))
                     {
                         plugin.Dispose();
                     }

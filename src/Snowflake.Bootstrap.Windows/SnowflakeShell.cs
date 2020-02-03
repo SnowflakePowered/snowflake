@@ -21,7 +21,6 @@ namespace Snowflake.Shell.Windows
 
         internal SnowflakeShell()
         {
-            this.StartCore();
         }
 
         public void StartCore()
