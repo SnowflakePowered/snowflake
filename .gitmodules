@@ -3,3 +3,6 @@
 	url = https://github.com/SnowflakePowered/stone/
 	branch = master
 	shallow = true
+[submodule "docfx/theme"]
+	path = docfx/theme
+	url = https://github.com/SnowflakePowered/snowflake-doc-templates
