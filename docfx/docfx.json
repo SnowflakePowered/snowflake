@@ -1,0 +1,42 @@
+﻿{
+  "metadata": [
+    {
+      "src": [
+        {
+          "files": [ 
+                    "**/Snowflake.Framework.Primitives.csproj",
+                    "**/Snowflake.Framework.csproj",
+                    "**/Snowflake.Framework.Remoting.csproj" ],
+          "exclude": [ "**/bin/**", "**/obj/**" ],
+          "src": "../src"
+        }
+      ],
+      "dest": "obj/api"
+    }
+  ],
+  "build": {
+    "template": "theme",
+    "content": [
+      {
+        "files": [ "**/*.yml" ],
+        "src": "obj/api",
+        "dest": "api"
+      },
+      {
+        "files": [ "articles/**/*.md", "*.md", "toc.yml" ]
+      }
+    ],
+    "resource": [
+      {
+        "files": [ "articles/images/**"]
+      }
+    ],
+    "overwrite": "specs/*.md",
+    "globalMetadata": {
+      "_appTitle": "Snowflake Documentation",
+      "_enableSearch": false,
+      "_disableContribution": true
+    },
+    "dest": "_site"
+  }
+}
