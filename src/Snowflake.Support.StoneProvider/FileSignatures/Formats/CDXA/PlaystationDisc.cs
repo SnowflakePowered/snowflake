@@ -61,7 +61,6 @@ namespace Snowflake.Stone.FileSignatures.Formats.CDXA
         {
             if (!this.disk.Files.ContainsKey("SYSTEM.CNF")) return null;
             var file = this.disk.Files["SYSTEM.CNF"];
-            byte[] buf = new byte[file.Length];
 
             using Stream block = file.OpenFile();
             using MemoryStream cnfMemory = new MemoryStream();

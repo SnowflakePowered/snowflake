@@ -23,7 +23,7 @@ namespace Snowflake.Services.AssemblyLoader
             logger.Info($"Loading module {module.Entry}");
             try
             {
-                var deps = module.ModuleDirectory.EnumerateDirectories().First(d => d.Name == "contents");
+                module.ModuleDirectory.EnumerateDirectories().First(d => d.Name == "contents");
             }
             catch (InvalidOperationException ex)
             {
