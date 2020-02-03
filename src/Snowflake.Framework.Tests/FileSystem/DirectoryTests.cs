@@ -50,10 +50,10 @@ namespace Snowflake.Filesystem.Tests
                 NormalizePath(Path.Combine(temp, "test")));
 
 #pragma warning disable CS0618 // Type or member is obsolete
-            Assert.Equal(NormalizePath(dir.OpenDirectory("dir1").UnsafeGetPath().FullName),
+            Assert.Equal(NormalizePath(dir.OpenDirectory("dir1").UnsafeGetPath().FullName), // lgtm [cs/call-to-obsolete-method]
                 NormalizePath(Path.Combine(temp, "test", "dir1")));
 
-            Assert.Equal(NormalizePath(dir.OpenDirectory("test").OpenDirectory("test").UnsafeGetPath().FullName),
+            Assert.Equal(NormalizePath(dir.OpenDirectory("test").OpenDirectory("test").UnsafeGetPath().FullName), // lgtm [cs/call-to-obsolete-method]
                 NormalizePath(Path.Combine(temp, "test", "test", "test")));
 #pragma warning restore CS0618 // Type or member is obsolete
 

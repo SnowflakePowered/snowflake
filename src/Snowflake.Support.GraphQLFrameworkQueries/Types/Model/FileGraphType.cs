@@ -26,7 +26,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Types.Model
             Field<StringGraphType>("realPath",
                 description: "The real path to the file on the file system.",
 #pragma warning disable CS0618 // Type or member is obsolete
-                resolve: context => context.Source.UnsafeGetFilePath().FullName);
+                resolve: context => context.Source.UnsafeGetFilePath().FullName); // lgtm [cs/call-to-obsolete-method]
 #pragma warning restore CS0618 // Type or member is obsolete
 
             Field<GuidGraphType>("guid",

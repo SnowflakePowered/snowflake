@@ -67,7 +67,7 @@ namespace Snowflake.Framework.Remoting.GraphQL.Attributes
             this.Nullable = nullable;
             this.GraphQlType = nullable ? graphQlType : typeof(NonNullGraphType<>).MakeGenericType(graphQlType);
 #pragma warning disable CS0618 // Type or member is obsolete
-            this.ConvertableType = convertableType;
+            this.ConvertableType = convertableType; // lgtm [cs/call-to-obsolete-method]
 #pragma warning restore CS0618 // Type or member is obsolete
         }
     }

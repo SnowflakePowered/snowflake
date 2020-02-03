@@ -204,10 +204,10 @@ namespace Snowflake.Configuration.Serialization
                     IAbstractConfigurationNode pathNode = key.PathType switch
                     {
 #pragma warning disable CS0618 // Type or member is obsolete
-                        PathType.Directory => new StringConfigurationNode(serializedKey, directory.UnsafeGetPath().FullName),
-                        PathType.File => new StringConfigurationNode(serializedKey, file.UnsafeGetFilePath().FullName),
-                        PathType.Either => file.Created ? new StringConfigurationNode(serializedKey, file.UnsafeGetFilePath().FullName) :
-                            new StringConfigurationNode(serializedKey, directory.UnsafeGetPath().FullName),
+                        PathType.Directory => new StringConfigurationNode(serializedKey, directory.UnsafeGetPath().FullName), // lgtm [cs/call-to-obsolete-method]
+                        PathType.File => new StringConfigurationNode(serializedKey, file.UnsafeGetFilePath().FullName), // lgtm [cs/call-to-obsolete-method]
+                        PathType.Either => file.Created ? new StringConfigurationNode(serializedKey, file.UnsafeGetFilePath().FullName) : // lgtm [cs/call-to-obsolete-method]
+                            new StringConfigurationNode(serializedKey, directory.UnsafeGetPath().FullName), // lgtm [cs/call-to-obsolete-method]
 #pragma warning restore CS0618 // Type or member is obsolete
                         PathType.Raw => new StringConfigurationNode(serializedKey, path),
                         // UnknownConfigurationNodes are ignored in most serializers.
