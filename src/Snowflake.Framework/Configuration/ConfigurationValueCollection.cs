@@ -15,6 +15,7 @@ namespace Snowflake.Configuration
     public class ConfigurationValueCollection : IConfigurationValueCollection
     {
         private IDictionary<string, Dictionary<string, IConfigurationValue>> BackingDictionary { get; }
+        private IDictionary<Guid, (string section, string option, IConfigurationValue value)> ValueBackingDictionary { get; }
 
         /// <summary>
         /// Cache of ensured descriptors
@@ -56,7 +57,7 @@ namespace Snowflake.Configuration
             {
                 var sectionDescType = typeof(ConfigurationSectionDescriptor<>).MakeGenericType(type);
                 var descriptor = Instantiate.CreateInstance(sectionDescType,
-                    new[] {typeof(string)},
+                    new[] { typeof(string) },
                     Expression.Constant(name)) as IConfigurationSectionDescriptor;
                 foreach (var (section, option, value) in values.Where(s => s.section == descriptor?.SectionKey))
                 {
@@ -79,7 +80,7 @@ namespace Snowflake.Configuration
 
             var sectionDescType = typeof(ConfigurationSectionDescriptor<>).MakeGenericType(typeof(T));
             var descriptor = Instantiate.CreateInstance(sectionDescType,
-                new[] {typeof(string)},
+                new[] { typeof(string) },
                 Expression.Constant(sectionName)) as IConfigurationSectionDescriptor;
             foreach (var (option, value) in values)
             {
@@ -98,6 +99,9 @@ namespace Snowflake.Configuration
             var defs = values.GroupBy(p => p.section)
                 .ToDictionary(p => p.Key, p => p.ToDictionary(o => o.option, k => k.value));
             this.BackingDictionary = defs;
+            this.ValueBackingDictionary = values.ToDictionary(p => p.value.Guid, p => p);
+            if (this.BackingDictionaryValueCount != this.ValueBackingDictionary.Count)
+                throw new InvalidOperationException("Number of stored configuration values is inconsistent.");
             this.EnsuredDescriptors = new HashSet<string>();
         }
 
@@ -124,10 +128,13 @@ namespace Snowflake.Configuration
             {
                 if (!this.BackingDictionary[descriptor.SectionKey].ContainsKey(prop.OptionKey))
                 {
-                    this.BackingDictionary[descriptor.SectionKey][prop.OptionKey] =
-                        new ConfigurationValue(prop.Default);
+                    var newConfigurationValue = new ConfigurationValue(prop.Default);
+                    this.BackingDictionary[descriptor.SectionKey][prop.OptionKey] = newConfigurationValue;
+                    this.ValueBackingDictionary[newConfigurationValue.Guid] = (descriptor.SectionKey, prop.OptionKey, newConfigurationValue);
                 }
             }
+            if (descriptor.Options.Any() && this.BackingDictionaryValueCount != this.ValueBackingDictionary.Count)
+                throw new InvalidOperationException("Number of stored configuration values is inconsistent after ensuring descriptor.");
         }
 
         internal void EnsureSectionDefault(IConfigurationSectionDescriptor descriptor, string option)
@@ -144,8 +151,11 @@ namespace Snowflake.Configuration
             if (key != null
                 && !this.BackingDictionary[descriptor.SectionKey].ContainsKey(option))
             {
-                this.BackingDictionary[descriptor.SectionKey][key.OptionKey]
-                    = new ConfigurationValue(key.Default);
+                var newConfigurationValue = new ConfigurationValue(key.Default);
+                this.BackingDictionary[descriptor.SectionKey][key.OptionKey] = newConfigurationValue;
+                this.ValueBackingDictionary[newConfigurationValue.Guid] = (descriptor.SectionKey, key.OptionKey, newConfigurationValue);
+                if (this.BackingDictionaryValueCount != this.ValueBackingDictionary.Count)
+                    throw new InvalidOperationException("Number of stored configuration values is inconsistent after ensuring descriptor.");
             }
         }
 
@@ -159,7 +169,11 @@ namespace Snowflake.Configuration
             }
         }
 
+        private int BackingDictionaryValueCount => this.BackingDictionary.Values.Sum(v => v.Count);
         public Guid Guid { get; }
+
+        public (string? section, string? option, IConfigurationValue? value) this[Guid valueGuid] 
+            => this.ValueBackingDictionary.TryGetValue(valueGuid, out var value) ? value : (null, null, null);
 
         public IEnumerator<(string, string, IConfigurationValue)> GetEnumerator()
         {
