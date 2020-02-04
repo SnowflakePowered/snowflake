@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Snowflake.Configuration;
 using Snowflake.Extensibility.Configuration;
-using Snowflake.Model.Database.Exceptions;
 using Snowflake.Model.Database.Extensions;
 using Snowflake.Model.Database.Models;
 
