@@ -6,7 +6,6 @@
     <AssemblyName>Snowflake.Support.InputEnumerators.Windows</AssemblyName>
     <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
     <_SnowflakeUseDevelopmentSDK>true</_SnowflakeUseDevelopmentSDK>
-
   </PropertyGroup>
 
   <ItemGroup>
