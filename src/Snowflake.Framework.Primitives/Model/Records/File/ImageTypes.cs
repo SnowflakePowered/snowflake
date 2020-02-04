@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Snowflake.Caching
+namespace Snowflake.Model.Records.File
 {
     /// <summary>
     /// Standard types of images.
