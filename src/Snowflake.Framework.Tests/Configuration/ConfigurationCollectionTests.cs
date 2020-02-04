@@ -25,11 +25,14 @@ namespace Snowflake.Configuration.Tests
         [Fact]
         public void StringInitialization_Tests()
         {
+            var isoPath = Guid.NewGuid();
+            var fsR = Guid.NewGuid();
+
             var values = new List<(string, string, (string, Guid))>()
             {
-                ("ExampleConfiguration", "ISOPath0", ("Test", Guid.Empty)),
+                ("ExampleConfiguration", "ISOPath0", ("Test", isoPath)),
                 ("ExampleConfiguration", "FullscreenResolution",
-                    (FullscreenResolution.Resolution1024X600.ToString(), Guid.Empty))
+                    (FullscreenResolution.Resolution1024X600.ToString(), fsR))
             };
 
             var collection =
@@ -39,8 +42,8 @@ namespace Snowflake.Configuration.Tests
             Assert.Equal("Test", configuration.Configuration.ExampleConfiguration.ISOPath0);
             Assert.Equal(FullscreenResolution.Resolution1024X600,
                 configuration.Configuration.ExampleConfiguration.FullscreenResolution);
-            Assert.Equal(Guid.Empty, configuration.Configuration.ExampleConfiguration.Values["ISOPath0"].Guid);
-            Assert.Equal(Guid.Empty,
+            Assert.Equal(isoPath, configuration.Configuration.ExampleConfiguration.Values["ISOPath0"].Guid);
+            Assert.Equal(fsR,
                 configuration.Configuration.ExampleConfiguration.Values["FullscreenResolution"].Guid);
         }
 

@@ -100,22 +100,29 @@ namespace Snowflake.Model.Database
                 value.Value = realValue;
                 context.Entry(value).State = EntityState.Modified;
             }
+            var valueGuids = configurationCollection.ValueCollection.Select(v => v.value.Guid).ToList();
 
-            foreach ((string section, string option, IConfigurationValue configurationValue) in configurationCollection.ValueCollection)
-            {
-                var value = await context.ConfigurationValues.FindAsync(configurationValue.Guid);
-                if (value != null) continue;
+            var alreadyExists = (await context.ConfigurationValues.Where(g => valueGuids.Contains(g.Guid))
+                .Select(g => g.Guid)
+                .ToListAsync())
+                .ToHashSet();
 
-               await context.ConfigurationValues.AddAsync(new ConfigurationValueModel
+            var newValues = valueGuids.Except(alreadyExists)
+                .Select(g =>
                 {
-                    SectionKey = section,
-                    OptionKey = option,
-                    Guid = configurationValue.Guid,
-                    Value = configurationValue.Value.AsConfigurationStringValue(),
-                    ValueCollectionGuid = configurationCollection.ValueCollection.Guid
+                    (string? section, string? option, IConfigurationValue? configurationValue) = configurationCollection.ValueCollection[g];
+                    // Values must not be null because g is from the value collection's GUIDs.
+                    return new ConfigurationValueModel
+                    {
+                        SectionKey = section!,
+                        OptionKey = option!,
+                        Guid = configurationValue!.Guid,
+                        Value = configurationValue!.Value.AsConfigurationStringValue(),
+                        ValueCollectionGuid = configurationCollection.ValueCollection.Guid
+                    };
                 });
-            }
 
+            await context.AddRangeAsync(newValues);
             await context.SaveChangesAsync();
         }
 
