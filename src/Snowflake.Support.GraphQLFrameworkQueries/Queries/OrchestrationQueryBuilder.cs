@@ -9,7 +9,9 @@ using Snowflake.Extensibility;
 using Snowflake.Framework.Remoting.GraphQL.Attributes;
 using Snowflake.Framework.Remoting.GraphQL.Query;
 using Snowflake.Model.Game;
+using Snowflake.Model.Game.LibraryExtensions;
 using Snowflake.Orchestration.Extensibility;
+using Snowflake.Orchestration.Saving;
 using Snowflake.Services;
 using Snowflake.Support.GraphQLFrameworkQueries.Types.PlatformInfo;
 
@@ -21,22 +23,15 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
         public IStoneProvider Stone { get; }
         public IGameLibrary GameLibrary { get; }
         public IEmulatedPortsManager Ports { get; }
-        public InputQueryBuilder InputQueryApi { get; }
-        public ControllerLayoutQueryBuilder ControllerQueryApi { get; }
-
         private ConcurrentDictionary<Guid, IGameEmulation> GameEmulationCache { get; }
 
         public OrchestrationQueryBuilder(IPluginCollection<IEmulatorOrchestrator> orchestrators,
             IStoneProvider stone,
             IGameLibrary library,
-            IEmulatedPortsManager ports,
-            InputQueryBuilder inputQueryBuilder,
-            ControllerLayoutQueryBuilder controllerLayoutQueryBuilder)
+            IEmulatedPortsManager ports)
         {
             this.Orchestrators = orchestrators;
             this.Stone = stone;
-            this.InputQueryApi = inputQueryBuilder;
-            this.ControllerQueryApi = controllerLayoutQueryBuilder;
             this.GameLibrary = library;
             this.Ports = ports;
         }
@@ -56,9 +51,10 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
         [Parameter(typeof(string), typeof(StringGraphType), "orchestratorName", "The name of the orchestrator plugin to use.")]
         [Parameter(typeof(string), typeof(StringGraphType), "configurationProfile", "The name of the configuration profile to use.")]
         [Parameter(typeof(Guid), typeof(GuidGraphType), "gameGuid", "The GUID of the game to launch.")]
-        [Parameter(typeof(bool), typeof(BooleanGraphType), "verify", "Whether or not to verify the game files before launching.", true)]
+        [Parameter(typeof(Guid?), typeof(GuidGraphType), "saveGuid", "The GUID of the save to restore.", true)]
+        [Parameter(typeof(bool), typeof(BooleanGraphType), "verify", "Whether or not to verify the game files before launching.")]
         public async Task<Guid> CreateGameEmulationInstance(string orchestratorName, string configurationProfile, 
-            Guid gameGuid, bool verify = false)
+            Guid gameGuid, Guid? saveGuid = null, bool verify = false)
         {
             var orchestrator = this.Orchestrators[orchestratorName];
             var game = await this.GameLibrary.GetGameAsync(gameGuid);
@@ -73,10 +69,47 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
             {
                 await foreach (var x in orchestrator.ValidateGamePrerequisites(game)) ;
             }
-            var instance = orchestrator.ProvisionEmulationInstance(game, controllers, configurationProfile, null);
+            
+            var save = saveGuid != null ? game.WithFiles().WithSaves().GetSave(saveGuid.Value) : null;
+            var instance = orchestrator.ProvisionEmulationInstance(game, controllers, configurationProfile, save);
             var guid = Guid.NewGuid();
             if (this.GameEmulationCache.TryAdd(guid, instance)) return guid;
             throw new InvalidOperationException("Unable to cache the created game emulation instance!");
+        }
+
+        [Mutation("prepareEmulation", "Calls all hooks for the emulation instance and prepares it for start.", typeof(GuidGraphType))]
+        [Parameter(typeof(Guid), typeof(GuidGraphType), "emulationHandle", "The GUID handle of a created emulation..")]
+        public async Task<Guid> PrepareGameEmulation(Guid emulationHandle)
+        {
+            if (!this.GameEmulationCache.TryGetValue(emulationHandle, out IGameEmulation emulation))
+                throw new KeyNotFoundException("Unable to find the emulation");
+            await emulation.RestoreSaveGame();
+            await emulation.SetupEnvironment();
+            await emulation.CompileConfiguration();
+            return emulationHandle;
+        }
+
+        [Mutation("startEmulation", "Starts an emulation.", typeof(GuidGraphType))]
+        [Parameter(typeof(Guid), typeof(GuidGraphType), "emulationHandle", "The GUID handle of a created emulation..")]
+        public Guid StartGameEmulation(Guid emulationHandle)
+        {
+            // todo save cancellation handle.
+            if (!this.GameEmulationCache.TryGetValue(emulationHandle, out IGameEmulation emulation))
+                throw new KeyNotFoundException("Unable to find the emulation");
+            var cancel = emulation.StartEmulation();
+            cancel.Register(async () => await emulation.DisposeAsync());
+            return emulationHandle;
+        }
+
+        [Mutation("stopEmulation", "Safely halts an emulation.", typeof(GuidGraphType))]
+        [Parameter(typeof(Guid), typeof(GuidGraphType), "emulationHandle", "The GUID handle of a created emulation.")]
+        public Guid StopGameEmulation(Guid emulationHandle)
+        {
+            // todo save cancellation handle.
+            if (!this.GameEmulationCache.TryGetValue(emulationHandle, out IGameEmulation emulation))
+                throw new KeyNotFoundException("Unable to find the emulation");
+            emulation.StopEmulation();
+            return emulationHandle;
         }
     }
 }
