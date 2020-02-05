@@ -11,6 +11,9 @@ using Snowflake.JsonConverters;
 
 namespace Snowflake.Configuration.Input
 {
+    /// <summary>
+    /// A JSON deseriazable input mapping backed by a simple dictionary lookup.
+    /// </summary>
     [JsonConverter(typeof(InputMappingConverter))]
     public class DictionaryInputMapping : IDeviceInputMapping
     {
@@ -37,6 +40,10 @@ namespace Snowflake.Configuration.Input
             }
         }
 
+        /// <summary>
+        /// Instantiate an input mapping with the given dictionary of mappings.
+        /// </summary>
+        /// <param name="elementMappings">The dictionary of mappings from <see cref="DeviceCapability"/> to input configuration string.</param>
         public DictionaryInputMapping(IDictionary<DeviceCapability, string> elementMappings)
         {
             this.elementMappings = elementMappings;

@@ -176,8 +176,19 @@
             Cache of ensured descriptors
             </summary>
         </member>
+        <member name="T:Snowflake.Configuration.Input.DictionaryInputMapping">
+            <summary>
+            A JSON deseriazable input mapping backed by a simple dictionary lookup.
+            </summary>
+        </member>
         <member name="P:Snowflake.Configuration.Input.DictionaryInputMapping.Item(Snowflake.Input.Device.DeviceCapability)">
             <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Configuration.Input.DictionaryInputMapping.#ctor(System.Collections.Generic.IDictionary{Snowflake.Input.Device.DeviceCapability,System.String})">
+            <summary>
+            Instantiate an input mapping with the given dictionary of mappings.
+            </summary>
+            <param name="elementMappings">The dictionary of mappings from <see cref="T:Snowflake.Input.Device.DeviceCapability"/> to input configuration string.</param>
         </member>
         <member name="P:Snowflake.Configuration.Input.InputConfigurationSection`1.Configuration">
             <inheritdoc/>

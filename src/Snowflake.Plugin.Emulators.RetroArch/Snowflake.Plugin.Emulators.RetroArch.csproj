@@ -30,7 +30,10 @@
     <None Update="resource\common\inputmappings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="resource\RetroArchBsnes\plugin.json">
+    <None Update="resource\RetroArch-Bsnes\plugin.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="resource\RetroArch-Bsnes\ports.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
