@@ -15,11 +15,7 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.PackTask
 
         public static string GetRelativePathTo(this FileSystemInfo from, FileSystemInfo to)
         {
-            Func<FileSystemInfo, string> getPath = fsi =>
-            {
-                var d = fsi as DirectoryInfo;
-                return d == null ? fsi.FullName : d.FullName.TrimEnd('\\') + "\\";
-            };
+            Func<FileSystemInfo, string> getPath = fsi => !(fsi is DirectoryInfo d) ? fsi.FullName : d.FullName.TrimEnd('\\') + "\\";
 
             var fromPath = getPath(from);
             var toPath = getPath(to);

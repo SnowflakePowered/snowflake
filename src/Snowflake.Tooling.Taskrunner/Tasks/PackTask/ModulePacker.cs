@@ -72,7 +72,7 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.PackTask
             defReader.Position = 0;
             await defReader.CopyToAsync(snowballArchive, 1024).ConfigureAwait(false);
             snowballArchive.CloseEntry();
-
+            rsa.Dispose();
             return Path.Combine(outputDirectory.FullName, $"{this.GetPackageName()}.snowpkg");
         }
 
