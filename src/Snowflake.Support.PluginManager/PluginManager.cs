@@ -26,6 +26,9 @@ namespace Snowflake.Support.PluginManager
         private readonly IDictionary<Type, IImmutableList<IPlugin>> loadedPlugins;
         private readonly IPluginConfigurationStore configurationStore;
         private readonly IFileSystem rootFs;
+
+        public ILogger Logger { get; }
+
         /// <summary>
         /// Initializes the default plugin manager.
         /// </summary>
@@ -43,6 +46,7 @@ namespace Snowflake.Support.PluginManager
             this.loadedPlugins = new Dictionary<Type, IImmutableList<IPlugin>>();
             this.configurationStore = databaseProvider;
             this.rootFs = rootFs;
+            this.Logger = this.logProvider.GetLogger("PluginManager");
         }
 
         /// <inheritdoc/>
@@ -135,14 +139,17 @@ namespace Snowflake.Support.PluginManager
             if (!this.loadedPlugins.ContainsKey(typeof(T)))
             {
                 this.loadedPlugins.Add(typeof(T), ImmutableList<IPlugin>.Empty);
+                this.Logger.Info($"Found new plugin type {typeof(T).Name}.");
             }
 
             if (this.IsRegistered(plugin.Name))
             {
+                this.Logger.Error($"Plugin {plugin.Name} is already registered.");
                 throw new InvalidOperationException($"Plugin {plugin.Name} is already registered.");
             }
 
             this.loadedPlugins[typeof(T)] = this.loadedPlugins[typeof(T)].Add(plugin);
+            this.Logger.Info($"Registered {typeof(T).Name} plugin {plugin.Name}.");
         }
 
         /// <inheritdoc/>
@@ -178,6 +185,7 @@ namespace Snowflake.Support.PluginManager
                     foreach (IPlugin plugin in this.loadedPlugins.Values.SelectMany(i => i))
                     {
                         plugin.Dispose();
+                        this.Logger.Info($"Disposed plugin {plugin.Name}.");
                     }
                 }
 
