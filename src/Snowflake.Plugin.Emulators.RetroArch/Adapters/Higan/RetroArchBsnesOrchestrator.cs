@@ -17,14 +17,14 @@ using Snowflake.Configuration;
 
 namespace Snowflake.Adapters.Higan
 {
-    [Plugin("RetroArch-BsnesExecutor")]
-    public class RetroArchBsnesExecutor : EmulatorOrchestrator
+    [Plugin("RetroArch-Bsnes")]
+    public class RetroArchBsnesOrchestrator : EmulatorOrchestrator
     {
-        public RetroArchBsnesExecutor(IEmulatorExecutable retroArchExecutable, IPluginProvision provision)
+        public RetroArchBsnesOrchestrator(IEmulatorExecutable retroArchExecutable, IPluginProvision provision)
             : base(provision)
         {
             this.RetroArchExecutable = retroArchExecutable;
-            var mapping = JsonConvert.DeserializeObject<IDeviceInputMapping>
+            var mapping = JsonConvert.DeserializeObject<DictionaryInputMapping>
                 (this.Provision.CommonResourceDirectory.OpenFile("inputmappings.json").ReadAllText());
             this.Mappings = new Dictionary<InputDriverType, IDeviceInputMapping>()
                 {
@@ -40,13 +40,13 @@ namespace Snowflake.Adapters.Higan
         public override IConfigurationCollection CreateGameConfiguration(IGame game, string profile)
         {
             return game.WithConfigurations()
-                .CreateNewProfile<HiganRetroArchConfiguration>(nameof(RetroArchBsnesExecutor), profile);
+                .CreateNewProfile<HiganRetroArchConfiguration>(nameof(RetroArchBsnesOrchestrator), profile);
         }
 
         public override IConfigurationCollection GetGameConfigurationValues(IGame game, string profile)
         {
             return game.WithConfigurations()
-                .GetProfile<HiganRetroArchConfiguration>(nameof(RetroArchBsnesExecutor), profile);
+                .GetProfile<HiganRetroArchConfiguration>(nameof(RetroArchBsnesOrchestrator), profile);
         }
 
         public override IGameEmulation 
@@ -54,7 +54,7 @@ namespace Snowflake.Adapters.Higan
             string configurationProfileName, ISaveProfile saveProfile)
         {
             var configuration = game.WithConfigurations()
-                .GetProfile<HiganRetroArchConfiguration>(nameof(RetroArchBsnesExecutor), 
+                .GetProfile<HiganRetroArchConfiguration>(nameof(RetroArchBsnesOrchestrator), 
                 configurationProfileName);
             var gameEmulation = new RetroArchBsnesGameEmulation(game,
                 configuration.Configuration,
