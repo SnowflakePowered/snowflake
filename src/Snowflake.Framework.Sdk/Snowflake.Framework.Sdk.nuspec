@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>Snowflake.Framework.Sdk</id>
-    <version>3.0.0</version>
+    <version>1.0.0-alpha.latest</version>
     <authors>Snowflake Developers</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MPL-2.0</license>
@@ -16,7 +16,6 @@
   </metadata>
 
   <files>
-    <file src="Sdk\*" target="Sdk" />
-    <file src="$outputpath$\**" target="\" />
+      <file src="Snowflake.Framework.Sdk.props" target="build\netcoreapp3.1\" />
   </files>
 </package>
