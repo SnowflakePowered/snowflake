@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Snowflake.Framework.Sdk" Version="1.0.0-alpha.latest"/>
+    <PackageReference Include="Snowflake.Framework.Sdk" Version="1.0.5-alpha.latest"/>
   </ItemGroup>
 
   <ItemGroup>
