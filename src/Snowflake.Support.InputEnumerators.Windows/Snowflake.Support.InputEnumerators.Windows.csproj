@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Snowflake.Framework.Sdk" Version="1.0.0-alpha.latest"/>
+    <PackageReference Include="Snowflake.Framework.Sdk" Version="1.0.5-alpha.latest"/>
     <PackageReference Include="SharpDX" Version="4.2.0" />
     <PackageReference Include="SharpDX.DirectInput" Version="4.2.0" />
     <PackageReference Include="SharpDX.XInput" Version="4.2.0" />

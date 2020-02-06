@@ -11,7 +11,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="Snowflake.Framework.Sdk" Version="1.0.0-alpha.latest"/>
+    <PackageReference Include="Snowflake.Framework.Sdk" Version="1.0.5-alpha.latest"/>
     <PackageReference Include="GraphQL.Server.Ui.Altair" Version="3.5.0-alpha0043" />
     <PackageReference Include="GraphQL.Server.Ui.GraphiQL" Version="3.5.0-alpha0043" />
     <PackageReference Include="GraphQL.Server.Ui.Playground" Version="3.5.0-alpha0043" />

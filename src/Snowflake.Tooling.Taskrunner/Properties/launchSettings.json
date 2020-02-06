@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Snowflake.Tooling.Taskrunner": {
+      "commandName": "Project"
+    },
+    "BuildTest": {
+      "commandName": "Project",
+      "commandLineArgs": "build",
+      "workingDirectory": "C:\\Users\\ronny\\coding\\snowflake\\src\\Snowflake.Support.GraphQLFrameworkQueries"
+    }
+  }
+}

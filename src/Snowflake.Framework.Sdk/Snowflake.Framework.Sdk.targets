@@ -1,0 +1,10 @@
+<Project ToolsVersion="15.0"> 
+  <Target Name="EnsureTFMCompatibility" BeforeTargets="_CheckForInvalidConfigurationAndPlatform">
+    <Error
+      Text="This version of Snowflake.Framework.Library is only compatible with the netcoreapp3.1 target framework. Please target netcoreapp3.1."
+      Condition="'$(TargetFramework)' != 'netcoreapp3.1'"/>
+  </Target>
+  <Target Name="CopyModuleManifest" AfterTargets="Build" Condition="Exists('$(ProjectDir)module.json')">
+    <Copy SourceFiles="$(ProjectDir)module.json" DestinationFolder="$(OutDir)"/>
+  </Target>
+</Project>

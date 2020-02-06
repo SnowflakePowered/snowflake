@@ -12,7 +12,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="Snowflake.Framework.Sdk" Version="1.0.0-alpha.latest"/>
+    <PackageReference Include="Snowflake.Framework.Sdk" Version="1.0.5-alpha.latest"/>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.1" />
   </ItemGroup>
   <PropertyGroup>

@@ -7,13 +7,10 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <PackageReference Include="Snowflake.Framework.Sdk" Version="1.0.0-alpha.latest"/>
+    <PackageReference Include="Snowflake.Framework.Sdk" Version="1.0.5-alpha.latest" />
     <AdditionalFiles Include="..\stylecop.json" />
   </ItemGroup>
-  
-<ItemGroup>
-  <Folder Include="Types\Execution\" />
-</ItemGroup>
+ 
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\Snowflake.ruleset</CodeAnalysisRuleSet>
     <NoWarn>1701;1702;1591;</NoWarn>

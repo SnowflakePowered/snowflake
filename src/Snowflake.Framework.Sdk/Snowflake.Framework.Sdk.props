@@ -22,8 +22,8 @@
     <ProjectReference Include="..\Snowflake.Framework.Services\Snowflake.Framework.Services.csproj" />
   </ItemGroup>
 
-  <ItemGroup Condition="Exists('module.json')">
-    <None Update="module.json">
+  <ItemGroup>
+    <None Update="$(ProjectDir)module.json" Condition="Exists('$(ProjectDir)module.json')">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
