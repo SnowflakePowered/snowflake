@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Snowflake.Framework.Sdk" Version="1.0.5-alpha.latest"/>
+    <PackageReference Include="Snowflake.Framework.Sdk" Version="1.0.6-alpha.latest"/>
     <PackageReference Include="MimeMapping" Version="1.0.1.26" />
     <PackageReference Include="Quamotion.DiscUtils.Core" Version="0.15.4" />
     <PackageReference Include="Quamotion.DiscUtils.Iso9660" Version="0.15.4" />
