@@ -1,4 +1,4 @@
-﻿<Project Sdk="Snowflake.Framework.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -6,8 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Snowflake.Framework.Sdk" Version="1.0.0-alpha.latest"/>
+  </ItemGroup>
+
+  <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json" />
   </ItemGroup>
+  
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\Snowflake.ruleset</CodeAnalysisRuleSet>
     <LangVersion>8.0</LangVersion>

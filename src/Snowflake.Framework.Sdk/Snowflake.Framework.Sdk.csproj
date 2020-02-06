@@ -8,7 +8,6 @@
     <IncludeSymbols>false</IncludeSymbols>
     <PackageTags>snowflake</PackageTags>
     <Description>Snowflake.Framework.Sdk</Description>
-
     <NuspecFile>$(MSBuildProjectName).nuspec</NuspecFile>
 
   </PropertyGroup>
@@ -17,4 +16,11 @@
     <Content Include="Sdk\*.props" PackagePath="%(Identity)" />
     <Content Include="Sdk\*.targets" PackagePath="%(Identity)" />
   </ItemGroup>
+
+  <PropertyGroup>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <GenerateRuntimeConfigurationFiles>false</GenerateRuntimeConfigurationFiles>
+    <NoPackageAnalysis>true</NoPackageAnalysis>
+    <NoBuild>true</NoBuild>
+  </PropertyGroup>
 </Project>

@@ -1,10 +1,11 @@
-<Project Sdk="Snowflake.Framework.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <_SnowflakeUseDevelopmentSDK>true</_SnowflakeUseDevelopmentSDK>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Snowflake.Framework.Sdk" Version="1.0.0-alpha.latest"/>
     <AdditionalFiles Include="..\stylecop.json" />
   </ItemGroup>
   <PropertyGroup>
