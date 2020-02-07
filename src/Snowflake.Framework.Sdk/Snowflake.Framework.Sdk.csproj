@@ -9,7 +9,6 @@
     <PackageTags>snowflake</PackageTags>
     <Description>Snowflake.Framework.Sdk</Description>
     <NuspecFile>$(MSBuildProjectName).nuspec</NuspecFile>
-
   </PropertyGroup>
 
   <ItemGroup>

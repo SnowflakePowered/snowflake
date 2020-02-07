@@ -5,7 +5,7 @@
     <_SnowflakeUseDevelopmentSDK>true</_SnowflakeUseDevelopmentSDK>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Snowflake.Framework.Sdk" Version="1.0.6-alpha.latest"/>
+    <PackageReference Include="Snowflake.Framework.Sdk" Version="1.0.10-alpha.latest"/>
     <AdditionalFiles Include="..\stylecop.json" />
   </ItemGroup>
   <PropertyGroup>

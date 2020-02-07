@@ -2,10 +2,13 @@
 
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003"> 
   <PropertyGroup>
-    <_SnowflakeUseDevelopmentSDK>false</_SnowflakeUseDevelopmentSDK>
+    <SnowflakePackageType>assembly</SnowflakePackageType>
     <SnowflakeSDKAssembliesVersion>1.0.0-alpha.*</SnowflakeSDKAssembliesVersion>
     <SnowflakeSDKToolingVersion>2.*</SnowflakeSDKToolingVersion>
     <SnowflakeProject>true</SnowflakeProject>
+    <Configurations>Debug;Release;Debug-Module;Release-Module</Configurations>
+    <_SnowflakeUseDevelopmentSDK>false</_SnowflakeUseDevelopmentSDK>
+    <_SnowflakeModuleOutName>$(SnowflakePackageType).$(AssemblyName)</_SnowflakeModuleOutName>
   </PropertyGroup>
 
   <ItemGroup Condition=" '$(_SnowflakeUseDevelopmentSDK)' == 'false' ">
@@ -27,4 +30,20 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+
+  <!-- Need to explicitly set these properties for the -netcoreapp3_0 or -netfx configurations becuase they are typically based off 'Debug' or 'Release' configs -->
+  <!-- Taken from https://github.com/dotnet/sdk/blob/073c98b92c81066c6c2e17c3674adbb6e833409a/src/Tasks/Microsoft.NET.Build.Tasks/targets/Microsoft.NET.Sdk.props#L41-L47 -->
+  <PropertyGroup Condition="$(Configuration.StartsWith('Debug'))">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineConstants>$(DefineContants);DEBUG</DefineConstants>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition="$(Configuration.StartsWith('Release'))">
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(Configuration.EndsWith('-Module'))">
+    <PublishDir>bin\module\$(_SnowflakeModuleOutName)\contents</PublishDir>
+    <_SnowflakeModuleDir>bin\module\$(_SnowflakeModuleOutName)</_SnowflakeModuleDir>
+  </PropertyGroup>
 </Project>
