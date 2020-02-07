@@ -40,4 +40,13 @@
           Condition="$(Configuration.EndsWith('-Module')) And Exists('$(ProjectDir)module.json')">
     <Copy SourceFiles="$(ProjectDir)module.json" DestinationFolder="$(_SnowflakeModuleDir)"/>
   </Target>
+
+  <Target Name="EchoSuccess" AfterTargets="CopyModuleManifestOnModuleBuild" 
+          Condition="$(Configuration.EndsWith('-Module'))">
+    <ConvertToAbsolutePath Paths="$(_SnowflakeModuleDir)">
+      <Output TaskParameter="AbsolutePaths" PropertyName="__SnowflakeBuildFullPath"/>
+    </ConvertToAbsolutePath>
+    <Message Importance="high" Text="Built Snowflake assembly module at"/>
+    <Message Importance="high" Text="    $(__SnowflakeBuildFullPath)"/>
+  </Target>
 </Project>

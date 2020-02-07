@@ -10,6 +10,7 @@
     <Version>2.2.0</Version>
     <StartupObject />
     <LangVersion>8.0</LangVersion>
+    <PackageIcon>PackageIcon.png</PackageIcon>
   </PropertyGroup>
   
   <PropertyGroup>
@@ -25,6 +26,7 @@
     <Compile Remove="Tasks\InstallProjectTask\**" />
     <EmbeddedResource Remove="Tasks\InstallProjectTask\**" />
     <None Remove="Tasks\InstallProjectTask\**" />
+    <None Include="PackageIcon.png" Pack="true" PackagePath="\"/>
   </ItemGroup>
   
   <ItemGroup>
