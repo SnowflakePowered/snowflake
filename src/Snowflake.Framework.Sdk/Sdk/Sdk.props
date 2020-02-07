@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003"> 
+  <Import Sdk="Microsoft.NET.Sdk" Project="Sdk.props" />
+
   <PropertyGroup>
     <SnowflakePackageType>assembly</SnowflakePackageType>
     <SnowflakeSDKAssembliesVersion>1.0.0-alpha.*</SnowflakeSDKAssembliesVersion>
@@ -29,7 +31,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-
   <!-- Need to explicitly set these properties for the -netcoreapp3_0 or -netfx configurations becuase they are typically based off 'Debug' or 'Release' configs -->
   <!-- Taken from https://github.com/dotnet/sdk/blob/073c98b92c81066c6c2e17c3674adbb6e833409a/src/Tasks/Microsoft.NET.Build.Tasks/targets/Microsoft.NET.Sdk.props#L41-L47 -->
   <PropertyGroup Condition="$(Configuration.StartsWith('Debug'))">
@@ -40,4 +41,12 @@
   <PropertyGroup Condition="$(Configuration.StartsWith('Release'))">
     <Optimize>true</Optimize>
   </PropertyGroup>
+  
+  <PropertyGroup Condition="$(Configuration.EndsWith('-Module'))">
+    <_SnowflakeModuleOutName>$(SnowflakePackageType).$(AssemblyName)</_SnowflakeModuleOutName>
+    <_SnowflakeModuleOutDir>bin\module</_SnowflakeModuleOutDir>
+    <_SnowflakeModuleDir>$(_SnowflakeModuleOutDir)\$(_SnowflakeModuleOutName)</_SnowflakeModuleDir>
+    <PublishDir>$(_SnowflakeModuleDir)\contents</PublishDir>
+  </PropertyGroup>
+  
 </Project>

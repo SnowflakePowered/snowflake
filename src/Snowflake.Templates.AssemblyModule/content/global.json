@@ -3,7 +3,6 @@
     "version": "3.1.100"
   },
   "msbuild-sdks": {
-    "Snowflake.Framework.Dependencies.Sdk": "2.0.0",
     "Snowflake.Framework.Sdk": "3.1.0"
   }
 }
