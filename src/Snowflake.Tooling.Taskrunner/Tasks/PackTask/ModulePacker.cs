@@ -23,7 +23,8 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.PackTask
             this.ModuleDefinition = moduleDefinition;
         }
 
-        private string GetPackageName() => $"{this.ModuleDefinition.Loader}.{this.ModuleDirectory.Name}";
+        private string GetPackageName() => this.ModuleDirectory.Name.StartsWith($"{this.ModuleDefinition.Loader}.") ?
+            this.ModuleDirectory.Name : $"{this.ModuleDefinition.Loader}.{this.ModuleDirectory.Name}";
 
         private byte[] GetSHA512(FileStream archive)
         {
