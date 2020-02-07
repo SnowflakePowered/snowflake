@@ -1,13 +1,28 @@
-<Project ToolsVersion="15.0"> 
+<Project ToolsVersion="15.0">
+  <PropertyGroup Condition="$(Configuration.EndsWith('-Module'))">
+    <_SnowflakeModuleOutName>$(SnowflakePackageType).$(AssemblyName)</_SnowflakeModuleOutName>
+    <_SnowflakeModuleDir>bin\module\$(_SnowflakeModuleOutName)</_SnowflakeModuleDir>
+    <PublishDir>$(_SnowflakeModuleDir)\contents</PublishDir>
+  </PropertyGroup>
+  
   <Target Name="EnsureTFMCompatibility" BeforeTargets="_CheckForInvalidConfigurationAndPlatform">
     <Error
-      Text="This version of Snowflake.Framework.Library is only compatible with the netcoreapp3.1 target framework. Please target netcoreapp3.1."
+      Text="Snowflake.Framework.Sdk is only compatible with the target framework netcoreapp3.1. Please target netcoreapp3.1."
       Condition="'$(TargetFramework)' != 'netcoreapp3.1'"/>
+  </Target>
+  <Target Name="WarnWithoutModuleManifest" BeforeTargets="_CheckForInvalidConfigurationAndPlatform">
+    <Warning
+      Text="This project does not have a module.json manifest, and will not be loadable by Snowflake."
+      Condition="!Exists('$(ProjectDir)module.json')"/>
   </Target>
   <Target Name="CopyModuleManifest" AfterTargets="Build" Condition="Exists('$(ProjectDir)module.json')">
     <Copy SourceFiles="$(ProjectDir)module.json" DestinationFolder="$(OutDir)"/>
   </Target>
   <Target Name="CopyModuleManifestOnPublish" AfterTargets="Publish" Condition="Exists('$(ProjectDir)module.json')">
     <Copy SourceFiles="$(ProjectDir)module.json" DestinationFolder="$(PublishDir)"/>
+  </Target>
+  <Target Name="CopyModuleManifestOnModuleBuild" AfterTargets="Publish" 
+          Condition="$(Configuration.EndsWith('-Module')) And Exists('$(ProjectDir)module.json')">
+    <Copy SourceFiles="$(ProjectDir)module.json" DestinationFolder="$(_SnowflakeModuleDir)"/>
   </Target>
 </Project>
