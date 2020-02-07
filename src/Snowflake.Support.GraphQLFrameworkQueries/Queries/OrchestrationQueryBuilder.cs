@@ -111,5 +111,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
             emulation.StopEmulation();
             return emulationHandle;
         }
+
+
     }
 }
