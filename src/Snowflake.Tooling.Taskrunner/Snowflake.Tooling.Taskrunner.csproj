@@ -7,7 +7,7 @@
     <RootNamespace>Snowflake.Tooling.Taskrunner</RootNamespace>
     <OutputType>Exe</OutputType>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>2.1.0</Version>
+    <Version>2.2.0</Version>
     <StartupObject />
     <LangVersion>8.0</LangVersion>
   </PropertyGroup>
@@ -33,5 +33,4 @@
     <PackageReference Include="SharpZipLib" Version="1.2.0" />
     <PackageReference Include="System.Interactive" Version="4.0.0" />
   </ItemGroup>
-
 </Project>

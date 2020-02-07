@@ -76,15 +76,15 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.AssemblyModuleBuilderTask
                 throw new InvalidOperationException($"Error! Assembly modules must target framework netcoreapp3.1");
             }
 
-            Console.WriteLine($"Found module {module.Entry}");
-            var builder = new DotNetBuilder(module, projectFile, arguments.OutputDirectory, arguments.MsbuildArgs);
+            Console.WriteLine($"Found \"{module.Name}\" with entry {module.Entry}");
+            var builder = new DotNetBuilder(module, projectFile, arguments.OutputDirectory, arguments.ReleaseBuild, arguments.MsbuildArgs);
 
             Console.WriteLine("Cleaning and building module...");
 
             try
             {
-                DirectoryInfo buildResult = await builder.Build();
-                Console.WriteLine($"Finished building module at {Environment.NewLine} {buildResult.FullName}");
+                await builder.Build();
+                Console.WriteLine($"Finished building module {module.Entry}");
                 return 0;
             }
             catch (Exception ex)

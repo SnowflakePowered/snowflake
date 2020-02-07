@@ -15,8 +15,10 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.AssemblyModuleBuilderTasks
         private readonly ModuleDefinition moduleDefinition;
         private readonly IEnumerable<string> args;
         private readonly string outputDirectory;
+        private readonly bool release;
 
         public DotNetBuilder(ModuleDefinition moduleDefinition, FileInfo projectFile, string outputDirectory,
+            bool release,
             string args)
         {
             this.dotnetProcess = new ProcessStartInfo()
@@ -27,46 +29,16 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.AssemblyModuleBuilderTasks
             this.projectFile = projectFile;
             this.moduleDefinition = moduleDefinition;
             this.outputDirectory = outputDirectory;
+            this.release = release;
             this.args = args.Split(' ');
         }
 
-        public DirectoryInfo Clean()
+        public async Task Build()
         {
-            var outputDirectory = this.outputDirectory != null
-                ? new DirectoryInfo(Path.GetFullPath(this.outputDirectory))
-                    .CreateSubdirectory(Path.GetFileNameWithoutExtension(moduleDefinition.Entry))
-                : projectFile.Directory
-                    .CreateSubdirectory("bin")
-                    .CreateSubdirectory("module")
-                    .CreateSubdirectory(Path.GetFileNameWithoutExtension(moduleDefinition.Entry));
-
-            try
-            {
-                foreach (var dir in outputDirectory.EnumerateDirectories())
-                {
-                    dir.Delete(true);
-                }
-
-                foreach (var file in outputDirectory.EnumerateFiles())
-                {
-                    file.Delete();
-                }
-            }
-            catch (IOException ex)
-            {
-                throw new IOException("Unable to clean output directory, is it in use?", ex);
-            }
-
-            return outputDirectory.CreateSubdirectory("contents");
-        }
-
-        public async Task<DirectoryInfo> Build()
-        {
-            var moduleContents = this.Clean();
-            var dotnetArgs = this.args
-                .Prepend(moduleContents.FullName)
-                .Prepend("-o")
-                .Prepend(projectFile.FullName)
+            var dotnetArgs = (this.outputDirectory != null ? this.args.Prepend($"/p:_SnowflakeModuleOutDir={this.outputDirectory}") : this.args)
+                .Prepend(this.release ? "Release-Module" : "Debug-Module")
+                .Prepend("-c")
+                .Prepend($"\"{projectFile.FullName}\"")
                 .Prepend("publish");
             this.dotnetProcess.Arguments = String.Join(" ", dotnetArgs);
             this.dotnetProcess.RedirectStandardOutput = true;
@@ -80,13 +52,6 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.AssemblyModuleBuilderTasks
             if (output.ExitCode != 0)
                 throw new InvalidOperationException(
                     "Unable to build module; MSBuild was unable to build your assembly.");
-            return this.CopyModuleFile(moduleContents).Directory;
-        }
-
-        public FileInfo CopyModuleFile(DirectoryInfo contentsDirectory)
-        {
-            var moduleFile = contentsDirectory.EnumerateFiles().FirstOrDefault(f => f.Name == "module.json");
-            return moduleFile.CopyTo(Path.Combine(moduleFile.Directory.Parent.FullName, moduleFile.Name));
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.PackTask
                 var currentModuleDir = DirectoryProvider.WorkingDirectory
                     .CreateSubdirectory("bin")
                     .CreateSubdirectory("module")
-                    .CreateSubdirectory(Path.GetFileNameWithoutExtension(Project.Name));
+                    .CreateSubdirectory($"assembly.{Path.GetFileNameWithoutExtension(Project.Name)}");
                 arguments.ModuleDirectory = currentModuleDir.FullName;
             }
 
