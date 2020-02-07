@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Snowflake.Framework.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Snowflake.Framework.Sdk" Version="1.0.12-alpha.latest"/>
     <PackageReference Include="Snowflake.SupportLibraries.GiantBomb.Api" Version="2.5.0" />
   </ItemGroup>
 </Project>

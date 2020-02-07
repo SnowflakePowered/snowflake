@@ -7,7 +7,7 @@
     <RootNamespace>Snowflake.Tooling.Taskrunner</RootNamespace>
     <OutputType>Exe</OutputType>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>2.2.0</Version>
+    <Version>2.2.1</Version>
     <StartupObject />
     <LangVersion>8.0</LangVersion>
     <PackageIcon>PackageIcon.png</PackageIcon>

@@ -1,11 +1,6 @@
 <Project ToolsVersion="15.0">
-  <PropertyGroup Condition="$(Configuration.EndsWith('-Module'))">
-    <_SnowflakeModuleOutName>$(SnowflakePackageType).$(AssemblyName)</_SnowflakeModuleOutName>
-    <_SnowflakeModuleOutDir>bin\module</_SnowflakeModuleOutDir>
-    <_SnowflakeModuleDir>$(_SnowflakeModuleOutDir)\$(_SnowflakeModuleOutName)</_SnowflakeModuleDir>
-    <PublishDir>$(_SnowflakeModuleDir)\contents</PublishDir>
-  </PropertyGroup>
-  
+  <Import Sdk="Microsoft.NET.Sdk" Project="Sdk.targets" />
+   
   <Target Name="EnsureTFMCompatibility" BeforeTargets="_CheckForInvalidConfigurationAndPlatform">
     <Error
       Text="Snowflake.Framework.Sdk is only compatible with the target framework netcoreapp3.1. Please target netcoreapp3.1."
@@ -49,4 +44,5 @@
     <Message Importance="high" Text="Built Snowflake assembly module at"/>
     <Message Importance="high" Text="    $(__SnowflakeBuildFullPath)"/>
   </Target>
+
 </Project>
