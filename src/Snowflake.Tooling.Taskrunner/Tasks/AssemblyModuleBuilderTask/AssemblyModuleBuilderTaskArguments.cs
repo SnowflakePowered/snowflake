@@ -14,7 +14,10 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.AssemblyModuleBuilderTask
             "The directory where the module sources are located. Defaults to the current working directory.")]
         public string SourceDirectory { get; set; }
 
-        [NamedArgument("a", "arguments", "The arguments to pass to MSBuild.")]
+        [NamedArgument("r", "release", "Publish a release build")]
+        public bool ReleaseBuild { get; set; } = false;
+
+        [NamedArgument("a", "arguments", "The arguments to pass to MSBuild. Use with caution.")]
         public string MsbuildArgs { get; set; } = "";
     }
 }
