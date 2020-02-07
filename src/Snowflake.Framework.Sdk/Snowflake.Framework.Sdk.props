@@ -8,7 +8,6 @@
     <SnowflakeProject>true</SnowflakeProject>
     <Configurations>Debug;Release;Debug-Module;Release-Module</Configurations>
     <_SnowflakeUseDevelopmentSDK>false</_SnowflakeUseDevelopmentSDK>
-    <_SnowflakeModuleOutName>$(SnowflakePackageType).$(AssemblyName)</_SnowflakeModuleOutName>
   </PropertyGroup>
 
   <ItemGroup Condition=" '$(_SnowflakeUseDevelopmentSDK)' == 'false' ">
@@ -40,10 +39,5 @@
   </PropertyGroup>
   <PropertyGroup Condition="$(Configuration.StartsWith('Release'))">
     <Optimize>true</Optimize>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="$(Configuration.EndsWith('-Module'))">
-    <PublishDir>bin\module\$(_SnowflakeModuleOutName)\contents</PublishDir>
-    <_SnowflakeModuleDir>bin\module\$(_SnowflakeModuleOutName)</_SnowflakeModuleDir>
   </PropertyGroup>
 </Project>
