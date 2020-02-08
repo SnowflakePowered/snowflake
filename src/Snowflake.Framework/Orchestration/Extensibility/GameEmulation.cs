@@ -18,14 +18,14 @@ namespace Snowflake.Orchestration.Extensibility
 
         public IEnumerable<IEmulatedController> ControllerPorts { get; }
 
-        public ISaveGame? InitialSave { get; }
+        public ISaveProfile SaveProfile { get; }
         public GameEmulation(IGame game,
             IEnumerable<IEmulatedController> controllerPorts,
-            ISaveGame? initialSave)
+            ISaveProfile saveProfile)
         {
             this.Game = game;
             this.ControllerPorts = controllerPorts;
-            this.InitialSave = initialSave;
+            this.SaveProfile = saveProfile;
         }
 
         public abstract Task SetupEnvironment();
@@ -64,7 +64,7 @@ namespace Snowflake.Orchestration.Extensibility
         public GameEmulation(IGame game,
            TConfigurationCollection configuration,
            IEnumerable<IEmulatedController> controllerPorts,
-           ISaveGame? initialSave) : base(game, controllerPorts, initialSave)
+           ISaveProfile saveProfile) : base(game, controllerPorts, saveProfile)
         {
             this.ConfigurationProfile = configuration;
         }

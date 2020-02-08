@@ -32,10 +32,10 @@ namespace Snowflake.Orchestration.Extensibility
         /// If this is null, then the implementation is responsible for creating a blank initial save game state
         /// in <see cref="RestoreSaveGame"/>.
         /// </summary>
-        ISaveGame? InitialSave { get; }
+        ISaveProfile SaveProfile { get; }
 
         /// <summary>
-        /// Compiles the relevant configuration in <see cref="ConfigurationProfile"/> into
+        /// Compiles the relevant configuration into
         /// the working directory of the emulation instance, ready for use.
         /// </summary>
         /// <returns>An asynchronous task that signals the completion of the compilation.</returns>
@@ -43,14 +43,14 @@ namespace Snowflake.Orchestration.Extensibility
        
         /// <summary>
         /// Persists the current state of the game's save information into a new immutable <see cref="ISaveGame"/>
-        /// using the game's <see cref="ISaveGameManager"/>, whether or not the game is currently running.
+        /// using the current <see cref="ISaveProfile"/>, whether or not the game is currently running.
         /// </summary>
         /// <returns>A new <see cref="ISaveGame"/> with the current contents of the working directory save folder.</returns>
         Task<ISaveGame> PersistSaveGame();
 
         /// <summary>
-        /// Restores <see cref="InitialSave"/> into the working directory save folder, or otherwise prepares
-        /// the folder for a new game if <see cref="InitialSave"/> is null.
+        /// Restores the save into the working directory save folder, or otherwise prepares
+        /// the folder for a new game if <see cref="SaveProfile"/> is null.
         /// <para>
         /// This method must be idempotent. If the save game restore succeeds, calling this method again must do
         /// nothing.

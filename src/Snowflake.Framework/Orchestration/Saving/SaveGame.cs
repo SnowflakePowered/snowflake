@@ -3,28 +3,25 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Snowflake.Orchestration.Saving
 {
-    public class SaveGame : ISaveGame
+    public abstract class SaveGame : ISaveGame
     {
-        public IReadOnlyDirectory SaveContents { get; }
         public DateTimeOffset CreatedTimestamp { get; }
         public Guid Guid { get; }
         public string SaveType { get; }
-        public IEnumerable<string> Tags { get; }
 
-        public SaveGame(IReadOnlyDirectory saveDirectory,
-            DateTimeOffset createdTime,
+        protected SaveGame(DateTimeOffset createdTime,
             Guid saveGuid,
-            string saveType,
-            IEnumerable<string> tags)
+            string saveType)
         {
-            this.SaveContents = saveDirectory;
             this.CreatedTimestamp = createdTime;
             this.Guid = saveGuid;
             this.SaveType = saveType;
-            this.Tags = tags.ToList();
         }
+
+        public abstract Task ExtractSave(IDirectory outputDirectory);
     }
 }

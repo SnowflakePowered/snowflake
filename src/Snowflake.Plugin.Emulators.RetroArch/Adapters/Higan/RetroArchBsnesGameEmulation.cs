@@ -30,9 +30,9 @@ namespace Snowflake.Adapters.Higan
         public RetroArchBsnesGameEmulation(IGame game,
             HiganRetroArchConfiguration configurationProfile,
             IEnumerable<IEmulatedController> controllerPorts,
-            ISaveGame? initialSave,
+            ISaveProfile saveProfile,
             IDictionary<InputDriverType, IDeviceInputMapping> inputMappings,
-            IEmulatorExecutable retroarchExecutable) : base(game, configurationProfile, controllerPorts, initialSave)
+            IEmulatorExecutable retroarchExecutable) : base(game, configurationProfile, controllerPorts, saveProfile)
         {
             this.InputMappings = inputMappings;
             this.Executable = retroarchExecutable;
@@ -48,25 +48,22 @@ namespace Snowflake.Adapters.Higan
 
         public override Task<ISaveGame> PersistSaveGame()
         {
-            var tags = this.InitialSave?.Tags ?? Enumerable.Empty<string>();
-            return this.Game.WithFiles().WithSaves().CreateSave("sram", tags, async targetDirectory =>
-            {
-                var saveDirectory = this.Scratch.OpenDirectory("save");
-                foreach (var file in saveDirectory.EnumerateFilesRecursive())
-                {
-                    await targetDirectory.CopyFromAsync(file);
-                }
-            });
+            return null!; // lol
+            //return this.Game.WithFiles().WithSaves().CreateSave("sram", tags, async targetDirectory =>
+            //{
+            //    var saveDirectory = this.Scratch.OpenDirectory("save");
+            //    foreach (var file in saveDirectory.EnumerateFilesRecursive())
+            //    {
+            //        await targetDirectory.CopyFromAsync(file);
+            //    }
+            //});
         }
 
         public override async Task RestoreSaveGame()
         {
-            if (this.InitialSave == null) return;
+            // todo: fix
             var saveDirectory = this.Scratch.OpenDirectory("save");
-            foreach (var file in this.InitialSave.SaveContents.EnumerateFilesRecursive())
-            {
-                await saveDirectory.CopyFromAsync(file);
-            }
+            await this.SaveProfile.GetHeadSave()?.ExtractSave(saveDirectory);
         }
 
         public override CancellationToken StartEmulation()
