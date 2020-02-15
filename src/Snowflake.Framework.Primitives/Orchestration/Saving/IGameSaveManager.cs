@@ -18,6 +18,20 @@ namespace Snowflake.Orchestration.Saving
         ISaveProfile? GetProfile(Guid guid);
 
         /// <summary>
+        /// Gets all save profiles for this game.
+        /// </summary>
+        /// <returns>All save profiles for this game.</returns>
+        IEnumerable<ISaveProfile> GetProfiles();
+
+        /// <summary>
+        /// Gets all save profiles with the provided save type.
+        /// </summary>
+        /// <returns>All save profiles with the provided save type.</returns>
+        /// <param name="saveType">The type of the save.</param>
+        IEnumerable<ISaveProfile> GetProfiles(string saveType);
+
+
+        /// <summary>
         /// Deletes the specified save profile.
         /// </summary>
         /// <param name="guid">The unique profile GUID.</param>
