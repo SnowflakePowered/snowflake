@@ -15,15 +15,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Orchestration\SystemFiles\**" />
-    <Compile Remove="Migrations\**" />
-    <EmbeddedResource Remove="Orchestration\SystemFiles\**" />
-    <EmbeddedResource Remove="Migrations\**" />
-    <None Remove="Orchestration\SystemFiles\**" />
-    <None Remove="Migrations\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Castle.Core" Version="4.4.0" PrivateAssets="Compile" />
     <PackageReference Include="Dapper" Version="2.0.30" PrivateAssets="Compile" />
     <PackageReference Include="Enums.NET" Version="3.0.3" PrivateAssets="Compile" />
@@ -44,12 +35,7 @@
   <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\Database\Migrations\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Model\Database\ControllerElementMappingsStore.Async.cs" />
-  </ItemGroup>
+  
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\Snowflake.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>

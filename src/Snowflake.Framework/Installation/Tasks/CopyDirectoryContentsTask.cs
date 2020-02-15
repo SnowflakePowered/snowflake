@@ -11,7 +11,7 @@ namespace Snowflake.Installation.Tasks
     /// Copies the descendant contents of the provided <see cref="DirectoryInfo"/> into
     /// a desination <see cref="IDirectory"/>.
     /// </summary>
-    public sealed class CopyDirectoryContentsTask : AsyncInstallTaskEnumerable<IFile?>
+    public sealed class CopyDirectoryContentsTask : AsyncInstallTaskEnumerable<IFile>
     {
         protected override string TaskName => "Copy";
 
@@ -33,7 +33,7 @@ namespace Snowflake.Installation.Tasks
             this.Destination = destinationDirectory;
         }
 
-        protected override async IAsyncEnumerable<IFile?> ExecuteOnce()
+        protected override async IAsyncEnumerable<IFile> ExecuteOnce()
         {
             // Do the parent directory
             foreach (var f in (await this.Source).EnumerateFiles())

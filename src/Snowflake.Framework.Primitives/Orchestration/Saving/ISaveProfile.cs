@@ -26,6 +26,11 @@ namespace Snowflake.Orchestration.Saving
         string SaveType { get; }
 
         /// <summary>
+        /// The name of this profile.
+        /// </summary>
+        string ProfileName { get; }
+
+        /// <summary>
         /// The strategy this profile uses to persist saves.
         /// </summary>
         SaveManagementStrategy ManagementStrategy { get; }
