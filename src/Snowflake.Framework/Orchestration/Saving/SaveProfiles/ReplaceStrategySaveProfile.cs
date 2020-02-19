@@ -8,56 +8,79 @@ using System.Threading.Tasks;
 
 namespace Snowflake.Orchestration.Saving.SaveProfiles
 {
-    internal sealed class CopyStrategySaveProfile : SaveProfile
+    internal sealed class ReplaceStrategySaveProfile : SaveProfile
     {
         private static readonly string DateFormat = "yyyy-MM-dd.HH-mm-ss";
 
-        public CopyStrategySaveProfile(Guid profileGuid, 
+        public ReplaceStrategySaveProfile(Guid profileGuid, 
             string saveType, string profileName, IDirectory profileRoot) 
             : base(profileGuid, saveType, profileName, profileRoot)
         {
             var saveManifest = this.ProfileRoot.OpenFile("profile");
             if (!saveManifest.Created)
             {
-                saveManifest.WriteAllText($"{profileName}{Environment.NewLine}{nameof(SaveManagementStrategy.Copy)}");
+                saveManifest.WriteAllText($"{profileName}{Environment.NewLine}{nameof(SaveManagementStrategy.Replace)}");
             }
         }
 
-        public override SaveManagementStrategy ManagementStrategy => SaveManagementStrategy.Copy;
+        public override SaveManagementStrategy ManagementStrategy => SaveManagementStrategy.Replace;
 
         public async override Task<ISaveGame> CreateSave(IDirectory saveContents)
         {
+            var oldLatestFile = this.ProfileRoot.OpenFile("latest");
+
             // todo decide on some way to organize these saves.
             var newGuid = Guid.NewGuid();
             var saveName = $"{DateTimeOffset.UtcNow.ToString(DateFormat)}-{newGuid}";
             var saveDirectory = this.ProfileRoot.OpenDirectory(saveName);
             var contentDirectory = saveDirectory.OpenDirectory("content");
 
+            // Copy it twice, once for backup, once for head.
             await foreach (var _ in contentDirectory.CopyFromDirectory(saveContents, true)) { };
 
+            if (oldLatestFile.Created)
+            {
+                var oldLatestName = oldLatestFile.ReadAllText();
+                var oldLatest = this.ProfileRoot.OpenDirectory(oldLatestName);
+                // Delete the old head
+                oldLatest.Delete();
+            }
             this.ProfileRoot.OpenFile("latest").WriteAllText(saveName, Encoding.UTF8);
-            return this.GetSave(saveDirectory)!;
+            return this.GetSave(saveDirectory);
         }
 
         public override async Task<ISaveGame> CreateSave(ISaveGame saveGame)
         {
+
+            var oldLatestFile = this.ProfileRoot.OpenFile("latest");
+
+            // todo decide on some way to organize these saves.
             var newGuid = Guid.NewGuid();
             var saveName = $"{DateTimeOffset.UtcNow.ToString(DateFormat)}-{newGuid}";
             var saveDirectory = this.ProfileRoot.OpenDirectory(saveName);
             var contentDirectory = saveDirectory.OpenDirectory("content");
 
+            // Copy it twice, once for backup, once for head.
             await saveGame.ExtractSave(contentDirectory);
 
+            // Delete the old head
+            if (oldLatestFile.Created)
+            {
+                var oldLatestName = oldLatestFile.ReadAllText();
+                var oldLatest = this.ProfileRoot.OpenDirectory(oldLatestName);
+                // Delete the old head
+                oldLatest.Delete();
+            }
             this.ProfileRoot.OpenFile("latest").WriteAllText(saveName, Encoding.UTF8);
-            return this.GetSave(saveDirectory)!;
+
+            return this.GetSave(saveDirectory);
         }
 
-        private ISaveGame? GetSave(IDirectory internalSaveDir)
+        private ISaveGame GetSave(IDirectory internalSaveDir)
         {
             string name = internalSaveDir.Name;
-            if (!DateTimeOffset.TryParseExact(name[0..DateFormat.Length], DateFormat, CultureInfo.InvariantCulture,
-                DateTimeStyles.AssumeUniversal, out var date)) return null;
-            if (!Guid.TryParseExact(name[(DateFormat.Length + 1)..], "D", out var guid)) return null;
+            var date = DateTimeOffset.ParseExact(name[0..DateFormat.Length], DateFormat, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
+            var guid = Guid.ParseExact(name[(DateFormat.Length + 1)..], "D");
             return new CopyingSaveGame(date, guid, this.SaveType, internalSaveDir.OpenDirectory("content"));
         }
 
@@ -71,16 +94,14 @@ namespace Snowflake.Orchestration.Saving.SaveProfiles
 
         public override IEnumerable<ISaveGame> GetHistory()
         {
-            return this.ProfileRoot.EnumerateDirectories().Select(this.GetSave).Where(s => s != null);
+            var save = this.GetHeadSave();
+            if (save == null) yield break;
+            yield return save;
         }
-
         public override void ClearHistory()
         {
-            var latest = this.ProfileRoot.OpenFile("latest").ReadAllText();
-            foreach (var toDelete in this.ProfileRoot.EnumerateDirectories().Where(d => d.Name != latest))
-            {
-                toDelete.Delete();
-            }
+            // no history to clear
+            return;
         }
     }
 }

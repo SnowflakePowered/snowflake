@@ -13,13 +13,25 @@ namespace Snowflake.Filesystem
         /// </summary>
         /// <param name="this">The destination directory.</param>
         /// <param name="source">The source directory.</param>
+        /// <param name="overwrite"></param>
         /// <returns>An enumerable of copied files.</returns>
-        public static async IAsyncEnumerable<IFile> CopyFromDirectory(this IDirectory @this, IDirectory source)
+        public static IAsyncEnumerable<IFile> CopyFromDirectory(this IDirectory @this, IDirectory source) => CopyFromDirectory(@this, source, false);
+
+        /// <summary>
+        /// Copies all the files and directories from the source directory recursively into this directory.
+        /// </summary>
+        /// <param name="this">The destination directory.</param>
+        /// <param name="source">The source directory.</param>
+        /// <param name="overwrite">Whether or not to overwrite existing files.</param>
+        /// <returns>An enumerable of copied files.</returns>
+        public static async IAsyncEnumerable<IFile> CopyFromDirectory(this IDirectory @this, IDirectory source, bool overwrite)
         {
+            if (@this == source) yield break;
+
             // Do the parent directory
             foreach (var f in source.EnumerateFiles())
             {
-                yield return await @this.CopyFromAsync(f);
+                yield return await @this.CopyFromAsync(f, overwrite);
             }
 
             var queuedDirs =
@@ -36,7 +48,7 @@ namespace Snowflake.Filesystem
                 var dst = parent.OpenDirectory(src.Name);
                 foreach (var f in src.EnumerateFiles())
                 {
-                    yield return await dst.CopyFromAsync(f);
+                    yield return await dst.CopyFromAsync(f, overwrite);
                 }
 
                 var children = src.EnumerateDirectories()

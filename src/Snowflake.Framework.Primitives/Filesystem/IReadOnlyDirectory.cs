@@ -15,6 +15,11 @@ namespace Snowflake.Filesystem
     public interface IReadOnlyDirectory
     {
         /// <summary>
+        /// Gets the name of the directory
+        /// </summary>
+        string Name { get; }
+
+        /// <summary>
         /// Opens an existing descendant directory with the given name.
         /// If the directory does not exist, throws IOException.
         /// You can open a nested directory using '/' as the path separator, and it 

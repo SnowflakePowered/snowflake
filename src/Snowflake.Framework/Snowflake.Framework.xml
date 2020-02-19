@@ -548,6 +548,24 @@
         <member name="M:Snowflake.Extensibility.Provisioning.ProvisionedPlugin.Dispose">
             <inheritdoc/>
         </member>
+        <member name="M:Snowflake.Filesystem.DirectoryExtensions.CopyFromDirectory(Snowflake.Filesystem.IDirectory,Snowflake.Filesystem.IDirectory)">
+            <summary>
+            Copies all the files and directories from the source directory recursively into this directory.
+            </summary>
+            <param name="this">The destination directory.</param>
+            <param name="source">The source directory.</param>
+            <param name="overwrite"></param>
+            <returns>An enumerable of copied files.</returns>
+        </member>
+        <member name="M:Snowflake.Filesystem.DirectoryExtensions.CopyFromDirectory(Snowflake.Filesystem.IDirectory,Snowflake.Filesystem.IDirectory,System.Boolean)">
+            <summary>
+            Copies all the files and directories from the source directory recursively into this directory.
+            </summary>
+            <param name="this">The destination directory.</param>
+            <param name="source">The source directory.</param>
+            <param name="overwrite">Whether or not to overwrite existing files.</param>
+            <returns>An enumerable of copied files.</returns>
+        </member>
         <member name="M:Snowflake.Filesystem.FileExtensions.ReadAllText(Snowflake.Filesystem.IReadOnlyFile)">
             <summary>
             Opens a text file, reads all the text in the file into a string, and then closes the opened stream.
