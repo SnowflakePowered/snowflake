@@ -75,5 +75,10 @@ namespace Snowflake.Orchestration.Saving
         /// </summary>
         /// <returns>All saves registered under this <see cref="ISaveProfile"/></returns>
         IEnumerable<ISaveGame> GetHistory();
+
+        /// <summary>
+        /// Clears the history, leaving only the head.
+        /// </summary>
+        void ClearHistory();
     }
 }

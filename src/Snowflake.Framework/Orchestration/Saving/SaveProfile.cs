@@ -33,5 +33,6 @@ namespace Snowflake.Orchestration.Saving
         public abstract ISaveGame? GetHeadSave();
 
         public abstract IEnumerable<ISaveGame> GetHistory();
+        public abstract void ClearHistory();
     }
 }

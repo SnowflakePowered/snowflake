@@ -1,5 +1,9 @@
-﻿using System.IO;
+﻿using Snowflake.Filesystem;
+using System;
+using System.IO;
 using System.Reflection;
+using Zio;
+using Zio.FileSystems;
 
 namespace Snowflake.Tests
 {
@@ -29,6 +33,22 @@ namespace Snowflake.Tests
             {
                 return reader.ReadToEnd();
             }
+        }
+
+        internal static IDirectory GetTemporaryDirectory()
+        {
+            var fs = new PhysicalFileSystem();
+            var temp = Path.GetTempPath();
+            var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
+            return new Filesystem.Directory($"snowflake-test-{Guid.NewGuid()}", pfs, pfs.GetDirectoryEntry("/"));
+        }
+
+        internal static IDirectory GetTemporaryDirectory(string tag)
+        {
+            var fs = new PhysicalFileSystem();
+            var temp = Path.GetTempPath();
+            var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
+            return new Filesystem.Directory($"snowflake-test-{tag}-{Guid.NewGuid()}", pfs, pfs.GetDirectoryEntry("/"));
         }
     }
 }

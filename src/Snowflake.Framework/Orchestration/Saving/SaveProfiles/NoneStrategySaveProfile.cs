@@ -17,19 +17,24 @@ namespace Snowflake.Orchestration.Saving.SaveProfiles
 
         public override SaveManagementStrategy ManagementStrategy => SaveManagementStrategy.None;
 
+        public override void ClearHistory()
+        {
+            return;
+        }
+
         public override Task<ISaveGame> CreateSave(IDirectory saveContents)
         {
-            return Task.FromResult<ISaveGame>(new NoneSaveGame(DateTimeOffset.UtcNow, Guid.NewGuid(), this.SaveType));
+            return Task.FromResult<ISaveGame>(new EmptySaveGame(DateTimeOffset.UtcNow, Guid.NewGuid(), this.SaveType));
         }
 
         public override Task<ISaveGame> CreateSave(ISaveGame saveGame)
         {
-            return Task.FromResult<ISaveGame>(new NoneSaveGame(DateTimeOffset.UtcNow, Guid.NewGuid(), this.SaveType));
+            return Task.FromResult<ISaveGame>(new EmptySaveGame(DateTimeOffset.UtcNow, Guid.NewGuid(), this.SaveType));
         }
 
         public override ISaveGame? GetHeadSave()
         {
-            return new NoneSaveGame(DateTimeOffset.UtcNow, Guid.NewGuid(), this.SaveType);
+            return new EmptySaveGame(DateTimeOffset.UtcNow, Guid.NewGuid(), this.SaveType);
         }
 
         public override IEnumerable<ISaveGame> GetHistory()

@@ -8,14 +8,20 @@ namespace Snowflake.Orchestration.Saving.SaveProfiles
 {
     internal class CopyingSaveGame : SaveGame
     {
-        public CopyingSaveGame(DateTimeOffset createdTime, Guid saveGuid, string saveType) 
+        public CopyingSaveGame(DateTimeOffset createdTime, 
+            Guid saveGuid,
+            string saveType,
+            IDirectory contentDirectory) 
             : base(createdTime, saveGuid, saveType)
         {
+            this.ContentDirectory = contentDirectory;
         }
 
-        public override Task ExtractSave(IDirectory outputDirectory)
+        private IDirectory ContentDirectory { get; }
+
+        public override async Task ExtractSave(IDirectory outputDirectory)
         {
-            throw new NotImplementedException();
+            await foreach (var _ in outputDirectory.CopyFromDirectory(this.ContentDirectory, true)) { };
         }
     }
 }

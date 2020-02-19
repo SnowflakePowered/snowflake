@@ -137,6 +137,39 @@ namespace Snowflake.Filesystem
         IFile MoveFrom(IFile source, bool overwrite);
 
         /// <summary>
+        /// Moves a directory between <see cref="IDirectory"/>.
+        /// 
+        /// The source directory will cease to exist in its original <see cref="IDirectory"/>.
+        /// 
+        /// There is no asychronous equivalent by design, since <see cref="MoveFrom(IFile, bool)"/> is intended to
+        /// be faster than <see cref="CopyFromAsync(IReadOnlyFile, bool, CancellationToken)"/> if the <see cref="IDirectory"/> instances
+        /// are on the same file system. Otherwise, you should use <see cref="CopyFromAsync(IReadOnlyFile, bool, CancellationToken)"/>,
+        /// then <see cref="IFile.Delete"/> the old file.
+        /// </summary>
+        /// <exception cref="IOException">If a file with the same name exists in the target destination and <paramref name="overwrite"/> is false.</exception>
+        /// <exception cref="FileNotFoundException">If the source file can not be found.</exception>
+        /// <param name="source">The <see cref="FileInfo"/></param>
+        /// <returns>The <see cref="IFile"/> that describes the file in the current <see cref="IDirectory"/>.</returns>
+        IDirectory MoveFrom(IDirectory source);
+
+        /// <summary>
+        /// Moves a directory between <see cref="IDirectory"/>.
+        /// 
+        /// The source directory will cease to exist in its original <see cref="IDirectory"/>.
+        /// 
+        /// There is no asychronous equivalent by design, since <see cref="MoveFrom(IFile, bool)"/> is intended to
+        /// be faster than <see cref="CopyFromAsync(IReadOnlyFile, bool, CancellationToken)"/> if the <see cref="IDirectory"/> instances
+        /// are on the same file system. Otherwise, you should use <see cref="CopyFromAsync(IReadOnlyFile, bool, CancellationToken)"/>,
+        /// then <see cref="IFile.Delete"/> the old file.
+        /// </summary>
+        /// <exception cref="IOException">If a file with the same name exists in the target destination and <paramref name="overwrite"/> is false.</exception>
+        /// <exception cref="FileNotFoundException">If the source file can not be found.</exception>
+        /// <param name="source">The <see cref="FileInfo"/></param>
+        /// <returns>The <see cref="IFile"/> that describes the file in the current <see cref="IDirectory"/>.</returns>
+        /// <param name="overwrite">Overwrite the file if it already exists in this <see cref="IDirectory"/></param>
+        IDirectory MoveFrom(IDirectory source, bool overwrite);
+
+        /// <summary>
         /// Copies a file from a <see cref="IFile"/> from another <see cref="IDirectory"/>, updating the
         /// manifests such that the resulting file has the same <see cref="IReadOnlyFile.FileGuid"/> as the source file.
         /// </summary>
