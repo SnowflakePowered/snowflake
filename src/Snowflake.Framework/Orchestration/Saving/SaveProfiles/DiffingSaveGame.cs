@@ -10,7 +10,7 @@ using VCDiff.Includes;
 
 namespace Snowflake.Orchestration.Saving.SaveProfiles
 {
-    internal class DiffingSaveGame : SaveGame
+    internal sealed class DiffingSaveGame : SaveGame
     {
         public DiffingSaveGame(DateTimeOffset createdTime, Guid saveGuid, string saveType, IDirectory baseDir, IDirectory diffDir)
             : base(createdTime, saveGuid, saveType)

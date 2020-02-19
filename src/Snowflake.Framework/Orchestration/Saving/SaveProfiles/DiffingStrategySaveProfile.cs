@@ -30,8 +30,7 @@ namespace Snowflake.Orchestration.Saving.SaveProfiles
 
         private async Task CreateBaseSave(IDirectory saveContents)
         {
-            var saveDirectory = this.ProfileRoot.OpenDirectory("base");
-            var contentDirectory = saveDirectory.OpenDirectory("content");
+            var contentDirectory = this.ProfileRoot.OpenDirectory("base/content");
             await foreach (var _ in contentDirectory.CopyFromDirectory(saveContents)) { };
         }
 
@@ -53,7 +52,7 @@ namespace Snowflake.Orchestration.Saving.SaveProfiles
             var copyDir = contentDirectory.OpenDirectory("copy"); 
 
             // Traverse base directory in tandem with saveContents
-            var baseDir = this.ProfileRoot.OpenDirectory("base").OpenDirectory("content").AsReadOnly();
+            var baseDir = this.ProfileRoot.OpenDirectory("base/content").AsReadOnly();
 
             foreach (var f in saveContents.EnumerateFiles())
             {
@@ -137,7 +136,7 @@ namespace Snowflake.Orchestration.Saving.SaveProfiles
                 DateTimeStyles.AssumeUniversal, out var date)) return null;
             if (!Guid.TryParseExact(name[(DateFormat.Length + 1)..], "D", out var guid)) return null;
 
-            var baseContent = this.ProfileRoot.OpenDirectory("base").OpenDirectory("content");
+            var baseContent = this.ProfileRoot.OpenDirectory("base/content");
             return new DiffingSaveGame(date, guid, this.SaveType, baseContent, internalSaveDir.OpenDirectory("content"));
         }
 

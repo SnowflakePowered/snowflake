@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Snowflake.Orchestration.Saving.SaveProfiles
 {
-    internal class CopyingSaveGame : SaveGame
+    internal sealed class CopyingSaveGame : SaveGame
     {
         public CopyingSaveGame(DateTimeOffset createdTime, 
             Guid saveGuid,
