@@ -39,6 +39,7 @@ namespace Snowflake.Services
                 options.EnableMetrics = true;
                 options.ExposeExceptions = true;
             })
+            .AddSystemTextJson()
             .AddWebSockets() // Add required services for web socket support
             .AddDataLoader(); // Add required services for DataLoader support
         }
