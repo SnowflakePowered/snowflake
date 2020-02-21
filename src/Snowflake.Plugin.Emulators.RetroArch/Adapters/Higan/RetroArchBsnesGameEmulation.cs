@@ -48,22 +48,18 @@ namespace Snowflake.Adapters.Higan
 
         public override Task<ISaveGame> PersistSaveGame()
         {
-            return null!; // lol
-            //return this.Game.WithFiles().WithSaves().CreateSave("sram", tags, async targetDirectory =>
-            //{
-            //    var saveDirectory = this.Scratch.OpenDirectory("save");
-            //    foreach (var file in saveDirectory.EnumerateFilesRecursive())
-            //    {
-            //        await targetDirectory.CopyFromAsync(file);
-            //    }
-            //});
+            return this.SaveProfile.CreateSave(this.Scratch.OpenDirectory("save"));
         }
 
         public override async Task RestoreSaveGame()
         {
             // todo: fix
             var saveDirectory = this.Scratch.OpenDirectory("save");
-            await this.SaveProfile.GetHeadSave()?.ExtractSave(saveDirectory);
+            var headSave = this.SaveProfile.GetHeadSave();
+            if (headSave != null)
+            {
+                await headSave.ExtractSave(saveDirectory);
+            }
         }
 
         public override CancellationToken StartEmulation()

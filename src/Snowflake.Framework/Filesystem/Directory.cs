@@ -420,21 +420,6 @@ namespace Snowflake.Filesystem
             // De-orphan the file (as a link)
             return this.OpenFile(fileName, true);
         }
-
-        public IDirectory MoveFrom(IDirectory source) => this.MoveFrom(source, false);
-
-        public IDirectory MoveFrom(IDirectory source, bool overwrite)
-        {
-            this.CheckDeleted();
-
-            if (this.ContainsFile(source.Name) && !overwrite) throw new IOException($"{source.Name} already exists in the target directory");
-            var file = this.OpenFile(source.Name, false);
-            // unsafe usage here as optimization.
-#pragma warning disable CS0618 // Type or member is obsolete
-            source.UnsafeGetPath().MoveTo(this.UnsafeGetPath().ToString());
-#pragma warning restore CS0618 // Type or member is obsolete
-            return this.OpenDirectory(source.Name);
-        }
     }
 }
 
