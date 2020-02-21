@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Snowflake.Orchetsration.Saving.Tests
+namespace Snowflake.Orchestration.Saving.Tests
 {
     public class DiffStrategySaveProfileTests
     {
@@ -58,7 +58,7 @@ namespace Snowflake.Orchetsration.Saving.Tests
         public async Task ExtractDirectory_Test()
         {
             var profileRoot = TestUtilities.GetTemporaryDirectory();
-            var saveContents = TestUtilities.GetTemporaryDirectory();
+            var saveContents = TestUtilities.GetTemporaryDirectory("source");
 
             saveContents.OpenFile("savecontent").WriteAllText("test content");
             saveContents.OpenDirectory("nestedcontent").OpenFile("savecontentnested").WriteAllText("test content 2");
@@ -76,9 +76,15 @@ namespace Snowflake.Orchetsration.Saving.Tests
 
             var extractPath = TestUtilities.GetTemporaryDirectory(nameof(DiffingStrategySaveProfile) + ".extract");
             await created.ExtractSave(extractPath);
+            
             Assert.Equal(save.CreatedTimestamp, retrievedSave.CreatedTimestamp);
 
+            Assert.True(extractPath.OpenFile("savecontent").Created);
+            Assert.True(extractPath.OpenDirectory("nestedcontent").OpenFile("savecontentnested").Created);
+            Assert.True(extractPath.OpenDirectory("nestedcontent/nestedtwo").OpenFile("savecontentnested").Created);
+
             // todo: ensure directory structure
+
         }
     }
 }

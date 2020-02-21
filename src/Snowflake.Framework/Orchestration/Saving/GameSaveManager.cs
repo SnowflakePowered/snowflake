@@ -39,12 +39,12 @@ namespace Snowflake.Orchestration.Saving
         private ISaveProfile? ParseProfile(IDirectory profileDirectory)
         {
             var guidParts = profileDirectory.Name[0..36];
-            var nameParts = profileDirectory.Name[36..].Split("-", 3);
+            var nameParts = profileDirectory.Name[37..].Split("-", 3);
             if (nameParts.Length != 3) return null;
             if (!Guid.TryParseExact(guidParts, "D", out var guid)) return null;
-            string saveType = nameParts[2];
-            string profileName = nameParts[3];
-            return Enums.Parse<SaveManagementStrategy>(nameParts[1], true) switch
+            string saveType = nameParts[1];
+            string profileName = nameParts[2];
+            return Enums.Parse<SaveManagementStrategy>(nameParts[0], true) switch
             {
                 SaveManagementStrategy.Replace => new ReplaceStrategySaveProfile(guid, saveType, profileName, profileDirectory),
                 SaveManagementStrategy.Copy => new CopyStrategySaveProfile(guid, saveType, profileName, profileDirectory),
