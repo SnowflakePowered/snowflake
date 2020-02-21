@@ -30,7 +30,6 @@ namespace Snowflake.Orchestration.Saving
         /// <param name="saveType">The type of the save.</param>
         IEnumerable<ISaveProfile> GetProfiles(string saveType);
 
-
         /// <summary>
         /// Deletes the specified save profile.
         /// </summary>

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Snowflake.Orchetsration.Saving.Tests
+namespace Snowflake.Orchestration.Saving.Tests
 {
     public class CopyingStrategySaveProfileTests
     {

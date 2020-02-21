@@ -44,7 +44,7 @@ namespace Snowflake.Orchestration.Saving.SaveProfiles
             }
 
             var queuedDirs = (from baseDir in this.BaseDir.EnumerateDirectories()
-                             where this.DiffDir.ContainsDirectory(baseDir.Name)
+                             where diffDir.ContainsDirectory(baseDir.Name)
                              select (outputDirectory, baseDir, diffDir.OpenDirectory(baseDir.Name))).ToList();         
 
             // BFS over all the children.
