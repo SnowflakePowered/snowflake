@@ -44,7 +44,7 @@ namespace Snowflake.Model.Database
             return null;
         }
 
-        public async IAsyncEnumerable<IFileRecord> GetFileRecordsAsync(IDirectory directoryRoot)
+        public async IAsyncEnumerable<IFileRecord> GetFileRecordsAsync(IIndelibleDirectory directoryRoot)
         {
             await using var context = new DatabaseContext(this.Options.Options);
             var files = directoryRoot.EnumerateFilesRecursive().ToList();

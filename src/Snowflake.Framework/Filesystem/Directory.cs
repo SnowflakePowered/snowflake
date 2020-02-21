@@ -420,6 +420,8 @@ namespace Snowflake.Filesystem
             // De-orphan the file (as a link)
             return this.OpenFile(fileName, true);
         }
+
+        public IIndelibleDirectory AsIndelible() => this;
     }
 }
 
