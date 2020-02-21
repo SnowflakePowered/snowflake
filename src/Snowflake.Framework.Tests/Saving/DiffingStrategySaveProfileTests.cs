@@ -55,6 +55,34 @@ namespace Snowflake.Orchestration.Saving.Tests
 
 
         [Fact]
+        public async Task CreateSaveMultiple_Test()
+        {
+            var profileRoot = TestUtilities.GetTemporaryDirectory();
+            var saveContents = TestUtilities.GetTemporaryDirectory();
+
+            saveContents.OpenFile("savecontent").WriteAllText("test content");
+            saveContents.OpenDirectory("nestedcontent").OpenFile("savecontentnested").WriteAllText("test content 2");
+            saveContents.OpenDirectory("nestedcontent").OpenDirectory("nestedtwo").OpenFile("savecontentnested").WriteAllText("test content 3");
+
+            var profileGuid = Guid.NewGuid();
+            var profile = new DiffingStrategySaveProfile(profileGuid, "Test", "testsave", profileRoot);
+            var save = await profile.CreateSave(saveContents);
+            var newSave = await profile.CreateSave(save);
+
+            var retrievedSave = profile.GetHeadSave();
+            Assert.Equal(newSave.CreatedTimestamp, retrievedSave.CreatedTimestamp);
+
+            var extract = TestUtilities.GetTemporaryDirectory("extract");
+            await retrievedSave.ExtractSave(extract);
+
+            Assert.True(extract.ContainsFile("savecontent"));
+            Assert.True(extract.OpenDirectory("nestedcontent").ContainsFile("savecontentnested"));
+            Assert.True(extract.OpenDirectory("nestedcontent/nestedtwo").ContainsFile("savecontentnested"));
+
+            // todo: ensure directory structure
+        }
+
+        [Fact]
         public async Task ExtractDirectory_Test()
         {
             var profileRoot = TestUtilities.GetTemporaryDirectory();
