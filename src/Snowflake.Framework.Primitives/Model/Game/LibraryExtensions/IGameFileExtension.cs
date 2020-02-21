@@ -35,36 +35,34 @@ namespace Snowflake.Model.Game.LibraryExtensions
         /// <summary>
         /// The directory to persist save files for a game.
         /// </summary>
-        IDirectory SavesRoot { get; }
+        IIndelibleDirectory SavesRoot { get; }
 
         /// <summary>
         /// The directory to store game ROM files and other program data such as assets and game-specific BIOS files.
         /// </summary>
-        IDirectory ProgramRoot { get; }
+        IIndelibleDirectory ProgramRoot { get; }
 
         /// <summary>
         /// The directory to store media such as boxarts, trailers, and screenshots.
         /// </summary>
-        IDirectory MediaRoot { get; }
+        IIndelibleDirectory MediaRoot { get; }
 
         /// <summary>
         /// The directory to store miscellaneous files related to the game. 
         /// </summary>
-        IDirectory MiscRoot { get; }
+        IIndelibleDirectory MiscRoot { get; }
 
         /// <summary>
         /// The directory to store resources required for the game to run.
         /// </summary>
-        IDirectory ResourceRoot { get; }
+        IIndelibleDirectory ResourceRoot { get; }
 
         /// <summary>
         /// The directory to store temporary files during the execution of the game.
         /// This directory is cleared before an emulator is run, and the required files
         /// for the emulator can be copied here.
-        ///
-        /// Afterwards, saves should be copied out from here into <see cref="SavesRoot"/>.
         /// </summary>
-        IDirectory RuntimeRoot { get; }
+        IIndelibleDirectory RuntimeRoot { get; }
 
         /// <summary>
         /// Gets the list of <see cref="IFileRecord"/>s that have been associated with this game.

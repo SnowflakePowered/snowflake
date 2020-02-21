@@ -22,21 +22,21 @@ namespace Snowflake.Model.Game.LibraryExtensions
             this.MiscRoot = this.Root.OpenDirectory("misc");
         }
 
-        private IDirectory Root { get; }
+        private IIndelibleDirectory Root { get; }
 
         private FileRecordLibrary FileRecordLibrary { get; }
 
-        public IDirectory SavesRoot { get; }
+        public IIndelibleDirectory SavesRoot { get; }
 
-        public IDirectory ProgramRoot { get; }
+        public IIndelibleDirectory ProgramRoot { get; }
 
-        public IDirectory MediaRoot { get; }
+        public IIndelibleDirectory MediaRoot { get; }
 
-        public IDirectory MiscRoot { get; }
+        public IIndelibleDirectory MiscRoot { get; }
 
-        public IDirectory ResourceRoot { get; }
+        public IIndelibleDirectory ResourceRoot { get; }
 
-        public IDirectory RuntimeRoot { get; }
+        public IIndelibleDirectory RuntimeRoot { get; }
 
         public IDirectory GetRuntimeLocation()
         {

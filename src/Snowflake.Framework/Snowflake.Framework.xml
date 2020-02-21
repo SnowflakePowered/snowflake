@@ -980,7 +980,7 @@
             Copies a file into an <see cref="T:Snowflake.Filesystem.IDirectory"/>
             </summary>
         </member>
-        <member name="M:Snowflake.Installation.Tasks.CopyFileTask.#ctor(Snowflake.Installation.TaskResult{System.IO.FileInfo},Snowflake.Filesystem.IDirectory)">
+        <member name="M:Snowflake.Installation.Tasks.CopyFileTask.#ctor(Snowflake.Installation.TaskResult{System.IO.FileInfo},Snowflake.Filesystem.IIndelibleDirectory)">
             <summary>
             Describe a file copy with the given source file and the target directory.
             The resultant file will have the same file name as the source.
