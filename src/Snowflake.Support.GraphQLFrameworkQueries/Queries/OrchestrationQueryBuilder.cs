@@ -51,10 +51,10 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
         [Parameter(typeof(string), typeof(StringGraphType), "orchestratorName", "The name of the orchestrator plugin to use.")]
         [Parameter(typeof(string), typeof(StringGraphType), "configurationProfile", "The name of the configuration profile to use.")]
         [Parameter(typeof(Guid), typeof(GuidGraphType), "gameGuid", "The GUID of the game to launch.")]
-        [Parameter(typeof(Guid?), typeof(GuidGraphType), "saveGuid", "The GUID of the save to restore.", true)]
+        [Parameter(typeof(Guid?), typeof(GuidGraphType), "saveGuid", "The GUID of the save profile to use.")]
         [Parameter(typeof(bool), typeof(BooleanGraphType), "verify", "Whether or not to verify the game files before launching.")]
         public async Task<Guid> CreateGameEmulationInstance(string orchestratorName, string configurationProfile, 
-            Guid gameGuid, Guid? saveGuid = null, bool verify = false)
+            Guid gameGuid, Guid saveGuid, bool verify = false)
         {
             var orchestrator = this.Orchestrators[orchestratorName];
             var game = await this.GameLibrary.GetGameAsync(gameGuid);
@@ -69,8 +69,9 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
             {
                 await foreach (var x in orchestrator.ValidateGamePrerequisites(game)) ;
             }
-            
-            var save = saveGuid != null ? game.WithFiles().WithSaves().GetSave(saveGuid.Value) : null;
+
+            var save = game.WithFiles().WithSaves().GetProfile(saveGuid);
+            if (save == null) throw new KeyNotFoundException($"Unable to find save profile with GUID {saveGuid}");
             var instance = orchestrator.ProvisionEmulationInstance(game, controllers, configurationProfile, save);
             var guid = Guid.NewGuid();
             if (this.GameEmulationCache.TryAdd(guid, instance)) return guid;
