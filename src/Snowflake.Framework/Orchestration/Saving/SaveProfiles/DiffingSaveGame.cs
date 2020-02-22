@@ -12,23 +12,23 @@ namespace Snowflake.Orchestration.Saving.SaveProfiles
 {
     internal sealed class DiffingSaveGame : SaveGame
     {
-        public DiffingSaveGame(DateTimeOffset createdTime, Guid saveGuid, string saveType, IDirectory baseDir, IDirectory diffDir)
+        public DiffingSaveGame(DateTimeOffset createdTime, Guid saveGuid, string saveType, IIndelibleDirectory baseDir, IIndelibleDirectory diffDir)
             : base(createdTime, saveGuid, saveType)
         {
             this.BaseDir = baseDir;
             this.DiffDir = diffDir;
         }
 
-        public IDirectory BaseDir { get; }
-        public IDirectory DiffDir { get; }
+        public IIndelibleDirectory BaseDir { get; }
+        public IIndelibleDirectory DiffDir { get; }
          
-        private async Task CopyRecursiveNonDiffs(IDirectory outputDirectory)
+        private async Task CopyRecursiveNonDiffs(IIndelibleDirectory outputDirectory)
         {
             var baseDir = this.DiffDir.OpenDirectory("copy");
             await foreach (var _ in outputDirectory.CopyFromDirectory(baseDir, true)) { };
         }
 
-        private async Task CopyRecursiveDiffs(IDirectory outputDirectory)
+        private async Task CopyRecursiveDiffs(IIndelibleDirectory outputDirectory)
         {
             var diffDir = this.DiffDir.OpenDirectory("diff");
             // Do the parent directory
@@ -48,8 +48,8 @@ namespace Snowflake.Orchestration.Saving.SaveProfiles
                              select (outputDirectory, baseDir, diffDir.OpenDirectory(baseDir.Name))).ToList();         
 
             // BFS over all the children.
-            Queue<(IDirectory parentDir, IDirectory baseDir, IDirectory diffDir)> dirsToProcess =
-                new Queue<(IDirectory, IDirectory, IDirectory)>(queuedDirs);
+            Queue<(IIndelibleDirectory parentDir, IDirectory baseDir, IDirectory diffDir)> dirsToProcess =
+                new Queue<(IIndelibleDirectory, IDirectory, IDirectory)>(queuedDirs);
 
             while (dirsToProcess.Count > 0)
             {
@@ -78,7 +78,7 @@ namespace Snowflake.Orchestration.Saving.SaveProfiles
             }
         }
 
-        public override async Task ExtractSave(IDirectory outputDirectory)
+        public override async Task ExtractSave(IIndelibleDirectory outputDirectory)
         {
             await CopyRecursiveDiffs(outputDirectory);
             await CopyRecursiveNonDiffs(outputDirectory);

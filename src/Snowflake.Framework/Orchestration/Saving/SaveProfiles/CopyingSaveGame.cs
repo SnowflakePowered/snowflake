@@ -11,15 +11,15 @@ namespace Snowflake.Orchestration.Saving.SaveProfiles
         public CopyingSaveGame(DateTimeOffset createdTime, 
             Guid saveGuid,
             string saveType,
-            IDirectory contentDirectory) 
+            IIndelibleDirectory contentDirectory) 
             : base(createdTime, saveGuid, saveType)
         {
             this.ContentDirectory = contentDirectory;
         }
 
-        private IDirectory ContentDirectory { get; }
+        private IIndelibleDirectory ContentDirectory { get; }
 
-        public override async Task ExtractSave(IDirectory outputDirectory)
+        public override async Task ExtractSave(IIndelibleDirectory outputDirectory)
         {
             await foreach (var _ in outputDirectory.CopyFromDirectory(this.ContentDirectory, true)) { };
         }

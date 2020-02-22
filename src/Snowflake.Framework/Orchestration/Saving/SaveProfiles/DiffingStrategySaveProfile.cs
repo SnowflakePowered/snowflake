@@ -28,13 +28,13 @@ namespace Snowflake.Orchestration.Saving.SaveProfiles
 
         public override SaveManagementStrategy ManagementStrategy => SaveManagementStrategy.Copy;
 
-        private async Task CreateBaseSave(IDirectory saveContents)
+        private async Task CreateBaseSave(IIndelibleDirectory saveContents)
         {
             var contentDirectory = this.ProfileRoot.OpenDirectory("base/content");
             await foreach (var _ in contentDirectory.CopyFromDirectory(saveContents)) { };
         }
 
-        public async override Task<ISaveGame> CreateSave(IDirectory saveContents)
+        public async override Task<ISaveGame> CreateSave(IIndelibleDirectory saveContents)
         {
             if (!this.ProfileRoot.ContainsDirectory("base")) await this.CreateBaseSave(saveContents);
             using var rollingHash = new RollingHash(32);
@@ -129,7 +129,7 @@ namespace Snowflake.Orchestration.Saving.SaveProfiles
             return created;
         }
 
-        private ISaveGame? GetSave(IDirectory internalSaveDir)
+        private ISaveGame? GetSave(IIndelibleDirectory internalSaveDir)
         {
             string name = internalSaveDir.Name;
             if (!DateTimeOffset.TryParseExact(name[0..DateFormat.Length], DateFormat, CultureInfo.InvariantCulture,

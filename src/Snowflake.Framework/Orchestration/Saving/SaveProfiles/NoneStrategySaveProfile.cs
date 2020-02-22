@@ -22,7 +22,7 @@ namespace Snowflake.Orchestration.Saving.SaveProfiles
             return;
         }
 
-        public override Task<ISaveGame> CreateSave(IDirectory saveContents)
+        public override Task<ISaveGame> CreateSave(IIndelibleDirectory saveContents)
         {
             return Task.FromResult<ISaveGame>(new EmptySaveGame(DateTimeOffset.UtcNow, Guid.NewGuid(), this.SaveType));
         }

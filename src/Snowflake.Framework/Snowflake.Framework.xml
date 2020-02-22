@@ -559,7 +559,7 @@
         <member name="M:Snowflake.Extensibility.Provisioning.ProvisionedPlugin.Dispose">
             <inheritdoc/>
         </member>
-        <member name="M:Snowflake.Filesystem.DirectoryExtensions.CopyFromDirectory(Snowflake.Filesystem.IDirectory,Snowflake.Filesystem.IDirectory)">
+        <member name="M:Snowflake.Filesystem.DirectoryExtensions.CopyFromDirectory(Snowflake.Filesystem.IIndelibleDirectory,Snowflake.Filesystem.IIndelibleDirectory)">
             <summary>
             Copies all the files and directories from the source directory recursively into this directory.
             </summary>
@@ -568,7 +568,7 @@
             <param name="overwrite"></param>
             <returns>An enumerable of copied files.</returns>
         </member>
-        <member name="M:Snowflake.Filesystem.DirectoryExtensions.CopyFromDirectory(Snowflake.Filesystem.IDirectory,Snowflake.Filesystem.IDirectory,System.Boolean)">
+        <member name="M:Snowflake.Filesystem.DirectoryExtensions.CopyFromDirectory(Snowflake.Filesystem.IIndelibleDirectory,Snowflake.Filesystem.IIndelibleDirectory,System.Boolean)">
             <summary>
             Copies all the files and directories from the source directory recursively into this directory.
             </summary>
