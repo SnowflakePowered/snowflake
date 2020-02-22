@@ -13,7 +13,7 @@ namespace Snowflake.Orchestration.Saving.SaveProfiles
         private static readonly string DateFormat = "yyyy-MM-dd.HH-mm-ss";
 
         public ReplaceStrategySaveProfile(Guid profileGuid, 
-            string saveType, string profileName, IDirectory profileRoot) 
+            string saveType, string profileName, IIndelibleDirectory profileRoot) 
             : base(profileGuid, saveType, profileName, profileRoot)
         {
             var saveManifest = this.ProfileRoot.OpenFile("profile");
@@ -25,7 +25,7 @@ namespace Snowflake.Orchestration.Saving.SaveProfiles
 
         public override SaveManagementStrategy ManagementStrategy => SaveManagementStrategy.Replace;
 
-        public async override Task<ISaveGame> CreateSave(IDirectory saveContents)
+        public async override Task<ISaveGame> CreateSave(IIndelibleDirectory saveContents)
         {
             var oldLatestFile = this.ProfileRoot.OpenFile("latest");
 
@@ -76,7 +76,7 @@ namespace Snowflake.Orchestration.Saving.SaveProfiles
             return this.GetSave(saveDirectory);
         }
 
-        private ISaveGame GetSave(IDirectory internalSaveDir)
+        private ISaveGame GetSave(IIndelibleDirectory internalSaveDir)
         {
             string name = internalSaveDir.Name;
             var date = DateTimeOffset.ParseExact(name[0..DateFormat.Length], DateFormat, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);

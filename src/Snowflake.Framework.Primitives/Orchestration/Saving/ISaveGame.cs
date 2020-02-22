@@ -21,7 +21,7 @@ namespace Snowflake.Orchestration.Saving
         /// <summary>
         /// Writes the content of the save to the given directory
         /// </summary>
-        Task ExtractSave(IDirectory outputDirectory);
+        Task ExtractSave(IIndelibleDirectory outputDirectory);
 
         /// <summary>
         /// A unique identifier that identifies all saves of this particular type.

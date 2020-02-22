@@ -8,7 +8,7 @@ namespace Snowflake.Orchestration.Saving
 {
     internal abstract class SaveProfile : ISaveProfile
     {
-        public SaveProfile(Guid profileGuid, string saveType, string profileName, IDirectory profileRoot)
+        public SaveProfile(Guid profileGuid, string saveType, string profileName, IIndelibleDirectory profileRoot)
         {
             this.Guid = profileGuid;
             this.ProfileName = profileName;
@@ -22,11 +22,11 @@ namespace Snowflake.Orchestration.Saving
 
         public string ProfileName { get; }
 
-        protected IDirectory ProfileRoot { get; }
+        protected IIndelibleDirectory ProfileRoot { get; }
 
         public abstract SaveManagementStrategy ManagementStrategy { get; }
 
-        public abstract Task<ISaveGame> CreateSave(IDirectory saveContents);
+        public abstract Task<ISaveGame> CreateSave(IIndelibleDirectory saveContents);
 
         public abstract Task<ISaveGame> CreateSave(ISaveGame saveGame);
 

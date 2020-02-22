@@ -13,7 +13,7 @@ namespace Snowflake.Orchestration.Saving.SaveProfiles
         {
         }
 
-        public override Task ExtractSave(IDirectory outputDirectory)
+        public override Task ExtractSave(IIndelibleDirectory outputDirectory)
         {
             return Task.CompletedTask;
         }
