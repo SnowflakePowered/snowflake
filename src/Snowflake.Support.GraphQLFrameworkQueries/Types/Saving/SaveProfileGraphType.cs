@@ -18,7 +18,6 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Types.Saving
                 description: "The GUID of this save profile");
             Field<ListGraphType<SaveGameGraphType>>("history", resolve: c => c.Source.GetHistory(), description: "Gets all saves in the profile's history");
             Field<ListGraphType<SaveGameGraphType>>("head", resolve: c => c.Source.GetHeadSave(), description: "Gets all saves in the profile's history");
-
         }
     }
 }
