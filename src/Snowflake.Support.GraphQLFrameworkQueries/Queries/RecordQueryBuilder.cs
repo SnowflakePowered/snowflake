@@ -17,6 +17,8 @@ using Snowflake.Support.GraphQLFrameworkQueries.Inputs.RecordMetadata;
 using Snowflake.Support.GraphQLFrameworkQueries.Types.ControllerLayout;
 using Snowflake.Support.GraphQLFrameworkQueries.Types.PlatformInfo;
 using Snowflake.Support.GraphQLFrameworkQueries.Types.Model;
+using Snowflake.Model.Records.File;
+using Snowflake.Model.Game.LibraryExtensions;
 
 namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
 {
@@ -31,17 +33,11 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
             this.StoneProvider = stoneProvider;
         }
 
-        [Connection("games", "Get all Games", typeof(GameGraphType))]
+        [Connection("games", "Get all games in the library", typeof(GameGraphType))]
         public IEnumerable<IGame> GetGames()
         {
             return this.GameLibrary.GetAllGames();
         }
-
-        //[Connection("files", "Get all files", typeof(FileRecordGraphType))]
-        //public IEnumerable<IFileRecord> GetFiles()
-        //{
-        //    return this.GameLibrary.FileLibrary.GetAllRecords();
-        //}
 
         //[Field("file", "Get a file by an ID", typeof(FileRecordGraphType))]
         //[Parameter(typeof(Guid), typeof(GuidGraphType), "guid", "The unique file GUID")]
@@ -63,19 +59,19 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
         //    return path;
         //}
 
-        //[Field("game", "Get a game by an ID", typeof(GameRecordGraphType))]
-        //[Parameter(typeof(Guid), typeof(GuidGraphType), "guid", "The unique game GUID")]
-        //public IGameRecord GetGame(Guid guid)
-        //{
-        //    return this.GameLibrary.Get(guid);
-        //}
+        [Query("game", "Get a game by an ID", typeof(GameGraphType))]
+        [Parameter(typeof(Guid), typeof(GuidGraphType), "guid", "The unique game GUID")]
+        public IGame GetGame(Guid guid)
+        {
+            return this.GameLibrary.GetGame(guid);
+        }
 
-        //[Connection("gamesByPlatform", "Get games filtered by a given platform", typeof(GameRecordGraphType))]
-        //[Parameter(typeof(string), typeof(StringGraphType), "platformId", "The platform ID")]
-        //public IEnumerable<IGameRecord> GetGamesByPlatform(string platformId)
-        //{
-        //    return this.GameLibrary.GetGamesByPlatform(platformId);
-        //}
+        [Connection("gamesByPlatform", "Get games filtered by a given platform", typeof(GameGraphType))]
+        [Parameter(typeof(string), typeof(StringGraphType), "platformId", "The platform ID")]
+        public IEnumerable<IGame> GetGamesByPlatform(string platformId)
+        {
+            return this.GameLibrary.QueryGames(g => g.PlatformID == platformId);
+        }
 
         [Mutation("addGame", "Adds a game to the database directly.", typeof(GameGraphType))]
         [Parameter(typeof(GameRecordInputObject), typeof(GameRecordInputType), "input", "game input")]
@@ -99,14 +95,5 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
                 throw new KeyNotFoundException($"Unable to find platform {input.Platform}.");
             }
         }
-
-        //[Mutation("addFile", "Adds a file to the database directly.", typeof(FileRecordGraphType))]
-        //[Parameter(typeof(FileRecordInputObject), typeof(FileRecordInputType), "input", "File input")]
-        //public IFileRecord AddFile(FileRecordInputObject input)
-        //{
-        //    var file = new FileRecord(input.FilePath, input.MimeType);
-        //    this.GameLibrary.FileLibrary.Set(file);
-        //    return file;
-        //}
     }
 }
