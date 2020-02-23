@@ -14,6 +14,7 @@ using Snowflake.Orchestration.Extensibility;
 using Snowflake.Orchestration.Saving;
 using Snowflake.Services;
 using Snowflake.Support.GraphQLFrameworkQueries.Types.PlatformInfo;
+using Snowflake.Support.GraphQLFrameworkQueries.Types.Saving;
 
 namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
 {
@@ -35,6 +36,56 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
             this.GameLibrary = library;
             this.Ports = ports;
         }
+        [Mutation("createSaveProfile", "Creates a new saving profile", typeof(SaveProfileGraphType))]
+        [Parameter(typeof(Guid), typeof(GuidGraphType), "gameGuid", "The GUID of the game to create a save profile for")]
+        [Parameter(typeof(string), typeof(StringGraphType), "saveProfileName", "The name of the new profile.")]
+        [Parameter(typeof(string), typeof(StringGraphType), "saveType", "The name of the new profile.")]
+        [Parameter(typeof(SaveManagementStrategy), typeof(SaveManagementStrategyEnum), "strategy", "The strategy to manage this save profile.")]
+        public ISaveProfile CreateSaveProfile(Guid gameGuid, string saveProfileName, string saveType, SaveManagementStrategy strategy)
+        {
+            var game = this.GameLibrary.GetGame(gameGuid);
+            return game.WithFiles().WithSaves().CreateProfile(saveProfileName, saveType, strategy);
+        }
+
+        [Mutation("deleteSaveProfile", "Creates a new saving profile", typeof(SaveProfileGraphType))]
+        [Parameter(typeof(Guid), typeof(GuidGraphType), "gameGuid", "The GUID of the game to create a save profile for")]
+        [Parameter(typeof(Guid), typeof(GuidGraphType), "profileGuid", "The GUID of the save profile.")]
+        public ISaveProfile DeleteSaveProfile(Guid gameGuid, Guid profileGuid)
+        { 
+            var game = this.GameLibrary.GetGame(gameGuid);
+            var saves = game.WithFiles().WithSaves();
+            var profile = saves.GetProfile(profileGuid);
+            if (profile != null) saves.DeleteProfile(profile.Guid);
+
+            return profile;
+        }
+
+        [Query("saveProfile", "Gets a given save profile", typeof(SaveProfileGraphType))]
+        [Parameter(typeof(Guid), typeof(GuidGraphType), "gameGuid", "The GUID of the game to create a save profile for.")]
+        [Parameter(typeof(Guid), typeof(GuidGraphType), "profileGuid", "The GUID of the save profile.")]
+        public ISaveProfile GetSaveProfile(Guid gameGuid, Guid profileGuid)
+        {
+            var game = this.GameLibrary.GetGame(gameGuid);
+            return game.WithFiles().WithSaves().GetProfile(profileGuid);
+        }
+
+        [Query("saveProfilesForType", "Gets all save profiles for a game", typeof(ListGraphType<SaveProfileGraphType>))]
+        [Parameter(typeof(Guid), typeof(GuidGraphType), "gameGuid", "The GUID of the game to create a save profile for.")]
+        [Parameter(typeof(string), typeof(StringGraphType), "saveType", "The name of the new profile.")]
+
+        public IEnumerable<ISaveProfile> GetSaveProfiles(Guid gameGuid, string saveType)
+        {
+            var game = this.GameLibrary.GetGame(gameGuid);
+            return game.WithFiles().WithSaves().GetProfiles(saveType);
+        }
+
+        [Query("saveProfiles", "Gets all save profiles for a game with a given save type.", typeof(ListGraphType<SaveProfileGraphType>))]
+        [Parameter(typeof(Guid), typeof(GuidGraphType), "gameGuid", "The GUID of the game to create a save profile for.")]
+        public IEnumerable<ISaveProfile> GetSaveProfiles(Guid gameGuid)
+        {
+            var game = this.GameLibrary.GetGame(gameGuid);
+            return game.WithFiles().WithSaves().GetProfiles();
+        }
 
         [Query("missingSystemFiles", "Gets missing system files for the given game that the given emulator requires to run", 
             typeof(ListGraphType<SystemFileGraphType>))]
@@ -51,7 +102,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
         [Parameter(typeof(string), typeof(StringGraphType), "orchestratorName", "The name of the orchestrator plugin to use.")]
         [Parameter(typeof(string), typeof(StringGraphType), "configurationProfile", "The name of the configuration profile to use.")]
         [Parameter(typeof(Guid), typeof(GuidGraphType), "gameGuid", "The GUID of the game to launch.")]
-        [Parameter(typeof(Guid?), typeof(GuidGraphType), "saveGuid", "The GUID of the save profile to use.")]
+        [Parameter(typeof(Guid), typeof(GuidGraphType), "saveGuid", "The GUID of the save profile to use.")]
         [Parameter(typeof(bool), typeof(BooleanGraphType), "verify", "Whether or not to verify the game files before launching.")]
         public async Task<Guid> CreateGameEmulationInstance(string orchestratorName, string configurationProfile, 
             Guid gameGuid, Guid saveGuid, bool verify = false)
