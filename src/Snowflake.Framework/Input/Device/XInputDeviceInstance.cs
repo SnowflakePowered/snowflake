@@ -106,5 +106,8 @@ namespace Snowflake.Input.Device
         public IDeviceLayoutMapping DefaultLayout { get; }
 
         public int ProductEnumerationIndex => this.EnumerationIndex;
+
+        // todo: make XInput specific labels!
+        public IDeviceCapabilityLabels CapabilityLabels => DefaultDeviceCapabilityLabels.DefaultLabels;
     }
 }

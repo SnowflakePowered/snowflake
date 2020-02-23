@@ -22,7 +22,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Types.InputDevice
                 resolve: context => context.Source.Capabilities);
             Field<ListGraphType<MappedControllerElementGraphType>>("defaultLayout",
                 description: "The default, assumed natural mapping from capability to virtual element without regard for any specific layout.",
-                resolve: context => (IEnumerable<MappedControllerElement>)context.Source.DefaultLayout);
+                resolve: context => context.Source.DefaultLayout);
             Field<IntGraphType>("enumerationIndex",
                 description: "When enumerating devices with a given driver, the index of enumeration for this driver.",
                 resolve: context => context.Source.EnumerationIndex);
@@ -41,6 +41,9 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Types.InputDevice
                             "with regards to the specific type of device, as determined by unique VID/product name," +
                             "if and only if the driver disambiguates between different devices.",
                 resolve: context => context.Source.ProductEnumerationIndex);
+            Field<DeviceCapabilityLabelsGraphType>("capabilityLabels",
+                description: "Friendly labels for the device capabilities of this instance",
+                resolve: context => context.Source.CapabilityLabels);
         }
     }
 }

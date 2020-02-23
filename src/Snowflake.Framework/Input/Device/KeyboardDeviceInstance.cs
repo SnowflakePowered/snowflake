@@ -49,8 +49,8 @@ namespace Snowflake.Input.Device
             this.Capabilities = DeviceCapabilityClasses.Keyboard
                 .Concat(DeviceCapabilityClasses.MouseButtons)
                 .Concat(DeviceCapabilityClasses.MouseCursor)
-                .Concat(new[] { DeviceCapability.Axis0, 
-                    DeviceCapability.Axis0Negative, 
+                .Concat(new[] { DeviceCapability.Axis0,
+                    DeviceCapability.Axis0Negative,
                     DeviceCapability.Axis0Positive })
                 .ToList();
 
@@ -69,5 +69,7 @@ namespace Snowflake.Input.Device
         public int NameEnumerationIndex => 0;
 
         public int ProductEnumerationIndex => 0;
+
+        public IDeviceCapabilityLabels CapabilityLabels => DefaultDeviceCapabilityLabels.DefaultLabels;
     }
 }

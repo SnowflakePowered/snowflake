@@ -70,18 +70,16 @@ namespace Snowflake.Support.InputEnumerators.Windows
 
                 // todo add support for mapping overrides
                 instances.Add(new DirectInputDeviceInstance(allOrder, classOrder, nameOrder, prodOrder, capabilities, 
-                    GenerateDefaultMapping(capabilities.Keys)));
+                    GenerateDefaultMapping(capabilities.Keys), DefaultDeviceCapabilityLabels.DefaultLabels));
 
                 yield return new InputDevice(vid, pid,
                     name, name, path, device.Information.InstanceGuid, instances.AsReadOnly());
             }
-            
         }
 
         private static readonly IDictionary<DeviceCapability, ControllerElement> _hidMappings =
            new Dictionary<DeviceCapability, ControllerElement>()
            {
-
                 {DeviceCapability.Button0, ControllerElement.ButtonA},
                 {DeviceCapability.Button1, ControllerElement.ButtonB},
                 {DeviceCapability.Button2, ControllerElement.ButtonX},

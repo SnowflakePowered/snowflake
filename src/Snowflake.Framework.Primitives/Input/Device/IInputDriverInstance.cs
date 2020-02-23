@@ -78,5 +78,11 @@ namespace Snowflake.Input.Device
         /// the natural mapping from controller element to a device capability.
         /// </summary>
         IDeviceLayoutMapping DefaultLayout { get; }
+
+        /// <summary>
+        /// Gets the friendly label names for capabilities this device instance supports.
+        /// This collection must at least have labels for all supported capabilities in <see cref="Capabilities"/>.
+        /// </summary>
+        IDeviceCapabilityLabels CapabilityLabels { get; }
     }
 }

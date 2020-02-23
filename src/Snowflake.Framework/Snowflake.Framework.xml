@@ -932,12 +932,34 @@
             <param name="vendor">The vendor ID of the physical device for this set of mappings.</param>
             <param name="mapping">The device layout mapping provided by the device enumerator.</param>
         </member>
+        <member name="T:Snowflake.Input.Device.DefaultDeviceCapabilityLabels">
+            <summary>
+            Implements a default label mapping using the name of the capability enum element.
+            </summary>
+        </member>
+        <member name="P:Snowflake.Input.Device.DefaultDeviceCapabilityLabels.DefaultLabels">
+            <summary>
+            Default labels using the name of the capability enum element.
+            </summary>
+        </member>
         <member name="M:Snowflake.Input.Device.DeviceCapabilityExtensions.GetClass(Snowflake.Input.Device.DeviceCapability)">
             <summary>
             Gets the capability class of this <see cref="T:Snowflake.Input.Device.DeviceCapability"/>
             </summary>
             <param name="this">The <see cref="T:Snowflake.Input.Device.DeviceCapability"/></param>
             <returns>The capability class of the capability.</returns>
+        </member>
+        <member name="T:Snowflake.Input.Device.DictionaryDeviceCapabilityLabels">
+            <summary>
+            Implements a label mapping using a backing dictionary. Missing labels are replaced with
+            the empty string.
+            </summary>
+        </member>
+        <member name="M:Snowflake.Input.Device.DictionaryDeviceCapabilityLabels.#ctor(System.Collections.Generic.IDictionary{Snowflake.Input.Device.DeviceCapability,System.String})">
+            <summary>
+            Create a new <see cref="T:Snowflake.Input.Device.IDeviceCapabilityLabels"/> using a backing dictionary.
+            </summary>
+            <param name="labels">The backing dictionary to use.</param>
         </member>
         <member name="T:Snowflake.Installation.Extensibility.GameInstaller">
             <inheritdoc cref="T:Snowflake.Installation.Extensibility.IGameInstaller" />
