@@ -47,10 +47,5 @@ namespace Snowflake.Loader
         /// The version of this module.
         /// </summary>
         Version Version { get; }
-
-        /// <summary>
-        /// Optional loader specific options
-        /// </summary>
-        dynamic? LoaderOptions { get; }
     }
 }

@@ -13,7 +13,6 @@ using Newtonsoft.Json.Linq;
 using System.Xml.Linq;
 using System.Linq;
 using IniParser.Parser;
-using Newtonsoft.Json;
 using Snowflake.Tests;
 using Snowflake.Input.Controller.Mapped;
 using Snowflake.Configuration.Input;

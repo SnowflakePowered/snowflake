@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using Newtonsoft.Json;
 using Snowflake.Configuration.Input;
 using Snowflake.Configuration.Serialization.Serializers.Implementations;
 using Snowflake.Configuration.Tests;

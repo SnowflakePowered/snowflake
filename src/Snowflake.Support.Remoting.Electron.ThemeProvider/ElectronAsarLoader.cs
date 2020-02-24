@@ -1,17 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Snowflake.Orchestration.Process;
+using System.Text.Json;
 using Snowflake.Extensibility;
 using Snowflake.Framework.Remoting.Electron;
 using Snowflake.Loader;
-using Newtonsoft.Json;
 using Snowflake.Support.Remoting.Electron.ThemeProvider;
 
 namespace Snowflake.Support.Remoting.Electron
 {
     public class ElectronAsarLoader : IModuleLoader<IElectronPackage>
     {
+        private static readonly JsonSerializerOptions serializationOptions = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true,
+        };
+
         private ILogger Logger { get; }
 
         public ElectronAsarLoader(ILogger logger)
@@ -37,7 +41,8 @@ namespace Snowflake.Support.Remoting.Electron
                     $"Electron ASAR {electronPackage.FullName} does not contain a theme definition...");
             }
 
-            var themeDef = JsonConvert.DeserializeObject<ThemeDefinition>(File.ReadAllText(themeDefPath));
+            var themeDef = JsonSerializer.Deserialize<ThemeDefinition>(File.ReadAllText(themeDefPath), serializationOptions);
+
             yield return new ElectronPackage()
             {
                 Author = module.Author,
