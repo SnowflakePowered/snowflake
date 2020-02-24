@@ -18,9 +18,9 @@ namespace Snowflake.Extensibility.Provisioning.Standalone
             return String.Empty;
         }
 
-        public IDictionary<string, string> GetDictionary(string key)
+        public IReadOnlyDictionary<string, string> GetDictionary(string key)
         {
-            return ImmutableDictionary.Create<string, string>();
+            return ImmutableDictionary<string, string>.Empty;
         }
 
         public IEnumerable<string> GetEnumerable(string key)

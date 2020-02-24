@@ -24,17 +24,17 @@ namespace Snowflake.Extensibility.Provisioning
         string Get(string key);
 
         /// <summary>
-        /// Gets a list of properties
+        /// Gets a list of properties. If it does not exist, returns the empty enumerable.
         /// </summary>
         /// <param name="key">The key of the property list</param>
         /// <returns>The list of properties</returns>
         IEnumerable<string> GetEnumerable(string key);
 
         /// <summary>
-        /// Gets a dictionary of properties
+        /// Gets a dictionary of properties. If it does not exist returns the empty dictionary.
         /// </summary>
         /// <param name="key">The key of the property dictionary</param>
         /// <returns>The dictionary of properties</returns>
-        IDictionary<string, string> GetDictionary(string key);
+        IReadOnlyDictionary<string, string> GetDictionary(string key);
     }
 }

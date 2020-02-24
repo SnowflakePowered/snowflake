@@ -2,12 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using System.Text.Json;
 using Snowflake.Extensibility;
 using Snowflake.Extensibility.Configuration;
 using Snowflake.Extensibility.Provisioning;
@@ -26,6 +24,7 @@ namespace Snowflake.Support.PluginManager
         private readonly IDictionary<Type, IImmutableList<IPlugin>> loadedPlugins;
         private readonly IPluginConfigurationStore configurationStore;
         private readonly IFileSystem rootFs;
+        private readonly JsonSerializerOptions jsonSerializerOptions;
 
         public ILogger Logger { get; }
 
@@ -47,6 +46,8 @@ namespace Snowflake.Support.PluginManager
             this.configurationStore = databaseProvider;
             this.rootFs = rootFs;
             this.Logger = this.logProvider.GetLogger("PluginManager");
+            this.jsonSerializerOptions = new JsonSerializerOptions();
+            this.jsonSerializerOptions.Converters.Add(new PluginPropertiesConverter());
         }
 
         /// <inheritdoc/>
@@ -85,10 +86,10 @@ namespace Snowflake.Support.PluginManager
                 throw new FileNotFoundException($"Unable to find plugin.json for {pluginAttr.PluginName}");
             }
 
-            IPluginProperties properties = new JsonPluginProperties(JObject
-                .FromObject(JsonConvert
-                        .DeserializeObject(pluginJsonFile.ReadAllText()),
-                    new JsonSerializer {Culture = CultureInfo.InvariantCulture}));
+            var props = JsonSerializer
+                .Deserialize<PluginPropertiesData>(pluginJsonFile.ReadAllText(), jsonSerializerOptions);
+
+            IPluginProperties properties = new PluginProperties(props.Strings, props.Dictionaries, props.Arrays);
 
             var pluginDataFs = rootFs.GetOrCreateSubFileSystem(appDataPath / "plugindata" / pluginAttr.PluginName);
 

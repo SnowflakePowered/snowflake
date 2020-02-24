@@ -179,6 +179,7 @@
         <member name="T:Snowflake.Configuration.Input.DictionaryInputMapping">
             <summary>
             A JSON deseriazable input mapping backed by a simple dictionary lookup.
+            todo: make this free from newtonsoft.json
             </summary>
         </member>
         <member name="P:Snowflake.Configuration.Input.DictionaryInputMapping.Item(Snowflake.Input.Device.DeviceCapability)">
@@ -492,18 +493,6 @@
             <summary>
             The empty plugin configuration.
             </summary>
-        </member>
-        <member name="P:Snowflake.Extensibility.Provisioning.JsonPluginProperties.PropertyKeys">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Extensibility.Provisioning.JsonPluginProperties.Get(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Extensibility.Provisioning.JsonPluginProperties.GetEnumerable(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Extensibility.Provisioning.JsonPluginProperties.GetDictionary(System.String)">
-            <inheritdoc/>
         </member>
         <member name="P:Snowflake.Extensibility.Provisioning.PluginProvision.Logger">
             <inheritdoc/>
@@ -972,7 +961,6 @@
             <param name="vendor">The vendor ID of the physical device for this set of mappings.</param>
             <param name="mapping">The device layout mapping provided by the device enumerator.</param>
         </member>
-<<<<<<< HEAD
         <member name="T:Snowflake.Input.Device.DefaultDeviceCapabilityLabels">
             <summary>
             Implements a default label mapping using the name of the capability enum element.
@@ -981,11 +969,11 @@
         <member name="P:Snowflake.Input.Device.DefaultDeviceCapabilityLabels.DefaultLabels">
             <summary>
             Default labels using the name of the capability enum element.
-=======
+            </summary>
+        </member>
         <member name="T:Snowflake.Input.Device.DeviceCapabilityExtensions">
             <summary>
             Extensions to <see cref="T:Snowflake.Input.Device.DeviceCapability"/>
->>>>>>> StoneProvider: Use System.Text.Json to parse stone
             </summary>
         </member>
         <member name="M:Snowflake.Input.Device.DeviceCapabilityExtensions.GetClass(Snowflake.Input.Device.DeviceCapability)">

@@ -13,6 +13,7 @@ namespace Snowflake.Configuration.Input
 {
     /// <summary>
     /// A JSON deseriazable input mapping backed by a simple dictionary lookup.
+    /// todo: make this free from newtonsoft.json
     /// </summary>
     [JsonConverter(typeof(InputMappingConverter))]
     public class DictionaryInputMapping : IDeviceInputMapping
