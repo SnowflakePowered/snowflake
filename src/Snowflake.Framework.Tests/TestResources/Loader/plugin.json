@@ -8,9 +8,14 @@
   ],
   "description": "Test",
   "someString": "TestString",
-  "someArray": ["One", "Two"],
+  "someArray": [ "One", "Two" ],
   "someDictionary": {
     "one": "1",
+    "two": "2",
+    "three": 3
+  },
+  "invalidDictionary": {
+    "one": [ "hello" ],
     "two": "2"
   }
 }

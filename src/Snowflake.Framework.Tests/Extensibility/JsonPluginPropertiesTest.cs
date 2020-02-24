@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using System.Text.Json;
 using Snowflake.Extensibility.Provisioning;
+using Snowflake.Support.PluginManager;
 using Snowflake.Tests;
 using Xunit;
 
@@ -14,9 +14,12 @@ namespace Snowflake.Extensibility.Tests
         [Fact]
         public void JsonPluginProperties_Tests()
         {
-            var propRoot =
-                JsonConvert.DeserializeObject<JObject>(TestUtilities.GetStringResource("Loader.plugin.json"));
-            IPluginProperties properties = new JsonPluginProperties(propRoot);
+            var opts = new JsonSerializerOptions();
+            opts.Converters.Add(new PluginPropertiesConverter());
+            var props = 
+                JsonSerializer.Deserialize<PluginPropertiesData>(TestUtilities.GetStringResource("Loader.plugin.json"), opts);
+            IPluginProperties properties = new PluginProperties(props.Strings, props.Dictionaries, props.Arrays);
+
             Assert.Equal("TestString", properties.Get("someString"));
             Assert.Contains("One", properties.GetEnumerable("someArray"));
             Assert.Contains("Two", properties.GetEnumerable("someArray"));
@@ -27,9 +30,12 @@ namespace Snowflake.Extensibility.Tests
         [Fact]
         public void JsonPluginProperties_InvalidTests()
         {
-            var propRoot =
-                JsonConvert.DeserializeObject<JObject>(TestUtilities.GetStringResource("Loader.plugin.json"));
-            IPluginProperties properties = new JsonPluginProperties(propRoot);
+            var opts = new JsonSerializerOptions();
+            opts.Converters.Add(new PluginPropertiesConverter());
+            var props =
+                JsonSerializer.Deserialize<PluginPropertiesData>(TestUtilities.GetStringResource("Loader.plugin.json"), opts);
+            IPluginProperties properties = new PluginProperties(props.Strings, props.Dictionaries, props.Arrays);
+
             Assert.Equal(String.Empty, properties.Get("notInObject"));
             Assert.Empty(properties.GetEnumerable("notInObject"));
             Assert.Empty(properties.GetDictionary("notInObject"));
