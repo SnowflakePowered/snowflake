@@ -880,11 +880,51 @@
         <member name="M:Snowflake.Input.Controller.ControllerElementCollection.System#Collections#IEnumerable#GetEnumerator">
             <inheritdoc/>
         </member>
+        <member name="T:Snowflake.Input.Controller.ControllerElementExtensions">
+            <summary>
+            Extensions to <see cref="T:Snowflake.Input.Controller.ControllerElement"/>
+            </summary>
+        </member>
+        <member name="M:Snowflake.Input.Controller.ControllerElementExtensions.Parse(System.String)">
+            <summary>
+            Parses a <see cref="T:Snowflake.Input.Controller.ControllerElement"/> from a string.
+            </summary>
+            <param name="controllerElement">The string representation of the controller element.</param>
+            <returns>A <see cref="T:Snowflake.Input.Controller.ControllerElement"/> parsed from the string.</returns>
+            <exception cref="T:System.ArgumentException">If the string is unable to be parsed.</exception>
+        </member>
+        <member name="M:Snowflake.Input.Controller.ControllerElementExtensions.ToString(Snowflake.Input.Controller.ControllerElement)">
+            <summary>
+            Gets the string representation of the <see cref="T:Snowflake.Input.Controller.ControllerElement"/>.
+            </summary>
+            <param name="this">The <see cref="T:Snowflake.Input.Controller.ControllerElement"/> to parse.</param>
+            <returns>The string representation of the <see cref="T:Snowflake.Input.Controller.ControllerElement"/>.</returns>
+        </member>
         <member name="P:Snowflake.Input.Controller.ControllerElementInfo.Label">
             <inheritdoc/>
         </member>
         <member name="P:Snowflake.Input.Controller.ControllerElementInfo.Type">
             <inheritdoc/>
+        </member>
+        <member name="T:Snowflake.Input.Controller.ControllerElementTypeExtensions">
+            <summary>
+            Extensions to <see cref="T:Snowflake.Input.Controller.ControllerElementType"/>
+            </summary>
+        </member>
+        <member name="M:Snowflake.Input.Controller.ControllerElementTypeExtensions.Parse(System.String)">
+            <summary>
+            Parses a <see cref="T:Snowflake.Input.Controller.ControllerElementType"/> from a string.
+            </summary>
+            <param name="controllerElement">The string representation of the controller element.</param>
+            <returns>A <see cref="T:Snowflake.Input.Controller.ControllerElementType"/> parsed from the string.</returns>
+            <exception cref="T:System.ArgumentException">If the string is unable to be parsed.</exception>
+        </member>
+        <member name="M:Snowflake.Input.Controller.ControllerElementTypeExtensions.ToString(Snowflake.Input.Controller.ControllerElementType)">
+            <summary>
+            Gets the string representation of the <see cref="T:Snowflake.Input.Controller.ControllerElementType"/>.
+            </summary>
+            <param name="this">The <see cref="T:Snowflake.Input.Controller.ControllerElementType"/> to parse.</param>
+            <returns>The string representation of the <see cref="T:Snowflake.Input.Controller.ControllerElementType"/>.</returns>
         </member>
         <member name="P:Snowflake.Input.Controller.ControllerLayout.LayoutID">
             <inheritdoc/>
@@ -932,6 +972,7 @@
             <param name="vendor">The vendor ID of the physical device for this set of mappings.</param>
             <param name="mapping">The device layout mapping provided by the device enumerator.</param>
         </member>
+<<<<<<< HEAD
         <member name="T:Snowflake.Input.Device.DefaultDeviceCapabilityLabels">
             <summary>
             Implements a default label mapping using the name of the capability enum element.
@@ -940,6 +981,11 @@
         <member name="P:Snowflake.Input.Device.DefaultDeviceCapabilityLabels.DefaultLabels">
             <summary>
             Default labels using the name of the capability enum element.
+=======
+        <member name="T:Snowflake.Input.Device.DeviceCapabilityExtensions">
+            <summary>
+            Extensions to <see cref="T:Snowflake.Input.Device.DeviceCapability"/>
+>>>>>>> StoneProvider: Use System.Text.Json to parse stone
             </summary>
         </member>
         <member name="M:Snowflake.Input.Device.DeviceCapabilityExtensions.GetClass(Snowflake.Input.Device.DeviceCapability)">

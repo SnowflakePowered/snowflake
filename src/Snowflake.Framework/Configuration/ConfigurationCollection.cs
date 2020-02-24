@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
-using Castle.Core.Internal;
 using Castle.DynamicProxy;
 using Newtonsoft.Json;
 using Snowflake.Configuration.Attributes;
