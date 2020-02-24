@@ -5,8 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using System.Text.Json;
 using Snowflake.Input.Controller;
 using Snowflake.Model.Game;
 using Snowflake.Romfile;
@@ -14,6 +13,7 @@ using Snowflake.Stone.FileSignatures;
 using Snowflake.Stone.FileSignatures.Nintendo;
 using Snowflake.Stone.FileSignatures.Sega;
 using Snowflake.Stone.FileSignatures.Sony;
+using Snowflake.Support.StoneProviders;
 
 namespace Snowflake.Services
 {
@@ -23,33 +23,25 @@ namespace Snowflake.Services
     public class StoneProvider : IStoneProvider
     {
         /// <inheritdoc/>
-        public IDictionary<PlatformId, IPlatformInfo> Platforms { get; }
+        public IReadOnlyDictionary<PlatformId, IPlatformInfo> Platforms => this.StoneData.Platforms;
 
         /// <inheritdoc/>
-        public IDictionary<ControllerId, IControllerLayout> Controllers { get; }
+        public IReadOnlyDictionary<ControllerId, IControllerLayout> Controllers => this.StoneData.Controllers;
 
-        private IDictionary<string, IList<IFileSignature>> FileSignatures { get; }
+        private IReadOnlyDictionary<string, IReadOnlyList<IFileSignature>> FileSignatures { get; }
         /// <inheritdoc/>
-        public Version StoneVersion { get; }
+        public Version StoneVersion => this.StoneData.Version;
 
+        private StoneData StoneData { get; }
         /// <summary>
         /// Creates a new <see cref="StoneProvider"/> with the built-in Stone definitions.
         /// </summary>
         public StoneProvider()
         {
             string stoneData = this.GetStoneData();
-            var stone = JsonConvert.DeserializeAnonymousType(stoneData,
-                new
-                {
-                    Controllers = new Dictionary<ControllerId, ControllerLayout>(),
-                    Platforms = new Dictionary<PlatformId, PlatformInfo>(),
-                    version = string.Empty,
-                });
-            this.Platforms = stone.Platforms.ToDictionary(kvp => kvp.Key, kvp => kvp.Value as IPlatformInfo);
-            this.Controllers = stone.Controllers.ToDictionary(kvp => kvp.Key, kvp => kvp.Value as IControllerLayout);
-            this.StoneVersion = Version.Parse(stone.version.Split('-')[0]); // todo: introduce semver
-
-            this.FileSignatures = new Dictionary<string, IList<IFileSignature>>()
+            this.StoneData = JsonSerializer.Deserialize<StoneData>(stoneData);
+          
+            this.FileSignatures = new Dictionary<string, IReadOnlyList<IFileSignature>>()
             {
                 {"application/vnd.stone-romfile.sony.psx-disctrack", new List<IFileSignature>() { new PlaystationCDRomFileSignature() } },
                 {"application/vnd.stone-romfile.sony.ps2-discimage", new List<IFileSignature>() { new Playstation2Iso9660FileSignature(), new Playstation2CDRomFileSignature() } },

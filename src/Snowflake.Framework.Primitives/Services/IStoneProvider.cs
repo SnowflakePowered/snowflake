@@ -18,12 +18,12 @@ namespace Snowflake.Services
         /// <summary>
         /// Gets the list of platforms loaded for this core service
         /// </summary>
-        IDictionary<PlatformId, IPlatformInfo> Platforms { get; }
+        IReadOnlyDictionary<PlatformId, IPlatformInfo> Platforms { get; }
 
         /// <summary>
         /// Gets the list of controllers loaded for this core service
         /// </summary>
-        IDictionary<ControllerId, IControllerLayout> Controllers { get; }
+        IReadOnlyDictionary<ControllerId, IControllerLayout> Controllers { get; }
 
         /// <summary>
         /// Attempts to get a Stone mimetype from a file stream by reading the file headers provided, if

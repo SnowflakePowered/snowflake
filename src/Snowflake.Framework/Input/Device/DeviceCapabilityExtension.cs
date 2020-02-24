@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Snowflake.Input.Device
 {
+    /// <summary>
+    /// Extensions to <see cref="DeviceCapability"/>
+    /// </summary>
     public static class DeviceCapabilityExtensions
     {
         /// <summary>
