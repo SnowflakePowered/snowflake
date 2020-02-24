@@ -31,11 +31,8 @@ namespace Snowflake.Loader
         /// <inheritdoc />
         public string DisplayName { get; }
 
-        /// <inheritdoc />
-        public dynamic? LoaderOptions { get; }
-
         public Module(string name, string displayName, string entry, string loader, string author, DirectoryInfo moduleDirectory,
-            Version version, dynamic? loaderOptions)
+            Version version)
         {
             this.Name = name;
             this.DisplayName = displayName;
@@ -45,38 +42,19 @@ namespace Snowflake.Loader
             this.ModuleDirectory = moduleDirectory;
             this.ContentsDirectory = moduleDirectory.CreateSubdirectory("contents");
             this.Version = version;
-            this.LoaderOptions = loaderOptions;
         }
     }
 
     internal class ModuleDefinition
     {
-        private string Name { get; }
-        private string DisplayName { get; }
-        private string Entry { get; }
-        private string Loader { get; }
-        private string FrameworkVersion { get; }
-        private string Version { get; }
-        private string Author { get; }
-        private dynamic LoaderOptions { get; }
-        public ModuleDefinition(string name,
-            string displayName,
-            string entry,
-            string loader,
-            string frameworkVersion,
-            string author,
-            string version,
-            dynamic loaderOptions)
-        {
-            this.Name = name;
-            this.Entry = entry;
-            this.Loader = loader;
-            this.Version = version;
-            this.Author = author;
-            this.DisplayName = displayName;
-            this.FrameworkVersion = frameworkVersion;
-            this.LoaderOptions = loaderOptions;
-        }
+#pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
+        public string Name { get; set; }
+        public string DisplayName { get; set; }
+        public string Entry { get; set; }
+        public string Loader { get; set; }
+        public string Version { get; set; }
+        public string Author { get; set; }
+#pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
 
         public IModule ToModule(DirectoryInfo moduleDirectory) => new Module(this.Name,
             this.DisplayName ?? this.Name,
@@ -84,7 +62,6 @@ namespace Snowflake.Loader
             this.Loader,
             this.Author,
             moduleDirectory,
-            System.Version.Parse(this.Version),
-            this.LoaderOptions);
+            System.Version.Parse(this.Version));
     }
 }

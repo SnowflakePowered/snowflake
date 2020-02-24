@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using Snowflake.Input.Controller;
 using Snowflake.Input.Controller.Mapped;
 using Snowflake.Input.Device;

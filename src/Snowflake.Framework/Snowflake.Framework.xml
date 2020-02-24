@@ -1144,9 +1144,6 @@
         <member name="P:Snowflake.Loader.Module.DisplayName">
             <inheritdoc />
         </member>
-        <member name="P:Snowflake.Loader.Module.LoaderOptions">
-            <inheritdoc />
-        </member>
         <member name="P:Snowflake.Loader.ModuleEnumerator.Modules">
             <inheritdoc/>
         </member>
