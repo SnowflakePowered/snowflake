@@ -1,17 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Snowflake.JsonConverters;
 using Snowflake.Model.Game;
 
 namespace Snowflake.Input.Controller
 {
     // should support everything including numeric keypads. buttons are for generic use, such as shaking actions
-    [JsonConverter(typeof(ControllerLayoutConverter))]
     internal class ControllerLayout : IControllerLayout
     {
         /// <inheritdoc/>

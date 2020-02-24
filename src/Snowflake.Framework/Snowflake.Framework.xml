@@ -1079,18 +1079,6 @@
             <param name="fileInfo">The ZIP file source.</param>
             <param name="destination">The destination directory.</param>
         </member>
-        <member name="M:Snowflake.JsonConverters.ConfigurationCollectionSerializer.WriteJson(Newtonsoft.Json.JsonWriter,System.Object,Newtonsoft.Json.JsonSerializer)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.JsonConverters.ConfigurationCollectionSerializer.ReadJson(Newtonsoft.Json.JsonReader,System.Type,System.Object,Newtonsoft.Json.JsonSerializer)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.JsonConverters.ConfigurationCollectionSerializer.CanConvert(System.Type)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.JsonConverters.ControllerLayoutConverter.Create(System.Type,Newtonsoft.Json.Linq.JObject)">
-            <inheritdoc/>
-        </member>
         <member name="M:Snowflake.JsonConverters.InputMappingConverter.Create(System.Type,Newtonsoft.Json.Linq.JObject)">
             <inheritdoc/>
         </member>
@@ -1131,9 +1119,6 @@
             <param name="writer">Newtonsoft.Json.JsonWriter</param>
             <param name="value">Object to serialize.</param>
             <param name="serializer">Newtonsoft.Json.JsonSerializer to use.</param>
-        </member>
-        <member name="M:Snowflake.JsonConverters.PlatformInfoConverter.Create(System.Type,Newtonsoft.Json.Linq.JObject)">
-            <inheritdoc/>
         </member>
         <member name="P:Snowflake.Loader.Module.Name">
             <inheritdoc/>

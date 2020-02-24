@@ -1,11 +1,7 @@
 ﻿using System.Collections.Generic;
-using Newtonsoft.Json;
-using Snowflake.JsonConverters;
-using Snowflake.Model.Game;
 
 namespace Snowflake.Model.Game
 {
-    [JsonConverter(typeof(PlatformInfoConverter))]
     internal class PlatformInfo : IPlatformInfo
     {
         internal PlatformInfo(string platformId, string name, IDictionary<string, string> metadata,

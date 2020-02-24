@@ -1,19 +1,14 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
 using Castle.DynamicProxy;
-using Newtonsoft.Json;
-using Snowflake.Configuration.Attributes;
 using Snowflake.Configuration.Extensions;
 using Snowflake.Configuration.Utility;
-using Snowflake.JsonConverters;
 
 namespace Snowflake.Configuration
 {
-    [JsonConverter(typeof(ConfigurationCollectionSerializer))]
     public class ConfigurationCollection<T> : IConfigurationCollection<T>
         where T : class, IConfigurationCollection<T>
     {
