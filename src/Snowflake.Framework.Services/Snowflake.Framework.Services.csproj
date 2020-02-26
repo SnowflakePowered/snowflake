@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="GraphQL" Version="3.0.0-preview-1521" />
-    <PackageReference Include="GraphQL.Server.Core" Version="3.5.0-alpha0049" />
+    <PackageReference Include="GraphQL.Server.Core" Version="3.5.0-alpha0058" />
     <PackageReference Include="GraphQL.Server.Transports.AspNetCore.SystemTextJson" Version="3.5.0-alpha0049" />
     <PackageReference Include="NLog" Version="4.6.8" PrivateAssets="Compile" />
     <PackageReference Include="GraphQL.Server.Transports.AspNetCore" Version="3.5.0-alpha0049" PrivateAssets="Compile" />
