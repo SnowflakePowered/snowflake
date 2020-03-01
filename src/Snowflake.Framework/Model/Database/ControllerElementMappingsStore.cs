@@ -48,7 +48,7 @@ namespace Snowflake.Model.Database
             return mappings?.AsControllerElementMappings();
         }
 
-        public IEnumerable<IControllerElementMappings> GetMappings(ControllerId controllerId,
+        public IQueryable<IControllerElementMappings> GetMappings(ControllerId controllerId,
             string deviceName, int vendorId)
         {
             var context = new DatabaseContext(this.Options.Options);
@@ -57,8 +57,7 @@ namespace Snowflake.Model.Database
                          && p.DeviceName == deviceName
                          && p.VendorID == vendorId)
                 .Include(p => p.MappedElements)
-                .Select(m => m.AsControllerElementMappings())
-                .AsEnumerable();
+                .Select(m => m.AsControllerElementMappings());
             return mappings;
         }
 
