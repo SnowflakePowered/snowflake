@@ -20,12 +20,12 @@ namespace Snowflake.Model.Database
         {
         }
 
-        public IEnumerable<IGameRecord> GetAllRecords()
+        public IQueryable<IGameRecord> GetAllRecords()
         {
             var context = new DatabaseContext(this.Options.Options);
             var records = context.GameRecords.Include(r => r.Metadata)
                 .Select(record => new GameRecord(record.PlatformID, record.RecordID,
-                record.Metadata.AsMetadataCollection(record.RecordID))).AsEnumerable();
+                record.Metadata.AsMetadataCollection(record.RecordID)));
             return records;
         }
 
@@ -39,14 +39,14 @@ namespace Snowflake.Model.Database
             return records?.AsEnumerable() ?? Enumerable.Empty<IGameRecord>();
         }
 
-        public IEnumerable<IGameRecord> QueryRecords(Expression<Func<IGameRecordQuery, bool>> predicate)
+        public IQueryable<IGameRecord> QueryRecords(Expression<Func<IGameRecordQuery, bool>> predicate)
         {
             var context = new DatabaseContext(this.Options.Options);
             var records = context.GameRecords.Include(r => r.Metadata)
                 .Where(predicate)
                 .Select(record => new GameRecord(record.PlatformID, record.RecordID,
                 record.Metadata.AsMetadataCollection(record.RecordID)));
-            return records?.AsEnumerable() ?? Enumerable.Empty<IGameRecord>();
+            return records;
         }
 
         public IGameRecord? GetRecord(Guid guid)

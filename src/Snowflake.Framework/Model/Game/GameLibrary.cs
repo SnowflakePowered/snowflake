@@ -79,15 +79,11 @@ namespace Snowflake.Model.Game
                 });
         }
 
-        public IEnumerable<IGame> GetAllGames()
+        public IQueryable<IGame> GetAllGames()
         {
             return this.GameRecordLibrary.GetAllRecords()
-                .Select(gameRecord =>
-                {
-                    var extensions = this.Extensions
-                        .ToDictionary(k => k.Value.extensionType, v => v.Value.extension.MakeExtension(gameRecord));
-                    return new Game(gameRecord, extensions);
-                });
+                .Select(gameRecord => new Game(gameRecord,
+                    GameLibrary.MakeExtensions(this.Extensions, gameRecord)));
         }
 
         public async IAsyncEnumerable<IGame> QueryGamesAsync(Expression<Func<IGameRecordQuery, bool>> predicate)
@@ -100,15 +96,17 @@ namespace Snowflake.Model.Game
             }
         }
 
-        public IEnumerable<IGame> QueryGames(Expression<Func<IGameRecordQuery, bool>> predicate)
+        public IQueryable<IGame> QueryGames(Expression<Func<IGameRecordQuery, bool>> predicate)
         {
-            return this.GameRecordLibrary.QueryRecords(predicate)
-                .Select(gameRecord =>
-                {
-                    var extensions = this.Extensions
-                        .ToDictionary(k => k.Value.extensionType, v => v.Value.extension.MakeExtension(gameRecord));
-                    return new Game(gameRecord, extensions);
-                });
+           return this.GameRecordLibrary.QueryRecords(predicate)
+                .Select(gameRecord => new Game(gameRecord, 
+                    GameLibrary.MakeExtensions(this.Extensions, gameRecord)));
+        }
+
+        static IDictionary<Type, IGameExtension> MakeExtensions(IDictionary<Type, (Type extensionType, IGameExtensionProvider extension)> extensions, 
+            IGameRecord gameRecord)
+        {
+            return extensions.ToDictionary(k => k.Value.extensionType, v => v.Value.extension.MakeExtension(gameRecord));
         }
 
         public async Task<IGame> CreateGameAsync(PlatformId platformId)
