@@ -27,6 +27,8 @@ namespace Snowflake.Services.Tests
                 .Returns(() => serviceContainer.Keys.Select(service => service.FullName));
             coreService.Setup(c => c.Get<IDummyComposable>())
                 .Returns(() => (IDummyComposable) serviceContainer[typeof(IDummyComposable)]);
+            coreService.Setup(c => c.Get(typeof(IDummyComposable)))
+                .Returns(() => (IDummyComposable)serviceContainer[typeof(IDummyComposable)]);
             var dummyService = new DummyService();
             var provider = new ServiceRegistrationProvider(coreService.Object);
             provider.RegisterService<IDummyComposable>(dummyService);

@@ -39,5 +39,13 @@ namespace Snowflake.Services
         /// <typeparam name="T">The type of service.</typeparam>
         /// <returns>The service instance</returns>
         T Get<T>();
+
+        /// <summary>
+        /// Get a service.
+        /// The <see cref="IModuleEnumerator"/> service will always be available.
+        /// </summary>
+        /// <param name="serviceType">The type of service.</param>
+        /// <returns>The service instance</returns>
+        object Get(Type serviceType);
     }
 }
