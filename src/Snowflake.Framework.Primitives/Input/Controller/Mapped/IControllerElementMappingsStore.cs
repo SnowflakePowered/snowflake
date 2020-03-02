@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Snowflake.Input.Controller.Mapped;
 using Snowflake.Input.Device;
@@ -73,7 +74,7 @@ namespace Snowflake.Input.Controller.Mapped
         /// <param name="deviceName">The device ID that maps from the spec controller.</param>
         /// <param name="vendorId">The vendor ID of the device.</param>
         /// <returns>All saved mappings from the provided controller ID to device ID.</returns>
-        IEnumerable<IControllerElementMappings> GetMappings(ControllerId controllerId, string deviceName, int vendorId);
+        IQueryable<IControllerElementMappings> GetMappings(ControllerId controllerId, string deviceName, int vendorId);
 
         /// <summary>
         /// Asynchronously gets all saved mappings from the provided controller ID to device ID.
