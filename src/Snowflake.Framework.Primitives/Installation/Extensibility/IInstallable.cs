@@ -22,5 +22,10 @@ namespace Snowflake.Installation.Extensibility
         /// Gets a display name for this installable.
         /// </summary>
         string DisplayName { get; }
+
+        /// <summary>
+        /// The name of the <see cref="IGameInstaller"/> that produced this installable.
+        /// </summary>
+        string Source { get; }
     }
 }
