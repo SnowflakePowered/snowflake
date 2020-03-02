@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Snowflake.Model.Game.LibraryExtensions;
@@ -74,7 +75,7 @@ namespace Snowflake.Model.Game
         /// instead of enumerating all possible games.
         /// </summary>
         /// <returns>All games in the library.</returns>
-        IEnumerable<IGame> GetAllGames();
+        IQueryable<IGame> GetAllGames();
 
         /// <summary>
         /// Asynchronously retrieves all games in the library. See <see cref="GetGames(Expression{Func{IGameRecord, bool}})"/> instead, 
@@ -99,7 +100,7 @@ namespace Snowflake.Model.Game
         /// </summary>
         /// <param name="predicate">The predicate to filter on.</param>
         /// <returns>All games in the library that fulfill the provided predicate.</returns>
-        IEnumerable<IGame> QueryGames(Expression<Func<IGameRecordQuery, bool>> predicate);
+        IQueryable<IGame> QueryGames(Expression<Func<IGameRecordQuery, bool>> predicate);
 
         /// <summary>
         /// Retrieves all games in the library that fulfill the provided predicate asynchronously. The default implementation
