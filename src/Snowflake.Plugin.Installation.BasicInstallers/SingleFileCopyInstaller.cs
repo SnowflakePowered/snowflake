@@ -58,10 +58,10 @@ namespace Snowflake.Plugin.Installation.BasicInstallers
                         .GetSerial(stream);
                     if (serial is null || serial is "")
                     {
-                        yield return new Installable(new[] { file }, file);
+                        yield return new Installable(new[] { file }, file, this);
                         continue;
                     }
-                    yield return new Installable(new[] { file }, $"{file.Name} ({serial})");
+                    yield return new Installable(new[] { file }, $"{file.Name} ({serial})", this);
                 }
             }
         }
