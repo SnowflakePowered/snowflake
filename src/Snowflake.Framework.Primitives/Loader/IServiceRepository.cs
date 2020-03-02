@@ -24,5 +24,11 @@ namespace Snowflake.Loader
         /// Gets a list of available service types.
         /// </summary>
         IEnumerable<string> Services { get; }
+        
+        /// <summary>
+        /// Returns a <see cref="IServiceProvider"/> that includes the services available in this instance of <see cref="IServiceRepository"/>
+        /// </summary>
+        /// <returns>A <see cref="IServiceProvider"/> that contain all available services in this instance of <see cref="IServiceRepository"/>.</returns>
+        IServiceProvider ToServiceProvider();
     }
 }

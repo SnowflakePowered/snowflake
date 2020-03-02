@@ -81,7 +81,13 @@ namespace Snowflake.Services
         public T Get<T>()
         {
             // todo throw?
-            return this.serviceContainer.ContainsKey(typeof(T)) ? (T) this.serviceContainer[typeof(T)] : default;
+            return (T)this.Get(typeof(T));
+        }
+
+        /// <inheritdoc/>
+        public object Get(Type serviceType)
+        {
+            return this.serviceContainer.ContainsKey(serviceType) ? this.serviceContainer[serviceType] : default;
         }
 
         /// <inheritdoc/>
@@ -102,6 +108,7 @@ namespace Snowflake.Services
             {
                 foreach (var service in this.serviceContainer.Values)
                 {
+                    if (service == this) continue;
                     (service as IDisposable)?.Dispose();
                 }
 
