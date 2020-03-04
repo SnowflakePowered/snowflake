@@ -13,7 +13,7 @@ namespace Snowflake.Input.Controller
     {
         private string ControllerIdString { get; }
 
-        private static readonly Regex ControllerIdRegex = new Regex("^[A-Z0-9_]+(_CONTROLLER|_DEVICE|_LAYOUT)$",
+        internal static readonly Regex ControllerIdRegex = new Regex("^[A-Z0-9_]+(_CONTROLLER|_DEVICE|_LAYOUT)$",
             RegexOptions.Compiled);
         private ControllerId(string id)
         {
