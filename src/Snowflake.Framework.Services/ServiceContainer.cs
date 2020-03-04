@@ -87,7 +87,7 @@ namespace Snowflake.Services
         /// <inheritdoc/>
         public object Get(Type serviceType)
         {
-            return this.serviceContainer.ContainsKey(serviceType) ? this.serviceContainer[serviceType] : default;
+            return this.serviceContainer.TryGetValue(serviceType, out var service) ? service : default;
         }
 
         /// <inheritdoc/>

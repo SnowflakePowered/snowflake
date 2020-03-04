@@ -1010,7 +1010,7 @@
         <member name="M:Snowflake.Installation.Extensibility.GameInstaller.Install(Snowflake.Model.Game.IGame,System.Collections.Generic.IEnumerable{System.IO.FileSystemInfo})">
             <inheritdoc />
         </member>
-        <member name="M:Snowflake.Installation.Extensibility.Installable.#ctor(System.Collections.Generic.IEnumerable{System.IO.FileSystemInfo},System.IO.FileSystemInfo)">
+        <member name="M:Snowflake.Installation.Extensibility.Installable.#ctor(System.Collections.Generic.IEnumerable{System.IO.FileSystemInfo},System.IO.FileSystemInfo,Snowflake.Installation.Extensibility.IGameInstaller)">
             <summary>
             Creates an <see cref="T:Snowflake.Installation.Extensibility.IInstallable"/> with the provided artifacts and uses
             the file path as a display name.
@@ -1018,12 +1018,13 @@
             <param name="artifacts">The artifacts to install.</param>
             <param name="source">The source file system info of the installable.</param>
         </member>
-        <member name="M:Snowflake.Installation.Extensibility.Installable.#ctor(System.Collections.Generic.IEnumerable{System.IO.FileSystemInfo},System.String)">
+        <member name="M:Snowflake.Installation.Extensibility.Installable.#ctor(System.Collections.Generic.IEnumerable{System.IO.FileSystemInfo},System.String,Snowflake.Installation.Extensibility.IGameInstaller)">
             <summary>
             Creates an <see cref="T:Snowflake.Installation.Extensibility.IInstallable"/> with the provided artifacts and display name.
             </summary>
             <param name="artifacts">The artifacts to install.</param>
             <param name="displayName">The display name of the installable.</param>
+            <param name="gameInstaller">The installer that produced this installable.</param>
         </member>
         <member name="T:Snowflake.Installation.Tasks.CopyDirectoryContentsTask">
             <summary>
