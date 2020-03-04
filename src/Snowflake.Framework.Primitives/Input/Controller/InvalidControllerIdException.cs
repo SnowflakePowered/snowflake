@@ -7,7 +7,7 @@ namespace Snowflake.Input.Controller
     /// <summary>
     /// Thrown when attempting to create an invalid controller ID.
     /// </summary>
-    public class InvalidControllerIdException : Exception
+    public class InvalidControllerIdException : ArgumentException
     {
         internal InvalidControllerIdException(string controllerId)
             : base($"{controllerId} is not a valid Stone Controller ID. " +

@@ -62,5 +62,53 @@ namespace Snowflake.Services.Tests
                 new List<string>() { });
             Assert.Throws<InvalidOperationException>(() => serviceProvider.Get<IDummyComposable>());
         }
+
+        [Fact]
+        public void ServiceProviderSystemAPI_Test()
+        {
+            var coreService = new Mock<IServiceContainer>();
+            IDictionary<Type, object> serviceContainer = new Dictionary<Type, object>();
+            coreService.Setup(c => c.RegisterService(It.IsAny<IDummyComposable>())).Callback<IDummyComposable>(d =>
+                serviceContainer
+                    .Add(typeof(IDummyComposable), d));
+            coreService.Setup(c => c.AvailableServices())
+                .Returns(() => serviceContainer.Keys.Select(service => service.FullName));
+            coreService.Setup(c => c.Get<IDummyComposable>())
+                .Returns(() => (IDummyComposable)serviceContainer[typeof(IDummyComposable)]);
+            coreService.Setup(c => c.Get(typeof(IDummyComposable)))
+                .Returns(() => (IDummyComposable)serviceContainer[typeof(IDummyComposable)]);
+            var dummyService = new DummyService();
+            var provider = new ServiceRegistrationProvider(coreService.Object);
+            provider.RegisterService<IDummyComposable>(dummyService);
+            Assert.Contains(typeof(IDummyComposable), serviceContainer.Keys);
+            Assert.Equal(dummyService, serviceContainer[typeof(IDummyComposable)]);
+
+            var serviceProvider = new ServiceProvider(coreService.Object,
+                new List<string>() { typeof(IDummyComposable).FullName });
+            Assert.Equal(dummyService, serviceProvider.ToServiceProvider().GetService(typeof(IDummyComposable)));
+        }
+
+        [Fact]
+        public void ServiceProviderNoImportSystemAPI_Test()
+        {
+            var coreService = new Mock<IServiceContainer>();
+            IDictionary<Type, object> serviceContainer = new Dictionary<Type, object>();
+            coreService.Setup(c => c.RegisterService(It.IsAny<IDummyComposable>())).Callback<IDummyComposable>(d =>
+                serviceContainer
+                    .Add(typeof(IDummyComposable), d));
+            coreService.Setup(c => c.AvailableServices())
+                .Returns(() => serviceContainer.Keys.Select(service => service.FullName));
+            coreService.Setup(c => c.Get<IDummyComposable>())
+                .Returns(() => (IDummyComposable)serviceContainer[typeof(IDummyComposable)]);
+            var dummyService = new DummyService();
+            var provider = new ServiceRegistrationProvider(coreService.Object);
+            provider.RegisterService<IDummyComposable>(dummyService);
+            Assert.Contains(typeof(IDummyComposable), serviceContainer.Keys);
+            Assert.Equal(dummyService, serviceContainer[typeof(IDummyComposable)]);
+
+            var serviceProvider = new ServiceProvider(coreService.Object,
+                new List<string>() { });
+            Assert.Null(serviceProvider.ToServiceProvider().GetService(typeof(IDummyComposable)));
+        }
     }
 }

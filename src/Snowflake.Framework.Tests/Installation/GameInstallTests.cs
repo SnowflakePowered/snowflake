@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -48,6 +49,8 @@ namespace Snowflake.Installation.Tests
             var install = new SingleFileCopyInstaller(stone);
 
             var installables = install.GetInstallables("NINTENDO_NES", new List<FileSystemInfo>() { new FileInfo(fname) });
+
+            Assert.True(installables.Select(i => i.Source).All(i => i == install.Name));
             
             foreach (var i in installables)
             {
