@@ -22,14 +22,6 @@ using Snowflake.Support.Remoting.GraphQL.RootProvider;
 
 namespace Snowflake.Services
 {
-    public class TestQueryServices
-    {
-        public PlatformId NintendoNes() => "NINTENDO_NES";
-        public PlatformId ReturnPlatform(PlatformId s) => s;
-        public ControllerId ReturnController(ControllerId s) => s;
-        public string HelloWorld() => "Hello World";
-    }
-
     internal class HotChocolateKestrelIntegration : IKestrelServerMiddlewareProvider
     {
         public HotChocolateKestrelIntegration(GraphQLSchemaRegistrationProvider schemas, IServiceProvider serviceCollection)
