@@ -17,7 +17,7 @@ using Zio.FileSystems;
 namespace Snowflake.Services
 {
     /// <inheritdoc />
-    internal class ServiceContainer : IServiceContainer
+    internal class ServiceContainer : IServiceContainer, IServiceProvider
     {
         #region Loaded Objects
 
@@ -44,8 +44,8 @@ namespace Snowflake.Services
                 kestrelHostname,
                 this.Get<ILogProvider>().GetLogger("kestrel")));
 
+            this.RegisterService<IGraphQLSchemaRegistrationProvider>(new GraphQLSchemaRegistrationProvider());
             this.RegisterGraphQLRootSchema();
-
             this.RegisterService<IContentDirectoryProvider>(directoryProvider);
             this.RegisterService<IServiceRegistrationProvider>(new ServiceRegistrationProvider(this));
             this.RegisterService<IServiceEnumerator>(new ServiceEnumerator(this));
@@ -58,6 +58,8 @@ namespace Snowflake.Services
             this.RegisterService<IGraphQLService>(schema);
             var kestrel = this.Get<IKestrelWebServerService>();
             kestrel.AddService(new GraphQLKestrelIntegration(schema));
+            kestrel.AddService(new HotChocolateKestrelIntegration(
+                (GraphQLSchemaRegistrationProvider)this.Get<IGraphQLSchemaRegistrationProvider>(), this));
         }
 
         /// <inheritdoc/>
@@ -119,6 +121,11 @@ namespace Snowflake.Services
 
             // Free any unmanaged objects here.
             this.disposed = true;
+        }
+
+        object IServiceProvider.GetService(Type serviceType)
+        {
+            return this.Get(serviceType);
         }
     }
 }

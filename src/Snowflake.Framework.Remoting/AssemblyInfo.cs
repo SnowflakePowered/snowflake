@@ -8,6 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCulture("")]
 [assembly: InternalsVisibleTo("Snowflake.Framework.Services")]
 [assembly: InternalsVisibleTo("Snowflake.Framework.Tests")]
+[assembly: InternalsVisibleTo("Snowflake.Framework.Tests")]
+
+[assembly: InternalsVisibleTo("HotChocolate.Core")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
 // to COM components.  If you need to access a type in this assembly from
