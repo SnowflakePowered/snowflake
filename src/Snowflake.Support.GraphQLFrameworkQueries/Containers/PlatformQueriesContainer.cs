@@ -5,6 +5,7 @@ using HotChocolate.Types.Relay;
 using Snowflake.Configuration;
 using Snowflake.Framework.Remoting.GraphQL;
 using Snowflake.Framework.Remoting.GraphQL.Model.Stone;
+using Snowflake.Framework.Remoting.GraphQL.Schema;
 using Snowflake.Loader;
 using Snowflake.Model.Game;
 using Snowflake.Services;
@@ -12,26 +13,16 @@ using Snowflake.Support.GraphQLFrameworkQueries.Queries;
 
 namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
 {
-    public class TestQuery
-        //: ObjectType<PlatformInfoQueryBuilder>
+
+    public class PlatformQueries
+        : ObjectType<PlatformInfoQueryBuilder>
     {
-        //protected override void Configure(IObjectTypeDescriptor<PlatformInfoQueryBuilder> descriptor)
-        //{
-        //    descriptor.Field(p => p.GetPlatform(default(PlatformId)))
-        //        .Argument("platformID", a => a.Description("platform Id"));
-        //}
-
-        public IPlatformInfo GetPlatform([Service] IStoneProvider p, PlatformId platformId)
+        protected override void Configure(IObjectTypeDescriptor<PlatformInfoQueryBuilder> descriptor)
         {
-            return p.Platforms[platformId];
+            descriptor.Field(p => p.GetPlatforms())
+                .UseFiltering()
+                .Description("Gets the Stone Platforms definitions matching the search query.");
         }
-
-        /// <summary>
-        /// Testing One Two Three
-        /// </summary>
-        /// <returns>Hello World</returns>
-        public PlatformId Hello() => "Hello";
-
     }
 
     public class PlatformQueriesContainer : IComposable
@@ -47,13 +38,12 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
             var rootSchema = coreInstance.Get<IGraphQLService>();
             var hotChocolate = coreInstance.Get<IGraphQLSchemaRegistrationProvider>();
 
-            hotChocolate.RegisterSchema(coreInstance, "snowflake", "platforms", schema =>
-            {
-                schema.AddQueryType<TestQuery>();
-            });
-
+      
             var platformQueries = new PlatformInfoQueryBuilder(stone);
-            rootSchema.Register(platformQueries);
+            
+            hotChocolate.AddQuery<PlatformQueries, PlatformInfoQueryBuilder>(platformQueries);
+
+            //rootSchema.Register(platformQueries);
             var logger = coreInstance.Get<ILogProvider>().GetLogger("graphql");
             logger.Info("Registered Platform GraphQL Queries.");
         }

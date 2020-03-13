@@ -24,7 +24,8 @@ namespace Snowflake.Services
         /// <typeparam name="T">The type of the service.</typeparam>
         /// <param name="serviceInstance">The instance of the service.</param>
         /// <exception cref="ArgumentException">Thrown when a service of the same type already exists.</exception>
-        void RegisterService<T>(T serviceInstance);
+        void RegisterService<T>(T serviceInstance)
+            where T : class;
 
         /// <summary>
         /// Get a list of registered services
@@ -38,7 +39,8 @@ namespace Snowflake.Services
         /// </summary>
         /// <typeparam name="T">The type of service.</typeparam>
         /// <returns>The service instance</returns>
-        T Get<T>();
+        T Get<T>()
+            where T: class;
 
         /// <summary>
         /// Get a service.
