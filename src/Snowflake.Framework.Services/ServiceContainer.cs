@@ -3,6 +3,8 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Snowflake.Configuration;
 using Snowflake.Framework.Remoting.GraphQL;
 using Snowflake.Framework.Remoting.Kestrel;
@@ -44,12 +46,24 @@ namespace Snowflake.Services
                 kestrelHostname,
                 this.Get<ILogProvider>().GetLogger("kestrel")));
 
-            this.RegisterService<IGraphQLSchemaRegistrationProvider>(new GraphQLSchemaRegistrationProvider());
+            this.RegisterService<IGraphQLSchemaRegistrationProvider>(new GraphQLSchemaRegistrationProvider(
+                this.Get<ILogProvider>().GetLogger("graphql")));
+
             this.RegisterGraphQLRootSchema();
             this.RegisterService<IContentDirectoryProvider>(directoryProvider);
             this.RegisterService<IServiceRegistrationProvider>(new ServiceRegistrationProvider(this));
             this.RegisterService<IServiceEnumerator>(new ServiceEnumerator(this));
             this.RegisterService<IFileSystem>(new PhysicalFileSystem());
+        }
+
+        internal IServiceCollection BuildServiceContainer()
+        {
+            var container = new ServiceCollection();
+            foreach (var (serviceType, serviceImpl) in this.serviceContainer)
+            {
+                container.AddSingleton(serviceType, serviceImpl);
+            }
+            return container;
         }
 
         private void RegisterGraphQLRootSchema()
@@ -59,11 +73,12 @@ namespace Snowflake.Services
             var kestrel = this.Get<IKestrelWebServerService>();
             kestrel.AddService(new GraphQLKestrelIntegration(schema));
             kestrel.AddService(new HotChocolateKestrelIntegration(
-                (GraphQLSchemaRegistrationProvider)this.Get<IGraphQLSchemaRegistrationProvider>(), this));
+                (GraphQLSchemaRegistrationProvider)this.Get<IGraphQLSchemaRegistrationProvider>()));
         }
 
         /// <inheritdoc/>
         public void RegisterService<T>(T serviceObject)
+            where T : class
         {
             if (this.serviceContainer.ContainsKey(typeof(T)))
             {
@@ -81,6 +96,7 @@ namespace Snowflake.Services
 
         /// <inheritdoc/>
         public T Get<T>()
+            where T : class
         {
             // todo throw?
             return (T)this.Get(typeof(T));
