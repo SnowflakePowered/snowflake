@@ -1,5 +1,6 @@
 ﻿using GraphQL.Instrumentation;
 using HotChocolate.Types;
+using Snowflake.Framework.Remoting.GraphQL.Model.Stone;
 using Snowflake.Model.Game;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,9 @@ namespace Snowflake.Framework.Remoting.GraphQL.Model.PlatformInfo
         protected override void Configure(IObjectTypeDescriptor<IPlatformInfo> descriptor)
         {
             descriptor.Name("PlatformInfo").Description("A Stone Platform description.");
-            descriptor.Field(p => p.PlatformID).Description("The Stone Platform ID of this platform.");
+            descriptor.Field(p => p.PlatformID)
+                .Type<PlatformIdType>()
+                .Description("The Stone Platform ID of this platform.");
             descriptor.Field(p => p.FriendlyName).Description("The human readable name of this platform.");
             descriptor.Field(p => p.MaximumInputs).Description("The maximum inputs this platform can have.");
             descriptor.Field(p => p.FileTypes).Description("Known Stone mimetypes of ROMs for this platform.")

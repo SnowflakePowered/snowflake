@@ -9,6 +9,10 @@
   <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="HotChocolate.Types.Filters" Version="11.0.0-preview.112" />
+  </ItemGroup>
 
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\Snowflake.ruleset</CodeAnalysisRuleSet>

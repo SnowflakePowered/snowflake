@@ -10,8 +10,8 @@ namespace Snowflake.Framework.Remoting.GraphQL.Model.Stone
     /// <summary>
     /// GraphQL Scalar Definition
     /// </summary>
-    internal sealed class PlatformIdType
-    : ScalarType
+    public sealed class PlatformIdType
+    : ScalarType<PlatformId, StringValueNode>
     {
         /// <summary>
         /// GraphQL Scalar Definition for a <see cref="PlatformId"/>
@@ -22,96 +22,18 @@ namespace Snowflake.Framework.Remoting.GraphQL.Model.Stone
             Description = "A Stone PlatformId must be of the form MANUFACTURER_SHORTNAME and represents a specific Stone platform.";
         }
 
-        // define which .NET type represents your type
-        public override Type ClrType { get; } = typeof(PlatformId);
-
-        // define which literals this type can be parsed from.
-        public override bool IsInstanceOfType(IValueNode literal)
+        protected override PlatformId ParseLiteral(StringValueNode literal)
         {
             if (literal == null)
             {
                 throw new ArgumentNullException(nameof(literal));
             }
-
-            return literal is StringValueNode
-                || literal is NullValueNode;
+            return (PlatformId)literal.Value;
         }
 
-        // define how a literal is parsed to the native .NET type.
-        public override object ParseLiteral(IValueNode literal)
+        protected override StringValueNode ParseValue(PlatformId value)
         {
-            if (literal == null)
-            {
-                throw new ArgumentNullException(nameof(literal));
-            }
-
-            if (literal is StringValueNode stringLiteral)
-            {
-                 return (PlatformId)stringLiteral.Value;
-            }
-
-            if (literal is NullValueNode)
-            {
-                return null;
-            }
-
-            throw new ArgumentException(
-                "PlatformId type can only be parsed from string literals.",
-                nameof(literal));
-        }
-
-        // define how a native type is parsed into a literal,
-        public override IValueNode ParseValue(object value)
-        {
-            if (value == null)
-            {
-                return new NullValueNode(null);
-            }
-
-            if (value is PlatformId p)
-            {
-                return new StringValueNode(null, p, false);
-            }
-
-            throw new ArgumentException(
-                "The specified value has to be a PlatformId in order to be parsed");
-        }
-
-        // define the result serialization. A valid output must be of the following .NET types:
-        // System.String, System.Char, System.Int16, System.Int32, System.Int64,
-        // System.Float, System.Double, System.Decimal and System.Boolean
-        public override object Serialize(object value)
-        {
-            if (value == null)
-            {
-                return null;
-            }
-
-            if (value is PlatformId p)
-            {
-                return (string)p;
-            }
-
-            throw new ArgumentException(
-                "The specified value cannot be serialized by the PlatformIdType.");
-        }
-
-        public override bool TryDeserialize(object serialized, out object value)
-        {
-            if (serialized is null)
-            {
-                value = null;
-                return true;
-            }
-
-            if (serialized is string s)
-            {
-                value = (PlatformId)s;
-                return true;
-            }
-
-            value = null;
-            return false;
+            return new StringValueNode(null, value, false);
         }
     }
 }

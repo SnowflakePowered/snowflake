@@ -14,7 +14,9 @@ using HotChocolate.Utilities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.WebSockets;
 using Microsoft.Extensions.DependencyInjection;
+using Snowflake.Framework.Remoting.GraphQL.Model.Game;
 using Snowflake.Framework.Remoting.GraphQL.Model.PlatformInfo;
+using Snowflake.Framework.Remoting.GraphQL.Model.Records;
 using Snowflake.Framework.Remoting.GraphQL.Model.Stone;
 using Snowflake.Framework.Remoting.GraphQL.Schema;
 using Snowflake.Framework.Remoting.Kestrel;
@@ -52,7 +54,10 @@ namespace Snowflake.Services
                 .AddScalarType<ControllerIdType>();
 
             this.Schemas
-                .AddObjectType<PlatformInfoType>();
+                .AddObjectType<PlatformInfoType>()
+                .AddObjectType<GameType>()
+                .AddObjectType<RecordMetadataType>()
+                .AddObjectType<GameRecordType>();
 ;
             services.AddDataLoaderRegistry();
             services.AddGraphQLSubscriptions();
@@ -73,11 +78,14 @@ namespace Snowflake.Services
                 {
                     foreach (var type in this.Schemas.ScalarTypes)
                     {
+                        //schemaBuilder.BindClrType<PlatformId, PlatformIdType>();
                         schemaBuilder.AddType(type);
                     }
 
                     foreach (var type in this.Schemas.ObjectTypes)
                     {
+                        //schemaBuilder.BindClrType<IPlatformInfo, PlatformInfoType>();
+                        
                         schemaBuilder.AddType(type);
                     }
 

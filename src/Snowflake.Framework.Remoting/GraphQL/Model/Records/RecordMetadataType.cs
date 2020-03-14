@@ -16,6 +16,7 @@ namespace Snowflake.Framework.Remoting.GraphQL.Model.Records
                 .Description("A piece of metadata associated with a record");
 
             descriptor.Field(r => r.Guid)
+                .Name("metadataID")
                 .Description("The unique GUID of the metadata.");
 
             descriptor.Field(r => r.Record)

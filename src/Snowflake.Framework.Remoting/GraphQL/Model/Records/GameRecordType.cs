@@ -1,4 +1,7 @@
-﻿using HotChocolate.Types;
+﻿using GraphQL.Types;
+using HotChocolate.Types;
+using Snowflake.Framework.Remoting.GraphQL.Model.Records;
+using Snowflake.Framework.Remoting.GraphQL.Model.Stone;
 using Snowflake.Model.Records.Game;
 using System;
 using System.Collections.Generic;
@@ -13,21 +16,23 @@ namespace Snowflake.Framework.Remoting.GraphQL.Model.Game
         protected override void Configure(IObjectTypeDescriptor<IGameRecord> descriptor)
         {
             descriptor.Name("GameRecord")
+                .BindFieldsExplicitly()
                 .Description("The record associated with a Game and its associated metadata.");
 
             descriptor.Field(g => g.Title)
                 .Description("The title of the game.");
 
             descriptor.Field(g => g.PlatformID)
+                .Type<PlatformIdType>()
                 .Description("The original platform or game console of the game this object represents.");
 
             descriptor.Field(g => g.RecordID)
-                .Name("guid")
                 .Description("The unique ID of the game.");
 
-            descriptor.Field(g => g.Metadata.Select(m => m.Value))
-                .Name("metadata")
+            descriptor.Field("metadata")
                 .Description("The metadata associated with this game.")
+                .Resolver(ctx => ctx.Parent<IGameRecord>().Metadata.Select(m => m.Value))
+                .Type<ListType<RecordMetadataType>>()
                 .UseFiltering();
         }
     }
