@@ -21,13 +21,13 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
         [ImportService(typeof(ILogProvider))]
         public void Compose(IModule module, IServiceRepository coreInstance)
         {
-            var stone = coreInstance.Get<IStoneProvider>();
-            var games = coreInstance.Get<IGameLibrary>();
-            var rootSchema = coreInstance.Get<IGraphQLService>();
-            var recordQueries = new RecordQueryBuilder(games, stone);
-            rootSchema.Register(recordQueries);
-            var logger = coreInstance.Get<ILogProvider>().GetLogger("graphql");
-            logger.Info("Registered Record GraphQL Queries.");
+            //var stone = coreInstance.Get<IStoneProvider>();
+            //var games = coreInstance.Get<IGameLibrary>();
+            //var rootSchema = coreInstance.Get<IGraphQLService>();
+            //var recordQueries = new RecordQueryBuilder(games, stone);
+            //rootSchema.Register(recordQueries);
+            //var logger = coreInstance.Get<ILogProvider>().GetLogger("graphql");
+            //logger.Info("Registered Record GraphQL Queries.");
         }
     }
 }

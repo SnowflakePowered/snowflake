@@ -11,7 +11,7 @@ using Snowflake.Model.Game;
 using Snowflake.Services;
 using Snowflake.Support.GraphQLFrameworkQueries.Types.PlatformInfo;
 
-namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
+namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.PlatformInfo
 {
     public class PlatformInfoQueryBuilder : QueryBuilder
     {

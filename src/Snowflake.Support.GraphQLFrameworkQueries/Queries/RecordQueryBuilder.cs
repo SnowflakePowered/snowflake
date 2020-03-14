@@ -19,24 +19,46 @@ using Snowflake.Support.GraphQLFrameworkQueries.Types.PlatformInfo;
 using Snowflake.Support.GraphQLFrameworkQueries.Types.Model;
 using Snowflake.Model.Records.File;
 using Snowflake.Model.Game.LibraryExtensions;
+using System.Linq.Expressions;
+using HotChocolate.Types;
+using HotChocolate.Types.Filters;
+using HotChocolate.Utilities;
+using HotChocolate.Language;
 
 namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
 {
+    //public class GameRecordQueryFilter
+    //     : FilterInputType<IGameRecordQuery>
+    //{
+    //    protected override void Configure(IFilterInputTypeDescriptor<IGameRecordQuery> descriptor)
+    //    {
+    //        descriptor
+    //            .BindFieldsExplicitly()
+    //            .Filter(t => t.PlatformID)
+    //            .BindFiltersExplicitly()
+    //            .AllowEquals().And()
+    //            .AllowStartsWith().Name("manufacturer");
+    //        descriptor
+    //            .BindFieldsExplicitly()
+    //            .Filter(t => t.RecordID)
+    //            .BindFiltersExplicitly()
+    //            .AllowEquals();
+    //    }
+    //}
+
+    //public class 
     public class RecordQueryBuilder : QueryBuilder
     {
         private IGameLibrary GameLibrary { get; }
-        private IStoneProvider StoneProvider { get; }
 
         public RecordQueryBuilder(IGameLibrary gameLibrary, IStoneProvider stoneProvider)
         {
             this.GameLibrary = gameLibrary;
-            this.StoneProvider = stoneProvider;
         }
 
-        [Connection("games", "Get all games in the library", typeof(GameGraphType))]
-        public IEnumerable<IGame> GetGames()
+        public IQueryable<IGame> GetGames(Expression<Func<IGameRecordQuery, bool>> predicate)
         {
-            return this.GameLibrary.GetAllGames();
+            return this.GameLibrary.QueryGames(predicate);
         }
 
         //[Field("file", "Get a file by an ID", typeof(FileRecordGraphType))]
@@ -59,41 +81,41 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
         //    return path;
         //}
 
-        [Query("game", "Get a game by an ID", typeof(GameGraphType))]
-        [Parameter(typeof(Guid), typeof(GuidGraphType), "guid", "The unique game GUID")]
-        public IGame GetGame(Guid guid)
-        {
-            return this.GameLibrary.GetGame(guid);
-        }
+        //[Query("game", "Get a game by an ID", typeof(GameGraphType))]
+        //[Parameter(typeof(Guid), typeof(GuidGraphType), "guid", "The unique game GUID")]
+        //public IGame GetGame(Guid guid)
+        //{
+        //    return this.GameLibrary.GetGame(guid);
+        //}
 
-        [Connection("gamesByPlatform", "Get games filtered by a given platform", typeof(GameGraphType))]
-        [Parameter(typeof(string), typeof(StringGraphType), "platformId", "The platform ID")]
-        public IEnumerable<IGame> GetGamesByPlatform(string platformId)
-        {
-            return this.GameLibrary.QueryGames(g => g.PlatformID == platformId);
-        }
+        //[Connection("gamesByPlatform", "Get games filtered by a given platform", typeof(GameGraphType))]
+        //[Parameter(typeof(string), typeof(StringGraphType), "platformId", "The platform ID")]
+        //public IEnumerable<IGame> GetGamesByPlatform(string platformId)
+        //{
+        //    return this.GameLibrary.QueryGames(g => g.PlatformID == platformId);
+        //}
 
-        [Mutation("addGame", "Adds a game to the database directly.", typeof(GameGraphType))]
-        [Parameter(typeof(GameRecordInputObject), typeof(GameRecordInputType), "input", "game input")]
-        public IGame AddGame(GameRecordInputObject input)
-        {
-            try
-            {
-                var game = this.GameLibrary.CreateGame(input.Platform);
-                game.Record.Title = input.Title;
+        //[Mutation("addGame", "Adds a game to the database directly.", typeof(GameGraphType))]
+        //[Parameter(typeof(GameRecordInputObject), typeof(GameRecordInputType), "input", "game input")]
+        //public IGame AddGame(GameRecordInputObject input)
+        //{
+        //    try
+        //    {
+        //        var game = this.GameLibrary.CreateGame(input.Platform);
+        //        game.Record.Title = input.Title;
 
-                foreach (var metadata in input.Metadata)
-                {
-                    game.Record.Metadata.Add(metadata.Key, metadata.Value);
-                }
+        //        foreach (var metadata in input.Metadata)
+        //        {
+        //            game.Record.Metadata.Add(metadata.Key, metadata.Value);
+        //        }
 
-                this.GameLibrary.UpdateGameRecord(game.Record);
-                return this.GameLibrary.GetGame(game.Record.RecordID);
-            }
-            catch (KeyNotFoundException)
-            {
-                throw new KeyNotFoundException($"Unable to find platform {input.Platform}.");
-            }
-        }
+        //        this.GameLibrary.UpdateGameRecord(game.Record);
+        //        return this.GameLibrary.GetGame(game.Record.RecordID);
+        //    }
+        //    catch (KeyNotFoundException)
+        //    {
+        //        throw new KeyNotFoundException($"Unable to find platform {input.Platform}.");
+        //    }
+        //}
     }
 }

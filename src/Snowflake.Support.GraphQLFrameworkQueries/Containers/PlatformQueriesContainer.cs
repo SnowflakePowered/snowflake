@@ -10,42 +10,31 @@ using Snowflake.Loader;
 using Snowflake.Model.Game;
 using Snowflake.Services;
 using Snowflake.Support.GraphQLFrameworkQueries.Queries;
+using Snowflake.Support.GraphQLFrameworkQueries.Queries.Game;
+using Snowflake.Support.GraphQLFrameworkQueries.Queries.PlatformInfo;
 
 namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
 {
-
-    public class PlatformQueries
-        : ObjectType<PlatformInfoQueryBuilder>
-    {
-        protected override void Configure(IObjectTypeDescriptor<PlatformInfoQueryBuilder> descriptor)
-        {
-            descriptor.Field(p => p.GetPlatforms())
-                .UseFiltering()
-                .Description("Gets the Stone Platforms definitions matching the search query.");
-        }
-    }
-
     public class PlatformQueriesContainer : IComposable
     {
         /// <inheritdoc/>
         [ImportService(typeof(IStoneProvider))]
         [ImportService(typeof(IGraphQLService))]
         [ImportService(typeof(ILogProvider))]
+        [ImportService(typeof(IGameLibrary))]
         [ImportService(typeof(IGraphQLSchemaRegistrationProvider))]
         public void Compose(IModule module, IServiceRepository coreInstance)
         {
             var stone = coreInstance.Get<IStoneProvider>();
-            var rootSchema = coreInstance.Get<IGraphQLService>();
+            var game = coreInstance.Get<IGameLibrary>();
             var hotChocolate = coreInstance.Get<IGraphQLSchemaRegistrationProvider>();
 
       
             var platformQueries = new PlatformInfoQueryBuilder(stone);
-            
-            hotChocolate.AddQuery<PlatformQueries, PlatformInfoQueryBuilder>(platformQueries);
+            var gameQueries = new GameQueryBuilder(game);
 
-            //rootSchema.Register(platformQueries);
-            var logger = coreInstance.Get<ILogProvider>().GetLogger("graphql");
-            logger.Info("Registered Platform GraphQL Queries.");
+            hotChocolate.AddQuery<PlatformQueries, PlatformInfoQueryBuilder>(platformQueries);
+            hotChocolate.AddQuery<GameQueries, GameQueryBuilder>(gameQueries);
         }
     }
 }
