@@ -1,4 +1,6 @@
 ﻿using HotChocolate.Types;
+using Snowflake.Framework.Remoting.GraphQL.Schema;
+using Snowflake.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -6,11 +8,13 @@ using System.Text;
 namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.PlatformInfo
 {
     public class PlatformQueries
-       : ObjectType<PlatformInfoQueryBuilder>
+       : ObjectTypeExtension
     {
-        protected override void Configure(IObjectTypeDescriptor<PlatformInfoQueryBuilder> descriptor)
+        protected override void Configure(IObjectTypeDescriptor descriptor)
         {
-            descriptor.Field(p => p.GetPlatforms())
+            descriptor.Name("Query");
+            descriptor.Field("platforms")
+                .Resolver(context => context.Service<IStoneProvider>().Platforms.Values)
                 .UseFiltering<PlatformInfoFilter>()
                 .Description("Gets the Stone Platforms definitions matching the search query.");
         }

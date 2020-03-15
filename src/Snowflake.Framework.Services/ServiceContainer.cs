@@ -18,7 +18,6 @@ using Zio.FileSystems;
 
 namespace Snowflake.Services
 {
-    /// <inheritdoc />
     internal class ServiceContainer : IServiceContainer, IServiceProvider
     {
         #region Loaded Objects
@@ -73,7 +72,7 @@ namespace Snowflake.Services
             var kestrel = this.Get<IKestrelWebServerService>();
             kestrel.AddService(new GraphQLKestrelIntegration(schema));
             kestrel.AddService(new HotChocolateKestrelIntegration(
-                (GraphQLSchemaRegistrationProvider)this.Get<IGraphQLSchemaRegistrationProvider>()));
+                (GraphQLSchemaRegistrationProvider)this.Get<IGraphQLSchemaRegistrationProvider>(), this));
         }
 
         /// <inheritdoc/>

@@ -10,7 +10,7 @@ using System.Text;
 
 namespace Snowflake.Framework.Remoting.GraphQL.Model.Game
 {
-    internal sealed class GameRecordType
+    public sealed class GameRecordType
         : ObjectType<IGameRecord>
     {
         protected override void Configure(IObjectTypeDescriptor<IGameRecord> descriptor)
