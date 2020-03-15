@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using HotChocolate;
 using HotChocolate.AspNetCore;
 using HotChocolate.AspNetCore.Subscriptions;
+using HotChocolate.Configuration;
 using HotChocolate.Execution;
 using HotChocolate.Execution.Configuration;
 using HotChocolate.Stitching;
@@ -28,12 +29,14 @@ namespace Snowflake.Services
 {
     internal class HotChocolateKestrelIntegration : IKestrelServerMiddlewareProvider
     {
-        public HotChocolateKestrelIntegration(GraphQLSchemaRegistrationProvider schemas)
+        public HotChocolateKestrelIntegration(GraphQLSchemaRegistrationProvider schemas, ServiceContainer serviceContainer)
         {
             this.Schemas = schemas;
+            ServiceContainer = serviceContainer;
         }
 
         public GraphQLSchemaRegistrationProvider Schemas { get; }
+        public ServiceContainer ServiceContainer { get; }
 
         public void Configure(IApplicationBuilder app)
         {
@@ -49,6 +52,7 @@ namespace Snowflake.Services
                 services.Add(sd);
             }
 
+            var kestrelSp = services.BuildServiceProvider();
             this.Schemas
                 .AddScalarType<PlatformIdType>()
                 .AddScalarType<ControllerIdType>();
@@ -58,41 +62,43 @@ namespace Snowflake.Services
                 .AddObjectType<GameType>()
                 .AddObjectType<RecordMetadataType>()
                 .AddObjectType<GameRecordType>();
-;
+            
             services.AddDataLoaderRegistry();
             services.AddGraphQLSubscriptions();
-        
-            services.AddStitchedSchema(builder =>
-            {
-                builder
-                .AddSchemaConfiguration(c =>
+
+            var schemaBuilder = SchemaBuilder.New()
+                .EnableRelaySupport()
+                .SetOptions(new SchemaOptions()
                 {
-                    c.RegisterExtendedScalarTypes();
-                    foreach (var type in this.Schemas.ScalarTypes)
-                    {
-                        c.RegisterType(type);
-                    }
+                    DefaultBindingBehavior = BindingBehavior.Explicit,
+                    UseXmlDocumentation = true,
+                    StrictValidation = true,
+                })
+                .AddQueryType(descriptor =>
+                {
+                    descriptor.Name("Query");
                 });
 
-                foreach (var (schemaName, schemaBuilder) in this.Schemas.Schemas)
-                {
-                    foreach (var type in this.Schemas.ScalarTypes)
-                    {
-                        //schemaBuilder.BindClrType<PlatformId, PlatformIdType>();
-                        schemaBuilder.AddType(type);
-                    }
+            foreach (var type in this.Schemas.ScalarTypes)
+            {
+                schemaBuilder.AddType(type);
+            }
 
-                    foreach (var type in this.Schemas.ObjectTypes)
-                    {
-                        //schemaBuilder.BindClrType<IPlatformInfo, PlatformInfoType>();
-                        
-                        schemaBuilder.AddType(type);
-                    }
+            foreach (var type in this.Schemas.ObjectTypes)
+            {
+                schemaBuilder.AddType(type);
+            }
+            foreach (var type in this.Schemas.ObjectTypeExtensions)
+            {
+                schemaBuilder.AddType(type);
+            }
 
-                    var schema = schemaBuilder.Create();
+            services.AddGraphQL(schemaBuilder.Create());
 
-                    builder.AddSchema(schemaName, schema);
-                }
+            services.AddQueryRequestInterceptor((context, builder, cancel) =>
+            {
+                builder.TrySetServices(context.RequestServices.Include(this.ServiceContainer));
+                return Task.CompletedTask;
             });
         }
     }
