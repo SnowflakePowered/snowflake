@@ -18,23 +18,20 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
     public class PlatformQueriesContainer : IComposable
     {
         /// <inheritdoc/>
-        [ImportService(typeof(IStoneProvider))]
-        [ImportService(typeof(IGraphQLService))]
-        [ImportService(typeof(ILogProvider))]
-        [ImportService(typeof(IGameLibrary))]
         [ImportService(typeof(IGraphQLSchemaRegistrationProvider))]
         public void Compose(IModule module, IServiceRepository coreInstance)
         {
-            var stone = coreInstance.Get<IStoneProvider>();
-            var game = coreInstance.Get<IGameLibrary>();
+          
             var hotChocolate = coreInstance.Get<IGraphQLSchemaRegistrationProvider>();
 
-      
-            var platformQueries = new PlatformInfoQueryBuilder(stone);
-            var gameQueries = new GameQueryBuilder(game);
+            hotChocolate.AddObjectTypeExtension<PlatformQueries>();
+            hotChocolate.AddObjectTypeExtension<GameQueries>();
+            hotChocolate.AddObjectTypeExtension<GameRecordQueries>();
+            hotChocolate.AddObjectTypeExtension<GameNodeQueries>();
 
-            hotChocolate.AddQuery<PlatformQueries, PlatformInfoQueryBuilder>(platformQueries);
-            hotChocolate.AddQuery<GameQueries, GameQueryBuilder>(gameQueries);
+            //hotChocolate.AddQuery<PlatformQueries, PlatformInfoQueryBuilder>(platformQueries);
+            //hotChocolate.AddObjectTypeExtension<GameRecordQueries>();
+            //hotChocolate.AddQuery<GameQueries, GameQueryBuilder>(gameQueries);
         }
     }
 }

@@ -1,16 +1,23 @@
 ﻿using HotChocolate;
 using HotChocolate.Types;
 using HotChocolate.Types.Descriptors;
+using HotChocolate.Types.Descriptors.Definitions;
 using Microsoft.Extensions.DependencyInjection;
 using Snowflake.Extensibility;
 using Snowflake.Framework.Remoting.GraphQL;
 using Snowflake.Loader;
+using Snowflake.Model.Game;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 
 namespace Snowflake.Services
 {
+    public class Query
+    {
+
+    }
+
     internal class GraphQLSchemaRegistrationProvider : IGraphQLSchemaRegistrationProvider
     {
         public GraphQLSchemaRegistrationProvider(ILogger logger)
@@ -18,12 +25,15 @@ namespace Snowflake.Services
             this.QueryBuilderServices = new ServiceCollection();
             this.Schemas = new ConcurrentDictionary<string, ISchemaBuilder>();
             this.ObjectTypes = new List<Type>();
+            this.ObjectTypeExtensions = new List<Type>();
+
             this.ScalarTypes = new List<Type>();
             this.Logger = logger;
         }
 
         internal IServiceCollection QueryBuilderServices { get; }
         internal IList<Type> ObjectTypes { get; }
+        internal IList<Type> ObjectTypeExtensions { get; }
         internal IList<Type> ScalarTypes { get; }
         private ILogger Logger { get; }
 
@@ -61,6 +71,13 @@ namespace Snowflake.Services
             schemaBuilder(schemaBuilderInstance);
             this.Schemas.Add($"{schemaNamespace}_{schemaName}", schemaBuilderInstance);
             this.Logger.Info($"Registered GraphQL Schema {schemaNamespace}_{schemaName}");
+        }
+
+        public IGraphQLSchemaRegistrationProvider AddObjectTypeExtension<T>() where T : ObjectTypeExtension
+        {
+            this.Logger.Info($"Registered GraphQL Object Type Extensions from {typeof(T).Name}.");
+            this.ObjectTypeExtensions.Add(typeof(T));
+            return this;
         }
     }
 }

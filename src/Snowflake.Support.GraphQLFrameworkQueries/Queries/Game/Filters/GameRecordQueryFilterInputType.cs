@@ -14,13 +14,22 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Game
     {
         protected override void Configure(IFilterInputTypeDescriptor<IGameRecordQuery> descriptor)
         {
-            descriptor.BindFieldsExplicitly();
             descriptor
-                .Filter(g => g.PlatformID);
+                .Name("GameFilter")
+                .BindFieldsExplicitly();
             descriptor
-               .Filter(g => g.RecordID);
+                .Filter(g => g.PlatformID)
+                .AllowEquals().Description("Get the platform with the specific PlatformID.").And()
+                .AllowIn().Description("Get platforms with the given PlatformIDs.").And()
+                .AllowStartsWith().Description("Get platforms whose PlatformIDs start with the given string");
             descriptor
-                .List(g => g.Metadata);
+               .Filter(g => g.RecordID)
+               .AllowEquals()
+               .Description("Gets the Game with the given record ID.");
+
+            // todo for 11
+            //descriptor
+            //    .List(g => g.Metadata);
 
       
 
