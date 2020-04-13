@@ -25,10 +25,10 @@ namespace Snowflake.Support.StoneProvider.JsonConverters
             IDictionary<string, string> fileTypes = rootElem.GetProperty("FileTypes").
                EnumerateObject().ToDictionary(p => p.Name, p => p.Value.GetString());
             IEnumerable<ISystemFile> biosFiles = rootElem.TryGetProperty("BiosFiles", out var biosFileElem) ?
-                from biosFile in biosFileElem.EnumerateObject()
+                (from biosFile in biosFileElem.EnumerateObject()
                 let noHashes = biosFile.Value.GetArrayLength() == 0
                 from hash in biosFile.Value.EnumerateArray()
-                select new BiosFile(biosFile.Name, noHashes ? string.Empty : hash.GetString())
+                select new BiosFile(biosFile.Name, noHashes ? string.Empty : hash.GetString())).ToList()
                     : Enumerable.Empty<ISystemFile>();
            
             return new PlatformInfo(platformId, friendlyName, metadata, fileTypes, biosFiles, maximumInputs);

@@ -9,8 +9,8 @@
 
   <ItemGroup>
     <PackageReference Include="GraphQL" Version="3.0.0-preview-1521" />
-    <PackageReference Include="HotChocolate" Version="10.4.0-rc.0" />
-    <PackageReference Include="HotChocolate.Types.Filters" Version="10.4.0-rc.0" />
+    <PackageReference Include="HotChocolate" Version="11.0.0-preview.123" />
+    <PackageReference Include="HotChocolate.Types.Filters" Version="11.0.0-preview.123" />
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" PrivateAssets="Compile" />
     <PackageReference Include="Microsoft.AspNetCore.ResponseCompression" Version="2.2.0" PrivateAssets="Compile" />
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.2.0" />

@@ -14,7 +14,9 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.PlatformInfo
         {
             descriptor.Name("Query");
             descriptor.Field("platforms")
-                .Resolver(context => context.Service<IStoneProvider>().Platforms.Values)
+                .Resolver(context => 
+                    context.Service<IStoneProvider>().Platforms.Values
+                 )
                 .UseFiltering<PlatformInfoFilter>()
                 .Description("Gets the Stone Platforms definitions matching the search query.");
         }

@@ -18,8 +18,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Game
             descriptor.Field(g => g.Record)
                 .Name("record")
                 .Type<GameRecordType>()
-                .Description("Record metadata relating to this game.")
-                ;
+                .Description("Record metadata relating to this game.");
 
             //descriptor.Field<IGame>(g => g.WithConfigurations())
             //    .Name("configs")
