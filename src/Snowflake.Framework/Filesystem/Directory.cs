@@ -168,6 +168,8 @@ namespace Snowflake.Filesystem
 
         public string Name { get; }
 
+        public string RootedPath => this.ThisDirectory.Path.FullName!;
+
         public bool ContainsDirectory(string directory)
         {
             return this.RootFileSystem.DirectoryExists(this.ThisDirectory.Path / directory);

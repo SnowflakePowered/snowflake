@@ -12,18 +12,19 @@ namespace Snowflake.Model.Game.LibraryExtensions
     {
         public GameFileExtension(IFileSystem gameFsRoot, FileRecordLibrary files)
         {
-            this.Root = new Directory(gameFsRoot);
+            this._Root = new Directory(gameFsRoot);
             this.FileRecordLibrary = files;
-            this.SavesRoot = this.Root.OpenDirectory("saves");
-            this.ProgramRoot = this.Root.OpenDirectory("program");
-            this.MediaRoot = this.Root.OpenDirectory("media");
-            this.ResourceRoot = this.Root.OpenDirectory("resource");
-            this.RuntimeRoot = this.Root.OpenDirectory("runtime");
-            this.MiscRoot = this.Root.OpenDirectory("misc");
+            this.SavesRoot = this._Root.OpenDirectory("saves");
+            this.ProgramRoot = this._Root.OpenDirectory("program");
+            this.MediaRoot = this._Root.OpenDirectory("media");
+            this.ResourceRoot = this._Root.OpenDirectory("resource");
+            this.RuntimeRoot = this._Root.OpenDirectory("runtime");
+            this.MiscRoot = this._Root.OpenDirectory("misc");
         }
 
-        private IIndelibleDirectory Root { get; }
+        private IIndelibleDirectory _Root { get; }
 
+        public IReadOnlyDirectory Root => this._Root.AsReadOnly();
         private FileRecordLibrary FileRecordLibrary { get; }
 
         public IIndelibleDirectory SavesRoot { get; }
@@ -51,9 +52,9 @@ namespace Snowflake.Model.Game.LibraryExtensions
             return this.GetFileInfo(file)!;
         }
 
-        public IEnumerable<IFileRecord> GetFileRecords() => this.FileRecordLibrary.GetFileRecords(this.Root);
+        public IEnumerable<IFileRecord> GetFileRecords() => this.FileRecordLibrary.GetFileRecords(this._Root);
 
-        public IAsyncEnumerable<IFileRecord> GetFileRecordsAsync() => this.FileRecordLibrary.GetFileRecordsAsync(this.Root);
+        public IAsyncEnumerable<IFileRecord> GetFileRecordsAsync() => this.FileRecordLibrary.GetFileRecordsAsync(this._Root);
 
         public Task<IFileRecord?> GetFileInfoAsync(IFile file) => this.FileRecordLibrary.GetRecordAsync(file);
 

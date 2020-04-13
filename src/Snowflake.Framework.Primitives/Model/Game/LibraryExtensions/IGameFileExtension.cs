@@ -33,6 +33,11 @@ namespace Snowflake.Model.Game.LibraryExtensions
     public interface IGameFileExtension : IGameExtension
     {
         /// <summary>
+        /// A read only view on the root path of the game directory context.
+        /// </summary>
+        IReadOnlyDirectory Root { get; }
+
+        /// <summary>
         /// The directory to persist save files for a game.
         /// </summary>
         IIndelibleDirectory SavesRoot { get; }

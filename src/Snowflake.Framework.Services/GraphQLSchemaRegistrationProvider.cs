@@ -26,7 +26,7 @@ namespace Snowflake.Services
             this.Schemas = new ConcurrentDictionary<string, ISchemaBuilder>();
             this.ObjectTypes = new List<Type>();
             this.ObjectTypeExtensions = new List<Type>();
-
+            this.InterfaceTypes = new List<Type>();
             this.ScalarTypes = new List<Type>();
             this.Logger = logger;
         }
@@ -35,6 +35,8 @@ namespace Snowflake.Services
         internal IList<Type> ObjectTypes { get; }
         internal IList<Type> ObjectTypeExtensions { get; }
         internal IList<Type> ScalarTypes { get; }
+        internal IList<Type> InterfaceTypes { get; }
+
         private ILogger Logger { get; }
 
         internal IDictionary<string, ISchemaBuilder> Schemas { get; }
@@ -62,6 +64,13 @@ namespace Snowflake.Services
         {
             this.Logger.Info($"Registered GraphQL Scalar from {typeof(T).Name}.");
             this.ScalarTypes.Add(typeof(T));
+            return this;
+        }
+
+        public IGraphQLSchemaRegistrationProvider AddInterfaceType<T>() where T : InterfaceType
+        {
+            this.Logger.Info($"Registered GraphQL Interface from {typeof(T).Name}.");
+            this.InterfaceTypes.Add(typeof(T));
             return this;
         }
 

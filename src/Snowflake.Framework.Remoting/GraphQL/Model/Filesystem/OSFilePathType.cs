@@ -4,33 +4,36 @@ using Snowflake.Input.Controller;
 using Snowflake.Model.Game;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
+using Zio;
 
-namespace Snowflake.Framework.Remoting.GraphQL.Model.Stone
+namespace Snowflake.Framework.Remoting.GraphQL.Model.Filesystem
 {
     /// <summary>
     /// GraphQL Scalar Definition
     /// </summary>
-    public sealed class ControllerIdType
-    : ScalarType<ControllerId, StringValueNode>
+    public sealed class OSDirectoryPathType
+    : ScalarType<DirectoryInfo, StringValueNode>
     {
         /// <summary>
-        /// GraphQL Scalar Definition for a <see cref="ControllerId"/>
+        /// GraphQL Scalar Definition for a <see cref="UPath"/> pointing to a directory
         /// </summary>
-        public ControllerIdType()
-            : base("ControllerId", BindingBehavior.Implicit)
+        public OSDirectoryPathType()
+            : base("OSDirectoryPath", BindingBehavior.Implicit)
         {
-            Description = "A Stone ControllerId must be of the form /^[A-Z0-9_]+(_CONTROLLER|_DEVICE|_LAYOUT)/ and represents a specific Stone controller layout.";
+            Description = "Represents a real, operating system dependent path that points to a directory on the operating system.";
         }
 
-        protected override ControllerId ParseLiteral(StringValueNode literal)
-        {
-            return (ControllerId)literal.Value;
+        protected override DirectoryInfo ParseLiteral(StringValueNode literal)
+        { 
+            var dirPath = new DirectoryInfo(literal.Value);
+            return dirPath;
         }
 
-        protected override StringValueNode ParseValue(ControllerId value)
+        protected override StringValueNode ParseValue(DirectoryInfo value)
         {
-            return new StringValueNode(null, value, false);
+            return new StringValueNode(null, value.FullName, false);
         }
 
         // define the result serialization. A valid output must be of the following .NET types:
@@ -38,9 +41,9 @@ namespace Snowflake.Framework.Remoting.GraphQL.Model.Stone
         // System.Float, System.Double, System.Decimal and System.Boolean
         public bool TrySerialize(object value, out object serialized)
         {
-            if (value is ControllerId p)
+            if (value is DirectoryInfo p)
             {
-                serialized = (string)p;
+                serialized = p.FullName;
                 return true;
             }
             serialized = null;
@@ -57,7 +60,7 @@ namespace Snowflake.Framework.Remoting.GraphQL.Model.Stone
 
             if (serialized is string s)
             {
-                value = (ControllerId)s;
+                value = new DirectoryInfo(s);
                 return true;
             }
 
