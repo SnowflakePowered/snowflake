@@ -12,69 +12,25 @@ namespace Snowflake.Framework.Remoting.GraphQL.Model.Stone
     /// GraphQL Scalar Definition
     /// </summary>
     internal sealed class ControllerIdType
-    : ScalarType
+    : ScalarType<ControllerId, StringValueNode>
     {
-        public override Type ClrType => typeof(ControllerId);
-
         /// <summary>
         /// GraphQL Scalar Definition for a <see cref="ControllerId"/>
         /// </summary>
         public ControllerIdType()
-            : base("ControllerId")
+            : base("ControllerId", BindingBehavior.Implicit)
         {
             Description = "A Stone ControllerId must be of the form /^[A-Z0-9_]+(_CONTROLLER|_DEVICE|_LAYOUT)/ and represents a specific Stone controller layout.";
         }
 
-        // define which literals this type can be parsed from.
-        public override bool IsInstanceOfType(IValueNode literal)
+        protected override ControllerId ParseLiteral(StringValueNode literal)
         {
-            if (literal == null)
-            {
-                throw new ArgumentNullException(nameof(literal));
-            }
-
-            return literal is StringValueNode
-                || literal is NullValueNode;
+            return (ControllerId)literal.Value;
         }
 
-        // define how a literal is parsed to the native .NET type.
-        public override object ParseLiteral(IValueNode literal)
+        protected override StringValueNode ParseValue(ControllerId value)
         {
-            if (literal == null)
-            {
-                throw new ArgumentNullException(nameof(literal));
-            }
-
-            if (literal is StringValueNode stringLiteral)
-            {
-                return (ControllerId)stringLiteral.Value;
-            }
-
-            if (literal is NullValueNode)
-            {
-                return null;
-            }
-
-            throw new ArgumentException(
-                "ControllerId type can only be parsed from string literals.",
-                nameof(literal));
-        }
-
-        // define how a native type is parsed into a literal,
-        public override IValueNode ParseValue(object value)
-        {
-            if (value == null)
-            {
-                return new NullValueNode(null);
-            }
-
-            if (value is ControllerId p)
-            {
-                return new StringValueNode(null, p, false);
-            }
-
-            throw new ArgumentException(
-                "The specified value has to be a ControllerId in order to be parsed");
+            return new StringValueNode(null, value, false);
         }
 
         // define the result serialization. A valid output must be of the following .NET types:

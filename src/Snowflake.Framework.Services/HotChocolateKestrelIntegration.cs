@@ -68,6 +68,7 @@ namespace Snowflake.Services
 
             var schemaBuilder = SchemaBuilder.New()
                 .EnableRelaySupport()
+                
                 .SetOptions(new SchemaOptions()
                 {
                     DefaultBindingBehavior = BindingBehavior.Explicit,
@@ -88,13 +89,14 @@ namespace Snowflake.Services
             {
                 schemaBuilder.AddType(type);
             }
+
             foreach (var type in this.Schemas.ObjectTypeExtensions)
             {
                 schemaBuilder.AddType(type);
             }
 
             services.AddGraphQL(schemaBuilder.Create());
-
+           
             services.AddQueryRequestInterceptor((context, builder, cancel) =>
             {
                 builder.TrySetServices(context.RequestServices.Include(this.ServiceContainer));

@@ -26,41 +26,30 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Game
                 .Field("games")
                 .Type<ListType<GameType>>()
                 .AddFilterArguments<GameRecordQueryFilterInputType>()
-                //.Argument("where", a => a.Type<GameRecordQueryFilterInputType>())
                 .Use(next => context =>
                 {
-                    IValueNode filter = context.Argument<IValueNode>("where");
+                    IValueNode valueNode = context.Argument<IValueNode>("where");
 
                     var queryBuilder = context.Service<IGameLibrary>();
 
-                    if (filter is null || filter is NullValueNode)
+                    if (valueNode is null || valueNode is NullValueNode)
                     {
                         context.Result = queryBuilder.GetAllGames().ToList();
-                        return next(context);
+                        return next.Invoke(context);
                     }
 
                     if (context.Field.Arguments["where"].Type is InputObjectType iot && iot is IFilterInputType fit)
                     {
-                        var visitor = new QueryableFilterVisitor(iot, typeof(IGameRecordQuery), context.GetTypeConversion());
-                        filter.Accept(visitor);
-                        var expr = visitor.CreateFilter<IGameRecordQuery>()
-                        ;
 
-                        var x = queryBuilder.QueryGames(expr);
+                        var filter = new QueryableFilterVisitorContext(iot, typeof(IGameRecordQuery), context.GetTypeConversion(), true);
+                        QueryableFilterVisitor.Default.Visit(valueNode, filter);
+
+                        var expr = filter.CreateFilter<IGameRecordQuery>();
+                        //var queryResult = queryBuilder.QueryGames(expr);
                         //queryBuilder.GetGames(g => g.Metadata.Any(g => g.MetadataKey == "x"));
                         context.Result = queryBuilder.QueryGames(expr).ToList();
                     }
-
-                    //if (context.Field.Arguments["where"].Type is InputObjectType iot && iot is GameRecordQueryFilterInputType grqf)
-                    //{
-                    //    var visitor = new GameRecordQueryFilterVisitor(iot, typeof(IGameRecordQuery), context.GetTypeConversion(), true);
-                    //    filter.Accept(visitor);
-                    //    var expr = visitor.CreateFilter<IGameRecordQuery>();
-
-                    //    //queryBuilder.GetGames(g => g.Metadata.Any(g => g.MetadataKey == "x"));
-                    //    context.Result = queryBuilder.GetGames(expr);
-                    //}
-                    return next(context);
+                    return next.Invoke(context);
                 });
                 //.UsePaging<GameType>();
         }

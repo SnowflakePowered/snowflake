@@ -28,10 +28,11 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Game
                .Description("Gets the Game with the given record ID.");
 
             // todo for 11
-            //descriptor
-            //    .List(g => g.Metadata);
+            descriptor
+                .List(g => g.Metadata)
+                .AllowAll();
 
-      
+
 
         }
     }
