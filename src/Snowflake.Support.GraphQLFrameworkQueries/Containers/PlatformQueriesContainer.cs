@@ -12,6 +12,7 @@ using Snowflake.Services;
 using Snowflake.Support.GraphQLFrameworkQueries.Queries;
 using Snowflake.Support.GraphQLFrameworkQueries.Queries.Debug;
 using Snowflake.Support.GraphQLFrameworkQueries.Queries.Game;
+using Snowflake.Support.GraphQLFrameworkQueries.Queries.LibraryExtensions;
 using Snowflake.Support.GraphQLFrameworkQueries.Queries.PlatformInfo;
 
 namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
@@ -28,6 +29,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
             hotChocolate.AddObjectTypeExtension<PlatformQueries>();
             hotChocolate.AddObjectTypeExtension<GameQueries>();
             hotChocolate.AddObjectTypeExtension<GameRecordQueries>();
+            hotChocolate.AddObjectTypeExtension<GameFileQueries>();
             hotChocolate.AddObjectTypeExtension<GameNodeQueries>();
             hotChocolate.AddObjectTypeExtension<EchoQueries>();
             //hotChocolate.AddQuery<PlatformQueries, PlatformInfoQueryBuilder>(platformQueries);

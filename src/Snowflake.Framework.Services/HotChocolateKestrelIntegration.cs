@@ -15,6 +15,8 @@ using HotChocolate.Utilities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.WebSockets;
 using Microsoft.Extensions.DependencyInjection;
+using Snowflake.Framework.Remoting.GraphQL.Model.Filesystem;
+using Snowflake.Framework.Remoting.GraphQL.Model.Filesystem.Contextual;
 using Snowflake.Framework.Remoting.GraphQL.Model.Game;
 using Snowflake.Framework.Remoting.GraphQL.Model.PlatformInfo;
 using Snowflake.Framework.Remoting.GraphQL.Model.Records;
@@ -55,14 +57,29 @@ namespace Snowflake.Services
             var kestrelSp = services.BuildServiceProvider();
             this.Schemas
                 .AddScalarType<PlatformIdType>()
-                .AddScalarType<ControllerIdType>();
+                .AddScalarType<ControllerIdType>()
+                .AddScalarType<OSFilePathType>()
+                .AddScalarType<OSDirectoryPathType>()
+                .AddScalarType<DirectoryPathType>()
+                .AddScalarType<FilePathType>();
 
             this.Schemas
+                .AddInterfaceType<FileInfoInterface>()
+                .AddInterfaceType<DirectoryInfoInterface>()
+                .AddInterfaceType<DirectoryContentsInterface>()
+                ;
+
+            this.Schemas
+                
                 .AddObjectType<PlatformInfoType>()
                 .AddObjectType<GameType>()
                 .AddObjectType<RecordMetadataType>()
-                .AddObjectType<GameRecordType>();
-            
+                .AddObjectType<GameRecordType>()
+
+                .AddObjectType<ContextualFileInfo>()
+                .AddObjectType<ContextualDirectoryInfo>()
+                .AddObjectType<ContextualDirectoryContents>();
+
             services.AddDataLoaderRegistry();
             services.AddGraphQLSubscriptions();
 
@@ -81,6 +98,11 @@ namespace Snowflake.Services
                 });
 
             foreach (var type in this.Schemas.ScalarTypes)
+            {
+                schemaBuilder.AddType(type);
+            }
+
+            foreach (var type in this.Schemas.InterfaceTypes)
             {
                 schemaBuilder.AddType(type);
             }

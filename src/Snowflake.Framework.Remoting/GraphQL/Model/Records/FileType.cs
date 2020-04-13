@@ -7,9 +7,9 @@ using System.Text;
 namespace Snowflake.Framework.Remoting.GraphQL.Model.Records
 {
     public sealed class FileType
-        : ObjectType<IFile>
+        : ObjectType<IReadOnlyFile>
     {
-        protected override void Configure(IObjectTypeDescriptor<IFile> descriptor)
+        protected override void Configure(IObjectTypeDescriptor<IReadOnlyFile> descriptor)
         {
             descriptor.Name("File")
                 .Description("A file with a virtualized path given context, managed by Snowflake by a directory manifest.")

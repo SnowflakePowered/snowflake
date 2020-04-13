@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Snowflake.Model.Game.LibraryExtensions;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -18,6 +19,16 @@ namespace Snowflake.Filesystem
         /// Gets the name of the directory
         /// </summary>
         string Name { get; }
+
+        /// <summary>
+        /// Gets the contextual path of the directory, relative to the root of the directory provider context.
+        /// For example, with paths produced by <see cref="IGameFileExtension"/>,
+        /// the rooted path would be relative to <see cref="IGameFileExtension.Root"/>. Keep in mind, these paths do
+        /// not have meaning outside of the context of the directory, which may or may not be known. They are also not
+        /// entirely compatible with <see cref="System.IO.Path"/> APIs, and are only meaningfull within the <see cref="Snowflake.Filesystem"/>
+        /// API.
+        /// </summary>
+        string RootedPath { get; }
 
         /// <summary>
         /// Opens an existing descendant directory with the given name.
