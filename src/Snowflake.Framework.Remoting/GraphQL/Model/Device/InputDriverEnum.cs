@@ -13,7 +13,7 @@ namespace Snowflake.Framework.Remoting.GraphQL.Model.Device
         {
             descriptor.Name("InputDriver")
                 .Description("Input device capabilities exposed by the underlying device API.")
-                .BindItems(BindingBehavior.Implicit);
+                .BindValues(BindingBehavior.Implicit);
         }
     }
 }

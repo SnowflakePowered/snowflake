@@ -19,9 +19,10 @@ using Snowflake.Framework.Remoting.GraphQL.Model.Device;
 using Snowflake.Framework.Remoting.GraphQL.Model.Filesystem;
 using Snowflake.Framework.Remoting.GraphQL.Model.Filesystem.Contextual;
 using Snowflake.Framework.Remoting.GraphQL.Model.Game;
-using Snowflake.Framework.Remoting.GraphQL.Model.PlatformInfo;
 using Snowflake.Framework.Remoting.GraphQL.Model.Records;
 using Snowflake.Framework.Remoting.GraphQL.Model.Stone;
+using Snowflake.Framework.Remoting.GraphQL.Model.Stone.ControllerLayout;
+using Snowflake.Framework.Remoting.GraphQL.Model.Stone.PlatformInfo;
 using Snowflake.Framework.Remoting.GraphQL.Schema;
 using Snowflake.Framework.Remoting.Kestrel;
 using Snowflake.Input.Controller;
@@ -63,6 +64,13 @@ namespace Snowflake.Services
                 .AddScalarType<ControllerIdType>()
                 
                 .AddObjectType<PlatformInfoType>()
+
+                .AddEnumType<ControllerElementEnum>()
+                .AddEnumType<ControllerElementTypeEnum>()
+                .AddObjectType<ControllerElementCollectionType>()
+                .AddObjectType<ControllerElementInfoElementType>()
+                .AddObjectType<ControllerElementInfoType>()
+                .AddObjectType<ControllerLayoutType>()
 
                 .AddObjectType<GameType>()
                 .AddObjectType<RecordMetadataType>()
@@ -122,6 +130,11 @@ namespace Snowflake.Services
                 });
 
             foreach (var type in this.Schemas.ScalarTypes)
+            {
+                schemaBuilder.AddType(type);
+            }
+
+            foreach (var type in this.Schemas.EnumTypes)
             {
                 schemaBuilder.AddType(type);
             }

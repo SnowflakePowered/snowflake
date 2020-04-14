@@ -1,7 +1,7 @@
 ﻿using GraphQL.Types;
 using HotChocolate.Types;
 using Snowflake.Framework.Remoting.GraphQL.Model.Records;
-using Snowflake.Framework.Remoting.GraphQL.Model.Stone;
+using Snowflake.Framework.Remoting.GraphQL.Model.Stone.PlatformInfo;
 using Snowflake.Model.Records.Game;
 using System;
 using System.Collections.Generic;

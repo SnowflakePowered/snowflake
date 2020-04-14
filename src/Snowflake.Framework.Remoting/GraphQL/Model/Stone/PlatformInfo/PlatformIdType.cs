@@ -1,34 +1,30 @@
 ﻿using HotChocolate.Language;
 using HotChocolate.Types;
-using Snowflake.Input.Controller;
 using Snowflake.Model.Game;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Snowflake.Framework.Remoting.GraphQL.Model.Stone
+namespace Snowflake.Framework.Remoting.GraphQL.Model.Stone.PlatformInfo
 {
     /// <summary>
     /// GraphQL Scalar Definition
     /// </summary>
-    public sealed class ControllerIdType
-    : ScalarType<ControllerId, StringValueNode>
+    public sealed class PlatformIdType
+    : ScalarType<PlatformId, StringValueNode>
     {
-        /// <summary>
-        /// GraphQL Scalar Definition for a <see cref="ControllerId"/>
-        /// </summary>
-        public ControllerIdType()
-            : base("ControllerId", BindingBehavior.Implicit)
+        public PlatformIdType()
+            : base("PlatformId", BindingBehavior.Implicit)
         {
-            Description = "A Stone ControllerId must be of the form /^[A-Z0-9_]+(_CONTROLLER|_DEVICE|_LAYOUT)/ and represents a specific Stone controller layout.";
+            Description = "A Stone PlatformId must be of the form MANUFACTURER_SHORTNAME and represents a specific Stone platform.";
         }
 
-        protected override ControllerId ParseLiteral(StringValueNode literal)
+        protected override PlatformId ParseLiteral(StringValueNode literal)
         {
-            return (ControllerId)literal.Value;
+            return (PlatformId)literal.Value;
         }
 
-        protected override StringValueNode ParseValue(ControllerId value)
+        protected override StringValueNode ParseValue(PlatformId value)
         {
             return new StringValueNode(null, value, false);
         }
@@ -38,7 +34,7 @@ namespace Snowflake.Framework.Remoting.GraphQL.Model.Stone
         // System.Float, System.Double, System.Decimal and System.Boolean
         public bool TrySerialize(object value, out object serialized)
         {
-            if (value is ControllerId p)
+            if (value is PlatformId p)
             {
                 serialized = (string)p;
                 return true;
@@ -57,7 +53,7 @@ namespace Snowflake.Framework.Remoting.GraphQL.Model.Stone
 
             if (serialized is string s)
             {
-                value = (ControllerId)s;
+                value = (PlatformId)s;
                 return true;
             }
 
