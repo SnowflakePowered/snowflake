@@ -19,23 +19,23 @@ namespace Snowflake.Framework.Remoting.GraphQL.Model.Filesystem.Contextual
                .Interface<DirectoryInfoInterface>();
             descriptor.Field("lastModifiedTime")
                 .Description("The last modified time of the directory, in UTC.")
-                .Type<DateTimeType>()
+                .Type<NonNullType<DateTimeType>>()
                 .Resolver(context => context.Parent<IReadOnlyDirectory>().UnsafeGetPath().LastWriteTimeUtc);
             descriptor.Field("createdTime")
                 .Description("The creation time of the directory, in UTC.")
-                .Type<DateTimeType>()
+                .Type<NonNullType<DateTimeType>>()
                 .Resolver(context => context.Parent<IReadOnlyDirectory>().UnsafeGetPath().CreationTimeUtc);
             descriptor.Field("osPath")
                 .Description("The path of the file on the realized operating system.")
-                .Type<OSDirectoryPathType>()
+                .Type<NonNullType<OSDirectoryPathType>>()
                 .Resolver(context => context.Parent<IReadOnlyDirectory>().UnsafeGetPath());
             descriptor.Field("path")
                 .Description("The path of this directory relative to the context of the virtualized filesystem.")
-                .Type<DirectoryPathType>()
+                .Type<NonNullType<DirectoryPathType>>()
                 .Resolver(context => (UPath)context.Parent<IReadOnlyDirectory>().RootedPath);
             descriptor.Field("name")
                   .Description("The name of the directory.")
-                  .Type<StringType>()
+                  .Type<NonNullType<StringType>>()
                   .Resolver(context => context.Parent<IReadOnlyDirectory>().Name);
         }
 #pragma warning restore CS0618 // Type or member is obsolete

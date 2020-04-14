@@ -21,19 +21,19 @@ namespace Snowflake.Framework.Remoting.GraphQL.Model.Filesystem.Contextual
                 .Resolver(context => context.Parent<IReadOnlyDirectory>());
             descriptor.Field("files")
                .Description("The files contained in this directory.")
-               .Type<ListType<ContextualFileInfoType>>()
+               .Type<NonNullType<ListType<NonNullType<ContextualFileInfoType>>>>()
                .Resolver(context => context.Parent<IReadOnlyDirectory>().EnumerateFiles());
             descriptor.Field("directories")
                 .Description("The child directories contained in this directory.")
-                .Type<ListType<ContextualDirectoryInfoType>>()
+                .Type<NonNullType<ListType<NonNullType<ContextualDirectoryInfoType>>>>()
                 .Resolver(context => context.Parent<IReadOnlyDirectory>().EnumerateDirectories());
             descriptor.Field("directoryCount")
                 .Description("The number of child directories contained in this directory.")
-                .Type<IntType>()
+                .Type<NonNullType<IntType>>()
                 .Resolver(context => context.Parent<IReadOnlyDirectory>().EnumerateDirectories().Count());
             descriptor.Field("fileCount")
                .Description("The number of child files contained in this directory.")
-               .Type<IntType>().Resolver(context => context.Parent<IReadOnlyDirectory>().EnumerateFiles().Count());
+               .Type<NonNullType<IntType>>().Resolver(context => context.Parent<IReadOnlyDirectory>().EnumerateFiles().Count());
         }
     }
 }

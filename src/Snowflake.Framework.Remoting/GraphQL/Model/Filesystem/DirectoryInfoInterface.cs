@@ -15,16 +15,16 @@ namespace Snowflake.Framework.Remoting.GraphQL.Model.Filesystem
                 .Description("Describes a directory in a filesystem, regardless of whether the filesystem is virtualized or realized (OS).");
             descriptor.Field("lastModifiedTime")
                 .Description("The last modified time of the directory, in UTC.")
-                .Type<DateTimeType>();
+                .Type<NonNullType<DateTimeType>>();
             descriptor.Field("createdTime")
                 .Description("The creation time of the directory, in UTC.")
-                .Type<DateTimeType>();
+                .Type<NonNullType<DateTimeType>>();
             descriptor.Field("name")
                 .Description("The name of the directory.")
-                .Type<StringType>();
+                .Type<NonNullType<StringType>>();
             descriptor.Field("osPath")
                 .Description("The path of the file on the realized operating system.")
-                .Type<OSDirectoryPathType>();
+                .Type<NonNullType<OSDirectoryPathType>>();
         }
     }
 }

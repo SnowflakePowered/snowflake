@@ -22,16 +22,16 @@ namespace Snowflake.Framework.Remoting.GraphQL.Model.Filesystem.Contextual
                 .Type<OSDirectoryInfoInterface>();
             descriptor.Field("files")
                .Description("The files contained in this directory.")
-               .Type<ListType<OSFileInfoType>>();
+               .Type<NonNullType<ListType<NonNullType<OSFileInfoType>>>>();
             descriptor.Field("directories")
                 .Description("The child directories contained in this directory.")
-                .Type<ListType<OSDirectoryInfoInterface>>();
+                .Type<NonNullType<ListType<NonNullType<OSDirectoryInfoInterface>>>>();
             descriptor.Field("directoryCount")
                 .Description("The number of child directories contained in this directory.")
-                .Type<IntType>();
+                .Type<NonNullType<IntType>>();
             descriptor.Field("fileCount")
                .Description("The number of child files contained in this directory.")
-               .Type<IntType>();
+               .Type<NonNullType<IntType>>();
         }
     }
 }
