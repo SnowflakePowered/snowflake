@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.PlatformInfo
+namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Stone
 {
     public class PlatformInfoFilter
         : FilterInputType<IPlatformInfo>
