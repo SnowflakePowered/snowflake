@@ -30,7 +30,7 @@ namespace Snowflake.Model.Database.Extensions
             string deviceName,
             string profileName,
             int vendorId,
-            InputDriverType driverType)
+            InputDriver driverType)
         {
             return new MappedControllerElementModel
             {

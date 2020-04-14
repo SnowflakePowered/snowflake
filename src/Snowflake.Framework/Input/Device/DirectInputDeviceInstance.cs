@@ -23,7 +23,7 @@ namespace Snowflake.Input.Device
         }
 
         private IReadOnlyDictionary<DeviceCapability, (int offset, int rawId)> CapabilityMap { get; }
-        public InputDriverType Driver => InputDriverType.DirectInput;
+        public InputDriver Driver => InputDriver.DirectInput;
 
         public int EnumerationIndex { get; }
 

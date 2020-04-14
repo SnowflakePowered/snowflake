@@ -19,7 +19,7 @@ namespace Snowflake.Orchestration.Extensibility
         /// <summary>
         /// The driver type of the real device used for this port.
         /// </summary>
-        InputDriverType Driver { get; }
+        InputDriver Driver { get; }
 
         /// <summary>
         /// The instance GUID of the real device used for this port.

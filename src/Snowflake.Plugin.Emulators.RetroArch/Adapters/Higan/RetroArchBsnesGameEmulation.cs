@@ -31,7 +31,7 @@ namespace Snowflake.Adapters.Higan
             HiganRetroArchConfiguration configurationProfile,
             IEnumerable<IEmulatedController> controllerPorts,
             ISaveProfile saveProfile,
-            IDictionary<InputDriverType, IDeviceInputMapping> inputMappings,
+            IDictionary<InputDriver, IDeviceInputMapping> inputMappings,
             IEmulatorExecutable retroarchExecutable) : base(game, configurationProfile, controllerPorts, saveProfile)
         {
             this.InputMappings = inputMappings;
@@ -39,7 +39,7 @@ namespace Snowflake.Adapters.Higan
             this.Scratch = this.Game.WithFiles().GetRuntimeLocation();
         }
 
-        public IDictionary<InputDriverType, IDeviceInputMapping> InputMappings { get; }
+        public IDictionary<InputDriver, IDeviceInputMapping> InputMappings { get; }
         public IEmulatorExecutable Executable { get; }
         private IDirectory Scratch { get; }
 

@@ -16,8 +16,8 @@ namespace Snowflake.Services
     /// 
     /// <para>
     /// All <see cref="IDeviceEnumerator"/> must provide a keyboard device that implements the
-    /// driver instance for <see cref="InputDriverType.Keyboard"/> and a passthrough device that
-    /// implements the <see cref="InputDriverType.Passthrough"/> driver instance at a minimum, otherwise
+    /// driver instance for <see cref="InputDriver.Keyboard"/> and a passthrough device that
+    /// implements the <see cref="InputDriver.Passthrough"/> driver instance at a minimum, otherwise
     /// emulators will be unable to map inputs.
     /// </para>
     /// </summary>

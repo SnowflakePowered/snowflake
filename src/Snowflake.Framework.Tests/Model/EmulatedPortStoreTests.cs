@@ -28,7 +28,7 @@ namespace Snowflake.Model.Tests
             device.SetupGet(p => p.InstanceGuid).Returns(instanceGuid);
 
             var instance = new Mock<IInputDeviceInstance>();
-            instance.SetupGet(p => p.Driver).Returns(InputDriverType.Passthrough);
+            instance.SetupGet(p => p.Driver).Returns(InputDriver.Passthrough);
             instance.SetupGet(p => p.NameEnumerationIndex).Returns(0);
 
             store.SetPort(orch.Object, "TEST_PLATFORM", 0, "TEST_CONTROLLER", device.Object, instance.Object, "default");
@@ -37,7 +37,7 @@ namespace Snowflake.Model.Tests
             Assert.NotNull(ret);
             Assert.Equal(instanceGuid, ret.InstanceGuid);
             Assert.Equal("TEST_CONTROLLER", ret.ControllerID);
-            Assert.Equal(InputDriverType.Passthrough, ret.Driver);
+            Assert.Equal(InputDriver.Passthrough, ret.Driver);
         }
 
         [Fact]
@@ -53,7 +53,7 @@ namespace Snowflake.Model.Tests
             device.SetupGet(p => p.InstanceGuid).Returns(instanceGuid);
 
             var instance = new Mock<IInputDeviceInstance>();
-            instance.SetupGet(p => p.Driver).Returns(InputDriverType.Passthrough);
+            instance.SetupGet(p => p.Driver).Returns(InputDriver.Passthrough);
             instance.SetupGet(p => p.NameEnumerationIndex).Returns(0);
 
             store.SetPort(orch.Object, "TEST_PLATFORM", 0, "TEST_CONTROLLER", device.Object, instance.Object, "default");
@@ -62,7 +62,7 @@ namespace Snowflake.Model.Tests
             Assert.NotNull(ret);
             Assert.Equal(instanceGuid, ret.InstanceGuid);
             Assert.Equal("TEST_CONTROLLER", ret.ControllerID);
-            Assert.Equal(InputDriverType.Passthrough, ret.Driver);
+            Assert.Equal(InputDriver.Passthrough, ret.Driver);
 
             store.ClearPort(orch.Object, "TEST_PLATFORM", 0);
             var ret2 = store.GetPort(orch.Object, "TEST_PLATFORM", 0);
@@ -83,7 +83,7 @@ namespace Snowflake.Model.Tests
 
 
             var instance = new Mock<IInputDeviceInstance>();
-            instance.SetupGet(p => p.Driver).Returns(InputDriverType.Passthrough);
+            instance.SetupGet(p => p.Driver).Returns(InputDriver.Passthrough);
             instance.SetupGet(p => p.NameEnumerationIndex).Returns(0);
 
             store.SetPort(orch.Object, "TEST_PLATFORM", 0, "TEST_CONTROLLER", device.Object, instance.Object, "default");

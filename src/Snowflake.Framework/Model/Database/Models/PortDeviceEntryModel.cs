@@ -9,7 +9,7 @@ namespace Snowflake.Model.Database.Models
 {
     internal class PortDeviceEntryModel : IEmulatedPortDeviceEntry
     {
-        public InputDriverType Driver { get; set; }
+        public InputDriver Driver { get; set; }
         public ControllerId ControllerID { get; set; }
         public PlatformId PlatformID { get; set; }
         public Guid InstanceGuid { get; set; }

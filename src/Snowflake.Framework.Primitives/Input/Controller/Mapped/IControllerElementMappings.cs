@@ -16,7 +16,7 @@ namespace Snowflake.Input.Controller.Mapped
         /// <summary>
         /// Gets the device id of the real device
         /// </summary>
-        InputDriverType DriverType { get; }
+        InputDriver DriverType { get; }
 
         /// <summary>
         /// Gets the name of the device.

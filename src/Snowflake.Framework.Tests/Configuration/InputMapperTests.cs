@@ -159,7 +159,7 @@ namespace Snowflake.Configuration.Tests
         {
             var mapcol = new ControllerElementMappings("Keyboard",
                            "TEST_CONTROLLER",
-                           InputDriverType.Keyboard,
+                           InputDriver.Keyboard,
                            IDeviceEnumerator.VirtualVendorID,
                            new XInputDeviceInstance(0).DefaultLayout);
 

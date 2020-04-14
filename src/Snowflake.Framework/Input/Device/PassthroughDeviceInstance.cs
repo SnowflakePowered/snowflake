@@ -7,7 +7,7 @@ namespace Snowflake.Input.Device
 {
     public sealed class PassthroughDeviceInstance : IInputDeviceInstance
     {
-        public InputDriverType Driver => InputDriverType.Passthrough;
+        public InputDriver Driver => InputDriver.Passthrough;
 
         public int EnumerationIndex => 0;
 

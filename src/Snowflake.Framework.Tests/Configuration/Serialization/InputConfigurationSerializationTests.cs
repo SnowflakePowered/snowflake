@@ -30,7 +30,7 @@ namespace Snowflake.Configuration.Serialization
         {
             var mapcol = new ControllerElementMappings("Keyboard",
                             "TEST_CONTROLLER",
-                            InputDriverType.Keyboard,
+                            InputDriver.Keyboard,
                             IDeviceEnumerator.VirtualVendorID,
                             new XInputDeviceInstance(0).DefaultLayout);
             IDeviceInputMapping mapping = new TestInputMapping();
@@ -59,7 +59,7 @@ namespace Snowflake.Configuration.Serialization
         {
             var mapcol = new ControllerElementMappings("Keyboard",
                            "TEST_CONTROLLER",
-                           InputDriverType.Keyboard,
+                           InputDriver.Keyboard,
                            IDeviceEnumerator.VirtualVendorID,
                            new XInputDeviceInstance(0).DefaultLayout);
             IDeviceInputMapping mapping = new TestInputMapping();
@@ -88,7 +88,7 @@ namespace Snowflake.Configuration.Serialization
         {
             var mapcol = new ControllerElementMappings("Keyboard",
                            "TEST_CONTROLLER",
-                           InputDriverType.Keyboard,
+                           InputDriver.Keyboard,
                            IDeviceEnumerator.VirtualVendorID,
                            new XInputDeviceInstance(0).DefaultLayout);
             IDeviceInputMapping mapping = new TestInputMapping();
@@ -117,7 +117,7 @@ namespace Snowflake.Configuration.Serialization
         {
             var mapcol = new ControllerElementMappings("Keyboard",
                           "TEST_CONTROLLER",
-                          InputDriverType.Keyboard,
+                          InputDriver.Keyboard,
                           IDeviceEnumerator.VirtualVendorID,
                           new XInputDeviceInstance(0).DefaultLayout);
             IDeviceInputMapping mapping = new TestInputMapping();

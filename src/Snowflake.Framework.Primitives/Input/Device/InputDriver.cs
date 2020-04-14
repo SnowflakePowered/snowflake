@@ -5,9 +5,9 @@ using System.Text;
 namespace Snowflake.Input.Device
 {
     /// <summary>
-    /// The type of input driver for a <see cref="IInputDeviceInstance"/>.
+    /// The input driver for a <see cref="IInputDeviceInstance"/>.
     /// </summary>
-    public enum InputDriverType
+    public enum InputDriver
     {
         /// <summary>
         /// No input driver.

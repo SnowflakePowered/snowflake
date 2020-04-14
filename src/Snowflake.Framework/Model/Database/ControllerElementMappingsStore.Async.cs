@@ -23,7 +23,7 @@ namespace Snowflake.Model.Database
         }
 
         public async Task<IControllerElementMappings?> GetMappingsAsync(ControllerId controllerId,
-            InputDriverType driver,
+            InputDriver driver,
             string deviceName,
             int vendorId,
             string profileName
@@ -92,7 +92,7 @@ namespace Snowflake.Model.Database
             await context.SaveChangesAsync();
         }
 
-        public async Task DeleteMappingsAsync(ControllerId controllerId, InputDriverType driverType,
+        public async Task DeleteMappingsAsync(ControllerId controllerId, InputDriver driverType,
             string deviceName, int vendorId, string profileName)
         {
             await using var context = new DatabaseContext(this.Options.Options);

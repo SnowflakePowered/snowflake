@@ -9,7 +9,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Inputs.MappedControllerEleme
     {
         public string DeviceName { get; set; }
         public int VendorID { get; set; }
-        public InputDriverType InputDriver { get; set; }
+        public InputDriver InputDriver { get; set; }
         public string ControllerId { get; set; }
         public string ProfileName { get; set; }
         public IList<MappedControllerElementInputObject> Mappings { get; set; }

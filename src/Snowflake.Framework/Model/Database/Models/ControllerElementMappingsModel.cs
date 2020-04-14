@@ -20,7 +20,7 @@ namespace Snowflake.Model.Database.Models
 
         public int VendorID { get; set; }
 
-        public InputDriverType DriverType { get; set; }
+        public InputDriver DriverType { get; set; }
         internal static void SetupModel(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ControllerElementMappingsModel>()
