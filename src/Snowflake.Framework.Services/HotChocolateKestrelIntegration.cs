@@ -115,9 +115,12 @@ namespace Snowflake.Services
             services.AddDataLoaderRegistry();
             services.AddGraphQLSubscriptions();
 
+            // Add privileged newtypes for Stone
+            services.AddTypeConverter<string, PlatformId>(from => from)
+                .AddTypeConverter<string, ControllerId>(from => from);
+
             var schemaBuilder = SchemaBuilder.New()
                 .EnableRelaySupport()
-                
                 .SetOptions(new SchemaOptions()
                 {
                     DefaultBindingBehavior = BindingBehavior.Explicit,
