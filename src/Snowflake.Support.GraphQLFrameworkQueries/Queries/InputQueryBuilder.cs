@@ -43,11 +43,11 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
             typeof(MappedControllerElementCollectionGraphType))]
         [Parameter(typeof(string), typeof(StringGraphType), "deviceName", "The hardware device name of the device.")]
         [Parameter(typeof(int), typeof(IntGraphType), "vendorId", "The vendor ID number of the device.")]
-        [Parameter(typeof(InputDriverType), typeof(InputDriverEnum), "inputDriver", "The input driver of the instance for this controller profile.")]
+        [Parameter(typeof(InputDriver), typeof(InputDriverEnum), "inputDriver", "The input driver of the instance for this controller profile.")]
         [Parameter(typeof(string), typeof(StringGraphType), "controllerId", "The Stone Controller ID that this mapping represents.")]
 
         [Parameter(typeof(string), typeof(StringGraphType), "profileName", "A profile name for the mapping.", nullable: true)]
-        public IControllerElementMappings GetProfile(string deviceName, int vendorId, InputDriverType inputDriver, string controllerId,
+        public IControllerElementMappings GetProfile(string deviceName, int vendorId, InputDriver inputDriver, string controllerId,
             string profileName = "default")
         {
             return this.MappedElementStore.GetMappings(controllerId, inputDriver, deviceName, vendorId, profileName ?? "default");
@@ -67,8 +67,8 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
             "Gets the default mapping between Stone controller IDs and the provided device.",
             typeof(ListGraphType<MappedControllerElementGraphType>))]
         [Parameter(typeof(Guid), typeof(GuidGraphType), "deviceInstanceGuid", "The device instance to get the layout for.")]
-        [Parameter(typeof(InputDriverType), typeof(InputDriverEnum), "inputDriver", "The input driver of the instance for this controller profile.")]
-        public IEnumerable<MappedControllerElement> GetDefaultProfile(Guid deviceInstanceGuid, InputDriverType inputDriver)
+        [Parameter(typeof(InputDriver), typeof(InputDriverEnum), "inputDriver", "The input driver of the instance for this controller profile.")]
+        public IEnumerable<MappedControllerElement> GetDefaultProfile(Guid deviceInstanceGuid, InputDriver inputDriver)
         {
             var device = this.DeviceEnumerator.QueryConnectedDevices()
                 .FirstOrDefault(i => i.InstanceGuid == deviceInstanceGuid)?.Instances

@@ -31,7 +31,7 @@ namespace Snowflake.Model.Database
         }
 
         public IControllerElementMappings? GetMappings(ControllerId controllerId,
-            InputDriverType driver,
+            InputDriver driver,
             string deviceName,
             int vendorId,
             string profileName
@@ -100,7 +100,7 @@ namespace Snowflake.Model.Database
             context.SaveChanges();
         }
 
-        public void DeleteMappings(ControllerId controllerId, InputDriverType driverType,
+        public void DeleteMappings(ControllerId controllerId, InputDriver driverType,
             string deviceName, int vendorId, string profileName)
         {
             using var context = new DatabaseContext(this.Options.Options);

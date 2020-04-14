@@ -6,7 +6,7 @@ using Snowflake.Input.Device;
 
 namespace Snowflake.Support.GraphQLFrameworkQueries.Types.InputDevice
 {
-    public class InputDriverEnum : EnumerationGraphType<InputDriverType>
+    public class InputDriverEnum : EnumerationGraphType<InputDriver>
     {
         public InputDriverEnum()
         {

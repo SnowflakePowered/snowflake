@@ -28,7 +28,7 @@ namespace Snowflake.Input.Controller.Mapped
         /// <inheritdoc/>
         public ControllerId ControllerID { get; }
 
-        public InputDriverType DriverType { get; }
+        public InputDriver DriverType { get; }
 
         public int VendorID { get; }
 
@@ -53,11 +53,11 @@ namespace Snowflake.Input.Controller.Mapped
         /// </summary>
         /// <param name="deviceName">The name of the physical device for this set of mappings.</param>
         /// <param name="controllerId">The Stone <see cref="ControllerID"/> this mapping is intended for.</param>
-        /// <param name="driver">The <see cref="InputDriverType"/> of the device instance for this set of mappings.</param>
+        /// <param name="driver">The <see cref="InputDriver"/> of the device instance for this set of mappings.</param>
         /// <param name="vendor">The vendor ID of the physical device for this set of mappings.</param>
         /// <param name="mapping">The device layout mapping provided by the device enumerator.</param>
         public ControllerElementMappings(string deviceName,
-            ControllerId controllerId, InputDriverType driver, int vendor,
+            ControllerId controllerId, InputDriver driver, int vendor,
             IDeviceLayoutMapping mapping)
             : this(deviceName, controllerId, driver, vendor)
         {
@@ -73,11 +73,11 @@ namespace Snowflake.Input.Controller.Mapped
         /// </summary>
         /// <param name="deviceName">The name of the physical device for this set of mappings.</param>
         /// <param name="controller">The controller layout to assign device mappings to.</param>
-        /// <param name="driver">The <see cref="InputDriverType"/> of the device instance for this set of mappings.</param>
+        /// <param name="driver">The <see cref="InputDriver"/> of the device instance for this set of mappings.</param>
         /// <param name="vendor">The vendor ID of the physical device for this set of mappings.</param>
         /// <param name="mapping">The device layout mapping provided by the device enumerator.</param>
         public ControllerElementMappings(string deviceName,
-           IControllerLayout controller, InputDriverType driver, int vendor,
+           IControllerLayout controller, InputDriver driver, int vendor,
            IDeviceLayoutMapping mapping)
            : this(deviceName, controller.LayoutID, driver, vendor)
         {
@@ -89,7 +89,7 @@ namespace Snowflake.Input.Controller.Mapped
         }
 
         public ControllerElementMappings(string deviceName,
-            ControllerId controllerId, InputDriverType driver, int vendor)
+            ControllerId controllerId, InputDriver driver, int vendor)
         {
             this.DeviceName = deviceName;
             this.ControllerID = controllerId;

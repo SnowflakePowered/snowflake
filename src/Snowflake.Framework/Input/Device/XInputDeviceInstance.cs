@@ -93,7 +93,7 @@ namespace Snowflake.Input.Device
             this.DefaultLayout = new DeviceLayoutMapping(_xInputMappings);
         }
 
-        public InputDriverType Driver => InputDriverType.XInput;
+        public InputDriver Driver => InputDriver.XInput;
 
         public int EnumerationIndex { get; }
 

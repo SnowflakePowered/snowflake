@@ -22,7 +22,7 @@ namespace Snowflake.Configuration.Tests
         {
             var mapcol = new ControllerElementMappings("Keyboard",
                 "TEST_CONTROLLER",
-                InputDriverType.Keyboard,
+                InputDriver.Keyboard,
                 IDeviceEnumerator.VirtualVendorID,
                 new XInputDeviceInstance(0).DefaultLayout);
             var x = new InputTemplate<IRetroArchInput>(mapcol);
@@ -36,7 +36,7 @@ namespace Snowflake.Configuration.Tests
         {
             var mapcol = new ControllerElementMappings("Keyboard",
                "TEST_CONTROLLER",
-               InputDriverType.Keyboard,
+               InputDriver.Keyboard,
                IDeviceEnumerator.VirtualVendorID,
                new XInputDeviceInstance(0).DefaultLayout);
             var x = new InputTemplate<IRetroArchInput>(mapcol);
@@ -49,7 +49,7 @@ namespace Snowflake.Configuration.Tests
         {
             var mapcol = new ControllerElementMappings("Keyboard",
                "TEST_CONTROLLER",
-               InputDriverType.Keyboard,
+               InputDriver.Keyboard,
                IDeviceEnumerator.VirtualVendorID,
                new XInputDeviceInstance(0).DefaultLayout);
             var x = new InputTemplate<IRetroArchInput>(mapcol);

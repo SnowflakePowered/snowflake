@@ -26,15 +26,15 @@ namespace Snowflake.Adapters.Higan
             this.RetroArchExecutable = retroArchExecutable;
             var mapping = JsonConvert.DeserializeObject<DictionaryInputMapping>
                 (this.Provision.CommonResourceDirectory.OpenFile("inputmappings.json").ReadAllText());
-            this.Mappings = new Dictionary<InputDriverType, IDeviceInputMapping>()
+            this.Mappings = new Dictionary<InputDriver, IDeviceInputMapping>()
                 {
-                    {InputDriverType.Keyboard, mapping },
-                    {InputDriverType.DirectInput, mapping },
-                    {InputDriverType.XInput, mapping },
+                    {InputDriver.Keyboard, mapping },
+                    {InputDriver.DirectInput, mapping },
+                    {InputDriver.XInput, mapping },
                 };
         }
 
-        private Dictionary<InputDriverType, IDeviceInputMapping> Mappings { get; }
+        private Dictionary<InputDriver, IDeviceInputMapping> Mappings { get; }
         private IEmulatorExecutable RetroArchExecutable { get; }
 
         public override IConfigurationCollection CreateGameConfiguration(IGame game, string profile)

@@ -53,7 +53,7 @@ namespace Snowflake.Input.Controller.Mapped
         /// <param name="deviceName">The name of the device.</param>
         /// <param name="vendorId">The vendor ID of the device.</param>
         /// <param name="profileName">The name of the mapping profile.</param>
-        void DeleteMappings(ControllerId controllerId, InputDriverType driverType,
+        void DeleteMappings(ControllerId controllerId, InputDriver driverType,
             string deviceName, int vendorId, string profileName);
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace Snowflake.Input.Controller.Mapped
         /// <param name="deviceName">The name of the device.</param>
         /// <param name="vendorId">The vendor ID of the device.</param>
         /// <param name="profileName">The name of the mapping profile.</param>
-        Task DeleteMappingsAsync(ControllerId controllerId, InputDriverType driverType,
+        Task DeleteMappingsAsync(ControllerId controllerId, InputDriver driverType,
             string deviceName, int vendorId, string profileName);
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Snowflake.Input.Controller.Mapped
         /// <param name="vendorId">The vendor ID of the device.</param>
         /// <param name="profileName">The name of the mapping profile.</param>
         /// <returns>The saved mapping profile from the provided controller ID to device ID.</returns>
-        IControllerElementMappings? GetMappings(ControllerId controllerId, InputDriverType driverType, 
+        IControllerElementMappings? GetMappings(ControllerId controllerId, InputDriver driverType, 
             string deviceId, int vendorId, string profileName);
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace Snowflake.Input.Controller.Mapped
         /// <param name="vendorId">The vendor ID of the device.</param>
         /// <param name="profileName">The name of the mapping profile.</param>
         /// <returns>The saved mapping profile from the provided controller ID to device ID.</returns>
-        Task<IControllerElementMappings?> GetMappingsAsync(ControllerId controllerId, InputDriverType driverType,
+        Task<IControllerElementMappings?> GetMappingsAsync(ControllerId controllerId, InputDriver driverType,
             string deviceId, int vendorId, string profileName);
 
         /// <summary>

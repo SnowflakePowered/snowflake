@@ -10,6 +10,6 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Inputs.PortEntry
         public Guid InstanceGuid { get; set; }
         public string ControllerId { get; set; }
         public string MappingsProfile { get; set; }
-        public InputDriverType InstanceDriver { get; set; }
+        public InputDriver InstanceDriver { get; set; }
     }
 }

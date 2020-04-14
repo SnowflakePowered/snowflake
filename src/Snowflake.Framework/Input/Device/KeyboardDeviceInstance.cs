@@ -57,7 +57,7 @@ namespace Snowflake.Input.Device
             this.DefaultLayout = new DeviceLayoutMapping(KeyboardDeviceInstance.DefaultKeyboardMappings);
         }
 
-        public InputDriverType Driver => InputDriverType.Keyboard;
+        public InputDriver Driver => InputDriver.Keyboard;
         public int EnumerationIndex => 0;
 
         public int ClassEnumerationIndex => 0;
