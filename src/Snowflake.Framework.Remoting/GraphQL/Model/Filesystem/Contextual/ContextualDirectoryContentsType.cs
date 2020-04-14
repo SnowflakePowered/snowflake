@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Snowflake.Framework.Remoting.GraphQL.Model.Filesystem.Contextual
 {
-    public sealed class ContextualDirectoryContents
+    public sealed class ContextualDirectoryContentsType
         : ObjectType<IReadOnlyDirectory>
     {
         protected override void Configure(IObjectTypeDescriptor<IReadOnlyDirectory> descriptor)
@@ -17,15 +17,15 @@ namespace Snowflake.Framework.Remoting.GraphQL.Model.Filesystem.Contextual
                 .Interface<DirectoryContentsInterface>();
             descriptor.Field("root")
                 .Description("The root directory.")
-                .Type<ContextualDirectoryInfo>()
+                .Type<ContextualDirectoryInfoType>()
                 .Resolver(context => context.Parent<IReadOnlyDirectory>());
             descriptor.Field("files")
                .Description("The files contained in this directory.")
-               .Type<ListType<ContextualFileInfo>>()
+               .Type<ListType<ContextualFileInfoType>>()
                .Resolver(context => context.Parent<IReadOnlyDirectory>().EnumerateFiles());
             descriptor.Field("directories")
                 .Description("The child directories contained in this directory.")
-                .Type<ListType<ContextualDirectoryInfo>>()
+                .Type<ListType<ContextualDirectoryInfoType>>()
                 .Resolver(context => context.Parent<IReadOnlyDirectory>().EnumerateDirectories());
             descriptor.Field("directoryCount")
                 .Description("The number of child directories contained in this directory.")

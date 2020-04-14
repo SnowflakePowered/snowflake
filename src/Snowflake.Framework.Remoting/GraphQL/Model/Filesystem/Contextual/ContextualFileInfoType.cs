@@ -11,7 +11,7 @@ using Zio;
 
 namespace Snowflake.Framework.Remoting.GraphQL.Model.Filesystem.Contextual
 {
-    public sealed class ContextualFileInfo
+    public sealed class ContextualFileInfoType
         : ObjectType<IReadOnlyFile>
     {
         protected override void Configure(IObjectTypeDescriptor<IReadOnlyFile> descriptor)

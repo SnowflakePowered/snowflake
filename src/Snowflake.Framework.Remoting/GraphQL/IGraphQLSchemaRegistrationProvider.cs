@@ -7,6 +7,9 @@ using System.Text;
 
 namespace Snowflake.Framework.Remoting.GraphQL
 {
+    /// <summary>
+    /// Only ever add a type that is in your own assembly
+    /// </summary>
     public interface IGraphQLSchemaRegistrationProvider
     {
         IGraphQLSchemaRegistrationProvider AddInterfaceType<T>() where T

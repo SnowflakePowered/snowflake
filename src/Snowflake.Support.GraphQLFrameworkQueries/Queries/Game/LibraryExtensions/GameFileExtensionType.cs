@@ -23,7 +23,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Game.LibraryExtensio
                 .Type<ListType<FileRecordType>>();
             descriptor.Field("fs")
                 .Argument("directoryPath", a => a.Type<DirectoryPathType>())
-                .Type<ContextualDirectoryContents>()
+                .Type<ContextualDirectoryContentsType>()
                 .Resolver(context =>
                 {
                     if (context.ArgumentKind("directoryPath") == ValueKind.Null) return context.Parent<IGameFileExtension>().Root;

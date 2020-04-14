@@ -25,9 +25,6 @@ namespace Snowflake.Framework.Remoting.GraphQL.Model.Filesystem
             descriptor.Field("osPath")
                 .Description("The path of the file on the realized operating system.")
                 .Type<OSDirectoryPathType>();
-            descriptor.Field("cursor")
-                .Description("The name of the field that acts as a unique cursor to the directoryPath argument of the fs API that produced this DirectoryInfo.")
-                .Type<StringType>();
         }
     }
 }
