@@ -16,6 +16,11 @@ namespace Snowflake.Framework.Remoting.GraphQL.Model.Records
             descriptor.Name("Game")
                 .Description("Represents all information regarding a particular game.")
                 .BindFieldsExplicitly();
+
+            descriptor.Field(g => g.Record)
+                .Name("record")
+                .Type<GameRecordType>()
+                .Description("Record metadata relating to this game.");
         }
     }
 }

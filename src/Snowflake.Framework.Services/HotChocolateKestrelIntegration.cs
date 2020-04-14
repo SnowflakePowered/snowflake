@@ -15,6 +15,7 @@ using HotChocolate.Utilities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.WebSockets;
 using Microsoft.Extensions.DependencyInjection;
+using Snowflake.Framework.Remoting.GraphQL.Model.Device;
 using Snowflake.Framework.Remoting.GraphQL.Model.Filesystem;
 using Snowflake.Framework.Remoting.GraphQL.Model.Filesystem.Contextual;
 using Snowflake.Framework.Remoting.GraphQL.Model.Game;
@@ -55,28 +56,31 @@ namespace Snowflake.Services
             }
 
             var kestrelSp = services.BuildServiceProvider();
+
+            // Stone and Game Model
             this.Schemas
                 .AddScalarType<PlatformIdType>()
                 .AddScalarType<ControllerIdType>()
+                
+                .AddObjectType<PlatformInfoType>()
+
+                .AddObjectType<GameType>()
+                .AddObjectType<RecordMetadataType>()
+                .AddObjectType<GameRecordType>()
+                ;
+
+            // Filesytem
+            this.Schemas
                 .AddScalarType<OSFilePathType>()
                 .AddScalarType<OSDirectoryPathType>()
                 .AddScalarType<DirectoryPathType>()
-                .AddScalarType<FilePathType>();
+                .AddScalarType<FilePathType>()
 
-            this.Schemas
                 .AddInterfaceType<FileInfoInterface>()
                 .AddInterfaceType<DirectoryInfoInterface>()
                 .AddInterfaceType<DirectoryContentsInterface>()
                 .AddInterfaceType<OSDirectoryInfoInterface>()
                 .AddInterfaceType<OSDirectoryContentsInterface>()
-                ;
-
-            this.Schemas
-                
-                .AddObjectType<PlatformInfoType>()
-                .AddObjectType<GameType>()
-                .AddObjectType<RecordMetadataType>()
-                .AddObjectType<GameRecordType>()
 
                 .AddObjectType<ContextualFileInfoType>()
                 .AddObjectType<ContextualDirectoryInfoType>()
@@ -87,6 +91,17 @@ namespace Snowflake.Services
                 .AddObjectType<OSDirectoryContentsType>()
                 .AddObjectType<OSDriveInfoType>()
                 .AddObjectType<OSDriveContentsType>()
+                ;
+
+            // Device
+            this.Schemas
+                .AddEnumType<DeviceCapabilityEnum>()
+                .AddEnumType<InputDriverEnum>()
+                
+                .AddObjectType<DeviceCapabilityLabelElementType>()
+                .AddObjectType<DeviceCapabilityLabelsType>()
+                .AddObjectType<InputDeviceInstanceType>()
+                .AddObjectType<InputDeviceType>()
                 ;
 
             services.AddDataLoaderRegistry();
