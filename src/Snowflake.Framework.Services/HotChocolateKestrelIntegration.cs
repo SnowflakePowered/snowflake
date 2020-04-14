@@ -67,6 +67,8 @@ namespace Snowflake.Services
                 .AddInterfaceType<FileInfoInterface>()
                 .AddInterfaceType<DirectoryInfoInterface>()
                 .AddInterfaceType<DirectoryContentsInterface>()
+                .AddInterfaceType<OSDirectoryInfoInterface>()
+                .AddInterfaceType<OSDirectoryContentsInterface>()
                 ;
 
             this.Schemas
@@ -76,9 +78,16 @@ namespace Snowflake.Services
                 .AddObjectType<RecordMetadataType>()
                 .AddObjectType<GameRecordType>()
 
-                .AddObjectType<ContextualFileInfo>()
-                .AddObjectType<ContextualDirectoryInfo>()
-                .AddObjectType<ContextualDirectoryContents>();
+                .AddObjectType<ContextualFileInfoType>()
+                .AddObjectType<ContextualDirectoryInfoType>()
+                .AddObjectType<ContextualDirectoryContentsType>()
+
+                .AddObjectType<OSFileInfoType>()
+                .AddObjectType<OSDirectoryInfoType>()
+                .AddObjectType<OSDirectoryContentsType>()
+                .AddObjectType<OSDriveInfoType>()
+                .AddObjectType<OSDriveContentsType>()
+                ;
 
             services.AddDataLoaderRegistry();
             services.AddGraphQLSubscriptions();
