@@ -23,19 +23,19 @@ namespace Snowflake.Framework.Remoting.GraphQL.Model.Filesystem.Contextual
                 .Resolver(context => null);
             descriptor.Field("files")
                .Description("The files contained in this directory.")
-               .Type<ListType<OSFileInfoType>>()
+               .Type<NonNullType<ListType<NonNullType<OSFileInfoType>>>>()
                .Resolver(context => Enumerable.Empty<FileInfo>());
             descriptor.Field("directories")
                 .Description("The child directories contained in this directory.")
-                .Type<ListType<OSDriveInfoType>>()
+                .Type<NonNullType<ListType<NonNullType<OSDriveInfoType>>>>()
                 .Resolver(context => context.Parent<DriveInfo[]>());
             descriptor.Field("directoryCount")
                 .Description("The number of child directories contained in this directory.")
-                .Type<IntType>()
+                .Type<NonNullType<IntType>>()
                 .Resolver(context => context.Parent<DriveInfo[]>().Length);
             descriptor.Field("fileCount")
                .Description("The number of child files contained in this directory.")
-               .Type<IntType>().Resolver(0);
+               .Type<NonNullType<IntType>>().Resolver(0);
         }
     }
 }
