@@ -27,12 +27,14 @@ namespace Snowflake.Services
             this.ObjectTypes = new List<Type>();
             this.ObjectTypeExtensions = new List<Type>();
             this.InterfaceTypes = new List<Type>();
+            this.EnumTypes = new List<Type>();
             this.ScalarTypes = new List<Type>();
             this.Logger = logger;
         }
 
         internal IServiceCollection QueryBuilderServices { get; }
         internal IList<Type> ObjectTypes { get; }
+        internal IList<Type> EnumTypes { get; }
         internal IList<Type> ObjectTypeExtensions { get; }
         internal IList<Type> ScalarTypes { get; }
         internal IList<Type> InterfaceTypes { get; }
@@ -64,6 +66,12 @@ namespace Snowflake.Services
         {
             this.Logger.Info($"Registered GraphQL Scalar from {typeof(T).Name}.");
             this.ScalarTypes.Add(typeof(T));
+            return this;
+        }
+        public IGraphQLSchemaRegistrationProvider AddEnumType<T>() where T : EnumType
+        {
+            this.Logger.Info($"Registered GraphQL Enum from {typeof(T).Name}.");
+            this.EnumTypes.Add(typeof(T));
             return this;
         }
 

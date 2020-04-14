@@ -12,6 +12,8 @@ namespace Snowflake.Framework.Remoting.GraphQL
     /// </summary>
     public interface IGraphQLSchemaRegistrationProvider
     {
+        IGraphQLSchemaRegistrationProvider AddEnumType<T>() where T : EnumType;
+
         IGraphQLSchemaRegistrationProvider AddInterfaceType<T>() where T
            : InterfaceType;
         IGraphQLSchemaRegistrationProvider AddObjectType<T>() where T

@@ -16,7 +16,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Filesystem
         protected override void Configure(IObjectTypeDescriptor descriptor)
         {
             descriptor.Name("Query");
-            descriptor.Field("fs")
+            descriptor.Field("filesystem")
                 .Argument("directoryPath", a => a.Type<OSDirectoryPathType>().Description("The path to explore."))
                 .Resolver(context => {
                     var path = context.Argument<DirectoryInfo>("directoryPath");
