@@ -34,6 +34,8 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
             hotChocolate.AddObjectTypeExtension<GameNodeQueries>();
             hotChocolate.AddObjectTypeExtension<EchoQueries>();
             hotChocolate.AddObjectTypeExtension<DeviceQueries>();
+            hotChocolate.AddObjectTypeExtension<DeviceNodeQueries>();
+
 
             hotChocolate.AddObjectTypeExtension<FilesystemQueries>();
 
