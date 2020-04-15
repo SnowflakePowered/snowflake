@@ -15,7 +15,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Stone
             descriptor.Name("Query");
             descriptor.Field("stone")
                 .Description("Provides access to Stone platform and controller definitions.")
-                .Type<StoneProviderType>()
+                .Type<NonNullType<StoneProviderType>>()
                 .Resolver(ctx => ctx.Service<IStoneProvider>());
         }
     }

@@ -21,10 +21,12 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Filesystem
                 .Resolver(context => {
                     var path = context.Argument<DirectoryInfo>("directoryPath");
                     if (path == null) return DriveInfo.GetDrives();
-                    return path;
+                    if (path.Exists) return path;
+                    return null;
                 })
                 .Type<OSDirectoryContentsInterface>()
-                .Description("Provides normalized OS-dependent filesystem access.");
+                .Description("Provides normalized OS-dependent filesystem access." +
+                "Returns null if the specified path does not exist.");
         }
     }
 

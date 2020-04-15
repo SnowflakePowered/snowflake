@@ -18,7 +18,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Runtime
             descriptor
                 .Name("Query");
             descriptor.Field("runtime")
-                .Type<RuntimeQueryType>()
+                .Type<NonNullType<RuntimeQueryType>>()
                 .Description("Provides access to Snowflake runtime details.")
                 .Resolver(RuntimeQueryRoot.Root);
         }

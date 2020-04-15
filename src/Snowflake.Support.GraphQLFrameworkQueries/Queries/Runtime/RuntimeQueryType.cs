@@ -23,7 +23,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Runtime
             descriptor.Field("modules")
                 .Description("Currently enumerated modules. These may or may not have been loaded.")
                 .Resolver(ctx => ctx.Service<IModuleEnumerator>().Modules)
-                .Type<ListType<NonNullType<ModuleType>>>();
+                .Type<NonNullType<ListType<NonNullType<ModuleType>>>>();
         }
     }
 }

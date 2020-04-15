@@ -14,7 +14,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Devices
         {
             descriptor.Name("Query");
             descriptor.Field("devices")
-                .Type<ListType<InputDeviceType>>()
+                .Type<NonNullType<ListType<NonNullType<InputDeviceType>>>>()
                 .Description("Provides access to input devices on the system.")
                 .Resolver(context =>
                 {
