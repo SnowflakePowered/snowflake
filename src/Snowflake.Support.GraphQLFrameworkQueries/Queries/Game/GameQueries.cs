@@ -24,7 +24,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Game
 
             descriptor
                 .Field("games")
-                .Type<ListType<GameType>>()
+                .Type<NonNullType<ListType<NonNullType<GameType>>>>()
                 .AddFilterArguments<GameRecordQueryFilterInputType>()
                 .Use(next => context =>
                 {
