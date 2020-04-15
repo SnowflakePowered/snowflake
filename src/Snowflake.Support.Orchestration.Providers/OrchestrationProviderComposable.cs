@@ -20,7 +20,7 @@ namespace Snowflake.Support.Execution
         [ImportService(typeof(IEmulatedPortStore))]
         [ImportService(typeof(IDeviceEnumerator))]
         [ImportService(typeof(IStoneProvider))]
-        [ImportService(typeof(IControllerElementMappingsStore))]
+        [ImportService(typeof(IControllerElementMappingProfileStore))]
         public void Compose(IModule composableModule, IServiceRepository serviceContainer)
         {
             var register = serviceContainer.Get<IServiceRegistrationProvider>();
@@ -30,7 +30,7 @@ namespace Snowflake.Support.Execution
             var portsStore = serviceContainer.Get<IEmulatedPortStore>();
             var deviceEnumerator = serviceContainer.Get<IDeviceEnumerator>();
             var stoneProvider = serviceContainer.Get<IStoneProvider>();
-            var mappingsStore = serviceContainer.Get<IControllerElementMappingsStore>();
+            var mappingsStore = serviceContainer.Get<IControllerElementMappingProfileStore>();
 
             var loader = new EmulatorExecutableProvider(logProvider.GetLogger("EmulatorExecutableLoader"), modules);
             register.RegisterService<IEmulatorExecutableProvider>(loader);

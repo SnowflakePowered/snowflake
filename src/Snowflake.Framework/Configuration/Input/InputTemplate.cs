@@ -63,7 +63,7 @@ namespace Snowflake.Configuration.Input
             }
         }
 
-        public InputTemplate(IControllerElementMappingCollection mappedElements, int playerIndex = 0)
+        public InputTemplate(IControllerElementMappingProfile mappedElements, int playerIndex = 0)
         {
             this.PlayerIndex = playerIndex;
             ProxyGenerator generator = new ProxyGenerator();

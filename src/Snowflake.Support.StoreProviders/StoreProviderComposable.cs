@@ -72,7 +72,7 @@ namespace Snowflake.Support.StoreProviders
 
             var inputStore = new ControllerElementMappingsStore(optionsBuilder);
             serviceContainer.Get<IServiceRegistrationProvider>()
-                .RegisterService<IControllerElementMappingsStore>(inputStore);
+                .RegisterService<IControllerElementMappingProfileStore>(inputStore);
 
             // ports
             var portStore = new EmulatedPortStore(optionsBuilder);

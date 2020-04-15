@@ -915,7 +915,7 @@
             <param name="this">The <see cref="T:Snowflake.Input.Controller.ControllerElementType"/> to parse.</param>
             <returns>The string representation of the <see cref="T:Snowflake.Input.Controller.ControllerElementType"/>.</returns>
         </member>
-        <member name="P:Snowflake.Input.Controller.ControllerLayout.LayoutID">
+        <member name="P:Snowflake.Input.Controller.ControllerLayout.ControllerID">
             <inheritdoc/>
         </member>
         <member name="P:Snowflake.Input.Controller.ControllerLayout.FriendlyName">
@@ -927,39 +927,51 @@
         <member name="P:Snowflake.Input.Controller.ControllerLayout.Layout">
             <inheritdoc/>
         </member>
-        <member name="M:Snowflake.Input.Controller.Mapped.ControllerElementMappingCollection.GetEnumerator">
+        <member name="M:Snowflake.Input.Controller.Mapped.ControllerElementMappingProfile.GetEnumerator">
             <inheritdoc/>
         </member>
-        <member name="M:Snowflake.Input.Controller.Mapped.ControllerElementMappingCollection.System#Collections#IEnumerable#GetEnumerator">
+        <member name="M:Snowflake.Input.Controller.Mapped.ControllerElementMappingProfile.System#Collections#IEnumerable#GetEnumerator">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Input.Controller.Mapped.ControllerElementMappingCollection.DeviceName">
+        <member name="P:Snowflake.Input.Controller.Mapped.ControllerElementMappingProfile.DeviceName">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Input.Controller.Mapped.ControllerElementMappingCollection.ControllerID">
+        <member name="P:Snowflake.Input.Controller.Mapped.ControllerElementMappingProfile.ControllerID">
             <inheritdoc/>
         </member>
-        <member name="M:Snowflake.Input.Controller.Mapped.ControllerElementMappingCollection.#ctor(System.String,Snowflake.Input.Controller.ControllerId,Snowflake.Input.Device.InputDriver,System.Int32,Snowflake.Input.Device.IDeviceLayoutMapping)">
+        <member name="M:Snowflake.Input.Controller.Mapped.ControllerElementMappingProfile.#ctor(System.String,System.String,Snowflake.Input.Controller.ControllerId,Snowflake.Input.Device.InputDriver,System.Int32,Snowflake.Input.Device.IDeviceLayoutMapping)">
             <summary>
-            Initializes a <see cref="T:Snowflake.Input.Controller.Mapped.ControllerElementMappingCollection"/> from an <see cref="T:Snowflake.Input.Device.IDeviceLayoutMapping"/>,
+            Initializes a <see cref="T:Snowflake.Input.Controller.Mapped.ControllerElementMappingProfile"/> from an <see cref="T:Snowflake.Input.Device.IDeviceLayoutMapping"/>,
             that includes all mappings from the default layout.
             </summary>
+            <param name="profileName">The name of the profile.</param>
             <param name="deviceName">The name of the physical device for this set of mappings.</param>
-            <param name="controllerId">The Stone <see cref="P:Snowflake.Input.Controller.Mapped.ControllerElementMappingCollection.ControllerID"/> this mapping is intended for.</param>
+            <param name="controllerId">The Stone <see cref="T:Snowflake.Input.Controller.ControllerId"/> this mapping is intended for.</param>
             <param name="driver">The <see cref="T:Snowflake.Input.Device.InputDriver"/> of the device instance for this set of mappings.</param>
             <param name="vendor">The vendor ID of the physical device for this set of mappings.</param>
             <param name="mapping">The device layout mapping provided by the device enumerator.</param>
         </member>
-        <member name="M:Snowflake.Input.Controller.Mapped.ControllerElementMappingCollection.#ctor(System.String,Snowflake.Input.Controller.IControllerLayout,Snowflake.Input.Device.InputDriver,System.Int32,Snowflake.Input.Device.IDeviceLayoutMapping)">
+        <member name="M:Snowflake.Input.Controller.Mapped.ControllerElementMappingProfile.#ctor(System.String,System.String,Snowflake.Input.Controller.IControllerLayout,Snowflake.Input.Device.InputDriver,System.Int32,Snowflake.Input.Device.IDeviceLayoutMapping)">
             <summary>
-            Initializes a<see cref= "T:Snowflake.Input.Controller.Mapped.ControllerElementMappingCollection" /> from an <see cref="T:Snowflake.Input.Device.IDeviceLayoutMapping"/>,
+            Initializes a<see cref= "T:Snowflake.Input.Controller.Mapped.ControllerElementMappingProfile" /> from an <see cref="T:Snowflake.Input.Device.IDeviceLayoutMapping"/>,
             that includes only mappings that are assignable to the provided layout.
             </summary>
+            <param name="profileName">The name of the controller profile.</param>
             <param name="deviceName">The name of the physical device for this set of mappings.</param>
             <param name="controller">The controller layout to assign device mappings to.</param>
             <param name="driver">The <see cref="T:Snowflake.Input.Device.InputDriver"/> of the device instance for this set of mappings.</param>
             <param name="vendor">The vendor ID of the physical device for this set of mappings.</param>
             <param name="mapping">The device layout mapping provided by the device enumerator.</param>
+        </member>
+        <member name="M:Snowflake.Input.Controller.Mapped.ControllerElementMappingProfile.#ctor(System.String,System.String,Snowflake.Input.Controller.ControllerId,Snowflake.Input.Device.InputDriver,System.Int32)">
+            <summary>
+            Initializes an empty <see cref= "T:Snowflake.Input.Controller.Mapped.ControllerElementMappingProfile" />.
+            </summary>
+            <param name="profileName">The name of the controller profile.</param>
+            <param name="deviceName">The name of the physical device for this set of mappings.</param>
+            <param name="controllerId">The controller ID to assign device mappings to.</param>
+            <param name="driver">The <see cref="T:Snowflake.Input.Device.InputDriver"/> of the device instance for this set of mappings.</param>
+            <param name="vendor">The vendor ID of the physical device for this set of mappings.</param>
         </member>
         <member name="T:Snowflake.Input.Device.DefaultDeviceCapabilityLabels">
             <summary>

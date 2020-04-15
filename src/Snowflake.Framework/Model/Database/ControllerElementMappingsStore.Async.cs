@@ -11,10 +11,10 @@ using Snowflake.Model.Database.Models;
 
 namespace Snowflake.Model.Database
 {
-    internal partial class ControllerElementMappingsStore : IControllerElementMappingsStore
+    internal partial class ControllerElementMappingsStore : IControllerElementMappingProfileStore
     {
         #region Asynchronous API
-        public async Task AddMappingsAsync(IControllerElementMappingCollection mappings, string profileName)
+        public async Task AddMappingsAsync(IControllerElementMappingProfile mappings, string profileName)
         {
             await using var context = new DatabaseContext(this.Options.Options);
             // todo: check already exists
@@ -22,7 +22,7 @@ namespace Snowflake.Model.Database
             await context.SaveChangesAsync();
         }
 
-        public async Task<IControllerElementMappingCollection?> GetMappingsAsync(ControllerId controllerId,
+        public async Task<IControllerElementMappingProfile?> GetMappingsAsync(ControllerId controllerId,
             InputDriver driver,
             string deviceName,
             int vendorId,
@@ -40,7 +40,7 @@ namespace Snowflake.Model.Database
             return mappings?.AsControllerElementMappings();
         }
 
-        public IAsyncEnumerable<IControllerElementMappingCollection> GetMappingsAsync(ControllerId controllerId,
+        public IAsyncEnumerable<IControllerElementMappingProfile> GetMappingsAsync(ControllerId controllerId,
             string deviceName, int vendorId)
         {
             var context = new DatabaseContext(this.Options.Options);
@@ -71,7 +71,7 @@ namespace Snowflake.Model.Database
             await context.SaveChangesAsync();
         }
 
-        public async Task UpdateMappingsAsync(IControllerElementMappingCollection mappings, string profileName)
+        public async Task UpdateMappingsAsync(IControllerElementMappingProfile mappings, string profileName)
         {
             await using var context = new DatabaseContext(this.Options.Options);
             var retrievedMappings = await context.ControllerElementMappings
