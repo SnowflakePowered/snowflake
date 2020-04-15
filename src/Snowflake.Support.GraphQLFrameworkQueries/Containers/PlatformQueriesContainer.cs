@@ -15,6 +15,7 @@ using Snowflake.Support.GraphQLFrameworkQueries.Queries.Devices;
 using Snowflake.Support.GraphQLFrameworkQueries.Queries.Filesystem;
 using Snowflake.Support.GraphQLFrameworkQueries.Queries.Game;
 using Snowflake.Support.GraphQLFrameworkQueries.Queries.LibraryExtensions;
+using Snowflake.Support.GraphQLFrameworkQueries.Queries.Runtime;
 using Snowflake.Support.GraphQLFrameworkQueries.Queries.Stone;
 
 namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
@@ -38,7 +39,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
             hotChocolate.AddObjectTypeExtension<PlatformInfoNodeQueries>();
             hotChocolate.AddObjectTypeExtension<ControllerLayoutNodeQueries>();
 
-
+            hotChocolate.AddObjectTypeExtension<RuntimeQueries>();
             hotChocolate.AddObjectTypeExtension<FilesystemQueries>();
 
             //hotChocolate.AddQuery<PlatformQueries, PlatformInfoQueryBuilder>(platformQueries);
