@@ -19,7 +19,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
         [ImportService(typeof(IStoneProvider))]
         [ImportService(typeof(IDeviceEnumerator))]
         [ImportService(typeof(IPluginManager))]
-        [ImportService(typeof(IControllerElementMappingsStore))]
+        [ImportService(typeof(IControllerElementMappingProfileStore))]
         [ImportService(typeof(IGraphQLService))]
         [ImportService(typeof(ILogProvider))]
         [ImportService(typeof(IGameLibrary))]
@@ -27,7 +27,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
         {
             var stone = coreInstance.Get<IStoneProvider>();
             var input = coreInstance.Get<IDeviceEnumerator>();
-            var mappedController = coreInstance.Get<IControllerElementMappingsStore>();
+            var mappedController = coreInstance.Get<IControllerElementMappingProfileStore>();
             var rootSchema = coreInstance.Get<IGraphQLService>();
 
             var inputQuery = new InputQueryBuilder(input, mappedController, stone);

@@ -14,7 +14,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Stone
         {
             descriptor
                 .Name("ControllerLayoutFilter")                
-                .Filter(c => c.LayoutID)
+                .Filter(c => c.ControllerID)
                 
                 .AllowEquals().Description("Get the platform with the specific LayoutID.").And()
                 .AllowIn().Description("Get platforms with the given LayoutIDs.").And()

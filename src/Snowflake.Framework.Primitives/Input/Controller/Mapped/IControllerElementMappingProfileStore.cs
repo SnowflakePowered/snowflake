@@ -74,7 +74,7 @@ namespace Snowflake.Input.Controller.Mapped
         /// <param name="deviceName">The device ID that maps from the spec controller.</param>
         /// <param name="vendorId">The vendor ID of the device.</param>
         /// <returns>All saved mappings from the provided controller ID to device ID.</returns>
-        IQueryable<IControllerElementMappingProfile> GetMappings(ControllerId controllerId, string deviceName, int vendorId);
+        IEnumerable<IControllerElementMappingProfile> GetMappings(ControllerId controllerId, string deviceName, int vendorId);
 
         /// <summary>
         /// Asynchronously gets all saved mappings from the provided controller ID to device ID.

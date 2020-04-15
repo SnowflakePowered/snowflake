@@ -12,6 +12,7 @@ using Snowflake.Services;
 using Snowflake.Support.GraphQLFrameworkQueries.Queries;
 using Snowflake.Support.GraphQLFrameworkQueries.Queries.Debug;
 using Snowflake.Support.GraphQLFrameworkQueries.Queries.Devices;
+using Snowflake.Support.GraphQLFrameworkQueries.Queries.Devices.Mapped;
 using Snowflake.Support.GraphQLFrameworkQueries.Queries.Filesystem;
 using Snowflake.Support.GraphQLFrameworkQueries.Queries.Game;
 using Snowflake.Support.GraphQLFrameworkQueries.Queries.Installables;
@@ -46,6 +47,9 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
             hotChocolate.AddInterfaceTypeExtension<InstallableQueries>();
             hotChocolate.AddObjectTypeExtension<DirectoryInfoInstallableQueries>();
             hotChocolate.AddObjectTypeExtension<DriveInfoInstallableQueries>();
+
+            hotChocolate.AddObjectTypeExtension<InputDeviceInstanceMappingProfileQueries>();
+            hotChocolate.AddObjectTypeExtension<InputDeviceMappingProfilesQueries>();
 
             //hotChocolate.AddQuery<PlatformQueries, PlatformInfoQueryBuilder>(platformQueries);
             //hotChocolate.AddObjectTypeExtension<GameRecordQueries>();

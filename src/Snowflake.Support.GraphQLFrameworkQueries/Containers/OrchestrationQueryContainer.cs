@@ -20,7 +20,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
         [ImportService(typeof(IStoneProvider))]
         [ImportService(typeof(IDeviceEnumerator))]
         [ImportService(typeof(IPluginManager))]
-        [ImportService(typeof(IControllerElementMappingsStore))]
+        [ImportService(typeof(IControllerElementMappingProfileStore))]
         [ImportService(typeof(IGraphQLService))]
         [ImportService(typeof(ILogProvider))]
         [ImportService(typeof(IGameLibrary))]
@@ -33,7 +33,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
             var library = coreInstance.Get<IGameLibrary>();
             var ports = coreInstance.Get<IEmulatedPortsManager>();
 
-            var mappedController = coreInstance.Get<IControllerElementMappingsStore>();
+            var mappedController = coreInstance.Get<IControllerElementMappingProfileStore>();
             var rootSchema = coreInstance.Get<IGraphQLService>();
 
             var  orchestrationQuery = new OrchestrationQueryBuilder(plugin.GetCollection<IEmulatorOrchestrator>(), stone, library, ports);

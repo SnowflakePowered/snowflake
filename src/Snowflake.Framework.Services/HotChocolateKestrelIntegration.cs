@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.WebSockets;
 using Microsoft.Extensions.DependencyInjection;
 using Snowflake.Framework.Remoting.GraphQL.Model.Device;
+using Snowflake.Framework.Remoting.GraphQL.Model.Device.Mapped;
 using Snowflake.Framework.Remoting.GraphQL.Model.Filesystem;
 using Snowflake.Framework.Remoting.GraphQL.Model.Filesystem.Contextual;
 using Snowflake.Framework.Remoting.GraphQL.Model.Game;
@@ -27,6 +28,7 @@ using Snowflake.Framework.Remoting.GraphQL.Model.Stone.PlatformInfo;
 using Snowflake.Framework.Remoting.GraphQL.Schema;
 using Snowflake.Framework.Remoting.Kestrel;
 using Snowflake.Input.Controller;
+using Snowflake.Input.Controller.Mapped;
 using Snowflake.Model.Game;
 using Snowflake.Support.Remoting.GraphQL.RootProvider;
 
@@ -115,6 +117,9 @@ namespace Snowflake.Services
                 .AddObjectType<DeviceCapabilityLabelsType>()
                 .AddObjectType<InputDeviceInstanceType>()
                 .AddObjectType<InputDeviceType>()
+
+                .AddObjectType<ControllerElementMappingType>()
+                .AddObjectType<ControllerElementMappingProfileType>()
                 ;
 
             services.AddDataLoaderRegistry();
