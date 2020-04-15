@@ -8,10 +8,10 @@ using Snowflake.Input.Device;
 
 namespace Snowflake.Input.Controller.Mapped
 {
-    public class ControllerElementMappings : IControllerElementMappings
+    public class ControllerElementMappingCollection : IControllerElementMappingCollection
     {
         /// <inheritdoc/>
-        public IEnumerator<MappedControllerElement> GetEnumerator()
+        public IEnumerator<ControllerElementMapping> GetEnumerator()
         {
             return this.controllerElements.Values.GetEnumerator();
         }
@@ -36,19 +36,19 @@ namespace Snowflake.Input.Controller.Mapped
         {
             get
             {
-                this.controllerElements.TryGetValue(layoutElement, out MappedControllerElement map);
+                this.controllerElements.TryGetValue(layoutElement, out ControllerElementMapping map);
                 return map.DeviceCapability;
             }
             set
             {
-                this.controllerElements[layoutElement] = new MappedControllerElement(layoutElement, value);
+                this.controllerElements[layoutElement] = new ControllerElementMapping(layoutElement, value);
             }
         }
 
-        private readonly Dictionary<ControllerElement, MappedControllerElement> controllerElements;
+        private readonly Dictionary<ControllerElement, ControllerElementMapping> controllerElements;
 
         /// <summary>
-        /// Initializes a <see cref="ControllerElementMappings"/> from an <see cref="IDeviceLayoutMapping"/>,
+        /// Initializes a <see cref="ControllerElementMappingCollection"/> from an <see cref="IDeviceLayoutMapping"/>,
         /// that includes all mappings from the default layout.
         /// </summary>
         /// <param name="deviceName">The name of the physical device for this set of mappings.</param>
@@ -56,7 +56,7 @@ namespace Snowflake.Input.Controller.Mapped
         /// <param name="driver">The <see cref="InputDriver"/> of the device instance for this set of mappings.</param>
         /// <param name="vendor">The vendor ID of the physical device for this set of mappings.</param>
         /// <param name="mapping">The device layout mapping provided by the device enumerator.</param>
-        public ControllerElementMappings(string deviceName,
+        public ControllerElementMappingCollection(string deviceName,
             ControllerId controllerId, InputDriver driver, int vendor,
             IDeviceLayoutMapping mapping)
             : this(deviceName, controllerId, driver, vendor)
@@ -68,7 +68,7 @@ namespace Snowflake.Input.Controller.Mapped
         }
 
         /// <summary>
-        /// Initializes a<see cref= "ControllerElementMappings" /> from an <see cref="IDeviceLayoutMapping"/>,
+        /// Initializes a<see cref= "ControllerElementMappingCollection" /> from an <see cref="IDeviceLayoutMapping"/>,
         /// that includes only mappings that are assignable to the provided layout.
         /// </summary>
         /// <param name="deviceName">The name of the physical device for this set of mappings.</param>
@@ -76,7 +76,7 @@ namespace Snowflake.Input.Controller.Mapped
         /// <param name="driver">The <see cref="InputDriver"/> of the device instance for this set of mappings.</param>
         /// <param name="vendor">The vendor ID of the physical device for this set of mappings.</param>
         /// <param name="mapping">The device layout mapping provided by the device enumerator.</param>
-        public ControllerElementMappings(string deviceName,
+        public ControllerElementMappingCollection(string deviceName,
            IControllerLayout controller, InputDriver driver, int vendor,
            IDeviceLayoutMapping mapping)
            : this(deviceName, controller.LayoutID, driver, vendor)
@@ -84,21 +84,21 @@ namespace Snowflake.Input.Controller.Mapped
             foreach (var (controllerElement, _) in controller.Layout)
             {
                 if (mapping[controllerElement] == DeviceCapability.None) continue;
-                this.Add(new MappedControllerElement(controllerElement, mapping[controllerElement]));
+                this.Add(new ControllerElementMapping(controllerElement, mapping[controllerElement]));
             }
         }
 
-        public ControllerElementMappings(string deviceName,
+        public ControllerElementMappingCollection(string deviceName,
             ControllerId controllerId, InputDriver driver, int vendor)
         {
             this.DeviceName = deviceName;
             this.ControllerID = controllerId;
             this.DriverType = driver;
             this.VendorID = vendor;
-            this.controllerElements = new Dictionary<ControllerElement, MappedControllerElement>();
+            this.controllerElements = new Dictionary<ControllerElement, ControllerElementMapping>();
         }
 
-        public void Add(MappedControllerElement controllerElement)
+        public void Add(ControllerElementMapping controllerElement)
         {
             this.controllerElements[controllerElement.LayoutElement] = controllerElement;
         }

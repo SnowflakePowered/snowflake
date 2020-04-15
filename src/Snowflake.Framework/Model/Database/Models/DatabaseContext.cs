@@ -19,8 +19,8 @@ namespace Snowflake.Model.Database.Models
         public DbSet<ConfigurationValueModel> ConfigurationValues { get; set; }
         public DbSet<GameRecordConfigurationProfileModel> GameRecordsConfigurationProfiles { get; set; }
 
-        public DbSet<ControllerElementMappingsModel> ControllerElementMappings { get; set; }
-        public DbSet<MappedControllerElementModel> MappedControllerElements { get; set; }
+        public DbSet<ControllerElementMappingCollectionModel> ControllerElementMappings { get; set; }
+        public DbSet<ControllerElementMappingModel> MappedControllerElements { get; set; }
 
         public DbSet<PortDeviceEntryModel> PortDeviceEntries { get; set; }
 
@@ -31,8 +31,8 @@ namespace Snowflake.Model.Database.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            MappedControllerElementModel.SetupModel(modelBuilder);
-            ControllerElementMappingsModel.SetupModel(modelBuilder);
+            ControllerElementMappingModel.SetupModel(modelBuilder);
+            ControllerElementMappingCollectionModel.SetupModel(modelBuilder);
 
             ConfigurationValueModel.SetupModel(modelBuilder);
             ConfigurationProfileModel.SetupModel(modelBuilder);

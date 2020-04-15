@@ -7,7 +7,7 @@ using Snowflake.Input.Device;
 namespace Snowflake.Input.Controller.Mapped
 {
     /// <summary>
-    /// Provides a store for <see cref="IControllerElementMappings"/>.
+    /// Provides a store for <see cref="IControllerElementMappingCollection"/>.
     /// </summary>
     public interface IControllerElementMappingsStore
     {
@@ -16,18 +16,18 @@ namespace Snowflake.Input.Controller.Mapped
         /// across mappings between different spec controllers and real devices, but must be unique
         /// for the same controller ID and device ID.
         /// </summary>
-        /// <param name="mappings">The <see cref="IControllerElementMappings"/> to store.</param>
+        /// <param name="mappings">The <see cref="IControllerElementMappingCollection"/> to store.</param>
         /// <param name="profileName">The profile name to store the mappings under.</param>
-        void AddMappings(IControllerElementMappings mappings, string profileName);
+        void AddMappings(IControllerElementMappingCollection mappings, string profileName);
 
         /// <summary>
         /// Asynchronously add the given mappings under the given profile name. Profile names do not have to be unique
         /// across mappings between different spec controllers and real devices, but must be unique
         /// for the same controller ID and device ID.
         /// </summary>
-        /// <param name="mappings">The <see cref="IControllerElementMappings"/> to store.</param>
+        /// <param name="mappings">The <see cref="IControllerElementMappingCollection"/> to store.</param>
         /// <param name="profileName">The profile name to store the mappings under.</param>
-        Task AddMappingsAsync(IControllerElementMappings mappings, string profileName);
+        Task AddMappingsAsync(IControllerElementMappingCollection mappings, string profileName);
 
         /// <summary>
         /// Deletes all mappings from the provided controller ID to device.
@@ -74,7 +74,7 @@ namespace Snowflake.Input.Controller.Mapped
         /// <param name="deviceName">The device ID that maps from the spec controller.</param>
         /// <param name="vendorId">The vendor ID of the device.</param>
         /// <returns>All saved mappings from the provided controller ID to device ID.</returns>
-        IQueryable<IControllerElementMappings> GetMappings(ControllerId controllerId, string deviceName, int vendorId);
+        IQueryable<IControllerElementMappingCollection> GetMappings(ControllerId controllerId, string deviceName, int vendorId);
 
         /// <summary>
         /// Asynchronously gets all saved mappings from the provided controller ID to device ID.
@@ -83,7 +83,7 @@ namespace Snowflake.Input.Controller.Mapped
         /// <param name="deviceName">The device ID that maps from the spec controller.</param>
         /// <param name="vendorId">The vendor ID of the device.</param>
         /// <returns>All saved mappings from the provided controller ID to device ID.</returns>
-        IAsyncEnumerable<IControllerElementMappings> GetMappingsAsync(ControllerId controllerId, string deviceName, int vendorId);
+        IAsyncEnumerable<IControllerElementMappingCollection> GetMappingsAsync(ControllerId controllerId, string deviceName, int vendorId);
 
         /// <summary>
         /// Gets the saved mapping profile from the provided controller ID to device ID.
@@ -94,7 +94,7 @@ namespace Snowflake.Input.Controller.Mapped
         /// <param name="vendorId">The vendor ID of the device.</param>
         /// <param name="profileName">The name of the mapping profile.</param>
         /// <returns>The saved mapping profile from the provided controller ID to device ID.</returns>
-        IControllerElementMappings? GetMappings(ControllerId controllerId, InputDriver driverType, 
+        IControllerElementMappingCollection? GetMappings(ControllerId controllerId, InputDriver driverType, 
             string deviceId, int vendorId, string profileName);
 
         /// <summary>
@@ -106,21 +106,21 @@ namespace Snowflake.Input.Controller.Mapped
         /// <param name="vendorId">The vendor ID of the device.</param>
         /// <param name="profileName">The name of the mapping profile.</param>
         /// <returns>The saved mapping profile from the provided controller ID to device ID.</returns>
-        Task<IControllerElementMappings?> GetMappingsAsync(ControllerId controllerId, InputDriver driverType,
+        Task<IControllerElementMappingCollection?> GetMappingsAsync(ControllerId controllerId, InputDriver driverType,
             string deviceId, int vendorId, string profileName);
 
         /// <summary>
         /// Updates the specific mapping profile with the given profile name.
         /// </summary>
-        /// <param name="mappings">The <see cref="IControllerElementMappings"/> to store.</param>
+        /// <param name="mappings">The <see cref="IControllerElementMappingCollection"/> to store.</param>
         /// <param name="profileName">The profile name to store the mappings under.</param>
-        void UpdateMappings(IControllerElementMappings mappings, string profileName);
+        void UpdateMappings(IControllerElementMappingCollection mappings, string profileName);
 
         /// <summary>
         /// Asynchronously updates the specific mapping profile with the given profile name.
         /// </summary>
-        /// <param name="mappings">The <see cref="IControllerElementMappings"/> to store.</param>
+        /// <param name="mappings">The <see cref="IControllerElementMappingCollection"/> to store.</param>
         /// <param name="profileName">The profile name to store the mappings under.</param>
-        Task UpdateMappingsAsync(IControllerElementMappings mappings, string profileName);
+        Task UpdateMappingsAsync(IControllerElementMappingCollection mappings, string profileName);
     }
 }

@@ -11,7 +11,7 @@ namespace Snowflake.Input.Controller.Mapped
     /// <summary>
     /// Represents a collection of mapped elements.
     /// </summary>
-    public interface IControllerElementMappings : IEnumerable<MappedControllerElement>
+    public interface IControllerElementMappingCollection : IEnumerable<ControllerElementMapping>
     {
         /// <summary>
         /// Gets the device id of the real device

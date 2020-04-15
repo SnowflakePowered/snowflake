@@ -10,7 +10,7 @@ namespace Snowflake.Input.Device
     /// Represents a map from a <see cref="Controller.ControllerElement"/>
     /// to a <see cref="DeviceCapability"/>
     /// </summary>
-    public interface IDeviceLayoutMapping : IEnumerable<MappedControllerElement>
+    public interface IDeviceLayoutMapping : IEnumerable<ControllerElementMapping>
     {
         /// <summary>
         /// Gets the capability that maps on to the given element.

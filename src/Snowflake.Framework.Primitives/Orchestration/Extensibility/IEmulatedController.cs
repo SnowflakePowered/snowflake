@@ -33,6 +33,6 @@ namespace Snowflake.Orchestration.Extensibility
         /// <summary>
         /// Gets the mapped controller elements mapping real inputs to the emulated controller
         /// </summary>
-        IControllerElementMappings LayoutMapping { get; }
+        IControllerElementMappingCollection LayoutMapping { get; }
     }
 }

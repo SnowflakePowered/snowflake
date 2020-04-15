@@ -927,32 +927,32 @@
         <member name="P:Snowflake.Input.Controller.ControllerLayout.Layout">
             <inheritdoc/>
         </member>
-        <member name="M:Snowflake.Input.Controller.Mapped.ControllerElementMappings.GetEnumerator">
+        <member name="M:Snowflake.Input.Controller.Mapped.ControllerElementMappingCollection.GetEnumerator">
             <inheritdoc/>
         </member>
-        <member name="M:Snowflake.Input.Controller.Mapped.ControllerElementMappings.System#Collections#IEnumerable#GetEnumerator">
+        <member name="M:Snowflake.Input.Controller.Mapped.ControllerElementMappingCollection.System#Collections#IEnumerable#GetEnumerator">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Input.Controller.Mapped.ControllerElementMappings.DeviceName">
+        <member name="P:Snowflake.Input.Controller.Mapped.ControllerElementMappingCollection.DeviceName">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Input.Controller.Mapped.ControllerElementMappings.ControllerID">
+        <member name="P:Snowflake.Input.Controller.Mapped.ControllerElementMappingCollection.ControllerID">
             <inheritdoc/>
         </member>
-        <member name="M:Snowflake.Input.Controller.Mapped.ControllerElementMappings.#ctor(System.String,Snowflake.Input.Controller.ControllerId,Snowflake.Input.Device.InputDriver,System.Int32,Snowflake.Input.Device.IDeviceLayoutMapping)">
+        <member name="M:Snowflake.Input.Controller.Mapped.ControllerElementMappingCollection.#ctor(System.String,Snowflake.Input.Controller.ControllerId,Snowflake.Input.Device.InputDriver,System.Int32,Snowflake.Input.Device.IDeviceLayoutMapping)">
             <summary>
-            Initializes a <see cref="T:Snowflake.Input.Controller.Mapped.ControllerElementMappings"/> from an <see cref="T:Snowflake.Input.Device.IDeviceLayoutMapping"/>,
+            Initializes a <see cref="T:Snowflake.Input.Controller.Mapped.ControllerElementMappingCollection"/> from an <see cref="T:Snowflake.Input.Device.IDeviceLayoutMapping"/>,
             that includes all mappings from the default layout.
             </summary>
             <param name="deviceName">The name of the physical device for this set of mappings.</param>
-            <param name="controllerId">The Stone <see cref="P:Snowflake.Input.Controller.Mapped.ControllerElementMappings.ControllerID"/> this mapping is intended for.</param>
+            <param name="controllerId">The Stone <see cref="P:Snowflake.Input.Controller.Mapped.ControllerElementMappingCollection.ControllerID"/> this mapping is intended for.</param>
             <param name="driver">The <see cref="T:Snowflake.Input.Device.InputDriver"/> of the device instance for this set of mappings.</param>
             <param name="vendor">The vendor ID of the physical device for this set of mappings.</param>
             <param name="mapping">The device layout mapping provided by the device enumerator.</param>
         </member>
-        <member name="M:Snowflake.Input.Controller.Mapped.ControllerElementMappings.#ctor(System.String,Snowflake.Input.Controller.IControllerLayout,Snowflake.Input.Device.InputDriver,System.Int32,Snowflake.Input.Device.IDeviceLayoutMapping)">
+        <member name="M:Snowflake.Input.Controller.Mapped.ControllerElementMappingCollection.#ctor(System.String,Snowflake.Input.Controller.IControllerLayout,Snowflake.Input.Device.InputDriver,System.Int32,Snowflake.Input.Device.IDeviceLayoutMapping)">
             <summary>
-            Initializes a<see cref= "T:Snowflake.Input.Controller.Mapped.ControllerElementMappings" /> from an <see cref="T:Snowflake.Input.Device.IDeviceLayoutMapping"/>,
+            Initializes a<see cref= "T:Snowflake.Input.Controller.Mapped.ControllerElementMappingCollection" /> from an <see cref="T:Snowflake.Input.Device.IDeviceLayoutMapping"/>,
             that includes only mappings that are assignable to the provided layout.
             </summary>
             <param name="deviceName">The name of the physical device for this set of mappings.</param>
