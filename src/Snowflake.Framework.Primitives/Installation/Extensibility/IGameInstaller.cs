@@ -18,7 +18,7 @@ namespace Snowflake.Installation.Extensibility
         /// <summary>
         /// Queries all installable file system entries in a given parent directory.
         /// 
-        /// This method should not do any write file operations.
+        /// This method should not perform any file write operations.
         /// </summary>
         /// <param name="platformId">The platform to lookup installables for.</param>
         /// <param name="fileEntries">
