@@ -20,11 +20,11 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
     public class InputQueryBuilder : QueryBuilder
     {
         public IDeviceEnumerator DeviceEnumerator { get; }
-        public IControllerElementMappingsStore MappedElementStore { get; }
+        public IControllerElementMappingProfileStore MappedElementStore { get; }
         public IStoneProvider StoneProvider { get; }
 
         public InputQueryBuilder(IDeviceEnumerator deviceEnumerator,
-            IControllerElementMappingsStore mappedElementCollectionStore,
+            IControllerElementMappingProfileStore mappedElementCollectionStore,
             IStoneProvider stoneProvider)
         {
             this.DeviceEnumerator = deviceEnumerator;
@@ -47,7 +47,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
         [Parameter(typeof(string), typeof(StringGraphType), "controllerId", "The Stone Controller ID that this mapping represents.")]
 
         [Parameter(typeof(string), typeof(StringGraphType), "profileName", "A profile name for the mapping.", nullable: true)]
-        public IControllerElementMappingCollection GetProfile(string deviceName, int vendorId, InputDriver inputDriver, string controllerId,
+        public IControllerElementMappingProfile GetProfile(string deviceName, int vendorId, InputDriver inputDriver, string controllerId,
             string profileName = "default")
         {
             return this.MappedElementStore.GetMappings(controllerId, inputDriver, deviceName, vendorId, profileName ?? "default");
@@ -58,7 +58,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
         [Parameter(typeof(string), typeof(StringGraphType), "deviceName", "The hardware device name of the device.")]
         [Parameter(typeof(int), typeof(IntGraphType), "vendorId", "The vendor ID number of the device.")]
         [Parameter(typeof(string), typeof(StringGraphType), "controllerId", "The Stone Controller ID that this mapping represents.")]
-        public IEnumerable<IControllerElementMappingCollection> GetProfiles(string deviceName, int vendorId, string controllerId)
+        public IEnumerable<IControllerElementMappingProfile> GetProfiles(string deviceName, int vendorId, string controllerId)
         {
             return this.MappedElementStore.GetMappings(controllerId, deviceName, vendorId);
         }
@@ -81,7 +81,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
             typeof(MappedControllerElementCollectionGraphType))]
         [Parameter(typeof(DefaultMappedControllerElementCollectionInputObject),
             typeof(DefaultMappedControllerElementCollectionInputType), "input", "The input")]
-        public IControllerElementMappingCollection CreateProfile(DefaultMappedControllerElementCollectionInputObject input)
+        public IControllerElementMappingProfile CreateProfile(DefaultMappedControllerElementCollectionInputObject input)
         {
             var device = this.DeviceEnumerator.QueryConnectedDevices()
                 .FirstOrDefault(d => d.InstanceGuid == input.InstanceGuid);
@@ -91,7 +91,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
             if (instance == null) return null;
             if (!this.StoneProvider.Controllers.TryGetValue(input.ControllerId, out var controllerLayout)) return null;
 
-            var defaults = new ControllerElementMappingCollection(device!.DeviceName, controllerLayout,
+            var defaults = new ControllerElementMappingProfile(input.ProfileName, device!.DeviceName, controllerLayout,
                 input.InputDriver, device.VendorID, instance.DefaultLayout);
             this.MappedElementStore.AddMappings(defaults, input.ProfileName);
             return this.MappedElementStore.GetMappings(input.ControllerId, instance.Driver,
@@ -103,7 +103,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
             typeof(MappedControllerElementCollectionGraphType))]
         [Parameter(typeof(MappedControllerElementCollectionInputObject),
             typeof(MappedControllerElementCollectionInputType), "input", "The input")]
-        public IControllerElementMappingCollection SetProfile(MappedControllerElementCollectionInputObject input)
+        public IControllerElementMappingProfile SetProfile(MappedControllerElementCollectionInputObject input)
         {
             var collection = this.MappedElementStore.GetMappings(input.ControllerId, input.InputDriver, 
                 input.DeviceName, input.VendorID, input.ProfileName);

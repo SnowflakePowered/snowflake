@@ -19,7 +19,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Stone
             descriptor.Interface<NodeType>();
             descriptor.Field("id")
                 .Type<IdType>()
-                .Resolver(ctx => ctx.Parent<IControllerLayout>().LayoutID);
+                .Resolver(ctx => ctx.Parent<IControllerLayout>().ControllerID);
 
             descriptor.AsNode()
                 .NodeResolver<ControllerId>((ctx, id) => Task.FromResult(

@@ -6,7 +6,7 @@ using Snowflake.Input.Controller.Mapped;
 
 namespace Snowflake.Support.GraphQLFrameworkQueries.Types.InputDevice.Mapped
 {
-    public class MappedControllerElementCollectionGraphType : ObjectGraphType<IControllerElementMappingCollection>
+    public class MappedControllerElementCollectionGraphType : ObjectGraphType<IControllerElementMappingProfile>
     {
         public MappedControllerElementCollectionGraphType()
         {

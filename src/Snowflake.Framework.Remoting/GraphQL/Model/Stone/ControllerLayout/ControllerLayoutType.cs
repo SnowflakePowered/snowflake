@@ -15,7 +15,7 @@ namespace Snowflake.Framework.Remoting.GraphQL.Model.Stone.ControllerLayout
             descriptor.Name("ControllerLayout")
                 .Description("A Stone Controller Layout. " +
                 "Describes the layout of a known controller by a collection of element definition.");
-            descriptor.Field(c => c.LayoutID)
+            descriptor.Field(c => c.ControllerID)
                 .Description("The Stone ID of the Controller Layout.")
                 .Type<NonNullType<ControllerIdType>>();
             descriptor.Field(c => c.FriendlyName)

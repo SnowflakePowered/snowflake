@@ -12,7 +12,7 @@ namespace Snowflake.Framework.Remoting.GraphQL.Model.Device.Mapped
     {
         protected override void Configure(IObjectTypeDescriptor<ControllerElementMapping> descriptor)
         {
-            descriptor.Name("MappedControllerElement")
+            descriptor.Name("ControllerElementMapping")
                 .Description("Decribes a mapping between a capability on a real input device to an element on an emulated controller.");
             descriptor.Field(c => c.DeviceCapability)
                 .Name("capability")
