@@ -13,7 +13,7 @@ namespace Snowflake.Orchestration.Extensibility
     {
         public EmulatedPortsManager(IEmulatedPortStore portsStore,
             IDeviceEnumerator deviceEnumerator,
-            IControllerElementMappingsStore mappingsStore,
+            IControllerElementMappingProfileStore mappingsStore,
             IStoneProvider stoneProvider)
         {
             this.Ports = portsStore;
@@ -24,7 +24,7 @@ namespace Snowflake.Orchestration.Extensibility
 
         private IEmulatedPortStore Ports { get; }
         private IDeviceEnumerator Devices { get; }
-        private IControllerElementMappingsStore Mappings { get; }
+        private IControllerElementMappingProfileStore Mappings { get; }
         private IStoneProvider StoneProvider { get; }
 
         public IEmulatedController? GetControllerAtPort(IEmulatorOrchestrator orchestrator,

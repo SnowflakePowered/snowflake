@@ -9,12 +9,17 @@ using System.Threading.Tasks;
 namespace Snowflake.Input.Controller.Mapped
 {
     /// <summary>
-    /// Represents a collection of mapped elements.
+    /// A collection of mapped elements that describes an input mapping profile.
     /// </summary>
-    public interface IControllerElementMappingCollection : IEnumerable<ControllerElementMapping>
+    public interface IControllerElementMappingProfile : IEnumerable<ControllerElementMapping>
     {
         /// <summary>
-        /// Gets the device id of the real device
+        /// The name of the profile, if any.
+        /// </summary>
+        string ProfileName { get; }
+
+        /// <summary>
+        /// The driver instance for which this profile is valid.
         /// </summary>
         InputDriver DriverType { get; }
 
@@ -29,7 +34,7 @@ namespace Snowflake.Input.Controller.Mapped
         int VendorID { get; }
 
         /// <summary>
-        /// Gets the controller id of the virtual controller layout
+        /// Gets the layout ID of the virtual controller layout
         /// </summary>
         ControllerId ControllerID { get; }
 

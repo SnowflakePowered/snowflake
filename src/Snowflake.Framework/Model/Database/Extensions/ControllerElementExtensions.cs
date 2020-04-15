@@ -11,7 +11,7 @@ namespace Snowflake.Model.Database.Extensions
 {
     internal static class ControllerElementExtensions
     {
-        public static ControllerElementMappingCollectionModel AsModel(this IControllerElementMappingCollection @this, string profileName)
+        public static ControllerElementMappingCollectionModel AsModel(this IControllerElementMappingProfile @this, string profileName)
         {
             return new ControllerElementMappingCollectionModel
             {
@@ -44,9 +44,11 @@ namespace Snowflake.Model.Database.Extensions
             };
         }
 
-        public static IControllerElementMappingCollection AsControllerElementMappings(this ControllerElementMappingCollectionModel @this)
+        public static IControllerElementMappingProfile AsControllerElementMappings(this ControllerElementMappingCollectionModel @this)
         {
-            var mappings = new ControllerElementMappingCollection(@this.DeviceName,
+            var mappings = new ControllerElementMappingProfile(
+                @this.ProfileName,
+                @this.DeviceName,
                 @this.ControllerID,
                 @this.DriverType,
                 @this.VendorID);

@@ -22,7 +22,7 @@ namespace Snowflake.Model.Tests
         [Fact]
         public void GetProfileNames_Test()
         {
-            var mapcol = new ControllerElementMappingCollection("Keyboard",
+            var mapcol = new ControllerElementMappingProfile("default", "Keyboard",
                            "TEST_CONTROLLER",
                            InputDriver.Keyboard,
                            IDeviceEnumerator.VirtualVendorID,
@@ -41,7 +41,7 @@ namespace Snowflake.Model.Tests
             var stoneProvider = new StoneProvider();
             foreach (var testmappings in stoneProvider.Controllers.Values)
             {
-                var mapcol = new ControllerElementMappingCollection("Xbox",
+                var mapcol = new ControllerElementMappingProfile("default", "Xbox",
                            "TEST_CONTROLLER",
                            InputDriver.XInput,
                            IDeviceEnumerator.VirtualVendorID,
@@ -76,7 +76,7 @@ namespace Snowflake.Model.Tests
             var stoneProvider = new StoneProvider();
             foreach (var testmappings in stoneProvider.Controllers.Values)
             {
-                var mapcol = new ControllerElementMappingCollection("Keyboard",
+                var mapcol = new ControllerElementMappingProfile("default", "Keyboard",
                            "TEST_CONTROLLER",
                            InputDriver.Keyboard,
                            IDeviceEnumerator.VirtualVendorID,
@@ -110,7 +110,7 @@ namespace Snowflake.Model.Tests
             var stoneProvider = new StoneProvider();
             foreach (var testmappings in stoneProvider.Controllers.Values)
             {
-                var mapcol = new ControllerElementMappingCollection("Keyboard",
+                var mapcol = new ControllerElementMappingProfile("default", "Keyboard",
                            "TEST_CONTROLLER",
                            InputDriver.Keyboard,
                            IDeviceEnumerator.VirtualVendorID,
@@ -152,7 +152,7 @@ namespace Snowflake.Model.Tests
             var stoneProvider = new StoneProvider();
             foreach (var testmappings in stoneProvider.Controllers.Values)
             {
-                var mapcol = new ControllerElementMappingCollection("Keyboard",
+                var mapcol = new ControllerElementMappingProfile("default", "Keyboard",
                            "TEST_CONTROLLER",
                            InputDriver.Keyboard,
                            IDeviceEnumerator.VirtualVendorID,
@@ -193,7 +193,7 @@ namespace Snowflake.Model.Tests
             var stoneProvider = new StoneProvider();
             foreach (var testmappings in stoneProvider.Controllers.Values)
             {
-                var mapcol = new ControllerElementMappingCollection("Keyboard",
+                var mapcol = new ControllerElementMappingProfile("default", "Keyboard",
                            "TEST_CONTROLLER",
                            InputDriver.Keyboard,
                            IDeviceEnumerator.VirtualVendorID,
@@ -223,7 +223,7 @@ namespace Snowflake.Model.Tests
             var stoneProvider = new StoneProvider();
             foreach (var testmappings in stoneProvider.Controllers.Values)
             {
-                var mapcol = new ControllerElementMappingCollection("Keyboard",
+                var mapcol = new ControllerElementMappingProfile("default", "Keyboard",
                            "TEST_CONTROLLER",
                            InputDriver.Keyboard,
                            IDeviceEnumerator.VirtualVendorID,
@@ -252,7 +252,7 @@ namespace Snowflake.Model.Tests
             var stoneProvider = new StoneProvider();
             foreach (var testmappings in stoneProvider.Controllers.Values)
             {
-                var mapcol = new ControllerElementMappingCollection("Keyboard",
+                var mapcol = new ControllerElementMappingProfile("default", "Keyboard",
                             "TEST_CONTROLLER",
                             InputDriver.Keyboard,
                             IDeviceEnumerator.VirtualVendorID,
@@ -282,7 +282,7 @@ namespace Snowflake.Model.Tests
             var stoneProvider = new StoneProvider();
             foreach (var testmappings in stoneProvider.Controllers.Values)
             {
-                var mapcol = new ControllerElementMappingCollection("Keyboard",
+                var mapcol = new ControllerElementMappingProfile("default", "Keyboard",
                             "TEST_CONTROLLER",
                             InputDriver.Keyboard,
                             IDeviceEnumerator.VirtualVendorID,
@@ -312,7 +312,7 @@ namespace Snowflake.Model.Tests
             var stoneProvider = new StoneProvider();
             foreach (var testmappings in stoneProvider.Controllers.Values)
             {
-                var mapcol = new ControllerElementMappingCollection("Keyboard",
+                var mapcol = new ControllerElementMappingProfile("default", "Keyboard",
                            "TEST_CONTROLLER",
                            InputDriver.Keyboard,
                            IDeviceEnumerator.VirtualVendorID,
@@ -342,7 +342,7 @@ namespace Snowflake.Model.Tests
             var stoneProvider = new StoneProvider();
             foreach (var testmappings in stoneProvider.Controllers.Values)
             {
-                var mapcol = new ControllerElementMappingCollection("Keyboard",
+                var mapcol = new ControllerElementMappingProfile("default", "Keyboard",
                            "TEST_CONTROLLER",
                            InputDriver.Keyboard,
                            IDeviceEnumerator.VirtualVendorID,
@@ -371,7 +371,7 @@ namespace Snowflake.Model.Tests
         {
             var stone = new StoneProvider();
             var nes = stone.Controllers["NES_CONTROLLER"];
-            var mapcol = new ControllerElementMappingCollection("Keyboard",
+            var mapcol = new ControllerElementMappingProfile("default", "Keyboard",
                 nes,
                            InputDriver.Keyboard,
                            IDeviceEnumerator.VirtualVendorID,

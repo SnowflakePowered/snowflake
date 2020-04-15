@@ -48,7 +48,7 @@ namespace Snowflake.Support.StoneProvider.JsonConverters
                         string controllerId = reader.GetString();
                         reader.Read(); // StartObject
                         var parsedController = ControllerLayoutConverter.Read(ref reader, typeof(ControllerLayout), options);
-                        if (parsedController.LayoutID != controllerId) throw new JsonException("Failed to match parsed controller ID");
+                        if (parsedController.ControllerID != controllerId) throw new JsonException("Failed to match parsed controller ID");
                         controllers.Add(controllerId, parsedController);
                         reader.Read(); // EndObject
                     }

@@ -28,7 +28,7 @@ namespace Snowflake.Configuration.Serialization
         [Fact]
         public void InputTemplateToAbstractConfigurationNodeIniSerializer_Test()
         {
-            var mapcol = new ControllerElementMappingCollection("Keyboard",
+            var mapcol = new ControllerElementMappingProfile("default", "Keyboard",
                             "TEST_CONTROLLER",
                             InputDriver.Keyboard,
                             IDeviceEnumerator.VirtualVendorID,
@@ -57,7 +57,7 @@ namespace Snowflake.Configuration.Serialization
         [Fact]
         public void InputTemplateToAbstractConfigurationNodeCfgSerializer_Test()
         {
-            var mapcol = new ControllerElementMappingCollection("Keyboard",
+            var mapcol = new ControllerElementMappingProfile("default", "Keyboard",
                            "TEST_CONTROLLER",
                            InputDriver.Keyboard,
                            IDeviceEnumerator.VirtualVendorID,
@@ -86,7 +86,7 @@ namespace Snowflake.Configuration.Serialization
         [Fact]
         public void InputTemplateToAbstractConfigurationNodeXmlSerializer_Test()
         {
-            var mapcol = new ControllerElementMappingCollection("Keyboard",
+            var mapcol = new ControllerElementMappingProfile("default", "Keyboard",
                            "TEST_CONTROLLER",
                            InputDriver.Keyboard,
                            IDeviceEnumerator.VirtualVendorID,
@@ -115,7 +115,7 @@ namespace Snowflake.Configuration.Serialization
         [Fact]
         public void InputTemplateToAbstractConfigurationNodeJsonSerializer_Test()
         {
-            var mapcol = new ControllerElementMappingCollection("Keyboard",
+            var mapcol = new ControllerElementMappingProfile("default", "Keyboard",
                           "TEST_CONTROLLER",
                           InputDriver.Keyboard,
                           IDeviceEnumerator.VirtualVendorID,

@@ -10,7 +10,7 @@ using Snowflake.Model.Database.Models;
 
 namespace Snowflake.Model.Database
 {
-    internal partial class ControllerElementMappingsStore : IControllerElementMappingsStore
+    internal partial class ControllerElementMappingsStore : IControllerElementMappingProfileStore
     {
         private DbContextOptionsBuilder<DatabaseContext> Options { get; set; }
 
@@ -22,7 +22,7 @@ namespace Snowflake.Model.Database
         }
 
         #region Synchronous API
-        public void AddMappings(IControllerElementMappingCollection mappings, string profileName)
+        public void AddMappings(IControllerElementMappingProfile mappings, string profileName)
         {
             using var context = new DatabaseContext(this.Options.Options);
             // todo: check already exists
@@ -30,7 +30,7 @@ namespace Snowflake.Model.Database
             context.SaveChanges();
         }
 
-        public IControllerElementMappingCollection? GetMappings(ControllerId controllerId,
+        public IControllerElementMappingProfile? GetMappings(ControllerId controllerId,
             InputDriver driver,
             string deviceName,
             int vendorId,
@@ -48,7 +48,7 @@ namespace Snowflake.Model.Database
             return mappings?.AsControllerElementMappings();
         }
 
-        public IQueryable<IControllerElementMappingCollection> GetMappings(ControllerId controllerId,
+        public IQueryable<IControllerElementMappingProfile> GetMappings(ControllerId controllerId,
             string deviceName, int vendorId)
         {
             var context = new DatabaseContext(this.Options.Options);
@@ -79,7 +79,7 @@ namespace Snowflake.Model.Database
             context.SaveChanges();
         }
 
-        public void UpdateMappings(IControllerElementMappingCollection mappings, string profileName)
+        public void UpdateMappings(IControllerElementMappingProfile mappings, string profileName)
         {
             using var context = new DatabaseContext(this.Options.Options);
             var retrievedMappings = context.ControllerElementMappings
