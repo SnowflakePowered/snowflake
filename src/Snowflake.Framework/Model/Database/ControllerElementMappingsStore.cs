@@ -22,7 +22,7 @@ namespace Snowflake.Model.Database
         }
 
         #region Synchronous API
-        public void AddMappings(IControllerElementMappings mappings, string profileName)
+        public void AddMappings(IControllerElementMappingCollection mappings, string profileName)
         {
             using var context = new DatabaseContext(this.Options.Options);
             // todo: check already exists
@@ -30,7 +30,7 @@ namespace Snowflake.Model.Database
             context.SaveChanges();
         }
 
-        public IControllerElementMappings? GetMappings(ControllerId controllerId,
+        public IControllerElementMappingCollection? GetMappings(ControllerId controllerId,
             InputDriver driver,
             string deviceName,
             int vendorId,
@@ -48,7 +48,7 @@ namespace Snowflake.Model.Database
             return mappings?.AsControllerElementMappings();
         }
 
-        public IQueryable<IControllerElementMappings> GetMappings(ControllerId controllerId,
+        public IQueryable<IControllerElementMappingCollection> GetMappings(ControllerId controllerId,
             string deviceName, int vendorId)
         {
             var context = new DatabaseContext(this.Options.Options);
@@ -79,7 +79,7 @@ namespace Snowflake.Model.Database
             context.SaveChanges();
         }
 
-        public void UpdateMappings(IControllerElementMappings mappings, string profileName)
+        public void UpdateMappings(IControllerElementMappingCollection mappings, string profileName)
         {
             using var context = new DatabaseContext(this.Options.Options);
             var retrievedMappings = context.ControllerElementMappings

@@ -10,7 +10,7 @@ namespace Snowflake.Input.Controller.Mapped
     /// <summary>
     /// Represents a real device controller element mapped onto a virtual device element
     /// </summary>
-    public struct MappedControllerElement
+    public struct ControllerElementMapping
     {
         /// <summary>
         /// Gets the virtual element.
@@ -27,7 +27,7 @@ namespace Snowflake.Input.Controller.Mapped
         /// </summary>
         /// <param name="virtualElement">The virtual controller element to map to.</param>
         /// <param name="deviceElement">The real device capability.</param>
-        public MappedControllerElement(ControllerElement virtualElement, DeviceCapability deviceElement)
+        public ControllerElementMapping(ControllerElement virtualElement, DeviceCapability deviceElement)
         {
             this.LayoutElement = virtualElement;
             this.DeviceCapability = deviceElement;
@@ -37,7 +37,7 @@ namespace Snowflake.Input.Controller.Mapped
         /// Create a new mapping between a virtual controller element and device capability from a key value pair
         /// </summary>
         /// <param name="kvp">The key value pair to convert</param>
-        public MappedControllerElement(KeyValuePair<ControllerElement, DeviceCapability> kvp)
+        public ControllerElementMapping(KeyValuePair<ControllerElement, DeviceCapability> kvp)
         {
             this.LayoutElement = kvp.Key;
             this.DeviceCapability = kvp.Value;
@@ -48,9 +48,9 @@ namespace Snowflake.Input.Controller.Mapped
         /// of the proper type.
         /// </summary>
         /// <param name="kvp">The key value pair</param>
-        public static explicit operator MappedControllerElement(KeyValuePair<ControllerElement, DeviceCapability> kvp)
+        public static explicit operator ControllerElementMapping(KeyValuePair<ControllerElement, DeviceCapability> kvp)
         {
-            return new MappedControllerElement(kvp);
+            return new ControllerElementMapping(kvp);
         }
     }
 }

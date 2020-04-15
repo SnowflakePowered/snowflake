@@ -28,9 +28,9 @@ namespace Snowflake.Input.Device
 
         IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
-        public IEnumerator<MappedControllerElement> GetEnumerator()
+        public IEnumerator<ControllerElementMapping> GetEnumerator()
         {
-            return this.Mapping.Select(o => (MappedControllerElement)o).GetEnumerator();
+            return this.Mapping.Select(o => (ControllerElementMapping)o).GetEnumerator();
         }
     }
 }

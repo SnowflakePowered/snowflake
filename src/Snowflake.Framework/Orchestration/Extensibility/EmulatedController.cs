@@ -13,7 +13,7 @@ namespace Snowflake.Orchestration.Extensibility
             IInputDevice physicalDevice,
             IInputDeviceInstance driverInstance,
             IControllerLayout targetLayout,
-            IControllerElementMappings layoutMapping)
+            IControllerElementMappingCollection layoutMapping)
         {
             this.PortIndex = portIndex;
             this.PhysicalDevice = physicalDevice;
@@ -28,7 +28,7 @@ namespace Snowflake.Orchestration.Extensibility
 
         public IControllerLayout TargetLayout { get; }
 
-        public IControllerElementMappings LayoutMapping { get; }
+        public IControllerElementMappingCollection LayoutMapping { get; }
 
         public IInputDeviceInstance PhysicalDeviceInstance { get; }
     }

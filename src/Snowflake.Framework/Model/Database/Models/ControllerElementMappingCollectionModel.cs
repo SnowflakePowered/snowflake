@@ -8,9 +8,9 @@ using Snowflake.Input.Device;
 #nullable disable
 namespace Snowflake.Model.Database.Models
 {
-    internal class ControllerElementMappingsModel
+    internal class ControllerElementMappingCollectionModel
     {
-        public List<MappedControllerElementModel> MappedElements { get; set; }
+        public List<ControllerElementMappingModel> MappedElements { get; set; }
 
         public ControllerId ControllerID { get; set; }
 
@@ -23,24 +23,24 @@ namespace Snowflake.Model.Database.Models
         public InputDriver DriverType { get; set; }
         internal static void SetupModel(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ControllerElementMappingsModel>()
+            modelBuilder.Entity<ControllerElementMappingCollectionModel>()
                 .Property(p => p.ControllerID)
                 .HasConversion(p => p.ToString(), s => s)
                 .IsRequired();
 
-            modelBuilder.Entity<ControllerElementMappingsModel>()
+            modelBuilder.Entity<ControllerElementMappingCollectionModel>()
                 .Property(p => p.DeviceName)
                 .IsRequired();
 
-            modelBuilder.Entity<ControllerElementMappingsModel>()
+            modelBuilder.Entity<ControllerElementMappingCollectionModel>()
                 .Property(p => p.VendorID)
                 .IsRequired();
 
-            modelBuilder.Entity<ControllerElementMappingsModel>()
+            modelBuilder.Entity<ControllerElementMappingCollectionModel>()
                .Property(p => p.DriverType)
                .IsRequired();
 
-            modelBuilder.Entity<ControllerElementMappingsModel>()
+            modelBuilder.Entity<ControllerElementMappingCollectionModel>()
                 .HasKey(p => new {p.ControllerID, p.DriverType, p.DeviceName, p.VendorID, p.ProfileName});
         }
     }

@@ -11,9 +11,9 @@ namespace Snowflake.Model.Database.Extensions
 {
     internal static class ControllerElementExtensions
     {
-        public static ControllerElementMappingsModel AsModel(this IControllerElementMappings @this, string profileName)
+        public static ControllerElementMappingCollectionModel AsModel(this IControllerElementMappingCollection @this, string profileName)
         {
-            return new ControllerElementMappingsModel
+            return new ControllerElementMappingCollectionModel
             {
                 ProfileName = profileName,
                 DriverType = @this.DriverType,
@@ -25,14 +25,14 @@ namespace Snowflake.Model.Database.Extensions
             };
         }
 
-        private static MappedControllerElementModel AsModel(this MappedControllerElement @this,
+        private static ControllerElementMappingModel AsModel(this ControllerElementMapping @this,
             ControllerId controllerId,
             string deviceName,
             string profileName,
             int vendorId,
             InputDriver driverType)
         {
-            return new MappedControllerElementModel
+            return new ControllerElementMappingModel
             {
                 LayoutElement = @this.LayoutElement,
                 DeviceCapability = @this.DeviceCapability,
@@ -44,15 +44,15 @@ namespace Snowflake.Model.Database.Extensions
             };
         }
 
-        public static IControllerElementMappings AsControllerElementMappings(this ControllerElementMappingsModel @this)
+        public static IControllerElementMappingCollection AsControllerElementMappings(this ControllerElementMappingCollectionModel @this)
         {
-            var mappings = new ControllerElementMappings(@this.DeviceName,
+            var mappings = new ControllerElementMappingCollection(@this.DeviceName,
                 @this.ControllerID,
                 @this.DriverType,
                 @this.VendorID);
             foreach (var mapping in @this.MappedElements)
             {
-                mappings.Add(new MappedControllerElement(mapping.LayoutElement, mapping.DeviceCapability));
+                mappings.Add(new ControllerElementMapping(mapping.LayoutElement, mapping.DeviceCapability));
             }
 
             return mappings;
