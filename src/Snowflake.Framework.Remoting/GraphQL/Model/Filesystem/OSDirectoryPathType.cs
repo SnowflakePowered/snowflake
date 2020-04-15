@@ -13,29 +13,25 @@ namespace Snowflake.Framework.Remoting.GraphQL.Model.Filesystem
     /// <summary>
     /// GraphQL Scalar Definition
     /// </summary>
-    public sealed class OSFilePathType
-    : ScalarType<FileInfo, StringValueNode>
+    public sealed class OSDirectoryPathType
+    : ScalarType<DirectoryInfo, StringValueNode>
     {
         /// <summary>
-        /// GraphQL Scalar Definition for a <see cref="UPath"/> pointing to a directory
+        /// GraphQL Scalar Definition for a <see cref="DirectoryInfo"/> represented as a path string.
         /// </summary>
-        public OSFilePathType()
-            : base("OSFilePath", BindingBehavior.Implicit)
+        public OSDirectoryPathType()
+            : base("OSDirectoryPath", BindingBehavior.Implicit)
         {
-            Description = "Represents a real, operating system dependent path that points to a file on the operating system.";
+            Description = "Represents a real, operating system dependent path that points to a directory on the operating system.";
         }
 
-        protected override FileInfo ParseLiteral(StringValueNode literal)
-        {
-            if (Path.EndsInDirectorySeparator(literal.Value))
-                throw new ArgumentException("File paths can not end in the directory separator character.");
-            
-            var filePath = new FileInfo(literal.Value);
-            
-            return filePath;
+        protected override DirectoryInfo ParseLiteral(StringValueNode literal)
+        { 
+            var dirPath = new DirectoryInfo(literal.Value);
+            return dirPath;
         }
 
-        protected override StringValueNode ParseValue(FileInfo value)
+        protected override StringValueNode ParseValue(DirectoryInfo value)
         {
             return new StringValueNode(null, value.FullName, false);
         }
@@ -45,7 +41,7 @@ namespace Snowflake.Framework.Remoting.GraphQL.Model.Filesystem
         // System.Float, System.Double, System.Decimal and System.Boolean
         public bool TrySerialize(object value, out object serialized)
         {
-            if (value is FileInfo p)
+            if (value is DirectoryInfo p)
             {
                 serialized = p.FullName;
                 return true;
@@ -62,9 +58,9 @@ namespace Snowflake.Framework.Remoting.GraphQL.Model.Filesystem
                 return true;
             }
 
-            if (serialized is string s && !Path.EndsInDirectorySeparator(s))
+            if (serialized is string s)
             {
-                value = new FileInfo(s);
+                value = new DirectoryInfo(s);
                 return true;
             }
 

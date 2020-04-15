@@ -96,5 +96,12 @@ namespace Snowflake.Services
             this.ObjectTypeExtensions.Add(typeof(T));
             return this;
         }
+
+        public IGraphQLSchemaRegistrationProvider AddInterfaceTypeExtension<T>() where T : InterfaceTypeExtension
+        {
+            this.Logger.Info($"Registered GraphQL Interface Type Extensions from {typeof(T).Name}.");
+            this.ObjectTypeExtensions.Add(typeof(T));
+            return this;
+        }
     }
 }

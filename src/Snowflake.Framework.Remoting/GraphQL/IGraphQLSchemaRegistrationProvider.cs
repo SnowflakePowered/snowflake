@@ -20,6 +20,8 @@ namespace Snowflake.Framework.Remoting.GraphQL
            : ObjectType;
         IGraphQLSchemaRegistrationProvider AddObjectTypeExtension<T>() where T
           : ObjectTypeExtension;
+        IGraphQLSchemaRegistrationProvider AddInterfaceTypeExtension<T>() where T
+         : InterfaceTypeExtension;
         IGraphQLSchemaRegistrationProvider AddScalarType<T>() where T
            : ScalarType;
         IGraphQLSchemaRegistrationProvider AddQuery<TQueryType, TQueryBuilder>(TQueryBuilder queryBuilderInstance) where TQueryType 

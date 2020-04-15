@@ -19,6 +19,7 @@ using Snowflake.Framework.Remoting.GraphQL.Model.Device;
 using Snowflake.Framework.Remoting.GraphQL.Model.Filesystem;
 using Snowflake.Framework.Remoting.GraphQL.Model.Filesystem.Contextual;
 using Snowflake.Framework.Remoting.GraphQL.Model.Game;
+using Snowflake.Framework.Remoting.GraphQL.Model.Installation;
 using Snowflake.Framework.Remoting.GraphQL.Model.Records;
 using Snowflake.Framework.Remoting.GraphQL.Model.Stone;
 using Snowflake.Framework.Remoting.GraphQL.Model.Stone.ControllerLayout;
@@ -100,6 +101,10 @@ namespace Snowflake.Services
                 .AddObjectType<OSDriveInfoType>()
                 .AddObjectType<OSDriveContentsType>()
                 ;
+
+            this.Schemas
+                .AddScalarType<OSTaggedFileSystemPathType>()
+                .AddObjectType<InstallableType>();
 
             // Device
             this.Schemas
