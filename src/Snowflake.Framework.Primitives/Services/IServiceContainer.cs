@@ -11,7 +11,7 @@ namespace Snowflake.Services
     /// services within it must be requested using <see cref="ImportServiceAttribute"/>, and
     /// new services can be registered using the <see cref="IServiceRegistrationProvider"/> service.
     /// </summary>
-    public interface IServiceContainer : IDisposable
+    internal interface IServiceContainer : IDisposable
     {
         /// <summary>
         /// Gets the directory to store appdata in this core service
