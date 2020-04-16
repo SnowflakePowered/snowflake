@@ -33,7 +33,8 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Devices.Mapped
                     var store = context.Service<IControllerElementMappingProfileStore>();
                     var controllerId = context.Argument<ControllerId>("controllerID");
                     return store.GetProfileNames(controllerId, deviceInstance.Driver, device.DeviceName, device.VendorID);
-                });
+                })
+                .Type<NonNullType<ListType<NonNullType<StringType>>>>();
 
             descriptor.Field("mapping")
                 .Description("Fetches a specific mapping profile for a specific device instance.")

@@ -70,7 +70,7 @@ namespace Snowflake.Support.StoreProviders
 
             // controller elements
 
-            var inputStore = new ControllerElementMappingsStore(optionsBuilder);
+            var inputStore = new ControllerElementMappingProfileStore(optionsBuilder);
             serviceContainer.Get<IServiceRegistrationProvider>()
                 .RegisterService<IControllerElementMappingProfileStore>(inputStore);
 

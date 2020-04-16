@@ -11,7 +11,7 @@ using Snowflake.Model.Database.Models;
 
 namespace Snowflake.Model.Database
 {
-    internal partial class ControllerElementMappingsStore : IControllerElementMappingProfileStore
+    internal partial class ControllerElementMappingProfileStore : IControllerElementMappingProfileStore
     {
         #region Asynchronous API
         public async Task AddMappingsAsync(IControllerElementMappingProfile mappings, string profileName)
@@ -38,19 +38,6 @@ namespace Snowflake.Model.Database
                                     && p.VendorID == vendorId
                                     && p.ProfileName == profileName);
             return mappings?.AsControllerElementMappings();
-        }
-
-        public IAsyncEnumerable<IControllerElementMappingProfile> GetMappingsAsync(ControllerId controllerId,
-            string deviceName, int vendorId)
-        {
-            var context = new DatabaseContext(this.Options.Options);
-            return context.ControllerElementMappings
-                 .Where(p => p.ControllerID == controllerId
-                         && p.DeviceName == deviceName
-                         && p.VendorID == vendorId)
-                .Include(p => p.MappedElements)
-                .Select(m => m.AsControllerElementMappings())
-                .AsAsyncEnumerable();
         }
 
         public async Task DeleteMappingsAsync(ControllerId controllerId, string deviceName, int vendorId)
