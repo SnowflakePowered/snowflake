@@ -91,6 +91,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Framework.Sdk", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Framework.Remoting.GraphQL", "Snowflake.Framework.Remoting.GraphQL\Snowflake.Framework.Remoting.GraphQL.csproj", "{A0CDF5B6-49EB-49D4-A394-B20E5A0A4F4A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Support.GraphQL.Server", "Snowflake.Support.GraphQL.Server\Snowflake.Support.GraphQL.Server.csproj", "{22986263-0BAD-4D78-9EE4-641F6534B050}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -483,6 +485,18 @@ Global
 		{A0CDF5B6-49EB-49D4-A394-B20E5A0A4F4A}.Release|x64.Build.0 = Release|Any CPU
 		{A0CDF5B6-49EB-49D4-A394-B20E5A0A4F4A}.Release|x86.ActiveCfg = Release|Any CPU
 		{A0CDF5B6-49EB-49D4-A394-B20E5A0A4F4A}.Release|x86.Build.0 = Release|Any CPU
+		{22986263-0BAD-4D78-9EE4-641F6534B050}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22986263-0BAD-4D78-9EE4-641F6534B050}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22986263-0BAD-4D78-9EE4-641F6534B050}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{22986263-0BAD-4D78-9EE4-641F6534B050}.Debug|x64.Build.0 = Debug|Any CPU
+		{22986263-0BAD-4D78-9EE4-641F6534B050}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{22986263-0BAD-4D78-9EE4-641F6534B050}.Debug|x86.Build.0 = Debug|Any CPU
+		{22986263-0BAD-4D78-9EE4-641F6534B050}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22986263-0BAD-4D78-9EE4-641F6534B050}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22986263-0BAD-4D78-9EE4-641F6534B050}.Release|x64.ActiveCfg = Release|Any CPU
+		{22986263-0BAD-4D78-9EE4-641F6534B050}.Release|x64.Build.0 = Release|Any CPU
+		{22986263-0BAD-4D78-9EE4-641F6534B050}.Release|x86.ActiveCfg = Release|Any CPU
+		{22986263-0BAD-4D78-9EE4-641F6534B050}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -524,6 +538,7 @@ Global
 		{DD94F85D-84A5-430F-96FE-55B8D702A2FE} = {FBD15674-246A-4C57-B865-07214D8BB9A1}
 		{C313F9B2-CD0A-4C07-B765-DD9F05B51516} = {FD0D8E05-2E14-4898-ACBC-665F0DDFF328}
 		{A0CDF5B6-49EB-49D4-A394-B20E5A0A4F4A} = {49B7A61F-B3BE-485E-84D0-B78C08656412}
+		{22986263-0BAD-4D78-9EE4-641F6534B050} = {FBD15674-246A-4C57-B865-07214D8BB9A1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {532F5D25-2D82-45B3-BF60-DDA40A0FB795}

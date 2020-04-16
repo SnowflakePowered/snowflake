@@ -18,7 +18,7 @@ using Zio.FileSystems;
 
 namespace Snowflake.Services
 {
-    internal class ServiceContainer : IServiceContainer, IServiceProvider
+    internal class ServiceContainer : IServiceContainer, IServiceProvider, IPrivilegedServiceContainerAccessor
     {
         #region Loaded Objects
 
@@ -39,16 +39,17 @@ namespace Snowflake.Services
             var directoryProvider = new ContentDirectoryProvider(this.AppDataDirectory);
             this.serviceContainer = new ConcurrentDictionary<Type, object>();
 
+            this.RegisterService<IPrivilegedServiceContainerAccessor>(this);
             this.RegisterService<ILogProvider>(new LogProvider());
             this.RegisterService<IModuleEnumerator>(new ModuleEnumerator(appDataDirectory));
             this.RegisterService<IKestrelWebServerService>(new KestrelServerService(appDataDirectory,
                 kestrelHostname,
                 this.Get<ILogProvider>().GetLogger("kestrel")));
 
-            this.RegisterService<IGraphQLSchemaRegistrationProvider>(new GraphQLSchemaRegistrationProvider(
-                this.Get<ILogProvider>().GetLogger("graphql")));
+            //this.RegisterService<IGraphQLSchemaRegistrationProvider>(new GraphQLSchemaRegistrationProvider(
+            //    this.Get<ILogProvider>().GetLogger("graphql")));
 
-            this.RegisterGraphQLRootSchema();
+            //this.RegisterGraphQLRootSchema();
             this.RegisterService<IContentDirectoryProvider>(directoryProvider);
             this.RegisterService<IServiceRegistrationProvider>(new ServiceRegistrationProvider(this));
             this.RegisterService<IServiceEnumerator>(new ServiceEnumerator(this));
@@ -65,12 +66,12 @@ namespace Snowflake.Services
             return container;
         }
 
-        private void RegisterGraphQLRootSchema()
-        {
-            var kestrel = this.Get<IKestrelWebServerService>();
-            kestrel.AddService(new HotChocolateKestrelIntegration(
-                (GraphQLSchemaRegistrationProvider)this.Get<IGraphQLSchemaRegistrationProvider>(), this));
-        }
+        //private void RegisterGraphQLRootSchema()
+        //{
+        //    var kestrel = this.Get<IKestrelWebServerService>();
+        //    kestrel.AddService(new HotChocolateKestrelIntegration(
+        //        (GraphQLSchemaRegistrationProvider)this.Get<IGraphQLSchemaRegistrationProvider>(), this));
+        //}
 
         /// <inheritdoc/>
         public void RegisterService<T>(T serviceObject)
@@ -139,5 +140,9 @@ namespace Snowflake.Services
         {
             return this.Get(serviceType);
         }
+
+        public IServiceContainer GetServiceContainer() => this;
+
+        public IServiceProvider GetServiceContainerAsServiceProvider() => this;
     }
 }
