@@ -5,6 +5,7 @@ using Snowflake.Loader;
 using Snowflake.Services;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Runtime
@@ -24,6 +25,10 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Runtime
                 .Description("Currently enumerated modules. These may or may not have been loaded.")
                 .Resolver(ctx => ctx.Service<IModuleEnumerator>().Modules)
                 .Type<NonNullType<ListType<NonNullType<ModuleType>>>>();
+            descriptor.Field("os")
+                .Description("Gets the operating system currently running.")
+                .Resolver(ctx => RuntimeInformation.OSDescription)
+                .Type<NonNullType<StringType>>();
         }
     }
 }
