@@ -32,50 +32,6 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
             this.StoneProvider = stoneProvider;
         }
 
-        [Connection("inputDevices", "Gets all connected input devices on this computer.",
-            typeof(InputDeviceGraphType))]
-        public IEnumerable<IInputDevice> GetInputDevices()
-        {
-            return this.DeviceEnumerator.QueryConnectedDevices();
-        }
-
-        [Query("controllerProfile", "Gets a controller profile for the given Stone controller and real device",
-            typeof(MappedControllerElementCollectionGraphType))]
-        [Parameter(typeof(string), typeof(StringGraphType), "deviceName", "The hardware device name of the device.")]
-        [Parameter(typeof(int), typeof(IntGraphType), "vendorId", "The vendor ID number of the device.")]
-        [Parameter(typeof(InputDriver), typeof(InputDriverEnum), "inputDriver", "The input driver of the instance for this controller profile.")]
-        [Parameter(typeof(string), typeof(StringGraphType), "controllerId", "The Stone Controller ID that this mapping represents.")]
-
-        [Parameter(typeof(string), typeof(StringGraphType), "profileName", "A profile name for the mapping.", nullable: true)]
-        public IControllerElementMappingProfile GetProfile(string deviceName, int vendorId, InputDriver inputDriver, string controllerId,
-            string profileName = "default")
-        {
-            return this.MappedElementStore.GetMappings(controllerId, inputDriver, deviceName, vendorId, profileName ?? "default");
-        }
-
-        [Connection("controllerProfiles", "Gets all a controller profiles for the given real device",
-            typeof(MappedControllerElementCollectionGraphType))]
-        [Parameter(typeof(string), typeof(StringGraphType), "deviceName", "The hardware device name of the device.")]
-        [Parameter(typeof(int), typeof(IntGraphType), "vendorId", "The vendor ID number of the device.")]
-        [Parameter(typeof(string), typeof(StringGraphType), "controllerId", "The Stone Controller ID that this mapping represents.")]
-        public IEnumerable<IControllerElementMappingProfile> GetProfiles(string deviceName, int vendorId, string controllerId)
-        {
-            return this.MappedElementStore.GetMappings(controllerId, deviceName, vendorId);
-        }
-
-        [Query("defaultLayout",
-            "Gets the default mapping between Stone controller IDs and the provided device.",
-            typeof(ListGraphType<MappedControllerElementGraphType>))]
-        [Parameter(typeof(Guid), typeof(GuidGraphType), "deviceInstanceGuid", "The device instance to get the layout for.")]
-        [Parameter(typeof(InputDriver), typeof(InputDriverEnum), "inputDriver", "The input driver of the instance for this controller profile.")]
-        public IEnumerable<ControllerElementMapping> GetDefaultProfile(Guid deviceInstanceGuid, InputDriver inputDriver)
-        {
-            var device = this.DeviceEnumerator.QueryConnectedDevices()
-                .FirstOrDefault(i => i.InstanceGuid == deviceInstanceGuid)?.Instances
-                .FirstOrDefault(i => i.Driver == inputDriver);
-            return device.DefaultLayout;
-        }
-
         [Mutation("createControllerProfile",
             "Creates the default controller profile for the given Stone controller and real device.",
             typeof(MappedControllerElementCollectionGraphType))]
