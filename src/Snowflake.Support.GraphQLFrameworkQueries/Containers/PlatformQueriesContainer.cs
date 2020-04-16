@@ -49,7 +49,6 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
             hotChocolate.AddObjectTypeExtension<DriveInfoInstallableQueries>();
 
             hotChocolate.AddObjectTypeExtension<InputDeviceInstanceMappingProfileQueries>();
-            hotChocolate.AddObjectTypeExtension<InputDeviceMappingProfilesQueries>();
 
             hotChocolate.AddObjectTypeExtension<SaveQueries>();
 

@@ -21,8 +21,22 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Devices.Mapped
                 .Description("The default controller layout mapping for this device.")
                 .Type<DeviceLayoutMappingType>();
 
+            descriptor.Field("mappingProfiles")
+                .Description("Fetches the mapping profile names for this device instance.")
+                .Argument("controllerID", arg =>
+                   arg.Type<NonNullType<ControllerIdType>>()
+                    .Description("The Stone controller ID to get compatible mappings for."))
+                .Resolver(context =>
+                {
+                    var deviceInstance = (IInputDeviceInstance)context.Source.Peek();
+                    var device = (IInputDevice)context.Source.Pop().Peek();
+                    var store = context.Service<IControllerElementMappingProfileStore>();
+                    var controllerId = context.Argument<ControllerId>("controllerID");
+                    return store.GetProfileNames(controllerId, deviceInstance.Driver, device.DeviceName, device.VendorID);
+                });
+
             descriptor.Field("mapping")
-                .Description("Fetches a specific profile for a specific device instance.")
+                .Description("Fetches a specific mapping profile for a specific device instance.")
                 .Argument("controllerID", arg => 
                    arg.Type<NonNullType<ControllerIdType>>()
                     .Description("The Stone controller ID to get compatible mappings for."))
