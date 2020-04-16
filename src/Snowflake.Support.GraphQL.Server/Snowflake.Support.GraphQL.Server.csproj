@@ -1,0 +1,22 @@
+<Project Sdk="Snowflake.Framework.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
+    <_SnowflakeUseDevelopmentSDK>true</_SnowflakeUseDevelopmentSDK>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <AdditionalFiles Include="..\stylecop.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="HotChocolate.AspNetCore" Version="11.0.0-preview.123" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Condition="$(_SnowflakeUseDevelopmentSDK)" Include="..\Snowflake.Framework.Remoting.GraphQL\Snowflake.Framework.Remoting.GraphQL.csproj" />
+  </ItemGroup>
+  <PropertyGroup>
+    <CodeAnalysisRuleSet>..\Snowflake.ruleset</CodeAnalysisRuleSet>
+    <NoWarn>1701;1702;1591;</NoWarn>
+  </PropertyGroup>
+</Project>

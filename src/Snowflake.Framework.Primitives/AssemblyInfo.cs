@@ -9,6 +9,8 @@ using System.Runtime.InteropServices;
 
 // Framework-hidden interface methods
 [assembly: InternalsVisibleTo("Snowflake.Framework")]
+[assembly: InternalsVisibleTo("Snowflake.Framework.Services")]
+[assembly: InternalsVisibleTo("Snowflake.Support.GraphQL.Server")]
 
 // Needed for mocking purposes
 [assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]

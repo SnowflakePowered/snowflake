@@ -9,7 +9,6 @@ using HotChocolate.AspNetCore.Subscriptions;
 using HotChocolate.Configuration;
 using HotChocolate.Execution;
 using HotChocolate.Execution.Configuration;
-using HotChocolate.Stitching;
 using HotChocolate.Types;
 using HotChocolate.Utilities;
 using Microsoft.AspNetCore.Builder;
@@ -36,14 +35,14 @@ namespace Snowflake.Services
 {
     internal class HotChocolateKestrelIntegration : IKestrelServerMiddlewareProvider
     {
-        public HotChocolateKestrelIntegration(GraphQLSchemaRegistrationProvider schemas, ServiceContainer serviceContainer)
+        public HotChocolateKestrelIntegration(GraphQLSchemaRegistrationProvider schemas, IServiceProvider serviceContainer)
         {
             this.Schemas = schemas;
-            ServiceContainer = serviceContainer;
+            this.ServiceContainer = serviceContainer;
         }
 
         public GraphQLSchemaRegistrationProvider Schemas { get; }
-        public ServiceContainer ServiceContainer { get; }
+        public IServiceProvider ServiceContainer { get; }
 
         public void Configure(IApplicationBuilder app)
         {
