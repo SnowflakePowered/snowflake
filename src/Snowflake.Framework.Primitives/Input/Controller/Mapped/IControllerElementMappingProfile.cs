@@ -14,12 +14,7 @@ namespace Snowflake.Input.Controller.Mapped
     public interface IControllerElementMappingProfile : IEnumerable<ControllerElementMapping>
     {
         /// <summary>
-        /// The name of the profile, if any.
-        /// </summary>
-        string ProfileName { get; }
-
-        /// <summary>
-        /// The driver instance for which this profile is valid.
+        /// Gets the device id of the real device
         /// </summary>
         InputDriver DriverType { get; }
 
@@ -34,7 +29,7 @@ namespace Snowflake.Input.Controller.Mapped
         int VendorID { get; }
 
         /// <summary>
-        /// Gets the layout ID of the virtual controller layout
+        /// Gets the controller id of the virtual controller layout
         /// </summary>
         ControllerId ControllerID { get; }
 

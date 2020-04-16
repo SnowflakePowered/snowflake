@@ -120,6 +120,18 @@ namespace Snowflake.Model.Database
 
             context.SaveChanges();
         }
+
+        public IQueryable<string> GetProfileNames(ControllerId controllerId, InputDriver driverType, string deviceName, int vendorId)
+        {
+            using var context = new DatabaseContext(this.Options.Options);
+            var retrievedMappings = context.ControllerElementMappings
+                .Where(p => p.ControllerID == controllerId
+                                    && p.DriverType == driverType
+                                    && p.DeviceName == deviceName
+                                    && p.VendorID == vendorId)
+                .Select(p => p.ProfileName);
+            return retrievedMappings;
+        }
         #endregion
     }
 }

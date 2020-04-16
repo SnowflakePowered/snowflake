@@ -44,12 +44,7 @@ namespace Snowflake.Services
             this.RegisterService<IModuleEnumerator>(new ModuleEnumerator(appDataDirectory));
             this.RegisterService<IKestrelWebServerService>(new KestrelServerService(appDataDirectory,
                 kestrelHostname,
-                this.Get<ILogProvider>().GetLogger("kestrel")));
-
-            //this.RegisterService<IGraphQLSchemaRegistrationProvider>(new GraphQLSchemaRegistrationProvider(
-            //    this.Get<ILogProvider>().GetLogger("graphql")));
-
-            //this.RegisterGraphQLRootSchema();
+                this.Get<ILogProvider>().GetLogger("KestrelServer")));
             this.RegisterService<IContentDirectoryProvider>(directoryProvider);
             this.RegisterService<IServiceRegistrationProvider>(new ServiceRegistrationProvider(this));
             this.RegisterService<IServiceEnumerator>(new ServiceEnumerator(this));
@@ -65,13 +60,6 @@ namespace Snowflake.Services
             }
             return container;
         }
-
-        //private void RegisterGraphQLRootSchema()
-        //{
-        //    var kestrel = this.Get<IKestrelWebServerService>();
-        //    kestrel.AddService(new HotChocolateKestrelIntegration(
-        //        (GraphQLSchemaRegistrationProvider)this.Get<IGraphQLSchemaRegistrationProvider>(), this));
-        //}
 
         /// <inheritdoc/>
         public void RegisterService<T>(T serviceObject)

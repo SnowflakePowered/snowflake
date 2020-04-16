@@ -20,7 +20,7 @@ namespace Snowflake.Configuration.Tests
         [Fact]
         public void Setter_Test()
         {
-            var mapcol = new ControllerElementMappingProfile("default", "Keyboard",
+            var mapcol = new ControllerElementMappingProfile("Keyboard",
                 "TEST_CONTROLLER",
                 InputDriver.Keyboard,
                 IDeviceEnumerator.VirtualVendorID,
@@ -34,7 +34,7 @@ namespace Snowflake.Configuration.Tests
         [Fact]
         public void NestedSetter_Test()
         {
-            var mapcol = new ControllerElementMappingProfile("default", "Keyboard",
+            var mapcol = new ControllerElementMappingProfile("Keyboard",
                "TEST_CONTROLLER",
                InputDriver.Keyboard,
                IDeviceEnumerator.VirtualVendorID,
@@ -47,7 +47,7 @@ namespace Snowflake.Configuration.Tests
         [Fact]
         public void SuperNestedSetter_Test()
         {
-            var mapcol = new ControllerElementMappingProfile("default", "Keyboard",
+            var mapcol = new ControllerElementMappingProfile("Keyboard",
                "TEST_CONTROLLER",
                InputDriver.Keyboard,
                IDeviceEnumerator.VirtualVendorID,

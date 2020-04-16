@@ -47,7 +47,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
             if (instance == null) return null;
             if (!this.StoneProvider.Controllers.TryGetValue(input.ControllerId, out var controllerLayout)) return null;
 
-            var defaults = new ControllerElementMappingProfile(input.ProfileName, device!.DeviceName, controllerLayout,
+            var defaults = new ControllerElementMappingProfile(device!.DeviceName, controllerLayout,
                 input.InputDriver, device.VendorID, instance.DefaultLayout);
             this.MappedElementStore.AddMappings(defaults, input.ProfileName);
             return this.MappedElementStore.GetMappings(input.ControllerId, instance.Driver,
