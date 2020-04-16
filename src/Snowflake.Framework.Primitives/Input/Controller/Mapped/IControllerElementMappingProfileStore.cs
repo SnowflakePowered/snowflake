@@ -7,7 +7,7 @@ using Snowflake.Input.Device;
 namespace Snowflake.Input.Controller.Mapped
 {
     /// <summary>
-    /// Provides a store for <see cref="IControllerElementMappingCollection"/>.
+    /// Provides a store for <see cref="IControllerElementMappingProfile"/>.
     /// </summary>
     public interface IControllerElementMappingProfileStore
     {
@@ -16,7 +16,7 @@ namespace Snowflake.Input.Controller.Mapped
         /// across mappings between different spec controllers and real devices, but must be unique
         /// for the same controller ID and device ID.
         /// </summary>
-        /// <param name="mappings">The <see cref="IControllerElementMappingCollection"/> to store.</param>
+        /// <param name="mappings">The <see cref="IControllerElementMappingProfile"/> to store.</param>
         /// <param name="profileName">The profile name to store the mappings under.</param>
         void AddMappings(IControllerElementMappingProfile mappings, string profileName);
 
@@ -25,7 +25,7 @@ namespace Snowflake.Input.Controller.Mapped
         /// across mappings between different spec controllers and real devices, but must be unique
         /// for the same controller ID and device ID.
         /// </summary>
-        /// <param name="mappings">The <see cref="IControllerElementMappingCollection"/> to store.</param>
+        /// <param name="mappings">The <see cref="IControllerElementMappingProfile"/> to store.</param>
         /// <param name="profileName">The profile name to store the mappings under.</param>
         Task AddMappingsAsync(IControllerElementMappingProfile mappings, string profileName);
 
@@ -112,14 +112,14 @@ namespace Snowflake.Input.Controller.Mapped
         /// <summary>
         /// Updates the specific mapping profile with the given profile name.
         /// </summary>
-        /// <param name="mappings">The <see cref="IControllerElementMappingCollection"/> to store.</param>
+        /// <param name="mappings">The <see cref="IControllerElementMappingProfile"/> to store.</param>
         /// <param name="profileName">The profile name to store the mappings under.</param>
         void UpdateMappings(IControllerElementMappingProfile mappings, string profileName);
 
         /// <summary>
         /// Asynchronously updates the specific mapping profile with the given profile name.
         /// </summary>
-        /// <param name="mappings">The <see cref="IControllerElementMappingCollection"/> to store.</param>
+        /// <param name="mappings">The <see cref="IControllerElementMappingProfile"/> to store.</param>
         /// <param name="profileName">The profile name to store the mappings under.</param>
         Task UpdateMappingsAsync(IControllerElementMappingProfile mappings, string profileName);
     }

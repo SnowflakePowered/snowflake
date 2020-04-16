@@ -157,7 +157,7 @@ namespace Snowflake.Configuration.Tests
         [Fact]
         public void InputTemplateGetterSetter_Test()
         {
-            var mapcol = new ControllerElementMappingProfile("default", "Keyboard",
+            var mapcol = new ControllerElementMappingProfile("Keyboard",
                            "TEST_CONTROLLER",
                            InputDriver.Keyboard,
                            IDeviceEnumerator.VirtualVendorID,

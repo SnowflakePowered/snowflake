@@ -46,9 +46,7 @@ namespace Snowflake.Model.Database.Extensions
 
         public static IControllerElementMappingProfile AsControllerElementMappings(this ControllerElementMappingCollectionModel @this)
         {
-            var mappings = new ControllerElementMappingProfile(
-                @this.ProfileName,
-                @this.DeviceName,
+            var mappings = new ControllerElementMappingProfile(@this.DeviceName,
                 @this.ControllerID,
                 @this.DriverType,
                 @this.VendorID);
