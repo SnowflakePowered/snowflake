@@ -26,7 +26,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="System.Reactive" Version="4.3.2" />
-    <PackageReference Include="VCDiff" Version="3.2.5" />
+    <PackageReference Include="VCDiff" Version="3.2.6" />
     <PackageReference Include="Zio" Version="0.7.6" />
   </ItemGroup>
 

@@ -13,11 +13,6 @@ using System.Collections.Generic;
 
 namespace Snowflake.Services
 {
-    public class Query
-    {
-
-    }
-
     internal class GraphQLSchemaRegistrationProvider : IGraphQLSchemaRegistrationProvider
     {
         public GraphQLSchemaRegistrationProvider(ILogger logger)

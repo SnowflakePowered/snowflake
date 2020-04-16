@@ -13,7 +13,6 @@ using HotChocolate.Stitching;
 using HotChocolate.Types;
 using HotChocolate.Utilities;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.WebSockets;
 using Microsoft.Extensions.DependencyInjection;
 using Snowflake.Framework.Remoting.GraphQL.Model.Device;
 using Snowflake.Framework.Remoting.GraphQL.Model.Device.Mapped;
@@ -48,7 +47,6 @@ namespace Snowflake.Services
 
         public void Configure(IApplicationBuilder app)
         {
-            app.UseWebSockets();
             app.UseGraphQL("/hotchocolate");
         }
 

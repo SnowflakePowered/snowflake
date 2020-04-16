@@ -1,5 +1,4 @@
-﻿using GraphQL.Types;
-using HotChocolate.Types;
+﻿using HotChocolate.Types;
 using Snowflake.Filesystem;
 using System;
 using System.Collections.Generic;

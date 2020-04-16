@@ -1,4 +1,5 @@
-﻿<Project Sdk="Snowflake.Framework.Dependencies.Sdk/2.0.0">
+<Project Sdk="Snowflake.Framework.Dependencies.Sdk/2.0.0">
+
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -7,9 +8,10 @@
     <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
 
+
   <ItemGroup>
-    <PackageReference Include="GraphQL" Version="3.0.0-preview-1521" />
-    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="HotChocolate" Version="11.0.0-preview.123" />
+    <PackageReference Include="HotChocolate.Types.Filters" Version="11.0.0-preview.123" />
   </ItemGroup>
 
   <ItemGroup>

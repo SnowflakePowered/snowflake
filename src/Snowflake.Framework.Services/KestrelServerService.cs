@@ -10,8 +10,8 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Concurrent;
 using System.IO;
 using Snowflake.Extensibility;
-using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.AspNetCore.WebSockets;
 
 namespace Snowflake.Framework.Remoting.Kestrel
 {
@@ -75,7 +75,8 @@ namespace Snowflake.Framework.Remoting.Kestrel
         {
             app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             app.UseResponseCompression();
-
+            app.UseWebSockets();
+            
             foreach (var provider in this.Providers.Values)
             {
                 provider.Configure(app);
