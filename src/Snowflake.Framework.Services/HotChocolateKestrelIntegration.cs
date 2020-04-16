@@ -22,6 +22,7 @@ using Snowflake.Framework.Remoting.GraphQL.Model.Filesystem.Contextual;
 using Snowflake.Framework.Remoting.GraphQL.Model.Game;
 using Snowflake.Framework.Remoting.GraphQL.Model.Installation;
 using Snowflake.Framework.Remoting.GraphQL.Model.Records;
+using Snowflake.Framework.Remoting.GraphQL.Model.Saving;
 using Snowflake.Framework.Remoting.GraphQL.Model.Stone;
 using Snowflake.Framework.Remoting.GraphQL.Model.Stone.ControllerLayout;
 using Snowflake.Framework.Remoting.GraphQL.Model.Stone.PlatformInfo;
@@ -121,6 +122,12 @@ namespace Snowflake.Services
                 .AddObjectType<ControllerElementMappingType>()
                 .AddObjectType<ControllerElementMappingProfileType>()
                 ;
+
+            this.Schemas
+               .AddEnumType<SaveManagementStrategyEnum>()
+               .AddObjectType<SaveGameType>()
+               .AddObjectType<SaveProfileType>()
+               ;
 
             services.AddDataLoaderRegistry();
             services.AddGraphQLSubscriptions();
