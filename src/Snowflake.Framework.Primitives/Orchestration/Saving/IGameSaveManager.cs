@@ -13,9 +13,9 @@ namespace Snowflake.Orchestration.Saving
         /// <summary>
         /// Gets the profile specified by the GUID, or null otherwise.
         /// </summary>
-        /// <param name="guid">The unique profile GUID.</param>
+        /// <param name="profileId">The unique profile GUID.</param>
         /// <returns>The save profile if it exists, null if it does not.</returns>
-        ISaveProfile? GetProfile(Guid guid);
+        ISaveProfile? GetProfile(Guid profileId);
 
         /// <summary>
         /// Gets all save profiles for this game.
