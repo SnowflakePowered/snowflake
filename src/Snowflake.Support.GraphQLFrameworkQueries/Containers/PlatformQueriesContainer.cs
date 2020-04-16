@@ -50,6 +50,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
 
             hotChocolate.AddObjectTypeExtension<InputDeviceInstanceMappingProfileQueries>();
             hotChocolate.AddObjectTypeExtension<InputDeviceMappingProfilesQueries>();
+            hotChocolate.AddObjectTypeExtension<ControllerElementMappingProfileNodeQueries>();
 
             hotChocolate.AddObjectTypeExtension<SaveQueries>();
 

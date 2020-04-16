@@ -90,24 +90,24 @@ namespace Snowflake.Input.Controller.Mapped
         /// </summary>
         /// <param name="controllerId">The Stone controller ID that maps to the real device.</param>
         /// <param name="driverType">The driver for which the mapping is for.</param>
-        /// <param name="deviceId">The device ID that maps from the spec controller.</param>
+        /// <param name="deviceName">The device ID that maps from the spec controller.</param>
         /// <param name="vendorId">The vendor ID of the device.</param>
         /// <param name="profileName">The name of the mapping profile.</param>
         /// <returns>The saved mapping profile from the provided controller ID to device ID.</returns>
         IControllerElementMappingProfile? GetMappings(ControllerId controllerId, InputDriver driverType, 
-            string deviceId, int vendorId, string profileName);
+            string deviceName, int vendorId, string profileName);
 
         /// <summary>
         /// Asynchronously gets the saved mapping profile from the provided controller ID to device ID.
         /// </summary>
         /// <param name="controllerId">The Stone controller ID that maps to the real device.</param>
         /// <param name="driverType">The driver for which the mapping is for.</param>
-        /// <param name="deviceId">The device ID that maps from the spec controller.</param>
+        /// <param name="deviceName">The device ID that maps from the spec controller.</param>
         /// <param name="vendorId">The vendor ID of the device.</param>
         /// <param name="profileName">The name of the mapping profile.</param>
         /// <returns>The saved mapping profile from the provided controller ID to device ID.</returns>
         Task<IControllerElementMappingProfile?> GetMappingsAsync(ControllerId controllerId, InputDriver driverType,
-            string deviceId, int vendorId, string profileName);
+            string deviceName, int vendorId, string profileName);
 
         /// <summary>
         /// Updates the specific mapping profile with the given profile name.
