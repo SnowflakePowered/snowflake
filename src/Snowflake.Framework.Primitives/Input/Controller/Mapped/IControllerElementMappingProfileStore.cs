@@ -68,6 +68,16 @@ namespace Snowflake.Input.Controller.Mapped
             string deviceName, int vendorId, string profileName);
 
         /// <summary>
+        /// Gets the profile names of all saved mappings from the provided controller ID to device ID.
+        /// </summary>
+        /// <param name="controllerId">The Stone controller ID that maps to the real device.</param>
+        /// <param name="driverType">The driver for which the mapping is for.</param>
+        /// <param name="deviceName">The device ID that maps from the spec controller.</param>
+        /// <param name="vendorId">The vendor ID of the device.</param>
+        /// <returns>All saved mappings from the provided controller ID to device ID.</returns>
+        IQueryable<string> GetProfileNames(ControllerId controllerId, InputDriver driverType, string deviceName, int vendorId);
+
+        /// <summary>
         /// Gets all saved mappings from the provided controller ID to device ID.
         /// </summary>
         /// <param name="controllerId">The Stone controller ID that maps to the real device.</param>
