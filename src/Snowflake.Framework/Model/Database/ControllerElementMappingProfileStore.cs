@@ -10,11 +10,11 @@ using Snowflake.Model.Database.Models;
 
 namespace Snowflake.Model.Database
 {
-    internal partial class ControllerElementMappingsStore : IControllerElementMappingProfileStore
+    internal partial class ControllerElementMappingProfileStore : IControllerElementMappingProfileStore
     {
         private DbContextOptionsBuilder<DatabaseContext> Options { get; set; }
 
-        public ControllerElementMappingsStore(DbContextOptionsBuilder<DatabaseContext> options)
+        public ControllerElementMappingProfileStore(DbContextOptionsBuilder<DatabaseContext> options)
         {
             this.Options = options;
             using var context = new DatabaseContext(this.Options.Options);
@@ -46,20 +46,6 @@ namespace Snowflake.Model.Database
                                     && p.VendorID == vendorId
                                     && p.ProfileName == profileName);
             return mappings?.AsControllerElementMappings();
-        }
-
-        public IEnumerable<IControllerElementMappingProfile> GetMappings(ControllerId controllerId,
-            string deviceName, int vendorId)
-        {
-            var context = new DatabaseContext(this.Options.Options);
-            var mappings = context.ControllerElementMappings
-                 .Where(p => p.ControllerID == controllerId
-                         && p.DeviceName == deviceName
-                         && p.VendorID == vendorId)
-                .Include(p => p.MappedElements)
-                .AsEnumerable()
-                .Select(m => m.AsControllerElementMappings());
-            return mappings;
         }
 
         public void DeleteMappings(ControllerId controllerId, string deviceName, int vendorId)
@@ -121,7 +107,7 @@ namespace Snowflake.Model.Database
             context.SaveChanges();
         }
 
-        public IQueryable<string> GetProfileNames(ControllerId controllerId, InputDriver driverType, string deviceName, int vendorId)
+        public IEnumerable<string> GetProfileNames(ControllerId controllerId, InputDriver driverType, string deviceName, int vendorId)
         {
             using var context = new DatabaseContext(this.Options.Options);
             var retrievedMappings = context.ControllerElementMappings
@@ -129,7 +115,8 @@ namespace Snowflake.Model.Database
                                     && p.DriverType == driverType
                                     && p.DeviceName == deviceName
                                     && p.VendorID == vendorId)
-                .Select(p => p.ProfileName);
+                .Select(p => p.ProfileName)
+                .ToList();
             return retrievedMappings;
         }
         #endregion

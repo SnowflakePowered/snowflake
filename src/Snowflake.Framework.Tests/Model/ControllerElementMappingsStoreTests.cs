@@ -30,7 +30,7 @@ namespace Snowflake.Model.Tests
 
             var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
             optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
-            var elementStore = new ControllerElementMappingsStore(optionsBuilder);
+            var elementStore = new ControllerElementMappingProfileStore(optionsBuilder);
 
             elementStore.AddMappings(mapcol, "default");
         }
@@ -50,7 +50,7 @@ namespace Snowflake.Model.Tests
                 var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
                 optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
 
-                var elementStore = new ControllerElementMappingsStore(optionsBuilder);
+                var elementStore = new ControllerElementMappingProfileStore(optionsBuilder);
 
                 elementStore.AddMappings(mapcol, "default");
 
@@ -85,7 +85,7 @@ namespace Snowflake.Model.Tests
                 var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
                 optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
 
-                var elementStore = new ControllerElementMappingsStore(optionsBuilder);
+                var elementStore = new ControllerElementMappingProfileStore(optionsBuilder);
 
                await elementStore.AddMappingsAsync(mapcol, "default");
 
@@ -119,7 +119,7 @@ namespace Snowflake.Model.Tests
                 var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
                 optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
 
-                var elementStore = new ControllerElementMappingsStore(optionsBuilder);
+                var elementStore = new ControllerElementMappingProfileStore(optionsBuilder);
 
                 elementStore.AddMappings(mapcol, "default");
 
@@ -161,7 +161,7 @@ namespace Snowflake.Model.Tests
                 var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
                 optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
 
-                var elementStore = new ControllerElementMappingsStore(optionsBuilder);
+                var elementStore = new ControllerElementMappingProfileStore(optionsBuilder);
 
                 await elementStore.AddMappingsAsync(mapcol, "default");
 
@@ -201,7 +201,7 @@ namespace Snowflake.Model.Tests
 
                 var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
                 optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
-                var elementStore = new ControllerElementMappingsStore(optionsBuilder);
+                var elementStore = new ControllerElementMappingProfileStore(optionsBuilder);
 
                 elementStore.AddMappings(mapcol, "default");
 
@@ -231,7 +231,7 @@ namespace Snowflake.Model.Tests
 
                 var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
                 optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
-                var elementStore = new ControllerElementMappingsStore(optionsBuilder);
+                var elementStore = new ControllerElementMappingProfileStore(optionsBuilder);
 
                 await elementStore.AddMappingsAsync(mapcol, "default");
 
@@ -260,49 +260,21 @@ namespace Snowflake.Model.Tests
 
                 var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
                 optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
-                var elementStore = new ControllerElementMappingsStore(optionsBuilder);
+                var elementStore = new ControllerElementMappingProfileStore(optionsBuilder);
 
                 elementStore.AddMappings(mapcol, "default");
                 elementStore.AddMappings(mapcol, "default2");
 
-                Assert.Equal(2, elementStore.GetMappings(mapcol.ControllerID, mapcol.DeviceName,
+                Assert.Equal(2, elementStore.GetProfileNames(mapcol.ControllerID, InputDriver.Keyboard, mapcol.DeviceName,
                     IDeviceEnumerator.VirtualVendorID)
                     .Count());
                 elementStore.DeleteMappings(mapcol.ControllerID, InputDriver.Keyboard, mapcol.DeviceName, 
                     IDeviceEnumerator.VirtualVendorID, "default");
-                Assert.Single(elementStore.GetMappings(mapcol.ControllerID, mapcol.DeviceName, mapcol.VendorID));
+                Assert.Single(elementStore.GetProfileNames(mapcol.ControllerID, InputDriver.Keyboard, mapcol.DeviceName,
+                    IDeviceEnumerator.VirtualVendorID));
                 elementStore.DeleteMappings(mapcol.ControllerID, mapcol.DeviceName, IDeviceEnumerator.VirtualVendorID);
-                Assert.Empty(elementStore.GetMappings(mapcol.ControllerID, mapcol.DeviceName, mapcol.VendorID));
-            }
-        }
-
-        [Fact]
-        public async Task GetMultipleMappingsAsync_Test()
-        {
-            var stoneProvider = new StoneProvider();
-            foreach (var testmappings in stoneProvider.Controllers.Values)
-            {
-                var mapcol = new ControllerElementMappingProfile("Keyboard",
-                            "TEST_CONTROLLER",
-                            InputDriver.Keyboard,
-                            IDeviceEnumerator.VirtualVendorID,
-                            new XInputDeviceInstance(0).DefaultLayout);
-
-                var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
-                optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
-                var elementStore = new ControllerElementMappingsStore(optionsBuilder);
-
-                await elementStore.AddMappingsAsync(mapcol, "default");
-                await elementStore.AddMappingsAsync(mapcol, "default2");
-
-                Assert.Equal(2, await elementStore.GetMappingsAsync(mapcol.ControllerID, mapcol.DeviceName,
-                    IDeviceEnumerator.VirtualVendorID)
-                    .CountAsync());
-                await elementStore.DeleteMappingsAsync(mapcol.ControllerID, InputDriver.Keyboard, mapcol.DeviceName,
-                    IDeviceEnumerator.VirtualVendorID, "default");
-                Assert.Single(elementStore.GetMappings(mapcol.ControllerID, mapcol.DeviceName, mapcol.VendorID));
-                await elementStore.DeleteMappingsAsync(mapcol.ControllerID, mapcol.DeviceName, IDeviceEnumerator.VirtualVendorID);
-                Assert.True(await elementStore.GetMappingsAsync(mapcol.ControllerID, mapcol.DeviceName, mapcol.VendorID).IsEmptyAsync());
+                Assert.Empty(elementStore.GetProfileNames(mapcol.ControllerID, InputDriver.Keyboard, mapcol.DeviceName,
+                    IDeviceEnumerator.VirtualVendorID));
             }
         }
 
@@ -320,7 +292,7 @@ namespace Snowflake.Model.Tests
 
                 var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
                 optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
-                var elementStore = new ControllerElementMappingsStore(optionsBuilder);
+                var elementStore = new ControllerElementMappingProfileStore(optionsBuilder);
 
                 elementStore.AddMappings(mapcol, "default");
 
@@ -350,7 +322,7 @@ namespace Snowflake.Model.Tests
 
                 var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
                 optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
-                var elementStore = new ControllerElementMappingsStore(optionsBuilder);
+                var elementStore = new ControllerElementMappingProfileStore(optionsBuilder);
 
                 await elementStore.AddMappingsAsync(mapcol, "default");
 
