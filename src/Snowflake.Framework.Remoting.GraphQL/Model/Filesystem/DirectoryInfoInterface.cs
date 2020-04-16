@@ -1,5 +1,4 @@
-﻿using GraphQL.Types;
-using HotChocolate.Types;
+﻿using HotChocolate.Types;
 using System;
 using System.Collections.Generic;
 using System.Text;

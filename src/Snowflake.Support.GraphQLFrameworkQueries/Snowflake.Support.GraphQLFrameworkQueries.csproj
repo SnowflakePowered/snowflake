@@ -11,9 +11,8 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="HotChocolate.Types.Filters" Version="11.0.0-preview.123" />
+    <ProjectReference Condition="$(_SnowflakeUseDevelopmentSDK)" Include="..\Snowflake.Framework.Remoting.GraphQL\Snowflake.Framework.Remoting.GraphQL.csproj" />
   </ItemGroup>
-
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\Snowflake.ruleset</CodeAnalysisRuleSet>
     <NoWarn>1701;1702;1591;</NoWarn>

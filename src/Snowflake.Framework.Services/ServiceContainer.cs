@@ -67,10 +67,7 @@ namespace Snowflake.Services
 
         private void RegisterGraphQLRootSchema()
         {
-            var schema = new GraphQLRootSchema();
-            this.RegisterService<IGraphQLService>(schema);
             var kestrel = this.Get<IKestrelWebServerService>();
-            kestrel.AddService(new GraphQLKestrelIntegration(schema));
             kestrel.AddService(new HotChocolateKestrelIntegration(
                 (GraphQLSchemaRegistrationProvider)this.Get<IGraphQLSchemaRegistrationProvider>(), this));
         }

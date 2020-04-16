@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Snowflake.Framework.Remoting.GraphQL.Model.Records
 {
-    internal sealed class RecordMetadataType
+    public sealed class RecordMetadataType
         : ObjectType<IRecordMetadata>
     {
         protected override void Configure(IObjectTypeDescriptor<IRecordMetadata> descriptor)
