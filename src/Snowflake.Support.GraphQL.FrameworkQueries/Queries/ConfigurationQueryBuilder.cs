@@ -39,7 +39,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
         {
             var emulator = this.PluginManager.Get<IEmulatorOrchestrator>(emulatorName);
             var game = this.GameLibrary.GetGame(gameGuid);
-            var config = emulator.GetGameConfigurationValues(game, profileName);
+            var config = emulator.GetGameConfiguration(game, profileName);
             return config;
         }
 
