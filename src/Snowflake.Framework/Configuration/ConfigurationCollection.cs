@@ -52,7 +52,10 @@ namespace Snowflake.Configuration
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         /// <inheritdoc/>
-        public IConfigurationSection this[string sectionName] => this.collectionInterceptor.Values[sectionName];
+        public IConfigurationSection? this[string sectionName] => 
+            this.collectionInterceptor.Values.TryGetValue(sectionName, out var section) 
+            ? section
+            : null;
     }
 
     class CollectionCircularInterceptor<T> : IInterceptor
