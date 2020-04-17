@@ -37,13 +37,19 @@ namespace Snowflake.Adapters.Higan
         private Dictionary<InputDriver, IDeviceInputMapping> Mappings { get; }
         private IEmulatorExecutable RetroArchExecutable { get; }
 
+        public override EmulatorCompatibility CheckCompatibility(IGame game)
+        {
+            // todo check stuff
+            return EmulatorCompatibility.Ready;
+        }
+
         public override IConfigurationCollection CreateGameConfiguration(IGame game, string profile)
         {
             return game.WithConfigurations()
                 .CreateNewProfile<HiganRetroArchConfiguration>(nameof(RetroArchBsnesOrchestrator), profile);
         }
 
-        public override IConfigurationCollection GetGameConfigurationValues(IGame game, string profile)
+        public override IConfigurationCollection GetGameConfiguration(IGame game, string profile)
         {
             return game.WithConfigurations()
                 .GetProfile<HiganRetroArchConfiguration>(nameof(RetroArchBsnesOrchestrator), profile);

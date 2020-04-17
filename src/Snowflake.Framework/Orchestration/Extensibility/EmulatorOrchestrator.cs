@@ -41,8 +41,10 @@ namespace Snowflake.Orchestration.Extensibility
             string configurationProfileName,
             ISaveProfile saveProfile);
 
-        public abstract IConfigurationCollection GetGameConfigurationValues(IGame game, string profile);
+        public abstract IConfigurationCollection GetGameConfiguration(IGame game, string profile);
 
         public abstract IConfigurationCollection CreateGameConfiguration(IGame game, string profile);
+
+        public abstract EmulatorCompatibility CheckCompatibility(IGame game);
     }
 }

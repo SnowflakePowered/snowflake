@@ -17,6 +17,13 @@ namespace Snowflake.Orchestration.Extensibility
     public interface IEmulatorOrchestrator : IPlugin
     {
         /// <summary>
+        /// Checks if a certain game is compatible with this emulator, or if some extra work is required.
+        /// </summary>
+        /// <param name="game">The game to check compatibility for.</param>
+        /// <returns>The compatibility level this emulator has with the game.</returns>
+        EmulatorCompatibility CheckCompatibility(IGame game);
+
+        /// <summary>
         /// Gets a list of BIOS files that are missing from the <see cref="ISystemFileProvider"/> service that
         /// are necessary to run the given game.
         /// If any of these are missing, then execution SHOULD NOT continue.
@@ -42,7 +49,7 @@ namespace Snowflake.Orchestration.Extensibility
         /// </summary>
         /// <param name="game">The game to retrieve configuration for.</param>
         /// <param name="profile">The configuration profile.</param>
-        IConfigurationCollection? GetGameConfigurationValues(IGame game, string profile);
+        IConfigurationCollection? GetGameConfiguration(IGame game, string profile);
 
         /// <summary>
         /// Creates a new game configuration for this game, used to configure the game for this orchestrator,

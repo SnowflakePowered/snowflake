@@ -79,14 +79,6 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
             return game.WithFiles().WithSaves().GetProfiles(saveType);
         }
 
-        [Query("saveProfiles", "Gets all save profiles for a game with a given save type.", typeof(ListGraphType<SaveProfileGraphType>))]
-        [Parameter(typeof(Guid), typeof(GuidGraphType), "gameGuid", "The GUID of the game to create a save profile for.")]
-        public IEnumerable<ISaveProfile> GetSaveProfiles(Guid gameGuid)
-        {
-            var game = this.GameLibrary.GetGame(gameGuid);
-            return game.WithFiles().WithSaves().GetProfiles();
-        }
-
         [Query("missingSystemFiles", "Gets missing system files for the given game that the given emulator requires to run", 
             typeof(ListGraphType<SystemFileGraphType>))]
         [Parameter(typeof(string), typeof(StringGraphType), "orchestratorName", "The name of the orchestrator plugin to use.")]
