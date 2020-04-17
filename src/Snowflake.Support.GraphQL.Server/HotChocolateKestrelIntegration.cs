@@ -13,6 +13,7 @@ using HotChocolate.Types;
 using HotChocolate.Utilities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Snowflake.Framework.Remoting.GraphQL.Model.Configuration;
 using Snowflake.Framework.Remoting.GraphQL.Model.Device;
 using Snowflake.Framework.Remoting.GraphQL.Model.Device.Mapped;
 using Snowflake.Framework.Remoting.GraphQL.Model.Filesystem;
@@ -126,6 +127,21 @@ namespace Snowflake.Services
                .AddObjectType<SaveProfileType>()
                ;
 
+            this.Schemas
+               .AddEnumType<ConfigurationOptionTypeEnum>()
+               .AddEnumType<PathTypeEnum>()
+
+               .AddObjectType<ConfigurationCollectionType>()
+               .AddObjectType<ConfigurationSectionType>()
+
+               .AddObjectType<ConfigurationValueType>()
+               .AddObjectType<NamedConfigurationValueType>()
+               .AddObjectType<OptionDescriptorType>()
+               .AddObjectType<OptionMetadataType>()
+               .AddObjectType<SectionDescriptorType>()
+               .AddObjectType<SelectionOptionDescriptorType>()
+
+               ;
             services.AddDataLoaderRegistry();
             services.AddGraphQLSubscriptions();
 
