@@ -52,6 +52,8 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
 
             hotChocolate.AddObjectTypeExtension<SaveQueries>();
 
+            hotChocolate.AddObjectTypeExtension<PluginQueries>();
+
             //hotChocolate.AddQuery<PlatformQueries, PlatformInfoQueryBuilder>(platformQueries);
             //hotChocolate.AddObjectTypeExtension<GameRecordQueries>();
             //hotChocolate.AddQuery<GameQueries, GameQueryBuilder>(gameQueries);
