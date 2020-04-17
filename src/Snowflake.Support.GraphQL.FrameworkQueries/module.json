@@ -1,5 +1,5 @@
 ﻿{
-  "entry": "Snowflake.Support.GraphQLFrameworkQueries.dll",
+  "entry": "Snowflake.Support.GraphQL.FrameworkQueries.dll",
   "loader": "assembly",
   "frameworkVersion": "1.0.0",
   "version": "1.0.0",
