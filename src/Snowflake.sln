@@ -85,7 +85,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Support.InputEnum
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Support.Orchestration.Providers", "Snowflake.Support.Orchestration.Providers\Snowflake.Support.Orchestration.Providers.csproj", "{566BBE4C-1ADF-425C-BF31-44A495131C09}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Support.GraphQLFrameworkQueries", "Snowflake.Support.GraphQLFrameworkQueries\Snowflake.Support.GraphQLFrameworkQueries.csproj", "{DD94F85D-84A5-430F-96FE-55B8D702A2FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Support.GraphQL.FrameworkQueries", "Snowflake.Support.GraphQL.FrameworkQueries\Snowflake.Support.GraphQL.FrameworkQueries.csproj", "{DD94F85D-84A5-430F-96FE-55B8D702A2FE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Framework.Sdk", "Snowflake.Framework.Sdk\Snowflake.Framework.Sdk.csproj", "{C313F9B2-CD0A-4C07-B765-DD9F05B51516}"
 EndProject
