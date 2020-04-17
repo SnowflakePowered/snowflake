@@ -21,7 +21,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Game.LibraryExtensio
                 .Resolver(g => g.Parent<IGameFileExtension>()
                 .GetFileRecords())
                 .Type<ListType<FileRecordType>>();
-            descriptor.Field("fs")
+            descriptor.Field("filesystem")
                 .Argument("directoryPath", a => a.Type<DirectoryPathType>())
                 .Type<ContextualDirectoryContentsType>()
                 .Resolver(context =>
