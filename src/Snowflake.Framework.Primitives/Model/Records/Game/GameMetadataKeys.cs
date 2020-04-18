@@ -12,6 +12,13 @@ namespace Snowflake.Model.Records.Game
     public static class GameMetadataKeys
     {
         /// <summary>
+        /// If game_deleted is "true", the game is deleted. If it 
+        /// is not present, or set to any other string, the game
+        /// is not deleted.
+        /// </summary>
+        public static readonly string Deleted = "game_deleted";
+
+        /// <summary>
         /// The platform of the game
         /// </summary>
         public static readonly string Platform = "game_platform";
