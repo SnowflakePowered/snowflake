@@ -33,11 +33,13 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Game
                .AllowEquals()
                     .Name("gameId")
                     .Description("Gets the Game with the given ID.");
-
             // todo for 11
             descriptor
                 .List(g => g.Metadata)
-                .AllowAll();
+                .AllowAll<MetadataFilterInputType>().And()
+                .AllowSome<MetadataFilterInputType>().And()
+                .AllowNone<MetadataFilterInputType>().And()
+                .AllowAny();
         }
     }
     //public class GameRecordQueryFilterInputType

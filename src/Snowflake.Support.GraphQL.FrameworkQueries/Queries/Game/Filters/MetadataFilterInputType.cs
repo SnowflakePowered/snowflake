@@ -1,34 +1,31 @@
 ﻿using HotChocolate.Types;
 using HotChocolate.Types.Filters;
+using Snowflake.Model.Records;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Game
 {
-    internal class MetadataFilter
-    {
-        public string Key { get; set; }
-        public string Value { get; set; }
-        public List<string> Value_in { get; set; }
-    }
-
     internal class MetadataFilterInputType
-        : InputObjectType<MetadataFilter>
+        : FilterInputType<IRecordMetadataQuery>
     {
-        protected override void Configure(IInputObjectTypeDescriptor<MetadataFilter> descriptor)
+        protected override void Configure(IFilterInputTypeDescriptor<IRecordMetadataQuery> descriptor)
         {
             descriptor
-                .Name("MetadataFilterInputType");
+                .Name("RecordMetadataFilter");
             descriptor
-                .Field(f => f.Key)
-                .Type<NonNullType<StringType>>();
+                .Filter(f => f.MetadataKey)
+                .AllowEquals().And()
+                .AllowNotEquals().And()
+                .AllowContains().And()
+                .AllowNotContains();
             descriptor
-                .Field(f => f.Value)
-                .Type<StringType>();
-            descriptor
-                .Field(f => f.Value_in)
-                .Type<ListType<NonNullType<StringType>>>();
+                .Filter(f => f.MetadataValue)
+                .AllowEquals().And()
+                .AllowNotEquals().And()
+                .AllowContains().And()
+                .AllowNotContains();
         }
     }
 }
