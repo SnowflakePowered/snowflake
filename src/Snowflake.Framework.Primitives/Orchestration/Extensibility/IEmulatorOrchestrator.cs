@@ -44,6 +44,13 @@ namespace Snowflake.Orchestration.Extensibility
         IAsyncEnumerable<TaskResult<IFile>> ValidateGamePrerequisites(IGame game);
 
         /// <summary>
+        /// Retrieves the names of configuration profiles for this game.
+        /// </summary>
+        /// <param name="game">The game to retrieve configuration profiles for.</param>
+        /// <returns>A list of configuration profile names saved for this game.</returns>
+        IEnumerable<string> GetConfigurationProfiles(IGame game);
+
+        /// <summary>
         /// Gets the inner-type erased generic <see cref="IConfigurationCollection"/> for this game, used
         /// to configure the game for this orchestrator.
         /// </summary>
@@ -68,7 +75,8 @@ namespace Snowflake.Orchestration.Extensibility
         /// <param name="saveProfile">The save profile to manage savedata with.</param>
         /// <returns>An emulator specific <see cref="IGameEmulation"/> instance that can be used to begin the emulation.</returns>
         IGameEmulation ProvisionEmulationInstance(IGame game, 
-            IEnumerable<IEmulatedController> controllerPorts, string configurationProfileName,
+            IEnumerable<IEmulatedController> controllerPorts,
+            string configurationProfileName,
             ISaveProfile saveProfile);
     }
 }

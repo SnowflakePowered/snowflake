@@ -46,5 +46,7 @@ namespace Snowflake.Orchestration.Extensibility
         public abstract IConfigurationCollection CreateGameConfiguration(IGame game, string profile);
 
         public abstract EmulatorCompatibility CheckCompatibility(IGame game);
+
+        public abstract IEnumerable<string> GetConfigurationProfiles(IGame game);
     }
 }
