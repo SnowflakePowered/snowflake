@@ -63,6 +63,8 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
             hotChocolate.AddObjectTypeExtension<GameOrchestrationQueries>();
 
             hotChocolate.AddObjectTypeExtension<GameMutations>();
+            hotChocolate.AddObjectTypeExtension<GameMetadataMutations>();
+
             //hotChocolate.AddQuery<PlatformQueries, PlatformInfoQueryBuilder>(platformQueries);
             //hotChocolate.AddObjectTypeExtension<GameRecordQueries>();
             //hotChocolate.AddQuery<GameQueries, GameQueryBuilder>(gameQueries);
