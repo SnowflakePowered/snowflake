@@ -16,8 +16,12 @@ namespace Snowflake.Framework.Remoting.GraphQL.Model.Extensibility
         {
             descriptor.Name("Module")
                 .Description("Describes a loaded module.");
-            descriptor.Field(p => p.Author).Description("The author of the module.");
-            descriptor.Field(p => p.Name).Description("The module name.");
+            descriptor
+                .Field(p => p.Author)
+                .Description("The author of the module.");
+            descriptor
+                .Field(p => p.Name)
+                .Description("The module name.");
             descriptor
                 .Field("version")
                 .Description("The version of the module.")
