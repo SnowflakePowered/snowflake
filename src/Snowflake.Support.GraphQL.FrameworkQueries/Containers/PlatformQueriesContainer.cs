@@ -9,6 +9,7 @@ using Snowflake.Framework.Remoting.GraphQL.Schema;
 using Snowflake.Loader;
 using Snowflake.Model.Game;
 using Snowflake.Services;
+using Snowflake.Support.GraphQL.FrameworkQueries.Queries.Game.Orchestration;
 using Snowflake.Support.GraphQLFrameworkQueries.Queries;
 using Snowflake.Support.GraphQLFrameworkQueries.Queries.Debug;
 using Snowflake.Support.GraphQLFrameworkQueries.Queries.Devices;
@@ -53,7 +54,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
             hotChocolate.AddObjectTypeExtension<SaveQueries>();
 
             hotChocolate.AddObjectTypeExtension<PluginQueries>();
-
+            hotChocolate.AddObjectTypeExtension<GameOrchestrationQueries>();
             //hotChocolate.AddQuery<PlatformQueries, PlatformInfoQueryBuilder>(platformQueries);
             //hotChocolate.AddObjectTypeExtension<GameRecordQueries>();
             //hotChocolate.AddQuery<GameQueries, GameQueryBuilder>(gameQueries);

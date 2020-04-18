@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Snowflake.Framework.Remoting.GraphQL.Model.Stone.PlatformInfo
 {
-    internal sealed class SystemFileType
+    public sealed class SystemFileType
         : ObjectType<ISystemFile>
     {
         protected override void Configure(IObjectTypeDescriptor<ISystemFile> descriptor)

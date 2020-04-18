@@ -20,6 +20,7 @@ using Snowflake.Framework.Remoting.GraphQL.Model.Filesystem;
 using Snowflake.Framework.Remoting.GraphQL.Model.Filesystem.Contextual;
 using Snowflake.Framework.Remoting.GraphQL.Model.Game;
 using Snowflake.Framework.Remoting.GraphQL.Model.Installation;
+using Snowflake.Framework.Remoting.GraphQL.Model.Orchestration;
 using Snowflake.Framework.Remoting.GraphQL.Model.Records;
 using Snowflake.Framework.Remoting.GraphQL.Model.Saving;
 using Snowflake.Framework.Remoting.GraphQL.Model.Stone;
@@ -125,6 +126,8 @@ namespace Snowflake.Services
                .AddEnumType<SaveManagementStrategyEnum>()
                .AddObjectType<SaveGameType>()
                .AddObjectType<SaveProfileType>()
+
+               .AddEnumType<EmulatorCompatibilityEnum>()
                ;
 
             this.Schemas
