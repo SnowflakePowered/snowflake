@@ -16,7 +16,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Runtime
         {
             descriptor.Name("Plugin");
             descriptor.Field("provision")
-                .Description("Provides access to ")
+                .Description("Provides access to the plugin's provisioned resources if this plugin is provisioned.")
                 .Resolver(ctx =>
                 {
                     if (ctx.Parent<IPlugin>() is IProvisionedPlugin provisionedPlugin)

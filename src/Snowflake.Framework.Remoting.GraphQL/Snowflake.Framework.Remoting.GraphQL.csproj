@@ -10,8 +10,8 @@
 
 
   <ItemGroup>
-    <PackageReference Include="HotChocolate" Version="11.0.0-preview.123" />
-    <PackageReference Include="HotChocolate.Types.Filters" Version="11.0.0-preview.123" />
+    <PackageReference Include="HotChocolate" Version="11.0.0-preview.127" />
+    <PackageReference Include="HotChocolate.Types.Filters" Version="11.0.0-preview.127" />
   </ItemGroup>
 
   <ItemGroup>

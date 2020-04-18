@@ -16,7 +16,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Installables
                 .Field("installables")
                 .Description("Fetches installables for this directory, searching all top level files and directories," +
                 "not including the current directory itself.")
-                .Argument("platformID", arg => arg.Type<NonNullType<PlatformIdType>>()
+                .Argument("platformId", arg => arg.Type<NonNullType<PlatformIdType>>()
                     .Description("The platform to look up installables for."))
                 .Type<NonNullType<ListType<NonNullType<InstallableType>>>>();
         }

@@ -22,13 +22,13 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Game
                 .Argument("saveType", arg => 
                     arg.Description("A string that identifies all save profiles with the same format.")
                     .Type<StringType>())
-                .Argument("profileID", arg =>
+                .Argument("profileId", arg =>
                     arg.Description("The GUID of a specific profile.")
                     .Type<UuidType>())
                 .Description("The save profiles associated with this game.")
                 .Resolver(ctx =>
                 {
-                    var profileId = ctx.Argument<Guid>("profileID");
+                    var profileId = ctx.Argument<Guid>("profileId");
                     var saveType = ctx.Argument<string>("saveType");
                     var saves = ctx.Parent<IGame>().WithFiles().WithSaves();
                     if (profileId != default)

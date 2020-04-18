@@ -16,6 +16,7 @@ namespace Snowflake.Framework.Remoting.GraphQL.Model.Device.Mapped
                 .Description("A collection of controller element to device capability mappings that describes a " +
                 "mapping profile from an input device to an emulated virtual device.");
             descriptor.Field(c => c.ControllerID)
+                .Name("controllerId")
                 .Description("The Stone Controller ID of the emulated controller this collection maps to.")
                 .Type<ControllerIdType>();
             descriptor.Field(c => c.DeviceName)
@@ -23,7 +24,8 @@ namespace Snowflake.Framework.Remoting.GraphQL.Model.Device.Mapped
                 "Together with the driver type and vendor ID, uniquely identifies the input device instances for which this profile is valid.")
                 .Type<StringType>();
             descriptor.Field(c => c.VendorID)
-               .Description("The vendor ID of the input device this profile maps capabilities from. " +
+                .Name("vendorId")
+                .Description("The vendor ID of the input device this profile maps capabilities from. " +
                 "Together with the device name and drive type, uniquely identifies the input device instances for which this profile is valid.")
                .Type<IntType>();
             descriptor.Field(c => c.DriverType)

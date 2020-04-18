@@ -16,7 +16,7 @@ namespace Snowflake.Framework.Remoting.GraphQL.Model.Saving
                 .Description("Describes a save profile, which is a linked list of save games, forming a lineage of saves from the first game in the profile " +
                 "to the head");
             descriptor.Field(s => s.Guid)
-                .Name("profileID")
+                .Name("profileId")
                 .Description("The GUID of the save profile. This GUID is contextualized, and only has meaning when the Game this save belongs to is known.")
                 .Type<NonNullType<UuidType>>();
             descriptor.Field(s => s.ManagementStrategy)

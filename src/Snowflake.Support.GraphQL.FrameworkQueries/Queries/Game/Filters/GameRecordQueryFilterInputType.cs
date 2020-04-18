@@ -19,21 +19,25 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Game
                 .BindFieldsExplicitly();
             descriptor
                 .Filter(g => g.PlatformID)
-                .AllowEquals().Description("Get the platform with the specific PlatformID.").And()
-                .AllowIn().Description("Get platforms with the given PlatformIDs.").And()
-                .AllowStartsWith().Description("Get platforms whose PlatformIDs start with the given string");
+                .AllowEquals()
+                    .Name("platformId")
+                    .Description("Get the platform with the specific PlatformID.").And()
+                .AllowIn()
+                    .Name("platformId_in")
+                    .Description("Get platforms with the given PlatformIDs.").And()
+                .AllowStartsWith()
+                    .Name("platformId_startsWith")
+                    .Description("Get platforms whose PlatformIDs start with the given string");
             descriptor
                .Filter(g => g.RecordID)
                .AllowEquals()
-               .Description("Gets the Game with the given record ID.");
+                    .Name("gameId")
+                    .Description("Gets the Game with the given ID.");
 
             // todo for 11
             descriptor
                 .List(g => g.Metadata)
                 .AllowAll();
-
-
-
         }
     }
     //public class GameRecordQueryFilterInputType

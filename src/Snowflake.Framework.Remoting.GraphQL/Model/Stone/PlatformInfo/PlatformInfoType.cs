@@ -13,6 +13,7 @@ namespace Snowflake.Framework.Remoting.GraphQL.Model.Stone.PlatformInfo
         {
             descriptor.Name("PlatformInfo").Description("A Stone Platform description.");
             descriptor.Field(p => p.PlatformID)
+                .Name("platformId")
                 .Type<NonNullType<PlatformIdType>>()
                 .Description("The Stone Platform ID of this platform.");
             descriptor.Field(p => p.FriendlyName).Description("The human readable name of this platform.");

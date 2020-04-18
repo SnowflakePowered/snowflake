@@ -50,7 +50,7 @@ namespace Snowflake.Framework.Remoting.GraphQL.Model.Filesystem.Contextual
                 .Description("The contextual path to this file.")
                 .Type<NonNullType<FilePathType>>()
                 .Resolver(context => (UPath)context.Parent<IReadOnlyFile>().RootedPath);
-            descriptor.Field("fileID")
+            descriptor.Field("fileId")
                .Description("The manifest GUID of this file.")
                .Type<NonNullType<UuidType>>()
                .Resolver(context => context.Parent<IReadOnlyFile>().FileGuid);

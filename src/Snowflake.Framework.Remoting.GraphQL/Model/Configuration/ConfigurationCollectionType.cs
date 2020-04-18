@@ -18,20 +18,20 @@ namespace Snowflake.Framework.Remoting.GraphQL.Model.Configuration
                 .Description("Describes the sections contained within the configuration collection.")
                 .Resolver(ctx => ctx.Parent<IConfigurationCollection>().Select(c => c.Value.Descriptor))
                 .Type<NonNullType<ListType<NonNullType<SectionDescriptorType>>>>();
-            descriptor.Field("collectionID")
+            descriptor.Field("collectionId")
                 .Description("The GUID that refers to this specific collection of values.")
                 .Type<UuidType>()
                 .Resolver(ctx => ctx.Parent<IConfigurationCollection>().ValueCollection.Guid);
             descriptor.Field("values")
                 .Description("The list of values that make up this collection.")
                 .Argument("sectionKey", arg => arg.Description("The configuration section for which to return values.").Type<StringType>())
-                .Argument("valueID", arg => arg.Description("Return a specific value with the given GUID. This overrides `sectionKey` if set.").Type<UuidType>())
+                .Argument("valueId", arg => arg.Description("Return a specific value with the given GUID. This overrides `sectionKey` if set.").Type<UuidType>())
                 .Resolver(ctx => {
 
                     var collection = ctx.Parent<IConfigurationCollection>();
                     var valueCollection = collection.ValueCollection;
                     string sectionKey = ctx.Argument<string>("sectionKey");
-                    Guid valueID = ctx.Argument<Guid>("valueID");
+                    Guid valueID = ctx.Argument<Guid>("valueId");
 
                     if (valueID != default)
                     {

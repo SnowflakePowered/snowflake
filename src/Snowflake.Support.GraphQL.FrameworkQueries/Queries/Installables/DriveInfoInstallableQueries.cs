@@ -18,15 +18,15 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Installables
         protected override void Configure(IObjectTypeDescriptor<DriveInfo[]> descriptor)
         {
             descriptor
-                .Name("__OSDirectoryContents__DriveInfo");
+                .Name("_OSDirectoryContents__DriveInfo");
             descriptor.Field("installables")
                 .Type<NonNullType<ListType<NonNullType<InstallableType>>>>()
-                .Argument("platformID", arg => arg.Type<NonNullType<PlatformIdType>>()
+                .Argument("platformId", arg => arg.Type<NonNullType<PlatformIdType>>()
                     .Description("The platform to look up installables for."))
                 .Resolver(ctx =>
                 {
                     var installers = ctx.Service<IPluginManager>().GetCollection<IGameInstaller>();
-                    var platform = ctx.Argument<PlatformId>("platformID");
+                    var platform = ctx.Argument<PlatformId>("platformId");
                     var drives = ctx.Parent<DriveInfo[]>();
 
                     return from installer in installers
