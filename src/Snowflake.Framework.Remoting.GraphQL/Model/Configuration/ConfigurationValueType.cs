@@ -17,7 +17,7 @@ namespace Snowflake.Framework.Remoting.GraphQL.Model.Configuration
                 .Description("The value set for the configuration option.")
                 .Type<AnyType>();
             descriptor.Field(v => v.Guid)
-                .Name("valueID")
+                .Name("valueId")
                 .Description("The GUID that refers to this specific value.")
                 .Type<UuidType>();
         }

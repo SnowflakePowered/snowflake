@@ -14,7 +14,7 @@ namespace Snowflake.Framework.Remoting.GraphQL.Model.Filesystem.Contextual
     {
         protected override void Configure(IObjectTypeDescriptor<DirectoryInfo> descriptor)
         {
-            descriptor.Name("__OSDirectoryInfo__DirectoryInfo")
+            descriptor.Name("_OSDirectoryInfo__DirectoryInfo")
                .Description("Describes a directory in the realized, OS-dependent file system.")
                .Interface<OSDirectoryInfoInterface>()
                .Interface<DirectoryInfoInterface>();

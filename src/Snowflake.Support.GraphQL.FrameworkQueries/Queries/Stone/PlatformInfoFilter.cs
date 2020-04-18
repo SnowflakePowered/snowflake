@@ -15,9 +15,15 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Stone
                 .Name("PlatformInfoFilter")                
                 .Filter(p => p.PlatformID)
                 
-                .AllowEquals().Description("Get the platform with the specific PlatformID.").And()
-                .AllowIn().Description("Get platforms with the given PlatformIDs.").And()
-                .AllowStartsWith().Description("Get platforms whose PlatformIDs start with the given string");
+                .AllowEquals()
+                    .Name("platformId")
+                    .Description("Get the platform with the specific PlatformID.").And()
+                .AllowIn()
+                    .Name("platformId_in")
+                    .Description("Get platforms with the given PlatformIDs.").And()
+                .AllowStartsWith()
+                    .Name("platformId_startsWith")
+                    .Description("Get platforms whose PlatformIDs start with the given string");
         }
     }
 }

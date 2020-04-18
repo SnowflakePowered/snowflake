@@ -22,10 +22,12 @@ namespace Snowflake.Framework.Remoting.GraphQL.Model.Game
                 .Description("The title of the game.");
 
             descriptor.Field(g => g.PlatformID)
+                .Name("platformId")
                 .Type<PlatformIdType>()
                 .Description("The original platform or game console of the game this object represents.");
 
             descriptor.Field(g => g.RecordID)
+                .Name("gameId")
                 .Description("The unique ID of the game.");
 
             descriptor.Field("metadata")

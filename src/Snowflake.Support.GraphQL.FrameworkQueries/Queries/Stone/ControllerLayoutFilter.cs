@@ -16,9 +16,15 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Stone
                 .Name("ControllerLayoutFilter")                
                 .Filter(c => c.ControllerID)
                 
-                .AllowEquals().Description("Get the platform with the specific LayoutID.").And()
-                .AllowIn().Description("Get platforms with the given LayoutIDs.").And()
-                .AllowStartsWith().Description("Get platforms whose LayoutIDs start with the given string");
+                .AllowEquals()
+                    .Name("controllerId")
+                    .Description("Get the platform with the specific LayoutID.").And()
+                .AllowIn()
+                    .Name("controllerId_in")
+                    .Description("Get platforms with the given LayoutIDs.").And()
+                .AllowStartsWith()
+                    .Name("controllerId_startsWith")
+                    .Description("Get platforms whose LayoutIDs start with the given string");
         }
     }
 }

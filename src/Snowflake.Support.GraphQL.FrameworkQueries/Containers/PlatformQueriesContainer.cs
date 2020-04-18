@@ -9,6 +9,8 @@ using Snowflake.Framework.Remoting.GraphQL.Schema;
 using Snowflake.Loader;
 using Snowflake.Model.Game;
 using Snowflake.Services;
+using Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Game;
+using Snowflake.Support.GraphQL.FrameworkQueries.Queries.Debug;
 using Snowflake.Support.GraphQL.FrameworkQueries.Queries.Game.Orchestration;
 using Snowflake.Support.GraphQLFrameworkQueries.Queries;
 using Snowflake.Support.GraphQLFrameworkQueries.Queries.Debug;
@@ -32,11 +34,15 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
           
             var hotChocolate = coreInstance.Get<IGraphQLSchemaRegistrationProvider>();
 
+            hotChocolate.AddObjectTypeExtension<EchoQueries>();
+            hotChocolate.AddObjectTypeExtension<MutationDebugQueries>();
+            hotChocolate.AddObjectTypeExtension<SubscriptionDebugQueries>();
+
+
             hotChocolate.AddObjectTypeExtension<StoneQueries>();
             hotChocolate.AddObjectTypeExtension<GameQueries>();
             hotChocolate.AddObjectTypeExtension<GameFileQueries>();
             hotChocolate.AddObjectTypeExtension<GameNodeQueries>();
-            hotChocolate.AddObjectTypeExtension<EchoQueries>();
             hotChocolate.AddObjectTypeExtension<DeviceQueries>();
             hotChocolate.AddObjectTypeExtension<DeviceNodeQueries>();
             hotChocolate.AddObjectTypeExtension<PlatformInfoNodeQueries>();
@@ -55,6 +61,8 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
 
             hotChocolate.AddObjectTypeExtension<PluginQueries>();
             hotChocolate.AddObjectTypeExtension<GameOrchestrationQueries>();
+
+            hotChocolate.AddObjectTypeExtension<GameMutations>();
             //hotChocolate.AddQuery<PlatformQueries, PlatformInfoQueryBuilder>(platformQueries);
             //hotChocolate.AddObjectTypeExtension<GameRecordQueries>();
             //hotChocolate.AddQuery<GameQueries, GameQueryBuilder>(gameQueries);

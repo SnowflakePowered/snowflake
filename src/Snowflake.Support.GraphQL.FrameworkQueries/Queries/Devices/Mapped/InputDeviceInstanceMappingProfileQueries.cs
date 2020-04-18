@@ -23,7 +23,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Devices.Mapped
 
             descriptor.Field("mappingProfiles")
                 .Description("Fetches the mapping profile names for this device instance.")
-                .Argument("controllerID", arg =>
+                .Argument("controllerId", arg =>
                    arg.Type<NonNullType<ControllerIdType>>()
                     .Description("The Stone controller ID to get compatible mappings for."))
                 .Resolver(context =>
@@ -31,14 +31,14 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Devices.Mapped
                     var deviceInstance = (IInputDeviceInstance)context.Source.Peek();
                     var device = (IInputDevice)context.Source.Pop().Peek();
                     var store = context.Service<IControllerElementMappingProfileStore>();
-                    var controllerId = context.Argument<ControllerId>("controllerID");
+                    var controllerId = context.Argument<ControllerId>("controllerId");
                     return store.GetProfileNames(controllerId, deviceInstance.Driver, device.DeviceName, device.VendorID);
                 })
                 .Type<NonNullType<ListType<NonNullType<StringType>>>>();
 
             descriptor.Field("mapping")
                 .Description("Fetches a specific mapping profile for a specific device instance.")
-                .Argument("controllerID", arg => 
+                .Argument("controllerId", arg => 
                    arg.Type<NonNullType<ControllerIdType>>()
                     .Description("The Stone controller ID to get compatible mappings for."))
                 .Argument("profileName", arg =>
@@ -50,7 +50,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Devices.Mapped
                     var deviceInstance = (IInputDeviceInstance)context.Source.Peek();
                     var device = (IInputDevice)context.Source.Pop().Peek();
                     var store = context.Service<IControllerElementMappingProfileStore>();
-                    var controllerId = context.Argument<ControllerId>("controllerID");
+                    var controllerId = context.Argument<ControllerId>("controllerId");
                     string profileName = context.Argument<string>("profileName");
                     return store.GetMappings(controllerId, deviceInstance.Driver, device.DeviceName, device.VendorID, profileName);
                 })

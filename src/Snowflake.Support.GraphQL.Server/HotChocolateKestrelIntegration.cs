@@ -9,6 +9,7 @@ using HotChocolate.AspNetCore.Subscriptions;
 using HotChocolate.Configuration;
 using HotChocolate.Execution;
 using HotChocolate.Execution.Configuration;
+using HotChocolate.Subscriptions;
 using HotChocolate.Types;
 using HotChocolate.Utilities;
 using Microsoft.AspNetCore.Builder;
@@ -48,11 +49,14 @@ namespace Snowflake.Services
 
         public void Configure(IApplicationBuilder app)
         {
-            app.UseGraphQL("/hotchocolate");
+            app.UseGraphQL("/graphql");
+            app.UseGraphQLSubscriptions();
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddInMemorySubscriptionProvider();
+
             // Add each query service
             foreach (var sd in this.Schemas.QueryBuilderServices)
             {
@@ -154,6 +158,7 @@ namespace Snowflake.Services
 
             var schemaBuilder = SchemaBuilder.New()
                 .EnableRelaySupport()
+               
                 .SetOptions(new SchemaOptions()
                 {
                     DefaultBindingBehavior = BindingBehavior.Explicit,
@@ -163,6 +168,14 @@ namespace Snowflake.Services
                 .AddQueryType(descriptor =>
                 {
                     descriptor.Name("Query");
+                })
+                .AddMutationType(descriptor =>
+                {
+                    descriptor.Name("Mutation");
+                })
+                .AddSubscriptionType(descriptor =>
+                {
+                    descriptor.Name("Subscription");
                 });
 
             foreach (var type in this.Schemas.ScalarTypes)
@@ -190,7 +203,12 @@ namespace Snowflake.Services
                 schemaBuilder.AddType(type);
             }
 
-            services.AddGraphQL(schemaBuilder.Create());
+            services.AddGraphQL(schemaBuilder.Create(),
+                new QueryExecutionOptions
+                {
+                    TracingPreference = TracingPreference.OnDemand,
+                    
+                });
            
             services.AddQueryRequestInterceptor((context, builder, cancel) =>
             {

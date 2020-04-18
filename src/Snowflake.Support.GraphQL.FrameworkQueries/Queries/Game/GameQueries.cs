@@ -50,8 +50,8 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Game
                         context.Result = queryBuilder.QueryGames(expr).ToList();
                     }
                     return next.Invoke(context);
-                });
-                //.UsePaging<GameType>();
+                })
+                .UsePaging<GameType>();
         }
     }
 }
