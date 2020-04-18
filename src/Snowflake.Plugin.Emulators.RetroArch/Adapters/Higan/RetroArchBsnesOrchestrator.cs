@@ -14,6 +14,7 @@ using Snowflake.Extensibility.Provisioning;
 using Snowflake.Model.Game.LibraryExtensions;
 using Snowflake.Plugin.Emulators.RetroArch.Adapters.Higan.Configuration;
 using Snowflake.Configuration;
+using System.Linq;
 
 namespace Snowflake.Adapters.Higan
 {
@@ -47,6 +48,13 @@ namespace Snowflake.Adapters.Higan
         {
             return game.WithConfigurations()
                 .CreateNewProfile<HiganRetroArchConfiguration>(nameof(RetroArchBsnesOrchestrator), profile);
+        }
+
+        public override IEnumerable<string> GetConfigurationProfiles(IGame game)
+        {
+            return game.WithConfigurations().GetProfileNames()
+                .FirstOrDefault(g => g.Key == nameof(RetroArchBsnesOrchestrator))
+                ?? Enumerable.Empty<string>();
         }
 
         public override IConfigurationCollection GetGameConfiguration(IGame game, string profile)
