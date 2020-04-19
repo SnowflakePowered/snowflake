@@ -1,6 +1,6 @@
 ﻿using GraphQL.Types;
 using HotChocolate.Types;
-using Snowflake.Framework.Remoting.GraphQL.Model.Extensibility;
+using Snowflake.Remoting.GraphQL.Model.Extensibility;
 using Snowflake.Loader;
 using Snowflake.Services;
 using System;

@@ -1,13 +1,16 @@
-﻿using System.Linq;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using HotChocolate;
 using HotChocolate.Types;
 using HotChocolate.Types.Relay;
 using Snowflake.Configuration;
-using Snowflake.Framework.Remoting.GraphQL;
-using Snowflake.Framework.Remoting.GraphQL.Model.Stone;
-using Snowflake.Framework.Remoting.GraphQL.Schema;
+using Snowflake.Remoting.GraphQL;
+using Snowflake.Remoting.GraphQL.Model.Stone;
+using Snowflake.Remoting.GraphQL.Schema;
 using Snowflake.Loader;
 using Snowflake.Model.Game;
+using Snowflake.Scraping;
 using Snowflake.Services;
 using Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Game;
 using Snowflake.Support.GraphQL.FrameworkQueries.Queries.Debug;
@@ -28,10 +31,13 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
     {
         /// <inheritdoc/>
         [ImportService(typeof(IGraphQLSchemaRegistrationProvider))]
+        [ImportService(typeof(IServiceRegistrationProvider))]
         public void Compose(IModule module, IServiceRepository coreInstance)
         {
           
             var hotChocolate = coreInstance.Get<IGraphQLSchemaRegistrationProvider>();
+            var serviceRegistration = coreInstance.Get<IServiceRegistrationProvider>();
+
             hotChocolate.AddObjectTypeExtension<SubscriptionDebugQueries>();
 
 
@@ -60,6 +66,9 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
 
             hotChocolate.AddObjectTypeExtension<GameMutations>();
             hotChocolate.AddObjectTypeExtension<GameMetadataMutations>();
+
+            //serviceRegistration
+            //    .RegisterService<IAsyncJobQueue<IScrapeContext, IEnumerable<ISeed>>>(new AsyncJobQueue<IScrapeContext, IEnumerable<ISeed>>(true));
 
             //hotChocolate.AddQuery<PlatformQueries, PlatformInfoQueryBuilder>(platformQueries);
             //hotChocolate.AddObjectTypeExtension<GameRecordQueries>();

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using Zio;
 
-namespace Snowflake.Framework.Remoting.GraphQL.Model.Filesystem.Contextual
+namespace Snowflake.Remoting.GraphQL.Model.Filesystem.Contextual
 {
     public sealed class ContextualDirectoryInfoType
         : ObjectType<IReadOnlyDirectory>

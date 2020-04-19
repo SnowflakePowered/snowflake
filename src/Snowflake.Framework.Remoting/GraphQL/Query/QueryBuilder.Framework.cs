@@ -10,9 +10,9 @@ using GraphQL.Builders;
 using GraphQL.Relay.Types;
 using GraphQL.Types;
 using GraphQL.Types.Relay;
-using Snowflake.Framework.Remoting.GraphQL.Attributes;
+using Snowflake.Remoting.GraphQL.Attributes;
 
-namespace Snowflake.Framework.Remoting.GraphQL.Query
+namespace Snowflake.Remoting.GraphQL.Query
 {
     /// <summary>
     /// <para>

@@ -1,7 +1,7 @@
 ﻿using Snowflake.Loader;
 using System.Threading.Tasks;
 
-namespace Snowflake.Framework.Remoting.Kestrel
+namespace Snowflake.Remoting.Kestrel
 {
     /// <summary>
     /// Provides middleware access to the Kestrel remoting server.

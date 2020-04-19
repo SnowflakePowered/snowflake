@@ -1,6 +1,6 @@
 ﻿using HotChocolate.Types;
-using Snowflake.Framework.Remoting.GraphQL.Model.Device.Mapped;
-using Snowflake.Framework.Remoting.GraphQL.Model.Stone.ControllerLayout;
+using Snowflake.Remoting.GraphQL.Model.Device.Mapped;
+using Snowflake.Remoting.GraphQL.Model.Stone.ControllerLayout;
 using Snowflake.Input.Controller;
 using Snowflake.Input.Controller.Mapped;
 using Snowflake.Input.Device;

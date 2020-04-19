@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Snowflake.Framework.Remoting.GraphQL.Model.Stone
+namespace Snowflake.Remoting.GraphQL.Model.Stone
 {
     internal class StoneMetadataType
         : ObjectType<KeyValuePair<string, string>>

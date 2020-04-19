@@ -1,6 +1,6 @@
 ﻿using HotChocolate.Types;
-using Snowflake.Framework.Remoting.GraphQL.Model.Installation;
-using Snowflake.Framework.Remoting.GraphQL.Model.Stone.PlatformInfo;
+using Snowflake.Remoting.GraphQL.Model.Installation;
+using Snowflake.Remoting.GraphQL.Model.Stone.PlatformInfo;
 using Snowflake.Installation.Extensibility;
 using Snowflake.Model.Game;
 using Snowflake.Services;

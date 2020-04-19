@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Snowflake.Framework.Remoting.GraphQL.Model.Stone.ControllerLayout
+namespace Snowflake.Remoting.GraphQL.Model.Stone.ControllerLayout
 {
     /// <summary>
     /// GraphQL Scalar Definition

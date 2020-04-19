@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using GraphQL.Types;
 
-namespace Snowflake.Framework.Remoting.GraphQL.Attributes
+namespace Snowflake.Remoting.GraphQL.Attributes
 {
     /// <summary>
     /// <para>

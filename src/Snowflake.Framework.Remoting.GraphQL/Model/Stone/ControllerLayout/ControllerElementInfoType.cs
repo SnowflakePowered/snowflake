@@ -4,7 +4,7 @@ using System.Text;
 using HotChocolate.Types;
 using Snowflake.Input.Controller;
 
-namespace Snowflake.Framework.Remoting.GraphQL.Model.Stone.ControllerLayout
+namespace Snowflake.Remoting.GraphQL.Model.Stone.ControllerLayout
 {
     public sealed class ControllerElementInfoType : ObjectType<IControllerElementInfo>
     {

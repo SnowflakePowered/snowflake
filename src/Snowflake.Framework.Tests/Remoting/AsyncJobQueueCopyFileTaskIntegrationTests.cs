@@ -5,7 +5,6 @@ using System.IO.Compression;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Filesystem;
-using Snowflake.Framework.Extensibility;
 using Snowflake.Installation;
 using Snowflake.Installation.Tasks;
 using Snowflake.Tests;
@@ -13,6 +12,7 @@ using Xunit;
 using Zio;
 using Zio.FileSystems;
 using FS = Snowflake.Filesystem;
+using Snowflake.Extensibility.Queueing;
 
 namespace Snowflake.Remoting.Tests
 {

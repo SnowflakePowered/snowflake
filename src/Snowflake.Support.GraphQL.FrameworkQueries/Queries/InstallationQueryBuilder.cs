@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 using GraphQL.Types;
 using Snowflake.Extensibility;
 using Snowflake.Filesystem;
-using Snowflake.Framework.Extensibility;
-using Snowflake.Framework.Remoting.GraphQL.Attributes;
-using Snowflake.Framework.Remoting.GraphQL.Query;
+using Snowflake.Remoting.GraphQL.Attributes;
+using Snowflake.Remoting.GraphQL.Query;
 using Snowflake.Installation;
 using Snowflake.Installation.Extensibility;
 using Snowflake.Model.Game;
 using Snowflake.Orchestration.Extensibility;
 using Snowflake.Support.GraphQLFrameworkQueries.Types.Installable;
 using Snowflake.Support.GraphQLFrameworkQueries.Types.Model;
+using Snowflake.Extensibility.Queueing;
 
 namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
 {

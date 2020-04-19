@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Text;
 using Zio;
 
-namespace Snowflake.Framework.Remoting.GraphQL.Model.Filesystem
+namespace Snowflake.Remoting.GraphQL.Model.Filesystem
 {
     /// <summary>
     /// GraphQL Scalar Definition

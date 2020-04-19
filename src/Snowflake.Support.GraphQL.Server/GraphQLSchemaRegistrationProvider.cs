@@ -4,7 +4,7 @@ using HotChocolate.Types.Descriptors;
 using HotChocolate.Types.Descriptors.Definitions;
 using Microsoft.Extensions.DependencyInjection;
 using Snowflake.Extensibility;
-using Snowflake.Framework.Remoting.GraphQL;
+using Snowflake.Remoting.GraphQL;
 using Snowflake.Loader;
 using Snowflake.Model.Game;
 using System;

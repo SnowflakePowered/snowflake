@@ -1,15 +1,15 @@
 ﻿using HotChocolate.Types;
 using Snowflake.Extensibility.Provisioning;
 using Snowflake.Extensibility.Provisioning.Standalone;
-using Snowflake.Framework.Remoting.GraphQL.Model.Configuration;
-using Snowflake.Framework.Remoting.GraphQL.Model.Filesystem;
-using Snowflake.Framework.Remoting.GraphQL.Model.Filesystem.Contextual;
+using Snowflake.Remoting.GraphQL.Model.Configuration;
+using Snowflake.Remoting.GraphQL.Model.Filesystem;
+using Snowflake.Remoting.GraphQL.Model.Filesystem.Contextual;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using Zio;
 
-namespace Snowflake.Framework.Remoting.GraphQL.Model.Extensibility
+namespace Snowflake.Remoting.GraphQL.Model.Extensibility
 {
     public sealed class ProvisionedPluginType
         : ObjectType<IProvisionedPlugin>

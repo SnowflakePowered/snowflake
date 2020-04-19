@@ -1,6 +1,6 @@
 ﻿using HotChocolate.Types;
 using HotChocolate.Types.Filters;
-using Snowflake.Framework.Remoting.GraphQL.Model.Stone;
+using Snowflake.Remoting.GraphQL.Model.Stone;
 using Snowflake.Model.Records.Game;
 using System;
 using System.Collections.Generic;

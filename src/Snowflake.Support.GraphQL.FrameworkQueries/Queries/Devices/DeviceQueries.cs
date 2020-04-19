@@ -1,5 +1,5 @@
 ﻿using HotChocolate.Types;
-using Snowflake.Framework.Remoting.GraphQL.Model.Device;
+using Snowflake.Remoting.GraphQL.Model.Device;
 using Snowflake.Services;
 using System;
 using System.Collections.Generic;

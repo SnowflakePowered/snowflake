@@ -489,6 +489,51 @@
             <param name="context">The serialization context.</param>
             <param name="index">The position or index of the given node within the current block in the context.</param>
         </member>
+        <member name="T:Snowflake.Extensibility.Queueing.AsyncJobQueue`1">
+            <inheritdoc />
+        </member>
+        <member name="M:Snowflake.Extensibility.Queueing.AsyncJobQueue`1.#ctor(System.Boolean)">
+            <summary>
+            Creates a new asynchronous job queue.
+            </summary>
+            <param name="disposeEnumerable">If false, will not automatically remove the enumerable once the job is complete.</param>
+        </member>
+        <member name="M:Snowflake.Extensibility.Queueing.AsyncJobQueue`1.TryRemoveSource(System.Guid,System.Collections.Generic.IAsyncEnumerable{`0}@)">
+            <inheritdoc />
+        </member>
+        <member name="T:Snowflake.Extensibility.Queueing.AsyncJobQueue`2">
+            <inheritdoc />
+        </member>
+        <member name="M:Snowflake.Extensibility.Queueing.AsyncJobQueue`2.#ctor(System.Boolean)">
+            <summary>
+            Creates a new asynchronous job queue.
+            </summary>
+            <param name="disposeEnumerable">If false, will not automatically remove the enumerable once the job is complete.</param>
+        </member>
+        <member name="M:Snowflake.Extensibility.Queueing.AsyncJobQueue`2.Empty">
+            <summary>
+            The empty enumerator.
+            </summary>
+            <returns>An empty async enumerable</returns>
+        </member>
+        <member name="M:Snowflake.Extensibility.Queueing.AsyncJobQueue`2.GetNext(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:Snowflake.Extensibility.Queueing.AsyncJobQueue`2.QueueJob(`0,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Snowflake.Extensibility.Queueing.AsyncJobQueue`2.QueueJob(`0,System.Guid,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Snowflake.Extensibility.Queueing.AsyncJobQueue`2.AsEnumerable(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:Snowflake.Extensibility.Queueing.AsyncJobQueue`2.GetSource(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:Snowflake.Extensibility.Queueing.AsyncJobQueue`2.TryRemoveSource(System.Guid,`0@)">
+            <inheritdoc />
+        </member>
         <member name="F:Snowflake.Extensibility.EmptyPluginConfiguration.EmptyConfiguration">
             <summary>
             The empty plugin configuration.

@@ -4,7 +4,7 @@ using System.Text;
 using HotChocolate.Types;
 using Snowflake.Input.Device;
 
-namespace Snowflake.Framework.Remoting.GraphQL.Model.Device
+namespace Snowflake.Remoting.GraphQL.Model.Device
 {
     public class InputDeviceType : ObjectType<IInputDevice>
     {

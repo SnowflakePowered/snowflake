@@ -1,6 +1,6 @@
 ﻿using HotChocolate;
 using HotChocolate.Types;
-using Snowflake.Framework.Remoting.GraphQL.Model.Saving;
+using Snowflake.Remoting.GraphQL.Model.Saving;
 using Snowflake.Model.Game;
 using Snowflake.Model.Game.LibraryExtensions;
 using Snowflake.Orchestration.Saving;

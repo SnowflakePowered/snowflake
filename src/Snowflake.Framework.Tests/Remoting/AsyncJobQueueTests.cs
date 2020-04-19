@@ -1,4 +1,4 @@
-﻿using Snowflake.Framework.Extensibility;
+﻿using Snowflake.Extensibility.Queueing;
 using System;
 using System.Collections.Generic;
 using System.Text;

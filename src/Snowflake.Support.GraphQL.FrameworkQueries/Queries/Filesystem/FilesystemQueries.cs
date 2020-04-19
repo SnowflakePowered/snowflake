@@ -1,8 +1,8 @@
 ﻿using HotChocolate.Types;
 using Microsoft.DotNet.PlatformAbstractions;
-using Snowflake.Framework.Remoting.GraphQL.Model.Filesystem;
-using Snowflake.Framework.Remoting.GraphQL.Model.Filesystem.Contextual;
-using Snowflake.Framework.Remoting.GraphQL.Schema;
+using Snowflake.Remoting.GraphQL.Model.Filesystem;
+using Snowflake.Remoting.GraphQL.Model.Filesystem.Contextual;
+using Snowflake.Remoting.GraphQL.Schema;
 using Snowflake.Services;
 using System;
 using System.Collections.Generic;

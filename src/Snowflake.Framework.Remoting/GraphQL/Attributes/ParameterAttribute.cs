@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using GraphQL.Types;
 
-namespace Snowflake.Framework.Remoting.GraphQL.Attributes
+namespace Snowflake.Remoting.GraphQL.Attributes
 {
     /// <summary>
     /// Describes a parameter in a method's argument list, providing necesssary details about

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Management;
 using Snowflake.Support.InputEnumerators.Windows;
 
-namespace Snowflake.Framework.Tests.Input.Windows
+namespace Snowflake.Input.Tests.Windows
 {
     // var controllers = new[] { new Controller(UserIndex.One), new Controller(UserIndex.Two), new Controller(UserIndex.Three), new Controller(UserIndex.Four) };
 

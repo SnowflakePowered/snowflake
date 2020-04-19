@@ -1,6 +1,6 @@
 ﻿using HotChocolate.Types;
-using Snowflake.Framework.Remoting.GraphQL.Model.Records;
-using Snowflake.Framework.Remoting.GraphQL.RelayMutations;
+using Snowflake.Remoting.GraphQL.Model.Records;
+using Snowflake.Remoting.GraphQL.RelayMutations;
 using Snowflake.Model.Game;
 using Snowflake.Model.Records;
 using System;

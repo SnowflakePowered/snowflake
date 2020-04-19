@@ -6,8 +6,9 @@ using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Snowflake.Configuration;
-using Snowflake.Framework.Remoting.GraphQL;
-using Snowflake.Framework.Remoting.Kestrel;
+using Snowflake.Extensibility;
+using Snowflake.Remoting.GraphQL;
+using Snowflake.Remoting.Kestrel;
 using Snowflake.Input;
 using Snowflake.Input.Controller.Mapped;
 using Snowflake.Loader;
@@ -15,6 +16,7 @@ using Snowflake.Services.Logging;
 using Snowflake.Support.Remoting.GraphQL.RootProvider;
 using Zio;
 using Zio.FileSystems;
+using Snowflake.Extensibility.Queueing;
 
 namespace Snowflake.Services
 {
@@ -49,6 +51,7 @@ namespace Snowflake.Services
             this.RegisterService<IServiceRegistrationProvider>(new ServiceRegistrationProvider(this));
             this.RegisterService<IServiceEnumerator>(new ServiceEnumerator(this));
             this.RegisterService<IFileSystem>(new PhysicalFileSystem());
+            this.RegisterService<IAsyncJobQueueFactory>(new AsyncJobQueueFactory());
         }
 
         internal IServiceCollection BuildServiceContainer()

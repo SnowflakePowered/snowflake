@@ -1,5 +1,5 @@
-﻿using Snowflake.Framework.Remoting.GraphQL;
-using Snowflake.Framework.Remoting.Kestrel;
+﻿using Snowflake.Remoting.GraphQL;
+using Snowflake.Remoting.Kestrel;
 using Snowflake.Loader;
 using Snowflake.Services;
 using System;

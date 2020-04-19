@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Snowflake.Framework.Remoting.Electron;
+using Snowflake.Remoting.Electron;
 
 namespace Snowflake.Support.Remoting.Electron
 {

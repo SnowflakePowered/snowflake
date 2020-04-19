@@ -6,9 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using GraphQL.Types;
 using Snowflake.Extensibility;
-using Snowflake.Framework.Extensibility;
-using Snowflake.Framework.Remoting.GraphQL.Attributes;
-using Snowflake.Framework.Remoting.GraphQL.Query;
+using Snowflake.Remoting.GraphQL.Attributes;
+using Snowflake.Remoting.GraphQL.Query;
 using Snowflake.Model.Game;
 using Snowflake.Model.Records.Game;
 using Snowflake.Scraping;
@@ -17,6 +16,7 @@ using Snowflake.Support.GraphQLFrameworkQueries.Inputs.Scraping;
 using Snowflake.Support.GraphQLFrameworkQueries.Types.Model;
 using Snowflake.Support.GraphQLFrameworkQueries.Types.Scraping;
 using static Snowflake.Scraping.Extensibility.SeedBuilder;
+using Snowflake.Extensibility.Queueing;
 
 namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
 {
@@ -41,7 +41,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
             this.Cullers = cullers;
             this.GameTraversers = gameTraversers;
             this.FileTraversers = fileTraversers;
-            this.GameScrapeContextJobQueue = new AsyncJobQueue<IScrapeContext, IEnumerable<ISeed>>(false);
+            //this.GameScrapeContextJobQueue = new AsyncJobQueue<IScrapeContext, IEnumerable<ISeed>>(false);
         }
 
         [Mutation("scrapeGameWithAllScrapersAuto", "Automatically scrape context with all scrapers and all cullers. " +

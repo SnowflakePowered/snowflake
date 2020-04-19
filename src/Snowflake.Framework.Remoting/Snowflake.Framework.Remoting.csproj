@@ -5,6 +5,7 @@
     <LangVersion>8.0</LangVersion>
     <_SnowflakeUseDevelopmentSDK>true</_SnowflakeUseDevelopmentSDK>
     <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
+    <RootNamespace>Snowflake.Remoting</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Snowflake.Framework.Remoting.GraphQL.Model.Saving
+namespace Snowflake.Remoting.GraphQL.Model.Saving
 {
     public sealed class SaveManagementStrategyEnum
         : EnumType<SaveManagementStrategy>
