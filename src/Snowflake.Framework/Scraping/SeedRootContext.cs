@@ -23,7 +23,7 @@ namespace Snowflake.Scraping
             this.Add(this.Root);
         }
 
-        public ISeed this[Guid seedGuid] => this.Seeds.FirstOrDefault(s => s.Guid == seedGuid) ?? this.Root;
+        public ISeed? this[Guid seedGuid] => this.Seeds.FirstOrDefault(s => s.Guid == seedGuid);
 
         public ISeed Add(SeedContent content, ISeed parent, string source)
         {

@@ -10,11 +10,11 @@ namespace Snowflake.Scraping
     public interface ISeedRootContext
     {
         /// <summary>
-        /// Returns the seed with the given GUID. If it does not exists, returns the root.
+        /// Returns the seed with the given GUID. If it does not exists, returns null.
         /// </summary>
         /// <param name="seedGuid">The GUID of the seed.</param>
         /// <returns>The seed with the given GUID if it exists within the context, otherwise the root seed.</returns>
-        ISeed this[Guid seedGuid] { get; }
+        ISeed? this[Guid seedGuid] { get; }
 
         /// <summary>
         /// Gets the root of the context where all seeds are attached to
@@ -47,7 +47,7 @@ namespace Snowflake.Scraping
         IEnumerable<ISeed> GetAllOfType(string type);
 
         /// <summary>
-        /// Gets all the children of the given seed relative to this context, not
+        /// Gets all the unculled children of the given seed relative to this context, not
         /// including the given seed.
         /// </summary>
         /// <param name="seed">The seed of which whose children are returned.</param>
@@ -55,7 +55,7 @@ namespace Snowflake.Scraping
         IEnumerable<ISeed> GetChildren(ISeed? seed);
 
         /// <summary>
-        /// Gets all the siblings of the given seed relative to this context,
+        /// Gets all the unculled siblings of the given seed relative to this context,
         /// not including the given seed.
         /// </summary>
         /// <param name="seed">The seed of which whose siblings are returned.</param>
@@ -63,13 +63,13 @@ namespace Snowflake.Scraping
         IEnumerable<ISeed> GetSiblings(ISeed? seed);
 
         /// <summary>
-        /// Gets all the children of the root.
+        /// Gets all the unculled children of the root.
         /// </summary>
         /// <returns>All the children of the root.</returns>
         IEnumerable<ISeed> GetRootSeeds();
 
         /// <summary>
-        /// Gets all the descendants of a given seed.
+        /// Gets all the unculled descendants of a given seed.
         /// </summary>
         /// <param name="seed">The seed whose descendants are returned.</param>
         /// <returns>All the descendants of the given seed.</returns>
