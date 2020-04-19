@@ -4,14 +4,27 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Snowflake.Framework.Extensibility
+namespace Snowflake.Extensibility.Queueing
 {
+    /// <summary>
+    /// A queue for long-existing <see cref="IAsyncEnumerable{T}"/> that represent a collection of long running resumable jobs.
+    /// </summary>
+    public interface IAsyncJobQueue
+    {
+        /// <summary>
+        /// Checks whether or not a job source with the given GUID exists.
+        /// </summary>
+        /// <param name="jobId">The GUID of the job to check</param>
+        /// <returns>Whether or not the job source still exists, or has already been disposed.</returns>
+        bool HasJob(Guid jobId);
+    }
+
     /// <summary>
     /// A queue for long-existing <see cref="IAsyncEnumerable{T}"/> that represent a collection of long running resumable jobs.
     /// </summary>
     /// <typeparam name="T">The type of elements in the enumerable.</typeparam>
     public interface IAsyncJobQueue<T>
-        : IAsyncJobQueue<IAsyncEnumerable<T>, T>
+        : IAsyncJobQueue<IAsyncEnumerable<T>, T>, IAsyncJobQueue
     {
         /// <summary>
         /// Tries to remove the <see cref="IAsyncEnumerable{T}"/> as it was added to the job queue.
@@ -34,7 +47,7 @@ namespace Snowflake.Framework.Extensibility
     /// <typeparam name="T">The type of elements in the enumerable.</typeparam>
     /// <typeparam name="TAsyncEnumerable">The type that implements <see cref="IAsyncEnumerable{T}"/></typeparam>
 
-    public interface IAsyncJobQueue<TAsyncEnumerable, T>
+    public interface IAsyncJobQueue<TAsyncEnumerable, T> : IAsyncJobQueue
         where TAsyncEnumerable : class, IAsyncEnumerable<T>
     {
         /// <summary>
@@ -64,7 +77,7 @@ namespace Snowflake.Framework.Extensibility
         /// </summary>
         /// <param name="jobId">The jobId</param>
         /// <returns>The <see cref="IAsyncEnumerable{T}"/> as it was added to the job queue.</returns>
-        TAsyncEnumerable GetSource(Guid jobId);
+        TAsyncEnumerable? GetSource(Guid jobId);
 
         /// <summary>
         /// Tries to remove the <see cref="IAsyncEnumerable{T}"/> as it was added to the job queue.
