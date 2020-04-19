@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Snowflake.Framework.Remoting.GraphQL.Model.Extensibility
+namespace Snowflake.Remoting.GraphQL.Model.Extensibility
 {
     public sealed class PluginType
         : ObjectType<IPlugin>

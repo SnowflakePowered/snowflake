@@ -1,6 +1,6 @@
 ﻿using HotChocolate.Types;
-using Snowflake.Framework.Remoting.GraphQL.Model.Installation;
-using Snowflake.Framework.Remoting.GraphQL.Model.Stone.PlatformInfo;
+using Snowflake.Remoting.GraphQL.Model.Installation;
+using Snowflake.Remoting.GraphQL.Model.Stone.PlatformInfo;
 using System;
 using System.Collections.Generic;
 using System.Text;

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Snowflake.Framework.Remoting.GraphQL.Schema
+namespace Snowflake.Remoting.GraphQL.Schema
 {
     public class Query
     {

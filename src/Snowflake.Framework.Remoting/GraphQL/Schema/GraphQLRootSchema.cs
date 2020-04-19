@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using GraphQL;
 using GraphQL.Types;
-using Snowflake.Framework.Remoting.GraphQL;
-using Snowflake.Framework.Remoting.GraphQL.Query;
+using Snowflake.Remoting.GraphQL;
+using Snowflake.Remoting.GraphQL.Query;
 
 namespace Snowflake.Support.Remoting.GraphQL.RootProvider
 {

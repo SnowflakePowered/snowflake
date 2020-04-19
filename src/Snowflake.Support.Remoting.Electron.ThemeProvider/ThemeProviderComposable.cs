@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Snowflake.Framework.Remoting.Electron;
-using Snowflake.Framework.Remoting.GraphQL;
+using Snowflake.Remoting.Electron;
+using Snowflake.Remoting.GraphQL;
 using Snowflake.Loader;
 using Snowflake.Services;
 using Snowflake.Support.Remoting.Electron.ThemeProvider.GraphQl;

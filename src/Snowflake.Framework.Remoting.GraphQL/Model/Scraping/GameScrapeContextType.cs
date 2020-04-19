@@ -1,11 +1,11 @@
 ﻿using HotChocolate.Types;
-using Snowflake.Framework.Remoting.GraphQL.Model.Extensibility;
+using Snowflake.Remoting.GraphQL.Model.Extensibility;
 using Snowflake.Scraping;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Snowflake.Framework.Remoting.GraphQL.Model.Scraping
+namespace Snowflake.Remoting.GraphQL.Model.Scraping
 {
     public sealed class GameScrapeContextType
         : ObjectType<IScrapeContext>

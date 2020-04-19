@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using Snowflake.Configuration;
-using Snowflake.Framework.Remoting.GraphQL;
+using Snowflake.Remoting.GraphQL;
 using Snowflake.Input;
 using Snowflake.Input.Controller.Mapped;
 using Snowflake.Input.Device;

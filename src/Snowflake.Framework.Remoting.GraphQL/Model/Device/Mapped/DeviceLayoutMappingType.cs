@@ -1,12 +1,12 @@
 ﻿using HotChocolate.Types;
-using Snowflake.Framework.Remoting.GraphQL.Model.Device.Mapped;
+using Snowflake.Remoting.GraphQL.Model.Device.Mapped;
 using Snowflake.Input.Controller.Mapped;
 using Snowflake.Input.Device;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Snowflake.Framework.Remoting.GraphQL.Model.Device.Mapped
+namespace Snowflake.Remoting.GraphQL.Model.Device.Mapped
 {
     public sealed class DeviceLayoutMappingType
         : ObjectType<IDeviceLayoutMapping>

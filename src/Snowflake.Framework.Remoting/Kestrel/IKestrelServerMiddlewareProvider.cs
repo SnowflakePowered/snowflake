@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Snowflake.Loader;
 
-namespace Snowflake.Framework.Remoting.Kestrel
+namespace Snowflake.Remoting.Kestrel
 {
     /// <summary>
     /// Provides the implementation for a Kestrel middleware.

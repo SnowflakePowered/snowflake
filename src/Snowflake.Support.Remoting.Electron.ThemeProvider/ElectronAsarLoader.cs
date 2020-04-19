@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using Snowflake.Extensibility;
-using Snowflake.Framework.Remoting.Electron;
+using Snowflake.Remoting.Electron;
 using Snowflake.Loader;
 using Snowflake.Support.Remoting.Electron.ThemeProvider;
 

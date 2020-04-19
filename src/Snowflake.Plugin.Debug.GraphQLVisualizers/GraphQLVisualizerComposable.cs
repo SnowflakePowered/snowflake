@@ -8,7 +8,7 @@ using GraphQL.Server.Ui.Playground;
 using GraphQL.Server.Ui.Voyager;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using Snowflake.Framework.Remoting.Kestrel;
+using Snowflake.Remoting.Kestrel;
 using Snowflake.Loader;
 
 namespace Snowflake.Plugin.Debug.GraphQLVisualizers

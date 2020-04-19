@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Snowflake.Framework.Remoting.GraphQL.Model.Scraping
+namespace Snowflake.Remoting.GraphQL.Model.Scraping
 {
     public sealed class SeedRootContextType
         : ObjectType<ISeedRootContext>

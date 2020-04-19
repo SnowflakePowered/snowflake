@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using GraphQL.Types;
-using Snowflake.Framework.Remoting.GraphQL.Query;
+using Snowflake.Remoting.GraphQL.Query;
 
-namespace Snowflake.Framework.Remoting.GraphQL
+namespace Snowflake.Remoting.GraphQL
 {
     /// <summary>
     /// Provides access to the GraphQL root schema.

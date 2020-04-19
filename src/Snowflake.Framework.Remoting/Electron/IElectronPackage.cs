@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Snowflake.Framework.Remoting.Electron
+namespace Snowflake.Remoting.Electron
 {
     /// <summary>
     /// Represents a loadable Electron package, that usually implements a user interface.

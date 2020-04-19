@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Snowflake.Framework.Remoting.Electron;
+using Snowflake.Remoting.Electron;
 
-using Snowflake.Framework.Remoting.GraphQL.Attributes;
-using Snowflake.Framework.Remoting.GraphQL.Query;
+using Snowflake.Remoting.GraphQL.Attributes;
+using Snowflake.Remoting.GraphQL.Query;
 using Snowflake.Support.Remoting.Electron.ThemeProvider.GraphQl.Types;
 
 namespace Snowflake.Support.Remoting.Electron.ThemeProvider.GraphQl

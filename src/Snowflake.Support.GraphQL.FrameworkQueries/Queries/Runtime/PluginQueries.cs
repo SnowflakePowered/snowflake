@@ -1,8 +1,8 @@
 ﻿using HotChocolate.Types;
 using Snowflake.Extensibility;
 using Snowflake.Extensibility.Provisioning;
-using Snowflake.Framework.Remoting.GraphQL.Model.Extensibility;
-using Snowflake.Framework.Remoting.GraphQL.Model.Filesystem.Contextual;
+using Snowflake.Remoting.GraphQL.Model.Extensibility;
+using Snowflake.Remoting.GraphQL.Model.Filesystem.Contextual;
 using System;
 using System.Collections.Generic;
 using System.Text;

@@ -1,13 +1,13 @@
 ﻿using HotChocolate.Types;
 using Snowflake.Extensibility;
-using Snowflake.Framework.Remoting.GraphQL.Model.Filesystem;
+using Snowflake.Remoting.GraphQL.Model.Filesystem;
 using Snowflake.Loader;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Snowflake.Framework.Remoting.GraphQL.Model.Extensibility
+namespace Snowflake.Remoting.GraphQL.Model.Extensibility
 {
     public sealed class ModuleType
         : ObjectType<IModule>

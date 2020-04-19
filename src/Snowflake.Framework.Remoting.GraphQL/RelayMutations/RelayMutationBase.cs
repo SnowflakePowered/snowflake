@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Snowflake.Framework.Remoting.GraphQL.RelayMutations
+namespace Snowflake.Remoting.GraphQL.RelayMutations
 {
     public abstract class RelayMutationBase
     {

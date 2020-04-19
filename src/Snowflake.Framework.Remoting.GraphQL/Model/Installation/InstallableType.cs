@@ -1,11 +1,11 @@
 ﻿using HotChocolate.Types;
-using Snowflake.Framework.Remoting.GraphQL.Model.Filesystem;
+using Snowflake.Remoting.GraphQL.Model.Filesystem;
 using Snowflake.Installation.Extensibility;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Snowflake.Framework.Remoting.GraphQL.Model.Installation
+namespace Snowflake.Remoting.GraphQL.Model.Installation
 {
     public sealed class InstallableType
         : ObjectType<IInstallable>

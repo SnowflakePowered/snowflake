@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Snowflake.Framework.Remoting.Electron
+namespace Snowflake.Remoting.Electron
 {
     /// <summary>
     /// A service that provides access to Electron package manifests.

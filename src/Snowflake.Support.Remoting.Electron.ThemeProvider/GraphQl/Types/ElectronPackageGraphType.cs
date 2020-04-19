@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using GraphQL.Types;
-using Snowflake.Framework.Remoting.Electron;
+using Snowflake.Remoting.Electron;
 
 namespace Snowflake.Support.Remoting.Electron.ThemeProvider.GraphQl.Types
 {

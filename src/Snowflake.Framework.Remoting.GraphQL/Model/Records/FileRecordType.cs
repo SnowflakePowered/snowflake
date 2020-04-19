@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Snowflake.Framework.Remoting.GraphQL.Model.Records
+namespace Snowflake.Remoting.GraphQL.Model.Records
 {
     public sealed class FileRecordType
         : ObjectType<IFileRecord>

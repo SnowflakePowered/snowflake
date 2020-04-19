@@ -4,7 +4,7 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using Snowflake.Extensibility;
-using Snowflake.Framework.Remoting.Electron;
+using Snowflake.Remoting.Electron;
 using Snowflake.Loader;
 
 namespace Snowflake.Support.Remoting.Electron

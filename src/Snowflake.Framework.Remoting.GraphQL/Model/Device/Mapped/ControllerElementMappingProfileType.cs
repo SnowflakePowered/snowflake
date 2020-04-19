@@ -1,11 +1,11 @@
 ﻿using HotChocolate.Types;
-using Snowflake.Framework.Remoting.GraphQL.Model.Stone.ControllerLayout;
+using Snowflake.Remoting.GraphQL.Model.Stone.ControllerLayout;
 using Snowflake.Input.Controller.Mapped;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Snowflake.Framework.Remoting.GraphQL.Model.Device.Mapped
+namespace Snowflake.Remoting.GraphQL.Model.Device.Mapped
 {
     public sealed class ControllerElementMappingProfileType
         : ObjectType<IControllerElementMappingProfile>

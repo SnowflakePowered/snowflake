@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Snowflake.Extensibility;
-using Snowflake.Framework.Remoting.Kestrel;
+using Snowflake.Remoting.Kestrel;
 using Snowflake.Loader;
 using Snowflake.Services.AssemblyLoader.Extensions;
 using Snowflake.Services.Logging;

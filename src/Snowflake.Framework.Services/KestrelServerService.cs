@@ -13,7 +13,7 @@ using Snowflake.Extensibility;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.AspNetCore.WebSockets;
 
-namespace Snowflake.Framework.Remoting.Kestrel
+namespace Snowflake.Remoting.Kestrel
 {
     internal class KestrelServerService : IKestrelWebServerService
     {

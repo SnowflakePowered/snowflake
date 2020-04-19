@@ -4,7 +4,7 @@ using HotChocolate.Types;
 using HotChocolate.Types.Filters;
 using HotChocolate.Types.Relay;
 using HotChocolate.Utilities;
-using Snowflake.Framework.Remoting.GraphQL.Model.Records;
+using Snowflake.Remoting.GraphQL.Model.Records;
 using Snowflake.Model.Game;
 using Snowflake.Model.Records.Game;
 using System;

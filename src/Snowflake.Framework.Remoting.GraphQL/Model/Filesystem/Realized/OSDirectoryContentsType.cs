@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace Snowflake.Framework.Remoting.GraphQL.Model.Filesystem.Contextual
+namespace Snowflake.Remoting.GraphQL.Model.Filesystem.Contextual
 {
     public sealed class OSDirectoryContentsType
         : ObjectType<DirectoryInfo>

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using GraphQL.Types;
-using Snowflake.Framework.Remoting.GraphQL.Attributes;
+using Snowflake.Remoting.GraphQL.Attributes;
 
-namespace Snowflake.Framework.Remoting.GraphQL.Query
+namespace Snowflake.Remoting.GraphQL.Query
 {
     /// <summary>
     /// A class that provides GraphQL Schema access through <see cref="IGraphQLService.Register(QueryBuilder)"/> must

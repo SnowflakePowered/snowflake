@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Snowflake.Framework.Remoting.GraphQL
+namespace Snowflake.Remoting.GraphQL
 {
     /// <summary>
     /// Only ever add a type that is in your own assembly

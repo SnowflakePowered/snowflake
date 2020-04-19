@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Snowflake.Framework.Remoting.GraphQL.Model.Stone.ControllerLayout
+namespace Snowflake.Remoting.GraphQL.Model.Stone.ControllerLayout
 {
     public sealed class ControllerElementEnum
         : EnumType<ControllerElement>

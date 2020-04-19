@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Snowflake.Framework.Remoting.GraphQL.Model.Stone.PlatformInfo
+namespace Snowflake.Remoting.GraphQL.Model.Stone.PlatformInfo
 {
     public sealed class SystemFileType
         : ObjectType<ISystemFile>

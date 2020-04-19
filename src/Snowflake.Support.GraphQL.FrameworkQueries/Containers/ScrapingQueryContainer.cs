@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Snowflake.Framework.Remoting.GraphQL;
+using Snowflake.Remoting.GraphQL;
 using Snowflake.Loader;
 using Snowflake.Model.Game;
 using Snowflake.Scraping.Extensibility;

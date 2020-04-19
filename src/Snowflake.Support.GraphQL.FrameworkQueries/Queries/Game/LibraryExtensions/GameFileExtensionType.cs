@@ -1,7 +1,7 @@
 ﻿using HotChocolate.Types;
-using Snowflake.Framework.Remoting.GraphQL.Model.Filesystem;
-using Snowflake.Framework.Remoting.GraphQL.Model.Filesystem.Contextual;
-using Snowflake.Framework.Remoting.GraphQL.Model.Records;
+using Snowflake.Remoting.GraphQL.Model.Filesystem;
+using Snowflake.Remoting.GraphQL.Model.Filesystem.Contextual;
+using Snowflake.Remoting.GraphQL.Model.Records;
 using Snowflake.Model.Game.LibraryExtensions;
 using System;
 using System.Collections.Generic;

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using GraphQL.Types;
 
-namespace Snowflake.Framework.Remoting.GraphQL.Query
+namespace Snowflake.Remoting.GraphQL.Query
 {
     internal class ConnectionQuery
     {

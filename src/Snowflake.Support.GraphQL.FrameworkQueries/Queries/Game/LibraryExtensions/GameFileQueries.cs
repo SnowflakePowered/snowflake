@@ -1,5 +1,5 @@
 ﻿using HotChocolate.Types;
-using Snowflake.Framework.Remoting.GraphQL.Model.Game;
+using Snowflake.Remoting.GraphQL.Model.Game;
 using Snowflake.Model.Game;
 using Snowflake.Model.Game.LibraryExtensions;
 using Snowflake.Support.GraphQLFrameworkQueries.Queries.Game.LibraryExtensions;
