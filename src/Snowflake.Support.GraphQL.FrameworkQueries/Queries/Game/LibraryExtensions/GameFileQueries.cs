@@ -18,7 +18,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.LibraryExtensions
 
             descriptor.Field("files")
                 .Type<GameFileExtensionType>()
-                .Description("Record metadata relating to this game.")
+                .Description("Provides access to the game's files.")
                 .Resolver(context => context.Parent<IGame>().WithFiles());
         }
     }

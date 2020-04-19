@@ -18,6 +18,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Game.LibraryExtensio
             descriptor.Name("GameFiles")
                 .Description("Files and file data relating to the game.");
             descriptor.Field("fileRecords")
+                .Description("Provides access to metadata attached to files, including registered mimetypes.")
                 .Resolver(g => g.Parent<IGameFileExtension>()
                 .GetFileRecords())
                 .Type<ListType<FileRecordType>>();

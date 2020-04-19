@@ -24,6 +24,7 @@ using Snowflake.Framework.Remoting.GraphQL.Model.Installation;
 using Snowflake.Framework.Remoting.GraphQL.Model.Orchestration;
 using Snowflake.Framework.Remoting.GraphQL.Model.Records;
 using Snowflake.Framework.Remoting.GraphQL.Model.Saving;
+using Snowflake.Framework.Remoting.GraphQL.Model.Scraping;
 using Snowflake.Framework.Remoting.GraphQL.Model.Stone;
 using Snowflake.Framework.Remoting.GraphQL.Model.Stone.ControllerLayout;
 using Snowflake.Framework.Remoting.GraphQL.Model.Stone.PlatformInfo;
@@ -84,7 +85,7 @@ namespace Snowflake.Services
                 .AddObjectType<GameRecordType>()
                 ;
 
-            // Filesytem
+            // Filesystem
             this.Schemas
                 .AddScalarType<OSFilePathType>()
                 .AddScalarType<OSDirectoryPathType>()
@@ -149,6 +150,14 @@ namespace Snowflake.Services
                .AddObjectType<SelectionOptionDescriptorType>()
 
                ;
+
+            this.Schemas
+                .AddObjectType<GameScrapeContextType>()
+                .AddObjectType<SeedContentType>()
+                .AddObjectType<SeedRootContextType>()
+                .AddObjectType<SeedType>()
+                ;
+
             services.AddDataLoaderRegistry();
             services.AddGraphQLSubscriptions();
 

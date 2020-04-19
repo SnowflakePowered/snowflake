@@ -87,7 +87,7 @@ namespace Snowflake.Scraping
             {
                 AttachTarget.Root => this.Context.Root,
                 AttachTarget.Target => matchingSeed,
-                AttachTarget.TargetParent => this.Context[matchingSeed.Parent],
+                AttachTarget.TargetParent => this.Context[matchingSeed.Parent] ?? this.Context.Root,
                 _ => this.Context.Root,
             };
         }

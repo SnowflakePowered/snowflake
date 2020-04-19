@@ -13,7 +13,6 @@ using Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Game;
 using Snowflake.Support.GraphQL.FrameworkQueries.Queries.Debug;
 using Snowflake.Support.GraphQL.FrameworkQueries.Queries.Game.Orchestration;
 using Snowflake.Support.GraphQLFrameworkQueries.Queries;
-using Snowflake.Support.GraphQLFrameworkQueries.Queries.Debug;
 using Snowflake.Support.GraphQLFrameworkQueries.Queries.Devices;
 using Snowflake.Support.GraphQLFrameworkQueries.Queries.Devices.Mapped;
 using Snowflake.Support.GraphQLFrameworkQueries.Queries.Filesystem;
@@ -33,9 +32,6 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
         {
           
             var hotChocolate = coreInstance.Get<IGraphQLSchemaRegistrationProvider>();
-
-            hotChocolate.AddObjectTypeExtension<EchoQueries>();
-            hotChocolate.AddObjectTypeExtension<MutationDebugQueries>();
             hotChocolate.AddObjectTypeExtension<SubscriptionDebugQueries>();
 
 
