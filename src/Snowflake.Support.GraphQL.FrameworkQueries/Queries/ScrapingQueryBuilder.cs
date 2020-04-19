@@ -28,7 +28,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
         private IPluginCollection<IGameMetadataTraverser> GameTraversers { get; }
         private IPluginCollection<IFileInstallationTraverser> FileTraversers { get; }
 
-        private IAsyncJobQueue<IEnumerable<ISeed>> GameScrapeContextJobQueue { get; }
+        private IAsyncJobQueue<IScrapeContext, IEnumerable<ISeed>> GameScrapeContextJobQueue { get; }
 
         public ScrapingQueryBuilder(IGameLibrary gameLibrary,
             IPluginCollection<IScraper> scrapers,
@@ -41,7 +41,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
             this.Cullers = cullers;
             this.GameTraversers = gameTraversers;
             this.FileTraversers = fileTraversers;
-            this.GameScrapeContextJobQueue = new AsyncJobQueue<IEnumerable<ISeed>>(false);
+            this.GameScrapeContextJobQueue = new AsyncJobQueue<IScrapeContext, IEnumerable<ISeed>>(false);
         }
 
         [Mutation("scrapeGameWithAllScrapersAuto", "Automatically scrape context with all scrapers and all cullers. " +
@@ -83,7 +83,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
         [Parameter(typeof(Guid), typeof(GuidGraphType), "jobGuid", "The GUID of the created scraping context to proceed with.", false)]
         public async Task<IEnumerable<ISeed>> ScrapeAllSteps(Guid jobGuid)
         {
-            return await ((GameScrapeContext)this.GameScrapeContextJobQueue.GetSource(jobGuid));
+            return await (this.GameScrapeContextJobQueue.GetSource(jobGuid));
         }
 
         [Query("discardScrapeResults", "Discards the completed scrape results.", typeof(ListGraphType<SeedGraphType>))]
@@ -104,7 +104,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
             var game = this.GameLibrary.GetGame(gameGuid);
             if (game == null) throw new KeyNotFoundException("Game with the given GUID was not found.");
 
-            var context = (GameScrapeContext)this.GameScrapeContextJobQueue.GetSource(jobGuid);
+            var context = this.GameScrapeContextJobQueue.GetSource(jobGuid);
             await context; // force it to result seeds.
 
             foreach (var traverser in this.GameTraversers) {
