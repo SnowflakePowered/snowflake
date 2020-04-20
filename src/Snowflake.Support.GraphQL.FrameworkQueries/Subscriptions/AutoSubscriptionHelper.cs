@@ -2,6 +2,7 @@
 using HotChocolate.Subscriptions;
 using HotChocolate.Types;
 using HotChocolate.Types.Descriptors.Definitions;
+using Snowflake.Remoting.GraphQL.RelayMutations;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -28,6 +29,18 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions
             {
                 await next(context);
                 await context.SendSimpleSubscription(context.Result);
+            });
+            return descriptor;
+        }
+        public static IObjectFieldDescriptor UseClientMutationId(this IObjectFieldDescriptor descriptor)
+        {
+            descriptor.Use(next => async context =>
+            {
+                await next(context);
+                if (context.Argument<object>("input") is RelayMutationBase input && context.Result is RelayMutationBase)
+                {
+                    ((RelayMutationBase)context.Result).ClientMutationID = input.ClientMutationID;
+                }
             });
             return descriptor;
         }
