@@ -1,26 +1,34 @@
-﻿using HotChocolate.Language;
+﻿using GraphQL.Types;
 using HotChocolate.Types;
+using Snowflake.Remoting.GraphQL.Model.Extensibility;
+using Snowflake.Loader;
+using Snowflake.Services;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Runtime
 {
-    public class RuntimeQueryRoot {
-        public static RuntimeQueryRoot Root = new RuntimeQueryRoot();
-    }
-
     public sealed class RuntimeQueries
         : ObjectTypeExtension
     {
         protected override void Configure(IObjectTypeDescriptor descriptor)
         {
-            descriptor
-                .Name("Query");
-            descriptor.Field("runtime")
-                .Type<NonNullType<RuntimeQueryType>>()
-                .Description("Provides access to Snowflake runtime details.")
-                .Resolver(RuntimeQueryRoot.Root);
+            descriptor.Name("RuntimeQuery")
+                .Description("Provides access to Snowflake runtime details");
+            descriptor.Field("plugins")
+                .Description("Currently loaded plugins.")
+                .Resolver(ctx => ctx.Service<IPluginManager>())
+                .Type<ListType<NonNullType<PluginType>>>();
+            descriptor.Field("modules")
+                .Description("Currently enumerated modules. These may or may not have been loaded.")
+                .Resolver(ctx => ctx.Service<IModuleEnumerator>().Modules)
+                .Type<NonNullType<ListType<NonNullType<ModuleType>>>>();
+            descriptor.Field("os")
+                .Description("Gets the operating system currently running.")
+                .Resolver(ctx => RuntimeInformation.OSDescription)
+                .Type<NonNullType<StringType>>();
         }
     }
 }

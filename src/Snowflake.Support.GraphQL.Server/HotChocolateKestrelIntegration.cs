@@ -34,6 +34,7 @@ using Snowflake.Input.Controller;
 using Snowflake.Input.Controller.Mapped;
 using Snowflake.Model.Game;
 using Snowflake.Support.Remoting.GraphQL.RootProvider;
+using HotChocolate.Language;
 
 namespace Snowflake.Services
 {
@@ -152,7 +153,7 @@ namespace Snowflake.Services
                ;
 
             this.Schemas
-                .AddObjectType<GameScrapeContextType>()
+                .AddObjectType<ScrapeContextType>()
                 .AddObjectType<SeedContentType>()
                 .AddObjectType<SeedRootContextType>()
                 .AddObjectType<SeedType>()
@@ -185,7 +186,8 @@ namespace Snowflake.Services
                 .AddSubscriptionType(descriptor =>
                 {
                     descriptor.Name("Subscription");
-                });
+                })
+                ;
 
             foreach (var type in this.Schemas.ScalarTypes)
             {
@@ -210,6 +212,11 @@ namespace Snowflake.Services
             foreach (var type in this.Schemas.ObjectTypeExtensions)
             {
                 schemaBuilder.AddType(type);
+            }
+
+            foreach (var config in this.Schemas.SchemaConfig)
+            {
+                config(schemaBuilder);
             }
 
             services.AddGraphQL(schemaBuilder.Create(),
