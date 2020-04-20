@@ -41,7 +41,7 @@ namespace Snowflake.Scraping
         private static IEnumerable<SeedContent> MakeGameSeeds(IGame game)
         {
             yield return ("platform", game.Record.PlatformID);
-            yield return ("record", game.Record.RecordID.ToString());
+            yield return ("scrapecontext_record", game.Record.RecordID.ToString());
 
             if (game.Record.Title != null) {
                 yield return ("search_title", game.Record.Title);
@@ -150,7 +150,7 @@ namespace Snowflake.Scraping
                         .ToLookup(x => x.Content.Type, x => x.Content);
 
                     // We need to ensure that the number of keys match before continuing.
-                    // If the keys match then we are guaranteed that every key is successfully fulfilled.
+                    // If the keys match then we are guaranteed that every key is successfully satisfied.
                     if (requiredChildren.GroupBy(p => p.Key).Count() != requiredChildrenDirectives.Count()
                         || requiredRoots.GroupBy(p => p.Key).Count() != requiredRootDirectives.Count()
                         || requiredSiblings.GroupBy(p => p.Key).Count() != requiredSiblingDirectives.Count()
