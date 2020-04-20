@@ -27,6 +27,14 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Queries.Queueing
                 .Name("activeJobIds")
                 .Description("The jobs currently active in the scraping queue.")
                 .Type<NonNullType<ListType<NonNullType<UuidType>>>>();
+            descriptor.Field(s => s.GetQueuedJobs())
+                .Name("queuedJobIds")
+                .Description("The jobs currently in the scraping queue.")
+                .Type<NonNullType<ListType<NonNullType<UuidType>>>>();
+            descriptor.Field(s => s.GetZombieJobs())
+                .Name("zombieJobIds")
+                .Description("The jobs that are still in the scraping queue, but no longer has items to process.")
+                .Type<NonNullType<ListType<NonNullType<UuidType>>>>();
         }
     }
 }

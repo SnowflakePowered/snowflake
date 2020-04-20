@@ -192,6 +192,10 @@ namespace Snowflake.Extensibility.Queueing
 
         public bool HasJob(Guid jobGuid) => this.Enumerables.ContainsKey(jobGuid);
 
-        public IEnumerable<Guid> GetActiveJobs() => this.Enumerables.Keys;
+        public IEnumerable<Guid> GetActiveJobs() => this.Enumerators.Keys;
+
+        public IEnumerable<Guid> GetQueuedJobs() => this.Enumerables.Keys;
+
+        public IEnumerable<Guid> GetZombieJobs() => this.Enumerables.Keys.Where(k => !this.Enumerators.ContainsKey(k));
     }
 }

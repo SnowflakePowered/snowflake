@@ -85,6 +85,21 @@ namespace Snowflake.Remoting.Tests
         }
 
         [Fact]
+        public async Task AsyncJobQueue_ExistentialTest()
+        {
+            IAsyncJobQueue<string> tq = new AsyncJobQueue<string>(false);
+            var token = await tq.QueueJob(EmitStrings());
+            Assert.True(tq.HasJob(token));
+            Assert.Contains(token, tq.GetActiveJobs());
+            Assert.Contains(token, tq.GetQueuedJobs());
+            Assert.DoesNotContain(token, tq.GetZombieJobs());
+            await foreach (string _ in tq.AsEnumerable(token)) { };
+            Assert.DoesNotContain(token, tq.GetActiveJobs());
+            Assert.Contains(token, tq.GetQueuedJobs());
+            Assert.Contains(token, tq.GetZombieJobs());
+        }
+
+        [Fact]
         public async Task AsyncJobQueue_ContextTest()
         {
             IAsyncJobQueue<string> tq = new AsyncJobQueue<string>(false);
