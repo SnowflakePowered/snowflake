@@ -41,6 +41,8 @@ namespace Snowflake.Scraping
         private static IEnumerable<SeedContent> MakeGameSeeds(IGame game)
         {
             yield return ("platform", game.Record.PlatformID);
+            yield return ("record", game.Record.RecordID.ToString());
+
             if (game.Record.Title != null) {
                 yield return ("search_title", game.Record.Title);
             }

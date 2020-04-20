@@ -24,6 +24,8 @@ using Snowflake.Support.GraphQLFrameworkQueries.Queries.Installables;
 using Snowflake.Support.GraphQLFrameworkQueries.Queries.LibraryExtensions;
 using Snowflake.Support.GraphQLFrameworkQueries.Queries.Runtime;
 using Snowflake.Support.GraphQLFrameworkQueries.Queries.Stone;
+using Snowflake.Support.GraphQL.FrameworkQueries.Queries.Queueing;
+using Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping;
 
 namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
 {
@@ -50,7 +52,9 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
             hotChocolate.AddObjectTypeExtension<PlatformInfoNodeQueries>();
             hotChocolate.AddObjectTypeExtension<ControllerLayoutNodeQueries>();
 
+            hotChocolate.AddEmptyQueryType("runtime", "RuntimeQuery", "Provides access to Snowflake runtime details.");
             hotChocolate.AddObjectTypeExtension<RuntimeQueries>();
+
             hotChocolate.AddObjectTypeExtension<FilesystemQueries>();
 
             hotChocolate.AddInterfaceTypeExtension<InstallableQueries>();
@@ -67,6 +71,10 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
             hotChocolate.AddObjectTypeExtension<GameMutations>();
             hotChocolate.AddObjectTypeExtension<GameMetadataMutations>();
 
+            hotChocolate.AddEmptyQueryType("job", "JobQuery", "Provides access to Snowflake runtime details.");
+            hotChocolate.AddObjectTypeExtension<JobQueries>();
+
+            hotChocolate.AddObjectTypeExtension<ScrapingMutations>();
             //serviceRegistration
             //    .RegisterService<IAsyncJobQueue<IScrapeContext, IEnumerable<ISeed>>>(new AsyncJobQueue<IScrapeContext, IEnumerable<ISeed>>(true));
 

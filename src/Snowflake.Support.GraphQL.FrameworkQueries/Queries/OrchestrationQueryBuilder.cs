@@ -60,36 +60,6 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
             return profile;
         }
 
-        [Query("saveProfile", "Gets a given save profile", typeof(SaveProfileGraphType))]
-        [Parameter(typeof(Guid), typeof(GuidGraphType), "gameGuid", "The GUID of the game to create a save profile for.")]
-        [Parameter(typeof(Guid), typeof(GuidGraphType), "profileGuid", "The GUID of the save profile.")]
-        public ISaveProfile GetSaveProfile(Guid gameGuid, Guid profileGuid)
-        {
-            var game = this.GameLibrary.GetGame(gameGuid);
-            return game.WithFiles().WithSaves().GetProfile(profileGuid);
-        }
-
-        [Query("saveProfilesForType", "Gets all save profiles for a game", typeof(ListGraphType<SaveProfileGraphType>))]
-        [Parameter(typeof(Guid), typeof(GuidGraphType), "gameGuid", "The GUID of the game to create a save profile for.")]
-        [Parameter(typeof(string), typeof(StringGraphType), "saveType", "The name of the new profile.")]
-
-        public IEnumerable<ISaveProfile> GetSaveProfiles(Guid gameGuid, string saveType)
-        {
-            var game = this.GameLibrary.GetGame(gameGuid);
-            return game.WithFiles().WithSaves().GetProfiles(saveType);
-        }
-
-        [Query("missingSystemFiles", "Gets missing system files for the given game that the given emulator requires to run", 
-            typeof(ListGraphType<SystemFileGraphType>))]
-        [Parameter(typeof(string), typeof(StringGraphType), "orchestratorName", "The name of the orchestrator plugin to use.")]
-        [Parameter(typeof(Guid), typeof(GuidGraphType), "gameGuid", "The GUID of the game to launch.")]
-        public IEnumerable<ISystemFile> GetMissingSystemFiles(string orchestratorName, Guid gameGuid)
-        {
-            var orchestrator = this.Orchestrators[orchestratorName];
-            var game = this.GameLibrary.GetGame(gameGuid);
-            return orchestrator.CheckMissingSystemFiles(game);
-        }
-
         [Mutation("createEmulation", "Creates an emulation instance for a game, returning a unique handle for the instance.", typeof(GuidGraphType))]
         [Parameter(typeof(string), typeof(StringGraphType), "orchestratorName", "The name of the orchestrator plugin to use.")]
         [Parameter(typeof(string), typeof(StringGraphType), "configurationProfile", "The name of the configuration profile to use.")]
