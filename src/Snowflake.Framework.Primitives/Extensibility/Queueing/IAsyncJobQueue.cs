@@ -17,6 +17,12 @@ namespace Snowflake.Extensibility.Queueing
         /// <param name="jobId">The GUID of the job to check</param>
         /// <returns>Whether or not the job source still exists, or has already been disposed.</returns>
         bool HasJob(Guid jobId);
+
+        /// <summary>
+        /// Retrieves the Job IDs for jobs active in the job queue
+        /// </summary>
+        /// <returns>The job IDs for jobs active (non-disposed) in the job queue.</returns>
+        IEnumerable<Guid> GetActiveJobs();
     }
 
     /// <summary>
@@ -50,6 +56,17 @@ namespace Snowflake.Extensibility.Queueing
     public interface IAsyncJobQueue<TAsyncEnumerable, T> : IAsyncJobQueue
         where TAsyncEnumerable : class, IAsyncEnumerable<T>
     {
+        /// <summary>
+        /// Retrieves the current value in the enumerator and whether or not the enumerator is exhausted.
+        /// Once the enumerator is exhausted, the value field will always be default(<typeparamref name="T"/>),
+        /// and hasNext will be false.
+        /// </summary>
+        /// <param name="jobId">The job token that was returned by <see cref="QueueJob(TAsyncEnumerable, CancellationToken)"/></param>
+        /// <returns>
+        /// The next value, or null if the current value is null.
+        /// </returns>
+        T GetCurrent(Guid jobId);
+
         /// <summary>
         /// Retrieves the next value in the enumerator and whether or not the enumerator is exhausted.
         /// Once the enumerator is exhausted, the value field will always be default(<typeparamref name="T"/>),

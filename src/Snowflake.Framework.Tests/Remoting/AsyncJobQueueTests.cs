@@ -14,8 +14,11 @@ namespace Snowflake.Remoting.Tests
         {
             IAsyncJobQueue<string> tq = new AsyncJobQueue<string>();
             var token = await tq.QueueJob(EmitStrings());
+            string _none = tq.GetCurrent(token);
+            Assert.Null(_none);
             (string val, bool next) = await tq.GetNext(token);
             Assert.Equal("Hello World", val);
+            Assert.Equal(val, tq.GetCurrent(token));
             Assert.True(next);
             (val, next) = await tq.GetNext(token);
             Assert.True(next);
@@ -26,6 +29,7 @@ namespace Snowflake.Remoting.Tests
             (val, next) = await tq.GetNext(token);
             Assert.False(next);
             Assert.Null(val);
+            Assert.Null(tq.GetCurrent(token));
         }
 
         [Fact]

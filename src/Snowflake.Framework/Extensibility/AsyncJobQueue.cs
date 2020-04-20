@@ -26,7 +26,8 @@ namespace Snowflake.Extensibility.Queueing
         /// <inheritdoc />
         public new bool TryRemoveSource(Guid jobId, out IAsyncEnumerable<T> asyncEnumerable)
         {
-            bool result = base.TryRemoveSource(jobId, out asyncEnumerable);
+            // regardless of nullability of asyncEnumerable, we replace it afterwards if null.
+            bool result = base.TryRemoveSource(jobId, out asyncEnumerable!);
             asyncEnumerable ??= Empty();
             return result;
         }
@@ -128,6 +129,13 @@ namespace Snowflake.Extensibility.Queueing
         }
 
         /// <inheritdoc />
+        public T GetCurrent(Guid jobId)
+        {
+            var enumerator = this.GetEnumerator(jobId);
+            return enumerator.Current;
+        }
+
+        /// <inheritdoc />
         public ValueTask<Guid> QueueJob(TAsyncEnumerable asyncEnumerable, CancellationToken token = default)
         {
             var guid = Guid.NewGuid();
@@ -180,9 +188,8 @@ namespace Snowflake.Extensibility.Queueing
             return result;
         }
 
-        public bool HasJob(Guid jobGuid)
-        {
-            return this.Enumerables.ContainsKey(jobGuid);
-        }
+        public bool HasJob(Guid jobGuid) => this.Enumerables.ContainsKey(jobGuid);
+
+        public IEnumerable<Guid> GetActiveJobs() => this.Enumerables.Keys;
     }
 }
