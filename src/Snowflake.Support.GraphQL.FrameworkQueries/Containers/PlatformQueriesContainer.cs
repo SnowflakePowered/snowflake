@@ -26,6 +26,10 @@ using Snowflake.Support.GraphQLFrameworkQueries.Queries.Runtime;
 using Snowflake.Support.GraphQLFrameworkQueries.Queries.Stone;
 using Snowflake.Support.GraphQL.FrameworkQueries.Queries.Queueing;
 using Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping;
+using HotChocolate.Types.Descriptors.Definitions;
+using HotChocolate.Types.Descriptors;
+using Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions;
+using HotChocolate.Language;
 
 namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
 {
@@ -74,13 +78,14 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
             hotChocolate.AddEmptyQueryType("job", "JobQuery", "Provides access to Snowflake runtime details.");
             hotChocolate.AddObjectTypeExtension<JobQueries>();
 
+            //hotChocolate.AddObjectTypeExtension<GameSubscriptions>();
             hotChocolate.AddObjectTypeExtension<ScrapingMutations>();
-            //serviceRegistration
-            //    .RegisterService<IAsyncJobQueue<IScrapeContext, IEnumerable<ISeed>>>(new AsyncJobQueue<IScrapeContext, IEnumerable<ISeed>>(true));
+            //hotChocolate.AddObjectTypeExtension<AutoSubscriptions>();
+            hotChocolate.ConfigureSchema(schema =>
+            {
+                schema.AddTypeInterceptor<AutoSubscriptionTypeInterceptor>();
+            });
 
-            //hotChocolate.AddQuery<PlatformQueries, PlatformInfoQueryBuilder>(platformQueries);
-            //hotChocolate.AddObjectTypeExtension<GameRecordQueries>();
-            //hotChocolate.AddQuery<GameQueries, GameQueryBuilder>(gameQueries);
         }
     }
 }

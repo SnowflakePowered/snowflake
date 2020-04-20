@@ -1,6 +1,8 @@
-﻿using HotChocolate.Types;
+﻿using HotChocolate.Subscriptions;
+using HotChocolate.Types;
 using Snowflake.Model.Game;
 using Snowflake.Model.Records;
+using Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,6 +17,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Game
             descriptor.Name("Mutation");
             
             descriptor.Field("updateGameMetadata")
+                .UseAutoSubscription()
                 .Description("Update or creates the given metadata value for a game.")
                 .Argument("input", arg => arg.Type<UpdateGameMetadataInputType>())
                 .Resolver(async ctx =>
@@ -32,14 +35,16 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Game
                         ClientMutationID = args.ClientMutationID,
                     };
                 })
-                .Type<UpdateGameMetadataPayloadType>();
+                .Type<NonNullType<UpdateGameMetadataPayloadType>>();
 
             descriptor.Field("deleteGameMetadata")
+                .UseAutoSubscription()
                 .Description("Removes a metadata entry for a game.")
                 .Argument("input", arg => arg.Type<DeleteGameMetadataInputType>())
                 .Resolver(async ctx =>
                 {
                     var gameLibrary = ctx.Service<IGameLibrary>();
+
                     DeleteGameMetadataInput args = ctx.Argument<DeleteGameMetadataInput>("input");
 
                     var game = await gameLibrary.GetGameAsync(args.GameID);
@@ -57,7 +62,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Game
                         ClientMutationID = args.ClientMutationID,
                     };
                 })
-                .Type<DeleteGameMetadataPayloadType>();
+                .Type<NonNullType<DeleteGameMetadataPayloadType>>();
         }
     }
 }
