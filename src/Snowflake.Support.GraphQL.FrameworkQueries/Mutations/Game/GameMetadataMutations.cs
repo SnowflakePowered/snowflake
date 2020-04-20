@@ -2,6 +2,7 @@
 using HotChocolate.Types;
 using Snowflake.Model.Game;
 using Snowflake.Model.Records;
+using Snowflake.Remoting.GraphQL.FrameworkQueries.Mutations.Relay;
 using Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions;
 using System;
 using System.Collections.Generic;
