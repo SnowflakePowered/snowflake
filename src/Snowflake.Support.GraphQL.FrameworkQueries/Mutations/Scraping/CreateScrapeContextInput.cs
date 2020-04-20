@@ -1,5 +1,5 @@
 ﻿using HotChocolate.Types;
-using Snowflake.Remoting.GraphQL.RelayMutations;
+using Snowflake.Remoting.GraphQL.FrameworkQueries.Mutations.Relay;
 using System;
 using System.Collections.Generic;
 using System.Text;

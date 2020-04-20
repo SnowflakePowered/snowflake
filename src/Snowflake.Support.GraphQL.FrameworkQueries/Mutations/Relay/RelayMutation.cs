@@ -3,10 +3,23 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Snowflake.Remoting.GraphQL.RelayMutations
+namespace Snowflake.Remoting.GraphQL.FrameworkQueries.Mutations.Relay
 {
     public static class RelayMutation
     {
+        public static IObjectFieldDescriptor UseClientMutationId(this IObjectFieldDescriptor descriptor)
+        {
+            descriptor.Use(next => async context =>
+            {
+                await next(context);
+                if (context.Argument<object>("input") is RelayMutationBase input && context.Result is RelayMutationBase)
+                {
+                    ((RelayMutationBase)context.Result).ClientMutationID = input.ClientMutationID;
+                }
+            });
+            return descriptor;
+        }
+
         public static IInputObjectTypeDescriptor<T> WithClientMutationId<T>(this IInputObjectTypeDescriptor<T> descriptor)
             where T : RelayMutationBase
         {
@@ -23,11 +36,6 @@ namespace Snowflake.Remoting.GraphQL.RelayMutations
                 .Name("clientMutationId")
                 .Type<StringType>();
             return descriptor;
-        }
-
-        public static void Reconcile(RelayMutationBase input, RelayMutationBase payload)
-        {
-            payload.ClientMutationID = input.ClientMutationID;
         }
     }
 }

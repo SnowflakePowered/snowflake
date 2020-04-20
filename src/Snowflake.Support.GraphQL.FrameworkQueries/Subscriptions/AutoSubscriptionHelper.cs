@@ -32,18 +32,6 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions
             });
             return descriptor;
         }
-        public static IObjectFieldDescriptor UseClientMutationId(this IObjectFieldDescriptor descriptor)
-        {
-            descriptor.Use(next => async context =>
-            {
-                await next(context);
-                if (context.Argument<object>("input") is RelayMutationBase input && context.Result is RelayMutationBase)
-                {
-                    ((RelayMutationBase)context.Result).ClientMutationID = input.ClientMutationID;
-                }
-            });
-            return descriptor;
-        }
 
         public static T GetEventMessage<T>(this IResolverContext context) => (T)context.ContextData["HotChocolate.Execution.EventMessage"];
         public static EventMessage GetEventMessage(this IResolverContext context) => (EventMessage)context.ContextData["HotChocolate.Execution.EventMessage"];

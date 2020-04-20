@@ -1,10 +1,10 @@
 ﻿using HotChocolate.Types;
 using Snowflake.Remoting.GraphQL.Model.Stone.PlatformInfo;
-using Snowflake.Remoting.GraphQL.RelayMutations;
 using Snowflake.Model.Game;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Snowflake.Remoting.GraphQL.FrameworkQueries.Mutations.Relay;
 
 namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Game
 {

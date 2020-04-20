@@ -1,6 +1,6 @@
 ﻿using HotChocolate.Types;
+using Snowflake.Remoting.GraphQL.FrameworkQueries.Mutations.Relay;
 using Snowflake.Remoting.GraphQL.Model.Scraping;
-using Snowflake.Remoting.GraphQL.RelayMutations;
 using Snowflake.Scraping;
 using System;
 using System.Collections.Generic;
