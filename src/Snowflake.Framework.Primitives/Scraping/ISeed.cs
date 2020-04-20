@@ -12,6 +12,16 @@ namespace Snowflake.Scraping
     public interface ISeed
     {
         /// <summary>
+        /// The source for a root seed.
+        /// </summary>
+        public static readonly string RootSource = "__root";
+
+        /// <summary>
+        /// The source if the data was sourced from sources other than scrapers.
+        /// </summary>
+        public static readonly string ClientSource = "__client";
+
+        /// <summary>
         /// Gets the unique GUID of the seed.
         /// </summary>
         Guid Guid { get; }

@@ -11,6 +11,7 @@ using System.Runtime.InteropServices;
 [assembly: InternalsVisibleTo("Snowflake.Support.PluginManager")]
 [assembly: InternalsVisibleTo("Snowflake.Support.InputEnumerators.Windows")]
 [assembly: InternalsVisibleTo("Snowflake.Support.InputEnumerators.Linux")]
+[assembly: InternalsVisibleTo("Snowflake.Support.GraphQL.FrameworkQueries")]
 
 [assembly: InternalsVisibleTo("Snowflake.Framework.Services")]
 [assembly: InternalsVisibleTo("Snowflake.Framework.Tests")]

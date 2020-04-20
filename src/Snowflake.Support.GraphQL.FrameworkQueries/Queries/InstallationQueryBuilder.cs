@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using GraphQL.Types;
 using Snowflake.Extensibility;
-using Snowflake.Filesystem;
 using Snowflake.Remoting.GraphQL.Attributes;
 using Snowflake.Remoting.GraphQL.Query;
 using Snowflake.Installation;
@@ -15,6 +14,7 @@ using Snowflake.Orchestration.Extensibility;
 using Snowflake.Support.GraphQLFrameworkQueries.Types.Installable;
 using Snowflake.Support.GraphQLFrameworkQueries.Types.Model;
 using Snowflake.Extensibility.Queueing;
+using Snowflake.Filesystem;
 
 namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
 {
@@ -44,7 +44,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
         public IEnumerable<InstallableGraphObject> GetInstallables(string platform, IEnumerable<string> files)
         {
             var filesysinfo = files.Select<string, FileSystemInfo>(s =>
-                (File.Exists(s), Directory.Exists(s)) switch
+                (System.IO.File.Exists(s), System.IO.Directory.Exists(s)) switch
                 {
                     (true, _) => new FileInfo(s),
                     (_, true) => new DirectoryInfo(s),
@@ -73,7 +73,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
         public async Task<Guid> CreateGameInstallation(string installerName, Guid gameGuid, IEnumerable<string> files)
         {
             var filesysinfo = files.Select<string, FileSystemInfo>(s => 
-                (File.Exists(s), Directory.Exists(s)) switch
+                (System.IO.File.Exists(s), System.IO.Directory.Exists(s)) switch
                 {
                      (true, _) => new FileInfo(s),
                      (_, true) => new DirectoryInfo(s),
