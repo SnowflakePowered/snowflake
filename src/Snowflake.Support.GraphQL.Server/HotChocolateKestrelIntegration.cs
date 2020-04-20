@@ -35,6 +35,7 @@ using Snowflake.Input.Controller.Mapped;
 using Snowflake.Model.Game;
 using Snowflake.Support.Remoting.GraphQL.RootProvider;
 using HotChocolate.Language;
+using Snowflake.Remoting.GraphQL;
 
 namespace Snowflake.Services
 {
@@ -225,10 +226,11 @@ namespace Snowflake.Services
                     TracingPreference = TracingPreference.OnDemand,
                     
                 });
-           
+
             services.AddQueryRequestInterceptor((context, builder, cancel) =>
             {
-                builder.TrySetServices(context.RequestServices.Include(this.ServiceContainer));
+                builder.SetProperty(SnowflakeGraphQLServices.ServicesNamespace, this.ServiceContainer);
+                //builder.TrySetServices(context.RequestServices.Include(this.ServiceContainer));
                 return Task.CompletedTask;
             });
         }

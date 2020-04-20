@@ -2,6 +2,7 @@
 using HotChocolate.Types;
 using HotChocolate.Types.Relay;
 using Snowflake.Model.Game;
+using Snowflake.Remoting.GraphQL;
 using Snowflake.Services;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Stone
 
             descriptor.AsNode()
                 .NodeResolver<PlatformId>((ctx, id) => Task.FromResult(
-                    ctx.Service<IStoneProvider>().Platforms.TryGetValue(id, out var value) ? value : null));
+                    ctx.SnowflakeService<IStoneProvider>().Platforms.TryGetValue(id, out var value) ? value : null));
         }
     }
 }

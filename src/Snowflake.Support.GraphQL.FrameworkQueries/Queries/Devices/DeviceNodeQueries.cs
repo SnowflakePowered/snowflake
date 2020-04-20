@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Snowflake.Remoting.GraphQL;
 
 namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Devices
 {
@@ -25,7 +26,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Devices
             descriptor.AsNode()
                 .NodeResolver<Guid>((ctx, id) => 
                     Task.FromResult(
-                        ctx.Service<IDeviceEnumerator>().QueryConnectedDevices().FirstOrDefault(i => i.InstanceGuid == id)));
+                        ctx.SnowflakeService<IDeviceEnumerator>().QueryConnectedDevices().FirstOrDefault(i => i.InstanceGuid == id)));
         }
     }
 }

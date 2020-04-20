@@ -4,6 +4,7 @@ using Snowflake.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Snowflake.Remoting.GraphQL;
 
 namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Devices
 {
@@ -18,7 +19,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Devices
                 .Description("Provides access to input devices on the system.")
                 .Resolver(context =>
                 {
-                    var input = context.Service<IDeviceEnumerator>();
+                    var input = context.SnowflakeService<IDeviceEnumerator>();
                     return input.QueryConnectedDevices();
                 });
         }

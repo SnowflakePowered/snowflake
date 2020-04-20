@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
+using Snowflake.Remoting.GraphQL;
 
 namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Runtime
 {
@@ -19,11 +20,11 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Runtime
                 .Description("Provides access to Snowflake runtime details");
             descriptor.Field("plugins")
                 .Description("Currently loaded plugins.")
-                .Resolver(ctx => ctx.Service<IPluginManager>())
+                .Resolver(ctx => ctx.SnowflakeService<IPluginManager>())
                 .Type<ListType<NonNullType<PluginType>>>();
             descriptor.Field("modules")
                 .Description("Currently enumerated modules. These may or may not have been loaded.")
-                .Resolver(ctx => ctx.Service<IModuleEnumerator>().Modules)
+                .Resolver(ctx => ctx.SnowflakeService<IModuleEnumerator>().Modules)
                 .Type<NonNullType<ListType<NonNullType<ModuleType>>>>();
             descriptor.Field("os")
                 .Description("Gets the operating system currently running.")

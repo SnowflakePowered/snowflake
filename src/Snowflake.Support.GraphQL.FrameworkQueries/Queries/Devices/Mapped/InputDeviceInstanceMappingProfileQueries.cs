@@ -7,6 +7,8 @@ using Snowflake.Input.Device;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Snowflake.Remoting.GraphQL;
+
 
 namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Devices.Mapped
 {
@@ -30,7 +32,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Devices.Mapped
                 {
                     var deviceInstance = (IInputDeviceInstance)context.Source.Peek();
                     var device = (IInputDevice)context.Source.Pop().Peek();
-                    var store = context.Service<IControllerElementMappingProfileStore>();
+                    var store = context.SnowflakeService<IControllerElementMappingProfileStore>();
                     var controllerId = context.Argument<ControllerId>("controllerId");
                     return store.GetProfileNames(controllerId, deviceInstance.Driver, device.DeviceName, device.VendorID);
                 })
@@ -49,7 +51,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Devices.Mapped
 
                     var deviceInstance = (IInputDeviceInstance)context.Source.Peek();
                     var device = (IInputDevice)context.Source.Pop().Peek();
-                    var store = context.Service<IControllerElementMappingProfileStore>();
+                    var store = context.SnowflakeService<IControllerElementMappingProfileStore>();
                     var controllerId = context.Argument<ControllerId>("controllerId");
                     string profileName = context.Argument<string>("profileName");
                     return store.GetMappings(controllerId, deviceInstance.Driver, device.DeviceName, device.VendorID, profileName);

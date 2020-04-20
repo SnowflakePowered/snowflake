@@ -2,6 +2,7 @@
 using HotChocolate.Types;
 using Snowflake.Model.Game;
 using Snowflake.Model.Records;
+using Snowflake.Remoting.GraphQL;
 using Snowflake.Remoting.GraphQL.FrameworkQueries.Mutations.Relay;
 using Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions;
 using System;
@@ -23,7 +24,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Game
                 .Argument("input", arg => arg.Type<CreateGameInputType>())
                 .Resolver(async ctx =>
                 {
-                    var gameLibrary = ctx.Service<IGameLibrary>();
+                    var gameLibrary = ctx.SnowflakeService<IGameLibrary>();
 
                     CreateGameInput args = ctx.Argument<CreateGameInput>("input");
                     var game = await gameLibrary.CreateGameAsync(args.PlatformID);
@@ -43,7 +44,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Game
                 .Argument("input", arg => arg.Type<DeleteGameInputType>())
                 .Resolver(async ctx =>
                 {
-                    var gameLibrary = ctx.Service<IGameLibrary>();
+                    var gameLibrary = ctx.SnowflakeService<IGameLibrary>();
 
                     DeleteGameInput args = ctx.Argument<DeleteGameInput>("input");
                     var game = await gameLibrary.GetGameAsync(args.GameID);
