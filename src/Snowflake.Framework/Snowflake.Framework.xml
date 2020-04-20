@@ -519,6 +519,9 @@
         <member name="M:Snowflake.Extensibility.Queueing.AsyncJobQueue`2.GetNext(System.Guid)">
             <inheritdoc />
         </member>
+        <member name="M:Snowflake.Extensibility.Queueing.AsyncJobQueue`2.GetCurrent(System.Guid)">
+            <inheritdoc />
+        </member>
         <member name="M:Snowflake.Extensibility.Queueing.AsyncJobQueue`2.QueueJob(`0,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>

@@ -1,5 +1,6 @@
 ﻿using HotChocolate.Types;
 using Snowflake.Remoting.GraphQL.Model.Extensibility;
+using Snowflake.Remoting.GraphQL.Model.Queueing;
 using Snowflake.Scraping;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace Snowflake.Remoting.GraphQL.Model.Scraping
 {
-    public sealed class GameScrapeContextType
+    public sealed class ScrapeContextType
         : ObjectType<IScrapeContext>
     {
         protected override void Configure(IObjectTypeDescriptor<IScrapeContext> descriptor)
@@ -21,6 +22,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Scraping
                 .Description("The scraper plugins that contribute data to the seed tree.")
                 .Type<NonNullType<ListType<NonNullType<PluginType>>>>();
             descriptor.Field(s => s.Context)
+                .Name("rootContext")
                 .Description("The root seed context that contains the current state of the seed root tree.")
                 .Type<NonNullType<SeedRootContextType>>();
         }

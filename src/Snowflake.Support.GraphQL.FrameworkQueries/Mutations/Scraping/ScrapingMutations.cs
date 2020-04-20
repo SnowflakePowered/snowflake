@@ -29,10 +29,18 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                         .Where(c => input.Scrapers.Contains(c.Name, StringComparer.InvariantCultureIgnoreCase));
                     var game = await ctx.Service<IGameLibrary>().GetGameAsync(input.GameID);
                     if (game == null) throw new ArgumentException("The specified game does not exist.");
-                    var jobQueue = ctx.Service<IAsyncJobQueue<IScrapeContext, IEnumerable<ISeed>>>();
+                    var jobQueueFactory = ctx.Service<IAsyncJobQueueFactory>();
+                    var jobQueue = jobQueueFactory.GetJobQueue<IScrapeContext, IEnumerable<ISeed>>(false);
                     var guid = await jobQueue.QueueJob(new GameScrapeContext(game, scrapers, cullers));
-                    var context = await jobQueue.GetSource(guid);
-                });
+                    IScrapeContext context = jobQueue.GetSource(guid);
+                    return new CreateScrapeContextPayload()
+                    {
+                        ClientMutationID = input.ClientMutationID,
+                        ScrapeContext = context,
+                        JobID = guid,
+                    };
+                })
+                .Type<CreateScrapeContextPayloadType>();
         }
     }
 }
