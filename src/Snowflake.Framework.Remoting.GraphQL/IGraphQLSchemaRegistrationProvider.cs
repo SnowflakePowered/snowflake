@@ -12,6 +12,8 @@ namespace Snowflake.Remoting.GraphQL
     /// </summary>
     public interface IGraphQLSchemaRegistrationProvider
     {
+        IGraphQLSchemaRegistrationProvider AddEmptyQueryType(string fieldName, string typeName, string description);
+
         IGraphQLSchemaRegistrationProvider AddEnumType<T>() where T : EnumType;
 
         IGraphQLSchemaRegistrationProvider AddInterfaceType<T>() where T
@@ -24,8 +26,6 @@ namespace Snowflake.Remoting.GraphQL
          : InterfaceTypeExtension;
         IGraphQLSchemaRegistrationProvider AddScalarType<T>() where T
            : ScalarType;
-        IGraphQLSchemaRegistrationProvider AddQuery<TQueryType, TQueryBuilder>(TQueryBuilder queryBuilderInstance) where TQueryType 
-            : ObjectType<TQueryBuilder>;
-        void ConfigureSchema(string schemaNamespace, string schemaName, Action<ISchemaBuilder> schemaBuilder);
+        IGraphQLSchemaRegistrationProvider ConfigureSchema(Action<ISchemaBuilder> schemaBuilder);
     }
 }

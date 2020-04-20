@@ -10,15 +10,17 @@ using Snowflake.Model.Game;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using HotChocolate.Language;
 
 namespace Snowflake.Services
 {
     internal class GraphQLSchemaRegistrationProvider : IGraphQLSchemaRegistrationProvider
     {
+        private static readonly object Empty = new { };
         public GraphQLSchemaRegistrationProvider(ILogger logger)
         {
             this.QueryBuilderServices = new ServiceCollection();
-            this.Schemas = new ConcurrentDictionary<string, ISchemaBuilder>();
+            this.SchemaConfig = new List<Action<ISchemaBuilder>>();
             this.ObjectTypes = new List<Type>();
             this.ObjectTypeExtensions = new List<Type>();
             this.InterfaceTypes = new List<Type>();
@@ -36,18 +38,7 @@ namespace Snowflake.Services
 
         private ILogger Logger { get; }
 
-        internal IDictionary<string, ISchemaBuilder> Schemas { get; }
-
-        public IGraphQLSchemaRegistrationProvider AddQuery<TQueryType, TQueryBuilder>(TQueryBuilder queryBuilderInstance)
-            where TQueryType : ObjectType<TQueryBuilder>
-        {
-            string schemaName = typeof(TQueryBuilder).FullName;
-            this.Logger.Info($"Registered GraphQL Queries from {schemaName}.");
-            this.QueryBuilderServices.AddSingleton(typeof(TQueryBuilder), queryBuilderInstance);
-            this.Schemas.Add(schemaName.Replace('.', '_'), SchemaBuilder.New()
-                .AddQueryType<TQueryType>());
-            return this;
-        }
+        internal IList<Action<ISchemaBuilder>> SchemaConfig { get; }
 
         public IGraphQLSchemaRegistrationProvider AddObjectType<T>()
             where T : ObjectType
@@ -77,14 +68,6 @@ namespace Snowflake.Services
             return this;
         }
 
-        public void ConfigureSchema(string schemaNamespace, string schemaName, Action<ISchemaBuilder> schemaBuilder)
-        {
-            var schemaBuilderInstance = SchemaBuilder.New();
-            schemaBuilder(schemaBuilderInstance);
-            this.Schemas.Add($"{schemaNamespace}_{schemaName}", schemaBuilderInstance);
-            this.Logger.Info($"Registered GraphQL Schema {schemaNamespace}_{schemaName}");
-        }
-
         public IGraphQLSchemaRegistrationProvider AddObjectTypeExtension<T>() where T : ObjectTypeExtension
         {
             this.Logger.Info($"Registered GraphQL Object Type Extensions from {typeof(T).Name}.");
@@ -96,6 +79,34 @@ namespace Snowflake.Services
         {
             this.Logger.Info($"Registered GraphQL Interface Type Extensions from {typeof(T).Name}.");
             this.ObjectTypeExtensions.Add(typeof(T));
+            return this;
+        }
+
+        public IGraphQLSchemaRegistrationProvider ConfigureSchema(Action<ISchemaBuilder> schemaBuilder)
+        {
+            this.SchemaConfig.Add(schemaBuilder);
+            return this;
+        }
+
+        public IGraphQLSchemaRegistrationProvider AddEmptyQueryType(string fieldName, string typeName, string description)
+        {
+            this.Logger.Info($"Registered GraphQL Query Type Extensions {typeName} at Query.{fieldName}.");
+            this.SchemaConfig.Add(schemaBuilder =>
+            {
+                schemaBuilder.AddObjectType(descriptor =>
+                {
+                    descriptor.Name(typeName)
+                        .Description(description);
+                })
+                .AddType(new ObjectTypeExtension(descriptor =>
+                {
+                    descriptor.Name("Query");
+                    descriptor.Field(fieldName)
+                    .Description(description)
+                    .Type(new NamedTypeNode(typeName))
+                    .Resolver(GraphQLSchemaRegistrationProvider.Empty);
+                }));
+            });
             return this;
         }
     }
