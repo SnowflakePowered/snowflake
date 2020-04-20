@@ -16,6 +16,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Game
         {
             descriptor.Name("Mutation");
             descriptor.Field("createGame")
+                .UseClientMutationId()
                 .UseAutoSubscription()
                 .Description("Creates a new game in the database.")
                 .Argument("input", arg => arg.Type<CreateGameInputType>())
@@ -28,12 +29,12 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Game
                     return new GamePayload()
                     {
                         Game = game,
-                        ClientMutationID = args.ClientMutationID,
                     };
                 })
                 .Type<NonNullType<GamePayloadType>>();
 
             descriptor.Field("deleteGame")
+                .UseClientMutationId()
                 .UseAutoSubscription()
                 .Description("Marks a game as deleted. This does not actually purge the game from the database. " +
                 "Instead, a metadata value `game_deleted` is set to true. " +
@@ -50,7 +51,6 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Game
                     return new GamePayload()
                     {
                         Game = game,
-                        ClientMutationID = args.ClientMutationID,
                     };
                 })
                 .Type<NonNullType<GamePayloadType>>();

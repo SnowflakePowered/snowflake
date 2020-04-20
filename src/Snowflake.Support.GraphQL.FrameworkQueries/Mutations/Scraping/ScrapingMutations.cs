@@ -4,6 +4,7 @@ using Snowflake.Model.Game;
 using Snowflake.Scraping;
 using Snowflake.Scraping.Extensibility;
 using Snowflake.Services;
+using Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,8 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
         {
             descriptor.Name("Mutation");
             descriptor.Field("createScrapeContext")
+                .UseClientMutationId()
+                .UseAutoSubscription()
                 .Argument("input", arg => arg.Type<CreateScrapeContextInputType>())
                 .Resolver(async ctx =>
                 {
@@ -40,7 +43,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                         JobID = guid,
                     };
                 })
-                .Type<CreateScrapeContextPayloadType>();
+                .Type<NonNullType<CreateScrapeContextPayloadType>>();
         }
     }
 }

@@ -17,6 +17,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Game
             descriptor.Name("Mutation");
             
             descriptor.Field("updateGameMetadata")
+                .UseClientMutationId()
                 .UseAutoSubscription()
                 .Description("Update or creates the given metadata value for a game.")
                 .Argument("input", arg => arg.Type<UpdateGameMetadataInputType>())
@@ -32,12 +33,12 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Game
                     {
                         Game = game,
                         Metadata = (game.Record.Metadata as IDictionary<string, IRecordMetadata>)[args.MetadataKey],
-                        ClientMutationID = args.ClientMutationID,
                     };
                 })
                 .Type<NonNullType<UpdateGameMetadataPayloadType>>();
 
             descriptor.Field("deleteGameMetadata")
+                .UseClientMutationId()
                 .UseAutoSubscription()
                 .Description("Removes a metadata entry for a game.")
                 .Argument("input", arg => arg.Type<DeleteGameMetadataInputType>())
@@ -59,7 +60,6 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Game
                     {
                         Game = game,
                         Metadata = metadata,
-                        ClientMutationID = args.ClientMutationID,
                     };
                 })
                 .Type<NonNullType<DeleteGameMetadataPayloadType>>();
