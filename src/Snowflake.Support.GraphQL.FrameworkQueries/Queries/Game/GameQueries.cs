@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using Snowflake.Remoting.GraphQL;
 
 namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Game
 {
@@ -38,7 +39,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Game
                     Expression<Func<IGameRecordQuery, bool>> excludeDeletedQuery = r =>
                                 !r.Metadata.Any(r => r.MetadataKey == GameMetadataKeys.Deleted && r.MetadataValue == "true");
 
-                    var queryBuilder = context.Service<IGameLibrary>();
+                    var queryBuilder = context.SnowflakeService<IGameLibrary>();
 
                     if (valueNode is null || valueNode is NullValueNode)
                     {

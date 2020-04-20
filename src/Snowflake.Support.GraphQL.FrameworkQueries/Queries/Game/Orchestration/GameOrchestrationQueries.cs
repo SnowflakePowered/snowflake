@@ -1,7 +1,7 @@
-﻿using GraphQL.Types;
-using HotChocolate.Types;
+﻿using HotChocolate.Types;
 using Snowflake.Model.Game;
 using Snowflake.Orchestration.Extensibility;
+using Snowflake.Remoting.GraphQL;
 using Snowflake.Services;
 using System;
 using System.Collections.Generic;
@@ -20,7 +20,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Queries.Game.Orchestration
                 .Description("Provides access to game orchestration information for orchestrators that support this game.")
                 .Resolver(ctx =>
                 {
-                    var orchestrators = ctx.Service<IPluginManager>()
+                    var orchestrators = ctx.SnowflakeService<IPluginManager>()
                         .GetCollection<IEmulatorOrchestrator>();
                     var game = ctx.Parent<IGame>();
 

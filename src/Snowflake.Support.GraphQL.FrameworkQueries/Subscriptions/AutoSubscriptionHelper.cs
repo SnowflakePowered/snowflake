@@ -2,7 +2,6 @@
 using HotChocolate.Subscriptions;
 using HotChocolate.Types;
 using HotChocolate.Types.Descriptors.Definitions;
-using Snowflake.Remoting.GraphQL.RelayMutations;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -35,13 +34,23 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions
 
         public static T GetEventMessage<T>(this IResolverContext context) => (T)context.ContextData["HotChocolate.Execution.EventMessage"];
         public static EventMessage GetEventMessage(this IResolverContext context) => (EventMessage)context.ContextData["HotChocolate.Execution.EventMessage"];
-        
-        private static async ValueTask<T> SendSimpleSubscription<T>(this IResolverContext context, T payload)
+
+        public static ValueTask SendEventMessage(this IResolverContext context, IEventMessage message)
         {
             var eventSender = context.Service<IEventSender>();
-            string subscriptionName = $"on{context.Field.Name.Value.ToPascalCase()}";
-            await eventSender.SendAsync(new SimpleEventMessage<T>(subscriptionName, payload));
+            return eventSender.SendAsync(message);
+        }
+
+        public static async ValueTask<T> SendSimpleSubscription<T>(this IResolverContext context, string subscriptionName, T payload)
+        {
+            await context.SendEventMessage(new SimpleEventMessage<T>(subscriptionName, payload));
             return payload;
+        }
+
+        internal static ValueTask<T> SendSimpleSubscription<T>(this IResolverContext context, T payload)
+        {
+            string subscriptionName = $"on{context.Field.Name.Value.ToPascalCase()}";
+            return context.SendSimpleSubscription(subscriptionName, payload);
         }
 
         /// <summary>

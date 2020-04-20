@@ -1,6 +1,7 @@
 ﻿using HotChocolate.Language;
 using HotChocolate.Types;
 using Snowflake.Extensibility.Queueing;
+using Snowflake.Remoting.GraphQL;
 using Snowflake.Scraping;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Queries.Queueing
             descriptor.Field("scraping")
                 .Resolver(ctx =>
                 {
-                    return ctx.Service<IAsyncJobQueueFactory>()
+                    return ctx.SnowflakeService<IAsyncJobQueueFactory>()
                         .GetJobQueue<IScrapeContext, IEnumerable<ISeed>>(false);
                 })
                 .Type<ScrapingJobQueueType>();

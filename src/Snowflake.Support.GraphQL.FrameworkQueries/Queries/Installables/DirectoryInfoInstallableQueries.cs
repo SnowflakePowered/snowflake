@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Snowflake.Remoting.GraphQL;
 
 namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Installables
 {
@@ -25,7 +26,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Installables
                     .Description("The platform to look up installables for."))
                 .Resolver(ctx =>
                 {
-                    var installers = ctx.Service<IPluginManager>().GetCollection<IGameInstaller>();
+                    var installers = ctx.SnowflakeService<IPluginManager>().GetCollection<IGameInstaller>();
                     var platform = ctx.Argument<PlatformId>("platformId");
                     var dirs = ctx.Parent<DirectoryInfo>();
 

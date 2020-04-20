@@ -30,6 +30,7 @@ using HotChocolate.Types.Descriptors.Definitions;
 using HotChocolate.Types.Descriptors;
 using Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions;
 using HotChocolate.Language;
+using Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Scraping;
 
 namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
 {
@@ -80,6 +81,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
 
             //hotChocolate.AddObjectTypeExtension<GameSubscriptions>();
             hotChocolate.AddObjectTypeExtension<ScrapingMutations>();
+            hotChocolate.AddObjectTypeExtension<ScrapingSubscriptions>();
             //hotChocolate.AddObjectTypeExtension<AutoSubscriptions>();
             hotChocolate.ConfigureSchema(schema =>
             {

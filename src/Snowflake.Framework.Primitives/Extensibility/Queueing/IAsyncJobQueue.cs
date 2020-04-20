@@ -98,7 +98,12 @@ namespace Snowflake.Extensibility.Queueing
 
         /// <summary>
         /// Tries to remove the <see cref="IAsyncEnumerable{T}"/> as it was added to the job queue.
-        /// This will only succeed if there are no active jobs for the enumerable in the queue.
+        /// This will only succeed if there are no active jobs for the enumerable in the queue,
+        /// and it was not automatically disposed.
+        /// 
+        /// If not automatically disposed, this means that the enumerable
+        /// must be exhausted before it can be removed.
+        /// 
         /// </summary>
         /// <param name="jobId">The jobId</param>
         /// <param name="asyncEnumerable">The async enumerable that is removed, or null if the result is false.</param>
