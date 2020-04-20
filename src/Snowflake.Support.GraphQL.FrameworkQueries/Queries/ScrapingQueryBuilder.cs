@@ -12,7 +12,6 @@ using Snowflake.Model.Game;
 using Snowflake.Model.Records.Game;
 using Snowflake.Scraping;
 using Snowflake.Scraping.Extensibility;
-using Snowflake.Support.GraphQLFrameworkQueries.Inputs.Scraping;
 using Snowflake.Support.GraphQLFrameworkQueries.Types.Model;
 using Snowflake.Support.GraphQLFrameworkQueries.Types.Scraping;
 using static Snowflake.Scraping.Extensibility.SeedBuilder;

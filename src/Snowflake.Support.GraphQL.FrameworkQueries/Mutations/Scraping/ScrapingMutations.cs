@@ -85,6 +85,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                     var jobQueue = ctx.SnowflakeService<IAsyncJobQueueFactory>()
                         .GetJobQueue<IScrapeContext, IEnumerable<ISeed>>(false);
                     var scrapeContext = jobQueue.GetSource(input.JobID);
+                    if (scrapeContext == null) throw new ArgumentException("The specified game does not exist.");
 
                     var addSeeds = input.Seeds;
                     if (addSeeds != null) 
@@ -112,6 +113,63 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                     return payload;
 
                 }).Type<NonNullType<ScrapeContextStepPayloadType>>();
+
+            descriptor.Field("applyScrapeResults")
+                .Description("Applies the specified scrape results to the specified game as-is.")
+                .UseClientMutationId()
+                .UseAutoSubscription()
+                .Argument("input", arg => arg.Type<ApplyScrapeResultsInputType>())
+                .Resolver(async ctx =>
+                {
+                    var input = ctx.Argument<ApplyScrapeResultsInput>("input");
+                    var jobQueue = ctx.SnowflakeService<IAsyncJobQueueFactory>()
+                        .GetJobQueue<IScrapeContext, IEnumerable<ISeed>>(false);
+                    var gameLibrary = ctx.SnowflakeService<IGameLibrary>();
+                    var pluginManager = ctx.SnowflakeService<IPluginManager>();
+                    var fileTraversers = pluginManager.GetCollection<IFileInstallationTraverser>()
+                        .Where(c => input.FileTraversers.Contains(c.Name, StringComparer.InvariantCultureIgnoreCase));
+                    
+                    var metaTraversers = pluginManager.GetCollection<IGameMetadataTraverser>()
+                        .Where(c => input.MetadataTraversers.Contains(c.Name, StringComparer.InvariantCultureIgnoreCase));
+
+                    var scrapeContext = jobQueue.GetSource(input.JobID);
+                    if (scrapeContext == null) throw new ArgumentException("The specified scrape context does not exist.");
+                    IGame? game = null;
+
+                    if (input.GameID == default)
+                    {
+                        var recordSeed = scrapeContext.Context.GetAllOfType("scrapecontext_record").FirstOrDefault();
+                        if (recordSeed == null) throw new ArgumentException("No valid game found to apply this scrape context.");
+                        game = await gameLibrary.GetGameAsync(Guid.Parse(recordSeed.Content.Value));
+                    }
+                    else
+                    {
+                        game = await gameLibrary.GetGameAsync(input.GameID);
+                    }
+
+                    if (game == null) throw new ArgumentException("The specified game does not exist.");
+
+
+                    foreach (var traverser in metaTraversers)
+                    {
+                        await traverser.TraverseAll(game, scrapeContext.Context.Root, scrapeContext.Context);
+                    }
+
+                    foreach (var traverser in fileTraversers)
+                    {
+                        await traverser.TraverseAll(game, scrapeContext.Context.Root, scrapeContext.Context);
+                    }
+
+                    jobQueue.TryRemoveSource(input.JobID, out var _);
+
+                    return new ApplyScrapeResultsPayload
+                    {
+                        Game = game,
+                        ScrapeContext = scrapeContext,
+                    };
+
+                }).Type<NonNullType<ApplyScrapeResultsPayloadType>>();
+
         }
     }
 }

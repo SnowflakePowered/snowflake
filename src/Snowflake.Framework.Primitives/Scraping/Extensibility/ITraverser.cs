@@ -43,7 +43,7 @@ namespace Snowflake.Scraping.Extensibility
         /// This may mean that the provided products are already applied to the <paramref name="sideEffectContext"/>,
         /// and should not be reapplied as enumerated.
         /// <para>
-        /// Although the full seed root context is provied, it is best practice for traversers to
+        /// Although the full seed root context is provided, it is best practice for traversers to
         /// traverse relative to the given <paramref name="relativeRoot"/>.
         /// </para>
         /// </summary>

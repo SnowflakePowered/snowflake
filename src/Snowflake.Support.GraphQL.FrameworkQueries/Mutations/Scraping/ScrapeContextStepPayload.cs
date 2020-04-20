@@ -26,6 +26,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                 .Description("Describes one step of the payload job.");
 
             descriptor.Field(s => s.ScrapeContext)
+                .Name("context")
                 .Type<ScrapeContextType>();
             descriptor.Field(s => s.JobID)
                 .Name("jobId")
