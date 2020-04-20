@@ -72,6 +72,46 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                 })
                 .Type<NonNullType<DeleteScrapeContextPayloadType>>();
 
+            descriptor.Field("nextScrapeContextStep")
+                .Description("Proceeds to the next step of the specified scrape context. " +
+                "Returns the output of the next job in the scrape context iterator, until " +
+                "it is exhausted. If the iterator is exhausted, `current` will be null, and `hasNext` will be false . " +
+                "If the specified scrape context does not exist, `context` and `current` will be null, and `hasNext` will be false. ")
+                .UseClientMutationId()
+                .Argument("input", arg => arg.Type<NextScrapeContextStepInputType>())
+                .Resolver(async ctx =>
+                {
+                    var input = ctx.Argument<NextScrapeContextStepInput>("input");
+                    var jobQueue = ctx.SnowflakeService<IAsyncJobQueueFactory>()
+                        .GetJobQueue<IScrapeContext, IEnumerable<ISeed>>(false);
+                    var scrapeContext = jobQueue.GetSource(input.JobID);
+
+                    var addSeeds = input.Seeds;
+                    if (addSeeds != null) 
+                    {
+                        foreach (var graft in addSeeds)
+                        {
+                            var seed = scrapeContext.Context[graft.SeedID];
+                            if (seed == null) continue;
+                            var seedTree = graft.Tree.ToSeedTree();
+                            var seedGraft = seedTree.Collapse(seed, ISeed.ClientSource);
+                            scrapeContext.Context.AddRange(seedGraft);
+                        }
+                    }
+
+                    var (current, hasNext) = await jobQueue.GetNext(input.JobID);
+                    var payload = new ScrapeContextStepPayload
+                    {
+                        ScrapeContext = scrapeContext,
+                        Current = current,
+                        HasNext = hasNext,
+                        JobID = input.JobID
+                    };
+                    
+                    await ctx.SendEventMessage(new OnScrapeContextStepMessage(input.JobID, payload));
+                    return payload;
+
+                }).Type<NonNullType<ScrapeContextStepPayloadType>>();
         }
     }
 }

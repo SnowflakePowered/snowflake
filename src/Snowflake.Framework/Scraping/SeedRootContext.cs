@@ -17,7 +17,7 @@ namespace Snowflake.Scraping
         {
             this.SeedCollectionGuid = Guid.NewGuid();
             this.Culled = ImmutableHashSet<Guid>.Empty;
-            this.Root = new Seed((SeedContent.RootSeedType, "__root"),
+            this.Root = new Seed((SeedContent.RootSeedType, ISeed.RootSource),
                 Guid.NewGuid(), this.SeedCollectionGuid, "collection");
             this.Seeds = ImmutableList<ISeed>.Empty;
             this.Add(this.Root);
