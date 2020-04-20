@@ -19,10 +19,29 @@ namespace Snowflake.Extensibility.Queueing
         bool HasJob(Guid jobId);
 
         /// <summary>
-        /// Retrieves the Job IDs for jobs active in the job queue
+        /// Retrieves the Job IDs for jobs active in the job queue, meaning
+        /// that they have active enumerators being evaluated in the queue.
+        /// 
+        /// This does not include undisposed, but inactive jobs.
         /// </summary>
-        /// <returns>The job IDs for jobs active (non-disposed) in the job queue.</returns>
+        /// <returns>The job IDs for jobs active in the job queue.</returns>
         IEnumerable<Guid> GetActiveJobs();
+
+        /// <summary>
+        /// Retrieves the Job IDs for all jobs in the queue, regardless of their state, including
+        /// undisposed, but inactive jobs.
+        /// </summary>
+        /// <returns>Gets jobs currently stored in the job queue</returns>
+        IEnumerable<Guid> GetQueuedJobs();
+
+        /// <summary>
+        /// Retrieves the job IDs for all jobs that are undisposed, but no longer have items 
+        /// in the enumerator.
+        /// </summary>
+        /// <returns>he job IDs for jobs that are undisposed, but no longer have items left in their enumerator.</returns>
+        IEnumerable<Guid> GetZombieJobs();
+
+
     }
 
     /// <summary>
