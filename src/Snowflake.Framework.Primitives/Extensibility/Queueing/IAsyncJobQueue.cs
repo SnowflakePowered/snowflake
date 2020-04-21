@@ -40,8 +40,6 @@ namespace Snowflake.Extensibility.Queueing
         /// </summary>
         /// <returns>he job IDs for jobs that are undisposed, but no longer have items left in their enumerator.</returns>
         IEnumerable<Guid> GetZombieJobs();
-
-
     }
 
     /// <summary>

@@ -1,5 +1,7 @@
 ﻿using HotChocolate.Types;
 using Snowflake.Extensibility.Queueing;
+using Snowflake.Remoting.GraphQL;
+using Snowflake.Remoting.GraphQL.Model.Queueing;
 using Snowflake.Scraping;
 using System;
 using System.Collections.Generic;
@@ -13,7 +15,8 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Queries.Queueing
         protected override void Configure(IObjectTypeDescriptor<IAsyncJobQueue<IScrapeContext, IEnumerable<ISeed>>> descriptor)
         {
             descriptor.Name("ScrapingJobQueue")
-                .Description("Provides access to values in the scraping job queue");
+                .Description("Provides access to values in the scraping job queue")
+                .UseJobQueue();
 
             descriptor.Field("job")
                 .Argument("jobId", arg => arg.Type<NonNullType<UuidType>>())
@@ -23,18 +26,6 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Queries.Queueing
                     return (context, ctx.Argument<Guid>("jobId"));
                 })
                 .Type<ScrapingJobType>();
-            descriptor.Field(s => s.GetActiveJobs())
-                .Name("activeJobIds")
-                .Description("The jobs currently active in the scraping queue.")
-                .Type<NonNullType<ListType<NonNullType<UuidType>>>>();
-            descriptor.Field(s => s.GetQueuedJobs())
-                .Name("queuedJobIds")
-                .Description("The jobs currently in the scraping queue.")
-                .Type<NonNullType<ListType<NonNullType<UuidType>>>>();
-            descriptor.Field(s => s.GetZombieJobs())
-                .Name("zombieJobIds")
-                .Description("The jobs that are still in the scraping queue, but no longer has items to process.")
-                .Type<NonNullType<ListType<NonNullType<UuidType>>>>();
         }
     }
 }

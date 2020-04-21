@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Snowflake.Remoting.GraphQL.Model.Queueing
 {
+    /// <summary>
+    /// The interface for a queueable job.
+    /// </summary>
     public sealed class QueuableJobInterface
         : InterfaceType
     {

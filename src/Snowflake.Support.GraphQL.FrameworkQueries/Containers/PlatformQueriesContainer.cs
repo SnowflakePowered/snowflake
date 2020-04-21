@@ -86,7 +86,6 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
             hotChocolate.AddObjectType<ScrapeContextStepPayloadType>();
             hotChocolate.AddInterfaceType<ScrapeContextPayloadInterface>();
 
-            //hotChocolate.AddObjectTypeExtension<AutoSubscriptions>();
             hotChocolate.ConfigureSchema(schema =>
             {
                 schema.AddTypeInterceptor<AutoSubscriptionTypeInterceptor>();
