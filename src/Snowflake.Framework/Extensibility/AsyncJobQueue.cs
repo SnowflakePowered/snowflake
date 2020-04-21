@@ -113,14 +113,16 @@ namespace Snowflake.Extensibility.Queueing
         public async ValueTask<(T, bool)> GetNext(Guid jobId)
         {
             var enumerator = this.GetEnumerator(jobId);
-            bool hasNext = await enumerator.MoveNextAsync();
+            bool movedNext = await enumerator.MoveNextAsync();
             
+            // todo: fix semantics of this
+
             // hack to ensure that the last value is not duplicated.
             // the expected behavior is to return null after the enumerable is exhausted.
             // this differs from regular direct IAsyncEnumerator access, where
             // current is never updated when hasnext turns false.
-            var result = (value: hasNext ? enumerator.Current : default, hasNext);
-            if (!result.hasNext)
+            var result = (value: movedNext ? enumerator.Current : default, movedNext);
+            if (!result.movedNext)
             {
                 await enumerator.DisposeAsync();
                 this.Enumerators.Remove(jobId);

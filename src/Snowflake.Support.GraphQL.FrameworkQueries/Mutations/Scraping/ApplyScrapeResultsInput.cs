@@ -11,8 +11,8 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
     {
         public Guid GameID { get; set; }
         public Guid JobID { get; set; }
-        public List<string> FileTraversers { get; }
-        public List<string> MetadataTraversers { get; }
+        public List<string> FileTraversers { get; set; }
+        public List<string> MetadataTraversers { get; set; }
 
     }
 
