@@ -100,22 +100,29 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                         }
                     }
 
-                    var (current, hasNext) = await jobQueue.GetNext(input.JobID);
-                    var payload = new ScrapeContextStepPayload
+                    var (current, movedNext) = await jobQueue.GetNext(input.JobID);
+                   
+                    if (movedNext)
+                    {
+                        var payload = new ScrapeContextStepPayload
+                        {
+                            ScrapeContext = scrapeContext,
+                            Current = current,
+                            JobID = input.JobID
+                        };
+                        await ctx.SendEventMessage(new OnScrapeContextStepMessage(input.JobID, payload));
+                        return payload;
+                    }
+                    var completePayload = new ScrapeContextCompletePayload
                     {
                         ScrapeContext = scrapeContext,
-                        Current = current,
-                        HasNext = hasNext,
                         JobID = input.JobID
                     };
 
-                    if (!(payload.Current == null && !payload.HasNext))
-                    {
-                        await ctx.SendEventMessage(new OnScrapeContextStepMessage(input.JobID, payload));
-                    }
-                    return payload;
+                    await ctx.SendEventMessage(new OnScrapeContextCompleteMessage(input.JobID, completePayload));
+                    return completePayload;
 
-                }).Type<NonNullType<ScrapeContextStepPayloadType>>();
+                }).Type<NonNullType<ScrapeContextPayloadInterface>>();
 
             descriptor.Field("exhaustScrapeContextSteps")
                 .Description("Exhausts the specified scrape context until completion. " +
@@ -143,22 +150,26 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                         }
                     }
 
-                    ScrapeContextStepPayload payload = null;
-                    for ((IEnumerable<ISeed> val, bool next) = await jobQueue.GetNext(input.JobID);
-                        next; (val, next) = await jobQueue.GetNext(input.JobID))
-                    {
-                        payload = new ScrapeContextStepPayload
+                    await foreach (IEnumerable<ISeed> val in jobQueue.AsEnumerable(input.JobID)) { 
+                        ScrapeContextStepPayload payload = new ScrapeContextStepPayload
                         {
                             ScrapeContext = scrapeContext,
                             Current = val,
-                            HasNext = next,
                             JobID = input.JobID
                         };
                         await ctx.SendEventMessage(new OnScrapeContextStepMessage(input.JobID, payload));
                     }
-                    return payload!;
 
-                }).Type<NonNullType<ScrapeContextStepPayloadType>>();
+                    var completePayload = new ScrapeContextCompletePayload
+                    {
+                        ScrapeContext = scrapeContext,
+                        JobID = input.JobID
+                    };
+
+                    await ctx.SendEventMessage(new OnScrapeContextCompleteMessage(input.JobID, completePayload));
+                    return completePayload;
+
+                }).Type<NonNullType<ScrapeContextCompletePayloadType>>();
 
             descriptor.Field("applyScrapeResults")
                 .Description("Applies the specified scrape results to the specified game as-is.")

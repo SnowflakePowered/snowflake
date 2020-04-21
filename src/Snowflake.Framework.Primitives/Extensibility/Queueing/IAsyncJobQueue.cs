@@ -82,20 +82,20 @@ namespace Snowflake.Extensibility.Queueing
         /// </summary>
         /// <param name="jobId">The job token that was returned by <see cref="QueueJob(TAsyncEnumerable, CancellationToken)"/></param>
         /// <returns>
-        /// The next value, or null if the current value is null.
+        /// The value, or null if the current value is null.
         /// </returns>
         T GetCurrent(Guid jobId);
 
         /// <summary>
         /// Retrieves the next value in the enumerator and whether or not the enumerator is exhausted.
         /// Once the enumerator is exhausted, the value field will always be default(<typeparamref name="T"/>),
-        /// and hasNext will be false.
+        /// and movedNext will be false.
         /// </summary>
         /// <param name="jobId">The job token that was returned by <see cref="QueueJob(TAsyncEnumerable, CancellationToken)"/></param>
         /// <returns>
         /// The next value and whether or not to continue iterating.
         /// </returns>
-        ValueTask<(T value, bool hasNext)> GetNext(Guid jobId);
+        ValueTask<(T value, bool movedNext)> GetNext(Guid jobId);
 
         /// <summary>
         /// Gets the remaining values in the enumerator as an <see cref="IAsyncEnumerable{T}"/>

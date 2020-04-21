@@ -82,6 +82,10 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
             //hotChocolate.AddObjectTypeExtension<GameSubscriptions>();
             hotChocolate.AddObjectTypeExtension<ScrapingMutations>();
             hotChocolate.AddObjectTypeExtension<ScrapingSubscriptions>();
+            hotChocolate.AddObjectType<ScrapeContextCompletePayloadType>();
+            hotChocolate.AddObjectType<ScrapeContextStepPayloadType>();
+            hotChocolate.AddInterfaceType<ScrapeContextPayloadInterface>();
+
             //hotChocolate.AddObjectTypeExtension<AutoSubscriptions>();
             hotChocolate.ConfigureSchema(schema =>
             {
