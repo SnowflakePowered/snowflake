@@ -1,4 +1,5 @@
 ﻿using HotChocolate.Types;
+using Snowflake.Remoting.GraphQL.FrameworkQueries.Mutations.Relay;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -6,6 +7,7 @@ using System.Text;
 namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
 {
     internal sealed class ApplyScrapeResultsInput
+        : RelayMutationBase
     {
         public Guid GameID { get; set; }
         public Guid JobID { get; set; }
@@ -19,7 +21,9 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
     {
         protected override void Configure(IInputObjectTypeDescriptor<ApplyScrapeResultsInput> descriptor)
         {
-            descriptor.Name(nameof(ApplyScrapeResultsInput));
+            descriptor.Name(nameof(ApplyScrapeResultsInput))
+                .WithClientMutationId();
+
             descriptor.Field(g => g.GameID)
                 .Name("gameId")
                 .Description("The GUID of the game to apply the results to." +
