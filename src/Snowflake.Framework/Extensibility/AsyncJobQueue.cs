@@ -71,9 +71,10 @@ namespace Snowflake.Extensibility.Queueing
 
             public async ValueTask<bool> MoveNextAsync()
             {
-                (T val, bool hasNext) = await this.Queue.GetNext(this.JobId);
-                this.Current = val;
-                return hasNext;
+                (T val, bool movedNext) = await this.Queue.GetNext(this.JobId);
+                if (movedNext) 
+                    this.Current = val;
+                return movedNext;
             }
         }
 

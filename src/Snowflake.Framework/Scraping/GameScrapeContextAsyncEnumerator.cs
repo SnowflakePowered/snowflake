@@ -23,11 +23,7 @@ namespace Snowflake.Scraping
         public CancellationToken Token { get; }
         private bool CullersRun { get; set; }
 
-        public ValueTask DisposeAsync()
-        {
-            // what do i do here? there's nothing to dispose!
-            return new ValueTask();
-        }
+        public ValueTask DisposeAsync() => default;
 
         public async ValueTask<bool> MoveNextAsync()
         {

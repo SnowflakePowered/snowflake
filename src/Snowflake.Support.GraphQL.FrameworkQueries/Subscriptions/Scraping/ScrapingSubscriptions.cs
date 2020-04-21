@@ -29,6 +29,14 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Scraping
                     var message = ctx.GetEventMessage<OnScrapeContextStepMessage>();
                     return message.Payload;
                 });
+            descriptor.Field("onScrapeContextComplete")
+               .Type<NonNullType<ScrapeContextCompletePayloadType>>()
+               .Argument("jobId", arg => arg.Type<NonNullType<UuidType>>())
+               .Resolver(ctx =>
+               {
+                   var message = ctx.GetEventMessage<OnScrapeContextCompleteMessage>();
+                   return message.Payload;
+               });
         }
     }
 }

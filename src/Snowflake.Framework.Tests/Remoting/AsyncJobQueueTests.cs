@@ -16,18 +16,18 @@ namespace Snowflake.Remoting.Tests
             var token = await tq.QueueJob(EmitStrings());
             string _none = tq.GetCurrent(token);
             Assert.Null(_none);
-            (string val, bool next) = await tq.GetNext(token);
+            (string val, bool valid) = await tq.GetNext(token);
             Assert.Equal("Hello World", val);
             Assert.Equal(val, tq.GetCurrent(token));
-            Assert.True(next);
-            (val, next) = await tq.GetNext(token);
-            Assert.True(next);
+            Assert.True(valid);
+            (val, valid) = await tq.GetNext(token);
+            Assert.True(valid);
             Assert.Equal("Goodbye World", val);
-            (val, next) = await tq.GetNext(token);
-            Assert.False(next);
+            (val, valid) = await tq.GetNext(token);
+            Assert.False(valid);
             Assert.Null(val);
-            (val, next) = await tq.GetNext(token);
-            Assert.False(next);
+            (val, valid) = await tq.GetNext(token);
+            Assert.False(valid);
             Assert.Null(val);
             Assert.Null(tq.GetCurrent(token));
         }
@@ -39,15 +39,15 @@ namespace Snowflake.Remoting.Tests
             Guid token = Guid.NewGuid();
             Assert.Equal(token, await tq.QueueJob(EmitStrings(), token));
 
-            (string val, bool next) = await tq.GetNext(token);
+            (string val, bool valid) = await tq.GetNext(token);
             Assert.Equal("Hello World", val);
 
-            Assert.True(next);
-            (val, next) = await tq.GetNext(token);
+            Assert.True(valid);
+            (val, valid) = await tq.GetNext(token);
             Assert.Equal("Goodbye World", val);
-            Assert.True(next);
-            (val, next) = await tq.GetNext(token);
-            Assert.False(next);
+            Assert.True(valid);
+            (val, valid) = await tq.GetNext(token);
+            Assert.False(valid);
             Assert.Null(val);
         }
 
