@@ -74,7 +74,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
 
             descriptor.Field("nextScrapeContextStep")
                 .Description("Proceeds to the next step of the specified scrape context. " +
-                "Returns the output of the next job in the scrape context iterator, until " +
+                "Returns the output of the next step in the scrape context iterator, until " +
                 "it is exhausted. If the iterator is exhausted, `current` will be null, and `hasNext` will be false . " +
                 "If the specified scrape context does not exist, `context` and `current` will be null, and `hasNext` will be false. ")
                 .UseClientMutationId()
@@ -108,9 +108,55 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                         HasNext = hasNext,
                         JobID = input.JobID
                     };
-                    
-                    await ctx.SendEventMessage(new OnScrapeContextStepMessage(input.JobID, payload));
+
+                    if (!(payload.Current == null && !payload.HasNext))
+                    {
+                        await ctx.SendEventMessage(new OnScrapeContextStepMessage(input.JobID, payload));
+                    }
                     return payload;
+
+                }).Type<NonNullType<ScrapeContextStepPayloadType>>();
+
+            descriptor.Field("exhaustScrapeContextSteps")
+                .Description("Exhausts the specified scrape context until completion. " +
+                "Returns the output of the last step of the scrape context, when there are no more remaining left to continue with.")
+                .UseClientMutationId()
+                .Argument("input", arg => arg.Type<NextScrapeContextStepInputType>())
+                .Resolver(async ctx =>
+                {
+                    var input = ctx.Argument<NextScrapeContextStepInput>("input");
+                    var jobQueue = ctx.SnowflakeService<IAsyncJobQueueFactory>()
+                        .GetJobQueue<IScrapeContext, IEnumerable<ISeed>>(false);
+                    var scrapeContext = jobQueue.GetSource(input.JobID);
+                    if (scrapeContext == null) throw new ArgumentException("The specified game does not exist.");
+
+                    var addSeeds = input.Seeds;
+                    if (addSeeds != null)
+                    {
+                        foreach (var graft in addSeeds)
+                        {
+                            var seed = scrapeContext.Context[graft.SeedID];
+                            if (seed == null) continue;
+                            var seedTree = graft.Tree.ToSeedTree();
+                            var seedGraft = seedTree.Collapse(seed, ISeed.ClientSource);
+                            scrapeContext.Context.AddRange(seedGraft);
+                        }
+                    }
+
+                    ScrapeContextStepPayload payload = null;
+                    for ((IEnumerable<ISeed> val, bool next) = await jobQueue.GetNext(input.JobID);
+                        next; (val, next) = await jobQueue.GetNext(input.JobID))
+                    {
+                        payload = new ScrapeContextStepPayload
+                        {
+                            ScrapeContext = scrapeContext,
+                            Current = val,
+                            HasNext = next,
+                            JobID = input.JobID
+                        };
+                        await ctx.SendEventMessage(new OnScrapeContextStepMessage(input.JobID, payload));
+                    }
+                    return payload!;
 
                 }).Type<NonNullType<ScrapeContextStepPayloadType>>();
 
