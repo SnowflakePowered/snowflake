@@ -36,6 +36,7 @@ using Snowflake.Model.Game;
 using Snowflake.Support.Remoting.GraphQL.RootProvider;
 using HotChocolate.Language;
 using Snowflake.Remoting.GraphQL;
+using Snowflake.Remoting.GraphQL.Model.Queueing;
 
 namespace Snowflake.Services
 {
@@ -159,6 +160,10 @@ namespace Snowflake.Services
                 .AddObjectType<SeedRootContextType>()
                 .AddObjectType<SeedType>()
                 ;
+            this.Schemas
+              .AddInterfaceType<JobQueueInterface>()
+              .AddInterfaceType<QueuableJobInterface>()
+              ;
 
             services.AddDataLoaderRegistry();
             services.AddGraphQLSubscriptions();
@@ -229,7 +234,7 @@ namespace Snowflake.Services
 
             services.AddQueryRequestInterceptor((context, builder, cancel) =>
             {
-                builder.SetProperty(SnowflakeGraphQLServices.ServicesNamespace, this.ServiceContainer);
+                builder.SetProperty(SnowflakeGraphQLExtensions.ServicesNamespace, this.ServiceContainer);
                 //builder.TrySetServices(context.RequestServices.Include(this.ServiceContainer));
                 return Task.CompletedTask;
             });

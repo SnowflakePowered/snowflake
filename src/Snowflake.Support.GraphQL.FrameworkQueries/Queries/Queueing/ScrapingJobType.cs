@@ -1,5 +1,6 @@
 ﻿using HotChocolate.Types;
 using Snowflake.Extensibility.Queueing;
+using Snowflake.Remoting.GraphQL.Model.Queueing;
 using Snowflake.Remoting.GraphQL.Model.Scraping;
 using Snowflake.Scraping;
 using System;
@@ -14,7 +15,15 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Queries.Queueing
         protected override void Configure(IObjectTypeDescriptor<(IAsyncJobQueue<IScrapeContext, IEnumerable<ISeed>>, Guid)> descriptor)
         {
             descriptor.Name("ScrapingJob")
-                .Description("Describes a single scraping job.");
+                .Description("Describes a single scraping job.")
+                .Interface<QueuableJobInterface>();
+            descriptor.Field("jobId")
+              .Type<NonNullType<UuidType>>()
+              .Resolver(ctx =>
+              {
+                  var (_, token) = ctx.Parent<(IAsyncJobQueue<IScrapeContext, IEnumerable<ISeed>>, Guid)>();
+                  return token;
+              });
             descriptor.Field("current")
                 .Type<ListType<SeedType>>()
                 .Resolver(ctx =>
