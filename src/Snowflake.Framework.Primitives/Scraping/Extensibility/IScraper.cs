@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Snowflake.Extensibility;
 using Snowflake.Installation;
@@ -46,10 +47,12 @@ namespace Snowflake.Scraping.Extensibility
         /// <param name="rootSeeds">Any seeds, keyed on their type, that must exist as children of the root as specified in <see cref="Directives"/>.</param>
         /// <param name="childSeeds">Any seeds, keyed on their type, that must exist as children of the target seed as specified in <see cref="Directives"/>.</param>
         /// <param name="siblingSeeds">Any seeds, keyed on their type, that must exist as siblings of the target seed as specified in <see cref="Directives"/></param>
+        /// <param name="cancellationToken">The cancellation token passed to this scraper if it is to be cancelled.</param>
         /// <returns>A tree of seeds based on information available in the given target.</returns>
         IAsyncEnumerable<SeedTree> ScrapeAsync(ISeed target,
             ILookup<string, SeedContent> rootSeeds,
             ILookup<string, SeedContent> childSeeds,
-            ILookup<string, SeedContent> siblingSeeds);
+            ILookup<string, SeedContent> siblingSeeds,
+            CancellationToken cancellationToken = default);
     }
 }

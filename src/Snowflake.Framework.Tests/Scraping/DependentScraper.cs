@@ -6,6 +6,8 @@ using Snowflake.Extensibility;
 using System.Threading.Tasks;
 using Snowflake.Scraping.Extensibility;
 using static Snowflake.Scraping.Extensibility.SeedBuilder;
+using System.Threading;
+using System.Runtime.CompilerServices;
 
 namespace Snowflake.Scraping.Tests
 {
@@ -20,7 +22,7 @@ namespace Snowflake.Scraping.Tests
 
         public override async IAsyncEnumerable<SeedTree> ScrapeAsync(ISeed parent,
             ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds,
-            ILookup<string, SeedContent> siblingSeeds)
+            ILookup<string, SeedContent> siblingSeeds, [EnumeratorCancellation] CancellationToken cancellationToken)
         {
             yield return ("TestDependent", $"{rootSeeds["Test"].First()} from Dependent Scraper");
         }
