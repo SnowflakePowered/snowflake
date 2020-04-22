@@ -92,6 +92,8 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                     var jobQueueFactory = ctx.SnowflakeService<IAsyncJobQueueFactory>();
                     var jobQueue = jobQueueFactory.GetJobQueue<IScrapeContext, IEnumerable<ISeed>>(false);
 
+                    if (!jobQueue.HasJob(input.JobID)) throw new ArgumentException("The specified job was not found");
+
                     jobQueue.RequestCancellation(input.JobID);
                     await jobQueue.GetNext(input.JobID);
                     bool result = jobQueue.TryRemoveSource(input.JobID, out var scrapeContext);
@@ -104,7 +106,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                         Game = ctx.GetAssignedGame(input.JobID)
                             .ContinueWith(g =>
                             {
-                                if (result) ctx.JobFinished(input.JobID);
+                                if (result) ctx.RemoveAssignment(input.JobID);
                                 return g;
                             }).Unwrap()
                     };
