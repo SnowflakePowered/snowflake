@@ -1,4 +1,5 @@
 ﻿using HotChocolate;
+using HotChocolate.Execution;
 using HotChocolate.Types;
 using Snowflake.Loader;
 using System;
@@ -27,5 +28,6 @@ namespace Snowflake.Remoting.GraphQL
         IGraphQLSchemaRegistrationProvider AddScalarType<T>() where T
            : ScalarType;
         IGraphQLSchemaRegistrationProvider ConfigureSchema(Action<ISchemaBuilder> schemaBuilder);
+        IGraphQLSchemaRegistrationProvider ConfigureQueryRequest(Action<IQueryRequestBuilder> queryBuilder);
     }
 }

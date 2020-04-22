@@ -39,7 +39,7 @@ namespace Snowflake.Installation.Extensibility
         /// <param name="game">The game to install the files to.</param>
         /// <param name="files">
         /// The list of files to install. Use <see cref="GetInstallables(PlatformId, IEnumerable{FileSystemInfo})"/>
-        /// to ensure that this installer can properly install the given files. Theoretically 
+        /// to ensure that this installer can properly install the given files.
         /// </param>
         /// <param name="cancellationToken">The cancellation token to pass to the installer.</param>
         /// <returns>The files that were installed to the game.</returns>

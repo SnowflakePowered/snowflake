@@ -235,7 +235,10 @@ namespace Snowflake.Services
             services.AddQueryRequestInterceptor((context, builder, cancel) =>
             {
                 builder.SetProperty(SnowflakeGraphQLExtensions.ServicesNamespace, this.ServiceContainer);
-                //builder.TrySetServices(context.RequestServices.Include(this.ServiceContainer));
+                foreach (var config in this.Schemas.QueryConfig)
+                {
+                    config(builder);
+                }
                 return Task.CompletedTask;
             });
         }
