@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using Snowflake.Extensibility;
 using Snowflake.Extensibility.Provisioning;
 using Snowflake.Model.Game;
@@ -19,7 +21,8 @@ namespace Snowflake.Support.Scraping.Primitives
         {
         }
 
-        public override async IAsyncEnumerable<IRecordMetadata> Traverse(IGame game, ISeed relativeRoot, ISeedRootContext context)
+        public override async IAsyncEnumerable<IRecordMetadata> Traverse(IGame game, ISeed relativeRoot, ISeedRootContext context, 
+            [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             foreach (var result in context.GetAllOfType("result").SelectMany(s => context.GetChildren(s).Distinct()))
             {

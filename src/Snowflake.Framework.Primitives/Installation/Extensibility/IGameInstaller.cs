@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-
+using System.Threading;
 using Snowflake.Extensibility;
 using Snowflake.Filesystem;
 using Snowflake.Model.Game;
@@ -27,7 +27,7 @@ namespace Snowflake.Installation.Extensibility
         /// </param>
         /// <returns>
         /// A list of installables that can be used with 
-        /// <see cref="Install(IGame, IEnumerable{FileSystemInfo})"/>
+        /// <see cref="Install(IGame, IEnumerable{FileSystemInfo}, CancellationToken)"/>
         /// </returns>
         IEnumerable<IInstallable> GetInstallables(PlatformId platformId, IEnumerable<FileSystemInfo> fileEntries);
 
@@ -41,8 +41,9 @@ namespace Snowflake.Installation.Extensibility
         /// The list of files to install. Use <see cref="GetInstallables(PlatformId, IEnumerable{FileSystemInfo})"/>
         /// to ensure that this installer can properly install the given files. Theoretically 
         /// </param>
+        /// <param name="cancellationToken">The cancellation token to pass to the installer.</param>
         /// <returns>The files that were installed to the game.</returns>
-        IAsyncEnumerable<TaskResult<IFile>> Install(IGame game, IEnumerable<FileSystemInfo> files);
+        IAsyncEnumerable<TaskResult<IFile>> Install(IGame game, IEnumerable<FileSystemInfo> files, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Platforms this <see cref="IGameInstaller"/> supports. There can be at most one instance of

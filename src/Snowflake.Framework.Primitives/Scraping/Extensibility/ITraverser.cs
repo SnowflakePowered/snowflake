@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Snowflake.Extensibility;
 using Snowflake.Filesystem;
@@ -35,7 +36,7 @@ namespace Snowflake.Scraping.Extensibility
         /// <param name="relativeRoot">The seed to begin traversing from.</param>
         /// <param name="context">The seed context within where the seeds can be traversed.</param>
         /// <returns>Objects based on values found in the tree.</returns>
-        Task<IEnumerable<TProducts>> TraverseAll(TEffectTarget sideEffectContext, ISeed relativeRoot, ISeedRootContext context);
+        Task<IEnumerable<TProducts>> TraverseAll(TEffectTarget sideEffectContext, ISeed relativeRoot, ISeedRootContext context, CancellationToken cancellationToken = default);
         /// <summary>
         /// Traverses the seed tree to yield objects of type <typeparamref name="TProducts"/>,
         /// which, while being enumerated, may cause side effects to the provided <paramref name="sideEffectContext"/>.
@@ -50,8 +51,9 @@ namespace Snowflake.Scraping.Extensibility
         /// <param name="sideEffectContext">The mutable object onto which side effects may be applied</param>
         /// <param name="relativeRoot">The seed to begin traversing from.</param>
         /// <param name="context">The seed context within where the seeds can be traversed.</param>
+        /// <param name="cancellationToken">The cancellation token passed to the async enumerable.</param>
         /// <returns>Objects based on values found in the tree.</returns>
-        IAsyncEnumerable<TProducts> Traverse(TEffectTarget sideEffectContext, ISeed relativeRoot, ISeedRootContext context);
+        IAsyncEnumerable<TProducts> Traverse(TEffectTarget sideEffectContext, ISeed relativeRoot, ISeedRootContext context, CancellationToken cancellationToken = default);
     }
 
     /// <summary>
