@@ -36,9 +36,9 @@ namespace Snowflake.Remoting.GraphQL.Model.Filesystem
 
             FileSystemInfo fsPath = (taggedParts[0], taggedParts[1]) switch
             {
-                ("file", string path) => !Path.EndsInDirectorySeparator(path) ? new FileInfo(path)
+                ("f", string path) => !Path.EndsInDirectorySeparator(path) ? new FileInfo(path)
                     : throw new ArgumentException("File paths can not end in the directory separator character."),
-                ("directory", string path) => new DirectoryInfo(path),
+                ("d", string path) => new DirectoryInfo(path),
                 _ => throw new ArgumentException("Unsupported tag for FileSystemPath."),
             };
             return fsPath;
@@ -46,8 +46,8 @@ namespace Snowflake.Remoting.GraphQL.Model.Filesystem
 
         protected override StringValueNode ParseValue(FileSystemInfo value)
         {
-            if (value is FileInfo f) return new StringValueNode(null, $"file|{f.FullName}", false);
-            if (value is DirectoryInfo d) return new StringValueNode(null, $"directory|{d.FullName}", false);
+            if (value is FileInfo f) return new StringValueNode(null, $"f|{f.FullName}", false);
+            if (value is DirectoryInfo d) return new StringValueNode(null, $"d|{d.FullName}", false);
             throw new ArgumentException("Unsupported FileSystemInfo subtype.");
         }
 
@@ -58,13 +58,13 @@ namespace Snowflake.Remoting.GraphQL.Model.Filesystem
         {
             if (value is FileInfo f)
             {
-                serialized = $"file|{f.FullName}";
+                serialized = $"f|{f.FullName}";
                 return true;
             }
 
             if (value is DirectoryInfo d)
             {
-                serialized = $"directory|{d.FullName}";
+                serialized = $"d|{d.FullName}";
                 return true;
             }
 
@@ -88,9 +88,9 @@ namespace Snowflake.Remoting.GraphQL.Model.Filesystem
 
                 FileSystemInfo fsPath = (taggedParts[0], taggedParts[1]) switch
                 {
-                    ("file", string path) => !Path.EndsInDirectorySeparator(path) ? new FileInfo(path)
+                    ("f", string path) => !Path.EndsInDirectorySeparator(path) ? new FileInfo(path)
                         : throw new ArgumentException("File paths can not end in the directory separator character."),
-                    ("directory", string path) => new DirectoryInfo(path),
+                    ("d", string path) => new DirectoryInfo(path),
                     _ => throw new ArgumentException("Unsupported tag for FileSystemPath."),
                 };
                 value = fsPath;
