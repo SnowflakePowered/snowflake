@@ -12,7 +12,7 @@ namespace Snowflake.Installation.Tests
         public async Task TaskCaching_Test()
         {
             var task = new TrivialCounterTask();
-            await foreach(var i in  EmitCounter(task));
+            await foreach(var i in EmitCounter(task));
             Assert.Equal(1, task.Counter);
         }
 

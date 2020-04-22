@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Snowflake.Filesystem;
 
 namespace Snowflake.Installation.Tasks
@@ -32,6 +33,11 @@ namespace Snowflake.Installation.Tasks
             this.Source =  source;
             this.Destination = destinationDirectory;
         }
+
+        protected override ValueTask<string> CreateSuccessDescription(IFile current)
+           => new ValueTask<string>($"Copied {current.Name} to directory {this.Destination.Name}");
+        protected override ValueTask<string> CreateFailureDescription(AggregateException e)
+            => new ValueTask<string>($"Failed to copy file to directory {this.Destination.Name} due to {e.InnerException}");
 
         protected override async IAsyncEnumerable<IFile> ExecuteOnce()
         {

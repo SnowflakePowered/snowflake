@@ -31,6 +31,11 @@ namespace Snowflake.Installation.Tasks
 
         protected override string TaskName => "Copy";
 
+        protected override async ValueTask<string> CreateSuccessDescription() 
+            => $"Copied {(await this.Source).FullName} to directory {this.Destination.Name}";
+        protected override async ValueTask<string> CreateFailureDescription(AggregateException _)
+            => $"Failed to copy {(await this.Source).FullName} to directory {this.Destination.Name}";
+
         protected override async Task<IFile?> ExecuteOnce()
         {
             return await this.Destination.CopyFromAsync(await this.Source);
