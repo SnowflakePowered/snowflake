@@ -32,6 +32,8 @@ using Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions;
 using HotChocolate.Language;
 using Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Scraping;
 using Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation;
+using System.Collections.Concurrent;
+using System;
 
 namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
 {
@@ -93,6 +95,12 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
                 schema.AddTypeInterceptor<AutoSubscriptionTypeInterceptor>();
             });
 
+            var jobQueue = new ConcurrentDictionary<Guid, Guid>();
+
+            hotChocolate.ConfigureQueryRequest(query =>
+            {
+                query.SetProperty("Snowflake.Support.GraphQL.FrameworkQueries.ResolverJobQueueMetadata.Store", jobQueue);
+            });
         }
     }
 }

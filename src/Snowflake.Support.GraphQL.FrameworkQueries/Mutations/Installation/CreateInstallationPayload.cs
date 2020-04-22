@@ -1,10 +1,13 @@
 ﻿using HotChocolate.Types;
+using Snowflake.Model.Game;
 using Snowflake.Remoting.GraphQL.FrameworkQueries.Mutations.Relay;
+using Snowflake.Remoting.GraphQL.Model.Records;
 using Snowflake.Remoting.GraphQL.Model.Scraping;
 using Snowflake.Scraping;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
 {
@@ -12,6 +15,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
         : RelayMutationBase
     {
         public Guid JobID { get; set; }
+        public Task<IGame> Game { get; set; }
     }
 
     internal sealed class CreateInstallationPayloadType
@@ -29,6 +33,10 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
                 .Name("jobId")
                 .Description("The job GUID.")
                 .Type<NonNullType<UuidType>>();
+
+            descriptor.Field(c => c.Game)
+                .Description("The game that this job will install to.")
+                .Type<NonNullType<GameType>>();
         }
     }
 

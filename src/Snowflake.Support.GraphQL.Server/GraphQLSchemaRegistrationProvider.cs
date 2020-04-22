@@ -11,6 +11,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using HotChocolate.Language;
+using HotChocolate.Execution;
 
 namespace Snowflake.Services
 {
@@ -21,6 +22,8 @@ namespace Snowflake.Services
         {
             this.QueryBuilderServices = new ServiceCollection();
             this.SchemaConfig = new List<Action<ISchemaBuilder>>();
+            this.QueryConfig = new List<Action<IQueryRequestBuilder>>();
+
             this.ObjectTypes = new List<Type>();
             this.ObjectTypeExtensions = new List<Type>();
             this.InterfaceTypes = new List<Type>();
@@ -39,6 +42,7 @@ namespace Snowflake.Services
         private ILogger Logger { get; }
 
         internal IList<Action<ISchemaBuilder>> SchemaConfig { get; }
+        internal IList<Action<IQueryRequestBuilder>> QueryConfig { get; }
 
         public IGraphQLSchemaRegistrationProvider AddObjectType<T>()
             where T : ObjectType
@@ -85,6 +89,12 @@ namespace Snowflake.Services
         public IGraphQLSchemaRegistrationProvider ConfigureSchema(Action<ISchemaBuilder> schemaBuilder)
         {
             this.SchemaConfig.Add(schemaBuilder);
+            return this;
+        }
+
+        public IGraphQLSchemaRegistrationProvider ConfigureQueryRequest(Action<IQueryRequestBuilder> queryBuilder)
+        {
+            this.QueryConfig.Add(queryBuilder);
             return this;
         }
 
