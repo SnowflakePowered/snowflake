@@ -1055,7 +1055,7 @@
         <member name="M:Snowflake.Installation.Extensibility.GameInstaller.GetInstallables(Snowflake.Model.Game.PlatformId,System.Collections.Generic.IEnumerable{System.IO.FileSystemInfo})">
             <inheritdoc />
         </member>
-        <member name="M:Snowflake.Installation.Extensibility.GameInstaller.Install(Snowflake.Model.Game.IGame,System.Collections.Generic.IEnumerable{System.IO.FileSystemInfo})">
+        <member name="M:Snowflake.Installation.Extensibility.GameInstaller.Install(Snowflake.Model.Game.IGame,System.Collections.Generic.IEnumerable{System.IO.FileSystemInfo},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:Snowflake.Installation.Extensibility.Installable.#ctor(System.Collections.Generic.IEnumerable{System.IO.FileSystemInfo},System.IO.FileSystemInfo,Snowflake.Installation.Extensibility.IGameInstaller)">

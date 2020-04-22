@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Snowflake.Extensibility.Provisioning;
 using Snowflake.Extensibility.Provisioning.Standalone;
@@ -24,12 +25,13 @@ namespace Snowflake.Scraping.Extensibility
         {
         }
 
-        public abstract IAsyncEnumerable<TProducts> Traverse(TEffectTarget sideEffectContext, ISeed relativeRoot, ISeedRootContext context);
+        public abstract IAsyncEnumerable<TProducts> Traverse(TEffectTarget sideEffectContext, ISeed relativeRoot, ISeedRootContext context, 
+            CancellationToken cancellationToken = default);
 
-        public async Task<IEnumerable<TProducts>> TraverseAll(TEffectTarget sideEffectContext, ISeed relativeRoot, ISeedRootContext context)
+        public async Task<IEnumerable<TProducts>> TraverseAll(TEffectTarget sideEffectContext, ISeed relativeRoot, ISeedRootContext context, CancellationToken cancellationToken = default)
         {
             IList<TProducts> list = new List<TProducts>();
-            await foreach (var product in this.Traverse(sideEffectContext, relativeRoot, context).ConfigureAwait(false))
+            await foreach (var product in this.Traverse(sideEffectContext, relativeRoot, context, cancellationToken).ConfigureAwait(false))
             {
                 list.Add(product);
             }

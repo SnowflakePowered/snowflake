@@ -12,6 +12,8 @@ using Snowflake.Extensibility;
 using Snowflake.Services;
 using Snowflake.Filesystem;
 using Snowflake.Romfile;
+using System.Threading;
+using System.Runtime.CompilerServices;
 
 namespace Snowflake.Plugin.Installation.BasicInstallers
 {
@@ -66,7 +68,8 @@ namespace Snowflake.Plugin.Installation.BasicInstallers
             }
         }
 
-        public override async IAsyncEnumerable<TaskResult<IFile>> Install(IGame game, IEnumerable<FileSystemInfo> files)
+        public override async IAsyncEnumerable<TaskResult<IFile>> Install(IGame game, IEnumerable<FileSystemInfo> files,
+            [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             var platform =  game.Record.PlatformID;
            
