@@ -31,6 +31,7 @@ using HotChocolate.Types.Descriptors;
 using Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions;
 using HotChocolate.Language;
 using Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Scraping;
+using Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation;
 
 namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
 {
@@ -86,6 +87,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
             hotChocolate.AddObjectType<ScrapeContextStepPayloadType>();
             hotChocolate.AddInterfaceType<ScrapeContextPayloadInterface>();
 
+            hotChocolate.AddObjectTypeExtension<InstallationMutations>();
             hotChocolate.ConfigureSchema(schema =>
             {
                 schema.AddTypeInterceptor<AutoSubscriptionTypeInterceptor>();

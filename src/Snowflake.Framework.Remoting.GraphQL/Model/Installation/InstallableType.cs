@@ -15,6 +15,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Installation
             descriptor.Name("Installable")
                 .Description("Describes a unit of installation for a system.");
             descriptor.Field(i => i.Source)
+                .Name("installer")
                 .Description("The installer plugin that will be used to install this unit.")
                 .Type<NonNullType<StringType>>();
             descriptor.Field(i => i.DisplayName)
