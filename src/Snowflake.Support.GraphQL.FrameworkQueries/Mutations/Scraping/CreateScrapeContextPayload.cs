@@ -1,5 +1,7 @@
 ﻿using HotChocolate.Types;
+using Snowflake.Model.Game;
 using Snowflake.Remoting.GraphQL.FrameworkQueries.Mutations.Relay;
+using Snowflake.Remoting.GraphQL.Model.Records;
 using Snowflake.Remoting.GraphQL.Model.Scraping;
 using Snowflake.Scraping;
 using System;
@@ -13,6 +15,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
     {
         public IScrapeContext ScrapeContext { get; set; }
         public Guid JobID { get; set; }
+        public IGame Game { get; set; }
     }
 
     internal sealed class CreateScrapeContextPayloadType
@@ -34,6 +37,10 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
             descriptor.Field(c => c.ScrapeContext)
                 .Name("context")
                 .Type<NonNullType<ScrapeContextType>>();
+
+            descriptor.Field(c => c.Game)
+               .Description("The game this scrape context was created for.")
+               .Type<NonNullType<GameType>>();
         }
     }
 

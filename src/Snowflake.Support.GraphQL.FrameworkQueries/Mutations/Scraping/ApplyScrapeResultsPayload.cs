@@ -26,7 +26,8 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                 .WithClientMutationId();
 
             descriptor.Field(c => c.Game)
-                .Type<NonNullType<GameType>>();
+               .Description("The game this scrape context was applied to.")
+               .Type<NonNullType<GameType>>();
 
             descriptor.Field(c => c.ScrapeContext)
                 .Name("context")

@@ -1,10 +1,13 @@
 ﻿using HotChocolate.Types;
+using Snowflake.Model.Game;
 using Snowflake.Remoting.GraphQL.FrameworkQueries.Mutations.Relay;
+using Snowflake.Remoting.GraphQL.Model.Records;
 using Snowflake.Remoting.GraphQL.Model.Scraping;
 using Snowflake.Scraping;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
 {
@@ -12,6 +15,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
         : RelayMutationBase
     {
         public IScrapeContext ScrapeContext { get; set; }
+        public Task<IGame> Game { get; set; }
         public Guid JobID { get; set; }
         public bool Success { get; set; }
     }
@@ -38,6 +42,10 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                 .Name("success")
                 .Description("Whether or not the job was removed from the queue")
                 .Type<NonNullType<BooleanType>>();
+
+            descriptor.Field(c => c.Game)
+               .Description("The game this scrape context was created for.")
+               .Type<NonNullType<GameType>>();
         }
     }
 
