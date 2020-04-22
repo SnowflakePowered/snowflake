@@ -4,6 +4,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Snowflake.Filesystem;
 
 namespace Snowflake.Installation.Tasks
@@ -28,6 +29,11 @@ namespace Snowflake.Installation.Tasks
         public IDirectory Destination { get; }
 
         protected override string TaskName => "Zip Extract";
+
+        protected override ValueTask<string> CreateSuccessDescription(IFile? current)
+           => new ValueTask<string>($"Extracted {current?.Name} to directory {this.Destination.Name}");
+        protected override ValueTask<string> CreateFailureDescription(AggregateException e)
+            => new ValueTask<string>($"Failed to extract file to directory {this.Destination.Name} due to {e.InnerException}");
 
         protected override async IAsyncEnumerable<IFile?> ExecuteOnce()
         {

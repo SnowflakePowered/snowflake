@@ -33,7 +33,11 @@ namespace Snowflake.Installation.Tests
             var temp2 = Path.GetTempFileName();
             await System.IO.File.WriteAllBytesAsync(temp2, Data);
             // Execute the results.
-            await foreach (var res in EmitCopyResult(temp2, dir));
+            await foreach (var res in EmitCopyResult(temp2, dir))
+            {
+                Assert.Equal(await res.Description, $"Copied {new FileInfo(temp2).FullName} to directory {dir.Name}");
+                Assert.Equal(await res.Description, $"Copied {new FileInfo(temp2).FullName} to directory {dir.Name}");
+            }
 
             Assert.True(dir.ContainsFile(Path.GetFileName(temp2)));
 
@@ -68,7 +72,11 @@ namespace Snowflake.Installation.Tests
                 .CreateSubdirectory(Path.GetRandomFileName());
 
             // Execute the results.
-            await foreach (var res in EmitCopyDirResult(dirToCopy, dir)) ;
+            await foreach (var res in EmitCopyDirResult(dirToCopy, dir))
+            {
+                Assert.Equal(await res.Description, $"Copied {(await res).Name} to directory {dir.Name}");
+                Assert.Equal(await res.Description, $"Copied {(await res).Name} to directory {dir.Name}");
+            }
 
             Assert.True(dir.ContainsDirectory(subDirToCopy.Name), "Did not copy parent successfully");
             Assert.True(dir.OpenDirectory(subDirToCopy.Name).ContainsFile(fileName), "Did not copy file successfully");
@@ -114,6 +122,10 @@ namespace Snowflake.Installation.Tests
             {
                 var val = await res;
                 if (res.Error != null) throw res.Error.InnerException;
+               
+                Assert.Equal(await res.Description, $"Extracted {(await res)?.Name} to directory {dir.Name}");
+                Assert.Equal(await res.Description, $"Extracted {(await res)?.Name} to directory {dir.Name}");
+                Assert.Equal(await res.Description, $"Extracted {val?.Name} to directory {dir.Name}");
             }
 
             Assert.True(dir.ContainsDirectory(dirToCopy.Name), "Did not extract parent successfully");

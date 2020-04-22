@@ -35,6 +35,18 @@ namespace Snowflake.Installation
         protected abstract string TaskName { get; }
 
         /// <summary>
+        /// Creates a description for the task on success.
+        /// A description should only depend on the inputs of the task.
+        /// </summary>
+        protected virtual ValueTask<string> CreateSuccessDescription() => new ValueTask<string>($"Execute {TaskName}");
+
+        /// <summary>
+        /// Creates a description for the task on failure.
+        /// A description should only depend on the inputs of the class.
+        /// </summary>
+        protected virtual ValueTask<string> CreateFailureDescription(AggregateException e) => new ValueTask<string>($"Failed to execute {this.TaskName}");
+
+        /// <summary>
         /// Gets the awaiter for the <see cref="AsyncInstallTask{T}"/>.
         /// This awaiter is always configured to not continue on captured context.
         /// <see cref="AsyncInstallTask{T}"/> must be context free.
@@ -44,7 +56,8 @@ namespace Snowflake.Installation
         {
             return this.BaseTask
                 .ContinueWith(f => f.Exception == null ?
-                     Success(this.TaskName, f) : Failure(this.TaskName, f, f.Exception))
+                     Success(this.TaskName, this.CreateSuccessDescription(), f) 
+                     : Failure(this.TaskName, this.CreateFailureDescription(f.Exception!), f, f.Exception))
                 .ConfigureAwait(false)
                 .GetAwaiter();
         }

@@ -39,6 +39,20 @@ namespace Snowflake.Installation
             return this.BaseTask.GetAsyncEnumerator(cancellationToken);
         }
 
+        /// <summary>
+        /// Creates a description for the task on success.
+        /// A description should only depend on the inputs of the task.
+        /// </summary>
+        /// <param name="current">The element currently being processed by the task.</param>
+        protected virtual ValueTask<string> CreateSuccessDescription(T current) => new ValueTask<string>($"Execute {TaskName}");
+
+        /// <summary>
+        /// Creates a description for the task on failure.
+        /// A description should only depend on the inputs of the class.
+        /// </summary>
+        /// <param name="exception">The exception thrown by the task on failure.</param>
+        protected virtual ValueTask<string> CreateFailureDescription(AggregateException exception) => new ValueTask<string>($"Failed to execute {this.TaskName}");
+
         private async IAsyncEnumerable<TaskResult<T>> WrapEnumerator()
         {
             await using var enumerator = this.ExecuteOnce().GetAsyncEnumerator();
@@ -49,11 +63,14 @@ namespace Snowflake.Installation
                 ValueTask<bool> result = enumerator.MoveNextAsync();
                 if (result.IsFaulted)
                 {
-                    yield return Failure(this.TaskName, new ValueTask<T>(enumerator.Current), result.AsTask().Exception);
+                    var exception = result.AsTask().Exception;
+                    yield return Failure(this.TaskName, this.CreateFailureDescription(exception!), 
+                        new ValueTask<T>(enumerator.Current), exception);
                 }
                 else if (await result)
                 {
-                    yield return Success(this.TaskName, new ValueTask<T>(enumerator.Current));
+                    yield return Success(this.TaskName, this.CreateSuccessDescription(enumerator.Current),
+                        new ValueTask<T>(enumerator.Current));
                 }
                 else
                 {
