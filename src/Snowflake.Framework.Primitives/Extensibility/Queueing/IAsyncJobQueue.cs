@@ -40,6 +40,13 @@ namespace Snowflake.Extensibility.Queueing
         /// </summary>
         /// <returns>he job IDs for jobs that are undisposed, but no longer have items left in their enumerator.</returns>
         IEnumerable<Guid> GetZombieJobs();
+
+        /// <summary>
+        /// Requests cancellation of the specified job.
+        /// This only works if the IAsyncEnumerable provided supports cancellation.
+        /// </summary>
+        /// <param name="jobId">The job ID of the job to cancel.</param>
+        void RequestCancellation(Guid jobId);
     }
 
     /// <summary>
@@ -78,7 +85,7 @@ namespace Snowflake.Extensibility.Queueing
         /// Once the enumerator is exhausted, the value field will always be default(<typeparamref name="T"/>),
         /// and hasNext will be false.
         /// </summary>
-        /// <param name="jobId">The job token that was returned by <see cref="QueueJob(TAsyncEnumerable, CancellationToken)"/></param>
+        /// <param name="jobId">The job token that was returned by <see cref="QueueJob(TAsyncEnumerable)"/></param>
         /// <returns>
         /// The value, or null if the current value is null.
         /// </returns>
@@ -89,7 +96,7 @@ namespace Snowflake.Extensibility.Queueing
         /// Once the enumerator is exhausted, the value field will always be default(<typeparamref name="T"/>),
         /// and movedNext will be false.
         /// </summary>
-        /// <param name="jobId">The job token that was returned by <see cref="QueueJob(TAsyncEnumerable, CancellationToken)"/></param>
+        /// <param name="jobId">The job token that was returned by <see cref="QueueJob(TAsyncEnumerable)"/></param>
         /// <returns>
         /// The next value and whether or not to continue iterating.
         /// </returns>
@@ -99,10 +106,10 @@ namespace Snowflake.Extensibility.Queueing
         /// Gets the remaining values in the enumerator as an <see cref="IAsyncEnumerable{T}"/>
         /// that can be looped on.
         /// 
-        /// Looping on this will exhaust the enumerator, and therefore using <see cref="GetNext(Guid)"/> after 
+        /// Looping on this will exhaust the enumerator, and therefore using <see cref="GetNext(Guid, bool)"/> after 
         /// enumerating the returned enumerable here will never return results.
         /// </summary>
-        /// <param name="jobId">The job token that was returned by <see cref="QueueJob(TAsyncEnumerable, CancellationToken)"/></param>
+        /// <param name="jobId">The job token that was returned by <see cref="QueueJob(TAsyncEnumerable)"/></param>
         /// <returns>The remaining values in the enumerator as an <see cref="IAsyncEnumerable{T}"/></returns>
         IAsyncEnumerable<T> AsEnumerable(Guid jobId);
 
@@ -119,7 +126,7 @@ namespace Snowflake.Extensibility.Queueing
         /// and it was not automatically disposed.
         /// 
         /// If not automatically disposed, this means that the enumerable
-        /// must be exhausted before it can be removed.
+        /// must be exhausted or cancelled with <see cref="IAsyncJobQueue.RequestCancellation(Guid)"/> before it can be removed.
         /// 
         /// </summary>
         /// <param name="jobId">The jobId</param>
@@ -131,10 +138,9 @@ namespace Snowflake.Extensibility.Queueing
         /// Queues an <see cref="IAsyncEnumerable{T}"/> into the job queue.
         /// </summary>
         /// <param name="asyncEnumerable">The <see cref="IAsyncEnumerable{T}"/> to persist in memory.</param>
-        /// <param name="token">A <see cref="CancellationToken"/> that will be passed to the enumerator used in <see cref="GetNext(Guid)"/>
         /// and <see cref="AsEnumerable(Guid)"/>.</param>
         /// <returns>A unique job token that can be used to modify the job at a later time.</returns>
-        ValueTask<Guid> QueueJob(TAsyncEnumerable asyncEnumerable, CancellationToken token = default);
+        ValueTask<Guid> QueueJob(TAsyncEnumerable asyncEnumerable);
 
         /// <summary>
         /// Queues an <see cref="IAsyncEnumerable{T}"/> into the job queue with your own job token.
@@ -145,6 +151,6 @@ namespace Snowflake.Extensibility.Queueing
         /// <param name="token">A <see cref="CancellationToken"/> that will be passed to the enumerator used in <see cref="GetNext(Guid)"/>
         /// and <see cref="AsEnumerable(Guid)"/>.</param>
         /// <returns>The <see cref="Guid"/> token you passed in <paramref name="guid"/>.</returns>
-        ValueTask<Guid> QueueJob(TAsyncEnumerable asyncEnumerable, Guid guid, CancellationToken token = default);
+        ValueTask<Guid> QueueJob(TAsyncEnumerable asyncEnumerable, Guid guid);
     }
 }

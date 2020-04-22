@@ -3,6 +3,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -67,7 +68,10 @@ namespace Snowflake.Extensibility.Queueing
             private Guid JobId { get; }
 
             // double dispose is no problem.
-            public ValueTask DisposeAsync() => this.Queue.GetEnumerator(this.JobId).DisposeAsync();
+            public async ValueTask DisposeAsync()
+            {
+                await this.Queue.GetEnumerator(this.JobId).DisposeAsync();
+            }
 
             public async ValueTask<bool> MoveNextAsync()
             {
@@ -85,19 +89,22 @@ namespace Snowflake.Extensibility.Queueing
         public AsyncJobQueue(bool disposeEnumerable = true)
         {
             this.Enumerables = new ConcurrentDictionary<Guid, TAsyncEnumerable>();
-            this.Enumerators = new ConcurrentDictionary<Guid, IAsyncEnumerator<T>>();
+            this.Enumerators = new ConcurrentDictionary<Guid, (CancellationTokenSource, ConfiguredCancelableAsyncEnumerable<T>.Enumerator)>();
+
             this.DisposeEnumerable = disposeEnumerable;
         }
 
         private IDictionary<Guid, TAsyncEnumerable> Enumerables { get; }
-        private IDictionary<Guid, IAsyncEnumerator<T>> Enumerators { get; }
+        private IDictionary<Guid, (CancellationTokenSource cancel,
+            ConfiguredCancelableAsyncEnumerable<T>.Enumerator enumerator)> Enumerators { get; }
         private bool DisposeEnumerable { get; }
 
-        private IAsyncEnumerator<T> GetEnumerator(Guid jobId)
+        private ConfiguredCancelableAsyncEnumerable<T>.Enumerator GetEnumerator(Guid jobId)
         {
-            var exists = this.Enumerators.TryGetValue(jobId, out IAsyncEnumerator<T>? value);
-            if (!exists) return Empty().GetAsyncEnumerator();
-            return value ?? Empty().GetAsyncEnumerator();
+            var exists = this.Enumerators.TryGetValue(jobId, out (CancellationTokenSource,
+                ConfiguredCancelableAsyncEnumerable<T>.Enumerator enumerator) value);
+            if (!exists) return Empty().ConfigureAwait(false).GetAsyncEnumerator();
+            return value.enumerator;
         }
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
@@ -114,22 +121,31 @@ namespace Snowflake.Extensibility.Queueing
         public async ValueTask<(T, bool)> GetNext(Guid jobId)
         {
             var enumerator = this.GetEnumerator(jobId);
-            bool movedNext = await enumerator.MoveNextAsync();
-            
-            // todo: fix semantics of this
+            bool movedNext = false;
+            try
+            {
+                movedNext = await enumerator.MoveNextAsync();
+            }
+            finally
+            {
+                if (!movedNext)
+                {
+                    try { }
+                    finally
+                    {
+                        await enumerator.DisposeAsync();
+                    }
+
+                    this.Enumerators.Remove(jobId);
+                    if (this.DisposeEnumerable) this.TryRemoveSource(jobId, out var _);
+                }
+            }
 
             // hack to ensure that the last value is not duplicated.
             // the expected behavior is to return null after the enumerable is exhausted.
             // this differs from regular direct IAsyncEnumerator access, where
             // current is never updated when hasnext turns false.
-            var result = (value: movedNext ? enumerator.Current : default, movedNext);
-            if (!result.movedNext)
-            {
-                await enumerator.DisposeAsync();
-                this.Enumerators.Remove(jobId);
-                if (this.DisposeEnumerable) this.TryRemoveSource(jobId, out var _);
-            }
-            return result;
+            return (movedNext ? enumerator.Current : default, movedNext);
         }
 
         /// <inheritdoc />
@@ -140,21 +156,22 @@ namespace Snowflake.Extensibility.Queueing
         }
 
         /// <inheritdoc />
-        public ValueTask<Guid> QueueJob(TAsyncEnumerable asyncEnumerable, CancellationToken token = default)
+        public ValueTask<Guid> QueueJob(TAsyncEnumerable asyncEnumerable)
         {
             var guid = Guid.NewGuid();
-            var enumerator = asyncEnumerable.GetAsyncEnumerator(token);
+            var cancel = new CancellationTokenSource();
+            var enumerator = asyncEnumerable.WithCancellation(cancel.Token).ConfigureAwait(false).GetAsyncEnumerator();
             this.Enumerables.Add(guid, asyncEnumerable);
-            this.Enumerators.Add(guid, enumerator);
+            this.Enumerators.Add(guid, (cancel, enumerator));
             return new ValueTask<Guid>(guid);
         }
 
         /// <inheritdoc />
-        public async ValueTask<Guid> QueueJob(TAsyncEnumerable asyncEnumerable, Guid guid, CancellationToken token = default)
+        public async ValueTask<Guid> QueueJob(TAsyncEnumerable asyncEnumerable, Guid guid)
         {
-            if (this.Enumerators.TryGetValue(guid, out IAsyncEnumerator<T>? old))
+            if (this.Enumerators.TryGetValue(guid, out (CancellationTokenSource, ConfiguredCancelableAsyncEnumerable<T>.Enumerator enumerator) old))
             {
-                await old.DisposeAsync();
+                await old.enumerator.DisposeAsync();
                 this.Enumerators.Remove(guid);
             }
 
@@ -163,8 +180,9 @@ namespace Snowflake.Extensibility.Queueing
                 this.Enumerables.Remove(guid);
             }
 
-            var enumerator = asyncEnumerable.GetAsyncEnumerator(token);
-            this.Enumerators.Add(guid, enumerator);
+            var cancel = new CancellationTokenSource();
+            var enumerator = asyncEnumerable.WithCancellation(cancel.Token).ConfigureAwait(false).GetAsyncEnumerator();
+            this.Enumerators.Add(guid, (cancel, enumerator));
             this.Enumerables.Add(guid, asyncEnumerable);
             return guid;
         }
@@ -200,5 +218,13 @@ namespace Snowflake.Extensibility.Queueing
         public IEnumerable<Guid> GetQueuedJobs() => this.Enumerables.Keys;
 
         public IEnumerable<Guid> GetZombieJobs() => this.Enumerables.Keys.Where(k => !this.Enumerators.ContainsKey(k));
+
+        public void RequestCancellation(Guid jobId)
+        {
+            if (this.Enumerators.TryGetValue(jobId, out (CancellationTokenSource cancel, ConfiguredCancelableAsyncEnumerable<T>.Enumerator _) val))
+            {
+                val.cancel.Cancel();
+            }
+        }
     }
 }
