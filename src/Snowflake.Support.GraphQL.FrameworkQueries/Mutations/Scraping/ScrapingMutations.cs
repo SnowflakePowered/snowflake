@@ -48,25 +48,53 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                 })
                 .Type<NonNullType<CreateScrapeContextPayloadType>>();
 
+            descriptor.Field("cancelScrapeContext")
+                .Description("Requests cancellation of the specified scrape context. If this succeeds, the next iteration will halt the " +
+                "scrape context regardless of the stage. There is no way to determine whether or not " +
+                "the cancellation succeeded until the scrape context is moved to the next step. Only then will it be eligible for deletion.")
+                .UseClientMutationId()
+                .UseAutoSubscription()
+                .Argument("input", arg => arg.Type<CancelScrapeContextInputType>())
+                .Resolver(ctx =>
+                {
+                    var input = ctx.Argument<CancelScrapeContextInput>("input");
+
+                    var jobQueueFactory = ctx.SnowflakeService<IAsyncJobQueueFactory>();
+                    var jobQueue = jobQueueFactory.GetJobQueue<IScrapeContext, IEnumerable<ISeed>>(false);
+
+                    var jobId = input.JobID;
+                    var scrapeContext = jobQueue.GetSource(jobId);
+                    if (scrapeContext == null) throw new ArgumentException("The specified scrape context was not found.");
+                    jobQueue.RequestCancellation(jobId);
+
+                    return new CancelScrapeContextPayload()
+                    {
+                        ScrapeContext = scrapeContext,
+                        JobID = jobId,
+                    };
+                })
+                .Type<NonNullType<CancelScrapeContextPayloadType>>();
+
             descriptor.Field("deleteScrapeContext")
-                .Description("Deletes a scrape context once it has completed. If it has not completed, the deletion will fail.")
+                .Description("Deletes a scrape context, halting its execution.")
                 .UseClientMutationId()
                 .UseAutoSubscription()
                 .Argument("input", arg => arg.Type<DeleteScrapeContextInputType>())
-                .Resolver(ctx =>
+                .Resolver(async ctx =>
                 {
                     var input = ctx.Argument<DeleteScrapeContextInput>("input");
                    
                     var jobQueueFactory = ctx.SnowflakeService<IAsyncJobQueueFactory>();
                     var jobQueue = jobQueueFactory.GetJobQueue<IScrapeContext, IEnumerable<ISeed>>(false);
 
-                    var jobId = input.JobID;
-                    bool result = jobQueue.TryRemoveSource(jobId, out IScrapeContext scrapeContext);
+                    jobQueue.RequestCancellation(input.JobID);
+                    await jobQueue.GetNext(input.JobID);
+                    bool result = jobQueue.TryRemoveSource(input.JobID, out var scrapeContext);
 
                     return new DeleteScrapeContextPayload()
                     {
                         ScrapeContext = scrapeContext,
-                        JobID = jobId,
+                        JobID = input.JobID,
                         Success = result,
                     };
                 })
@@ -172,7 +200,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                 }).Type<NonNullType<ScrapeContextCompletePayloadType>>();
 
             descriptor.Field("applyScrapeResults")
-                .Description("Applies the specified scrape results to the specified game as-is.")
+                .Description("Applies the specified scrape results to the specified game as-is. Be sure to delete the scrape context afterwards.")
                 .UseClientMutationId()
                 .UseAutoSubscription()
                 .Argument("input", arg => arg.Type<ApplyScrapeResultsInputType>())
@@ -217,8 +245,6 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                         await traverser.TraverseAll(game, scrapeContext.Context.Root, scrapeContext.Context);
                     }
 
-                    jobQueue.TryRemoveSource(input.JobID, out var _);
-
                     return new ApplyScrapeResultsPayload
                     {
                         Game = game,
@@ -226,7 +252,6 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                     };
 
                 }).Type<NonNullType<ApplyScrapeResultsPayloadType>>();
-
         }
     }
 }
