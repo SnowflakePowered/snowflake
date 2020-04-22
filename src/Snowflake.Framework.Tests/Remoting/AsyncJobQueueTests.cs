@@ -1,7 +1,9 @@
 ﻿using Snowflake.Extensibility.Queueing;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -134,9 +136,49 @@ namespace Snowflake.Remoting.Tests
             Assert.False(tq.TryRemoveSource(token, out var _));
         }
 
-        public static async IAsyncEnumerable<string> EmitStrings()
+        [Fact]
+        public async Task AsyncJobQueue_EnforceNoEarlyDipose()
+        {
+            IAsyncJobQueue<string> tq = new AsyncJobQueue<string>(false);
+            var token = await tq.QueueJob(EmitStrings());
+            (string val, bool next) = await tq.GetNext(token);
+            Assert.Equal("Hello World", val);
+
+            Assert.False(tq.TryRemoveSource(token, out var _));
+
+            tq.RequestCancellation(token);
+            Assert.False(tq.TryRemoveSource(token, out var _));
+            (val, next) = await tq.GetNext(token);
+            Assert.False(next);
+            Assert.Null(val);
+            Assert.True(tq.TryRemoveSource(token, out var _));
+        }
+
+        [Fact]
+        public async Task AsyncJobQueue_HandlesCancellation()
+        {
+            IAsyncJobQueue<string> tq = new AsyncJobQueue<string>(false);
+            var token = await tq.QueueJob(EmitStrings());
+            int times = 0;
+            var ct = new CancellationTokenSource();
+
+            await foreach (string x in tq.AsEnumerable(token))
+            {
+                times++;
+                tq.RequestCancellation(token);
+            }
+
+            Assert.Equal(1, times);
+            var (val, next) = await tq.GetNext(token);
+            Assert.False(next);
+            Assert.Null(val);
+            Assert.True(tq.TryRemoveSource(token, out var _));
+        }
+
+        public static async IAsyncEnumerable<string> EmitStrings([EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             yield return "Hello World";
+            if (cancellationToken.IsCancellationRequested) yield break;
             yield return "Goodbye World";
         }
     }
