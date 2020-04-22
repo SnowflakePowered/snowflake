@@ -6,12 +6,14 @@ using Snowflake.Remoting.GraphQL.FrameworkQueries.Mutations.Relay;
 using Snowflake.Scraping;
 using Snowflake.Scraping.Extensibility;
 using Snowflake.Services;
+using Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation;
 using Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions;
 using Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Scraping;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
 {
@@ -39,10 +41,12 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                     var jobQueue = jobQueueFactory.GetJobQueue<IScrapeContext, IEnumerable<ISeed>>(false);
                     var guid = await jobQueue.QueueJob(new GameScrapeContext(game, scrapers, cullers));
                     IScrapeContext context = jobQueue.GetSource(guid);
+                    ctx.AssignGameGuid(game, guid);
                     return new CreateScrapeContextPayload()
                     {
                         ClientMutationID = input.ClientMutationID,
                         ScrapeContext = context,
+                        Game = game,
                         JobID = guid,
                     };
                 })
@@ -71,6 +75,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                     {
                         ScrapeContext = scrapeContext,
                         JobID = jobId,
+                        Game = ctx.GetAssignedGame(jobId)
                     };
                 })
                 .Type<NonNullType<CancelScrapeContextPayloadType>>();
@@ -96,6 +101,12 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                         ScrapeContext = scrapeContext,
                         JobID = input.JobID,
                         Success = result,
+                        Game = ctx.GetAssignedGame(input.JobID)
+                            .ContinueWith(g =>
+                            {
+                                if (result) ctx.JobFinished(input.JobID);
+                                return g;
+                            }).Unwrap()
                     };
                 })
                 .Type<NonNullType<DeleteScrapeContextPayloadType>>();
@@ -113,7 +124,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                     var jobQueue = ctx.SnowflakeService<IAsyncJobQueueFactory>()
                         .GetJobQueue<IScrapeContext, IEnumerable<ISeed>>(false);
                     var scrapeContext = jobQueue.GetSource(input.JobID);
-                    if (scrapeContext == null) throw new ArgumentException("The specified game does not exist.");
+                    if (scrapeContext == null) throw new ArgumentException("The specified scrape context does not exist.");
 
                     var addSeeds = input.Seeds;
                     if (addSeeds != null) 
@@ -136,7 +147,8 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                         {
                             ScrapeContext = scrapeContext,
                             Current = current,
-                            JobID = input.JobID
+                            JobID = input.JobID,
+                            Game = ctx.GetAssignedGame(input.JobID)
                         };
                         await ctx.SendEventMessage(new OnScrapeContextStepMessage(input.JobID, payload));
                         return payload;
@@ -144,7 +156,8 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                     var completePayload = new ScrapeContextCompletePayload
                     {
                         ScrapeContext = scrapeContext,
-                        JobID = input.JobID
+                        JobID = input.JobID,
+                        Game = ctx.GetAssignedGame(input.JobID)
                     };
 
                     await ctx.SendEventMessage(new OnScrapeContextCompleteMessage(input.JobID, completePayload));
@@ -183,7 +196,8 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                         {
                             ScrapeContext = scrapeContext,
                             Current = val,
-                            JobID = input.JobID
+                            JobID = input.JobID,
+                            Game = ctx.GetAssignedGame(input.JobID)
                         };
                         await ctx.SendEventMessage(new OnScrapeContextStepMessage(input.JobID, payload));
                     }
@@ -191,7 +205,8 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                     var completePayload = new ScrapeContextCompletePayload
                     {
                         ScrapeContext = scrapeContext,
-                        JobID = input.JobID
+                        JobID = input.JobID,
+                        Game = ctx.GetAssignedGame(input.JobID)
                     };
 
                     await ctx.SendEventMessage(new OnScrapeContextCompleteMessage(input.JobID, completePayload));
@@ -223,9 +238,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
 
                     if (input.GameID == default)
                     {
-                        var recordSeed = scrapeContext.Context.GetAllOfType("scrapecontext_record").FirstOrDefault();
-                        if (recordSeed == null) throw new ArgumentException("No valid game found to apply this scrape context.");
-                        game = await gameLibrary.GetGameAsync(Guid.Parse(recordSeed.Content.Value));
+                        game = await ctx.GetAssignedGame(input.GameID);
                     }
                     else
                     {

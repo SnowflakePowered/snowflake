@@ -1,10 +1,13 @@
 ﻿using HotChocolate.Types;
+using Snowflake.Model.Game;
 using Snowflake.Remoting.GraphQL.FrameworkQueries.Mutations.Relay;
+using Snowflake.Remoting.GraphQL.Model.Records;
 using Snowflake.Remoting.GraphQL.Model.Scraping;
 using Snowflake.Scraping;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
 {
@@ -13,6 +16,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
     {
         public IScrapeContext ScrapeContext { get; set; }
         public IEnumerable<ISeed> Current { get; set; }
+        public Task<IGame> Game { get; set; }
         public Guid JobID { get; set; }
     }
 
@@ -33,6 +37,9 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                 .Type<NonNullType<UuidType>>();
             descriptor.Field(s => s.Current)
                 .Type<ListType<SeedType>>();
+            descriptor.Field(c => c.Game)
+               .Description("The game this scrape context was created for.")
+               .Type<NonNullType<GameType>>();
         }
     }
 }

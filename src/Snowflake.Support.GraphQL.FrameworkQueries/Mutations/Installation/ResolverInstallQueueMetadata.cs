@@ -28,5 +28,13 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
             if (gameGuid == default) return Task.FromResult<IGame?>(null);
             return context.SnowflakeService<IGameLibrary>().GetGameAsync(gameGuid);
         }
+
+        public static IResolverContext JobFinished(this IResolverContext context, Guid jobGuid)
+        {
+            ((ConcurrentDictionary<Guid, Guid>)context
+                .ContextData["Snowflake.Support.GraphQL.FrameworkQueries.ResolverJobQueueMetadata.Store"])
+                .TryRemove(jobGuid, out Guid _);
+            return context;
+        }
     }
 }

@@ -27,7 +27,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
             descriptor.Field(g => g.GameID)
                 .Name("gameId")
                 .Description("The GUID of the game to apply the results to." +
-                " If not specified, tries to apply the results to the GUID of the seed `scrapecontext_record`.")
+                " If not specified, applies the results to the game this scrape context was originally created for.")
                 .Type<UuidType>();
             descriptor.Field(g => g.JobID)
                 .Name("jobId")
