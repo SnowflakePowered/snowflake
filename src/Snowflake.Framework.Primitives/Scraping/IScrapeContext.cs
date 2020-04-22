@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Snowflake.Scraping.Extensibility;
 
@@ -46,15 +47,17 @@ namespace Snowflake.Scraping
         /// <summary>
         /// Proceed with populating the seed tree using the given <see cref="Scrapers"/>.
         /// </summary>
+        /// <param name="cancellationToken">The cancellation token used to halt this step.</param>
         /// <returns>Whether or not all possible seeds have been added with the given <see cref="Scrapers"/></returns>
-        ValueTask<bool> Proceed();
+        ValueTask<bool> Proceed(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Proceed with populating the seed tree using the given <see cref="Scrapers"/>.
         /// </summary>
         /// <param name="seedsToAdd">Adds seeds to the root of the tree before running scrapers.</param>
+        /// <param name="cancellationToken">The cancellation token used to halt this step.</param>
         /// <returns>Whether or not all possible seeds have been added with the given <see cref="Scrapers"/></returns>
-        ValueTask<bool> Proceed(IEnumerable<SeedContent> seedsToAdd);
+        ValueTask<bool> Proceed(IEnumerable<SeedContent> seedsToAdd, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Automatically gets the awaiter for the final, automatically culled, flattened seed tree state.

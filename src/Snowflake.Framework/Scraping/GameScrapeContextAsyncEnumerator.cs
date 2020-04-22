@@ -30,7 +30,7 @@ namespace Snowflake.Scraping
             // is this the correct value for this?
             if (this.Token.IsCancellationRequested) return false; 
             
-            bool retVal = await this.Context.Proceed();
+            bool retVal = await this.Context.Proceed(this.Token);
             this.Current = this.Context.Context.GetUnculled();
 
             if (!retVal && !this.CullersRun)

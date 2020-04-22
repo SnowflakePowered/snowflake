@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Snowflake.Extensibility.Provisioning;
 using Snowflake.Extensibility.Provisioning.Standalone;
@@ -39,6 +40,7 @@ namespace Snowflake.Scraping.Extensibility
         public abstract IAsyncEnumerable<SeedTree> ScrapeAsync(ISeed parent,
             ILookup<string, SeedContent> rootSeeds,
             ILookup<string, SeedContent> childSeeds,
-            ILookup<string, SeedContent> siblingSeeds);
+            ILookup<string, SeedContent> siblingSeeds,
+            CancellationToken cancellationToken = default);
     }
 }

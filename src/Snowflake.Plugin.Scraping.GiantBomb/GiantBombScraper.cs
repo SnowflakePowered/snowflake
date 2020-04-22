@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using GiantBomb.Api;
 using Snowflake.Extensibility;
@@ -64,7 +66,7 @@ namespace Snowflake.Plugin.Scraping.GiantBomb
 
         public override async IAsyncEnumerable<SeedTree> ScrapeAsync(ISeed parent,
             ILookup<string, SeedContent> rootSeeds, ILookup<string, SeedContent> childSeeds,
-            ILookup<string, SeedContent> siblingSeeds)
+            ILookup<string, SeedContent> siblingSeeds, [EnumeratorCancellation] CancellationToken cancellationToken)
         {
             PlatformId platformId = rootSeeds["platform"].First().Value;
             bool platformSupported = platformMap.TryGetValue(platformId, out int giantBombPlatformId);
