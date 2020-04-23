@@ -17,13 +17,11 @@ namespace Snowflake.Installation
     {
         private IAsyncEnumerable<TaskResult<T>> BaseTask => this.WrapEnumerator();
 
-
         /// <summary>
         /// Runs when the <see cref="AsyncInstallTaskEnumerable{T}"/> is evaluated.
         /// </summary>
         /// <returns>The result of the <see cref="AsyncInstallTaskEnumerable{T}"/>.</returns>
         protected abstract IAsyncEnumerable<T> ExecuteOnce();
-
 
         /// <summary>
         /// A string identifier for the task.
