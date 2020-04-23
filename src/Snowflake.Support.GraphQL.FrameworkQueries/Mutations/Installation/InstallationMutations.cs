@@ -44,7 +44,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
                     return new CreateInstallationPayload
                     {
                         JobID = jobId,
-                        Game = Task<IGame>.FromResult(game),
+                        Game = Task.FromResult(game),
                     };
                 })
                 .Type<NonNullType<CreateInstallationPayloadType>>();
@@ -59,12 +59,16 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
                     var jobQueue = ctx.SnowflakeService<IAsyncJobQueueFactory>()
                         .GetJobQueue<TaskResult<IFile>>();
 
-                    //var (newFile, moved) = await jobQueue.GetNext(arg.JobID);
+                    var (newFile, moved) = await jobQueue.GetNext(arg.JobID);
                     var game = await ctx.GetAssignedGame(arg.JobID);
 
-                    return "Test";
+                    return new NextInstallationStepPayload()
+                    {
+                        JobID = arg.JobID,
+                        Current = newFile
+                    };
                 })
-                .Type<StringType>();
+                .Type<NextInstallationStepPayloadType>();
         }
     }
 }
