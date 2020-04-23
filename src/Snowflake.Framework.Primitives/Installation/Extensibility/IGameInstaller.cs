@@ -35,6 +35,10 @@ namespace Snowflake.Installation.Extensibility
         /// Installs files to an <see cref="IGame"/> by yielding instances of <see cref="TaskResult{IFile}"/>.
         /// Instead of doing manual file manipulation, use installation tasks. <see cref="AsyncInstallTask{T}"/>
         /// and <see cref="AsyncInstallTaskEnumerable{T}"/>.
+        /// 
+        /// This method <strong>is not allowed to throw.</strong> Exceptions may only occur within <see cref="AsyncInstallTask{T}"/>
+        /// and <see cref="AsyncInstallTaskEnumerable{T}"/> awaited by this <see cref="IAsyncEnumerable{T}"/> to yield
+        /// <see cref="TaskResult{T}"/> instances.
         /// </summary>
         /// <param name="game">The game to install the files to.</param>
         /// <param name="files">
