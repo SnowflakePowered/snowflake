@@ -8,9 +8,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
+namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations
 {
-    internal static class ResolverInstallQueueMetadata
+    internal static class ResolverJobQueueGameMetadata
     {
         public static IResolverContext AssignGameGuid(this IResolverContext context, IGame game, Guid jobGuid)
         {

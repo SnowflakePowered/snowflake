@@ -1146,6 +1146,13 @@
             </summary>
             <param name="message">The messsage to fail with.</param>
         </member>
+        <member name="M:Snowflake.Installation.Tasks.FailureTask`1.#ctor(System.String,System.Exception)">
+            <summary>
+            Fails with the provided message using the provided exception.
+            </summary>
+            <param name="message">The messsage to fail with.</param>
+            <param name="innerException">The inner exception.</param>
+        </member>
         <member name="M:Snowflake.JsonConverters.InputMappingConverter.Create(System.Type,Newtonsoft.Json.Linq.JObject)">
             <inheritdoc/>
         </member>

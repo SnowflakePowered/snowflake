@@ -37,5 +37,12 @@ namespace Snowflake.Remoting.GraphQL.FrameworkQueries.Mutations.Relay
                 .Type<StringType>();
             return descriptor;
         }
+
+        public static IInterfaceTypeDescriptor WithClientMutationId(this IInterfaceTypeDescriptor descriptor)
+        {
+            descriptor.Field("clientMutationId")
+                .Type<StringType>();
+            return descriptor;
+        }
     }
 }

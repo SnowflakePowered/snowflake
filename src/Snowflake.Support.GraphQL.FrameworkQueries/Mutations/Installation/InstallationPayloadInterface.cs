@@ -1,27 +1,24 @@
 ﻿using HotChocolate.Types;
 using Snowflake.Remoting.GraphQL.FrameworkQueries.Mutations.Relay;
 using Snowflake.Remoting.GraphQL.Model.Records;
-using Snowflake.Remoting.GraphQL.Model.Scraping;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
+namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
 {
-    public sealed class ScrapeContextPayloadInterface
+    internal sealed class InstallationPayloadInterface
         : InterfaceType
     {
         protected override void Configure(IInterfaceTypeDescriptor descriptor)
         {
-            descriptor.Name("ScrapeContextPayload")
+            descriptor.Name("InstallationPayload")
                 .WithClientMutationId();
 
-            descriptor.Field("context")
-                .Type<ScrapeContextType>();
             descriptor.Field("jobId")
                 .Type<NonNullType<UuidType>>();
             descriptor.Field("game")
-                .Type<NonNullType<GameType>>();
+               .Type<GameType>();
         }
     }
 }
