@@ -13,6 +13,14 @@ namespace Snowflake.Installation.Tests
         {
             var task = new TrivialCounterTask();
             await foreach(var i in EmitCounter(task));
+            // No matter how many times task is awaited, ExecuteOnce will only execute one time.
+            var taskResult = await task;
+            Assert.Equal(1, await taskResult);
+            Assert.Equal(1, await taskResult);
+            Assert.Equal(1, await taskResult);
+            Assert.Equal(1, await await task);
+            Assert.Equal(1, await await task);
+            Assert.Equal(1, await await task);
             Assert.Equal(1, task.Counter);
         }
 
@@ -58,7 +66,7 @@ namespace Snowflake.Installation.Tests
 
         protected override Task<int> ExecuteOnce()
         {
-            return Task.Run(() => this.Counter++);
+            return Task.Run(() => ++this.Counter);
         }
     }
 

@@ -9,13 +9,17 @@ namespace Snowflake.Installation
     /// <summary>
     /// Represents an awaitable placeholder for a final result of type <typeparamref name="T"/>.
     /// A <see cref="TaskResult{T}"/> can be safely awaited multiple times while guaranteeing that
-    /// it remains valid, and any side effects occur only once.
+    /// it remains valid, and any side effects are guaranteed to only occur only once.
+    /// 
+    /// If <see cref="TaskResult{T}.Error"/> is not null, awaiting on this <see cref="TaskResult{T}"/>
+    /// will throw the exception set in <see cref="TaskResult{T}.Error"/>. It is highly
+    /// recommended to check the error value before awaiting the task.
     /// </summary>
     /// <typeparam name="T">The type of the result.</typeparam>
     public struct TaskResult<T>
            : ITaskResult
     {
-        private ValueTask<T> Result => CachedResult.Value;
+        private ValueTask<T> Result => CachedResult?.Value ?? default;
 
         /// <summary>
         /// A string identifier for the result

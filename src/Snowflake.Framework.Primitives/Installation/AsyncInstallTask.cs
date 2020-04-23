@@ -55,9 +55,9 @@ namespace Snowflake.Installation
         public ConfiguredTaskAwaitable<TaskResult<T>>.ConfiguredTaskAwaiter GetAwaiter()
         {
             return this.BaseTask
-                .ContinueWith(f => f.Exception == null ?
-                     Success(this.TaskName, this.CreateSuccessDescription(), f) 
-                     : Failure(this.TaskName, this.CreateFailureDescription(f.Exception!), f, f.Exception))
+                .ContinueWith(t => t.Exception == null ?
+                     Success(this.TaskName, this.CreateSuccessDescription(), t) 
+                     : Failure(this.TaskName, this.CreateFailureDescription(t.Exception!), t, t.Exception))
                 .ConfigureAwait(false)
                 .GetAwaiter();
         }
