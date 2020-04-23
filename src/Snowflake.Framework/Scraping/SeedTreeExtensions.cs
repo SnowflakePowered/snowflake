@@ -11,12 +11,15 @@ namespace Snowflake.Scraping
         {
             var parentSeed = new Seed(@this.Content, parent, source);
             yield return parentSeed;
-            foreach (var child in @this.Children)
+            var seedsToProcess = new Stack<SeedTree>(@this.Children);
+            while (seedsToProcess.Count != 0)
             {
-                foreach (var childSeed in child.Collapse(parentSeed, source))
+                var childSeed = seedsToProcess.Pop();
+                foreach (SeedTree childSeedTree in childSeed.Children)
                 {
-                    yield return childSeed;
+                    seedsToProcess.Push(childSeedTree);
                 }
+                yield return new Seed(childSeed.Content, parentSeed, source);
             }
         }
     }
