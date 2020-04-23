@@ -169,24 +169,23 @@ namespace Snowflake.Scraping
                     // Collect the results.
                     var attachSeed = this.GetAttachTarget(scraper.AttachPoint, matchingSeed);
 
-                    await foreach (var task in scraper.ScrapeAsync(matchingSeed, requiredRoots, requiredChildren,
-                        requiredSiblings, cancellationToken).ConfigureAwait(false))
+                    try
                     {
-                        try
+                        await foreach (var task in scraper.ScrapeAsync(matchingSeed, requiredRoots, requiredChildren,
+                            requiredSiblings, cancellationToken).ConfigureAwait(false))
                         {
                             resultsToAppend.AddRange(task.Collapse(attachSeed, scraper.Name));
                         }
-                        catch
-                        {
-                            continue;
-                        }
+                        scraperResults.AddRange(resultsToAppend);
+                        scraperVisited.Add((scraper.Name, matchingSeed.Guid)); // mark that matchingSeed was visited.
+                                                                               // scraperResults.AddRange(resultsToAppend);
+                                                                               // Attach the seeds
                     }
-                    scraperResults.AddRange(resultsToAppend);
-                    scraperVisited.Add((scraper.Name, matchingSeed.Guid)); // mark that matchingSeed was visited.
-                                                                           // scraperResults.AddRange(resultsToAppend);
-                                                                           // Attach the seeds
+                    catch
+                    {
+                        continue;
+                    }
                 }
-
                 return (scraperVisited, scraperResults);
             }).ToList();
 

@@ -37,10 +37,7 @@ namespace Snowflake.Scraping.Extensibility
         /// a new tree of seeds that are attached to the specified attach point on
         /// the job <see cref="ISeedRootContext"/>.
         /// <para>
-        /// While scraping must be an asynchronous action, there is no requirement that
-        /// the actual processing must be asynchronous. You may not need to use
-        /// async/await at all and return a seed tree as normal using
-        /// SeedBuilder syntax.
+        /// <strong>If this method throws, the entire resulting enumerable will be ignored.</strong>
         /// </para>
         /// </summary>
         /// <param name="target">An instance of the seed with the specified <see cref="TargetType"/>.</param>
