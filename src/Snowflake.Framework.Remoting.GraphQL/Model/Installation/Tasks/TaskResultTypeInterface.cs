@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Snowflake.Remoting.GraphQL.Model.Installation
+namespace Snowflake.Remoting.GraphQL.Model.Installation.Tasks
 {
     public sealed class TaskResultTypeInterface
         : InterfaceType
@@ -14,10 +14,10 @@ namespace Snowflake.Remoting.GraphQL.Model.Installation
                 .Description("Describes a task result that yields some value.");
             descriptor.Field("description")
                .Description("Describes this task result in a human-friendly way.")
-               .Type<NonNullType<StringType>>();
+               .Type<StringType>();
             descriptor.Field("name")
                 .Description("The name of this task result.")
-                .Type<NonNullType<StringType>>();
+                .Type<StringType>();
         }
     }
 }
