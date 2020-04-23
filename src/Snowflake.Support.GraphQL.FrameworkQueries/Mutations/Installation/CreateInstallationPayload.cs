@@ -15,7 +15,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
         : RelayMutationBase
     {
         public Guid JobID { get; set; }
-        public Task<IGame> Game { get; set; }
+        public IGame Game { get; set; }
     }
 
     internal sealed class CreateInstallationPayloadType

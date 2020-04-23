@@ -7,8 +7,10 @@ using Snowflake.Installation.Extensibility;
 using Snowflake.Model.Game;
 using Snowflake.Remoting.GraphQL;
 using Snowflake.Remoting.GraphQL.FrameworkQueries.Mutations.Relay;
+using Snowflake.Remoting.GraphQL.Model.Installation.Tasks;
 using Snowflake.Services;
 using Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions;
+using Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Installation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +26,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
         {
             descriptor.Name("Mutation");
             descriptor.Field("createInstallation")
+                .Description("Creates a new installation with the specified artifacts and game.")
                 .UseClientMutationId()
                 .UseAutoSubscription()
                 .Argument("input", a => a.Type<CreateInstallationInputType>())
@@ -44,14 +47,14 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
                     return new CreateInstallationPayload
                     {
                         JobID = jobId,
-                        Game = Task.FromResult(game),
+                        Game = game,
                     };
                 })
                 .Type<NonNullType<CreateInstallationPayloadType>>();
 
             descriptor.Field("nextInstallationStep")
+                .Description("Proceeds with the next step in the installation. If an exception occurs, cancellation will automatically be requested.")
                 .UseClientMutationId()
-                .UseAutoSubscription()
                 .Argument("input", a => a.Type<NextInstallationStepInputType>())
                 .Resolver(async ctx =>
                 {
@@ -60,15 +63,128 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
                         .GetJobQueue<TaskResult<IFile>>();
 
                     var (newFile, moved) = await jobQueue.GetNext(arg.JobID);
-                    var game = await ctx.GetAssignedGame(arg.JobID);
 
-                    return new NextInstallationStepPayload()
+                    // Force execution of task in case it wasn't already executed.
+                    if (newFile.Error == null)
+                    {
+                        await newFile;
+                    }
+                    else
+                    {
+                        jobQueue.RequestCancellation(arg.JobID);
+                        await ctx.SendEventMessage(new OnInstallationCancelledMessage(arg.JobID, new InstallationCancelledPayload()
+                        {
+                            Game = ctx.GetAssignedGame(arg.JobID),
+                            JobID = arg.JobID,
+                            ClientMutationID = arg.ClientMutationID,
+                        }));
+                    }
+
+                    if (moved)
+                    {
+                        var payload = new InstallationStepPayload()
+                        {
+                            JobID = arg.JobID,
+                            Current = newFile,
+                            Game = ctx.GetAssignedGame(arg.JobID),
+                        };
+                        await ctx.SendEventMessage(new OnInstallationStepMessage(arg.JobID, payload));
+                        return payload;
+                    }
+                    var finishedPayload = new InstallationCompletePayload()
                     {
                         JobID = arg.JobID,
-                        Current = newFile
+                        Game = ctx.GetAssignedGame(arg.JobID).ContinueWith(g =>
+                        {
+                            ctx.RemoveAssignment(arg.JobID);
+                            return g;
+                        }).Unwrap(),
                     };
+                    await ctx.SendEventMessage(new OnInstallationCompleteMessage(arg.JobID, finishedPayload));
+                    return finishedPayload;
                 })
-                .Type<NextInstallationStepPayloadType>();
+                .Type<NonNullType<InstallationPayloadInterface>>();
+
+            descriptor.Field("exhaustInstallationSteps")
+                .Description("Exhaust all steps in the installation. " +
+                "If an error occurs during installation, cancellation will automatically be requested, but the " +
+                "installation must run to completion.")
+                .UseClientMutationId()
+                .Argument("input", a => a.Type<NextInstallationStepInputType>())
+                .Resolver(async ctx =>
+                {
+                    var arg = ctx.Argument<NextInstallationStepInput>("input");
+                    var jobQueue = ctx.SnowflakeService<IAsyncJobQueueFactory>()
+                        .GetJobQueue<TaskResult<IFile>>();
+                    var gameTask = ctx.GetAssignedGame(arg.JobID);
+
+                    await foreach (TaskResult<IFile> newFile in jobQueue.AsEnumerable(arg.JobID))
+                    {
+                        var payload = new InstallationStepPayload()
+                        {
+                            JobID = arg.JobID,
+                            Current = newFile,
+                            Game = gameTask,
+                            ClientMutationID = arg.ClientMutationID,
+                        };
+
+                        if (newFile.Error == null)
+                        {
+                            await newFile;
+                            await ctx.SendEventMessage(new OnInstallationStepMessage(arg.JobID, payload));
+                        }
+                        else
+                        {
+                            jobQueue.RequestCancellation(arg.JobID);
+                            await ctx.SendEventMessage(new OnInstallationStepMessage(arg.JobID, payload));
+                            await ctx.SendEventMessage(new OnInstallationCancelledMessage(arg.JobID, new InstallationCancelledPayload()
+                            {
+                                Game = gameTask,
+                                JobID = arg.JobID,
+                                ClientMutationID = arg.ClientMutationID,
+                            }));
+
+                        }
+                    }
+
+                    var finishedPayload = new InstallationCompletePayload()
+                    {
+                        ClientMutationID = arg.ClientMutationID,
+                        JobID = arg.JobID,
+                        Game = gameTask
+                            .ContinueWith(g =>
+                            {
+                                ctx.RemoveAssignment(arg.JobID);
+                                return g;
+                            }).Unwrap(),
+                    };
+                    await ctx.SendEventMessage(new OnInstallationCompleteMessage(arg.JobID, finishedPayload));
+                    return finishedPayload;
+                })
+                .Type<NonNullType<InstallationCompletePayloadType>>();
+
+            descriptor.Field("cancelInstallation")
+                .Description("Requests cancellation of an installation. This does not mean the installation step is complete. The installation" +
+                " must be continued to ensure proper cleanup.")
+                .UseAutoSubscription()
+                .UseClientMutationId()
+                .Argument("input", a => a.Type<NextInstallationStepInputType>())
+                .Resolver(async ctx =>
+                {
+                    var arg = ctx.Argument<NextInstallationStepInput>("input");
+                    var jobQueue = ctx.SnowflakeService<IAsyncJobQueueFactory>()
+                        .GetJobQueue<TaskResult<IFile>>();
+
+                    jobQueue.RequestCancellation(arg.JobID);
+
+                    var finishedPayload = new InstallationCancelledPayload()
+                    {
+                        JobID = arg.JobID,
+                        Game = ctx.GetAssignedGame(arg.JobID)
+                    };
+                    return finishedPayload;
+                })
+                .Type<NonNullType<InstallationCancelledPayloadType>>();
         }
     }
 }

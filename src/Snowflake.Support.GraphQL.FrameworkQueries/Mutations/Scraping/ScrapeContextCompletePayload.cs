@@ -26,6 +26,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
         {
             descriptor.Name(nameof(ScrapeContextCompletePayload))
                 .Description("Describes the final step of the scrape context.")
+                .WithClientMutationId()
                 .Interface<ScrapeContextPayloadInterface>();
            
             descriptor.Field(s => s.ScrapeContext)

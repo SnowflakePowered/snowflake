@@ -13,7 +13,6 @@ using Snowflake.Model.Game;
 using Snowflake.Scraping;
 using Snowflake.Services;
 using Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Game;
-using Snowflake.Support.GraphQL.FrameworkQueries.Queries.Debug;
 using Snowflake.Support.GraphQL.FrameworkQueries.Queries.Game.Orchestration;
 using Snowflake.Support.GraphQLFrameworkQueries.Queries;
 using Snowflake.Support.GraphQLFrameworkQueries.Queries.Devices;
@@ -34,6 +33,7 @@ using Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Scraping;
 using Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation;
 using System.Collections.Concurrent;
 using System;
+using Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Installation;
 
 namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
 {
@@ -47,9 +47,6 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
           
             var hotChocolate = coreInstance.Get<IGraphQLSchemaRegistrationProvider>();
             var serviceRegistration = coreInstance.Get<IServiceRegistrationProvider>();
-
-            hotChocolate.AddObjectTypeExtension<SubscriptionDebugQueries>();
-
 
             hotChocolate.AddObjectTypeExtension<StoneQueries>();
             hotChocolate.AddObjectTypeExtension<GameQueries>();
@@ -90,6 +87,8 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
             hotChocolate.AddInterfaceType<ScrapeContextPayloadInterface>();
 
             hotChocolate.AddObjectTypeExtension<InstallationMutations>();
+            hotChocolate.AddObjectTypeExtension<InstallationSubscriptions>();
+
             hotChocolate.ConfigureSchema(schema =>
             {
                 schema.AddTypeInterceptor<AutoSubscriptionTypeInterceptor>();
