@@ -25,6 +25,8 @@ namespace Snowflake.Installation
 
         /// <summary>
         /// Runs when the <see cref="AsyncInstallTask{T}"/> is evaluated.
+        /// This method <strong>must only throw within the returned task.</strong> This means either it can throw if async,
+        /// or if this method is synchronous, exceptions are only thrown within the returned task object.
         /// </summary>
         /// <returns>The result of the <see cref="AsyncInstallTask{T}"/>.</returns>
         protected abstract Task<T> ExecuteOnce();

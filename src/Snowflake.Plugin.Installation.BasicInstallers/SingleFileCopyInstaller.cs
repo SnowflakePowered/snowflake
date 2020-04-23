@@ -82,8 +82,19 @@ namespace Snowflake.Plugin.Installation.BasicInstallers
 
                 var copiedFile = await new CopyFileTask(file, game.WithFiles().ProgramRoot);
                 yield return copiedFile;
-                
-                game.WithFiles().RegisterFile(await copiedFile, mimetype);
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    yield break;
+                }
+                if (copiedFile.Error == null)
+                {
+                    game.WithFiles().RegisterFile(await copiedFile, mimetype);
+                }
+                else
+                {
+                    yield return await new FailureTask<IFile>($"Failed to install {file.Name} to game {game.Record.RecordID}", copiedFile.Error);
+                    yield break;
+                }
             }
         }
     }

@@ -1104,6 +1104,19 @@
             <param name="source">The source file.</param>
             <param name="destinationDirectory">The target directory.</param>
         </member>
+        <member name="T:Snowflake.Installation.Tasks.ExecuteAsyncTask`1">
+            <summary>
+            Wraps a <see cref="T:System.Threading.Tasks.Task`1"/> into an <see cref="T:Snowflake.Installation.AsyncInstallTask`1"/>
+            that yields <see cref="T:Snowflake.Installation.TaskResult`1"/>.
+            </summary>
+            <typeparam name="TResult">The return type of the task.</typeparam>
+        </member>
+        <member name="M:Snowflake.Installation.Tasks.ExecuteAsyncTask`1.#ctor(System.Threading.Tasks.Task{`0})">
+            <summary>
+            Describes the execution result of the supplied task as a <see cref="T:Snowflake.Installation.TaskResult`1"/>
+            </summary>
+            <param name="task">The task to execute.</param>
+        </member>
         <member name="T:Snowflake.Installation.Tasks.ExtractZipTask">
             <summary>
             Extracts a ZIP file into a target directory.
@@ -1115,6 +1128,23 @@
             </summary>
             <param name="fileInfo">The ZIP file source.</param>
             <param name="destination">The destination directory.</param>
+        </member>
+        <member name="T:Snowflake.Installation.Tasks.FailureTask`1">
+            <summary>
+            Immediately fails the task by throwing an exception.
+            </summary>
+        </member>
+        <member name="M:Snowflake.Installation.Tasks.FailureTask`1.#ctor(System.Exception)">
+            <summary>
+            Fails with the provided exception
+            </summary>
+            <param name="exception">The exception that occurred.</param>
+        </member>
+        <member name="M:Snowflake.Installation.Tasks.FailureTask`1.#ctor(System.String)">
+            <summary>
+            Fails with the provided message using a generic exception.
+            </summary>
+            <param name="message">The messsage to fail with.</param>
         </member>
         <member name="M:Snowflake.JsonConverters.InputMappingConverter.Create(System.Type,Newtonsoft.Json.Linq.JObject)">
             <inheritdoc/>
