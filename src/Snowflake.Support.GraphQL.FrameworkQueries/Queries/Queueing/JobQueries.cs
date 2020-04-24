@@ -1,6 +1,8 @@
 ﻿using HotChocolate.Language;
 using HotChocolate.Types;
 using Snowflake.Extensibility.Queueing;
+using Snowflake.Filesystem;
+using Snowflake.Installation;
 using Snowflake.Remoting.GraphQL;
 using Snowflake.Scraping;
 using System;
@@ -22,6 +24,13 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Queries.Queueing
                         .GetJobQueue<IScrapeContext, IEnumerable<ISeed>>(false);
                 })
                 .Type<ScrapingJobQueueType>();
+            descriptor.Field("installation")
+                .Resolver(ctx =>
+                {
+                    return ctx.SnowflakeService<IAsyncJobQueueFactory>()
+                        .GetJobQueue<TaskResult<IFile>>();
+                })
+                .Type<InstallationJobQueueType>();
         }
     }
 }
