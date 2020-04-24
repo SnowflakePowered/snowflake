@@ -27,7 +27,7 @@
     </PackageReference>
     <PackageReference Include="System.Reactive" Version="4.4.1" />
     <PackageReference Include="VCDiff" Version="3.2.6" />
-    <PackageReference Include="Zio" Version="0.7.6" />
+    <PackageReference Include="Zio" Version="0.8.0" />
   </ItemGroup>
 
   <ItemGroup>
