@@ -48,6 +48,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Queries.Game.Orchestration
                    return orchestrator.GetConfigurationProfiles(game);
                });
             descriptor.Field("configuration")
+                .Description("Retrieves the specified configuration profile for this orchestrator registered for this game.")
                 .Argument("profileName", arg => arg.Description("The name of the profile to retrieve").Type<NonNullType<StringType>>())
                 .Type<ConfigurationCollectionType>()
                 .Resolver(ctx =>

@@ -77,5 +77,15 @@ namespace Snowflake.Model.Game.LibraryExtensions
         {
             return this.CollectionStore.UpdateConfigurationAsync(profile);
         }
+
+        public Guid GetOwningValueCollection(Guid valueGuid)
+        {
+            return this.CollectionStore.GetOwningValueCollection(valueGuid);
+        }
+
+        public Task<Guid> GetOwningValueCollectionAsync(Guid valueGuid)
+        {
+            return this.CollectionStore.GetOwningValueCollectionAsync(valueGuid);
+        }
     }
 }

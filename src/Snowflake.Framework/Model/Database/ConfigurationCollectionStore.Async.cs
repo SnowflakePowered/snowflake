@@ -166,5 +166,13 @@ namespace Snowflake.Model.Database
             context.Entry(entityValue).State = EntityState.Modified;
             await context.SaveChangesAsync();
         }
+
+        public async Task<Guid> GetOwningValueCollectionAsync(Guid valueGuid)
+        {
+            using var context = new DatabaseContext(this.Options.Options);
+            var entityValue = await context.ConfigurationValues.FindAsync(valueGuid);
+            if (entityValue == null) return default;
+            return entityValue.ValueCollectionGuid;
+        }
     }
 }

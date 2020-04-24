@@ -188,5 +188,13 @@ namespace Snowflake.Model.Database
             context.Entry(entityValue).State = EntityState.Modified;
             context.SaveChanges();
         }
+
+        public Guid GetOwningValueCollection(Guid valueGuid)
+        {
+            using var context = new DatabaseContext(this.Options.Options);
+            var entityValue = context.ConfigurationValues.Find(valueGuid);
+            if (entityValue == null) return default;
+            return entityValue.ValueCollectionGuid;
+        }
     }
 }
