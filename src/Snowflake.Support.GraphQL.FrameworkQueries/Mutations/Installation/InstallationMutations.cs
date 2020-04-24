@@ -39,8 +39,8 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
                         .GetJobQueue<TaskResult<IFile>>();
 
                     var orchestrator = ctx.SnowflakeService<IPluginManager>()
-                        .GetCollection<IEmulatorOrchestrator>()
-                        .FirstOrDefault(c => String.Equals(c.Name, arg.Orchestrator, StringComparison.InvariantCultureIgnoreCase));
+                        .GetCollection<IEmulatorOrchestrator>()[arg.Orchestrator];
+
                     var game = await ctx.SnowflakeService<IGameLibrary>().GetGameAsync(arg.GameID);
                     if (orchestrator == null) throw new ArgumentException("The specified orchestrator plugin is not installed.");
                     if (game == null) throw new ArgumentException("The specified game was not found.");
@@ -70,8 +70,8 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
                         .GetJobQueue<TaskResult<IFile>>();
 
                     var installer = ctx.SnowflakeService<IPluginManager>()
-                        .GetCollection<IGameInstaller>()
-                        .FirstOrDefault(c => String.Equals(c.Name, arg.Installer, StringComparison.InvariantCultureIgnoreCase));
+                        .GetCollection<IGameInstaller>()[arg.Installer];
+
                     var game = await ctx.SnowflakeService<IGameLibrary>().GetGameAsync(arg.GameID);
                     if (installer == null) throw new ArgumentException("The specified installer plugin is not installed.");
                     if (game == null) throw new ArgumentException("The specified game was not found.");
