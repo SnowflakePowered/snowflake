@@ -39,6 +39,10 @@ namespace Snowflake.Remoting.GraphQL.Model.Installation.Tasks
             descriptor.Field(t => t.Name)
                 .Description("The name of this task result.")
                 .Type<StringType>();
+            descriptor.Field("errored")
+                .Description("Whether or not this task has errored.")
+                .Resolver(ctx => ctx.Parent<TaskResult<T>>().Error != null)
+                .Type<NonNullType<BooleanType>>();
             descriptor.Field("value")
                 .Resolver(async ctx =>
                 {

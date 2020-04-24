@@ -12,7 +12,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Installation.Tasks
         {
             descriptor
                 .Type<TSuccessType>()
-                .Type<ExceptionType>();
+                .Type<InstallationExceptionType>();
 
             descriptor
                 .Extend()
@@ -22,7 +22,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Installation.Tasks
                     definition.Name = $"{successType.Name}TaskResultValue";
                 })
                 .DependsOn<TSuccessType>()
-                .DependsOn<ExceptionType>();
+                .DependsOn<InstallationExceptionType>();
         }
     }
 }
