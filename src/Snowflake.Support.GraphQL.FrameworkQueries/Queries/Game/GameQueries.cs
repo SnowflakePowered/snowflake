@@ -1,5 +1,4 @@
-﻿using GraphQL.Types;
-using HotChocolate.Language;
+﻿using HotChocolate.Language;
 using HotChocolate.Types;
 using HotChocolate.Types.Filters;
 using HotChocolate.Types.Relay;

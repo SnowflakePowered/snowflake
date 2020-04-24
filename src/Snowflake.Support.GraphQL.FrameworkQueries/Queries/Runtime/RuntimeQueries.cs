@@ -1,5 +1,4 @@
-﻿using GraphQL.Types;
-using HotChocolate.Types;
+﻿using HotChocolate.Types;
 using Snowflake.Remoting.GraphQL.Model.Extensibility;
 using Snowflake.Loader;
 using Snowflake.Services;
