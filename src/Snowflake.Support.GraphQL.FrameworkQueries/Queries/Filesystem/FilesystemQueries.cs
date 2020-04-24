@@ -2,7 +2,6 @@
 using Microsoft.DotNet.PlatformAbstractions;
 using Snowflake.Remoting.GraphQL.Model.Filesystem;
 using Snowflake.Remoting.GraphQL.Model.Filesystem.Contextual;
-using Snowflake.Remoting.GraphQL.Schema;
 using Snowflake.Services;
 using System;
 using System.Collections.Generic;

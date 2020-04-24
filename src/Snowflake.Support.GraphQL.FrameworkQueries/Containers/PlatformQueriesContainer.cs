@@ -6,8 +6,6 @@ using HotChocolate.Types;
 using HotChocolate.Types.Relay;
 using Snowflake.Configuration;
 using Snowflake.Remoting.GraphQL;
-using Snowflake.Remoting.GraphQL.Model.Stone;
-using Snowflake.Remoting.GraphQL.Schema;
 using Snowflake.Loader;
 using Snowflake.Model.Game;
 using Snowflake.Scraping;
