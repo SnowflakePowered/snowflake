@@ -158,7 +158,6 @@ namespace Snowflake.Model.Game.LibraryExtensions
         /// </summary>
         /// <param name="valueGuid">The unique GUID of the configuration value to update.</param>
         /// <param name="newValue">The new value of the configuration value.</param>
-
         void UpdateValue(Guid valueGuid, object newValue);
 
         /// <summary>
@@ -167,8 +166,20 @@ namespace Snowflake.Model.Game.LibraryExtensions
         /// </summary>
         /// <param name="valueGuid">The unique GUID of the configuration value to update.</param>
         /// <param name="newValue">The new value of the configuration value.</param>
-
         Task UpdateValueAsync(Guid valueGuid, object newValue);
+
+        /// <summary>
+        /// Gets the Guid of the value collection of the value in the in the database with the given
+        /// <paramref name="valueGuid"/>.
+        /// </summary>
+        /// <param name="valueGuid">The unique GUID of the configuration value to update.</param>
+        Guid GetOwningValueCollection(Guid valueGuid);
+
+        /// <summary>
+        /// Gets the Guid of the value collection of the value in the in the database with the given <paramref name="valueGuid"/> asynchronously.
+        /// </summary>
+        /// <param name="valueGuid">The unique GUID of the configuration value to update.</param>
+        Task<Guid> GetOwningValueCollectionAsync(Guid valueGuid);
 
         /// <summary>
         /// Updates the entire <see cref="IConfigurationCollection"/>.
