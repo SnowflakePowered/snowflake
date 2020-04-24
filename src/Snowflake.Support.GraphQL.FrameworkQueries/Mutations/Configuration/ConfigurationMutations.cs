@@ -2,6 +2,7 @@
 using Snowflake.Configuration;
 using Snowflake.Model.Game;
 using Snowflake.Model.Game.LibraryExtensions;
+using Snowflake.Orchestration.Extensibility;
 using Snowflake.Remoting.GraphQL;
 using Snowflake.Remoting.GraphQL.FrameworkQueries.Mutations.Relay;
 using Snowflake.Services;
@@ -45,6 +46,40 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Configuration
                         Collections = newValueGuid.GroupBy(k => k.valueCollection, v => v.value),
                     };
                 }).Type<NonNullType<UpdateGameConfigurationValuePayloadType>>();
+            descriptor.Field("deleteGameConfiguration")
+                .UseAutoSubscription()
+                .UseClientMutationId()
+                .Description("Delete the specified game configuration profile.")
+                .Argument("input", a => a.Type<DeleteGameConfigurationInputType>())
+                .Resolver(async ctx =>
+                {
+                    var games = ctx.SnowflakeService<IGameLibrary>();
+                    var configStore = games.GetExtension<IGameConfigurationExtensionProvider>();
+                    var orchestrators = ctx.SnowflakeService<IPluginManager>().GetCollection<IEmulatorOrchestrator>();
+                    var input = ctx.Argument<DeleteGameConfigurationInput>("input");
+                    IConfigurationCollection config = null;
+
+                    if (input.Retrieval != null)
+                    {
+                        var orchestrator = orchestrators[input.Retrieval.Orchestrator];
+                        var game = await games.GetGameAsync(input.Retrieval.GameID);
+                        if (orchestrator == null)
+                            throw new ArgumentException("The specified orchestrator was not found.");
+                        if (game == null)
+                            throw new ArgumentException("The specified game was not found.");
+                        config = orchestrator.GetGameConfiguration(game, input.Retrieval.ProfileName);
+                        if (config?.ValueCollection?.Guid != input.CollectionID)
+                            throw new ArgumentException("The specified retrieval and collectionId do not match.");
+                    }
+
+                    await configStore.DeleteProfileAsync(input.CollectionID);
+
+                    return new DeleteGameConfigurationPayload()
+                    {
+                        CollectionID = input.CollectionID,
+                        Configuration = config,
+                    };
+                }).Type<NonNullType<DeleteGameConfigurationPayloadType>>();
             descriptor.Field("updatePluginConfigurationValues")
                 .UseAutoSubscription()
                 .UseClientMutationId()

@@ -32,9 +32,9 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                     var input = ctx.Argument<CreateScrapeContextInput>("input");
                     var plugins = ctx.SnowflakeService<IPluginManager>();
                     var cullers = plugins.GetCollection<ICuller>()
-                        .Where(c => input.Cullers.Contains(c.Name, StringComparer.InvariantCultureIgnoreCase));
+                        .Where(c => input.Cullers.Contains(c.Name, StringComparer.InvariantCulture));
                     var scrapers = plugins.GetCollection<IScraper>()
-                        .Where(c => input.Scrapers.Contains(c.Name, StringComparer.InvariantCultureIgnoreCase));
+                        .Where(c => input.Scrapers.Contains(c.Name, StringComparer.InvariantCulture));
                     var game = await ctx.SnowflakeService<IGameLibrary>().GetGameAsync(input.GameID);
                     if (game == null) throw new ArgumentException("The specified game does not exist.");
                     var jobQueueFactory = ctx.SnowflakeService<IAsyncJobQueueFactory>();
@@ -229,10 +229,10 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                     var gameLibrary = ctx.SnowflakeService<IGameLibrary>();
                     var pluginManager = ctx.SnowflakeService<IPluginManager>();
                     var fileTraversers = pluginManager.GetCollection<IFileInstallationTraverser>()
-                        .Where(c => input.FileTraversers.Contains(c.Name, StringComparer.InvariantCultureIgnoreCase));
+                        .Where(c => input.FileTraversers.Contains(c.Name, StringComparer.InvariantCulture));
                     
                     var metaTraversers = pluginManager.GetCollection<IGameMetadataTraverser>()
-                        .Where(c => input.MetadataTraversers.Contains(c.Name, StringComparer.InvariantCultureIgnoreCase));
+                        .Where(c => input.MetadataTraversers.Contains(c.Name, StringComparer.InvariantCulture));
 
                     var scrapeContext = jobQueue.GetSource(input.JobID);
                     if (scrapeContext == null) throw new ArgumentException("The specified scrape context does not exist.");
