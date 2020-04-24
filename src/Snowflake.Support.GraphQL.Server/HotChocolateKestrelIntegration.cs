@@ -85,8 +85,7 @@ namespace Snowflake.Services
 
                 .AddObjectType<GameType>()
                 .AddObjectType<RecordMetadataType>()
-                .AddObjectType<GameRecordType>()
-                ;
+                .AddObjectType<GameRecordType>();
 
             // Filesystem
             this.Schemas
@@ -109,8 +108,7 @@ namespace Snowflake.Services
                 .AddObjectType<OSDirectoryInfoType>()
                 .AddObjectType<OSDirectoryContentsType>()
                 .AddObjectType<OSDriveInfoType>()
-                .AddObjectType<OSDriveContentsType>()
-                ;
+                .AddObjectType<OSDriveContentsType>();
 
             this.Schemas
                 .AddScalarType<OSTaggedFileSystemPathType>()
@@ -127,16 +125,13 @@ namespace Snowflake.Services
                 .AddObjectType<InputDeviceType>()
 
                 .AddObjectType<ControllerElementMappingType>()
-                .AddObjectType<ControllerElementMappingProfileType>()
-                ;
+                .AddObjectType<ControllerElementMappingProfileType>();
 
             this.Schemas
                .AddEnumType<SaveManagementStrategyEnum>()
                .AddObjectType<SaveGameType>()
                .AddObjectType<SaveProfileType>()
-
-               .AddEnumType<EmulatorCompatibilityEnum>()
-               ;
+               .AddEnumType<EmulatorCompatibilityEnum>();
 
             this.Schemas
                .AddEnumType<ConfigurationOptionTypeEnum>()
@@ -150,20 +145,16 @@ namespace Snowflake.Services
                .AddObjectType<OptionDescriptorType>()
                .AddObjectType<OptionMetadataType>()
                .AddObjectType<SectionDescriptorType>()
-               .AddObjectType<SelectionOptionDescriptorType>()
-
-               ;
+               .AddObjectType<SelectionOptionDescriptorType>();
 
             this.Schemas
                 .AddObjectType<ScrapeContextType>()
                 .AddObjectType<SeedContentType>()
                 .AddObjectType<SeedRootContextType>()
-                .AddObjectType<SeedType>()
-                ;
+                .AddObjectType<SeedType>();
             this.Schemas
               .AddInterfaceType<JobQueueInterface>()
-              .AddInterfaceType<QueuableJobInterface>()
-              ;
+              .AddInterfaceType<QueuableJobInterface>();
 
             services.AddDataLoaderRegistry();
             services.AddGraphQLSubscriptions();

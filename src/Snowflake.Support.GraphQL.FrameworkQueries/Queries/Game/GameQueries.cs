@@ -58,12 +58,10 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Game
 
                     if (context.Field.Arguments["where"].Type is InputObjectType iot && iot is IFilterInputType fit)
                     {
-
                         var filter = new QueryableFilterVisitorContext(iot, typeof(IGameRecordQuery), context.GetTypeConversion(), true);
                         QueryableFilterVisitor.Default.Visit(valueNode, filter);
 
                         var expr = filter.CreateFilter<IGameRecordQuery>();
-
                         
                         //var queryResult = queryBuilder.QueryGames(expr);
                         //queryBuilder.GetGames(g => g.Metadata.Any(g => g.MetadataKey == "x"));
@@ -84,7 +82,6 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Game
                             var combinedLambda = Expression.Lambda<Func<IGameRecordQuery, bool>>(combinedBody, param);
                             context.Result = queryBuilder.QueryGames(combinedLambda).ToList();
                         }
-
                     }
                     return next.Invoke(context);
                 })

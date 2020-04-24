@@ -39,5 +39,4 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
                 .Type<NonNullType<GameType>>();
         }
     }
-
 }

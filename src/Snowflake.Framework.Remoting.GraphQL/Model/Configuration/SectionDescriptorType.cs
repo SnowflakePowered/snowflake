@@ -30,7 +30,6 @@ namespace Snowflake.Remoting.GraphQL.Model.Configuration
                 .Name("optionDescriptors")
                 .Description("Describes the options contained within this configuration section.")
                 .Type<NonNullType<ListType<NonNullType<OptionDescriptorType>>>>();
-
         }
     }
 }
