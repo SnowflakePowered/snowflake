@@ -25,8 +25,8 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Filesystem
                     "or the root directory on a Unix-like system."))
                 .Resolver(context => {
                     var path = context.Argument<DirectoryInfo>("directoryPath");
-                    if (path == null && RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) return DriveInfo.GetDrives();
-                    if (path == null &&
+                    if ((path == null) && RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) return DriveInfo.GetDrives();
+                    if ((path == null) &&
                         (RuntimeInformation.IsOSPlatform(OSPlatform.OSX)
                         || RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                         || RuntimeInformation.IsOSPlatform(OSPlatform.FreeBSD)) return new DirectoryInfo("/");
@@ -39,5 +39,4 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Filesystem
                 "Returns null if the specified path does not exist.");
         }
     }
-
 }

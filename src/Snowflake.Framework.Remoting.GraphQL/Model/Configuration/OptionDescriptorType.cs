@@ -43,7 +43,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Configuration
             descriptor.Field(o => o.IsSelection)
                 .Description("Whether or not this option is a selection option.")
                 .Deprecated("Prefer using `optionType`.")
-                .Type<NonNullType<BooleanType>>(); ;
+                .Type<NonNullType<BooleanType>>();
             descriptor.Field(o => o.Min)
                 .Description("The minimum value allowed if this option is a numeric option.");
             descriptor.Field(o => o.Max)

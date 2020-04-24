@@ -31,7 +31,6 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Game.LibraryExtensio
                     var path = context.Argument<UPath>("directoryPath");
                     return context.Parent<IGameFileExtension>().Root.OpenDirectory(path.FullName);
                 });
-
         }
     }
 }

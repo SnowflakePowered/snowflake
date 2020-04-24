@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Text;
 using Snowflake.Remoting.GraphQL;
 
-
 namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Devices.Mapped
 {
     public sealed class InputDeviceInstanceMappingProfileQueries
@@ -48,7 +47,6 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Devices.Mapped
                     .Description("The profile to fetch."))
                 .Resolver(context =>
                 {
-
                     var deviceInstance = (IInputDeviceInstance)context.Source.Peek();
                     var device = (IInputDevice)context.Source.Pop().Peek();
                     var store = context.SnowflakeService<IControllerElementMappingProfileStore>();

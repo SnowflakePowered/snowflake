@@ -11,7 +11,6 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions
         public SimpleEventMessage(string subscriptionName, T payload)
             : base(new EventDescription(subscriptionName), payload)
         {
-
         }
     }
 }

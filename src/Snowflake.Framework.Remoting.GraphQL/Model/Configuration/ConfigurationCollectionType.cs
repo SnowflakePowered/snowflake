@@ -26,8 +26,8 @@ namespace Snowflake.Remoting.GraphQL.Model.Configuration
                 .Description("The list of values that make up this collection.")
                 .Argument("sectionKey", arg => arg.Description("The configuration section for which to return values.").Type<StringType>())
                 .Argument("valueId", arg => arg.Description("Return a specific value with the given GUID. This overrides `sectionKey` if set.").Type<UuidType>())
-                .Resolver(ctx => {
-
+                .Resolver(ctx =>
+                {
                     var collection = ctx.Parent<IConfigurationCollection>();
                     var valueCollection = collection.ValueCollection;
                     string sectionKey = ctx.Argument<string>("sectionKey");
@@ -41,12 +41,12 @@ namespace Snowflake.Remoting.GraphQL.Model.Configuration
                     }
                     if (sectionKey != null)
                     {
-                       return collection[sectionKey]?
-                        .Values.Select(kvp => (sectionKey, kvp.Key, kvp.Value))
-                        ?? Enumerable.Empty<(string, string, IConfigurationValue)>();
+                        return collection[sectionKey]?
+                         .Values.Select(kvp => (sectionKey, kvp.Key, kvp.Value))
+                         ?? Enumerable.Empty<(string, string, IConfigurationValue)>();
                     }
                     return valueCollection;
-                 })
+                })
                 .Type<NonNullType<ListType<NonNullType<NamedConfigurationValueType>>>>();
         }
     }

@@ -76,7 +76,6 @@ namespace Snowflake.Extensibility.Queueing
     /// </summary>
     /// <typeparam name="T">The type of elements in the enumerable.</typeparam>
     /// <typeparam name="TAsyncEnumerable">The type that implements <see cref="IAsyncEnumerable{T}"/></typeparam>
-
     public interface IAsyncJobQueue<TAsyncEnumerable, T> : IAsyncJobQueue
         where TAsyncEnumerable : class, IAsyncEnumerable<T>
     {

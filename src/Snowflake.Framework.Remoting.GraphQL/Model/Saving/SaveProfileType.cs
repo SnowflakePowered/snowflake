@@ -11,7 +11,6 @@ namespace Snowflake.Remoting.GraphQL.Model.Saving
     {
         protected override void Configure(IObjectTypeDescriptor<ISaveProfile> descriptor)
         {
-
             descriptor.Name("SaveProfile")
                 .Description("Describes a save profile, which is a linked list of save games, forming a lineage of saves from the first game in the profile " +
                 "to the head");
