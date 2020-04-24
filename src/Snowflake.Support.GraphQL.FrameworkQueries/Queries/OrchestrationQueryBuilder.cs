@@ -4,21 +4,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using GraphQL.Types;
 using Snowflake.Extensibility;
-using Snowflake.Remoting.GraphQL.Attributes;
-using Snowflake.Remoting.GraphQL.Query;
 using Snowflake.Model.Game;
 using Snowflake.Model.Game.LibraryExtensions;
 using Snowflake.Orchestration.Extensibility;
 using Snowflake.Orchestration.Saving;
 using Snowflake.Services;
-using Snowflake.Support.GraphQLFrameworkQueries.Types.PlatformInfo;
-using Snowflake.Support.GraphQLFrameworkQueries.Types.Saving;
 
 namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
 {
-    public class OrchestrationQueryBuilder : QueryBuilder
+    public class OrchestrationQueryBuilder
     {
         public IPluginCollection<IEmulatorOrchestrator> Orchestrators { get; }
         public IStoneProvider Stone { get; }
@@ -36,20 +31,13 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
             this.GameLibrary = library;
             this.Ports = ports;
         }
-        [Mutation("createSaveProfile", "Creates a new saving profile", typeof(SaveProfileGraphType))]
-        [Parameter(typeof(Guid), typeof(GuidGraphType), "gameGuid", "The GUID of the game to create a save profile for")]
-        [Parameter(typeof(string), typeof(StringGraphType), "saveProfileName", "The name of the new profile.")]
-        [Parameter(typeof(string), typeof(StringGraphType), "saveType", "The name of the new profile.")]
-        [Parameter(typeof(SaveManagementStrategy), typeof(SaveManagementStrategyEnum), "strategy", "The strategy to manage this save profile.")]
+      
         public ISaveProfile CreateSaveProfile(Guid gameGuid, string saveProfileName, string saveType, SaveManagementStrategy strategy)
         {
             var game = this.GameLibrary.GetGame(gameGuid);
             return game.WithFiles().WithSaves().CreateProfile(saveProfileName, saveType, strategy);
         }
 
-        [Mutation("deleteSaveProfile", "Creates a new saving profile", typeof(SaveProfileGraphType))]
-        [Parameter(typeof(Guid), typeof(GuidGraphType), "gameGuid", "The GUID of the game to create a save profile for")]
-        [Parameter(typeof(Guid), typeof(GuidGraphType), "profileGuid", "The GUID of the save profile.")]
         public ISaveProfile DeleteSaveProfile(Guid gameGuid, Guid profileGuid)
         { 
             var game = this.GameLibrary.GetGame(gameGuid);
@@ -60,12 +48,6 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
             return profile;
         }
 
-        [Mutation("createEmulation", "Creates an emulation instance for a game, returning a unique handle for the instance.", typeof(GuidGraphType))]
-        [Parameter(typeof(string), typeof(StringGraphType), "orchestratorName", "The name of the orchestrator plugin to use.")]
-        [Parameter(typeof(string), typeof(StringGraphType), "configurationProfile", "The name of the configuration profile to use.")]
-        [Parameter(typeof(Guid), typeof(GuidGraphType), "gameGuid", "The GUID of the game to launch.")]
-        [Parameter(typeof(Guid), typeof(GuidGraphType), "saveGuid", "The GUID of the save profile to use.")]
-        [Parameter(typeof(bool), typeof(BooleanGraphType), "verify", "Whether or not to verify the game files before launching.")]
         public async Task<Guid> CreateGameEmulationInstance(string orchestratorName, string configurationProfile, 
             Guid gameGuid, Guid saveGuid, bool verify = false)
         {
@@ -91,8 +73,6 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
             throw new InvalidOperationException("Unable to cache the created game emulation instance!");
         }
 
-        [Mutation("prepareEmulation", "Calls all hooks for the emulation instance and prepares it for start.", typeof(GuidGraphType))]
-        [Parameter(typeof(Guid), typeof(GuidGraphType), "emulationHandle", "The GUID handle of a created emulation..")]
         public async Task<Guid> PrepareGameEmulation(Guid emulationHandle)
         {
             if (!this.GameEmulationCache.TryGetValue(emulationHandle, out IGameEmulation emulation))
@@ -103,8 +83,6 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
             return emulationHandle;
         }
 
-        [Mutation("startEmulation", "Starts an emulation.", typeof(GuidGraphType))]
-        [Parameter(typeof(Guid), typeof(GuidGraphType), "emulationHandle", "The GUID handle of a created emulation..")]
         public Guid StartGameEmulation(Guid emulationHandle)
         {
             // todo save cancellation handle.
@@ -115,8 +93,6 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
             return emulationHandle;
         }
 
-        [Mutation("stopEmulation", "Safely halts an emulation.", typeof(GuidGraphType))]
-        [Parameter(typeof(Guid), typeof(GuidGraphType), "emulationHandle", "The GUID handle of a created emulation.")]
         public Guid StopGameEmulation(Guid emulationHandle)
         {
             // todo save cancellation handle.
