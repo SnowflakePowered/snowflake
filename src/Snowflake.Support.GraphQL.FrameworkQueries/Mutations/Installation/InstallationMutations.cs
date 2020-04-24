@@ -5,6 +5,7 @@ using Snowflake.Filesystem;
 using Snowflake.Installation;
 using Snowflake.Installation.Extensibility;
 using Snowflake.Model.Game;
+using Snowflake.Orchestration.Extensibility;
 using Snowflake.Remoting.GraphQL;
 using Snowflake.Remoting.GraphQL.FrameworkQueries.Mutations.Relay;
 using Snowflake.Remoting.GraphQL.Model.Installation.Tasks;
@@ -25,6 +26,38 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
         protected override void Configure(IObjectTypeDescriptor descriptor)
         {
             descriptor.Name("Mutation");
+
+            descriptor.Field("createValidation")
+                .Description("Creates a validation intallation with the specified game and orchestrator.")
+                .UseClientMutationId()
+                .UseAutoSubscription()
+                .Argument("input", a => a.Type<CreateValidationInputType>())
+                .Resolver(async ctx =>
+                {
+                    var arg = ctx.Argument<CreateValidationInput>("input");
+                    var jobQueue = ctx.SnowflakeService<IAsyncJobQueueFactory>()
+                        .GetJobQueue<TaskResult<IFile>>();
+
+                    var orchestrator = ctx.SnowflakeService<IPluginManager>()
+                        .GetCollection<IEmulatorOrchestrator>()
+                        .FirstOrDefault(c => String.Equals(c.Name, arg.Orchestrator, StringComparison.InvariantCultureIgnoreCase));
+                    var game = await ctx.SnowflakeService<IGameLibrary>().GetGameAsync(arg.GameID);
+                    if (orchestrator == null) throw new ArgumentException("The specified orchestrator plugin is not installed.");
+                    if (game == null) throw new ArgumentException("The specified game was not found.");
+                    var compatibility = orchestrator.CheckCompatibility(game);
+                    if (compatibility != EmulatorCompatibility.RequiresValidation)
+                        throw new ArgumentException("The specified orchestrator can not validate the specified game. Either it is unsupported, " +
+                            "or has already been validated.");
+                    var jobId = await jobQueue.QueueJob(orchestrator.ValidateGamePrerequisites(game));
+                    ctx.AssignGameGuid(game, jobId);
+                    return new CreateValidationPayload
+                    {
+                        JobID = jobId,
+                        Game = game,
+                    };
+                })
+                .Type<NonNullType<CreateValidationPayloadType>>();
+
             descriptor.Field("createInstallation")
                 .Description("Creates a new installation with the specified artifacts and game.")
                 .UseClientMutationId()
