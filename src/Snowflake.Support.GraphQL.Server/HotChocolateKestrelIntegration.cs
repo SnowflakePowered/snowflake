@@ -174,7 +174,6 @@ namespace Snowflake.Services
 
             var schemaBuilder = SchemaBuilder.New()
                 .EnableRelaySupport()
-               
                 .SetOptions(new SchemaOptions()
                 {
                     DefaultBindingBehavior = BindingBehavior.Explicit,
