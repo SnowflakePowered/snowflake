@@ -14,19 +14,6 @@ using HotChocolate.Types;
 using HotChocolate.Utilities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using Snowflake.Remoting.GraphQL.Model.Configuration;
-using Snowflake.Remoting.GraphQL.Model.Device;
-using Snowflake.Remoting.GraphQL.Model.Device.Mapped;
-using Snowflake.Remoting.GraphQL.Model.Filesystem;
-using Snowflake.Remoting.GraphQL.Model.Filesystem.Contextual;
-using Snowflake.Remoting.GraphQL.Model.Game;
-using Snowflake.Remoting.GraphQL.Model.Installation;
-using Snowflake.Remoting.GraphQL.Model.Orchestration;
-using Snowflake.Remoting.GraphQL.Model.Records;
-using Snowflake.Remoting.GraphQL.Model.Saving;
-using Snowflake.Remoting.GraphQL.Model.Scraping;
-using Snowflake.Remoting.GraphQL.Model.Stone.ControllerLayout;
-using Snowflake.Remoting.GraphQL.Model.Stone.PlatformInfo;
 using Snowflake.Remoting.Kestrel;
 using Snowflake.Input.Controller;
 using Snowflake.Input.Controller.Mapped;
@@ -34,19 +21,18 @@ using Snowflake.Model.Game;
 using HotChocolate.Language;
 using Snowflake.Remoting.GraphQL;
 using Snowflake.Remoting.GraphQL.Model.Queueing;
+using Snowflake.Support.GraphQL.Server;
 
 namespace Snowflake.Services
 {
     internal class HotChocolateKestrelIntegration : IKestrelServerMiddlewareProvider
     {
-        public HotChocolateKestrelIntegration(GraphQLSchemaRegistrationProvider schemas, IServiceProvider serviceContainer)
+        public HotChocolateKestrelIntegration(HotChocolateSchemaBuilder schema)
         {
-            this.Schemas = schemas;
-            this.ServiceContainer = serviceContainer;
+            this.Schema = schema;
         }
 
-        public GraphQLSchemaRegistrationProvider Schemas { get; }
-        public IServiceProvider ServiceContainer { get; }
+        private HotChocolateSchemaBuilder Schema { get; }
 
         public void Configure(IApplicationBuilder app)
         {
@@ -57,177 +43,18 @@ namespace Snowflake.Services
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddInMemorySubscriptionProvider();
-
-            // Add each query service
-            foreach (var sd in this.Schemas.QueryBuilderServices)
-            {
-                services.Add(sd);
-            }
-
-            var kestrelSp = services.BuildServiceProvider();
-
-            // Stone and Game Model
-            this.Schemas
-                .AddScalarType<PlatformIdType>()
-                .AddScalarType<ControllerIdType>()
-                
-                .AddObjectType<PlatformInfoType>()
-
-                .AddEnumType<ControllerElementEnum>()
-                .AddEnumType<ControllerElementTypeEnum>()
-                .AddObjectType<ControllerElementCollectionType>()
-                .AddObjectType<ControllerElementInfoElementType>()
-                .AddObjectType<ControllerElementInfoType>()
-                .AddObjectType<ControllerLayoutType>()
-
-                .AddObjectType<GameType>()
-                .AddObjectType<RecordMetadataType>()
-                .AddObjectType<GameRecordType>();
-
-            // Filesystem
-            this.Schemas
-                .AddScalarType<OSFilePathType>()
-                .AddScalarType<OSDirectoryPathType>()
-                .AddScalarType<DirectoryPathType>()
-                .AddScalarType<FilePathType>()
-
-                .AddInterfaceType<FileInfoInterface>()
-                .AddInterfaceType<DirectoryInfoInterface>()
-                .AddInterfaceType<DirectoryContentsInterface>()
-                .AddInterfaceType<OSDirectoryInfoInterface>()
-                .AddInterfaceType<OSDirectoryContentsInterface>()
-
-                .AddObjectType<ContextualFileInfoType>()
-                .AddObjectType<ContextualDirectoryInfoType>()
-                .AddObjectType<ContextualDirectoryContentsType>()
-
-                .AddObjectType<OSFileInfoType>()
-                .AddObjectType<OSDirectoryInfoType>()
-                .AddObjectType<OSDirectoryContentsType>()
-                .AddObjectType<OSDriveInfoType>()
-                .AddObjectType<OSDriveContentsType>();
-
-            this.Schemas
-                .AddScalarType<OSTaggedFileSystemPathType>()
-                .AddObjectType<InstallableType>();
-
-            // Device
-            this.Schemas
-                .AddEnumType<DeviceCapabilityEnum>()
-                .AddEnumType<InputDriverEnum>()
-                
-                .AddObjectType<DeviceCapabilityLabelElementType>()
-                .AddObjectType<DeviceCapabilityLabelsType>()
-                .AddObjectType<InputDeviceInstanceType>()
-                .AddObjectType<InputDeviceType>()
-
-                .AddObjectType<ControllerElementMappingType>()
-                .AddObjectType<ControllerElementMappingProfileType>();
-
-            this.Schemas
-               .AddEnumType<SaveManagementStrategyEnum>()
-               .AddObjectType<SaveGameType>()
-               .AddObjectType<SaveProfileType>()
-               .AddEnumType<EmulatorCompatibilityEnum>();
-
-            this.Schemas
-               .AddEnumType<ConfigurationOptionTypeEnum>()
-               .AddEnumType<PathTypeEnum>()
-
-               .AddObjectType<ConfigurationCollectionType>()
-               .AddObjectType<ConfigurationSectionType>()
-
-               .AddObjectType<ConfigurationValueType>()
-               .AddObjectType<NamedConfigurationValueType>()
-               .AddObjectType<OptionDescriptorType>()
-               .AddObjectType<OptionMetadataType>()
-               .AddObjectType<SectionDescriptorType>()
-               .AddObjectType<SelectionOptionDescriptorType>();
-
-            this.Schemas
-                .AddObjectType<ScrapeContextType>()
-                .AddObjectType<SeedContentType>()
-                .AddObjectType<SeedRootContextType>()
-                .AddObjectType<SeedType>();
-            this.Schemas
-              .AddInterfaceType<JobQueueInterface>()
-              .AddInterfaceType<QueuableJobInterface>();
-
             services.AddDataLoaderRegistry();
             services.AddGraphQLSubscriptions();
 
             // Add privileged newtypes for Stone
-            services.AddTypeConverter<string, PlatformId>(from => from)
-                .AddTypeConverter<string, ControllerId>(from => from);
+            this.Schema.AddStoneIdTypeConverters(services);
+            this.Schema.AddSnowflakeQueryRequestInterceptor(services);
 
-            var schemaBuilder = SchemaBuilder.New()
-                .EnableRelaySupport()
-                .SetOptions(new SchemaOptions()
-                {
-                    DefaultBindingBehavior = BindingBehavior.Explicit,
-                    UseXmlDocumentation = true,
-                    StrictValidation = true,
-                })
-                .AddQueryType(descriptor =>
-                {
-                    descriptor.Name("Query");
-                })
-                .AddMutationType(descriptor =>
-                {
-                    descriptor.Name("Mutation");
-                })
-                .AddSubscriptionType(descriptor =>
-                {
-                    descriptor.Name("Subscription");
-                })
-                ;
-
-            foreach (var type in this.Schemas.ScalarTypes)
-            {
-                schemaBuilder.AddType(type);
-            }
-
-            foreach (var type in this.Schemas.EnumTypes)
-            {
-                schemaBuilder.AddType(type);
-            }
-
-            foreach (var type in this.Schemas.InterfaceTypes)
-            {
-                schemaBuilder.AddType(type);
-            }
-
-            foreach (var type in this.Schemas.ObjectTypes)
-            {
-                schemaBuilder.AddType(type);
-            }
-
-            foreach (var type in this.Schemas.ObjectTypeExtensions)
-            {
-                schemaBuilder.AddType(type);
-            }
-
-            foreach (var config in this.Schemas.SchemaConfig)
-            {
-                config(schemaBuilder);
-            }
-
-            services.AddGraphQL(schemaBuilder.Create(),
+            services.AddGraphQL(this.Schema.Create().Create(),
                 new QueryExecutionOptions
                 {
                     TracingPreference = TracingPreference.OnDemand,
-                    
                 });
-
-            services.AddQueryRequestInterceptor((context, builder, cancel) =>
-            {
-                builder.SetProperty(SnowflakeGraphQLExtensions.ServicesNamespace, this.ServiceContainer);
-                foreach (var config in this.Schemas.QueryConfig)
-                {
-                    config(builder);
-                }
-                return Task.CompletedTask;
-            });
         }
     }
 }

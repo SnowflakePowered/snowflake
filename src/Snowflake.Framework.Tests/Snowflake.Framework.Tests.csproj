@@ -50,6 +50,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Snowflake.Framework.Remoting.GraphQL\Snowflake.Framework.Remoting.GraphQL.csproj" />
     <ProjectReference Include="..\Snowflake.Framework.Remoting\Snowflake.Framework.Remoting.csproj" />
     <ProjectReference Include="..\Snowflake.Framework.Tests.DummyComposableInterface\Snowflake.Framework.Tests.DummyComposableInterface.csproj" />
     <ProjectReference Include="..\Snowflake.Framework.Tests.InvalidComposable\Snowflake.Framework.Tests.InvalidComposable.csproj" />
@@ -57,10 +58,11 @@
     <ProjectReference Include="..\Snowflake.Framework.Services\Snowflake.Framework.Services.csproj" />
     <ProjectReference Include="..\Snowflake.Framework\Snowflake.Framework.csproj" />
     <ProjectReference Include="..\Snowflake.Plugin.Installation.BasicInstallers\Snowflake.Plugin.Installation.BasicInstallers.csproj" />
+    <ProjectReference Include="..\Snowflake.Support.GraphQL.FrameworkQueries\Snowflake.Support.GraphQL.FrameworkQueries.csproj" />
+    <ProjectReference Include="..\Snowflake.Support.GraphQL.Server\Snowflake.Support.GraphQL.Server.csproj" />
     <ProjectReference Include="..\Snowflake.Support.PluginManager\Snowflake.Support.PluginManager.csproj" />
     <ProjectReference Include="..\Snowflake.Support.ShiragameProvider\Snowflake.Support.ShiragameProvider.csproj" />
     <ProjectReference Include="..\Snowflake.Support.StoneProvider\Snowflake.Support.StoneProvider.csproj" />
-
   </ItemGroup>
 
   <ItemGroup>

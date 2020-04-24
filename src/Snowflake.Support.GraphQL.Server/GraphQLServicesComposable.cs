@@ -23,8 +23,9 @@ namespace Snowflake.Support.GraphQL.Server
             var services = serviceRepository.Get<IPrivilegedServiceContainerAccessor>();
 
             var schema = new GraphQLSchemaRegistrationProvider(logger);
-            var hotChocolate = new HotChocolateKestrelIntegration(schema,
-                services.GetServiceContainerAsServiceProvider());
+            var hotChocolate = new HotChocolateKestrelIntegration(
+                new HotChocolateSchemaBuilder(schema,
+                services.GetServiceContainerAsServiceProvider()));
 
             register.RegisterService<IGraphQLSchemaRegistrationProvider>(schema);
             kestrel.AddService(hotChocolate);

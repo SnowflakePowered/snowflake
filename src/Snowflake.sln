@@ -89,9 +89,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Support.GraphQL.F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Framework.Sdk", "Snowflake.Framework.Sdk\Snowflake.Framework.Sdk.csproj", "{C313F9B2-CD0A-4C07-B765-DD9F05B51516}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Framework.Remoting.GraphQL", "Snowflake.Framework.Remoting.GraphQL\Snowflake.Framework.Remoting.GraphQL.csproj", "{A0CDF5B6-49EB-49D4-A394-B20E5A0A4F4A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Framework.Remoting.GraphQL", "Snowflake.Framework.Remoting.GraphQL\Snowflake.Framework.Remoting.GraphQL.csproj", "{A0CDF5B6-49EB-49D4-A394-B20E5A0A4F4A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Support.GraphQL.Server", "Snowflake.Support.GraphQL.Server\Snowflake.Support.GraphQL.Server.csproj", "{22986263-0BAD-4D78-9EE4-641F6534B050}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Support.GraphQL.Server", "Snowflake.Support.GraphQL.Server\Snowflake.Support.GraphQL.Server.csproj", "{22986263-0BAD-4D78-9EE4-641F6534B050}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
