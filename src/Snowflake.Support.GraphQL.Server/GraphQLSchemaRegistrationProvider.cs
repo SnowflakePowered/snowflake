@@ -20,7 +20,6 @@ namespace Snowflake.Services
         private static readonly object Empty = new { };
         public GraphQLSchemaRegistrationProvider(ILogger logger)
         {
-            this.QueryBuilderServices = new ServiceCollection();
             this.SchemaConfig = new List<Action<ISchemaBuilder>>();
             this.QueryConfig = new List<Action<IQueryRequestBuilder>>();
 
@@ -32,7 +31,6 @@ namespace Snowflake.Services
             this.Logger = logger;
         }
 
-        internal IServiceCollection QueryBuilderServices { get; }
         internal IList<Type> ObjectTypes { get; }
         internal IList<Type> EnumTypes { get; }
         internal IList<Type> ObjectTypeExtensions { get; }

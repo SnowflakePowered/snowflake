@@ -45,6 +45,11 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
           
             var hotChocolate = coreInstance.Get<IGraphQLSchemaRegistrationProvider>();
             var serviceRegistration = coreInstance.Get<IServiceRegistrationProvider>();
+            this.ConfigureHotChocolate(hotChocolate);
+        }
+
+        internal void ConfigureHotChocolate(IGraphQLSchemaRegistrationProvider hotChocolate)
+        {
 
             hotChocolate.AddObjectTypeExtension<StoneQueries>();
             hotChocolate.AddObjectTypeExtension<GameQueries>();
