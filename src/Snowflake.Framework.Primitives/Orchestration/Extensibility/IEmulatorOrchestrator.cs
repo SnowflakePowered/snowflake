@@ -55,14 +55,6 @@ namespace Snowflake.Orchestration.Extensibility
         /// Gets the inner-type erased generic <see cref="IConfigurationCollection"/> for this game, used
         /// to configure the game for this orchestrator.
         /// </summary>
-        /// <param name="game">The game to retrieve configuration for.</param>
-        /// <param name="profile">The configuration profile.</param>
-        IConfigurationCollection? GetGameConfiguration(IGame game, string profile);
-
-        /// <summary>
-        /// Gets the inner-type erased generic <see cref="IConfigurationCollection"/> for this game, used
-        /// to configure the game for this orchestrator.
-        /// </summary>
         /// <param name="collectionGuid">The value collection GUID of the target configuration.</param>
         /// <param name="game">The game to retrieve configuration for.</param>
         IConfigurationCollection? GetGameConfiguration(IGame game, Guid collectionGuid);

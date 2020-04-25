@@ -57,12 +57,6 @@ namespace Snowflake.Adapters.Higan
                 ?? Enumerable.Empty<(string, Guid)>();
         }
 
-        public override IConfigurationCollection GetGameConfiguration(IGame game, string profile)
-        {
-            return game.WithConfigurations()
-                .GetProfile<HiganRetroArchConfiguration>(nameof(RetroArchBsnesOrchestrator), profile);
-        }
-
         public override IConfigurationCollection GetGameConfiguration(IGame game, Guid profile)
         {
             return game.WithConfigurations()
