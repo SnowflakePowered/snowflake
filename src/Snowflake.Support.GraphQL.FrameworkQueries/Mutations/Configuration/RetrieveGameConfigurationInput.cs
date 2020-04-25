@@ -9,7 +9,6 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Configuration
     {
         public Guid GameID { get; set; }
         public string Orchestrator { get; set; }
-        public string ProfileName { get; set; }
     }
 
     internal sealed class RetrieveGameConfigurationInputType
@@ -18,16 +17,13 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Configuration
         protected override void Configure(IInputObjectTypeDescriptor<RetrieveGameConfigurationInput> descriptor)
         {
             descriptor.Name(nameof(RetrieveGameConfigurationInput))
-                .Description("Describes a game configuration by its game ID, orchestrator, and profile name.");
+                .Description("Describes a game configuration by its game ID, orchestrator.");
 
             descriptor.Field(i => i.GameID)
                 .Name("gameId")
                 .Type<NonNullType<UuidType>>();
 
             descriptor.Field(i => i.Orchestrator)
-                .Type<NonNullType<StringType>>();
-
-            descriptor.Field(i => i.ProfileName)
                 .Type<NonNullType<StringType>>();
         }
     }

@@ -5,6 +5,7 @@ using Snowflake.Installation;
 using Snowflake.Model.Game;
 using Snowflake.Orchestration.Saving;
 using Snowflake.Orchestration.SystemFiles;
+using System;
 using System.Collections.Generic;
 
 namespace Snowflake.Orchestration.Extensibility
@@ -48,7 +49,7 @@ namespace Snowflake.Orchestration.Extensibility
         /// </summary>
         /// <param name="game">The game to retrieve configuration profiles for.</param>
         /// <returns>A list of configuration profile names saved for this game.</returns>
-        IEnumerable<string> GetConfigurationProfiles(IGame game);
+        IEnumerable<(string profileName, Guid collectionGuid)> GetConfigurationProfiles(IGame game);
 
         /// <summary>
         /// Gets the inner-type erased generic <see cref="IConfigurationCollection"/> for this game, used
@@ -57,6 +58,14 @@ namespace Snowflake.Orchestration.Extensibility
         /// <param name="game">The game to retrieve configuration for.</param>
         /// <param name="profile">The configuration profile.</param>
         IConfigurationCollection? GetGameConfiguration(IGame game, string profile);
+
+        /// <summary>
+        /// Gets the inner-type erased generic <see cref="IConfigurationCollection"/> for this game, used
+        /// to configure the game for this orchestrator.
+        /// </summary>
+        /// <param name="collectionGuid">The value collection GUID of the target configuration.</param>
+        /// <param name="game">The game to retrieve configuration for.</param>
+        IConfigurationCollection? GetGameConfiguration(IGame game, Guid collectionGuid);
 
         /// <summary>
         /// Creates a new game configuration for this game, used to configure the game for this orchestrator,

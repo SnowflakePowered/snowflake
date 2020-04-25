@@ -112,6 +112,47 @@ namespace Snowflake.Model.Tests
         }
 
         [Fact]
+        public async Task GameLibraryIntegrationConfigGuid_Test()
+        {
+            var path = new DirectoryInfo(Path.GetTempPath())
+                .CreateSubdirectory(Path.GetFileNameWithoutExtension(Path.GetTempFileName()));
+            var fs = new PhysicalFileSystem();
+            var gfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(path.FullName));
+
+            var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
+            optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
+            var glib = new GameRecordLibrary(optionsBuilder);
+            var ccs = new ConfigurationCollectionStore(optionsBuilder);
+
+            var gl = new GameLibrary(glib);
+            gl.AddExtension<IGameConfigurationExtensionProvider, IGameConfigurationExtension>
+                (new GameConfigurationExtensionProvider(ccs));
+            var game = gl.CreateGame("NINTENDO_NES");
+
+            var profile = game.WithConfigurations()
+                .CreateNewProfile<ExampleConfigurationCollection>("TestConfiguration", "test");
+
+            Assert.NotNull(game.WithConfigurations()
+                .GetProfile<ExampleConfigurationCollection>("TestConfiguration", profile.ValueCollection.Guid));
+
+            Assert.NotEmpty(game.WithConfigurations().GetProfileNames());
+
+            profile.Configuration.ExampleConfiguration.FullscreenResolution =
+                Configuration.FullscreenResolution.Resolution1600X1050;
+            gl.WithConfigurationLibrary().UpdateProfile(profile);
+            var newProfile = game.WithConfigurations()
+                .GetProfile<ExampleConfigurationCollection>("TestConfiguration", profile.ValueCollection.Guid);
+            Assert.Equal(Configuration.FullscreenResolution.Resolution1600X1050,
+                newProfile.Configuration.ExampleConfiguration.FullscreenResolution);
+
+            Assert.ThrowsAny<Exception>(() => game.WithConfigurations()
+                .CreateNewProfile<ExampleConfigurationCollection>("TestConfiguration", "test"));
+
+            game.WithConfigurations().DeleteProfile("TestConfiguration", profile.ValueCollection.Guid);
+            Assert.Empty(game.WithConfigurations().GetProfileNames());
+        }
+
+        [Fact]
         public void GameLibraryUnknownExtension_Test()
         {
             var path = new DirectoryInfo(Path.GetTempPath())
@@ -216,6 +257,47 @@ namespace Snowflake.Model.Tests
                 .CreateNewProfileAsync<ExampleConfigurationCollection>("TestConfiguration", "test"));
 
             await game.WithConfigurations().DeleteProfileAsync("TestConfiguration", "test");
+            Assert.Empty(game.WithConfigurations().GetProfileNames());
+        }
+
+        [Fact]
+        public async Task GameLibraryIntegrationConfigAsyncGuid_Test()
+        {
+            var path = new DirectoryInfo(Path.GetTempPath())
+                .CreateSubdirectory(Path.GetFileNameWithoutExtension(Path.GetTempFileName()));
+            var fs = new PhysicalFileSystem();
+            var gfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(path.FullName));
+
+            var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
+            optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
+            var glib = new GameRecordLibrary(optionsBuilder);
+            var ccs = new ConfigurationCollectionStore(optionsBuilder);
+
+            var gl = new GameLibrary(glib);
+            gl.AddExtension<IGameConfigurationExtensionProvider, IGameConfigurationExtension>
+                (new GameConfigurationExtensionProvider(ccs));
+            var game = await gl.CreateGameAsync("NINTENDO_NES");
+
+            var profile = await game.WithConfigurations()
+                .CreateNewProfileAsync<ExampleConfigurationCollection>("TestConfiguration", "test");
+
+            Assert.NotNull(await game.WithConfigurations()
+                .GetProfileAsync<ExampleConfigurationCollection>("TestConfiguration", profile.CollectionGuid));
+
+            Assert.NotEmpty(game.WithConfigurations().GetProfileNames());
+
+            profile.Configuration.ExampleConfiguration.FullscreenResolution =
+                Configuration.FullscreenResolution.Resolution1600X1050;
+            await gl.WithConfigurationLibrary().UpdateProfileAsync(profile);
+            var newProfile = await game.WithConfigurations()
+                .GetProfileAsync<ExampleConfigurationCollection>("TestConfiguration", profile.CollectionGuid);
+            Assert.Equal(Configuration.FullscreenResolution.Resolution1600X1050,
+                newProfile.Configuration.ExampleConfiguration.FullscreenResolution);
+
+            await Assert.ThrowsAnyAsync<Exception>(async () => await game.WithConfigurations()
+                .CreateNewProfileAsync<ExampleConfigurationCollection>("TestConfiguration", "test"));
+
+            await game.WithConfigurations().DeleteProfileAsync("TestConfiguration", profile.CollectionGuid);
             Assert.Empty(game.WithConfigurations().GetProfileNames());
         }
 

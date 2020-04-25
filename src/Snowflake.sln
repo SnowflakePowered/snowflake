@@ -47,8 +47,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scraping", "Scraping", "{86
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Tooling.Taskrunner", "Snowflake.Tooling.Taskrunner\Snowflake.Tooling.Taskrunner.csproj", "{68750828-29F8-4CB4-AF7B-0F48305FA06D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1694A898-A257-4E2F-BCEF-FC8EBD109D22}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Support.Remoting.Electron.ThemeProvider", "Snowflake.Support.Remoting.Electron.ThemeProvider\Snowflake.Support.Remoting.Electron.ThemeProvider.csproj", "{FDA33F17-5D5F-4651-917A-19E6CD804AB2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Framework.Dependencies.Sdk", "Snowflake.Framework.Dependencies.Sdk\Snowflake.Framework.Dependencies.Sdk.csproj", "{C044AEDA-BE98-46A0-8357-EA06B7776C19}"

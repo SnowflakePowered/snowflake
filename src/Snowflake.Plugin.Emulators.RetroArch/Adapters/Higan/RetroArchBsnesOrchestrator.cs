@@ -50,14 +50,20 @@ namespace Snowflake.Adapters.Higan
                 .CreateNewProfile<HiganRetroArchConfiguration>(nameof(RetroArchBsnesOrchestrator), profile);
         }
 
-        public override IEnumerable<string> GetConfigurationProfiles(IGame game)
+        public override IEnumerable<(string, Guid)> GetConfigurationProfiles(IGame game)
         {
             return game.WithConfigurations().GetProfileNames()
                 .FirstOrDefault(g => g.Key == nameof(RetroArchBsnesOrchestrator))
-                ?? Enumerable.Empty<string>();
+                ?? Enumerable.Empty<(string, Guid)>();
         }
 
         public override IConfigurationCollection GetGameConfiguration(IGame game, string profile)
+        {
+            return game.WithConfigurations()
+                .GetProfile<HiganRetroArchConfiguration>(nameof(RetroArchBsnesOrchestrator), profile);
+        }
+
+        public override IConfigurationCollection GetGameConfiguration(IGame game, Guid profile)
         {
             return game.WithConfigurations()
                 .GetProfile<HiganRetroArchConfiguration>(nameof(RetroArchBsnesOrchestrator), profile);

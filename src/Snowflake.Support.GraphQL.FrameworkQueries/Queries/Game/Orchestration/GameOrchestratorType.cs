@@ -41,7 +41,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Queries.Game.Orchestration
                });
             descriptor.Field("configurationProfiles")
                .Description("The names of configuration profiles saved with this emulator.")
-               .Type<NonNullType<ListType<StringType>>>()
+               .Type<NonNullType<ListType<NonNullType<ConfigurationProfileType>>>>()
                .Resolver(ctx =>
                {
                    (IGame game, IEmulatorOrchestrator orchestrator) = ctx.Parent<(IGame, IEmulatorOrchestrator)>();
