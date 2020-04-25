@@ -72,8 +72,12 @@ namespace Snowflake.Adapters.Higan
             
             this.ProcessCancellationSource = new CancellationTokenSource();
             this.RunningProcess.EnableRaisingEvents = true;
-            
-            this.RunningProcess.Exited += (s, e) => this.ProcessCancellationSource.Cancel();
+
+            this.RunningProcess.Exited += (s, e) =>
+            {
+                this.ProcessCancellationSource.Cancel();
+            };
+
             return this.ProcessCancellationSource.Token;
         }
 
@@ -120,7 +124,8 @@ namespace Snowflake.Adapters.Higan
             if (this.RunningProcess == null) return;
             using var controller = new RetroArchNetworkController();
             await controller.Quit();
-            await this.RunningProcess.WaitForExitAsync(new CancellationTokenSource(500).Token);
+            using var timeout = new CancellationTokenSource(500);
+            await this.RunningProcess.WaitForExitAsync(timeout.Token);
             this.RunningProcess.Kill(true);
         }
     }
