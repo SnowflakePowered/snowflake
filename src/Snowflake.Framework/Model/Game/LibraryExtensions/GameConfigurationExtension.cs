@@ -27,7 +27,13 @@ namespace Snowflake.Model.Game.LibraryExtensions
                 .DeleteConfigurationForGame(this.GameRecord.RecordID, sourceName, profile);
         }
 
-        public IEnumerable<IGrouping<string, string>> GetProfileNames()
+        public void DeleteProfile(string sourceName, Guid profile)
+        {
+            this.ConfigurationStore
+                .DeleteConfigurationForGame(this.GameRecord.RecordID, sourceName, profile);
+        }
+
+        public IEnumerable<IGrouping<string, (string profileName, Guid collectionGuid)>> GetProfileNames()
         {
             return this.ConfigurationStore.GetProfileNames(this.GameRecord);
         }
@@ -52,6 +58,12 @@ namespace Snowflake.Model.Game.LibraryExtensions
                 .DeleteConfigurationForGameAsync(this.GameRecord.RecordID, sourceName, profile);
         }
 
+        public async Task DeleteProfileAsync(string sourceName, Guid profile)
+        {
+            await this.ConfigurationStore
+                .DeleteConfigurationForGameAsync(this.GameRecord.RecordID, sourceName, profile);
+        }
+
         public Task<IConfigurationCollection<T>> CreateNewProfileAsync<T>(string sourceName, string profile)
             where T : class, IConfigurationCollection<T>
         {
@@ -64,6 +76,18 @@ namespace Snowflake.Model.Game.LibraryExtensions
         {
             return this.ConfigurationStore
                 .GetConfigurationAsync<T>(this.GameRecord.RecordID, sourceName, profile);
+        }
+
+        public IConfigurationCollection<T>? GetProfile<T>(string sourceName, Guid collectionGuid)
+            where T : class, IConfigurationCollection<T>
+        {
+            return this.ConfigurationStore.GetConfiguration<T>(this.GameRecord.RecordID, sourceName, collectionGuid);
+        }
+
+        public Task<IConfigurationCollection<T>?> GetProfileAsync<T>(string sourceName, Guid collectionGuid)
+            where T : class, IConfigurationCollection<T>
+        {
+            return this.ConfigurationStore.GetConfigurationAsync<T>(this.GameRecord.RecordID, sourceName, collectionGuid);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Snowflake.Configuration.Attributes;
 
 namespace Snowflake.Configuration
@@ -45,5 +46,10 @@ namespace Snowflake.Configuration
         /// Gets the values backing this configuration collection.
         /// </summary>
         IConfigurationValueCollection ValueCollection { get; }
+
+        /// <summary>
+        /// The unique GUID of the collection is defined by its value collection GUID.
+        /// </summary>
+        Guid CollectionGuid => ValueCollection.Guid;
     }
 }

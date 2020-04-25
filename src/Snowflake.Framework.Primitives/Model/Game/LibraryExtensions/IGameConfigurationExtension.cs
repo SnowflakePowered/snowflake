@@ -52,7 +52,7 @@ namespace Snowflake.Model.Game.LibraryExtensions
         /// Gets all the names of profiles for this <see cref="IGame"/>, grouped by source.
         /// </summary>
         /// <returns>All the names of profiles for this <see cref="IGame"/>, grouped by source.</returns>
-        IEnumerable<IGrouping<string, string>> GetProfileNames();
+        IEnumerable<IGrouping<string, (string profileName, Guid collectionGuid)>> GetProfileNames();
 
         /// <summary>
         /// Gets the specific, registered configuration profile with the given <paramref name="sourceName"/>,
@@ -65,6 +65,16 @@ namespace Snowflake.Model.Game.LibraryExtensions
         IConfigurationCollection<T>? GetProfile<T>(string sourceName, string profile)
             where T : class, IConfigurationCollection<T>;
 
+        /// <summary>
+        /// Gets the specific, registered configuration profile with the given <paramref name="sourceName"/>,
+        /// <paramref name="collectionGuid"/>, and interprets the profile with the prototype <typeparamref name="T"/>
+        /// </summary>
+        /// <param name="sourceName">The source or creator of this profile.</param>
+        /// <param name="collectionGuid">The profile name.</param>
+        /// <typeparam name="T">The configuration prototype.</typeparam>
+        /// <returns>The previously added configuration profile. If this can not be found, throws an exception.</returns>
+        IConfigurationCollection<T>? GetProfile<T>(string sourceName, Guid collectionGuid)
+            where T : class, IConfigurationCollection<T>;
 
         /// <summary>
         /// Asychronously gets the specific, registered configuration profile with the given <paramref name="sourceName"/>,
@@ -76,6 +86,31 @@ namespace Snowflake.Model.Game.LibraryExtensions
         /// <returns>The previously added configuration profile. If this can not be found, throws an exception.</returns>
         Task<IConfigurationCollection<T>?> GetProfileAsync<T>(string sourceName, string profile)
             where T : class, IConfigurationCollection<T>;
+
+        /// <summary>
+        /// Asychronously gets the specific, registered configuration profile with the given <paramref name="sourceName"/>,
+        /// <paramref name="collectionGuid"/>, and interprets the profile with the prototype <typeparamref name="T"/>
+        /// </summary>
+        /// <param name="sourceName">The source or creator of this profile.</param>
+        /// <param name="collectionGuid">The profile name.</param>
+        /// <typeparam name="T">The configuration prototype.</typeparam>
+        /// <returns>The previously added configuration profile. If this can not be found, throws an exception.</returns>
+        Task<IConfigurationCollection<T>?> GetProfileAsync<T>(string sourceName, Guid collectionGuid)
+            where T : class, IConfigurationCollection<T>;
+
+        /// <summary>
+        /// Deletes the profile with the given source name and profile.
+        /// </summary>
+        /// <param name="sourceName">The source name or name of creator of the profile.</param>
+        /// <param name="collectionGuid">The collection GUID of the profile.</param>
+        void DeleteProfile(string sourceName, Guid collectionGuid);
+
+        /// <summary>
+        /// Asynchronously deletes the profile with the given source name and profile.
+        /// </summary>
+        /// <param name="sourceName">The source name or name of creator of the profile.</param>
+        /// <param name="collectionGuid">The collection GUID of the profile.</param>
+        Task DeleteProfileAsync(string sourceName, Guid collectionGuid);
 
         /// <summary>
         /// Deletes the profile with the given source name and profile.

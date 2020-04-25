@@ -67,9 +67,9 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Configuration
                             throw new ArgumentException("The specified orchestrator was not found.");
                         if (game == null)
                             throw new ArgumentException("The specified game was not found.");
-                        config = orchestrator.GetGameConfiguration(game, input.Retrieval.ProfileName);
-                        if (config?.ValueCollection?.Guid != input.CollectionID)
-                            throw new ArgumentException("The specified retrieval and collectionId do not match.");
+                        config = orchestrator.GetGameConfiguration(game, input.CollectionID);
+                        if (config == null)
+                            throw new ArgumentException("The specified collectionId was not found in the configuration set for the specified orchestrator.");
                     }
 
                     await configStore.DeleteProfileAsync(input.CollectionID);

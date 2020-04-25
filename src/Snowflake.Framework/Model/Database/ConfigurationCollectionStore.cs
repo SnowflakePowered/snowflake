@@ -23,7 +23,7 @@ namespace Snowflake.Model.Database
             context.Database.Migrate();
         }
 
-        public IEnumerable<IGrouping<string, string>>
+        public IEnumerable<IGrouping<string, (string profileName, Guid collectionGuid)>>
             GetProfileNames(IGameRecord gameRecord)
         {
             using var context = new DatabaseContext(this.Options.Options);
@@ -31,8 +31,8 @@ namespace Snowflake.Model.Database
                 .Include(g => g.ConfigurationProfiles)
                 .SingleOrDefault(g => g.RecordID == gameRecord.RecordID)?
                 .ConfigurationProfiles
-                .GroupBy(p => p.ConfigurationSource, p => p.ProfileName) ??
-                Enumerable.Empty<IGrouping<string, string>>();
+                .GroupBy(p => p.ConfigurationSource, p => (p.ProfileName, p.ProfileID)) ??
+                Enumerable.Empty<IGrouping<string, (string, Guid)>>();
         }
 
         public IConfigurationCollection<T> CreateConfiguration<T>(string sourceName)
@@ -95,6 +95,22 @@ namespace Snowflake.Model.Database
                 .SingleOrDefault(g => g.GameID == gameGuid
                                       && g.ConfigurationSource == sourceName
                                       && g.ProfileName == profileName);
+            if (profileJunction == null) return;
+
+            context.Entry(profileJunction).State = EntityState.Deleted;
+            context.Entry(profileJunction.Profile).State = EntityState.Deleted;
+
+            context.SaveChanges();
+        }
+
+        public void DeleteConfigurationForGame(Guid gameGuid, string sourceName, Guid collectionGuid)
+        {
+            using var context = new DatabaseContext(this.Options.Options);
+            var profileJunction = context.GameRecordsConfigurationProfiles
+                .Include(p => p.Profile)
+                .SingleOrDefault(g => g.GameID == gameGuid
+                                      && g.ConfigurationSource == sourceName
+                                      && g.ProfileID == collectionGuid);
             if (profileJunction == null) return;
 
             context.Entry(profileJunction).State = EntityState.Deleted;
@@ -169,6 +185,25 @@ namespace Snowflake.Model.Database
                 .SingleOrDefault(g => g.GameID == gameGuid
                                       && g.ConfigurationSource == sourceName
                                       && g.ProfileName == profileName);
+            if (profileJunction == null) return null;
+
+            var profile = context.ConfigurationProfiles
+                .SingleOrDefault(s => s.ValueCollectionGuid == profileJunction.ProfileID);
+
+            return profile?.AsConfiguration<T>();
+        }
+
+        public IConfigurationCollection<T>? GetConfiguration<T>(Guid gameGuid,
+            string sourceName, Guid valueCollectionGuid)
+            where T : class, IConfigurationCollection<T>
+        {
+            using var context = new DatabaseContext(this.Options.Options);
+            var profileJunction = context.GameRecordsConfigurationProfiles
+                .Include(g => g.Profile)
+                .ThenInclude(g => g.Values)
+                .SingleOrDefault(g => g.GameID == gameGuid
+                                      && g.ConfigurationSource == sourceName
+                                      && g.ProfileID == valueCollectionGuid);
             if (profileJunction == null) return null;
 
             var profile = context.ConfigurationProfiles
