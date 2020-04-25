@@ -32,31 +32,6 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
             this.Ports = ports;
         }
       
-        public async Task<Guid> CreateGameEmulationInstance(string orchestratorName, string configurationProfile, 
-            Guid gameGuid, Guid saveGuid, bool verify = false)
-        {
-            var orchestrator = this.Orchestrators[orchestratorName];
-            var game = await this.GameLibrary.GetGameAsync(gameGuid);
-            var platform = this.Stone.Platforms[game.Record.PlatformID];
-            var controllers = (from i in Enumerable.Range(0, platform.MaximumInputs)
-                               select this.Ports.GetControllerAtPort(orchestrator, platform.PlatformID, i)).ToList();
-            if (orchestrator.CheckMissingSystemFiles(game).Any())
-            {
-                throw new InvalidOperationException($"Game {gameGuid} is missing BIOS prerequesites!");
-            }
-            if (verify)
-            {
-                await foreach (var x in orchestrator.ValidateGamePrerequisites(game)) ;
-            }
-
-            var save = game.WithFiles().WithSaves().GetProfile(saveGuid);
-            if (save == null) throw new KeyNotFoundException($"Unable to find save profile with GUID {saveGuid}");
-            var instance = orchestrator.ProvisionEmulationInstance(game, controllers, configurationProfile, save);
-            var guid = Guid.NewGuid();
-            if (this.GameEmulationCache.TryAdd(guid, instance)) return guid;
-            throw new InvalidOperationException("Unable to cache the created game emulation instance!");
-        }
-
         public async Task<Guid> PrepareGameEmulation(Guid emulationHandle)
         {
             if (!this.GameEmulationCache.TryGetValue(emulationHandle, out IGameEmulation emulation))
