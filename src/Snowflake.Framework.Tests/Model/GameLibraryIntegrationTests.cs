@@ -106,9 +106,6 @@ namespace Snowflake.Model.Tests
             Assert.Equal(Configuration.FullscreenResolution.Resolution1600X1050,
                 newProfile.Configuration.ExampleConfiguration.FullscreenResolution);
 
-            Assert.ThrowsAny<Exception>(() => game.WithConfigurations()
-                .CreateNewProfile<ExampleConfigurationCollection>("TestConfiguration", "test"));
-
             game.WithConfigurations().DeleteProfile("TestConfiguration", profileGuid);
             Assert.Empty(game.WithConfigurations().GetProfileNames());
         }
@@ -146,9 +143,6 @@ namespace Snowflake.Model.Tests
                 .GetProfile<ExampleConfigurationCollection>("TestConfiguration", profile.ValueCollection.Guid);
             Assert.Equal(Configuration.FullscreenResolution.Resolution1600X1050,
                 newProfile.Configuration.ExampleConfiguration.FullscreenResolution);
-
-            Assert.ThrowsAny<Exception>(() => game.WithConfigurations()
-                .CreateNewProfile<ExampleConfigurationCollection>("TestConfiguration", "test"));
 
             game.WithConfigurations().DeleteProfile("TestConfiguration", profile.ValueCollection.Guid);
             Assert.Empty(game.WithConfigurations().GetProfileNames());
@@ -256,9 +250,6 @@ namespace Snowflake.Model.Tests
             Assert.Equal(Configuration.FullscreenResolution.Resolution1600X1050,
                 newProfile.Configuration.ExampleConfiguration.FullscreenResolution);
 
-            await Assert.ThrowsAnyAsync<Exception>(async () => await game.WithConfigurations()
-                .CreateNewProfileAsync<ExampleConfigurationCollection>("TestConfiguration", "test"));
-
             await game.WithConfigurations().DeleteProfileAsync("TestConfiguration", profileGuid);
             Assert.Empty(game.WithConfigurations().GetProfileNames());
         }
@@ -296,9 +287,6 @@ namespace Snowflake.Model.Tests
                 .GetProfileAsync<ExampleConfigurationCollection>("TestConfiguration", profile.CollectionGuid);
             Assert.Equal(Configuration.FullscreenResolution.Resolution1600X1050,
                 newProfile.Configuration.ExampleConfiguration.FullscreenResolution);
-
-            await Assert.ThrowsAnyAsync<Exception>(async () => await game.WithConfigurations()
-                .CreateNewProfileAsync<ExampleConfigurationCollection>("TestConfiguration", "test"));
 
             await game.WithConfigurations().DeleteProfileAsync("TestConfiguration", profile.CollectionGuid);
             Assert.Empty(game.WithConfigurations().GetProfileNames());

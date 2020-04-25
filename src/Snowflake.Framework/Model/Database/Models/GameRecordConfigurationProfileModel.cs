@@ -40,7 +40,7 @@ namespace Snowflake.Model.Database.Models
             modelBuilder.Entity<GameRecordConfigurationProfileModel>()
                 .HasKey(k => new
                 {
-                    k.ProfileName, k.GameID,
+                    k.ProfileID, k.GameID,
                     k.ConfigurationSource
                 });
         }

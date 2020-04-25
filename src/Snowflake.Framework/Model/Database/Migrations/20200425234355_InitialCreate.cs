@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Snowflake.Migrations
+namespace Snowflake.Model.Database.Migrations
 {
     public partial class InitialCreate : Migration
     {
@@ -114,14 +114,14 @@ namespace Snowflake.Migrations
                 name: "GameRecordsConfigurationProfiles",
                 columns: table => new
                 {
+                    ProfileID = table.Column<Guid>(nullable: false),
                     GameID = table.Column<Guid>(nullable: false),
-                    ProfileName = table.Column<string>(nullable: false),
                     ConfigurationSource = table.Column<string>(nullable: false),
-                    ProfileID = table.Column<Guid>(nullable: false)
+                    ProfileName = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GameRecordsConfigurationProfiles", x => new { x.ProfileName, x.GameID, x.ConfigurationSource });
+                    table.PrimaryKey("PK_GameRecordsConfigurationProfiles", x => new { x.ProfileID, x.GameID, x.ConfigurationSource });
                     table.ForeignKey(
                         name: "FK_GameRecordsConfigurationProfiles_Records_GameID",
                         column: x => x.GameID,

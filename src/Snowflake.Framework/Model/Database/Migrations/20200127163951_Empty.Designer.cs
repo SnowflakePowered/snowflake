@@ -2,19 +2,21 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Snowflake.Model.Database.Models;
 
 namespace Snowflake.Model.Database.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20200127163951_Empty")]
+    partial class Empty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.3");
+                .HasAnnotation("ProductVersion", "3.1.0");
 
             modelBuilder.Entity("Snowflake.Model.Database.Models.ConfigurationProfileModel", b =>
                 {
@@ -58,7 +60,7 @@ namespace Snowflake.Model.Database.Migrations
                     b.ToTable("ConfigurationValues");
                 });
 
-            modelBuilder.Entity("Snowflake.Model.Database.Models.ControllerElementMappingCollectionModel", b =>
+            modelBuilder.Entity("Snowflake.Model.Database.Models.ControllerElementMappingsModel", b =>
                 {
                     b.Property<string>("ControllerID")
                         .HasColumnType("TEXT");
@@ -80,7 +82,31 @@ namespace Snowflake.Model.Database.Migrations
                     b.ToTable("ControllerElementMappings");
                 });
 
-            modelBuilder.Entity("Snowflake.Model.Database.Models.ControllerElementMappingModel", b =>
+            modelBuilder.Entity("Snowflake.Model.Database.Models.GameRecordConfigurationProfileModel", b =>
+                {
+                    b.Property<string>("ProfileName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("GameID")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ConfigurationSource")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("ProfileID")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("ProfileName", "GameID", "ConfigurationSource");
+
+                    b.HasIndex("GameID");
+
+                    b.HasIndex("ProfileID")
+                        .IsUnique();
+
+                    b.ToTable("GameRecordsConfigurationProfiles");
+                });
+
+            modelBuilder.Entity("Snowflake.Model.Database.Models.MappedControllerElementModel", b =>
                 {
                     b.Property<string>("ControllerID")
                         .HasColumnType("TEXT");
@@ -109,31 +135,6 @@ namespace Snowflake.Model.Database.Migrations
                     b.HasIndex("ControllerID", "DriverType", "DeviceName", "VendorID", "ProfileName");
 
                     b.ToTable("MappedControllerElements");
-                });
-
-            modelBuilder.Entity("Snowflake.Model.Database.Models.GameRecordConfigurationProfileModel", b =>
-                {
-                    b.Property<Guid>("ProfileID")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("GameID")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("ConfigurationSource")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("ProfileName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("ProfileID", "GameID", "ConfigurationSource");
-
-                    b.HasIndex("GameID");
-
-                    b.HasIndex("ProfileID")
-                        .IsUnique();
-
-                    b.ToTable("GameRecordsConfigurationProfiles");
                 });
 
             modelBuilder.Entity("Snowflake.Model.Database.Models.PortDeviceEntryModel", b =>
@@ -242,15 +243,6 @@ namespace Snowflake.Model.Database.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Snowflake.Model.Database.Models.ControllerElementMappingModel", b =>
-                {
-                    b.HasOne("Snowflake.Model.Database.Models.ControllerElementMappingCollectionModel", "Collection")
-                        .WithMany("MappedElements")
-                        .HasForeignKey("ControllerID", "DriverType", "DeviceName", "VendorID", "ProfileName")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Snowflake.Model.Database.Models.GameRecordConfigurationProfileModel", b =>
                 {
                     b.HasOne("Snowflake.Model.Database.Models.GameRecordModel", "Game")
@@ -262,6 +254,15 @@ namespace Snowflake.Model.Database.Migrations
                     b.HasOne("Snowflake.Model.Database.Models.ConfigurationProfileModel", "Profile")
                         .WithOne()
                         .HasForeignKey("Snowflake.Model.Database.Models.GameRecordConfigurationProfileModel", "ProfileID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Snowflake.Model.Database.Models.MappedControllerElementModel", b =>
+                {
+                    b.HasOne("Snowflake.Model.Database.Models.ControllerElementMappingsModel", "Collection")
+                        .WithMany("MappedElements")
+                        .HasForeignKey("ControllerID", "DriverType", "DeviceName", "VendorID", "ProfileName")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
