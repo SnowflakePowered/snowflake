@@ -71,6 +71,7 @@ namespace Snowflake.Extensibility.Queueing
             public async ValueTask DisposeAsync()
             {
                 await this.Queue.GetEnumerator(this.JobId).DisposeAsync();
+                this.Queue.GetCancellationTokenSource(this.JobId)?.Dispose();
             }
 
             public async ValueTask<bool> MoveNextAsync()
@@ -107,6 +108,13 @@ namespace Snowflake.Extensibility.Queueing
             return value.enumerator;
         }
 
+        private CancellationTokenSource? GetCancellationTokenSource(Guid jobId)
+        {
+            var exists = this.Enumerators.TryGetValue(jobId, out (CancellationTokenSource cts,
+                ConfiguredCancelableAsyncEnumerable<T>.Enumerator enumerator) value);
+            if (!exists) return null;
+            return value.cts;
+        }
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         /// <summary>
         /// The empty enumerator.
@@ -134,6 +142,7 @@ namespace Snowflake.Extensibility.Queueing
                     finally
                     {
                         await enumerator.DisposeAsync();
+                        this.GetCancellationTokenSource(jobId)?.Dispose();
                     }
 
                     this.Enumerators.Remove(jobId);
@@ -169,9 +178,11 @@ namespace Snowflake.Extensibility.Queueing
         /// <inheritdoc />
         public async ValueTask<Guid> QueueJob(TAsyncEnumerable asyncEnumerable, Guid guid)
         {
-            if (this.Enumerators.TryGetValue(guid, out (CancellationTokenSource, ConfiguredCancelableAsyncEnumerable<T>.Enumerator enumerator) old))
+            if (this.Enumerators.TryGetValue(guid, out (CancellationTokenSource cancel, ConfiguredCancelableAsyncEnumerable<T>.Enumerator enumerator) old))
             {
                 await old.enumerator.DisposeAsync();
+                old.cancel.Dispose();
+
                 this.Enumerators.Remove(guid);
             }
 
