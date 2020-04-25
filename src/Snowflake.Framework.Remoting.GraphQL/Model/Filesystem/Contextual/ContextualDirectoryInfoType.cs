@@ -20,15 +20,15 @@ namespace Snowflake.Remoting.GraphQL.Model.Filesystem.Contextual
             descriptor.Field("lastModifiedTime")
                 .Description("The last modified time of the directory, in UTC.")
                 .Type<NonNullType<DateTimeType>>()
-                .Resolver(context => context.Parent<IReadOnlyDirectory>().UnsafeGetPath().LastWriteTimeUtc);
+                .Resolver(context => context.Parent<IReadOnlyDirectory>().UnsafeGetPath().LastWriteTimeUtc); // lgtm [cs/call-to-obsolete-method]
             descriptor.Field("createdTime")
                 .Description("The creation time of the directory, in UTC.")
                 .Type<NonNullType<DateTimeType>>()
-                .Resolver(context => context.Parent<IReadOnlyDirectory>().UnsafeGetPath().CreationTimeUtc);
+                .Resolver(context => context.Parent<IReadOnlyDirectory>().UnsafeGetPath().CreationTimeUtc); // lgtm [cs/call-to-obsolete-method]
             descriptor.Field("osPath")
                 .Description("The path of the file on the realized operating system.")
                 .Type<NonNullType<OSDirectoryPathType>>()
-                .Resolver(context => context.Parent<IReadOnlyDirectory>().UnsafeGetPath());
+                .Resolver(context => context.Parent<IReadOnlyDirectory>().UnsafeGetPath()); // lgtm [cs/call-to-obsolete-method]
             descriptor.Field("path")
                 .Description("The path of this directory relative to the context of the virtualized filesystem.")
                 .Type<NonNullType<DirectoryPathType>>()
