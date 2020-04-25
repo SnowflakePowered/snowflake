@@ -72,20 +72,20 @@ namespace Snowflake.Orchestration.Extensibility
         /// returning the inner-type erased generic  <see cref="IConfigurationCollection"/> for this game.
         /// </summary>
         /// <param name="game">The game to retrieve configuration for.</param>
-        /// <param name="profile">The configuration profile.</param>
-        IConfigurationCollection CreateGameConfiguration(IGame game, string profile);
+        /// <param name="profileName">The profile name of the new configuration collection.</param>
+        IConfigurationCollection CreateGameConfiguration(IGame game, string profileName);
 
         /// <summary>
         /// Provision the emulation instance to run the game.
         /// </summary>
         /// <param name="game">The game to be run.</param>
         /// <param name="controllerPorts">The input devices to be used during the emulation.</param>
-        /// <param name="configurationProfileName">The name of the configuration profile used in this emulation.</param>
+        /// <param name="configurationProfile">The collection GUID of the configuration profile.</param>
         /// <param name="saveProfile">The save profile to manage savedata with.</param>
         /// <returns>An emulator specific <see cref="IGameEmulation"/> instance that can be used to begin the emulation.</returns>
         IGameEmulation ProvisionEmulationInstance(IGame game, 
             IEnumerable<IEmulatedController> controllerPorts,
-            string configurationProfileName,
+            Guid configurationProfile,
             ISaveProfile saveProfile);
     }
 }

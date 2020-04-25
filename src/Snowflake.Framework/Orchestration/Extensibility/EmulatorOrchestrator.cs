@@ -38,7 +38,7 @@ namespace Snowflake.Orchestration.Extensibility
 
         public abstract IGameEmulation ProvisionEmulationInstance(IGame game,
             IEnumerable<IEmulatedController> controllerPorts,
-            string configurationProfileName,
+            Guid configurationProfileGuid,
             ISaveProfile saveProfile);
 
         public abstract IConfigurationCollection GetGameConfiguration(IGame game, string profile);
