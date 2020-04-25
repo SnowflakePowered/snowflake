@@ -67,22 +67,6 @@ namespace Snowflake.Model.Database
             await context.SaveChangesAsync();
         }
 
-        public async Task DeleteConfigurationForGameAsync(Guid gameGuid, string sourceName, string profileName)
-        {
-            await using var context = new DatabaseContext(this.Options.Options);
-            var profileJunction = await context.GameRecordsConfigurationProfiles
-                .Include(p => p.Profile)
-                .SingleOrDefaultAsync(g => g.GameID == gameGuid
-                                      && g.ConfigurationSource == sourceName
-                                      && g.ProfileName == profileName);
-            if (profileJunction == null) return;
-
-            context.Entry(profileJunction).State = EntityState.Deleted;
-            context.Entry(profileJunction.Profile).State = EntityState.Deleted;
-
-            await context.SaveChangesAsync();
-        }
-
         public async Task DeleteConfigurationForGameAsync(Guid gameGuid, string sourceName, Guid collectionGuid)
         {
             await using var context = new DatabaseContext(this.Options.Options);
@@ -150,25 +134,6 @@ namespace Snowflake.Model.Database
                 .Include(c => c.Values)
                 .SingleOrDefaultAsync(c => c.ValueCollectionGuid == valueCollectionGuid);
             return config?.AsConfiguration<T>();
-        }
-
-        public async Task<IConfigurationCollection<T>?> GetConfigurationAsync<T>(Guid gameGuid,
-            string sourceName, string profileName)
-            where T : class, IConfigurationCollection<T>
-        {
-            await using var context = new DatabaseContext(this.Options.Options);
-            var profileJunction = await context.GameRecordsConfigurationProfiles
-                .Include(g => g.Profile)
-                .ThenInclude(g => g.Values)
-                .SingleOrDefaultAsync(g => g.GameID == gameGuid
-                                      && g.ConfigurationSource == sourceName
-                                      && g.ProfileName == profileName);
-            if (profileJunction == null) return null;
-
-            var profile = await context.ConfigurationProfiles
-                .SingleOrDefaultAsync(s => s.ValueCollectionGuid == profileJunction.ProfileID);
-
-            return profile?.AsConfiguration<T>();
         }
 
         public async Task<IConfigurationCollection<T>?> GetConfigurationAsync<T>(Guid gameGuid,

@@ -91,8 +91,10 @@ namespace Snowflake.Model.Tests
             var profile = game.WithConfigurations()
                 .CreateNewProfile<ExampleConfigurationCollection>("TestConfiguration", "test");
 
+            var profileGuid = profile.CollectionGuid;
+
             Assert.NotNull(game.WithConfigurations()
-                .GetProfile<ExampleConfigurationCollection>("TestConfiguration", "test"));
+                .GetProfile<ExampleConfigurationCollection>("TestConfiguration", profileGuid));
 
             Assert.NotEmpty(game.WithConfigurations().GetProfileNames());
 
@@ -100,14 +102,14 @@ namespace Snowflake.Model.Tests
                 Configuration.FullscreenResolution.Resolution1600X1050;
             gl.WithConfigurationLibrary().UpdateProfile(profile);
             var newProfile = game.WithConfigurations()
-                .GetProfile<ExampleConfigurationCollection>("TestConfiguration", "test");
+                .GetProfile<ExampleConfigurationCollection>("TestConfiguration", profileGuid);
             Assert.Equal(Configuration.FullscreenResolution.Resolution1600X1050,
                 newProfile.Configuration.ExampleConfiguration.FullscreenResolution);
 
             Assert.ThrowsAny<Exception>(() => game.WithConfigurations()
                 .CreateNewProfile<ExampleConfigurationCollection>("TestConfiguration", "test"));
 
-            game.WithConfigurations().DeleteProfile("TestConfiguration", "test");
+            game.WithConfigurations().DeleteProfile("TestConfiguration", profileGuid);
             Assert.Empty(game.WithConfigurations().GetProfileNames());
         }
 
@@ -239,9 +241,10 @@ namespace Snowflake.Model.Tests
 
             var profile = await game.WithConfigurations()
                 .CreateNewProfileAsync<ExampleConfigurationCollection>("TestConfiguration", "test");
+            var profileGuid = profile.CollectionGuid;
 
             Assert.NotNull(await game.WithConfigurations()
-                .GetProfileAsync<ExampleConfigurationCollection>("TestConfiguration", "test"));
+                .GetProfileAsync<ExampleConfigurationCollection>("TestConfiguration", profileGuid));
 
             Assert.NotEmpty(game.WithConfigurations().GetProfileNames());
 
@@ -249,14 +252,14 @@ namespace Snowflake.Model.Tests
                 Configuration.FullscreenResolution.Resolution1600X1050;
             await gl.WithConfigurationLibrary().UpdateProfileAsync(profile);
             var newProfile = await game.WithConfigurations()
-                .GetProfileAsync<ExampleConfigurationCollection>("TestConfiguration", "test");
+                .GetProfileAsync<ExampleConfigurationCollection>("TestConfiguration", profileGuid);
             Assert.Equal(Configuration.FullscreenResolution.Resolution1600X1050,
                 newProfile.Configuration.ExampleConfiguration.FullscreenResolution);
 
             await Assert.ThrowsAnyAsync<Exception>(async () => await game.WithConfigurations()
                 .CreateNewProfileAsync<ExampleConfigurationCollection>("TestConfiguration", "test"));
 
-            await game.WithConfigurations().DeleteProfileAsync("TestConfiguration", "test");
+            await game.WithConfigurations().DeleteProfileAsync("TestConfiguration", profileGuid);
             Assert.Empty(game.WithConfigurations().GetProfileNames());
         }
 
