@@ -12,9 +12,8 @@ using Xunit;
 using Zio;
 using Zio.FileSystems;
 using FS = Snowflake.Filesystem;
-using Snowflake.Extensibility.Queueing;
 
-namespace Snowflake.Remoting.Tests
+namespace Snowflake.Extensibility.Queueing.Tests
 {
     public class AsyncJobQueueCopyFileTaskIntegrationTests
     {

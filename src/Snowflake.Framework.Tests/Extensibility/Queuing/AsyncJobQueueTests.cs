@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Snowflake.Remoting.Tests
+namespace Snowflake.Extensibility.Queueing.Tests
 {
     public class AsyncJobQueueTests
     {
