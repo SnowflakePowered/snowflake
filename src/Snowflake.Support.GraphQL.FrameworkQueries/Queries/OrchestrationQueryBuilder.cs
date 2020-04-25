@@ -32,22 +32,6 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries
             this.Ports = ports;
         }
       
-        public ISaveProfile CreateSaveProfile(Guid gameGuid, string saveProfileName, string saveType, SaveManagementStrategy strategy)
-        {
-            var game = this.GameLibrary.GetGame(gameGuid);
-            return game.WithFiles().WithSaves().CreateProfile(saveProfileName, saveType, strategy);
-        }
-
-        public ISaveProfile DeleteSaveProfile(Guid gameGuid, Guid profileGuid)
-        { 
-            var game = this.GameLibrary.GetGame(gameGuid);
-            var saves = game.WithFiles().WithSaves();
-            var profile = saves.GetProfile(profileGuid);
-            if (profile != null) saves.DeleteProfile(profile.Guid);
-
-            return profile;
-        }
-
         public async Task<Guid> CreateGameEmulationInstance(string orchestratorName, string configurationProfile, 
             Guid gameGuid, Guid saveGuid, bool verify = false)
         {
