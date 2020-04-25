@@ -34,6 +34,7 @@ using System;
 using Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Installation;
 using Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Input;
 using Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Configuration;
+using Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Saving;
 
 namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
 {
@@ -96,6 +97,8 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
 
             hotChocolate.AddObjectTypeExtension<InputMutations>();
             hotChocolate.AddObjectTypeExtension<ConfigurationMutations>();
+
+            hotChocolate.AddObjectTypeExtension<SavingMutations>();
 
             hotChocolate.ConfigureSchema(schema =>
             {
