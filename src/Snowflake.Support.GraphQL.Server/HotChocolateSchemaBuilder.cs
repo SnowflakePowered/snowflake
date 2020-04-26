@@ -126,10 +126,14 @@ namespace Snowflake.Support.GraphQL.Server
                 .AddObjectType<SeedContentType>()
                 .AddObjectType<SeedRootContextType>()
                 .AddObjectType<SeedType>();
-            _ = this.Schemas
+            this.Schemas
               .AddInterfaceType<JobQueueInterface>()
               .AddInterfaceType<QueuableJobInterface>();
 
+            this.Schemas
+                .AddObjectType<EmulatedControllerType>()
+                .AddObjectType<EmulatedPortDeviceEntryType>()
+                .AddObjectType<GameEmulationType>();
 
             var schemaBuilder = SchemaBuilder.New()
                 .EnableRelaySupport()

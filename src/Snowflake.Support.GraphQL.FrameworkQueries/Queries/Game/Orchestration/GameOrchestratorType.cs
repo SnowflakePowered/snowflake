@@ -8,6 +8,14 @@ using Snowflake.Orchestration.Extensibility;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using HotChocolate;
+using Snowflake.Remoting.GraphQL;
+using System.Linq;
+using Snowflake.Input.Controller.Mapped;
+using Snowflake.Services;
+using System.Threading.Tasks;
+using Snowflake.Orchestration.Extensibility.Extensions;
+using Snowflake.Input.Device;
 
 namespace Snowflake.Support.GraphQL.FrameworkQueries.Queries.Game.Orchestration
 {
@@ -57,6 +65,32 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Queries.Game.Orchestration
                     Guid configProfile = ctx.Argument<Guid>("collectionId");
                     return orchestrator.GetGameConfiguration(game, configProfile);
                 });
+            descriptor.Field("ports")
+                .Description("Retrieves the emulated ports of this orchestrator for the platform of the game.")
+                .Argument("portIndex", arg => arg
+                    .Description("The port index to retrieve, if retrieving a specific port.")
+                    .Type<IntType>())
+                .Resolver(ctx =>
+                {
+                    (IGame game, IEmulatorOrchestrator orchestrator) = ctx.Parent<(IGame, IEmulatorOrchestrator)>();
+                    var portStore = ctx.SnowflakeService<IEmulatedPortStore>();
+                    var inputConfig = ctx.SnowflakeService<IControllerElementMappingProfileStore>();
+                    var devices = ctx.SnowflakeService<IDeviceEnumerator>();
+                    var stone = ctx.SnowflakeService<IStoneProvider>();
+                    var arg = ctx.Argument<Optional<int>>("portIndex");
+                    IEnumerable<IEmulatedPortDeviceEntry> deviceEntries;
+                    if (arg.HasValue)
+                    {
+                        var port = portStore.GetPort(orchestrator, game.Record.PlatformID, arg.Value);
+                        deviceEntries = port != null ? new[] { port } : Enumerable.Empty<IEmulatedPortDeviceEntry>();
+                    }
+                    else
+                    {
+                        deviceEntries = portStore.EnumeratePorts(orchestrator, game.Record.PlatformID);
+                    }
+                    return deviceEntries;
+                })
+                .Type<NonNullType<ListType<NonNullType<ConnectedEmulatedControllerType>>>>();
         }
     }
 }
