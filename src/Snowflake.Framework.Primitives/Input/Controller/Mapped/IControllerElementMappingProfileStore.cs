@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Snowflake.Input.Controller.Mapped;
@@ -48,24 +49,14 @@ namespace Snowflake.Input.Controller.Mapped
         /// <summary>
         /// Deletes the mapping profile from the provided controller ID to device ID.
         /// </summary>
-        /// <param name="controllerId">The Stone controller ID that maps to the real device.</param>
-        /// <param name="driverType">The driver for which the mapping is for.</param>
-        /// <param name="deviceName">The name of the device.</param>
-        /// <param name="vendorId">The vendor ID of the device.</param>
-        /// <param name="profileName">The name of the mapping profile.</param>
-        void DeleteMappings(ControllerId controllerId, InputDriver driverType,
-            string deviceName, int vendorId, string profileName);
+        /// <param name="profileGuid">The [rofile GUID of the mapping profile.</param>
+        void DeleteMappings(Guid profileGuid);
 
         /// <summary>
         /// Asynchronously deletes the mapping profile from the provided controller ID to device ID.
         /// </summary>
-        /// <param name="controllerId">The Stone controller ID that maps to the real device.</param>
-        /// <param name="driverType">The driver for which the mapping is for.</param>
-        /// <param name="deviceName">The name of the device.</param>
-        /// <param name="vendorId">The vendor ID of the device.</param>
-        /// <param name="profileName">The name of the mapping profile.</param>
-        Task DeleteMappingsAsync(ControllerId controllerId, InputDriver driverType,
-            string deviceName, int vendorId, string profileName);
+        /// <param name="profileGuid">The [rofile GUID of the mapping profile.</param>
+        Task DeleteMappingsAsync(Guid profileGuid);
 
         /// <summary>
         /// Gets the profile names of all saved mappings from the provided controller ID to device ID.
@@ -75,44 +66,35 @@ namespace Snowflake.Input.Controller.Mapped
         /// <param name="deviceName">The device ID that maps from the spec controller.</param>
         /// <param name="vendorId">The vendor ID of the device.</param>
         /// <returns>All saved mappings from the provided controller ID to device ID.</returns>
-        IEnumerable<string> GetProfileNames(ControllerId controllerId, InputDriver driverType, string deviceName, int vendorId);
+        IEnumerable<(string profileName, Guid profileGuid)> GetProfileNames(ControllerId controllerId, InputDriver driverType, string deviceName, int vendorId);
 
         /// <summary>
         /// Gets the saved mapping profile from the provided controller ID to device ID.
         /// </summary>
-        /// <param name="controllerId">The Stone controller ID that maps to the real device.</param>
-        /// <param name="driverType">The driver for which the mapping is for.</param>
-        /// <param name="deviceName">The device ID that maps from the spec controller.</param>
-        /// <param name="vendorId">The vendor ID of the device.</param>
-        /// <param name="profileName">The name of the mapping profile.</param>
+        /// <param name="profileGuid">The [rofile GUID of the mapping profile.</param>
         /// <returns>The saved mapping profile from the provided controller ID to device ID.</returns>
-        IControllerElementMappingProfile? GetMappings(ControllerId controllerId, InputDriver driverType, 
-            string deviceName, int vendorId, string profileName);
+        IControllerElementMappingProfile? GetMappings(Guid profileGuid);
 
         /// <summary>
         /// Asynchronously gets the saved mapping profile from the provided controller ID to device ID.
         /// </summary>
-        /// <param name="controllerId">The Stone controller ID that maps to the real device.</param>
-        /// <param name="driverType">The driver for which the mapping is for.</param>
-        /// <param name="deviceName">The device ID that maps from the spec controller.</param>
-        /// <param name="vendorId">The vendor ID of the device.</param>
-        /// <param name="profileName">The name of the mapping profile.</param>
+        /// <param name="profileGuid">The [rofile GUID of the mapping profile.</param>
         /// <returns>The saved mapping profile from the provided controller ID to device ID.</returns>
-        Task<IControllerElementMappingProfile?> GetMappingsAsync(ControllerId controllerId, InputDriver driverType,
-            string deviceName, int vendorId, string profileName);
+        Task<IControllerElementMappingProfile?> GetMappingsAsync(Guid profileGuid);
 
         /// <summary>
-        /// Updates the specific mapping profile with the given profile name.
+        /// Updates the specific mapping profile with the given profile name. A profile with the 
+        /// same <see cref="IControllerElementMappingProfile.ProfileGuid"/> must be already in the database.
         /// </summary>
         /// <param name="mappings">The <see cref="IControllerElementMappingProfile"/> to store.</param>
-        /// <param name="profileName">The profile name to store the mappings under.</param>
-        void UpdateMappings(IControllerElementMappingProfile mappings, string profileName);
+        void UpdateMappings(IControllerElementMappingProfile mappings);
 
         /// <summary>
         /// Asynchronously updates the specific mapping profile with the given profile name.
+        /// A profile with the 
+        /// same <see cref="IControllerElementMappingProfile.ProfileGuid"/> must be already in the database.
         /// </summary>
         /// <param name="mappings">The <see cref="IControllerElementMappingProfile"/> to store.</param>
-        /// <param name="profileName">The profile name to store the mappings under.</param>
-        Task UpdateMappingsAsync(IControllerElementMappingProfile mappings, string profileName);
+        Task UpdateMappingsAsync(IControllerElementMappingProfile mappings);
     }
 }

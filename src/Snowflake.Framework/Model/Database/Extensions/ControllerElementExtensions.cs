@@ -15,32 +15,23 @@ namespace Snowflake.Model.Database.Extensions
         {
             return new ControllerElementMappingCollectionModel
             {
+                ProfileID = @this.ProfileGuid,
                 ProfileName = profileName,
                 DriverType = @this.DriverType,
                 ControllerID = @this.ControllerID,
                 DeviceName = @this.DeviceName,
                 VendorID = @this.VendorID,
-                MappedElements = @this.Select(e => e.AsModel(@this.ControllerID, @this.DeviceName, 
-                profileName, @this.VendorID, @this.DriverType)).ToList()
+                MappedElements = @this.Select(e => e.AsModel(@this.ProfileGuid)).ToList()
             };
         }
 
-        private static ControllerElementMappingModel AsModel(this ControllerElementMapping @this,
-            ControllerId controllerId,
-            string deviceName,
-            string profileName,
-            int vendorId,
-            InputDriver driverType)
+        private static ControllerElementMappingModel AsModel(this ControllerElementMapping @this, Guid profileGuid)
         {
             return new ControllerElementMappingModel
             {
                 LayoutElement = @this.LayoutElement,
                 DeviceCapability = @this.DeviceCapability,
-                ProfileName = profileName,
-                ControllerID = controllerId,
-                DeviceName = deviceName,
-                VendorID = vendorId,
-                DriverType = driverType
+                ProfileID = profileGuid,
             };
         }
 
@@ -49,7 +40,8 @@ namespace Snowflake.Model.Database.Extensions
             var mappings = new ControllerElementMappingProfile(@this.DeviceName,
                 @this.ControllerID,
                 @this.DriverType,
-                @this.VendorID);
+                @this.VendorID,
+                @this.ProfileID);
             foreach (var mapping in @this.MappedElements)
             {
                 mappings.Add(new ControllerElementMapping(mapping.LayoutElement, mapping.DeviceCapability));

@@ -30,21 +30,12 @@ namespace Snowflake.Model.Database
             context.SaveChanges();
         }
 
-        public IControllerElementMappingProfile? GetMappings(ControllerId controllerId,
-            InputDriver driver,
-            string deviceName,
-            int vendorId,
-            string profileName
-            )
+        public IControllerElementMappingProfile? GetMappings(Guid profileGuid)
         {
             using var context = new DatabaseContext(this.Options.Options);
             var mappings = context.ControllerElementMappings
                 .Include(p => p.MappedElements)
-                .SingleOrDefault(p => p.ControllerID == controllerId
-                                    && p.DriverType == driver
-                                    && p.DeviceName == deviceName
-                                    && p.VendorID == vendorId
-                                    && p.ProfileName == profileName);
+                .SingleOrDefault(p => p.ProfileID == profileGuid);
             return mappings?.AsControllerElementMappings();
         }
 
@@ -54,9 +45,7 @@ namespace Snowflake.Model.Database
             var retrievedMappings = context.ControllerElementMappings
                 .Where(p => p.ControllerID == controllerId
                          && p.DeviceName == deviceName
-                         && p.VendorID == vendorId)
-                .Include(p => p.MappedElements);
-               
+                         && p.VendorID == vendorId);
 
             foreach (var retrievedMapping in retrievedMappings)
             {
@@ -66,48 +55,62 @@ namespace Snowflake.Model.Database
             context.SaveChanges();
         }
 
-        public void UpdateMappings(IControllerElementMappingProfile mappings, string profileName)
+        public void UpdateMappings(IControllerElementMappingProfile mappings)
         {
             using var context = new DatabaseContext(this.Options.Options);
             var retrievedMappings = context.ControllerElementMappings
                 .Include(p => p.MappedElements)
-                .SingleOrDefault(p => p.ControllerID == mappings.ControllerID 
-                                   && p.DriverType == mappings.DriverType
-                                   && p.DeviceName == mappings.DeviceName 
-                                   && p.VendorID == mappings.VendorID
-                                   && p.ProfileName == profileName);
+                .SingleOrDefault(p => p.ProfileID == mappings.ProfileGuid);
 
+            var mappingSet = mappings.Select(k => k.LayoutElement).ToHashSet();
             foreach (var mapping in retrievedMappings.MappedElements)
             {
-                if (mappings[mapping.LayoutElement] == mapping.DeviceCapability) continue;
-                mapping.DeviceCapability = mappings[mapping.LayoutElement];
-                context.Entry(mapping).State = EntityState.Modified;
+                try
+                {
+                    if (!mappingSet.Contains(mapping.LayoutElement))
+                    {
+                        context.Entry(mapping).State = EntityState.Deleted;
+                        continue;
+                    }
+                    if (mappings[mapping.LayoutElement] == mapping.DeviceCapability) continue;
+                    mapping.DeviceCapability = mappings[mapping.LayoutElement];
+                    context.Entry(mapping).State = EntityState.Modified;
+                } 
+                finally
+                {
+                    mappingSet.Remove(mapping.LayoutElement);
+                }
+            }
+
+            foreach (var toChange in mappingSet)
+            {
+                var model = new ControllerElementMappingModel
+                {
+                    LayoutElement = toChange,
+                    DeviceCapability = mappings[toChange],
+                    Collection = retrievedMappings,
+                    ProfileID = retrievedMappings.ProfileID
+                };
+                retrievedMappings.MappedElements.Add(model);
+                context.Entry(model).State = EntityState.Added;
             }
 
             context.SaveChanges();
         }
 
-        public void DeleteMappings(ControllerId controllerId, InputDriver driverType,
-            string deviceName, int vendorId, string profileName)
+        public void DeleteMappings(Guid profileGuid)
         {
             using var context = new DatabaseContext(this.Options.Options);
-            var retrievedMappings = context.ControllerElementMappings
-                .Include(p => p.MappedElements)
-                .SingleOrDefault(p => p.ControllerID == controllerId 
-                                    && p.DriverType == driverType
-                                    && p.DeviceName == deviceName
-                                    && p.VendorID == vendorId
-                                    && p.ProfileName == profileName);
-
-            if (retrievedMappings != null)
+            var mappings = context.ControllerElementMappings.Find(profileGuid);
+            if (mappings != null)
             {
-                context.Entry(retrievedMappings).State = EntityState.Deleted;
+                context.Entry(mappings).State = EntityState.Deleted;
             }
 
             context.SaveChanges();
         }
 
-        public IEnumerable<string> GetProfileNames(ControllerId controllerId, InputDriver driverType, string deviceName, int vendorId)
+        public IEnumerable<(string profileName, Guid profileGuid)> GetProfileNames(ControllerId controllerId, InputDriver driverType, string deviceName, int vendorId)
         {
             using var context = new DatabaseContext(this.Options.Options);
             var retrievedMappings = context.ControllerElementMappings
@@ -115,8 +118,8 @@ namespace Snowflake.Model.Database
                                     && p.DriverType == driverType
                                     && p.DeviceName == deviceName
                                     && p.VendorID == vendorId)
-                .Select(p => p.ProfileName)
-                .ToList();
+                .ToList()
+                .Select(p => (p.ProfileName, p.ProfileID));
             return retrievedMappings;
         }
         #endregion

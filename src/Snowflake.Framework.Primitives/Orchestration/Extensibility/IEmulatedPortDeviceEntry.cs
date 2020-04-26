@@ -37,10 +37,10 @@ namespace Snowflake.Orchestration.Extensibility
         PlatformId PlatformID { get; }
 
         /// <summary>
-        /// The name of the input mappings profile that maps the real <see cref="DeviceCapability"/> of the
+        /// The GUID of the input mappings profile that maps the real <see cref="DeviceCapability"/> of the
         /// real device to the <see cref="ControllerElement"/> of the virtual device for this port.
         /// </summary>
-        string ProfileName { get; }
+        Guid ProfileGuid { get; }
 
         /// <summary>
         /// The 0-indexed port index of the port.

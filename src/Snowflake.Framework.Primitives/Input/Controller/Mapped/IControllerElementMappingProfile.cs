@@ -34,6 +34,11 @@ namespace Snowflake.Input.Controller.Mapped
         ControllerId ControllerID { get; }
 
         /// <summary>
+        /// The unique GUID that identifies this profile.
+        /// </summary>
+        Guid ProfileGuid { get; set; }
+
+        /// <summary>
         /// Gets or sets the device element mapped to the given layout element,
         /// if the layout element exists for this particular layout.
         /// 

@@ -22,21 +22,12 @@ namespace Snowflake.Model.Database
             await context.SaveChangesAsync();
         }
 
-        public async Task<IControllerElementMappingProfile?> GetMappingsAsync(ControllerId controllerId,
-            InputDriver driver,
-            string deviceName,
-            int vendorId,
-            string profileName
-            )
+        public async Task<IControllerElementMappingProfile?> GetMappingsAsync(Guid profileGuid)
         {
             await using var context = new DatabaseContext(this.Options.Options);
             var mappings = await context.ControllerElementMappings
                 .Include(p => p.MappedElements)
-                .SingleOrDefaultAsync(p => p.ControllerID == controllerId
-                                    && p.DriverType == driver
-                                    && p.DeviceName == deviceName
-                                    && p.VendorID == vendorId
-                                    && p.ProfileName == profileName);
+                .SingleOrDefaultAsync(p => p.ProfileID == profileGuid);
             return mappings?.AsControllerElementMappings();
         }
 
@@ -46,8 +37,7 @@ namespace Snowflake.Model.Database
             var retrievedMappings = context.ControllerElementMappings
                 .Where(p => p.ControllerID == controllerId
                          && p.DeviceName == deviceName
-                         && p.VendorID == vendorId)
-                .Include(p => p.MappedElements);
+                         && p.VendorID == vendorId);
 
 
             foreach (var retrievedMapping in retrievedMappings)
@@ -58,38 +48,53 @@ namespace Snowflake.Model.Database
             await context.SaveChangesAsync();
         }
 
-        public async Task UpdateMappingsAsync(IControllerElementMappingProfile mappings, string profileName)
+        public async Task UpdateMappingsAsync(IControllerElementMappingProfile mappings)
         {
             await using var context = new DatabaseContext(this.Options.Options);
             var retrievedMappings = await context.ControllerElementMappings
                 .Include(p => p.MappedElements)
-                .SingleOrDefaultAsync(p => p.ControllerID == mappings.ControllerID
-                                   && p.DriverType == mappings.DriverType
-                                   && p.DeviceName == mappings.DeviceName
-                                   && p.VendorID == mappings.VendorID
-                                   && p.ProfileName == profileName);
+                .SingleOrDefaultAsync(p => p.ProfileID == mappings.ProfileGuid);
 
+            var mappingSet = mappings.Select(k => k.LayoutElement).ToHashSet();
             foreach (var mapping in retrievedMappings.MappedElements)
             {
-                if (mappings[mapping.LayoutElement] == mapping.DeviceCapability) continue;
-                mapping.DeviceCapability = mappings[mapping.LayoutElement];
-                context.Entry(mapping).State = EntityState.Modified;
+                try
+                {
+                    if (!mappingSet.Contains(mapping.LayoutElement))
+                    {
+                        context.Entry(mapping).State = EntityState.Deleted;
+                        continue;
+                    }
+                    if (mappings[mapping.LayoutElement] == mapping.DeviceCapability) continue;
+                    mapping.DeviceCapability = mappings[mapping.LayoutElement];
+                    context.Entry(mapping).State = EntityState.Modified;
+                }
+                finally
+                {
+                    mappingSet.Remove(mapping.LayoutElement);
+                }
+            }
+
+            foreach (var toChange in mappingSet)
+            {
+                var model = new ControllerElementMappingModel
+                {
+                    LayoutElement = toChange,
+                    DeviceCapability = mappings[toChange],
+                    Collection = retrievedMappings,
+                    ProfileID = retrievedMappings.ProfileID
+                };
+                retrievedMappings.MappedElements.Add(model);
+                context.Entry(model).State = EntityState.Added;
             }
 
             await context.SaveChangesAsync();
         }
 
-        public async Task DeleteMappingsAsync(ControllerId controllerId, InputDriver driverType,
-            string deviceName, int vendorId, string profileName)
+        public async Task DeleteMappingsAsync(Guid profileGuid)
         {
             await using var context = new DatabaseContext(this.Options.Options);
-            var retrievedMappings = await context.ControllerElementMappings
-                .Include(p => p.MappedElements)
-                .SingleOrDefaultAsync(p => p.ControllerID == controllerId
-                                    && p.DriverType == driverType
-                                    && p.DeviceName == deviceName
-                                    && p.VendorID == vendorId
-                                    && p.ProfileName == profileName);
+            var retrievedMappings = await context.ControllerElementMappings.FindAsync(profileGuid);
 
             if (retrievedMappings != null)
             {
