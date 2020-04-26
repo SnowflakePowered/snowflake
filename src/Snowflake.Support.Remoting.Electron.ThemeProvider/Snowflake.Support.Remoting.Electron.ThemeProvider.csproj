@@ -6,5 +6,9 @@
     <_SnowflakeUseDevelopmentSDK>true</_SnowflakeUseDevelopmentSDK>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Snowflake.Framework.Remoting.GraphQL\Snowflake.Framework.Remoting.GraphQL.csproj" />
+  </ItemGroup>
+
 
 </Project>
