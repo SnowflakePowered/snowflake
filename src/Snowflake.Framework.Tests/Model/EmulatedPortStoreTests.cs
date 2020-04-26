@@ -31,7 +31,7 @@ namespace Snowflake.Model.Tests
             instance.SetupGet(p => p.Driver).Returns(InputDriver.Passthrough);
             instance.SetupGet(p => p.NameEnumerationIndex).Returns(0);
 
-            store.SetPort(orch.Object, "TEST_PLATFORM", 0, "TEST_CONTROLLER", device.Object, instance.Object, Guid.NewGuid());
+            store.SetPort(orch.Object, "TEST_PLATFORM", 0, "TEST_CONTROLLER", device.Object.InstanceGuid, instance.Object.Driver, Guid.NewGuid());
 
             var ret = store.GetPort(orch.Object, "TEST_PLATFORM", 0);
             Assert.NotNull(ret);
@@ -56,7 +56,7 @@ namespace Snowflake.Model.Tests
             instance.SetupGet(p => p.Driver).Returns(InputDriver.Passthrough);
             instance.SetupGet(p => p.NameEnumerationIndex).Returns(0);
 
-            store.SetPort(orch.Object, "TEST_PLATFORM", 0, "TEST_CONTROLLER", device.Object, instance.Object, Guid.NewGuid());
+            store.SetPort(orch.Object, "TEST_PLATFORM", 0, "TEST_CONTROLLER", device.Object.InstanceGuid, instance.Object.Driver, Guid.NewGuid());
 
             var ret = store.GetPort(orch.Object, "TEST_PLATFORM", 0);
             Assert.NotNull(ret);
@@ -86,8 +86,8 @@ namespace Snowflake.Model.Tests
             instance.SetupGet(p => p.Driver).Returns(InputDriver.Passthrough);
             instance.SetupGet(p => p.NameEnumerationIndex).Returns(0);
 
-            store.SetPort(orch.Object, "TEST_PLATFORM", 0, "TEST_CONTROLLER", device.Object, instance.Object, Guid.NewGuid());
-            store.SetPort(orch.Object, "TEST_PLATFORM", 2, "TEST_CONTROLLER", device.Object, instance.Object, Guid.NewGuid());
+            store.SetPort(orch.Object, "TEST_PLATFORM", 0, "TEST_CONTROLLER", device.Object.InstanceGuid, instance.Object.Driver, Guid.NewGuid());
+            store.SetPort(orch.Object, "TEST_PLATFORM", 2, "TEST_CONTROLLER", device.Object.InstanceGuid, instance.Object.Driver, Guid.NewGuid());
 
             var ret = store.EnumeratePorts(orch.Object, "TEST_PLATFORM");
             Assert.Equal(2, ret.Count());

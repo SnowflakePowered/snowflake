@@ -37,7 +37,8 @@ namespace Snowflake.Orchestration.Extensibility
             var instance = device.Instances.FirstOrDefault(i => i.Driver == portEntry.Driver);
             var profile = this.Mappings.GetMappings(portEntry.ProfileGuid);
             if (profile == null) return null;
-            var targetLayout = this.StoneProvider.Controllers[portEntry.ControllerID];
+            if (!this.StoneProvider.Controllers.TryGetValue(portEntry.ControllerID, out var targetLayout)) 
+                return null;
             return new EmulatedController(portIndex, device, instance, targetLayout, profile);
         }
     }

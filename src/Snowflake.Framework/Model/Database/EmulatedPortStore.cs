@@ -52,7 +52,7 @@ namespace Snowflake.Model.Database
         }
 
         public void SetPort(PlatformId platform, int portNumber, ControllerId controller, 
-            IInputDevice device, IInputDeviceInstance instance, Guid inputProfile, string emulatorName)
+            Guid deviceInstanceGuid, InputDriver instanceDriver, Guid inputProfile, string emulatorName)
         {
             using var context = new DatabaseContext(Options.Options);
             var entity = context.PortDeviceEntries
@@ -60,9 +60,9 @@ namespace Snowflake.Model.Database
             if (entity != null)
             {
                 entity.ProfileGuid = inputProfile;
-                entity.InstanceGuid = device.InstanceGuid;
+                entity.InstanceGuid = deviceInstanceGuid;
                 entity.ControllerID = controller;
-                entity.Driver = instance.Driver;
+                entity.Driver = instanceDriver;
                 context.Entry(entity).State = EntityState.Modified;
             }
             else
@@ -70,9 +70,9 @@ namespace Snowflake.Model.Database
                 var newEntity = new PortDeviceEntryModel()
                 {
                     ProfileGuid = inputProfile,
-                    InstanceGuid = device.InstanceGuid,
+                    InstanceGuid = deviceInstanceGuid,
                     ControllerID = controller,
-                    Driver = instance.Driver,
+                    Driver = instanceDriver,
                     OrchestratorName = emulatorName,
                     PlatformID = platform,
                     PortIndex = portNumber
@@ -85,8 +85,8 @@ namespace Snowflake.Model.Database
         public IEmulatedPortDeviceEntry? GetPort(IEmulatorOrchestrator orchestrator, PlatformId platform, int portNumber)
             => this.GetPort(platform, portNumber, orchestrator.Name);
         public void SetPort(IEmulatorOrchestrator orchestrator, PlatformId platform, int portNumber,
-            ControllerId controller, IInputDevice device, IInputDeviceInstance instance, Guid inputProfile)
-            => this.SetPort(platform, portNumber, controller, device, instance, inputProfile, orchestrator.Name);
+            ControllerId controller, Guid deviceInstanceGuid, InputDriver instanceDriver, Guid inputProfile)
+            => this.SetPort(platform, portNumber, controller, deviceInstanceGuid, instanceDriver, inputProfile, orchestrator.Name);
         public void ClearPort(IEmulatorOrchestrator orchestrator, PlatformId platform, int portNumber)
             => this.ClearPort(platform, portNumber, orchestrator.Name);
         public IEnumerable<IEmulatedPortDeviceEntry> EnumeratePorts(IEmulatorOrchestrator orchestrator, PlatformId platform)
