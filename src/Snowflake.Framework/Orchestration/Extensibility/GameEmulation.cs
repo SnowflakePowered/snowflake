@@ -45,6 +45,9 @@ namespace Snowflake.Orchestration.Extensibility
         #region IAsyncDisposable Support
 
         private bool IsDisposed { get; set; } = false;
+
+        public GameEmulationState EmulationState { get; protected set; } = GameEmulationState.RequiresSetupEnvironment;
+
         public async ValueTask DisposeAsync()
         {
             if (this.IsDisposed) return;

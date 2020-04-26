@@ -35,6 +35,13 @@ namespace Snowflake.Orchestration.Extensibility
         ISaveProfile SaveProfile { get; }
 
         /// <summary>
+        /// The current state of the game emulation. It is absolutely impervious that
+        /// implementations update this accordingly, or the <see cref="IGameEmulation"/> will 
+        /// not function correctly.
+        /// </summary>
+        GameEmulationState EmulationState { get; }
+
+        /// <summary>
         /// Compiles relevant configuration into the working directory of the emulation instance, ready for use.
         /// </summary>
         /// <returns>An asynchronous task that signals the completion of the compilation.</returns>
@@ -42,7 +49,9 @@ namespace Snowflake.Orchestration.Extensibility
        
         /// <summary>
         /// Persists the current state of the game's save information into a new immutable <see cref="ISaveGame"/>
-        /// using the current <see cref="ISaveProfile"/>, whether or not the game is currently running.
+        /// using the current <see cref="ISaveProfile"/>.
+        /// 
+        /// This can only be run if the game is not currently running, to avoid race conditions causing data corruption.
         /// </summary>
         /// <returns>A new <see cref="ISaveGame"/> with the current contents of the working directory save folder.</returns>
         Task<ISaveGame> PersistSaveGame();
