@@ -26,18 +26,19 @@ namespace Snowflake.Orchestration.Extensibility
         /// Sets the saved <see cref="IEmulatedPortDeviceEntry"/> for the given <see cref= "IEmulatorOrchestrator" />,
         /// platform, and port number combination.
         /// 
-        /// Only connected devices can be set to a port. Use <see cref="ClearPort(IEmulatorOrchestrator, PlatformId, int)"/> to
+        /// Use <see cref="ClearPort(IEmulatorOrchestrator, PlatformId, int)"/> to
         /// "disconnect" or unassign a port entry.
         /// </summary>
         /// <param name="orchestrator">The <see cref="IEmulatorOrchestrator"/> to save this port entry for.</param>
         /// <param name="platform">The <see cref="PlatformId"/> to assign this port to.</param>
         /// <param name="portNumber">The port number to assign.</param>
         /// <param name="controller">The <see cref="ControllerId"/> of the virtual controller to assign this port to.</param>
-        /// <param name="device">The real <see cref="IInputDevice"/> that this port originates from.</param>
-        /// <param name="instance">The <see cref="IInputDeviceInstance"/> of the device to use for this port.</param>
+        /// <param name="deviceInstanceGuid">The real <see cref="IInputDevice"/> that this port originates from.</param>
+        /// <param name="instanceDriver">The <see cref="InputDriver"/> of the <see cref="IInputDeviceInstance"/>
+        ///     of the device to use for this port.</param>
         /// <param name="inputProfile">The Profile GUID of the input profile to use.</param>
         public void SetPort(IEmulatorOrchestrator orchestrator, PlatformId platform, int portNumber, ControllerId controller,
-           IInputDevice device, IInputDeviceInstance instance, Guid inputProfile);
+           Guid deviceInstanceGuid, InputDriver instanceDriver, Guid inputProfile);
 
         /// <summary>
         /// Clears the given port for the given <see cref="IEmulatorOrchestrator"/> for the given platform.
