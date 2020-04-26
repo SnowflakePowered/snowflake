@@ -2,6 +2,7 @@
 using Snowflake.Input.Controller;
 using Snowflake.Input.Device;
 using Snowflake.Model.Game;
+using Snowflake.Remoting.GraphQL.FrameworkQueries.Mutations.Relay;
 using Snowflake.Remoting.GraphQL.Model.Device;
 using Snowflake.Remoting.GraphQL.Model.Stone.ControllerLayout;
 using Snowflake.Remoting.GraphQL.Model.Stone.PlatformInfo;
@@ -12,6 +13,7 @@ using System.Text;
 namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Ports
 {
     internal sealed class ClearPortDeviceInput
+        : RelayMutationBase
     {
         public string Orchestrator { get; set; }
         public int PortIndex { get; set; }
@@ -23,7 +25,8 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Ports
     {
         protected override void Configure(IInputObjectTypeDescriptor<ClearPortDeviceInput> descriptor)
         {
-            descriptor.Name(nameof(ClearPortDeviceInput));
+            descriptor.Name(nameof(ClearPortDeviceInput))
+                .WithClientMutationId();
             descriptor.Field(i => i.Orchestrator)
                 .Description("The name of the emulator orchestrator that will have its set of virtual ports changed.")
                 .Type<NonNullType<StringType>>();

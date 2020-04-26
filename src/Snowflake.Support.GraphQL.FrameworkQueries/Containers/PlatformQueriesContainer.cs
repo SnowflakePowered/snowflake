@@ -36,6 +36,8 @@ using Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Input;
 using Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Configuration;
 using Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Saving;
 using Snowflake.Orchestration.Extensibility;
+using Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration;
+using Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Ports;
 
 namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
 {
@@ -48,7 +50,6 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
         {
           
             var hotChocolate = coreInstance.Get<IGraphQLSchemaRegistrationProvider>();
-            var serviceRegistration = coreInstance.Get<IServiceRegistrationProvider>();
             this.ConfigureHotChocolate(hotChocolate);
         }
 
@@ -105,6 +106,9 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
             {
                 schema.AddTypeInterceptor<AutoSubscriptionTypeInterceptor>();
             });
+
+            hotChocolate.AddObjectTypeExtension<OrchestrationMutations>();
+            hotChocolate.AddObjectTypeExtension<PortMutations>();
 
             var jobQueue = new ConcurrentDictionary<Guid, Guid>();
             var gameInstanceCache = new ConcurrentDictionary<Guid, IGameEmulation>();
