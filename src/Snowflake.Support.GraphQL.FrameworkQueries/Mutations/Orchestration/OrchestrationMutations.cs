@@ -21,12 +21,6 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
         protected override void Configure(IObjectTypeDescriptor descriptor)
         {
             descriptor.Name("Mutation");
-            descriptor.Extend()
-                .OnBeforeCreate(defn =>
-                {
-                    defn.ContextData.Add("Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration.GameInstanceCache",
-                        new ConcurrentDictionary<Guid, IGameEmulation>());
-                });
             descriptor.Field("createEmulationInstance")
                 .Argument("input", a => a.Type<CreateEmulationInstanceInputType>())
                 .Resolver(async ctx =>
@@ -73,7 +67,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                     if (ctx.GetGameCache().TryAdd(guid, instance))
                         return new EmulationInstancePayload()
                         {
-                            Emulation = instance,
+                            GameEmulation = instance,
                             InstanceID = guid
                         };
                     throw new InvalidOperationException("Could not create emulation instance.");
@@ -89,6 +83,6 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
     static class OrchestrationMutationContextExtesions
     {
        internal static ConcurrentDictionary<Guid, IGameEmulation> GetGameCache(this IResolverContext ctx)
-            => (ConcurrentDictionary<Guid, IGameEmulation>)ctx.RootType.ContextData["Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration.GameInstanceCache"];
+            => (ConcurrentDictionary<Guid, IGameEmulation>)ctx.ContextData["Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration.GameInstanceCache"];
     }
 }

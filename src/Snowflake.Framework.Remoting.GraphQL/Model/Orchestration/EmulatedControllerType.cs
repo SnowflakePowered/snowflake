@@ -24,7 +24,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Orchestration
                 .Description("The zero-indexed emulated port index; i.e. Player 1 is represented by a port index of 0.")
                 .Type<NonNullType<IntType>>();
             descriptor.Field(e => e.TargetLayout)
-                .Description("The target controller layout that is being emulated. If this is null, then the virtual port has " +
+                .Description("The target controller layout that is being emulated. If this is null, then the virtual port has" +
                 "an invalid controller ID.")
                 .Type<ControllerLayoutType>();
             descriptor.Field(e => e.PhysicalDevice)

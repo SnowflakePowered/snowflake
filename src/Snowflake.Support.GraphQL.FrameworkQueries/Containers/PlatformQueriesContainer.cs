@@ -35,6 +35,7 @@ using Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Installation;
 using Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Input;
 using Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Configuration;
 using Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Saving;
+using Snowflake.Orchestration.Extensibility;
 
 namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
 {
@@ -106,10 +107,12 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
             });
 
             var jobQueue = new ConcurrentDictionary<Guid, Guid>();
-
+            var gameInstanceCache = new ConcurrentDictionary<Guid, IGameEmulation>();
+            
             hotChocolate.ConfigureQueryRequest(query =>
             {
                 query.SetProperty("Snowflake.Support.GraphQL.FrameworkQueries.ResolverJobQueueMetadata.Store", jobQueue);
+                query.SetProperty("Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration.GameInstanceCache", gameInstanceCache);
             });
         }
     }
