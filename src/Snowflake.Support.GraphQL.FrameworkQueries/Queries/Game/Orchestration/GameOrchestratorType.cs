@@ -66,7 +66,8 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Queries.Game.Orchestration
                     return orchestrator.GetGameConfiguration(game, configProfile);
                 });
             descriptor.Field("ports")
-                .Description("Retrieves the emulated ports of this orchestrator for the platform of the game.")
+                .Description("Retrieves the emulated ports of this orchestrator for the platform of the game. If a retrieved port " +
+                "does not exist, it is unassigned.")
                 .Argument("portIndex", arg => arg
                     .Description("The port index to retrieve, if retrieving a specific port.")
                     .Type<IntType>())

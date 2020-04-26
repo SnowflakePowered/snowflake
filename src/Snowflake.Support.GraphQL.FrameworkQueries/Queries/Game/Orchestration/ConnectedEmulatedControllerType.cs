@@ -40,6 +40,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Queries.Game.Orchestration
                     IInputDevice physicalDevice = devices.GetPortDevice(deviceEntry);
                     IInputDeviceInstance deviceInstance = devices.GetPortDeviceInstance(deviceEntry);
                     IControllerElementMappingProfile mappingProfile = await inputConfig.GetMappingsAsync(deviceEntry.ProfileGuid);
+  
                     return new EmulatedController(deviceEntry.PortIndex, physicalDevice, deviceInstance, controllerLayout, mappingProfile);
                 })
                 .Type<NonNullType<EmulatedControllerType>>();
