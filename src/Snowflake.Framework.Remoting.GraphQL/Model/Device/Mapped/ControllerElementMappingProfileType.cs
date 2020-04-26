@@ -15,6 +15,10 @@ namespace Snowflake.Remoting.GraphQL.Model.Device.Mapped
             descriptor.Name("ControllerElementMappingProfile")
                 .Description("A collection of controller element to device capability mappings that describes a " +
                 "mapping profile from an input device to an emulated virtual device.");
+            descriptor.Field(c => c.ProfileGuid)
+                .Name("profileId")
+                .Description("The Profile GUID of this mapping profile.")
+                .Type<ControllerIdType>();
             descriptor.Field(c => c.ControllerID)
                 .Name("controllerId")
                 .Description("The Stone Controller ID of the emulated controller this collection maps to.")

@@ -60,41 +60,35 @@ namespace Snowflake.Model.Database.Migrations
 
             modelBuilder.Entity("Snowflake.Model.Database.Models.ControllerElementMappingCollectionModel", b =>
                 {
+                    b.Property<Guid>("ProfileID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("ControllerID")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("DeviceName")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int>("DriverType")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("DeviceName")
+                    b.Property<string>("ProfileName")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("VendorID")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("ProfileName")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("ControllerID", "DriverType", "DeviceName", "VendorID", "ProfileName");
+                    b.HasKey("ProfileID");
 
                     b.ToTable("ControllerElementMappings");
                 });
 
             modelBuilder.Entity("Snowflake.Model.Database.Models.ControllerElementMappingModel", b =>
                 {
-                    b.Property<string>("ControllerID")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("DeviceName")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("VendorID")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("DriverType")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("ProfileName")
+                    b.Property<Guid>("ProfileID")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("LayoutElement")
@@ -104,9 +98,7 @@ namespace Snowflake.Model.Database.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("ControllerID", "DeviceName", "VendorID", "DriverType", "ProfileName", "LayoutElement");
-
-                    b.HasIndex("ControllerID", "DriverType", "DeviceName", "VendorID", "ProfileName");
+                    b.HasKey("ProfileID", "LayoutElement");
 
                     b.ToTable("MappedControllerElements");
                 });
@@ -157,8 +149,7 @@ namespace Snowflake.Model.Database.Migrations
                     b.Property<Guid>("InstanceGuid")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("ProfileName")
-                        .IsRequired()
+                    b.Property<Guid>("ProfileGuid")
                         .HasColumnType("TEXT");
 
                     b.HasKey("OrchestratorName", "PlatformID", "PortIndex");
@@ -246,7 +237,7 @@ namespace Snowflake.Model.Database.Migrations
                 {
                     b.HasOne("Snowflake.Model.Database.Models.ControllerElementMappingCollectionModel", "Collection")
                         .WithMany("MappedElements")
-                        .HasForeignKey("ControllerID", "DriverType", "DeviceName", "VendorID", "ProfileName")
+                        .HasForeignKey("ProfileID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

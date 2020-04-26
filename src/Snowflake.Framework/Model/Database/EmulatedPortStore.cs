@@ -52,14 +52,14 @@ namespace Snowflake.Model.Database
         }
 
         public void SetPort(PlatformId platform, int portNumber, ControllerId controller, 
-            IInputDevice device, IInputDeviceInstance instance, string inputProfile, string emulatorName)
+            IInputDevice device, IInputDeviceInstance instance, Guid inputProfile, string emulatorName)
         {
             using var context = new DatabaseContext(Options.Options);
             var entity = context.PortDeviceEntries
                 .Find(emulatorName, platform, portNumber);
             if (entity != null)
             {
-                entity.ProfileName = inputProfile;
+                entity.ProfileGuid = inputProfile;
                 entity.InstanceGuid = device.InstanceGuid;
                 entity.ControllerID = controller;
                 entity.Driver = instance.Driver;
@@ -69,7 +69,7 @@ namespace Snowflake.Model.Database
             {
                 var newEntity = new PortDeviceEntryModel()
                 {
-                    ProfileName = inputProfile,
+                    ProfileGuid = inputProfile,
                     InstanceGuid = device.InstanceGuid,
                     ControllerID = controller,
                     Driver = instance.Driver,
@@ -85,7 +85,7 @@ namespace Snowflake.Model.Database
         public IEmulatedPortDeviceEntry? GetPort(IEmulatorOrchestrator orchestrator, PlatformId platform, int portNumber)
             => this.GetPort(platform, portNumber, orchestrator.Name);
         public void SetPort(IEmulatorOrchestrator orchestrator, PlatformId platform, int portNumber,
-            ControllerId controller, IInputDevice device, IInputDeviceInstance instance, string inputProfile)
+            ControllerId controller, IInputDevice device, IInputDeviceInstance instance, Guid inputProfile)
             => this.SetPort(platform, portNumber, controller, device, instance, inputProfile, orchestrator.Name);
         public void ClearPort(IEmulatorOrchestrator orchestrator, PlatformId platform, int portNumber)
             => this.ClearPort(platform, portNumber, orchestrator.Name);

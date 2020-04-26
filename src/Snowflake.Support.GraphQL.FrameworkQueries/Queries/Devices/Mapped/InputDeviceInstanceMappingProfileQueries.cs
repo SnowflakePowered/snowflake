@@ -35,24 +35,18 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Devices.Mapped
                     var controllerId = context.Argument<ControllerId>("controllerId");
                     return store.GetProfileNames(controllerId, deviceInstance.Driver, device.DeviceName, device.VendorID);
                 })
-                .Type<NonNullType<ListType<NonNullType<StringType>>>>();
+                .Type<NonNullType<ListType<NonNullType<InputProfileType>>>>();
 
             descriptor.Field("mapping")
                 .Description("Fetches a specific mapping profile for a specific device instance.")
-                .Argument("controllerId", arg => 
-                   arg.Type<NonNullType<ControllerIdType>>()
-                    .Description("The Stone controller ID to get compatible mappings for."))
-                .Argument("profileName", arg =>
-                   arg.Type<NonNullType<StringType>>()
-                    .Description("The profile to fetch."))
+                .Argument("profileId", arg =>
+                   arg.Type<NonNullType<UuidType>>()
+                    .Description("The profile GUID of the profile to fetch."))
                 .Resolver(context =>
                 {
-                    var deviceInstance = (IInputDeviceInstance)context.Source.Peek();
-                    var device = (IInputDevice)context.Source.Pop().Peek();
                     var store = context.SnowflakeService<IControllerElementMappingProfileStore>();
-                    var controllerId = context.Argument<ControllerId>("controllerId");
-                    string profileName = context.Argument<string>("profileName");
-                    return store.GetMappings(controllerId, deviceInstance.Driver, device.DeviceName, device.VendorID, profileName);
+                    var profileId = context.Argument<Guid>("profileId");
+                    return store.GetMappings(profileId);
                 })
                 .Type<ControllerElementMappingProfileType>();
         }

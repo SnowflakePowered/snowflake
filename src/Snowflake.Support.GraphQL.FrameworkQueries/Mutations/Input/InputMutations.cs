@@ -29,9 +29,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Input
                     var devices = ctx.SnowflakeService<IDeviceEnumerator>().QueryConnectedDevices();
                     var (vendorId, deviceName) = input.Device.RetrieveDeviceName(devices);
                     var mappingStore = ctx.SnowflakeService<IControllerElementMappingProfileStore>();
-                    if (mappingStore.GetProfileNames(input.ControllerID, input.InputDriver, deviceName, vendorId).Contains(input.ProfileName))
-                        throw new ArgumentException("There is already an input profile for the specified device archetype with the same name.");
-
+                   
                     if (!ctx.SnowflakeService<IStoneProvider>().Controllers.TryGetValue(input.ControllerID, out var controllerLayout))
                         throw new ArgumentException("The specified controller layout was not found.");
 
@@ -67,12 +65,10 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Input
                 .Resolver(async ctx =>
                 {
                     var input = ctx.Argument<UpdateInputProfileInput>("input");
-                    var devices = ctx.SnowflakeService<IDeviceEnumerator>().QueryConnectedDevices();
 
-                    var (vendorId, deviceName) = input.Device.RetrieveDeviceName(devices);
                     var mappingStore = ctx.SnowflakeService<IControllerElementMappingProfileStore>();
-
-                    var profile = await mappingStore.GetMappingsAsync(input.ControllerID, input.InputDriver, deviceName, vendorId, input.ProfileName);
+                    var profile = await mappingStore
+                        .GetMappingsAsync(input.ProfileID);
 
                     if (profile == null) throw new ArgumentException("The specified input profile was not found.");
 
@@ -81,7 +77,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Input
                         profile[mapping.LayoutElement] = mapping.DeviceCapability;
                     }
 
-                    await mappingStore.UpdateMappingsAsync(profile, input.ProfileName);
+                    await mappingStore.UpdateMappingsAsync(profile);
                     return new InputProfilePayload()
                     {
                         InputProfile = profile,
@@ -93,17 +89,12 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Input
                 .Resolver(async ctx =>
                 {
                     var input = ctx.Argument<DeleteInputProfileInput>("input");
-                    var devices = ctx.SnowflakeService<IDeviceEnumerator>().QueryConnectedDevices();
-
-                    var (vendorId, deviceName) = input.Device.RetrieveDeviceName(devices);
                     var mappingStore = ctx.SnowflakeService<IControllerElementMappingProfileStore>();
 
-                    var profile = await mappingStore.GetMappingsAsync(input.ControllerID, input.InputDriver, deviceName, vendorId, input.ProfileName);
+                    var profile = await mappingStore.GetMappingsAsync(input.ProfileID);
                     if (profile == null) throw new ArgumentException("The specified input profile was not found.");
 
-                    await mappingStore.DeleteMappingsAsync(input.ControllerID, input.InputDriver, deviceName, vendorId, input.ProfileName);
-
-                    await mappingStore.UpdateMappingsAsync(profile, input.ProfileName);
+                    await mappingStore.DeleteMappingsAsync(input.ProfileID);
                     return new InputProfilePayload()
                     {
                         InputProfile = profile,

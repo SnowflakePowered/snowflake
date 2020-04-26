@@ -7,8 +7,11 @@ using Snowflake.Model.Database.Models;
 
 namespace Snowflake.Support.StoreProviders
 {
-   internal class DesignTimeSqliteDbContextFactory :
-        IDesignTimeDbContextFactory<DatabaseContext>
+    /// <summary>
+    /// Used to provide an entry point for dotnet ef
+    /// </summary>
+    internal class DesignTimeSqliteDbContextFactory :
+         IDesignTimeDbContextFactory<DatabaseContext>
     {
         public DatabaseContext CreateDbContext(string[] args)
         {

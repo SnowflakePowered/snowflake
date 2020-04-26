@@ -44,7 +44,7 @@ namespace Snowflake.Input.Controller.Mapped
         }
 
         /// <summary>
-        /// Converts between a <see cref="MappedControllerElement"/> and a <see cref="KeyValuePair{TKey, TValue}"/>
+        /// Converts between a <see cref="ControllerElementMapping"/> and a <see cref="KeyValuePair{TKey, TValue}"/>
         /// of the proper type.
         /// </summary>
         /// <param name="kvp">The key value pair</param>

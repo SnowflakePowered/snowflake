@@ -13,7 +13,7 @@ namespace Snowflake.Model.Database.Models
         public ControllerId ControllerID { get; set; }
         public PlatformId PlatformID { get; set; }
         public Guid InstanceGuid { get; set; }
-        public string ProfileName { get; set; }
+        public  Guid ProfileGuid { get; set; }
         public int PortIndex { get; set; }
         public string OrchestratorName { get; set; }
 
@@ -34,7 +34,7 @@ namespace Snowflake.Model.Database.Models
                .Property(p => p.InstanceGuid)
                .IsRequired();
             modelBuilder.Entity<PortDeviceEntryModel>()
-               .Property(p => p.ProfileName)
+               .Property(p => p.ProfileGuid)
                .IsRequired();
             modelBuilder.Entity<PortDeviceEntryModel>()
                .Property(p => p.PortIndex)

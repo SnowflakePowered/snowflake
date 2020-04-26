@@ -54,11 +54,7 @@ namespace Snowflake.Model.Tests
 
                 elementStore.AddMappings(mapcol, "default");
 
-                var retStore = elementStore.GetMappings(mapcol.ControllerID, 
-                    InputDriver.XInput, 
-                    "Xbox",
-                    IDeviceEnumerator.VirtualVendorID,
-                    "default");
+                var retStore = elementStore.GetMappings(mapcol.ProfileGuid);
 
                 foreach (var element in retStore)
                 {
@@ -89,11 +85,7 @@ namespace Snowflake.Model.Tests
 
                await elementStore.AddMappingsAsync(mapcol, "default");
 
-                var retStore = await elementStore.GetMappingsAsync(mapcol.ControllerID,
-                    InputDriver.Keyboard,
-                    "Keyboard",
-                    IDeviceEnumerator.VirtualVendorID,
-                    "default");
+                var retStore = await elementStore.GetMappingsAsync(mapcol.ProfileGuid);
 
                 foreach (var element in retStore)
                 {
@@ -125,10 +117,11 @@ namespace Snowflake.Model.Tests
 
                 // map buttonA to buttonB.
                 mapcol[ControllerElement.ButtonA] = DeviceCapability.Button1;
+                elementStore.UpdateMappings(mapcol);
 
-                elementStore.UpdateMappings(mapcol, "default");
-                var retStore = elementStore.GetMappings(mapcol.ControllerID,
-                    InputDriver.Keyboard, mapcol.DeviceName, IDeviceEnumerator.VirtualVendorID, "default");
+                mapcol[ControllerElement.ButtonB] = DeviceCapability.Axis0Positive;
+                elementStore.UpdateMappings(mapcol);
+                var retStore = elementStore.GetMappings(mapcol.ProfileGuid);
 
                 foreach (var element in retStore)
                 {
@@ -167,10 +160,12 @@ namespace Snowflake.Model.Tests
 
                 // map buttonA to buttonB.
                 mapcol[ControllerElement.ButtonA] = DeviceCapability.Button1;
+                elementStore.UpdateMappings(mapcol);
 
-                await elementStore.UpdateMappingsAsync(mapcol, "default");
-                var retStore = await elementStore.GetMappingsAsync(mapcol.ControllerID,
-                    InputDriver.Keyboard, mapcol.DeviceName, IDeviceEnumerator.VirtualVendorID, "default");
+                mapcol[ControllerElement.ButtonB] = DeviceCapability.Axis0Positive;
+                elementStore.UpdateMappings(mapcol);
+
+                var retStore = await elementStore.GetMappingsAsync(mapcol.ProfileGuid);
 
                 foreach (var element in retStore)
                 {
@@ -205,13 +200,10 @@ namespace Snowflake.Model.Tests
 
                 elementStore.AddMappings(mapcol, "default");
 
-                var retStore = elementStore.GetMappings(mapcol.ControllerID,
-                    InputDriver.Keyboard, mapcol.DeviceName, IDeviceEnumerator.VirtualVendorID, "default");
+                var retStore = elementStore.GetMappings(mapcol.ProfileGuid);
                 Assert.NotNull(retStore);
-                elementStore.DeleteMappings(mapcol.ControllerID, InputDriver.Keyboard, mapcol.DeviceName, 
-                    IDeviceEnumerator.VirtualVendorID, "default");
-                var deletedRetStore = elementStore.GetMappings(mapcol.ControllerID, InputDriver.Keyboard,
-                    mapcol.DeviceName, IDeviceEnumerator.VirtualVendorID, "default");
+                elementStore.DeleteMappings(mapcol.ProfileGuid);
+                var deletedRetStore = elementStore.GetMappings(mapcol.ProfileGuid);
                 Assert.Null(deletedRetStore);
             }
         }
@@ -235,13 +227,10 @@ namespace Snowflake.Model.Tests
 
                 await elementStore.AddMappingsAsync(mapcol, "default");
 
-                var retStore = await elementStore.GetMappingsAsync(mapcol.ControllerID,
-                    InputDriver.Keyboard, mapcol.DeviceName, IDeviceEnumerator.VirtualVendorID, "default");
+                var retStore = await elementStore.GetMappingsAsync(mapcol.ProfileGuid);
                 Assert.NotNull(retStore);
-                await elementStore.DeleteMappingsAsync(mapcol.ControllerID, InputDriver.Keyboard, mapcol.DeviceName,
-                    IDeviceEnumerator.VirtualVendorID, "default");
-                var deletedRetStore = elementStore.GetMappings(mapcol.ControllerID, InputDriver.Keyboard,
-                    mapcol.DeviceName, IDeviceEnumerator.VirtualVendorID, "default");
+                await elementStore.DeleteMappingsAsync(mapcol.ProfileGuid);
+                var deletedRetStore = elementStore.GetMappings(mapcol.ProfileGuid);
                 Assert.Null(deletedRetStore);
             }
         }
@@ -257,19 +246,23 @@ namespace Snowflake.Model.Tests
                             InputDriver.Keyboard,
                             IDeviceEnumerator.VirtualVendorID,
                             new XInputDeviceInstance(0).DefaultLayout);
+                var mapcol2 = new ControllerElementMappingProfile("Keyboard",
+                            "TEST_CONTROLLER",
+                            InputDriver.Keyboard,
+                            IDeviceEnumerator.VirtualVendorID,
+                            new XInputDeviceInstance(0).DefaultLayout);
 
                 var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
                 optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
                 var elementStore = new ControllerElementMappingProfileStore(optionsBuilder);
 
                 elementStore.AddMappings(mapcol, "default");
-                elementStore.AddMappings(mapcol, "default2");
+                elementStore.AddMappings(mapcol2, "default2");
 
                 Assert.Equal(2, elementStore.GetProfileNames(mapcol.ControllerID, InputDriver.Keyboard, mapcol.DeviceName,
                     IDeviceEnumerator.VirtualVendorID)
                     .Count());
-                elementStore.DeleteMappings(mapcol.ControllerID, InputDriver.Keyboard, mapcol.DeviceName, 
-                    IDeviceEnumerator.VirtualVendorID, "default");
+                elementStore.DeleteMappings(mapcol.ProfileGuid);
                 Assert.Single(elementStore.GetProfileNames(mapcol.ControllerID, InputDriver.Keyboard, mapcol.DeviceName,
                     IDeviceEnumerator.VirtualVendorID));
                 elementStore.DeleteMappings(mapcol.ControllerID, mapcol.DeviceName, IDeviceEnumerator.VirtualVendorID);
@@ -296,9 +289,7 @@ namespace Snowflake.Model.Tests
 
                 elementStore.AddMappings(mapcol, "default");
 
-                var retStore = elementStore.GetMappings(
-                    mapcol.ControllerID, InputDriver.Keyboard, "Keyboard", 
-                    IDeviceEnumerator.VirtualVendorID, "default");
+                var retStore = elementStore.GetMappings(mapcol.ProfileGuid);
                 foreach (var element in retStore)
                 {
                     Assert.Contains(element.LayoutElement, mapcol.Select(x => x.LayoutElement));
@@ -326,9 +317,7 @@ namespace Snowflake.Model.Tests
 
                 await elementStore.AddMappingsAsync(mapcol, "default");
 
-                var retStore = await elementStore.GetMappingsAsync(
-                    mapcol.ControllerID, InputDriver.Keyboard, "Keyboard",
-                    IDeviceEnumerator.VirtualVendorID, "default");
+                var retStore = await elementStore.GetMappingsAsync(mapcol.ProfileGuid);
                 foreach (var element in retStore)
                 {
                     Assert.Contains(element.LayoutElement, mapcol.Select(x => x.LayoutElement));
@@ -344,7 +333,7 @@ namespace Snowflake.Model.Tests
             var stone = new StoneProvider();
             var nes = stone.Controllers["NES_CONTROLLER"];
             var mapcol = new ControllerElementMappingProfile("Keyboard",
-                nes,
+                           nes,
                            InputDriver.Keyboard,
                            IDeviceEnumerator.VirtualVendorID,
                            new KeyboardDeviceInstance().DefaultLayout);

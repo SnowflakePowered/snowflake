@@ -18,6 +18,8 @@ namespace Snowflake.Model.Database.Models
 
         public string ProfileName { get; set; }
 
+        public Guid ProfileID { get; set; }
+
         public int VendorID { get; set; }
 
         public InputDriver DriverType { get; set; }
@@ -41,7 +43,7 @@ namespace Snowflake.Model.Database.Models
                .IsRequired();
 
             modelBuilder.Entity<ControllerElementMappingCollectionModel>()
-                .HasKey(p => new {p.ControllerID, p.DriverType, p.DeviceName, p.VendorID, p.ProfileName});
+                .HasKey(p => p.ProfileID);
         }
     }
 }

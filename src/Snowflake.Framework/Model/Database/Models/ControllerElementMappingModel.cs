@@ -13,21 +13,12 @@ namespace Snowflake.Model.Database.Models
     {
         public ControllerElement LayoutElement { get; set; }
         public DeviceCapability DeviceCapability { get; set; }
-
-        public ControllerId ControllerID { get; set; }
-        public string DeviceName { get; set; }
-        public string ProfileName { get; set; }
-        public int VendorID { get; set; }
+        public Guid ProfileID { get; set; }
 
         public ControllerElementMappingCollectionModel Collection { get; set; }
-        public InputDriver DriverType { get; internal set; }
 
         internal static void SetupModel(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ControllerElementMappingModel>()
-                .Property(p => p.ControllerID)
-                .HasConversion(p => p.ToString(), s => s);
-
             modelBuilder.Entity<ControllerElementMappingModel>()
                 .Property(p => p.LayoutElement)
                 .HasConversion(e => Enums.AsString(e), e => Enums.Parse<ControllerElement>(e))
@@ -41,10 +32,10 @@ namespace Snowflake.Model.Database.Models
             modelBuilder.Entity<ControllerElementMappingModel>()
                 .HasOne(e => e.Collection)
                 .WithMany(e => e!.MappedElements)
-                .HasForeignKey(p => new { p.ControllerID, p.DriverType, p.DeviceName, p.VendorID, p.ProfileName });
+                .HasForeignKey(p => p.ProfileID);
 
             modelBuilder.Entity<ControllerElementMappingModel>()
-                .HasKey(p => new {p.ControllerID, p.DeviceName, p.VendorID, p.DriverType, p.ProfileName, p.LayoutElement});
+                .HasKey(p => new {p.ProfileID, p.LayoutElement});
         }
     }
 }
