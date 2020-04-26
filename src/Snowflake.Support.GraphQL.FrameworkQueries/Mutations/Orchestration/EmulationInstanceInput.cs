@@ -11,7 +11,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
     {
         public Guid InstanceID { get; set; }
     }
-    internal sealed class CEmulationInstanceInputType
+    internal sealed class EmulationInstanceInputType
         : InputObjectType<EmulationInstanceInput>
     {
         protected override void Configure(IInputObjectTypeDescriptor<EmulationInstanceInput> descriptor)

@@ -13,6 +13,10 @@
   <ItemGroup>
     <ProjectReference Condition="$(_SnowflakeUseDevelopmentSDK)" Include="..\Snowflake.Framework.Remoting.GraphQL\Snowflake.Framework.Remoting.GraphQL.csproj" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="Mutations\Ports\" />
+  </ItemGroup>
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\Snowflake.ruleset</CodeAnalysisRuleSet>
     <NoWarn>1701;1702;1591;</NoWarn>
