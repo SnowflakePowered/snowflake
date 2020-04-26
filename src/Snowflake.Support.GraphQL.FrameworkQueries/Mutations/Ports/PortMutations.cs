@@ -1,7 +1,9 @@
 ﻿using HotChocolate.Types;
 using Snowflake.Orchestration.Extensibility;
 using Snowflake.Remoting.GraphQL;
+using Snowflake.Remoting.GraphQL.FrameworkQueries.Mutations.Relay;
 using Snowflake.Services;
+using Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,6 +17,8 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Ports
         {
             descriptor.Name("Mutation");
             descriptor.Field("updatePortDevice")
+                .UseAutoSubscription()
+                .UseClientMutationId()
                 .Description("Updates a virtual port device.")
                 .Argument("input", arg => arg.Type<NonNullType<UpdatePortDeviceInputType>>())
                 .Resolver(ctx =>
@@ -33,6 +37,8 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Ports
                 })
                 .Type<NonNullType<UpdatePortPayloadType>>();
             descriptor.Field("clearPortDevice")
+                .UseAutoSubscription()
+                .UseClientMutationId()
                 .Argument("input", arg => arg.Type<NonNullType<ClearPortDeviceInputType>>())
                 .Resolver(ctx =>
                 {

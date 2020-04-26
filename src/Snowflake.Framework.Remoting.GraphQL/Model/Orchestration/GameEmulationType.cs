@@ -24,6 +24,9 @@ namespace Snowflake.Remoting.GraphQL.Model.Orchestration
             descriptor.Field(e => e.ControllerPorts)
                 .Description("The input devices and their associations to the emulated input devices being used for this emulation.")
                 .Type<NonNullType<ListType<NonNullType<EmulatedControllerType>>>>();
+            descriptor.Field(e => e.EmulationState)
+                .Description("The current state of the emulation.")
+                .Type<NonNullType<GameEmulationStateEnum>>();
         }
     }
 }
