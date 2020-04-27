@@ -108,7 +108,7 @@ namespace Snowflake.Services
                 })
                 .AddType(new ObjectTypeExtension(descriptor =>
                 {
-                    descriptor.Name("Query");
+                    descriptor.ExtendQuery();
                     descriptor.Field(fieldName)
                     .Description(description)
                     .Type(new NamedTypeNode(typeName))

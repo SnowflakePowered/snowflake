@@ -15,7 +15,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Queries.Game.Orchestration
     {
         protected override void Configure(IObjectTypeDescriptor<IGame> descriptor)
         {
-            descriptor.Name("Game");
+            descriptor.ExtendGame();
             descriptor.Field("orchestration")
                 .Description("Provides access to game orchestration information for orchestrators that support this game.")
                 .Resolver(ctx =>

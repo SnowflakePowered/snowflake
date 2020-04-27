@@ -20,7 +20,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Configuration
     {
         protected override void Configure(IObjectTypeDescriptor descriptor)
         {
-            descriptor.Name("Mutation");
+            descriptor.ExtendMutation();
             descriptor.Field("updateGameConfigurationValues")
                 .UseAutoSubscription()
                 .UseClientMutationId()

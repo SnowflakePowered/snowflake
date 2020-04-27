@@ -12,7 +12,7 @@ namespace Snowflake.Support.Remoting.Electron.ThemeProvider.GraphQL
     {
         protected override void Configure(IObjectTypeDescriptor descriptor)
         {
-            descriptor.Name("Query");
+            descriptor.ExtendQuery();
             descriptor.Field("electronPackages")
                 .Description("All loaded Electron ASAR theme packages.")
                 .Resolver(ctx => ctx.SnowflakeService<IElectronPackageProvider>().Interfaces)

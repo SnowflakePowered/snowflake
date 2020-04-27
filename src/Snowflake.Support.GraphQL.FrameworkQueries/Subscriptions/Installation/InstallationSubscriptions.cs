@@ -19,7 +19,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Installation
     {
         protected override void Configure(IObjectTypeDescriptor descriptor)
         {
-            descriptor.Name("Subscription");
+            descriptor.ExtendSubscription();
 
             descriptor.Field("onInstallationStep")
                 .Description("A subscription for when a game installation step occurs.")

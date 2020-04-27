@@ -16,7 +16,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Game
     {
         protected override void Configure(IObjectTypeDescriptor<IGame> descriptor)
         {
-            descriptor.Name("Game");
+            descriptor.ExtendGame();
 
             descriptor.Field("saves")
                 .Argument("saveType", arg => 

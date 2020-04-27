@@ -20,8 +20,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Game
     {
         protected override void Configure(IObjectTypeDescriptor descriptor)
         {
-            descriptor
-                .Name("Query");
+            descriptor.ExtendQuery();
 
             descriptor
                 .Field("games")

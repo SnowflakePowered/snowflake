@@ -16,7 +16,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Ports
     {
         protected override void Configure(IObjectTypeDescriptor descriptor)
         {
-            descriptor.Name("Mutation");
+            descriptor.ExtendMutation();
             descriptor.Field("updatePortDevice")
                 .UseAutoSubscription()
                 .UseClientMutationId()

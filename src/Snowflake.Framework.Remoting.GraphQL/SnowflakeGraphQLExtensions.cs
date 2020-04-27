@@ -1,6 +1,7 @@
 ﻿using HotChocolate.Resolvers;
 using HotChocolate.Types;
 using Snowflake.Extensibility.Queueing;
+using Snowflake.Model.Game;
 using Snowflake.Remoting.GraphQL.Model.Queueing;
 using Snowflake.Services;
 using System;
@@ -15,6 +16,26 @@ namespace Snowflake.Remoting.GraphQL
     public static class SnowflakeGraphQLExtensions
     {
         internal static readonly string ServicesNamespace = "Snowflake.Remoting.GraphQL.ServiceContainer";
+
+        /// <summary>
+        /// Extends the root query type.
+        /// </summary>
+        public static IObjectTypeDescriptor ExtendQuery(this IObjectTypeDescriptor descriptor) => descriptor.Name("Query");
+
+        /// <summary>
+        /// Extends the root mutation type.
+        /// </summary>
+        public static IObjectTypeDescriptor ExtendMutation(this IObjectTypeDescriptor descriptor) => descriptor.Name("Mutation");
+
+        /// <summary>
+        /// Extends the root subscription type
+        /// </summary>
+        public static IObjectTypeDescriptor ExtendSubscription(this IObjectTypeDescriptor descriptor) => descriptor.Name("Subscription");
+
+        /// <summary>
+        /// Extends the Game query type.
+        /// </summary>
+        public static IObjectTypeDescriptor<IGame> ExtendGame(this IObjectTypeDescriptor<IGame> descriptor) => descriptor.Name("Game");
 
         /// <summary>
         /// Retrieves a service from the Snowflake services container 

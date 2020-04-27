@@ -19,7 +19,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Scraping
     {
         protected override void Configure(IObjectTypeDescriptor descriptor)
         {
-            descriptor.Name("Subscription");
+            descriptor.ExtendSubscription();
 
             descriptor.Field("onScrapeContextStep")
                 .Description("A subscription for when a scrape context step occurs.")

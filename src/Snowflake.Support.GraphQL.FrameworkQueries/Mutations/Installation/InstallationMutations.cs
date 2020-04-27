@@ -26,7 +26,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
     {
         protected override void Configure(IObjectTypeDescriptor descriptor)
         {
-            descriptor.Name("Mutation");
+            descriptor.ExtendMutation();
 
             descriptor.Field("createValidation")
                 .Description("Creates a validation intallation with the specified game and orchestrator.")

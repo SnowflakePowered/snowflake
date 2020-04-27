@@ -17,7 +17,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Saving
     {
         protected override void Configure(IObjectTypeDescriptor descriptor)
         {
-            descriptor.Name("Mutation");
+            descriptor.ExtendMutation();
             descriptor.Field("createSaveProfile")
                 .Description("Create a new save profile.")
                 .UseClientMutationId()

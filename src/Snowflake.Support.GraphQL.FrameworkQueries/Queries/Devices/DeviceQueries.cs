@@ -13,7 +13,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Devices
     {
         protected override void Configure(IObjectTypeDescriptor descriptor)
         {
-            descriptor.Name("Query");
+            descriptor.ExtendQuery();
             descriptor.Field("devices")
                 .Type<NonNullType<ListType<NonNullType<InputDeviceType>>>>()
                 .Description("Provides access to input devices on the system.")
