@@ -146,18 +146,22 @@ namespace Snowflake.Support.GraphQL.Server
                 })
                 .AddQueryType(descriptor =>
                 {
-                    descriptor.Name("Query");
+                    descriptor.Name("Query")
+                        .Description("The query root of Snowflake's GraphQL interface.");
                 });
 
             if (!queryOnly)
             {
                 schemaBuilder.AddMutationType(descriptor =>
                 {
-                    descriptor.Name("Mutation");
+                    descriptor.Name("Mutation")
+                        .Description("The mutation root of Snowflake's GraphQL interface. " +
+                        "Snowflake provides mutations that implement Relay Input Object Mutations Specifications.");
                 })
                 .AddSubscriptionType(descriptor =>
                 {
-                    descriptor.Name("Subscription");
+                    descriptor.Name("Subscription")
+                        .Description("The subscription root of Snowflake's GraphQL interface.");
                 });
             }
 

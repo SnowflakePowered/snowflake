@@ -6,6 +6,7 @@ using Snowflake.Support.GraphQLFrameworkQueries.Queries.Game.LibraryExtensions;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Snowflake.Remoting.GraphQL;
 
 namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.LibraryExtensions
 {

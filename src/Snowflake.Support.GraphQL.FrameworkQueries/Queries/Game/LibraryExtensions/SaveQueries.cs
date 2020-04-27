@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Snowflake.Remoting.GraphQL;
 
 namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Game
 {

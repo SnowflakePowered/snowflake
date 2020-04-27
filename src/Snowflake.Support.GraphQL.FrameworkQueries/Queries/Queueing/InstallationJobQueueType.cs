@@ -21,7 +21,8 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Queries.Queueing
                 .UseJobQueue();
 
             descriptor.Field("job")
-                .Argument("jobId", arg => arg.Type<NonNullType<UuidType>>())
+                .Argument("jobId", arg => arg.Type<NonNullType<UuidType>>()
+                    .Description("The `jobId` of the installation job that can be used to query the installation state."))
                 .Resolver(ctx =>
                 {
                     var context = ctx.Parent<IAsyncJobQueue<TaskResult<IFile>>>();
