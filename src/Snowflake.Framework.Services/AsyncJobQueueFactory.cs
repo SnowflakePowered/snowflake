@@ -33,7 +33,7 @@ namespace Snowflake
         {
             if (this.JobQueues.TryGetValue((typeof(TAsyncEnumerable), typeof(T), disposeEnumerable), out var queue))
             {
-                if (queue is AsyncJobQueue<T> plainJobQueue && typeof(TAsyncEnumerable) == typeof(IAsyncEnumerable<T>)) 
+                if (queue is AsyncJobQueue<T> && typeof(TAsyncEnumerable) == typeof(IAsyncEnumerable<T>)) 
                     return (IAsyncJobQueue<TAsyncEnumerable, T>)queue;
                 if (queue is AsyncJobQueue<TAsyncEnumerable, T>)
                     return (IAsyncJobQueue<TAsyncEnumerable, T>)queue;
