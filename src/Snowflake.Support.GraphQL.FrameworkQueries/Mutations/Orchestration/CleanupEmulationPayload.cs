@@ -1,5 +1,6 @@
 ﻿using HotChocolate.Types;
 using Snowflake.Orchestration.Extensibility;
+using Snowflake.Remoting.GraphQL.FrameworkQueries.Mutations.Relay;
 using Snowflake.Remoting.GraphQL.Model.Orchestration;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Text;
 namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
 {
     public sealed class CleanupEmulationPayload
+        : RelayMutationBase
     {
         public Guid InstanceID { get; set; }
         public bool Success { get; set; }
@@ -18,7 +20,8 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
     {
         protected override void Configure(IObjectTypeDescriptor<CleanupEmulationPayload> descriptor)
         {
-            descriptor.Name(nameof(CleanupEmulationPayload));
+            descriptor.Name(nameof(CleanupEmulationPayload))
+                .WithClientMutationId();
 
             descriptor.Field(i => i.InstanceID)
                 .Name("instanceId")

@@ -8,17 +8,11 @@ using System.Text;
 namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Scraping
 {
     internal class OnScrapeContextCompleteMessage
-    : EventMessage
+    : SingleIdentifierChannelMessage
     {
         public OnScrapeContextCompleteMessage(Guid jobId, ScrapeContextCompletePayload payload)
-            : base(CreateEventDescription(jobId), payload)
+            : base(jobId, payload, "onScrapeContextComplete", nameof(jobId))
         {
-        }
-
-        private static EventDescription CreateEventDescription(Guid jobId)
-        {
-            return new EventDescription("onScrapeContextComplete",
-                new ArgumentNode("jobId", new StringValueNode(jobId.ToString("N"))));
         }
     }
 }

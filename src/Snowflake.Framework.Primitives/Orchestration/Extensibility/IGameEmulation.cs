@@ -79,7 +79,7 @@ namespace Snowflake.Orchestration.Extensibility
         Task SetupEnvironment();
 
         /// <summary>
-        /// Begin the emulation instancee (run the game).
+        /// Begin the emulation instance (run the game).
         /// <para>
         /// This method must be idempotent. Once an emulation has started, this method must return the same cancellation token
         /// for the same process instance in future calls. If the emulation has stopped, this method must do nothing.

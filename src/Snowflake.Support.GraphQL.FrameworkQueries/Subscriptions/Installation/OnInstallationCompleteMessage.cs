@@ -9,17 +9,11 @@ using System.Text;
 namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Installation
 {
     internal class OnInstallationCompleteMessage
-    : EventMessage
+    : SingleIdentifierChannelMessage
     {
         public OnInstallationCompleteMessage(Guid jobId, InstallationCompletePayload payload)
-            : base(CreateEventDescription(jobId), payload)
+            : base(jobId, payload, "onInstallationComplete", nameof(jobId))
         {
-        }
-
-        private static EventDescription CreateEventDescription(Guid jobId)
-        {
-            return new EventDescription("onInstallationComplete",
-                new ArgumentNode("jobId", new StringValueNode(jobId.ToString("N"))));
         }
     }
 }
