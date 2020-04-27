@@ -24,19 +24,23 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Input
             if (identifier.InstanceID.HasValue)
             {
                 var instanceIdDevice = devices.FirstOrDefault(d => d.InstanceGuid == identifier.InstanceID.Value);
-                if (instanceIdDevice == null) throw new ArgumentException("No input device was found with the specified instance GUID");
+                if (instanceIdDevice == null) 
+                    throw new ArgumentException("No input device was found with the specified instance GUID");
                 return (instanceIdDevice.VendorID, instanceIdDevice.DeviceName);
             }
 
-            if (!identifier.VendorID.HasValue) throw new ArgumentException("Neither Instance GUID nor Vendor ID were specified.");
+            if (!identifier.VendorID.HasValue) 
+                throw new ArgumentException("Neither Instance GUID nor Vendor ID were specified.");
             if (identifier.ProductID.HasValue)
             {
                 var productIdDevice = devices.FirstOrDefault(d => d.VendorID == identifier.VendorID.Value && d.ProductID == identifier.ProductID.Value);
-                if (productIdDevice == null) throw new ArgumentException("No input device was found with the specified combination of Vendor ID and Product ID");
+                if (productIdDevice == null) 
+                    throw new ArgumentException("No input device was found with the specified combination of Vendor ID and Product ID");
                 return (productIdDevice.VendorID, productIdDevice.DeviceName);
             }
 
-            if (!identifier.DeviceName.HasValue) throw new ArgumentException("No valid combination of Vendor ID, Product ID, and Device Name was provided.");
+            if (!identifier.DeviceName.HasValue) 
+                throw new ArgumentException("No valid combination of Vendor ID, Product ID, and Device Name was provided.");
             return (identifier.VendorID, identifier.DeviceName);
         }
     }

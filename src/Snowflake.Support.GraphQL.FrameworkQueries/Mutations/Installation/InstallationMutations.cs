@@ -1,4 +1,5 @@
-﻿using HotChocolate.Types;
+﻿using HotChocolate;
+using HotChocolate.Types;
 using Snowflake.Extensibility;
 using Snowflake.Extensibility.Queueing;
 using Snowflake.Filesystem;
@@ -42,12 +43,24 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
                         .GetCollection<IEmulatorOrchestrator>()[arg.Orchestrator];
 
                     var game = await ctx.SnowflakeService<IGameLibrary>().GetGameAsync(arg.GameID);
-                    if (orchestrator == null) throw new ArgumentException("The specified orchestrator plugin is not installed.");
-                    if (game == null) throw new ArgumentException("The specified game was not found.");
+                    if (orchestrator == null) 
+                        return ErrorBuilder.New()
+                                .SetCode("INST_NOTFOUND_ORCHESTRATOR")
+                                .SetMessage("The specified orchestrator was not found.")
+                                .Build();
+                    if (game == null) 
+                        return ErrorBuilder.New()
+                                    .SetCode("INST_NOTFOUND_GAME")
+                                    .SetMessage("The specified game does not exist.")
+                                    .Build();
                     var compatibility = orchestrator.CheckCompatibility(game);
                     if (compatibility != EmulatorCompatibility.RequiresValidation)
-                        throw new ArgumentException("The specified orchestrator can not validate the specified game. Either it is unsupported, " +
-                            "or has already been validated.");
+                        return ErrorBuilder.New()
+                                        .SetCode("INST_ORCH_CANNOTVALIDATE")
+                                        .SetMessage("The specified orchestrator can not validate the specified game. Either it is unsupported, " +
+                                                    "or has already been validated.")
+                                        .SetExtension("compatibility", compatibility.ToString())
+                                        .Build();
                     var jobId = await jobQueue.QueueJob(orchestrator.ValidateGamePrerequisites(game));
                     ctx.AssignGameGuid(game, jobId);
                     return new CreateValidationPayload
@@ -73,8 +86,16 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
                         .GetCollection<IGameInstaller>()[arg.Installer];
 
                     var game = await ctx.SnowflakeService<IGameLibrary>().GetGameAsync(arg.GameID);
-                    if (installer == null) throw new ArgumentException("The specified installer plugin is not installed.");
-                    if (game == null) throw new ArgumentException("The specified game was not found.");
+                    if (installer == null) 
+                        return ErrorBuilder.New()
+                                    .SetCode("INST_NOTFOUND_INSTALLER")
+                                    .SetMessage("The specified installer was not found.")
+                                    .Build();
+                    if (game == null) 
+                        return ErrorBuilder.New()
+                                    .SetCode("INST_NOTFOUND_GAME")
+                                    .SetMessage("The specified game does not exist.")
+                                    .Build();
                     var jobId = await jobQueue.QueueJob(installer.Install(game, arg.Artifacts));
                     ctx.AssignGameGuid(game, jobId);
                     return new CreateInstallationPayload
@@ -104,6 +125,10 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
                     }
                     else
                     {
+                        ctx.ReportError(ErrorBuilder.New()
+                            .SetException(newFile.Error)
+                            .SetCode("INST_ERR_INSTALL")
+                            .Build());
                         jobQueue.RequestCancellation(arg.JobID);
                         await ctx.SendEventMessage(new OnInstallationCancelledMessage(arg.JobID, new InstallationCancelledPayload()
                         {
