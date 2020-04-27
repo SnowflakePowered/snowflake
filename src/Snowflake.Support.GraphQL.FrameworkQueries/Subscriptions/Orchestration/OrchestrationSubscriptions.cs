@@ -1,4 +1,5 @@
 ﻿using HotChocolate.Types;
+using Snowflake.Remoting.GraphQL;
 using Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration;
 using System;
 using System.Collections.Generic;

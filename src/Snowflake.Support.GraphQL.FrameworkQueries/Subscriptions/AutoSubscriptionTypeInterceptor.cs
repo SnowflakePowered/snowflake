@@ -53,8 +53,10 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions
                     });
                 def.Fields.Add(descriptor.CreateDefinition());
             }
-            def.Description = 
-@"Snowflake provides two types of definition in its framework queries:
+            def.Description += 
+@"
+
+Snowflake provides two types of definition in its framework queries:
   * `onVerbObject`
   * `onObjectVerb(Uuid!)`
 
