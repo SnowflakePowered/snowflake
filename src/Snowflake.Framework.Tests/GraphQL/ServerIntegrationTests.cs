@@ -34,7 +34,7 @@ namespace Snowflake.Remoting.GraphQL.Tests
             var container = new ServiceContainer(appDataDirectory.FullName, "http://localhost:9797");
             var schema = new GraphQLSchemaRegistrationProvider(container.Get<ILogProvider>().GetLogger("graphql"));
             var schemaBuilder = new HotChocolateSchemaBuilder(schema, container.GetServiceContainerAsServiceProvider());
-            new PlatformQueriesContainer().ConfigureHotChocolate(schema);
+            new QueryContainer().ConfigureHotChocolate(schema);
             schemaBuilder.Create(false)
                 .Create()
                 .MakeExecutable();

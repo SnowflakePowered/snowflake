@@ -13,7 +13,6 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
         public Guid JobID { get; set; }
         public List<string> FileTraversers { get; set; }
         public List<string> MetadataTraversers { get; set; }
-
     }
 
     internal sealed class ApplyScrapeContextInputType

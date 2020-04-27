@@ -42,14 +42,13 @@ using Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Orchestration;
 
 namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
 {
-    public class PlatformQueriesContainer : IComposable
+    public class QueryContainer : IComposable
     {
         /// <inheritdoc/>
         [ImportService(typeof(IGraphQLSchemaRegistrationProvider))]
         [ImportService(typeof(IServiceRegistrationProvider))]
         public void Compose(IModule module, IServiceRepository coreInstance)
         {
-          
             var hotChocolate = coreInstance.Get<IGraphQLSchemaRegistrationProvider>();
             this.ConfigureHotChocolate(hotChocolate);
         }
