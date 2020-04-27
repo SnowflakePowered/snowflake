@@ -9,10 +9,12 @@ using Snowflake.Remoting.GraphQL;
 using Snowflake.Remoting.GraphQL.FrameworkQueries.Mutations.Relay;
 using Snowflake.Services;
 using Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions;
+using Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Orchestration;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
@@ -25,8 +27,8 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
             descriptor.Name("Mutation");
             descriptor.Field("createEmulationInstance")
                 .Description("Create an emulation instance.")
-                .UseAutoSubscription()
                 .UseClientMutationId()
+                .UseAutoSubscription()
                 .Argument("input", a => a.Type<CreateEmulationInstanceInputType>())
                 .Resolver(async ctx =>
                 {
@@ -100,7 +102,6 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
             descriptor.Field("cleanupEmulation")
                 .Description("Immediately shuts down and cleans up the game emulation. This may or may not persist the " +
                 "save game depending on the emulator, but there may be data loss if the game is not saved properly.")
-                .UseAutoSubscription()
                 .UseClientMutationId()
                 .Argument("input", arg => arg.Type<EmulationInstanceInputType>())
                 .Resolver(async ctx =>
@@ -134,16 +135,18 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                             ctx.GetGameCache().TryRemove(input.InstanceID, out var _);
                         }
                     }
-                    return new CleanupEmulationPayload()
+                    var payload = new CleanupEmulationPayload()
                     {
+                        ClientMutationID = input.ClientMutationID,
                         Success = success,
                         InstanceID = input.InstanceID
                     };
+                    await ctx.SendEventMessage(new OnEmulationCleanup(payload));
+                    return payload;
                 })
                 .Type<NonNullType<CleanupEmulationPayloadType>>();
             descriptor.Field("setupEmulationEnvironment")
                 .Description("Prepares the emulation environment for this game emulation.")
-                .UseAutoSubscription()
                 .UseClientMutationId()
                 .Argument("input", arg => arg.Type<EmulationInstanceInputType>())
                 .Resolver(async ctx =>
@@ -173,16 +176,18 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                             .SetMessage("A fatal error occurred with setting up the environment for this game emulation.")
                             .Build();
                     }
-                    return new EmulationInstancePayload()
+                    var payload = new EmulationInstancePayload()
                     {
+                        ClientMutationID = input.ClientMutationID,
                         GameEmulation = gameEmulation,
                         InstanceID = input.InstanceID,
                     };
+                    await ctx.SendEventMessage(new OnEmulationSetupEnvironment(payload));
+                    return payload;
                 })
                 .Type<NonNullType<EmulationInstancePayloadType>>();
             descriptor.Field("compileEmulationConfiguration")
                .Description("Compiles the configuation file for this emulator.")
-               .UseAutoSubscription()
                .UseClientMutationId()
                .Argument("input", arg => arg.Type<EmulationInstanceInputType>())
                .Resolver(async ctx =>
@@ -212,16 +217,18 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                            .SetMessage("A fatal error occurred with compiling the configuration for this game emulation.")
                            .Build();
                    }
-                   return new EmulationInstancePayload()
+                   var payload = new EmulationInstancePayload()
                    {
+                       ClientMutationID = input.ClientMutationID,
                        GameEmulation = gameEmulation,
                        InstanceID = input.InstanceID,
                    };
+                   await ctx.SendEventMessage(new OnEmulationCompileConfiguration(payload));
+                   return payload;
                })
                .Type<NonNullType<EmulationInstancePayloadType>>();
             descriptor.Field("restoreEmulationSave")
                 .Description("Restores the save game from the save profile of the game emulation into the emulation working folder.")
-                .UseAutoSubscription()
                 .UseClientMutationId()
                 .Argument("input", arg => arg.Type<EmulationInstanceInputType>())
                 .Resolver(async ctx =>
@@ -251,16 +258,18 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                             .SetMessage("An error occurred with restoring the save profile for this game emulation.")
                             .Build();
                     }
-                    return new EmulationInstancePayload()
+                    var payload = new EmulationInstancePayload()
                     {
+                        ClientMutationID = input.ClientMutationID,
                         GameEmulation = gameEmulation,
                         InstanceID = input.InstanceID,
                     };
+                    await ctx.SendEventMessage(new OnEmulationRestoreSave(payload));
+                    return payload;
                 })
                 .Type<NonNullType<EmulationInstancePayloadType>>();
             descriptor.Field("startEmulation")
                 .Description("Starts the specified emulation.")
-                .UseAutoSubscription()
                 .UseClientMutationId()
                 .Argument("input", arg => arg.Type<EmulationInstanceInputType>())
                 .Resolver(async ctx =>
@@ -278,9 +287,21 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                             .SetCode("ORCH_INVALID_STATE")
                             .SetMessage("The specified orchestration mutation is not valid for the current state of the game emulation.")
                             .Build();
+
+                    var payload = new EmulationInstancePayload()
+                    {
+                        ClientMutationID = input.ClientMutationID,
+                        GameEmulation = gameEmulation,
+                        InstanceID = input.InstanceID,
+                    };
+
                     try
                     {
-                        await gameEmulation.RestoreSaveGame();
+                        var token = gameEmulation.StartEmulation();
+                        token.Register(async () =>
+                        {
+                            await ctx.SendEventMessage(new OnEmulationStop(payload));
+                        });
                     }
                     catch (Exception e)
                     {
@@ -290,16 +311,13 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                             .SetMessage("An error occurred with starting this game emulation.")
                             .Build();
                     }
-                    return new EmulationInstancePayload()
-                    {
-                        GameEmulation = gameEmulation,
-                        InstanceID = input.InstanceID,
-                    };
+                    
+                    await ctx.SendEventMessage(new OnEmulationStart(payload));
+                    return payload;
                 })
                 .Type<NonNullType<EmulationInstancePayloadType>>();
             descriptor.Field("stopEmulation")
                 .Description("Stops the specified emulation.")
-                .UseAutoSubscription()
                 .UseClientMutationId()
                 .Argument("input", arg => arg.Type<EmulationInstanceInputType>())
                 .Resolver(async ctx =>
@@ -319,7 +337,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                             .Build();
                     try
                     {
-                        await gameEmulation.RestoreSaveGame();
+                        await gameEmulation.StopEmulation();
                     }
                     catch (Exception e)
                     {
@@ -338,7 +356,6 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                 .Type<NonNullType<EmulationInstancePayloadType>>();
             descriptor.Field("persistEmulationSave")
                 .Description("Persists the current state of the emulation save file to the save profile.")
-                .UseAutoSubscription()
                 .UseClientMutationId()
                 .Argument("input", arg => arg.Type<EmulationInstanceInputType>())
                 .Resolver(async ctx =>
@@ -360,12 +377,15 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                     try
                     {
                         var save = await gameEmulation.PersistSaveGame();
-                        return new PersistEmulationSavePayload()
+
+                        var payload = new PersistEmulationSavePayload()
                         {
                             GameEmulation = gameEmulation,
                             InstanceID = input.InstanceID,
                             SaveGame = save,
                         };
+                        await ctx.SendEventMessage(new OnEmulationPersistSave(payload));
+                        return payload;
                     }
                     catch (Exception e)
                     {

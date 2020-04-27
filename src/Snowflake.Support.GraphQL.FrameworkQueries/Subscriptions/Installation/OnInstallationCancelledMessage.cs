@@ -9,17 +9,11 @@ using System.Text;
 namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Installation
 {
     internal class OnInstallationCancelledMessage
-    : EventMessage
+    : SingleIdentifierChannelMessage
     {
         public OnInstallationCancelledMessage(Guid jobId, InstallationCancelledPayload payload)
-            : base(CreateEventDescription(jobId), payload)
+            : base(jobId, payload, "onInstallationCancelled", nameof(jobId))
         {
-        }
-
-        private static EventDescription CreateEventDescription(Guid jobId)
-        {
-            return new EventDescription("onInstallationCancelled",
-                new ArgumentNode("jobId", new StringValueNode(jobId.ToString("N"))));
         }
     }
 }
