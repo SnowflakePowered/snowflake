@@ -168,7 +168,8 @@ namespace Snowflake.Extensibility.Queueing
         public ValueTask<Guid> QueueJob(TAsyncEnumerable asyncEnumerable)
         {
             var guid = Guid.NewGuid();
-            var cancel = new CancellationTokenSource();
+            // We will dispose this token later with the enumerator.
+            var cancel = new CancellationTokenSource(); // lgtm [cs/local-not-disposed]
             var enumerator = asyncEnumerable.WithCancellation(cancel.Token).ConfigureAwait(false).GetAsyncEnumerator();
             this.Enumerables.Add(guid, asyncEnumerable);
             this.Enumerators.Add(guid, (cancel, enumerator));
@@ -191,7 +192,8 @@ namespace Snowflake.Extensibility.Queueing
                 this.Enumerables.Remove(guid);
             }
 
-            var cancel = new CancellationTokenSource();
+            // We will dispose this token later with the enumerator.
+            var cancel = new CancellationTokenSource(); // lgtm [cs/local-not-disposed]
             var enumerator = asyncEnumerable.WithCancellation(cancel.Token).ConfigureAwait(false).GetAsyncEnumerator();
             this.Enumerators.Add(guid, (cancel, enumerator));
             this.Enumerables.Add(guid, asyncEnumerable);

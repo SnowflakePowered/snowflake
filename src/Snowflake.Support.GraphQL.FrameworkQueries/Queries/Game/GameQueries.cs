@@ -55,15 +55,12 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Game
                         return next.Invoke(context);
                     }
 
-                    if (context.Field.Arguments["where"].Type is InputObjectType iot && iot is IFilterInputType fit)
+                    if (context.Field.Arguments["where"].Type is InputObjectType iot && iot is IFilterInputType)
                     {
                         var filter = new QueryableFilterVisitorContext(iot, typeof(IGameRecordQuery), context.GetTypeConversion(), true);
                         QueryableFilterVisitor.Default.Visit(valueNode, filter);
 
                         var expr = filter.CreateFilter<IGameRecordQuery>();
-                        
-                        //var queryResult = queryBuilder.QueryGames(expr);
-                        //queryBuilder.GetGames(g => g.Metadata.Any(g => g.MetadataKey == "x"));
                         
                         if (!excludeDeleted)
                         {

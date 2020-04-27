@@ -75,9 +75,6 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Queries.Game.Orchestration
                 {
                     (IGame game, IEmulatorOrchestrator orchestrator) = ctx.Parent<(IGame, IEmulatorOrchestrator)>();
                     var portStore = ctx.SnowflakeService<IEmulatedPortStore>();
-                    var inputConfig = ctx.SnowflakeService<IControllerElementMappingProfileStore>();
-                    var devices = ctx.SnowflakeService<IDeviceEnumerator>();
-                    var stone = ctx.SnowflakeService<IStoneProvider>();
                     var arg = ctx.Argument<Optional<int>>("portIndex");
                     IEnumerable<IEmulatedPortDeviceEntry> deviceEntries;
                     if (arg.HasValue)

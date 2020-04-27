@@ -66,7 +66,6 @@ namespace Snowflake.Remoting.GraphQL.Model.Scraping
                 .Description("All seeds, whether culled or unculled in the tree.")
                 .Resolver(ctx =>
                 {
-                    Guid seedGuid = ctx.Argument<Guid>("seedId");
                     var seedRootContext = ctx.Parent<ISeedRootContext>();
                     return seedRootContext.GetAll();
                 })
