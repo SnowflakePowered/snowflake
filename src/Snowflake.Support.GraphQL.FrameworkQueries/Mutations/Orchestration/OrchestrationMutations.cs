@@ -141,7 +141,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                         Success = success,
                         InstanceID = input.InstanceID
                     };
-                    await ctx.SendEventMessage(new OnEmulationCleanup(payload));
+                    await ctx.SendEventMessage(new OnEmulationCleanupMessage(payload));
                     return payload;
                 })
                 .Type<NonNullType<CleanupEmulationPayloadType>>();
@@ -182,7 +182,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                         GameEmulation = gameEmulation,
                         InstanceID = input.InstanceID,
                     };
-                    await ctx.SendEventMessage(new OnEmulationSetupEnvironment(payload));
+                    await ctx.SendEventMessage(new OnEmulationSetupEnvironmentMessage(payload));
                     return payload;
                 })
                 .Type<NonNullType<EmulationInstancePayloadType>>();
@@ -223,7 +223,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                        GameEmulation = gameEmulation,
                        InstanceID = input.InstanceID,
                    };
-                   await ctx.SendEventMessage(new OnEmulationCompileConfiguration(payload));
+                   await ctx.SendEventMessage(new OnEmulationCompileConfigurationMessage(payload));
                    return payload;
                })
                .Type<NonNullType<EmulationInstancePayloadType>>();
@@ -264,7 +264,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                         GameEmulation = gameEmulation,
                         InstanceID = input.InstanceID,
                     };
-                    await ctx.SendEventMessage(new OnEmulationRestoreSave(payload));
+                    await ctx.SendEventMessage(new OnEmulationRestoreSaveMessage(payload));
                     return payload;
                 })
                 .Type<NonNullType<EmulationInstancePayloadType>>();
@@ -300,7 +300,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                         var token = gameEmulation.StartEmulation();
                         token.Register(async () =>
                         {
-                            await ctx.SendEventMessage(new OnEmulationStop(payload));
+                            await ctx.SendEventMessage(new OnEmulationStopMessage(payload));
                         });
                     }
                     catch (Exception e)
@@ -312,7 +312,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                             .Build();
                     }
                     
-                    await ctx.SendEventMessage(new OnEmulationStart(payload));
+                    await ctx.SendEventMessage(new OnEmulationStartMessage(payload));
                     return payload;
                 })
                 .Type<NonNullType<EmulationInstancePayloadType>>();
@@ -384,7 +384,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                             InstanceID = input.InstanceID,
                             SaveGame = save,
                         };
-                        await ctx.SendEventMessage(new OnEmulationPersistSave(payload));
+                        await ctx.SendEventMessage(new OnEmulationPersistSaveMessage(payload));
                         return payload;
                     }
                     catch (Exception e)

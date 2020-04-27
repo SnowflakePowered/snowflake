@@ -62,9 +62,8 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                 "scrape context regardless of the stage. There is no way to determine whether or not " +
                 "the cancellation succeeded until the scrape context is moved to the next step. Only then will it be eligible for deletion.")
                 .UseClientMutationId()
-                .UseAutoSubscription()
                 .Argument("input", arg => arg.Type<CancelScrapeContextInputType>())
-                .Resolver(ctx =>
+                .Resolver(async ctx =>
                 {
                     var input = ctx.Argument<CancelScrapeContextInput>("input");
 
@@ -80,19 +79,21 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                            .Build();
                     jobQueue.RequestCancellation(jobId);
 
-                    return new CancelScrapeContextPayload()
+                    var payload = new CancelScrapeContextPayload()
                     {
+                        ClientMutationID = input.ClientMutationID,
                         ScrapeContext = scrapeContext,
                         JobID = jobId,
                         Game = ctx.GetAssignedGame(jobId)
                     };
+                    await ctx.SendEventMessage(new OnScrapeContextCancelMessage(payload));
+                    return payload;
                 })
                 .Type<NonNullType<CancelScrapeContextPayloadType>>();
 
             descriptor.Field("deleteScrapeContext")
                 .Description("Deletes a scrape context, halting its execution.")
                 .UseClientMutationId()
-                .UseAutoSubscription()
                 .Argument("input", arg => arg.Type<DeleteScrapeContextInputType>())
                 .Resolver(async ctx =>
                 {
@@ -111,7 +112,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                     await jobQueue.GetNext(input.JobID);
                     bool result = jobQueue.TryRemoveSource(input.JobID, out var scrapeContext);
 
-                    return new DeleteScrapeContextPayload()
+                    var payload = new DeleteScrapeContextPayload()
                     {
                         ScrapeContext = scrapeContext,
                         JobID = input.JobID,
@@ -123,6 +124,8 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                                 return g;
                             }).Unwrap()
                     };
+                    await ctx.SendEventMessage(new OnScrapeContextDeleteMessage(payload));
+                    return payload;
                 })
                 .Type<NonNullType<DeleteScrapeContextPayloadType>>();
 
@@ -169,7 +172,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                             JobID = input.JobID,
                             Game = ctx.GetAssignedGame(input.JobID)
                         };
-                        await ctx.SendEventMessage(new OnScrapeContextStepMessage(input.JobID, payload));
+                        await ctx.SendEventMessage(new OnScrapeContextStepMessage(payload));
                         return payload;
                     }
                     var completePayload = new ScrapeContextCompletePayload
@@ -179,7 +182,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                         Game = ctx.GetAssignedGame(input.JobID)
                     };
 
-                    await ctx.SendEventMessage(new OnScrapeContextCompleteMessage(input.JobID, completePayload));
+                    await ctx.SendEventMessage(new OnScrapeContextCompleteMessage(completePayload));
                     return completePayload;
 
                 }).Type<NonNullType<ScrapeContextPayloadInterface>>();
@@ -222,7 +225,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                             JobID = input.JobID,
                             Game = ctx.GetAssignedGame(input.JobID)
                         };
-                        await ctx.SendEventMessage(new OnScrapeContextStepMessage(input.JobID, payload));
+                        await ctx.SendEventMessage(new OnScrapeContextStepMessage(payload));
                     }
 
                     var completePayload = new ScrapeContextCompletePayload
@@ -232,19 +235,18 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                         Game = ctx.GetAssignedGame(input.JobID)
                     };
 
-                    await ctx.SendEventMessage(new OnScrapeContextCompleteMessage(input.JobID, completePayload));
+                    await ctx.SendEventMessage(new OnScrapeContextCompleteMessage(completePayload));
                     return completePayload;
 
                 }).Type<NonNullType<ScrapeContextCompletePayloadType>>();
 
-            descriptor.Field("applyScrapeResults")
+            descriptor.Field("applyScrapeContext")
                 .Description("Applies the specified scrape results to the specified game as-is. Be sure to delete the scrape context afterwards.")
                 .UseClientMutationId()
-                .UseAutoSubscription()
-                .Argument("input", arg => arg.Type<ApplyScrapeResultsInputType>())
+                .Argument("input", arg => arg.Type<ApplyScrapeContextInputType>())
                 .Resolver(async ctx =>
                 {
-                    var input = ctx.Argument<ApplyScrapeResultsInput>("input");
+                    var input = ctx.Argument<ApplyScrapeContextInput>("input");
                     var jobQueue = ctx.SnowflakeService<IAsyncJobQueueFactory>()
                         .GetJobQueue<IScrapeContext, IEnumerable<ISeed>>(false);
                     var gameLibrary = ctx.SnowflakeService<IGameLibrary>();
@@ -289,13 +291,14 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                         await traverser.TraverseAll(game, scrapeContext.Context.Root, scrapeContext.Context);
                     }
 
-                    return new ApplyScrapeResultsPayload
+                    var payload = new ApplyScrapeContextPayload
                     {
                         Game = game,
                         ScrapeContext = scrapeContext,
                     };
-
-                }).Type<NonNullType<ApplyScrapeResultsPayloadType>>();
+                    await ctx.SendEventMessage(new OnScrapeContextApplyMessage(input.JobID, payload));
+                    return payload;
+                }).Type<NonNullType<ApplyScrapeContextPayloadType>>();
         }
     }
 }

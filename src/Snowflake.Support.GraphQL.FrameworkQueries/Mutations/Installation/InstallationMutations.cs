@@ -130,27 +130,30 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
                             .SetCode("INST_ERR_INSTALL")
                             .Build());
                         jobQueue.RequestCancellation(arg.JobID);
-                        await ctx.SendEventMessage(new OnInstallationCancelledMessage(arg.JobID, new InstallationCancelledPayload()
-                        {
-                            Game = ctx.GetAssignedGame(arg.JobID),
-                            JobID = arg.JobID,
-                            ClientMutationID = arg.ClientMutationID,
-                        }));
+                        await ctx.SendEventMessage(new OnInstallationCancelMessage(
+                            new InstallationCancelledPayload()
+                            {
+                                Game = ctx.GetAssignedGame(arg.JobID),
+                                JobID = arg.JobID,
+                                ClientMutationID = arg.ClientMutationID,
+                            }));
                     }
 
                     if (moved)
                     {
                         var payload = new InstallationStepPayload()
                         {
+                            ClientMutationID = arg.ClientMutationID,
                             JobID = arg.JobID,
                             Current = newFile,
                             Game = ctx.GetAssignedGame(arg.JobID),
                         };
-                        await ctx.SendEventMessage(new OnInstallationStepMessage(arg.JobID, payload));
+                        await ctx.SendEventMessage(new OnInstallationStepMessage(payload));
                         return payload;
                     }
                     var finishedPayload = new InstallationCompletePayload()
                     {
+                        ClientMutationID = arg.ClientMutationID,
                         JobID = arg.JobID,
                         Game = ctx.GetAssignedGame(arg.JobID).ContinueWith(g =>
                         {
@@ -158,7 +161,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
                             return g;
                         }).Unwrap(),
                     };
-                    await ctx.SendEventMessage(new OnInstallationCompleteMessage(arg.JobID, finishedPayload));
+                    await ctx.SendEventMessage(new OnInstallationCompleteMessage(finishedPayload));
                     return finishedPayload;
                 })
                 .Type<NonNullType<InstallationPayloadInterface>>();
@@ -189,18 +192,19 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
                         if (newFile.Error == null)
                         {
                             await newFile;
-                            await ctx.SendEventMessage(new OnInstallationStepMessage(arg.JobID, payload));
+                            await ctx.SendEventMessage(new OnInstallationStepMessage(payload));
                         }
                         else
                         {
                             jobQueue.RequestCancellation(arg.JobID);
-                            await ctx.SendEventMessage(new OnInstallationStepMessage(arg.JobID, payload));
-                            await ctx.SendEventMessage(new OnInstallationCancelledMessage(arg.JobID, new InstallationCancelledPayload()
-                            {
-                                Game = gameTask,
-                                JobID = arg.JobID,
-                                ClientMutationID = arg.ClientMutationID,
-                            }));
+                            await ctx.SendEventMessage(new OnInstallationStepMessage(payload));
+                            await ctx.SendEventMessage(new OnInstallationCancelMessage(
+                                new InstallationCancelledPayload()
+                                {
+                                    Game = gameTask,
+                                    JobID = arg.JobID,
+                                    ClientMutationID = arg.ClientMutationID,
+                                }));
 
                         }
                     }
@@ -216,7 +220,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
                                 return g;
                             }).Unwrap(),
                     };
-                    await ctx.SendEventMessage(new OnInstallationCompleteMessage(arg.JobID, finishedPayload));
+                    await ctx.SendEventMessage(new OnInstallationCompleteMessage(finishedPayload));
                     return finishedPayload;
                 })
                 .Type<NonNullType<InstallationCompletePayloadType>>();
@@ -224,7 +228,6 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
             descriptor.Field("cancelInstallation")
                 .Description("Requests cancellation of an installation. This does not mean the installation step is complete. The installation" +
                 " must be continued to ensure proper cleanup.")
-                .UseAutoSubscription()
                 .UseClientMutationId()
                 .Argument("input", a => a.Type<NextInstallationStepInputType>())
                 .Resolver(async ctx =>
@@ -237,9 +240,12 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
 
                     var finishedPayload = new InstallationCancelledPayload()
                     {
+                        ClientMutationID = arg.ClientMutationID,
                         JobID = arg.JobID,
                         Game = ctx.GetAssignedGame(arg.JobID)
                     };
+
+                    await ctx.SendEventMessage(new OnInstallationCancelMessage(finishedPayload));
                     return finishedPayload;
                 })
                 .Type<NonNullType<InstallationCancelledPayloadType>>();

@@ -8,11 +8,11 @@ using System.Text;
 
 namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Orchestration
 {
-    internal class OnEmulationStop
+    internal class OnEmulationCompileConfigurationMessage
         : SingleIdentifierChannelMessage
     {
-        public OnEmulationStop(EmulationInstancePayload payload)
-            : base(payload.InstanceID, payload, "onEmulationStop", "instanceId")
+        public OnEmulationCompileConfigurationMessage(EmulationInstancePayload payload)
+            : base(payload.InstanceID, payload, "onEmulationCompileConfiguration", "instanceId")
         {
         }
     }

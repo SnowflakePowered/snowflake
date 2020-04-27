@@ -10,8 +10,8 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Installation
     internal class OnInstallationStepMessage
     : SingleIdentifierChannelMessage
     {
-        public OnInstallationStepMessage(Guid jobId, InstallationStepPayload payload)
-            : base(jobId, payload, "onInstallationStep", nameof(jobId))
+        public OnInstallationStepMessage(InstallationStepPayload payload)
+            : base(payload.JobID, payload, "onInstallationStep", "jobId")
         {
         }
     }

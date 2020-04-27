@@ -10,8 +10,8 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Scraping
     internal class OnScrapeContextCompleteMessage
     : SingleIdentifierChannelMessage
     {
-        public OnScrapeContextCompleteMessage(Guid jobId, ScrapeContextCompletePayload payload)
-            : base(jobId, payload, "onScrapeContextComplete", nameof(jobId))
+        public OnScrapeContextCompleteMessage(ScrapeContextCompletePayload payload)
+            : base(payload.JobID, payload, "onScrapeContextComplete", "jobId")
         {
         }
     }

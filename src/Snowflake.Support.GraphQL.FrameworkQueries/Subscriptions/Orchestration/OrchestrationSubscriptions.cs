@@ -18,7 +18,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Orchestration
                 .Argument("instanceId", arg => arg.Type<NonNullType<UuidType>>())
                 .Resolver(ctx =>
                 {
-                    var message = ctx.GetEventMessage<OnEmulationCleanup>();
+                    var message = ctx.GetEventMessage<OnEmulationCleanupMessage>();
                     return message.Payload;
                 });
             descriptor.Field("onEmulationStart")
@@ -27,7 +27,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Orchestration
                 .Argument("instanceId", arg => arg.Type<NonNullType<UuidType>>())
                 .Resolver(ctx =>
                 {
-                    var message = ctx.GetEventMessage<OnEmulationStart>();
+                    var message = ctx.GetEventMessage<OnEmulationStartMessage>();
                     return message.Payload;
                 });
             descriptor.Field("onEmulationStop")
@@ -36,7 +36,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Orchestration
                 .Argument("instanceId", arg => arg.Type<NonNullType<UuidType>>())
                 .Resolver(ctx =>
                 {
-                    var message = ctx.GetEventMessage<OnEmulationStop>();
+                    var message = ctx.GetEventMessage<OnEmulationStopMessage>();
                     return message.Payload;
                 });
             descriptor.Field("onEmulationSetupEnvironment")
@@ -45,7 +45,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Orchestration
                 .Argument("instanceId", arg => arg.Type<NonNullType<UuidType>>())
                 .Resolver(ctx =>
                 {
-                    var message = ctx.GetEventMessage<OnEmulationSetupEnvironment>();
+                    var message = ctx.GetEventMessage<OnEmulationSetupEnvironmentMessage>();
                     return message.Payload;
                 });
             descriptor.Field("onEmulationCompileConfiguration")
@@ -54,7 +54,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Orchestration
                 .Argument("instanceId", arg => arg.Type<NonNullType<UuidType>>())
                 .Resolver(ctx =>
                 {
-                    var message = ctx.GetEventMessage<OnEmulationCompileConfiguration>();
+                    var message = ctx.GetEventMessage<OnEmulationCompileConfigurationMessage>();
                     return message.Payload;
                 });
             descriptor.Field("onEmulationRestoreSave")
@@ -63,7 +63,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Orchestration
                 .Argument("instanceId", arg => arg.Type<NonNullType<UuidType>>())
                 .Resolver(ctx =>
                 {
-                    var message = ctx.GetEventMessage<OnEmulationRestoreSave>();
+                    var message = ctx.GetEventMessage<OnEmulationRestoreSaveMessage>();
                     return message.Payload;
                 });
             descriptor.Field("onEmulationPersistSave")
@@ -72,7 +72,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Orchestration
                 .Argument("instanceId", arg => arg.Type<NonNullType<UuidType>>())
                 .Resolver(ctx =>
                 {
-                    var message = ctx.GetEventMessage<OnEmulationPersistSave>();
+                    var message = ctx.GetEventMessage<OnEmulationPersistSaveMessage>();
                     return message.Payload;
                 });
         }

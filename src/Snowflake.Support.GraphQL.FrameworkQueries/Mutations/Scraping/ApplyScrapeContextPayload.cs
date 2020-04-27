@@ -10,19 +10,19 @@ using System.Text;
 
 namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
 {
-    internal sealed class ApplyScrapeResultsPayload
+    internal sealed class ApplyScrapeContextPayload
         : RelayMutationBase
     {
         public IScrapeContext ScrapeContext { get; set; }
         public IGame Game { get; set; }
     }
 
-    internal sealed class ApplyScrapeResultsPayloadType
-        : ObjectType<ApplyScrapeResultsPayload>
+    internal sealed class ApplyScrapeContextPayloadType
+        : ObjectType<ApplyScrapeContextPayload>
     {
-        protected override void Configure(IObjectTypeDescriptor<ApplyScrapeResultsPayload> descriptor)
+        protected override void Configure(IObjectTypeDescriptor<ApplyScrapeContextPayload> descriptor)
         {
-            descriptor.Name(nameof(ApplyScrapeResultsPayload))
+            descriptor.Name(nameof(ApplyScrapeContextPayload))
                 .WithClientMutationId();
 
             descriptor.Field(c => c.Game)

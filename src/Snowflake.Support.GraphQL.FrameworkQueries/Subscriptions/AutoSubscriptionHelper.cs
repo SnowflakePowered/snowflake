@@ -32,6 +32,26 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions
             return descriptor;
         }
 
+        public static IObjectFieldDescriptor UseAutoSubscription(this IObjectFieldDescriptor descriptor, string subscriptionName)
+        {
+            descriptor
+                .Extend()
+                .OnBeforeNaming((configure, defn) =>
+                {
+                    if (!configure.ContextData.ContainsKey(AutoSubscriptionTypeInterceptor.AutoSubscriptionContext))
+                    {
+                        configure.ContextData[AutoSubscriptionTypeInterceptor.AutoSubscriptionContext] = new List<ObjectFieldDefinition>();
+                    }
+                    ((List<ObjectFieldDefinition>)configure.ContextData[AutoSubscriptionTypeInterceptor.AutoSubscriptionContext]).Add(defn);
+                });
+            descriptor.Use(next => async context =>
+            {
+                await next(context);
+                await context.SendSimpleSubscription(subscriptionName, context.Result);
+            });
+            return descriptor;
+        }
+
         public static T GetEventMessage<T>(this IResolverContext context) => (T)context.ContextData["HotChocolate.Execution.EventMessage"];
         public static EventMessage GetEventMessage(this IResolverContext context) => (EventMessage)context.ContextData["HotChocolate.Execution.EventMessage"];
 
