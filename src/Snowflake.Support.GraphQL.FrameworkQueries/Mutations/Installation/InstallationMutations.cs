@@ -109,6 +109,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
             descriptor.Field("nextInstallationStep")
                 .Description("Proceeds with the next step in the installation. If an exception occurs, cancellation will automatically be requested.")
                 .UseClientMutationId()
+                .UseAutoSubscription()
                 .Argument("input", a => a.Type<NextInstallationStepInputType>())
                 .Resolver(async ctx =>
                 {
@@ -171,6 +172,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
                 "If an error occurs during installation, cancellation will automatically be requested, but the " +
                 "installation must run to completion.")
                 .UseClientMutationId()
+                .UseAutoSubscription()
                 .Argument("input", a => a.Type<NextInstallationStepInputType>())
                 .Resolver(async ctx =>
                 {
@@ -229,6 +231,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
                 .Description("Requests cancellation of an installation. This does not mean the installation step is complete. The installation" +
                 " must be continued to ensure proper cleanup.")
                 .UseClientMutationId()
+                .UseAutoSubscription()
                 .Argument("input", a => a.Type<NextInstallationStepInputType>())
                 .Resolver(async ctx =>
                 {
