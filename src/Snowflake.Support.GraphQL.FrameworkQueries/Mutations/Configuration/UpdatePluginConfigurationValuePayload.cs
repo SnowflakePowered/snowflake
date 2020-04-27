@@ -26,10 +26,10 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Configuration
             descriptor.Name(nameof(UpdatePluginConfigurationValuePayload))
                 .WithClientMutationId();
             descriptor.Field(g => g.Values)
-                .Description("The modified values.")
+                .Description("The modified configuration values.")
                 .Type<NonNullType<ListType<NonNullType<ConfigurationValueType>>>>();
             descriptor.Field(g => g.Plugin)
-                .Description("The plugin that owns the modified configuration.")
+                .Description("The plugin that uses this configuration.")
                 .Type<NonNullType<PluginType>>();
         }
     }

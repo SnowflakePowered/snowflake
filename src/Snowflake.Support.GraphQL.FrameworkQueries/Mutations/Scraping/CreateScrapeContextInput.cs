@@ -24,6 +24,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
 
             descriptor.Field(i => i.GameID)
                 .Name("gameId")
+                .Description("The `gameId` GUID of the game to scrape for.")
                 .Type<NonNullType<UuidType>>();
 
             descriptor.Field(i => i.Scrapers)

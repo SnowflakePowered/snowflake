@@ -24,7 +24,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Configuration
             descriptor.Name(nameof(UpdateGameConfigurationValuePayload))
                 .WithClientMutationId();
             descriptor.Field(g => g.Values)
-                .Description("The modified values.")
+                .Description("The modified configuration values.")
                 .Type<NonNullType<ListType<NonNullType<ConfigurationValueType>>>>();
             descriptor.Field( g=> g.Collections)
                 .Description("The modified configuration value GUIDs grouped by the value collection GUID.")

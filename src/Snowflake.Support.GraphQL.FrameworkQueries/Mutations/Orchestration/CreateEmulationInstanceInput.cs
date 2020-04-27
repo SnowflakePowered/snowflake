@@ -22,19 +22,24 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
         {
             descriptor.Name(nameof(CreateEmulationInstanceInput))
                 .WithClientMutationId();
+
             descriptor.Field(i => i.Orchestrator)
+                .Description("The name of the orchestrator to use to launch this emulation instance.")
                 .Type<NonNullType<StringType>>();
 
             descriptor.Field(i => i.GameID)
                 .Name("gameId")
+                .Description("The `gameId` GUID of the game to create the instance for.")
                 .Type<NonNullType<UuidType>>();
 
             descriptor.Field(i => i.CollectionID)
                 .Name("collectionId")
+                .Description("The `collectionId` of the configuration collection to use for this emulation instance.")
                 .Type<NonNullType<UuidType>>();
 
             descriptor.Field(i => i.SaveProfileID)
                 .Name("saveProfileId")
+                .Description("The `profileId` of the save profile to use for this emulation instance.")
                 .Type<NonNullType<UuidType>>();
         }
     }

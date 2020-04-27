@@ -20,8 +20,10 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Configuration
             descriptor.Name(nameof(ConfigurationValueInput));
             descriptor.Field(i => i.ValueID)
                 .Name("valueId")
+                .Description("The GUID of the configuration value to modify.")
                 .Type<NonNullType<UuidType>>();
             descriptor.Field(i => i.Value)
+                .Description("The new value of the configuration value. For enum (selection) values, this should be an integer.")
                 .Type<AnyType>();
         }
     }

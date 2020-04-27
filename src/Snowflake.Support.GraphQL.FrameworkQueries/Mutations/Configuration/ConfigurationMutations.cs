@@ -93,7 +93,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Configuration
             descriptor.Field("updatePluginConfigurationValues")
                 .UseAutoSubscription()
                 .UseClientMutationId()
-                .Description("Updates .")
+                .Description("Updates configuration values for a plugin.")
                 .Argument("input", a => a.Type<UpdatePluginConfigurationValueInputType>())
                 .Resolver(async ctx =>
                 {

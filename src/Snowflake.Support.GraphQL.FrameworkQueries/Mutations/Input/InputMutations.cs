@@ -21,6 +21,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Input
         {
             descriptor.Name("Mutation");
             descriptor.Field("createInputProfile")
+                .Description("Creates a new input profile.")
                 .Argument("input", arg => arg.Type<NonNullType<CreateInputProfileInputType>>())
                 .UseClientMutationId()
                 .UseAutoSubscription()
@@ -79,6 +80,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Input
                 }).Type<NonNullType<InputProfilePayloadType>>();
 
             descriptor.Field("updateInputProfile")
+                .Description("Updates an input profile with new controller element mappings. Mappings can not be 'unset', but can be set to the device capability NONE.")
                 .UseClientMutationId()
                 .UseAutoSubscription()
                 .Argument("input", arg => arg.Type<NonNullType<UpdateInputProfileInputType>>())
@@ -109,6 +111,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Input
                 }).Type<NonNullType<InputProfilePayloadType>>();
 
             descriptor.Field("deleteInputProfile")
+                .Description("Deletes the specified input profile.")
                 .Argument("input", arg => arg.Type<NonNullType<DeleteInputProfileInputType>>())
                 .Resolver(async ctx =>
                 {

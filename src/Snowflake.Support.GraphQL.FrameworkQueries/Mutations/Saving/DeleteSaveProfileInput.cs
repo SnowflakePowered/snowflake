@@ -25,10 +25,12 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Saving
 
             descriptor.Field(g => g.GameID)
                 .Name("gameId")
+                .Description("The `gameId` GUID of the game to delete a save profile for.")
                 .Type<NonNullType<UuidType>>();
 
             descriptor.Field(g => g.ProfileID)
                 .Name("profileId")
+                .Description("The GUID of the save profile to delete.")
                 .Type<NonNullType<UuidType>>();
         }
     }

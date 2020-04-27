@@ -26,9 +26,11 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Saving
                 .WithClientMutationId();
 
             descriptor.Field(g => g.Game)
+                .Description("The game that the profile was deleted from.")
                 .Type<NonNullType<GameType>>();
 
             descriptor.Field(g => g.SaveProfile)
+                .Description("The newly deleted save profile. This may no longer show accurate save game entries.")
                 .Type<NonNullType<SaveProfileType>>();
         }
     }

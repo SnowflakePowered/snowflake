@@ -22,6 +22,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Scraping
             descriptor.Name("Subscription");
 
             descriptor.Field("onScrapeContextStep")
+                .Description("A subscription for when a scrape context step occurs.")
                 .Type<NonNullType<ScrapeContextStepPayloadType>>()
                 .Argument("jobId", arg => arg.Type<NonNullType<UuidType>>())
                 .Resolver(ctx =>
@@ -30,6 +31,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Scraping
                     return message.Payload;
                 });
             descriptor.Field("onScrapeContextComplete")
+            .Description("A subscription for when a scrape context completes.")
                .Type<NonNullType<ScrapeContextCompletePayloadType>>()
                .Argument("jobId", arg => arg.Type<NonNullType<UuidType>>())
                .Resolver(ctx =>

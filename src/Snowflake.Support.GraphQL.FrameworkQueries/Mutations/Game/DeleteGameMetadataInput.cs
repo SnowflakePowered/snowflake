@@ -25,10 +25,12 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Game
 
             descriptor.Field(i => i.GameID)
                 .Name("gameId")
+                .Description("The `gameId` GUID of the game that owns the metadata to delete.")
                 .Type<NonNullType<UuidType>>();
 
             descriptor.Field(i => i.MetadataKey)
-               .Type<NonNullType<StringType>>();
+                .Description("The metadata key of the metadata to delete.")
+                .Type<NonNullType<StringType>>();
         }
     }
 }

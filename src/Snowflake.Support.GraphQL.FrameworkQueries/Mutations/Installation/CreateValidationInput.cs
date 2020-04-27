@@ -25,8 +25,10 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
 
             descriptor.Field(i => i.GameID)
                 .Name("gameId")
+                .Description("The `gameId` GUID of the game to validate.")
                 .Type<NonNullType<UuidType>>();
             descriptor.Field(i => i.Orchestrator)
+                .Description("The name of the orchestrator plugin that will run the validation.")
                 .Type<NonNullType<ListType<NonNullType<StringType>>>>();
         }
     }

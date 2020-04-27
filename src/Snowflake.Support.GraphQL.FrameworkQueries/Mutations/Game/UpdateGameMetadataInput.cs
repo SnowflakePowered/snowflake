@@ -26,13 +26,16 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Game
 
             descriptor.Field(i => i.GameID)
                 .Name("gameId")
+                .Description("The `gameId` GUID of the game to modify metadata.")
                 .Type<NonNullType<UuidType>>();
 
             descriptor.Field(i => i.MetadataKey)
-               .Type<NonNullType<StringType>>();
+                .Description("The metadata key of the metadata to modify.")
+                .Type<NonNullType<StringType>>();
 
             descriptor.Field(i => i.MetadataValue)
-               .Type<NonNullType<StringType>>();
+                .Description("The new string value of the metadata.")
+                .Type<NonNullType<StringType>>();
         }
     }
 }

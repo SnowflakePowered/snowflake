@@ -21,6 +21,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
             
             descriptor.Field(i => i.InstanceID)
                 .Name("instanceId")
+                .Description("The GUID of the emulation instance to use as a handle to modify the instance.")
                 .Type<NonNullType<UuidType>>();
         }
     }

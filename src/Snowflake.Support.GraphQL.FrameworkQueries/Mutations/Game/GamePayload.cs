@@ -23,6 +23,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Game
                 .WithClientMutationId();
 
             descriptor.Field(p => p.Game)
+                .Description("The modified game.")
                 .Type<GameType>();
         }
     }

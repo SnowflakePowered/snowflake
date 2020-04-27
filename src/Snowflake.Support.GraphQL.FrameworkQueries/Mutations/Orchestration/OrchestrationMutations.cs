@@ -24,6 +24,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
         {
             descriptor.Name("Mutation");
             descriptor.Field("createEmulationInstance")
+                .Description("Create an emulation instance.")
                 .UseAutoSubscription()
                 .UseClientMutationId()
                 .Argument("input", a => a.Type<CreateEmulationInstanceInputType>())
@@ -258,7 +259,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                 })
                 .Type<NonNullType<EmulationInstancePayloadType>>();
             descriptor.Field("startEmulation")
-                .Description("Starts the specified emulation")
+                .Description("Starts the specified emulation.")
                 .UseAutoSubscription()
                 .UseClientMutationId()
                 .Argument("input", arg => arg.Type<EmulationInstanceInputType>())

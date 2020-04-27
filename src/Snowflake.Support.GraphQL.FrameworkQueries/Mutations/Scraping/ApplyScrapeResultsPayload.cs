@@ -31,6 +31,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
 
             descriptor.Field(c => c.ScrapeContext)
                 .Name("context")
+                .Description("The scrape context that was used.")
                 .Type<NonNullType<ScrapeContextType>>();
         }
     }

@@ -24,6 +24,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
 
             descriptor.Field(i => i.JobID)
                 .Name("jobId")
+                .Description("The `jobId` of the installation or verification job to update.")
                 .Type<NonNullType<UuidType>>();
         }
     }

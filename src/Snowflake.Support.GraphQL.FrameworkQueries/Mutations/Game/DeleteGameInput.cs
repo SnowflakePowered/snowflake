@@ -24,6 +24,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Game
 
             descriptor.Field(i => i.GameID)
                 .Name("gameId")
+                .Description("The `gameId` GUID of the game to delete.")
                 .Type<NonNullType<UuidType>>();
         }
     }

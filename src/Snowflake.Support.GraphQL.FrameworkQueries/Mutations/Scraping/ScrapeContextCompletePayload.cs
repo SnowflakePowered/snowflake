@@ -31,9 +31,11 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
            
             descriptor.Field(s => s.ScrapeContext)
                 .Name("context")
+                .Description("The scrape context that was completed.")
                 .Type<ScrapeContextType>();
             descriptor.Field(s => s.JobID)
                 .Name("jobId")
+                .Description("The `jobId` of the scrape context that can be used to query or update the scrape context.")
                 .Type<NonNullType<UuidType>>();
             descriptor.Field(c => c.Game)
                .Description("The game this scrape context was created for.")

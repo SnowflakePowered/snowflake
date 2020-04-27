@@ -29,12 +29,12 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
          
             descriptor.Field(c => c.JobID)
                 .Name("jobId")
-                .Description("The job GUID.")
+                .Description("The `jobId` of the scrape context that can be used to query or update the scrape context.")
                 .Type<NonNullType<UuidType>>();
 
             descriptor.Field(c => c.ScrapeContext)
                 .Name("context")
-                .Description("The context that cancellation was requested for.")
+                .Description("The scrape context that cancellation was requested for.")
                 .Type<ScrapeContextType>();
 
             descriptor.Field(c => c.Game)
