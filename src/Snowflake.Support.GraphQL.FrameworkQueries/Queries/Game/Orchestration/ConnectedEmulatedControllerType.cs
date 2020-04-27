@@ -51,7 +51,6 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Queries.Game.Orchestration
               .Description("The emulated port device entry.")
               .Resolver(ctx => ctx.Parent<IEmulatedPortDeviceEntry>())
               .Type<NonNullType<EmulatedPortDeviceEntryType>>();
-
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Ports
         public int PortIndex { get; set; }
         public Guid ProfileID { get; set; }
         public PlatformId PlatformID { get; set; }
-        public InputDriver Driver {get;set;}
+        public InputDriver Driver { get; set; }
     }
 
     internal sealed class UpdatePortDeviceInputType
