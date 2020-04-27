@@ -19,11 +19,10 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
         protected override void Configure(IObjectTypeDescriptor<CleanupEmulationPayload> descriptor)
         {
             descriptor.Name(nameof(CleanupEmulationPayload));
-            // todo game emulation query type
 
             descriptor.Field(i => i.InstanceID)
                 .Name("instanceId")
-                .Description("The instance that was cleaned up")
+                .Description("The instance that was cleaned up.")
                 .Type<NonNullType<UuidType>>();
             descriptor.Field(i => i.Success)
                 .Description("Whether or not the cleanup was a success.")

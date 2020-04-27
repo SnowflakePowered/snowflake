@@ -25,9 +25,11 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Game
                 .WithClientMutationId();
 
             descriptor.Field(p => p.Game)
+                .Description("The game that the metadata was deleted from.")
                 .Type<NonNullType<GameType>>();
             descriptor.Field(p => p.Metadata)
-               .Type<RecordMetadataType>();
+                .Description("The metadata that was deleted.")
+                .Type<RecordMetadataType>();
         }
     }
 }

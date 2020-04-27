@@ -31,11 +31,11 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
 
             descriptor.Field(c => c.JobID)
                 .Name("jobId")
-                .Description("The job GUID.")
+                .Description("The installation job GUID that can be used to update and query this installation.")
                 .Type<NonNullType<UuidType>>();
 
             descriptor.Field(c => c.Game)
-                .Description("The game that this job will install to.")
+                .Description("The game that is the target of the installation.")
                 .Type<NonNullType<GameType>>();
         }
     }

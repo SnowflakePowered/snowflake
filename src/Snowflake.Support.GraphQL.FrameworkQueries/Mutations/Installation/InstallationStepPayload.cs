@@ -35,12 +35,15 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
 
             descriptor.Field(i => i.JobID)
                 .Name("jobId")
+                .Description("The `jobId` of the installation or verification job that was updated.")
                 .Type<NonNullType<UuidType>>();
             descriptor.Field(i => i.Current)
                 .Name("current")
+                .Description("The current file that was yielded by the installation or verification job.")
                 .Type<TaskResultType<IFile, ContextualFileInfoType>>();
             descriptor.Field(i => i.Game)
-               .Type<GameType>();
+                .Description("The game that is the target of the installation or validation.")
+                .Type<GameType>();
         }
     }
 }

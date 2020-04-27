@@ -22,12 +22,13 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
         {
             descriptor.Name(nameof(EmulationInstancePayload))
                 .WithClientMutationId();
-            // todo game emulation query type
 
             descriptor.Field(i => i.InstanceID)
                 .Name("instanceId")
+                .Description("The GUID of the emulation instance to use as a handle to modify the instance.")
                 .Type<NonNullType<UuidType>>();
             descriptor.Field(i => i.GameEmulation)
+                .Description("The emulation instance that was updated.")
                 .Type<NonNullType<GameEmulationType>>();
         }
     }

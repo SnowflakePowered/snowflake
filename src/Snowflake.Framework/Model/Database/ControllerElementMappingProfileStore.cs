@@ -67,11 +67,6 @@ namespace Snowflake.Model.Database
             {
                 try
                 {
-                    if (!mappingSet.Contains(mapping.LayoutElement))
-                    {
-                        context.Entry(mapping).State = EntityState.Deleted;
-                        continue;
-                    }
                     if (mappings[mapping.LayoutElement] == mapping.DeviceCapability) continue;
                     mapping.DeviceCapability = mappings[mapping.LayoutElement];
                     context.Entry(mapping).State = EntityState.Modified;

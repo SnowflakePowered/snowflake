@@ -22,8 +22,10 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Input
         {
             descriptor.Name(nameof(ControllerElementMappingInput));
             descriptor.Field(i => i.LayoutElement)
+                .Description("The controller layout element that will be emulated.")
                 .Type<NonNullType<ControllerElementEnum>>();
             descriptor.Field(i => i.DeviceCapability)
+                .Description("The capability on the physical input device that will act as the layout element.")
                 .Type<NonNullType<DeviceCapabilityEnum>>();
         }
     }

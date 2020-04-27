@@ -19,6 +19,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Saving
         {
             descriptor.Name("Mutation");
             descriptor.Field("createSaveProfile")
+                .Description("Create a new save profile.")
                 .UseClientMutationId()
                 .UseAutoSubscription()
                 .Argument("input", arg => arg.Type<CreateSaveProfileInputType>())
@@ -43,6 +44,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Saving
                 .Type<NonNullType<CreateSaveProfilePayloadType>>();
 
             descriptor.Field("deleteSaveProfile")
+                .Description("Delete a save profile.")
                 .UseClientMutationId()
                 .UseAutoSubscription()
                 .Argument("input", arg => arg.Type<DeleteSaveProfileInputType>())

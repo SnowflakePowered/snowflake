@@ -24,6 +24,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Game
 
             descriptor.Field(i => i.PlatformID)
                 .Name("platformId")
+                .Description("The Stone platform ID of the platform of this game.")
                 .Type<NonNullType<PlatformIdType>>();
         }
     }

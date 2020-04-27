@@ -21,8 +21,10 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Configuration
             descriptor.Name(nameof(UpdatePluginConfigurationValueInput))
                 .WithClientMutationId();
             descriptor.Field(g => g.Plugin)
+                .Description("The name of the plugin that is being configured.")
                 .Type<NonNullType<StringType>>();
             descriptor.Field(g => g.Values)
+                .Description("The configuration values to modify.")
                 .Type<NonNullType<ListType<NonNullType<ConfigurationValueInputType>>>>();
         }
     }

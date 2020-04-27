@@ -34,9 +34,11 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
 
             descriptor.Field(i => i.JobID)
                 .Name("jobId")
+                .Description("The `jobId` of the installation or validation that was completed.")
                 .Type<NonNullType<UuidType>>();
             descriptor.Field(i => i.Game)
-               .Type<GameType>();
+                .Description("The game the installation or validation was for.")
+                .Type<GameType>();
         }
     }
 

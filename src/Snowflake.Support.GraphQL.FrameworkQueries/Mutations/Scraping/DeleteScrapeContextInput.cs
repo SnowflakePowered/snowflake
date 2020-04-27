@@ -22,6 +22,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
 
             descriptor.Field(i => i.JobID)
                 .Name("jobId")
+                .Description("The `jobId` of the scrape context that can be used to query or update the scrape context.")
                 .Type<NonNullType<UuidType>>();
         }
     }

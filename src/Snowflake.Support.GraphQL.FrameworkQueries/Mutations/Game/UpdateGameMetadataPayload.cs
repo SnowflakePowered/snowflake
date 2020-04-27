@@ -25,9 +25,11 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Game
                 .WithClientMutationId();
 
             descriptor.Field(p => p.Game)
+                .Description("The game that metadata was modified for.")
                 .Type<NonNullType<GameType>>();
             descriptor.Field(p => p.Metadata)
-               .Type<NonNullType<RecordMetadataType>>();
+                .Description("The modified metadata.")
+                .Type<NonNullType<RecordMetadataType>>();
         }
     }
 }

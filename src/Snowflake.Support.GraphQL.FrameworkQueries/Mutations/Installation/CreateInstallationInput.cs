@@ -26,12 +26,15 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
 
             descriptor.Field(i => i.GameID)
                 .Name("gameId")
+                .Description("The `gameId` GUID of the game to install to.")
                 .Type<NonNullType<UuidType>>();
 
             descriptor.Field(i => i.Artifacts)
+                .Description("The artifacts (collection of files and folders) to install. This should be retrieved by the `filesystem.installables.artifacts` Query field.")
                 .Type<NonNullType<ListType<NonNullType<OSTaggedFileSystemPathType>>>>();
 
             descriptor.Field(i => i.Installer)
+                .Description("The installer that will install the specified artifacts. This should be retrieved by the `filesystem.installables.installer` Query field.")
                 .Type<NonNullType<ListType<NonNullType<StringType>>>>();
         }
     }

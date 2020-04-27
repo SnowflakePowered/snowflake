@@ -27,15 +27,19 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Saving
 
             descriptor.Field(g => g.GameID)
                 .Name("gameId")
+                .Description("The `gameId` GUID of the game to create a save profile for.")
                 .Type<NonNullType<UuidType>>();
 
             descriptor.Field(g => g.ProfileName)
+                .Description("The name of the new save profile.")
                 .Type<NonNullType<StringType>>();
 
             descriptor.Field(g => g.SaveType)
+                .Description("The save type of the new save profile.")
                 .Type<NonNullType<StringType>>();
 
             descriptor.Field(g => g.ManagementStrategy)
+                .Description("The management strategy this save profile will use to manage subsequent saves.")
                 .Type<NonNullType<SaveManagementStrategyEnum>>();
         }
     }

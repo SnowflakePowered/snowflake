@@ -34,9 +34,11 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
 
             descriptor.Field(i => i.JobID)
                 .Name("jobId")
+                .Description("The `jobId` of the installation or validation that was cancelled.")
                 .Type<NonNullType<UuidType>>();
             descriptor.Field(i => i.Game)
-               .Type<GameType>();
+                .Description("The game that is the target of the installation or validation.")
+                .Type<GameType>();
         }
     }
 

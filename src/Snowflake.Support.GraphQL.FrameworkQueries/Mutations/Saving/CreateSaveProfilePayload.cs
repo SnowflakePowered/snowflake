@@ -26,9 +26,11 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Saving
                 .WithClientMutationId();
 
             descriptor.Field(g => g.Game)
+                .Description("The game that the new save profile was created for.")
                 .Type<NonNullType<GameType>>();
 
             descriptor.Field(g => g.SaveProfile)
+                .Description("The newly created save profile.")
                 .Type<NonNullType<SaveProfileType>>();
         }
     }

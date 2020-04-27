@@ -20,6 +20,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Configuration
             descriptor.Name(nameof(UpdateGameConfigurationValueInput))
                 .WithClientMutationId();
             descriptor.Field(g => g.Values)
+                .Description("The values to update configuration for.")
                 .Type<NonNullType<ListType<NonNullType<ConfigurationValueInputType>>>>();
         }
     }

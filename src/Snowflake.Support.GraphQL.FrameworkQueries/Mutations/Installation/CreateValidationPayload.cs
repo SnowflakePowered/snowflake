@@ -34,15 +34,15 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
 
             descriptor.Field(c => c.JobID)
                 .Name("jobId")
-                .Description("The job GUID.")
+                .Description("The job GUID that can be used to query or modify this validation.")
                 .Type<NonNullType<UuidType>>();
 
             descriptor.Field(c => c.Game)
-                .Description("The game that this job will install to.")
+                .Description("The game that is the target of the validation.")
                 .Type<NonNullType<GameType>>();
 
             descriptor.Field("orchestrator")
-                .Description("The orchestrator that is verifying this game.")
+                .Description("The orchestrator that is validating this game.")
                 .Resolver(ctx =>
                 {
                     var input = ctx.Parent<CreateValidationPayload>();

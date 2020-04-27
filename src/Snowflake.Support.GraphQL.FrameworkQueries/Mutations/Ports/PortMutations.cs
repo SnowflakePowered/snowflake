@@ -43,6 +43,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Ports
             descriptor.Field("clearPortDevice")
                 .UseAutoSubscription()
                 .UseClientMutationId()
+                .Description("Unsets the specified port device.")
                 .Argument("input", arg => arg.Type<NonNullType<ClearPortDeviceInputType>>())
                 .Resolver(ctx =>
                 {

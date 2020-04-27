@@ -22,11 +22,11 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
             descriptor.Name(nameof(NextScrapeContextStepInput));
             descriptor.Field(i => i.JobID)
                 .Name("jobId")
-                .Description("The scrape context job GUID to proceed with.")
+                .Description("The `jobId` of the scrape context that can be used to query or update the scrape context.")
                 .Type<NonNullType<UuidType>>();
             descriptor.Field(i => i.Seeds)
                 .Name("seeds")
-                .Description("Any user-provided seeds to add to the scrape context.")
+                .Description("User-provided seeds to add to the scrape context.")
                 .Type<ListType<NonNullType<SeedTreeGraftInputType>>>();
         }
     }
