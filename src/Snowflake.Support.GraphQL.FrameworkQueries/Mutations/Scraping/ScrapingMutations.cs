@@ -23,7 +23,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
     {
         protected override void Configure(IObjectTypeDescriptor descriptor)
         {
-            descriptor.Name("Mutation");
+            descriptor.ExtendMutation();
             descriptor.Field("createScrapeContext")
                 .UseClientMutationId()
                 .UseAutoSubscription()

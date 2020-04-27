@@ -12,7 +12,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Stone
     {
         protected override void Configure(IObjectTypeDescriptor descriptor)
         {
-            descriptor.Name("Query");
+            descriptor.ExtendQuery();
             descriptor.Field("stone")
                 .Description("Provides access to Stone platform and controller definitions.")
                 .Type<NonNullType<StoneProviderType>>()

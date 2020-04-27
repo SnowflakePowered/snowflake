@@ -24,7 +24,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
     {
         protected override void Configure(IObjectTypeDescriptor descriptor)
         {
-            descriptor.Name("Mutation");
+            descriptor.ExtendMutation();
             descriptor.Field("createEmulationInstance")
                 .Description("Create an emulation instance.")
                 .UseClientMutationId()

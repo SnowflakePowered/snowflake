@@ -19,7 +19,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Input
     {
         protected override void Configure(IObjectTypeDescriptor descriptor)
         {
-            descriptor.Name("Mutation");
+            descriptor.ExtendMutation();
             descriptor.Field("createInputProfile")
                 .Description("Creates a new input profile.")
                 .Argument("input", arg => arg.Type<NonNullType<CreateInputProfileInputType>>())

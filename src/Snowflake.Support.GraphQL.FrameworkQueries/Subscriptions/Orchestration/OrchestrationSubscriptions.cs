@@ -11,7 +11,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Orchestration
     {
         protected override void Configure(IObjectTypeDescriptor descriptor)
         {
-            descriptor.Name("Subscription");
+            descriptor.ExtendSubscription();
             descriptor.Field("onEmulationCleanup")
                 .Description("A subscription for the cleanupEmulation mutation.")
                 .Type<NonNullType<EmulationInstancePayloadType>>()

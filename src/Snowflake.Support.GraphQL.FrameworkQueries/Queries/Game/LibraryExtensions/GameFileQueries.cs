@@ -14,7 +14,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.LibraryExtensions
     {
         protected override void Configure(IObjectTypeDescriptor<IGame> descriptor)
         {
-            descriptor.Name("Game");
+            descriptor.ExtendGame();
 
             descriptor.Field("files")
                 .Type<GameFileExtensionType>()
