@@ -1,4 +1,5 @@
-﻿using HotChocolate.Types;
+﻿using HotChocolate;
+using HotChocolate.Types;
 using Snowflake.Configuration;
 using Snowflake.Model.Game;
 using Snowflake.Model.Game.LibraryExtensions;
@@ -64,12 +65,21 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Configuration
                         var orchestrator = orchestrators[input.Retrieval.Orchestrator];
                         var game = await games.GetGameAsync(input.Retrieval.GameID);
                         if (orchestrator == null)
-                            throw new ArgumentException("The specified orchestrator was not found.");
+                            return ErrorBuilder.New()
+                                .SetCode("CFG_NOTFOUND_ORCHESTRATOR")
+                                .SetMessage("The specified orchestrator was not found.")
+                                .Build();
                         if (game == null)
-                            throw new ArgumentException("The specified game was not found.");
+                            return ErrorBuilder.New()
+                                .SetCode("CFG_NOTFOUND_GAME")
+                                .SetMessage("The specified game was not found.")
+                                .Build();
                         config = orchestrator.GetGameConfiguration(game, input.CollectionID);
                         if (config == null)
-                            throw new ArgumentException("The specified collectionId was not found in the configuration set for the specified orchestrator.");
+                            return ErrorBuilder.New()
+                                .SetCode("CFG_NOTFOUND_COLLECTION")
+                                .SetMessage("The specified collectionId was not found in the configuration set for the specified orchestrator..")
+                                .Build();
                     }
 
                     await configStore.DeleteProfileAsync(input.CollectionID);
@@ -89,9 +99,17 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Configuration
                 {
                     var input = ctx.Argument<UpdatePluginConfigurationValueInput>("input");
                     var plugin = ctx.SnowflakeService<IPluginManager>().Get(input.Plugin);
-                    if (plugin == null) throw new ArgumentException("Specified plugin was not found.");
+                    if (plugin == null)
+                        return ErrorBuilder.New()
+                                .SetCode("PCFG_NOTFOUND_PLUGIN")
+                                .SetMessage("The specified plugin was not found.")
+                                .Build();
                     var configStore = plugin?.Provision?.ConfigurationStore;
-                    if (configStore == null) throw new ArgumentException("Specified plugin is not a provisioned plugin.");
+                    if (configStore == null)
+                        return ErrorBuilder.New()
+                                .SetCode("PCFG_NOTPROVISIONED")
+                                .SetMessage("The specified plugin was not a provisioned plugin.")
+                                .Build();
                     var newValues = new List<Guid>();
                     foreach (var value in input.Values)
                     {

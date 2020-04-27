@@ -1,4 +1,5 @@
-﻿using HotChocolate.Types;
+﻿using HotChocolate;
+using HotChocolate.Types;
 using Snowflake.Extensibility.Queueing;
 using Snowflake.Model.Game;
 using Snowflake.Remoting.GraphQL;
@@ -36,7 +37,11 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                     var scrapers = plugins.GetCollection<IScraper>()
                         .Where(c => input.Scrapers.Contains(c.Name, StringComparer.InvariantCulture));
                     var game = await ctx.SnowflakeService<IGameLibrary>().GetGameAsync(input.GameID);
-                    if (game == null) throw new ArgumentException("The specified game does not exist.");
+                    if (game == null)
+                        return ErrorBuilder.New()
+                           .SetCode("SCRP_NOTFOUND_GAME")
+                           .SetMessage("The specified game does not exist.")
+                           .Build();
                     var jobQueueFactory = ctx.SnowflakeService<IAsyncJobQueueFactory>();
                     var jobQueue = jobQueueFactory.GetJobQueue<IScrapeContext, IEnumerable<ISeed>>(false);
                     var guid = await jobQueue.QueueJob(new GameScrapeContext(game, scrapers, cullers));
@@ -68,7 +73,11 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
 
                     var jobId = input.JobID;
                     var scrapeContext = jobQueue.GetSource(jobId);
-                    if (scrapeContext == null) throw new ArgumentException("The specified scrape context was not found.");
+                    if (scrapeContext == null)
+                        return ErrorBuilder.New()
+                           .SetCode("SCRP_NOTFOUND_SCRAPECONTEXT")
+                           .SetMessage("The specified scrape context does not exist.")
+                           .Build();
                     jobQueue.RequestCancellation(jobId);
 
                     return new CancelScrapeContextPayload()
@@ -92,7 +101,11 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                     var jobQueueFactory = ctx.SnowflakeService<IAsyncJobQueueFactory>();
                     var jobQueue = jobQueueFactory.GetJobQueue<IScrapeContext, IEnumerable<ISeed>>(false);
 
-                    if (!jobQueue.HasJob(input.JobID)) throw new ArgumentException("The specified job was not found");
+                    if (!jobQueue.HasJob(input.JobID))
+                        return ErrorBuilder.New()
+                           .SetCode("SCRP_NOTFOUND_SCRAPECONTEXT")
+                           .SetMessage("The specified scrape context does not exist.")
+                           .Build();
 
                     jobQueue.RequestCancellation(input.JobID);
                     await jobQueue.GetNext(input.JobID);
@@ -126,7 +139,11 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                     var jobQueue = ctx.SnowflakeService<IAsyncJobQueueFactory>()
                         .GetJobQueue<IScrapeContext, IEnumerable<ISeed>>(false);
                     var scrapeContext = jobQueue.GetSource(input.JobID);
-                    if (scrapeContext == null) throw new ArgumentException("The specified scrape context does not exist.");
+                    if (scrapeContext == null)
+                        return ErrorBuilder.New()
+                           .SetCode("SCRP_NOTFOUND_SCRAPECONTEXT")
+                           .SetMessage("The specified scrape context does not exist.")
+                           .Build();
 
                     var addSeeds = input.Seeds;
                     if (addSeeds != null) 
@@ -178,7 +195,11 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                     var jobQueue = ctx.SnowflakeService<IAsyncJobQueueFactory>()
                         .GetJobQueue<IScrapeContext, IEnumerable<ISeed>>(false);
                     var scrapeContext = jobQueue.GetSource(input.JobID);
-                    if (scrapeContext == null) throw new ArgumentException("The specified game does not exist.");
+                    if (scrapeContext == null)
+                        return ErrorBuilder.New()
+                           .SetCode("SCRP_NOTFOUND_SCRAPECONTEXT")
+                           .SetMessage("The specified scrape context does not exist.")
+                           .Build();
 
                     var addSeeds = input.Seeds;
                     if (addSeeds != null)
@@ -235,8 +256,12 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                         .Where(c => input.MetadataTraversers.Contains(c.Name, StringComparer.InvariantCulture));
 
                     var scrapeContext = jobQueue.GetSource(input.JobID);
-                    if (scrapeContext == null) throw new ArgumentException("The specified scrape context does not exist.");
-                    IGame? game = null;
+                    if (scrapeContext == null)
+                        return ErrorBuilder.New()
+                           .SetCode("SCRP_NOTFOUND_SCRAPECONTEXT")
+                           .SetMessage("The specified scrape context does not exist.")
+                           .Build();
+                    IGame game;
 
                     if (input.GameID == default)
                     {
@@ -247,7 +272,11 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                         game = await gameLibrary.GetGameAsync(input.GameID);
                     }
 
-                    if (game == null) throw new ArgumentException("The specified game does not exist.");
+                    if (game == null)
+                        return ErrorBuilder.New()
+                           .SetCode("SCRP_NOTFOUND_GAME")
+                           .SetMessage("The specified game does not exist.")
+                           .Build();
 
 
                     foreach (var traverser in metaTraversers)

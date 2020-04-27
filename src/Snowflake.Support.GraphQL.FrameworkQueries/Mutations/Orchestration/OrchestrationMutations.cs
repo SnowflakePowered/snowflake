@@ -32,11 +32,18 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                     var input = ctx.Argument<CreateEmulationInstanceInput>("input");
                     var orchestrator = ctx.SnowflakeService<IPluginManager>()
                         .GetCollection<IEmulatorOrchestrator>()[input.Orchestrator];
-                    if (orchestrator == null) throw new ArgumentException("The specified orchestrator was not found.");
+                    if (orchestrator == null)
+                        return ErrorBuilder.New()
+                           .SetCode("ORCH_NOTFOUND_ORCHESTRATOR")
+                           .SetMessage("The specified orchestrator was not found")
+                           .Build();
                     var game = await ctx.SnowflakeService<IGameLibrary>()
                         .GetGameAsync(input.GameID);
                     if (game == null)
-                        throw new ArgumentException("The specified game was not found.");
+                        return ErrorBuilder.New()
+                           .SetCode("ORCH_NOTFOUND_GAME")
+                           .SetMessage("The specified game does not exist.")
+                           .Build();
                     var compatibility = orchestrator.CheckCompatibility(game);
                     if (compatibility != EmulatorCompatibility.Ready)
                     {
@@ -45,26 +52,36 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                             case EmulatorCompatibility.MissingSystemFiles:
                                 return ErrorBuilder.New()
                                     .SetCode("ORCH_GAME_MISSING_SYSTEM_FILES")
-                                    .SetMessage("The specified game can not be run. The emulator requires system files that could not be found.");
+                                    .SetMessage("The specified game can not be run. The emulator requires system files that could not be found.")
+                                    .Build();
                             case EmulatorCompatibility.RequiresValidation:
                                 return ErrorBuilder.New()
                                     .SetCode("ORCH_GAME_REQUIRES_VALIDATION")
-                                    .SetMessage("The specified game must be validated before it can run.");
+                                    .SetMessage("The specified game must be validated before it can run.")
+                                    .Build();
                             case EmulatorCompatibility.Unsupported:
                                 return ErrorBuilder.New()
                                     .SetCode("ORCH_GAME_UNSUPPORTED")
-                                    .SetMessage("The specified game is unsupported by this orchestrator.");
+                                    .SetMessage("The specified game is unsupported by this orchestrator.")
+                                    .Build();
                         }
                     }
                     var ports = ctx.SnowflakeService<IEmulatedPortsManager>();
                     if (!ctx.SnowflakeService<IStoneProvider>().Platforms.TryGetValue(game.Record.PlatformID, out var platform))
                     {
-                        throw new ArgumentException("The specified game has an invalid platform ID.");
+                        return ErrorBuilder.New()
+                           .SetCode("ORCH_INVALID_GAME_PLATFORMID")
+                           .SetMessage("The specified game has an invalid platform ID.")
+                           .Build();
                     }
                     var controllers = (from i in Enumerable.Range(0, platform.MaximumInputs)
                                        select ports.GetControllerAtPort(orchestrator, platform.PlatformID, i)).ToList();
                     var save = game.WithFiles().WithSaves().GetProfile(input.SaveProfileID);
-                    if (save == null) throw new ArgumentException("The specified save profile could not be found.");
+                    if (save == null)
+                        return ErrorBuilder.New()
+                           .SetCode("ORCH_NOTFOUND_SAVE")
+                           .SetMessage("The specified save profile does not exist.")
+                           .Build();
                     var instance = orchestrator.ProvisionEmulationInstance(game, controllers, input.CollectionID, save);
 
                     var guid = Guid.NewGuid();
@@ -74,7 +91,10 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                             GameEmulation = instance,
                             InstanceID = guid
                         };
-                    throw new InvalidOperationException("Could not create emulation instance.");
+                    return ErrorBuilder.New()
+                           .SetCode("ORCH_ERR_CREATE")
+                           .SetMessage("Could not create the emulation instance.")
+                           .Build();
                 }).Type<NonNullType<EmulationInstancePayloadType>>();
             descriptor.Field("cleanupEmulation")
                 .Description("Immediately shuts down and cleans up the game emulation. This may or may not persist the " +
@@ -88,8 +108,9 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                     if (!ctx.GetGameCache().TryGetValue(input.InstanceID, out var gameEmulation))
                     {
                         return ErrorBuilder.New()
-                            .SetCode("ORCH_INSTANCE_NOT_FOUND")
-                            .SetMessage("The specified orchestration instance was not found.");
+                            .SetCode("ORCH_NOTFOUND_INSTANCE")
+                            .SetMessage("The specified orchestration instance was not found.")
+                            .Build();
                     }
                     bool success = false;
                     try
@@ -102,7 +123,8 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                         return ErrorBuilder.New()
                             .SetException(e)
                             .SetCode("ORCH_ERR_CLEANUPEMULATION")
-                            .SetMessage("A fatal error occurred with setting up the environment for this game emulation.");
+                            .SetMessage("A fatal error occurred with setting up the environment for this game emulation.")
+                            .Build();
                     }
                     finally
                     {
@@ -129,13 +151,15 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                     if (!ctx.GetGameCache().TryGetValue(input.InstanceID, out var gameEmulation))
                     {
                         return ErrorBuilder.New()
-                            .SetCode("ORCH_INSTANCE_NOT_FOUND")
-                            .SetMessage("The specified orchestration instance was not found.");
+                            .SetCode("ORCH_NOTFOUND_INSTANCE")
+                            .SetMessage("The specified orchestration instance was not found.")
+                            .Build();
                     }
                     if (gameEmulation.EmulationState != GameEmulationState.RequiresSetupEnvironment)
                         return ErrorBuilder.New()
                             .SetCode("ORCH_INVALID_STATE")
-                            .SetMessage("The specified orchestration mutation is not valid for the current state of the game emulation.");
+                            .SetMessage("The specified orchestration mutation is not valid for the current state of the game emulation.")
+                            .Build();
                     try
                     {
                         await gameEmulation.SetupEnvironment();
@@ -145,7 +169,8 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                         return ErrorBuilder.New()
                             .SetException(e)
                             .SetCode("ORCH_ERR_SETUPEMULATIONENVIRONMENT")
-                            .SetMessage("A fatal error occurred with setting up the environment for this game emulation.");
+                            .SetMessage("A fatal error occurred with setting up the environment for this game emulation.")
+                            .Build();
                     }
                     return new EmulationInstancePayload()
                     {
@@ -165,13 +190,15 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                    if (!ctx.GetGameCache().TryGetValue(input.InstanceID, out var gameEmulation))
                    {
                        return ErrorBuilder.New()
-                           .SetCode("ORCH_INSTANCE_NOT_FOUND")
-                           .SetMessage("The specified orchestration instance was not found.");
+                           .SetCode("ORCH_NOTFOUND_INSTANCE")
+                           .SetMessage("The specified orchestration instance was not found.")
+                           .Build();
                    }
                    if (gameEmulation.EmulationState != GameEmulationState.RequiresCompileConfiguration)
                        return ErrorBuilder.New()
                            .SetCode("ORCH_INVALID_STATE")
-                           .SetMessage("The specified orchestration mutation is not valid for the current state of the game emulation.");
+                           .SetMessage("The specified orchestration mutation is not valid for the current state of the game emulation.")
+                           .Build();
                    try
                    {
                        await gameEmulation.CompileConfiguration();
@@ -181,7 +208,8 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                        return ErrorBuilder.New()
                            .SetException(e)
                            .SetCode("ORCH_ERR_COMPILEEMULATIONCONFIGURATION")
-                           .SetMessage("A fatal error occurred with compiling the configuration for this game emulation.");
+                           .SetMessage("A fatal error occurred with compiling the configuration for this game emulation.")
+                           .Build();
                    }
                    return new EmulationInstancePayload()
                    {
@@ -201,13 +229,15 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                     if (!ctx.GetGameCache().TryGetValue(input.InstanceID, out var gameEmulation))
                     {
                         return ErrorBuilder.New()
-                            .SetCode("ORCH_INSTANCE_NOT_FOUND")
-                            .SetMessage("The specified orchestration instance was not found.");
+                            .SetCode("ORCH_NOTFOUND_INSTANCE")
+                            .SetMessage("The specified orchestration instance was not found.")
+                            .Build();
                     }
                     if (gameEmulation.EmulationState != GameEmulationState.RequiresRestoreSaveGame)
                         return ErrorBuilder.New()
                             .SetCode("ORCH_INVALID_STATE")
-                            .SetMessage("The specified orchestration mutation is not valid for the current state of the game emulation.");
+                            .SetMessage("The specified orchestration mutation is not valid for the current state of the game emulation.")
+                            .Build();
                     try
                     {
                         await gameEmulation.RestoreSaveGame();
@@ -217,7 +247,8 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                         return ErrorBuilder.New()
                             .SetException(e)
                             .SetCode("ORCH_ERR_RESTOREEMULATIONSAVE")
-                            .SetMessage("An error occurred with restoring the save profile for this game emulation.");
+                            .SetMessage("An error occurred with restoring the save profile for this game emulation.")
+                            .Build();
                     }
                     return new EmulationInstancePayload()
                     {
@@ -237,13 +268,15 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                     if (!ctx.GetGameCache().TryGetValue(input.InstanceID, out var gameEmulation))
                     {
                         return ErrorBuilder.New()
-                            .SetCode("ORCH_INSTANCE_NOT_FOUND")
-                            .SetMessage("The specified orchestration instance was not found.");
+                            .SetCode("ORCH_NOTFOUND_INSTANCE")
+                            .SetMessage("The specified orchestration instance was not found.")
+                            .Build();
                     }
                     if (gameEmulation.EmulationState != GameEmulationState.CanStartEmulation)
                         return ErrorBuilder.New()
                             .SetCode("ORCH_INVALID_STATE")
-                            .SetMessage("The specified orchestration mutation is not valid for the current state of the game emulation.");
+                            .SetMessage("The specified orchestration mutation is not valid for the current state of the game emulation.")
+                            .Build();
                     try
                     {
                         await gameEmulation.RestoreSaveGame();
@@ -253,7 +286,8 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                         return ErrorBuilder.New()
                             .SetException(e)
                             .SetCode("ORCH_ERR_STARTEMULATION")
-                            .SetMessage("An error occurred with starting this game emulation.");
+                            .SetMessage("An error occurred with starting this game emulation.")
+                            .Build();
                     }
                     return new EmulationInstancePayload()
                     {
@@ -273,13 +307,15 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                     if (!ctx.GetGameCache().TryGetValue(input.InstanceID, out var gameEmulation))
                     {
                         return ErrorBuilder.New()
-                            .SetCode("ORCH_INSTANCE_NOT_FOUND")
-                            .SetMessage("The specified orchestration instance was not found.");
+                            .SetCode("ORCH_NOTFOUND_INSTANCE")
+                            .SetMessage("The specified orchestration instance was not found.")
+                            .Build();
                     }
                     if (gameEmulation.EmulationState != GameEmulationState.CanStopEmulation)
                         return ErrorBuilder.New()
                             .SetCode("ORCH_INVALID_STATE")
-                            .SetMessage("The specified orchestration mutation is not valid for the current state of the game emulation.");
+                            .SetMessage("The specified orchestration mutation is not valid for the current state of the game emulation.")
+                            .Build();
                     try
                     {
                         await gameEmulation.RestoreSaveGame();
@@ -289,7 +325,8 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                         return ErrorBuilder.New()
                             .SetException(e)
                             .SetCode("ORCH_ERR_STOPEMULATION")
-                            .SetMessage("An error occurred with stopping this game emulation.");
+                            .SetMessage("An error occurred with stopping this game emulation.")
+                            .Build();
                     }
                     return new EmulationInstancePayload()
                     {
@@ -309,14 +346,16 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                     if (!ctx.GetGameCache().TryGetValue(input.InstanceID, out var gameEmulation))
                     {
                         return ErrorBuilder.New()
-                            .SetCode("ORCH_INSTANCE_NOT_FOUND")
-                            .SetMessage("The specified orchestration instance was not found.");
+                            .SetCode("ORCH_NOTFOUND_INSTANCE")
+                            .SetMessage("The specified orchestration instance was not found.")
+                            .Build();
                     }
                     if (gameEmulation.EmulationState != GameEmulationState.CanStartEmulation
                     && gameEmulation.EmulationState != GameEmulationState.RequiresDispose)
                         return ErrorBuilder.New()
                             .SetCode("ORCH_INVALID_STATE")
-                            .SetMessage("The specified orchestration mutation is not valid for the current state of the game emulation.");
+                            .SetMessage("The specified orchestration mutation is not valid for the current state of the game emulation.")
+                            .Build();
                     try
                     {
                         var save = await gameEmulation.PersistSaveGame();
@@ -332,7 +371,8 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                         return ErrorBuilder.New()
                             .SetException(e)
                             .SetCode("ORCH_ERR_PERSISTSAVEGAME")
-                            .SetMessage("An error occurred with persisting the save profile for this emulation.");
+                            .SetMessage("An error occurred with persisting the save profile for this emulation.")
+                            .Build();
                     }
                 })
                 .Type<NonNullType<PersistEmulationSavePayloadType>>();

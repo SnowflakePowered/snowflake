@@ -1,4 +1,5 @@
-﻿using HotChocolate.Types;
+﻿using HotChocolate;
+using HotChocolate.Types;
 using Snowflake.Model.Game;
 using Snowflake.Model.Game.LibraryExtensions;
 using Snowflake.Orchestration.Saving;
@@ -26,8 +27,11 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Saving
                     var gameLibrary = ctx.SnowflakeService<IGameLibrary>();
                     var input = ctx.Argument<CreateSaveProfileInput>("input");
                     var game = await gameLibrary.GetGameAsync(input.GameID);
-                    if (game == null) 
-                        throw new ArgumentException("The specified game was not found.");
+                    if (game == null)
+                        return ErrorBuilder.New()
+                           .SetCode("SAVE_NOTFOUND_GAME")
+                           .SetMessage("The specified game does not exist.")
+                           .Build();
                     var saveProfile = game.WithFiles().WithSaves()
                         .CreateProfile(input.ProfileName, input.SaveType, input.ManagementStrategy);
                     return new CreateSaveProfilePayload()
@@ -48,11 +52,17 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Saving
                     var input = ctx.Argument<DeleteSaveProfileInput>("input");
                     var game = await gameLibrary.GetGameAsync(input.GameID);
                     if (game == null)
-                        throw new ArgumentException("The specified game was not found.");
+                        return ErrorBuilder.New()
+                           .SetCode("SAVE_NOTFOUND_GAME")
+                           .SetMessage("The specified game does not exist.")
+                           .Build();
                     var gameSaves = game.WithFiles().WithSaves();
                     var saveProfile = gameSaves.GetProfile(input.ProfileID);
                     if (saveProfile == null)
-                        throw new ArgumentException("The specified save profile was not found.");
+                        return ErrorBuilder.New()
+                           .SetCode("SAVE_NOTFOUND_PROFILE")
+                           .SetMessage("The specified save profile does not exist.")
+                           .Build();
                     gameSaves.DeleteProfile(input.ProfileID);
                     return new DeleteSaveProfilePayload()
                     {

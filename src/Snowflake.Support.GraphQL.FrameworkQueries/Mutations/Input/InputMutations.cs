@@ -1,4 +1,5 @@
-﻿using HotChocolate.Types;
+﻿using HotChocolate;
+using HotChocolate.Types;
 using Snowflake.Input.Controller.Mapped;
 using Snowflake.Input.Device;
 using Snowflake.Remoting.GraphQL;
@@ -27,11 +28,27 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Input
                 {
                     var input = ctx.Argument<CreateInputProfileInput>("input");
                     var devices = ctx.SnowflakeService<IDeviceEnumerator>().QueryConnectedDevices();
-                    var (vendorId, deviceName) = input.Device.RetrieveDeviceName(devices);
+                    (int vendorId, string deviceName) = (default, default);
+
+                    try
+                    {
+                        (vendorId, deviceName) = input.Device.RetrieveDeviceName(devices);
+                    }
+                    catch (ArgumentException e)
+                    {
+                        return ErrorBuilder.New()
+                            .SetCode("INPT_INVALID_DEVICE")
+                            .SetMessage(e.Message)
+                            .Build();
+                    }
+
                     var mappingStore = ctx.SnowflakeService<IControllerElementMappingProfileStore>();
                    
                     if (!ctx.SnowflakeService<IStoneProvider>().Controllers.TryGetValue(input.ControllerID, out var controllerLayout))
-                        throw new ArgumentException("The specified controller layout was not found.");
+                        return ErrorBuilder.New()
+                           .SetCode("INPT_NOTFOUND_CONTROLLER")
+                           .SetMessage("The specified controller layout was not found")
+                           .Build();
 
                     IInputDeviceInstance instance = null;
                     if (input.Device.InstanceID.HasValue)
@@ -46,8 +63,11 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Input
                     }
 
                     if (instance == null)
-                        throw new ArgumentException("No connected instance of the specified input device and driver combination was found. " +
-                        "A connected instance is required to create a new input profile.");
+                        return ErrorBuilder.New()
+                           .SetCode("INPT_NOTFOUND_INSTANCE")
+                           .SetMessage("No connected instance of the specified input device and driver combination was found. " +
+                        "A connected instance is required to create a new input profile.")
+                           .Build();
 
                     var defaults = new ControllerElementMappingProfile(deviceName, controllerLayout,
                         input.InputDriver, vendorId, instance.DefaultLayout);
@@ -70,7 +90,11 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Input
                     var profile = await mappingStore
                         .GetMappingsAsync(input.ProfileID);
 
-                    if (profile == null) throw new ArgumentException("The specified input profile was not found.");
+                    if (profile == null)
+                        return ErrorBuilder.New()
+                           .SetCode("INPT_NOTFOUND_PROFILE")
+                           .SetMessage("The specified input profile was not found.")
+                           .Build();
 
                     foreach (var mapping in input.Mappings)
                     {
@@ -92,7 +116,11 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Input
                     var mappingStore = ctx.SnowflakeService<IControllerElementMappingProfileStore>();
 
                     var profile = await mappingStore.GetMappingsAsync(input.ProfileID);
-                    if (profile == null) throw new ArgumentException("The specified input profile was not found.");
+                    if (profile == null)
+                        return ErrorBuilder.New()
+                           .SetCode("INPT_NOTFOUND_PROFILE")
+                           .SetMessage("The specified input profile was not found.")
+                           .Build();
 
                     await mappingStore.DeleteMappingsAsync(input.ProfileID);
                     return new InputProfilePayload()

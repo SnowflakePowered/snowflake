@@ -1,4 +1,5 @@
-﻿using HotChocolate.Types;
+﻿using HotChocolate;
+using HotChocolate.Types;
 using Snowflake.Orchestration.Extensibility;
 using Snowflake.Remoting.GraphQL;
 using Snowflake.Remoting.GraphQL.FrameworkQueries.Mutations.Relay;
@@ -26,7 +27,10 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Ports
                     var input = ctx.Argument<UpdatePortDeviceInput>("input");
                     var orchestrator = ctx.SnowflakeService<IPluginManager>().GetCollection<IEmulatorOrchestrator>()[input.Orchestrator];
                     if (orchestrator == null)
-                        throw new ArgumentException("The specified orchestrator is not installed.");
+                        return ErrorBuilder.New()
+                               .SetCode("PORT_NOTFOUND_ORCHESTRATOR")
+                               .SetMessage("The specified orchestrator was not found.")
+                               .Build();
                     ctx.SnowflakeService<IEmulatedPortStore>()
                         .SetPort(orchestrator, input.PlatformID, input.PortIndex, input.ControllerID,
                             input.InstanceID, input.Driver, input.ProfileID);
@@ -45,7 +49,10 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Ports
                     var input = ctx.Argument<ClearPortDeviceInput>("input");
                     var orchestrator = ctx.SnowflakeService<IPluginManager>().GetCollection<IEmulatorOrchestrator>()[input.Orchestrator];
                     if (orchestrator == null)
-                        throw new ArgumentException("The specified orchestrator is not installed.");
+                        return ErrorBuilder.New()
+                               .SetCode("PORT_NOTFOUND_ORCHESTRATOR")
+                               .SetMessage("The specified orchestrator was not found.")
+                               .Build();
                     var oldPort = ctx.SnowflakeService<IEmulatedPortStore>().GetPort(orchestrator, input.PlatformID, input.PortIndex);
 
                     ctx.SnowflakeService<IEmulatedPortStore>()
