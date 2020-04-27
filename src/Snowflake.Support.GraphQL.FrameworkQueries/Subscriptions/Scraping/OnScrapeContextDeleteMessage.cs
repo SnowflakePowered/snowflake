@@ -7,11 +7,11 @@ using System.Text;
 
 namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Scraping
 {
-    internal class OnScrapeContextStepMessage
+    internal class OnScrapeContextDeleteMessage
     : SingleIdentifierChannelMessage
     {
-        public OnScrapeContextStepMessage(ScrapeContextStepPayload payload)
-            : base(payload.JobID, payload, "onScrapeContextStep", "jobId")
+        public OnScrapeContextDeleteMessage(DeleteScrapeContextPayload payload)
+            : base(payload.JobID, payload, "onScrapeContextDelete", "jobId")
         {
         }
     }

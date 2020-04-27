@@ -8,11 +8,11 @@ using System.Text;
 
 namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Installation
 {
-    internal class OnInstallationCancelledMessage
+    internal class OnInstallationCancelMessage
     : SingleIdentifierChannelMessage
     {
-        public OnInstallationCancelledMessage(Guid jobId, InstallationCancelledPayload payload)
-            : base(jobId, payload, "onInstallationCancelled", nameof(jobId))
+        public OnInstallationCancelMessage(InstallationCancelledPayload payload)
+            : base(payload.JobID, payload, "onInstallationCancel", "jobId")
         {
         }
     }

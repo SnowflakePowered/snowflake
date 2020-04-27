@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
 {
-    internal sealed class ApplyScrapeResultsInput
+    internal sealed class ApplyScrapeContextInput
         : RelayMutationBase
     {
         public Guid GameID { get; set; }
@@ -16,12 +16,12 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
 
     }
 
-    internal sealed class ApplyScrapeResultsInputType
-        : InputObjectType<ApplyScrapeResultsInput>
+    internal sealed class ApplyScrapeContextInputType
+        : InputObjectType<ApplyScrapeContextInput>
     {
-        protected override void Configure(IInputObjectTypeDescriptor<ApplyScrapeResultsInput> descriptor)
+        protected override void Configure(IInputObjectTypeDescriptor<ApplyScrapeContextInput> descriptor)
         {
-            descriptor.Name(nameof(ApplyScrapeResultsInput))
+            descriptor.Name(nameof(ApplyScrapeContextInput))
                 .WithClientMutationId();
 
             descriptor.Field(g => g.GameID)

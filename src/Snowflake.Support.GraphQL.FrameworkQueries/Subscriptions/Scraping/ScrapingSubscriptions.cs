@@ -39,6 +39,33 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Scraping
                    var message = ctx.GetEventMessage<OnScrapeContextCompleteMessage>();
                    return message.Payload;
                });
+            descriptor.Field("onScrapeContextDelete")
+                .Description("A subscription for when a scrape context is deleted.")
+                .Type<NonNullType<DeleteScrapeContextPayloadType>>()
+                .Argument("jobId", arg => arg.Type<NonNullType<UuidType>>())
+                .Resolver(ctx =>
+                {
+                    var message = ctx.GetEventMessage<OnScrapeContextDeleteMessage>();
+                    return message.Payload;
+                });
+            descriptor.Field("onScrapeContextCancel")
+                .Description("A subscription for when a scrape context is cancelled.")
+                .Type<NonNullType<CancelScrapeContextPayloadType>>()
+                .Argument("jobId", arg => arg.Type<NonNullType<UuidType>>())
+                .Resolver(ctx =>
+                {
+                    var message = ctx.GetEventMessage<OnScrapeContextCancelMessage>();
+                    return message.Payload;
+                });
+            descriptor.Field("onScrapeContextApply")
+                .Description("A subscription for when a scrape context is applied to a game.")
+                .Type<NonNullType<ApplyScrapeContextPayloadType>>()
+                .Argument("jobId", arg => arg.Type<NonNullType<UuidType>>())
+                .Resolver(ctx =>
+                {
+                    var message = ctx.GetEventMessage<OnScrapeContextApplyMessage>();
+                    return message.Payload;
+                });
         }
     }
 }

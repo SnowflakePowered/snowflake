@@ -39,13 +39,13 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Installation
                     var message = ctx.GetEventMessage<OnInstallationCompleteMessage>();
                     return message.Payload;
                 });
-            descriptor.Field("onInstallationCancelled")
+            descriptor.Field("onInstallationCancel")
                 .Description("A subscription for when a game installation is cancelled.")
                .Type<NonNullType<InstallationCancelledPayloadType>>()
                .Argument("jobId", arg => arg.Type<NonNullType<UuidType>>())
                .Resolver(ctx =>
                {
-                   var message = ctx.GetEventMessage<OnInstallationCancelledMessage>();
+                   var message = ctx.GetEventMessage<OnInstallationCancelMessage>();
                    return message.Payload;
                });
         }

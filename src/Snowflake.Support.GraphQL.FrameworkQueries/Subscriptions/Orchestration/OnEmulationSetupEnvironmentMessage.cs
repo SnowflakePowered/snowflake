@@ -8,11 +8,11 @@ using System.Text;
 
 namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Orchestration
 {
-    internal class OnEmulationPersistSave
+    internal class OnEmulationSetupEnvironmentMessage
         : SingleIdentifierChannelMessage
     {
-        public OnEmulationPersistSave(PersistEmulationSavePayload payload)
-            : base(payload.InstanceID, payload, "onEmulationPersistSave", "instanceId")
+        public OnEmulationSetupEnvironmentMessage(EmulationInstancePayload payload)
+            : base(payload.InstanceID, payload, "onEmulationSetupEnvironment", "instanceId")
         {
         }
     }

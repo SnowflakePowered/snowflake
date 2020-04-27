@@ -11,8 +11,8 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Installation
     internal class OnInstallationCompleteMessage
     : SingleIdentifierChannelMessage
     {
-        public OnInstallationCompleteMessage(Guid jobId, InstallationCompletePayload payload)
-            : base(jobId, payload, "onInstallationComplete", nameof(jobId))
+        public OnInstallationCompleteMessage(InstallationCompletePayload payload)
+            : base(payload.JobID, payload, "onInstallationComplete", "jobId")
         {
         }
     }
