@@ -28,8 +28,8 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Filesystem
                     if ((path == null) && RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) return DriveInfo.GetDrives();
                     if ((path == null) &&
                         (RuntimeInformation.IsOSPlatform(OSPlatform.OSX)
-                        || RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-                        || RuntimeInformation.IsOSPlatform(OSPlatform.FreeBSD)) return new DirectoryInfo("/");
+                        || RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
+                        || RuntimeInformation.IsOSPlatform(OSPlatform.FreeBSD))) return new DirectoryInfo("/");
 
                     if (path?.Exists ?? false) return path;
                     return null;

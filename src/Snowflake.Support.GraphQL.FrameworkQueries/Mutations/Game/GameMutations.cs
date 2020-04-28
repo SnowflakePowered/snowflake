@@ -56,7 +56,6 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Game
                     };
                 })
                 .Type<NonNullType<GamePayloadType>>();
-
         }
     }
 }
