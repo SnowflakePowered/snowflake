@@ -71,6 +71,5 @@ namespace Snowflake.Configuration.Serialization.Serializers.Implementations
         {
             return original.Replace("\\", "\\\\");
         }
-
     }
 }
