@@ -90,7 +90,8 @@ namespace Snowflake.Extensibility.Tests
             var config = EmptyPluginConfigurationStore.EmptyConfigurationStore;
             var section = new ConfigurationSection<ExampleConfigurationSection>();
             config.Set(section);
-            config.Set(section.Values.Values.First());
+            var val = section.Values.Values.First();
+            config.Set(val.Guid, val.Value);
             config.Get<ExampleConfigurationSection>();
         }
 
@@ -100,7 +101,8 @@ namespace Snowflake.Extensibility.Tests
             var config = EmptyPluginConfigurationStore.EmptyConfigurationStore;
             var section = new ConfigurationSection<ExampleConfigurationSection>();
             await config.SetAsync(section);
-            await config.SetAsync(section.Values.Values.First());
+            var val = section.Values.Values.First();
+            await config.SetAsync(val.Guid, val.Value);
             await config.GetAsync<ExampleConfigurationSection>();
         }
 

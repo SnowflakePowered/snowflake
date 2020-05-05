@@ -155,6 +155,13 @@ namespace Snowflake.Model.Database
             return profile?.AsConfiguration<T>();
         }
 
+        public async Task<IConfigurationValue> GetValueAsync(Guid valueGuid)
+        {
+            await using var context = new DatabaseContext(this.Options.Options);
+            var entityValue = await context.ConfigurationValues.FindAsync(valueGuid);
+            return entityValue.AsConfigurationValue();
+        }
+
         public Task UpdateValueAsync(IConfigurationValue value) => this.UpdateValueAsync(value.Guid, value.Value);
 
         public async Task UpdateValueAsync(Guid valueGuid, object? value)
@@ -162,6 +169,19 @@ namespace Snowflake.Model.Database
             await using var context = new DatabaseContext(this.Options.Options);
             var entityValue = await context.ConfigurationValues.FindAsync(valueGuid);
             if (entityValue == null) return;
+            bool typeMatches = value switch
+            {
+                string _ => entityValue.ValueType == ConfigurationOptionType.String || entityValue.ValueType == ConfigurationOptionType.Path,
+                bool _ => entityValue.ValueType == ConfigurationOptionType.Boolean,
+                long _ => entityValue.ValueType == ConfigurationOptionType.Integer || entityValue.ValueType == ConfigurationOptionType.Selection,
+                int _ => entityValue.ValueType == ConfigurationOptionType.Integer || entityValue.ValueType == ConfigurationOptionType.Selection,
+                short _ => entityValue.ValueType == ConfigurationOptionType.Integer || entityValue.ValueType == ConfigurationOptionType.Selection,
+                double _ => entityValue.ValueType == ConfigurationOptionType.Decimal,
+                float _ => entityValue.ValueType == ConfigurationOptionType.Decimal,
+                Enum _ => entityValue.ValueType == ConfigurationOptionType.Selection,
+                _ => false,
+            };
+            if (!typeMatches) return;
             entityValue.Value = value.AsConfigurationStringValue();
             context.Entry(entityValue).State = EntityState.Modified;
             await context.SaveChangesAsync();

@@ -77,6 +77,13 @@ namespace Snowflake.Model.Database
             return collection;
         }
 
+        public IConfigurationValue GetValue(Guid valueGuid)
+        {
+            using var context = new DatabaseContext(this.Options.Options);
+            var entityValue = context.ConfigurationValues.Find(valueGuid);
+            return entityValue.AsConfigurationValue();
+        }
+
         public void DeleteConfiguration(Guid configurationValueCollectionGuid)
         {
             using var context = new DatabaseContext(this.Options.Options);
@@ -184,6 +191,19 @@ namespace Snowflake.Model.Database
             using var context = new DatabaseContext(this.Options.Options);
             var entityValue = context.ConfigurationValues.Find(valueGuid);
             if (entityValue == null) return;
+            bool typeMatches = value switch
+            {
+                string _ => entityValue.ValueType == ConfigurationOptionType.String || entityValue.ValueType == ConfigurationOptionType.Path,
+                bool _ => entityValue.ValueType == ConfigurationOptionType.Boolean,
+                long _ => entityValue.ValueType == ConfigurationOptionType.Integer || entityValue.ValueType == ConfigurationOptionType.Selection,
+                int _ => entityValue.ValueType == ConfigurationOptionType.Integer || entityValue.ValueType == ConfigurationOptionType.Selection,
+                short _ => entityValue.ValueType == ConfigurationOptionType.Integer || entityValue.ValueType == ConfigurationOptionType.Selection,
+                double _ => entityValue.ValueType == ConfigurationOptionType.Decimal,
+                float _ => entityValue.ValueType == ConfigurationOptionType.Decimal,
+                Enum _ => entityValue.ValueType == ConfigurationOptionType.Selection,
+                _ => false,
+            };
+            if (!typeMatches) return;
             entityValue.Value = value.AsConfigurationStringValue();
             context.Entry(entityValue).State = EntityState.Modified;
             context.SaveChanges();

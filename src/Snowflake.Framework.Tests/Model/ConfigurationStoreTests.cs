@@ -77,9 +77,41 @@ namespace Snowflake.Model.Tests
             // trigger an ensure of the ExampleConfiguration
             var getConfig = configStore.GetConfiguration<ExampleConfigurationCollection>(config.ValueCollection.Guid);
             Assert.Equal(setValue.Value, getConfig.ValueCollection[setValue.Guid].value.Value);
-            
         }
 
+        [Fact]
+        public void ConfigurationStore_GetValue_Test()
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
+            optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
+            var configStore = new ConfigurationCollectionStore(optionsBuilder);
+            var config = configStore
+                .CreateConfiguration<ExampleConfigurationCollection>("TestConfiguration");
+            var setValue = config.ValueCollection[config.Configuration.ExampleConfiguration.Descriptor,
+                nameof(config.Configuration.ExampleConfiguration.FullscreenResolution)];
+            config.Configuration.ExampleConfiguration.FullscreenResolution
+                = Configuration.FullscreenResolution.Resolution3840X2160;
+            configStore.UpdateConfiguration(config);
+            var getValue = configStore.GetValue(setValue.Guid);
+            Assert.Equal(setValue.Value, (Configuration.FullscreenResolution)getValue.Value);
+        }
+
+        [Fact]
+        public async Task ConfigurationStore_GetValueAsync_Test()
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
+            optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
+            var configStore = new ConfigurationCollectionStore(optionsBuilder);
+            var config = configStore
+                .CreateConfiguration<ExampleConfigurationCollection>("TestConfiguration");
+            var setValue = config.ValueCollection[config.Configuration.ExampleConfiguration.Descriptor,
+                nameof(config.Configuration.ExampleConfiguration.FullscreenResolution)];
+            config.Configuration.ExampleConfiguration.FullscreenResolution
+                = Configuration.FullscreenResolution.Resolution3840X2160;
+            configStore.UpdateConfiguration(config);
+            var getValue = await configStore.GetValueAsync(setValue.Guid);
+            Assert.Equal(setValue.Value, (Configuration.FullscreenResolution)getValue.Value);
+        }
 
         [Fact]
         public void ConfigurationStore_Delete_Test()

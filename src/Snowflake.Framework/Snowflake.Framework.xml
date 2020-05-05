@@ -147,22 +147,22 @@
             </summary>
             <typeparam name="T">The type of the configuration.</typeparam>
         </member>
-        <member name="P:Snowflake.Configuration.ConfigurationSectionDescriptor`1.Description">
+        <member name="P:Snowflake.Configuration.ConfigurationSectionDescriptor.Description">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Configuration.ConfigurationSectionDescriptor`1.DisplayName">
+        <member name="P:Snowflake.Configuration.ConfigurationSectionDescriptor.DisplayName">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Configuration.ConfigurationSectionDescriptor`1.SectionName">
+        <member name="P:Snowflake.Configuration.ConfigurationSectionDescriptor.SectionName">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Configuration.ConfigurationSectionDescriptor`1.SectionKey">
+        <member name="P:Snowflake.Configuration.ConfigurationSectionDescriptor.SectionKey">
             <inheritdoc />
         </member>
-        <member name="P:Snowflake.Configuration.ConfigurationSectionDescriptor`1.Options">
+        <member name="P:Snowflake.Configuration.ConfigurationSectionDescriptor.Options">
             <inheritdoc />
         </member>
-        <member name="P:Snowflake.Configuration.ConfigurationSectionDescriptor`1.Item(System.String)">
+        <member name="P:Snowflake.Configuration.ConfigurationSectionDescriptor.Item(System.String)">
             <inheritdoc/>
         </member>
         <member name="P:Snowflake.Configuration.ConfigurationValue.Value">

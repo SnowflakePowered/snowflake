@@ -17,7 +17,7 @@ namespace Snowflake.Extensibility.Provisioning.Standalone
             get => emptyPluginConfigurationStore;
         }
 
-        public void Set(IConfigurationValue value)
+        public void Set(Guid valueGuid, object? value)
         {
             return;
         }
@@ -34,7 +34,7 @@ namespace Snowflake.Extensibility.Provisioning.Standalone
             return;
         }
 
-        public void Set(IEnumerable<IConfigurationValue> values)
+        public void Set(IEnumerable<(Guid valueGuid, object? value)> values)
         {
             return;
         }
@@ -51,12 +51,12 @@ namespace Snowflake.Extensibility.Provisioning.Standalone
             return Task.CompletedTask;
         }
 
-        public Task SetAsync(IConfigurationValue value)
+        public Task SetAsync(Guid valueGuid, object? value)
         {
             return Task.CompletedTask;
         }
 
-        public Task SetAsync(IEnumerable<IConfigurationValue> values)
+        public Task SetAsync(IEnumerable<(Guid valueGuid, object? value)> values)
         {
             return Task.CompletedTask;
         }

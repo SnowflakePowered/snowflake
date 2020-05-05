@@ -32,61 +32,68 @@ namespace Snowflake.Configuration
         {
         }
 
-        private static object FromString(string? strValue, Type? optionType)
+        internal static object FromString(string? strValue, Type? optionType)
         {
             return optionType == typeof(string)
                 ? strValue ?? string.Empty // return string value if string
-                : optionType?.GetTypeInfo()?.IsEnum ?? false
-                    ? Enums.Parse(optionType!, strValue ?? String.Empty) // return parsed enum if enum
-                    : TypeDescriptor.GetConverter(optionType).ConvertFromInvariantString(strValue);
+                : TypeDescriptor.GetConverter(optionType).ConvertFromInvariantString(strValue);
+
+            //return optionType == typeof(string)
+            //    ? strValue ?? string.Empty // return string value if string
+            //    : optionType?.GetTypeInfo()?.IsEnum ?? false
+            //        ? Enums.Parse(optionType!, strValue ?? String.Empty) // return parsed enum if enum
+            //        : TypeDescriptor.GetConverter(optionType).ConvertFromInvariantString(strValue);
         }
 
         public static IConfigurationValueCollection MakeExistingValueCollection<T>
-        (IEnumerable<(string section, string option, (string stringValue, Guid guid) value)> values,
+        (IEnumerable<(string section, string option, (string stringValue, Guid guid, ConfigurationOptionType type) value)> values,
             Guid collectionGuid)
             where T : class, IConfigurationCollection, IConfigurationCollection<T>
         {
             var typedValues = new List<(string, string, IConfigurationValue)>();
-            foreach (var (type, name) in from props in typeof(T).GetPublicProperties()
-                     where props.GetIndexParameters().Length == 0
-                        && props.PropertyType.GetInterfaces().Contains(typeof(IConfigurationSection))
-                select (
-                    type: props.PropertyType,
-                    name: props.Name)
-                )
+            foreach ((string section, string option, (string stringValue, Guid guid, ConfigurationOptionType type) value) in values)
             {
-                var sectionDescType = typeof(ConfigurationSectionDescriptor<>).MakeGenericType(type);
-                var descriptor = Instantiate.CreateInstance(sectionDescType,
-                    new[] { typeof(string) },
-                    Expression.Constant(name)) as IConfigurationSectionDescriptor;
-                foreach (var (section, option, value) in values.Where(s => s.section == descriptor?.SectionKey))
+                Type type = value.type switch
                 {
-                    Type? t = descriptor?[option]?.Type;
-                    typedValues.Add((section, option,
-                        new ConfigurationValue(FromString(value.stringValue, t), value.guid)));
-                }
-            }
+                    ConfigurationOptionType.Boolean => typeof(bool),
+                    ConfigurationOptionType.String => typeof(string),
+                    ConfigurationOptionType.Path => typeof(string),
+                    ConfigurationOptionType.Integer => typeof(long),
+                    ConfigurationOptionType.Decimal => typeof(double),
+                    ConfigurationOptionType.Selection => typeof(int),
+                    _ => throw new NotImplementedException(),
+                };
 
+                typedValues.Add((section, option,
+                        new ConfigurationValue(FromString(value.stringValue, type), value.guid, value.type)));
+            }
             return new ConfigurationValueCollection(typedValues, collectionGuid);
         }
 
         public static IConfigurationValueCollection MakeExistingValueCollection<T>
-        (IEnumerable<(string option, (string stringValue, Guid guid) value)> values,
+        (IEnumerable<(string option, (string stringValue, Guid guid, ConfigurationOptionType type) value)> values,
             string sectionName,
             Guid collectionGuid)
             where T : class, IConfigurationSection<T>
         {
             var typedValues = new List<(string, string, IConfigurationValue)>();
-
-            var sectionDescType = typeof(ConfigurationSectionDescriptor<>).MakeGenericType(typeof(T));
-            var descriptor = Instantiate.CreateInstance(sectionDescType,
-                new[] { typeof(string) },
-                Expression.Constant(sectionName)) as IConfigurationSectionDescriptor;
+            var descriptor = new ConfigurationSectionDescriptor<T>(sectionName);
+           
             foreach (var (option, value) in values)
             {
-                Type? t = descriptor?[option]?.Type;
+                //Type? type = descriptor?[option]?.Type;
+                Type type = value.type switch
+                {
+                    ConfigurationOptionType.Boolean => typeof(bool),
+                    ConfigurationOptionType.String => typeof(string),
+                    ConfigurationOptionType.Path => typeof(string),
+                    ConfigurationOptionType.Integer => typeof(int),
+                    ConfigurationOptionType.Decimal => typeof(double),
+                    ConfigurationOptionType.Selection => typeof(int),
+                    _ => throw new NotImplementedException(),
+                };
                 typedValues.Add((sectionName, option,
-                    new ConfigurationValue(FromString(value.stringValue, t), value.guid)));
+                    new ConfigurationValue(FromString(value.stringValue, type), value.guid, value.type)));
             }
 
             return new ConfigurationValueCollection(typedValues, collectionGuid);
@@ -128,9 +135,16 @@ namespace Snowflake.Configuration
             {
                 if (!this.BackingDictionary[descriptor.SectionKey].ContainsKey(prop.OptionKey))
                 {
-                    var newConfigurationValue = new ConfigurationValue(prop.Default);
+                    var newConfigurationValue = new ConfigurationValue(prop.Default, prop.OptionType);
                     this.BackingDictionary[descriptor.SectionKey][prop.OptionKey] = newConfigurationValue;
                     this.ValueBackingDictionary[newConfigurationValue.Guid] = (descriptor.SectionKey, prop.OptionKey, newConfigurationValue);
+                } 
+                else if (this.BackingDictionary[descriptor.SectionKey][prop.OptionKey].Type 
+                    == ConfigurationOptionType.Selection)
+                {
+                    // ensure selection
+                    var enumType = descriptor[prop.OptionKey].Type;
+                    this.BackingDictionary[descriptor.SectionKey][prop.OptionKey].Value = Enums.GetMember(enumType, this.BackingDictionary[descriptor.SectionKey][prop.OptionKey].Value)?.Value ?? 0;
                 }
             }
             if (descriptor.Options.Any() && this.BackingDictionaryValueCount != this.ValueBackingDictionary.Count)
@@ -151,11 +165,18 @@ namespace Snowflake.Configuration
             if (key != null
                 && !this.BackingDictionary[descriptor.SectionKey].ContainsKey(option))
             {
-                var newConfigurationValue = new ConfigurationValue(key.Default);
+                var newConfigurationValue = new ConfigurationValue(key.Default, key.OptionType);
                 this.BackingDictionary[descriptor.SectionKey][key.OptionKey] = newConfigurationValue;
                 this.ValueBackingDictionary[newConfigurationValue.Guid] = (descriptor.SectionKey, key.OptionKey, newConfigurationValue);
                 if (this.BackingDictionaryValueCount != this.ValueBackingDictionary.Count)
                     throw new InvalidOperationException("Number of stored configuration values is inconsistent after ensuring descriptor.");
+            }
+            else if (this.BackingDictionary[descriptor.SectionKey][option].Type
+                  == ConfigurationOptionType.Selection)
+            {
+                var enumType = descriptor[option].Type;
+                this.BackingDictionary[descriptor.SectionKey][option].Value = 
+                    Enums.GetMember(enumType, this.BackingDictionary[descriptor.SectionKey][option].Value)?.Value ?? 0;
             }
         }
 
