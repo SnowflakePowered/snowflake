@@ -14,25 +14,37 @@ namespace Snowflake.Model.Database
     internal partial class PluginConfigurationStore : IPluginConfigurationStore
     {
         #region Asynchronous API
-        public async Task SetAsync(IConfigurationValue value)
+        public async Task SetAsync(Guid valueGuid, object? value)
         {
             await using var context = new DatabaseContext(Options.Options);
-            var entity = await context.ConfigurationValues
-                .SingleOrDefaultAsync(v => v.Guid == value.Guid);
+            var entity = await context.ConfigurationValues.FindAsync(valueGuid);
             if (entity == null) return;
-            entity.Value = value.Value.AsConfigurationStringValue();
+            bool typeMatches = value switch
+            {
+                string _ => entity.ValueType == ConfigurationOptionType.String || entity.ValueType == ConfigurationOptionType.Path,
+                bool _ => entity.ValueType == ConfigurationOptionType.Boolean,
+                long _ => entity.ValueType == ConfigurationOptionType.Integer || entity.ValueType == ConfigurationOptionType.Selection,
+                int _ => entity.ValueType == ConfigurationOptionType.Integer || entity.ValueType == ConfigurationOptionType.Selection,
+                short _ => entity.ValueType == ConfigurationOptionType.Integer || entity.ValueType == ConfigurationOptionType.Selection,
+                double _ => entity.ValueType == ConfigurationOptionType.Decimal,
+                float _ => entity.ValueType == ConfigurationOptionType.Decimal,
+                Enum _ => entity.ValueType == ConfigurationOptionType.Selection,
+                _ => false,
+            };
+            if (!typeMatches) return;
+            entity.Value = value.AsConfigurationStringValue();
             context.Entry(entity).State = EntityState.Modified;
             await context.SaveChangesAsync();
         }
 
-        public async Task SetAsync(IEnumerable<IConfigurationValue> values)
+        public async Task SetAsync(IEnumerable<(Guid valueGuid, object? value)> values)
         {
             await using var context = new DatabaseContext(Options.Options);
-            foreach (var value in values)
+            foreach ((Guid valueGuid, object? value) in values)
             {
-                var entity = await context.ConfigurationValues.FindAsync(value.Guid);
+                var entity = await context.ConfigurationValues.FindAsync(valueGuid);
                 if (entity == null) continue;
-                entity.Value = value.Value.AsConfigurationStringValue();
+                entity.Value = value.AsConfigurationStringValue();
                 context.Entry(entity).State = EntityState.Modified;
             }
 

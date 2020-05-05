@@ -16,5 +16,10 @@ namespace Snowflake.Configuration
         /// Gets the GUID record of the value.
         /// </summary>
         Guid Guid { get; }
+
+        /// <summary>
+        /// The canonical <see cref="ConfigurationOptionType"/> of this value.
+        /// </summary>
+        ConfigurationOptionType Type { get; }
     }
 }

@@ -36,14 +36,29 @@ namespace Snowflake.Model.Database.Extensions
             };
         }
 
-        public static string? AsConfigurationStringValue(this object? @this)
+        internal static string? AsConfigurationStringValue(this object? @this)
         {
             if (@this == null) return null;
 
             return @this.GetType().GetTypeInfo().IsEnum
-                ? Enums.GetName(@this.GetType(), @this)
+                ? Convert.ToString((int)@this)
                 : // optimized path for enums
                 Convert.ToString(@this);
+        }
+
+        internal static IConfigurationValue AsConfigurationValue(this ConfigurationValueModel @this)
+        {
+            Type type = @this.ValueType switch
+            {
+                ConfigurationOptionType.Boolean => typeof(bool),
+                ConfigurationOptionType.String => typeof(string),
+                ConfigurationOptionType.Path => typeof(string),
+                ConfigurationOptionType.Integer => typeof(long),
+                ConfigurationOptionType.Decimal => typeof(double),
+                ConfigurationOptionType.Selection => typeof(int),
+                _ => throw new NotImplementedException(),
+            };
+            return new ConfigurationValue(ConfigurationValueCollection.FromString(@this.Value, type), @this.Guid, @this.ValueType);
         }
 
         public static List<ConfigurationValueModel> AsModel(this IConfigurationValueCollection @this)
@@ -54,6 +69,7 @@ namespace Snowflake.Model.Database.Extensions
                     SectionKey = t.section,
                     OptionKey = t.option,
                     Guid = t.value.Guid,
+                    ValueType = t.value.Type,
                     Value = t.value.Value.AsConfigurationStringValue()
                 }).ToList();
         }
@@ -61,7 +77,7 @@ namespace Snowflake.Model.Database.Extensions
         public static IConfigurationCollection<T> AsConfiguration<T>(this ConfigurationProfileModel model)
             where T : class, IConfigurationCollection<T>
         {
-            var values = model.Values.Select(v => (v.SectionKey, v.OptionKey, (v.Value, v.Guid)));
+            var values = model.Values.Select(v => (v.SectionKey, v.OptionKey, (v.Value, v.Guid, v.ValueType)));
             var valueCollection = ConfigurationValueCollection.MakeExistingValueCollection<T>
                 (values, model.ValueCollectionGuid);
             return new ConfigurationCollection<T>(valueCollection);
@@ -71,7 +87,7 @@ namespace Snowflake.Model.Database.Extensions
             where T : class, IConfigurationSection<T>
         {
             var sectionKey = model.Values.First().SectionKey;
-            var values = model.Values.Select(v => (v.OptionKey, (v.Value, v.Guid)));
+            var values = model.Values.Select(v => (v.OptionKey, (v.Value, v.Guid, v.ValueType)));
             var valueCollection = ConfigurationValueCollection.MakeExistingValueCollection<T>
                 (values, sectionKey, model.ValueCollectionGuid);
             return new ConfigurationSection<T>(valueCollection, sectionKey);

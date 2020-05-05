@@ -132,7 +132,21 @@ namespace Snowflake.Model.Game.LibraryExtensions
         Task DeleteProfileAsync(Guid valueCollectionGuid);
 
         /// <summary>
+        /// Retrieves a specific configuration value without context asynchronously.
+        /// </summary>
+        /// <param name="valueGuid">The unique GUID of the value.</param>
+        /// <returns></returns>
+        Task<IConfigurationValue> GetValueAsync(Guid valueGuid);
+
+        /// <summary>
+        /// Retrieves a specific configuration value without context.
+        /// </summary>
+        /// <param name="valueGuid">The unique GUID of the value.</param>
+        IConfigurationValue GetValue(Guid valueGuid);
+
+        /// <summary>
         /// Updates the given <see cref="IConfigurationValue"/>.
+        /// If the type of the value does not match the existing value, then the update will not occur.
         /// </summary>
         /// <param name="newValue">
         /// The new <see cref="IConfigurationValue"/>.
@@ -143,6 +157,7 @@ namespace Snowflake.Model.Game.LibraryExtensions
 
         /// <summary>
         /// Asychronously updates the given <see cref="IConfigurationValue"/>.
+        /// If the type of the value does not match the existing value, then the update will not occur.
         /// </summary>
         /// <param name="newValue">
         /// The new <see cref="IConfigurationValue"/>.

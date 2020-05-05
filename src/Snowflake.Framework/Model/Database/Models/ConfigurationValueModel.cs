@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Text;
 using EnumsNET.NonGeneric;
 using Microsoft.EntityFrameworkCore;
+using Snowflake.Configuration;
 
 #nullable disable
 namespace Snowflake.Model.Database.Models
@@ -16,6 +17,7 @@ namespace Snowflake.Model.Database.Models
         public string SectionKey { get; set; }
         public string OptionKey { get; set; }
 
+        public ConfigurationOptionType ValueType { get; set; }
         public Guid ValueCollectionGuid { get; set; }
         public ConfigurationProfileModel Profile { get; set; }
 
@@ -41,6 +43,10 @@ namespace Snowflake.Model.Database.Models
 
             modelBuilder.Entity<ConfigurationValueModel>()
                 .Property(p => p.ValueCollectionGuid)
+                .IsRequired();
+
+            modelBuilder.Entity<ConfigurationValueModel>()
+                .Property(p => p.ValueType)
                 .IsRequired();
 
             modelBuilder.Entity<ConfigurationValueModel>()

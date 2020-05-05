@@ -10,15 +10,18 @@ namespace Snowflake.Configuration
         /// <inheritdoc/>
         public Guid Guid { get; }
 
-        internal ConfigurationValue(object value)
-            : this(value, Guid.NewGuid())
+        public ConfigurationOptionType Type { get; }
+
+        internal ConfigurationValue(object value, ConfigurationOptionType type)
+            : this(value, Guid.NewGuid(), type)
         {
         }
 
-        internal ConfigurationValue(object value, Guid guid)
+        internal ConfigurationValue(object value, Guid guid, ConfigurationOptionType type)
         {
             this.Guid = guid;
             this.Value = value;
+            this.Type = type;
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Snowflake.Configuration.Tests
         {
             var values = new List<(string, string, IConfigurationValue)>()
             {
-                ("ExampleConfiguration", "ISOPath0", new ConfigurationValue("Test", Guid.Empty))
+                ("ExampleConfiguration", "ISOPath0", new ConfigurationValue("Test", Guid.Empty, ConfigurationOptionType.Path))
             };
             var configuration =
                 new ConfigurationCollection<ExampleConfigurationCollection>(new ConfigurationValueCollection(values));
@@ -28,11 +28,11 @@ namespace Snowflake.Configuration.Tests
             var isoPath = Guid.NewGuid();
             var fsR = Guid.NewGuid();
 
-            var values = new List<(string, string, (string, Guid))>()
+            var values = new List<(string, string, (string, Guid, ConfigurationOptionType))>()
             {
-                ("ExampleConfiguration", "ISOPath0", ("Test", isoPath)),
+                ("ExampleConfiguration", "ISOPath0", ("Test", isoPath, ConfigurationOptionType.Path)),
                 ("ExampleConfiguration", "FullscreenResolution",
-                    (FullscreenResolution.Resolution1024X600.ToString(), fsR))
+                    (FullscreenResolution.Resolution1024X600.ToString("d"), fsR, ConfigurationOptionType.Selection))
             };
 
             var collection =

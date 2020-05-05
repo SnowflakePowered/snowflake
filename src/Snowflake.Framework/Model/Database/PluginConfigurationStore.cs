@@ -24,25 +24,50 @@ namespace Snowflake.Model.Database
         }
 
         #region Synchronous API
-        public void Set(IConfigurationValue value)
+        public void Set(Guid valueGuid, object? value)
         {
             using var context = new DatabaseContext(Options.Options);
-            var entity = context.ConfigurationValues
-                .SingleOrDefault(v => v.Guid == value.Guid);
+            var entity = context.ConfigurationValues.Find(valueGuid);
             if (entity == null) return;
-            entity.Value = value.Value.AsConfigurationStringValue();
+            bool typeMatches = value switch
+            {
+                string _ => entity.ValueType == ConfigurationOptionType.String || entity.ValueType == ConfigurationOptionType.Path,
+                bool _ => entity.ValueType == ConfigurationOptionType.Boolean,
+                long _ => entity.ValueType == ConfigurationOptionType.Integer || entity.ValueType == ConfigurationOptionType.Selection,
+                int _ => entity.ValueType == ConfigurationOptionType.Integer || entity.ValueType == ConfigurationOptionType.Selection,
+                short _ => entity.ValueType == ConfigurationOptionType.Integer || entity.ValueType == ConfigurationOptionType.Selection,
+                double _ => entity.ValueType == ConfigurationOptionType.Decimal,
+                float _ => entity.ValueType == ConfigurationOptionType.Decimal,
+                Enum _ => entity.ValueType == ConfigurationOptionType.Selection,
+                _ => false,
+            };
+            if (!typeMatches) return;
+            entity.Value = value.AsConfigurationStringValue();
             context.Entry(entity).State = EntityState.Modified;
             context.SaveChanges();
         }
 
-        public void Set(IEnumerable<IConfigurationValue> values)
+        public void Set(IEnumerable<(Guid valueGuid, object? value)> values)
         {
             using var context = new DatabaseContext(Options.Options);
-            foreach (var value in values)
+            foreach ((Guid valueGuid, object? value) in values)
             {
-                var entity = context.ConfigurationValues.Find(value.Guid);
+                var entity = context.ConfigurationValues.Find(valueGuid);
                 if (entity == null) continue;
-                entity.Value = value.Value.AsConfigurationStringValue();
+                bool typeMatches = value switch
+                {
+                    string _ => entity.ValueType == ConfigurationOptionType.String || entity.ValueType == ConfigurationOptionType.Path,
+                    bool _ => entity.ValueType == ConfigurationOptionType.Boolean,
+                    long _ => entity.ValueType == ConfigurationOptionType.Integer || entity.ValueType == ConfigurationOptionType.Selection,
+                    int _ => entity.ValueType == ConfigurationOptionType.Integer || entity.ValueType == ConfigurationOptionType.Selection,
+                    short _ => entity.ValueType == ConfigurationOptionType.Integer || entity.ValueType == ConfigurationOptionType.Selection,
+                    double _ => entity.ValueType == ConfigurationOptionType.Decimal,
+                    float _ => entity.ValueType == ConfigurationOptionType.Decimal,
+                    Enum _ => entity.ValueType == ConfigurationOptionType.Selection,
+                    _ => false,
+                };
+                if (!typeMatches) return;
+                entity.Value = value.AsConfigurationStringValue();
                 context.Entry(entity).State = EntityState.Modified;
             }
 

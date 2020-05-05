@@ -56,28 +56,30 @@ namespace Snowflake.Extensibility.Configuration
         /// Updates a single <em>existing</em> configuration value, this will do nothing if the GUID is not found in
         /// the database.
         /// </summary>
-        /// <param name="value">The configuration value with valid GUID and updated data</param>
-        void Set(IConfigurationValue value);
+        /// <param name="valueGuid">The GUID of the configuration value to update.</param>
+        /// <param name="value">The new configuration value data.</param>
+        void Set(Guid valueGuid, object? value);
 
         /// <summary>
         /// Asynchronously updates a single <em>existing</em> configuration value, this will do nothing if the GUID is not found in
         /// the database.
         /// </summary>
-        /// <param name="value">The configuration value with valid GUID and updated data</param>
-        Task SetAsync(IConfigurationValue value);
+        /// <param name="valueGuid">The GUID of the configuration value to update</param>
+        /// <param name="value">The new configuration value data.</param>
+        Task SetAsync(Guid valueGuid, object? value);
 
         /// <summary>
         /// Updates multiple <em>existing</em> configuration values, this will do nothing for the GUID is not found in
         /// the database.
         /// </summary>
         /// <param name="values">The configuration value with valid GUID and updated data</param>
-        void Set(IEnumerable<IConfigurationValue> values);
+        void Set(IEnumerable<(Guid valueGuid, object? value)> values);
 
         /// <summary>
         /// Asynchronously updates multiple <em>existing</em> configuration values, this will do nothing for the GUID is not found in
         /// the database.
         /// </summary>
         /// <param name="values">The configuration value with valid GUID and updated data</param>
-        Task SetAsync(IEnumerable<IConfigurationValue> values);
+        Task SetAsync(IEnumerable<(Guid valueGuid, object? value)> values);
     }
 }

@@ -38,7 +38,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Configuration
                         if (owningGuid == default) continue; // value is an orphan or not found.
 
                         await configStore.UpdateValueAsync(value.ValueID, value.Value);
-                        newValues.Add(new ConfigurationValue(value.Value, value.ValueID));
+                        newValues.Add(await configStore.GetValueAsync(value.ValueID));
                         newValueGuid.Add((owningGuid, value.ValueID));
                     }
                     return new UpdateGameConfigurationValuePayload()
@@ -110,13 +110,9 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Configuration
                                 .SetCode("PCFG_NOTPROVISIONED")
                                 .SetMessage("The specified plugin was not a provisioned plugin.")
                                 .Build();
-                    var newValues = new List<Guid>();
-                    foreach (var value in input.Values)
-                    {
-                        await configStore.SetAsync(new ConfigurationValue(value.Value, value.ValueID));
-                        newValues.Add(value.ValueID);
-                    }
-
+                    var newValues = input.Values.Select(i => i.ValueID);
+                    await configStore.SetAsync(input.Values.Select(i => (i.ValueID, i.Value)));
+                   
                     var configuration = plugin.GetPluginConfiguration();
                     return new UpdatePluginConfigurationValuePayload()
                     {
