@@ -65,6 +65,22 @@ namespace Snowflake.Configuration.Attributes
         public PathType PathType { get; } = PathType.NotPath;
 
         /// <summary>
+        /// If this option is a path, the contextual directory that will be used as the 'root' folder of 
+        /// the file browser shown to the user, rooted at one of three directories
+        /// <list type="bullet">
+        /// <item><pre>game:/</pre> The contextual file system of the game.</item>
+        /// <item><pre>common:/</pre> The common resource directory of the orchestrator</item>
+        /// <item><pre>plugin:/</pre> The plugin resource directory</item>
+        /// </list>
+        /// </summary>
+        public string RootPath { get; set; } = string.Empty;
+
+        /// <summary>
+        /// If this option is a file path (<see cref="PathType.Directory"/>), the filter string that restricts possible file types the user is able to select.
+        /// </summary>
+        public string Filter { get; set; } = string.Empty;
+
+        /// <summary>
         /// Gets the name of the option as it appears inside the emulator configuration
         /// </summary>
         public string OptionName { get; }
@@ -177,6 +193,7 @@ namespace Snowflake.Configuration.Attributes
         /// <param name="optionName">The name of the option</param>
         /// <param name="default">The default value of the option. Note that only strings, enums and primitive types are supported.</param>
         /// <param name="pathType">The type of the path this points to.</param>
+        /// <param name="rootPath">The root path of the </param>
         public ConfigurationOptionAttribute(string optionName, string @default, PathType pathType)
             : this(optionName, @default, typeof(string))
         {

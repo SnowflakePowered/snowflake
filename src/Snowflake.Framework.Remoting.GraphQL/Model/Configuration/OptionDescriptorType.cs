@@ -37,7 +37,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Configuration
                 "meaning it is not serialized to the configuration file, and instead triggers some side effect.")
                 .Type<NonNullType<BooleanType>>();
             descriptor.Field(o => o.IsPath)
-                .Description("Whether or not this option is a file path option.")
+                .Description("Whether or not this option is a path option.")
                 .Deprecated("Prefer using `optionType`.")
                 .Type<NonNullType<BooleanType>>();
             descriptor.Field(o => o.IsSelection)
@@ -66,6 +66,19 @@ namespace Snowflake.Remoting.GraphQL.Model.Configuration
             descriptor.Field(o => o.CustomMetadata)
                 .Description("Custom, plugin-defined metadata for this option, if any.")
                 .Type<NonNullType<ListType<NonNullType<OptionMetadataType>>>>();
+            descriptor.Field(o => o.RootPath)
+                .Description("If this option is a Path, the root path to begin browsing from. " + 
+@"The format of this string is not exactly an `ContextualFilePath`. Instead, it is rooted (begins) at one of three roots
+
+* `game:/`, where the latter part of the path can be accessed with the query `game.filesystem`, for this game.
+* `common:/`, where the latter part of the path can be accessed with the query `plugin.provision.commonResourceDirectory`, for this orchestrator.
+* `plugin:/`, where the latter part of the path can be accessed with the query `plugin.provision.resourceDirectory`, for this orchestrator.
+")
+                .Type<NonNullType<StringType>>();
+            descriptor.Field("filter")
+                .Description("If this option is a file path, the allowed file paths to show in the file browser.")
+                .Resolver(ctx => ctx.Parent<IConfigurationOptionDescriptor>().Filter.Split("|"))
+                .Type<NonNullType<ListType<NonNullType<StringType>>>>();
         }
     }
 }
