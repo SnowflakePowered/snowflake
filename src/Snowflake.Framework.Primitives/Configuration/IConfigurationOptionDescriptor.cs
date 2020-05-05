@@ -62,6 +62,21 @@ namespace Snowflake.Configuration
         PathType PathType { get; }
 
         /// <summary>
+        /// If <see cref="IsPath"/> is true, the contextual directory that will be used as the 'root' folder of 
+        /// the file browser shown to the user, rooted at one of three directories
+        /// <list type="bullet">
+        /// <item><pre>game:/</pre> The contextual file system of the game.</item>
+        /// <item><pre>common:/</pre> The common resource directory of the orchestrator</item>
+        /// <item><pre>plugin:/</pre> The plugin resource directory</item>
+        /// </list>
+        /// </summary>
+        string RootPath { get; }
+
+        /// <summary>
+        /// If this option is a file path (<see cref="PathType.Directory"/>), the filter string that restricts possible file types the user is able to select.
+        /// </summary>
+        string Filter { get; }
+        /// <summary>
         /// Gets the name of the option as it appears inside the emulator configuration
         /// </summary>
         string OptionName { get; }

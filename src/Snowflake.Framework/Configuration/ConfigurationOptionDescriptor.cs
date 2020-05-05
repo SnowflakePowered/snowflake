@@ -68,6 +68,10 @@ namespace Snowflake.Configuration
         /// <inheritdoc/>
         public IEnumerable<ISelectionOptionDescriptor> SelectionOptions { get; }
 
+        public string RootPath { get; }
+
+        public string Filter { get; }
+
         internal ConfigurationOptionDescriptor(ConfigurationOptionAttribute configOption,
             IEnumerable<CustomMetadataAttribute> customMetadata, string keyName)
         {
@@ -93,6 +97,8 @@ namespace Snowflake.Configuration
                     .Select(m => new SelectionOptionDescriptor(m))
                     .ToList()
                 : Enumerable.Empty<ISelectionOptionDescriptor>();
+            this.RootPath = configOption.RootPath;
+            this.Filter = configOption.Filter;
         }
 
         private static ConfigurationOptionType GetOptionType(Type t, bool isPath)
