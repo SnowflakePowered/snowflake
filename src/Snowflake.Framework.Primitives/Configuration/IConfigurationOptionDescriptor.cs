@@ -34,7 +34,7 @@ namespace Snowflake.Configuration
         /// side effects to the configuration during emulator instance creation by the emulator handler.
         /// If a flag affects the configuration, it should be placed in the same section it modifies.
         /// </summary>
-        bool Flag { get; }
+        bool IsFlag { get; }
 
         /// <summary>
         /// Gets the maximum value allowable for a number value
@@ -122,5 +122,10 @@ namespace Snowflake.Configuration
         /// this value.
         /// </summary>
         string Unset { get; }
+
+        /// <summary>
+        /// If this option is a reource option (<see cref="ConfigurationOptionType.Resource"/>, the mimetype of the resource this option accepts.
+        /// </summary>
+        public string ResourceType { get; }
     }
 }

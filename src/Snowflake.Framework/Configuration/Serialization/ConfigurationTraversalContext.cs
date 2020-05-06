@@ -182,7 +182,7 @@ namespace Snowflake.Configuration.Serialization
             {
                 string serializedKey = key.OptionName;
                 if (useIndexer) serializedKey = serializedKey.Replace(indexer, Convert.ToString(index));
-                if (key.Flag) continue;
+                if (key.IsFlag) continue;
 
                 if (key.IsPath && value.Value is string fullPath)
                 {

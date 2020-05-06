@@ -37,5 +37,9 @@ namespace Snowflake.Configuration
         /// This value is a choice out of a limited set of choices.
         /// </summary>
         Selection,
+        /// <summary>
+        /// This value is a GUID representing a file record
+        /// </summary>
+        Resource,
     }
 }

@@ -159,11 +159,12 @@ namespace Snowflake.Configuration.Tests
             var store = new ConfigurationCollectionStore(optionsBuilder);
             var configCollection = await store.CreateConfigurationAsync<ExampleConfigurationCollection>("Test");
 
+            var resGuid = Guid.NewGuid();
             configCollection.Configuration.ExampleConfiguration.ISOPath0 = "TestEqual";
             configCollection.Configuration.ExampleConfiguration.FullscreenResolution =
                 FullscreenResolution.Resolution1152X648;
             configCollection.Configuration.ExampleConfiguration.Fullscreen = false;
-
+            configCollection.Configuration.ExampleConfiguration.SomeResource = resGuid;
             await store.UpdateConfigurationAsync(configCollection);
 
             var retrievedConfig =
@@ -175,6 +176,8 @@ namespace Snowflake.Configuration.Tests
                 retrievedConfig.Configuration.ExampleConfiguration.FullscreenResolution);
             Assert.Equal(configCollection.Configuration.ExampleConfiguration.Fullscreen,
                 retrievedConfig.Configuration.ExampleConfiguration.Fullscreen);
+            Assert.Equal(resGuid, configCollection.Configuration.ExampleConfiguration.SomeResource);
+
         }
 
         [Fact]
@@ -184,11 +187,13 @@ namespace Snowflake.Configuration.Tests
             optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
             var store = new ConfigurationCollectionStore(optionsBuilder);
             var configCollection = await store.CreateConfigurationAsync<ExampleConfigurationCollection>("Test");
+            var resGuid = Guid.NewGuid();
 
             configCollection.Configuration.ExampleConfiguration.ISOPath0 = "TestEqual";
             configCollection.Configuration.ExampleConfiguration.FullscreenResolution =
                 FullscreenResolution.Resolution1152X648;
             configCollection.Configuration.ExampleConfiguration.Fullscreen = false;
+            configCollection.Configuration.ExampleConfiguration.SomeResource = resGuid;
 
             await store.UpdateConfigurationAsync(configCollection);
             configCollection.Configuration.ExampleConfiguration.FullscreenResolution =
@@ -204,6 +209,8 @@ namespace Snowflake.Configuration.Tests
                 retrievedConfig.Configuration.ExampleConfiguration.FullscreenResolution);
             Assert.Equal(configCollection.Configuration.ExampleConfiguration.Fullscreen,
                 retrievedConfig.Configuration.ExampleConfiguration.Fullscreen);
+            Assert.Equal(resGuid, configCollection.Configuration.ExampleConfiguration.SomeResource);
+
         }
 
         [Fact]
