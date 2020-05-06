@@ -36,7 +36,9 @@ namespace Snowflake.Configuration
         {
             return optionType == typeof(string)
                 ? strValue ?? string.Empty // return string value if string
-                : TypeDescriptor.GetConverter(optionType).ConvertFromInvariantString(strValue);
+                : (Guid.TryParse(strValue, out Guid guid) 
+                ? guid
+                : TypeDescriptor.GetConverter(optionType).ConvertFromInvariantString(strValue));
 
             //return optionType == typeof(string)
             //    ? strValue ?? string.Empty // return string value if string
@@ -61,6 +63,7 @@ namespace Snowflake.Configuration
                     ConfigurationOptionType.Integer => typeof(long),
                     ConfigurationOptionType.Decimal => typeof(double),
                     ConfigurationOptionType.Selection => typeof(int),
+                    ConfigurationOptionType.Resource => typeof(Guid),
                     _ => throw new NotImplementedException(),
                 };
 
@@ -90,6 +93,7 @@ namespace Snowflake.Configuration
                     ConfigurationOptionType.Integer => typeof(int),
                     ConfigurationOptionType.Decimal => typeof(double),
                     ConfigurationOptionType.Selection => typeof(int),
+                    ConfigurationOptionType.Resource => typeof(Guid),
                     _ => throw new NotImplementedException(),
                 };
                 typedValues.Add((sectionName, option,

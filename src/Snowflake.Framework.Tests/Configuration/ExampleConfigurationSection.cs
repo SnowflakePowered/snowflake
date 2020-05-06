@@ -46,6 +46,9 @@ namespace Snowflake.Configuration
 
         [ConfigurationOption("InternalCpuRatio", 1.0)]
         double InternalCpuRatio { get; set; }
+
+        [ConfigurationOption("application/vnd.snowflake-resource.dolphin-respack")]
+        Guid SomeResource { get; set; }
     }
 
     public enum FullscreenResolution

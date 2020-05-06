@@ -33,7 +33,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Configuration
             descriptor.Field(o => o.Private)
                 .Description("Whether or not tihs option should be showed to the user by default.")
                 .Type<NonNullType<BooleanType>>();
-            descriptor.Field(o => o.Flag).Description("Whether or not this option is a flag, " +
+            descriptor.Field(o => o.IsFlag).Description("Whether or not this option is a flag, " +
                 "meaning it is not serialized to the configuration file, and instead triggers some side effect.")
                 .Type<NonNullType<BooleanType>>();
             descriptor.Field(o => o.IsPath)
@@ -79,6 +79,9 @@ namespace Snowflake.Remoting.GraphQL.Model.Configuration
                 .Description("If this option is a file path, the allowed file paths to show in the file browser.")
                 .Resolver(ctx => ctx.Parent<IConfigurationOptionDescriptor>().Filter.Split("|"))
                 .Type<NonNullType<ListType<NonNullType<StringType>>>>();
+            descriptor.Field(o => o.ResourceType)
+                .Description("If this option is a resource, the mimetype of the resource this option accepts.")
+                .Type<NonNullType<StringType>>();
         }
     }
 }

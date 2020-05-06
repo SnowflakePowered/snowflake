@@ -24,7 +24,7 @@ namespace Snowflake.Configuration
         public bool Private { get; }
 
         /// <inheritdoc/>
-        public bool Flag { get; }
+        public bool IsFlag { get; }
 
         /// <inheritdoc/>
         public double Max { get; }
@@ -68,9 +68,14 @@ namespace Snowflake.Configuration
         /// <inheritdoc/>
         public IEnumerable<ISelectionOptionDescriptor> SelectionOptions { get; }
 
+        /// <inheritdoc/>
         public string RootPath { get; }
 
+        /// <inheritdoc/>
         public string Filter { get; }
+
+        /// <inheritdoc/>
+        public string ResourceType { get; }
 
         internal ConfigurationOptionDescriptor(ConfigurationOptionAttribute configOption,
             IEnumerable<CustomMetadataAttribute> customMetadata, string keyName)
@@ -83,7 +88,7 @@ namespace Snowflake.Configuration
             this.PathType = configOption.PathType;
             this.Simple = configOption.Simple;
             this.Private = configOption.Private;
-            this.Flag = configOption.Flag;
+            this.IsFlag = configOption.Flag;
             this.Max = configOption.Max;
             this.Min = configOption.Min;
             this.CustomMetadata = customMetadata.ToDictionary(m => m.Key, m => m.Value);
@@ -99,6 +104,7 @@ namespace Snowflake.Configuration
                 : Enumerable.Empty<ISelectionOptionDescriptor>();
             this.RootPath = configOption.RootPath;
             this.Filter = configOption.Filter;
+            this.ResourceType = configOption.ResourceType;
         }
 
         private static ConfigurationOptionType GetOptionType(Type t, bool isPath)
@@ -106,6 +112,11 @@ namespace Snowflake.Configuration
             if (t.IsEnum)
             {
                 return ConfigurationOptionType.Selection;
+            }
+
+            if (t == typeof(Guid))
+            {
+                return ConfigurationOptionType.Resource;
             }
 
             if (t == typeof(int) || t == typeof(long))

@@ -45,6 +45,11 @@ namespace Snowflake.Configuration.Attributes
         public bool Flag { get; set; } = false;
 
         /// <summary>
+        /// If this option is a resource option, the mimetype of the resource this option accepts.
+        /// </summary>
+        public string ResourceType { get; } = string.Empty;
+
+        /// <summary>
         /// Gets or sets the maximum value allowable for a number value
         /// </summary>
         public double Max { get; set; } = 0;
@@ -136,6 +141,7 @@ namespace Snowflake.Configuration.Attributes
         {
         }
 
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfigurationOptionAttribute"/> class.
         /// Represents one option in an emulator configuration inside a configuration section.
@@ -151,6 +157,20 @@ namespace Snowflake.Configuration.Attributes
             {
                 throw new ArgumentException("Configuration options can not be complex objects.");
             }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConfigurationOptionAttribute"/> class 
+        /// Represents a resource option in an emulator configuration inside a configuration section.
+        /// Typically configuration options must be a double, bool, integer or an enum value in order to be safe,
+        /// type information may be lost when serializing into a wire format.
+        /// </summary>
+        /// <param name="resourceType">The mimetype of the resource.</param>
+        public ConfigurationOptionAttribute(string resourceType)
+            : this($"#flag!!resource!!{resourceType}", Guid.Empty, typeof(Guid))
+        {
+            this.Flag = true;
+            this.ResourceType = resourceType;
         }
 
         /// <summary>
@@ -193,7 +213,6 @@ namespace Snowflake.Configuration.Attributes
         /// <param name="optionName">The name of the option</param>
         /// <param name="default">The default value of the option. Note that only strings, enums and primitive types are supported.</param>
         /// <param name="pathType">The type of the path this points to.</param>
-        /// <param name="rootPath">The root path of the </param>
         public ConfigurationOptionAttribute(string optionName, string @default, PathType pathType)
             : this(optionName, @default, typeof(string))
         {

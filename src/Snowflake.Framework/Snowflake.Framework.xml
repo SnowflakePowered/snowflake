@@ -78,7 +78,7 @@
         <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.Private">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.Flag">
+        <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.IsFlag">
             <inheritdoc/>
         </member>
         <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.Max">
@@ -121,6 +121,15 @@
             <inheritdoc/>
         </member>
         <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.SelectionOptions">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.RootPath">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.Filter">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.ConfigurationOptionDescriptor.ResourceType">
             <inheritdoc/>
         </member>
         <member name="P:Snowflake.Configuration.ConfigurationSection`1.Configuration">

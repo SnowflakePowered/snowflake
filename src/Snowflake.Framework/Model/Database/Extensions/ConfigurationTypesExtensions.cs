@@ -56,6 +56,7 @@ namespace Snowflake.Model.Database.Extensions
                 ConfigurationOptionType.Integer => typeof(long),
                 ConfigurationOptionType.Decimal => typeof(double),
                 ConfigurationOptionType.Selection => typeof(int),
+                ConfigurationOptionType.Resource => typeof(Guid),
                 _ => throw new NotImplementedException(),
             };
             return new ConfigurationValue(ConfigurationValueCollection.FromString(@this.Value, type), @this.Guid, @this.ValueType);
