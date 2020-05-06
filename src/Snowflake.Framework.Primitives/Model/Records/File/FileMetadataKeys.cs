@@ -56,5 +56,25 @@ namespace Snowflake.Model.Records.File
         /// The filename of the runnable binary in a zip file.
         /// </summary>
         public static readonly string RomZipRunnableFilename = "rom_zip_runnable_filename";
+
+        /// <summary>
+        /// The friendly name of a resource pack.
+        /// </summary>
+        public static readonly string ResourceName = "resource_name";
+
+        /// <summary>
+        /// The description of a resource pack.
+        /// </summary>
+        public static readonly string ResourceDescription = "resource_description";
+
+        /// <summary>
+        /// The type of a resource pack
+        /// </summary>
+        public static readonly string ResourceType = "resource_type";
+
+        /// <summary>
+        /// The emulator that uses a resource pack
+        /// </summary>
+        public static readonly string ResourceOrchestrator = "resource_orchestrator";
     }
 }
