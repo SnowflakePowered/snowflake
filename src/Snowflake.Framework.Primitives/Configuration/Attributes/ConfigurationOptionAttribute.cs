@@ -141,7 +141,6 @@ namespace Snowflake.Configuration.Attributes
         {
         }
 
-        
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfigurationOptionAttribute"/> class.
         /// Represents one option in an emulator configuration inside a configuration section.
