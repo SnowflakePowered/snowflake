@@ -29,50 +29,47 @@ namespace Snowflake.Stone.FileSignatures.Formats.N64
 {
     internal abstract class ByteSwapStream : Stream
     {
-        private Stream m_BaseStream;
+        private Stream baseStream;
 
         protected ByteSwapStream(Stream baseStream)
         {
-            if (baseStream == null)
-                throw new ArgumentNullException(nameof(baseStream));
-
-            m_BaseStream = baseStream;
+            this.baseStream = baseStream;
         }
 
         public sealed override bool CanRead
         {
-            get { return m_BaseStream.CanRead; }
+            get { return this.baseStream.CanRead; }
         }
 
         public sealed override bool CanSeek
         {
-            get { return m_BaseStream.CanSeek; }
+            get { return this.baseStream.CanSeek; }
         }
 
         public sealed override bool CanWrite
         {
-            get { return m_BaseStream.CanWrite; }
+            get { return this.baseStream.CanWrite; }
         }
 
         public sealed override void Flush()
         {
-            m_BaseStream.Flush();
+            this.baseStream.Flush();
         }
 
         public sealed override long Length
         {
-            get { return m_BaseStream.Length; }
+            get { return this.baseStream.Length; }
         }
 
         public sealed override long Position
         {
             get
             {
-                return m_BaseStream.Position;
+                return this.baseStream.Position;
             }
             set
             {
-                m_BaseStream.Position = value;
+                this.baseStream.Position = value;
             }
         }
 
@@ -82,11 +79,11 @@ namespace Snowflake.Stone.FileSignatures.Formats.N64
                 throw new ArgumentNullException(nameof(buffer));
 
             /* Copy a block of data that isn't swapped */
-            Byte[] innerBuffer = new Byte[count];
+            byte[] innerBuffer = new byte[count];
 
             try
             {
-                m_BaseStream.Read(innerBuffer, 0, count);
+                this.baseStream.Read(innerBuffer, 0, count);
             }
             catch (Exception)
             {
@@ -98,7 +95,7 @@ namespace Snowflake.Stone.FileSignatures.Formats.N64
             /* Read into the new buffer swapped */
             for (int i = offset; i < count; i++)
             {
-                buffer[i] = innerBuffer[(Int32)ComputeNextSwapPosition(i - offset)];
+                buffer[i] = innerBuffer[(int)ComputeNextSwapPosition(i - offset)];
             }
 
             return count;
@@ -106,39 +103,35 @@ namespace Snowflake.Stone.FileSignatures.Formats.N64
 
         public sealed override long Seek(long offset, SeekOrigin origin)
         {
-            return m_BaseStream.Seek(offset, origin);
+            return this.baseStream.Seek(offset, origin);
         }
 
         public sealed override void SetLength(long value)
         {
-            m_BaseStream.SetLength(value);
+            this.baseStream.SetLength(value);
         }
 
         public sealed override void Write(byte[] buffer, int offset, int count)
         {
-            Byte[] innerBuffer = new Byte[count];
+            byte[] innerBuffer = new byte[count];
 
             /* Write the data to inner buffer as unswapped */
             for (int i = offset; i < count; i++)
             {
-                innerBuffer[(Int32)ComputeNextSwapPosition(i - offset)] = buffer[i];
+                innerBuffer[(int)ComputeNextSwapPosition(i - offset)] = buffer[i];
             }
 
-            try
-            {
-                m_BaseStream.Write(innerBuffer, 0, count);
-            }
-            catch { throw; }
+            this.baseStream.Write(innerBuffer, 0, count);
         }
 
         public sealed override int ReadByte()
         {
-            return m_BaseStream.ReadByte();
+            return this.baseStream.ReadByte();
         }
 
         public sealed override void WriteByte(byte value)
         {
-            m_BaseStream.WriteByte(value);
+            this.baseStream.WriteByte(value);
         }
 
         protected abstract long ComputeNextSwapPosition(long position);
