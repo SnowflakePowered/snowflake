@@ -17,12 +17,9 @@ namespace Snowflake.Stone.FileSignatures.Formats.SFO
         public int SizeValueDataAndPadding { get; set; }
         public int OffsetDataValueInDataTable { get; set; }
 
-        /**
-         * Reads one entry of the indexTable and return it's values in a SFOIndexTableEntry-object
-         * @param fIn
-         * @return SFOIndexTableEntry
-         * @throws IOException
-         */
+        /// <summary>
+        /// Reads one entry of the indexTable and return it's values in a SFOIndexTableEntry-object
+        /// </summary>
         public static SFOIndexTableEntry ReadEntry(Stream fIn)
         {
             SFOIndexTableEntry sfoIndexTableEntry = new SFOIndexTableEntry();
@@ -56,22 +53,6 @@ namespace Snowflake.Stone.FileSignatures.Formats.SFO
             sfoIndexTableEntry.OffsetDataValueInDataTable = SFOReaderUtilities.ByteArrayReverseToInt(tempByteArray4);
 
             return sfoIndexTableEntry;
-        }
-
-        /// <inheritdoc/>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-
-            sb.Append("== SFO IndexTable Entry ==\n")
-                .Append("offsetKeyNameInKeyTable:    ").Append(this.OffsetKeyNameInKeyTable).Append("\n")
-                .Append("dataAlignmentRequirements:  ").Append(this.DataAlignmentRequirements).Append("\n")
-                .Append("dataTypeValue:              ").Append(this.DataTypeValue).Append("\n")
-                .Append("sizeValueData:              ").Append(this.SizeValueData).Append("\n")
-                .Append("sizeValueDataAndPadding:    ").Append(this.SizeValueDataAndPadding).Append("\n")
-                .Append("offsetDataValueInDataTable: ").Append(this.OffsetDataValueInDataTable).Append("\n");
-
-            return sb.ToString();
         }
     }
 }
