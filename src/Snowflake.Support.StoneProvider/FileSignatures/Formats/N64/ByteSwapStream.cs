@@ -1,20 +1,25 @@
 ﻿/*
-Soft64 - C# N64 Emulator
-Copyright (C) Soft64 Project @ Codeplex
-Copyright (C) 2013 - 2014 Bryan Perris
+MIT License
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+Copyright (c) 2019 Bryan Perris
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 */
 
 using System;
@@ -24,56 +29,68 @@ namespace Snowflake.Stone.FileSignatures.Formats.N64
 {
     internal abstract class ByteSwapStream : Stream
     {
-        private readonly Stream baseStream;
+        private Stream m_BaseStream;
 
         protected ByteSwapStream(Stream baseStream)
         {
-            this.baseStream = baseStream ?? throw new ArgumentNullException("baseStream");
+            if (baseStream == null)
+                throw new ArgumentNullException(nameof(baseStream));
+
+            m_BaseStream = baseStream;
         }
 
-        /// <inheritdoc/>
-        public sealed override bool CanRead => this.baseStream.CanRead;
+        public sealed override bool CanRead
+        {
+            get { return m_BaseStream.CanRead; }
+        }
 
-        /// <inheritdoc/>
-        public sealed override bool CanSeek => this.baseStream.CanSeek;
+        public sealed override bool CanSeek
+        {
+            get { return m_BaseStream.CanSeek; }
+        }
 
-        /// <inheritdoc/>
-        public sealed override bool CanWrite => this.baseStream.CanWrite;
+        public sealed override bool CanWrite
+        {
+            get { return m_BaseStream.CanWrite; }
+        }
 
-        /// <inheritdoc/>
         public sealed override void Flush()
         {
-            this.baseStream.Flush();
+            m_BaseStream.Flush();
         }
 
-        /// <inheritdoc/>
-        public sealed override long Length => this.baseStream.Length;
+        public sealed override long Length
+        {
+            get { return m_BaseStream.Length; }
+        }
 
-        /// <inheritdoc/>
         public sealed override long Position
         {
-            get { return this.baseStream.Position; }
-            set { this.baseStream.Position = value; }
+            get
+            {
+                return m_BaseStream.Position;
+            }
+            set
+            {
+                m_BaseStream.Position = value;
+            }
         }
 
-        /// <inheritdoc/>
         public sealed override int Read(byte[] buffer, int offset, int count)
         {
             if (buffer == null)
-            {
-                throw new ArgumentNullException("buffer");
-            }
+                throw new ArgumentNullException(nameof(buffer));
 
             /* Copy a block of data that isn't swapped */
-            byte[] innerBuffer = new byte[count];
+            Byte[] innerBuffer = new Byte[count];
 
             try
             {
-                this.baseStream.Read(innerBuffer, 0, count);
+                m_BaseStream.Read(innerBuffer, 0, count);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw e;
+                throw;
             }
 
             /* TODO: Some error checkign when larger byte swappers crashes on small buffers */
@@ -81,55 +98,47 @@ namespace Snowflake.Stone.FileSignatures.Formats.N64
             /* Read into the new buffer swapped */
             for (int i = offset; i < count; i++)
             {
-                buffer[i] = innerBuffer[(int) this.ComputeNextSwapPosition(i - offset)];
+                buffer[i] = innerBuffer[(Int32)ComputeNextSwapPosition(i - offset)];
             }
 
             return count;
         }
 
-        /// <inheritdoc/>
         public sealed override long Seek(long offset, SeekOrigin origin)
         {
-            return this.baseStream.Seek(offset, origin);
+            return m_BaseStream.Seek(offset, origin);
         }
 
-        /// <inheritdoc/>
         public sealed override void SetLength(long value)
         {
-            this.baseStream.SetLength(value);
+            m_BaseStream.SetLength(value);
         }
 
-        /// <inheritdoc/>
         public sealed override void Write(byte[] buffer, int offset, int count)
         {
-            byte[] innerBuffer = new byte[count];
+            Byte[] innerBuffer = new Byte[count];
 
             /* Write the data to inner buffer as unswapped */
             for (int i = offset; i < count; i++)
             {
-                innerBuffer[(int) this.ComputeNextSwapPosition(i - offset)] = buffer[i];
+                innerBuffer[(Int32)ComputeNextSwapPosition(i - offset)] = buffer[i];
             }
 
             try
             {
-                this.baseStream.Write(innerBuffer, 0, count);
+                m_BaseStream.Write(innerBuffer, 0, count);
             }
-            catch
-            {
-                throw;
-            }
+            catch { throw; }
         }
 
-        /// <inheritdoc/>
         public sealed override int ReadByte()
         {
-            return this.baseStream.ReadByte();
+            return m_BaseStream.ReadByte();
         }
 
-        /// <inheritdoc/>
         public sealed override void WriteByte(byte value)
         {
-            this.baseStream.WriteByte(value);
+            m_BaseStream.WriteByte(value);
         }
 
         protected abstract long ComputeNextSwapPosition(long position);
