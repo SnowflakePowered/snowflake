@@ -4,13 +4,9 @@ namespace Snowflake.Stone.FileSignatures.Formats.SFO
 {
     internal static class SFOReaderUtilities
     {
-        /**
-         * Converts any byte[]-Array to a string with the specified encoding.
-         *
-         * @param byteArray
-         * @param encoding
-         * @return String
-         */
+        /// <summary>
+        /// Converts a byte[] to a string.
+        /// </summary>
         public static string ByteArrayToString(byte[] byteArray)
         {
             return SFOReaderUtilities.ByteArrayToString(byteArray, false);
@@ -28,12 +24,9 @@ namespace Snowflake.Stone.FileSignatures.Formats.SFO
             }
         }
 
-        /**
-         * Reverse any byte[]-Array and converts it then to an int
-         *
-         * @param b
-         * @return int
-         */
+        /// <summary>
+        /// Reverse any byte[]-Array and converts it then to an int
+        /// </summary>
         public static int ByteArrayReverseToInt(byte[] b)
         {
             byte[] bTemp = new byte[b.Length];
@@ -46,24 +39,17 @@ namespace Snowflake.Stone.FileSignatures.Formats.SFO
             return SFOReaderUtilities.ByteArrayToInt(bTemp);
         }
 
-        /**
-         * Returns any byte[]-Array as an int
-         *
-         * @param b
-         * @return Integer
-         */
+        /// <summary>
+        /// Returns any byte[] as an int
+        /// </summary>
         public static int ByteArrayToInt(byte[] b)
         {
             return SFOReaderUtilities.ByteArrayToInt(b, 0);
         }
 
-        /**
-         * Returns any byte[]-Array as an int from the given offset
-         *
-         * @param b
-         * @param offset
-         * @return Integer
-         */
+        /// <summary>
+        /// Returns any byte[] as an int from the given offset
+        /// </summary>
         public static int ByteArrayToInt(byte[] b, int offset)
         {
             int value = 0;
