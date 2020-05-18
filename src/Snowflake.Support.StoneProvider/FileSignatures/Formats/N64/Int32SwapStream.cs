@@ -28,17 +28,6 @@ using System.IO;
 
 namespace Snowflake.Stone.FileSignatures.Formats.N64
 {
-    internal sealed class Swap32Stream : ByteSwapStream
-    {
-        public Swap32Stream(Stream baseStream) : base(baseStream)
-        {
-        }
-
-        protected override long ComputeNextSwapPosition(long position)
-        {
-            return (position & unchecked(0x7FFFFFFFFFFFFFFCL)) + 3 - (position % 4);
-        }
-    }
     internal sealed class Int32SwapStream : ByteSwapStream
     {
         public Int32SwapStream(Stream baseStream)
