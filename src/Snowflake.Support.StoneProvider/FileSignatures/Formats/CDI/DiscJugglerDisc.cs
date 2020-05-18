@@ -9,9 +9,7 @@ using Snowflake.Stone.FileSignatures.Formats.ISO9660;
 // <summary>
 // Implementation based off
 // https://github.com/inolen/redream
-// 
-// Licensed under GPLv3
-// 
+//
 // This is very slightly off for some reason, but it seems to work well enough for 
 // just getting lba block 1 so...
 // 
