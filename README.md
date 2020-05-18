@@ -54,6 +54,6 @@ As well, input management APIs are currently only available on Windows. Attempti
 
 Legal
 -----
-Snowflake is licensed under the Mozilla Public License 2.0 (MPL2) with certain parts dual licensed under the GNU General Public License version 3 and MPL2 as indicated. Since May 1, 2016, this license is retroactively applied to all prior copies of Snowflake's source code which may have been licensed under different terms. 
+Snowflake is licensed under the Mozilla Public License 2.0 (MPL2). Since May 1, 2016, this license is retroactively applied to all prior copies of Snowflake's source code which may have been licensed under different terms. 
 
 Snowflake does not in any way facilitate the download of illegal ROM images or warez of any kind. 
