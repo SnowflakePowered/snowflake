@@ -15,7 +15,7 @@
     <PackageReference Include="Microsoft.AspNetCore.ResponseCompression" Version="2.2.0" PrivateAssets="Compile" />
     <PackageReference Include="Microsoft.AspNetCore.WebSockets" Version="2.2.1" PrivateAssets="Compile" />
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.2.0" />
-    <PackageReference Include="NLog" Version="4.7.0" PrivateAssets="Compile" />
+    <PackageReference Include="NLog" Version="4.7.2" PrivateAssets="Compile" />
   </ItemGroup>
 
   <ItemGroup>
