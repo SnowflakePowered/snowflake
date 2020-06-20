@@ -22,6 +22,9 @@
     <AdditionalFiles Include="..\stylecop.json" />
 
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Shiragame\" />
+  </ItemGroup>
   
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\Snowflake.ruleset</CodeAnalysisRuleSet>

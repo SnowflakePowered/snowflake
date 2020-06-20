@@ -61,7 +61,6 @@
     <ProjectReference Include="..\Snowflake.Support.GraphQL.FrameworkQueries\Snowflake.Support.GraphQL.FrameworkQueries.csproj" />
     <ProjectReference Include="..\Snowflake.Support.GraphQL.Server\Snowflake.Support.GraphQL.Server.csproj" />
     <ProjectReference Include="..\Snowflake.Support.PluginManager\Snowflake.Support.PluginManager.csproj" />
-    <ProjectReference Include="..\Snowflake.Support.ShiragameProvider\Snowflake.Support.ShiragameProvider.csproj" />
     <ProjectReference Include="..\Snowflake.Support.StoneProvider\Snowflake.Support.StoneProvider.csproj" />
   </ItemGroup>
 

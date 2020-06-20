@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Extensibility;
-using Snowflake.Shiragame;
 
 namespace Snowflake.Romfile
 {

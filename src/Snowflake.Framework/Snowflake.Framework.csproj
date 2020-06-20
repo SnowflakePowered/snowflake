@@ -38,6 +38,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Model\Database\Migrations\" />
+    <Folder Include="Shiragame\" />
   </ItemGroup>
   
   <PropertyGroup>
