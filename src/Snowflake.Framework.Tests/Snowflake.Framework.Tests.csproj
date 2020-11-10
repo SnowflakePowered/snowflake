@@ -14,7 +14,7 @@
     <PackageReference Include="Enums.NET" Version="3.0.3" />
     <PackageReference Include="ini-parser-netstandard" Version="2.5.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.9" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.0" />
     <PackageReference Include="NLog" Version="4.7.5" />
     <PackageReference Include="System.Data.HashFunction.CRC" Version="2.0.0" />
