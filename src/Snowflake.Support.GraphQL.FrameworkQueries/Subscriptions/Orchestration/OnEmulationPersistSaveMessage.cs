@@ -9,10 +9,10 @@ using System.Text;
 namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Orchestration
 {
     internal class OnEmulationPersistSaveMessage
-        : SingleIdentifierChannelMessage
+       : EventMessage<Guid>
     {
         public OnEmulationPersistSaveMessage(PersistEmulationSavePayload payload)
-            : base(payload.InstanceID, payload, "onEmulationPersistSave", "instanceId")
+            : base(payload.InstanceID, payload)
         {
         }
     }

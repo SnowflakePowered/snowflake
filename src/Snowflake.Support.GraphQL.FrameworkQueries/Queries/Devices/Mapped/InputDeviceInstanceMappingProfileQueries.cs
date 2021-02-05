@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Snowflake.Remoting.GraphQL;
+using HotChocolate;
 
 namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Devices.Mapped
 {
@@ -27,10 +28,19 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Devices.Mapped
                 .Argument("controllerId", arg =>
                    arg.Type<NonNullType<ControllerIdType>>()
                     .Description("The Stone controller ID to get compatible mappings for."))
-                .Resolver(context =>
+                .Resolve(context =>
                 {
-                    var deviceInstance = (IInputDeviceInstance)context.Source.Peek();
-                    var device = (IInputDevice)context.Source.Pop().Peek();
+
+                    var deviceInstance = context.Parent<IInputDeviceInstance>();
+                    var device = (IInputDevice)context.ScopedContextData.GetValueOrDefault(nameof(IInputDevice));
+                    if (device == null)
+                    {
+                        throw new GraphQLException(ErrorBuilder.New()
+                                .AddLocation(context.Field.SyntaxNode)
+                                .SetMessage("InputDevice was not pushed down.")
+                                .SetPath(context.Path)
+                                .Build());
+                    }
                     var store = context.SnowflakeService<IControllerElementMappingProfileStore>();
                     var controllerId = context.Argument<ControllerId>("controllerId");
                     return store.GetProfileNames(controllerId, deviceInstance.Driver, device.DeviceName, device.VendorID);

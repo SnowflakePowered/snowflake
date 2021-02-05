@@ -8,10 +8,10 @@ using System.Text;
 namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Scraping
 {
     internal class OnScrapeContextStepMessage
-    : SingleIdentifierChannelMessage
+    : EventMessage<Guid>
     {
         public OnScrapeContextStepMessage(ScrapeContextStepPayload payload)
-            : base(payload.JobID, payload, "onScrapeContextStep", "jobId")
+            : base(payload.JobID, payload)
         {
         }
     }

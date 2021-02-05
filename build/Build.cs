@@ -29,7 +29,7 @@ class Build : NukeBuild
     public static int Main() => Execute<Build>(x => x.Compile);
 
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
-    readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
+    readonly string Configuration = IsLocalBuild ? "Debug" : "Release";
 
     [Solution] readonly Solution Solution;
     [GitRepository] readonly GitRepository GitRepository;
@@ -51,6 +51,7 @@ class Build : NukeBuild
         {
             DotNetToolUpdate(s => s
                 .SetPackageName("Snowflake.Tooling.Cli")
+                .SetVersion("5.0.0")
             );
         });
 

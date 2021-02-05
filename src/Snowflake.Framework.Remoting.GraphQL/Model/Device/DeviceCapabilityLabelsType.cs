@@ -14,13 +14,13 @@ namespace Snowflake.Remoting.GraphQL.Model.Device
             descriptor.Name("DeviceCapabilityLabels")
                 .Description("A mapping of device capabilities to friendly string labels.");
             descriptor.Field("mappings")
-                .Resolver(c => c.Parent<IDeviceCapabilityLabels>())
+                .Resolve(c => c.Parent<IDeviceCapabilityLabels>())
                 .Description("The list of mappings from label to capability for this device instance.")
                 .Type<NonNullType<ListType<NonNullType<DeviceCapabilityLabelElementType>>>>();
             foreach (var (key, _) in DefaultDeviceCapabilityLabels.DefaultLabels)
             {
                 descriptor.Field(key.ToString())
-                    .Resolver(c => c.Parent<IDeviceCapabilityLabels>()[key] ?? key.ToString())
+                    .Resolve(c => c.Parent<IDeviceCapabilityLabels>()[key] ?? key.ToString())
                     .Type<NonNullType<StringType>>();
             }
         }

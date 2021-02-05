@@ -19,5 +19,6 @@
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\Snowflake.ruleset</CodeAnalysisRuleSet>
     <LangVersion>9.0</LangVersion>
+    <StartupObject>Program</StartupObject>
   </PropertyGroup>
 </Project>

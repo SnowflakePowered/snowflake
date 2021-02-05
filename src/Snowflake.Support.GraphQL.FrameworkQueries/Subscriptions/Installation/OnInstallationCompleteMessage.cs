@@ -9,10 +9,10 @@ using System.Text;
 namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Installation
 {
     internal class OnInstallationCompleteMessage
-    : SingleIdentifierChannelMessage
+    : EventMessage<Guid>
     {
         public OnInstallationCompleteMessage(InstallationCompletePayload payload)
-            : base(payload.JobID, payload, "onInstallationComplete", "jobId")
+            : base(payload.JobID, payload)
         {
         }
     }
