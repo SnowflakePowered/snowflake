@@ -10,12 +10,12 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions
     {
         public object? Payload { get; set; }
         public TTopic Topic { get; set; }
-
-        public string ArgumentName { get; set; }
-        public EventMessage(TTopic identifier, object payload)
+        public string ArgumentName { get; }
+        public EventMessage(TTopic identifier, object payload, string argumentName)
         {
             this.Topic = identifier;
             this.Payload = payload;
+            this.ArgumentName = argumentName;
         }
     }
 }

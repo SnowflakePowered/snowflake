@@ -11,7 +11,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Scraping
     : EventMessage<Guid>
     {
         public OnScrapeContextApplyMessage(Guid jobId, ApplyScrapeContextPayload payload)
-            : base(jobId, payload)
+            : base(jobId, payload, "jobId")
         {
         }
     }

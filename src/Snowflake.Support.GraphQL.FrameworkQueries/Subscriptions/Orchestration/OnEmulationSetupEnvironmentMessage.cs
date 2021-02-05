@@ -12,7 +12,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Orchestration
        : EventMessage<Guid>
     {
         public OnEmulationSetupEnvironmentMessage(EmulationInstancePayload payload)
-            : base(payload.InstanceID, payload)
+            : base(payload.InstanceID, payload, "instanceId")
         {
         }
     }

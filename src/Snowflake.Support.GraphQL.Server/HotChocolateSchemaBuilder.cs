@@ -144,57 +144,65 @@ namespace Snowflake.Support.GraphQL.Server
                     StrictValidation = true,
                     RemoveUnreachableTypes = false,
                 })
-                .AddQueryType(descriptor =>
+                .ModifyRequestOptions(opts =>
+                {
+                    opts.TracingPreference = HotChocolate.Execution.Options.TracingPreference.Always;
+                });
+
+            schemaBuilder.ConfigureSchema(schemaBuilder =>
+            {
+                schemaBuilder.AddQueryType(descriptor =>
                 {
                     descriptor.Name("Query")
                         .Description("The query root of Snowflake's GraphQL interface.");
                 });
 
-            if (!queryOnly)
-            {
-                schemaBuilder.AddMutationType(descriptor =>
+                if (!queryOnly)
                 {
-                    descriptor.Name("Mutation")
-                        .Description("The mutation root of Snowflake's GraphQL interface. " +
-                        "Snowflake provides mutations that implement Relay Input Object Mutations Specifications.");
-                })
-                .AddSubscriptionType(descriptor =>
+                    schemaBuilder.AddMutationType(descriptor =>
+                    {
+                        descriptor.Name("Mutation")
+                            .Description("The mutation root of Snowflake's GraphQL interface. " +
+                            "Snowflake provides mutations that implement Relay Input Object Mutations Specifications.");
+                    })
+                    .AddSubscriptionType(descriptor =>
+                    {
+                        descriptor.Name("Subscription")
+                            .Description("The subscription root of Snowflake's GraphQL interface.");
+                    });
+                }
+
+
+
+                foreach (var type in this.Schemas.ScalarTypes)
                 {
-                    descriptor.Name("Subscription")
-                        .Description("The subscription root of Snowflake's GraphQL interface.");
-                });
-            }
+                    schemaBuilder.AddType(type);
+                }
 
-            foreach (var type in this.Schemas.ScalarTypes)
-            {
-                schemaBuilder.AddType(type);
-            }
+                foreach (var type in this.Schemas.EnumTypes)
+                {
+                    schemaBuilder.AddType(type);
+                }
 
-            foreach (var type in this.Schemas.EnumTypes)
-            {
-                schemaBuilder.AddType(type);
-            }
+                foreach (var type in this.Schemas.InterfaceTypes)
+                {
+                    schemaBuilder.AddType(type);
+                }
 
-            foreach (var type in this.Schemas.InterfaceTypes)
-            {
-                schemaBuilder.AddType(type);
-            }
+                foreach (var type in this.Schemas.ObjectTypes)
+                {
+                    schemaBuilder.AddType(type);
+                }
 
-            foreach (var type in this.Schemas.ObjectTypes)
-            {
-                schemaBuilder.AddType(type);
-            }
-
-            foreach (var type in this.Schemas.ObjectTypeExtensions)
-            {
-                schemaBuilder.AddType(type);
-            }
-
+                foreach (var type in this.Schemas.ObjectTypeExtensions)
+                {
+                    schemaBuilder.AddType(type);
+                }
+            });
             foreach (var config in this.Schemas.SchemaConfig)
             {
                 config(schemaBuilder);
             }
-
             return schemaBuilder;
         }
         

@@ -86,7 +86,6 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
             hotChocolate.AddEmptyQueryType("job", "JobQuery", "Provides access to Snowflake runtime details.");
             hotChocolate.AddObjectTypeExtension<JobQueries>();
 
-            //hotChocolate.AddObjectTypeExtension<GameSubscriptions>();
             hotChocolate.AddObjectTypeExtension<ScrapingMutations>();
             hotChocolate.AddObjectTypeExtension<ScrapingSubscriptions>();
             hotChocolate.AddObjectType<ScrapeContextCompletePayloadType>();

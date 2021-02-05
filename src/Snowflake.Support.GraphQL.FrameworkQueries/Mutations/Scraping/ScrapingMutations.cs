@@ -28,7 +28,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                 .UseClientMutationId()
                 .UseAutoSubscription()
                 .Argument("input", arg => arg.Type<CreateScrapeContextInputType>())
-                .Resolver(async ctx =>
+                .Resolve(async ctx =>
                 {
                     var input = ctx.Argument<CreateScrapeContextInput>("input");
                     var plugins = ctx.SnowflakeService<IPluginManager>();
@@ -64,7 +64,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                 .UseClientMutationId()
                 .UseAutoSubscription()
                 .Argument("input", arg => arg.Type<CancelScrapeContextInputType>())
-                .Resolver(async ctx =>
+                .Resolve(async ctx =>
                 {
                     var input = ctx.Argument<CancelScrapeContextInput>("input");
 
@@ -97,7 +97,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                 .UseClientMutationId()
                 .UseAutoSubscription()
                 .Argument("input", arg => arg.Type<DeleteScrapeContextInputType>())
-                .Resolver(async ctx =>
+                .Resolve(async ctx =>
                 {
                     var input = ctx.Argument<DeleteScrapeContextInput>("input");
                    
@@ -139,7 +139,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                 .UseClientMutationId()
                 .UseAutoSubscription()
                 .Argument("input", arg => arg.Type<NextScrapeContextStepInputType>())
-                .Resolver(async ctx =>
+                .Resolve(async ctx =>
                 {
                     var input = ctx.Argument<NextScrapeContextStepInput>("input");
                     var jobQueue = ctx.SnowflakeService<IAsyncJobQueueFactory>()
@@ -196,7 +196,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                 .UseClientMutationId()
                 .UseAutoSubscription()
                 .Argument("input", arg => arg.Type<NextScrapeContextStepInputType>())
-                .Resolver(async ctx =>
+                .Resolve(async ctx =>
                 {
                     var input = ctx.Argument<NextScrapeContextStepInput>("input");
                     var jobQueue = ctx.SnowflakeService<IAsyncJobQueueFactory>()
@@ -249,7 +249,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                 .UseClientMutationId()
                 .UseAutoSubscription()
                 .Argument("input", arg => arg.Type<ApplyScrapeContextInputType>())
-                .Resolver(async ctx =>
+                .Resolve(async ctx =>
                 {
                     var input = ctx.Argument<ApplyScrapeContextInput>("input");
                     var jobQueue = ctx.SnowflakeService<IAsyncJobQueueFactory>()

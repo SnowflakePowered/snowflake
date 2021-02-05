@@ -1,4 +1,4 @@
-﻿using HotChocolate.Resolvers;
+﻿using HotChocolate;
 using HotChocolate.Types;
 using Snowflake.Extensibility.Queueing;
 using Snowflake.Scraping;
@@ -25,19 +25,22 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Installation
                 .Description("A subscription for when a game installation step occurs.")
                 .Type<NonNullType<InstallationStepPayloadType>>()
                 .Argument("jobId", arg => arg.Type<NonNullType<UuidType>>())
-                .SubscribeToTopic<Guid, OnInstallationStepMessage>("jobId");
+                .SubscribeToTopic<Guid, OnInstallationStepMessage>("jobId")
+                .Resolve(ctx => ctx.GetEventMessage<InstallationStepPayload>());
 
             descriptor.Field("onInstallationComplete")
                 .Description("A subscription for when a game installation completes.")
                 .Type<NonNullType<InstallationCompletePayloadType>>()
                 .Argument("jobId", arg => arg.Type<NonNullType<UuidType>>())
-                .SubscribeToTopic<Guid, OnInstallationCompleteMessage>("jobId");
+                .SubscribeToTopic<Guid, OnInstallationCompleteMessage>("jobId")
+                .Resolve(ctx => ctx.GetEventMessage<InstallationCompletePayload>());
                 
             descriptor.Field("onInstallationCancel")
                 .Description("A subscription for when a game installation is cancelled.")
                 .Type<NonNullType<InstallationCancelledPayloadType>>()
                 .Argument("jobId", arg => arg.Type<NonNullType<UuidType>>())
-                .SubscribeToTopic<Guid, OnInstallationCancelMessage>("jobId");
+                .SubscribeToTopic<Guid, OnInstallationCancelMessage>("jobId")
+                .Resolve(ctx => ctx.GetEventMessage<InstallationCancelledPayload>());
         }
     }
 }
