@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <AssemblyName>dotnet-snowflake</AssemblyName>
     <PackageId>Snowflake.Tooling.Cli</PackageId>
     <RootNamespace>Snowflake.Tooling.Taskrunner</RootNamespace>
@@ -9,7 +9,7 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Version>2.2.2</Version>
     <StartupObject />
-    <LangVersion>8.0</LangVersion>
+    <LangVersion>9.0</LangVersion>
     <PackageIcon>PackageIcon.png</PackageIcon>
   </PropertyGroup>
   
