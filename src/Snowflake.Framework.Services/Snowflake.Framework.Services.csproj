@@ -11,10 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" PrivateAssets="Compile" />
-    <PackageReference Include="Microsoft.AspNetCore.ResponseCompression" Version="2.2.0" PrivateAssets="Compile" />
-    <PackageReference Include="Microsoft.AspNetCore.WebSockets" Version="2.2.1" PrivateAssets="Compile" />
-    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.2.0" />
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="NLog" Version="4.7.7" PrivateAssets="Compile" />
   </ItemGroup>
 

@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using HotChocolate;
-using HotChocolate.Types;
-using HotChocolate.Types.Relay;
-using Snowflake.Configuration;
 using Snowflake.Remoting.GraphQL;
 using Snowflake.Loader;
 using Snowflake.Model.Game;
@@ -39,7 +36,9 @@ using Snowflake.Orchestration.Extensibility;
 using Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration;
 using Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Ports;
 using Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Orchestration;
-
+using HotChocolate.Execution.Configuration;
+using HotChocolate.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
 {
     public class QueryContainer : IComposable
@@ -104,7 +103,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Containers
 
             hotChocolate.ConfigureSchema(schema =>
             {
-                schema.AddTypeInterceptor<AutoSubscriptionTypeInterceptor>();
+                schema.TryAddTypeInterceptor<AutoSubscriptionTypeInterceptor>();
             });
 
             hotChocolate.AddObjectTypeExtension<OrchestrationMutations>();

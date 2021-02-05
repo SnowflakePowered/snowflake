@@ -25,7 +25,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Input
                 .Argument("input", arg => arg.Type<NonNullType<CreateInputProfileInputType>>())
                 .UseClientMutationId()
                 .UseAutoSubscription()
-                .Resolver(async ctx =>
+                .Resolve(async ctx =>
                 {
                     var input = ctx.Argument<CreateInputProfileInput>("input");
                     var devices = ctx.SnowflakeService<IDeviceEnumerator>().QueryConnectedDevices();
@@ -84,7 +84,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Input
                 .UseClientMutationId()
                 .UseAutoSubscription()
                 .Argument("input", arg => arg.Type<NonNullType<UpdateInputProfileInputType>>())
-                .Resolver(async ctx =>
+                .Resolve(async ctx =>
                 {
                     var input = ctx.Argument<UpdateInputProfileInput>("input");
 
@@ -113,7 +113,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Input
             descriptor.Field("deleteInputProfile")
                 .Description("Deletes the specified input profile.")
                 .Argument("input", arg => arg.Type<NonNullType<DeleteInputProfileInputType>>())
-                .Resolver(async ctx =>
+                .Resolve(async ctx =>
                 {
                     var input = ctx.Argument<DeleteInputProfileInput>("input");
                     var mappingStore = ctx.SnowflakeService<IControllerElementMappingProfileStore>();

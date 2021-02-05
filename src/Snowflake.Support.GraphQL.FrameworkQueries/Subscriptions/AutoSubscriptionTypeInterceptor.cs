@@ -13,7 +13,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions
     {
         internal static readonly string AutoSubscriptionContext = "Snowflake.Support.GraphQL.FrameworkQueries.AutoMutationSubscription";
 
-        public bool TriggerAggregations => throw new NotImplementedException();
+        public bool TriggerAggregations => false;
 
         public bool CanHandle(ITypeSystemObjectContext context)
         {
@@ -59,10 +59,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions
                 descriptor
                     .Type(type)
                     .Description($"Subscription for the {mutationDef.Name.Value} mutation.")
-                    .Resolve(ctx =>
-                    {
-                        return ctx.GetEventMessage().Payload;
-                    });
+                    .SubscribeToTopic<object>(subscriptionName);
                 def.Fields.Add(descriptor.CreateDefinition());
             }
             def.Description += 

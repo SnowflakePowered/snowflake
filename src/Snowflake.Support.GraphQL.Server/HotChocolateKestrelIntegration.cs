@@ -21,6 +21,7 @@ using Snowflake.Model.Game;
 using HotChocolate.Language;
 using Snowflake.Remoting.GraphQL;
 using Snowflake.Remoting.GraphQL.Model.Queueing;
+
 using Snowflake.Support.GraphQL.Server;
 
 namespace Snowflake.Services
@@ -37,14 +38,11 @@ namespace Snowflake.Services
         public void Configure(IApplicationBuilder app)
         {
             app.UseGraphQL("/graphql");
-            app.UseGraphQLSubscriptions();
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
           
-            services.AddGraphQLSubscriptions();
-
             // Add privileged newtypes for Stone
 
             var graphQL = services.AddGraphQLServer();

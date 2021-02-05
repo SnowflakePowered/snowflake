@@ -56,7 +56,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Game
 
                     if (context.Field.Arguments["where"].Type is InputObjectType iot && iot is IFilterInputType)
                     {
-                        var filter = new QueryableFilterVisitorContext(iot, typeof(IGameRecordQuery), context.GetTypeConversion(), true);
+                        var filter = new QueryableFilterVisitorContext(iot, typeof(IGameRecordQuery), context.GetTypeConverter(), true);
                         QueryableFilterVisitor.Default.Visit(valueNode, filter);
 
                         var expr = filter.CreateFilter<IGameRecordQuery>();

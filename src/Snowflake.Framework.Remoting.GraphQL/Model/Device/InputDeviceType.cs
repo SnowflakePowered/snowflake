@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using HotChocolate.Types;
 using Snowflake.Input.Device;
-
 namespace Snowflake.Remoting.GraphQL.Model.Device
 {
     public class InputDeviceType : ObjectType<IInputDevice>
@@ -12,9 +11,13 @@ namespace Snowflake.Remoting.GraphQL.Model.Device
         {
             descriptor.Name("InputDevice")
                 .Description("Describes an enumerated input device with a determined layout.");
-            descriptor.Field(c => c.Instances)
+            descriptor.Field("instances")
                 .Description("The enumerated driver instances of this device.")
-                .Type<NonNullType<ListType<InputDeviceInstanceType>>>();
+                .Type<NonNullType<ListType<InputDeviceInstanceType>>>()
+                .Resolve(ctx => {
+                    ctx.ScopedContextData = ctx.ScopedContextData.SetItem(nameof(IInputDevice), ctx.Parent<IInputDevice>());
+                    return ctx.Parent<IInputDevice>().Instances;
+                 });
             descriptor.Field(c => c.VendorID)
                 .Name("vendorId")
                 .Description("The Vendor ID of the device.");

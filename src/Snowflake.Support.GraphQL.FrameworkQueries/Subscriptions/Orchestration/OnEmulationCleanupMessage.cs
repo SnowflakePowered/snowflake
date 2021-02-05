@@ -9,10 +9,10 @@ using System.Text;
 namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Orchestration
 {
     internal class OnEmulationCleanupMessage
-        : SingleIdentifierChannelMessage
+       : EventMessage<Guid>
     {
         public OnEmulationCleanupMessage(CleanupEmulationPayload payload)
-            : base(payload.InstanceID, payload, "onEmulationCleanup", "instanceId")
+            : base(payload.InstanceID, payload)
         {
         }
     }

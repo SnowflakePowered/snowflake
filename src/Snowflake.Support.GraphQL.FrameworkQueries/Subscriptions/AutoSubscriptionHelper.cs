@@ -52,18 +52,16 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions
             return descriptor;
         }
 
-        public static T GetEventMessage<T>(this IResolverContext context) => (T)context.ContextData["HotChocolate.Execution.EventMessage"];
-        public static EventMessage GetEventMessage(this IResolverContext context) => (EventMessage)context.ContextData["HotChocolate.Execution.EventMessage"];
-
-        public static ValueTask SendEventMessage(this IResolverContext context, IEventMessage message)
+        public static ValueTask SendEventMessage<T>(this IResolverContext context, EventMessage<T> message)
         {
             var eventSender = context.Service<ITopicEventSender>();
-            return eventSender.SendAsync(message);
+            return eventSender.SendAsync(message.Topic, message.Payload);
         }
 
         public static async ValueTask<T> SendSimpleSubscription<T>(this IResolverContext context, string subscriptionName, T payload)
         {
-            await context.SendEventMessage(new SimpleEventMessage<T>(subscriptionName, payload));
+            var eventSender = context.Service<ITopicEventSender>();
+            await eventSender.SendAsync(subscriptionName, payload);
             return payload;
         }
 

@@ -25,29 +25,19 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Installation
                 .Description("A subscription for when a game installation step occurs.")
                 .Type<NonNullType<InstallationStepPayloadType>>()
                 .Argument("jobId", arg => arg.Type<NonNullType<UuidType>>())
-                .Resolver(ctx =>
-                {
-                    var message = ctx.GetEventMessage<OnInstallationStepMessage>();
-                    return message.Payload;
-                });
+                .SubscribeToTopic<Guid, OnInstallationStepMessage>("jobId");
+
             descriptor.Field("onInstallationComplete")
                 .Description("A subscription for when a game installation completes.")
                 .Type<NonNullType<InstallationCompletePayloadType>>()
                 .Argument("jobId", arg => arg.Type<NonNullType<UuidType>>())
-                .Resolver(ctx =>
-                {
-                    var message = ctx.GetEventMessage<OnInstallationCompleteMessage>();
-                    return message.Payload;
-                });
+                .SubscribeToTopic<Guid, OnInstallationCompleteMessage>("jobId");
+                
             descriptor.Field("onInstallationCancel")
                 .Description("A subscription for when a game installation is cancelled.")
-               .Type<NonNullType<InstallationCancelledPayloadType>>()
-               .Argument("jobId", arg => arg.Type<NonNullType<UuidType>>())
-               .Resolver(ctx =>
-               {
-                   var message = ctx.GetEventMessage<OnInstallationCancelMessage>();
-                   return message.Payload;
-               });
+                .Type<NonNullType<InstallationCancelledPayloadType>>()
+                .Argument("jobId", arg => arg.Type<NonNullType<UuidType>>())
+                .SubscribeToTopic<Guid, OnInstallationCancelMessage>("jobId");
         }
     }
 }

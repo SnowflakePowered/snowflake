@@ -17,65 +17,40 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Orchestration
                 .Description("A subscription for the cleanupEmulation mutation.")
                 .Type<NonNullType<EmulationInstancePayloadType>>()
                 .Argument("instanceId", arg => arg.Type<NonNullType<UuidType>>())
-                .Resolver(ctx =>
-                {
-                    var message = ctx.GetEventMessage<OnEmulationCleanupMessage>();
-                    return message.Payload;
-                });
+                .SubscribeToTopic<Guid, OnEmulationCleanupMessage>("instanceId");
             descriptor.Field("onEmulationStart")
                 .Description("A subscription for the startEmulation mutation.")
                 .Type<NonNullType<EmulationInstancePayloadType>>()
                 .Argument("instanceId", arg => arg.Type<NonNullType<UuidType>>())
-                .Resolver(ctx =>
-                {
-                    var message = ctx.GetEventMessage<OnEmulationStartMessage>();
-                    return message.Payload;
-                });
+                .SubscribeToTopic<Guid, OnEmulationStartMessage>("instanceId");
+
             descriptor.Field("onEmulationStop")
                 .Description("A subscription for when an emulation ends. The payload will be the same as in the corresponding `onEmulationStart` subscription.")
                 .Type<NonNullType<EmulationInstancePayloadType>>()
                 .Argument("instanceId", arg => arg.Type<NonNullType<UuidType>>())
-                .Resolver(ctx =>
-                {
-                    var message = ctx.GetEventMessage<OnEmulationStopMessage>();
-                    return message.Payload;
-                });
+                .SubscribeToTopic<Guid, OnEmulationStopMessage>("instanceId");
+           
             descriptor.Field("onEmulationSetupEnvironment")
                 .Description("A subscription for the setupEmulationEnvironment mutation.")
                 .Type<NonNullType<EmulationInstancePayloadType>>()
                 .Argument("instanceId", arg => arg.Type<NonNullType<UuidType>>())
-                .Resolver(ctx =>
-                {
-                    var message = ctx.GetEventMessage<OnEmulationSetupEnvironmentMessage>();
-                    return message.Payload;
-                });
+                .SubscribeToTopic<Guid, OnEmulationSetupEnvironmentMessage>("instanceId");
             descriptor.Field("onEmulationCompileConfiguration")
                 .Description("A subscription for the compileEmulationConfiguration mutation.")
                 .Type<NonNullType<EmulationInstancePayloadType>>()
                 .Argument("instanceId", arg => arg.Type<NonNullType<UuidType>>())
-                .Resolver(ctx =>
-                {
-                    var message = ctx.GetEventMessage<OnEmulationCompileConfigurationMessage>();
-                    return message.Payload;
-                });
+                .SubscribeToTopic<Guid, OnEmulationCompileConfigurationMessage>("instanceId");
             descriptor.Field("onEmulationRestoreSave")
                 .Description("A subscription for the restoreEmulationSave mutation.")
                 .Type<NonNullType<EmulationInstancePayloadType>>()
                 .Argument("instanceId", arg => arg.Type<NonNullType<UuidType>>())
-                .Resolver(ctx =>
-                {
-                    var message = ctx.GetEventMessage<OnEmulationRestoreSaveMessage>();
-                    return message.Payload;
-                });
+                .SubscribeToTopic<Guid, OnEmulationRestoreSaveMessage> ("instanceId");
+                
             descriptor.Field("onEmulationPersistSave")
                 .Description("A subscription for the persistEmulationSave mutation.")
                 .Type<NonNullType<PersistEmulationSavePayloadType>>()
                 .Argument("instanceId", arg => arg.Type<NonNullType<UuidType>>())
-                .Resolver(ctx =>
-                {
-                    var message = ctx.GetEventMessage<OnEmulationPersistSaveMessage>();
-                    return message.Payload;
-                });
+                .SubscribeToTopic<Guid, OnEmulationPersistSaveMessage>("instanceId");
         }
     }
 }

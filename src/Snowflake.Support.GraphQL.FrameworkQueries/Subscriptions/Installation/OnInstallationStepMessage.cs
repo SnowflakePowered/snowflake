@@ -8,10 +8,10 @@ using System.Text;
 namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Installation
 {
     internal class OnInstallationStepMessage
-    : SingleIdentifierChannelMessage
+    : EventMessage<Guid>
     {
         public OnInstallationStepMessage(InstallationStepPayload payload)
-            : base(payload.JobID, payload, "onInstallationStep", "jobId")
+            : base(payload.JobID, payload)
         {
         }
     }
