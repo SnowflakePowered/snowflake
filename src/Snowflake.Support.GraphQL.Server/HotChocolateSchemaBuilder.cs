@@ -172,8 +172,6 @@ namespace Snowflake.Support.GraphQL.Server
                     });
                 }
 
-
-
                 foreach (var type in this.Schemas.ScalarTypes)
                 {
                     schemaBuilder.AddType(type);

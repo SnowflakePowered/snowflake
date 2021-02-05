@@ -75,6 +75,5 @@ namespace Snowflake.Remoting.GraphQL.Model.Filesystem
         {
             return this.TrySerialize(value, out var s) ? s : default;
         }
-
     }
 }

@@ -30,7 +30,6 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Devices.Mapped
                     .Description("The Stone controller ID to get compatible mappings for."))
                 .Resolve(context =>
                 {
-
                     var deviceInstance = context.Parent<IInputDeviceInstance>();
                     var device = (IInputDevice)context.ScopedContextData.GetValueOrDefault(nameof(IInputDevice));
                     if (device == null)

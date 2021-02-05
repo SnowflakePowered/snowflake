@@ -207,7 +207,6 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
                                     JobID = arg.JobID,
                                     ClientMutationID = arg.ClientMutationID,
                                 }));
-
                         }
                     }
 
