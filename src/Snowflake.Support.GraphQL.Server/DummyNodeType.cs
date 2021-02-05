@@ -18,8 +18,8 @@ namespace Snowflake.Support.GraphQL.Server
                 .Deprecated("Do not use this type.")
                 .Resolve("__dummy")
                 .Type<IdType>();
-            descriptor.AsNode()
-                .NodeResolver<string>((ctx, id) => Task.FromResult(new object()));
+            descriptor.ImplementsNode()
+                .ResolveNode<string>((ctx, id) => Task.FromResult(new object()));
         }
     }
 }

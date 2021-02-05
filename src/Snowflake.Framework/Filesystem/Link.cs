@@ -65,7 +65,6 @@ namespace Snowflake.Filesystem
 
         FileInfo IReadOnlyFile.UnsafeGetFilePointerPath() => new FileInfo(this.RawInfo.FileSystem.ConvertPathToInternal(this.RawInfo.Path));
 
-
         public Stream OpenReadStream()
         {
             if (!this.Created) throw new FileNotFoundException($"The file {this.Name} was not found");

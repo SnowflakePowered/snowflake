@@ -48,12 +48,11 @@ namespace Snowflake.Services
 
         public void ConfigureServices(IServiceCollection services)
         {
-
             // Add privileged newtypes for Stone
             services
                 .AddRouting()
-                .AddMemoryCache()
-                ;
+                .AddMemoryCache();
+
             var graphQL = services
                 .AddGraphQLServer()
                 .AddApolloTracing()
@@ -64,7 +63,6 @@ namespace Snowflake.Services
             this.Schema.AddSnowflakeGraphQl(graphQL);
             this.Schema.AddStoneIdTypeConverters(graphQL);
             this.Schema.AddSnowflakeQueryRequestInterceptor(graphQL);
-           
         }
     }
 }

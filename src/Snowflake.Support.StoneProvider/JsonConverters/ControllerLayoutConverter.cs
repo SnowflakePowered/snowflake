@@ -29,8 +29,7 @@ namespace Snowflake.Support.StoneProvider.JsonConverters
                 let elementInfoElem = layoutElem.Value
                 let elementLabel = elementInfoElem.GetProperty("Label").GetString()
                 let elementType = ControllerElementTypeExtensions.Parse(elementInfoElem.GetProperty("Type").GetString()!)
-                select (elementKey, elementInfo: new ControllerElementInfo(elementLabel, elementType))
-                ;
+                select (elementKey, elementInfo: new ControllerElementInfo(elementLabel, elementType));
 
             var layout = new ControllerElementCollection();
            

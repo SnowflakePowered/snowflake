@@ -187,7 +187,6 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
 
                     await ctx.SendEventMessage(new OnScrapeContextCompleteMessage(completePayload));
                     return completePayload;
-
                 }).Type<NonNullType<ScrapeContextPayloadInterface>>();
 
             descriptor.Field("exhaustScrapeContextSteps")
@@ -241,7 +240,6 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
 
                     await ctx.SendEventMessage(new OnScrapeContextCompleteMessage(completePayload));
                     return completePayload;
-
                 }).Type<NonNullType<ScrapeContextCompletePayloadType>>();
 
             descriptor.Field("applyScrapeContext")
@@ -284,7 +282,6 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                            .SetCode("SCRP_NOTFOUND_GAME")
                            .SetMessage("The specified game does not exist.")
                            .Build();
-
 
                     foreach (var traverser in metaTraversers)
                     {
