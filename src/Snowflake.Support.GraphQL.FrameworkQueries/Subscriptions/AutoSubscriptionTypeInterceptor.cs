@@ -12,28 +12,40 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions
     internal sealed class AutoSubscriptionTypeInterceptor : ITypeInitializationInterceptor
     {
         internal static readonly string AutoSubscriptionContext = "Snowflake.Support.GraphQL.FrameworkQueries.AutoMutationSubscription";
+
+        public bool TriggerAggregations => throw new NotImplementedException();
+
         public bool CanHandle(ITypeSystemObjectContext context)
         {
             return context.Type.Name == "Subscription";
         }
 
-        public void OnAfterCompleteName(ICompletionContext context, DefinitionBase definition, IDictionary<string, object> contextData)
+        public void OnAfterCompleteName(ITypeCompletionContext completionContext, DefinitionBase definition, IDictionary<string, object> contextData)
         {
+            
         }
 
-        public void OnAfterCompleteType(ICompletionContext context, DefinitionBase definition, IDictionary<string, object> contextData)
+        public void OnAfterCompleteType(ITypeCompletionContext completionContext, DefinitionBase definition, IDictionary<string, object> contextData)
         {
+            
         }
 
-        public void OnAfterRegisterDependencies(IInitializationContext context, DefinitionBase definition, IDictionary<string, object> contextData)
+        public void OnAfterInitialize(ITypeDiscoveryContext discoveryContext, DefinitionBase definition, IDictionary<string, object> contextData)
         {
+            
         }
 
-        public void OnBeforeCompleteName(ICompletionContext context, DefinitionBase definition, IDictionary<string, object> contextData)
+        public void OnAfterRegisterDependencies(ITypeDiscoveryContext discoveryContext, DefinitionBase definition, IDictionary<string, object> contextData)
         {
+            
         }
 
-        public void OnBeforeCompleteType(ICompletionContext context, DefinitionBase definition, IDictionary<string, object> contextData)
+        public void OnBeforeCompleteName(ITypeCompletionContext completionContext, DefinitionBase definition, IDictionary<string, object> contextData)
+        {
+           
+        }
+
+        public void OnBeforeCompleteType(ITypeCompletionContext context, DefinitionBase definition, IDictionary<string, object> contextData)
         {
             var def = (ObjectTypeDefinition)definition;
 
@@ -47,7 +59,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions
                 descriptor
                     .Type(type)
                     .Description($"Subscription for the {mutationDef.Name.Value} mutation.")
-                    .Resolver(ctx =>
+                    .Resolve(ctx =>
                     {
                         return ctx.GetEventMessage().Payload;
                     });
@@ -71,8 +83,29 @@ In most cases, it is more useful to subscribe to the `onObjectVerb` subscription
 ";
         }
 
-        public void OnBeforeRegisterDependencies(IInitializationContext context, DefinitionBase definition, IDictionary<string, object> contextData)
+        public void OnBeforeInitialize(ITypeDiscoveryContext discoveryContext)
         {
+            throw new NotImplementedException();
+        }
+
+        public void OnBeforeRegisterDependencies(ITypeDiscoveryContext discoveryContext, DefinitionBase definition, IDictionary<string, object> contextData)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnTypesCompleted(IReadOnlyCollection<ITypeCompletionContext> completionContexts)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnTypesCompletedName(IReadOnlyCollection<ITypeCompletionContext> completionContexts)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnTypesInitialized(IReadOnlyCollection<ITypeDiscoveryContext> discoveryContexts)
+        {
+            throw new NotImplementedException();
         }
     }
 }

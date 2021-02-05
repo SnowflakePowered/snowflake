@@ -42,19 +42,16 @@ namespace Snowflake.Services
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddInMemorySubscriptionProvider();
-            services.AddDataLoaderRegistry();
+          
             services.AddGraphQLSubscriptions();
 
             // Add privileged newtypes for Stone
-            this.Schema.AddStoneIdTypeConverters(services);
-            this.Schema.AddSnowflakeQueryRequestInterceptor(services);
 
-            services.AddGraphQL(this.Schema.Create().Create(),
-                new QueryExecutionOptions
-                {
-                    TracingPreference = TracingPreference.OnDemand,
-                });
+            var graphQL = services.AddGraphQLServer();
+            graphQL.AddInMemorySubscriptions();
+            this.Schema.AddStoneIdTypeConverters(graphQL);
+            this.Schema.AddSnowflakeQueryRequestInterceptor(graphQL);
+            this.Schema.AddSnowflakeGraphQl(graphQL);
         }
     }
 }

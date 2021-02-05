@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
-using EnumsNET.NonGeneric;
 using Microsoft.EntityFrameworkCore;
 using Snowflake.Configuration;
 

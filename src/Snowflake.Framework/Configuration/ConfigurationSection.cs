@@ -5,7 +5,6 @@ using System.Collections.Immutable;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
-using EnumsNET.NonGeneric;
 using Snowflake.Configuration.Interceptors;
 
 namespace Snowflake.Configuration

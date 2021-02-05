@@ -25,6 +25,7 @@ using Snowflake.Remoting.GraphQL;
 using System.Threading.Tasks;
 using Snowflake.Model.Game;
 using Snowflake.Input.Controller;
+using HotChocolate.Execution.Configuration;
 
 namespace Snowflake.Support.GraphQL.Server
 {
@@ -38,7 +39,7 @@ namespace Snowflake.Support.GraphQL.Server
         public GraphQLSchemaRegistrationProvider Schemas { get; }
         public IServiceProvider ServiceContainer { get; }
 
-        public ISchemaBuilder Create(bool queryOnly = false)
+        public IRequestExecutorBuilder AddSnowflakeGraphQl(IRequestExecutorBuilder schemaBuilder, bool queryOnly = false)
         {
             this.Schemas
                 .AddObjectType<DummyNodeType>();
@@ -135,8 +136,7 @@ namespace Snowflake.Support.GraphQL.Server
                 .AddObjectType<EmulatedPortDeviceEntryType>()
                 .AddObjectType<GameEmulationType>();
 
-            var schemaBuilder = SchemaBuilder.New()
-                .EnableRelaySupport()
+            schemaBuilder.EnableRelaySupport()
                 .SetOptions(new SchemaOptions()
                 {
                     DefaultBindingBehavior = BindingBehavior.Explicit,
@@ -198,20 +198,20 @@ namespace Snowflake.Support.GraphQL.Server
             return schemaBuilder;
         }
         
-        public void AddSnowflakeQueryRequestInterceptor(IServiceCollection services)
+        public void AddSnowflakeQueryRequestInterceptor(IRequestExecutorBuilder services)
         {
-            services.AddQueryRequestInterceptor((context, builder, cancel) =>
+            services.AddHttpRequestInterceptor((context, executor, builder, ct) =>
             {
                 builder.SetProperty(SnowflakeGraphQLExtensions.ServicesNamespace, this.ServiceContainer);
                 foreach (var config in this.Schemas.QueryConfig)
                 {
                     config(builder);
                 }
-                return Task.CompletedTask;
+                return ValueTask.CompletedTask;
             });
         }
 
-        public void AddStoneIdTypeConverters(IServiceCollection services)
+        public void AddStoneIdTypeConverters(IRequestExecutorBuilder services)
         {
             services.AddTypeConverter<string, PlatformId>(from => from)
                .AddTypeConverter<string, ControllerId>(from => from);

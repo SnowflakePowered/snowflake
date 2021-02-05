@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using EnumsNET;
-using EnumsNET.NonGeneric;
 using Snowflake.Configuration;
 using Snowflake.Model.Database.Models;
 

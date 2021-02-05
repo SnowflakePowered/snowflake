@@ -45,7 +45,7 @@ namespace Snowflake.Filesystem
 
         public void Rename(string newName)
         {
-            this.RawInfo.MoveTo(this.RawInfo.Parent.Path / Path.GetFileName(newName));
+            this.RawInfo.MoveTo(this.RawInfo.Parent!.Path / Path.GetFileName(newName));
             this._ParentDirectory.RemoveManifestRecord(this.Name);
             this.RawInfo = new FileEntry(this.RawInfo.FileSystem, this.RawInfo.Parent.Path / Path.GetFileName(newName));
             this._ParentDirectory.AddManifestRecord(this.Name, this.FileGuid, false);

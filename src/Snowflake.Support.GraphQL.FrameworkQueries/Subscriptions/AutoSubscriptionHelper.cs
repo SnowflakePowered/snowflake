@@ -57,7 +57,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions
 
         public static ValueTask SendEventMessage(this IResolverContext context, IEventMessage message)
         {
-            var eventSender = context.Service<IEventSender>();
+            var eventSender = context.Service<ITopicEventSender>();
             return eventSender.SendAsync(message);
         }
 

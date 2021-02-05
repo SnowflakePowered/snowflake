@@ -10,9 +10,9 @@
     <AdditionalFiles Include="..\stylecop.json" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="HotChocolate.AspNetCore" Version="11.0.0-preview.123" />
+    <PackageReference Include="HotChocolate.AspNetCore" Version="11.0.9" />
     <PackageReference Include="HotChocolate.AspNetCore.Subscriptions" Version="11.0.0-preview.127" />
-    <PackageReference Include="HotChocolate.Subscriptions.InMemory" Version="11.0.0-preview.127" />
+    <PackageReference Include="HotChocolate.Subscriptions.InMemory" Version="11.0.9" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Condition="$(_SnowflakeUseDevelopmentSDK)" Include="..\Snowflake.Framework.Remoting.GraphQL\Snowflake.Framework.Remoting.GraphQL.csproj" />

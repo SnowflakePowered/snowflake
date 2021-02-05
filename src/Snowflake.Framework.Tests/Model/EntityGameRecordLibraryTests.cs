@@ -64,8 +64,7 @@ namespace Snowflake.Model.Tests
         public void SetWithMetadata_Test()
         {
             var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
-            optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}")
-                .ConfigureWarnings(warnings => warnings.Throw(RelationalEventId.QueryClientEvaluationWarning));
+            optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
 
             var lib = new GameRecordLibrary(optionsBuilder);
             var record = lib.CreateRecord("NINTENDO_NES");
@@ -285,8 +284,7 @@ namespace Snowflake.Model.Tests
         public async Task SetWithMetadataAsync_Test()
         {
             var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
-            optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}")
-                .ConfigureWarnings(warnings => warnings.Throw(RelationalEventId.QueryClientEvaluationWarning));
+            optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
 
             var lib = new GameRecordLibrary(optionsBuilder);
             var record = await lib.CreateRecordAsync("NINTENDO_NES");
