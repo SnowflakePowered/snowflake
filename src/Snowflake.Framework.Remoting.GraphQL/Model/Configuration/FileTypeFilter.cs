@@ -15,7 +15,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Configuration
                 .Description("Describes a filter for a file type.");
             descriptor.Field("name")
                 .Description("The name of the filter.")
-                .Resolver(ctx =>
+                .Resolve(ctx =>
                 {
                     string filter = ctx.Parent<string>();
                     if (!filter.Contains('(')) return filter;
@@ -23,7 +23,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Configuration
                 }).Type<NonNullType<StringType>>();
             descriptor.Field("filters")
                 .Description("The name of the filter.")
-                .Resolver(ctx =>
+                .Resolve(ctx =>
                 {
                     string filter = ctx.Parent<string>();
                     if (!filter.Contains('(') || !filter.Contains(')')) return filter.Split(",");

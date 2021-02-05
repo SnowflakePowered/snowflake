@@ -20,22 +20,22 @@ namespace Snowflake.Remoting.GraphQL.Model.Filesystem.Contextual
             descriptor.Field("root")
                 .Description("The root directory.")
                 .Type<OSDirectoryInfoType>()
-                .Resolver(context => context.Parent<DirectoryInfo>());
+                .Resolve(context => context.Parent<DirectoryInfo>());
             descriptor.Field("files")
                .Description("The files contained in this directory.")
                .Type<NonNullType<ListType<NonNullType<OSFileInfoType>>>>()
-               .Resolver(context => context.Parent<DirectoryInfo>().EnumerateFiles());
+               .Resolve(context => context.Parent<DirectoryInfo>().EnumerateFiles());
             descriptor.Field("directories")
                 .Description("The child directories contained in this directory.")
                 .Type<NonNullType<ListType<NonNullType<OSDirectoryInfoType>>>>()
-                .Resolver(context => context.Parent<DirectoryInfo>().EnumerateDirectories());
+                .Resolve(context => context.Parent<DirectoryInfo>().EnumerateDirectories());
             descriptor.Field("directoryCount")
                 .Description("The number of child directories contained in this directory.")
                 .Type<NonNullType<IntType>>()
-                .Resolver(context => context.Parent<DirectoryInfo>().EnumerateDirectories().LongCount());
+                .Resolve(context => context.Parent<DirectoryInfo>().EnumerateDirectories().LongCount());
             descriptor.Field("fileCount")
                .Description("The number of child files contained in this directory.")
-               .Type<NonNullType<IntType>>().Resolver(context => context.Parent<DirectoryInfo>().EnumerateDirectories().LongCount());
+               .Type<NonNullType<IntType>>().Resolve(context => context.Parent<DirectoryInfo>().EnumerateDirectories().LongCount());
         }
     }
 }

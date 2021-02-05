@@ -18,7 +18,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Queries.Game.Orchestration
             descriptor.ExtendGame();
             descriptor.Field("orchestration")
                 .Description("Provides access to game orchestration information for orchestrators that support this game.")
-                .Resolver(ctx =>
+                .Resolve(ctx =>
                 {
                     var orchestrators = ctx.SnowflakeService<IPluginManager>()
                         .GetCollection<IEmulatorOrchestrator>();

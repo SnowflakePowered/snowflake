@@ -20,7 +20,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Stone
             descriptor.Interface<NodeType>();
             descriptor.Field("id")
                 .Type<IdType>()
-                .Resolver(ctx => ctx.Parent<IPlatformInfo>().PlatformID);
+                .Resolve(ctx => ctx.Parent<IPlatformInfo>().PlatformID);
 
             descriptor.AsNode()
                 .NodeResolver<PlatformId>((ctx, id) => Task.FromResult(

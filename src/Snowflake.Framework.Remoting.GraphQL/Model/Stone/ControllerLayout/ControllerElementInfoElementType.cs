@@ -13,11 +13,11 @@ namespace Snowflake.Remoting.GraphQL.Model.Stone.ControllerLayout
             descriptor.Name("ControllerElementInfoElement")
                 .Description("Defines a single element/capability of a controller layout by the semantic element, and its type.");
             descriptor.Field("type")
-                .Resolver(ctx => ctx.Parent<KeyValuePair<ControllerElement, IControllerElementInfo>>().Value.Type)
+                .Resolve(ctx => ctx.Parent<KeyValuePair<ControllerElement, IControllerElementInfo>>().Value.Type)
                 .Type<NonNullType<ControllerElementTypeEnum>>()
                 .Description("The semantic type of this controller element.");
             descriptor.Field("label")
-                .Resolver(ctx => ctx.Parent<KeyValuePair<ControllerElement, IControllerElementInfo>>().Value.Label)
+                .Resolve(ctx => ctx.Parent<KeyValuePair<ControllerElement, IControllerElementInfo>>().Value.Label)
                 .Description("The human-readable label of this controller element.")
                 .Type<NonNullType<StringType>>();
             descriptor.Field(c => c.Key)

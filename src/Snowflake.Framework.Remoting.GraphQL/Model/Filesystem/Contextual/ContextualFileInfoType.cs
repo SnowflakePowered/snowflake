@@ -21,39 +21,39 @@ namespace Snowflake.Remoting.GraphQL.Model.Filesystem.Contextual
             descriptor.Field("extension")
                 .Description("The extension of the file.")
                 .Type<NonNullType<StringType>>()
-                .Resolver(context => Path.GetExtension(context.Parent<IReadOnlyFile>().Name));
+                .Resolve(context => Path.GetExtension(context.Parent<IReadOnlyFile>().Name));
             descriptor.Field("name")
                 .Description("The name of the file.")
                 .Type<NonNullType<StringType>>()
-                .Resolver(context => context.Parent<IReadOnlyFile>().Name);
+                .Resolve(context => context.Parent<IReadOnlyFile>().Name);
             descriptor.Field("osPath")
                 .Description("The path of the file on the realized operating system.")
                 .Type<NonNullType<OSFilePathType>>()
-                .Resolver(context => context.Parent<IReadOnlyFile>().UnsafeGetFilePath()); // lgtm [cs/call-to-obsolete-method]
+                .Resolve(context => context.Parent<IReadOnlyFile>().UnsafeGetFilePath()); // lgtm [cs/call-to-obsolete-method]
             descriptor.Field("lastModifiedTime")
                 .Description("The last modified time of the file, in UTC.")
                 .Type<NonNullType<DateTimeType>>()
-                .Resolver(context => context.Parent<IReadOnlyFile>().UnsafeGetFilePath().LastWriteTimeUtc); // lgtm [cs/call-to-obsolete-method]
+                .Resolve(context => context.Parent<IReadOnlyFile>().UnsafeGetFilePath().LastWriteTimeUtc); // lgtm [cs/call-to-obsolete-method]
             descriptor.Field("createdTime")
                 .Description("The creation time of the file, in UTC.")
                 .Type<NonNullType<DateTimeType>>()
-                .Resolver(context => context.Parent<IReadOnlyFile>().UnsafeGetFilePath().CreationTimeUtc); // lgtm [cs/call-to-obsolete-method]
+                .Resolve(context => context.Parent<IReadOnlyFile>().UnsafeGetFilePath().CreationTimeUtc); // lgtm [cs/call-to-obsolete-method]
             descriptor.Field("size")
                 .Description("The size of the file, in bytes.")
                 .Type<NonNullType<IntType>>()
-                .Resolver(context => context.Parent<IReadOnlyFile>().UnsafeGetFilePath().Length); // lgtm [cs/call-to-obsolete-method]
+                .Resolve(context => context.Parent<IReadOnlyFile>().UnsafeGetFilePath().Length); // lgtm [cs/call-to-obsolete-method]
             descriptor.Field("isLink")
                 .Description("Whether or not this file is a link to a file outside the directory context.")
                 .Type<NonNullType<BooleanType>>()
-                .Resolver(context => context.Parent<IReadOnlyFile>().IsLink);
+                .Resolve(context => context.Parent<IReadOnlyFile>().IsLink);
             descriptor.Field("path")
                 .Description("The contextual path to this file.")
                 .Type<NonNullType<FilePathType>>()
-                .Resolver(context => (UPath)context.Parent<IReadOnlyFile>().RootedPath);
+                .Resolve(context => (UPath)context.Parent<IReadOnlyFile>().RootedPath);
             descriptor.Field("fileId")
                .Description("The manifest GUID of this file.")
                .Type<NonNullType<UuidType>>()
-               .Resolver(context => context.Parent<IReadOnlyFile>().FileGuid);
+               .Resolve(context => context.Parent<IReadOnlyFile>().FileGuid);
 #pragma warning restore CS0618 // Type or member is obsolete
         }
     }

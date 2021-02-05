@@ -37,7 +37,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Device.Mapped
                 "Together with the device name and vendor ID, uniquely identifies the input device instances for which this profile is valid.")
                .Type<IntType>();
             descriptor.Field("mappings")
-                .Resolver(c => c.Parent<IControllerElementMappingProfile>())
+                .Resolve(c => c.Parent<IControllerElementMappingProfile>())
                 .Description("The set of mappings that map each capability from the real device to the element on the emulated device.")
                 .Type<NonNullType<ListType<NonNullType<ControllerElementMappingType>>>>();
         }

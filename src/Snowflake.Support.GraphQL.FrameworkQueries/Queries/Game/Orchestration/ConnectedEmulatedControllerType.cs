@@ -21,7 +21,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Queries.Game.Orchestration
                 .Description("Describe the connection state of the physical device plugged into an emulated port.");
             descriptor.Field("isConnected")
                 .Description("Whether or not the physical device of the emulated controller is connected.")
-                .Resolver(ctx =>
+                .Resolve(ctx =>
                 {
                     var devices = ctx.SnowflakeService<IDeviceEnumerator>();
                     var entry = ctx.Parent<IEmulatedPortDeviceEntry>();
@@ -30,7 +30,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Queries.Game.Orchestration
                 .Type<NonNullType<BooleanType>>();
             descriptor.Field("controller")
                 .Description("The emulated controller plugged into the port.")
-                .Resolver(async ctx =>
+                .Resolve(async ctx =>
                 {
                     var deviceEntry = ctx.Parent<IEmulatedPortDeviceEntry>();
                     var inputConfig = ctx.SnowflakeService<IControllerElementMappingProfileStore>();
@@ -49,7 +49,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Queries.Game.Orchestration
               .Type<NonNullType<IntType>>();
             descriptor.Field("portDeviceEntry")
               .Description("The emulated port device entry.")
-              .Resolver(ctx => ctx.Parent<IEmulatedPortDeviceEntry>())
+              .Resolve(ctx => ctx.Parent<IEmulatedPortDeviceEntry>())
               .Type<NonNullType<EmulatedPortDeviceEntryType>>();
         }
     }

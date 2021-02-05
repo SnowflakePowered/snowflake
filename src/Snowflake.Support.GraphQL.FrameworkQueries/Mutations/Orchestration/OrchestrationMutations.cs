@@ -105,7 +105,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                 .UseClientMutationId()
                 .UseAutoSubscription()
                 .Argument("input", arg => arg.Type<EmulationInstanceInputType>())
-                .Resolver(async ctx =>
+                .Resolve(async ctx =>
                 {
                     var input = ctx.Argument<EmulationInstanceInput>("input");
                     if (!ctx.GetGameCache().TryGetValue(input.InstanceID, out var gameEmulation))
@@ -151,7 +151,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                 .UseClientMutationId()
                 .UseAutoSubscription()
                 .Argument("input", arg => arg.Type<EmulationInstanceInputType>())
-                .Resolver(async ctx =>
+                .Resolve(async ctx =>
                 {
                     var input = ctx.Argument<EmulationInstanceInput>("input");
                     if (!ctx.GetGameCache().TryGetValue(input.InstanceID, out var gameEmulation))
@@ -193,7 +193,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                .UseClientMutationId()
                .UseAutoSubscription()
                .Argument("input", arg => arg.Type<EmulationInstanceInputType>())
-               .Resolver(async ctx =>
+               .Resolve(async ctx =>
                {
                    var input = ctx.Argument<EmulationInstanceInput>("input");
                    if (!ctx.GetGameCache().TryGetValue(input.InstanceID, out var gameEmulation))
@@ -235,7 +235,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                 .UseClientMutationId()
                 .UseAutoSubscription()
                 .Argument("input", arg => arg.Type<EmulationInstanceInputType>())
-                .Resolver(async ctx =>
+                .Resolve(async ctx =>
                 {
                     var input = ctx.Argument<EmulationInstanceInput>("input");
                     if (!ctx.GetGameCache().TryGetValue(input.InstanceID, out var gameEmulation))
@@ -277,7 +277,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                 .UseClientMutationId()
                 .UseAutoSubscription()
                 .Argument("input", arg => arg.Type<EmulationInstanceInputType>())
-                .Resolver(async ctx =>
+                .Resolve(async ctx =>
                 {
                     var input = ctx.Argument<EmulationInstanceInput>("input");
                     if (!ctx.GetGameCache().TryGetValue(input.InstanceID, out var gameEmulation))
@@ -326,7 +326,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                 .UseClientMutationId()
                 .UseAutoSubscription()
                 .Argument("input", arg => arg.Type<EmulationInstanceInputType>())
-                .Resolver(async ctx =>
+                .Resolve(async ctx =>
                 {
                     var input = ctx.Argument<EmulationInstanceInput>("input");
                     if (!ctx.GetGameCache().TryGetValue(input.InstanceID, out var gameEmulation))
@@ -365,7 +365,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                 .UseClientMutationId()
                 .UseAutoSubscription()
                 .Argument("input", arg => arg.Type<EmulationInstanceInputType>())
-                .Resolver(async ctx =>
+                .Resolve(async ctx =>
                 {
                     var input = ctx.Argument<EmulationInstanceInput>("input");
                     if (!ctx.GetGameCache().TryGetValue(input.InstanceID, out var gameEmulation))

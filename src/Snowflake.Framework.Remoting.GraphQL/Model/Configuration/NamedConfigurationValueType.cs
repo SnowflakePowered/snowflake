@@ -14,15 +14,15 @@ namespace Snowflake.Remoting.GraphQL.Model.Configuration
             descriptor.Name("NamedConfigurationValue")
                 .Description("Represents a single unit of configuration with a named option key.");
             descriptor.Field("value")
-                .Resolver(ctx => ctx.Parent<(string section, string option, IConfigurationValue value)>().value)
+                .Resolve(ctx => ctx.Parent<(string section, string option, IConfigurationValue value)>().value)
                 .Description("The value set for the configuration option.")
                 .Type<ConfigurationValueType>();
             descriptor.Field("optionKey")
-                .Resolver(ctx => ctx.Parent<(string section, string option, IConfigurationValue value)>().option)
+                .Resolve(ctx => ctx.Parent<(string section, string option, IConfigurationValue value)>().option)
                 .Description("The string key of the configuration option this value is set for.")
                 .Type<NonNullType<StringType>>();
             descriptor.Field("sectionKey")
-                .Resolver(ctx => ctx.Parent<(string section, string option, IConfigurationValue value)>().section)
+                .Resolve(ctx => ctx.Parent<(string section, string option, IConfigurationValue value)>().section)
                 .Description("The string key of the configuration section that contains the option this value is set for.")
                 .Type<StringType>();
         }

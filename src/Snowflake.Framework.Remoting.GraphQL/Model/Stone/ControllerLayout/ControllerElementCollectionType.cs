@@ -15,7 +15,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Stone.ControllerLayout
                 .Description("A collection of Controller Element definitions that describe a Controller Layout.");
             descriptor.Field("elements")
                 .Description("A list of element definitions.")
-                .Resolver(ctx => ctx.Parent<IControllerElementCollection>())
+                .Resolve(ctx => ctx.Parent<IControllerElementCollection>())
                 .Type<NonNullType<ListType<NonNullType<ControllerElementInfoElementType>>>>();
             //descriptor.BindFieldsImplicitly()
             //    .Ignore(c => c[default]);

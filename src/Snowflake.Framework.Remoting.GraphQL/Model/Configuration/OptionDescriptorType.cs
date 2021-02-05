@@ -77,7 +77,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Configuration
                 .Type<NonNullType<StringType>>();
             descriptor.Field("filter")
                 .Description("If this option is a file path, the allowed file paths to show in the file browser.")
-                .Resolver(ctx => ctx.Parent<IConfigurationOptionDescriptor>().Filter.Split("|"))
+                .Resolve(ctx => ctx.Parent<IConfigurationOptionDescriptor>().Filter.Split("|"))
                 .Type<NonNullType<ListType<NonNullType<StringType>>>>();
             descriptor.Field(o => o.ResourceType)
                 .Description("If this option is a resource, the mimetype of the resource this option accepts.")

@@ -30,11 +30,11 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Queries.Game.Orchestration
             descriptor.Field("pluginName")
                 .Description("The name of the orchestrator plugin.")
                 .Type<NonNullType<StringType>>()
-                .Resolver(ctx => ctx.Parent<(IGame _, IEmulatorOrchestrator o)>().o.Name);
+                .Resolve(ctx => ctx.Parent<(IGame _, IEmulatorOrchestrator o)>().o.Name);
             descriptor.Field("compatibility")
                 .Description("The compatibility level of the game with the emulator.")
                 .Type<NonNullType<EmulatorCompatibilityEnum>>()
-                .Resolver(ctx =>
+                .Resolve(ctx =>
                 {
                     (IGame game, IEmulatorOrchestrator orchestrator) = ctx.Parent<(IGame, IEmulatorOrchestrator)>();
                     return orchestrator.CheckCompatibility(game);
@@ -42,7 +42,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Queries.Game.Orchestration
             descriptor.Field("missingSystemFiles")
                .Description("Any system files that are required but missing to run the game with this emulator.")
                .Type<NonNullType<ListType<NonNullType<SystemFileType>>>>()
-               .Resolver(ctx =>
+               .Resolve(ctx =>
                {
                    (IGame game, IEmulatorOrchestrator orchestrator) = ctx.Parent<(IGame, IEmulatorOrchestrator)>();
                    return orchestrator.CheckMissingSystemFiles(game);
@@ -50,7 +50,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Queries.Game.Orchestration
             descriptor.Field("configurationProfiles")
                .Description("The names of configuration profiles saved with this emulator.")
                .Type<NonNullType<ListType<NonNullType<ConfigurationProfileType>>>>()
-               .Resolver(ctx =>
+               .Resolve(ctx =>
                {
                    (IGame game, IEmulatorOrchestrator orchestrator) = ctx.Parent<(IGame, IEmulatorOrchestrator)>();
                    return orchestrator.GetConfigurationProfiles(game);
@@ -59,7 +59,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Queries.Game.Orchestration
                 .Description("Retrieves the specified configuration profile for this orchestrator registered for this game.")
                 .Argument("collectionId", arg => arg.Description("The collectionId of the profile to retrieve").Type<NonNullType<UuidType>>())
                 .Type<ConfigurationCollectionType>()
-                .Resolver(ctx =>
+                .Resolve(ctx =>
                 {
                     (IGame game, IEmulatorOrchestrator orchestrator) = ctx.Parent<(IGame, IEmulatorOrchestrator)>();
                     Guid configProfile = ctx.Argument<Guid>("collectionId");
@@ -71,7 +71,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Queries.Game.Orchestration
                 .Argument("portIndex", arg => arg
                     .Description("The port index to retrieve, if retrieving a specific port.")
                     .Type<IntType>())
-                .Resolver(ctx =>
+                .Resolve(ctx =>
                 {
                     (IGame game, IEmulatorOrchestrator orchestrator) = ctx.Parent<(IGame, IEmulatorOrchestrator)>();
                     var portStore = ctx.SnowflakeService<IEmulatedPortStore>();

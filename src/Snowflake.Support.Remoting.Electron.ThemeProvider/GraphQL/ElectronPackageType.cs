@@ -18,7 +18,7 @@ namespace Snowflake.Support.Remoting.Electron.ThemeProvider.GraphQL
 
             descriptor.Field("packagePath")
                 .Description("The path of the package on disk.")
-                .Resolver(ctx => new FileInfo(ctx.Parent<IElectronPackage>().PackagePath))
+                .Resolve(ctx => new FileInfo(ctx.Parent<IElectronPackage>().PackagePath))
                 .Type<NonNullType<OSFilePathType>>();
             descriptor.Field(e => e.Author)
                 .Description("The author of the theme.")

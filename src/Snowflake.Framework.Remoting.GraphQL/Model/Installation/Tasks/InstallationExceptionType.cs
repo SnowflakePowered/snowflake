@@ -15,7 +15,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Installation.Tasks
                 .Description("Describes an exception that occurred during an install task.");
             descriptor.Field("clrExceptionType")
                 .Description("Gets the CLR type of the exception that occurred.")
-                .Resolver(ctx =>
+                .Resolve(ctx =>
                 {
                     var exception = ctx.Parent<Exception>();
                     if (exception is AggregateException aggregate && aggregate.InnerExceptions.Count == 1)
@@ -28,7 +28,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Installation.Tasks
                 .Type<NonNullType<StringType>>();
             descriptor.Field("message")
                 .Description("Gets the message of the description.")
-                .Resolver(ctx =>
+                .Resolve(ctx =>
                 {
                     var exception = ctx.Parent<Exception>();
                     if (exception is AggregateException aggregate && aggregate.InnerExceptions.Count == 1)

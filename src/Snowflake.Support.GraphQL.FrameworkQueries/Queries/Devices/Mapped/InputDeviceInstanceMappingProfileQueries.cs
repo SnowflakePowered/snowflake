@@ -52,7 +52,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Devices.Mapped
                 .Argument("profileId", arg =>
                    arg.Type<NonNullType<UuidType>>()
                     .Description("The profile GUID of the profile to fetch."))
-                .Resolver(context =>
+                .Resolve(context =>
                 {
                     var store = context.SnowflakeService<IControllerElementMappingProfileStore>();
                     var profileId = context.Argument<Guid>("profileId");

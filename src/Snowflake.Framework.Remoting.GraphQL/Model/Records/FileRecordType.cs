@@ -22,7 +22,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Records
                 .Description("The unique ID of the file record. This is the same as the `fileId` from a ContextualFile");
             descriptor.Field("metadata")
                .Description("The metadata associated with this game.")
-               .Resolver(ctx => ctx.Parent<IFileRecord>().Metadata.Select(m => m.Value))
+               .Resolve(ctx => ctx.Parent<IFileRecord>().Metadata.Select(m => m.Value))
                .Type<ListType<RecordMetadataType>>()
                .UseFiltering();
         }

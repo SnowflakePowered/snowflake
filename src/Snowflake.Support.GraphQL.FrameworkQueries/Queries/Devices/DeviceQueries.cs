@@ -17,7 +17,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Devices
             descriptor.Field("devices")
                 .Type<NonNullType<ListType<NonNullType<InputDeviceType>>>>()
                 .Description("Provides access to input devices on the system.")
-                .Resolver(context =>
+                .Resolve(context =>
                 {
                     var input = context.SnowflakeService<IDeviceEnumerator>();
                     return input.QueryConnectedDevices();

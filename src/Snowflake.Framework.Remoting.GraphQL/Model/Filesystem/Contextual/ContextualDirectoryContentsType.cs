@@ -18,22 +18,22 @@ namespace Snowflake.Remoting.GraphQL.Model.Filesystem.Contextual
             descriptor.Field("root")
                 .Description("The root directory.")
                 .Type<ContextualDirectoryInfoType>()
-                .Resolver(context => context.Parent<IReadOnlyDirectory>());
+                .Resolve(context => context.Parent<IReadOnlyDirectory>());
             descriptor.Field("files")
                .Description("The files contained in this directory.")
                .Type<NonNullType<ListType<NonNullType<ContextualFileInfoType>>>>()
-               .Resolver(context => context.Parent<IReadOnlyDirectory>().EnumerateFiles());
+               .Resolve(context => context.Parent<IReadOnlyDirectory>().EnumerateFiles());
             descriptor.Field("directories")
                 .Description("The child directories contained in this directory.")
                 .Type<NonNullType<ListType<NonNullType<ContextualDirectoryInfoType>>>>()
-                .Resolver(context => context.Parent<IReadOnlyDirectory>().EnumerateDirectories());
+                .Resolve(context => context.Parent<IReadOnlyDirectory>().EnumerateDirectories());
             descriptor.Field("directoryCount")
                 .Description("The number of child directories contained in this directory.")
                 .Type<NonNullType<IntType>>()
-                .Resolver(context => context.Parent<IReadOnlyDirectory>().EnumerateDirectories().Count());
+                .Resolve(context => context.Parent<IReadOnlyDirectory>().EnumerateDirectories().Count());
             descriptor.Field("fileCount")
                .Description("The number of child files contained in this directory.")
-               .Type<NonNullType<IntType>>().Resolver(context => context.Parent<IReadOnlyDirectory>().EnumerateFiles().Count());
+               .Type<NonNullType<IntType>>().Resolve(context => context.Parent<IReadOnlyDirectory>().EnumerateFiles().Count());
         }
     }
 }

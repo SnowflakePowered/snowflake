@@ -21,31 +21,31 @@ namespace Snowflake.Remoting.GraphQL.Model.Filesystem.Contextual
             descriptor.Field("lastModifiedTime")
                 .Description("The last modified time of the directory, in UTC.")
                 .Type<NonNullType<DateTimeType>>()
-                .Resolver(context => context.Parent<DirectoryInfo>().LastWriteTimeUtc);
+                .Resolve(context => context.Parent<DirectoryInfo>().LastWriteTimeUtc);
             descriptor.Field("createdTime")
                 .Description("The creation time of the directory, in UTC.")
                 .Type<NonNullType<DateTimeType>>()
-                .Resolver(context => context.Parent<DirectoryInfo>().CreationTimeUtc);
+                .Resolve(context => context.Parent<DirectoryInfo>().CreationTimeUtc);
             descriptor.Field("osPath")
                 .Description("The path of the file on the realized operating system.")
                 .Type<NonNullType<OSDirectoryPathType>>()
-                .Resolver(context => context.Parent<DirectoryInfo>());
+                .Resolve(context => context.Parent<DirectoryInfo>());
             descriptor.Field("path")
                 .Description("The path of this directory")
                 .Type<NonNullType<OSDirectoryPathType>>()
-                .Resolver(context => context.Parent<DirectoryInfo>());
+                .Resolve(context => context.Parent<DirectoryInfo>());
             descriptor.Field("name")
                  .Description("The name of the directory.")
                  .Type<NonNullType<StringType>>()
-                 .Resolver(context => context.Parent<DirectoryInfo>().Name);
+                 .Resolve(context => context.Parent<DirectoryInfo>().Name);
             descriptor.Field("isDrive")
                 .Description("Whether or not this directory is a drive root.")
                 .Type<NonNullType<BooleanType>>()
-                .Resolver(context => context.Parent<DirectoryInfo>().Parent == null);
+                .Resolve(context => context.Parent<DirectoryInfo>().Parent == null);
             descriptor.Field("isHidden")
                 .Description("Whether or not this directory is hidden")
                 .Type<NonNullType<BooleanType>>()
-                .Resolver(context => context.Parent<DirectoryInfo>().Attributes.HasFlag(FileAttributes.Hidden));
+                .Resolve(context => context.Parent<DirectoryInfo>().Attributes.HasFlag(FileAttributes.Hidden));
         }
     }
 }

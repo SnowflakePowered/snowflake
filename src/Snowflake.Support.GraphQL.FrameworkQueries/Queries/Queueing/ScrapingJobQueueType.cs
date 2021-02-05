@@ -21,7 +21,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Queries.Queueing
             descriptor.Field("job")
                 .Argument("jobId", arg => arg.Type<NonNullType<UuidType>>()
                     .Description("The `jobId` of the scrape context that can be used to query the scrape context."))
-                .Resolver(ctx =>
+                .Resolve(ctx =>
                 {
                     var context = ctx.Parent<IAsyncJobQueue<IScrapeContext, IEnumerable<ISeed>>>();
                     return (context, ctx.Argument<Guid>("jobId"));

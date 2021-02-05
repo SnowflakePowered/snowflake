@@ -27,7 +27,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                 .WithClientMutationId();
             descriptor.Field("jobContextField")
                 .Description("The subfield of the `job` Query that this job can be accessed from.")
-                .Resolver("scraping");
+                .Resolve("scraping");
 
             descriptor.Field(c => c.JobID)
                 .Name("jobId")
