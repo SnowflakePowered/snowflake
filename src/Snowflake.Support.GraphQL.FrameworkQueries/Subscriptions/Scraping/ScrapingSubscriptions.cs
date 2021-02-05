@@ -1,4 +1,4 @@
-﻿using HotChocolate.Resolvers;
+﻿using HotChocolate;
 using HotChocolate.Types;
 using Snowflake.Extensibility.Queueing;
 using Snowflake.Scraping;
@@ -25,30 +25,35 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Scraping
                 .Description("A subscription for when a scrape context step occurs.")
                 .Type<NonNullType<ScrapeContextStepPayloadType>>()
                 .Argument("jobId", arg => arg.Type<NonNullType<UuidType>>())
-                .SubscribeToTopic<Guid, OnScrapeContextStepMessage>("jobId");
+                .SubscribeToTopic<Guid, OnScrapeContextStepMessage>("jobId")
+                .Resolve(ctx => ctx.GetEventMessage<ScrapeContextStepPayload>());
 
             descriptor.Field("onScrapeContextComplete")
             .Description("A subscription for when a scrape context completes.")
                .Type<NonNullType<ScrapeContextCompletePayloadType>>()
                .Argument("jobId", arg => arg.Type<NonNullType<UuidType>>())
-               .SubscribeToTopic<Guid, OnScrapeContextCompleteMessage>("jobId");
+               .SubscribeToTopic<Guid, OnScrapeContextCompleteMessage>("jobId")
+               .Resolve(ctx => ctx.GetEventMessage<ScrapeContextCompletePayload>());
                
             descriptor.Field("onScrapeContextDelete")
                 .Description("A subscription for when a scrape context is deleted.")
                 .Type<NonNullType<DeleteScrapeContextPayloadType>>()
                 .Argument("jobId", arg => arg.Type<NonNullType<UuidType>>())
-                .SubscribeToTopic<Guid, OnScrapeContextDeleteMessage>("jobId");
+                .SubscribeToTopic<Guid, OnScrapeContextDeleteMessage>("jobId")
+                .Resolve(ctx => ctx.GetEventMessage<DeleteScrapeContextPayload>());
             descriptor.Field("onScrapeContextCancel")
                 .Description("A subscription for when a scrape context is cancelled.")
                 .Type<NonNullType<CancelScrapeContextPayloadType>>()
                 .Argument("jobId", arg => arg.Type<NonNullType<UuidType>>())
-                .SubscribeToTopic<Guid, OnScrapeContextCancelMessage>("jobId");
+                .SubscribeToTopic<Guid, OnScrapeContextCancelMessage>("jobId")
+                .Resolve(ctx => ctx.GetEventMessage<CancelScrapeContextPayload>());
 
             descriptor.Field("onScrapeContextApply")
                 .Description("A subscription for when a scrape context is applied to a game.")
                 .Type<NonNullType<ApplyScrapeContextPayloadType>>()
                 .Argument("jobId", arg => arg.Type<NonNullType<UuidType>>())
-                .SubscribeToTopic<Guid, OnScrapeContextApplyMessage>("jobId");
+                .SubscribeToTopic<Guid, OnScrapeContextApplyMessage>("jobId")
+                .Resolve(ctx => ctx.GetEventMessage<ApplyScrapeContextPayload>());
         }
     }
 }

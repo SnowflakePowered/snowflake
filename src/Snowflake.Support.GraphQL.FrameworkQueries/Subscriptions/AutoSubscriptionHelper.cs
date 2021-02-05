@@ -52,10 +52,23 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions
             return descriptor;
         }
 
+        public static IObjectFieldDescriptor SubscribeToTopic<TArg, T>(this IObjectFieldDescriptor descriptor, string argumentName)
+            where T: EventMessage<TArg>
+        {
+            descriptor.SubscribeToTopic<string, object>
+                (ctx =>
+                {
+                    string subscriptionName = $"{typeof(T).Name}({argumentName}:{ctx.ArgumentValue<TArg>(argumentName)})";
+                    return subscriptionName;
+                });
+            return descriptor;
+        }
+
         public static ValueTask SendEventMessage<T>(this IResolverContext context, EventMessage<T> message)
         {
             var eventSender = context.Service<ITopicEventSender>();
-            return eventSender.SendAsync(message.Topic, message.Payload);
+            string subscriptionName = $"{message.GetType().Name}({message.ArgumentName}:{message.Topic})";
+            return eventSender.SendAsync(subscriptionName, message.Payload);
         }
 
         public static async ValueTask<T> SendSimpleSubscription<T>(this IResolverContext context, string subscriptionName, T payload)

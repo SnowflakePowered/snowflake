@@ -37,19 +37,28 @@ namespace Snowflake.Services
 
         public void Configure(IApplicationBuilder app)
         {
-            app.UseGraphQL("/graphql");
+            app.UseDeveloperExceptionPage();
+            app
+                .UseRouting()
+                .UseEndpoints(endpoints =>
+                {
+                    endpoints.MapGraphQL();
+                });
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
-          
-            // Add privileged newtypes for Stone
 
-            var graphQL = services.AddGraphQLServer();
+            // Add privileged newtypes for Stone
+            services.AddRouting();
+            var graphQL = services
+                .AddGraphQLServer()
+                .AddApolloTracing();
             graphQL.AddInMemorySubscriptions();
+            this.Schema.AddSnowflakeGraphQl(graphQL);
             this.Schema.AddStoneIdTypeConverters(graphQL);
             this.Schema.AddSnowflakeQueryRequestInterceptor(graphQL);
-            this.Schema.AddSnowflakeGraphQl(graphQL);
+           
         }
     }
 }

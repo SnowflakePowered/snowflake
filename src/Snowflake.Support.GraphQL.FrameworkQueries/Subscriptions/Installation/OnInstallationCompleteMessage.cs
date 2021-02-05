@@ -12,7 +12,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Installation
     : EventMessage<Guid>
     {
         public OnInstallationCompleteMessage(InstallationCompletePayload payload)
-            : base(payload.JobID, payload)
+            : base(payload.JobID, payload, "jobId")
         {
         }
     }

@@ -11,7 +11,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions.Scraping
     : EventMessage<Guid>
     {
         public OnScrapeContextCancelMessage(CancelScrapeContextPayload payload)
-            : base(payload.JobID, payload)
+            : base(payload.JobID, payload, "jobId")
         {
         }
     }
