@@ -12,8 +12,8 @@
   
   <ItemGroup>
     <PackageReference Include="GraphQL.Server.Ui.GraphiQL" Version="4.4.1" />
-    <PackageReference Include="GraphQL.Server.Ui.Playground" Version="4.4.1" />
     <PackageReference Include="GraphQL.Server.Ui.Voyager" Version="4.4.1" />
+    <PackageReference Include="GraphQL.Server.Ui.Altair" Version="4.4.1" />
   </ItemGroup>
 
   <PropertyGroup>
