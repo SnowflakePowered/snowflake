@@ -14,21 +14,21 @@ namespace Snowflake.Support.StoneProvider.JsonConverters
         {
             using var jsonDoc = JsonDocument.ParseValue(ref reader);
             var rootElem = jsonDoc.RootElement;
-            string platformId = rootElem.GetProperty("PlatformID").GetString();
-            string friendlyName = rootElem.GetProperty("FriendlyName").GetString();
+            string platformId = rootElem.GetProperty("PlatformID").GetString()!;
+            string friendlyName = rootElem.GetProperty("FriendlyName").GetString()!;
 
             IDictionary<string, string> metadata = rootElem.GetProperty("Metadata").
-                EnumerateObject().ToDictionary(p => p.Name, p => p.Value.GetString());
+                EnumerateObject().ToDictionary(p => p.Name, p => p.Value.GetString()!);
 
             int maximumInputs = rootElem.GetProperty("MaximumInputs").GetInt32();
 
             IDictionary<string, string> fileTypes = rootElem.GetProperty("FileTypes").
-               EnumerateObject().ToDictionary(p => p.Name, p => p.Value.GetString());
+               EnumerateObject().ToDictionary(p => p.Name, p => p.Value.GetString()!);
             IEnumerable<ISystemFile> biosFiles = rootElem.TryGetProperty("BiosFiles", out var biosFileElem) ?
                 (from biosFile in biosFileElem.EnumerateObject()
                 let noHashes = biosFile.Value.GetArrayLength() == 0
                 from hash in biosFile.Value.EnumerateArray()
-                select new BiosFile(biosFile.Name, noHashes ? string.Empty : hash.GetString())).ToList()
+                select new BiosFile(biosFile.Name, noHashes ? string.Empty : hash.GetString()!)).ToList()
                     : Enumerable.Empty<ISystemFile>();
            
             return new PlatformInfo(platformId, friendlyName, metadata, fileTypes, biosFiles, maximumInputs);

@@ -29,7 +29,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Configuration
                 .Resolve(async ctx =>
                 {
                     var configStore = ctx.SnowflakeService<IGameLibrary>().GetExtension<IGameConfigurationExtensionProvider>();
-                    var input = ctx.Argument<UpdateGameConfigurationValueInput>("input");
+                    var input = ctx.ArgumentValue<UpdateGameConfigurationValueInput>("input");
                     var newValues = new List<IConfigurationValue>();
                     var newValueGuid = new List<(Guid valueCollection, Guid value)>();
                     foreach (var value in input.Values)
@@ -57,7 +57,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Configuration
                     var games = ctx.SnowflakeService<IGameLibrary>();
                     var configStore = games.GetExtension<IGameConfigurationExtensionProvider>();
                     var orchestrators = ctx.SnowflakeService<IPluginManager>().GetCollection<IEmulatorOrchestrator>();
-                    var input = ctx.Argument<DeleteGameConfigurationInput>("input");
+                    var input = ctx.ArgumentValue<DeleteGameConfigurationInput>("input");
                     IConfigurationCollection config = null;
 
                     if (input.Retrieval != null)
@@ -97,7 +97,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Configuration
                 .Argument("input", a => a.Type<UpdatePluginConfigurationValueInputType>())
                 .Resolve(async ctx =>
                 {
-                    var input = ctx.Argument<UpdatePluginConfigurationValueInput>("input");
+                    var input = ctx.ArgumentValue<UpdatePluginConfigurationValueInput>("input");
                     var plugin = ctx.SnowflakeService<IPluginManager>().Get(input.Plugin);
                     if (plugin == null)
                         return ErrorBuilder.New()

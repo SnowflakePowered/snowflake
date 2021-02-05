@@ -27,7 +27,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Configuration
                 .Argument("valueId", arg => arg.Description("Return a specific value with the given GUID.").Type<UuidType>())
                 .Resolve(ctx => {
                     var section = ctx.Parent<IConfigurationSection>();
-                    Guid valueID = ctx.Argument<Guid>("valueID");
+                    Guid valueID = ctx.ArgumentValue<Guid>("valueID");
 
                     if (valueID != default)
                     {

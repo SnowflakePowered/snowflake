@@ -26,7 +26,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Queries.Queueing
                 .Resolve(ctx =>
                 {
                     var context = ctx.Parent<IAsyncJobQueue<TaskResult<IFile>>>();
-                    return (context, ctx.Argument<Guid>("jobId"));
+                    return (context, ctx.ArgumentValue<Guid>("jobId"));
                 })
                 .Type<InstallationJobType>();
         }

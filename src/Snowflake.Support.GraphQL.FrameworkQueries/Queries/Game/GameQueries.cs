@@ -32,8 +32,8 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Game
                 .AddFilterArguments<GameRecordQueryFilterInputType>()
                 .Use(next => context =>
                 {
-                    IValueNode valueNode = context.Argument<IValueNode>("where");
-                    bool excludeDeleted = context.Argument<bool>("excludeDeleted");
+                    IValueNode valueNode = context.ArgumentValue<IValueNode>("where");
+                    bool excludeDeleted = context.ArgumentValue<bool>("excludeDeleted");
                     Expression<Func<IGameRecordQuery, bool>> excludeDeletedQuery = r =>
                                 !r.Metadata.Any(r => r.MetadataKey == GameMetadataKeys.Deleted && r.MetadataValue == "true");
 

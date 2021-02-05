@@ -24,7 +24,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Filesystem
                     .Description("The path to explore. If this is null, returns a listing of drives on Windows, " +
                     "or the root directory on a Unix-like system."))
                 .Resolve(context => {
-                    var path = context.Argument<DirectoryInfo>("directoryPath");
+                    var path = context.ArgumentValue<DirectoryInfo>("directoryPath");
                     if ((path == null) && RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) return DriveInfo.GetDrives();
                     if ((path == null) &&
                         (RuntimeInformation.IsOSPlatform(OSPlatform.OSX)

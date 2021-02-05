@@ -42,7 +42,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Devices.Mapped
                                 .Build());
                     }
                     var store = context.SnowflakeService<IControllerElementMappingProfileStore>();
-                    var controllerId = context.Argument<ControllerId>("controllerId");
+                    var controllerId = context.ArgumentValue<ControllerId>("controllerId");
                     return store.GetProfileNames(controllerId, deviceInstance.Driver, device.DeviceName, device.VendorID);
                 })
                 .Type<NonNullType<ListType<NonNullType<InputProfileType>>>>();
@@ -55,7 +55,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Devices.Mapped
                 .Resolve(context =>
                 {
                     var store = context.SnowflakeService<IControllerElementMappingProfileStore>();
-                    var profileId = context.Argument<Guid>("profileId");
+                    var profileId = context.ArgumentValue<Guid>("profileId");
                     return store.GetMappings(profileId);
                 })
                 .Type<ControllerElementMappingProfileType>();

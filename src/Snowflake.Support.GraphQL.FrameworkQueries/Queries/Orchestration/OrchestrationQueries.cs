@@ -21,7 +21,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Queries.Orchestration
                     .Description("The `instanceId` of the game emulation instance that is used to query the game emulation state."))
                 .Resolve(ctx =>
                 {
-                    var guid = ctx.Argument<Guid>("instanceId");
+                    var guid = ctx.ArgumentValue<Guid>("instanceId");
                     ctx.GetGameCache().TryGetValue(guid, out var gameEmulation);
                     return gameEmulation;
                 })

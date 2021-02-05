@@ -26,7 +26,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Game
                 .Resolve(async ctx =>
                 {
                     var gameLibrary = ctx.SnowflakeService<IGameLibrary>();
-                    UpdateGameMetadataInput args = ctx.Argument<UpdateGameMetadataInput>("input");
+                    UpdateGameMetadataInput args = ctx.ArgumentValue<UpdateGameMetadataInput>("input");
 
                     var game = await gameLibrary.GetGameAsync(args.GameID);
                     game.Record.Metadata[args.MetadataKey] = args.MetadataValue;
@@ -48,7 +48,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Game
                 {
                     var gameLibrary = ctx.SnowflakeService<IGameLibrary>();
 
-                    DeleteGameMetadataInput args = ctx.Argument<DeleteGameMetadataInput>("input");
+                    DeleteGameMetadataInput args = ctx.ArgumentValue<DeleteGameMetadataInput>("input");
 
                     var game = await gameLibrary.GetGameAsync(args.GameID);
                     (game.Record.Metadata as IDictionary<string, IRecordMetadata>)

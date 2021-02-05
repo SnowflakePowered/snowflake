@@ -62,7 +62,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Queries.Game.Orchestration
                 .Resolve(ctx =>
                 {
                     (IGame game, IEmulatorOrchestrator orchestrator) = ctx.Parent<(IGame, IEmulatorOrchestrator)>();
-                    Guid configProfile = ctx.Argument<Guid>("collectionId");
+                    Guid configProfile = ctx.ArgumentValue<Guid>("collectionId");
                     return orchestrator.GetGameConfiguration(game, configProfile);
                 });
             descriptor.Field("ports")
@@ -75,7 +75,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Queries.Game.Orchestration
                 {
                     (IGame game, IEmulatorOrchestrator orchestrator) = ctx.Parent<(IGame, IEmulatorOrchestrator)>();
                     var portStore = ctx.SnowflakeService<IEmulatedPortStore>();
-                    var arg = ctx.Argument<Optional<int>>("portIndex");
+                    var arg = ctx.ArgumentValue<Optional<int>>("portIndex");
                     IEnumerable<IEmulatedPortDeviceEntry> deviceEntries;
                     if (arg.HasValue)
                     {

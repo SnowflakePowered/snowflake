@@ -29,8 +29,8 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Game
                 .Description("The save profiles associated with this game.")
                 .Resolve(ctx =>
                 {
-                    var profileId = ctx.Argument<Guid>("profileId");
-                    var saveType = ctx.Argument<string>("saveType");
+                    var profileId = ctx.ArgumentValue<Guid>("profileId");
+                    var saveType = ctx.ArgumentValue<string>("saveType");
                     var saves = ctx.Parent<IGame>().WithFiles().WithSaves();
                     if (profileId != default)
                     {

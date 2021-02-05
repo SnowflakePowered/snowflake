@@ -19,6 +19,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Stone.PlatformInfo
             Description = "A Stone PlatformId must be of the form MANUFACTURER_SHORTNAME and represents a specific Stone platform.";
         }
 
+
         protected override PlatformId ParseLiteral(StringValueNode literal)
         {
             return (PlatformId)literal.Value;
