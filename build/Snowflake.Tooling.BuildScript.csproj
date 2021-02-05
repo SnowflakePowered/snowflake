@@ -11,8 +11,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Build" Version="16.7.0" />
-    <PackageReference Include="Nuke.Common" Version="0.24.11" />
+    <PackageReference Include="Microsoft.Build" Version="16.8.0" />
+    <PackageReference Include="Nuke.Common" Version="5.0.2" />
   </ItemGroup>
 
   <ItemGroup>

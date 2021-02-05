@@ -1,5 +1,6 @@
 ﻿using HotChocolate;
 using HotChocolate.Execution;
+using HotChocolate.Execution.Configuration;
 using HotChocolate.Types;
 using Snowflake.Loader;
 using System;
@@ -72,7 +73,7 @@ namespace Snowflake.Remoting.GraphQL
         /// Manually configure the <see cref="ISchemaBuilder"/> used to configure the schema.
         /// </summary>
         /// <param name="schemaBuilder">A delegate that configures the <see cref="ISchemaBuilder"/></param>
-        IGraphQLSchemaRegistrationProvider ConfigureSchema(Action<ISchemaBuilder> schemaBuilder);
+        IGraphQLSchemaRegistrationProvider ConfigureSchema(Action<IRequestExecutorBuilder> schemaBuilder);
 
         /// <summary>
         /// Configure the <see cref="IQueryRequestBuilder"/> used to build the GraphQL query request

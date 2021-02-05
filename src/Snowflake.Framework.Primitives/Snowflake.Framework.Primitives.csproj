@@ -6,7 +6,7 @@
     <LangVersion>9.0</LangVersion>
     <NullableContextOptions>enable</NullableContextOptions>
     <Nullable>enable</Nullable>
-        <_SnowflakeUseDevelopmentSDK>true</_SnowflakeUseDevelopmentSDK>
+    <_SnowflakeUseDevelopmentSDK>true</_SnowflakeUseDevelopmentSDK>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Cover' ">
@@ -15,15 +15,15 @@
 
   <ItemGroup>
     <Compile Remove="Extensibility\Events\**" />
+    <Compile Remove="Shiragame\**" />
     <EmbeddedResource Remove="Extensibility\Events\**" />
+    <EmbeddedResource Remove="Shiragame\**" />
     <None Remove="Extensibility\Events\**" />
+    <None Remove="Shiragame\**" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json" />
 
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Shiragame\" />
   </ItemGroup>
   
   <PropertyGroup>

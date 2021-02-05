@@ -30,7 +30,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                 .UseClientMutationId()
                 .UseAutoSubscription()
                 .Argument("input", a => a.Type<CreateEmulationInstanceInputType>())
-                .Resolver(async ctx =>
+                .Resolve(async ctx =>
                 {
                     var input = ctx.Argument<CreateEmulationInstanceInput>("input");
                     var orchestrator = ctx.SnowflakeService<IPluginManager>()

@@ -33,11 +33,12 @@ namespace Snowflake.Remoting.GraphQL.Model.Filesystem
         {
             return new StringValueNode(null, value.FullName, false);
         }
+        public override IValueNode ParseResult(object resultValue) => ParseValue(resultValue);
 
         // define the result serialization. A valid output must be of the following .NET types:
         // System.String, System.Char, System.Int16, System.Int32, System.Int64,
         // System.Float, System.Double, System.Decimal and System.Boolean
-        public bool TrySerialize(object value, out object serialized)
+        public override bool TrySerialize(object value, out object serialized)
         {
             if (value is UPath p)
             {

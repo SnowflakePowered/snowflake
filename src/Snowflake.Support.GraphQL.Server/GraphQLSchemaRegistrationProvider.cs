@@ -12,6 +12,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using HotChocolate.Language;
 using HotChocolate.Execution;
+using HotChocolate.Execution.Configuration;
 
 namespace Snowflake.Services
 {
@@ -20,7 +21,7 @@ namespace Snowflake.Services
         private static readonly object Empty = new { };
         public GraphQLSchemaRegistrationProvider(ILogger logger)
         {
-            this.SchemaConfig = new List<Action<ISchemaBuilder>>();
+            this.SchemaConfig = new List<Action<IRequestExecutorBuilder>>();
             this.QueryConfig = new List<Action<IQueryRequestBuilder>>();
 
             this.ObjectTypes = new List<Type>();
@@ -39,7 +40,7 @@ namespace Snowflake.Services
 
         private ILogger Logger { get; }
 
-        internal IList<Action<ISchemaBuilder>> SchemaConfig { get; }
+        internal IList<Action<IRequestExecutorBuilder>> SchemaConfig { get; }
         internal IList<Action<IQueryRequestBuilder>> QueryConfig { get; }
 
         public IGraphQLSchemaRegistrationProvider AddObjectType<T>()
@@ -84,7 +85,7 @@ namespace Snowflake.Services
             return this;
         }
 
-        public IGraphQLSchemaRegistrationProvider ConfigureSchema(Action<ISchemaBuilder> schemaBuilder)
+        public IGraphQLSchemaRegistrationProvider ConfigureSchema(Action<IRequestExecutorBuilder> schemaBuilder)
         {
             this.SchemaConfig.Add(schemaBuilder);
             return this;
@@ -106,7 +107,7 @@ namespace Snowflake.Services
                     descriptor.Name(typeName)
                         .Description(description);
                 })
-                .AddType(new ObjectTypeExtension(descriptor =>
+                .AddTypeExtension(new ObjectTypeExtension(descriptor =>
                 {
                     descriptor.ExtendQuery();
                     descriptor.Field(fieldName)
