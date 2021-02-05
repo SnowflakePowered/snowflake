@@ -29,10 +29,11 @@ namespace Snowflake.Loader
         {
             return from directory in this.ModuleDirectory.EnumerateDirectories()
                 where File.Exists(Path.Combine(directory.FullName, "module.json"))
-                select JsonSerializer.Deserialize<ModuleDefinition>(
+                let moduleInfo = JsonSerializer.Deserialize<ModuleDefinition>(
                         File.ReadAllText(Path.Combine(directory.FullName, "module.json")), 
-                        serializationOptions)
-                    .ToModule(directory);
+                        serializationOptions)?.ToModule(directory)
+                where moduleInfo != null
+                select moduleInfo;
         }
     }
 }
