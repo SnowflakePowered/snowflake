@@ -32,7 +32,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                 .Argument("input", a => a.Type<CreateEmulationInstanceInputType>())
                 .Resolve(async ctx =>
                 {
-                    var input = ctx.Argument<CreateEmulationInstanceInput>("input");
+                    var input = ctx.ArgumentValue<CreateEmulationInstanceInput>("input");
                     var orchestrator = ctx.SnowflakeService<IPluginManager>()
                         .GetCollection<IEmulatorOrchestrator>()[input.Orchestrator];
                     if (orchestrator == null)
@@ -107,7 +107,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                 .Argument("input", arg => arg.Type<EmulationInstanceInputType>())
                 .Resolve(async ctx =>
                 {
-                    var input = ctx.Argument<EmulationInstanceInput>("input");
+                    var input = ctx.ArgumentValue<EmulationInstanceInput>("input");
                     if (!ctx.GetGameCache().TryGetValue(input.InstanceID, out var gameEmulation))
                     {
                         return ErrorBuilder.New()
@@ -153,7 +153,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                 .Argument("input", arg => arg.Type<EmulationInstanceInputType>())
                 .Resolve(async ctx =>
                 {
-                    var input = ctx.Argument<EmulationInstanceInput>("input");
+                    var input = ctx.ArgumentValue<EmulationInstanceInput>("input");
                     if (!ctx.GetGameCache().TryGetValue(input.InstanceID, out var gameEmulation))
                     {
                         return ErrorBuilder.New()
@@ -195,7 +195,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                .Argument("input", arg => arg.Type<EmulationInstanceInputType>())
                .Resolve(async ctx =>
                {
-                   var input = ctx.Argument<EmulationInstanceInput>("input");
+                   var input = ctx.ArgumentValue<EmulationInstanceInput>("input");
                    if (!ctx.GetGameCache().TryGetValue(input.InstanceID, out var gameEmulation))
                    {
                        return ErrorBuilder.New()
@@ -237,7 +237,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                 .Argument("input", arg => arg.Type<EmulationInstanceInputType>())
                 .Resolve(async ctx =>
                 {
-                    var input = ctx.Argument<EmulationInstanceInput>("input");
+                    var input = ctx.ArgumentValue<EmulationInstanceInput>("input");
                     if (!ctx.GetGameCache().TryGetValue(input.InstanceID, out var gameEmulation))
                     {
                         return ErrorBuilder.New()
@@ -279,7 +279,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                 .Argument("input", arg => arg.Type<EmulationInstanceInputType>())
                 .Resolve(async ctx =>
                 {
-                    var input = ctx.Argument<EmulationInstanceInput>("input");
+                    var input = ctx.ArgumentValue<EmulationInstanceInput>("input");
                     if (!ctx.GetGameCache().TryGetValue(input.InstanceID, out var gameEmulation))
                     {
                         return ErrorBuilder.New()
@@ -328,7 +328,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                 .Argument("input", arg => arg.Type<EmulationInstanceInputType>())
                 .Resolve(async ctx =>
                 {
-                    var input = ctx.Argument<EmulationInstanceInput>("input");
+                    var input = ctx.ArgumentValue<EmulationInstanceInput>("input");
                     if (!ctx.GetGameCache().TryGetValue(input.InstanceID, out var gameEmulation))
                     {
                         return ErrorBuilder.New()
@@ -367,7 +367,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                 .Argument("input", arg => arg.Type<EmulationInstanceInputType>())
                 .Resolve(async ctx =>
                 {
-                    var input = ctx.Argument<EmulationInstanceInput>("input");
+                    var input = ctx.ArgumentValue<EmulationInstanceInput>("input");
                     if (!ctx.GetGameCache().TryGetValue(input.InstanceID, out var gameEmulation))
                     {
                         return ErrorBuilder.New()

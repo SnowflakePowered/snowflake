@@ -26,7 +26,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Saving
                 .Resolve(async ctx =>
                 {
                     var gameLibrary = ctx.SnowflakeService<IGameLibrary>();
-                    var input = ctx.Argument<CreateSaveProfileInput>("input");
+                    var input = ctx.ArgumentValue<CreateSaveProfileInput>("input");
                     var game = await gameLibrary.GetGameAsync(input.GameID);
                     if (game == null)
                         return ErrorBuilder.New()
@@ -51,7 +51,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Saving
                 .Resolve(async ctx =>
                 {
                     var gameLibrary = ctx.SnowflakeService<IGameLibrary>();
-                    var input = ctx.Argument<DeleteSaveProfileInput>("input");
+                    var input = ctx.ArgumentValue<DeleteSaveProfileInput>("input");
                     var game = await gameLibrary.GetGameAsync(input.GameID);
                     if (game == null)
                         return ErrorBuilder.New()

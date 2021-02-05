@@ -27,7 +27,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Input
                 .UseAutoSubscription()
                 .Resolve(async ctx =>
                 {
-                    var input = ctx.Argument<CreateInputProfileInput>("input");
+                    var input = ctx.ArgumentValue<CreateInputProfileInput>("input");
                     var devices = ctx.SnowflakeService<IDeviceEnumerator>().QueryConnectedDevices();
                     (int vendorId, string deviceName) = (default, default);
 
@@ -86,7 +86,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Input
                 .Argument("input", arg => arg.Type<NonNullType<UpdateInputProfileInputType>>())
                 .Resolve(async ctx =>
                 {
-                    var input = ctx.Argument<UpdateInputProfileInput>("input");
+                    var input = ctx.ArgumentValue<UpdateInputProfileInput>("input");
 
                     var mappingStore = ctx.SnowflakeService<IControllerElementMappingProfileStore>();
                     var profile = await mappingStore
@@ -115,7 +115,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Input
                 .Argument("input", arg => arg.Type<NonNullType<DeleteInputProfileInputType>>())
                 .Resolve(async ctx =>
                 {
-                    var input = ctx.Argument<DeleteInputProfileInput>("input");
+                    var input = ctx.ArgumentValue<DeleteInputProfileInput>("input");
                     var mappingStore = ctx.SnowflakeService<IControllerElementMappingProfileStore>();
 
                     var profile = await mappingStore.GetMappingsAsync(input.ProfileID);

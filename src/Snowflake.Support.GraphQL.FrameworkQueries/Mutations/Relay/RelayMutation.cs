@@ -12,7 +12,7 @@ namespace Snowflake.Remoting.GraphQL.FrameworkQueries.Mutations.Relay
             descriptor.Use(next => async context =>
             {
                 await next(context);
-                if (context.Argument<object>("input") is RelayMutationBase input && context.Result is RelayMutationBase)
+                if (context.ArgumentValue<object>("input") is RelayMutationBase input && context.Result is RelayMutationBase)
                 {
                     ((RelayMutationBase)context.Result).ClientMutationID = input.ClientMutationID;
                 }

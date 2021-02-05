@@ -50,11 +50,17 @@ namespace Snowflake.Services
         {
 
             // Add privileged newtypes for Stone
-            services.AddRouting();
+            services
+                .AddRouting()
+                .AddMemoryCache()
+                ;
             var graphQL = services
                 .AddGraphQLServer()
-                .AddApolloTracing();
-            graphQL.AddInMemorySubscriptions();
+                .AddApolloTracing()
+                .AddInMemorySubscriptions()
+                .UseAutomaticPersistedQueryPipeline()
+                .AddInMemoryQueryStorage();
+
             this.Schema.AddSnowflakeGraphQl(graphQL);
             this.Schema.AddStoneIdTypeConverters(graphQL);
             this.Schema.AddSnowflakeQueryRequestInterceptor(graphQL);

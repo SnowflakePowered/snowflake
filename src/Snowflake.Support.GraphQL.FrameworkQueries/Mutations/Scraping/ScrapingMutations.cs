@@ -30,7 +30,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                 .Argument("input", arg => arg.Type<CreateScrapeContextInputType>())
                 .Resolve(async ctx =>
                 {
-                    var input = ctx.Argument<CreateScrapeContextInput>("input");
+                    var input = ctx.ArgumentValue<CreateScrapeContextInput>("input");
                     var plugins = ctx.SnowflakeService<IPluginManager>();
                     var cullers = plugins.GetCollection<ICuller>()
                         .Where(c => input.Cullers.Contains(c.Name, StringComparer.InvariantCulture));
@@ -66,7 +66,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                 .Argument("input", arg => arg.Type<CancelScrapeContextInputType>())
                 .Resolve(async ctx =>
                 {
-                    var input = ctx.Argument<CancelScrapeContextInput>("input");
+                    var input = ctx.ArgumentValue<CancelScrapeContextInput>("input");
 
                     var jobQueueFactory = ctx.SnowflakeService<IAsyncJobQueueFactory>();
                     var jobQueue = jobQueueFactory.GetJobQueue<IScrapeContext, IEnumerable<ISeed>>(false);
@@ -99,7 +99,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                 .Argument("input", arg => arg.Type<DeleteScrapeContextInputType>())
                 .Resolve(async ctx =>
                 {
-                    var input = ctx.Argument<DeleteScrapeContextInput>("input");
+                    var input = ctx.ArgumentValue<DeleteScrapeContextInput>("input");
                    
                     var jobQueueFactory = ctx.SnowflakeService<IAsyncJobQueueFactory>();
                     var jobQueue = jobQueueFactory.GetJobQueue<IScrapeContext, IEnumerable<ISeed>>(false);
@@ -141,7 +141,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                 .Argument("input", arg => arg.Type<NextScrapeContextStepInputType>())
                 .Resolve(async ctx =>
                 {
-                    var input = ctx.Argument<NextScrapeContextStepInput>("input");
+                    var input = ctx.ArgumentValue<NextScrapeContextStepInput>("input");
                     var jobQueue = ctx.SnowflakeService<IAsyncJobQueueFactory>()
                         .GetJobQueue<IScrapeContext, IEnumerable<ISeed>>(false);
                     var scrapeContext = jobQueue.GetSource(input.JobID);
@@ -198,7 +198,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                 .Argument("input", arg => arg.Type<NextScrapeContextStepInputType>())
                 .Resolve(async ctx =>
                 {
-                    var input = ctx.Argument<NextScrapeContextStepInput>("input");
+                    var input = ctx.ArgumentValue<NextScrapeContextStepInput>("input");
                     var jobQueue = ctx.SnowflakeService<IAsyncJobQueueFactory>()
                         .GetJobQueue<IScrapeContext, IEnumerable<ISeed>>(false);
                     var scrapeContext = jobQueue.GetSource(input.JobID);
@@ -251,7 +251,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                 .Argument("input", arg => arg.Type<ApplyScrapeContextInputType>())
                 .Resolve(async ctx =>
                 {
-                    var input = ctx.Argument<ApplyScrapeContextInput>("input");
+                    var input = ctx.ArgumentValue<ApplyScrapeContextInput>("input");
                     var jobQueue = ctx.SnowflakeService<IAsyncJobQueueFactory>()
                         .GetJobQueue<IScrapeContext, IEnumerable<ISeed>>(false);
                     var gameLibrary = ctx.SnowflakeService<IGameLibrary>();

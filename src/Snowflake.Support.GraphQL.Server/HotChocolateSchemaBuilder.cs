@@ -146,7 +146,7 @@ namespace Snowflake.Support.GraphQL.Server
                 })
                 .ModifyRequestOptions(opts =>
                 {
-                    opts.TracingPreference = HotChocolate.Execution.Options.TracingPreference.Always;
+                    opts.TracingPreference = HotChocolate.Execution.Options.TracingPreference.OnDemand;
                 });
 
             schemaBuilder.ConfigureSchema(schemaBuilder =>
@@ -221,8 +221,14 @@ namespace Snowflake.Support.GraphQL.Server
 
         public void AddStoneIdTypeConverters(IRequestExecutorBuilder services)
         {
-            services.AddTypeConverter<string, PlatformId>(from => from)
-               .AddTypeConverter<string, ControllerId>(from => from);
+            services.BindRuntimeType<PlatformId, PlatformIdType>()
+                .BindRuntimeType<ControllerId, ControllerIdType>();
+
+            services
+               .AddTypeConverter<string, PlatformId>(from => from)
+               .AddTypeConverter<PlatformId, string>(from => from)
+               .AddTypeConverter<string, ControllerId>(from => from)
+               .AddTypeConverter<ControllerId, string>(from => from);
         }
     }
 }

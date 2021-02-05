@@ -28,7 +28,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Extensibility
                     if (provision.Provision is StandalonePluginProvision) return null;
                     if (context.ArgumentKind("directoryPath") == ValueKind.Null)
                         return provision.Provision.CommonResourceDirectory;
-                    var path = context.Argument<UPath>("directoryPath");
+                    var path = context.ArgumentValue<UPath>("directoryPath");
                     return provision.Provision.CommonResourceDirectory.OpenDirectory(path.FullName);
                 });
             descriptor.Field("resourceDirectory")
@@ -41,7 +41,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Extensibility
                    if (provision.Provision is StandalonePluginProvision) return null;
                    if (context.ArgumentKind("directoryPath") == ValueKind.Null)
                        return provision.Provision.ResourceDirectory;
-                   var path = context.Argument<UPath>("directoryPath");
+                   var path = context.ArgumentValue<UPath>("directoryPath");
                    return provision.Provision.ResourceDirectory.OpenDirectory(path.FullName);
                });
             descriptor.Field("dataDirectory")
@@ -55,7 +55,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Extensibility
 
                    if (context.ArgumentKind("directoryPath") == ValueKind.Null)
                        return provision.Provision.DataDirectory;
-                   var path = context.Argument<UPath>("directoryPath");
+                   var path = context.ArgumentValue<UPath>("directoryPath");
                    return provision.Provision.DataDirectory.OpenDirectory(path.FullName);
                });
             descriptor.Field("configuration")

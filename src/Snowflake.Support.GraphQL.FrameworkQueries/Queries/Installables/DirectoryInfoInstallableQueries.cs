@@ -27,7 +27,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Installables
                 .Resolve(ctx =>
                 {
                     var installers = ctx.SnowflakeService<IPluginManager>().GetCollection<IGameInstaller>();
-                    var platform = ctx.Argument<PlatformId>("platformId");
+                    var platform = ctx.ArgumentValue<PlatformId>("platformId");
                     var dirs = ctx.Parent<DirectoryInfo>();
 
                     return from installer in installers

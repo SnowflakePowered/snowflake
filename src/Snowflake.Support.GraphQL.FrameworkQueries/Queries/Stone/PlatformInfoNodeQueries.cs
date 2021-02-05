@@ -22,8 +22,9 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Stone
                 .Type<IdType>()
                 .Resolve(ctx => ctx.Parent<IPlatformInfo>().PlatformID);
 
-            descriptor.AsNode()
-                .NodeResolver<PlatformId>((ctx, id) => Task.FromResult(
+            descriptor
+                .ImplementsNode()
+                .ResolveNode<string>((ctx, id) => Task.FromResult<object>(
                     ctx.SnowflakeService<IStoneProvider>().Platforms.TryGetValue(id, out var value) ? value : null));
         }
     }

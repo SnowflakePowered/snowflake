@@ -26,7 +26,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Scraping
                 .Resolve(ctx =>
                 {
                     var seedRootContext = ctx.Parent<ISeedRootContext>();
-                    Guid seedGuid = ctx.Argument<Guid>("seedId");
+                    Guid seedGuid = ctx.ArgumentValue<Guid>("seedId");
                     if (seedGuid == default) seedGuid = seedRootContext.Root.Guid;
 
                     var seed = seedRootContext[seedGuid];
@@ -40,7 +40,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Scraping
                 .Resolve(ctx =>
                 {
                     var seedRootContext = ctx.Parent<ISeedRootContext>();
-                    Guid seedGuid = ctx.Argument<Guid>("seedId");
+                    Guid seedGuid = ctx.ArgumentValue<Guid>("seedId");
                     if (seedGuid == default) seedGuid = seedRootContext.Root.Guid;
 
                     var seed = seedRootContext[seedGuid];
@@ -54,7 +54,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Scraping
                 .Resolve(ctx =>
                 {
                     var seedRootContext = ctx.Parent<ISeedRootContext>();
-                    Guid seedGuid = ctx.Argument<Guid>("seedId");
+                    Guid seedGuid = ctx.ArgumentValue<Guid>("seedId");
                     if (seedGuid == default) seedGuid = seedRootContext.Root.Guid;
 
                     var seed = seedRootContext[seedGuid];

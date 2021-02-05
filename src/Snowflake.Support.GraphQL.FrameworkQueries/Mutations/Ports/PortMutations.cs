@@ -24,7 +24,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Ports
                 .Argument("input", arg => arg.Type<NonNullType<UpdatePortDeviceInputType>>())
                 .Resolve(ctx =>
                 {
-                    var input = ctx.Argument<UpdatePortDeviceInput>("input");
+                    var input = ctx.ArgumentValue<UpdatePortDeviceInput>("input");
                     var orchestrator = ctx.SnowflakeService<IPluginManager>().GetCollection<IEmulatorOrchestrator>()[input.Orchestrator];
                     if (orchestrator == null)
                         return ErrorBuilder.New()
@@ -47,7 +47,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Ports
                 .Argument("input", arg => arg.Type<NonNullType<ClearPortDeviceInputType>>())
                 .Resolve(ctx =>
                 {
-                    var input = ctx.Argument<ClearPortDeviceInput>("input");
+                    var input = ctx.ArgumentValue<ClearPortDeviceInput>("input");
                     var orchestrator = ctx.SnowflakeService<IPluginManager>().GetCollection<IEmulatorOrchestrator>()[input.Orchestrator];
                     if (orchestrator == null)
                         return ErrorBuilder.New()

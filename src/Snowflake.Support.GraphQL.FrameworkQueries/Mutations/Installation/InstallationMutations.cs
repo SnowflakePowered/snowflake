@@ -35,7 +35,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
                 .Argument("input", a => a.Type<CreateValidationInputType>())
                 .Resolve(async ctx =>
                 {
-                    var arg = ctx.Argument<CreateValidationInput>("input");
+                    var arg = ctx.ArgumentValue<CreateValidationInput>("input");
                     var jobQueue = ctx.SnowflakeService<IAsyncJobQueueFactory>()
                         .GetJobQueue<TaskResult<IFile>>();
 
@@ -78,7 +78,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
                 .Argument("input", a => a.Type<CreateInstallationInputType>())
                 .Resolve(async ctx =>
                 {
-                    var arg = ctx.Argument<CreateInstallationInput>("input");
+                    var arg = ctx.ArgumentValue<CreateInstallationInput>("input");
                     var jobQueue = ctx.SnowflakeService<IAsyncJobQueueFactory>()
                         .GetJobQueue<TaskResult<IFile>>();
 
@@ -113,7 +113,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
                 .Argument("input", a => a.Type<NextInstallationStepInputType>())
                 .Resolve(async ctx =>
                 {
-                    var arg = ctx.Argument<NextInstallationStepInput>("input");
+                    var arg = ctx.ArgumentValue<NextInstallationStepInput>("input");
                     var jobQueue = ctx.SnowflakeService<IAsyncJobQueueFactory>()
                         .GetJobQueue<TaskResult<IFile>>();
 
@@ -176,7 +176,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
                 .Argument("input", a => a.Type<NextInstallationStepInputType>())
                 .Resolve(async ctx =>
                 {
-                    var arg = ctx.Argument<NextInstallationStepInput>("input");
+                    var arg = ctx.ArgumentValue<NextInstallationStepInput>("input");
                     var jobQueue = ctx.SnowflakeService<IAsyncJobQueueFactory>()
                         .GetJobQueue<TaskResult<IFile>>();
                     var gameTask = ctx.GetAssignedGame(arg.JobID);
@@ -235,7 +235,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
                 .Argument("input", a => a.Type<NextInstallationStepInputType>())
                 .Resolve(async ctx =>
                 {
-                    var arg = ctx.Argument<NextInstallationStepInput>("input");
+                    var arg = ctx.ArgumentValue<NextInstallationStepInput>("input");
                     var jobQueue = ctx.SnowflakeService<IAsyncJobQueueFactory>()
                         .GetJobQueue<TaskResult<IFile>>();
 

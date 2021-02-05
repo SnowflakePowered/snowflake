@@ -26,7 +26,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Game
                 {
                     var gameLibrary = ctx.SnowflakeService<IGameLibrary>();
 
-                    CreateGameInput args = ctx.Argument<CreateGameInput>("input");
+                    CreateGameInput args = ctx.ArgumentValue<CreateGameInput>("input");
                     var game = await gameLibrary.CreateGameAsync(args.PlatformID);
                     return new GamePayload()
                     {
@@ -46,7 +46,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Game
                 {
                     var gameLibrary = ctx.SnowflakeService<IGameLibrary>();
 
-                    DeleteGameInput args = ctx.Argument<DeleteGameInput>("input");
+                    DeleteGameInput args = ctx.ArgumentValue<DeleteGameInput>("input");
                     var game = await gameLibrary.GetGameAsync(args.GameID);
                     game.Record.Metadata["game_deleted"] = "true";
                     await gameLibrary.UpdateGameRecordAsync(game.Record);

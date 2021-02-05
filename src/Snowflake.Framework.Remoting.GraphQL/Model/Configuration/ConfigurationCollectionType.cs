@@ -30,8 +30,8 @@ namespace Snowflake.Remoting.GraphQL.Model.Configuration
                 {
                     var collection = ctx.Parent<IConfigurationCollection>();
                     var valueCollection = collection.ValueCollection;
-                    string sectionKey = ctx.Argument<string>("sectionKey");
-                    Guid valueID = ctx.Argument<Guid>("valueId");
+                    string sectionKey = ctx.ArgumentValue<string>("sectionKey");
+                    Guid valueID = ctx.ArgumentValue<Guid>("valueId");
 
                     if (valueID != default)
                     {
