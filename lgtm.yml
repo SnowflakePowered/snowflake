@@ -6,9 +6,9 @@ extraction:
   csharp:
     index:
       solution: src/Snowflake.sln
-      vstools_version: 15
+      vstools_version: 16
       dotnet:
-        version: '3.1.100'
+        version: '5.0.100'
   python:
     python_setup: 
       version: 3

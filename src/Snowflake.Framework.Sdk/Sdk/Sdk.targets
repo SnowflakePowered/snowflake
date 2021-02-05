@@ -3,8 +3,8 @@
    
   <Target Name="EnsureTFMCompatibility" BeforeTargets="_CheckForInvalidConfigurationAndPlatform">
     <Error
-      Text="Snowflake.Framework.Sdk is only compatible with the target framework netcoreapp3.1. Please target netcoreapp3.1."
-      Condition="'$(TargetFramework)' != 'netcoreapp3.1'"/>
+      Text="Snowflake.Framework.Sdk is only compatible with the target framework net5.0. Please target net5.0."
+      Condition="'$(TargetFramework)' != 'net5.0'"/>
   </Target>
 
   <Target Name="WarnWithoutModuleManifest" BeforeTargets="_CheckForInvalidConfigurationAndPlatform">

@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Snowflake.Framework.Dependencies.Sdk/2.0.0">
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>net5.0</TargetFrameworks>
     <RootNamespace>Snowflake</RootNamespace>
     <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
-    <LangVersion>8.0</LangVersion>
+    <LangVersion>9.0</LangVersion>
     <NullableContextOptions>enable</NullableContextOptions>
     <Nullable>enable</Nullable>
         <_SnowflakeUseDevelopmentSDK>true</_SnowflakeUseDevelopmentSDK>
