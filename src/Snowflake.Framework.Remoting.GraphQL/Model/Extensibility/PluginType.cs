@@ -23,10 +23,10 @@ namespace Snowflake.Remoting.GraphQL.Model.Extensibility
                 .Description("The plugin name.");
             descriptor.Field("version")
                       .Description("The version of the module.")
-                      .Resolver(ctx => ctx.Parent<IPlugin>().Version.ToString());
+                      .Resolve(ctx => ctx.Parent<IPlugin>().Version.ToString());
             descriptor.Field("interfaces")
                 .Description("The plugin interfaces this plugin implements.")
-                .Resolver(c => c.Parent<IPlugin>().GetType().GetInterfaces().Select(t => t.FullName));
+                .Resolve(c => c.Parent<IPlugin>().GetType().GetInterfaces().Select(t => t.FullName));
         }
     }
 }

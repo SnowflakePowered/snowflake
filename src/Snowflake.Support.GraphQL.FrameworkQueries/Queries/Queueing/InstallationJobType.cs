@@ -25,21 +25,21 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Queries.Queueing
                 .Interface<QueuableJobInterface>();
             descriptor.Field("jobId")
               .Type<NonNullType<UuidType>>()
-              .Resolver(ctx =>
+              .Resolve(ctx =>
               {
                   var (_, token) = ctx.Parent<(IAsyncJobQueue<TaskResult<IFile>>, Guid)>();
                   return token;
               });
             descriptor.Field("current")
                 .Type<TaskResultType<IFile, ContextualFileInfoType>>()
-                .Resolver(ctx =>
+                .Resolve(ctx =>
                 {
                     var (queue, token) = ctx.Parent<(IAsyncJobQueue<TaskResult<IFile>>, Guid)>();
                     return queue.GetCurrent(token);
                 });
             descriptor.Field("context")
                 .Type<ScrapeContextType>()
-                .Resolver(ctx =>
+                .Resolve(ctx =>
                 {
                     var (queue, token) = ctx.Parent<(IAsyncJobQueue<TaskResult<IFile>>, Guid)>();
                     return queue.GetSource(token);
@@ -47,7 +47,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Queries.Queueing
             descriptor.Field("game")
                 .Description("The game associated with this job, if any.")
                 .Type<GameType>()
-                .Resolver(ctx =>
+                .Resolve(ctx =>
                 {
                     var (_, token) = ctx.Parent<(IAsyncJobQueue<TaskResult<IFile>>, Guid)>();
                     return ctx.GetAssignedGame(token);

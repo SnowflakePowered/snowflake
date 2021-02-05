@@ -32,7 +32,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Game
 
             descriptor.Field("metadata")
                 .Description("The metadata associated with this game.")
-                .Resolver(ctx => ctx.Parent<IGameRecord>().Metadata.Select(m => m.Value))
+                .Resolve(ctx => ctx.Parent<IGameRecord>().Metadata.Select(m => m.Value))
                 .Type<ListType<RecordMetadataType>>()
                 .UseFiltering();
         }

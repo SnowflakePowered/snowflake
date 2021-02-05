@@ -25,7 +25,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Extensibility
             descriptor
                 .Field("version")
                 .Description("The version of the module.")
-                .Resolver(ctx => ctx.Parent<IModule>().Version.ToString());
+                .Resolve(ctx => ctx.Parent<IModule>().Version.ToString());
             descriptor.Field(p => p.DisplayName).Description("The friendly display name of the module.");
             descriptor.Field(p => p.Loader).Description("The loader that is responsible for loading this module.");
             descriptor.Field(p => p.ContentsDirectory).Description("The directory that contains the modules contents. " +

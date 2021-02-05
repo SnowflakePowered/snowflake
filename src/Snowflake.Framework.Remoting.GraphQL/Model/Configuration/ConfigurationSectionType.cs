@@ -16,16 +16,16 @@ namespace Snowflake.Remoting.GraphQL.Model.Configuration
                 .Description("Describes a single, standalone configuration section that does not belong to a configuration collection.");
             descriptor.Field("sectionDescriptor")
                 .Description("Describes this configuration section.")
-                .Resolver(ctx => ctx.Parent<IConfigurationSection>().Descriptor)
+                .Resolve(ctx => ctx.Parent<IConfigurationSection>().Descriptor)
                 .Type<NonNullType<SectionDescriptorType>>();
             descriptor.Field("collectionId")
                 .Description("The GUID that refers to this specific collection of values.")
                 .Type<UuidType>()
-                .Resolver(ctx => ctx.Parent<IConfigurationSection>().ValueCollection.Guid);
+                .Resolve(ctx => ctx.Parent<IConfigurationSection>().ValueCollection.Guid);
             descriptor.Field("values")
                 .Description("The list of values that make up this collection.")
                 .Argument("valueId", arg => arg.Description("Return a specific value with the given GUID.").Type<UuidType>())
-                .Resolver(ctx => {
+                .Resolve(ctx => {
                     var section = ctx.Parent<IConfigurationSection>();
                     Guid valueID = ctx.Argument<Guid>("valueID");
 

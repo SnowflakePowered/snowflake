@@ -33,7 +33,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
                 .UseClientMutationId()
                 .UseAutoSubscription()
                 .Argument("input", a => a.Type<CreateValidationInputType>())
-                .Resolver(async ctx =>
+                .Resolve(async ctx =>
                 {
                     var arg = ctx.Argument<CreateValidationInput>("input");
                     var jobQueue = ctx.SnowflakeService<IAsyncJobQueueFactory>()
@@ -76,7 +76,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
                 .UseClientMutationId()
                 .UseAutoSubscription()
                 .Argument("input", a => a.Type<CreateInstallationInputType>())
-                .Resolver(async ctx =>
+                .Resolve(async ctx =>
                 {
                     var arg = ctx.Argument<CreateInstallationInput>("input");
                     var jobQueue = ctx.SnowflakeService<IAsyncJobQueueFactory>()
@@ -111,7 +111,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
                 .UseClientMutationId()
                 .UseAutoSubscription()
                 .Argument("input", a => a.Type<NextInstallationStepInputType>())
-                .Resolver(async ctx =>
+                .Resolve(async ctx =>
                 {
                     var arg = ctx.Argument<NextInstallationStepInput>("input");
                     var jobQueue = ctx.SnowflakeService<IAsyncJobQueueFactory>()
@@ -174,7 +174,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
                 .UseClientMutationId()
                 .UseAutoSubscription()
                 .Argument("input", a => a.Type<NextInstallationStepInputType>())
-                .Resolver(async ctx =>
+                .Resolve(async ctx =>
                 {
                     var arg = ctx.Argument<NextInstallationStepInput>("input");
                     var jobQueue = ctx.SnowflakeService<IAsyncJobQueueFactory>()
@@ -233,7 +233,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
                 .UseClientMutationId()
                 .UseAutoSubscription()
                 .Argument("input", a => a.Type<NextInstallationStepInputType>())
-                .Resolver(async ctx =>
+                .Resolve(async ctx =>
                 {
                     var arg = ctx.Argument<NextInstallationStepInput>("input");
                     var jobQueue = ctx.SnowflakeService<IAsyncJobQueueFactory>()

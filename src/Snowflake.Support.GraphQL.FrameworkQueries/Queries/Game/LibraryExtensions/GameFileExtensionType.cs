@@ -19,13 +19,13 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Game.LibraryExtensio
                 .Description("Files and file data relating to the game.");
             descriptor.Field("fileRecords")
                 .Description("Provides access to metadata attached to files, including registered mimetypes.")
-                .Resolver(g => g.Parent<IGameFileExtension>()
+                .Resolve(g => g.Parent<IGameFileExtension>()
                 .GetFileRecords())
                 .Type<ListType<FileRecordType>>();
             descriptor.Field("filesystem")
                 .Argument("directoryPath", a => a.Type<DirectoryPathType>())
                 .Type<ContextualDirectoryContentsType>()
-                .Resolver(context =>
+                .Resolve(context =>
                 {
                     if (context.ArgumentKind("directoryPath") == ValueKind.Null) return context.Parent<IGameFileExtension>().Root;
                     var path = context.Argument<UPath>("directoryPath");

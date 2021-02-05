@@ -27,7 +27,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Game
                     arg.Description("The GUID of a specific profile.")
                     .Type<UuidType>())
                 .Description("The save profiles associated with this game.")
-                .Resolver(ctx =>
+                .Resolve(ctx =>
                 {
                     var profileId = ctx.Argument<Guid>("profileId");
                     var saveType = ctx.Argument<string>("saveType");

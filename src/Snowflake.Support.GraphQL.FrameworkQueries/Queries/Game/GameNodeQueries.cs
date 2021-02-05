@@ -18,7 +18,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Game
             descriptor.Interface<NodeType>();
             descriptor.Field("id")
                 .Type<IdType>()
-                .Resolver(ctx => ctx.Parent<IGame>().Record.RecordID);
+                .Resolve(ctx => ctx.Parent<IGame>().Record.RecordID);
 
             descriptor.AsNode()
                 .NodeResolver<Guid>(async (ctx, id) => await ctx.SnowflakeService<IGameLibrary>().GetGameAsync(id));

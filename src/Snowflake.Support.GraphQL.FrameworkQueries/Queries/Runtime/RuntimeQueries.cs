@@ -19,15 +19,15 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Runtime
                 .Description("Provides access to Snowflake runtime details");
             descriptor.Field("plugins")
                 .Description("Currently loaded plugins.")
-                .Resolver(ctx => ctx.SnowflakeService<IPluginManager>())
+                .Resolve(ctx => ctx.SnowflakeService<IPluginManager>())
                 .Type<ListType<NonNullType<PluginType>>>();
             descriptor.Field("modules")
                 .Description("Currently enumerated modules. These may or may not have been loaded.")
-                .Resolver(ctx => ctx.SnowflakeService<IModuleEnumerator>().Modules)
+                .Resolve(ctx => ctx.SnowflakeService<IModuleEnumerator>().Modules)
                 .Type<NonNullType<ListType<NonNullType<ModuleType>>>>();
             descriptor.Field("os")
                 .Description("Gets the operating system currently running.")
-                .Resolver(ctx => RuntimeInformation.OSDescription)
+                .Resolve(ctx => RuntimeInformation.OSDescription)
                 .Type<NonNullType<StringType>>();
         }
     }

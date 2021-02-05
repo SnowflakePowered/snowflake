@@ -113,7 +113,7 @@ namespace Snowflake.Services
                     descriptor.Field(fieldName)
                     .Description(description)
                     .Type(new NamedTypeNode(typeName))
-                    .Resolver(GraphQLSchemaRegistrationProvider.Empty);
+                    .Resolve(GraphQLSchemaRegistrationProvider.Empty);
                 }));
             });
             return this;

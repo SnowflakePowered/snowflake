@@ -34,17 +34,17 @@ namespace Snowflake.Remoting.GraphQL.Model.Installation.Tasks
 
             descriptor.Field("description")
                 .Description("Describes this task result in a human-friendly way.")
-                .Resolver(async ctx => await (ctx.Parent<TaskResult<T>>().Description))
+                .Resolve(async ctx => await (ctx.Parent<TaskResult<T>>().Description))
                 .Type<StringType>();
             descriptor.Field(t => t.Name)
                 .Description("The name of this task result.")
                 .Type<StringType>();
             descriptor.Field("errored")
                 .Description("Whether or not this task has errored.")
-                .Resolver(ctx => ctx.Parent<TaskResult<T>>().Error != null)
+                .Resolve(ctx => ctx.Parent<TaskResult<T>>().Error != null)
                 .Type<NonNullType<BooleanType>>();
             descriptor.Field("value")
-                .Resolver(async ctx =>
+                .Resolve(async ctx =>
                 {
                     var taskResult = ctx.Parent<TaskResult<T>>();
                     // lol if err != nil

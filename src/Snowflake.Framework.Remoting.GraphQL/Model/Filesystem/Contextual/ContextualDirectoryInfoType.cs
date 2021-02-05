@@ -20,23 +20,23 @@ namespace Snowflake.Remoting.GraphQL.Model.Filesystem.Contextual
             descriptor.Field("lastModifiedTime")
                 .Description("The last modified time of the directory, in UTC.")
                 .Type<NonNullType<DateTimeType>>()
-                .Resolver(context => context.Parent<IReadOnlyDirectory>().UnsafeGetPath().LastWriteTimeUtc); // lgtm [cs/call-to-obsolete-method]
+                .Resolve(context => context.Parent<IReadOnlyDirectory>().UnsafeGetPath().LastWriteTimeUtc); // lgtm [cs/call-to-obsolete-method]
             descriptor.Field("createdTime")
                 .Description("The creation time of the directory, in UTC.")
                 .Type<NonNullType<DateTimeType>>()
-                .Resolver(context => context.Parent<IReadOnlyDirectory>().UnsafeGetPath().CreationTimeUtc); // lgtm [cs/call-to-obsolete-method]
+                .Resolve(context => context.Parent<IReadOnlyDirectory>().UnsafeGetPath().CreationTimeUtc); // lgtm [cs/call-to-obsolete-method]
             descriptor.Field("osPath")
                 .Description("The path of the file on the realized operating system.")
                 .Type<NonNullType<OSDirectoryPathType>>()
-                .Resolver(context => context.Parent<IReadOnlyDirectory>().UnsafeGetPath()); // lgtm [cs/call-to-obsolete-method]
+                .Resolve(context => context.Parent<IReadOnlyDirectory>().UnsafeGetPath()); // lgtm [cs/call-to-obsolete-method]
             descriptor.Field("path")
                 .Description("The path of this directory relative to the context of the virtualized filesystem.")
                 .Type<NonNullType<DirectoryPathType>>()
-                .Resolver(context => (UPath)context.Parent<IReadOnlyDirectory>().RootedPath);
+                .Resolve(context => (UPath)context.Parent<IReadOnlyDirectory>().RootedPath);
             descriptor.Field("name")
                   .Description("The name of the directory.")
                   .Type<NonNullType<StringType>>()
-                  .Resolver(context => context.Parent<IReadOnlyDirectory>().Name);
+                  .Resolve(context => context.Parent<IReadOnlyDirectory>().Name);
         }
 #pragma warning restore CS0618 // Type or member is obsolete
     }

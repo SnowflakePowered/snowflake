@@ -24,7 +24,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Installables
                 .Type<NonNullType<ListType<NonNullType<InstallableType>>>>()
                 .Argument("platformId", arg => arg.Type<NonNullType<PlatformIdType>>()
                     .Description("The platform to look up installables for."))
-                .Resolver(ctx =>
+                .Resolve(ctx =>
                 {
                     var installers = ctx.SnowflakeService<IPluginManager>().GetCollection<IGameInstaller>();
                     var platform = ctx.Argument<PlatformId>("platformId");

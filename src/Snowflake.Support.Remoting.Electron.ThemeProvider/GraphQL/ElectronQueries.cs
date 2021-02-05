@@ -15,7 +15,7 @@ namespace Snowflake.Support.Remoting.Electron.ThemeProvider.GraphQL
             descriptor.ExtendQuery();
             descriptor.Field("electronPackages")
                 .Description("All loaded Electron ASAR theme packages.")
-                .Resolver(ctx => ctx.SnowflakeService<IElectronPackageProvider>().Interfaces)
+                .Resolve(ctx => ctx.SnowflakeService<IElectronPackageProvider>().Interfaces)
                 .Type<NonNullType<ListType<NonNullType<ElectronPackageType>>>>();
         }
     }

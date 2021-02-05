@@ -21,10 +21,11 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Devices
             descriptor.Interface<NodeType>();
             descriptor.Field("id")
                 .Type<IdType>()
-                .Resolver(ctx => ctx.Parent<IInputDevice>().InstanceGuid);
+                .Resolve(ctx => ctx.Parent<IInputDevice>().InstanceGuid);
 
-            descriptor.AsNode()
-                .NodeResolver<Guid>((ctx, id) => 
+            descriptor.ImplementsNode()
+                
+                .ResolveNode<Guid>((ctx, id) => 
                     Task.FromResult(
                         ctx.SnowflakeService<IDeviceEnumerator>().QueryConnectedDevices().FirstOrDefault(i => i.InstanceGuid == id)));
         }

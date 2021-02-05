@@ -22,7 +22,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Extensibility
                 .Description("Provides filesystem access the plugin's common resource directory.")
                 .Argument("directoryPath", a => a.Type<DirectoryPathType>())
                 .Type<ContextualDirectoryContentsType>()
-                .Resolver(context =>
+                .Resolve(context =>
                 {
                     var provision = context.Parent<IProvisionedPlugin>();
                     if (provision.Provision is StandalonePluginProvision) return null;
@@ -35,7 +35,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Extensibility
                .Description("Provides filesystem access the plugin's resource directory.")
                .Argument("directoryPath", a => a.Type<DirectoryPathType>())
                .Type<ContextualDirectoryContentsType>()
-               .Resolver(context =>
+               .Resolve(context =>
                {
                    var provision = context.Parent<IProvisionedPlugin>();
                    if (provision.Provision is StandalonePluginProvision) return null;
@@ -48,7 +48,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Extensibility
                .Description("Provides filesystem access the plugin's data directory.")
                .Argument("directoryPath", a => a.Type<DirectoryPathType>())
                .Type<ContextualDirectoryContentsType>()
-               .Resolver(context =>
+               .Resolve(context =>
                {
                    var provision = context.Parent<IProvisionedPlugin>();
                    if (provision.Provision is StandalonePluginProvision) return null;
@@ -61,7 +61,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Extensibility
             descriptor.Field("configuration")
               .Description("Provides access to the plugin configuration section.")
               .Type<ConfigurationSectionType>()
-              .Resolver(context =>
+              .Resolve(context =>
               {
                   var provision = context.Parent<IProvisionedPlugin>();
                   return provision.GetPluginConfiguration();

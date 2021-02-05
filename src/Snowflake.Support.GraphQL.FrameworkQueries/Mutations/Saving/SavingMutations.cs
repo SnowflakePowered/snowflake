@@ -23,7 +23,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Saving
                 .UseClientMutationId()
                 .UseAutoSubscription()
                 .Argument("input", arg => arg.Type<CreateSaveProfileInputType>())
-                .Resolver(async ctx =>
+                .Resolve(async ctx =>
                 {
                     var gameLibrary = ctx.SnowflakeService<IGameLibrary>();
                     var input = ctx.Argument<CreateSaveProfileInput>("input");
@@ -48,7 +48,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Saving
                 .UseClientMutationId()
                 .UseAutoSubscription()
                 .Argument("input", arg => arg.Type<DeleteSaveProfileInputType>())
-                .Resolver(async ctx =>
+                .Resolve(async ctx =>
                 {
                     var gameLibrary = ctx.SnowflakeService<IGameLibrary>();
                     var input = ctx.Argument<DeleteSaveProfileInput>("input");

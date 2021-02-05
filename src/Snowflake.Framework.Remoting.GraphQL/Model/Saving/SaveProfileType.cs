@@ -26,13 +26,13 @@ namespace Snowflake.Remoting.GraphQL.Model.Saving
                 .Type<NonNullType<StringType>>();
             descriptor.Field("head")
                 .Description("The 'head' save, or the latest save in the profile. If the profile is empty, this is null.")
-                .Resolver(ctx => ctx.Parent<ISaveProfile>().GetHeadSave())
+                .Resolve(ctx => ctx.Parent<ISaveProfile>().GetHeadSave())
                 .Type<SaveGameType>();
             descriptor.Field("history")
                 .Description("All saves in the profile history. " +
                 "If not using a DIFF or COPY strategy, this will consist only of the head save. " +
                 "If this profile is empty, consists of an empty array.")
-                .Resolver(ctx => ctx.Parent<ISaveProfile>().GetHistory())
+                .Resolve(ctx => ctx.Parent<ISaveProfile>().GetHistory())
                 .Type<NonNullType<ListType<NonNullType<SaveGameType>>>>();
         }
     }

@@ -23,7 +23,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Scraping
                 "If the seed does not exist, returns the empty array. " +
                 "If no seed is given, returns the descendants of the root.")
                 .Argument("seedId", arg => arg.Type<UuidType>())
-                .Resolver(ctx =>
+                .Resolve(ctx =>
                 {
                     var seedRootContext = ctx.Parent<ISeedRootContext>();
                     Guid seedGuid = ctx.Argument<Guid>("seedId");
@@ -37,7 +37,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Scraping
             descriptor.Field("siblings")
                 .Description("The unculled siblings of a given seed. If the seed does not exist, returns the empty array.")
                 .Argument("seedId", arg => arg.Type<UuidType>())
-                .Resolver(ctx =>
+                .Resolve(ctx =>
                 {
                     var seedRootContext = ctx.Parent<ISeedRootContext>();
                     Guid seedGuid = ctx.Argument<Guid>("seedId");
@@ -51,7 +51,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Scraping
             descriptor.Field("children")
                 .Description("The direct children of a given seed. If the seed does not exist, returns an empty array.")
                 .Argument("seedId", arg => arg.Type<UuidType>())
-                .Resolver(ctx =>
+                .Resolve(ctx =>
                 {
                     var seedRootContext = ctx.Parent<ISeedRootContext>();
                     Guid seedGuid = ctx.Argument<Guid>("seedId");
@@ -64,7 +64,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Scraping
 
             descriptor.Field("allSeeds")
                 .Description("All seeds, whether culled or unculled in the tree.")
-                .Resolver(ctx =>
+                .Resolve(ctx =>
                 {
                     var seedRootContext = ctx.Parent<ISeedRootContext>();
                     return seedRootContext.GetAll();

@@ -30,7 +30,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
                 .WithClientMutationId();
             descriptor.Field("jobContextField")
                 .Description("The subfield of the `job` Query that this job can be accessed from.")
-                .Resolver("installation");
+                .Resolve("installation");
 
             descriptor.Field(c => c.JobID)
                 .Name("jobId")
@@ -43,7 +43,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
 
             descriptor.Field("orchestrator")
                 .Description("The orchestrator that is validating this game.")
-                .Resolver(ctx =>
+                .Resolve(ctx =>
                 {
                     var input = ctx.Parent<CreateValidationPayload>();
                     return (input.Game, input.Orchestrator);

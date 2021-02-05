@@ -19,7 +19,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Device.Mapped
             descriptor.Field("mappings")
                 .Description("The set of mappings that map each element on the unspecified layout to a capability on the real device.")
                 .Type<NonNullType<ListType<NonNullType<ControllerElementMappingType>>>>()
-                .Resolver(ctx => ctx.Parent<IDeviceLayoutMapping>());
+                .Resolve(ctx => ctx.Parent<IDeviceLayoutMapping>());
         }
     }
 }

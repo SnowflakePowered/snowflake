@@ -22,7 +22,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Ports
                 .UseClientMutationId()
                 .Description("Updates a virtual port device.")
                 .Argument("input", arg => arg.Type<NonNullType<UpdatePortDeviceInputType>>())
-                .Resolver(ctx =>
+                .Resolve(ctx =>
                 {
                     var input = ctx.Argument<UpdatePortDeviceInput>("input");
                     var orchestrator = ctx.SnowflakeService<IPluginManager>().GetCollection<IEmulatorOrchestrator>()[input.Orchestrator];
@@ -45,7 +45,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Ports
                 .UseClientMutationId()
                 .Description("Unsets the specified port device.")
                 .Argument("input", arg => arg.Type<NonNullType<ClearPortDeviceInputType>>())
-                .Resolver(ctx =>
+                .Resolve(ctx =>
                 {
                     var input = ctx.Argument<ClearPortDeviceInput>("input");
                     var orchestrator = ctx.SnowflakeService<IPluginManager>().GetCollection<IEmulatorOrchestrator>()[input.Orchestrator];

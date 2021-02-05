@@ -45,7 +45,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Configuration
                 .Type<NonNullType<UuidType>>();
             descriptor.Field("valueIds")
                 .Description("The GUIDs of the configuration values that were modified.")
-                .Resolver(ctx => ctx.Parent<IGrouping<Guid, Guid>>().AsEnumerable())
+                .Resolve(ctx => ctx.Parent<IGrouping<Guid, Guid>>().AsEnumerable())
                 .Type<NonNullType<ListType<NonNullType<UuidType>>>>();
         }
     }

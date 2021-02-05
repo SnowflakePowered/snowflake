@@ -16,7 +16,7 @@ namespace Snowflake.Support.GraphQL.Server
                 .Description("Dummy type to enable Relay support with only default types. Do not use this type.")
                 .Field("id")
                 .Deprecated("Do not use this type.")
-                .Resolver("__dummy")
+                .Resolve("__dummy")
                 .Type<IdType>();
             descriptor.AsNode()
                 .NodeResolver<string>((ctx, id) => Task.FromResult(new object()));

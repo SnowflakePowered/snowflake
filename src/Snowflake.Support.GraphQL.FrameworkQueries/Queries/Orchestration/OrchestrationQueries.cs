@@ -19,7 +19,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Queries.Orchestration
                 .Description("Provides access to information about currently queued game emulation instances. Returns null if the instance does not exist.")
                 .Argument("instanceId", arg => arg.Type<NonNullType<UuidType>>()
                     .Description("The `instanceId` of the game emulation instance that is used to query the game emulation state."))
-                .Resolver(ctx =>
+                .Resolve(ctx =>
                 {
                     var guid = ctx.Argument<Guid>("instanceId");
                     ctx.GetGameCache().TryGetValue(guid, out var gameEmulation);
