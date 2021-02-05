@@ -41,7 +41,7 @@ namespace Snowflake.Persistence
         /// <typeparam name="T">The return type of the object</typeparam>
         /// <param name="queryFunction">The query function that returns the object</param>
         /// <returns></returns>
-        T Query<T>(Func<IDbConnection, T> queryFunction);
+        T? Query<T>(Func<IDbConnection, T> queryFunction);
 
         /// <summary>
         /// Executes a string query that returns an enumerable of matching objects.
@@ -59,7 +59,7 @@ namespace Snowflake.Persistence
         /// <param name="query">The parameterized string query.</param>
         /// <param name="param">The object containing the parameters</param>
         /// <returns>The first object given the string query, or null if no matching objects found.</returns>
-        T QueryFirstOrDefault<T>(string query, object? param = null);
+        T? QueryFirstOrDefault<T>(string query, object? param = null);
 
         /// <summary>
         /// Gets a connection to the database

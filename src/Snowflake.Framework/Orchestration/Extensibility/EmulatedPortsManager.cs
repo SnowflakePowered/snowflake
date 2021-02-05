@@ -35,6 +35,7 @@ namespace Snowflake.Orchestration.Extensibility
             var device = this.Devices.GetPortDevice(portEntry);
             if (device == null) return null;
             var instance = device.Instances.FirstOrDefault(i => i.Driver == portEntry.Driver);
+            if (instance == null) return null;
             var profile = this.Mappings.GetMappings(portEntry.ProfileGuid);
             if (profile == null) return null;
             if (!this.StoneProvider.Controllers.TryGetValue(portEntry.ControllerID, out var targetLayout)) 

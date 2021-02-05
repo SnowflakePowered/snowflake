@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Linq;
 using Dapper;
 using Microsoft.Data.Sqlite;
 
@@ -44,12 +45,15 @@ namespace Snowflake.Persistence
         /// <typeparam name="T">The type the query will return</typeparam>
         /// <param name="queryFunction">A function to query the database using the opened connection</param>
         /// <returns>The requested data.</returns>
-        public T Query<T>(Func<IDbConnection, T> queryFunction)
+        public T? Query<T>(Func<IDbConnection, T> queryFunction)
         {
             T record;
             using (var dbTransaction = this.GetConnection().BeginTransaction())
             using (var dbConnection = dbTransaction.Connection)
             {
+                if (dbConnection == null)
+                    return default;
+
                 dbConnection.Open();
                 record = queryFunction(dbConnection);
                 dbTransaction.Commit();
@@ -71,6 +75,8 @@ namespace Snowflake.Persistence
         {
             using var dbTransaction = this.GetConnection().BeginTransaction();
             using var dbConnection = dbTransaction.Connection;
+            if (dbConnection == null)
+                return;
             dbConnection.Open();
             queryFunction(dbConnection);
             dbTransaction.Commit();
@@ -90,7 +96,7 @@ namespace Snowflake.Persistence
         /// <returns>The requested data.</returns>
         public IEnumerable<T> Query<T>(string query, object? param = null)
         {
-            return this.Query(dbConnection => dbConnection.Query<T>(query, param));
+            return this.Query(dbConnection => dbConnection.Query<T>(query, param)) ?? Enumerable.Empty<T>();
         }
 
         /// <summary>
@@ -112,7 +118,7 @@ namespace Snowflake.Persistence
         /// <param name="query">The SQL query to execute</param>
         /// <param name="param">The query parameters</param>
         /// <returns>The requested data, or null if not present.</returns>
-        public T QueryFirstOrDefault<T>(string query, object? param = null)
+        public T? QueryFirstOrDefault<T>(string query, object? param = null)
         {
             return this.Query(dbConnection => dbConnection.QueryFirstOrDefault<T>(query, param));
         }

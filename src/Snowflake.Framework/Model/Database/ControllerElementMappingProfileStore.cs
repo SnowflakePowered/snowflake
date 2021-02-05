@@ -62,6 +62,9 @@ namespace Snowflake.Model.Database
                 .Include(p => p.MappedElements)
                 .SingleOrDefault(p => p.ProfileID == mappings.ProfileGuid);
 
+            if (retrievedMappings == null)
+                return;
+
             var mappingSet = mappings.Select(k => k.LayoutElement).ToHashSet();
             foreach (var mapping in retrievedMappings.MappedElements)
             {
