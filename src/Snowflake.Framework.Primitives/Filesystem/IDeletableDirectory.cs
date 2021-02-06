@@ -19,6 +19,7 @@ namespace Snowflake.Filesystem
           IMutableDirectoryBase<IDeletableDirectory>,
           IMutableDirectoryBase<IDeletableDirectory, IDirectory>,
           IMutableDirectoryBase<IDeletableDirectory, IReadOnlyDirectory>,
+          IMutableDirectoryBase<IDeletableDirectory, IDisposableDirectory>,
           IMutableDirectoryBase<IDeletableDirectory, IDeletableMoveFromableDirectory>
     {
         /// <summary>
