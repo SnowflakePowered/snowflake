@@ -279,6 +279,7 @@ namespace Snowflake.Filesystem.Tests
             var nested = dir.OpenDirectory("nested");
             var nested2 = nested.OpenDirectory("nested2");
             nested.Delete();
+            
             Assert.Throws<InvalidOperationException>(() => nested.EnumerateFiles());
             Assert.Throws<InvalidOperationException>(() => nested2.EnumerateFiles());
         }

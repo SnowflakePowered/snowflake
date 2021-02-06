@@ -12,7 +12,8 @@ using System.Text;
 
 namespace Snowflake.Filesystem
 {
-    internal sealed class Directory : IDeletableDirectory, IReadOnlyDirectory, IDirectory, IMoveFromableDirectory
+    internal sealed class Directory : IDeletableDirectory, 
+            IReadOnlyDirectory, IDirectory, IMoveFromableDirectory, IDeletableMoveFromableDirectory
     {
         internal static ConcurrentDictionary<string, object> DatabaseLocks = new ConcurrentDictionary<string, object>();
 
@@ -423,9 +424,17 @@ namespace Snowflake.Filesystem
             return this.OpenFile(fileName, true);
         }
 
-        public IDirectory AsIndelible() => this;
+        IReadOnlyDirectory IMutableDirectoryBase<IDeletableDirectory, IReadOnlyDirectory>.ReopenAs()
+            => this;
 
-        public IMoveFromableDirectory AsMoveFromable() => this;
+        IMoveFromableDirectory IMutableDirectoryBase<IDeletableDirectory, IMoveFromableDirectory>.ReopenAs()
+            => this;
+
+        IDirectory IMutableDirectoryBase<IDeletableDirectory, IDirectory>.ReopenAs()
+            => this;
+
+        IDeletableMoveFromableDirectory IMutableDirectoryBase<IDeletableDirectory, IDeletableMoveFromableDirectory>.ReopenAs()
+            => this;
     }
 }
 
