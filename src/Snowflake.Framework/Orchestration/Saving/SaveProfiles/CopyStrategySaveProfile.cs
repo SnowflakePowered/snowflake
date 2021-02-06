@@ -13,7 +13,7 @@ namespace Snowflake.Orchestration.Saving.SaveProfiles
         private static readonly string DateFormat = "yyyy-MM-dd.HH-mm-ss";
 
         public CopyStrategySaveProfile(Guid profileGuid, 
-            string saveType, string profileName, IIndelibleDirectory profileRoot) 
+            string saveType, string profileName, IDirectory profileRoot) 
             : base(profileGuid, saveType, profileName, profileRoot)
         {
             var saveManifest = this.ProfileRoot.OpenFile("profile");
@@ -25,7 +25,7 @@ namespace Snowflake.Orchestration.Saving.SaveProfiles
 
         public override SaveManagementStrategy ManagementStrategy => SaveManagementStrategy.Copy;
 
-        public async override Task<ISaveGame> CreateSave(IIndelibleDirectory saveContents)
+        public async override Task<ISaveGame> CreateSave(IDirectory saveContents)
         {
             // todo decide on some way to organize these saves.
             var newGuid = Guid.NewGuid();
@@ -52,7 +52,7 @@ namespace Snowflake.Orchestration.Saving.SaveProfiles
             return this.GetSave(saveDirectory)!;
         }
 
-        private ISaveGame? GetSave(IDirectory internalSaveDir)
+        private ISaveGame? GetSave(IDeletableDirectory internalSaveDir)
         {
             string name = internalSaveDir.Name;
             if (!DateTimeOffset.TryParseExact(name[0..DateFormat.Length], DateFormat, CultureInfo.InvariantCulture,

@@ -53,7 +53,7 @@ namespace Snowflake.Filesystem.Tests
 
             var link = dir.LinkFrom(new FileInfo(tempFile));
 
-            var newLink = dir.OpenDirectory("new").MoveFrom(link);
+            var newLink = dir.OpenDirectory("new").AsMoveFromable().MoveFrom(link);
 
             using (var str = newLink.OpenReadStream())
             {

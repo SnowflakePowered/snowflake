@@ -13,7 +13,7 @@ namespace Snowflake.Filesystem
         {
             this.RawInfo = file;
             this.FileSystemPath = new Lazy<FileInfo>(this.GetFileInfo);
-            this._ParentDirectory = parentDirectory;
+            this.ParentDirectory = parentDirectory;
             this.FileGuid = guid;
         }
 
@@ -26,8 +26,7 @@ namespace Snowflake.Filesystem
 
         public long Length => this.Created ? this.FileSystemPath.Value.Length : -1;
 
-        internal Directory _ParentDirectory { get; }
-        public IDirectory ParentDirectory => _ParentDirectory;
+        internal Directory ParentDirectory { get; }
 
         public bool Created => this.FileSystemPath.Value.Exists;
 
@@ -46,9 +45,9 @@ namespace Snowflake.Filesystem
         public void Rename(string newName)
         {
             this.RawInfo.MoveTo(this.RawInfo.Parent!.Path / Path.GetFileName(newName));
-            this._ParentDirectory.RemoveManifestRecord(this.Name);
+            this.ParentDirectory.RemoveManifestRecord(this.Name);
             this.RawInfo = new FileEntry(this.RawInfo.FileSystem, this.RawInfo.Parent.Path / Path.GetFileName(newName));
-            this._ParentDirectory.AddManifestRecord(this.Name, this.FileGuid, true);
+            this.ParentDirectory.AddManifestRecord(this.Name, this.FileGuid, true);
         }
 
         public void Delete()
@@ -58,7 +57,7 @@ namespace Snowflake.Filesystem
                 this.RawInfo.Delete();
             }
 
-            this._ParentDirectory.RemoveManifestRecord(this.Name);
+            this.ParentDirectory.RemoveManifestRecord(this.Name);
         }
 
         public FileInfo UnsafeGetFilePath() => this.FileSystemPath.Value;
@@ -80,14 +79,14 @@ namespace Snowflake.Filesystem
 
         public string RootedPath => this.RawInfo.Path.ToString();
 
-        IReadOnlyDirectory IReadOnlyFile.ParentDirectory => this._ParentDirectory;
+        IReadOnlyDirectory IReadOnlyFile.ParentDirectory => this.ParentDirectory;
 
         /// <summary>
         /// Open the <see cref="Link"/> as a <see cref="File"/>, exposing
         /// the link source file.
         /// </summary>
         /// <returns>A <see cref="File"/> where the link file is readable.</returns>
-        internal File UnsafeOpenAsFile() => new File(this._ParentDirectory, this.RawInfo, this.FileGuid);
+        internal File UnsafeOpenAsFile() => new File(this.ParentDirectory, this.RawInfo, this.FileGuid);
 
         public bool IsLink => true;
     }

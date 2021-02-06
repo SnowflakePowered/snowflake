@@ -91,7 +91,7 @@ namespace Snowflake.Filesystem
         IReadOnlyFile OpenFile(string file, bool createIfNotExists);
 
         /// <summary>
-        /// Enumerates all direct child directories of this <see cref="IDirectory"/>.
+        /// Enumerates all direct child directories of this <see cref="IDeletableDirectory"/>.
         /// </summary>
         /// <returns>All direct children directories.</returns>
         IEnumerable<IReadOnlyDirectory> EnumerateDirectories();

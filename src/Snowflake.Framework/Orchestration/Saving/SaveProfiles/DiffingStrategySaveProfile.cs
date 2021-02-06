@@ -28,13 +28,13 @@ namespace Snowflake.Orchestration.Saving.SaveProfiles
 
         public override SaveManagementStrategy ManagementStrategy => SaveManagementStrategy.Diff;
 
-        private async Task CreateBaseSave(IIndelibleDirectory saveContents)
+        private async Task CreateBaseSave(IDirectory saveContents)
         {
             var contentDirectory = this.ProfileRoot.OpenDirectory("base/content");
             await foreach (var _ in contentDirectory.CopyFromDirectory(saveContents)) { };
         }
 
-        public async override Task<ISaveGame> CreateSave(IIndelibleDirectory saveContents)
+        public async override Task<ISaveGame> CreateSave(IDirectory saveContents)
         {
             if (!this.ProfileRoot.ContainsDirectory("base")) await this.CreateBaseSave(saveContents);
             using var rollingHash = new RollingHash(32);
@@ -82,8 +82,8 @@ namespace Snowflake.Orchestration.Saving.SaveProfiles
                               where baseDir.ContainsDirectory(targetDir.Name)
                               select (diffDir, baseDir.OpenDirectory(targetDir.Name), targetDir)).ToList();
 
-            Queue<(IDirectory parentDir, IReadOnlyDirectory baseDir, IDirectory targetDir)> dirsToProcess =
-                new Queue<(IDirectory, IReadOnlyDirectory, IDirectory)>(queuedDirs);
+            Queue<(IDeletableDirectory parentDir, IReadOnlyDirectory baseDir, IDeletableDirectory targetDir)> dirsToProcess =
+                new Queue<(IDeletableDirectory, IReadOnlyDirectory, IDeletableDirectory)>(queuedDirs);
 
             while (dirsToProcess.Count > 0)
             {
@@ -129,7 +129,7 @@ namespace Snowflake.Orchestration.Saving.SaveProfiles
             return created;
         }
 
-        private ISaveGame? GetSave(IIndelibleDirectory internalSaveDir)
+        private ISaveGame? GetSave(IDirectory internalSaveDir)
         {
             string name = internalSaveDir.Name;
             if (!DateTimeOffset.TryParseExact(name[0..DateFormat.Length], DateFormat, CultureInfo.InvariantCulture,

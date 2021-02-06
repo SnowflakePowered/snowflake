@@ -321,7 +321,7 @@
             </pre>
             </summary>
             <param name="pathResolutionContext">
-            A list of tuples of strings and <see cref="T:Snowflake.Filesystem.IDirectory"/> that specify each
+            A list of tuples of strings and <see cref="T:Snowflake.Filesystem.IReadOnlyDirectory"/> that specify each
             namespaced path.
             </param>
         </member>
@@ -605,7 +605,7 @@
         <member name="M:Snowflake.Extensibility.Provisioning.ProvisionedPlugin.Dispose">
             <inheritdoc/>
         </member>
-        <member name="M:Snowflake.Filesystem.DirectoryExtensions.CopyFromDirectory(Snowflake.Filesystem.IIndelibleDirectory,Snowflake.Filesystem.IIndelibleDirectory)">
+        <member name="M:Snowflake.Filesystem.DirectoryExtensions.CopyFromDirectory(Snowflake.Filesystem.IDirectory,Snowflake.Filesystem.IDirectory)">
             <summary>
             Copies all the files and directories from the source directory recursively into this directory.
             </summary>
@@ -614,7 +614,7 @@
             <param name="overwrite"></param>
             <returns>An enumerable of copied files.</returns>
         </member>
-        <member name="M:Snowflake.Filesystem.DirectoryExtensions.CopyFromDirectory(Snowflake.Filesystem.IIndelibleDirectory,Snowflake.Filesystem.IIndelibleDirectory,System.Boolean)">
+        <member name="M:Snowflake.Filesystem.DirectoryExtensions.CopyFromDirectory(Snowflake.Filesystem.IDirectory,Snowflake.Filesystem.IDirectory,System.Boolean)">
             <summary>
             Copies all the files and directories from the source directory recursively into this directory.
             </summary>
@@ -1139,7 +1139,7 @@
             Copies a file into an <see cref="T:Snowflake.Filesystem.IDirectory"/>
             </summary>
         </member>
-        <member name="M:Snowflake.Installation.Tasks.CopyFileTask.#ctor(Snowflake.Installation.TaskResult{System.IO.FileInfo},Snowflake.Filesystem.IIndelibleDirectory)">
+        <member name="M:Snowflake.Installation.Tasks.CopyFileTask.#ctor(Snowflake.Installation.TaskResult{System.IO.FileInfo},Snowflake.Filesystem.IDirectory)">
             <summary>
             Describe a file copy with the given source file and the target directory.
             The resultant file will have the same file name as the source.

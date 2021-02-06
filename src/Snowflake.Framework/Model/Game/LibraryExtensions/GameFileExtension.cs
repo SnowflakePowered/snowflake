@@ -22,24 +22,24 @@ namespace Snowflake.Model.Game.LibraryExtensions
             this.MiscRoot = this._Root.OpenDirectory("misc");
         }
 
-        private IIndelibleDirectory _Root { get; }
+        private IDirectory _Root { get; }
 
         public IReadOnlyDirectory Root => this._Root.AsReadOnly();
         private FileRecordLibrary FileRecordLibrary { get; }
 
-        public IIndelibleDirectory SavesRoot { get; }
+        public IDirectory SavesRoot { get; }
 
-        public IIndelibleDirectory ProgramRoot { get; }
+        public IDirectory ProgramRoot { get; }
 
-        public IIndelibleDirectory MediaRoot { get; }
+        public IDirectory MediaRoot { get; }
 
-        public IIndelibleDirectory MiscRoot { get; }
+        public IDirectory MiscRoot { get; }
 
-        public IIndelibleDirectory ResourceRoot { get; }
+        public IDirectory ResourceRoot { get; }
 
-        public IIndelibleDirectory RuntimeRoot { get; }
+        public IDirectory RuntimeRoot { get; }
 
-        public IDirectory GetRuntimeLocation()
+        public IDeletableDirectory GetRuntimeLocation()
         {
             return this.RuntimeRoot.OpenDirectory(Guid.NewGuid().ToString());
         }

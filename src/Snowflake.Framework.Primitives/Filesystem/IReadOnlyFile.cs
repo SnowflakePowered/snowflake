@@ -6,7 +6,7 @@ using System.Text;
 namespace Snowflake.Filesystem
 {
     /// <summary>
-    /// Represents a read only view over a file contained within an <see cref="IDirectory"/> that could have
+    /// Represents a read only view over a file contained within an <see cref="IDeletableDirectory"/> that could have
     /// metadata potentially attached to it by a unique <see cref="Guid"/> that tracks the file
     /// within the file system, as long as the <see cref="Snowflake.Filesystem"/> API methods
     /// are used.
@@ -26,7 +26,7 @@ namespace Snowflake.Filesystem
         long Length { get; }
 
         /// <summary>
-        /// The <see cref="IDirectory"/> under which this file is located.
+        /// The <see cref="IDeletableDirectory"/> under which this file is located.
         /// </summary>
         IReadOnlyDirectory ParentDirectory { get; }
 
@@ -45,7 +45,7 @@ namespace Snowflake.Filesystem
         /// <summary>
         /// Whether or not this file has been created or currently exists.
         /// 
-        /// Keep in mind that <see cref="IDirectory.OpenFile(string)"/> does not actually
+        /// Keep in mind that <see cref="IDeletableDirectory.OpenFile(string)"/> does not actually
         /// create a file on the file system.
         /// </summary>
         bool Created { get; }
@@ -66,7 +66,7 @@ namespace Snowflake.Filesystem
         /// This method is obsolete because it is unsafe to use,
         /// without going through the interface methods of 
         /// <see cref="IFile"/>, there is no guarantee that the parent
-        /// <see cref="IDirectory"/> instance will remain consistent.
+        /// <see cref="IDeletableDirectory"/> instance will remain consistent.
         /// 
         /// However, access to the underlying filesystem is necessary
         /// for the API to be remotely useful at the barrier.

@@ -35,7 +35,7 @@ namespace Snowflake.Tests
             }
         }
 
-        internal static IDirectory GetTemporaryDirectory()
+        internal static IDeletableDirectory GetTemporaryDirectory()
         {
             var fs = new PhysicalFileSystem();
             var temp = Path.GetTempPath();
@@ -43,7 +43,7 @@ namespace Snowflake.Tests
             return new Filesystem.Directory($"snowflake-test-{Guid.NewGuid()}", pfs, pfs.GetDirectoryEntry("/"));
         }
 
-        internal static IDirectory GetTemporaryDirectory(string tag)
+        internal static IDeletableDirectory GetTemporaryDirectory(string tag)
         {
             var fs = new PhysicalFileSystem();
             var temp = Path.GetTempPath();

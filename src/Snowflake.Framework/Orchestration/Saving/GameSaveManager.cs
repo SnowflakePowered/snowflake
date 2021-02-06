@@ -10,12 +10,12 @@ namespace Snowflake.Orchestration.Saving
 {
     internal class GameSaveManager : IGameSaveManager
     {
-        public GameSaveManager(IIndelibleDirectory saveRoot)
+        public GameSaveManager(IDirectory saveRoot)
         {
             this.SaveRoot = saveRoot;
         }
 
-        public IIndelibleDirectory SaveRoot { get; }
+        public IDirectory SaveRoot { get; }
 
         public ISaveProfile CreateProfile(string profileName, string saveType, SaveManagementStrategy managementStrategy)
         {

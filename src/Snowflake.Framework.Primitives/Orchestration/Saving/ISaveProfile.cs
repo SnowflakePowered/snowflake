@@ -51,14 +51,14 @@ namespace Snowflake.Orchestration.Saving
         /// </para>
         /// </param>
         /// <returns>A new <see cref="ISaveGame"/> instance.</returns>
-        Task<ISaveGame> CreateSave(IIndelibleDirectory saveContents);
+        Task<ISaveGame> CreateSave(IDirectory saveContents);
 
         /// <summary>
         /// Creates a new immutable save game from an existing savegame. This function should be atomic, and if creating the save fails
         /// should not add a save. The new savegame becomes the "head" save.
         /// </summary>
         /// <param name="saveGame">The savegame to create a new save from. The save must be of the same type, 
-        /// as this method works by calling <see cref="ISaveGame.ExtractSave(IIndelibleDirectory)"./></param>
+        /// as this method works by calling <see cref="ISaveGame.ExtractSave(IDirectory)"./></param>
         Task<ISaveGame> CreateSave(ISaveGame saveGame);
 
         /// <summary>

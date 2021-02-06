@@ -12,7 +12,7 @@ using System.Text;
 
 namespace Snowflake.Filesystem
 {
-    internal sealed class Directory : IDirectory, IReadOnlyDirectory
+    internal sealed class Directory : IDeletableDirectory, IReadOnlyDirectory, IDirectory, IMoveFromableDirectory
     {
         internal static ConcurrentDictionary<string, object> DatabaseLocks = new ConcurrentDictionary<string, object>();
 
@@ -180,7 +180,7 @@ namespace Snowflake.Filesystem
             return this.RootFileSystem.FileExists(this.ThisDirectory.Path / file) || this.RootFileSystem.DirectoryExists(this.ThisDirectory.Path / file);
         }
 
-        public IDirectory OpenDirectory(string name)
+        public IDeletableDirectory OpenDirectory(string name)
         {
             this.CheckDeleted();
             var directoryStrings = ((UPath)name).Split();
@@ -193,7 +193,7 @@ namespace Snowflake.Filesystem
             return currentDirectory;
         }
 
-        public IEnumerable<IDirectory> EnumerateDirectories()
+        public IEnumerable<IDeletableDirectory> EnumerateDirectories()
         {
             this.CheckDeleted();
             return this.ThisDirectory.EnumerateDirectories()
@@ -325,7 +325,7 @@ namespace Snowflake.Filesystem
 
             // BFS over all the children.
 
-            Queue<IDirectory> dirsToProcess = new Queue<IDirectory>(queuedDirs);
+            Queue<IDeletableDirectory> dirsToProcess = new Queue<IDeletableDirectory>(queuedDirs);
 
             while (dirsToProcess.Count > 0)
             {
@@ -423,7 +423,9 @@ namespace Snowflake.Filesystem
             return this.OpenFile(fileName, true);
         }
 
-        public IIndelibleDirectory AsIndelible() => this;
+        public IDirectory AsIndelible() => this;
+
+        public IMoveFromableDirectory AsMoveFromable() => this;
     }
 }
 

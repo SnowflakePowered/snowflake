@@ -22,6 +22,6 @@ namespace Snowflake.Orchestration.Saving
             this.SaveType = saveType;
         }
 
-        public abstract Task ExtractSave(IIndelibleDirectory outputDirectory);
+        public abstract Task ExtractSave(IDirectory outputDirectory);
     }
 }
