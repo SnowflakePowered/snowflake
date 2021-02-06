@@ -48,7 +48,7 @@ namespace Snowflake.Model.Database
             return null;
         }
 
-        public IEnumerable<IFileRecord> GetFileRecords(IIndelibleDirectory directoryRoot)
+        public IEnumerable<IFileRecord> GetFileRecords(IDirectory directoryRoot)
         {
             using var context = new DatabaseContext(this.Options.Options);
             var files = directoryRoot.EnumerateFilesRecursive().ToList();

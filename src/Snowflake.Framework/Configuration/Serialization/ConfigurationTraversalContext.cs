@@ -29,7 +29,7 @@ namespace Snowflake.Configuration.Serialization
         /// </pre>
         /// </summary>
         /// <param name="pathResolutionContext">
-        /// A list of tuples of strings and <see cref="IDirectory"/> that specify each
+        /// A list of tuples of strings and <see cref="IReadOnlyDirectory"/> that specify each
         /// namespaced path.
         /// </param>
         public ConfigurationTraversalContext(params (string directoryNamespace, IReadOnlyDirectory directory)[] pathResolutionContext)

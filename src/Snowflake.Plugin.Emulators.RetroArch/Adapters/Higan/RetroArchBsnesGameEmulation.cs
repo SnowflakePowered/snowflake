@@ -41,7 +41,7 @@ namespace Snowflake.Adapters.Higan
 
         public IDictionary<InputDriver, IDeviceInputMapping> InputMappings { get; }
         public IEmulatorExecutable Executable { get; }
-        private IDirectory Scratch { get; }
+        private IDeletableDirectory Scratch { get; }
 
         private CancellationTokenSource? ProcessCancellationSource { get; set; }
         private Process? RunningProcess { get; set; }

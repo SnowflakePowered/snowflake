@@ -20,14 +20,14 @@ namespace Snowflake.Installation.Tasks
         /// </summary>
         /// <param name="source">The source file.</param>
         /// <param name="destinationDirectory">The target directory.</param>
-        public CopyFileTask(TaskResult<FileInfo> source, IIndelibleDirectory destinationDirectory)
+        public CopyFileTask(TaskResult<FileInfo> source, IDirectory destinationDirectory)
         {
             this.Source = source;
             this.Destination = destinationDirectory;
         }
 
         private TaskResult<FileInfo> Source { get; }
-        private IIndelibleDirectory Destination { get; }
+        private IDirectory Destination { get; }
 
         protected override string TaskName => "Copy";
 

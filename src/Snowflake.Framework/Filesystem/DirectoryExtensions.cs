@@ -15,7 +15,7 @@ namespace Snowflake.Filesystem
         /// <param name="source">The source directory.</param>
         /// <param name="overwrite"></param>
         /// <returns>An enumerable of copied files.</returns>
-        public static IAsyncEnumerable<IFile> CopyFromDirectory(this IIndelibleDirectory @this, IIndelibleDirectory source) => CopyFromDirectory(@this, source, false);
+        public static IAsyncEnumerable<IFile> CopyFromDirectory(this IDirectory @this, IDirectory source) => CopyFromDirectory(@this, source, false);
 
         /// <summary>
         /// Copies all the files and directories from the source directory recursively into this directory.
@@ -24,7 +24,7 @@ namespace Snowflake.Filesystem
         /// <param name="source">The source directory.</param>
         /// <param name="overwrite">Whether or not to overwrite existing files.</param>
         /// <returns>An enumerable of copied files.</returns>
-        public static async IAsyncEnumerable<IFile> CopyFromDirectory(this IIndelibleDirectory @this, IIndelibleDirectory source, bool overwrite)
+        public static async IAsyncEnumerable<IFile> CopyFromDirectory(this IDirectory @this, IDirectory source, bool overwrite)
         {
             if (@this == source) yield break;
 
@@ -40,7 +40,7 @@ namespace Snowflake.Filesystem
 
             // BFS over all the children.
 
-            Queue<(IIndelibleDirectory, IDirectory)> dirsToProcess = new Queue<(IIndelibleDirectory, IDirectory)>(queuedDirs);
+            Queue<(IDirectory, IDeletableDirectory)> dirsToProcess = new Queue<(IDirectory, IDeletableDirectory)>(queuedDirs);
 
             while (dirsToProcess.Count > 0)
             {

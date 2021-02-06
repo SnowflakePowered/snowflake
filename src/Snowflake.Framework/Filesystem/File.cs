@@ -11,7 +11,7 @@ namespace Snowflake.Filesystem
         internal File(Directory parentDirectory, FileEntry file, Guid guid)
         {
             this.RawInfo = file;
-            this._ParentDirectory = parentDirectory;
+            this.ParentDirectory = parentDirectory;
             this.FileGuid = guid;
         }
 
@@ -21,8 +21,7 @@ namespace Snowflake.Filesystem
 
         public long Length => this.RawInfo.Exists ? this.RawInfo.Length : -1;
 
-        internal Directory _ParentDirectory { get; }
-        public IDirectory ParentDirectory => _ParentDirectory;
+        internal Directory ParentDirectory { get; }
 
         public bool Created => this.RawInfo.Exists;
 
@@ -46,9 +45,9 @@ namespace Snowflake.Filesystem
         public void Rename(string newName)
         {
             this.RawInfo.MoveTo(this.RawInfo.Parent!.Path / Path.GetFileName(newName));
-            this._ParentDirectory.RemoveManifestRecord(this.Name);
+            this.ParentDirectory.RemoveManifestRecord(this.Name);
             this.RawInfo = new FileEntry(this.RawInfo.FileSystem, this.RawInfo.Parent.Path / Path.GetFileName(newName));
-            this._ParentDirectory.AddManifestRecord(this.Name, this.FileGuid, false);
+            this.ParentDirectory.AddManifestRecord(this.Name, this.FileGuid, false);
         }
 
         public void Delete()
@@ -58,7 +57,7 @@ namespace Snowflake.Filesystem
                 this.RawInfo.Delete();
             }
 
-            this._ParentDirectory.RemoveManifestRecord(this.Name);
+            this.ParentDirectory.RemoveManifestRecord(this.Name);
         }
 
         public FileInfo UnsafeGetFilePath()
@@ -78,7 +77,7 @@ namespace Snowflake.Filesystem
 
         public string RootedPath => this.RawInfo.Path.ToString();
 
-        IReadOnlyDirectory IReadOnlyFile.ParentDirectory => this._ParentDirectory;
+        IReadOnlyDirectory IReadOnlyFile.ParentDirectory => this.ParentDirectory;
 
         public bool IsLink => false;
     }

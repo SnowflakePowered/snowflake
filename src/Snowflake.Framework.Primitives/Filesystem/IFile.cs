@@ -7,7 +7,7 @@ using Snowflake.Model.Records.File;
 namespace Snowflake.Filesystem
 {
     /// <summary>
-    /// Represents a file contained within an <see cref="IDirectory"/> that could have
+    /// Represents a file contained within an <see cref="IDeletableDirectory"/> that could have
     /// metadata potentially attached to it by a unique <see cref="Guid"/> that tracks the file
     /// within the file system, as long as the <see cref="Snowflake.Filesystem"/> API methods
     /// are used.
@@ -43,7 +43,7 @@ namespace Snowflake.Filesystem
         /// Renames the file, keeping the same <see cref="IReadOnlyFile.FileGuid"/>.
         /// If the provided name is a path, it will be truncated with <see cref="Path.GetFileName(string)"/>.
         /// 
-        /// To move files between directories, use <see cref="IDirectory.MoveFrom(IFile)"/> and
+        /// To move files between directories, use <see cref="IMoveFromableDirectory.MoveFrom(IFile)"/> and
         /// <see cref="IDirectory.CopyFrom(IReadOnlyFile)"/> and friends.
         /// </summary>
         /// <param name="newName">The new name of the <see cref="IFile"/></param>

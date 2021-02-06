@@ -40,34 +40,34 @@ namespace Snowflake.Model.Game.LibraryExtensions
         /// <summary>
         /// The directory to persist save files for a game.
         /// </summary>
-        IIndelibleDirectory SavesRoot { get; }
+        IDirectory SavesRoot { get; }
 
         /// <summary>
         /// The directory to store game ROM files and other program data such as assets and game-specific BIOS files.
         /// </summary>
-        IIndelibleDirectory ProgramRoot { get; }
+        IDirectory ProgramRoot { get; }
 
         /// <summary>
         /// The directory to store media such as boxarts, trailers, and screenshots.
         /// </summary>
-        IIndelibleDirectory MediaRoot { get; }
+        IDirectory MediaRoot { get; }
 
         /// <summary>
         /// The directory to store miscellaneous files related to the game. 
         /// </summary>
-        IIndelibleDirectory MiscRoot { get; }
+        IDirectory MiscRoot { get; }
 
         /// <summary>
         /// The directory to store resources required for the game to run.
         /// </summary>
-        IIndelibleDirectory ResourceRoot { get; }
+        IDirectory ResourceRoot { get; }
 
         /// <summary>
         /// The directory to store temporary files during the execution of the game.
         /// This directory is cleared before an emulator is run, and the required files
         /// for the emulator can be copied here.
         /// </summary>
-        IIndelibleDirectory RuntimeRoot { get; }
+        IDirectory RuntimeRoot { get; }
 
         /// <summary>
         /// Gets the list of <see cref="IFileRecord"/>s that have been associated with this game.
@@ -123,7 +123,7 @@ namespace Snowflake.Model.Game.LibraryExtensions
         /// <returns>A working scratch directory for an emulator running instance. This directory
         /// is guaranteed to be unique. Emulators are responsible for their own cleanup and are well advised
         /// to delete this directory after execution completes.</returns>
-        IDirectory GetRuntimeLocation();
+        IDeletableDirectory GetRuntimeLocation();
     }
 
     /// <summary>
