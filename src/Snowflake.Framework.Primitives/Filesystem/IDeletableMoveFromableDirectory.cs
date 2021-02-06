@@ -15,10 +15,10 @@ namespace Snowflake.Filesystem
     /// When files are moved between IDirectories, the files GUID is preserved. 
     /// Thus, metadata can be preserved throughout.
     /// 
-    /// A MoveFromableDirectory allows files to be moved into this directory from other files.
+    /// A DeletableMoveFromableDirectory allows files to be moved into this directory from other files, as well as being deleted.
     /// </summary>
-    public interface IMoveFromableDirectory 
-        : IDirectory
+    public interface IDeletableMoveFromableDirectory 
+        : IDeletableDirectory
     {
         /// <summary>
         /// Moves a file between 2 <see cref="IDirectory"/> instances, updating the 

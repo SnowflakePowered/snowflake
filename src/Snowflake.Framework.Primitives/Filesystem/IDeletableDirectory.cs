@@ -14,7 +14,12 @@ namespace Snowflake.Filesystem
     /// When files are moved between IDirectories, the files GUID is preserved. 
     /// Thus, metadata can be preserved throughout.
     /// </summary>
-    public interface IDeletableDirectory : IDirectory
+    public interface IDeletableDirectory 
+        : IDirectory,
+          IMutableDirectoryBase<IDeletableDirectory>,
+          IMutableDirectoryBase<IDeletableDirectory, IDirectory>,
+          IMutableDirectoryBase<IDeletableDirectory, IReadOnlyDirectory>,
+          IMutableDirectoryBase<IDeletableDirectory, IDeletableMoveFromableDirectory>
     {
         /// <summary>
         /// Deletes the directory, including all files and subdirectories included.
@@ -23,17 +28,5 @@ namespace Snowflake.Filesystem
         /// this specific directory until it exists again. 
         /// </summary>       
         void Delete();
-
-        /// <summary>
-        /// Returns an undeletable version of this directory
-        /// </summary>
-        /// <returns></returns>
-        IDirectory AsIndelible();
-
-        /// <summary>
-        /// Returns a version of this directory that can have files moved into it.
-        /// </summary>
-        /// <returns></returns>
-        IMoveFromableDirectory AsMoveFromable();
     }
 }
