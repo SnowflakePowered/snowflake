@@ -27,22 +27,27 @@ namespace Snowflake.Filesystem
 #pragma warning restore IDE1006 // Naming Styles
         }
 
-        private SqliteDatabase Manifest { get; }
-        private object DatabaseLock { get; }
+        private SqliteDatabase? Manifest { get; }
+        private object? DatabaseLock { get; }
         private bool IsDeleted { get; set; } = false;
+        private bool UseManifest { get; set; } = true;
 
-        internal Directory(string name, IFileSystem rootFs, DirectoryEntry parentDirectory)
+        internal Directory(string name, IFileSystem rootFs, DirectoryEntry parentDirectory, bool useManifest = true)
         {
             this.RootFileSystem = rootFs;
             this.ThisDirectory = parentDirectory.CreateSubdirectory(name);
             this.Name = name;
+            this.UseManifest = useManifest;
 
-            var manifestPath = this.RootFileSystem.ConvertPathToInternal(this.ThisDirectory.Path / ".manifest");
-            this.DatabaseLock = Directory.DatabaseLocks.GetOrAdd(manifestPath, new object());
-            this.Manifest =  new SqliteDatabase(manifestPath);
-            lock (this.DatabaseLock)
+            if (this.UseManifest)
             {
-                this.Manifest.CreateTable("directory_manifest", "uuid TEXT", "is_link BOOLEAN", "filename TEXT PRIMARY KEY");
+                var manifestPath = this.RootFileSystem.ConvertPathToInternal(this.ThisDirectory.Path / ".manifest");
+                this.DatabaseLock = Directory.DatabaseLocks.GetOrAdd(manifestPath, new object());
+                this.Manifest = new SqliteDatabase(manifestPath);
+                lock (this.DatabaseLock)
+                {
+                    this.Manifest.CreateTable("directory_manifest", "uuid TEXT", "is_link BOOLEAN", "filename TEXT PRIMARY KEY");
+                }
             }
         }
 
@@ -51,6 +56,7 @@ namespace Snowflake.Filesystem
             this.RootFileSystem = rootFs;
             this.ThisDirectory = rootFs.GetDirectoryEntry("/");
             this.Name = "#FSROOT";
+            this.UseManifest = true;
             var manifestPath = this.RootFileSystem.ConvertPathToInternal(this.ThisDirectory.Path / ".manifest");
             this.DatabaseLock = Directory.DatabaseLocks.GetOrAdd(manifestPath, new object());
             this.Manifest = new SqliteDatabase(manifestPath);
@@ -76,9 +82,10 @@ namespace Snowflake.Filesystem
         internal void AddManifestRecord(string file, Guid guid, bool isLink)
         {
             this.CheckDeleted();
-            lock (this.DatabaseLock)
+            if (!this.UseManifest) return;
+            lock (this.DatabaseLock!)
             {
-                this.Manifest.Execute(connection =>
+                this.Manifest?.Execute(connection =>
                 {
                     connection.Execute(
                         @"INSERT OR REPLACE INTO directory_manifest (uuid, is_link, filename) VALUES (@guid, @isLink, @file)",
@@ -90,9 +97,10 @@ namespace Snowflake.Filesystem
         internal void RemoveManifestRecord(string file)
         {
             this.CheckDeleted();
-            lock (this.DatabaseLock)
+            if (!this.UseManifest) return;
+            lock (this.DatabaseLock!)
             {
-                this.Manifest.Execute(connection =>
+                this.Manifest?.Execute(connection =>
                 {
                     connection.Execute(@"DELETE FROM directory_manifest WHERE filename = @file", new { file });
                 });
@@ -103,9 +111,17 @@ namespace Snowflake.Filesystem
         {
             this.CheckDeleted();
             var fileName = file.GetName();
-            lock (this.DatabaseLock) 
+
+            if (!this.UseManifest)
+            {
+                // Links are not supported in non-manifest directories.
+                // i.e. Disposable or Projecting
+                return (Guid.Empty, false);
+            }
+
+            lock (this.DatabaseLock!) 
             { 
-                return this.Manifest.Query<(Guid, bool)>(conn =>
+                return this.Manifest!.Query<(Guid, bool)>(conn =>
                 {
                     var record = conn.Query<ManifestRecord>(@"SELECT uuid, is_link FROM directory_manifest WHERE filename = @fileName",
                         new { fileName });
@@ -132,9 +148,9 @@ namespace Snowflake.Filesystem
         {
             this.CheckDeleted();
 
-            lock (this.DatabaseLock)
+            lock (this.DatabaseLock!)
             {
-                this.Manifest.Execute(connection =>
+                this.Manifest?.Execute(connection =>
                 {
                     connection.Execute(
                         @"UPDATE directory_manifest SET is_link = @isLink WHERE filename = @file",
@@ -142,6 +158,7 @@ namespace Snowflake.Filesystem
                 });
             }
         }
+
         internal bool CheckIsLink(UPath file)
         {
             var entry = new FileEntry(this.RootFileSystem, file);
@@ -189,7 +206,7 @@ namespace Snowflake.Filesystem
             Directory currentDirectory = this;
             foreach (string directoryString in directoryStrings)
             {
-                currentDirectory = new Directory(directoryString, this.RootFileSystem, currentDirectory.ThisDirectory);
+                currentDirectory = new Directory(directoryString, this.RootFileSystem, currentDirectory.ThisDirectory, this.UseManifest);
             }
             return currentDirectory;
         }
@@ -382,13 +399,18 @@ namespace Snowflake.Filesystem
             return this.EnumerateFilesRecursive().Select(f => f.AsReadOnly());
         }
 
-        public IReadOnlyDirectory AsReadOnly() => this;
-
         public void Delete()
         {
             this.CheckDeleted();
             this.IsDeleted = true;
-            lock (this.DatabaseLock)
+            if (this.UseManifest)
+            {
+                lock (this.DatabaseLock!)
+                {
+                    this.ThisDirectory.Delete(true);
+                }
+            }
+            else
             {
                 this.ThisDirectory.Delete(true);
             }
@@ -435,6 +457,26 @@ namespace Snowflake.Filesystem
 
         IDeletableMoveFromableDirectory IMutableDirectoryBase<IDeletableDirectory, IDeletableMoveFromableDirectory>.ReopenAs()
             => this;
+
+        IDisposableDirectory IMutableDirectoryBase<IDeletableDirectory, IDisposableDirectory>.ReopenAs()
+        {
+            if (this.EnumerateDirectories().Any() || this.EnumerateFiles().Any())
+            {
+                throw new IOException("The directory is not empty. Disposable directories must not contain files prior to opening.");
+            }
+
+            if (this.UseManifest)
+            {
+                lock (this.DatabaseLock!)
+                {
+                    // Recreate the directory without manifest
+                    this.ThisDirectory.Delete();
+                    this.ThisDirectory.Create();
+                }
+            }
+            this.UseManifest = false;
+            return new DisposableDirectory(this);
+        }
     }
 }
 
