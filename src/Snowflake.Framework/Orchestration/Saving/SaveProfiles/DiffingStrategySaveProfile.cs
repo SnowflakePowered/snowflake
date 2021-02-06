@@ -22,11 +22,11 @@ namespace Snowflake.Orchestration.Saving.SaveProfiles
             var saveManifest = this.ProfileRoot.OpenFile("profile");
             if (!saveManifest.Created)
             {
-                saveManifest.WriteAllText($"{profileName}{Environment.NewLine}{nameof(SaveManagementStrategy.Copy)}");
+                saveManifest.WriteAllText($"{profileName}{Environment.NewLine}{nameof(SaveManagementStrategy.Diff)}");
             }
         }
 
-        public override SaveManagementStrategy ManagementStrategy => SaveManagementStrategy.Copy;
+        public override SaveManagementStrategy ManagementStrategy => SaveManagementStrategy.Diff;
 
         private async Task CreateBaseSave(IIndelibleDirectory saveContents)
         {
