@@ -108,7 +108,7 @@ namespace Snowflake.Filesystem
         bool ContainsFile(string file);
 
         /// <summary>
-        /// Whether or not this directory contains directory as a direct child.
+        /// Whether or not this directory contains the specified directory.
         /// </summary>
         /// <param name="directory">The name of the directory to check.</param>
         /// <returns>Whether or not this directory contains the given directory.</returns>
