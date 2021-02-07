@@ -190,12 +190,15 @@ namespace Snowflake.Filesystem
 
         public bool ContainsDirectory(string directory)
         {
-            return this.RootFileSystem.DirectoryExists(this.ThisDirectory.Path / directory);
+            return this.RootFileSystem.DirectoryExists(this.ThisDirectory.Path / ((UPath)directory).ToRelative());
         }
 
         public bool ContainsFile(string file)
         {
-            return this.RootFileSystem.FileExists(this.ThisDirectory.Path / file) || this.RootFileSystem.DirectoryExists(this.ThisDirectory.Path / file);
+            UPath filePath = ((UPath)file).ToRelative();
+            var fullPath = this.ThisDirectory.Path / filePath;
+            return this.RootFileSystem.FileExists(fullPath) 
+                || this.RootFileSystem.DirectoryExists(fullPath);
         }
 
         public IDeletableDirectory OpenDirectory(string name)
