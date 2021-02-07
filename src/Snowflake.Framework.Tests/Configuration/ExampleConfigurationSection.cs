@@ -44,6 +44,9 @@ namespace Snowflake.Configuration
         [ConfigurationOption("ISOPath0", @"game:/program/RMGE01.wbfs", PathType.File)]
         string ISOPath0 { get; set; }
 
+        [ConfigurationOption("ISODir", @"game:/program", PathType.Directory)]
+        string ISODir { get; set; }
+
         [ConfigurationOption("InternalCpuRatio", 1.0)]
         double InternalCpuRatio { get; set; }
 
