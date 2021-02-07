@@ -149,16 +149,15 @@ namespace Snowflake.Filesystem
         IEnumerable<IFile> EnumerateFilesRecursive();
 
         /// <summary>
-        /// Whether or not this directory contains a file in its manifest. If provided a
+        /// Whether or not this directory contains a file or directory in its manifest. If provided a
         /// full path, this will truncate the path using <see cref="Path.GetFileName(string)"/>
         /// </summary>
         /// <param name="file">The name of the file to check.</param>
-        /// <returns>Whether or not this directory contains the given file.</returns>
+        /// <returns>Whether or not this directory contains the given file or directory.</returns>
         bool ContainsFile(string file);
 
         /// <summary>
         /// Whether or not this directory contains directory as a direct child.
-        /// full path, this will truncate the path using <see cref="Path.GetDirectoryName(string)"/>
         /// </summary>
         /// <param name="directory">The name of the directory to check.</param>
         /// <returns>Whether or not this directory contains the given directory.</returns>

@@ -205,21 +205,23 @@ namespace Snowflake.Configuration.Serialization
                         throw new KeyNotFoundException($"Unable to find a root for the filesystem namespace {drive} in the context.");
 
                     var directory = rootDir.OpenDirectory(directoryName);
-                    var file = rootDir.OpenFile(path);
-
-                    IAbstractConfigurationNode pathNode = key.PathType switch
-                    {
+                    var file = directory.OpenFile(path);
 #pragma warning disable CS0618 // Type or member is obsolete
-                        PathType.Directory => new StringConfigurationNode(serializedKey, directory.UnsafeGetPath().FullName), // lgtm [cs/call-to-obsolete-method]
-                        PathType.File => new StringConfigurationNode(serializedKey, file.UnsafeGetFilePath().FullName), // lgtm [cs/call-to-obsolete-method]
-                        PathType.Either => file.Created ? new StringConfigurationNode(serializedKey, file.UnsafeGetFilePath().FullName) : // lgtm [cs/call-to-obsolete-method]
-                            new StringConfigurationNode(serializedKey, directory.UnsafeGetPath().FullName), // lgtm [cs/call-to-obsolete-method]
+                    switch (key.PathType)
+                    {
+                        case PathType.Directory:
+                        case PathType.Either when !file.Created:
+                            nodes.Add(new StringConfigurationNode(serializedKey, directory.UnsafeGetPath().FullName)); // lgtm [cs/call-to-obsolete-method]
+                            break;
+                        case PathType.File:
+                        case PathType.Either when file.Created:
+                            nodes.Add(new StringConfigurationNode(serializedKey, file.UnsafeGetFilePath().FullName)); // lgtm [cs/call-to-obsolete-method]
+                            break;
+                        default:
+                            nodes.Add(new StringConfigurationNode(serializedKey, fullPath));
+                            break;
+                    }
 #pragma warning restore CS0618 // Type or member is obsolete
-                        PathType.Raw => new StringConfigurationNode(serializedKey, fullPath),
-                        // UnknownConfigurationNodes are ignored in most serializers.
-                        _ => new UnknownConfigurationNode(serializedKey, fullPath)
-                    };
-                    nodes.Add(pathNode);
                     continue;
                 }
 

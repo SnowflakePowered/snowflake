@@ -58,6 +58,28 @@ namespace Snowflake.Filesystem
         IReadOnlyFile OpenFile(string file);
 
         /// <summary>
+        /// Opens a file if it exists.
+        /// 
+        /// Unlike <see cref="OpenDirectory(string)"/>, you can not use the path separator to
+        /// open a nested file. Paths will be truncated with <see cref="Path.GetFileName(string)"/>.
+        /// 
+        /// Instead, use <see cref="OpenDirectory(string)"/> to open the directory of the desired file,
+        /// then call <see cref="OpenFile(string)"/> on the returned instance.
+        /// 
+        /// Keep in mind this does not actually create a file on the underlying file system. 
+        /// However, you can use <see cref="IFile.OpenStream()"/> and friends to create the file
+        /// if it does not yet exist.
+        /// </summary>
+        /// <param name="file">The name of the file. If this is a path, will be truncated with <see cref="Path.GetFileName(string)"/></param>
+        /// <param name="openIfNotExists">
+        /// If true, then the handle will be created for the file if it does not exists.
+        /// No actual file will be created but the filename will receive an entry in the
+        /// manifest.
+        /// </param>
+        /// <returns>An object that associates a given file with a with a unique <see cref="Guid"/></returns>
+        IReadOnlyFile OpenFile(string file, bool openIfNotExists);
+
+        /// <summary>
         /// Enumerates all direct child directories of this <see cref="IReadOnlyDirectory"/>.
         /// </summary>
         /// <returns>All direct children directories.</returns>
@@ -87,7 +109,6 @@ namespace Snowflake.Filesystem
 
         /// <summary>
         /// Whether or not this directory contains directory as a direct child.
-        /// full path, this will truncate the path using <see cref="Path.GetDirectoryName(string)"/>
         /// </summary>
         /// <param name="directory">The name of the directory to check.</param>
         /// <returns>Whether or not this directory contains the given directory.</returns>

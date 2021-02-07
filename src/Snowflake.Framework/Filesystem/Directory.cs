@@ -371,7 +371,7 @@ namespace Snowflake.Filesystem
 
         IReadOnlyFile IReadOnlyDirectory.OpenFile(string file)
         {
-            if (this.ContainsFile(file)) return this.OpenFile(file, false).AsReadOnly();
+            if (this.ContainsFile(Path.GetFileName(file))) return this.OpenFile(file, false).AsReadOnly();
             throw new FileNotFoundException($"File {file} does not exist within the directory {this.Name}.");
         }
 
@@ -467,6 +467,12 @@ namespace Snowflake.Filesystem
             }
             this.UseManifest = false;
             return new DisposableDirectory(this);
+        }
+
+        IReadOnlyFile IReadOnlyDirectory.OpenFile(string file, bool openIfNotExists)
+        {
+            if (openIfNotExists) return this.OpenFile(file, false).AsReadOnly();
+            return (this as IReadOnlyDirectory).OpenFile(file);
         }
     }
 }
