@@ -24,6 +24,7 @@ namespace Snowflake.Configuration
         Directory,
         /// <summary>
         /// This path points either a directory or a file.
+        /// Directories take precedence over files, except if the file already exists.
         /// </summary>
         Either,
         /// <summary>
