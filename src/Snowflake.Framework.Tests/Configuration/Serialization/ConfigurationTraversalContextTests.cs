@@ -150,7 +150,7 @@ namespace Snowflake.Configuration.Serialization
                 if (node.Key == "Display")
                 {
                     var confList = (node as ListConfigurationNode).Value;
-                    Assert.Equal(7, confList.Count);
+                    Assert.Equal(8, confList.Count);
                     Assert.Equal("FullscreenResolution", confList[0].Key);
                     Assert.IsType<EnumConfigurationNode>(confList[0]);
                     Assert.Equal("1152x648", ((EnumConfigurationNode)confList[0]).Value);
@@ -171,8 +171,11 @@ namespace Snowflake.Configuration.Serialization
                     Assert.Equal("ISOPath0", confList[5].Key);
                     Assert.IsType<StringConfigurationNode>(confList[5]);
 
-                    Assert.Equal("InternalCpuRatio", confList[6].Key);
-                    Assert.IsType<DecimalConfigurationNode>(confList[6]);
+                    Assert.Equal("ISODir", confList[6].Key);
+                    Assert.IsType<StringConfigurationNode>(confList[6]);
+
+                    Assert.Equal("InternalCpuRatio", confList[7].Key);
+                    Assert.IsType<DecimalConfigurationNode>(confList[7]);
                 }
 
                 if (node.Key == "TestNestedSection")
@@ -224,7 +227,7 @@ namespace Snowflake.Configuration.Serialization
                 if (node.Key == "Display")
                 {
                     var confList = (node as ListConfigurationNode).Value;
-                    Assert.Equal(7, confList.Count);
+                    Assert.Equal(8, confList.Count);
                     Assert.Equal("FullscreenResolution", confList[0].Key);
                     Assert.IsType<EnumConfigurationNode>(confList[0]);
                     Assert.Equal("1152x648", ((EnumConfigurationNode)confList[0]).Value);
@@ -244,9 +247,12 @@ namespace Snowflake.Configuration.Serialization
 
                     Assert.Equal("ISOPath0", confList[5].Key);
                     Assert.IsType<StringConfigurationNode>(confList[5]);
+                    
+                    Assert.Equal("ISODir", confList[6].Key);
+                    Assert.IsType<StringConfigurationNode>(confList[6]);
 
-                    Assert.Equal("InternalCpuRatio", confList[6].Key);
-                    Assert.IsType<DecimalConfigurationNode>(confList[6]);
+                    Assert.Equal("InternalCpuRatio", confList[7].Key);
+                    Assert.IsType<DecimalConfigurationNode>(confList[7]);
                 }
 
                 if (node.Key == "TestNestedSection")

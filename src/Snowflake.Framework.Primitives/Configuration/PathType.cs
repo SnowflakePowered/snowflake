@@ -24,8 +24,8 @@ namespace Snowflake.Configuration
         Directory,
         /// <summary>
         /// This path points either a directory or a file.
-        /// If the path ends in an extension, then it is considered a file.
-        /// Otherwise, directories take precedence over files, except if the file already exists.
+        /// If the directory already exists, then it is considered a directory.
+        /// Otherwise, this acts as a file.
         /// </summary>
         Either,
         /// <summary>

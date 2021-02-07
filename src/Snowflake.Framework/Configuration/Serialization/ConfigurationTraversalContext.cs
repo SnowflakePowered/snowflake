@@ -197,27 +197,27 @@ namespace Snowflake.Configuration.Serialization
                         throw new ArgumentException("Path strings must be fully qualified with a namespace followed by a ':'.");
                     string path = pathComponents[1];
                     string drive  = pathComponents[0];
-                    string? directoryName = Path.GetDirectoryName(path);
-
-                    if (directoryName == null) throw new ArgumentException($"Could not get directory name for path {path}.");
+                   
 
                     if (!this.PathResolutionContext.TryGetValue(drive, out var rootDir))
                         throw new KeyNotFoundException($"Unable to find a root for the filesystem namespace {drive} in the context.");
 
-                    var directory = rootDir.OpenDirectory(directoryName);
-                    var file = directory.OpenFile(path, true);
 #pragma warning disable CS0618 // Type or member is obsolete
                     switch (key.PathType)
                     {
                         case PathType.File:
-                        case PathType.Either when !String.IsNullOrEmpty(Path.GetExtension(path)) || file.Created:
+                        case PathType.Either when !rootDir.ContainsDirectory(path):
+                            string? directoryName = Path.GetDirectoryName(path);
+                            if (directoryName == null) throw new ArgumentException($"Could not get directory name for path {path}.");
+                            var fileDirectory = rootDir.OpenDirectory(directoryName);
+                            var file = fileDirectory.OpenFile(path, true);
                             nodes.Add(new StringConfigurationNode(serializedKey, file.UnsafeGetFilePath().FullName)); // lgtm [cs/call-to-obsolete-method]
                             break;
                         case PathType.Directory:
                         case PathType.Either:
+                            var directory = rootDir.OpenDirectory(path);
                             nodes.Add(new StringConfigurationNode(serializedKey, directory.UnsafeGetPath().FullName)); // lgtm [cs/call-to-obsolete-method]
                             break;
-                        
                         default:
                             nodes.Add(new StringConfigurationNode(serializedKey, fullPath));
                             break;
