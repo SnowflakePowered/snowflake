@@ -68,7 +68,13 @@ namespace Snowflake.Filesystem
 
         private void CheckDeleted()
         {
-            if (!this.ContainsFile(".manifest"))
+            if (this.UseManifest && !this.ContainsFile(".manifest"))
+            {
+                this.IsDeleted = true;
+            }
+
+            // normal doesn't check symlinks
+            if (!new DirectoryInfo(this.RootFileSystem.ConvertPathToInternal(this.ThisDirectory.Path)).Exists())
             {
                 this.IsDeleted = true;
             }
@@ -140,6 +146,19 @@ namespace Snowflake.Filesystem
 
                     var _record = record.First();
                     return (new Guid(_record.uuid), _record.is_link);
+                });
+            }
+        }
+
+        internal int GetLinkCount()
+        {
+            if (!this.UseManifest) return 0;
+            this.CheckDeleted();
+            lock(this.DatabaseLock!)
+            {
+                return this.Manifest!.Query<int>(connection =>
+                {
+                    return connection.Query<int>(@"SELECT COUNT(*) FROM directory_manifest WHERE is_link = 1").First();
                 });
             }
         }
@@ -415,6 +434,8 @@ namespace Snowflake.Filesystem
 
         public IFile LinkFrom(FileInfo source, bool overwrite)
         {
+            if (!this.UseManifest) throw new InvalidOperationException("Unmanifested directories can not form links.");
+
             // Disallow source being a symlink
             if (!source.Exists) throw new FileNotFoundException($"{source.FullName} could not be found.");
             string? fileName = Path.GetFileName(source.Name);

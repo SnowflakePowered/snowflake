@@ -19,7 +19,7 @@ namespace Snowflake.Filesystem.Tests
             var fs = new PhysicalFileSystem();
             var temp = Path.GetTempPath();
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
-            var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
+            var dir = new FS.Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/"));
 
             var tempFile = Path.GetTempFileName();
             using (var str = new FileInfo(tempFile).OpenWrite())
@@ -43,7 +43,7 @@ namespace Snowflake.Filesystem.Tests
             var fs = new PhysicalFileSystem();
             var temp = Path.GetTempPath();
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
-            var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
+            var dir = new FS.Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/"));
 
             var tempFile = Path.GetTempFileName();
             using (var str = new FileInfo(tempFile).OpenWrite())
@@ -67,7 +67,7 @@ namespace Snowflake.Filesystem.Tests
             var fs = new PhysicalFileSystem();
             var temp = Path.GetTempPath();
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
-            var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
+            var dir = new FS.Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/"));
 
             var tempFile = Path.GetTempFileName();
             using (var str = new FileInfo(tempFile).OpenWrite())
@@ -92,7 +92,7 @@ namespace Snowflake.Filesystem.Tests
             var fs = new PhysicalFileSystem();
             var temp = Path.GetTempPath();
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
-            var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
+            var dir = new FS.Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/"));
 
             var tempFile = Path.GetTempFileName();
             using (var str = new FileInfo(tempFile).OpenWrite())
@@ -110,12 +110,38 @@ namespace Snowflake.Filesystem.Tests
         }
 
         [Fact]
+        public void LinkCount_Test()
+        {
+            var fs = new PhysicalFileSystem();
+            var temp = Path.GetTempPath();
+            var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
+            var dir = new FS.Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/"));
+
+            var tempFile = Path.GetTempFileName();
+            using (var str = new FileInfo(tempFile).OpenWrite())
+            {
+                str.WriteByte(255);
+            }
+            Assert.Equal(0, dir.GetLinkCount());
+            var link = dir.LinkFrom(new FileInfo(tempFile));
+            Assert.Equal(1, dir.GetLinkCount());
+            link.Delete();
+            Assert.Equal(0, dir.GetLinkCount());
+
+            Assert.True(new FileInfo(tempFile).Exists);
+            using (var str = new FileInfo(tempFile).OpenRead())
+            {
+                Assert.Equal(255, str.ReadByte());
+            }
+        }
+
+        [Fact]
         public void LinkOverwritesNonCreatedFile_Test()
         {
             var fs = new PhysicalFileSystem();
             var temp = Path.GetTempPath();
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
-            var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
+            var dir = new FS.Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/"));
 
             var tempFile = Path.GetTempFileName();
             using (var str = new FileInfo(tempFile).OpenWrite())
@@ -140,7 +166,7 @@ namespace Snowflake.Filesystem.Tests
             var fs = new PhysicalFileSystem();
             var temp = Path.GetTempPath();
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
-            var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
+            var dir = new FS.Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/"));
 
             var tempFile = Path.GetTempFileName();
             using (var str = new FileInfo(tempFile).OpenWrite())
@@ -170,7 +196,7 @@ namespace Snowflake.Filesystem.Tests
             var fs = new PhysicalFileSystem();
             var temp = Path.GetTempPath();
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
-            var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
+            var dir = new FS.Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/"));
 
             var tempFile = Path.GetTempFileName();
             using (var str = new FileInfo(tempFile).OpenWrite())
@@ -209,7 +235,7 @@ namespace Snowflake.Filesystem.Tests
             var fs = new PhysicalFileSystem();
             var temp = Path.GetTempPath();
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
-            var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
+            var dir = new FS.Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/"));
 
             var tempFile = Path.GetTempFileName();
             using (var str = new FileInfo(tempFile).OpenWrite())
@@ -249,7 +275,7 @@ namespace Snowflake.Filesystem.Tests
 
             var temp = Path.GetTempPath();
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
-            var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
+            var dir = new FS.Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/"));
 
             var tempFile = Path.GetTempFileName();
             var tempFile2 = Path.GetTempFileName();
@@ -269,6 +295,25 @@ namespace Snowflake.Filesystem.Tests
             Assert.Equal(Path.GetFileName(tempFile2), link.Name);
             Assert.Equal(link.FileGuid, dir.OpenFile(tempFile2).FileGuid);
             Assert.True(new FileInfo(tempFile).Exists);
+        }
+
+        [Fact]
+        public void CannotCreateLinkWithoutManifest_Test()
+        {
+            var fs = new PhysicalFileSystem();
+
+            var temp = Path.GetTempPath();
+            var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
+            var dir = new FS.Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/"), false);
+
+            var tempFile = Path.GetTempFileName();
+
+            using (var str = new FileInfo(tempFile).OpenWrite())
+            {
+                str.WriteByte(255);
+            }
+
+            Assert.Throws<InvalidOperationException>(() => dir.LinkFrom(new FileInfo(tempFile)));
         }
 
     }
