@@ -41,7 +41,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Filesystem.Contextual
             descriptor.Field("size")
                 .Description("The size of the file, in bytes.")
                 .Type<NonNullType<IntType>>()
-                .Resolve(context => context.Parent<IReadOnlyFile>().UnsafeGetFilePath().Length); // lgtm [cs/call-to-obsolete-method]
+                .Resolve(context => context.Parent<IReadOnlyFile>().Length); // lgtm [cs/call-to-obsolete-method]
             descriptor.Field("isLink")
                 .Description("Whether or not this file is a link to a file outside the directory context.")
                 .Type<NonNullType<BooleanType>>()

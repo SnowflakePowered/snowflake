@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Zio;
+using Emet.FileSystems;
 
 namespace Snowflake.Filesystem
 {
@@ -19,11 +20,27 @@ namespace Snowflake.Filesystem
 
         internal FileEntry RawInfo { get; private set; }
 
-        public long Length => this.RawInfo.Exists ? this.RawInfo.Length : -1;
+        public long Length 
+        { 
+            get 
+            {
+                var fileInfo = this.UnsafeGetFilePath();
+                var dirEntry = new Emet.FileSystems.DirectoryEntry(fileInfo.FullName, FileSystem.FollowSymbolicLinks.Always);
+                return dirEntry.FileType == FileType.File ? dirEntry.FileSize : -1; 
+            } 
+        }
 
         internal Directory ParentDirectory { get; }
 
-        public bool Created => this.RawInfo.Exists;
+        public bool Created 
+        {
+            get
+            {
+                var fileInfo = this.UnsafeGetFilePath();
+                var dirEntry = new Emet.FileSystems.DirectoryEntry(fileInfo.FullName, FileSystem.FollowSymbolicLinks.Always);
+                return dirEntry.FileType == FileType.File;
+            } 
+        }
 
         public Guid FileGuid { get; }
 
