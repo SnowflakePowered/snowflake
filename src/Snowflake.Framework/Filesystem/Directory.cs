@@ -233,7 +233,7 @@ namespace Snowflake.Filesystem
         {
             this.CheckDeleted();
             if (file.GetName() == ".manifest") throw new UnauthorizedAccessException("Unable to open manifest file.");
-
+            if (this.ContainsDirectory(file.GetName())) throw new IOException("Tried to open a directory as a file.");
             (Guid guid, bool isLink) = this.RetrieveManifestRecord(file, updateLink);
 
             return isLink switch
