@@ -20,27 +20,11 @@ namespace Snowflake.Filesystem
 
         internal FileEntry RawInfo { get; private set; }
 
-        public long Length 
-        { 
-            get 
-            {
-                var fileInfo = this.UnsafeGetFilePath();
-                var dirEntry = new Emet.FileSystems.DirectoryEntry(fileInfo.FullName, FileSystem.FollowSymbolicLinks.Always);
-                return dirEntry.FileType == FileType.File ? dirEntry.FileSize : -1; 
-            } 
-        }
+        public long Length => this.UnsafeGetFilePath().Length();
 
         internal Directory ParentDirectory { get; }
 
-        public bool Created 
-        {
-            get
-            {
-                var fileInfo = this.UnsafeGetFilePath();
-                var dirEntry = new Emet.FileSystems.DirectoryEntry(fileInfo.FullName, FileSystem.FollowSymbolicLinks.Always);
-                return dirEntry.FileType == FileType.File;
-            } 
-        }
+        public bool Created => this.UnsafeGetFilePath().Exists();
 
         public Guid FileGuid { get; }
 

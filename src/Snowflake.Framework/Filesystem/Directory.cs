@@ -9,7 +9,6 @@ using System.Threading;
 using Snowflake.Persistence;
 using Dapper;
 using System.Text;
-using EmetFS = Emet.FileSystems;
 
 namespace Snowflake.Filesystem
 {
@@ -193,8 +192,7 @@ namespace Snowflake.Filesystem
         {
             UPath fullPath = this.ThisDirectory.Path / ((UPath)directory).ToRelative();
             string realPath = this.RootFileSystem.ConvertPathToInternal(fullPath);
-            var symlinkEntry = new EmetFS.DirectoryEntry(realPath, EmetFS.FileSystem.FollowSymbolicLinks.Always);
-            return symlinkEntry.FileType == EmetFS.FileType.Directory;
+            return new DirectoryInfo(realPath).Exists();
         }
 
         public bool ContainsFile(string file)
@@ -202,10 +200,9 @@ namespace Snowflake.Filesystem
             UPath filePath = ((UPath)file).ToRelative();
             var fullPath = this.ThisDirectory.Path / filePath;
             string realPath = this.RootFileSystem.ConvertPathToInternal(fullPath);
-            var symlinkEntry = new EmetFS.DirectoryEntry(realPath, EmetFS.FileSystem.FollowSymbolicLinks.Always);
-            return 
-                symlinkEntry.FileType == EmetFS.FileType.Directory
-                || symlinkEntry.FileType == EmetFS.FileType.File;
+            return
+                new DirectoryInfo(realPath).Exists()
+                || new FileInfo(realPath).Exists();
         }
 
         public IDeletableDirectory OpenDirectory(string name)
@@ -270,7 +267,7 @@ namespace Snowflake.Filesystem
         public IFile CopyFrom(FileInfo source, bool overwrite)
         {
             this.CheckDeleted();
-            if (!source.Exists) throw new FileNotFoundException($"{source.FullName} could not be found.");
+            if (!source.Exists()) throw new FileNotFoundException($"{source.FullName} could not be found.");
             string? fileName = Path.GetFileName(source.Name);
 
             if (fileName == null) throw new ArgumentException($"Could not get file name for path {source.Name}.");
@@ -285,7 +282,7 @@ namespace Snowflake.Filesystem
         public async Task<IFile> CopyFromAsync(FileInfo source, bool overwrite, CancellationToken cancellation = default)
         {
             this.CheckDeleted();
-            if (!source.Exists) throw new FileNotFoundException($"{source.FullName} could not be found.");
+            if (!source.Exists()) throw new FileNotFoundException($"{source.FullName} could not be found.");
             string? fileName = Path.GetFileName(source.Name);
             if (fileName == null) throw new ArgumentException($"Cannot get file name for path {source.Name}");
             var file = this.OpenFile(fileName, false);
@@ -418,7 +415,7 @@ namespace Snowflake.Filesystem
 
         public IFile LinkFrom(FileInfo source, bool overwrite)
         {
-
+            // Disallow source being a symlink
             if (!source.Exists) throw new FileNotFoundException($"{source.FullName} could not be found.");
             string? fileName = Path.GetFileName(source.Name);
 

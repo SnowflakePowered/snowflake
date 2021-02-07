@@ -682,6 +682,31 @@
             <param name="encoding">The encoding applied to the contents of the file.</param>
             <returns>A string containing all text in the file.</returns>
         </member>
+        <member name="M:Snowflake.Filesystem.FileSystemInfoExtensions.Exists(System.IO.FileInfo)">
+            <summary>
+            Gets a value indicating whether the specified file exists.
+            Unlike <see cref="P:System.IO.FileInfo.Exists"/>, this method follows symbolic links.
+            </summary>
+            <param name="this">The <see cref="T:System.IO.FileInfo"/> representing the current file.</param>
+            <returns><see langword="true"/> if the file exists on disk and is accessible, <see langword="false"/> otherwise.</returns>
+        </member>
+        <member name="M:Snowflake.Filesystem.FileSystemInfoExtensions.Exists(System.IO.DirectoryInfo)">
+            <summary>
+            Gets a value indicating whether the specified directory exists.
+            Unlike <see cref="P:System.IO.DirectoryInfo.Exists"/>, this method follows symbolic links.
+            </summary>
+            <param name="this">The <see cref="T:System.IO.DirectoryInfo"/> representing the current file.</param>
+            <returns><see langword="true"/> if the directory exists on disk and is accessible, <see langword="false"/> otherwise.</returns>
+        </member>
+        <member name="M:Snowflake.Filesystem.FileSystemInfoExtensions.Length(System.IO.FileInfo)">
+            <summary>
+            Gets the size, in bytes, of the current file.
+            Unlike <see cref="P:System.IO.FileInfo.Length"/>, this method follows symbolic links.
+            </summary>
+            <param name="this">The <see cref="T:System.IO.FileInfo"/> representing the current file.</param>
+            <returns>The size of the file in bytes, or -1 if the file does not exist or is a directory.</returns>
+            <exception cref="T:System.IO.IOException"></exception>
+        </member>
         <member name="M:Snowflake.Filesystem.Link.UnsafeOpenAsFile">
             <summary>
             Open the <see cref="T:Snowflake.Filesystem.Link"/> as a <see cref="T:Snowflake.Filesystem.File"/>, exposing
