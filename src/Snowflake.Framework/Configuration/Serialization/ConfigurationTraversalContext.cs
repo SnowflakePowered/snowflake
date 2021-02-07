@@ -186,6 +186,12 @@ namespace Snowflake.Configuration.Serialization
 
                 if (key.IsPath && value.Value is string fullPath)
                 {
+                    if (key.PathType == PathType.Raw)
+                    {
+                        nodes.Add(new StringConfigurationNode(serializedKey, fullPath));
+                        continue;
+                    }
+
                     string[] pathComponents = fullPath.Split(":", 2);
                     if (pathComponents.Length != 2)
                         throw new ArgumentException("Path strings must be fully qualified with a namespace followed by a ':'.");
@@ -198,8 +204,8 @@ namespace Snowflake.Configuration.Serialization
                     if (!this.PathResolutionContext.TryGetValue(drive, out var rootDir))
                         throw new KeyNotFoundException($"Unable to find a root for the filesystem namespace {drive} in the context.");
 
-                    var directory = rootDir.OpenDirectory(directoryName, true);
-                    var file = directory.OpenFile(path, true);
+                    var directory = rootDir.OpenDirectory(directoryName);
+                    var file = rootDir.OpenFile(path);
 
                     IAbstractConfigurationNode pathNode = key.PathType switch
                     {
@@ -209,10 +215,9 @@ namespace Snowflake.Configuration.Serialization
                         PathType.Either => file.Created ? new StringConfigurationNode(serializedKey, file.UnsafeGetFilePath().FullName) : // lgtm [cs/call-to-obsolete-method]
                             new StringConfigurationNode(serializedKey, directory.UnsafeGetPath().FullName), // lgtm [cs/call-to-obsolete-method]
 #pragma warning restore CS0618 // Type or member is obsolete
-                        PathType.Raw => new StringConfigurationNode(serializedKey, path),
+                        PathType.Raw => new StringConfigurationNode(serializedKey, fullPath),
                         // UnknownConfigurationNodes are ignored in most serializers.
-                        _ => new UnknownConfigurationNode(serializedKey, path)
-                            as IAbstractConfigurationNode // hack to allow type inference,
+                        _ => new UnknownConfigurationNode(serializedKey, fullPath)
                     };
                     nodes.Add(pathNode);
                     continue;
@@ -240,7 +245,6 @@ namespace Snowflake.Configuration.Serialization
                     Enum rawVal => new EnumConfigurationNode(serializedKey, rawVal, rawVal.GetType()),
 
                     _ => new UnknownConfigurationNode(serializedKey, value.Value)
-                        as IAbstractConfigurationNode, // hack to allow type inference
                 };
                 nodes.Add(node);
             }

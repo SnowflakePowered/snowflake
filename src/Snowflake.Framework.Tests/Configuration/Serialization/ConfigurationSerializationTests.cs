@@ -28,7 +28,8 @@ namespace Snowflake.Configuration.Serialization.Tests
             var temp = Path.GetTempPath();
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
             var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
-
+            dir.OpenDirectory("program")
+              .OpenFile("RMGE01.wbfs").OpenStream().Close();
             configuration.Configuration.ExampleConfiguration.FullscreenResolution = FullscreenResolution.Resolution1152X648;
             var context = new ConfigurationTraversalContext(("game", dir));
 
@@ -52,7 +53,8 @@ namespace Snowflake.Configuration.Serialization.Tests
             var temp = Path.GetTempPath();
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
             var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
-
+            dir.OpenDirectory("program")
+              .OpenFile("RMGE01.wbfs").OpenStream().Close();
             configuration.Configuration.ExampleConfiguration.FullscreenResolution = FullscreenResolution.Resolution1152X648;
             var context = new ConfigurationTraversalContext(("game", dir));
 
@@ -75,7 +77,8 @@ namespace Snowflake.Configuration.Serialization.Tests
             var temp = Path.GetTempPath();
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
             var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
-
+            dir.OpenDirectory("program")
+              .OpenFile("RMGE01.wbfs").OpenStream().Close();
             configuration.Configuration.ExampleConfiguration.FullscreenResolution = FullscreenResolution.Resolution1152X648;
             var context = new ConfigurationTraversalContext(("game", dir));
             var list = context.TraverseCollection(configuration.Configuration);
@@ -98,7 +101,8 @@ namespace Snowflake.Configuration.Serialization.Tests
             var temp = Path.GetTempPath();
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
             var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
-
+            dir.OpenDirectory("program")
+              .OpenFile("RMGE01.wbfs").OpenStream().Close();
             configuration.Configuration.ExampleConfiguration.FullscreenResolution = FullscreenResolution.Resolution1152X648;
             var context = new ConfigurationTraversalContext(("game", dir));
 
