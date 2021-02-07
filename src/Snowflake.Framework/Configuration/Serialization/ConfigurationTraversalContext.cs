@@ -205,18 +205,19 @@ namespace Snowflake.Configuration.Serialization
                         throw new KeyNotFoundException($"Unable to find a root for the filesystem namespace {drive} in the context.");
 
                     var directory = rootDir.OpenDirectory(directoryName);
-                    var file = directory.OpenFile(path);
+                    var file = directory.OpenFile(path, true);
 #pragma warning disable CS0618 // Type or member is obsolete
                     switch (key.PathType)
                     {
-                        case PathType.Directory:
-                        case PathType.Either when !file.Created:
-                            nodes.Add(new StringConfigurationNode(serializedKey, directory.UnsafeGetPath().FullName)); // lgtm [cs/call-to-obsolete-method]
-                            break;
                         case PathType.File:
-                        case PathType.Either when file.Created:
+                        case PathType.Either when !String.IsNullOrEmpty(Path.GetExtension(path)) || file.Created:
                             nodes.Add(new StringConfigurationNode(serializedKey, file.UnsafeGetFilePath().FullName)); // lgtm [cs/call-to-obsolete-method]
                             break;
+                        case PathType.Directory:
+                        case PathType.Either:
+                            nodes.Add(new StringConfigurationNode(serializedKey, directory.UnsafeGetPath().FullName)); // lgtm [cs/call-to-obsolete-method]
+                            break;
+                        
                         default:
                             nodes.Add(new StringConfigurationNode(serializedKey, fullPath));
                             break;
