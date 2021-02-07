@@ -9,6 +9,7 @@ using System.Threading;
 using Snowflake.Persistence;
 using Dapper;
 using System.Text;
+using EmetFS = Emet.FileSystems;
 
 namespace Snowflake.Filesystem
 {
@@ -190,15 +191,21 @@ namespace Snowflake.Filesystem
 
         public bool ContainsDirectory(string directory)
         {
-            return this.RootFileSystem.DirectoryExists(this.ThisDirectory.Path / ((UPath)directory).ToRelative());
+            UPath fullPath = this.ThisDirectory.Path / ((UPath)directory).ToRelative();
+            string realPath = this.RootFileSystem.ConvertPathToInternal(fullPath);
+            var symlinkEntry = new EmetFS.DirectoryEntry(realPath, EmetFS.FileSystem.FollowSymbolicLinks.Always);
+            return symlinkEntry.FileType == EmetFS.FileType.Directory;
         }
 
         public bool ContainsFile(string file)
         {
             UPath filePath = ((UPath)file).ToRelative();
             var fullPath = this.ThisDirectory.Path / filePath;
-            return this.RootFileSystem.FileExists(fullPath) 
-                || this.RootFileSystem.DirectoryExists(fullPath);
+            string realPath = this.RootFileSystem.ConvertPathToInternal(fullPath);
+            var symlinkEntry = new EmetFS.DirectoryEntry(realPath, EmetFS.FileSystem.FollowSymbolicLinks.Always);
+            return 
+                symlinkEntry.FileType == EmetFS.FileType.Directory
+                || symlinkEntry.FileType == EmetFS.FileType.File;
         }
 
         public IDeletableDirectory OpenDirectory(string name)
