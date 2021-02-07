@@ -366,22 +366,10 @@ namespace Snowflake.Filesystem
             throw new DirectoryNotFoundException($"Directory {name} does not exist within {this.Name}.");
         }
 
-        IReadOnlyDirectory IReadOnlyDirectory.OpenDirectory(string name, bool createIfNotExists)
-        {
-            if (createIfNotExists) return this.OpenDirectory(name).AsReadOnly();
-            return (this as IReadOnlyDirectory).OpenDirectory(name);
-        }
-
         IReadOnlyFile IReadOnlyDirectory.OpenFile(string file)
         {
             if (this.ContainsFile(file)) return this.OpenFile(file, false).AsReadOnly();
             throw new FileNotFoundException($"File {file} does not exist within the directory {this.Name}.");
-        }
-
-        IReadOnlyFile IReadOnlyDirectory.OpenFile(string file, bool createIfNotExists)
-        {
-            if (createIfNotExists) return this.OpenFile(file, false).AsReadOnly();
-            return (this as IReadOnlyDirectory).OpenFile(file);
         }
 
         IEnumerable<IReadOnlyDirectory> IReadOnlyDirectory.EnumerateDirectories()
