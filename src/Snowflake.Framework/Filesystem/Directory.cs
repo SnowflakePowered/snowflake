@@ -42,7 +42,7 @@ namespace Snowflake.Filesystem
             this.Name = name;
             this.UseManifest = useManifest;
 
-            if (this.UseManifest)
+            if (this.UseManifest || this.IsManifested)
             {
                 var manifestPath = this.RootFileSystem.ConvertPathToInternal(this.ThisDirectory.Path / ".manifest");
                 this.DatabaseLock = Directory.DatabaseLocks.GetOrAdd(manifestPath, new object());
@@ -545,7 +545,7 @@ namespace Snowflake.Filesystem
             {
                 throw new PlatformNotSupportedException("This operating system does not support symbolic link projections.");
             }
-            OSFileSystem.CreateSymbolicLink(realTargetPath, fileInfo.FullName, Emet.FileSystems.FileType.File);
+            OSFileSystem.CreateSymbolicLink(fileInfo.FullName, realTargetPath, Emet.FileSystems.FileType.File);
             return (this as IReadOnlyDirectory).OpenFile(name);
 #pragma warning restore CS0618 // Type or member is obsolete
         }
