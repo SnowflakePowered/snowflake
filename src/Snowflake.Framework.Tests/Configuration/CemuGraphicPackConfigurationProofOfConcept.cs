@@ -10,7 +10,7 @@ namespace Snowflake.Configuration
     [ConfigurationTarget("#cemu")]
     public interface CemuConfigurationCollection : IConfigurationCollection<CemuConfigurationCollection>
     {
-        [ConfigurationTargetMember("#cemu")]
+        [ConfigurationTargetMember("#cemu", true)]
         CemuRootConfigSection Content { get; set; }
 
         [ConfigurationTargetMember("#cemu")]
