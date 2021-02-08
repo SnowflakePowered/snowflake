@@ -85,23 +85,6 @@ namespace Snowflake.Configuration.Serialization
         }
 
         [Fact]
-        public void RecursiveTarget_Test()
-        {
-            var configuration =
-             new ConfigurationCollection<DoubleTargetConfigurationCollection>(new ConfigurationValueCollection());
-
-            var fs = new PhysicalFileSystem();
-            var temp = Path.GetTempPath();
-            var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
-            var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
-            dir.OpenDirectory("program")
-                .OpenFile("RMGE01.wbfs").OpenStream().Close();
-            var context = new ConfigurationTraversalContext(("game", dir));
-
-            context.TraverseCollection(configuration.Configuration);
-        }
-
-        [Fact]
         public void InputTemplateToAbstractConfigurationNode_Test()
         {
             var mapcol = new ControllerElementMappingProfile("Keyboard",
@@ -180,7 +163,7 @@ namespace Snowflake.Configuration.Serialization
 
                 if (node.Key == "TestNestedSection")
                 {
-                    Assert.Equal("TestNestedNestedSection", (node as ListConfigurationNode).Value[0].Key);
+                    Assert.Equal("TestNestedNestedSection", (node as ListConfigurationNode).Value[1].Key);
                 }
             }
         }
@@ -257,7 +240,7 @@ namespace Snowflake.Configuration.Serialization
 
                 if (node.Key == "TestNestedSection")
                 {
-                    Assert.Equal("TestNestedNestedSection", (node as ListConfigurationNode).Value[0].Key);
+                    Assert.Equal("TestNestedNestedSection", (node as ListConfigurationNode).Value[1].Key);
                 }
             }
         }
