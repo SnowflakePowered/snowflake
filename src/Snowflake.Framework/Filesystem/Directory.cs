@@ -573,6 +573,15 @@ namespace Snowflake.Filesystem
             }
             return this.OpenDirectory(name, false);
         }
+
+        IEnumerable<IReadOnlyDirectory> IMutableDirectoryBase<IProjectingDirectory, IReadOnlyDirectory, IReadOnlyFile>.EnumerateDirectories()
+            => this.AsReadOnly().EnumerateDirectories();
+
+        IEnumerable<IReadOnlyFile> IMutableDirectoryBase<IProjectingDirectory, IReadOnlyDirectory, IReadOnlyFile>.EnumerateFiles()
+            => this.AsReadOnly().EnumerateFiles();
+
+        IEnumerable<IReadOnlyFile> IMutableDirectoryBase<IProjectingDirectory, IReadOnlyDirectory, IReadOnlyFile>.EnumerateFilesRecursive()
+            => this.AsReadOnly().EnumerateFilesRecursive();
     }
 }
 

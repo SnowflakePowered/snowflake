@@ -77,18 +77,11 @@ namespace Snowflake.Filesystem
         }
 
         IEnumerable<IReadOnlyFile> IMutableDirectoryBase<IProjectingDirectory, IReadOnlyDirectory, IReadOnlyFile>.EnumerateFiles()
-        {
-            throw new NotImplementedException();
-        }
+            => this.Base.AsReadOnly().EnumerateFiles();
 
         IEnumerable<IReadOnlyFile> IMutableDirectoryBase<IProjectingDirectory, IReadOnlyDirectory, IReadOnlyFile>.EnumerateFilesRecursive()
-        {
-            throw new NotImplementedException();
-        }
-
+            => this.Base.AsReadOnly().EnumerateFilesRecursive();
         IEnumerable<IReadOnlyDirectory> IMutableDirectoryBase<IProjectingDirectory, IReadOnlyDirectory, IReadOnlyFile>.EnumerateDirectories()
-        {
-            throw new NotImplementedException();
-        }
+            => this.Base.AsReadOnly().EnumerateDirectories();
     }
 }
