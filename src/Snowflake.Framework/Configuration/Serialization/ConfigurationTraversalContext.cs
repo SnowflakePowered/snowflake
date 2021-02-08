@@ -112,7 +112,11 @@ namespace Snowflake.Configuration.Serialization
                 .GetPublicProperties()
                 .Where(props => props.GetIndexParameters().Length == 0
                         && props.PropertyType.GetInterfaces().Contains(typeof(IConfigurationSection)))
-                .ToDictionary(p => p.Name, p => p.GetAttribute<ConfigurationTargetMemberAttribute>()?.TargetName ?? NullTarget);
+                .ToDictionary(p => p.Name, p =>
+                    {
+                        var attribute = p.GetAttribute<ConfigurationTargetMemberAttribute>();
+                        return (attribute?.TargetName ?? NullTarget, attribute?.Explode ?? false);
+                    });
 
             // If there are no targets, then there is nothing to do.
             if (targetMappings == null) return new Dictionary<string, IAbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>>>();
@@ -128,9 +132,18 @@ namespace Snowflake.Configuration.Serialization
 
             foreach (var (key, value) in collection)
             {
-                string targetName = targetMappings[key];
+                (string targetName, bool explode) = targetMappings[key];
                 if (!flatTargets.ContainsKey(targetName) || targetName == ConfigurationTraversalContext.NullTarget) continue;
-                flatTargets[targetName].nodes.Add(new ListConfigurationNode(value.Descriptor.SectionName, this.TraverseSection(value).AsReadOnly()));
+                if (!explode)
+                {
+                    flatTargets[targetName]
+                        .nodes.Add(new ListConfigurationNode(value.Descriptor.SectionName, this.TraverseSection(value).AsReadOnly()));
+                }
+                else
+                {
+                    flatTargets[targetName]
+                        .nodes.AddRange(this.TraverseSection(value));
+                }
             }
 
             var targets = ConfigurationTraversalContext.ResolveConfigurationTargets(collection);
