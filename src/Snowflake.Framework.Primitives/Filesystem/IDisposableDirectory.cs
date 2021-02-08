@@ -8,7 +8,7 @@ namespace Snowflake.Filesystem
 {
     public interface IDisposableDirectory
         : IDisposable, 
-        IMutableDirectoryBase<IProjectingDirectory>
+        IMutableDirectoryBase
     {
     }
 }

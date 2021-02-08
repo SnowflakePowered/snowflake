@@ -46,6 +46,14 @@ namespace Snowflake.Filesystem
         /// <returns></returns>
         public static IDeletableMoveFromableDirectory AsMoveFromable(this IDeletableDirectory @this) =>
             ((IMutableDirectoryBase<IDeletableDirectory, IDeletableMoveFromableDirectory>)@this).ReopenAs();
+
+        /// <summary>
+        /// Returns an disposable version of this directory.
+        /// </summary>
+        /// <exception cref="System.IO.IOException">When the directory is not empty.</exception>
+        /// <returns></returns>
+        public static IDisposableDirectory AsDisposable(this IMutableDirectoryBase<IDeletableDirectory, IDisposableDirectory> @this)
+            => @this.ReopenAs();
     }
 }
 #pragma warning restore CS0618
