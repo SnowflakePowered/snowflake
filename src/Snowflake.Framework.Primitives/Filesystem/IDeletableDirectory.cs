@@ -16,11 +16,11 @@ namespace Snowflake.Filesystem
     /// </summary>
     public interface IDeletableDirectory 
         : IDirectory,
-          IMutableDirectoryBase<IDeletableDirectory>,
-          IMutableDirectoryBase<IDeletableDirectory, IDirectory>,
-          IMutableDirectoryBase<IDeletableDirectory, IReadOnlyDirectory>,
-          IMutableDirectoryBase<IDeletableDirectory, IDisposableDirectory>,
-          IMutableDirectoryBase<IDeletableDirectory, IDeletableMoveFromableDirectory>
+          IDirectoryOpeningDirectoryBase<IDeletableDirectory>,
+          IReopenableDirectoryBase<IDirectory>,
+          IReopenableDirectoryBase<IReadOnlyDirectory>,
+          IReopenableDirectoryBase<IDisposableDirectory>,
+          IReopenableDirectoryBase<IDeletableMoveFromableDirectory>
     {
         /// <summary>
         /// Deletes the directory, including all files and subdirectories included.

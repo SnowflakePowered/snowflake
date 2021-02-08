@@ -16,28 +16,21 @@ namespace Snowflake.Filesystem
         /// Returns an undeletable version of this directory
         /// </summary>
         /// <returns></returns>
-        public static IDirectory AsIndelible(this IMutableDirectoryBase<IDeletableDirectory, IDirectory> @this) 
+        public static IDirectory AsIndelible(this IReopenableDirectoryBase<IDirectory> @this) 
             => @this.ReopenAs();
 
         /// <summary>
         /// Returns an undeletable version of this directory
         /// </summary>
         /// <returns></returns>
-        public static IDirectory AsIndelible(this IMutableDirectoryBase<IMoveFromableDirectory, IDirectory> @this)
-            => @this.ReopenAs();
-
-        /// <summary>
-        /// Returns an undeletable version of this directory
-        /// </summary>
-        /// <returns></returns>
-        public static IReadOnlyDirectory AsReadOnly(this IMutableDirectoryBase<IDeletableDirectory, IReadOnlyDirectory> @this)
+        public static IReadOnlyDirectory AsReadOnly(this IReopenableDirectoryBase<IReadOnlyDirectory> @this)
             => @this.ReopenAs();
 
         /// <summary>
         /// Returns a version of this directory that can have files moved into it.
         /// </summary>
         /// <returns></returns>
-        public static IMoveFromableDirectory AsMoveFromable(this IMutableDirectoryBase<IDeletableDirectory, IMoveFromableDirectory> @this) =>
+        public static IMoveFromableDirectory AsMoveFromable(this IReopenableDirectoryBase<IMoveFromableDirectory> @this) =>
             @this.ReopenAs();
 
         /// <summary>
@@ -45,14 +38,14 @@ namespace Snowflake.Filesystem
         /// </summary>
         /// <returns></returns>
         public static IDeletableMoveFromableDirectory AsMoveFromable(this IDeletableDirectory @this) =>
-            ((IMutableDirectoryBase<IDeletableDirectory, IDeletableMoveFromableDirectory>)@this).ReopenAs();
+            ((IReopenableDirectoryBase<IDeletableMoveFromableDirectory>)@this).ReopenAs();
 
         /// <summary>
         /// Returns an disposable version of this directory.
         /// </summary>
         /// <exception cref="System.IO.IOException">When the directory is not empty.</exception>
         /// <returns></returns>
-        public static IDisposableDirectory AsDisposable(this IMutableDirectoryBase<IDeletableDirectory, IDisposableDirectory> @this)
+        public static IDisposableDirectory AsDisposable(this IReopenableDirectoryBase<IDisposableDirectory> @this)
             => @this.ReopenAs();
     }
 }

@@ -73,15 +73,15 @@ namespace Snowflake.Filesystem
 
         public IProjectingDirectory OpenDirectory(string name)
         {
-            return (this.Base as IMutableDirectoryBase<IProjectingDirectory>).OpenDirectory(name);
+            return (this.Base as IDirectoryOpeningDirectoryBase<IProjectingDirectory>).OpenDirectory(name);
         }
 
-        IEnumerable<IReadOnlyFile> IMutableDirectoryBase<IProjectingDirectory, IReadOnlyDirectory, IReadOnlyFile>.EnumerateFiles()
+        IEnumerable<IReadOnlyFile> IEnumerableDirectoryBase<IReadOnlyDirectory, IReadOnlyFile>.EnumerateFiles()
             => this.Base.AsReadOnly().EnumerateFiles();
 
-        IEnumerable<IReadOnlyFile> IMutableDirectoryBase<IProjectingDirectory, IReadOnlyDirectory, IReadOnlyFile>.EnumerateFilesRecursive()
+        IEnumerable<IReadOnlyFile> IEnumerableDirectoryBase<IReadOnlyDirectory, IReadOnlyFile>.EnumerateFilesRecursive()
             => this.Base.AsReadOnly().EnumerateFilesRecursive();
-        IEnumerable<IReadOnlyDirectory> IMutableDirectoryBase<IProjectingDirectory, IReadOnlyDirectory, IReadOnlyFile>.EnumerateDirectories()
+        IEnumerable<IReadOnlyDirectory> IEnumerableDirectoryBase<IReadOnlyDirectory, IReadOnlyFile>.EnumerateDirectories()
             => this.Base.AsReadOnly().EnumerateDirectories();
     }
 }
