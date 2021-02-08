@@ -49,16 +49,6 @@ namespace Snowflake.Filesystem
 
         public IEnumerable<IFile> EnumerateFilesRecursive() => this.Base.EnumerateFilesRecursive();
 
-        public IEnumerable<IProjectingDirectory> EnumerateDirectories()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IProjectingDirectory OpenDirectory(string name)
-        {
-            throw new NotImplementedException();
-        }
-
         public IFile OpenFile(string file) => this.Base.OpenFile(file);
 
         public System.IO.DirectoryInfo UnsafeGetPath() => this.Base.UnsafeGetPath();
