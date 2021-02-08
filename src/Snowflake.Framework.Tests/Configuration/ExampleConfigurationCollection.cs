@@ -19,5 +19,8 @@ namespace Snowflake.Configuration.Tests
     {
         [ConfigurationTargetMember("#dolphin")]
         ExampleConfigurationSection ExampleConfiguration { get; }
+
+        [ConfigurationTargetMember("TestNestedSection")]
+        ExampleConfigurationSection ExampleConfiguration2 { get; }
     }
 }
