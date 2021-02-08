@@ -20,17 +20,17 @@ namespace Snowflake.Configuration.Serialization.Serializers.Implementations
             context.AppendLine($"<{this.RootElementName}>");
         }
 
-        public override void SerializeFooter( IConfigurationSerializationContext<string> context)
+        public override void SerializeFooter(IConfigurationSerializationContext<string> context)
         {
             context.AppendLine($"</{this.RootElementName}>");
         }
 
-        public override void SerializeBlockBegin( IConfigurationSerializationContext<string> context, int index)
+        public override void SerializeBlockBegin(IConfigurationSerializationContext<string> context, int index)
         {
             // todo: sanitize
             context.AppendLine($"<{context.GetCurrentScope()}>");
         }
-        public override void SerializeBlockEnd( IConfigurationSerializationContext<string> context, int index)
+        public override void SerializeBlockEnd(IConfigurationSerializationContext<string> context, int index)
         {
             // todo: sanitize
             context.AppendLine($"</{context.GetCurrentScope()}>");

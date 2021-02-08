@@ -114,5 +114,28 @@ namespace Snowflake.Configuration.Serialization.Tests
             var jtoken = JToken.Parse(outputJson);
             Assert.True(jtoken.HasValues);
         }
+
+
+        [Fact]
+        public void CollectionToAbstractConfigurationNodeCemuXmlSerializer_Test()
+        {
+            var configuration =
+              new ConfigurationCollection<CemuConfigurationCollection>(new ConfigurationValueCollection());
+
+            var fs = new PhysicalFileSystem();
+            var temp = Path.GetTempPath();
+            var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
+            var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
+            
+            var context = new ConfigurationTraversalContext(("game", dir));
+            var list = context.TraverseCollection(configuration.Configuration);
+            IAbstractConfigurationNode dolphinList = list["#cemu"];
+
+            var xmlSerializer = new SimpleXmlConfigurationSerializer("content");
+
+            string outputXml = xmlSerializer.Transform(dolphinList);
+            XDocument doc = XDocument.Parse(outputXml);
+            Assert.NotEmpty(doc.Nodes());
+        }
     }
 }
