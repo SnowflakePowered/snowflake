@@ -14,7 +14,8 @@ using OSFileSystem = Emet.FileSystems.FileSystem;
 namespace Snowflake.Filesystem
 {
     internal sealed class Directory : IDeletableDirectory, 
-            IReadOnlyDirectory, IDirectory, IMoveFromableDirectory, IDeletableMoveFromableDirectory, IProjectingDirectory
+            IReadOnlyDirectory, IDirectory, IMoveFromableDirectory, IDeletableMoveFromableDirectory, IProjectingDirectory,
+        IMutableDirectoryBase<IProjectingDirectory>
     {
         internal static ConcurrentDictionary<string, object> DatabaseLocks = new ConcurrentDictionary<string, object>();
 
@@ -571,11 +572,6 @@ namespace Snowflake.Filesystem
                 return existingDir;
             }
             return this.OpenDirectory(name, false);
-        }
-
-        IEnumerable<IProjectingDirectory> IMutableDirectoryBase<IProjectingDirectory>.EnumerateDirectories()
-        {
-            throw new NotImplementedException();
         }
     }
 }

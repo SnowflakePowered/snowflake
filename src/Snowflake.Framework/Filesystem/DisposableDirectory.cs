@@ -70,5 +70,25 @@ namespace Snowflake.Filesystem
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
+
+        public IProjectingDirectory OpenDirectory(string name)
+        {
+            return (this.Base as IMutableDirectoryBase<IProjectingDirectory>).OpenDirectory(name);
+        }
+
+        IEnumerable<IReadOnlyFile> IMutableDirectoryBase<IProjectingDirectory, IReadOnlyDirectory, IReadOnlyFile>.EnumerateFiles()
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerable<IReadOnlyFile> IMutableDirectoryBase<IProjectingDirectory, IReadOnlyDirectory, IReadOnlyFile>.EnumerateFilesRecursive()
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerable<IReadOnlyDirectory> IMutableDirectoryBase<IProjectingDirectory, IReadOnlyDirectory, IReadOnlyFile>.EnumerateDirectories()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
