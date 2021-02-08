@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 namespace Snowflake.Filesystem
 {
     public interface IProjectingDirectory
-        : IMutableDirectoryBase<IProjectingDirectory>,
-        IMutableDirectoryBase<IProjectingDirectory, IReadOnlyDirectory, IReadOnlyFile>
+        : IMutableDirectoryBase,
+          IFileOpeningDirectoryBase<IFile>,
+        IDirectoryOpeningDirectoryBase<IProjectingDirectory>,
+        IEnumerableDirectoryBase<IReadOnlyDirectory, IReadOnlyFile>
     {
         IReadOnlyFile Project(IFile file);
         IReadOnlyFile Project(IFile file, string name);

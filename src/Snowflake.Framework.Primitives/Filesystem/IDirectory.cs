@@ -15,35 +15,20 @@ namespace Snowflake.Filesystem
     /// Thus, metadata can be preserved throughout.
     /// </summary>
     public interface IDirectory 
-        : IMutableDirectoryBase<IDeletableDirectory>,
-        IMutableDirectoryBase<IDeletableDirectory, IReadOnlyDirectory>,
-        IMutableDirectoryBase<IDeletableDirectory, IMoveFromableDirectory>,
-        IMutableDirectoryBase<IDeletableDirectory, IDeletableDirectory, IFile>
+        : IMutableDirectoryBase,
+          IFileOpeningDirectoryBase<IFile>,
+          IDirectoryOpeningDirectoryBase<IDeletableDirectory>,
+          IReopenableDirectoryBase<IReadOnlyDirectory>,
+          IReopenableDirectoryBase<IMoveFromableDirectory>,
+          IEnumerableDirectoryBase<IDeletableDirectory, IFile>
     {
-       
-        /// <summary>
-        /// Opens an existing descendant directory with the given name.
-        /// If the directory does not exist, creates the directory.
-        /// You can open a nested directory using '/' as the path separator, and it 
-        /// will be created relative to this current directory.
-        /// </summary>
-        /// <param name="name">The name of the existing directory</param>
-        /// <returns>The directory if it exists, or null if it does not.</returns>
-        new IDeletableDirectory OpenDirectory(string name);
-
-        /// <summary>
-        /// Enumerates all direct child directories of this <see cref="IDirectory"/>.
-        /// </summary>
-        /// <returns>All direct children directories.</returns>
-        new IEnumerable<IDeletableDirectory> EnumerateDirectories();
-
-
         /// <summary>
         /// <para>
         /// Creates a link to an unmanaged <see cref="FileInfo"/> that exists outside of
         /// a <see cref="IDirectory"/>. Links are akin to shortcuts more than symbolic links,
         /// being represented as a text file with a real file path to another file on the file system.
-        ///  Do not ever link to another <see cref="IFile"/>. Instead, use <see cref="IMutableDirectoryBase.CopyFrom(IReadOnlyFile)"/>.
+        /// 
+        /// Do not ever link to another <see cref="IFile"/>. Instead, use <see cref="IMutableDirectoryBase.CopyFrom(IReadOnlyFile)"/>.
         /// </para>
         /// <para>
         /// Links are transparent, i.e. <see cref="IFile.OpenStream()"/> will open a stream to the linked file, and

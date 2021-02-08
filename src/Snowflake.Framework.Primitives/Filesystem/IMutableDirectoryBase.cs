@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading;
@@ -19,24 +18,6 @@ namespace Snowflake.Filesystem
         /// Gets the name of the directory
         /// </summary>
         string Name { get; }
-
-        /// <summary>
-        /// Opens or creates a file, adding it to the manifest and assigning it a
-        /// unique <see cref="Guid"/>.
-        /// 
-        /// Unlike <see cref="IMutableDirectoryBase{T}.OpenDirectory(string)"/>, you can not use the path separator to
-        /// open a nested file. Paths will be truncated with <see cref="Path.GetFileName(string)"/>.
-        /// 
-        /// Instead, use <see cref="IMutableDirectoryBase{T}.OpenDirectory(string)"/> to open the directory of the desired file,
-        /// then call <see cref="OpenFile(string)"/> on the returned instance.
-        /// 
-        /// Keep in mind this does not actually create a file on the underlying file system. 
-        /// However, you can use <see cref="IFile.OpenStream()"/> and friends to create the file
-        /// if it does not yet exist.
-        /// </summary>
-        /// <param name="file">The name of the file. If this is a path, will be truncated with <see cref="Path.GetFileName(string)"/></param>
-        /// <returns>An object that associates a given file with a with a unique <see cref="Guid"/></returns>
-        IFile OpenFile(string file);
 
         /// <summary>
         /// Copies a file from an unmanaged <see cref="FileInfo"/> that exists outside of
@@ -159,82 +140,5 @@ namespace Snowflake.Filesystem
         /// <returns>The underlying <see cref="DirectoryInfo"/> where files are contained.</returns>
         [Obsolete("Avoid accessing the underlying file path, and use the object methods instead.")]
         DirectoryInfo UnsafeGetPath();
-    }
-
-    /// <summary>
-    /// Base interface for a mutable directory.
-    /// 
-    /// Never refer to this interface directly. The most basic directory type is <see cref="IDirectory"/>
-    /// </summary>
-    /// <typeparam name="TChildDirectory">The type of child directory this directory will open</typeparam>
-    public interface IMutableDirectoryBase<TChildDirectory>
-        : IMutableDirectoryBase
-    {
-        /// <summary>
-        /// Opens an existing descendant directory with the given name.
-        /// If the directory does not exist, creates the directory.
-        /// You can open a nested directory using '/' as the path separator, and it 
-        /// will be created relative to this current directory.
-        /// </summary>
-        /// <param name="name">The name of the existing directory</param>
-        /// <returns>The directory if it exists, or null if it does not.</returns>
-        TChildDirectory OpenDirectory(string name);
-    }
-
-    /// <summary>
-    /// Base interface for a mutable directory.
-    /// 
-    /// The most basic directory type is <see cref="IDirectory"/>
-    /// </summary>
-    /// <typeparam name="TChildDirectory">The type of child directory this directory will open</typeparam>
-    /// <typeparam name="TReopenableAs">The type of directory this directory can be reopenable as</typeparam>
-    public interface IMutableDirectoryBase<TChildDirectory, TReopenableAs>
-        : IMutableDirectoryBase<TChildDirectory>
-    {
-        /// <summary>
-        /// Reopens the directory with the implemented capability.
-        /// 
-        /// This is an implementation detail, and if used incorrectly, will cause issues. 
-        /// Instead, use the extension methods in <see cref="DirectoryConversionExtensions"/>, such as
-        /// <see cref="DirectoryConversionExtensions.AsReadOnly(IMutableDirectoryBase{IDeletableDirectory, IReadOnlyDirectory})"/>
-        /// or <see cref="DirectoryConversionExtensions.AsIndelible(IMutableDirectoryBase{IMoveFromableDirectory, IDirectory})"/>.
-        /// </summary>
-        /// <returns>The directory with the implemented capability.</returns>
-        [Obsolete("Internal implementation detail. Use As* methods instead.")]
-        TReopenableAs ReopenAs();
-    }
-
-    /// <summary>
-    /// Base interface for a mutable directory.
-    /// 
-    /// This interface defines enumeration.
-    /// 
-    /// The most basic directory type is <see cref="IDirectory"/>
-    /// </summary>
-    /// <typeparam name="TChildDirectory">The type of child directory this directory will open</typeparam>
-    /// <typeparam name="TDirectoryEnumerableAs">The type of directory this directory will enumerate as.</typeparam>
-    /// <typeparam name="TFileEnumerableAs">The type of files this directory will enumerate as.</typeparam>
-    public interface IMutableDirectoryBase<TChildDirectory, TDirectoryEnumerableAs, TFileEnumerableAs>
-        : IMutableDirectoryBase<TChildDirectory>
-    {
-        /// <summary>
-        /// Enumerates all direct child directories of this <see cref="IDirectory"/>.
-        /// </summary>
-        /// <returns>All direct children directories.</returns>
-        IEnumerable<TDirectoryEnumerableAs> EnumerateDirectories();
-
-        /// <summary>
-        /// Enumerates all files in this directory,
-        /// </summary>
-        /// <returns>All direct children files.</returns>
-        IEnumerable<TFileEnumerableAs> EnumerateFiles();
-
-        /// <summary>
-        /// Recursively enumerates all files that are contained in this directory.
-        /// 
-        /// This method is usually implemented as a Breadth-first search, but no order is guaranteed.
-        /// </summary>
-        /// <returns>All files contained within this directory, including descendant subfolders.</returns>
-        IEnumerable<TFileEnumerableAs> EnumerateFilesRecursive();
     }
 }

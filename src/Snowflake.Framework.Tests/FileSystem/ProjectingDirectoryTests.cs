@@ -10,7 +10,7 @@ using Snowflake.Filesystem;
 using Zio.FileSystems;
 using Directory = Snowflake.Filesystem.Directory;
 
-namespace Snowflake.FileSystem
+namespace Snowflake.Filesystem.Tests
 {
     public class ProjectingDirectoryTests
     {
@@ -34,6 +34,7 @@ namespace Snowflake.FileSystem
                 str.WriteByte(255);
             }// safe the file
 
+            
             var projecting = dir.OpenDirectory("test");
             var file2 = projecting.Project(file);
             Assert.Equal(1, file2.Length);

@@ -8,8 +8,10 @@ namespace Snowflake.Filesystem
 {
     public interface IDisposableDirectory
         : IDisposable, 
-        IMutableDirectoryBase<IProjectingDirectory>,
-        IMutableDirectoryBase<IProjectingDirectory, IReadOnlyDirectory, IReadOnlyFile>
+        IMutableDirectoryBase,
+        IFileOpeningDirectoryBase<IFile>,
+        IDirectoryOpeningDirectoryBase<IProjectingDirectory>,
+        IEnumerableDirectoryBase<IReadOnlyDirectory, IReadOnlyFile>
     {
     }
 }

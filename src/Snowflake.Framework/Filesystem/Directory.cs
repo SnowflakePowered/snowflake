@@ -15,7 +15,7 @@ namespace Snowflake.Filesystem
 {
     internal sealed class Directory : IDeletableDirectory, 
             IReadOnlyDirectory, IDirectory, IMoveFromableDirectory, IDeletableMoveFromableDirectory, IProjectingDirectory,
-        IMutableDirectoryBase<IProjectingDirectory>
+        IDirectoryOpeningDirectoryBase<IProjectingDirectory>
     {
         internal static ConcurrentDictionary<string, object> DatabaseLocks = new ConcurrentDictionary<string, object>();
 
@@ -391,29 +391,29 @@ namespace Snowflake.Filesystem
             }
         }
 
-        IReadOnlyDirectory IReadOnlyDirectory.OpenDirectory(string name)
+        IReadOnlyDirectory IDirectoryOpeningDirectoryBase<IReadOnlyDirectory>.OpenDirectory(string name)
         {
             if (this.ContainsDirectory(name)) return (Directory)this.OpenDirectory(name);
             throw new DirectoryNotFoundException($"Directory {name} does not exist within {this.Name}.");
         }
 
-        IReadOnlyFile IReadOnlyDirectory.OpenFile(string file)
+        IReadOnlyFile IFileOpeningDirectoryBase<IReadOnlyFile>.OpenFile(string file)
         {
             if (this.ContainsFile(Path.GetFileName(file))) return this.OpenFile(file, false).AsReadOnly();
             throw new FileNotFoundException($"File {file} does not exist within the directory {this.Name}.");
         }
 
-        IEnumerable<IReadOnlyDirectory> IReadOnlyDirectory.EnumerateDirectories()
+        IEnumerable<IReadOnlyDirectory> IEnumerableDirectoryBase<IReadOnlyDirectory, IReadOnlyFile>.EnumerateDirectories()
         {
             return this.EnumerateDirectories().Select(d => d.AsReadOnly());
         }
 
-        IEnumerable<IReadOnlyFile> IReadOnlyDirectory.EnumerateFiles()
+        IEnumerable<IReadOnlyFile> IEnumerableDirectoryBase<IReadOnlyDirectory, IReadOnlyFile>.EnumerateFiles()
         {
             return this.EnumerateFiles().Select(f => f.AsReadOnly());
         }
 
-        IEnumerable<IReadOnlyFile> IReadOnlyDirectory.EnumerateFilesRecursive()
+        IEnumerable<IReadOnlyFile> IEnumerableDirectoryBase<IReadOnlyDirectory, IReadOnlyFile>.EnumerateFilesRecursive()
         {
             return this.EnumerateFilesRecursive().Select(f => f.AsReadOnly());
         }
@@ -467,19 +467,19 @@ namespace Snowflake.Filesystem
             return this.OpenFile(fileName, true);
         }
 
-        IReadOnlyDirectory IMutableDirectoryBase<IDeletableDirectory, IReadOnlyDirectory>.ReopenAs()
+        IReadOnlyDirectory IReopenableDirectoryBase<IReadOnlyDirectory>.ReopenAs()
             => this;
 
-        IMoveFromableDirectory IMutableDirectoryBase<IDeletableDirectory, IMoveFromableDirectory>.ReopenAs()
+        IMoveFromableDirectory IReopenableDirectoryBase<IMoveFromableDirectory>.ReopenAs()
             => this;
 
-        IDirectory IMutableDirectoryBase<IDeletableDirectory, IDirectory>.ReopenAs()
+        IDirectory IReopenableDirectoryBase<IDirectory>.ReopenAs()
             => this;
 
-        IDeletableMoveFromableDirectory IMutableDirectoryBase<IDeletableDirectory, IDeletableMoveFromableDirectory>.ReopenAs()
+        IDeletableMoveFromableDirectory IReopenableDirectoryBase<IDeletableMoveFromableDirectory>.ReopenAs()
             => this;
 
-        IDisposableDirectory IMutableDirectoryBase<IDeletableDirectory, IDisposableDirectory>.ReopenAs()
+        IDisposableDirectory IReopenableDirectoryBase<IDisposableDirectory>.ReopenAs()
         {
             if (this.EnumerateDirectories().Any() || this.EnumerateFiles().Any())
             {
@@ -555,7 +555,7 @@ namespace Snowflake.Filesystem
             throw new NotImplementedException();
         }
 
-        IProjectingDirectory IMutableDirectoryBase<IProjectingDirectory>.OpenDirectory(string name)
+        IProjectingDirectory IDirectoryOpeningDirectoryBase<IProjectingDirectory>.OpenDirectory(string name)
         {
             if (this.IsManifested || this.UseManifest)
             {
@@ -573,15 +573,6 @@ namespace Snowflake.Filesystem
             }
             return this.OpenDirectory(name, false);
         }
-
-        IEnumerable<IReadOnlyDirectory> IMutableDirectoryBase<IProjectingDirectory, IReadOnlyDirectory, IReadOnlyFile>.EnumerateDirectories()
-            => this.AsReadOnly().EnumerateDirectories();
-
-        IEnumerable<IReadOnlyFile> IMutableDirectoryBase<IProjectingDirectory, IReadOnlyDirectory, IReadOnlyFile>.EnumerateFiles()
-            => this.AsReadOnly().EnumerateFiles();
-
-        IEnumerable<IReadOnlyFile> IMutableDirectoryBase<IProjectingDirectory, IReadOnlyDirectory, IReadOnlyFile>.EnumerateFilesRecursive()
-            => this.AsReadOnly().EnumerateFilesRecursive();
     }
 }
 
