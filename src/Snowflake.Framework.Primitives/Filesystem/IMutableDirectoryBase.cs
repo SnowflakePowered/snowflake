@@ -135,20 +135,6 @@ namespace Snowflake.Filesystem
         Task<IFile> CopyFromAsync(IReadOnlyFile source, bool overwrite, CancellationToken cancellation = default);
 
         /// <summary>
-        /// Enumerates all files in this directory,
-        /// </summary>
-        /// <returns>All direct children files.</returns>
-        IEnumerable<IFile> EnumerateFiles();
-
-        /// <summary>
-        /// Recursively enumerates all files that are contained in this directory.
-        /// 
-        /// This method is usually implemented as a Breadth-first search, but no order is guaranteed.
-        /// </summary>
-        /// <returns>All files contained within this directory, including descendant subfolders.</returns>
-        IEnumerable<IFile> EnumerateFilesRecursive();
-
-        /// <summary>
         /// Whether or not this directory contains a file or directory in its manifest. If provided a
         /// full path, this will truncate the path using <see cref="Path.GetFileName(string)"/>
         /// </summary>
@@ -193,12 +179,6 @@ namespace Snowflake.Filesystem
         /// <param name="name">The name of the existing directory</param>
         /// <returns>The directory if it exists, or null if it does not.</returns>
         TChildDirectory OpenDirectory(string name);
-
-        /// <summary>
-        /// Enumerates all direct child directories of this <see cref="IDirectory"/>.
-        /// </summary>
-        /// <returns>All direct children directories.</returns>
-        IEnumerable<TChildDirectory> EnumerateDirectories();
     }
 
     /// <summary>
@@ -222,5 +202,39 @@ namespace Snowflake.Filesystem
         /// <returns>The directory with the implemented capability.</returns>
         [Obsolete("Internal implementation detail. Use As* methods instead.")]
         TReopenableAs ReopenAs();
+    }
+
+    /// <summary>
+    /// Base interface for a mutable directory.
+    /// 
+    /// This interface defines enumeration.
+    /// 
+    /// The most basic directory type is <see cref="IDirectory"/>
+    /// </summary>
+    /// <typeparam name="TChildDirectory">The type of child directory this directory will open</typeparam>
+    /// <typeparam name="TDirectoryEnumerableAs">The type of directory this directory will enumerate as.</typeparam>
+    /// <typeparam name="TFileEnumerableAs">The type of files this directory will enumerate as.</typeparam>
+    public interface IMutableDirectoryBase<TChildDirectory, TDirectoryEnumerableAs, TFileEnumerableAs>
+        : IMutableDirectoryBase<TChildDirectory>
+    {
+        /// <summary>
+        /// Enumerates all direct child directories of this <see cref="IDirectory"/>.
+        /// </summary>
+        /// <returns>All direct children directories.</returns>
+        IEnumerable<TDirectoryEnumerableAs> EnumerateDirectories();
+
+        /// <summary>
+        /// Enumerates all files in this directory,
+        /// </summary>
+        /// <returns>All direct children files.</returns>
+        IEnumerable<TFileEnumerableAs> EnumerateFiles();
+
+        /// <summary>
+        /// Recursively enumerates all files that are contained in this directory.
+        /// 
+        /// This method is usually implemented as a Breadth-first search, but no order is guaranteed.
+        /// </summary>
+        /// <returns>All files contained within this directory, including descendant subfolders.</returns>
+        IEnumerable<TFileEnumerableAs> EnumerateFilesRecursive();
     }
 }

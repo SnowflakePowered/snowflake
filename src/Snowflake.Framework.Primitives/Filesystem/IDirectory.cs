@@ -17,7 +17,8 @@ namespace Snowflake.Filesystem
     public interface IDirectory 
         : IMutableDirectoryBase<IDeletableDirectory>,
         IMutableDirectoryBase<IDeletableDirectory, IReadOnlyDirectory>,
-        IMutableDirectoryBase<IDeletableDirectory, IMoveFromableDirectory>
+        IMutableDirectoryBase<IDeletableDirectory, IMoveFromableDirectory>,
+        IMutableDirectoryBase<IDeletableDirectory, IDeletableDirectory, IFile>
     {
        
         /// <summary>
