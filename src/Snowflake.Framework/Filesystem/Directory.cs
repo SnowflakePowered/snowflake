@@ -9,11 +9,12 @@ using System.Threading;
 using Snowflake.Persistence;
 using Dapper;
 using System.Text;
+using OSFileSystem = Emet.FileSystems.FileSystem;
 
 namespace Snowflake.Filesystem
 {
     internal sealed class Directory : IDeletableDirectory, 
-            IReadOnlyDirectory, IDirectory, IMoveFromableDirectory, IDeletableMoveFromableDirectory
+            IReadOnlyDirectory, IDirectory, IMoveFromableDirectory, IDeletableMoveFromableDirectory, IProjectingDirectory
     {
         internal static ConcurrentDictionary<string, object> DatabaseLocks = new ConcurrentDictionary<string, object>();
 
@@ -31,6 +32,7 @@ namespace Snowflake.Filesystem
         private object? DatabaseLock { get; }
         private bool IsDeleted { get; set; } = false;
         private bool UseManifest { get; set; } = true;
+        internal bool IsManifested => this.ContainsFile(".manifest");
 
         internal Directory(string name, IFileSystem rootFs, DirectoryEntry parentDirectory, bool useManifest = true)
         {
@@ -224,7 +226,9 @@ namespace Snowflake.Filesystem
                 || new FileInfo(realPath).Exists();
         }
 
-        public IDeletableDirectory OpenDirectory(string name)
+        public IDeletableDirectory OpenDirectory(string name) => this.OpenDirectory(name, this.UseManifest);
+
+        internal Directory OpenDirectory(string name, bool useManifest)
         {
             this.CheckDeleted();
             var directoryStrings = ((UPath)name).Split();
@@ -232,7 +236,7 @@ namespace Snowflake.Filesystem
             Directory currentDirectory = this;
             foreach (string directoryString in directoryStrings)
             {
-                currentDirectory = new Directory(directoryString, this.RootFileSystem, currentDirectory.ThisDirectory, this.UseManifest);
+                currentDirectory = new Directory(directoryString, this.RootFileSystem, currentDirectory.ThisDirectory, useManifest);
             }
             return currentDirectory;
         }
@@ -498,6 +502,80 @@ namespace Snowflake.Filesystem
         {
             if (openIfNotExists) return this.OpenFile(file, false).AsReadOnly();
             return (this as IReadOnlyDirectory).OpenFile(file);
+        }
+
+        IReadOnlyFile IProjectingDirectory.Project(IFile file)
+            => (this as IProjectingDirectory).Project((IReadOnlyFile)file);
+
+        IReadOnlyFile IProjectingDirectory.Project(IFile file, string name)
+        => (this as IProjectingDirectory).Project((IReadOnlyFile)file, name);
+
+        IReadOnlyDirectory IProjectingDirectory.Project(IDirectory directory)
+            => (this as IProjectingDirectory).Project(directory.AsReadOnly());
+
+        IReadOnlyDirectory IProjectingDirectory.Project(IDirectory directory, string name)
+            => (this as IProjectingDirectory).Project(directory.AsReadOnly());
+
+        IReadOnlyFile IProjectingDirectory.Project(IReadOnlyFile file) 
+            => (this as IProjectingDirectory).Project(file, file.Name);
+
+        IReadOnlyDirectory IProjectingDirectory.Project(IReadOnlyDirectory directory) 
+            => (this as IProjectingDirectory).Project(directory, directory.Name);
+
+        IReadOnlyFile IProjectingDirectory.Project(IReadOnlyFile source, string name)
+        {
+#pragma warning disable CS0618 // Type or member is obsolete
+            var fileInfo = source.UnsafeGetFilePath();
+            var targetPath = this.ThisDirectory.Path / Path.GetFileName(name);
+            string realTargetPath = this.RootFileSystem.ConvertPathToInternal(targetPath);
+            if (fileInfo.IsSymbolicLink())
+            {
+                throw new IOException("Unable to project to an existing projection.");
+            }
+            if (this.ContainsFile(name))
+            {
+                throw new IOException($"A file or directory called {name} already exists in the projecting directory.");
+            }
+            if (!source.Created)
+            {
+                throw new IOException("Unable to project to a non-existent file.");
+            }
+            if (!OSFileSystem.OSSupportsSymbolicLinks)
+            {
+                throw new PlatformNotSupportedException("This operating system does not support symbolic link projections.");
+            }
+            OSFileSystem.CreateSymbolicLink(realTargetPath, fileInfo.FullName, Emet.FileSystems.FileType.File);
+            return (this as IReadOnlyDirectory).OpenFile(name);
+#pragma warning restore CS0618 // Type or member is obsolete
+        }
+
+        IReadOnlyDirectory IProjectingDirectory.Project(IReadOnlyDirectory directory, string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        IProjectingDirectory IMutableDirectoryBase<IProjectingDirectory>.OpenDirectory(string name)
+        {
+            if (this.IsManifested || this.UseManifest)
+            {
+                throw new IOException("Can not open projecting directory as child of manifested directory.");
+            }    
+
+            if (this.ContainsDirectory(name))
+            {
+                var existingDir = this.OpenDirectory(name, false);
+                if (existingDir.IsManifested) 
+                    throw new IOException("Can not open manifested directory as projecting.");
+                if (existingDir.UnsafeGetPath().IsSymbolicLink())
+                    throw new IOException("Can not open directory projection as projecting.");
+                return existingDir;
+            }
+            return this.OpenDirectory(name, false);
+        }
+
+        IEnumerable<IProjectingDirectory> IMutableDirectoryBase<IProjectingDirectory>.EnumerateDirectories()
+        {
+            throw new NotImplementedException();
         }
     }
 }
