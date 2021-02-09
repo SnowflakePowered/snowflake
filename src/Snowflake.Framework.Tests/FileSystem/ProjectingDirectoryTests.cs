@@ -38,13 +38,6 @@ namespace Snowflake.Filesystem.Tests
             var projecting = dir.OpenDirectory("test");
             var file2 = projecting.Project(file);
             Assert.Equal(1, file2.Length);
-
-            Assert.Equal(Guid.Empty, file2.FileGuid);
-
-            Assert.Equal(file.FileGuid, file2.FileGuid);
-
-            Assert.Throws<IOException>(() => dir2.CopyFrom(file));
-            Assert.Equal(1, dir2.CopyFrom(file, true).Length);
         }
 
     }

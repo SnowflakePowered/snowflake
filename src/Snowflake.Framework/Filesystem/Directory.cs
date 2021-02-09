@@ -326,7 +326,8 @@ namespace Snowflake.Filesystem
 
         public IFile CopyFrom(IReadOnlyFile source, bool overwrite)
         {
-            if (this.ContainsFile(source.Name) && !overwrite) throw new IOException($"{source.Name} already exists in the target directory.");
+            if (this.ContainsFile(source.Name) && !overwrite) 
+                throw new IOException($"{source.Name} already exists in the target directory.");
             this.AddManifestRecord(source.Name, source.FileGuid, source.IsLink);
 
             return this.CopyFrom(source.UnsafeGetFilePointerPath(), overwrite);
