@@ -57,7 +57,11 @@ namespace Snowflake.Filesystem
         {
             if (!disposedValue)
             {
-                if (disposing)
+                if (disposing && this.Base.IsDeleted)
+                {
+                    disposedValue = true;
+                } 
+                else if (disposing)
                 {
                     try
                     {
@@ -67,14 +71,11 @@ namespace Snowflake.Filesystem
                     {
 
                     }
-                    finally
-                    {
-                        disposedValue = true;
-                    }
                 }
                 disposedValue = true;
             }
         }
+        
         public void Dispose()
         {
             // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
@@ -87,12 +88,11 @@ namespace Snowflake.Filesystem
             return (this.Base as IDirectoryOpeningDirectoryBase<IProjectingDirectory>).OpenDirectory(name);
         }
 
-        IEnumerable<IReadOnlyFile> IEnumerableDirectoryBase<IReadOnlyDirectory, IReadOnlyFile>.EnumerateFiles()
-            => this.Base.AsReadOnly().EnumerateFiles();
-
-        IEnumerable<IReadOnlyFile> IEnumerableDirectoryBase<IReadOnlyDirectory, IReadOnlyFile>.EnumerateFilesRecursive()
-            => this.Base.AsReadOnly().EnumerateFilesRecursive();
-        IEnumerable<IReadOnlyDirectory> IEnumerableDirectoryBase<IReadOnlyDirectory, IReadOnlyFile>.EnumerateDirectories()
-            => this.Base.AsReadOnly().EnumerateDirectories();
+        public IFile LinkFrom(System.IO.FileInfo source) => this.Base.LinkFrom(source);
+        public IFile LinkFrom(System.IO.FileInfo source, bool overwrite) => this.Base.LinkFrom(source, overwrite);
+        IDeletableDirectory IDirectoryOpeningDirectoryBase<IDeletableDirectory>.OpenDirectory(string name) => this.Base.OpenDirectory(name);
+        IReadOnlyDirectory IReopenableDirectoryBase<IReadOnlyDirectory>.ReopenAs() => this.Base.AsReadOnly();
+        IMoveFromableDirectory IReopenableDirectoryBase<IMoveFromableDirectory>.ReopenAs() => this.Base.AsIndelible().AsMoveFromable();
+        public IEnumerable<IDeletableDirectory> EnumerateDirectories() => this.Base.EnumerateDirectories();
     }
 }

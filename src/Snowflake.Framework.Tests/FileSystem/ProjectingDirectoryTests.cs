@@ -35,9 +35,9 @@ namespace Snowflake.Filesystem.Tests
             }// safe the file
 
             
-            var projecting = dir.OpenDirectory("test");
-            var file2 = projecting.Project(file);
-            Assert.Equal(1, file2.Length);
+            //var projecting = dir.OpenDirectory("test");
+            //var file2 = projecting.Project(file);
+            //Assert.Equal(1, file2.Length);
         }
 
     }

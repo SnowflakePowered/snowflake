@@ -25,7 +25,7 @@ namespace Snowflake.Orchestration.Saving.SaveProfiles
 
         public override SaveManagementStrategy ManagementStrategy => SaveManagementStrategy.Copy;
 
-        public async override Task<ISaveGame> CreateSave(IDirectory saveContents)
+        public async override Task<ISaveGame> CreateSave(IReadOnlyDirectory saveContents)
         {
             // todo decide on some way to organize these saves.
             var newGuid = Guid.NewGuid();

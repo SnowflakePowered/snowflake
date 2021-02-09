@@ -23,7 +23,7 @@ namespace Snowflake.Orchestration.Saving.Tests
 
             var profileGuid = Guid.NewGuid();
             var profile = new NoneStrategySaveProfile(profileGuid, "Test", "testsave", profileRoot);
-            var save = await profile.CreateSave(saveContents);
+            var save = await profile.CreateSave(saveContents.AsReadOnly());
             var _save = await profile.CreateSave(save);
             var retrievedSave = profile.GetHeadSave();
 

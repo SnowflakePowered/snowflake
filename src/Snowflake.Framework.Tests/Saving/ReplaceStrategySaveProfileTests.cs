@@ -22,7 +22,7 @@ namespace Snowflake.Orchestration.Saving.Tests
 
             var profileGuid = Guid.NewGuid();
             var profile = new ReplaceStrategySaveProfile(profileGuid, "Test", "testsave", profileRoot);
-            var save = await profile.CreateSave(saveContents);
+            var save = await profile.CreateSave(saveContents.AsReadOnly());
 
             var retrievedSave = profile.GetHeadSave();
 
@@ -39,7 +39,7 @@ namespace Snowflake.Orchestration.Saving.Tests
 
             var profileGuid = Guid.NewGuid();
             var profile = new ReplaceStrategySaveProfile(profileGuid, "Test", "testsave", profileRoot);
-            var save = await profile.CreateSave(saveContents);
+            var save = await profile.CreateSave(saveContents.AsReadOnly());
             var save2 = await profile.CreateSave(save);
 
             var retrievedSave = profile.GetHeadSave();

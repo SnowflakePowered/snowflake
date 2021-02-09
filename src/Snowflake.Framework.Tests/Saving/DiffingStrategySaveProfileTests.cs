@@ -22,7 +22,7 @@ namespace Snowflake.Orchestration.Saving.Tests
 
             var profileGuid = Guid.NewGuid();
             var profile = new DiffingStrategySaveProfile(profileGuid, "Test", "testsave", profileRoot);
-            var save = await profile.CreateSave(saveContents);
+            var save = await profile.CreateSave(saveContents.AsReadOnly());
 
             var retrievedSave = profile.GetHeadSave();
 
@@ -41,13 +41,13 @@ namespace Snowflake.Orchestration.Saving.Tests
 
             var profileGuid = Guid.NewGuid();
             var profile = new DiffingStrategySaveProfile(profileGuid, "Test", "testsave", profileRoot);
-            var save = await profile.CreateSave(saveContents);
+            var save = await profile.CreateSave(saveContents.AsReadOnly());
 
             saveContents.OpenFile("copyContent").WriteAllText("copy content");
 
             var retrievedSave = profile.GetHeadSave();
 
-            await profile.CreateSave(saveContents);
+            await profile.CreateSave(saveContents.AsReadOnly());
             Assert.Equal(save.CreatedTimestamp, retrievedSave.CreatedTimestamp);
 
             // todo: ensure directory structure
@@ -66,7 +66,7 @@ namespace Snowflake.Orchestration.Saving.Tests
 
             var profileGuid = Guid.NewGuid();
             var profile = new DiffingStrategySaveProfile(profileGuid, "Test", "testsave", profileRoot);
-            var save = await profile.CreateSave(saveContents);
+            var save = await profile.CreateSave(saveContents.AsReadOnly());
             var newSave = await profile.CreateSave(save);
 
             var retrievedSave = profile.GetHeadSave();
@@ -94,13 +94,13 @@ namespace Snowflake.Orchestration.Saving.Tests
 
             var profileGuid = Guid.NewGuid();
             var profile = new DiffingStrategySaveProfile(profileGuid, "Test", "testsave", profileRoot);
-            var save = await profile.CreateSave(saveContents);
+            var save = await profile.CreateSave(saveContents.AsReadOnly());
 
             saveContents.OpenFile("copyContent").WriteAllText("copy content");
 
             var retrievedSave = profile.GetHeadSave();
 
-            var created = await profile.CreateSave(saveContents);
+            var created = await profile.CreateSave(saveContents.AsReadOnly());
 
             var extractPath = TestUtilities.GetTemporaryDirectory(nameof(DiffingStrategySaveProfile) + ".extract");
             await created.ExtractSave(extractPath);

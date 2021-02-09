@@ -13,9 +13,9 @@ namespace Snowflake.Filesystem
         /// </summary>
         /// <param name="this">The destination directory.</param>
         /// <param name="source">The source directory.</param>
-        /// <param name="overwrite"></param>
         /// <returns>An enumerable of copied files.</returns>
-        public static IAsyncEnumerable<IFile> CopyFromDirectory(this IDirectory @this, IDirectory source) => CopyFromDirectory(@this, source, false);
+        public static IAsyncEnumerable<IFile> CopyFromDirectory(this IDirectory @this, IDirectory source)
+            => CopyFromDirectory(@this, source.AsReadOnly());
 
         /// <summary>
         /// Copies all the files and directories from the source directory recursively into this directory.
@@ -24,7 +24,26 @@ namespace Snowflake.Filesystem
         /// <param name="source">The source directory.</param>
         /// <param name="overwrite">Whether or not to overwrite existing files.</param>
         /// <returns>An enumerable of copied files.</returns>
-        public static async IAsyncEnumerable<IFile> CopyFromDirectory(this IDirectory @this, IDirectory source, bool overwrite)
+        public static IAsyncEnumerable<IFile> CopyFromDirectory(this IDirectory @this, IDirectory source, bool overwrite)
+            => CopyFromDirectory(@this, source.AsReadOnly(), overwrite);
+
+        /// <summary>
+        /// Copies all the files and directories from the source directory recursively into this directory.
+        /// </summary>
+        /// <param name="this">The destination directory.</param>
+        /// <param name="source">The source directory.</param>
+        /// <returns>An enumerable of copied files.</returns>
+        public static IAsyncEnumerable<IFile> CopyFromDirectory(this IDirectory @this, IReadOnlyDirectory source) 
+            => CopyFromDirectory(@this, source, false);
+
+        /// <summary>
+        /// Copies all the files and directories from the source directory recursively into this directory.
+        /// </summary>
+        /// <param name="this">The destination directory.</param>
+        /// <param name="source">The source directory.</param>
+        /// <param name="overwrite">Whether or not to overwrite existing files.</param>
+        /// <returns>An enumerable of copied files.</returns>
+        public static async IAsyncEnumerable<IFile> CopyFromDirectory(this IDirectory @this, IReadOnlyDirectory source, bool overwrite)
         {
             if (@this == source) yield break;
 
@@ -40,7 +59,7 @@ namespace Snowflake.Filesystem
 
             // BFS over all the children.
 
-            Queue<(IDirectory, IDeletableDirectory)> dirsToProcess = new Queue<(IDirectory, IDeletableDirectory)>(queuedDirs);
+            Queue<(IDirectory, IReadOnlyDirectory)> dirsToProcess = new (queuedDirs);
 
             while (dirsToProcess.Count > 0)
             {

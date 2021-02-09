@@ -611,10 +611,26 @@
             </summary>
             <param name="this">The destination directory.</param>
             <param name="source">The source directory.</param>
-            <param name="overwrite"></param>
             <returns>An enumerable of copied files.</returns>
         </member>
         <member name="M:Snowflake.Filesystem.DirectoryExtensions.CopyFromDirectory(Snowflake.Filesystem.IDirectory,Snowflake.Filesystem.IDirectory,System.Boolean)">
+            <summary>
+            Copies all the files and directories from the source directory recursively into this directory.
+            </summary>
+            <param name="this">The destination directory.</param>
+            <param name="source">The source directory.</param>
+            <param name="overwrite">Whether or not to overwrite existing files.</param>
+            <returns>An enumerable of copied files.</returns>
+        </member>
+        <member name="M:Snowflake.Filesystem.DirectoryExtensions.CopyFromDirectory(Snowflake.Filesystem.IDirectory,Snowflake.Filesystem.IReadOnlyDirectory)">
+            <summary>
+            Copies all the files and directories from the source directory recursively into this directory.
+            </summary>
+            <param name="this">The destination directory.</param>
+            <param name="source">The source directory.</param>
+            <returns>An enumerable of copied files.</returns>
+        </member>
+        <member name="M:Snowflake.Filesystem.DirectoryExtensions.CopyFromDirectory(Snowflake.Filesystem.IDirectory,Snowflake.Filesystem.IReadOnlyDirectory,System.Boolean)">
             <summary>
             Copies all the files and directories from the source directory recursively into this directory.
             </summary>

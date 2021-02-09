@@ -7,11 +7,7 @@ using System.Threading.Tasks;
 namespace Snowflake.Filesystem
 {
     public interface IDisposableDirectory
-        : IDisposable, 
-        IMutableDirectoryBase,
-        IFileOpeningDirectoryBase<IFile>,
-        IDirectoryOpeningDirectoryBase<IProjectingDirectory>,
-        IEnumerableDirectoryBase<IReadOnlyDirectory, IReadOnlyFile>
+        : IDirectory, IDisposable
     {
     }
 }
