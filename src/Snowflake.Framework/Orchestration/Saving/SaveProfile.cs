@@ -26,7 +26,7 @@ namespace Snowflake.Orchestration.Saving
 
         public abstract SaveManagementStrategy ManagementStrategy { get; }
 
-        public abstract Task<ISaveGame> CreateSave(IDirectory saveContents);
+        public abstract Task<ISaveGame> CreateSave(IReadOnlyDirectory saveContents);
 
         public abstract Task<ISaveGame> CreateSave(ISaveGame saveGame);
 

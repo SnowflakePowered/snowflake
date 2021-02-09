@@ -47,7 +47,7 @@ namespace Snowflake.Adapters.Higan
         private Process? RunningProcess { get; set; }
         public override Task<ISaveGame> PersistSaveGame()
         {
-            return this.SaveProfile.CreateSave(this.Scratch.OpenDirectory("save"));
+            return this.SaveProfile.CreateSave(this.Scratch.OpenDirectory("save").AsReadOnly());
         }
 
         public override async Task RestoreSaveGame()

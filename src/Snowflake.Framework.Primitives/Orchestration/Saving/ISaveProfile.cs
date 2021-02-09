@@ -51,7 +51,7 @@ namespace Snowflake.Orchestration.Saving
         /// </para>
         /// </param>
         /// <returns>A new <see cref="ISaveGame"/> instance.</returns>
-        Task<ISaveGame> CreateSave(IDirectory saveContents);
+        Task<ISaveGame> CreateSave(IReadOnlyDirectory saveContents);
 
         /// <summary>
         /// Creates a new immutable save game from an existing savegame. This function should be atomic, and if creating the save fails

@@ -28,13 +28,13 @@ namespace Snowflake.Orchestration.Saving.SaveProfiles
 
         public override SaveManagementStrategy ManagementStrategy => SaveManagementStrategy.Diff;
 
-        private async Task CreateBaseSave(IDirectory saveContents)
+        private async Task CreateBaseSave(IReadOnlyDirectory saveContents)
         {
             var contentDirectory = this.ProfileRoot.OpenDirectory("base/content");
             await foreach (var _ in contentDirectory.CopyFromDirectory(saveContents)) { };
         }
 
-        public async override Task<ISaveGame> CreateSave(IDirectory saveContents)
+        public async override Task<ISaveGame> CreateSave(IReadOnlyDirectory saveContents)
         {
             if (!this.ProfileRoot.ContainsDirectory("base")) await this.CreateBaseSave(saveContents);
             using var rollingHash = new RollingHash(32);
@@ -82,8 +82,8 @@ namespace Snowflake.Orchestration.Saving.SaveProfiles
                               where baseDir.ContainsDirectory(targetDir.Name)
                               select (diffDir, baseDir.OpenDirectory(targetDir.Name), targetDir)).ToList();
 
-            Queue<(IDeletableDirectory parentDir, IReadOnlyDirectory baseDir, IDeletableDirectory targetDir)> dirsToProcess =
-                new Queue<(IDeletableDirectory, IReadOnlyDirectory, IDeletableDirectory)>(queuedDirs);
+            Queue<(IDeletableDirectory parentDir, IReadOnlyDirectory baseDir, IReadOnlyDirectory targetDir)> dirsToProcess =
+                new(queuedDirs);
 
             while (dirsToProcess.Count > 0)
             {
@@ -119,13 +119,12 @@ namespace Snowflake.Orchestration.Saving.SaveProfiles
         public override async Task<ISaveGame> CreateSave(ISaveGame saveGame)
         {
             // Get a random directory
-            var tempDirectory = this.ProfileRoot.OpenDirectory($"temp-{Guid.NewGuid()}");
+            using var tempDirectory = this.ProfileRoot.OpenDirectory($"temp-{Guid.NewGuid()}").AsDisposable();
 
             // Extract directory contents
             await saveGame.ExtractSave(tempDirectory);
 
-            var created = await this.CreateSave(tempDirectory);
-            tempDirectory.Delete();
+            var created = await this.CreateSave(tempDirectory.AsReadOnly());
             return created;
         }
 

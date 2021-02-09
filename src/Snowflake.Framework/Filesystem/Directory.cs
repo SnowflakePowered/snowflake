@@ -31,7 +31,7 @@ namespace Snowflake.Filesystem
 
         private SqliteDatabase? Manifest { get; }
         private object? DatabaseLock { get; }
-        private bool IsDeleted { get; set; } = false;
+        internal bool IsDeleted { get; set; } = false;
         private bool UseManifest { get; set; } = true;
         internal bool IsManifested => this.ContainsFile(".manifest");
 
