@@ -92,6 +92,10 @@ namespace Snowflake.Filesystem
         {
             this.CheckDeleted();
             if (!this.UseManifest) return;
+            if (guid == Guid.Empty)
+            {
+                guid = Guid.NewGuid();
+            }
             lock (this.DatabaseLock!)
             {
                 this.Manifest?.Execute(connection =>
