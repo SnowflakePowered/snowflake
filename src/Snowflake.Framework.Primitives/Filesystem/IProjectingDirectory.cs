@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +23,16 @@ namespace Snowflake.Filesystem
         IReadOnlyDirectory Project(IReadOnlyDirectory directory);
         IReadOnlyDirectory Project(IReadOnlyDirectory directory, string name);
 
+        /// <summary>
+        /// Deletes the directory, including all files and subdirectories included.
+        /// 
+        /// This will invalidate all instances of <see cref="IDirectory"/> pointing to
+        /// this specific directory until it exists again. 
+        /// </summary>       
+        /// <exception cref="IOException"></exception>
+        /// <exception cref="System.Security.SecurityException"></exception>
+        /// <exception cref="UnauthorizedAccessException"></exception>
+        /// <exception cref="DirectoryNotFoundException"></exception>
         void Delete();
     }
 }

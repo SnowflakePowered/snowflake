@@ -28,6 +28,10 @@ namespace Snowflake.Filesystem
         /// This will invalidate all instances of <see cref="IDirectory"/> pointing to
         /// this specific directory until it exists again. 
         /// </summary>       
+        /// <exception cref="IOException"></exception>
+        /// <exception cref="System.Security.SecurityException"></exception>
+        /// <exception cref="UnauthorizedAccessException"></exception>
+        /// <exception cref="DirectoryNotFoundException"></exception>
         void Delete();
     }
 }

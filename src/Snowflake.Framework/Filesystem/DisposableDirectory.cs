@@ -59,7 +59,18 @@ namespace Snowflake.Filesystem
             {
                 if (disposing)
                 {
-                    this.Base.Delete();
+                    try
+                    {
+                        this.Base.Delete();
+                    } 
+                    catch 
+                    {
+
+                    }
+                    finally
+                    {
+                        disposedValue = true;
+                    }
                 }
                 disposedValue = true;
             }
