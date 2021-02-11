@@ -4,11 +4,14 @@ using System.IO;
 using System.Text;
 using Zio;
 using Emet.FileSystems;
+using Tsuku.Extensions;
 
 namespace Snowflake.Filesystem
 {
     internal sealed class File : IFile
     {
+        public static readonly string SnowflakeFile = "Snowflake.File";
+
         internal File(Directory parentDirectory, FileEntry file, Guid guid)
         {
             this.RawInfo = file;
@@ -40,15 +43,15 @@ namespace Snowflake.Filesystem
 
         public Stream OpenStream(FileMode mode, FileAccess rw, FileShare share = FileShare.None)
         {
-            return this.RawInfo.Open(mode, rw, share);
+            var stream = this.RawInfo.Open(mode, rw, share);
+            this.UnsafeGetFilePath().SetAttribute(File.SnowflakeFile, this.FileGuid);
+            return stream;
         }
 
         public void Rename(string newName)
         {
             this.RawInfo.MoveTo(this.RawInfo.Parent!.Path / Path.GetFileName(newName));
-            this.ParentDirectory.RemoveManifestRecord(this.Name);
             this.RawInfo = new FileEntry(this.RawInfo.FileSystem, this.RawInfo.Parent.Path / Path.GetFileName(newName));
-            this.ParentDirectory.AddManifestRecord(this.Name, this.FileGuid, false);
         }
 
         public void Delete()
@@ -57,8 +60,6 @@ namespace Snowflake.Filesystem
             {
                 this.RawInfo.Delete();
             }
-
-            this.ParentDirectory.RemoveManifestRecord(this.Name);
         }
 
         public FileInfo UnsafeGetFilePath()

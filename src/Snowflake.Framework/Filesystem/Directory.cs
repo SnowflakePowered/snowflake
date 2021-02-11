@@ -10,48 +10,21 @@ using Snowflake.Persistence;
 using Dapper;
 using System.Text;
 using OSFileSystem = Emet.FileSystems.FileSystem;
+using Tsuku.Extensions;
 
 namespace Snowflake.Filesystem
 {
     internal sealed class Directory : IDeletableDirectory, 
-            IReadOnlyDirectory, IDirectory, IMoveFromableDirectory, IDeletableMoveFromableDirectory, IProjectingDirectory,
-        IDirectoryOpeningDirectoryBase<IProjectingDirectory>
+            IReadOnlyDirectory, IDirectory, IMoveFromableDirectory, IDeletableMoveFromableDirectory
     {
-        internal static ConcurrentDictionary<string, object> DatabaseLocks = new ConcurrentDictionary<string, object>();
-
-        private class ManifestRecord
-        {
-#pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
-#pragma warning disable IDE1006 // Naming Styles
-            public string uuid { get; set; }
-            public bool is_link { get; set; }
-#pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
-#pragma warning restore IDE1006 // Naming Styles
-        }
-
-        private SqliteDatabase? Manifest { get; }
-        private object? DatabaseLock { get; }
         internal bool IsDeleted { get; set; } = false;
-        private bool UseManifest { get; set; } = true;
-        internal bool IsManifested => this.ContainsFile(".manifest");
+       
 
         internal Directory(string name, IFileSystem rootFs, DirectoryEntry parentDirectory, bool useManifest = true)
         {
             this.RootFileSystem = rootFs;
             this.ThisDirectory = parentDirectory.CreateSubdirectory(name);
             this.Name = name;
-            this.UseManifest = useManifest;
-
-            if (this.UseManifest || this.IsManifested)
-            {
-                var manifestPath = this.RootFileSystem.ConvertPathToInternal(this.ThisDirectory.Path / ".manifest");
-                this.DatabaseLock = Directory.DatabaseLocks.GetOrAdd(manifestPath, new object());
-                this.Manifest = new SqliteDatabase(manifestPath);
-                lock (this.DatabaseLock)
-                {
-                    this.Manifest.CreateTable("directory_manifest", "uuid TEXT", "is_link BOOLEAN", "filename TEXT PRIMARY KEY");
-                }
-            }
         }
 
         internal Directory(IFileSystem rootFs)
@@ -59,23 +32,10 @@ namespace Snowflake.Filesystem
             this.RootFileSystem = rootFs;
             this.ThisDirectory = rootFs.GetDirectoryEntry("/");
             this.Name = "#FSROOT";
-            this.UseManifest = true;
-            var manifestPath = this.RootFileSystem.ConvertPathToInternal(this.ThisDirectory.Path / ".manifest");
-            this.DatabaseLock = Directory.DatabaseLocks.GetOrAdd(manifestPath, new object());
-            this.Manifest = new SqliteDatabase(manifestPath);
-            lock (this.DatabaseLock)
-            {
-                this.Manifest.CreateTable("directory_manifest", "uuid TEXT", "is_link BOOLEAN", "filename TEXT PRIMARY KEY");
-            }
         }
 
         private void CheckDeleted()
         {
-            if (this.UseManifest && !this.ContainsFile(".manifest"))
-            {
-                this.IsDeleted = true;
-            }
-
             // normal doesn't check symlinks
             if (!new DirectoryInfo(this.RootFileSystem.ConvertPathToInternal(this.ThisDirectory.Path)).Exists())
             {
@@ -85,123 +45,6 @@ namespace Snowflake.Filesystem
             if (this.IsDeleted)
             {
                 throw new InvalidOperationException("Directory is already deleted.");
-            }
-        }
-
-        internal void AddManifestRecord(string file, Guid guid, bool isLink)
-        {
-            this.CheckDeleted();
-            if (!this.UseManifest) return;
-            if (guid == Guid.Empty)
-            {
-                guid = Guid.NewGuid();
-            }
-            lock (this.DatabaseLock!)
-            {
-                this.Manifest?.Execute(connection =>
-                {
-                    connection.Execute(
-                        @"INSERT OR REPLACE INTO directory_manifest (uuid, is_link, filename) VALUES (@guid, @isLink, @file)",
-                        new { guid, isLink, file });
-                });
-            }
-        }
-
-        internal void RemoveManifestRecord(string file)
-        {
-            this.CheckDeleted();
-            if (!this.UseManifest) return;
-            lock (this.DatabaseLock!)
-            {
-                this.Manifest?.Execute(connection =>
-                {
-                    connection.Execute(@"DELETE FROM directory_manifest WHERE filename = @file", new { file });
-                });
-            }
-        }
-
-        internal (Guid guid, bool isLink) RetrieveManifestRecord(UPath file, bool updateLink)
-        {
-            this.CheckDeleted();
-            var fileName = file.GetName();
-
-            if (!this.UseManifest)
-            {
-                // Links are not supported in non-manifest directories.
-                // i.e. Disposable or Projecting
-                return (Guid.Empty, false);
-            }
-
-            lock (this.DatabaseLock!) 
-            { 
-                return this.Manifest!.Query<(Guid, bool)>(conn =>
-                {
-                    var record = conn.Query<ManifestRecord>(@"SELECT uuid, is_link FROM directory_manifest WHERE filename = @fileName",
-                        new { fileName });
-
-                    if (!record.Any() || updateLink)
-                    {
-                        // New file encountered.
-                        bool isLink = this.CheckIsLink(file);
-                        Guid guid = record.Any() ? new Guid(record.First().uuid) : Guid.NewGuid();
-                        conn.Execute(@"INSERT OR REPLACE INTO directory_manifest (uuid, is_link, filename) VALUES (@guid, @isLink, @fileName)",
-                            new { guid, fileName, isLink });
-
-                        record = conn.Query<ManifestRecord>(@"SELECT uuid, is_link FROM directory_manifest WHERE filename = @fileName",
-                            new { fileName });
-                    }
-
-                    var _record = record.First();
-                    return (new Guid(_record.uuid), _record.is_link);
-                });
-            }
-        }
-
-        internal int GetLinkCount()
-        {
-            if (!this.UseManifest) return 0;
-            this.CheckDeleted();
-            lock(this.DatabaseLock!)
-            {
-                return this.Manifest!.Query<int>(connection =>
-                {
-                    return connection.Query<int>(@"SELECT COUNT(*) FROM directory_manifest WHERE is_link = 1").First();
-                });
-            }
-        }
-
-        internal void UpdateLinkCache(UPath filePath, bool isLink)
-        {
-            this.CheckDeleted();
-
-            lock (this.DatabaseLock!)
-            {
-                this.Manifest?.Execute(connection =>
-                {
-                    connection.Execute(
-                        @"UPDATE directory_manifest SET is_link = @isLink WHERE filename = @file",
-                        new { isLink, file = filePath.GetName() });
-                });
-            }
-        }
-
-        internal bool CheckIsLink(UPath file)
-        {
-            var entry = new FileEntry(this.RootFileSystem, file);
-
-            // Uncreated files can not be links (but can link to nonexisting files).
-            if (!entry.Exists) return false;
-
-            try
-            {
-                using var stream = entry.Open(FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                Span<byte> buf = stackalloc byte[Link.LinkHeader.Length];
-                stream.Read(buf);
-                return Encoding.UTF8.GetString(buf) == Link.LinkHeader;
-            } 
-            catch
-            {
-                return false;
             }
         }
 
@@ -231,9 +74,7 @@ namespace Snowflake.Filesystem
                 || new FileInfo(realPath).Exists();
         }
 
-        public IDeletableDirectory OpenDirectory(string name) => this.OpenDirectory(name, this.UseManifest);
-
-        internal Directory OpenDirectory(string name, bool useManifest)
+        internal Directory OpenDirectory(string name)
         {
             this.CheckDeleted();
             var directoryStrings = ((UPath)name).Split();
@@ -241,7 +82,7 @@ namespace Snowflake.Filesystem
             Directory currentDirectory = this;
             foreach (string directoryString in directoryStrings)
             {
-                currentDirectory = new Directory(directoryString, this.RootFileSystem, currentDirectory.ThisDirectory, useManifest);
+                currentDirectory = new Directory(directoryString, this.RootFileSystem, currentDirectory.ThisDirectory);
             }
             return currentDirectory;
         }
@@ -257,22 +98,25 @@ namespace Snowflake.Filesystem
         {
             this.CheckDeleted();
             return this.ThisDirectory.EnumerateFiles()
-                .Where(f => f.Name != ".manifest")
-                .Select(f => this.OpenFile(f.Name, false));
+                .Select(f => this.OpenFile(f.Name));
         }
 
-        private IFile OpenFile(UPath file, bool updateLink)
+        private IFile OpenFile(UPath file, Guid inheritGuid)
         {
             this.CheckDeleted();
-            if (file.GetName() == ".manifest") throw new UnauthorizedAccessException("Unable to open manifest file.");
             if (this.ContainsDirectory(file.GetName())) throw new IOException("Tried to open a directory as a file.");
-            (Guid guid, bool isLink) = this.RetrieveManifestRecord(file, updateLink);
-
-            return isLink switch
+            var fileEntry = new FileEntry(this.RootFileSystem, file);
+            var rawInfo = new FileInfo(this.RootFileSystem.ConvertPathToInternal(fileEntry.Path));
+            if (rawInfo.TryGetGuidAttribute(File.SnowflakeFile, out Guid guid))
             {
-                false => new File(this, new FileEntry(this.RootFileSystem, file), guid),
-                true => new Link(this, new FileEntry(this.RootFileSystem, file), guid)
-            };
+                return new File(this, fileEntry, guid);
+            }
+            guid = inheritGuid;
+            if (rawInfo.Exists)
+            {
+                rawInfo.SetAttribute(File.SnowflakeFile, guid);
+            }
+            return new File(this, fileEntry, guid);
         }
 
         public DirectoryInfo UnsafeGetPath()
@@ -280,14 +124,11 @@ namespace Snowflake.Filesystem
             return new DirectoryInfo(this.RootFileSystem.ConvertPathToInternal(this.ThisDirectory.Path));
         }
 
-        private IFile OpenFile(string file, bool updateLink)
-        {
-            return this.OpenFile(this.ThisDirectory.Path / Path.GetFileName(file), updateLink);
-        }
-
         public IFile OpenFile(string file)
+            => this.OpenFile(file, Guid.NewGuid());
+        private IFile OpenFile(string file, Guid inheritGuid)
         {
-            return this.OpenFile(this.ThisDirectory.Path / Path.GetFileName(file), false);
+            return this.OpenFile(this.ThisDirectory.Path / Path.GetFileName(file), inheritGuid);
         }
 
         public IFile CopyFrom(FileInfo source) => this.CopyFrom(source, false);
@@ -301,7 +142,7 @@ namespace Snowflake.Filesystem
             if (fileName == null) throw new ArgumentException($"Could not get file name for path {source.Name}.");
 
             source.CopyTo(this.RootFileSystem.ConvertPathToInternal(this.ThisDirectory.Path / fileName), overwrite);
-            return this.OpenFile(fileName, true);
+            return this.OpenFile(fileName);
         }
 
         public Task<IFile> CopyFromAsync(FileInfo source, CancellationToken cancellation = default) 
@@ -313,27 +154,24 @@ namespace Snowflake.Filesystem
             if (!source.Exists()) throw new FileNotFoundException($"{source.FullName} could not be found.");
             string? fileName = Path.GetFileName(source.Name);
             if (fileName == null) throw new ArgumentException($"Cannot get file name for path {source.Name}");
-            var file = this.OpenFile(fileName, false);
+            if (!source.TryGetGuidAttribute(File.SnowflakeFile, out Guid existingGuid))
+                existingGuid = Guid.NewGuid();
+            var file = this.OpenFile(fileName, existingGuid);
             if (file.Created && !overwrite) throw new IOException($"{source.Name} already exists in the target directory.");
-            if (file is Link link)
-            {
-                file = link.UnsafeOpenAsFile();
-            }
+          
             using (var newStream = file.OpenStream(FileMode.Create, FileAccess.ReadWrite))
             using (var sourceStream = source.OpenRead())
             {
                 await sourceStream.CopyToAsync(newStream, cancellation);
             }
 
-            return this.OpenFile(fileName, true);
+            return file;
         }
 
         public IFile CopyFrom(IReadOnlyFile source, bool overwrite)
         {
             if (this.ContainsFile(source.Name) && !overwrite) 
                 throw new IOException($"{source.Name} already exists in the target directory.");
-            this.AddManifestRecord(source.Name, source.FileGuid, source.IsLink);
-
             return this.CopyFrom(source.UnsafeGetFilePointerPath(), overwrite);
         }
 
@@ -342,9 +180,7 @@ namespace Snowflake.Filesystem
 
         public async Task<IFile> CopyFromAsync(IReadOnlyFile source, bool overwrite, CancellationToken cancellation = default)
         {
-
             if (this.ContainsFile(source.Name) && !overwrite) throw new IOException($"{source.Name} already exists in the target directory");
-            this.AddManifestRecord(source.Name, source.FileGuid, source.IsLink);
             return await this.CopyFromAsync(source.UnsafeGetFilePointerPath(), overwrite, cancellation);
         }
 
@@ -358,12 +194,11 @@ namespace Snowflake.Filesystem
 
             if (!source.Created) throw new FileNotFoundException($"{source.UnsafeGetFilePointerPath().FullName} could not be found.");
             if (this.ContainsFile(source.Name) && !overwrite) throw new IOException($"{source.Name} already exists in the target directory");
-            this.AddManifestRecord(source.Name, source.FileGuid, source.IsLink);
-            var file = this.OpenFile(source.Name, false);
+            var file = this.OpenFile(source.Name);
             // unsafe usage here as optimization.
             source.UnsafeGetFilePointerPath().MoveTo(file.UnsafeGetFilePointerPath().ToString(), overwrite);
             source.Delete();
-            return this.OpenFile(file.Name, true);
+            return this.OpenFile(file.Name);
         }
 
         public IEnumerable<IFile> EnumerateFilesRecursive()
@@ -404,7 +239,7 @@ namespace Snowflake.Filesystem
 
         IReadOnlyFile IFileOpeningDirectoryBase<IReadOnlyFile>.OpenFile(string file)
         {
-            if (this.ContainsFile(Path.GetFileName(file))) return this.OpenFile(file, false).AsReadOnly();
+            if (this.ContainsFile(Path.GetFileName(file))) return this.OpenFile(file).AsReadOnly();
             throw new FileNotFoundException($"File {file} does not exist within the directory {this.Name}.");
         }
 
@@ -427,49 +262,14 @@ namespace Snowflake.Filesystem
         {
             this.CheckDeleted();
             this.IsDeleted = true;
-            if (this.UseManifest)
-            {
-                lock (this.DatabaseLock!)
-                {
-                    this.ThisDirectory.Delete(true);
-                }
-            }
-            else
-            {
-                this.ThisDirectory.Delete(true);
-            }
+            this.ThisDirectory.Delete(true);
         }
 
         public IFile LinkFrom(FileInfo source) => this.LinkFrom(source, false);
 
         public IFile LinkFrom(FileInfo source, bool overwrite)
         {
-            if (!this.UseManifest) throw new InvalidOperationException("Unmanifested directories can not form links.");
-
-            // Disallow source being a symlink
-            if (!source.Exists) throw new FileNotFoundException($"{source.FullName} could not be found.");
-            string? fileName = Path.GetFileName(source.Name);
-
-            if (fileName == null) throw new ArgumentException($"Could not get file name for path {source.Name}.");
-
-            if (this.ContainsFile(fileName) && !overwrite) 
-                throw new IOException($"{source.Name} already exists in the target directory.");
-
-            UPath destination = (this.ThisDirectory.Path / Path.GetFileName(fileName));
-
-            // Ensure link cache is cleared
-            this.UpdateLinkCache(destination, true);
-
-            // Create an orphaned file
-            var file = new File(this, new FileEntry(this.RootFileSystem, destination), Guid.Empty);
-
-            using (var newStream = file.OpenStream(FileMode.Create, FileAccess.ReadWrite))
-            {
-                newStream.Write(Encoding.UTF8.GetBytes($"{Link.LinkHeader}{Path.GetFullPath(new Uri(source.FullName).LocalPath)}"));
-            }
-
-            // De-orphan the file (as a link)
-            return this.OpenFile(fileName, true);
+            throw new NotImplementedException();
         }
 
         IReadOnlyDirectory IReopenableDirectoryBase<IReadOnlyDirectory>.ReopenAs()
@@ -491,93 +291,17 @@ namespace Snowflake.Filesystem
                 throw new IOException("The directory is not empty. Disposable directories must not contain files prior to opening.");
             }
 
-            if (this.UseManifest)
-            {
-                lock (this.DatabaseLock!)
-                {
-                    // Recreate the directory without manifest
-                    this.ThisDirectory.Delete();
-                    this.ThisDirectory.Create();
-                }
-            }
-            this.UseManifest = false;
             return new DisposableDirectory(this);
         }
 
         IReadOnlyFile IReadOnlyDirectory.OpenFile(string file, bool openIfNotExists)
         {
-            if (openIfNotExists) return this.OpenFile(file, false).AsReadOnly();
+            if (openIfNotExists) return this.OpenFile(file).AsReadOnly();
             return (this as IReadOnlyDirectory).OpenFile(file);
         }
 
-        IReadOnlyFile IProjectingDirectory.Project(IFile file)
-            => (this as IProjectingDirectory).Project((IReadOnlyFile)file);
-
-        IReadOnlyFile IProjectingDirectory.Project(IFile file, string name)
-        => (this as IProjectingDirectory).Project((IReadOnlyFile)file, name);
-
-        IReadOnlyDirectory IProjectingDirectory.Project(IDirectory directory)
-            => (this as IProjectingDirectory).Project(directory.AsReadOnly());
-
-        IReadOnlyDirectory IProjectingDirectory.Project(IDirectory directory, string name)
-            => (this as IProjectingDirectory).Project(directory.AsReadOnly());
-
-        IReadOnlyFile IProjectingDirectory.Project(IReadOnlyFile file) 
-            => (this as IProjectingDirectory).Project(file, file.Name);
-
-        IReadOnlyDirectory IProjectingDirectory.Project(IReadOnlyDirectory directory) 
-            => (this as IProjectingDirectory).Project(directory, directory.Name);
-
-        IReadOnlyFile IProjectingDirectory.Project(IReadOnlyFile source, string name)
-        {
-#pragma warning disable CS0618 // Type or member is obsolete
-            var fileInfo = source.UnsafeGetFilePath();
-            var targetPath = this.ThisDirectory.Path / Path.GetFileName(name);
-            string realTargetPath = this.RootFileSystem.ConvertPathToInternal(targetPath);
-            if (fileInfo.IsSymbolicLink())
-            {
-                throw new IOException("Unable to project to an existing projection.");
-            }
-            if (this.ContainsFile(name))
-            {
-                throw new IOException($"A file or directory called {name} already exists in the projecting directory.");
-            }
-            if (!source.Created)
-            {
-                throw new IOException("Unable to project to a non-existent file.");
-            }
-            if (!OSFileSystem.OSSupportsSymbolicLinks)
-            {
-                throw new PlatformNotSupportedException("This operating system does not support symbolic link projections.");
-            }
-            OSFileSystem.CreateSymbolicLink(fileInfo.FullName, realTargetPath, Emet.FileSystems.FileType.File);
-            return (this as IReadOnlyDirectory).OpenFile(name);
-#pragma warning restore CS0618 // Type or member is obsolete
-        }
-
-        IReadOnlyDirectory IProjectingDirectory.Project(IReadOnlyDirectory directory, string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        IProjectingDirectory IDirectoryOpeningDirectoryBase<IProjectingDirectory>.OpenDirectory(string name)
-        {
-            if (this.IsManifested || this.UseManifest)
-            {
-                throw new IOException("Can not open projecting directory as child of manifested directory.");
-            }    
-
-            if (this.ContainsDirectory(name))
-            {
-                var existingDir = this.OpenDirectory(name, false);
-                if (existingDir.IsManifested) 
-                    throw new IOException("Can not open manifested directory as projecting.");
-                if (existingDir.UnsafeGetPath().IsSymbolicLink())
-                    throw new IOException("Can not open directory projection as projecting.");
-                return existingDir;
-            }
-            return this.OpenDirectory(name, false);
-        }
+        IDeletableDirectory IDirectoryOpeningDirectoryBase<IDeletableDirectory>.OpenDirectory(string name)
+            => this.OpenDirectory(name);
     }
 }
 

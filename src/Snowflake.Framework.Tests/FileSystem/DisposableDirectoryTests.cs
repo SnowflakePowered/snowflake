@@ -123,8 +123,6 @@ namespace Snowflake.Filesystem.Tests
 
             var file2 = dir2.CopyFrom(file);
 
-            Assert.Equal(Guid.Empty, file2.FileGuid);
-
             Assert.Equal(file.FileGuid, file2.FileGuid);
             Assert.Equal(1, file2.Length);
 
@@ -154,7 +152,6 @@ namespace Snowflake.Filesystem.Tests
             
             var file2 = await dir2.CopyFromAsync(file);
 
-            Assert.Equal(Guid.Empty, file.FileGuid);
             Assert.Equal(file.FileGuid, file2.FileGuid);
             Assert.True(file.Created);
             Assert.Equal(1, file2.Length);
