@@ -723,13 +723,6 @@
             <returns>The size of the file in bytes, or -1 if the file does not exist or is a directory.</returns>
             <exception cref="T:System.IO.IOException"></exception>
         </member>
-        <member name="M:Snowflake.Filesystem.Link.UnsafeOpenAsFile">
-            <summary>
-            Open the <see cref="T:Snowflake.Filesystem.Link"/> as a <see cref="T:Snowflake.Filesystem.File"/>, exposing
-            the link source file.
-            </summary>
-            <returns>A <see cref="T:Snowflake.Filesystem.File"/> where the link file is readable.</returns>
-        </member>
         <member name="P:Snowflake.Input.Controller.ControllerElementCollection.ButtonA">
             <inheritdoc/>
         </member>

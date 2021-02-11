@@ -83,11 +83,6 @@ namespace Snowflake.Filesystem
             GC.SuppressFinalize(this);
         }
 
-        public IProjectingDirectory OpenDirectory(string name)
-        {
-            return (this.Base as IDirectoryOpeningDirectoryBase<IProjectingDirectory>).OpenDirectory(name);
-        }
-
         public IFile LinkFrom(System.IO.FileInfo source) => this.Base.LinkFrom(source);
         public IFile LinkFrom(System.IO.FileInfo source, bool overwrite) => this.Base.LinkFrom(source, overwrite);
         IDeletableDirectory IDirectoryOpeningDirectoryBase<IDeletableDirectory>.OpenDirectory(string name) => this.Base.OpenDirectory(name);

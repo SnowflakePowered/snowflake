@@ -16,10 +16,8 @@ namespace Snowflake.Filesystem
 
         internal static bool IsSymbolicLink(this FileSystemInfo @this)
         {
-            var fileType = new Emet.FileSystems.DirectoryEntry(@this.FullName, Emet.FileSystems.FileSystem.FollowSymbolicLinks.Never).FileType;
-            return fileType == Emet.FileSystems.FileType.SymbolicLink || fileType == Emet.FileSystems.FileType.ReparsePoint;
+            return @this.Attributes.HasFlag(FileAttributes.ReparsePoint);
         }
-
 
         /// <summary>
         /// Gets a value indicating whether the specified file exists.
