@@ -142,7 +142,12 @@ namespace Snowflake.Filesystem
             if (fileName == null) throw new ArgumentException($"Could not get file name for path {source.Name}.");
 
             source.CopyTo(this.RootFileSystem.ConvertPathToInternal(this.ThisDirectory.Path / fileName), overwrite);
-            return this.OpenFile(fileName);
+
+            // Preserve GUID, on Linux xattrs are not preserved from copy.
+            if (!source.TryGetGuidAttribute(File.SnowflakeFile, out Guid existingGuid))
+                existingGuid = Guid.NewGuid();
+
+            return this.OpenFile(fileName, existingGuid);
         }
 
         public Task<IFile> CopyFromAsync(FileInfo source, CancellationToken cancellation = default) 
@@ -154,8 +159,11 @@ namespace Snowflake.Filesystem
             if (!source.Exists()) throw new FileNotFoundException($"{source.FullName} could not be found.");
             string? fileName = Path.GetFileName(source.Name);
             if (fileName == null) throw new ArgumentException($"Cannot get file name for path {source.Name}");
+
+            // Preserve GUID
             if (!source.TryGetGuidAttribute(File.SnowflakeFile, out Guid existingGuid))
                 existingGuid = Guid.NewGuid();
+
             var file = this.OpenFile(fileName, existingGuid);
             if (file.Created && !overwrite) throw new IOException($"{source.Name} already exists in the target directory.");
           
@@ -194,9 +202,16 @@ namespace Snowflake.Filesystem
 
             if (!source.Created) throw new FileNotFoundException($"{source.UnsafeGetFilePointerPath().FullName} could not be found.");
             if (this.ContainsFile(source.Name) && !overwrite) throw new IOException($"{source.Name} already exists in the target directory");
-            var file = this.OpenFile(source.Name);
+            // Preserve GUID
+            
+            if (!source.UnsafeGetFilePointerPath().TryGetGuidAttribute(File.SnowflakeFile, out Guid existingGuid))
+                existingGuid = Guid.NewGuid();
+            var file = this.OpenFile(source.Name, existingGuid);
+
             // unsafe usage here as optimization.
-            source.UnsafeGetFilePointerPath().MoveTo(file.UnsafeGetFilePointerPath().ToString(), overwrite);
+            source.UnsafeGetFilePointerPath()
+                .MoveTo(file.UnsafeGetFilePointerPath().ToString(), overwrite);
+
             source.Delete();
             return this.OpenFile(file.Name);
         }
