@@ -69,7 +69,7 @@ namespace Snowflake.Filesystem
                     } 
                     catch 
                     {
-
+                        disposedValue = true;
                     }
                 }
                 disposedValue = true;

@@ -41,7 +41,7 @@ namespace Snowflake.Orchestration.Projections
             if (this.Children.TryGetValue(directoryName, out var projection))
                 return projection;
 
-            projection = new();
+            projection = new(this);
             this.Children.Add(directoryName, projection);
             return projection;
         }
