@@ -50,11 +50,9 @@ namespace Snowflake.Filesystem
         void Rename(string newName);
 
         /// <summary>
-        /// Deletes a <see cref="IFile"/> from the underlying file system as well as the
-        /// manifest of the <see cref="IReadOnlyFile.ParentDirectory"/>.
+        /// Deletes a <see cref="IFile"/> from the underlying file system.
         /// 
-        /// If <see cref="IReadOnlyFile.Created"/> is false, the file will simply be removed from the
-        /// manifest.
+        /// If <see cref="IReadOnlyFile.Created"/> is false, this will do nothing.
         /// </summary>
         void Delete();
 
