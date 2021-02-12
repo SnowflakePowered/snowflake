@@ -28,7 +28,7 @@
     </PackageReference>
     <PackageReference Include="System.Reactive" Version="5.0.0" />
     <PackageReference Include="VCDiff" Version="3.3.0" />
-    <PackageReference Include="Tsuku" Version="1.0.0"/>
+    <PackageReference Include="Tsuku" Version="1.0.0" />
     <PackageReference Include="Zio" Version="0.11.0" />
   </ItemGroup>
 
