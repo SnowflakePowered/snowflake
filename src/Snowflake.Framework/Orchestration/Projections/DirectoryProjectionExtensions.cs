@@ -13,7 +13,7 @@ namespace Snowflake.Orchestration.Projections
             => d.Project(name, file);
         public static DirectoryProjection N(this DirectoryProjection d, string name)
             => d.Enter(name);
-        public static DirectoryProjection X(this DirectoryProjection d, string name)
+        public static DirectoryProjection X(this DirectoryProjection d)
            => d.Exit();
     }
 }

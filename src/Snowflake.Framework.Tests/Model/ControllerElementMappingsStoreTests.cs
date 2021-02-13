@@ -10,7 +10,6 @@ using Snowflake.Input.Controller.Mapped;
 using Snowflake.Input.Device;
 using Snowflake.Model.Database;
 using Snowflake.Model.Database.Models;
-using Snowflake.Persistence;
 using Snowflake.Services;
 using Snowflake.Tests;
 using Xunit;

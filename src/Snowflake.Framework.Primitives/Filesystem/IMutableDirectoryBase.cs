@@ -116,15 +116,14 @@ namespace Snowflake.Filesystem
         Task<IFile> CopyFromAsync(IReadOnlyFile source, bool overwrite, CancellationToken cancellation = default);
 
         /// <summary>
-        /// Whether or not this directory contains a file or directory in its manifest. If provided a
-        /// full path, this will truncate the path using <see cref="Path.GetFileName(string)"/>
+        /// Whether or not this directory contains a file.
         /// </summary>
         /// <param name="file">The name of the file to check.</param>
         /// <returns>Whether or not this directory contains the given file or directory.</returns>
         bool ContainsFile(string file);
 
         /// <summary>
-        /// Whether or not this directory contains directory as a direct child.
+        /// Whether or not this directory contains directory as a child.
         /// </summary>
         /// <param name="directory">The name of the directory to check.</param>
         /// <returns>Whether or not this directory contains the given directory.</returns>

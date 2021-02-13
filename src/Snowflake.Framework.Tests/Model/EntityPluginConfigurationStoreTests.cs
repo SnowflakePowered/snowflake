@@ -8,7 +8,6 @@ using Snowflake.Configuration;
 using Snowflake.Extensibility.Configuration;
 using Snowflake.Model.Database;
 using Snowflake.Model.Database.Models;
-using Snowflake.Persistence;
 using Xunit;
 
 namespace Snowflake.Extensibility.Tests

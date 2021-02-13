@@ -29,12 +29,14 @@ namespace Snowflake.Filesystem
             file2.OpenStream().Close();
 
             var p = new DirectoryProjection();
-            p.Enter("SomeDirectory")
-                .Project("project1", file1)
-                .Enter("DeeperDirectory")
-                    .Project("project2", file2)
-                .Exit()
-            .Exit();
+            p.N("SomeDirectory")
+                .P("project1", file1)
+                .N("DeeperDirectory")
+                    .P("project2", file2)
+                .X()
+            .X();
+
+
         }
     }
 }
