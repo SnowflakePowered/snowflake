@@ -56,8 +56,7 @@ namespace Snowflake.Filesystem
         IReadOnlyFile OpenFile(string file, bool openIfNotExists);
 
         /// <summary>
-        /// Whether or not this directory contains a file in its manifest. If provided a
-        /// full path, this will truncate the path using <see cref="Path.GetFileName(string)"/>
+        /// Whether or not this directory contains a file in its manifest.
         /// </summary>
         /// <param name="file">The name of the file to check.</param>
         /// <returns>Whether or not this directory contains the given file.</returns>

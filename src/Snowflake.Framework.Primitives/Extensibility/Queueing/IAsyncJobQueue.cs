@@ -105,7 +105,7 @@ namespace Snowflake.Extensibility.Queueing
         /// Gets the remaining values in the enumerator as an <see cref="IAsyncEnumerable{T}"/>
         /// that can be looped on.
         /// 
-        /// Looping on this will exhaust the enumerator, and therefore using <see cref="GetNext(Guid, bool)"/> after 
+        /// Looping on this will exhaust the enumerator, and therefore using <see cref="GetNext(Guid)"/> after 
         /// enumerating the returned enumerable here will never return results.
         /// </summary>
         /// <param name="jobId">The job token that was returned by <see cref="QueueJob(TAsyncEnumerable)"/></param>

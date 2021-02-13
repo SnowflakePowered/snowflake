@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Snowflake.Model.Database;
 using Snowflake.Model.Database.Models;
-using Snowflake.Persistence;
 using Xunit;
 
 namespace Snowflake.Configuration.Tests
