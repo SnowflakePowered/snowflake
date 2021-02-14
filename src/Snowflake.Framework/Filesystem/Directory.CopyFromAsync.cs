@@ -30,7 +30,7 @@ namespace Snowflake.Filesystem
         {
             if (this.ContainsFile(Path.GetFileName(targetName)) && !overwrite) throw new IOException($"{source.Name} already exists in the target directory");
 #pragma warning disable CS0618 // Type or member is obsolete
-            return await this.CopyFromAsync(source.UnsafeGetFilePath(), targetName, overwrite, cancellation);
+            return await this.CopyFromAsync(source.UnsafeGetPath(), targetName, overwrite, cancellation);
 #pragma warning restore CS0618 // Type or member is obsolete
         }
 

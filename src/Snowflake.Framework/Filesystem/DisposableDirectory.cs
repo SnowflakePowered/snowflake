@@ -112,5 +112,20 @@ namespace Snowflake.Filesystem
 
         public Task<IFile> CopyFromAsync(IReadOnlyFile source, string targetName, bool overwrite, CancellationToken cancellation = default)
             => this.Base.CopyFromAsync(source, targetName, overwrite, cancellation);
+
+        public IFile LinkFrom(System.IO.FileInfo source, string targetName)
+            => this.Base.LinkFrom(source, targetName);
+
+        public IFile LinkFrom(System.IO.FileInfo source, string targetName, bool overwrite)
+            => this.Base.LinkFrom(source, targetName, overwrite);
+
+        public IDeletableDirectory LinkFrom(System.IO.DirectoryInfo source)
+            => this.Base.LinkFrom(source);
+        public IDeletableDirectory LinkFrom(System.IO.DirectoryInfo source, bool overwrite)
+            => this.Base.LinkFrom(source, overwrite);
+        public IDeletableDirectory LinkFrom(System.IO.DirectoryInfo source, string targetName)
+            => this.Base.LinkFrom(source, targetName);
+        public IDeletableDirectory LinkFrom(System.IO.DirectoryInfo source, string targetName, bool overwrite)
+            => this.Base.LinkFrom(source, targetName, overwrite);
     }
 }

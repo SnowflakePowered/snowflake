@@ -29,15 +29,15 @@ namespace Snowflake.Remoting.GraphQL.Model.Filesystem.Contextual
             descriptor.Field("osPath")
                 .Description("The path of the file on the realized operating system.")
                 .Type<NonNullType<OSFilePathType>>()
-                .Resolve(context => context.Parent<IReadOnlyFile>().UnsafeGetFilePath()); // lgtm [cs/call-to-obsolete-method]
+                .Resolve(context => context.Parent<IReadOnlyFile>().UnsafeGetPath()); // lgtm [cs/call-to-obsolete-method]
             descriptor.Field("lastModifiedTime")
                 .Description("The last modified time of the file, in UTC.")
                 .Type<NonNullType<DateTimeType>>()
-                .Resolve(context => context.Parent<IReadOnlyFile>().UnsafeGetFilePath().LastWriteTimeUtc); // lgtm [cs/call-to-obsolete-method]
+                .Resolve(context => context.Parent<IReadOnlyFile>().UnsafeGetPath().LastWriteTimeUtc); // lgtm [cs/call-to-obsolete-method]
             descriptor.Field("createdTime")
                 .Description("The creation time of the file, in UTC.")
                 .Type<NonNullType<DateTimeType>>()
-                .Resolve(context => context.Parent<IReadOnlyFile>().UnsafeGetFilePath().CreationTimeUtc); // lgtm [cs/call-to-obsolete-method]
+                .Resolve(context => context.Parent<IReadOnlyFile>().UnsafeGetPath().CreationTimeUtc); // lgtm [cs/call-to-obsolete-method]
             descriptor.Field("size")
                 .Description("The size of the file, in bytes.")
                 .Type<NonNullType<IntType>>()

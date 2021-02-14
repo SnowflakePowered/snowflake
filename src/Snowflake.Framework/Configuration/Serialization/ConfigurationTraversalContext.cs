@@ -224,7 +224,7 @@ namespace Snowflake.Configuration.Serialization
                             if (directoryName == null) throw new ArgumentException($"Could not get directory name for path {path}.");
                             var fileDirectory = rootDir.OpenDirectory(directoryName);
                             var file = fileDirectory.OpenFile(path, true);
-                            nodes.Add(new StringConfigurationNode(serializedKey, file.UnsafeGetFilePath().FullName)); // lgtm [cs/call-to-obsolete-method]
+                            nodes.Add(new StringConfigurationNode(serializedKey, file.UnsafeGetPath().FullName)); // lgtm [cs/call-to-obsolete-method]
                             break;
                         case PathType.Directory:
                         case PathType.Either:

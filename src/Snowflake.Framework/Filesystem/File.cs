@@ -23,11 +23,11 @@ namespace Snowflake.Filesystem
 
         internal FileEntry RawInfo { get; private set; }
 
-        public long Length => this.UnsafeGetFilePath().Length();
+        public long Length => this.UnsafeGetPath().Length();
 
         internal Directory ParentDirectory { get; }
 
-        public bool Created => this.UnsafeGetFilePath().Exists();
+        public bool Created => this.UnsafeGetPath().Exists();
 
         public Guid FileGuid { get; }
 
@@ -44,7 +44,7 @@ namespace Snowflake.Filesystem
         public Stream OpenStream(FileMode mode, FileAccess rw, FileShare share = FileShare.None)
         {
             var stream = this.RawInfo.Open(mode, rw, share);
-            this.UnsafeGetFilePath().SetAttribute(File.SnowflakeFile, this.FileGuid);
+            this.UnsafeGetPath().SetAttribute(File.SnowflakeFile, this.FileGuid);
             return stream;
         }
 
@@ -62,7 +62,7 @@ namespace Snowflake.Filesystem
             }
         }
 
-        public FileInfo UnsafeGetFilePath()
+        public FileInfo UnsafeGetPath()
         {
             return new FileInfo(this.RawInfo.FileSystem.ConvertPathToInternal(this.RawInfo.Path));
         }
