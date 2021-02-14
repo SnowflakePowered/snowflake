@@ -23,27 +23,17 @@ namespace Snowflake.Filesystem
     {
         /// <summary>
         /// <para>
-        /// Creates a link to an unmanaged <see cref="FileInfo"/> that exists outside of
-        /// a <see cref="IDirectory"/>. Links are akin to shortcuts more than symbolic links,
-        /// being represented as a text file with a real file path to another file on the file system.
+        /// Creates a symbolic link to an unmanaged <see cref="FileInfo"/> that exists outside of
+        /// a <see cref="IDirectory"/>.
         /// 
-        /// Do not ever link to another <see cref="IFile"/>. Instead, use <see cref="IMutableDirectoryBase.CopyFrom(IReadOnlyFile)"/>.
+        /// You should not link to another <see cref="IFile"/>. Instead, use <see cref="IMutableDirectoryBase.CopyFrom(IReadOnlyFile)"/>.
         /// </para>
         /// <para>
         /// Links are transparent, i.e. <see cref="IFile.OpenStream()"/> will open a stream to the linked file, and
-        /// <see cref="IReadOnlyFile.UnsafeGetFilePath"/> will return the path of the linked file. The path of the shortcut
-        /// remains inaccessible except for the internal method <see cref="IReadOnlyFile.UnsafeGetFilePointerPath"/>. 
+        /// <see cref="IReadOnlyFile.UnsafeGetFilePath"/> will return the path of the linked file.
         /// <see cref="IDirectory"/> methods like <see cref="IMutableDirectoryBase.CopyFrom(IReadOnlyFile)"/> and 
-        /// <see cref="IMoveFromableDirectory.MoveFrom(IFile)"/> work as 
+        /// <see cref="IMoveFromableDirectoryBase.MoveFrom(IFile)"/> work as 
         /// expected.
-        /// </para>
-        /// <para>
-        /// Links differ semantically from Files in two ways: <see cref="IReadOnlyFile.IsLink"/> is always true for links,
-        /// and always false for Files, and <see cref="IFile.OpenStream()"/> on a non existing file throws <see cref="FileNotFoundException"/>
-        /// instead of creating a new file. The reasoning behind throwing an exception is that links should always point to 
-        /// a real file on the filesystem, and not be used as a method to escape the directory jail (although <see cref="IFile.OpenStream(FileMode, FileAccess, FileShare)"/>
-        /// will work as expected. The intended action when encountering a broken link is not to create a new file, but instead to
-        /// repair the link by recreating it with <see cref="LinkFrom(FileInfo)"/>.
         /// </para>
         /// <para>
         /// The underlying file that a link points to can only be modified through the stream.
@@ -69,21 +59,6 @@ namespace Snowflake.Filesystem
         /// a <see cref="IDirectory"/>. Links are akin to shortcuts more than symbolic links,
         /// being represented as a text file with a real file path to another file on the file system.
         ///  Do not ever link to another <see cref="IFile"/>. Instead, use <see cref="IMutableDirectoryBase.CopyFrom(IReadOnlyFile)"/>.
-        /// </para>
-        /// <para>
-        /// Links are transparent, i.e. <see cref="IFile.OpenStream()"/> will open a stream to the linked file, and
-        /// <see cref="IReadOnlyFile.UnsafeGetFilePath"/> will return the path of the linked file. The path of the shortcut
-        /// remains inaccessible except for the internal method <see cref="IReadOnlyFile.UnsafeGetFilePointerPath"/>. 
-        /// <see cref="IDeletableDirectory"/> methods like <see cref="IMutableDirectoryBase.CopyFrom(IReadOnlyFile)"/> and <see cref="IMoveFromableDirectory.MoveFrom(IFile)"/> work as 
-        /// expected.
-        /// </para>
-        /// <para>
-        /// Links differ semantically from Files in two ways: <see cref="IReadOnlyFile.IsLink"/> is always true for links,
-        /// and always false for Files, and <see cref="IFile.OpenStream()"/> on a non existing file throws <see cref="FileNotFoundException"/>
-        /// instead of creating a new file. The reasoning behind throwing an exception is that links should always point to 
-        /// a real file on the filesystem, and not be used as a method to escape the directory jail (although <see cref="IFile.OpenStream(FileMode, FileAccess, FileShare)"/>
-        /// will work as expected. The intended action when encountering a broken link is not to create a new file, but instead to
-        /// repair the link by recreating it with <see cref="LinkFrom(FileInfo, bool)"/>
         /// </para>
         /// <para>
         /// The underlying file that a link points to can only be modified through the stream.
