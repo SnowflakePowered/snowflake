@@ -25,7 +25,7 @@ namespace Snowflake.Filesystem
         /// </summary>
         /// <param name="this">The <see cref="FileInfo"/> representing the current file.</param>
         /// <returns><see langword="true"/> if the file exists on disk and is accessible, <see langword="false"/> otherwise.</returns>
-        internal static bool Exists(this FileInfo @this)
+        internal static bool ContentExists(this FileInfo @this)
         {
             return @this.AsDirEntry().FileType == Emet.FileSystems.FileType.File;
         }
@@ -36,7 +36,7 @@ namespace Snowflake.Filesystem
         /// </summary>
         /// <param name="this">The <see cref="DirectoryInfo"/> representing the current file.</param>
         /// <returns><see langword="true"/> if the directory exists on disk and is accessible, <see langword="false"/> otherwise.</returns>
-        internal static bool Exists(this DirectoryInfo @this)
+        internal static bool ContentExists(this DirectoryInfo @this)
         {
             return @this.AsDirEntry().FileType == Emet.FileSystems.FileType.Directory;
         }

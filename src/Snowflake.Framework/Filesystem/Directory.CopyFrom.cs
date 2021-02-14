@@ -34,7 +34,7 @@ namespace Snowflake.Filesystem
         public IFile CopyFrom(FileInfo source, string targetName, bool overwrite)
         {
             this.CheckDeleted();
-            if (!source.Exists()) throw new FileNotFoundException($"{source.FullName} could not be found.");
+            if (!source.ContentExists()) throw new FileNotFoundException($"{source.FullName} could not be found.");
             string? fileName = Path.GetFileName(targetName);
 
             if (!Directory.IsValidFileName(fileName)) throw new DirectoryNotFoundException($"Filename {targetName} is invalid.");
